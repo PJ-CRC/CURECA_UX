@@ -1,6 +1,7 @@
 {
     "id":  "brex-06_R001",
     "kind":  "request",
+    "status":  "완료",
     "at":  "2026-10-21T10:35:06+09:00",
     "by":  "이상헌",
     "doneBy":  "Claude",
