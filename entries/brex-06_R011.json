@@ -1,10 +1,10 @@
 {
     "id":  "brex-06_R011",
     "kind":  "request",
-    "status":  "대기",
-    "at":  "2026-10-27T18:10:27+09:00",
+    "status":  "진행 중",
+    "at":  "2026-10-27T18:10:54+09:00",
     "by":  "이상헌",
-    "doneBy":  "이상헌",
+    "doneBy":  "Claude",
     "pc":  "BREX_06",
     "reqId":  "R011",
     "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
@@ -14,6 +14,6 @@
     "nodeId":  "789:33347",
     "type":  "텍스트 수정",
     "text":  "sh.l test에 만들어줘",
-    "note":  "",
+    "note":  "R010을 SH.L TEST에 만드는 중",
     "shot":  ""
 }
