@@ -1,0 +1,18 @@
+{
+   "at" : "2026-10-27T14:34:51+09:00",
+   "by" : "테스터",
+   "doneBy" : "테스터",
+   "fileKey" : "etCQFF3CTf1EA6C79d4BBf",
+   "fileName" : "UX AI TEST",
+   "frame" : "DASHBOARD",
+   "id" : "brexui-macbookpro_R001",
+   "kind" : "request",
+   "nodeId" : "789:33347",
+   "note" : "팝업 내용이 정해지지 않아 보류합니다. ① 어느 요소에서 여는 팝업인가요? (예: 3-1·5-1·6-1·7-1 More, 5-2 에러 토스트 상세, 4 Running 상태) ② 팝업에 담을 내용·버튼은 무엇인가요? 정해 주시면 DASHBOARD 옆에 새 프레임으로 만들겠습니다.",
+   "page" : "SH.L TEST",
+   "pc" : "brexui-MacBookPro",
+   "reqId" : "R001",
+   "shot" : "shots/brexui-macbookpro_R001.jpg",
+   "text" : "신규 화면 하나 만들어줘봐 팝업 레이어로",
+   "type" : "텍스트 수정"
+}
