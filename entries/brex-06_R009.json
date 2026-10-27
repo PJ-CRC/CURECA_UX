@@ -1,0 +1,18 @@
+{
+    "id":  "brex-06_R009",
+    "kind":  "request",
+    "at":  "2026-10-27T10:17:45+09:00",
+    "by":  "이상헌",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "reqId":  "R009",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "DASHBOARD",
+    "nodeId":  "789:33347",
+    "type":  "신규 프레임",
+    "text":  "SH.L TEST에 있는 프레임들의 내용을 기반으로 레이아웃 구조를 잡아줘\nSH.L TEST에 만들어줘야 해",
+    "note":  "SH.L TEST에 섹션 「Layout Structure · 레이아웃 구조 (R009)」 추가, 와이어프레임 9종(대시보드 · 목록 · 목록+상세 패널 · 상태 모니터링 · 탭+매트릭스 · 탭+목록·상세 · 카드 선택 · 단계 진행 · 차트+필터). 이미지는 docs/layout_structures",
+    "shot":  "shots/brex-06_R009.jpg"
+}

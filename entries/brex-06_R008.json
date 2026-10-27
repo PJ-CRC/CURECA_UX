@@ -1,0 +1,18 @@
+{
+    "id":  "brex-06_R008",
+    "kind":  "request",
+    "at":  "2026-10-26T15:24:26+09:00",
+    "by":  "이상헌",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "reqId":  "R008",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L",
+    "frame":  "LI-STN-08-P",
+    "nodeId":  "647:108480",
+    "type":  "텍스트 수정",
+    "text":  "테이블의 Reagent Product Name -\u003e Product Name 변경\nActive는 토글에서 현재 사용중인지 아니지 표기로 변경\nActive,  Inactive\nCreated Date/Time, File Version 정보를 File Info로 이동\nCreated Date/Time -\u003e File Created Date/Time\n Product Name에 Master 파일의 경우 Master Info를 기재\nBarcode Info의 Segments 정보 제거\nsegments의 위에 Segment Info Label 표기\nQuantity Info에서 Display 삭제",
+    "note":  "LI-STN-08 계열 + TI-STN-08 계열(목록 · 상세 · File Data · 유형별 정의 · 문구) + 프로토타입 T/L 모드 반영. 표: Product Name, Master Info. Active: L-IOS는 글자 Active/Inactive, T-IOS는 토글 유지 · 라벨 Active/Inactive. 패널: File Info에 File Version · File Created Date/Time, Import Info는 Registered · User ID, Barcode Segments 칸 삭제 · Segment Info 라벨, Quantity Display 삭제. 캡처 12장 갱신",
+    "shot":  "shots/brex-06_R008.jpg"
+}

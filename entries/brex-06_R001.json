@@ -1,0 +1,18 @@
+{
+    "id":  "brex-06_R001",
+    "kind":  "request",
+    "at":  "2026-10-21T10:35:06+09:00",
+    "by":  "이상헌",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "reqId":  "R001",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "Revision history (Mobile)",
+    "nodeId":  "175:19357",
+    "type":  "요소 추가",
+    "text":  "히스토리 내역 아래에 사각형 이미지 추가 색상은 파란색으로 하고 사이즈는 500X800",
+    "note":  "Table(175:19363) 아래 40px(x 100, y 516)에 파란 사각형 500×800(#2463DF, 241:16) 추가. 프레임 높이 1339 안에 들어가 크기 변경 없음.",
+    "shot":  "shots/brex-06_R001.jpg"
+}
