@@ -1,8 +1,8 @@
 {
     "id":  "brex-06_R014",
     "kind":  "request",
-    "status":  "진행 중",
-    "at":  "2026-10-28T16:40:43+09:00",
+    "status":  "완료",
+    "at":  "2026-10-28T16:42:30+09:00",
     "by":  "이상헌",
     "doneBy":  "Claude",
     "pc":  "BREX_06",
@@ -15,6 +15,6 @@
     "type":  "텍스트 수정",
     "layout":  "",
     "text":  "UX_trans 섹션에 있는 화면들만 지금 추가된 가이드 내용 반영해줘",
-    "note":  "UX_trans 4개 화면 버튼 · 칩 크기를 COMM-5에 맞추는 중",
-    "shot":  ""
+    "note":  "CURECA UX 가이드 5-c Button · 5-e Chips 크기 반영(UX_trans 4개 화면, 9곳): DASHBOARD View All 26→32 / table_detail pannel Delete · Save 44→40, Inactive 28→32 / content 7 필터 칩 3개 42→40 / LI-TSS-PSI-SAM-02-02 Done 44→40, Delete 28→32. 라이브러리에 해당 크기 변형이 없어 인스턴스 높이를 직접 맞춤. 원본 화면은 그대로. 배지 · 기간 표기 · 아코디언은 어긋난 곳 없음",
+    "shot":  "shots/brex-06_R014.jpg"
 }

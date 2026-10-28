@@ -1,0 +1,26 @@
+{
+    "id":  "brex-06_R014",
+    "kind":  "request",
+    "reqId":  "R014",
+    "at":  "2026-10-28T16:42:31+09:00",
+    "from":  "2026-10-28T16:40:43+09:00",
+    "by":  "이상헌",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "DASHBOARD",
+    "nodeId":  "1143:99714",
+    "text":  "UX_trans 섹션에 있는 화면들만 지금 추가된 가이드 내용 반영해줘",
+    "models":  {
+                   "claude-opus-5-5":  9
+               },
+    "calls":  9,
+    "input":  18,
+    "cacheWrite":  17298,
+    "cacheRead":  1842376,
+    "output":  6745,
+    "total":  1866437,
+    "usd":  0.6418
+}
