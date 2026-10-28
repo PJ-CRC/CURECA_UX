@@ -1,0 +1,26 @@
+{
+    "id":  "brex-06_20261028-163811",
+    "kind":  "work",
+    "reqId":  "",
+    "at":  "2026-10-28T16:38:11+09:00",
+    "from":  "2026-10-28T16:34:58+09:00",
+    "by":  "이상헌",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "고칠 화면 찾기: CURECA UX 가이드 (COMM-5)",
+    "models":  {
+                   "claude-opus-5-5":  16
+               },
+    "calls":  16,
+    "input":  32,
+    "cacheWrite":  21265,
+    "cacheRead":  2862989,
+    "output":  16556,
+    "total":  2900842,
+    "usd":  1.0740
+}
