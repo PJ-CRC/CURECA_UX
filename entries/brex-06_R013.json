@@ -1,0 +1,20 @@
+{
+    "id":  "brex-06_R013",
+    "kind":  "request",
+    "status":  "대기",
+    "at":  "2026-10-28T14:42:21+09:00",
+    "by":  "이상헌",
+    "doneBy":  "이상헌",
+    "pc":  "BREX_06",
+    "reqId":  "R013",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "DASHBOARD",
+    "nodeId":  "1143:99714",
+    "type":  "레이아웃·배치",
+    "layout":  "",
+    "text":  "UX_trans 섹션에 있는 내용들을 현재 선택한 UX 가이드 내용에 맞춰서 수정해줘",
+    "note":  "",
+    "shot":  ""
+}
