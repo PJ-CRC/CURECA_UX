@@ -1,10 +1,10 @@
 {
     "id":  "brex-06_R012",
     "kind":  "request",
-    "status":  "대기",
-    "at":  "2026-10-28T10:24:45+09:00",
+    "status":  "진행 중",
+    "at":  "2026-10-28T10:25:07+09:00",
     "by":  "이상헌",
-    "doneBy":  "이상헌",
+    "doneBy":  "Claude",
     "pc":  "BREX_06",
     "reqId":  "R012",
     "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
@@ -15,6 +15,6 @@
     "type":  "기타",
     "layout":  "",
     "text":  "현재 대시보드와 똑같은 대시보드 하나더 만들어줘",
-    "note":  "",
+    "note":  "DASHBOARD 프레임 복제 중",
     "shot":  ""
 }
