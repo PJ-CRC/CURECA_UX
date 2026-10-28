@@ -1,0 +1,20 @@
+{
+    "id":  "brex-06_R012",
+    "kind":  "request",
+    "status":  "대기",
+    "at":  "2026-10-28T10:24:45+09:00",
+    "by":  "이상헌",
+    "doneBy":  "이상헌",
+    "pc":  "BREX_06",
+    "reqId":  "R012",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "DASHBOARD",
+    "nodeId":  "789:33347",
+    "type":  "기타",
+    "layout":  "",
+    "text":  "현재 대시보드와 똑같은 대시보드 하나더 만들어줘",
+    "note":  "",
+    "shot":  ""
+}
