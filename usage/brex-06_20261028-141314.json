@@ -1,0 +1,26 @@
+{
+    "id":  "brex-06_20261028-141314",
+    "kind":  "work",
+    "reqId":  "",
+    "at":  "2026-10-28T14:13:14+09:00",
+    "from":  "2026-10-28T14:07:20+09:00",
+    "by":  "이상헌",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "Connon UX",
+    "nodeId":  "1115:92103",
+    "text":  "가이드: CURECA UX 가이드 (J003)",
+    "models":  {
+                   "claude-opus-5-5":  17
+               },
+    "calls":  17,
+    "input":  34,
+    "cacheWrite":  68256,
+    "cacheRead":  9543139,
+    "output":  35966,
+    "total":  9647395,
+    "usd":  3.1741
+}
