@@ -2,7 +2,7 @@
     "id":  "brex-06_R013",
     "kind":  "request",
     "status":  "완료",
-    "at":  "2026-10-28T14:55:35+09:00",
+    "at":  "2026-10-28T14:56:01+09:00",
     "by":  "이상헌",
     "doneBy":  "Claude",
     "pc":  "BREX_06",
@@ -15,6 +15,6 @@
     "type":  "레이아웃·배치",
     "layout":  "",
     "text":  "UX_trans 섹션에 있는 내용들을 현재 선택한 UX 가이드 내용에 맞춰서 수정해줘",
-    "note":  "CURECA UX 가이드(내 작업 기준)에 맞춰 UX_trans 10개 화면 중 7개, 94곳 수정: 날짜 YYYY-MM-DD hh:mm(초 삭제 54), 수량 ea/rxns (n 단위)·단복수 15, 구성품 오름차순 2, Module명 (n) 12, Not Tested 4 · Insufficient 1, 소모품→시약·이름 순서 2목록, 오타 5. Pretendard 글은 Inter로 교체. Cancelled Orders 날짜 20곳은 처음에 빠져 있어 추가로 고침. Test Status 작은 패널의 Not tested는 그림이라 그대로",
+    "note":  "CURECA UX 가이드(내 작업 기준)에 맞춰 UX_trans 10개 화면 중 7개, 94곳 수정: 날짜 YYYY-MM-DD hh:mm(초 삭제) 57, 수량 ea/rxns (n 단위)·단복수 17, 구성품 오름차순 2, Module명 (n) 11, Not Tested 4 · Insufficient 1, 오타 2, 소모품→시약·이름 순서 2목록. Pretendard 글은 Inter로 교체. Cancelled Orders 날짜 20곳은 처음에 빠져 있어 추가로 고침. Test Status 작은 패널의 Not tested는 그림이라 그대로",
     "shot":  "shots/brex-06_R013.jpg"
 }
