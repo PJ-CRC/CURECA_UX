@@ -1,0 +1,26 @@
+{
+    "id":  "brex-06_R012",
+    "kind":  "request",
+    "reqId":  "R012",
+    "at":  "2026-10-28T10:25:52+09:00",
+    "from":  "2026-10-28T10:25:04+09:00",
+    "by":  "이상헌",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "DASHBOARD",
+    "nodeId":  "789:33347",
+    "text":  "현재 대시보드와 똑같은 대시보드 하나더 만들어줘",
+    "models":  {
+                   "claude-opus-5-5":  6
+               },
+    "calls":  6,
+    "input":  12,
+    "cacheWrite":  5781,
+    "cacheRead":  655717,
+    "output":  3513,
+    "total":  665023,
+    "usd":  0.2477
+}
