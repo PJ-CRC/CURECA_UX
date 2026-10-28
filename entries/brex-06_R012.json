@@ -1,8 +1,8 @@
 {
     "id":  "brex-06_R012",
     "kind":  "request",
-    "status":  "진행 중",
-    "at":  "2026-10-28T10:25:07+09:00",
+    "status":  "완료",
+    "at":  "2026-10-28T10:25:53+09:00",
     "by":  "이상헌",
     "doneBy":  "Claude",
     "pc":  "BREX_06",
@@ -15,6 +15,6 @@
     "type":  "기타",
     "layout":  "",
     "text":  "현재 대시보드와 똑같은 대시보드 하나더 만들어줘",
-    "note":  "DASHBOARD 프레임 복제 중",
-    "shot":  ""
+    "note":  "DASHBOARD를 복제해 DASHBOARD 2(1072:20377)를 Cancelled Orders 오른쪽(x 4152, y 0)에 만들었습니다. 목록 · 캡처 추가",
+    "shot":  "shots/brex-06_R012.jpg"
 }
