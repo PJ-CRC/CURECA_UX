@@ -1,10 +1,10 @@
 {
     "id":  "brex-06_R014",
     "kind":  "request",
-    "status":  "대기",
-    "at":  "2026-10-28T16:40:24+09:00",
+    "status":  "진행 중",
+    "at":  "2026-10-28T16:40:43+09:00",
     "by":  "이상헌",
-    "doneBy":  "이상헌",
+    "doneBy":  "Claude",
     "pc":  "BREX_06",
     "reqId":  "R014",
     "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
@@ -15,6 +15,6 @@
     "type":  "텍스트 수정",
     "layout":  "",
     "text":  "UX_trans 섹션에 있는 화면들만 지금 추가된 가이드 내용 반영해줘",
-    "note":  "",
+    "note":  "UX_trans 4개 화면 버튼 · 칩 크기를 COMM-5에 맞추는 중",
     "shot":  ""
 }
