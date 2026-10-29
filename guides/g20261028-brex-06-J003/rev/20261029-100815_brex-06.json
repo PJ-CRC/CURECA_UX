@@ -1,0 +1,8 @@
+{
+    "rev":  "20261029-100815_brex-06",
+    "by":  "Claude",
+    "at":  "2026-10-29T10:08:15+09:00",
+    "note":  "Connon UX 섹션 새 판 반영: 5. Component 번호 재정리(21개) · 상세 12장 추가(Dropdown · Loading · Pagination · Popup · Progress Step · Search Bar · Selection Controls 등), 4-a(2/4) 발생 Case · 상태 전이 표 · 상태별 도어 개방, 4-a(1/4) Module명 노출 순서, 4-b 예시",
+    "base":  "20261028-163355_brex-06",
+    "pc":  "BREX_06"
+}
