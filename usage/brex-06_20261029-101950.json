@@ -1,0 +1,26 @@
+{
+    "id":  "brex-06_20261029-101950",
+    "kind":  "work",
+    "reqId":  "",
+    "at":  "2026-10-29T10:19:50+09:00",
+    "from":  "2026-10-29T10:09:00+09:00",
+    "by":  "이상헌",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "Common UX Components · COMM-5",
+    "nodeId":  "1334:32018",
+    "text":  "COMM-5 컴포넌트 13종 생성",
+    "models":  {
+                   "claude-opus-5-5":  23
+               },
+    "calls":  23,
+    "input":  50,
+    "cacheWrite":  54120,
+    "cacheRead":  11988369,
+    "output":  47200,
+    "total":  12089739,
+    "usd":  3.7748
+}

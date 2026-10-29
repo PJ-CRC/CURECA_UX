@@ -1,0 +1,18 @@
+{
+    "id":  "brex-06_20261029-101949",
+    "kind":  "work",
+    "at":  "2026-10-29T10:19:49+09:00",
+    "by":  "이상헌",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "reqId":  "",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "Common UX Components · COMM-5",
+    "nodeId":  "1334:32018",
+    "type":  "",
+    "text":  "COMM-5 컴포넌트 13종 생성",
+    "note":  "CURECA UX 가이드 5. Component 상세 13종으로 컴포넌트를 만들었습니다.\n- SH.L TEST에 섹션 「Common UX Components · COMM-5」 추가, 컴포넌트 21개 · 변형 127개\n- Accordion · Badge · Button(Square · Text · Top) · Calendar(Day Cell · Date · Month) · Chips · Dropdown · Loading · Pagination · Popup(Basic · Import/Export · Alert · Confirm) · Progress Step · Scroll Bar · Search Bar · Selection Controls(+Segment Control)\n- 글꼴은 Inter로 만든 뒤 Figma 플러그인으로 Pretendard로 바꿈(글 329개)\n색은 실제 화면 컴포넌트 기준: 주 #0E1012, 테두리 #C5CCD5, 배경 #F3F6FB, 오류 #EA3625, 경고 #F39D34",
+    "shot":  "shots/brex-06_20261029-101949.jpg"
+}
