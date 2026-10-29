@@ -1,0 +1,26 @@
+{
+    "id":  "brex-06_20261029-100838",
+    "kind":  "work",
+    "reqId":  "",
+    "at":  "2026-10-29T10:08:38+09:00",
+    "from":  "2026-10-29T10:03:56+09:00",
+    "by":  "이상헌",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "가이드 수정: CURECA UX 가이드 (Connon UX 새 판 반영)",
+    "models":  {
+                   "claude-opus-5-5":  24
+               },
+    "calls":  24,
+    "input":  48,
+    "cacheWrite":  142212,
+    "cacheRead":  8342232,
+    "output":  32661,
+    "total":  8517153,
+    "usd":  3.1820
+}
