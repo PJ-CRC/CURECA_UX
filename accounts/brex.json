@@ -1,0 +1,21 @@
+{
+    "id":  "brex",
+    "name":  "최고관리자",
+    "admin":  true,
+    "menus":  [
+                  "setup",
+                  "guide",
+                  "workbench",
+                  "history",
+                  "usage",
+                  "proto"
+              ],
+    "active":  true,
+    "createdAt":  "2026-10-30T10:46:39+09:00",
+    "createdBy":  "",
+    "salt":  "slQZLbzvSTaIEI0fpqGqDA==",
+    "iter":  100000,
+    "hash":  "JOh7rnyLatmcPkNUFLDD6nbo3j+1tAgOVfDKEBDDCx0=",
+    "pwAt":  "2026-10-30T10:46:39+09:00",
+    "updatedAt":  "2026-10-30T10:46:39+09:00"
+}
