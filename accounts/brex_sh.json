@@ -1,0 +1,20 @@
+{
+    "id":  "brex_sh",
+    "name":  "이상헌",
+    "admin":  false,
+    "menus":  [
+                  "setup",
+                  "guide",
+                  "workbench",
+                  "history",
+                  "proto"
+              ],
+    "active":  true,
+    "createdAt":  "2026-10-30T10:56:37+09:00",
+    "createdBy":  "brex",
+    "salt":  "lwbXv61a39GbSHQXva3R/w==",
+    "iter":  100000,
+    "hash":  "ekr6FXFOVxP3eeBzmdYud9KPqHdH6i1pGC4+1m3mgqg=",
+    "pwAt":  "2026-10-30T10:56:37+09:00",
+    "updatedAt":  "2026-10-30T10:56:37+09:00"
+}
