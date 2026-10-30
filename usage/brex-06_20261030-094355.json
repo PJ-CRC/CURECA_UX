@@ -1,0 +1,26 @@
+{
+    "id":  "brex-06_20261030-094355",
+    "kind":  "work",
+    "reqId":  "",
+    "at":  "2026-10-30T09:43:55+09:00",
+    "from":  "2026-10-30T09:38:08+09:00",
+    "by":  "이상헌",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "가이드 수정: CURECA UX 가이드 (J012)",
+    "models":  {
+                   "claude-opus-5-5":  25
+               },
+    "calls":  25,
+    "input":  50,
+    "cacheWrite":  104067,
+    "cacheRead":  12950402,
+    "output":  27818,
+    "total":  13082337,
+    "usd":  3.9792
+}
