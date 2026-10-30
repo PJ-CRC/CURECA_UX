@@ -1,0 +1,26 @@
+{
+    "id":  "brex-06_R016",
+    "kind":  "request",
+    "reqId":  "R016",
+    "at":  "2026-10-30T13:23:46+09:00",
+    "from":  "2026-10-30T13:23:03+09:00",
+    "by":  "최고관리자",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "table (Tube Setting)",
+    "nodeId":  "789:56900",
+    "text":  "[가이드 반영] 「CURECA UX 가이드」 수정(「개요」 Connon UX 섹션 새 판(2026-10-30)과 Figma 컴포넌트를 가이드에 반영했습니다.\n- 개요: 기준 섹션 판 · 컴포넌트를 쓰라는 안내 추가\n- 5. Component: Tab이 빠져 20개(5-a~5-t)로 번호표 갱신(Table 5-p · Text Input 5-q · Toast 5-r · Tooltip 5-s · Validation Check 5-t), 모든 항목 상세 있음\n- 새 상세: 5-e Card, 5-o Sorting, 5-p Table, 5-q Text Input, 5-r Toast, 5-s Tooltip, 5-t Validation Check (그림 포함)\n- 5-j Popup: 3장 → 4장(3/4 Stacked Popup 추가)\n- Figma 컴포넌트: Common UX Components · COMM-5의 컴포넌트 20종 · 변형 · 노드 id 표 추가\n- 참고: 1~4장은 Figma와 같아 그대로. 새로 상세가 생긴 5-e · 5-o~5-t · Stacked Popup은 아직 컴포넌트가 없음(만들려면 Workbench 수정 요청))에 맞게 고쳐 주세요. LIS Code · System Code 입력칸 높이 40 → 5-q 크기(M 38 또는 L 48). 데이터 개수 「Items 100」 → 「100 Items」(선택).",
+    "models":  {
+                   "claude-opus-5-5":  5
+               },
+    "calls":  5,
+    "input":  10,
+    "cacheWrite":  5095,
+    "cacheRead":  1021659,
+    "output":  2513,
+    "total":  1029277,
+    "usd":  0.2954
+}
