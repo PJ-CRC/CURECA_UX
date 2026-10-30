@@ -1,0 +1,17 @@
+{
+    "id":  "qa-temp",
+    "name":  "테스트 사용자",
+    "admin":  false,
+    "menus":  [
+                  "workbench",
+                  "history"
+              ],
+    "active":  true,
+    "createdAt":  "2026-10-30T10:50:45+09:00",
+    "createdBy":  "brex",
+    "salt":  "JTpYFusEEvrC2gS54sYgzQ==",
+    "iter":  100000,
+    "hash":  "j9T7dw5k4W5izC2zMr0UNuaBPYTZ+58cDG/VAwVnyKc=",
+    "pwAt":  "2026-10-30T10:50:45+09:00",
+    "updatedAt":  "2026-10-30T10:50:45+09:00"
+}
