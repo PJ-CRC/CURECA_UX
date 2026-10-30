@@ -1,8 +1,8 @@
 {
     "id":  "brex-06_R021",
     "kind":  "request",
-    "status":  "진행 중",
-    "at":  "2026-10-30T13:25:33+09:00",
+    "status":  "완료",
+    "at":  "2026-10-30T13:37:00+09:00",
     "createdAt":  "2026-10-30T13:21:23+09:00",
     "by":  "최고관리자",
     "doneBy":  "Claude",
@@ -16,6 +16,6 @@
     "type":  "가이드 반영",
     "layout":  "",
     "text":  "[가이드 반영] 「CURECA UX 가이드」 수정(「개요」 Connon UX 섹션 새 판(2026-10-30)과 Figma 컴포넌트를 가이드에 반영했습니다.\n- 개요: 기준 섹션 판 · 컴포넌트를 쓰라는 안내 추가\n- 5. Component: Tab이 빠져 20개(5-a~5-t)로 번호표 갱신(Table 5-p · Text Input 5-q · Toast 5-r · Tooltip 5-s · Validation Check 5-t), 모든 항목 상세 있음\n- 새 상세: 5-e Card, 5-o Sorting, 5-p Table, 5-q Text Input, 5-r Toast, 5-s Tooltip, 5-t Validation Check (그림 포함)\n- 5-j Popup: 3장 → 4장(3/4 Stacked Popup 추가)\n- Figma 컴포넌트: Common UX Components · COMM-5의 컴포넌트 20종 · 변형 · 노드 id 표 추가\n- 참고: 1~4장은 Figma와 같아 그대로. 새로 상세가 생긴 5-e · 5-o~5-t · Stacked Popup은 아직 컴포넌트가 없음(만들려면 Workbench 수정 요청))에 맞게 고쳐 주세요. 이번 판에 상세가 새로 생긴 5-e Card, 5-j(3/4) Stacked Popup, 5-o Sorting, 5-p Table, 5-q Text Input, 5-r Toast, 5-s Tooltip, 5-t Validation Check 컴포넌트를 가이드 규칙대로 추가.",
-    "note":  "가이드 규칙대로 컴포넌트 8종 만드는 중",
-    "shot":  ""
+    "note":  "가이드에 새로 상세가 생긴 컴포넌트를 Common UX Components · COMM-5 섹션 아래쪽에 만들었습니다(글꼴 Pretendard).\n- 5-q Text Input / Box: State 7(Enabled · Focused · Typing · Complete · Error · Read Only · Disabled) × Size L 48 · M 38\n- 5-q Text Input / Password(5개 상태) · Inline(Enabled · Typing · Complete · Error)\n- 5-r Toast: Main · Main + Sub\n- 5-s Tooltip: Ellipsis(폭 320) · Info · Event Error · Event Warning\n- 5-o Sorting / Column Header: Default · Descending · Ascending\n- 5-p Table: Header(정렬 헤더 사용) · Row(Default · Hover · Selected) · Items(T-IOS 노출 개수 드롭다운 / L-IOS) · No Data\n- 5-e Card: List · Table × Button 있음 · 없음\n- 5-j Popup / Stacked: 메시지 개수 · Close All · 썸네일 5개 · 닫기 · 이동 버튼(Button 컴포넌트 사용)\n- 섹션 설명을 「상세 20종(5-a ~ 5-t) · 2026-10-30」으로 갱신\n- 참고: 5-t Validation Check는 별도 모양이 없는 규칙이라 컴포넌트를 만들지 않았습니다(Text Input Error 상태 · Toast · Popup으로 표현). 아이콘은 글자 기호(✓ ✕ ⇕)로 넣었으니 아이콘 컴포넌트가 생기면 바꿔 주세요.",
+    "shot":  "shots/brex-06_R021.jpg"
 }
