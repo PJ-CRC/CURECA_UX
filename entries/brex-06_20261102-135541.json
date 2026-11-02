@@ -1,0 +1,18 @@
+{
+    "id":  "brex-06_20261102-135541",
+    "kind":  "work",
+    "at":  "2026-11-02T13:55:41+09:00",
+    "by":  "이상헌",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "reqId":  "",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "M-TI-INS-02-T",
+    "nodeId":  "1730:36490",
+    "type":  "",
+    "text":  "M-TI-INS-02-T 흐름 수정",
+    "note":  "M-TI-INS-02-T를 M-TI-TMG-01(Overview)에서 들어오는 2depth 화면으로 수정\n- App Bar: Menu → Back(‹ Instrument)\n- 탭: All 대신 누른 모듈 종류(예: Sample Preparation)가 선택된 상태, 탭 줄을 그 탭이 보이게 스크롤\n- 목록: 그 종류 모듈만(Sample Preparation (1) · (2)), 2 Modules, 페이지 1\n- 2depth라 Bottom Nav 제거",
+    "shot":  "shots/brex-06_20261102-135541.jpg"
+}
