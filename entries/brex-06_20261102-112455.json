@@ -1,0 +1,18 @@
+{
+    "id":  "brex-06_20261102-112455",
+    "kind":  "work",
+    "at":  "2026-11-02T11:24:55+09:00",
+    "by":  "이상헌",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "reqId":  "",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "M-COMM-3-a",
+    "nodeId":  "1698:33069",
+    "type":  "",
+    "text":  "Connon UX 모바일판 PC 스타일 · 402×874",
+    "note":  "Connon UX (Mobile) 스타일을 PC Connon UX와 같게 맞춤\n- 표지 · Revision History · 목차 · 장 표지 6장: PC 프레임을 복제해 글만 모바일로 (목차에 M-COMM-6 추가)\n- 본문 34장 머리: PC 머리(어두운 배경 · 장 라벨 · 제목 + 기존 CID · 요약 · Ver/Date/CID 표)로 교체, 예시 영역 배경 #F5F6FA\n- 예시 폰 화면 402 × 874 고정(위 Status Bar · App Bar · Tab, 아래 Bottom Nav · CTA 고정 + 가운데 Scroll Area), Mobile 컴포넌트 기준 폭 360 → 402 (내부 328 → 370)",
+    "shot":  "shots/brex-06_20261102-112455.jpg"
+}
