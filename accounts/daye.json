@@ -1,0 +1,19 @@
+{
+    "id":  "daye",
+    "name":  "정다예",
+    "admin":  false,
+    "menus":  [
+                  "guide",
+                  "workbench",
+                  "history",
+                  "usage"
+              ],
+    "active":  true,
+    "createdAt":  "2026-11-02T17:35:06+09:00",
+    "createdBy":  "brex",
+    "salt":  "+gMQHmwTtgSmIybSqKR9Eg==",
+    "iter":  100000,
+    "hash":  "CPRGAAX3qhEDSGmssm9uMUulmquY5aT8EyDF4FuWpNg=",
+    "pwAt":  "2026-11-02T17:35:06+09:00",
+    "updatedAt":  "2026-11-02T17:35:06+09:00"
+}
