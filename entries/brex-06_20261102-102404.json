@@ -1,0 +1,18 @@
+{
+    "id":  "brex-06_20261102-102404",
+    "kind":  "work",
+    "at":  "2026-11-02T10:24:04+09:00",
+    "by":  "이상헌",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "reqId":  "",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "M-TI-IVT-04-T",
+    "nodeId":  "1659:37759",
+    "type":  "",
+    "text":  "Inventory 모바일 화면 수정",
+    "note":  "Reagents: Reagents type 칩 → 드롭다운(All Reagents type)",
+    "shot":  "shots/brex-06_20261102-102404.jpg"
+}

@@ -1,0 +1,18 @@
+{
+    "id":  "brex-06_20261102-102405",
+    "kind":  "work",
+    "at":  "2026-11-02T10:24:05+09:00",
+    "by":  "이상헌",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "reqId":  "",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "M-TI-IVT-04-T-P",
+    "nodeId":  "1673:37511",
+    "type":  "",
+    "text":  "Inventory 모바일 화면 수정",
+    "note":  "Reagents Item details 신규(PC TI-IVT-04-T-P): 바코드 15개 + Expired 개수 · 유효기간 · 남은 Rxns · 사용 횟수, Sort, 페이지네이션",
+    "shot":  "shots/brex-06_20261102-102405.jpg"
+}
