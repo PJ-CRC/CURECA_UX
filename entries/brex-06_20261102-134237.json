@@ -1,0 +1,18 @@
+{
+    "id":  "brex-06_20261102-134237",
+    "kind":  "work",
+    "at":  "2026-11-02T13:42:37+09:00",
+    "by":  "이상헌",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "reqId":  "",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "M-TI-IVT-04-T-P",
+    "nodeId":  "1730:37287",
+    "type":  "",
+    "text":  "mobile 화면 잘림 해결 (새 노드)",
+    "note":  "Figma 앱에서 화면 오른쪽이 360 기준으로 잘려 보이던 문제 해결: 화면 11장을 같은 내용의 새 노드로 바꿔 배치를 다시 받게 함(노드 ID 변경). Connon UX (Mobile) 예시 폰 5장도 새 노드로, 넓힌 Mobile 컴포넌트는 배치를 다시 계산. 사용자가 Figma 앱에서 풀린 것 확인.",
+    "shot":  "shots/brex-06_20261102-134237.jpg"
+}
