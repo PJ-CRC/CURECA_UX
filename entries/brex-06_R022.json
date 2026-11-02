@@ -1,0 +1,21 @@
+{
+    "id":  "brex-06_R022",
+    "kind":  "request",
+    "status":  "대기",
+    "at":  "2026-11-02T15:40:22+09:00",
+    "createdAt":  "2026-11-02T15:40:22+09:00",
+    "by":  "최고관리자",
+    "doneBy":  "최고관리자",
+    "pc":  "BREX_06",
+    "reqId":  "R022",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "M-Components (Mobile)",
+    "nodeId":  "1692:32457",
+    "type":  "일반",
+    "layout":  "",
+    "text":  "mobile 섹션에 200x500 사각형 하나 그려줘\n색상은 파란색으로",
+    "note":  "",
+    "shot":  ""
+}
