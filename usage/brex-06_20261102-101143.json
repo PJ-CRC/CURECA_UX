@@ -1,0 +1,26 @@
+{
+    "id":  "brex-06_20261102-101143",
+    "kind":  "work",
+    "reqId":  "",
+    "at":  "2026-11-02T10:11:43+09:00",
+    "from":  "2026-11-02T10:00:00+09:00",
+    "by":  "이상헌",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "M-TI-IVT-01-T",
+    "nodeId":  "1658:37323",
+    "text":  "Inventory(TI-IVT) 모바일 화면 변환",
+    "models":  {
+                   "claude-opus-5-5":  15
+               },
+    "calls":  15,
+    "input":  30,
+    "cacheWrite":  48444,
+    "cacheRead":  3472515,
+    "output":  28313,
+    "total":  3549302,
+    "usd":  1.6484
+}
