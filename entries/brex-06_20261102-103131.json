@@ -1,0 +1,18 @@
+{
+    "id":  "brex-06_20261102-103131",
+    "kind":  "work",
+    "at":  "2026-11-02T10:31:31+09:00",
+    "by":  "이상헌",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "reqId":  "",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "M-TI-IVT-02-T-D",
+    "nodeId":  "1676:37697",
+    "type":  "",
+    "text":  "Inventory 모바일 Consumables · Reagents 다시 만들기",
+    "note":  "Consumables 상세를 그룹(Tips) 단위로: 1000 µL · 300 µL · Wide Bore Tip별 위치 표(Capacity 포함) + More",
+    "shot":  "shots/brex-06_20261102-103131.jpg"
+}
