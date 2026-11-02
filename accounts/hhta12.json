@@ -1,0 +1,20 @@
+{
+    "id":  "hhta12",
+    "name":  "하승현",
+    "admin":  false,
+    "menus":  [
+                  "guide",
+                  "workbench",
+                  "history",
+                  "usage",
+                  "proto"
+              ],
+    "active":  true,
+    "createdAt":  "2026-11-02T17:33:26+09:00",
+    "createdBy":  "brex",
+    "salt":  "c7ANwxUKEqDMZeKYscJAQQ==",
+    "iter":  100000,
+    "hash":  "MQAVc7Y8ypjolHIF1tPYUsAUb1V6FEs2+wtu+IxPug0=",
+    "pwAt":  "2026-11-02T17:33:27+09:00",
+    "updatedAt":  "2026-11-02T17:33:27+09:00"
+}
