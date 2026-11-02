@@ -1,8 +1,8 @@
 {
     "id":  "brex-06_R023",
     "kind":  "request",
-    "status":  "진행 중",
-    "at":  "2026-11-02T15:43:13+09:00",
+    "status":  "완료",
+    "at":  "2026-11-02T15:43:47+09:00",
     "createdAt":  "2026-11-02T15:42:08+09:00",
     "by":  "최고관리자",
     "doneBy":  "Claude",
@@ -16,6 +16,6 @@
     "type":  "일반",
     "layout":  "",
     "text":  "아니 Connon UX (Mobile)여기에 했잖아!!",
-    "note":  "R022 사각형을 「mobile」 섹션으로 옮기는 중",
-    "shot":  ""
+    "note":  "R022 파란 사각형을 Connon UX (Mobile)에서 「mobile」 섹션으로 옮겼습니다. 잘못 넣어 죄송합니다.\n- mobile 섹션: Blue Rectangle (R022) 200×500 #0066FF → TI-INS-02-01-P 오른쪽 빈자리(섹션 안 x 7330, y 474)\n- Connon UX (Mobile) 섹션: 사각형 제거됨(옮김)\n- 참고: 위치가 다르면 원하는 자리를 다시 요청해 주세요.",
+    "shot":  "shots/brex-06_R023.jpg"
 }
