@@ -9,12 +9,12 @@
                   "usage",
                   "proto"
               ],
-    "active":  true,
     "createdAt":  "2026-11-02T17:33:07+09:00",
     "createdBy":  "brex",
     "salt":  "sbuvOwJ3c+qQsOYxyaJ0gg==",
     "iter":  100000,
     "hash":  "+q8dqC3c3CcTPF/NnYiBZKVinsg+iYgSIM+IF7sW6YE=",
     "pwAt":  "2026-11-02T17:33:07+09:00",
-    "updatedAt":  "2026-11-02T17:33:07+09:00"
+    "active":  true,
+    "updatedAt":  "2026-11-02T17:35:17+09:00"
 }
