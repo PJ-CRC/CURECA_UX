@@ -1,0 +1,26 @@
+{
+    "id":  "brex-06_20261102-095513",
+    "kind":  "work",
+    "reqId":  "",
+    "at":  "2026-11-02T09:55:13+09:00",
+    "from":  "2026-11-02T09:48:00+09:00",
+    "by":  "이상헌",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "M-TI-INS-02-T",
+    "nodeId":  "1650:37225",
+    "text":  "TI-INS-02-T 모바일 화면 변환",
+    "models":  {
+                   "claude-opus-5-5":  32
+               },
+    "calls":  32,
+    "input":  68,
+    "cacheWrite":  62782,
+    "cacheRead":  5317071,
+    "output":  27243,
+    "total":  5407164,
+    "usd":  2.1108
+}
