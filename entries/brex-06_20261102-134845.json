@@ -1,0 +1,18 @@
+{
+    "id":  "brex-06_20261102-134845",
+    "kind":  "work",
+    "at":  "2026-11-02T13:48:45+09:00",
+    "by":  "이상헌",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "reqId":  "",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "M-TI-TMG-01",
+    "nodeId":  "1739:36506",
+    "type":  "",
+    "text":  "TI-TMG-01 모바일 화면",
+    "note":  "TI-TMG-01(Instrument Overview) 모바일 화면 신규 M-TI-TMG-01 (402 폭, Mobile 컴포넌트)\n- 장비 이미지 제외, Prep System 3 · Dx System 5 모듈 카드: Enabled/Total · Disabled · Error/Warning · Connected/Disconnected · Ready/Running/Paused/Error · Door Open/Closed, 알림 있는 모듈은 벨 표시\n- 상단 장비 선택(CURECA(1) ⌄) · Running · Event 개수, 하단 Bottom Nav(More)\n- 흐름: 카드 탭 → M-TI-INS-02-T → M-TI-INS-02-T-D → M-TI-INS-02-01-P",
+    "shot":  "shots/brex-06_20261102-134845.jpg"
+}
