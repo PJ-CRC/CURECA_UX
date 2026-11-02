@@ -1,0 +1,18 @@
+{
+    "id":  "brex-06_20261102-101130",
+    "kind":  "work",
+    "at":  "2026-11-02T10:11:30+09:00",
+    "by":  "이상헌",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "reqId":  "",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "M-TI-IVT-03-T-P",
+    "nodeId":  "1659:37626",
+    "type":  "",
+    "text":  "Inventory(TI-IVT) 모바일 화면 변환",
+    "note":  "mobile 섹션에 Inventory(TI-IVT) 모바일 화면 7장 신규 (360 폭, Noto Sans KR, M/* 컴포넌트)\n- 탭: Summary · Consumables · Reagents · Waste Bin/Bottle (Overview · Usage History 제거), Refresh 버튼 제거\n- Consumables · Reagents: 목록만 먼저, 행 탭 → 상세 화면(M-TI-IVT-02-T-D · 04-T-D), [Item details] → M-TI-IVT-03-T-P\n- 목록은 15개 고정 + 페이지네이션 (Summary · Waste Bin/Bottle · Item details)\n참고: TI-IVT-03-T는 없어 03-T-P(Item details)로, Consumables는 TI-IVT-02-T 기준. 15개를 채우려고 Waste Bin 행 일부는 PC 패턴으로 예시 데이터를 더함.",
+    "shot":  "shots/brex-06_20261102-101130.jpg"
+}
