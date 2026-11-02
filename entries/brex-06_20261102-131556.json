@@ -1,0 +1,18 @@
+{
+    "id":  "brex-06_20261102-131556",
+    "kind":  "work",
+    "at":  "2026-11-02T13:15:56+09:00",
+    "by":  "이상헌",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "reqId":  "",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "M-TI-IVT-04-T",
+    "nodeId":  "1714:162989",
+    "type":  "",
+    "text":  "mobile 화면에 Connon UX (Mobile) 적용",
+    "note":  "mobile 섹션 모바일 화면 11장에 Connon UX (Mobile) 적용\n- 402 × 874 고정(위 Status Bar · App Bar · Tab / Modal Header, 아래 Bottom Nav · CTA 고정, 가운데 Scroll Area)\n- 직접 그린 요소 → Mobile/* 컴포넌트: App Bar · Bottom Nav(Active Inventory / More) · Tab Item · Status Pill · Card(KPI) · Chip · Modal Header · Button · Load More · Dropdown Field\n- 화면 간격 500으로 다시 배치(라벨 함께)",
+    "shot":  "shots/brex-06_20261102-131556.jpg"
+}
