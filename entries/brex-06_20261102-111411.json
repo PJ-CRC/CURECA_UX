@@ -1,0 +1,18 @@
+{
+    "id":  "brex-06_20261102-111411",
+    "kind":  "work",
+    "at":  "2026-11-02T11:14:11+09:00",
+    "by":  "이상헌",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "reqId":  "",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "M-COMM-0",
+    "nodeId":  "1697:32564",
+    "type":  "",
+    "text":  "Connon UX 모바일판 · 모바일 컴포넌트 신규",
+    "note":  "SH.L TEST › 새 섹션 「Connon UX (Mobile)」 (Connon UX 아래)\n- M-Components (Mobile): 모바일 컴포넌트 35종 (App Bar · Bottom Nav · Tab · Segmented · Button 36변형 · Chip · Status Pill · Badge · Text Field · Password · Search · Dropdown · Date · Checkbox · Radio · Toggle · Validation · List Item · Card · Accordion · Bottom Sheet 4종 · Dialog · Modal Header · Toast · Tooltip · Progress Step · Loading · Load More · Pagination · Empty State · Scroll · Section Header)\n- 문서 44장: 표지 · Revision History · 목차, M-COMM-1~5 (PC COMM-1-a ~ 5-u를 모바일 규칙으로, PC → Mobile 표 + 컴포넌트 예시), M-COMM-6 모바일 전용 (Bottom Sheet · Pull to Refresh · Skeleton · Swipe · Empty State · Segmented · Load More · Safe Area · Keyboard)",
+    "shot":  "shots/brex-06_20261102-111411.jpg"
+}
