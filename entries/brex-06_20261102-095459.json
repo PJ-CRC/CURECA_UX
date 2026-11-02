@@ -1,0 +1,18 @@
+{
+    "id":  "brex-06_20261102-095459",
+    "kind":  "work",
+    "at":  "2026-11-02T09:54:59+09:00",
+    "by":  "이상헌",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "reqId":  "",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "M-TI-INS-02-01-P",
+    "nodeId":  "1654:18",
+    "type":  "",
+    "text":  "TI-INS-02-T 모바일 화면 변환",
+    "note":  "mobile 섹션에 TI-INS-02-T 모바일 화면 3장 신규 (360×800, Noto Sans KR, M/* 컴포넌트)\n- M-TI-INS-02-T: Overview 제거, 모듈 종류를 가로 스크롤 탭으로, 탭 → 카드형 리스트 10개 고정 + 페이지네이션(1~4)\n- M-TI-INS-02-T-D: 우측 상세 패널을 새 화면으로(목록 행 탭), Door · Device · Storage · Waste Bin/Bottle · Event History를 카드 리스트로\n- M-TI-INS-02-01-P: [Management] 탭 → Full-screen 팝업(모듈 선택, 모듈 카드 펼침 · Enable/Disable, 하단 Cancel/Save)\n참고: 가이드(12-5)는 모바일 페이지네이션을 무한 스크롤로 정하지만 요청대로 페이지네이션을 넣음. 원본 PC 프레임은 그대로 둠.",
+    "shot":  "shots/brex-06_20261102-095459.jpg"
+}
