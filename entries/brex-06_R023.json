@@ -1,0 +1,21 @@
+{
+    "id":  "brex-06_R023",
+    "kind":  "request",
+    "status":  "대기",
+    "at":  "2026-11-02T15:42:08+09:00",
+    "createdAt":  "2026-11-02T15:42:08+09:00",
+    "by":  "최고관리자",
+    "doneBy":  "최고관리자",
+    "pc":  "BREX_06",
+    "reqId":  "R023",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "M-Components (Mobile)",
+    "nodeId":  "1692:32457",
+    "type":  "일반",
+    "layout":  "",
+    "text":  "아니 Connon UX (Mobile)여기에 했잖아!!",
+    "note":  "",
+    "shot":  ""
+}
