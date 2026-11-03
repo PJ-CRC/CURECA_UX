@@ -25,10 +25,10 @@
 
 ## Workbench 수정 요청 처리
 
-- **백그라운드 감시(기본)**: 서버가 켜진 지 5초 뒤 `workbench/agent.ps1`(맥 `agent.pl`)을 **창 없이** 띄운다(시작 안내 7단계 체크박스, `setup.autoWatch`가 false면 안 함, 시작 · 중지 버튼도 7단계). 에이전트는 Claude Code CLI를 **한 번 띄워 계속 유지**한다(`claude -p --input-format stream-json --output-format stream-json`, `--permission-mode acceptEdits`, 허용 도구 Bash · 파일 · Figma MCP). `watch_requests`를 1분씩 반복해 돌리고, `PENDING` · `RESUME` · `JOBS`가 나오면 그 결과를 떠 있는 세션에 메시지로 보낸다. 받은 Claude는 이 문서 규칙대로 그 항목만 처리하고 차례를 끝낸다(감시 재실행 · 사용 한도 표시는 하지 않고, 묻지 말고 모호하면 「보류」, 앞서 처리한 요청과 섞지 않고 상태를 다시 읽는다).
+- **백그라운드 감시(기본)**: 서버가 켜진 지 5초 뒤 `workbench/agent.ps1`(맥 `agent.pl`)을 **창 없이** 띄운다(시작 안내 7단계 체크박스, `setup.autoWatch`가 false면 안 함, 시작 · 중지 버튼도 7단계). 에이전트는 처리할 것이 처음 생길 때 Claude Code CLI를 띄워 **계속 유지**한다(`claude -p --input-format stream-json --output-format stream-json`, `--permission-mode acceptEdits`, 허용 도구 Bash · 파일 · Figma MCP). `watch_requests`를 1분씩 반복해 돌리고, `PENDING` · `RESUME` · `JOBS`가 나오면 그 결과를 떠 있는 세션에 메시지로 보낸다. 받은 Claude는 이 문서 규칙대로 그 항목만 처리하고 차례를 끝낸다(감시 재실행 · 사용 한도 표시는 하지 않고, 묻지 말고 모호하면 「보류」, 앞서 처리한 요청과 섞지 않고 상태를 다시 읽는다).
   - 컨텍스트가 **80%**를 넘으면 압축한다(CLI 자동 압축 기준 `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE=80`, 응답 사용량이 80% 이상이면 에이전트가 `/compact`를 보냄). 30분 넘게 요청이 없으면 세션을 새로 띄운다. 세션이 죽거나 한 요청이 20분 넘으면 새로 띄운다.
   - Claude Code는 PATH의 `claude`, 없으면 Claude 데스크톱 앱에 들어 있는 것(윈도우 `%LOCALAPPDATA%\Claude-Data\claude_*\claude-code\{버전}\…\claude.exe`, 맥 `~/Library/Application Support/Claude/claude-code/{버전}/{해시}/claude.app/Contents/MacOS/claude`. 못 찾으면 시작 안내 7단계에 경로를 직접 넣는다). CLI는 데스크톱 앱 로그인과 별개라 처음 한 번 시작 안내 7단계 「Claude 로그인 · Figma 연결」(Claude Code 창에서 `/login`, `/mcp` → figma 인증)이 필요하다. 서버가 그때 Figma MCP(`https://mcp.figma.com/mcp`)를 CLI에 등록해 둔다.
-  - 상태 `workbench/.agent.json` {at, host, pid, status: idle|working|login|error|stopped, msg}, 중지 신호 `.agent_stop`(처리 중이면 마친 뒤 멈춤), 기록 `.agent.log`. 같은 감시 결과가 3번 연달아 처리되지 않으면 10분 쉰다.
+  - 상태 `workbench/.agent.json` {at, host, pid, status: idle|working|login|error|stopped, msg}, 중지 신호 `.agent_stop`(처리 중이면 마친 뒤 멈춤), 세션 새로 띄우기 신호 `.agent_renew`(7단계 「Claude 로그인 · Figma 연결」 창을 열 때 서버가 씀. 로그인 · Figma 연결 전에 뜬 세션을 버린다), 기록 `.agent.log`. 같은 감시 결과가 3번 연달아 처리되지 않으면 10분 쉰다. 백그라운드 감시가 동작 중이면 Workbench 탭을 모두 닫아도 서버가 꺼지지 않는다(에이전트가 API를 써야 한다). 자동 시작은 시작 안내 「완료」와 상관없이 `autoWatch`만 본다.
 - **대화형 Claude Code 창(직접 작업)**: 지금처럼 Claude 앱 Code 탭이나 터미널에서 열어 쓴다. 이 창에서 「워크벤치 요청 감시」를 부탁받으면 먼저 `workbench/.agent.json`을 본다. **백그라운드 에이전트가 동작 중(150초 안에 썼고 status가 stopped가 아님)이면 감시를 시작하지 말고** 사용자에게 「백그라운드가 감시 중」이라고 알린다(같은 요청을 두 번 처리하지 않게). 꺼져 있을 때만 아래 순서대로 감시한다.
 
 대화형 창에서 감시할 때(백그라운드가 꺼져 있을 때):
@@ -82,11 +82,12 @@
 - 작업자 PC는 Figma AI Run을 실행할 때마다 `workbench/git_remote.txt` 저장소의 **`release` 브랜치**를 확인해, 새 버전이면 프로그램 파일만 바꾼다(`workbench/update.ps1` · `update.sh`).
   - 개인 데이터(`workbench/edit_requests.json` · `jobs.json`, `projects/`, `.claude/`)는 이미 있으면 그대로 둔다.
   - 깃 작업 폴더(개발용 clone, 이 폴더)는 자동 업데이트하지 않는다.
-- **배포는 사용자가 「배포해줘」(버전 포함)라고 할 때만** 한다.
-  1. `Common_UX_Changelog.md` 맨 위에 `## [Workbench] v{버전} · 날짜 · 요약` 항목을 쓴다.
-  2. `powershell -ExecutionPolicy Bypass -File tools\release.ps1 -Version {버전} -Publish`
+- **배포는 사용자가 「배포해줘」(버전 포함)라고 할 때만** 한다. 「배포해줘」는 **develop 커밋 · 푸시까지 포함한 요청**이다(develop이 먼저, 배포본은 그 커밋으로 만든다).
+  1. `Common_UX_Changelog.md` 맨 위에 `## [Workbench] v{버전} · 날짜 · 요약` 항목을 쓰고(미배포 항목은 「v{버전}에 포함」으로), `VERSION`을 `{버전}`으로 고친다.
+  2. 작업 폴더의 변경을 모두 **develop에 커밋하고 푸시**한다(`origin` = PJ-CRC/CURECA_UX, Deploy key).
+  3. `powershell -ExecutionPolicy Bypass -File tools\release.ps1 -Version {버전} -Publish` — 커밋 안 한 변경이 있거나, VERSION이 다르거나, 푸시 안 한 커밋이 있으면 스크립트가 멈춘다(그때는 2번부터 다시).
      - release 브랜치에 올리고 태그 `v{버전}`을 단다. 설치용 압축 `dist\UX_AI_TEST_Workbench_v{버전}_Windows.zip` · `_Mac.zip`을 만든다.
-  3. 버전 규칙: 고침은 끝자리(0.1.0 → 0.1.1), 기능 추가는 가운데(0.1.x → 0.2.0). 이미 배포한 버전은 다시 쓸 수 없다.
+  4. 버전 규칙: 고침은 끝자리(0.1.0 → 0.1.1), 기능 추가는 가운데(0.1.x → 0.2.0). 이미 배포한 버전은 다시 쓸 수 없다.
 - 새 사람에게는 `dist`의 최신 압축을 준다. 이미 쓰는 사람은 다시 실행하면 자동으로 바뀐다.
 
 ## 계정 · 메뉴 권한

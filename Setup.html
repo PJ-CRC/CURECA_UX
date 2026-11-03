@@ -372,7 +372,8 @@ a{color:var(--accent)}
       s4: { done: plugin || !!c.plugin, chip: plugin ? ['ok', '플러그인 연결됨'] : (c.plugin ? ['ok', '완료'] : ['wait', '연결 대기']) },
       s5: { done: !!c.claude, chip: c.claude ? ['ok', '완료'] : (e.claudeInstalled === false && !e.claudeCli ? ['bad', '설치 필요'] : ['wait', '확인 필요']) },
       s6: { done: !!c.connector, chip: c.connector ? ['ok', '완료'] : ['wait', '확인 필요'] },
-      s7: { done: watch && ag.status !== 'login', chip: ag.alive ? (ag.status === 'login' ? ['bad', '로그인 필요'] : ag.status === 'error' ? ['bad', '확인 필요'] : ag.status === 'working' ? ['ok', '처리 중'] : ['ok', '백그라운드 감시 중']) : watch ? ['ok', '감시 중 (Claude 창)'] : ['wait', '시작 대기'] },
+      /* 백그라운드는 기다림(idle) · 처리 중(working)일 때만 완료. 오류 · 로그인 필요는 감시가 돌아도 요청을 처리하지 못한다 */
+      s7: { done: ag.alive ? (ag.status === 'idle' || ag.status === 'working') : watch, chip: ag.alive ? (ag.status === 'login' ? ['bad', '로그인 필요'] : ag.status === 'error' ? ['bad', '확인 필요'] : ag.status === 'working' ? ['ok', '처리 중'] : ['ok', '백그라운드 감시 중']) : watch ? ['ok', '감시 중 (Claude 창)'] : ['wait', '시작 대기'] },
       s8: { done: !!(e.historySync && e.historySync.ok),
             chip: e.historySync && e.historySync.ok ? ['ok', '연결됨'] : e.historySyncing ? ['wait', '연결 중…'] : e.gitInstalled === false ? ['bad', 'git 설치 필요'] :
               e.historySync ? ['bad', /로그인/.test(e.historySync.message) ? '로그인 필요' : '확인 필요'] : ['wait', '연결 대기'] }

@@ -20,6 +20,7 @@ use Encode qw(encode decode);
 
 my $WB = $FindBin::Bin; my $ROOT = "$WB/..";
 my $STATE = "$WB/.agent.json"; my $STOP = "$WB/.agent_stop"; my $LOG = "$WB/.agent.log";
+my $RENEW = "$WB/.agent_renew";   # 서버가 「Claude 로그인 · Figma 연결」 창을 열 때 쓴다 → 떠 있는 세션을 버리고 다음 요청 때 새로(로그인 · Figma가 반영된 세션)
 my ($COMPACT_PCT, $IDLE_MIN, $TURN_MIN) = (80, 30, 20);
 my $J = JSON::PP->new->utf8->canonical;
 my %st = (status => 'idle', msg => '');
@@ -38,7 +39,8 @@ sub logm {
 }
 if (-f $STATE) {
   my $o = eval { $J->decode(slurp($STATE)) };
-  if (ref $o eq 'HASH' && $o->{pid} && $o->{pid} != $$ && ($o->{status} // '') ne 'stopped' && kill(0, $o->{pid})) { exit 0; }
+  # 상태를 150초 안에 썼을 때만 다른 에이전트로 본다(재부팅 뒤 같은 pid를 다른 프로그램이 쓰면 kill 0만으로는 살아 있는 것처럼 보여 새 에이전트가 말없이 끝났다)
+  if (ref $o eq 'HASH' && $o->{pid} && $o->{pid} != $$ && ($o->{status} // '') ne 'stopped' && (-M $STATE) * 86400 < 150 && kill(0, $o->{pid})) { exit 0; }
 }
 my $claude = $ARGV[0] // '';
 if (!$claude || !-x $claude) { save_state('error', 'Claude Code CLI를 찾지 못했습니다.'); logm('Claude Code CLI 없음 — 종료'); exit 1; }
@@ -109,13 +111,13 @@ sub make_prompt {
 }
 
 save_state('idle', '요청을 기다리는 중'); logm("시작 (pid $$, $claude)");
-start_session();
+# 세션은 처리할 것이 생길 때 띄운다: 미리 띄우면 로그인 · Figma 연결 전에 뜬 세션을 계속 써서 Figma 도구 없이 처리했다
 my ($last, $repeat) = ('', 0);
 while (1) {
   if (-f $STOP) { unlink $STOP; stop_session('중지'); save_state('stopped', '중지됨'); logm('중지'); exit 0; }
+  if (-f $RENEW) { unlink $RENEW; stop_session('로그인 · Figma 연결 창을 열어 새로 띄움'); }
   if ($S && session_dead()) { close $S->{in}; close $S->{out}; undef $S; logm('세션이 끝나 있음'); }
-  elsif ($S && $S->{turns} > 0 && time - $S->{last} >= $IDLE_MIN * 60) { stop_session("$IDLE_MIN 분 쉼"); start_session(); }
-  start_session() unless $S;
+  elsif ($S && $S->{turns} > 0 && time - $S->{last} >= $IDLE_MIN * 60) { stop_session("$IDLE_MIN 분 쉼"); }
   save_state();
   my $out = `perl '$WB/watch_requests.pl' 1 2>/dev/null`; $out = decode('UTF-8', $out // ''); $out =~ s/^\s+|\s+$//g;
   next if $out eq '' || $out eq 'TIMEOUT';
@@ -125,6 +127,7 @@ while (1) {
     for (1 .. 40) { last if -f $STOP; sleep 15; save_state(); }
     $repeat = 0; next;
   }
+  start_session() unless $S;
   if (!$S) { save_state('error', 'Claude 세션을 띄우지 못했습니다. 기록: workbench/.agent.log'); sleep 30; next; }
   save_state('working', '처리 중: ' . join(' · ', split /\n/, $out)); logm("처리 시작: $out");
   my $r = send_turn(make_prompt($out));

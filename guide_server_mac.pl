@@ -46,6 +46,7 @@ my $PROJ_ROOT = "$ROOT/projects";
 my $HEART_FILE = "$ROOT/workbench/.watcher.json";
 my $AGENT_FILE = "$ROOT/workbench/.agent.json";
 my $AGENT_STOP = "$ROOT/workbench/.agent_stop";
+my $AGENT_RENEW = "$ROOT/workbench/.agent_renew";   # 로그인 · Figma 연결 창을 열면 써서 에이전트가 세션을 새로 띄우게
 my $SETUP_DIR = "$ENV{HOME}/Library/Application Support/UX_AI_TEST_Workbench";
 my $SETUP_FILE = "$SETUP_DIR/setup.json";
 my $JSON = JSON::PP->new->utf8->canonical->pretty;
@@ -776,6 +777,8 @@ sub open_claude_cli {
   # claude.ai 계정의 Figma 커넥터가 있으면 그걸 쓴다(로그인 뒤 자동). 없을 때만 Figma MCP를 직접 등록
   system("'$cc' mcp add --transport http --scope user figma https://mcp.figma.com/mcp >/dev/null 2>&1") unless $list =~ /^(claude\.ai )?figma/mi;
   osa_terminal("cd '$ROOT' && '$cc'", 'claude_code');
+  # 이 창에서 /login · /mcp를 하면 백그라운드 세션은 예전 상태 그대로다 → 에이전트가 버리고 다음 요청 때 새로 띄운다
+  write_bytes($AGENT_RENEW, now_iso());
 }
 # Figma AI Run으로 켤 때마다: 백그라운드 감시가 없으면 시작한다
 #  시작 안내 7단계의 「실행할 때 자동으로 시작」을 끄면(setup.autoWatch = false) 하지 않는다. 대화형 Claude 창이 이미 감시 중이면(하트비트 60초 이내) 시작하지 않는다
@@ -783,7 +786,7 @@ sub open_claude_cli {
 sub auto_watch {
   my ($first) = @_;
   my $s = read_setup();
-  return if !$s->{done} || (exists $s->{autoWatch} && defined $s->{autoWatch} && !$s->{autoWatch});
+  return if (exists $s->{autoWatch} && defined $s->{autoWatch} && !$s->{autoWatch});
   my $a = agent_info();
   return if $a->{alive};
   return if !$first && ($a->{status} eq 'stopped' || -f $AGENT_STOP);
@@ -866,6 +869,8 @@ sub idle_check {
   if (%pages || !$any_page) { undef $empty_since; return; }
   $empty_since = time unless defined $empty_since;
   return if time - $empty_since < 3;
+  # 백그라운드 감시가 동작 중이면 끄지 않는다: 탭을 닫아도 에이전트가 요청을 처리하려면 서버(API)가 있어야 한다
+  return if agent_info()->{alive};
   print "\n  Workbench 탭을 모두 닫아 서버를 껐습니다.\n"; exit 0;
 }
 
@@ -1066,7 +1071,7 @@ if (eval { require IO::Socket::IP; 1 }) {
   if ($v6) { push @listeners, $v6; }
 }
 my %is_listener = map { ($_ => 1) } @listeners;
-print "\n  UX AI TEST Workbench 서버가 실행 중입니다.  (Workbench 탭을 모두 닫거나 이 창을 닫으면 멈춥니다)\n\n";
+print "\n  UX AI TEST Workbench 서버가 실행 중입니다.  (이 창을 닫으면 멈춥니다. 탭을 모두 닫으면 백그라운드 감시가 꺼져 있을 때만 멈춤)\n\n";
 print "  시작 안내    http://localhost:$PORT/Setup.html\n";
 print "  가이드       http://localhost:$PORT/\n";
 print "  Workbench    http://localhost:$PORT/Figma_Workbench.html\n\n";
@@ -1074,7 +1079,7 @@ print "  처음 쓰는 Mac이라면 브라우저에 뜬 「시작 안내」를 �
 print "    1. 작업자 이름   2. Figma 앱 실행   3. 작업할 Figma 링크 붙여넣기\n";
 print "    4. Figma 플러그인 등록   5. Claude 앱 실행 · 폴더 열기\n";
 print "    6. Claude에 Figma 연결   7. 요청 감시 시작\n\n";
-print "  종료: 브라우저의 Workbench 탭을 모두 닫으면 저절로 꺼집니다. Control+C 또는 창 닫기\n\n";
+print "  종료: 브라우저의 Workbench 탭을 모두 닫으면 저절로 꺼집니다(백그라운드 감시가 동작 중이면 켜 둠). Control+C 또는 창 닫기\n\n";
 
 # 켤 때 한 번 로그인 셸 PATH를 받아 둔다(백그라운드 감시 · git · claude가 쓴다)
 load_shell_path();

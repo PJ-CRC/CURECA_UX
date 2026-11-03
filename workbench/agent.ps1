@@ -15,6 +15,7 @@ $ErrorActionPreference = 'Continue'
 $WB = $PSScriptRoot; $Root = Split-Path $WB -Parent
 $Utf8 = New-Object Text.UTF8Encoding $false
 $StateFile = Join-Path $WB '.agent.json'; $StopFile = Join-Path $WB '.agent_stop'; $LogFile = Join-Path $WB '.agent.log'
+$RenewFile = Join-Path $WB '.agent_renew'   # 서버가 「Claude 로그인 · Figma 연결」 창을 열 때 쓴다 → 떠 있는 세션을 버리고 다음 요청 때 새로(로그인 · Figma가 반영된 세션)
 $CompactPct = 80; $IdleMin = 30; $TurnMin = 20
 $script:St = @{ status = 'idle'; msg = '' }
 $script:S = $null        # 떠 있는 세션 { p: Process, turns, last(마지막 사용 시각) }
@@ -110,14 +111,14 @@ CLAUDE.md의 「Workbench 수정 요청 처리」와 「작업 대기열」 규�
 }
 
 Save-State 'idle' '요청을 기다리는 중'; Log "시작 (pid $PID, $Claude)"
-[void](Start-Session)
+# 세션은 처리할 것이 생길 때 띄운다: 미리 띄우면 로그인 · Figma 연결 전에 뜬 세션을 계속 써서 Figma 도구 없이 처리했다
 $last = ''; $repeat = 0
 while ($true) {
   if (Test-Path $StopFile) { Remove-Item $StopFile -Force -ErrorAction SilentlyContinue; Stop-Session '중지'; Save-State 'stopped' '중지됨'; Log '중지'; exit 0 }
-  # 세션 관리: 죽었거나 · 오래 쉬었거나 · 많이 썼으면 새로
+  # 세션 관리: 죽었거나 · 오래 쉬었거나 · 로그인 · 연결이 바뀌었으면 버린다(다음 처리 때 새로)
+  if (Test-Path $RenewFile) { Remove-Item $RenewFile -Force -ErrorAction SilentlyContinue; Stop-Session '로그인 · Figma 연결 창을 열어 새로 띄움' }
   if ($script:S -and $script:S.p.HasExited) { Stop-Session '세션이 끝나 있음' }
-  elseif ($script:S -and $script:S.turns -gt 0 -and ((Get-Date) - $script:S.last).TotalMinutes -ge $IdleMin) { Stop-Session "$IdleMin 분 쉼"; [void](Start-Session) }
-  if (-not $script:S) { [void](Start-Session) }
+  elseif ($script:S -and $script:S.turns -gt 0 -and ((Get-Date) - $script:S.last).TotalMinutes -ge $IdleMin) { Stop-Session "$IdleMin 분 쉼" }
   Save-State $null $null
   $out = (& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $WB 'watch_requests.ps1') -MaxMinutes 1 2>$null | Out-String).Trim()
   if (-not $out -or $out -eq 'TIMEOUT') { continue }
@@ -127,6 +128,7 @@ while ($true) {
     for ($i = 0; $i -lt 40; $i++) { if (Test-Path $StopFile) { break }; Start-Sleep -Seconds 15; Save-State $null $null }
     $repeat = 0; continue
   }
+  if (-not $script:S) { [void](Start-Session) }
   if (-not $script:S) { Save-State 'error' 'Claude 세션을 띄우지 못했습니다. 기록: workbench/.agent.log'; Start-Sleep -Seconds 30; continue }
   Save-State 'working' ('처리 중: ' + (($out -split "`n") -join ' · ')); Log "처리 시작: $out"
   $r = Send-Turn (Make-Prompt $out)
