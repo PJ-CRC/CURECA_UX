@@ -160,6 +160,8 @@ details.how pre{white-space:pre-wrap}
 /* 끼워 넣기(embed=1): Common UX 가이드 페이지 안에서 보여 줄 때. 상단 메뉴 · 돌아가기 링크를 빼고 여백을 줄인다 */
 html.embed body{background:transparent}
 html.embed .appnav,html.embed .back,html.embed #title{display:none}
+/* 보기만 가능한 계정(UX 문서 · 수정 요청 권한 없음): 수정 요청 · 수정 반영 안내 숨김 */
+html.doc-ro #editBtn,html.doc-ro #fixes{display:none!important}
 html.embed .app-wrap{max-width:none;padding:0 0 24px}
 html.embed .side{top:12px;max-height:calc(100vh - 24px)}
 @media (max-width:860px){
@@ -250,6 +252,11 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
       ]);
     }).then(function(d){ meta = d[0]; head(meta); build(d[1], keepSec); fixes(); itemDates(); }, function(){ fail('이 가이드를 찾지 못했습니다: ' + id); });
   }
+  /* 권한: 「UX 문서 · 수정 요청」(guideEdit)이 없으면 보기만 — 수정 요청 버튼 · 수정 반영 안내(연관 항목 찾기 등)를 숨긴다(서버도 막는다) */
+  fetch('/api/me', { cache: 'no-store' }).then(function(r){ return r.json(); }).then(function(m){
+    var can = !m.required || (m.user && (m.allowed || []).indexOf('guideEdit') >= 0);
+    document.documentElement.classList.toggle('doc-ro', !can);
+  }).catch(function(){});
   load();
 
   function appliedKeys(){ return Object.keys(applied).filter(function(k){ return applied[k].guideId === id; }); }

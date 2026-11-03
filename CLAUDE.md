@@ -95,7 +95,7 @@
 - 계정 = `.history/accounts/{id}.json` `{id, name, admin, menus, salt, hash, iter, active, createdAt, updatedAt, pwAt}` — 비밀번호는 **PBKDF2-SHA256(100000회) 해시만**, 원문은 어디에도 남기지 않는다. 작업 이력과 함께 깃으로 모든 PC에 공유된다(한 계정 한 파일). 서버는 이 폴더를 웹으로 내보내지 않는다.
 - **최고관리자는 1명**(`brex`, `admin: true`): 메뉴 전부 + 「계정 관리」(`Accounts.html`: 계정 추가 · 이름 · 메뉴 · 사용 중지 · 비밀번호 초기화 · 지우기). 최고관리자는 지우거나 중지할 수 없다. 누구나 「내 정보」(`Account.html`)에서 자기 비밀번호를 바꾼다.
 - **시작 안내(`Setup.html`) · 내 정보는 권한 설정 대상이 아니다**: 로그인한 모든 계정이 쓴다(서버 메뉴 `always`). 계정 관리 화면의 메뉴 선택에도 나오지 않는다.
-- 고르는 메뉴 키: `guide` UX 문서(공통 규칙 · 정의서, + 문서 보기 `UX_Guide.html`) · `workbench` · `history` 변경 이력 · `usage` 사용량 통계 · `proto` 프로토타입(+ `prototypes/`). 허용되지 않은 페이지는 첫 허용 메뉴로, API(`/api/usage` · `/api/prototypes` · `/api/accounts`)는 403.
+- 고르는 메뉴 키: `guide` UX 문서(공통 규칙 · 정의서, + 문서 보기 `UX_Guide.html`. **보기만**) · `guideEdit` UX 문서 · 수정 요청(화면 없는 권한: 새 가이드 · 정의서 만들기, 항목 [수정 요청], 연관 항목 찾기 · 반영 요청. 계정 관리에서 켜면 `guide`도 함께 켜진다. 없으면 그 버튼이 숨고 서버가 jobs `guide` · `guide-edit` · `guide-check` 추가와 guides `save`를 오류로 막는다(브라우저 화면만, Claude · 플러그인은 그대로)) · `workbench` · `history` 변경 이력 · `usage` 사용량 통계 · `proto` 프로토타입(+ `prototypes/`). 허용되지 않은 페이지는 첫 허용 메뉴로, API(`/api/usage` · `/api/prototypes` · `/api/accounts`)는 403.
 - 권한 검사는 **브라우저 페이지에서 온 요청만**(`Sec-Fetch-Site` 머리글, Origin이 `null`이 아님). **Claude(curl) · Figma 플러그인은 로그인 없이 그대로** 쓴다. Claude는 계정 파일을 직접 고치지 않는다(사용자가 요청하면 화면 · API로).
 - 작업자 이름(요청 · 이력의 작성자, Workbench 「작업자」 칸 · 시작 안내 1단계)은 로그인한 계정 이름으로 고정된다.
 - 서버 API: `GET /api/me`, `POST /api/login` · `/api/logout` · `/api/me/password {current, next}`, `GET/POST /api/accounts {action: add|update|delete}`(최고관리자).

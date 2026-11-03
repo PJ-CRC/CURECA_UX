@@ -291,6 +291,8 @@ $AcctDir = P $HistDir 'accounts'
 $Menus = @(
   [ordered]@{ key = 'setup'; label = '시작 안내'; pages = @('Setup.html'); always = $true },   # 권한 설정 없이 누구나
   [ordered]@{ key = 'guide'; label = 'UX 문서'; pages = @('Common_UX_Guide.html', 'UX_Guide.html') },
+  # UX 문서 수정 요청(화면 없는 권한): 새 가이드 · 정의서 만들기, 항목 수정 요청, 연관 항목 찾기 · 반영 요청. 없으면 UX 문서는 보기만
+  [ordered]@{ key = 'guideEdit'; label = 'UX 문서 · 수정 요청'; pages = @() },
   [ordered]@{ key = 'workbench'; label = 'Figma Workbench'; pages = @('Figma_Workbench.html') },
   [ordered]@{ key = 'history'; label = '변경 이력'; pages = @('Change_History.html') },
   [ordered]@{ key = 'usage'; label = '사용량 통계'; pages = @('Usage_Stats.html') },
@@ -352,14 +354,16 @@ function Current-User {
   if (-not $a -or $a.active -eq $false -or [string]$a.pwAt -ne [string]$s.login.pwAt) { return $null }
   return $a
 }
+# UX 문서를 고칠 수 있는가(만들기 · 수정 요청 · 연관 항목 찾기): 브라우저 화면에서 온 요청만 검사한다(Claude · 플러그인은 그대로)
+function Can-EditDocs { if (-not $isBrowser -or -not (Auth-Required)) { return $true }; $u = Current-User; return [bool]($u -and (@(User-Menus $u) -contains 'guideEdit')) }
 function Pick-Menus($a) { return @(@($a.menus) | Where-Object { $MenuKeys -contains $_ }) }
 function User-Menus($a) { if (-not $a) { return @() }; if ($a.admin) { return @($Menus | ForEach-Object { $_.key }) }; $p = Pick-Menus $a; return @($Menus | Where-Object { $_.always -or $p -contains $_.key } | ForEach-Object { $_.key }) }
 function Me-Info {
   $req = Auth-Required; $u = $null; if ($req) { $u = Current-User }
   $allowed = if ($req) { User-Menus $u } else { @($MenuKeys) + $AlwaysKeys }
   # 처음 열 페이지: 고른 메뉴 중 첫째(없으면 시작 안내)
-  $first = ''; foreach ($m in $Menus) { if (-not $m.always -and $allowed -contains $m.key) { $first = $m.pages[0]; break } }
-  if (-not $first) { foreach ($m in $Menus) { if ($allowed -contains $m.key) { $first = $m.pages[0]; break } } }
+  $first = ''; foreach ($m in $Menus) { if (-not $m.always -and $m.pages.Count -and $allowed -contains $m.key) { $first = $m.pages[0]; break } }
+  if (-not $first) { foreach ($m in $Menus) { if ($m.pages.Count -and $allowed -contains $m.key) { $first = $m.pages[0]; break } } }
   $ns = Need-Sync; $hs = $null; if ($ns) { try { $hs = [IO.File]::ReadAllText($SyncStat, $Utf8) | ConvertFrom-Json } catch {} }
   return [ordered]@{ required = $req
     needSync = $ns; syncMsg = $(if ($hs) { [string]$hs.message } else { '' }); syncBusy = $(if ($hs) { [bool]$hs.busy } else { $false })
@@ -909,6 +913,8 @@ while ($l.IsListening) {
         switch ([string]$body.action) {
           'add' {
             $kind = [string]$body.kind; $key = [string]$body.fileKey; $nid = [string]$body.nodeId
+            # UX 문서 만들기 · 수정 요청 · 연관 항목 찾기는 「UX 문서 · 수정 요청」 권한이 있어야 한다(없으면 보기만)
+            if ($kind -in 'guide', 'guide-edit', 'guide-check' -and -not (Can-EditDocs)) { throw 'UX 문서를 고칠 권한이 없습니다(보기만 가능). 최고관리자에게 「UX 문서 · 수정 요청」 권한을 요청하세요.' }
             if ($kind -notin 'capture', 'catalog', 'guide', 'guide-check', 'guide-edit', 'text', 'prototype', 'prototype-edit', 'prototype-sync') { throw "알 수 없는 작업: $kind" }
             # 프로토타입(이 PC에만, prototypes/{id}/): 만들기(prototype, 고른 화면 frames) · 수정 요청(prototype-edit) · Figma 바뀐 화면 맞추기(prototype-sync)
             if ($kind -eq 'prototype') {
@@ -1019,6 +1025,7 @@ while ($l.IsListening) {
         $body = (New-Object IO.StreamReader($req.InputStream, $Utf8)).ReadToEnd() | ConvertFrom-Json
         # 가이드 고치기: guide.md는 그대로 두고 수정본을 새 파일로 남긴다(여러 PC가 고쳐도 깃 충돌이 없다)
         if ($body.action -eq 'save') {
+          if (-not (Can-EditDocs)) { throw 'UX 문서를 고칠 권한이 없습니다(보기만 가능). 최고관리자에게 「UX 문서 · 수정 요청」 권한을 요청하세요.' }
           $gid = [string]$body.id; $md = [string]$body.md
           if ($gid -notmatch '^[A-Za-z0-9_-]{1,64}$' -or -not (Test-Path (P $GuideRoot $gid 'meta.json'))) { throw "가이드를 찾지 못했습니다: $gid" }
           if (-not $md.Trim()) { throw '가이드 내용이 비어 있습니다.' }
