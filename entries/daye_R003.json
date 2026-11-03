@@ -1,0 +1,24 @@
+{
+    "id":  "daye_R003",
+    "kind":  "request",
+    "status":  "대기",
+    "at":  "2026-11-03T18:10:55+09:00",
+    "createdAt":  "2026-11-03T18:10:55+09:00",
+    "by":  "정다예",
+    "doneBy":  "정다예",
+    "pc":  "DAYE",
+    "reqId":  "R003",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L",
+    "frame":  "File Info",
+    "nodeId":  "491:33625",
+    "type":  "일반",
+    "layout":  "",
+    "text":  "다시해줘",
+    "note":  "",
+    "shot":  "",
+    "images":  [
+
+               ]
+}
