@@ -96,6 +96,9 @@ run_sync() {
 # 가벼운 확인: 이 PC에 올릴 이력이 있거나 원격 history가 내 것과 다르면 맞춰야 한다
 need_sync() {
   [ "$ST_OK" = true ] && [ -e "$H/.git" ] || return 0
+  # 공유 저장소 주소(git_remote.txt)가 바뀌었으면(저장소 이전) 새 주소로 맞춘다
+  rf="$ROOT/workbench/git_remote.txt"; want=$( [ -f "$rf" ] && tr -d ' \r\n' < "$rf" )
+  [ -z "$want" ] || [ "$(git -C "$H" remote get-url origin 2>/dev/null)" = "$want" ] || return 0
   [ -z "$(git -C "$H" status --porcelain 2>/dev/null)" ] || return 0
   r=$(git -C "$H" ls-remote origin refs/heads/history 2>/dev/null) || return 0
   [ "${r%%[[:space:]]*}" != "$(git -C "$H" rev-parse -q --verify HEAD 2>/dev/null)" ]
