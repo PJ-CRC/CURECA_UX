@@ -4,11 +4,10 @@
 
 ## 범위
 
-- Workbench는 **프로젝트(Figma 파일) 단위**다. 작업 파일은 시작 안내 3단계에 넣은 링크의 파일이고, 기본은 **UX AI TEST** (fileKey `etCQFF3CTf1EA6C79d4BBf`)다.
+- Workbench는 **프로젝트(Figma 파일) 단위**다. 작업 파일은 시작 안내 3단계에 넣은 링크의 파일이다. **기본 프로젝트는 없다**(링크가 없으면 Workbench는 시작 안내 3단계로 안내하고, 파일 키 없이 온 요청 · 캡처는 그 링크의 파일로 본다).
 - 파일마다 **수정 가능 페이지는 하나**다. 다른 페이지는 읽기만 한다.
   - 모든 파일 같음: 시작 안내 링크(작업 링크)가 가리키는 노드의 페이지(`projects/{fileKey}/project.json`의 editablePageId · editablePageName, catalog.json에서 `editable: true`). 링크를 바꾸면 서버가 바로 바꾼다.
   - 기준은 **project.json의 작업 링크 하나**다. 서버는 프레임 목록을 받을 때(플러그인 · Claude)와 켤 때마다 링크로 수정 가능 페이지를 다시 정한다. 보내온 `editablePageId`는 링크로 정하지 못할 때만 쓴다.
-  - 기본 작업 링크는 UX AI TEST의 SH.L 페이지(`129:104548`)다.
   - **작업 페이지 바꾸기**: Workbench 「구분 (페이지)」 아래 상태 줄의 「이 페이지를 작업 페이지로」(또는 수정 요청 칸 보기 전용 안내의 「이 페이지를 작업 페이지로」)를 누르면 `POST /api/projects {action:'editable', key, pageId}`로 그 프로젝트 작업 링크의 node-id가 그 페이지로 바뀐다(시작 안내 링크가 같은 파일이면 그것도). 수정 가능 페이지는 여전히 하나다. 그래서 요청을 처리할 때마다 **그때의** project.json editablePageName으로 확인한다(등록 뒤 작업 페이지가 바뀌었으면 「보류」).
   - **프로젝트 탭**: Workbench 위쪽 탭이 프로젝트(Figma 파일)다. 주소 `Figma_Workbench.html?p={fileKey}`로 정해지고(Ctrl+클릭하면 새 창), 「+」로 등록된 프로젝트를 열거나 Figma 링크로 새 프로젝트를 등록한다(`POST /api/projects {action:'add', link}`). 요청에는 늘 `fileKey`가 있으니 그 파일 · 그 파일의 수정 가능 페이지 기준으로 처리한다.
   - Figma 플러그인은 열린 파일의 프로젝트 작업 링크(`GET /api/projects`)로 수정 가능 페이지를 정한다(아직 모르는 파일이면 시작 안내 링크).
@@ -22,13 +21,13 @@
 
 1. 로컬 서버가 떠 있는지 확인한다: `http://localhost:8765/api/requests`가 응답하면 된다. 없으면 사용자에게 `Figma AI Run` 실행을 안내한다(윈도우 `Figma AI Run.bat`, 맥 `Figma AI Run.app`. Claude가 직접 띄울 때는 윈도우 `.claude/launch.json`의 `guide-sync`, 맥 `perl guide_server_mac.pl 8765`).
    - 윈도우의 Claude 앱(스토어 설치판)이 띄운 프로그램은 `%LOCALAPPDATA%`를 따로 된 사본으로 본다. 그래서 Claude가 띄운 서버는 PC별 시작 안내 상태(`setup.json`: 작업자 이름 · 작업 링크)를 옛 값으로 읽을 수 있다. 되도록 사용자가 `Figma AI Run`으로 띄우게 안내하고, Claude도 그 파일을 직접 읽지 말고 `GET /api/setup`으로 확인한다.
-2. Figma MCP(`use_figma`, `get_screenshot`)가 연결돼 있는지 확인한다. 안 돼 있으면 사용자에게 Figma 연결(`/mcp` 또는 앱의 커넥터 설정)을 안내한다. 사용자 본인 Figma 계정에 UX AI TEST **편집 권한**이 있어야 한다.
+2. Figma MCP(`use_figma`, `get_screenshot`)가 연결돼 있는지 확인한다. 안 돼 있으면 사용자에게 Figma 연결(`/mcp` 또는 앱의 커넥터 설정)을 안내한다. 사용자 본인 Figma 계정에 작업 파일 **편집 권한**이 있어야 한다.
 
 ## Workbench 수정 요청 처리
 
 - **백그라운드 감시(기본)**: 서버가 켜진 지 5초 뒤 `workbench/agent.ps1`(맥 `agent.pl`)을 **창 없이** 띄운다(시작 안내 7단계 체크박스, `setup.autoWatch`가 false면 안 함, 시작 · 중지 버튼도 7단계). 에이전트는 Claude Code CLI를 **한 번 띄워 계속 유지**한다(`claude -p --input-format stream-json --output-format stream-json`, `--permission-mode acceptEdits`, 허용 도구 Bash · 파일 · Figma MCP). `watch_requests`를 1분씩 반복해 돌리고, `PENDING` · `RESUME` · `JOBS`가 나오면 그 결과를 떠 있는 세션에 메시지로 보낸다. 받은 Claude는 이 문서 규칙대로 그 항목만 처리하고 차례를 끝낸다(감시 재실행 · 사용 한도 표시는 하지 않고, 묻지 말고 모호하면 「보류」, 앞서 처리한 요청과 섞지 않고 상태를 다시 읽는다).
   - 컨텍스트가 **80%**를 넘으면 압축한다(CLI 자동 압축 기준 `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE=80`, 응답 사용량이 80% 이상이면 에이전트가 `/compact`를 보냄). 30분 넘게 요청이 없으면 세션을 새로 띄운다. 세션이 죽거나 한 요청이 20분 넘으면 새로 띄운다.
-  - Claude Code는 PATH의 `claude`, 없으면 Claude 데스크톱 앱에 들어 있는 것(윈도우 `%LOCALAPPDATA%\Claude-Data\claude_*\claude-code\{버전}\…\claude.exe`). CLI는 데스크톱 앱 로그인과 별개라 처음 한 번 시작 안내 7단계 「Claude 로그인 · Figma 연결」(Claude Code 창에서 `/login`, `/mcp` → figma 인증)이 필요하다. 서버가 그때 Figma MCP(`https://mcp.figma.com/mcp`)를 CLI에 등록해 둔다.
+  - Claude Code는 PATH의 `claude`, 없으면 Claude 데스크톱 앱에 들어 있는 것(윈도우 `%LOCALAPPDATA%\Claude-Data\claude_*\claude-code\{버전}\…\claude.exe`, 맥 `~/Library/Application Support/Claude/claude-code/{버전}/{해시}/claude.app/Contents/MacOS/claude`. 못 찾으면 시작 안내 7단계에 경로를 직접 넣는다). CLI는 데스크톱 앱 로그인과 별개라 처음 한 번 시작 안내 7단계 「Claude 로그인 · Figma 연결」(Claude Code 창에서 `/login`, `/mcp` → figma 인증)이 필요하다. 서버가 그때 Figma MCP(`https://mcp.figma.com/mcp`)를 CLI에 등록해 둔다.
   - 상태 `workbench/.agent.json` {at, host, pid, status: idle|working|login|error|stopped, msg}, 중지 신호 `.agent_stop`(처리 중이면 마친 뒤 멈춤), 기록 `.agent.log`. 같은 감시 결과가 3번 연달아 처리되지 않으면 10분 쉰다.
 - **대화형 Claude Code 창(직접 작업)**: 지금처럼 Claude 앱 Code 탭이나 터미널에서 열어 쓴다. 이 창에서 「워크벤치 요청 감시」를 부탁받으면 먼저 `workbench/.agent.json`을 본다. **백그라운드 에이전트가 동작 중(150초 안에 썼고 status가 stopped가 아님)이면 감시를 시작하지 말고** 사용자에게 「백그라운드가 감시 중」이라고 알린다(같은 요청을 두 번 처리하지 않게). 꺼져 있을 때만 아래 순서대로 감시한다.
 
@@ -38,7 +37,7 @@
 1. `workbench/watch_requests.ps1`을 **백그라운드**로 실행한다(윈도우 `powershell -NoProfile -ExecutionPolicy Bypass -File workbench/watch_requests.ps1`, 맥 `perl workbench/watch_requests.pl`). 「대기」 요청이 생기면 `PENDING R0xx,...`(겹치면 `CONFLICT …` 줄이 함께), 겹침이 풀린 요청은 `RESUME R0xx,...`, 처리할 작업이 생기면 `JOBS J0xx,...`를 출력하고 끝난다. 50분 동안 없으면 `TIMEOUT`.
    - **사용 한도 표시**: 감시를 시작할 때와 감시가 끝나 깰 때마다(`PENDING` · `RESUME` · `JOBS` · `TIMEOUT`) `mcp__ccd_session_mgmt__get_usage`로 이 계정의 사용 한도를 읽는다. 결과를 `workbench/.plan_usage.json`에 `{at(지금 시각 ISO), plan, windows:[{label, percentUsed, resetsAt}]}`로 덮어쓴다(Write 도구, UTF-8). 상단 메뉴에 버전 앞에 「Claude 24% · 1시간 33분 후 초기화 · 주간 4%」로 보인다(appnav.js). 이 PC 작업자 본인 것만이고 공유하지 않는다. 도구가 없거나 `plan.status`가 ok가 아니면 건너뛴다. 이것 때문에 따로 깨우지는 않는다.
 2. `TIMEOUT`이면 다시 실행한다. `JOBS`면 아래 「작업 대기열」대로, `PENDING`이면 요청마다 아래 순서로 처리한 뒤 다시 실행한다. **처리 순서는 `PENDING`에 적힌 순서**다(감시가 우선순위 「높음」 먼저, 같은 우선순위는 먼저 등록한 것부터 정렬해 둔다. `RESUME`도 같다).
-   0. 대상 파일 = 요청의 `fileKey`(없으면 UX AI TEST). **수정 가능 페이지가 아니면 반영하지 않는다.** 요청의 `page`가 그 파일의 지금 수정 가능 페이지(project.json editablePageName)일 때만 반영한다. 아니면 상태를 「보류」로 바꾸고 note에 「○○ 페이지는 보기 전용입니다. 담당자 확인 필요」를 남긴다.
+   0. 대상 파일 = 요청의 `fileKey`(없으면 시작 안내 작업 링크의 파일, 둘 다 없으면 「보류」). **수정 가능 페이지가 아니면 반영하지 않는다.** 요청의 `page`가 그 파일의 지금 수정 가능 페이지(project.json editablePageName)일 때만 반영한다. 아니면 상태를 「보류」로 바꾸고 note에 「○○ 페이지는 보기 전용입니다. 담당자 확인 필요」를 남긴다.
    1. 상태를 「진행 중」으로: `POST http://localhost:8765/api/requests` `{action:'update', id, status:'진행 중', note, by:'Claude'}`
    2. Figma(대상 파일 · 수정 가능 페이지)에 반영한다. **작업 기준 가이드를 먼저 확인한다**: `GET /api/guides`의 `applied[fileKey].guideId`(**이 PC 작업자가 고른 작업 기준**, `workbench/guide_apply.json`, 공유하지 않음)가 있으면 그 가이드의 **지금 내용**(`items[].mdPath`, 고친 적이 있으면 가장 최근 수정본 `rev/…md`)을 읽고 그 규칙(구성 · 크기 · 컴포넌트 · 표기)을 따른다. 작업 기준 가이드가 없으면(기본 가이드는 없다) 요청 내용과 그 파일의 기존 화면을 따르고 note 마지막 줄에 「작업 기준 가이드 없음」이라고 적는다. 가이드와 요청이 어긋나면 요청을 따르되 note에 그렇게 적는다. 프로토타입은 여기서 고치지 않고, 완료 뒤 6번으로 맞춘다.
    3. 반영한 프레임의 캡처를 갱신한다(아래 「캡처」).
@@ -60,11 +59,11 @@
   - Workbench 수정 요청 칸에서 붙여넣기 · 끌어다 놓기 · 파일 선택으로 넣는다. 최대 5장, 한 장 10MB 미만(PNG · JPG · GIF · WEBP). 원본을 `POST /api/attach?ext=` → `{tmp}`로 먼저 올리고, `add`의 `images:[{tmp, small, name}]`로 등록하면 서버가 요청 ID 이름으로 옮긴다.
   - 작업 이력(깃 공유)에는 원본이 아니라 브라우저가 만든 줄인 사본(긴 변 1600 JPG, `small`)만 `.history/attach/{PC}_{요청 ID}_{n}.jpg`로 올린다. 요청을 지우면 원본 · 사본 모두 지운다.
 - **레이아웃**: 요청에 `layout`(예: `2. 목록 (테이블)`)이 있으면 `docs/layout_structures/Layout_Structure.html`의 그 레이아웃(공통 틀 · 영역 크기 · 규칙, 테이블이면 텍스트 정렬)을 따라 만들거나 고친다. 와이어프레임은 같은 폴더의 PNG(`01_dashboard.png` … `09_chart_filter.png`)다.
-- `Common_UX_Changelog.md` 항목 제목에는 UX AI TEST가 아니면 파일명을 앞에 붙인다(예: `[CURECA 기획] …`).
+- `Common_UX_Changelog.md` 항목 제목 앞에 파일명을 붙인다(예: `[CURECA 기획] …`).
 
 ## 프로젝트 폴더
 
-프로젝트(Figma 파일)마다 `projects/{fileKey}/`에 둔다. 기본 프로젝트는 UX AI TEST(`projects/etCQFF3CTf1EA6C79d4BBf/`).
+프로젝트(Figma 파일)마다 `projects/{fileKey}/`에 둔다(PC마다 따로, 저장소 · 배포본에 넣지 않는다). 기본 프로젝트는 없다.
 
 | 파일 | 내용 |
 |---|---|

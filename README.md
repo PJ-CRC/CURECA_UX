@@ -1,7 +1,7 @@
 # UX_AI_TEST
 figma ai test
 
-Figma **UX AI TEST** 파일의 **SH.L** 페이지(Common UX StoryBoard)를 분석·정리한 가이드와 도구 모음.
+Figma 파일을 프로젝트 단위로 다루는 Workbench(수정 요청 · Claude 반영 · 캡처 · 작업 이력 · UX 문서 · 프로토타입). 작업할 파일은 PC마다 시작 안내 3단계 링크로 정한다(기본 프로젝트 없음).
 
 ## 브랜치 안내
 
@@ -33,17 +33,17 @@ Figma **UX AI TEST** 파일의 **SH.L** 페이지(Common UX StoryBoard)를 분�
 | `workbench/agent.ps1` · `.pl` | 백그라운드 Claude 에이전트: 창 없이 요청을 감시하고, 요청 · 작업이 생기면 **계속 떠 있는** Claude Code CLI 세션(`claude -p` stream-json)에 보내 CLAUDE.md 규칙대로 처리. 컨텍스트 80%면 자동 압축, 30분 쉬면 세션 새로. Figma AI Run 실행 때 서버가 자동으로 띄움(시작 안내 7단계에서 시작 · 중지, 처음 한 번 CLI 로그인 · Figma 연결). 상태 `.agent.json`, 기록 `.agent.log` |
 | `Usage_Stats.html` | 사용량 통계: 작업마다 Claude가 쓴 토큰(입력 · 캐시 쓰기 · 캐시 읽기 · 출력)과 금액 환산을 작업자별 · 작업별로 표시. 기간 · 작업자 필터 |
 | `workbench/usage.ps1` · `.pl` · `pricing.json` | 요청 하나의 사용량을 Claude Code 대화 기록에서 더해 `.history/usage/`에 남김(요청 완료 때 서버가 실행). 금액은 `pricing.json` 단가로 환산 |
-| `Figma_Workbench.html` · `workbench/` | SH.L 작업 페이지. 위쪽에 작업 결과물 캡처, 아래쪽에 depth 메뉴와 수정 요청 입력 (아래 사용법) |
+| `Figma_Workbench.html` · `workbench/` | 작업 페이지(작업 링크의 페이지). 왼쪽 depth 메뉴 · Claude 답변, 오른쪽 캡처와 그 아래 수정 요청 입력 (아래 사용법) |
 | `guide_server.ps1`(윈도우) · `guide_server_mac.pl`(맥) · `Figma AI Run.bat` · `Figma AI Run.app` · `figma_plugin/` | 로컬 서버 · 실행 파일 · Figma 플러그인(Claude · Workbench 연동, 아래 「Figma 플러그인」) |
 
 ---
 
-# Figma Workbench (SH.L 작업 페이지)
+# Figma Workbench
 
 `Figma AI Run`(윈도우 `.bat`, 맥 `.app` · 둘 다 추가 설치 없음)을 실행하면 가이드가 열린다. 상단 메뉴의 **Figma Workbench**를 누르거나 `http://localhost:8765/Figma_Workbench.html`로 간다. 상단 「작업자」에 이름을 넣어 두면 요청과 작업 이력에 남는다.
 
 - 상단 메뉴(시작 안내 · 가이드 · Workbench · 변경 이력 · 프로토타입)는 모든 페이지에서 같은 위치에 고정된다(`appnav.css`). 작업할 Figma 파일 · 페이지는 **시작 안내 3단계의 작업 링크**로만 정한다. 링크가 가리키는 페이지가 수정 가능 페이지가 되고, Workbench에 그 페이지 이름이 보인다. 오른쪽에 버전(`v0.2.0`)이 보인다.
-- **프로젝트(Figma 파일) 단위**로 자료를 `projects/{fileKey}/`에 둔다: `project.json`(작업 링크 · 수정 가능 페이지), `catalog.json`(페이지 · 프레임 목록), `labels.json`(화면 제목), `shots/` · `shots_meta.json`(캡처). 기본 프로젝트는 UX AI TEST다.
+- **프로젝트(Figma 파일) 단위**로 자료를 `projects/{fileKey}/`에 둔다: `project.json`(작업 링크 · 수정 가능 페이지), `catalog.json`(페이지 · 프레임 목록), `labels.json`(화면 제목), `shots/` · `shots_meta.json`(캡처). PC마다 따로이고(저장소 · 배포본에 없음) 기본 프로젝트는 없다.
 - 화면은 좌우 2분할이다. 왼쪽(기본 30%)에 작업 페이지 메뉴와 수정 요청, 오른쪽(더 넓게)에 작업 결과물이 보인다. 가운데 분할선을 끌어(또는 ← →) 왼쪽 너비를 20~45%로 바꾼다.
 - **오른쪽: 작업 결과물**
   - 캡처가 있으면 캡처를 보여 준다. 너비 맞춤 / 전체 맞춤 / 확대·축소, 더블클릭 100%, 드래그 이동.
@@ -55,7 +55,7 @@ Figma **UX AI TEST** 파일의 **SH.L** 페이지(Common UX StoryBoard)를 분�
   - › 2 페이지 = 화면 ID (예: `TI-STN-08`, `LI-STN-08`, `COMM-5-d`)
   - › 3 상세 = 프레임 (예: `TI-STN-08-P`, `TI-STN-08 / 정책`, `COMM-5-d(1/5)`)
   - 드롭다운이나 메뉴 버튼으로 이동한다. 미완료 요청이 있는 화면은 버튼에 숫자가 붙는다.
-  - 수정 가능 페이지(UX AI TEST는 SH.L, 다른 프로젝트는 작업 링크의 페이지) 밖은 **보기 전용**이다. 요청은 등록되지만 Claude가 「보류」로 둔다.
+  - 수정 가능 페이지(작업 링크의 페이지) 밖은 **보기 전용**이다. 요청은 등록되지만 Claude가 「보류」로 둔다.
   - 목록이 아직 없는 프로젝트는 **[Claude에게 목록 만들기 요청]**(권장, Figma 클라우드에서 만듦) 또는 Figma 플러그인 실행으로 만든다.
 - **왼쪽 아래: 수정 요청**
   - 유형·우선순위를 고르고 내용을 적어 **요청 등록**(Ctrl + Enter)을 누르면 `workbench/edit_requests.json`에 쌓인다.

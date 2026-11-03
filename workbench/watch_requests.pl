@@ -25,7 +25,6 @@ sub iso_epoch {
   return timegm($6, $5, $4, $3, $2 - 1, $1) - ($8 * 3600 + $9 * 60) * ($7 eq '+' ? 1 : -1);
 }
 my $hist_dir = "$FindBin::Bin/../.history/entries";
-my $def_key = 'etCQFF3CTf1EA6C79d4BBf';
 (my $slug = Encode::decode('UTF-8', hostname())) =~ s/\.local$//; $slug = lc $slug; $slug =~ s/[^a-z0-9-]/-/g;   # 서버(guide_server_mac.pl)와 같은 PC 이름 규칙
 sub others {
   my @o; opendir(my $dh, $hist_dir) or return ();
@@ -41,9 +40,9 @@ sub others {
 # 겹침: 같은 파일 · 프레임에 다른 PC 요청이 「진행 중」이거나, 내 요청보다 **먼저 등록한** 「대기」 요청
 #  등록 시각은 이력의 createdAt(예전 이력에는 없어 마지막 변경 시각 at으로 대신)
 sub overlap {
-  my ($r, @others) = @_; my $k = $r->{fileKey} || $def_key; my $rc = iso_epoch($r->{createdAt}) // time;
+  my ($r, @others) = @_; my $k = $r->{fileKey} // ''; my $rc = iso_epoch($r->{createdAt}) // time;
   return grep { my $oc = iso_epoch($_->{createdAt} || $_->{at});
-    ($_->{fileKey} || $def_key) eq $k && ($_->{nodeId} // '') eq ($r->{nodeId} // '') && ($_->{status} eq '진행 중' || (defined $oc && $oc < $rc)) } @others;
+    ($_->{fileKey} // '') eq $k && ($_->{nodeId} // '') eq ($r->{nodeId} // '') && ($_->{status} eq '진행 중' || (defined $oc && $oc < $rc)) } @others;
 }
 # 처리 순서: 우선순위 「높음」 먼저, 같은 우선순위는 먼저 등록한 것부터(등록 시각, 같으면 요청 번호). Claude는 출력된 순서대로 한 건씩 처리한다
 sub id_num { (my $n = $_[0]{id} // '') =~ s/\D//g; return $n eq '' ? 0 : $n + 0; }

@@ -42,7 +42,7 @@ my $ROOT = $FindBin::Bin;
 my $REQ_FILE = "$ROOT/workbench/edit_requests.json";
 my $JOB_FILE = "$ROOT/workbench/jobs.json";
 my $PROJ_ROOT = "$ROOT/projects";
-my $DEFAULT_KEY = 'etCQFF3CTf1EA6C79d4BBf';   # 기본 프로젝트: UX AI TEST
+# 기본 프로젝트는 없다. 파일 키를 안 준 요청(예: 플러그인 캡처)은 시작 안내 3단계 작업 링크의 파일로 본다(work_key)
 my $HEART_FILE = "$ROOT/workbench/.watcher.json";
 my $AGENT_FILE = "$ROOT/workbench/.agent.json";
 my $AGENT_STOP = "$ROOT/workbench/.agent_stop";
@@ -130,10 +130,14 @@ sub find_claude_code {
   # nvm · asdf · fnm로 깐 node의 전역 npm(가장 최근 것)
   my @n = grep { -x $_ && !-d $_ } map { glob("'$_'") } ("$home/.nvm/versions/node/*/bin/claude", "$home/.asdf/installs/nodejs/*/bin/claude", "$home/.local/share/fnm/node-versions/*/installation/bin/claude");
   if (@n) { @n = sort { (stat $b)[9] <=> (stat $a)[9] } @n; (my $d = $n[0]) =~ s{/claude$}{}; $ENV{PATH} .= ":$d" unless index(":$ENV{PATH}:", ":$d:") >= 0; return $n[0]; }
+  # Claude 데스크톱 앱이 넣어 둔 것: 예전 claude-code/{버전}/{해시}/claude, 새 버전(2.1.3xx~) …/{해시}/claude.app/Contents/MacOS/claude
   my @c = grep { -x $_ && !-d $_ } map { glob("'$_'") } (
     "$ENV{HOME}/Library/Application Support/Claude*/claude-code/*/claude",
     "$ENV{HOME}/Library/Application Support/Claude*/claude-code/*/*/claude",
-    "$ENV{HOME}/Library/Application Support/Claude*/*/claude-code/*/*/claude");
+    "$ENV{HOME}/Library/Application Support/Claude*/*/claude-code/*/*/claude",
+    "$ENV{HOME}/Library/Application Support/Claude*/claude-code/*/claude.app/Contents/MacOS/claude",
+    "$ENV{HOME}/Library/Application Support/Claude*/claude-code/*/*/claude.app/Contents/MacOS/claude",
+    "$ENV{HOME}/Library/Application Support/Claude*/*/claude-code/*/*/claude.app/Contents/MacOS/claude");
   @c = sort { (stat $b)[9] <=> (stat $a)[9] } @c;
   return $c[0];
 }
@@ -218,6 +222,7 @@ sub ensure_proj {
   return $p;
 }
 sub key_of { my ($u) = @_; return str($u) =~ m{figma\.com/(?:design|file|proto)/([A-Za-z0-9]+)} ? $1 : ''; }
+sub work_key { return key_of(read_setup()->{figmaUrl}); }
 # 작업 링크가 바뀌면 수정 가능 페이지도 바꾼다: 링크의 node-id가 페이지면 그 페이지, 프레임이면 그 프레임이 있는 페이지(프레임 목록 기준)
 #  catalog.json은 배열 모양이 바뀌지 않게 글자만 고친다(editable · editablePageId)
 #  정했으면 1, 링크에 노드가 없거나 목록에서 그 노드를 찾지 못하면 0
@@ -253,7 +258,7 @@ sub prototypes_get {
       my ($why, $at) = ('', '');
       my $s = $shot{$k} && ref $shot{$k} eq 'HASH' ? $shot{$k}{ str($fr->{nodeId}) } : undef;
       if (ref $s eq 'HASH' && (parse_iso($s->{at}) // 0) > $since) { $why = 'Figma 캡처가 새로 들어옴'; $at = str($s->{at}); }
-      my ($h) = grep { str($_->{nodeId}) eq str($fr->{nodeId}) && (str($_->{fileKey}) eq $k || (str($_->{fileKey}) eq '' && $k eq $DEFAULT_KEY)) && (parse_iso($_->{at}) // 0) > $since } @hist;
+      my ($h) = grep { str($_->{nodeId}) eq str($fr->{nodeId}) && str($_->{fileKey}) eq $k && (parse_iso($_->{at}) // 0) > $since } @hist;
       if ($h) { $why = str($h->{by}) . ' ' . str($h->{reqId}) . ' 수정 완료'; $at = str($h->{at}); }
       push @stale, { nodeId => str($fr->{nodeId}), name => str($fr->{name}), why => $why, at => $at } if $why ne '';
     }
@@ -315,7 +320,7 @@ sub fix_editable_pages {
 
 # ── 캡처 {fileKey, nodeId, png(base64, PNG 또는 JPG), w, h, by, name} → projects/{fileKey}/shots ──
 sub shots_post {
-  my ($b) = @_; my $key = str($b->{fileKey}) || $DEFAULT_KEY; die "잘못된 파일 키입니다.\n" unless key_ok($key);
+  my ($b) = @_; my $key = str($b->{fileKey}) || work_key(); die "잘못된 파일 키입니다.\n" unless key_ok($key);
   my $nid = str($b->{nodeId}); die "잘못된 nodeId: $nid\n" unless $nid =~ /^\d+:\d+$/;
   my $img = decode_base64(str($b->{png}));
   my $ext = substr($img, 0, 4) eq "\x89PNG" ? 'png' : substr($img, 0, 2) eq "\xFF\xD8" ? 'jpg' : '';
@@ -335,7 +340,7 @@ sub shots_post {
 # ── 작업 이력(공유) ──
 # 그 프레임의 지금 캡처를 이력용으로 남긴다: 크기는 그대로(원본), PNG는 JPG(품질 85, sips)로 바꿔 용량만 줄인다. 바꾸지 못하면 그대로 복사
 sub copy_hist_shot {
-  my ($key, $nid, $name) = @_; $key = str($key) || $DEFAULT_KEY;
+  my ($key, $nid, $name) = @_; $key = str($key); return '' if $key eq '';
   return '' unless key_ok($key) && str($nid) =~ /^\d+:\d+$/;
   (my $fn = $nid) =~ s/:/-/; my $src;
   for my $x (qw(png jpg)) { $src = proj_dir($key) . "/shots/$fn.$x" if -f proj_dir($key) . "/shots/$fn.$x"; }
@@ -623,11 +628,12 @@ sub projects_get {
       my $shots = 0; if (opendir(my $sh, proj_dir($k) . '/shots')) { $shots = scalar grep { /\.(png|jpg)$/ } readdir $sh; closedir $sh; }
       push @list, { key => $p->{key}, name => str($p->{name}), link => str($p->{link}), editablePageId => str($p->{editablePageId}), editablePageName => str($p->{editablePageName}),
         uxGuideLink => str($p->{uxGuideLink}), hasCatalog => (-f proj_dir($k) . '/catalog.json') ? JSON::PP::true : JSON::PP::false, shots => $shots,
-        isDefault => $k eq $DEFAULT_KEY ? JSON::PP::true : JSON::PP::false };
+        isDefault => $k eq work_key() ? JSON::PP::true : JSON::PP::false };
     }
     closedir $dh;
   }
-  return { defaultKey => $DEFAULT_KEY, projects => \@list };
+  # defaultKey: 예전 이름 그대로(Figma AI Run.app이 이 글자로 지금 서버인지 확인한다). 값은 시작 안내 작업 링크의 파일(없으면 빈 값)
+  return { defaultKey => work_key(), workKey => work_key(), projects => \@list };
 }
 
 # ── 작업 대기열: 캡처 받기(capture) · 프레임 목록 만들기(catalog). 플러그인 또는 Claude가 처리한다 ──

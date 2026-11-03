@@ -7,8 +7,7 @@ figma.showUI(__html__, { width: 280, height: 150, themeColors: true });
 
 // ── Workbench 캡처 ──
 // 작업 페이지(수정 가능 페이지)에서 무언가 바뀌면 그 최상위 프레임을 JPG(원본 크기)로 내보내 UI → 로컬 서버(/api/shots)로 보낸다.
-// 작업 페이지 = 시작 안내 링크가 가리키는 페이지, 기본 프로젝트(UX AI TEST)는 SH.L
-const DEFAULT_KEY = 'etCQFF3CTf1EA6C79d4BBf', SHL_ID = '129:104548';
+// 작업 페이지 = 그 파일 프로젝트의 작업 링크(시작 안내 링크)가 가리키는 페이지. 기본 프로젝트는 없다
 let autoShots = true, workPage = null, dirty = new Set(), timer = null, busyShots = false;
 
 const topFrame = n => { while (n && n.parent && n.parent.type !== 'PAGE' && n.parent.type !== 'SECTION') n = n.parent; return n && n.parent && (n.parent.type === 'PAGE' || n.parent.type === 'SECTION') && n.type !== 'SECTION' ? n : null; };
@@ -46,7 +45,7 @@ function schedule() { clearTimeout(timer); timer = setTimeout(flushShots, 1500);
 
 // Figma 부담 줄이기: 플러그인은 페이지를 스스로 불러오지 않는다.
 // 캡처 감시는 사용자가 작업 페이지에 있을 때만 붙인다(이미 열려 있는 페이지라 추가 로딩 없음).
-function workPageId() { return (typeof linkPageId === 'string' && linkPageId) || (figma.fileKey === DEFAULT_KEY ? SHL_ID : ''); }
+function workPageId() { return (typeof linkPageId === 'string' && linkPageId) || ''; }
 let workHandler = null;
 function watchShl() {
   // 작업 링크가 다른 페이지로 바뀌었으면 예전 작업 페이지의 감시를 뗀다
