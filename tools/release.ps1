@@ -8,6 +8,8 @@
 #  - 올리는 곳: 기본은 git_remote.txt. -Remote로 다른 저장소에 올릴 수 있다(저장소를 옮길 때 옛 저장소에 마지막 배포). -NoZip이면 압축은 만들지 않는다
 #  - PJ-CRC/CURECA_UX는 이 PC의 Deploy key(~/.ssh/config의 Host github-uxai)로 올린다. release · 태그는 보호 규칙(Rulesets)이 있어 Deploy key만 올릴 수 있다
 #  - 원격에 release가 없으면(새 저장소) 예전 이력 없이 새로 시작한다
+#  - 순서: develop에 커밋 · 푸시한 코드로만 배포한다. -Publish는 ① 커밋 안 한 변경이 없고 ② VERSION이 배포 버전과 같고(커밋돼 있어야 함)
+#    ③ 지금 브랜치가 원격보다 앞서 있지 않을 때만 진행한다(아니면 멈춘다). -Publish 없이(압축만) 돌리면 VERSION을 고친다
 param([Parameter(Mandatory = $true)][string]$Version, [switch]$Publish, [string]$OutDir = '', [string]$Remote = '', [switch]$NoZip)
 $ErrorActionPreference = 'Stop'
 if ($Version -notmatch '^\d+\.\d+\.\d+$') { throw "버전 형식: 0.1.0 (받은 값: $Version)" }
@@ -15,7 +17,24 @@ $Src = Split-Path $PSScriptRoot -Parent
 if (-not $OutDir) { $OutDir = Join-Path $Src 'dist' }
 $Utf8 = New-Object Text.UTF8Encoding $false
 Add-Type -AssemblyName System.IO.Compression, System.IO.Compression.FileSystem
-[IO.File]::WriteAllText((Join-Path $Src 'VERSION'), "$Version`n", $Utf8)
+function G { $out = & git @args 2>&1 | ForEach-Object { "$_" }; $script:code = $LASTEXITCODE; return (($out | Where-Object { $_ }) -join "`n").Trim() }
+if ($Publish) {
+  # develop 먼저: 커밋 · 푸시하지 않은 코드는 배포하지 않는다
+  $ErrorActionPreference = 'Continue'
+  $dirty = G -C $Src status --porcelain
+  if ($dirty) { throw "커밋하지 않은 변경이 있어 배포하지 않습니다. 변경 이력 · VERSION까지 develop에 커밋 · 푸시한 뒤 다시 배포하세요.`n$dirty" }
+  $cur = ([IO.File]::ReadAllText((Join-Path $Src 'VERSION'))).Trim()
+  if ($cur -ne $Version) { throw "VERSION($cur)이 배포 버전($Version)과 다릅니다. VERSION을 $Version 으로 고쳐 커밋 · 푸시한 뒤 배포하세요." }
+  $br = G -C $Src rev-parse --abbrev-ref HEAD
+  G -C $Src fetch -q origin $br | Out-Null
+  if ($code) { throw "원격의 $br 브랜치를 확인하지 못했습니다. 먼저 푸시하세요." }
+  $ahead = G -C $Src rev-list --count "origin/$br..HEAD"
+  if ($ahead -ne '0') { throw "$br 에 푸시하지 않은 커밋이 $ahead 개 있습니다. 먼저 푸시한 뒤 배포하세요." }
+  Write-Host "  $br $(G -C $Src rev-parse --short HEAD) (원격과 같음)으로 배포합니다."
+  $ErrorActionPreference = 'Stop'
+} else {
+  [IO.File]::WriteAllText((Join-Path $Src 'VERSION'), "$Version`n", $Utf8)
+}
 
 # ── 프로그램 파일 목록 ──
 $files = 'VERSION','Figma AI Run.bat','Figma AI Run (Terminal).command','appnav.js','appnav.css','guide_server.ps1','guide_server_mac.pl',
@@ -36,7 +55,6 @@ $override = @{ 'workbench\edit_requests.json' = $Utf8.GetBytes('{"version":1,"it
 foreach ($rel in $list) { if (-not $override.ContainsKey($rel) -and -not (Test-Path -LiteralPath (Join-Path $Src $rel))) { throw "없는 파일: $rel" } }
 $macLaunch = $Utf8.GetBytes("{`n  `"version`": `"0.0.1`",`n  `"configurations`": [`n    {`n      `"name`": `"guide-sync`",`n      `"runtimeExecutable`": `"perl`",`n      `"runtimeArgs`": [`"guide_server_mac.pl`", `"8765`"],`n      `"port`": 8765`n    }`n  ]`n}`n")
 function Is-Exec($rel) { $r = $rel -replace '\\', '/'; return ($r -like '*.command' -or $r -like '*.pl' -or $r -like '*.sh' -or $r -like '*/Contents/MacOS/*') }
-function G { $out = & git @args 2>&1 | ForEach-Object { "$_" }; $script:code = $LASTEXITCODE; return (($out | Where-Object { $_ }) -join "`n").Trim() }
 
 # ── release 브랜치에 올리기 ──
 $sha = ''
