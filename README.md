@@ -5,7 +5,7 @@ Figma **UX AI TEST** 파일의 **SH.L** 페이지(Common UX StoryBoard)를 분�
 
 ## 브랜치 안내
 
-<!-- branch-line -->> **이 브랜치: `develop`** — 개발 코드. 기능 수정 · 추가는 여기서 한다.
+<!-- branch-line -->> **이 브랜치: `main`** — 기준 코드(안정판). develop에서 확인된 코드만 옮긴다.
 
 | 브랜치 | 용도 | 올리는 사람 |
 |---|---|---|
