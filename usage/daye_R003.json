@@ -1,0 +1,26 @@
+{
+    "id":  "daye_R003",
+    "kind":  "request",
+    "reqId":  "R003",
+    "at":  "2026-11-03T18:12:22+09:00",
+    "from":  "2026-11-03T18:11:25+09:00",
+    "by":  "정다예",
+    "doneBy":  "Claude",
+    "pc":  "DAYE",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L",
+    "frame":  "File Info",
+    "nodeId":  "491:33625",
+    "text":  "다시해줘",
+    "models":  {
+                   "claude-opus-5-5":  8
+               },
+    "calls":  8,
+    "input":  15,
+    "cacheWrite":  6423,
+    "cacheRead":  480797,
+    "output":  3524,
+    "total":  490759,
+    "usd":  0.2181
+}
