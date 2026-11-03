@@ -1,8 +1,8 @@
 {
     "id":  "brex-06_R024",
     "kind":  "request",
-    "status":  "진행 중",
-    "at":  "2026-11-03T17:42:37+09:00",
+    "status":  "완료",
+    "at":  "2026-11-03T17:43:43+09:00",
     "createdAt":  "2026-11-03T17:38:04+09:00",
     "by":  "최고관리자",
     "doneBy":  "Claude",
@@ -16,8 +16,8 @@
     "type":  "일반",
     "layout":  "",
     "text":  "mobile 섹션에 삼각형 추가 크기는 150",
-    "note":  "",
-    "shot":  "",
+    "note":  "Connon UX (Mobile) 섹션에 150×150 삼각형을 추가했습니다.\n- SH.L TEST › Connon UX (Mobile) 섹션: 위쪽 빈 곳(M-Components 오른쪽)에 삼각형 1개(Triangle, 150×150, #0FC0BB)\n- 참고: 요청 프레임 COMM-1-a에는 Mobile 영역이 없어(Tablet · PC만) 같은 페이지의 Mobile 섹션으로 해석했습니다. 자리 · 색은 요청에 없어 임의로 정했으니 필요하면 알려 주세요.",
+    "shot":  "shots/brex-06_R024.jpg",
     "images":  [
 
                ]
