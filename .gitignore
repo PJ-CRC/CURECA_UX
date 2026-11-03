@@ -28,20 +28,17 @@ workbench/.history_sync.lock
 workbench/.update.json
 dist/
 workbench/guide_apply.json
-# 프로토타입은 PC마다 따로(배포 예시 assay-pack만 저장소에)
-prototypes/*
-!prototypes/assay-pack/
+# 프로토타입은 PC마다 따로(저장소 · 배포본에 넣지 않는다)
+prototypes/
+Assay_Pack_Prototype.html
 # PC마다 따로 쌓이는 데이터(서버가 없으면 빈 파일로 만든다)
 workbench/edit_requests.json
 workbench/jobs.json
 workbench/req_images/
 workbench/job_files/
 workbench/.run/
-# 프로젝트는 기본 프로젝트(UX AI TEST)의 설정만 저장소에. 캡처 · 다른 프로젝트는 PC마다 따로
-projects/*
-!projects/etCQFF3CTf1EA6C79d4BBf/
-projects/*/shots/
-projects/*/shots_meta.json
+# 프로젝트(Figma 파일)는 PC마다 따로(기본 프로젝트 없음, 시작 안내 3단계 링크로 정한다)
+projects/
 # 검토용 초안 문서(로컬 전용)
 docs/ui_proposal/
 docs/UI_Layout_Proposal.html

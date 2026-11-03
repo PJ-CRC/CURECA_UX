@@ -19,16 +19,15 @@ Add-Type -AssemblyName System.IO.Compression, System.IO.Compression.FileSystem
 
 # ── 프로그램 파일 목록 ──
 $files = 'VERSION','Figma AI Run.bat','Figma AI Run (Terminal).command','appnav.js','appnav.css','guide_server.ps1','guide_server_mac.pl',
-  'Common_UX_Guide.html','Common_UX_Changelog.md','Change_History.html','Usage_Stats.html','UX_Guide.html','Figma_Workbench.html','Assay_Pack_Prototype.html','Prototypes.html','Prototype.html','Login.html','Account.html','Accounts.html','Setup.html','CLAUDE.md','README.md'
+  'Common_UX_Guide.html','Common_UX_Changelog.md','Change_History.html','Usage_Stats.html','UX_Guide.html','Figma_Workbench.html','Prototypes.html','Prototype.html','Login.html','Account.html','Accounts.html','Setup.html','CLAUDE.md','README.md'
 $wb = 'edit_requests.json','watch_requests.ps1','watch_requests.pl','agent.ps1','agent.pl','launch_win.ps1','history_sync.ps1','history_sync.sh','github_login.ps1','github_login.sh','update.ps1','update.sh','git_remote.txt','usage.ps1','usage.pl','pricing.json'
 $list = New-Object System.Collections.Generic.List[string]
 foreach ($f in $files) { $list.Add($f) }
 foreach ($f in $wb) { $list.Add("workbench\$f") }
-# 프로토타입은 PC마다 따로 쌓인다(이 PC 것은 넣지 않음). 예시 assay-pack만 넣는다
-foreach ($f in 'meta.json', 'index.html') { $list.Add("prototypes\assay-pack\$f") }
-# 빼는 것: 이 PC에서 받은 Workbench 캡처(projects/*/shots, shots_meta.json — PC마다 다시 받는다), 검토용 초안 문서
-$skip = '^projects\\[^\\]+\\(shots\\|shots_meta\.json$)|^docs\\(ui_proposal\\|UI_Layout_Proposal\.html$|Plan_Update_and_Accounts\.md$)'
-foreach ($d in 'docs','figma_plugin','.claude','Figma AI Run.app','projects') {
+# 프로토타입 · 프로젝트(Figma 파일)는 PC마다 따로라 넣지 않는다(기본 프로젝트 · 예시 프로토타입 없음)
+# 빼는 것: 검토용 초안 문서
+$skip = '^docs\\(ui_proposal\\|UI_Layout_Proposal\.html$|Plan_Update_and_Accounts\.md$)'
+foreach ($d in 'docs','figma_plugin','.claude','Figma AI Run.app') {
   Get-ChildItem -LiteralPath (Join-Path $Src $d) -Recurse -File -Force | Where-Object { $_.Name -ne 'settings.local.json' } | ForEach-Object { $rel = $_.FullName.Substring($Src.Length + 1); if ($rel -notmatch $skip) { $list.Add($rel) } }
 }
 # 내용을 바꿔 넣는 파일: 수정 요청은 PC마다 따로 쌓이므로 빈 목록(저장소에 없어도 된다), README는 브랜치 안내 줄을 release용으로

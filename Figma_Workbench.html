@@ -247,6 +247,11 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
 .btn{padding:7px 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface);font-size:13px}
 .btn:hover{border-color:var(--accent)}
 .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
+/* 작업 링크가 없을 때(기본 프로젝트 없음): 시작 안내 3단계로 안내 */
+.nolink{margin:auto;max-width:460px;padding:40px 24px;text-align:center;color:var(--ink-2)}
+.nolink b{display:block;font-size:17px;color:var(--ink);margin-bottom:8px}
+.nolink p{margin:0 0 16px;font-size:14px;line-height:1.6}
+.nolink .btn{display:inline-block;text-decoration:none}
 :root[data-theme="dark"] .btn.primary{color:#0f1115}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.primary{color:#0f1115}}
 .btn:disabled{opacity:.45;cursor:default}
@@ -425,7 +430,6 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
 <script>
 (function(){
   /* 프로젝트(Figma 파일)마다 projects/{fileKey}/ 에 catalog.json(프레임 목록) · labels.json(화면 제목 · 라벨) · shots/ · shots_meta.json(캡처)이 있다 */
-  var DEFAULT_KEY = 'etCQFF3CTf1EA6C79d4BBf';   // 기본 프로젝트: UX AI TEST
   var WB = { titles: {} }, $ = function(id){ return document.getElementById(id); };
   var API = '/api/requests', online = false, reqData = {version:0, items:[]}, filter = 'here';
   /* 공유 작업 이력(모든 작업자): 같은 프레임에 다른 작업자의 요청이 진행 중인지 본다 */
@@ -440,9 +444,9 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
   function toast(t){ var el = $('toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(function(){ el.classList.remove('on'); }, 1800); }
 
   /* ── 작업 페이지 분류: 1 구분 = Figma 페이지 › 2 페이지 = 화면 ID(TI-STN-08 …) › 3 상세 = 프레임(TI-STN-08-P …) ──
-     작업 파일(프로젝트): 시작 안내 3단계 링크의 파일. 없으면 기본 프로젝트(UX AI TEST).
+     작업 파일(프로젝트): 시작 안내 3단계 링크의 파일(주소 ?p=로 다른 프로젝트). 기본 프로젝트는 없다.
      프레임 목록은 Figma 플러그인 또는 Claude가 만들어 서버로 보낸다(/api/catalog → projects/{fileKey}/catalog.json) */
-  var FILE = { key: DEFAULT_KEY, name: 'UX AI TEST', isDefault: true, node: '' };
+  var FILE = { key: '', name: '', node: '' };
   var CAT = { pages: [] };
   var label = {};
   /* 화면 ID: 프레임 규칙의 앞부분. TI-STN-08-P → TI-STN-08, LI-RUN-02-01 → LI-RUN-02, COMM-5-d(1/5) → COMM-5-d */
@@ -639,7 +643,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
   function overlaps(nodeId){
     var now = Date.now();
     return (HIST.items || []).filter(function(h){
-      return h.kind === 'request' && String(h.id).indexOf(HIST.pcSlug + '_') !== 0 && (h.fileKey || DEFAULT_KEY) === FILE.key && h.nodeId === nodeId &&
+      return h.kind === 'request' && String(h.id).indexOf(HIST.pcSlug + '_') !== 0 && h.fileKey === FILE.key && h.nodeId === nodeId &&
         (h.status === '대기' || h.status === '진행 중') && now - (Date.parse(h.at) || 0) < OL_MAX;
     });
   }
@@ -664,7 +668,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     if (!cur || cur.id !== p.id) liveOnce = false;
     cur = p; openFor(p);
     renderMenu(); revealCur(); renderViewer(); renderTarget(); renderReqs();
-    store('wb.cur.' + FILE.key, id); if (FILE.isDefault) store('wb.cur', id);
+    store('wb.cur.' + FILE.key, id);
     if (push !== false && location.hash !== '#' + id.replace(':', '-')) history.replaceState(null, '', '#' + id.replace(':', '-'));
   }
   /* 넘기기 순서 = 작업 페이지 목록(트리)에 보이는 순서: 묶음마다 자기 프레임 → 하위 화면 */
@@ -823,8 +827,8 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
   renderLayout();
 
   function fmt(t){ return (t || '').replace('T', ' ').slice(5, 16); }
-  /* 요청은 파일(프로젝트)별로 본다. fileKey가 없는 예전 요청은 UX AI TEST 요청이다 */
-  function sameFile(r){ return (r.fileKey || DEFAULT_KEY) === FILE.key; }
+  /* 요청은 파일(프로젝트)별로 본다 */
+  function sameFile(r){ return r.fileKey === FILE.key; }
   /* 요청 목록은 「변경 이력」에서 본다. 여기는 요청마다 Claude가 남긴 답변(처리 메모)을 보여 준다 */
   var WAIT = {'대기': 'Claude가 아직 처리하지 않았습니다.', '진행 중': 'Claude가 처리하고 있습니다…', '보류': '보류되었습니다.', '완료': '처리했습니다.'};
   /* 답변을 읽기 좋게: 줄바꿈은 그대로, 한 줄로 이어 쓴 메모는 문장(「. 」) · 「 / 」 · 「; 」에서 나눈다.
@@ -1030,7 +1034,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     var ed = pages.filter(function(x){ return x.editable; });
     /* 처음 보는 프레임: 작업 링크가 가리키는 프레임 → 그 링크의 페이지(수정 가능 페이지) 첫 프레임 */
     var home = byId[FILE.node] || ed[0] || pages[0];
-    var saved = store('wb.cur.' + FILE.key) || (FILE.isDefault ? store('wb.cur') : '');
+    var saved = store('wb.cur.' + FILE.key) || '';
     try { openKeys = JSON.parse(store('wb.open.' + FILE.key) || '{}') || {}; } catch(x){ openKeys = {}; }
     if (!home) { showWaiting(); return; }
     go(byId[h] ? h : (byId[saved] ? saved : home.id), false);
@@ -1141,8 +1145,9 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
   /* 다른 창에서 탭을 열거나 닫으면 이 창의 탭 줄도 맞춘다 */
   window.addEventListener('storage', function(e){ if (e.key === 'wb.tabs') { readTabs(); if (TABS.indexOf(FILE.key) < 0) TABS.push(FILE.key); renderTabs(); } });
 
-  /* 작업 파일 정하기: 주소의 ?p= → 마지막으로 본 탭 → 시작 안내 링크의 파일 → 기본(UX AI TEST)
-     → 그 프로젝트의 라벨 · 캡처 메타 · 목록 · 작업 대기열을 불러온다 */
+  /* 작업 파일 정하기: 주소의 ?p= → 시작 안내 3단계 링크의 파일 → 마지막으로 본 탭. 기본 프로젝트는 없다
+     (셋 다 없으면 시작 안내로 안내하고 멈춘다) → 그 프로젝트의 라벨 · 캡처 메타 · 목록 · 작업 대기열을 불러온다 */
+  var NO_LINK = {};
   var getJ = function(u){ return fetch(u, { cache: 'no-store' }).then(function(r){ return r.json(); }).catch(function(){ return null; }); };
   (location.protocol === 'file:' ? Promise.reject() : Promise.all([getJ('/api/setup'), getJ('/api/projects')]))
     .then(function(r){
@@ -1150,9 +1155,10 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       PROJ = (r[1] && r[1].projects) || [];
       readTabs();
       var want = new URLSearchParams(location.search).get('p') || '', last = store('wb.proj') || '';
-      var key = /^[A-Za-z0-9]{10,64}$/.test(want) ? want : (TABS.indexOf(last) >= 0 ? last : (sf ? sf.key : DEFAULT_KEY));
+      var key = /^[A-Za-z0-9]{10,64}$/.test(want) ? want : (sf ? sf.key : (TABS.indexOf(last) >= 0 ? last : ''));
+      if (!key) throw NO_LINK;
       var p = projOf(key), pf = parseFig(p && p.link) || (sf && sf.key === key ? sf : null);
-      FILE = { key: key, name: (p && p.name) || (key === DEFAULT_KEY ? 'UX AI TEST' : 'Figma 파일 ' + key.slice(0, 6)), isDefault: key === DEFAULT_KEY,
+      FILE = { key: key, name: (p && p.name) || 'Figma 파일 ' + key.slice(0, 6),
         node: pf ? pf.node : '', link: (p && p.link) || (sf && sf.key === key ? r[0].state.figmaUrl : '') };
       if (sf && TABS.indexOf(sf.key) < 0 && !TABS.length) TABS.push(sf.key);
       if (TABS.indexOf(key) < 0) TABS.push(key);
@@ -1160,6 +1166,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       if (want !== key) history.replaceState(null, '', purl(key) + location.hash);
     }, function(){ TABS = [FILE.key]; })
     .then(function(){
+      if (!FILE.key) throw NO_LINK;
       renderTabs(); document.title = FILE.name + ' · Figma Workbench';
       $('rtext').value = store('wb.draft.' + FILE.key) || '';
       growText();
@@ -1171,6 +1178,12 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       setInterval(function(){ if (!document.hidden) poll(false); }, 3000);
       /* 플러그인 · Claude가 목록이나 캡처를 새로 보내면(다른 PC · 파일 수정 후) 반영 */
       setInterval(function(){ if (!document.hidden) { loadCatalog(false); loadJobs(); } }, 5000);
+    })
+    .catch(function(x){
+      if (x !== NO_LINK) throw x;
+      /* 작업 링크가 없음: 시작 안내 3단계로 */
+      $('wb').innerHTML = '<div class="nolink"><b>작업할 Figma 파일이 정해지지 않았습니다</b><p>시작 안내 3단계에 작업할 Figma 링크를 넣으면 그 파일(프로젝트)로 Workbench가 열립니다.</p><a class="btn primary" href="Setup.html#s3">시작 안내 3단계로</a></div>';
+      document.title = 'Figma Workbench';
     });
 })();
 </script>

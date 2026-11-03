@@ -2,6 +2,23 @@
 
 ---
 
+## [Workbench] v0.8.0 · 2026-11-03 · 기본 프로젝트 없앰(시작 안내 링크로만), 맥 Claude Code 새 위치
+
+- 작업 프로젝트는 시작 안내 3단계 링크로만 정한다. UX AI TEST 기본값 · 기본 링크 버튼을 없앴고, Workbench는 시작 안내 링크의 프로젝트로 열린다.
+- 프로젝트 폴더 · 예시 프로토타입(Assay Pack)은 PC마다 따로라 배포본에 넣지 않는다.
+- 맥: Claude 앱 새 버전의 Claude Code 위치(`…/claude.app/Contents/MacOS/claude`)도 찾는다. 자세한 내용은 아래 「v0.8.0에 포함」.
+
+## [Workbench] (v0.8.0에 포함) · 2026-11-03 · 기본 프로젝트(UX AI TEST) · 예시 프로토타입 없앰
+
+- **기본값 없음**: 작업 파일(프로젝트)은 시작 안내 3단계 링크로만 정한다. 「기본 작업 링크 사용 (UX AI TEST)」 버튼, 처음 실행 때 UX AI TEST 링크를 자동으로 넣던 것, 화면 · 서버 · 감시 · 플러그인에 박혀 있던 UX AI TEST 파일 키를 모두 없앴다.
+- **Workbench**: 시작 안내 링크의 파일로 연다(주소 `?p=`가 있으면 그 파일, 둘 다 없으면 마지막으로 본 탭). 예전에는 마지막으로 본 탭이 먼저라 UX AI TEST에 머물렀다. 링크가 아예 없으면 「작업할 Figma 파일이 정해지지 않았습니다 → 시작 안내 3단계로」를 보여 준다.
+- UX 문서 「내 작업 기준」 · 프로토타입 · 플러그인 캡처도 시작 안내 링크의 파일 기준. 파일 키 없는 예전 요청을 UX AI TEST로 보던 것도 없앴다.
+- **PC마다 따로인 것은 배포 · 저장소에서 뺌**: 프로젝트 폴더(`projects/`, UX AI TEST 목록 · 라벨)와 예시 프로토타입(Assay Pack: `prototypes/assay-pack`, `Assay_Pack_Prototype.html`). 이 PC에 있는 파일은 그대로 둔다.
+
+## [Workbench] (v0.8.0에 포함) · 2026-11-03 · 고침: 맥 Claude Code 새 위치(claude.app)
+
+- 맥 Claude 데스크톱 앱 새 버전은 Claude Code CLI를 `~/Library/Application Support/Claude/claude-code/{버전}/{해시}/claude.app/Contents/MacOS/claude`에 둔다. 서버가 예전 위치(`…/{해시}/claude`)만 찾아 7단계가 「찾지 못함」이던 것을 고쳤다(두 위치 모두 찾고, 가장 최근 것을 쓴다). 앱이 업데이트돼 버전 · 해시 폴더가 바뀌어도 다시 찾는다.
+
 ## [Workbench] v0.7.3 · 2026-11-03 · 처음 실행 로그인 화면, Claude Code 위치 직접 지정
 
 - 새 PC도 처음 실행하면 로그인 화면부터(계정 정보가 없으면 그 화면에서 깃허브 연결 → 로그인).

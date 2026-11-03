@@ -10,7 +10,6 @@ $jobs = Join-Path $PSScriptRoot 'jobs.json'
 $utf8 = New-Object System.Text.UTF8Encoding($false)
 $histDir = Join-Path (Join-Path (Split-Path $PSScriptRoot -Parent) '.history') 'entries'
 $slug = ([Environment]::MachineName.ToLower() -replace '[^a-z0-9-]', '-')
-$defKey = 'etCQFF3CTf1EA6C79d4BBf'
 function Others {
   $o = @()
   if (Test-Path $histDir) {
@@ -29,10 +28,10 @@ function T($s) { try { return [DateTimeOffset]::Parse([string]$s) } catch { retu
 # 겹침: 같은 파일 · 프레임에 다른 PC 요청이 「진행 중」이거나, 내 요청보다 **먼저 등록한** 「대기」 요청
 #  등록 시각은 이력의 createdAt(예전 이력에는 없어 마지막 변경 시각 at으로 대신). 내 요청 시각을 못 읽으면 지금으로 본다
 function Overlap($r, $others) {
-  $k = [string]$r.fileKey; if (-not $k) { $k = $defKey }
+  $k = [string]$r.fileKey
   $rc = T $r.createdAt; if (-not $rc) { $rc = [DateTimeOffset]::Now }
   return @($others | Where-Object {
-    $ek = [string]$_.fileKey; if (-not $ek) { $ek = $defKey }
+    $ek = [string]$_.fileKey
     $oc = T $(if ($_.createdAt) { $_.createdAt } else { $_.at })
     $ek -eq $k -and $_.nodeId -eq $r.nodeId -and ($_.status -eq '진행 중' -or ($oc -and $oc -lt $rc))
   })

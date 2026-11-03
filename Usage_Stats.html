@@ -371,7 +371,7 @@ td.usd{font-weight:700}
     $('range').textContent = rows.length + '건' + (pages > 1 ? ' · ' + page + ' / ' + pages + ' 페이지' : '');
     $('jobTbl').classList.toggle('det', det);
     $('rows').innerHTML = rows.length ? rows.slice((page - 1) * PER, page * PER).map(function(u){
-      var proj = u.fileName && u.fileName !== 'UX AI TEST' ? '[' + esc(u.fileName) + '] ' : '';
+      var proj = u.fileName ? '[' + esc(u.fileName) + '] ' : '';
       return '<tr><td class="date">' + esc(fmt(u.at)) + '</td>' +
         '<td><span class="kind">' + (u.reqId ? '작업 ' + esc(u.reqId) : '작업') + '</span>' + proj + (u.frame ? '<b>' + esc(u.frame) + '</b>' : '') +
           '<span class="clamp" title="' + esc(u.text) + '">' + esc(u.text) + '</span><span class="sub one-line">API 호출 ' + num(u.calls) + '회 · ' + esc(Object.keys(u.models || {}).join(', ')) + '</span></td>' +

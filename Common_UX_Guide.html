@@ -215,8 +215,8 @@ dialog.gd-dlg::backdrop{background:rgba(10,12,16,.45)}
     function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
     function parseFig(u){ var m = String(u || '').match(/figma\.com\/(?:design|file|proto)\/([A-Za-z0-9]+)/); return m ? m[1] : ''; }
     function day(t){ return t ? String(t).slice(0, 10) : ''; }
-    /* 작업 기준 가이드: 시작 안내 작업 링크의 파일(없으면 UX AI TEST)마다 하나. 이 PC(나)에만 적용되고, 이 PC의 Claude가 요청을 처리할 때 따른다 */
-    var DEF_KEY = 'etCQFF3CTf1EA6C79d4BBf', workKey = DEF_KEY, workName = 'UX AI TEST', guideMap = {}, curGuide = '', viewId = null;
+    /* 작업 기준 가이드: 시작 안내 작업 링크의 파일마다 하나(링크가 없으면 고를 수 없다). 이 PC(나)에만 적용되고, 이 PC의 Claude가 요청을 처리할 때 따른다 */
+    var workKey = '', workName = '', guideMap = {}, curGuide = '', viewId = null;
     /* 본문: 고른 가이드의 보기 화면(끼워 넣기). 만든 가이드가 하나도 없으면 안내만 */
     function show(){
       var on = !!viewId;
@@ -249,9 +249,9 @@ dialog.gd-dlg::backdrop{background:rgba(10,12,16,.45)}
         $g('specJobs').innerHTML = making.filter(function(j){ return j.docKind === 'spec'; }).map(jobChip).join('');
         /* 가이드를 고친 뒤 Claude가 찾은 「고쳐야 할 화면」이 아직 반영 여부를 정하지 않은 채 남아 있으면 카드에 알린다 */
         var fix = {}; all.forEach(function(j){ if (j.kind === 'guide-check' && j.status === '완료' && (j.items || []).length) fix[j.guide] = (fix[j.guide] || 0) + j.items.length; });
-        workKey = parseFig(d[2] && d[2].state && d[2].state.figmaUrl) || DEF_KEY;
+        workKey = parseFig(d[2] && d[2].state && d[2].state.figmaUrl) || '';
         var pj = d[3] && (d[3].projects || []).filter(function(p){ return p.key === workKey; })[0];
-        workName = pj && pj.name ? pj.name : workKey === DEF_KEY ? 'UX AI TEST' : workKey.slice(0, 6);
+        workName = pj && pj.name ? pj.name : workKey ? workKey.slice(0, 6) : '작업 링크 없음';
         var ap = (d[0].applied || {})[workKey], cur = ap && ap.guideId || '';
         guideMap = {}; guides.forEach(function(g){ guideMap[g.id] = g; });
         if (cur && !guideMap[cur]) cur = '';   // 지운 가이드면 작업 기준 없음
@@ -268,7 +268,7 @@ dialog.gd-dlg::backdrop{background:rgba(10,12,16,.45)}
         if (sel.dataset.opts !== opts) { sel.innerHTML = opts; sel.dataset.opts = opts; }
         if (document.activeElement !== sel) sel.value = viewId;
         sel.disabled = !guides.length;
-        $g('gdApply').disabled = !viewId || viewId === cur;
+        $g('gdApply').disabled = !viewId || viewId === cur || !workKey;   // 작업 링크(파일)가 없으면 작업 기준을 정할 수 없다
         $g('gdBy2').textContent = viewId === cur && ap && ap.guideId === cur && ap.by ? '적용 · ' + String(ap.at || '').replace('T', ' ').slice(0, 16) : '';
         /* 만드는 중인 가이드 · 가이드 수정 뒤 「고쳐야 할 화면」 확인이 남은 가이드는 선택 상자 옆에 작게 알린다 */
         $g('gdJobs').innerHTML = jobs.map(jobChip).join('') + (viewId && fix[viewId] ? '<a class="gd-st fix" href="UX_Guide.html?g=' + encodeURIComponent(viewId) + '#fix">수정 반영 확인 ' + fix[viewId] + '</a>' : '');

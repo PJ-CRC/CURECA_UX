@@ -178,7 +178,6 @@ a{color:var(--accent)}
         <li>아래 칸에 붙여 넣고 <b>확인</b>을 누릅니다.</li>
       </ol>
       <div class="row"><input class="inp" id="figUrl" placeholder="https://www.figma.com/design/…" aria-label="Figma 링크"><button class="btn pri" id="figSave">확인</button></div>
-      <div class="row"><button class="btn" id="figDefault">기본 작업 링크 사용 (UX AI TEST)</button></div>
       <div id="figInfo"></div>
     </div>
   </details>
@@ -299,10 +298,7 @@ a{color:var(--accent)}
 <script>
 (function(){
   var API = '/api/setup';
-  /* 기본 프로젝트: UX AI TEST › SH.L */
-  var KEY = 'etCQFF3CTf1EA6C79d4BBf';
-  var PAGE = '129:104548';
-  var DEFAULT_URL = 'https://www.figma.com/design/' + KEY + '/UX-AI-TEST?node-id=' + PAGE.replace(':', '-');
+  /* 작업 파일(프로젝트)은 3단계에 넣은 링크로만 정한다. 기본 프로젝트는 없다 */
   var S = { state: { checks: {} }, env: null, online: false }, isMac = /Mac/.test(navigator.platform);
   var $ = function(id){ return document.getElementById(id); };
   var steps = ['s1','s2','s3','s4','s5','s6','s7','s8'];
@@ -372,7 +368,7 @@ a{color:var(--accent)}
     return {
       s1: { done: !!(S.state.user || '').trim(), chip: (S.state.user || '').trim() ? ['ok', S.state.user] : ['wait', '입력 필요'] },
       s2: { done: !!c.figma, chip: c.figma ? ['ok', '완료'] : (e.figmaInstalled === false ? ['bad', '설치 필요'] : ['wait', '확인 필요']) },
-      s3: { done: !!fig, chip: fig ? (fig.key === KEY ? ['ok', edName() ? '연결됨 · ' + edName() : '연결됨'] : (S.cat ? ['ok', '연결됨 · 목록 받음'] : ['ok', '연결됨 · 목록 대기'])) : ['wait', '링크 필요'] },
+      s3: { done: !!fig, chip: fig ? (edName() ? ['ok', '연결됨 · ' + edName()] : S.cat ? ['ok', '연결됨 · 목록 받음'] : ['ok', '연결됨 · 목록 대기']) : ['wait', '링크 필요'] },
       s4: { done: plugin || !!c.plugin, chip: plugin ? ['ok', '플러그인 연결됨'] : (c.plugin ? ['ok', '완료'] : ['wait', '연결 대기']) },
       s5: { done: !!c.claude, chip: c.claude ? ['ok', '완료'] : (e.claudeInstalled === false && !e.claudeCli ? ['bad', '설치 필요'] : ['wait', '확인 필요']) },
       s6: { done: !!c.connector, chip: c.connector ? ['ok', '완료'] : ['wait', '확인 필요'] },
@@ -452,7 +448,7 @@ a{color:var(--accent)}
     $('agentStart').hidden = !!ag.alive; $('agentStop').hidden = !ag.alive;
     setMsg('watchEnv', ag.alive ? null : ws != null && ws < 90 ? ['ok', '✓ Claude 창이 요청을 감시하고 있습니다. (' + (e.watcherHost || '') + ', ' + ago(ws) + ')'] : null);
 
-    var url = S.state.figmaUrl || DEFAULT_URL;
+    var url = S.state.figmaUrl || '(3단계에 넣은 작업 링크)';
     $('promptCheck').textContent = 'Figma 연결 확인해줘. 작업 파일: ' + url;
     $('promptWatch').textContent = '워크벤치 요청 감시 시작해줘. 작업 파일: ' + url;
     renderFig();
@@ -467,12 +463,9 @@ a{color:var(--accent)}
     var box = $('figInfo'), u = S.state.figmaUrl, f = parseFig(u);
     if (!u) { box.innerHTML = ''; return; }
     if (!f) { box.innerHTML = '<p class="msg bad">Figma 링크 형식이 아닙니다.</p>'; return; }
-    var same = f.key === KEY;
     box.innerHTML =
       '<dl class="kv"><dt>파일 키</dt><dd>' + f.key + '</dd><dt>노드</dt><dd>' + (f.node || '(페이지 지정 없음)') + '</dd></dl>' +
-      (same
-        ? '<p class="msg ok">✓ Workbench 작업 파일과 같은 파일입니다.' + (edName() ? ' 수정 가능 페이지: 「' + esc(edName()) + '」 (이 링크가 가리키는 페이지)' : '') + '</p>'
-        : '<p class="msg ok">✓ Workbench가 이 파일로 열립니다. (프로젝트 단위로 메뉴 · 수정 요청이 이 파일 기준으로 바뀝니다)</p>' +
+      ('<p class="msg ok">✓ Workbench가 이 파일로 열립니다. (프로젝트 단위로 메뉴 · 수정 요청이 이 파일 기준으로 바뀝니다)</p>' +
           (S.cat && S.cat.pages
             ? '<p class="msg ok">✓ 프레임 목록 받음: ' + esc(S.cat.fileName || '') + ' · ' + S.cat.pages.length + '페이지 · ' + S.cat.pages.reduce(function(a, p){ return a + (p.frames || []).length; }, 0) + '프레임' +
               (S.cat.pages.filter(function(p){ return p.editable; })[0] ? ' · 수정 페이지 ' + esc(S.cat.pages.filter(function(p){ return p.editable; })[0].name) : ' · 수정 페이지 없음(링크한 노드의 페이지에서 플러그인을 다시 실행하세요)') + '</p>'
@@ -485,20 +478,20 @@ a{color:var(--accent)}
     'git-login': '깃허브 연결 창을 열었습니다. 창의 안내대로 진행하세요.', install: '설치를 시작했습니다. 설치 창의 안내를 따르세요.' };
   function launch(app, what){
     var body = { app: app };
-    if (app === 'figma') body.url = S.state.figmaUrl || DEFAULT_URL;
+    if (app === 'figma') body.url = S.state.figmaUrl || '';
     if (what) body.what = what;
     return fetch(API + '/launch', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
       .then(function(r){ return r.json(); })
       .then(function(d){ toast(d.error ? d.error : DONE[app]); setTimeout(load, 800); return !d.error; })
       .catch(function(){ toast('서버에 연결할 수 없습니다.'); return false; });
   }
-  /* 처음 연 PC: Claude · Figma 실행, 기본 작업 링크, 깃(없으면 설치 · 있으면 깃허브 연결)을 한 번에 시작한다 */
+  /* 처음 연 PC: Claude · Figma 실행, 깃(없으면 설치 · 있으면 깃허브 연결)을 한 번에 시작한다 */
   function auto(){
     var e = S.env || {}, did = [], todo = [], p = { autoAt: new Date().toISOString() };
-    if (!S.state.figmaUrl) p.figmaUrl = DEFAULT_URL;
     save(p).then(function(){
       if (e.claudeInstalled) { launch('claude'); did.push('Claude 실행'); } else todo.push('Claude 설치(5단계)');
       if (e.figmaInstalled) { setTimeout(function(){ launch('figma'); }, 1500); did.push('Figma 실행'); } else todo.push('Figma 설치(2단계)');
+      if (!S.state.figmaUrl) todo.push('작업할 Figma 링크(3단계)');
       /* 이미 연결된 PC(예전에 로그인)면 창을 띄우지 않는다 */
       if (!(e.historySync && e.historySync.ok)) { setTimeout(function(){ launch('git-login'); }, 3000); did.push('깃허브 연결' + (e.gitInstalled ? '' : '(git 설치부터)')); }
       var m = $('autoMsg'); m.hidden = false; m.className = 'msg ok';
@@ -541,7 +534,6 @@ a{color:var(--accent)}
     save({ figmaUrl: v }).then(function(){ toast('링크를 저장했습니다.'); });
   };
   $('figUrl').addEventListener('keydown', function(e){ if (e.key === 'Enter') $('figSave').click(); });
-  $('figDefault').onclick = function(){ $('figUrl').value = DEFAULT_URL; $('figSave').click(); };
   $('finish').onclick = function(){ save({ done: true }).then(function(){ location.href = 'Figma_Workbench.html'; }, function(){ location.href = 'Figma_Workbench.html'; }); };
   $('reset').onclick = function(){
     if (!confirm('이 PC의 시작 안내 진행 상태를 처음으로 되돌릴까요?')) return;

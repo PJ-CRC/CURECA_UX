@@ -205,7 +205,7 @@ button{cursor:pointer}
       out.push({key:'h:' + h.id, kind:'work', mine:String(h.id).indexOf(hist.pcSlug + '_') === 0, at:h.at,
         status:h.kind === 'request' ? (h.status || '완료') : '작업', who:who, people:[h.by, h.doneBy], pc:h.pc,
         badge:h.reqId ? '작업 ' + h.reqId : '작업', title:h.reqId ? (h.frame || first) : (first || h.frame || '작업'),
-        frame:h.frame || '', page:h.page, file:h.fileName && h.fileName !== 'UX AI TEST' ? h.fileName : '', type:h.type, layout:h.layout,
+        frame:h.frame || '', page:h.page, file:h.fileName || '', type:h.type, layout:h.layout,
         text:h.text, note:h.note, shot:h.shot ? '.history/' + h.shot : '', nodeId:h.nodeId,
         images:(h.images || []).map(function(x){ return {src:'.history/' + x, full:'.history/' + x}; })});
     });
@@ -213,7 +213,7 @@ button{cursor:pointer}
       if (logged[hist.pcSlug + '_' + r.id]) return;
       var who = r.author || '—'; if (r.updatedBy && r.updatedBy !== r.author) who += ' → ' + r.updatedBy;
       out.push({key:'r:' + r.id, kind:'req', mine:true, at:r.updatedAt || r.createdAt, status:r.status, who:who, people:[r.author, r.updatedBy],
-        badge:'요청 ' + r.id, title:r.frame || r.id, frame:r.frame || '', page:r.page, file:r.fileName && r.fileName !== 'UX AI TEST' ? r.fileName : '',
+        badge:'요청 ' + r.id, title:r.frame || r.id, frame:r.frame || '', page:r.page, file:r.fileName || '',
         type:r.type, layout:r.layout, text:r.text, note:r.note, nodeId:r.nodeId,
         images:(r.images || []).map(function(m){ return {src:m.small || m.file, full:m.file}; })});
     });

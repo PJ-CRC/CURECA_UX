@@ -33,7 +33,8 @@ $Root = $PSScriptRoot
 $ReqFile = P $Root 'workbench' 'edit_requests.json'
 $JobFile = P $Root 'workbench' 'jobs.json'
 $ProjRoot = P $Root 'projects'
-$DefaultKey = 'etCQFF3CTf1EA6C79d4BBf'   # 기본 프로젝트: UX AI TEST
+# 기본 프로젝트는 없다. 파일 키를 안 준 요청(예: 플러그인 캡처)은 시작 안내 3단계 작업 링크의 파일로 본다
+function Work-Key { return (Key-Of (Read-Setup).figmaUrl) }
 $ProtoRoot = P $Root 'prototypes'   # 프로토타입(이 PC에만): prototypes/{id}/meta.json · index.html · screens/
 $Utf8 = New-Object System.Text.UTF8Encoding($false)
 # PC별 진행 상태: 윈도우 %LOCALAPPDATA%, 맥 ~/Library/Application Support
@@ -114,7 +115,7 @@ function Read-Jobs { if (Test-Path $JobFile) { try { return [IO.File]::ReadAllTe
 # ── 작업 이력(공유) ──
 # 그 프레임의 지금 캡처를 이력용으로 남긴다: 크기는 그대로(원본), PNG는 JPG(품질 85)로 바꿔 용량만 줄인다. 바꾸지 못하면 그대로 복사
 function Copy-HistShot($key, $nid, $name) {
-  if (-not $key) { $key = $DefaultKey }
+  if (-not $key) { return '' }
   if (-not (Test-Key $key) -or [string]$nid -notmatch '^\d+:\d+$') { return '' }
   $src = $null
   foreach ($x in 'png', 'jpg') { $f = P (Proj-Dir $key) 'shots' ($nid.Replace(':', '-') + '.' + $x); if (Test-Path $f) { $src = $f } }
@@ -743,7 +744,7 @@ while ($l.IsListening) {
     # 프레임 캡처 저장 {fileKey, nodeId, png(base64, PNG 또는 JPG), w, h, by, name} → projects/{fileKey}/shots
     if ($path -eq '/api/shots' -and $req.HttpMethod -eq 'POST') {
       $body = (New-Object IO.StreamReader($req.InputStream, $Utf8)).ReadToEnd() | ConvertFrom-Json
-      $key = [string]$body.fileKey; if (-not $key) { $key = $DefaultKey }
+      $key = [string]$body.fileKey; if (-not $key) { $key = Work-Key }
       if (-not (Test-Key $key)) { throw '잘못된 파일 키입니다.' }
       $nid = [string]$body.nodeId
       if ($nid -notmatch '^\d+:\d+$') { throw "잘못된 nodeId: $nid" }
@@ -775,10 +776,11 @@ while ($l.IsListening) {
         foreach ($d in Get-ChildItem $ProjRoot -Directory) {
           $p = Read-Proj $d.Name; if (-not $p) { continue }
           $shots = 0; $sd = P $d.FullName 'shots'; if (Test-Path $sd) { $shots = @(Get-ChildItem $sd -File).Count }
-          $list += [pscustomobject]@{ key = $p.key; name = $p.name; link = $p.link; editablePageId = $p.editablePageId; editablePageName = $p.editablePageName; uxGuideLink = $p.uxGuideLink; hasCatalog = (Test-Path (P $d.FullName 'catalog.json')); shots = $shots; isDefault = ($p.key -eq $DefaultKey) }
+          $list += [pscustomobject]@{ key = $p.key; name = $p.name; link = $p.link; editablePageId = $p.editablePageId; editablePageName = $p.editablePageName; uxGuideLink = $p.uxGuideLink; hasCatalog = (Test-Path (P $d.FullName 'catalog.json')); shots = $shots; isDefault = ($p.key -eq (Work-Key)) }
         }
       }
-      SendJson $c 200 @{ defaultKey = $DefaultKey; projects = @($list) }; continue
+      # defaultKey: 예전 이름 그대로(Figma AI Run 실행 파일이 이 글자로 지금 서버인지 확인한다). 값은 시작 안내 작업 링크의 파일(없으면 빈 값)
+      SendJson $c 200 @{ defaultKey = (Work-Key); workKey = (Work-Key); projects = @($list) }; continue
     }
     # 프로토타입 목록(이 PC에만): prototypes/{id}/meta.json + Figma가 바뀐 화면(stale)
     #  바뀐 화면 = 프로토타입을 맞춘 뒤(syncedAt) 캡처가 새로 들어온 프레임(shots_meta) · 다른 작업자가 완료한 요청(공유 이력)의 프레임
@@ -798,7 +800,7 @@ while ($l.IsListening) {
             $why = ''; $at = ''
             $s = if ($shotMeta[$k]) { $shotMeta[$k].($fr.nodeId) } else { $null }
             if ($s -and $s.at) { try { if ([datetime]$s.at -gt $since) { $why = 'Figma 캡처가 새로 들어옴'; $at = [string]$s.at } } catch {} }
-            $h = $hist | Where-Object { $_.nodeId -eq $fr.nodeId -and (([string]$_.fileKey -eq $k) -or (-not $_.fileKey -and $k -eq $DefaultKey)) } | Where-Object { try { [datetime]$_.at -gt $since } catch { $false } } | Select-Object -First 1
+            $h = $hist | Where-Object { $_.nodeId -eq $fr.nodeId -and [string]$_.fileKey -eq $k } | Where-Object { try { [datetime]$_.at -gt $since } catch { $false } } | Select-Object -First 1
             if ($h) { $why = "$($h.by) $($h.reqId) 수정 완료"; $at = [string]$h.at }
             if ($why) { $stale += [pscustomobject]@{ nodeId = $fr.nodeId; name = $fr.name; why = $why; at = $at } }
           }
