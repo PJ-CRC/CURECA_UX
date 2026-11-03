@@ -333,7 +333,17 @@ function Save-Account($a) {
   [IO.File]::WriteAllText((P $AcctDir (([string]$a.id).ToLower() + '.json')), ($a | ConvertTo-Json -Depth 4), $Utf8)
   $script:SyncWant = $true   # 바로 깃으로 올린다
 }
-function Auth-Required { return ((Test-Path $AcctDir) -and @(Get-ChildItem $AcctDir -Filter *.json -ErrorAction SilentlyContinue).Count -gt 0) }
+function Has-Accounts { return ((Test-Path $AcctDir) -and @(Get-ChildItem $AcctDir -Filter *.json -ErrorAction SilentlyContinue).Count -gt 0) }
+# 공유 이력을 한 번이라도 받았는지(계정 정보는 이력과 함께 깃으로 온다)
+function Hist-Ready {
+  if ((Test-Path $HistEntries) -and @(Get-ChildItem $HistEntries -Filter *.json -ErrorAction SilentlyContinue).Count) { return $true }
+  try { return [bool](([IO.File]::ReadAllText($SyncStat, $Utf8) | ConvertFrom-Json).ok) } catch { return $false }
+}
+# 로그인이 필요한가: 계정이 있으면 늘. 새 PC라 아직 이력(계정)을 못 받았어도 로그인 화면부터 보인다(그 화면에서 깃허브 연결 → 계정을 받은 뒤 로그인)
+#  이력을 받았는데도 계정이 하나도 없으면(계정을 쓰지 않는 곳) 예전처럼 로그인 없이 쓴다
+function Auth-Required { return ((Has-Accounts) -or -not (Hist-Ready)) }
+# 계정 정보를 아직 받지 못한 새 PC: 로그인 화면이 깃허브 연결부터 안내한다
+function Need-Sync { return (-not (Has-Accounts) -and -not (Hist-Ready)) }
 # 이 PC에 로그인한 계정(사용 중이고 비밀번호가 로그인 뒤 바뀌지 않았을 때)
 function Current-User {
   $s = Read-Setup; if (-not $s.login -or -not $s.login.id) { return $null }
@@ -349,8 +359,10 @@ function Me-Info {
   # 처음 열 페이지: 고른 메뉴 중 첫째(없으면 시작 안내)
   $first = ''; foreach ($m in $Menus) { if (-not $m.always -and $allowed -contains $m.key) { $first = $m.pages[0]; break } }
   if (-not $first) { foreach ($m in $Menus) { if ($allowed -contains $m.key) { $first = $m.pages[0]; break } } }
+  $ns = Need-Sync; $hs = $null; if ($ns) { try { $hs = [IO.File]::ReadAllText($SyncStat, $Utf8) | ConvertFrom-Json } catch {} }
   return [ordered]@{ required = $req
-    user = $(if ($u) { [ordered]@{ id = $u.id; name = $u.name; admin = [bool]$u.admin; menus = @($allowed) } } else { $null })
+    needSync = $ns; syncMsg = $(if ($hs) { [string]$hs.message } else { '' }); syncBusy = $(if ($hs) { [bool]$hs.busy } else { $false })
+    user =$(if ($u) { [ordered]@{ id = $u.id; name = $u.name; admin = [bool]$u.admin; menus = @($allowed) } } else { $null })
     menus = @($Menus | ForEach-Object { [ordered]@{ key = $_.key; label = $_.label; page = $_.pages[0]; pages = $_.pages; admin = [bool]$_.admin } })
     allowed = @($allowed); first = $(if ($first) { $first } else { 'Account.html' }) }
 }
@@ -388,6 +400,9 @@ function Find-Git {
 # Claude Code 실행 파일: PATH의 claude, 없으면 Claude 데스크톱 앱에 들어 있는 것(앱의 Code 탭이 쓰는 그것)
 #  %LOCALAPPDATA%\Claude-Data\claude_*\claude-code\{버전}\{해시}\claude.exe 중 가장 최근 것
 function Find-ClaudeCode {
+  # 시작 안내 7단계에서 직접 넣은 경로(where claude 결과)가 먼저
+  $set = [string](Read-Setup).claudePath
+  if ($set -and (Test-Path -LiteralPath $set -PathType Leaf)) { return $set }
   $g = Get-Command claude -ErrorAction SilentlyContinue | Select-Object -First 1
   if ($g) { return $g.Source }
   $d = Join-Path $env:LOCALAPPDATA 'Claude-Data'
@@ -460,6 +475,8 @@ function Get-SetupEnv {
     figmaInstalled = (Test-Path $FigmaExe)
     claudeInstalled = [bool](Find-Claude)
     claudeCli = [bool](Find-ClaudeCode)
+    # 7단계에 보이는 진단: 찾은 경로 · 찾아본 PATH · 직접 넣은 경로
+    claudePath = [string](Find-ClaudeCode); claudeLook = [string]$env:PATH; claudeSet = [string](Read-Setup).claudePath
     pluginSeenSec = (& $ago $script:PluginSeen)
     watcherSec = $(if ($hb) { & $ago $hb.at } else { $null })
     watcherHost = $(if ($hb) { [string]$hb.host } else { '' })
@@ -562,7 +579,8 @@ while ($l.IsListening) {
     }
     if (($isBrowser -or $path -like '/api/accounts*' -or $path -eq '/api/me/password') -and (Auth-Required)) {
       $rel0 = $path.TrimStart('/'); if ($rel0 -eq '') { $rel0 = 'Common_UX_Guide.html' }
-      $open = ($rel0 -in 'Login.html', 'appnav.css', 'appnav.js', 'VERSION') -or ($path -in '/api/alive', '/api/bye') -or ($rel0 -match '\.(css|js|png|jpe?g|svg|ico|woff2?)$' -and $rel0 -notlike 'prototypes/*')
+      # 계정 정보를 아직 못 받은 새 PC: 로그인 화면의 [깃허브 연결](/api/setup/launch)은 로그인 없이 된다
+      $open = ($rel0 -in 'Login.html', 'appnav.css', 'appnav.js', 'VERSION') -or ($path -in '/api/alive', '/api/bye') -or ($path -eq '/api/setup/launch' -and (Need-Sync)) -or ($rel0 -match '\.(css|js|png|jpe?g|svg|ico|woff2?)$' -and $rel0 -notlike 'prototypes/*')
       if (-not $open) {
         $u = Current-User
         if (-not $u) {
@@ -663,6 +681,12 @@ while ($l.IsListening) {
         $s = Read-Setup
         foreach ($k in 'done', 'user', 'figmaUrl', 'autoAt', 'autoWatch') { if ($null -ne $body.$k) { $s | Add-Member -NotePropertyName $k -NotePropertyValue $body.$k -Force } }
         if ($body.checks) { $s | Add-Member -NotePropertyName checks -NotePropertyValue $body.checks -Force }
+        # Claude Code 경로 직접 지정(7단계): where claude 결과(여러 줄이면 첫 줄). 빈 값이면 자동으로 찾기
+        if ($null -ne $body.claudePath) {
+          $cp = (([string]$body.claudePath) -split "`r?`n" | Where-Object { $_.Trim() } | Select-Object -First 1); $cp = "$cp".Trim().Trim('"')   # 빈 값이면 Select 결과가 AutomationNull이라 [string]으로 바꿔도 null
+          if ($cp -and -not (Test-Path -LiteralPath $cp -PathType Leaf)) { throw "그 경로에서 Claude Code를 찾지 못했습니다: $cp (where claude 결과를 그대로 붙여 넣으세요)" }
+          $s | Add-Member -NotePropertyName claudePath -NotePropertyValue $cp -Force
+        }
         $s | Add-Member -NotePropertyName updatedAt -NotePropertyValue (Get-Date).ToString('yyyy-MM-ddTHH:mm:sszzz') -Force
         if (-not (Test-Path $SetupDir)) { New-Item -ItemType Directory -Path $SetupDir | Out-Null }
         [IO.File]::WriteAllText($SetupFile, ($s | ConvertTo-Json -Depth 5), $Utf8)

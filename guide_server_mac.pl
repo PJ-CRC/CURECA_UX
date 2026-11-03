@@ -117,6 +117,9 @@ sub load_shell_path {
 # Claude Code 실행 파일: PATH(로그인 셸 PATH 포함)의 claude → 흔한 설치 위치 → Claude 데스크톱 앱에 들어 있는 것(가장 최근 것)
 sub find_claude_code {
   my $home = $ENV{HOME} || '';
+  # 시작 안내 7단계에서 직접 넣은 경로(터미널 `which claude` 결과)가 먼저
+  my $set = encode(q{UTF-8}, str(eval { read_setup()->{claudePath} }));
+  if ($set ne '' && -x $set && !-d $set) { (my $d = $set) =~ s{/[^/]+$}{}; $ENV{PATH} .= ":$d" unless index(":$ENV{PATH}:", ":$d:") >= 0; return $set; }
   my @dirs = ('/usr/local/bin', '/opt/homebrew/bin', "$home/.local/bin", "$home/.claude/local", "$home/.claude/bin", "$home/.npm-global/bin",
     "$home/.volta/bin", "$home/.bun/bin", "$home/Library/pnpm", "$home/.yarn/bin");
   # 찾은 폴더는 PATH에도 붙인다(npm으로 깐 claude는 같은 폴더의 node로 돈다)
@@ -155,6 +158,8 @@ sub setup_env {
     figmaInstalled => app_installed('Figma') ? JSON::PP::true : JSON::PP::false,
     claudeInstalled => app_installed('Claude') ? JSON::PP::true : JSON::PP::false,
     claudeCli => find_claude_code() ? JSON::PP::true : JSON::PP::false,
+    # 7단계에 보이는 진단: 찾은 경로 · 찾아본 PATH(직접 넣은 경로가 있으면 그것)
+    claudePath => decode(q{UTF-8}, find_claude_code() // q{}), claudeLook => decode(q{UTF-8}, $ENV{PATH} // q{}), claudeSet => str(eval { read_setup()->{claudePath} }),
     pluginSeenSec => $ago->($plugin_seen), watcherSec => $ago->($wt), watcherHost => ref $hb eq 'HASH' ? str($hb->{host}) : '',
     agent => agent_info(),
     # 맥의 /usr/bin/git은 개발자 도구가 있어야 동작한다
@@ -459,7 +464,17 @@ sub read_accounts {
 }
 sub read_account { my ($id) = @_; return undef unless str($id) =~ /^[A-Za-z0-9._-]{3,32}$/; my $a = eval { read_json("$ACCT_DIR/" . lc($id) . '.json') }; return ref $a eq 'HASH' ? $a : undef; }
 sub save_account { my ($a) = @_; make_path($ACCT_DIR); $a->{updatedAt} = now_iso(); write_json("$ACCT_DIR/" . lc($a->{id}) . '.json', $a); $sync_want = 1; }
-sub auth_required { opendir(my $dh, $ACCT_DIR) or return 0; my $n = grep { /\.json$/ } readdir $dh; closedir $dh; return $n > 0; }
+sub has_accounts { opendir(my $dh, $ACCT_DIR) or return 0; my $n = grep { /\.json$/ } readdir $dh; closedir $dh; return $n > 0; }
+# 공유 이력을 한 번이라도 받았는지(계정 정보는 이력과 함께 깃으로 온다)
+sub hist_ready {
+  if (opendir(my $dh, $HIST_ENTRIES)) { my $n = grep { /\.json$/ } readdir $dh; closedir $dh; return 1 if $n; }
+  my $st = eval { read_json($SYNC_STAT) }; return ref $st eq 'HASH' && $st->{ok} ? 1 : 0;
+}
+# 로그인이 필요한가: 계정이 있으면 늘. 새 PC라 아직 이력(계정)을 못 받았어도 로그인 화면부터 보인다(그 화면에서 깃허브 연결 → 계정을 받은 뒤 로그인)
+#  이력을 받았는데도 계정이 하나도 없으면(계정을 쓰지 않는 곳) 예전처럼 로그인 없이 쓴다
+sub auth_required { return has_accounts() || !hist_ready(); }
+# 계정 정보를 아직 받지 못한 새 PC: 로그인 화면이 깃허브 연결부터 안내한다
+sub need_sync { return !has_accounts() && !hist_ready(); }
 sub current_user {
   my $s = read_setup(); return undef unless ref $s->{login} eq 'HASH' && str($s->{login}{id}) ne '';
   my $a = read_account($s->{login}{id});
@@ -474,7 +489,9 @@ sub me_info {
   # 처음 열 페이지: 고른 메뉴 중 첫째(없으면 시작 안내)
   my ($first) = map { $_->{pages}[0] } grep { !$_->{always} && $al{ $_->{key} } } @MENUS;
   ($first) = map { $_->{pages}[0] } grep { $al{ $_->{key} } } @MENUS unless $first;
+  my $ns = need_sync(); my $hs = $ns ? eval { read_json($SYNC_STAT) } : undef; $hs = {} unless ref $hs eq 'HASH';
   return { required => $req ? JSON::PP::true : JSON::PP::false,
+    needSync => $ns ? JSON::PP::true : JSON::PP::false, syncMsg => str($hs->{message}), syncBusy => $hs->{busy} ? JSON::PP::true : JSON::PP::false,
     user => $u ? { id => $u->{id}, name => $u->{name}, admin => $u->{admin} ? JSON::PP::true : JSON::PP::false, menus => [@allowed] } : undef,
     menus => [ map { { key => $_->{key}, label => $_->{label}, page => $_->{pages}[0], pages => $_->{pages}, admin => $_->{admin} ? JSON::PP::true : JSON::PP::false } } @MENUS ],
     allowed => [@allowed], first => $first || 'Account.html' };
@@ -768,6 +785,14 @@ sub setup_post {
   if ($path eq '/api/setup') {
     my $s = read_setup();
     for my $k (qw(done user figmaUrl autoAt autoWatch)) { $s->{$k} = $b->{$k} if exists $b->{$k} && defined $b->{$k}; }
+    # Claude Code 경로 직접 지정(7단계): `which claude` 결과 · 별칭 줄을 붙여 넣어도 경로만 쓴다. 빈 값이면 자동으로 찾기
+    if (exists $b->{claudePath}) {
+      my $p = trim($b->{claudePath});
+      if ($p ne '' && $p !~ m{^~?/[^'"\s]*$}) { my ($m) = $p =~ m{(~?/[^'"\s]*/claude)\b}; $p = $m if defined $m; }
+      $p =~ s{^~}{$ENV{HOME}};
+      die "그 경로에서 Claude Code를 찾지 못했습니다: $p (터미널에서 which claude 결과를 그대로 붙여 넣으세요)\n" if $p ne '' && !(-x encode('UTF-8', $p) && !-d encode('UTF-8', $p));
+      $s->{claudePath} = $p;
+    }
     $s->{checks} = $b->{checks} if ref $b->{checks} eq 'HASH';
     $s->{updatedAt} = now_iso();
     make_path($SETUP_DIR); write_json($SETUP_FILE, $s);
@@ -876,7 +901,8 @@ sub handle {
   }
   if (($is_browser || $path =~ m{^/api/accounts} || $path eq '/api/me/password') && auth_required()) {
     (my $rel0 = $path) =~ s{^/+}{}; $rel0 = 'Common_UX_Guide.html' if $rel0 eq '';
-    my $open = (grep { $rel0 eq $_ } qw(Login.html appnav.css appnav.js VERSION)) || $path eq '/api/alive' || $path eq '/api/bye' || ($rel0 =~ /\.(css|js|png|jpe?g|svg|ico|woff2?)$/i && $rel0 !~ m{^prototypes/});
+    # 계정 정보를 아직 못 받은 새 PC: 로그인 화면의 [깃허브 연결](/api/setup/launch)은 로그인 없이 된다
+    my $open = (grep { $rel0 eq $_ } qw(Login.html appnav.css appnav.js VERSION)) || $path eq '/api/alive' || $path eq '/api/bye' || ($path eq '/api/setup/launch' && need_sync()) || ($rel0 =~ /\.(css|js|png|jpe?g|svg|ico|woff2?)$/i && $rel0 !~ m{^prototypes/});
     unless ($open) {
       my $u = current_user();
       unless ($u) {

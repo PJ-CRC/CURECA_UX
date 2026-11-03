@@ -36,16 +36,36 @@ button{width:100%;height:44px;margin-top:6px;border:0;border-radius:9px;backgrou
 button:disabled{opacity:.6;cursor:default}
 .err{min-height:20px;margin:10px 0 0;color:var(--red);font-size:13px}
 .foot{margin:18px 0 0;color:var(--ink-3);font-size:12px;line-height:1.5}
+/* 새 PC: 계정 정보(깃 공유)를 받기 전에는 깃허브 연결부터 */
+.sync{display:none}
+.card.need .sync{display:block}
+.card.need .login{display:none}
+.sync ol{margin:0 0 14px;padding-left:20px;font-size:13.5px;color:var(--ink-2)}
+.sync ol li{margin:4px 0}
+.sync .st{margin:12px 0 0;padding:8px 10px;border-radius:8px;background:var(--surface-2);font-size:13px;color:var(--ink-2)}
 </style>
 </head>
 <body>
 <form class="card" id="f" autocomplete="on">
   <div class="brand">Figma AI Run</div>
   <h1>로그인</h1>
-  <p class="sub">관리자에게 받은 아이디와 비밀번호로 로그인하세요. 이 PC에서는 로그아웃할 때까지 유지됩니다.</p>
-  <label>아이디<input id="id" name="username" autocomplete="username" autocapitalize="off" spellcheck="false" required></label>
-  <label>비밀번호<input id="pw" name="password" type="password" autocomplete="current-password" required></label>
-  <button id="go">로그인</button>
+  <!-- 새 PC: 계정 정보는 작업 이력과 함께 깃허브로 받는다 → 깃허브 연결이 끝나면 로그인 칸으로 바뀐다 -->
+  <div class="sync">
+    <p class="sub">이 PC에 아직 계정 정보가 없습니다. 깃허브에 연결해 계정 정보를 받은 뒤 로그인합니다(처음 한 번).</p>
+    <ol>
+      <li>아래 <b>[깃허브 연결]</b>을 누르면 연결 창이 열립니다.</li>
+      <li>창의 안내대로 <b>본인 깃허브 계정</b>으로 로그인 · 승인합니다(저장소에 초대 · 수락돼 있어야 합니다).</li>
+      <li>연결이 끝나면 이 화면이 저절로 로그인 칸으로 바뀝니다.</li>
+    </ol>
+    <button type="button" id="gh">깃허브 연결</button>
+    <p class="st" id="syncSt">깃허브 연결을 기다리는 중…</p>
+  </div>
+  <div class="login">
+    <p class="sub">관리자에게 받은 아이디와 비밀번호로 로그인하세요. 이 PC에서는 로그아웃할 때까지 유지됩니다.</p>
+    <label>아이디<input id="id" name="username" autocomplete="username" autocapitalize="off" spellcheck="false"></label>
+    <label>비밀번호<input id="pw" name="password" type="password" autocomplete="current-password"></label>
+    <button id="go">로그인</button>
+  </div>
   <p class="err" id="err" role="alert"></p>
   <p class="foot">계정이 없거나 비밀번호를 잊었으면 최고관리자에게 요청하세요.</p>
 </form>
@@ -60,12 +80,37 @@ button:disabled{opacity:.6;cursor:default}
   var next = new URLSearchParams(location.search).get('next') || '';
   /* 같은 서버 안의 주소로만 돌아간다 */
   if (!/^\/[^\/\\]/.test(next) || /Login\.html/.test(next)) next = '';
-  fetch('/api/me', { cache: 'no-store' }).then(function(r){ return r.json(); }).then(function(m){
-    if (!m.required || m.user) location.replace(next || '/' + m.first);
-  }).catch(function(){ $('err').textContent = '서버에 연결할 수 없습니다. Figma AI Run을 실행해 주세요.'; });
-  $('id').focus();
+  /* 로그인 상태 확인. 새 PC(계정 정보를 아직 못 받음)면 깃허브 연결부터, 받으면 로그인 칸으로 */
+  var needSync = false, timer = null;
+  function check(){
+    return fetch('/api/me', { cache: 'no-store' }).then(function(r){ return r.json(); }).then(function(m){
+      if (!m.required || m.user) { location.replace(next || '/' + m.first); return; }
+      var was = needSync; needSync = !!m.needSync;
+      $('f').classList.toggle('need', needSync);
+      if (needSync) {
+        $('syncSt').textContent = m.syncBusy ? '깃허브에 연결하는 중…' : m.syncMsg ? m.syncMsg : '깃허브 연결을 기다리는 중…';
+        if (!timer) timer = setInterval(check, 3000);
+      } else {
+        if (timer) { clearInterval(timer); timer = null; }
+        if (was) $('err').textContent = '';
+        $('id').focus();
+      }
+    }).catch(function(){ $('err').textContent = '서버에 연결할 수 없습니다. Figma AI Run을 실행해 주세요.'; });
+  }
+  check();
+  $('gh').addEventListener('click', function(){
+    var b = this; b.disabled = true; $('err').textContent = '';
+    fetch('/api/setup/launch', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ app: 'git-login' }) })
+      .then(function(r){ return r.json(); }).then(function(d){
+        if (d.error) throw new Error(d.error);
+        $('syncSt').textContent = '연결 창을 열었습니다. 창의 안내대로 진행하세요.';
+      }).catch(function(x){ $('err').textContent = x.message || '연결 창을 열지 못했습니다.'; })
+      .then(function(){ setTimeout(function(){ b.disabled = false; }, 4000); });
+  });
   $('f').addEventListener('submit', function(e){
     e.preventDefault();
+    if (needSync) return;
+    if (!$('id').value.trim() || !$('pw').value) { $('err').textContent = '아이디와 비밀번호를 입력해 주세요.'; return; }
     $('go').disabled = true; $('err').textContent = '';
     fetch('/api/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: $('id').value.trim(), pw: $('pw').value }) })
       .then(function(r){ return r.json(); }).then(function(d){

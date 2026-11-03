@@ -71,6 +71,17 @@ a{color:var(--accent)}
 .path code{flex:1;font:12.5px Consolas,monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .path .btn{flex:none;height:28px;padding:0 10px;font-size:12.5px}
 .msg{font-size:13px;margin:6px 0 0}
+/* 7단계 Claude Code 위치 */
+.cc-path{background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:8px 0}
+.cc-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px}
+.cc-row + .cc-row{margin-top:8px}
+.cc-row code{font-size:12.5px;word-break:break-all}
+.cc-row code.ok{color:var(--ok, #1a7f37)}
+.cc-row code.bad{color:var(--red, #d93025)}
+.cc-row input{flex:1;min-width:220px;height:32px;padding:0 10px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--ink);font:12.5px Consolas,Menlo,monospace}
+.cc-look{margin-top:8px;font-size:12px;color:var(--ink-3)}
+.cc-look summary{cursor:pointer}
+.cc-look code{display:block;white-space:pre-wrap;word-break:break-all;margin-top:4px;font-size:11.5px}
 .msg.ok{color:var(--ok)} .msg.bad{color:var(--red)} .msg.wait{color:var(--warn)}
 .chk{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;margin-top:6px;cursor:pointer}
 .chk input{width:16px;height:16px;accent-color:var(--accent)}
@@ -230,6 +241,17 @@ a{color:var(--accent)}
     <summary><span class="num">7</span><span class="ttl">요청 감시 (백그라운드)<small>창 없이 Claude가 Workbench 요청을 받아 Figma에 반영</small></span><span class="chip" data-chip></span></summary>
     <div class="body">
       <p class="msg" id="agentEnv"></p>
+      <!-- Claude Code 위치: 찾은 경로를 보여 주고, 못 찾으면 터미널의 which claude(윈도우 where claude) 결과를 넣어 직접 지정 -->
+      <div class="cc-path" id="ccBox">
+        <div class="cc-row"><b>Claude Code 위치</b> <code id="ccFound">확인 중…</code></div>
+        <div class="cc-row" id="ccSetRow">
+          <input id="ccPath" type="text" spellcheck="false" autocomplete="off" placeholder="못 찾으면: 터미널에서 which claude 실행 → 나온 경로를 붙여 넣기">
+          <button class="btn" id="ccSave" type="button">경로 저장</button>
+          <button class="btn" id="ccAuto" type="button" hidden>자동으로 찾기</button>
+        </div>
+        <details class="cc-look"><summary>찾아본 곳(PATH)</summary><code id="ccLook"></code></details>
+        <p class="msg" id="ccMsg"></p>
+      </div>
       <ol>
         <li><b>처음 한 번:</b> <b>「Claude 로그인 · Figma 연결」</b>을 누르면 Claude Code 창이 열립니다. 창에서 <code>/login</code> → 본인 Claude 계정으로 로그인, 이어서 <code>/mcp</code> → <b>figma</b> → <b>Authenticate</b> → 2단계와 같은 Figma 계정으로 승인합니다. 끝나면 창을 닫습니다.</li>
         <li><b>「백그라운드 감시 시작」</b>을 누릅니다. 창은 뜨지 않고, 요청이 들어오면 Claude가 뒤에서 처리합니다. (아래 체크를 켜 두면 Figma AI Run을 실행할 때마다 자동으로 시작합니다.)</li>
@@ -316,6 +338,16 @@ a{color:var(--accent)}
       .then(function(r){ return r.json(); })
       .then(function(d){ if (d.error) throw new Error(d.error); S.state = d.state; S.env = d.env; render(); return d; });
   }
+  /* Claude Code 경로 직접 지정 · 되돌리기(빈 값 = 자동으로 찾기) */
+  function saveCc(p){
+    $('ccSave').disabled = true;
+    return save({ claudePath: p })
+      .then(function(d){ setMsg('ccMsg', d.env && d.env.claudeCli ? ['ok', '✓ ' + (p ? '저장했습니다. 이 경로의 Claude Code를 씁니다.' : '자동으로 찾습니다.')] : ['bad', '아직 Claude Code를 찾지 못했습니다.']); })
+      .catch(function(x){ setMsg('ccMsg', ['bad', x.message]); })
+      .then(function(){ $('ccSave').disabled = false; });
+  }
+  $('ccSave').onclick = function(){ var p = $('ccPath').value.trim(); if (!p) { setMsg('ccMsg', ['bad', '경로를 붙여 넣어 주세요.']); $('ccPath').focus(); return; } saveCc(p); };
+  $('ccAuto').onclick = function(){ $('ccPath').value = ''; saveCc(''); };
   function load(){
     return fetch(API, { cache: 'no-store' }).then(function(r){ return r.json(); })
       .then(function(d){
@@ -392,6 +424,13 @@ a{color:var(--accent)}
     setMsg('claudeEnv', e.claudeInstalled == null ? null : e.claudeInstalled ? ['ok', '✓ 이 PC에 Claude 데스크톱 앱이 설치되어 있습니다.'] : e.claudeCli ? ['ok', '✓ Claude Code CLI가 설치되어 있습니다. (데스크톱 앱은 없음)'] : ['bad', 'Claude 데스크톱 앱을 찾지 못했습니다. 다운로드해 설치하세요.']);
     var ps = e.pluginSeenSec;
     setMsg('pluginEnv', ps != null && ps < 600 ? ['ok', '✓ 플러그인이 서버에 연결되었습니다. (' + ago(ps) + ')'] : ['wait', '플러그인 연결을 기다리는 중… 플러그인을 실행하면 자동으로 확인됩니다.']);
+    /* Claude Code 위치: 찾은 경로 · 직접 넣은 경로 · 찾아본 PATH */
+    $('ccFound').textContent = e.claudePath || '찾지 못함';
+    $('ccFound').className = e.claudePath ? 'ok' : 'bad';
+    $('ccLook').textContent = String(e.claudeLook || '').split(isMac ? ':' : ';').filter(Boolean).join('\n');
+    $('ccAuto').hidden = !e.claudeSet;
+    if (document.activeElement !== $('ccPath') && !$('ccPath').value) $('ccPath').value = e.claudeSet || '';
+    $('ccPath').placeholder = '못 찾으면: 터미널에서 ' + (isMac ? 'which claude' : 'where claude') + ' 실행 → 나온 경로를 붙여 넣기';
     $('cliRow').hidden = $('cliRow2').hidden = !e.claudeCli;
     $('cliHint').hidden = !!e.claudeCli;
     $('autoWatch').checked = S.state.autoWatch !== false;   // 기본 켬
