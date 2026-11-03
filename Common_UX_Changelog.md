@@ -2,6 +2,16 @@
 
 ---
 
+## [Workbench] v0.7.2 · 2026-11-03 · 맥 Claude Code 찾기, 깃허브 연결 계정 고르기
+
+- 맥에서 Claude Code를 설치 · 로그인해도 「찾지 못했습니다」가 나던 문제 고침(사용자 셸 PATH로 찾기).
+- 깃허브 연결 때 지금 로그인된 계정을 보여 주고, 다른 계정으로 로그인할 수 있게 함(맥 · 윈도우). 자세한 내용은 아래 「v0.7.2에 포함」.
+
+## [Workbench] (v0.7.2에 포함) · 2026-11-03 · 고침: 맥 Claude Code 못 찾음 · 깃허브 계정 고르기
+
+- **맥에서 Claude Code를 설치 · 로그인해도 「찾지 못했습니다」**: Figma AI Run.app으로 켠 서버는 PATH가 짧아(/usr/bin:/bin) nvm · npm · Homebrew로 깐 claude를 못 찾았다. 서버가 켤 때(못 찾았으면 1분마다) 사용자 셸(zsh)의 PATH와 `command -v claude`(별칭 포함)를 받아 쓰고, nvm · asdf · fnm · volta · bun · pnpm 위치도 찾는다. 찾은 폴더는 PATH에 붙여 백그라운드 감시도 node · claude를 찾게 했다(셸이 멈춰도 6초에서 끊음).
+- **깃허브 연결에서 다른 계정을 고를 수 없음**: 이미 로그인된(저장된) 계정으로 바로 연결되던 것을, 지금 계정을 보여 주고 「Enter = 이 계정 · 2 = 다른 계정으로 로그인」을 고르게 했다(맥 `gh` 로그인 추가, 윈도우 Git Credential Manager 저장 로그인 지우고 다시 로그인).
+
 ## [Workbench] v0.7.1 · 2026-11-03 · 계정 관리 오류, 맥 시작 안내 터미널 창, 이력 동기화 주소 변경
 
 - 메뉴 1개짜리 계정이 있으면 계정 관리에서 「a.menus.map is not a function」이 나던 문제 고침.
