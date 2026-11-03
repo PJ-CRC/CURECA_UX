@@ -91,9 +91,42 @@ sub write_json { my ($f, $o) = @_; write_bytes($f, $JSON->encode($o)); }
 sub str { my ($v) = @_; return defined $v ? "$v" : ''; }
 sub trim { my ($s) = @_; $s = str($s); $s =~ s/^\s+|\s+$//g; return $s; }
 sub app_installed { my ($name) = @_; return (-d "/Applications/$name.app" || -d "$ENV{HOME}/Applications/$name.app") ? 1 : 0; }
-# Claude Code 실행 파일: PATH의 claude, 없으면 Claude 데스크톱 앱에 들어 있는 것(앱의 Code 탭이 쓰는 그것, 가장 최근 것)
+# 로그인 셸 PATH: Figma AI Run.app으로 켜면 PATH가 짧아(/usr/bin:/bin …) nvm · npm · Homebrew 등으로 깐 claude(와 그것을 돌리는 node)를 못 찾는다
+#  사용자의 셸(zsh 등)을 로그인 · 대화형으로 잠깐 띄워(6초 제한) PATH와 `command -v claude`를 받아,
+#  이 서버의 PATH에 붙인다(띄우는 에이전트 · 터미널 창도 이 PATH를 물려받는다). 못 찾았으면 1분 뒤 다시 묻는다(그사이 설치했을 수 있다)
+my ($shell_at, $shell_claude) = (0, '');
+sub load_shell_path {
+  return if time - $shell_at < 60; $shell_at = time;
+  my $sh = $ENV{SHELL} && -x $ENV{SHELL} ? $ENV{SHELL} : '/bin/zsh';
+  # 셸 설정(.zshrc 등)이 멈춰도 서버가 기다리지 않게: 6초 안에 읽은 만큼만 쓰고 셸은 끝낸다
+  #  셸 경고(job control 등)는 서버 창에 찍히지 않게 잠깐 오류 출력을 막는다
+  open(my $err, '>&', \*STDERR); open(STDERR, '>', '/dev/null');
+  my $out = ''; my $pid = open(my $fh, '-|', $sh, '-lic', 'echo __PATH__=$PATH; command -v claude');
+  open(STDERR, '>&', $err); return unless $pid;
+  my $sel = IO::Select->new($fh); my $end = time + 6;
+  while (time < $end && $sel->can_read($end - time)) { my $n = sysread($fh, my $b, 65536); last unless $n; $out .= $b; }
+  kill 'KILL', $pid; close $fh;
+  my %have = map { $_ => 1 } split(/:/, $ENV{PATH} || '');
+  for my $l (split /\n/, $out // '') {
+    # 셸 꾸밈 글자(창 제목 등)가 앞에 붙어도 찾는다
+    if ($l =~ /__PATH__=(\S*)/) { for my $d (split /:/, $1) { next if $d eq '' || $have{$d}++; $ENV{PATH} .= ":$d"; } next; }
+    # 경로 또는 별칭(alias claude='/Users/…/.claude/local/claude')
+    $shell_claude = $1 if $l =~ m{(/[^'"\s]*/claude)\b} && -x $1 && !-d $1;
+  }
+}
+# Claude Code 실행 파일: PATH(로그인 셸 PATH 포함)의 claude → 흔한 설치 위치 → Claude 데스크톱 앱에 들어 있는 것(가장 최근 것)
 sub find_claude_code {
-  for my $d (split(/:/, $ENV{PATH} || ''), '/usr/local/bin', '/opt/homebrew/bin', "$ENV{HOME}/.local/bin", "$ENV{HOME}/.claude/local") { return "$d/claude" if -x "$d/claude"; }
+  my $home = $ENV{HOME} || '';
+  my @dirs = ('/usr/local/bin', '/opt/homebrew/bin', "$home/.local/bin", "$home/.claude/local", "$home/.claude/bin", "$home/.npm-global/bin",
+    "$home/.volta/bin", "$home/.bun/bin", "$home/Library/pnpm", "$home/.yarn/bin");
+  # 찾은 폴더는 PATH에도 붙인다(npm으로 깐 claude는 같은 폴더의 node로 돈다)
+  my $look = sub { for my $d (split(/:/, $ENV{PATH} || ''), @dirs) { if (-x "$d/claude" && !-d "$d/claude") { $ENV{PATH} .= ":$d" unless index(":$ENV{PATH}:", ":$d:") >= 0; return "$d/claude"; } } return ''; };
+  my $hit = $look->(); return $hit if $hit;
+  load_shell_path(); return $shell_claude if $shell_claude;
+  $hit = $look->(); return $hit if $hit;
+  # nvm · asdf · fnm로 깐 node의 전역 npm(가장 최근 것)
+  my @n = grep { -x $_ && !-d $_ } map { glob("'$_'") } ("$home/.nvm/versions/node/*/bin/claude", "$home/.asdf/installs/nodejs/*/bin/claude", "$home/.local/share/fnm/node-versions/*/installation/bin/claude");
+  if (@n) { @n = sort { (stat $b)[9] <=> (stat $a)[9] } @n; (my $d = $n[0]) =~ s{/claude$}{}; $ENV{PATH} .= ":$d" unless index(":$ENV{PATH}:", ":$d:") >= 0; return $n[0]; }
   my @c = grep { -x $_ && !-d $_ } map { glob("'$_'") } (
     "$ENV{HOME}/Library/Application Support/Claude*/claude-code/*/claude",
     "$ENV{HOME}/Library/Application Support/Claude*/claude-code/*/*/claude",
@@ -1001,6 +1034,8 @@ print "    4. Figma 플러그인 등록   5. Claude 앱 실행 · 폴더 열기\
 print "    6. Claude에 Figma 연결   7. 요청 감시 시작\n\n";
 print "  종료: 브라우저의 Workbench 탭을 모두 닫으면 저절로 꺼집니다. Control+C 또는 창 닫기\n\n";
 
+# 켤 때 한 번 로그인 셸 PATH를 받아 둔다(백그라운드 감시 · git · claude가 쓴다)
+load_shell_path();
 hist_backfill();
 fix_editable_pages();
 my $auto_watch_at = time + 5;   # 켠 지 5초 뒤: 백그라운드 감시가 꺼져 있으면 시작. 그 뒤 2분마다 확인해 죽었으면 다시 시작(사용자가 중지한 것은 제외)

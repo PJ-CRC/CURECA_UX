@@ -42,12 +42,21 @@ fi
 [ -n "$GH" ] && [ -x "$GH" ] || fail "gh를 받지 못했습니다. 인터넷 연결을 확인하고 다시 누르세요."
 echo "  [2/3] ✓ 로그인 도구 준비됨"
 
-# 3. 로그인
-if ! "$GH" auth status -h github.com >/dev/null 2>&1; then
+# 3. 로그인: 이미 로그인된 계정이 있으면 그 계정으로 연결할지 묻는다(다른 계정으로 바꿀 수 있게)
+CUR=''
+if "$GH" auth status -h github.com >/dev/null 2>&1; then CUR=$("$GH" api user -q .login 2>/dev/null); fi
+if [ -n "$CUR" ]; then
+  echo
+  echo "  [3/3] 지금 로그인된 깃허브 계정: $CUR"
+  read -r -p "        이 계정으로 연결하려면 Enter, 다른 계정으로 로그인하려면 2 를 누르세요: " ans
+  [ "$ans" = 2 ] && CUR=''
+fi
+if [ -z "$CUR" ]; then
   echo
   echo "  [3/3] 깃허브 로그인"
   echo "        ① 아래에 나오는 8자리 코드를 확인하고 Enter를 누릅니다."
-  echo "        ② 열린 브라우저에 코드를 넣고, 본인 깃허브 계정으로 로그인 · 승인합니다."
+  echo "        ② 열린 브라우저에 코드를 넣고, 연결할 깃허브 계정으로 로그인 · 승인합니다."
+  echo "           브라우저에 다른 계정이 로그인돼 있으면 먼저 그 계정에서 로그아웃(또는 계정 전환)하세요."
   echo "        (「Authenticate Git with your GitHub credentials?」가 나오면 Enter)"
   echo
   "$GH" auth login -h github.com -p https -w || fail "깃허브 로그인을 마치지 못했습니다. 다시 누르세요."
