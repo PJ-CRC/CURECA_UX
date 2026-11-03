@@ -36,6 +36,7 @@ workbench/edit_requests.json
 workbench/jobs.json
 workbench/req_images/
 workbench/job_files/
+workbench/.run/
 # 프로젝트는 기본 프로젝트(UX AI TEST)의 설정만 저장소에. 캡처 · 다른 프로젝트는 PC마다 따로
 projects/*
 !projects/etCQFF3CTf1EA6C79d4BBf/

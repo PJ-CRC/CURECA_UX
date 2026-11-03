@@ -669,10 +669,17 @@ sub jobs_post {
 }
 
 # ── 시작 안내 POST ──
-# 맥 터미널 새 창에서 명령 실행
+# 맥 터미널 새 창에서 명령 실행: workbench/.run/{이름}.command를 만들어 open으로 연다
+#  (예전 osascript 방식은 「자동화」 권한이 없으면 조용히 실패해, 시작 안내가 창 없이 「로그인하세요」만 보였다)
+#  열지 못하면 오류로 알려 시작 안내에 보이게 한다
 sub osa_terminal {
-  my ($cmd) = @_; (my $q = $cmd) =~ s/(["\\])/\\$1/g;
-  system('/usr/bin/osascript', '-e', qq{tell application "Terminal" to do script "$q"}, '-e', 'tell application "Terminal" to activate');
+  my ($cmd, $name) = @_;
+  my $dir = "$ROOT/workbench/.run"; make_path($dir);
+  my $f = "$dir/" . ($name || 'run') . '.command';
+  write_bytes($f, "#!/bin/bash\n$cmd\n");
+  chmod 0755, $f;
+  my $rc = system('/usr/bin/open', '-a', 'Terminal', $f);
+  die "터미널 창을 열지 못했습니다. 터미널을 열고 직접 실행하세요: $cmd\n" if $rc != 0;
 }
 # 요청 감시 하트비트(감시 스크립트가 20초마다 씀)가 몇 초 전인지. 없으면 undef
 sub watch_age {
@@ -705,7 +712,7 @@ sub open_claude_cli {
   my $list = `'$cc' mcp list 2>&1`;
   # claude.ai 계정의 Figma 커넥터가 있으면 그걸 쓴다(로그인 뒤 자동). 없을 때만 Figma MCP를 직접 등록
   system("'$cc' mcp add --transport http --scope user figma https://mcp.figma.com/mcp >/dev/null 2>&1") unless $list =~ /^(claude\.ai )?figma/mi;
-  osa_terminal("cd '$ROOT' && '$cc'");
+  osa_terminal("cd '$ROOT' && '$cc'", 'claude_code');
 }
 # Figma AI Run으로 켤 때마다: 백그라운드 감시가 없으면 시작한다
 #  시작 안내 7단계의 「실행할 때 자동으로 시작」을 끄면(setup.autoWatch = false) 하지 않는다. 대화형 Claude 창이 이미 감시 중이면(하트비트 60초 이내) 시작하지 않는다
@@ -760,7 +767,7 @@ sub setup_post {
     }
     # 깃허브 연결: git(개발자 도구) 설치 → gh 브라우저 로그인(토큰 불필요) → history 브랜치 연결을 터미널 한 창에서
     elsif ($app eq 'git-login') {
-      osa_terminal("bash '$ROOT/workbench/github_login.sh'");
+      osa_terminal("bash '$ROOT/workbench/github_login.sh'", 'github_login');
     }
     # Claude Code(터미널)를 이 폴더에서 띄운다: 처음 로그인 · Figma 연결, 직접 작업
     elsif ($app eq 'claude-cli') { open_claude_cli(); }

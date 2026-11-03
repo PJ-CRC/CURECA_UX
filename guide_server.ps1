@@ -361,7 +361,8 @@ function Write-Login($a) {
   if (-not (Test-Path $SetupDir)) { New-Item -ItemType Directory -Path $SetupDir | Out-Null }
   [IO.File]::WriteAllText($SetupFile, ($s | ConvertTo-Json -Depth 5), $Utf8)
 }
-function Public-Account($a) { [ordered]@{ id = $a.id; name = $a.name; admin = [bool]$a.admin; menus = $(if ($a.admin) { @(User-Menus $a) } else { @(Pick-Menus $a) }); active = ($a.active -ne $false); createdAt = $a.createdAt; updatedAt = $a.updatedAt; pwAt = $a.pwAt } }
+# menus는 늘 배열로: $( )로 감싸면 메뉴가 1개일 때 배열이 풀려 글자로 나간다(화면 a.menus.map 오류)
+function Public-Account($a) { [ordered]@{ id = $a.id; name = $a.name; admin = [bool]$a.admin; menus = @(if ($a.admin) { User-Menus $a } else { Pick-Menus $a }); active = ($a.active -ne $false); createdAt = $a.createdAt; updatedAt = $a.updatedAt; pwAt = $a.pwAt } }
 function Find-Claude {
   # Claude 데스크톱 앱: 맥 /Applications/Claude.app, 윈도우 Microsoft Store(MSIX) 또는 일반 설치
   if ($script:ClaudeApp) { return $script:ClaudeApp }
