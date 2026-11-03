@@ -3,14 +3,14 @@
     "name":  "테스터",
     "admin":  false,
     "menus":  [
-                  "workbench"
+                  "guide"
               ],
-    "active":  true,
     "createdAt":  "2026-11-03T14:12:24+09:00",
     "createdBy":  "brex",
-    "salt":  "iCcD9rOkZB8skBIgJKh3Sw==",
+    "active":  true,
+    "salt":  "d/GfYNt/Yafd/qRzW6Wf9g==",
     "iter":  100000,
-    "hash":  "Z3JuQidp8PqHF/5UfIMEa7F9G4BE/Fm30D6vkYhlpQ8=",
-    "pwAt":  "2026-11-03T14:12:25+09:00",
-    "updatedAt":  "2026-11-03T14:12:25+09:00"
+    "hash":  "bQ94WTv8Qb/4VHJyaIh0jmGkReDHqxSULbNB9ftojY0=",
+    "pwAt":  "2026-11-03T14:12:46+09:00",
+    "updatedAt":  "2026-11-03T14:12:46+09:00"
 }
