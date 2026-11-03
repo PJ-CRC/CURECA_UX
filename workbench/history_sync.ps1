@@ -103,6 +103,9 @@ function Run-Sync {
 # 가벼운 확인: 이 PC에 올릴 이력이 있거나 원격 history가 내 것과 다르면 맞춰야 한다
 function Need-Sync {
   if (-not $St.ok -or -not (Test-Path (Join-Path $H '.git'))) { return $true }
+  # 공유 저장소 주소(git_remote.txt)가 바뀌었으면(저장소 이전) 새 주소로 맞춘다
+  $rf = Join-Path $WB 'git_remote.txt'
+  if ((Test-Path $rf) -and ([IO.File]::ReadAllText($rf)).Trim() -and (G -C $H remote get-url origin) -ne ([IO.File]::ReadAllText($rf)).Trim()) { return $true }
   if (G -C $H status --porcelain) { return $true }
   $r = G -C $H ls-remote origin refs/heads/history
   if ($code) { return $true }

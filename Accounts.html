@@ -126,7 +126,8 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
     return fetch('/api/accounts', { cache: 'no-store' }).then(function(r){ return r.json(); }).then(function(d){
       if (d.error) throw new Error(d.error);
       $('srv').textContent = '로컬 서버 연결됨'; $('srv').className = 'badge on';
-      ITEMS = d.items || []; MENUS = d.menus || []; MENUS.forEach(function(m){ LAB[m.key] = m.label; });
+      /* 메뉴가 1개면 예전 서버가 배열 대신 글자로 보냈다 → 늘 배열로 */
+      ITEMS = (d.items || []).map(function(a){ a.menus = [].concat(a.menus || []); return a; }); MENUS = [].concat(d.menus || []); MENUS.forEach(function(m){ LAB[m.key] = m.label; });
       $('fMenus').innerHTML = MENUS.map(function(m){ return '<label><input type="checkbox" value="' + esc(m.key) + '"> ' + esc(m.label) + '</label>'; }).join('');
       renderRows();
       if (keep && sel) pick(sel); else fresh();
