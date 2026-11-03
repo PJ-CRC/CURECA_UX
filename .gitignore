@@ -13,6 +13,7 @@ workbench/.plan_usage.json
 # 백그라운드 Claude 에이전트 상태 · 기록(PC마다)
 workbench/.agent.json
 workbench/.agent_stop
+workbench/.agent_renew
 workbench/.agent.log
 workbench/.agent_prompt.txt
 workbench/.agent_out.txt

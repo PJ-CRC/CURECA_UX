@@ -54,8 +54,9 @@ while ((Get-Date) -lt $until) {
   $out = @()
   try {
     $j = [IO.File]::ReadAllText($file, $utf8) | ConvertFrom-Json
-    $wait = Order @($j.items | Where-Object { $_ -and $_.status -eq '대기' })
-    $held = Order @($j.items | Where-Object { $_ -and $_.status -eq '보류' -and ([string]$_.note).StartsWith('겹침 대기') })
+    # @( )로 한 번 더 감싼다: 함수가 돌려준 배열이 1개면 하나로 풀려 .Count가 비어(PowerShell 5.1) 대기 요청이 1개일 때 PENDING을 내지 않았다
+    $wait = @(Order @($j.items | Where-Object { $_ -and $_.status -eq '대기' }))
+    $held = @(Order @($j.items | Where-Object { $_ -and $_.status -eq '보류' -and ([string]$_.note).StartsWith('겹침 대기') }))
     $others = @(); if ($wait.Count -or $held.Count) { $others = Others }
     if ($wait.Count -gt 0) {
       $out += 'PENDING ' + (($wait | ForEach-Object { $_.id }) -join ',')

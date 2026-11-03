@@ -43,6 +43,7 @@ $SetupFile = P $SetupDir 'setup.json'
 $HeartFile = P $Root 'workbench' '.watcher.json'
 $AgentFile = P $Root 'workbench' '.agent.json'
 $AgentStop = P $Root 'workbench' '.agent_stop'
+$AgentRenew = P $Root 'workbench' '.agent_renew'   # 로그인 · Figma 연결 창을 열면 써서 에이전트가 세션을 새로 띄우게
 if ($IsMac) { $FigmaExe = '/Applications/Figma.app' } else { $FigmaExe = P $env:LOCALAPPDATA 'Figma' 'Figma.exe' }
 $PluginSeen = $null
 $ClaudeApp = $null
@@ -451,13 +452,15 @@ function Open-ClaudeCli {
   try { $list = (& $cc mcp list 2>&1 | Out-String); if ($list -notmatch '(?mi)^(claude\.ai )?figma') { & $cc mcp add --transport http --scope user figma https://mcp.figma.com/mcp 2>&1 | Out-Null } } catch {}
   if ($IsMac) { & osascript -e ('tell application "Terminal" to do script "cd ' + "'" + $Root + "' && '" + $cc + "'" + '"') -e 'tell application "Terminal" to activate' }
   else { Start-Process 'powershell' -WorkingDirectory $Root -ArgumentList ('-NoExit -Command & ''' + $cc + '''') }
+  # 이 창에서 /login · /mcp를 하면 백그라운드 세션은 예전 상태 그대로다 → 에이전트가 버리고 다음 요청 때 새로 띄운다
+  try { [IO.File]::WriteAllText($AgentRenew, (Get-Date).ToString('o'), $Utf8) } catch {}
 }
 # Figma AI Run으로 켤 때마다: 백그라운드 감시가 없으면 숨김으로 시작한다
 #  시작 안내 7단계의 「실행할 때 자동으로 시작」을 끄면(setup.autoWatch = false) 하지 않는다. 대화형 Claude 창이 이미 감시 중이면(하트비트 60초 이내) 겹치지 않게 시작하지 않는다
 #  처음(켤 때)이 아닌 2분마다 확인에서는 사용자가 중지한 것(status stopped · 중지 중)은 다시 띄우지 않는다
 function Auto-Watch([bool]$first = $true) {
   $s = Read-Setup
-  if (-not $s.done -or $s.autoWatch -eq $false) { return }
+  if ($s.autoWatch -eq $false) { return }   # 시작 안내 「완료」(done)와 상관없이: 버튼을 안 누르고 넘어간 PC도 감시가 돌게
   $a = Agent-Info
   if ($a.alive) { return }
   if (-not $first -and ($a.status -eq 'stopped' -or $a.stopping)) { return }
@@ -513,7 +516,7 @@ try { $l.Start() } catch {
   exit 1
 }
 Write-Host ''
-Write-Host '  UX AI TEST Workbench 서버가 실행 중입니다.  (Workbench 탭을 모두 닫거나 이 창을 닫으면 멈춥니다)' -ForegroundColor Green
+Write-Host '  UX AI TEST Workbench 서버가 실행 중입니다.  (이 창을 닫으면 멈춥니다. 탭을 모두 닫으면 백그라운드 감시가 꺼져 있을 때만 멈춤)' -ForegroundColor Green
 Write-Host ''
 Write-Host "  시작 안내    http://localhost:$Port/Setup.html"
 Write-Host "  가이드       http://localhost:$Port/"
@@ -524,7 +527,7 @@ Write-Host '    1. 작업자 이름   2. Figma 앱 실행   3. 작업할 Figma �
 Write-Host '    4. Figma 플러그인 등록   5. Claude 앱 실행 · 폴더 열기'
 Write-Host '    6. Claude에 Figma 연결   7. 요청 감시 시작'
 Write-Host ''
-Write-Host '  종료: 브라우저의 Workbench 탭을 모두 닫으면 저절로 꺼집니다. Ctrl+C 또는 창 닫기' -ForegroundColor DarkGray
+Write-Host '  종료: 브라우저의 Workbench 탭을 모두 닫으면 저절로 꺼집니다(백그라운드 감시가 동작 중이면 켜 둠). Ctrl+C 또는 창 닫기' -ForegroundColor DarkGray
 Write-Host ''
 
 # ── 브라우저 탭: 열린 탭이 모두 닫히면(마지막 닫힘 후 3초) 묻지 않고 서버를 끈다. 새로고침 · 메뉴 이동은 그 사이 다시 연결된다 ──
@@ -536,6 +539,8 @@ function Idle-Check {
   if ($Pages.Count -or -not $script:AnyPage) { $script:EmptySince = $null; return }
   if (-not $script:EmptySince) { $script:EmptySince = Get-Date }
   if (((Get-Date) - $script:EmptySince).TotalSeconds -lt 3) { return }
+  # 백그라운드 감시가 동작 중이면 끄지 않는다: 탭을 닫아도 에이전트가 요청을 처리하려면 서버(API)가 있어야 한다
+  if ((Agent-Info).alive) { return }
   Stop-Server 'Workbench 탭을 모두 닫아 서버를 껐습니다.'
 }
 

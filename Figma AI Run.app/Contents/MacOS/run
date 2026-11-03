@@ -2,7 +2,7 @@
 # Figma AI Run.app (macOS) - 터미널 창 없이 Workbench 서버를 뒤에서 띄우고 브라우저를 연다
 #  - 서버: 같은 폴더의 guide_server_mac.pl (macOS 기본 Perl, 설치 없음)
 #  - 실행할 때마다 떠 있던 Workbench 서버를 끄고, 새 버전이 배포됐으면 받은 뒤(workbench/update.sh) 새로 띄운다(다시 열기 = 새로 시작)
-#  - 서버 끄기: 브라우저의 Workbench 탭을 모두 닫으면 3초 뒤 저절로 꺼진다
+#  - 서버 끄기: 브라우저의 Workbench 탭을 모두 닫으면 3초 뒤 저절로 꺼진다(백그라운드 감시가 동작 중이면 켜 둔다)
 #  - 기록: ~/Library/Logs/Figma AI Run.log
 PORT=8765
 URL="http://localhost:$PORT"
