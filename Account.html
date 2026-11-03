@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Account</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="appnav.css">
+<style>
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --surface-2:#f3f6fb; --ink:#14171c; --ink-2:#4a5260; --ink-3:#7a8392;
+  --line:#e3e7ee; --accent:#2747d8; --accent-soft:#e6ebff; --red:#d93025; --red-soft:#fdecea; --ok:#1a7f37; --ok-soft:#e3f4e8;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1115; --surface:#171a20; --surface-2:#1e232b; --ink:#e8ebf0; --ink-2:#b4bcc8; --ink-3:#8590a0;
+    --line:#2a3039; --accent:#8ea2ff; --accent-soft:#232c52; --red:#ff7b72; --red-soft:#3a1f1e; --ok:#56d364; --ok-soft:#16301d;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1115; --surface:#171a20; --surface-2:#1e232b; --ink:#e8ebf0; --ink-2:#b4bcc8; --ink-3:#8590a0;
+  --line:#2a3039; --accent:#8ea2ff; --accent-soft:#232c52; --red:#ff7b72; --red-soft:#3a1f1e; --ok:#56d364; --ok-soft:#16301d;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 Pretendard,-apple-system,"Segoe UI","Malgun Gothic",sans-serif}
+button,input{font:inherit;color:inherit}
+.badge{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
+.badge.on{background:var(--ok-soft);color:var(--ok);border-color:transparent}
+.badge.off{background:var(--red-soft);color:var(--red);border-color:transparent}
+.app-head h1{font-weight:800}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--card-r);padding:20px 24px;margin-bottom:var(--gap)}
+.card h2{margin:0 0 12px;font-size:16px}
+dl{display:grid;grid-template-columns:110px minmax(0,1fr);gap:8px 12px;margin:0}
+dt{color:var(--ink-3);font-size:13px}
+dd{margin:0;font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:4px}
+.chip{font-size:12px;font-weight:700;padding:1px 9px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+label{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:700;color:var(--ink-2);margin-bottom:10px;max-width:360px}
+input{height:38px;border:1px solid var(--line);border-radius:8px;background:var(--surface);padding:0 10px;font-size:14px}
+input:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:transparent}
+.btn{height:36px;padding:0 16px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:14px;font-weight:600;cursor:pointer}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn:disabled{opacity:.5;cursor:default}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.msg{font-size:13px}
+.msg.bad{color:var(--red)} .msg.ok{color:var(--ok)}
+.hint{font-size:12.5px;color:var(--ink-3);margin:0 0 12px}
+</style>
+</head>
+<body>
+<nav class="appnav" aria-label="도구 메뉴">
+  <b class="appnav-brand">Figma AI Run</b>
+  <a href="Setup.html">시작 안내</a>
+  <a href="Common_UX_Guide.html">UX 문서</a>
+  <a href="Figma_Workbench.html">Figma Workbench</a>
+  <a href="Change_History.html">변경 이력</a>
+  <a href="Usage_Stats.html">사용량 통계</a>
+  <a href="Prototypes.html">프로토타입</a>
+  <span class="appnav-sp"></span>
+  <div class="appnav-right"><span class="badge" id="srv">확인 중…</span></div>
+</nav>
+<main class="app-wrap read">
+  <header class="app-head"><div class="app-head-t"><h1>내 정보</h1><p>계정 정보와 비밀번호를 확인 · 변경합니다. 이름 · 메뉴는 최고관리자가 바꿉니다.</p></div></header>
+  <section class="card">
+    <h2>계정</h2>
+    <dl>
+      <dt>아이디</dt><dd id="uId">-</dd>
+      <dt>이름</dt><dd id="uName">-</dd>
+      <dt>사용 메뉴</dt><dd><div class="chips" id="uMenus"></div></dd>
+    </dl>
+  </section>
+  <section class="card">
+    <h2>비밀번호 변경</h2>
+    <p class="hint">8자 이상. 바꾸면 다른 PC에서는 다시 로그인해야 합니다(이 PC는 그대로 유지).</p>
+    <form id="pwForm" autocomplete="on">
+      <input type="text" name="username" id="uIdHidden" autocomplete="username" hidden>
+      <label>지금 비밀번호<input id="cur" type="password" autocomplete="current-password" required></label>
+      <label>새 비밀번호<input id="nw" type="password" autocomplete="new-password" minlength="8" required></label>
+      <label>새 비밀번호 확인<input id="nw2" type="password" autocomplete="new-password" minlength="8" required></label>
+      <div class="row"><button class="btn primary" id="pwBtn">비밀번호 변경</button><span class="msg" id="pwMsg" role="status"></span></div>
+    </form>
+  </section>
+</main>
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  fetch('/api/me', { cache: 'no-store' }).then(function(r){ return r.json(); }).then(function(m){
+    $('srv').textContent = '로컬 서버 연결됨'; $('srv').className = 'badge on';
+    if (!m.user) { $('uId').textContent = m.required ? '로그인하지 않음' : '계정 없이 사용 중(계정이 아직 없습니다)'; $('pwForm').querySelectorAll('input,button').forEach(function(x){ x.disabled = true; }); return; }
+    $('uId').textContent = m.user.id; $('uIdHidden').value = m.user.id; $('uName').textContent = m.user.name + (m.user.admin ? ' (최고관리자)' : '');
+    var lab = {}; m.menus.forEach(function(x){ lab[x.key] = x.label; });
+    $('uMenus').innerHTML = m.user.menus.map(function(k){ return '<span class="chip">' + esc(lab[k] || k) + '</span>'; }).join('');
+  }).catch(function(){ $('srv').textContent = '서버 없음'; $('srv').className = 'badge off'; });
+  $('pwForm').addEventListener('submit', function(e){
+    e.preventDefault(); var msg = $('pwMsg'); msg.className = 'msg bad';
+    if ($('nw').value !== $('nw2').value) { msg.textContent = '새 비밀번호가 서로 다릅니다.'; return; }
+    $('pwBtn').disabled = true; msg.textContent = '';
+    fetch('/api/me/password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ current: $('cur').value, next: $('nw').value }) })
+      .then(function(r){ return r.json(); }).then(function(d){
+        if (d.error) throw new Error(d.error);
+        msg.className = 'msg ok'; msg.textContent = '비밀번호를 바꿨습니다.'; $('cur').value = $('nw').value = $('nw2').value = '';
+      }).catch(function(err){ msg.textContent = err.message; }).then(function(){ $('pwBtn').disabled = false; });
+  });
+})();
+</script>
+<script src="appnav.js" defer></script>
+</body>
+</html>

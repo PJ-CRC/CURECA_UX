@@ -1,0 +1,5 @@
+# 맥 실행 파일은 줄바꿈을 LF로 유지 (CRLF면 맥에서 실행 안 됨)
+*.command text eol=lf
+*.pl text eol=lf
+*.app/Contents/MacOS/* text eol=lf
+*.plist text eol=lf

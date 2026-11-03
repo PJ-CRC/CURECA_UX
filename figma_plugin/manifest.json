@@ -1,0 +1,16 @@
+{
+  "name": "Common UX Sync",
+  "id": "common-ux-color-sync-local",
+  "api": "1.0.0",
+  "main": "code.js",
+  "ui": "ui.html",
+  "editorType": ["figma"],
+  "documentAccess": "dynamic-page",
+  "enablePrivatePluginApi": true,
+  "permissions": ["currentuser"],
+  "networkAccess": {
+    "allowedDomains": ["none"],
+    "devAllowedDomains": ["http://localhost:8765"],
+    "reasoning": "로컬 Workbench 서버(Figma AI Run)와 연동한다: 캡처 · 프레임 목록을 올리고, Claude가 맡긴 캡처 · 글 수정 작업을 받아 처리한다."
+  }
+}

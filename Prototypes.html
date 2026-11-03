@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prototypes</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="appnav.css">
+<style>
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --surface-2:#f3f6fb; --ink:#14171c; --ink-2:#4a5260; --ink-3:#7a8392;
+  --line:#e3e7ee; --accent:#2747d8; --accent-soft:#e6ebff; --red:#d93025; --red-soft:#fdecea;
+  --ok:#1a7f37; --ok-soft:#e3f4e8; --warn:#b35900; --warn-soft:#fff1e0;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1115; --surface:#171a20; --surface-2:#1e232b; --ink:#e8ebf0; --ink-2:#b4bcc8; --ink-3:#8590a0;
+    --line:#2a3039; --accent:#8ea2ff; --accent-soft:#232c52; --red:#ff7b72; --red-soft:#3a1f1e;
+    --ok:#56d364; --ok-soft:#16301d; --warn:#f0a24f; --warn-soft:#38270f;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1115; --surface:#171a20; --surface-2:#1e232b; --ink:#e8ebf0; --ink-2:#b4bcc8; --ink-3:#8590a0;
+  --line:#2a3039; --accent:#8ea2ff; --accent-soft:#232c52; --red:#ff7b72; --red-soft:#3a1f1e;
+  --ok:#56d364; --ok-soft:#16301d; --warn:#f0a24f; --warn-soft:#38270f;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 Pretendard,-apple-system,"Segoe UI","Malgun Gothic",sans-serif}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+.badge{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
+.badge.on{background:var(--ok-soft);color:var(--ok);border-color:transparent}
+.badge.off{background:var(--red-soft);color:var(--red);border-color:transparent}
+.app-head h1{font-weight:800}
+.app-head p{color:var(--ink-2)}
+.btn{height:36px;padding:0 16px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:14px;font-weight:600;white-space:nowrap}
+.btn:hover:not(:disabled){border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+:root[data-theme="dark"] .btn.primary{color:#0f1115}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.primary{color:#0f1115}}
+.btn:disabled{opacity:.45;cursor:default}
+
+/* 목록: 카드 */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:var(--gap)}
+.pcard{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:var(--card-r);overflow:hidden;text-decoration:none;color:inherit;min-width:0}
+a.pcard:hover{border-color:var(--accent)}
+.pcard .thumb{aspect-ratio:16/9;background:var(--surface-2) center/cover no-repeat;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--ink-3);font-size:13px}
+.pcard .bd{padding:12px 16px 14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.pcard .t{display:flex;align-items:center;gap:8px;min-width:0}
+.pcard .t b{font-size:16px;font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pcard .meta{font-size:12.5px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:2px 10px}
+.chip{flex:none;font-size:11.5px;font-weight:700;padding:1px 8px;border-radius:999px;background:var(--surface-2);color:var(--ink-2);white-space:nowrap}
+.chip.ok{background:var(--ok-soft);color:var(--ok)}
+.chip.warn{background:var(--warn-soft);color:var(--warn)}
+.chip.busy{background:var(--accent-soft);color:var(--accent)}
+.chip.bad{background:var(--red-soft);color:var(--red)}
+.empty{padding:40px 20px;text-align:center;color:var(--ink-3);background:var(--surface);border:1px dashed var(--line);border-radius:var(--card-r)}
+
+/* 새 프로토타입 */
+.new{background:var(--surface);border:1px solid var(--line);border-radius:var(--card-r);padding:20px;margin-bottom:var(--section-gap)}
+.new[hidden]{display:none}
+.new h2{margin:0 0 4px;font-size:18px}
+.new .sub{margin:0 0 16px;color:var(--ink-3);font-size:13px}
+.frow{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:12px}
+.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:700;color:var(--ink-2);min-width:0}
+.f input,.f select,.f textarea{border:1px solid var(--line);border-radius:8px;background:var(--surface);padding:7px 10px;font-size:14px;font-weight:400;min-width:0}
+.f textarea{min-height:84px;resize:vertical}
+.f input:focus,.f select:focus,.f textarea:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:transparent}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface);align-self:flex-start}
+.seg button{border:0;background:none;padding:6px 14px;font-size:13px;font-weight:600;white-space:nowrap}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button.on{background:var(--accent);color:#fff}
+:root[data-theme="dark"] .seg button.on{color:#0f1115}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .seg button.on{color:#0f1115}}
+.pick{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;margin-bottom:12px}
+@media (max-width:900px){.pick{grid-template-columns:1fr}}
+.box{border:1px solid var(--line);border-radius:10px;display:flex;flex-direction:column;min-height:0;min-width:0}
+.box .hd{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--line);font-size:13px;font-weight:700;flex-wrap:wrap}
+.box .hd .sp{flex:1}
+.box .hd select,.box .hd input{height:30px;border:1px solid var(--line);border-radius:7px;background:var(--surface);padding:0 8px;font-size:13px;font-weight:400;min-width:0}
+.box .hd input{width:180px}
+.box .ls{list-style:none;margin:0;padding:6px;overflow:auto;height:360px}
+.grp{font-size:12px;font-weight:700;color:var(--ink-3);padding:8px 8px 2px}
+.fr{display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:7px;font-size:13.5px;cursor:pointer;min-width:0}
+.fr:hover{background:var(--surface-2)}
+.fr input{flex:none;width:16px;height:16px;margin:0}
+.fr .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fr small{flex:none;color:var(--ink-3);font-size:12px}
+.sel{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;font-size:13.5px;min-width:0}
+.sel + .sel{border-top:1px solid var(--line)}
+.sel .th{flex:none;width:64px;height:36px;border-radius:5px;background:var(--surface-2) center/cover no-repeat;border:1px solid var(--line)}
+.sel .nm{flex:1;min-width:0}
+.sel .nm b{display:block;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sel .nm small{color:var(--ink-3);font-size:12px}
+.sel label{flex:none;font-size:12px;color:var(--ink-2);display:flex;align-items:center;gap:3px}
+.ib{flex:none;width:26px;height:26px;border:1px solid var(--line);border-radius:6px;background:var(--surface);font-size:13px;line-height:1;padding:0}
+.ib:hover:not(:disabled){border-color:var(--accent)}
+.ib:disabled{opacity:.35;cursor:default}
+.acts{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.msg{font-size:13px;color:var(--ink-3)}
+.msg.bad{color:var(--red)}
+.hint{font-size:12.5px;color:var(--ink-3);margin:0 0 12px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--surface);padding:8px 16px;border-radius:8px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.on{opacity:1}
+</style>
+</head>
+<body>
+<nav class="appnav" aria-label="도구 메뉴">
+  <b class="appnav-brand">Figma AI Run</b>
+  <a href="Setup.html">시작 안내</a>
+  <a href="Common_UX_Guide.html">UX 문서</a>
+  <a href="Figma_Workbench.html">Figma Workbench</a>
+  <a href="Change_History.html">변경 이력</a>
+  <a href="Usage_Stats.html">사용량 통계</a>
+  <a href="Prototypes.html" aria-current="page">프로토타입</a>
+  <span class="appnav-sp"></span>
+  <div class="appnav-right">
+    <span class="badge" id="srv">확인 중…</span>
+  </div>
+</nav>
+<main class="app-wrap wide">
+  <header class="app-head">
+    <div class="app-head-t">
+      <h1>프로토타입</h1>
+      <p>Figma 화면을 골라 Claude에게 동작하는 HTML 프로토타입을 만들게 합니다. 이 PC에만 저장되고, Figma가 바뀌면 Claude가 맞춥니다.</p>
+    </div>
+    <div class="app-head-act"><button class="btn primary" id="newBtn">＋ 새 프로토타입</button></div>
+  </header>
+
+  <section class="new" id="newPane" hidden aria-label="새 프로토타입">
+    <h2>새 프로토타입</h2>
+    <p class="sub">화면을 고르고 흐름을 적으면 요청 감시 중인 Claude가 만듭니다. 화면은 보기 전용 페이지에서도 고를 수 있습니다(Figma를 읽기만 함).</p>
+    <div class="frow">
+      <label class="f">이름<input id="pName" maxlength="60" placeholder="예) Assay Pack 등록 흐름"></label>
+      <label class="f">프로젝트 (Figma 파일)<select id="pProj"></select></label>
+      <div class="f">환경<div class="seg" id="pEnv"><button type="button" data-v="T-IOS" class="on">T-IOS (웹 1920)</button><button type="button" data-v="L-IOS">L-IOS (앱)</button></div></div>
+    </div>
+    <div class="pick">
+      <div class="box">
+        <div class="hd">화면 고르기 <span class="sp"></span><select id="pPage" aria-label="페이지"></select><input id="pSearch" type="search" placeholder="화면 ID · 프레임 이름" aria-label="화면 검색"></div>
+        <ul class="ls" id="pList"><li class="grp">프로젝트를 고르세요</li></ul>
+      </div>
+      <div class="box">
+        <div class="hd">고른 화면 <span id="pCount" class="chip">0</span><span class="sp"></span><span style="font-weight:400;color:var(--ink-3);font-size:12px">순서대로 흐름에 놓입니다 · ◉ 시작 화면</span></div>
+        <ul class="ls" id="pSel"></ul>
+      </div>
+    </div>
+    <label class="f" style="margin-bottom:12px">흐름 설명 (화면 사이 동작)<textarea id="pFlow" placeholder="예)&#10;- 목록에서 행 클릭 → 상세 패널 열림&#10;- [Import] → 업로드 팝업 → 완료 시 토스트 후 목록 갱신&#10;- 검색 조건 바꾸면 목록 거르기"></textarea></label>
+    <p class="hint">Claude가 화면별 HTML 파일과 공통 컴포넌트(Common UX 가이드 · COMM-5 기준)로 만듭니다. 화면 수에 따라 몇 분 걸리고, 사용량은 사용량 통계에 「프로토타입」으로 남습니다.</p>
+    <div class="acts">
+      <button class="btn primary" id="pSubmit">만들기 요청</button>
+      <button class="btn" id="pCancel" type="button">닫기</button>
+      <span class="msg" id="pMsg"></span>
+    </div>
+  </section>
+
+  <div class="grid" id="grid"><div class="empty">불러오는 중…</div></div>
+</main>
+<div class="toast" id="toast" role="status"></div>
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function store(k, v){ try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch(e){ return null; } }
+  function toast(t){ var el = $('toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(function(){ el.classList.remove('on'); }, 2000); }
+  function who(){ return store('cux.user') || ''; }
+  function fmt(t){ var d = new Date(t); if (isNaN(d)) return ''; var p = function(n){ return (n < 10 ? '0' : '') + n; }; return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes()); }
+  function getJ(u){ return fetch(u, { cache: 'no-store' }).then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); }); }
+  function shotUrl(key, id, meta){ var m = meta && meta[id]; return m ? 'projects/' + key + '/shots/' + id.replace(':', '-') + '.' + (m.ext || 'png') + '?t=' + encodeURIComponent(m.at || '') : ''; }
+  /* 화면 ID: Workbench와 같은 규칙 (TI-STN-08-P → TI-STN-08) */
+  function screenOf(name){
+    var m;
+    if ((m = name.match(/^((?:M-)?(?:TI|LI)-[A-Z]+(?:-\d+)?)(?=$|[-_ \/(\[])/))) return m[1];
+    if ((m = name.match(/^((?:M-)?COMM-\d(?:-[A-Za-z])?)(?![A-Za-z])/))) return m[1];
+    return '';
+  }
+
+  var PROJ = [], JOBS = [], PROTOS = [], SHOTS = {}, online = false;
+
+  /* ── 목록 ── */
+  function render(){
+    var busy = JOBS.filter(function(j){ return j.kind === 'prototype' && (j.status === '대기' || j.status === '진행 중'); });
+    var failed = JOBS.filter(function(j){ return j.kind === 'prototype' && (j.status === '실패' || j.status === '보류') && !PROTOS.some(function(p){ return p.jobId === j.id; }); }).slice(0, 3);
+    var syncing = {}; JOBS.forEach(function(j){ if ((j.kind === 'prototype-sync' || j.kind === 'prototype-edit') && (j.status === '대기' || j.status === '진행 중')) syncing[j.proto] = j; });
+    var h = '';
+    busy.concat(failed).forEach(function(j){
+      var fr = j.frames || [];
+      h += '<div class="pcard"><div class="thumb">' + (j.status === '진행 중' ? 'Claude가 만드는 중…' : j.status === '대기' ? '요청 감시 중인 Claude를 기다리는 중' : esc(j.note || j.status)) + '</div><div class="bd">' +
+        '<div class="t"><b>' + esc(j.name) + '</b><span class="chip ' + (j.status === '실패' ? 'bad' : j.status === '보류' ? 'warn' : 'busy') + '">' + esc(j.status === '대기' || j.status === '진행 중' ? '만드는 중 · ' + j.status : j.status) + '</span></div>' +
+        '<div class="meta"><span>' + esc(j.id) + '</span><span>화면 ' + fr.length + '개</span><span>' + esc(j.env || '') + '</span><span>' + esc(fmt(j.createdAt)) + '</span></div></div></div>';
+    });
+    PROTOS.forEach(function(p){
+      var fr = p.frames || [], st = (p.stale || []).length, sj = syncing[p.id], start = fr.filter(function(f){ return f.nodeId === p.start; })[0] || fr[0];
+      var th = start && SHOTS[p.fileKey] ? shotUrl(p.fileKey, start.nodeId, SHOTS[p.fileKey]) : '';
+      var chip = sj ? '<span class="chip busy">' + (sj.kind === 'prototype-edit' ? '수정 중' : '맞추는 중') + '</span>' : st ? '<span class="chip warn">갱신 필요 ' + st + '</span>' : '<span class="chip ok">최신</span>';
+      h += '<a class="pcard" href="Prototype.html?id=' + encodeURIComponent(p.id) + '"><div class="thumb"' + (th ? ' style="background-image:url(&quot;' + esc(th) + '&quot;)"' : '') + '>' + (th ? '' : '미리보기 없음') + '</div><div class="bd">' +
+        '<div class="t"><b>' + esc(p.name) + '</b>' + chip + '</div>' +
+        '<div class="meta"><span>' + esc(p.fileName || '') + '</span><span>화면 ' + fr.length + '개</span><span>' + esc(p.env || '') + '</span><span>' + esc(fmt(p.updatedAt)) + '</span></div></div></a>';
+    });
+    h = h || '<div class="empty">아직 프로토타입이 없습니다. 「＋ 새 프로토타입」으로 화면을 골라 만들기를 요청하세요.</div>';
+    if (render.h !== h) { render.h = h; $('grid').innerHTML = h; }   // 5초마다 불러와도 같으면 다시 그리지 않는다(누르는 중인 카드가 바뀌지 않게)
+  }
+  function load(){
+    if (location.protocol === 'file:') { setSrv(false); $('grid').innerHTML = '<div class="empty">Figma AI Run 실행 후 http://localhost:8765/Prototypes.html 에서 열어 주세요.</div>'; return; }
+    Promise.all([getJ('/api/prototypes'), getJ('/api/jobs')]).then(function(r){
+      setSrv(true);
+      PROTOS = r[0].items || []; JOBS = r[1].items || [];
+      var keys = {}; PROTOS.forEach(function(p){ if (p.fileKey) keys[p.fileKey] = 1; });
+      return Promise.all(Object.keys(keys).filter(function(k){ return !SHOTS[k]; }).map(function(k){ return getJ('projects/' + k + '/shots_meta.json').then(function(m){ SHOTS[k] = m; }, function(){ SHOTS[k] = {}; }); }));
+    }).then(render, function(){ setSrv(false); });
+  }
+  function setSrv(on){ online = on; $('srv').textContent = on ? '로컬 서버 연결됨' : '서버 없음'; $('srv').className = 'badge ' + (on ? 'on' : 'off'); }
+
+  /* ── 새 프로토타입: 화면 고르기 ── */
+  var CAT = null, picked = [], startId = '', env = 'T-IOS', catKey = '';
+  function openNew(on){
+    $('newPane').hidden = !on; $('newBtn').disabled = on;
+    if (on) { if (!PROJ.length) loadProjects(); $('pName').focus(); }
+  }
+  function loadProjects(){
+    getJ('/api/projects').then(function(d){
+      PROJ = d.projects || [];
+      var cur = store('wb.proj') || d.defaultKey;
+      $('pProj').innerHTML = PROJ.map(function(p){ return '<option value="' + esc(p.key) + '"' + (p.key === cur ? ' selected' : '') + '>' + esc(p.name || p.key) + (p.hasCatalog ? '' : ' (프레임 목록 없음)') + '</option>'; }).join('');
+      loadCatalog();
+    }).catch(function(){ $('pMsg').textContent = '프로젝트 목록을 읽지 못했습니다.'; });
+  }
+  function loadCatalog(){
+    var key = $('pProj').value; if (!key) return;
+    if (key !== catKey) { picked = []; startId = ''; }
+    catKey = key; CAT = null; $('pList').innerHTML = '<li class="grp">불러오는 중…</li>';
+    Promise.all([getJ('/api/catalog?key=' + encodeURIComponent(key)), getJ('projects/' + key + '/shots_meta.json').catch(function(){ return {}; })]).then(function(r){
+      CAT = r[0]; SHOTS[key] = r[1] || {};
+      var pages = (CAT.pages || []).filter(function(p){ return p.frames && p.frames.length; });
+      var ed = pages.filter(function(p){ return p.editable; })[0];
+      $('pPage').innerHTML = '<option value="">전체 페이지</option>' + pages.map(function(p){ return '<option value="' + esc(p.id) + '"' + (ed && p.id === ed.id ? ' selected' : '') + '>' + esc(p.name) + (p.editable ? ' ★' : '') + '</option>'; }).join('');
+      renderPick(); renderSel();
+    }).catch(function(){ $('pList').innerHTML = '<li class="grp">이 파일의 프레임 목록이 없습니다. Workbench에서 「Claude에게 목록 만들기 요청」을 먼저 해 주세요.</li>'; });
+  }
+  function renderPick(){
+    if (!CAT) return;
+    var pid = $('pPage').value, q = $('pSearch').value.trim().toLowerCase(), h = '';
+    (CAT.pages || []).forEach(function(pg){
+      if (!pg.frames || !pg.frames.length || (pid && pg.id !== pid)) return;
+      var rows = pg.frames.filter(function(f){ return !q || f[1].toLowerCase().indexOf(q) >= 0; });
+      if (!rows.length) return;
+      var groups = [], by = {};
+      rows.forEach(function(f){ var s = screenOf(f[1]) || '기타'; if (!by[s]) { by[s] = []; groups.push(s); } by[s].push(f); });
+      h += '<li class="grp">' + esc(pg.name) + '</li>';
+      groups.forEach(function(s){
+        if (groups.length > 1 || s !== '기타') h += '<li class="grp" style="padding-left:16px;font-weight:600">' + esc(s) + '</li>';
+        by[s].forEach(function(f){
+          var on = picked.some(function(p){ return p.nodeId === f[0]; });
+          h += '<li><label class="fr"><input type="checkbox" data-id="' + esc(f[0]) + '" data-name="' + esc(f[1]) + '" data-page="' + esc(pg.name) + '"' + (on ? ' checked' : '') + '><span class="nm" title="' + esc(f[1]) + '">' + esc(f[1]) + '</span><small>' + f[2] + '×' + f[3] + '</small></label></li>';
+        });
+      });
+    });
+    $('pList').innerHTML = h || '<li class="grp">맞는 화면이 없습니다.</li>';
+  }
+  function renderSel(){
+    if (startId && !picked.some(function(p){ return p.nodeId === startId; })) startId = '';
+    if (!startId && picked.length) startId = picked[0].nodeId;
+    $('pCount').textContent = picked.length;
+    $('pSel').innerHTML = picked.length ? picked.map(function(p, i){
+      var th = shotUrl(catKey, p.nodeId, SHOTS[catKey]);
+      return '<li class="sel"><span class="th"' + (th ? ' style="background-image:url(&quot;' + esc(th) + '&quot;)"' : '') + '></span><span class="nm"><b title="' + esc(p.name) + '">' + (i + 1) + '. ' + esc(p.name) + '</b><small>' + esc(p.page) + ' · ' + esc(p.nodeId) + '</small></span>' +
+        '<label><input type="radio" name="start" data-start="' + esc(p.nodeId) + '"' + (p.nodeId === startId ? ' checked' : '') + '>시작</label>' +
+        '<button class="ib" data-up="' + i + '"' + (i ? '' : ' disabled') + ' aria-label="위로">↑</button><button class="ib" data-down="' + i + '"' + (i < picked.length - 1 ? '' : ' disabled') + ' aria-label="아래로">↓</button><button class="ib" data-rm="' + i + '" aria-label="빼기">×</button></li>';
+    }).join('') : '<li class="grp">왼쪽에서 화면을 체크하세요.</li>';
+  }
+  $('pList').addEventListener('change', function(e){
+    var c = e.target.closest('input[data-id]'); if (!c) return;
+    if (c.checked) picked.push({ nodeId: c.dataset.id, name: c.dataset.name, page: c.dataset.page });
+    else picked = picked.filter(function(p){ return p.nodeId !== c.dataset.id; });
+    renderSel();
+  });
+  $('pSel').addEventListener('click', function(e){
+    var b = e.target.closest('button'); if (b) {
+      var i;
+      if (b.dataset.up) { i = +b.dataset.up; picked.splice(i - 1, 0, picked.splice(i, 1)[0]); }
+      else if (b.dataset.down) { i = +b.dataset.down; picked.splice(i + 1, 0, picked.splice(i, 1)[0]); }
+      else if (b.dataset.rm) { picked.splice(+b.dataset.rm, 1); }
+      renderSel(); renderPick(); return;
+    }
+    var r = e.target.closest('input[data-start]'); if (r) startId = r.dataset.start;
+  });
+  $('pProj').addEventListener('change', loadCatalog);
+  $('pPage').addEventListener('change', renderPick);
+  $('pSearch').addEventListener('input', renderPick);
+  $('pEnv').addEventListener('click', function(e){ var b = e.target.closest('button'); if (!b) return; env = b.dataset.v; [].forEach.call(this.children, function(x){ x.classList.toggle('on', x === b); }); });
+  $('newBtn').addEventListener('click', function(){ openNew(true); });
+  $('pCancel').addEventListener('click', function(){ openNew(false); });
+  $('pSubmit').addEventListener('click', function(){
+    var name = $('pName').value.trim(), msg = $('pMsg'); msg.className = 'msg bad';
+    if (!online) { msg.textContent = '서버가 꺼져 있어 요청할 수 없습니다.'; return; }
+    if (!name) { msg.textContent = '이름을 입력해 주세요.'; $('pName').focus(); return; }
+    if (!picked.length) { msg.textContent = '화면을 하나 이상 골라 주세요.'; return; }
+    var p = PROJ.filter(function(x){ return x.key === catKey; })[0] || {};
+    $('pSubmit').disabled = true;
+    fetch('/api/jobs', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
+      action: 'add', kind: 'prototype', fileKey: catKey, name: name, text: $('pFlow').value.trim(), env: env, start: startId,
+      frames: picked, link: p.link || '', by: who() }) })
+      .then(function(r){ return r.json(); }).then(function(d){
+        if (d.error) throw new Error(d.error);
+        toast(d.job.id + ' 만들기를 요청했습니다');
+        picked = []; startId = ''; $('pName').value = ''; $('pFlow').value = ''; msg.textContent = '';
+        openNew(false); load();
+      }).catch(function(e){ msg.textContent = '요청 실패: ' + e.message; })
+      .then(function(){ $('pSubmit').disabled = false; });
+  });
+
+  load();
+  setInterval(function(){ if (!document.hidden) load(); }, 5000);
+})();
+</script>
+<script src="appnav.js" defer></script>
+</body>
+</html>

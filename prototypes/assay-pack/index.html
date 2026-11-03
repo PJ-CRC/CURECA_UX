@@ -1,0 +1,760 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assay Pack Prototype</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root{
+  --p:#12B5AE; --p7:#0B8580; --p1:#E7F7F6; --blue:#2463DF;
+  --r:#EA3625; --r1:#FFF1F0; --o:#F39D34; --o1:#FFF6E8; --g:#01BF69; --g1:#E4F8EF;
+  --g0:#FFFFFF; --g100:#F6F7F9; --g150:#EEF1F5; --g200:#DEE2E7; --g300:#C5CCD5; --g400:#ADB5BD; --g500:#838C96; --g700:#5F666E; --g900:#1F2329;
+  --lnb:#141B3D; --lnb2:#1E2853; --shadow:0 8px 28px rgba(16,24,40,.18);
+  --tb-bg:#1B1E24; --tb-ink:#E8EBF0; --tb-ink2:#9AA3AF; --stage:#E9ECF1;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --stage:#121418; } }
+:root[data-theme="dark"]{ --stage:#121418; }
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--stage);font-family:Pretendard,-apple-system,"Segoe UI","Malgun Gothic",sans-serif;color:var(--g900);-webkit-font-smoothing:antialiased}
+button{font:inherit;cursor:pointer;color:inherit}
+input,select{font:inherit;color:inherit}
+/* ===== Toolbar ===== */
+.tb{position:sticky;top:0;z-index:100;background:var(--tb-bg);color:var(--tb-ink);display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding:10px 16px}
+.tb h1{font-size:15px;margin:0;font-weight:700}
+.tb h1 small{color:var(--tb-ink2);font-weight:500;margin-left:6px}
+.tb .opt{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--tb-ink2)}
+.seg{display:inline-flex;background:#2A2F37;border-radius:9px;padding:3px}
+.seg button{border:0;background:transparent;color:var(--tb-ink2);padding:5px 11px;border-radius:7px;font-size:12.5px;font-weight:600}
+.seg button.on{background:var(--p);color:#fff}
+.sw{position:relative;width:38px;height:22px;border-radius:11px;background:#3A404A;border:0;padding:0}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .15s}
+.sw.on{background:var(--p)}.sw.on::after{left:19px}
+.tb .tbtn{border:1px solid #3A404A;background:transparent;color:var(--tb-ink);border-radius:8px;padding:6px 12px;font-size:13px}
+.tb .sp{flex:1}
+.tb .crumb{font-size:12px;color:var(--tb-ink2)}
+/* ===== App frame ===== */
+.stage{padding:16px;overflow-x:auto;max-width:100vw}
+.app{width:1760px;min-width:1760px;margin:0 auto;min-height:860px;background:var(--g150);display:grid;grid-template-columns:218px 1fr;border-radius:10px;overflow:hidden;box-shadow:var(--shadow);position:relative}
+.lnb{background:var(--lnb);color:#C9CFE3;display:flex;flex-direction:column;padding:20px 12px}
+.logo{color:#fff;font-weight:900;font-size:22px;letter-spacing:.08em;text-align:center;margin:6px 0 26px}
+.logo sup{font-size:9px;background:#4C6BFF;border-radius:6px;padding:1px 5px;margin-left:4px;letter-spacing:0;vertical-align:8px}
+.mi{display:flex;justify-content:space-between;align-items:center;padding:12px 10px;border-radius:8px;font-weight:700;font-size:14px}
+.mi.on{background:var(--blue);color:#fff}
+.sub{padding:6px 0 6px 18px;border-left:1px solid #2F3A6A;margin:6px 0 0 18px}
+.sub div{padding:6px 10px;font-size:12.5px;color:#8E97B8}
+.sub div.on{color:#fff;font-weight:700}
+.user{margin-top:auto;background:var(--lnb2);border-radius:8px;padding:10px 12px;font-size:12.5px;display:flex;align-items:center;gap:8px}
+.user i{width:22px;height:22px;border-radius:50%;background:#C9CFE3;display:inline-block}
+.main{display:flex;flex-direction:column;min-width:0}
+.gnb{height:48px;display:flex;justify-content:center;align-items:center;gap:10px;background:var(--g150)}
+.gnb span{background:#fff;border-radius:18px;padding:5px 14px;font-size:13px;font-weight:600;color:var(--g700);display:inline-flex;gap:10px}
+.gnb b{color:var(--blue)}.gnb .er{color:var(--r)}.gnb .wa{color:var(--o)}
+.content{padding:10px 26px 26px;display:flex;flex-direction:column;gap:14px}
+.title{display:flex;align-items:center;gap:10px}
+.title h2{font-size:24px;margin:0;font-weight:800}
+.title .path{font-size:13px;color:var(--g500)}
+.card{background:#fff;border-radius:6px}
+/* search */
+.search{display:flex;align-items:center;gap:14px;padding:14px 16px;flex-wrap:nowrap}
+.field{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--g700)}
+.field input,.field select{height:40px;border:1px solid var(--g300);border-radius:4px;padding:0 12px;font-size:13px;background:#fff;color:var(--g900)}
+.field input[type=text]{width:140px}
+.field select{width:140px}
+.field .tl{color:var(--g500)}
+.search .sp{flex:1}
+.b{height:40px;padding:0 18px;border-radius:4px;border:1px solid var(--g200);background:#fff;font-size:14px;font-weight:500;white-space:nowrap}
+.b.dark{background:#000;border-color:#000;color:#fff}
+.b.light{background:var(--g100);border-color:var(--g100)}
+.b.sm{height:32px;padding:0 12px;font-size:13.5px}
+.b:disabled{opacity:.4;cursor:default}
+/* list */
+.listhead{display:flex;align-items:center;gap:8px;padding:12px 16px;font-size:14px}
+.listhead b{font-weight:800;margin-right:6px}
+.listhead .info{color:var(--g700);font-size:13.5px}
+.listhead .sp{flex:1}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{background:#F7F8FA;font-weight:700;height:40px;text-align:left;padding:0 20px;border-bottom:1px solid var(--g200);white-space:nowrap}
+td{height:48px;text-align:left;padding:0 20px;border-bottom:1px solid var(--g150);color:var(--g900)}
+th:has(> .cb),td:has(> .cb),td:has(> .go){text-align:center;padding:0}
+.list th:nth-child(3),.list td:nth-child(3),.list th:nth-child(n+6):nth-child(-n+7),.list td:nth-child(n+6):nth-child(-n+7),.list th:nth-child(9),.list td:nth-child(9){text-align:center}
+/* Active 토글: 같은 File type · Reagent Product Name 중 1개만 활성, Master는 선택 불가 */
+/* Active 표시: 토글 없음. 목록은 태그만(활성 = 검은 Active, 비활성 = 회색 Inactive), 변경은 상세에서 (T-IOS만) */
+.tag{display:inline-block;padding:2px 6px;border-radius:2px;background:#1F2329;color:#fff;font-size:11px;font-weight:600;line-height:1.4;vertical-align:middle}
+.tag.off{background:#E9ECEF;color:#5F6B7A}
+.actv{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.actv small{font-size:12px;color:var(--g500)}
+/* L-IOS 조회 전용: 체크박스 열 숨김 */
+.list.ro th:first-child,.list.ro td:first-child{display:none}
+.chk{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--g700);white-space:nowrap}
+.chk input{width:20px;height:20px;accent-color:#1F2329}
+.psize{height:32px;border:1px solid var(--g300);border-radius:4px;padding:0 8px;font-size:13px;margin-left:12px;background:#fff}
+tbody tr:hover td{background:#FAFBFC}
+tbody tr.sel td{background:#EEF3FF}
+tbody tr.act td{background:#D9DDEA}
+tbody tr.actv td{background:#EEF8F7}
+tbody tr.actv.sel td{background:#E2F0F4}
+.abadge{display:inline-block;margin-left:8px;background:var(--p);color:#fff;font-size:11px;font-weight:700;border-radius:10px;padding:1px 8px;vertical-align:1px}
+.field input.wide{width:220px}
+tbody tr.actv.act td{background:#D9DDEA}
+/* 기간 필드 · Period Filters (COMM-5-d Calendar) */
+.pfield{height:40px;width:250px;display:flex;align-items:center;gap:8px;border:1px solid var(--g300);border-radius:4px;background:#fff;padding:0 12px;font-size:13px;color:var(--g400);text-align:left}
+.pfield.done{color:var(--g900)}
+.pfield i{font-style:normal;color:var(--g700);font-size:14px}
+.pf{width:820px;background:#fff;border-radius:6px;box-shadow:var(--shadow);text-align:left}
+.pf .mh{display:flex;justify-content:space-between;align-items:center;padding:18px 24px}
+.pf .mh h3{margin:0;font-size:18px;font-weight:600}
+.pf .mh button{border:0;background:transparent;font-size:18px;color:var(--g700)}
+.ptab{display:flex;justify-content:center;margin:0 0 14px}
+.ptab div{display:inline-flex;background:var(--g100);border-radius:8px;padding:3px}
+.ptab button{border:0;background:transparent;border-radius:6px;padding:6px 26px;font-size:13px;color:var(--g400)}
+.ptab button.on{background:#fff;color:var(--g900);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.pbody{display:grid;grid-template-columns:90px 1fr;gap:0;padding:0 24px;min-height:300px}
+.punit{display:flex;flex-direction:column;gap:6px;padding-top:44px;border-right:1px solid var(--g150)}
+.punit button{border:0;background:transparent;text-align:left;padding:6px 12px;font-size:13px;color:var(--g400)}
+.punit button.on{color:var(--g900);font-weight:700}
+.pcals{display:grid;grid-template-columns:1fr 1fr;gap:28px;padding-left:20px}
+.pcal h5{margin:0 0 8px;text-align:center;font-size:13px;font-weight:600}
+.pnav{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.pnav select{border:0;font-size:13px;font-weight:600;background:transparent}
+.pnav select.mo{font-size:20px;font-weight:700}
+.pnav button{border:0;background:transparent;font-size:16px;color:var(--g700)}
+.pnav b{font-size:20px}
+.dgrid{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;font-size:12px;row-gap:4px}
+.dgrid span{color:var(--g500);font-size:11px;padding:4px 0}
+.dgrid button,.mgrid button{border:0;background:transparent;height:30px;border-radius:15px;font-size:12px;color:var(--g900)}
+.dgrid button.out{color:var(--g300)}
+.dgrid button:disabled,.mgrid button:disabled{color:var(--g300);cursor:default}
+.dgrid button.in,.mgrid button.in{background:#E9EBF5;border-radius:0}
+.dgrid button.sel,.mgrid button.sel{background:var(--g900);color:#fff;border-radius:15px}
+.mgrid{display:grid;grid-template-columns:repeat(3,1fr);row-gap:14px;text-align:center;padding-top:10px}
+.mgrid button{height:34px}
+.pslide{padding:34px 10px 0 30px}
+.pslide p{margin:0;color:var(--g500);font-size:13px}
+.pslide h4{margin:6px 0 24px;font-size:20px;font-weight:400;color:var(--g500)}.pslide h4 b{color:var(--g900)}
+.pslide input{width:100%;accent-color:var(--blue)}
+.pslide .ticks{display:flex;justify-content:space-between;font-size:12px;color:var(--g700);margin-top:4px}
+.pfoot{display:flex;align-items:flex-start;gap:8px;padding:14px 24px 18px;border-top:1px solid var(--g150);margin-top:12px}
+.pin{display:flex;flex-direction:column;gap:4px}
+.pin input{width:128px;height:36px;border:1px solid var(--g300);border-radius:4px;padding:0 10px;font-size:13px}
+.pin input::placeholder{color:var(--g400)}
+.pin input.err{border-color:var(--r)}
+.pin small{color:var(--r);font-size:11px;max-width:200px;line-height:1.3}
+.pfoot .tl{line-height:36px;color:var(--g500)}
+.prange{margin-left:auto;align-self:center;color:var(--r);font-size:12px}
+.pfoot .apply{margin-left:12px;min-width:92px;height:36px;border-radius:4px;border:0;background:var(--g900);color:#fff;font-weight:600;font-size:13px}
+.pfoot .apply:disabled{background:#5B6068;opacity:.55;cursor:default}
+/* 업로드 화면 · 미리보기 */
+.mod{width:520px;background:#fff;border-radius:6px;box-shadow:var(--shadow);text-align:left}
+.mod.wide{width:640px}
+.mod .mh{display:flex;justify-content:space-between;align-items:center;padding:18px 24px}
+.mod .mh h3{margin:0;font-size:18px}
+.mod .mh button{border:0;background:transparent;font-size:16px;color:var(--g700)}
+.mod .mbd{padding:0 24px 20px;display:flex;flex-direction:column;gap:16px}
+.mod .mf{display:flex;justify-content:flex-end;gap:8px;padding:16px 24px;border-top:1px solid var(--g150)}
+.mb2{min-width:88px;height:36px;padding:0 16px;border-radius:4px;font-weight:700;font-size:13px;border:1px solid var(--g200);background:#fff}
+.mb2.pri{background:var(--p);border-color:var(--p);color:#fff}
+.mb2:disabled{opacity:.4;cursor:default}
+.mfield{display:flex;flex-direction:column;gap:8px;font-size:13px;font-weight:700;color:var(--g700)}
+.mfield select{height:40px;border:1px solid var(--g300);border-radius:4px;padding:0 12px;font-size:13px;font-weight:400;color:var(--g900);background:#fff}
+.dz{border:1px dashed var(--g300);background:var(--g100);border-radius:6px;padding:24px 16px;display:flex;flex-direction:column;align-items:center;gap:8px;font-size:14px;font-weight:500}
+.dz.over{border-color:var(--p);background:var(--p1)}
+.dz i{width:36px;height:36px;border-radius:50%;background:var(--p1);color:var(--p7);display:flex;align-items:center;justify-content:center;font-style:normal;font-weight:800;font-size:18px}
+.dz small{color:var(--g500);font-size:12px;font-weight:400}
+.fchip{display:flex;align-items:center;gap:10px;border:1px solid var(--g200);border-radius:4px;padding:10px 14px;font-size:14px;font-weight:500}
+.fchip small{color:var(--g500);font-weight:400;font-size:12px}
+.fchip button{margin-left:auto;border:0;background:transparent;color:var(--g700)}
+.pinfo{display:flex;gap:16px 28px;flex-wrap:wrap}
+.pinfo div{display:flex;flex-direction:column;gap:4px;font-size:14px}.pinfo span{font-size:12px;font-weight:700;color:var(--g700)}
+.pstat{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.pstat div{background:var(--g100);border-radius:4px;padding:10px 12px;font-size:12px;font-weight:700;color:var(--g700)}
+.pstat b{display:block;font-size:18px;color:var(--g900);margin-top:2px}
+.pstat .n,.pstat .n b{color:var(--g)}.pstat .c,.pstat .c b{color:var(--o)}.pstat .r,.pstat .r b{color:var(--r)}
+.ptbl{font-size:13px}.ptbl th{height:34px}.ptbl td{height:34px}
+.ptbl .New{color:var(--g);font-weight:600}.ptbl .Changed{color:var(--o);font-weight:600}.ptbl .Removed{color:var(--r);font-weight:600}
+.pnote{background:var(--p1);color:var(--p7);border-radius:4px;padding:10px 12px;font-size:13px;font-weight:500}
+.pmore{color:var(--g500);font-size:12px;margin-top:-8px}
+.split{position:relative}
+.split>.panel{position:absolute;top:0;right:0;bottom:0;width:50%;z-index:5;box-shadow:-8px 0 28px rgba(16,24,40,.22)}
+/* 패널이 열리면 [Delete] · [Import] · Pagination을 패널 왼쪽(보이는 목록 영역)으로 이동 */
+.split .listhead{padding-right:calc(50% + 16px)}
+.split .pager{width:50%}
+.split>.panel .pb{overflow-y:auto;min-height:0}
+.panel{display:flex;flex-direction:column}
+.panel .ph{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--g150)}
+.panel .ph h3{margin:0;font-size:18px}
+.panel .x{border:0;background:transparent;font-size:18px;color:var(--g700)}
+.panel .pb{padding:4px 16px 16px;flex:1}
+.panel h4{margin:20px 0 12px;font-size:16px;display:flex;align-items:center;gap:8px}
+.panel .cnt{background:#2E3445;color:#fff;font-size:12px;border-radius:10px;padding:1px 8px}
+.panel .g2,.panel .g4{display:grid;gap:20px 16px;padding-bottom:16px;border-bottom:1px solid var(--g150)}
+.panel .g2{grid-template-columns:1fr 1fr}.panel .g4{grid-template-columns:repeat(4,1fr)}
+.kv{display:flex;flex-direction:column;gap:6px;min-width:0}
+.kv span{font-size:12.5px;font-weight:700;color:var(--g700)}
+.kv b{font-weight:400;font-size:14px;line-height:1.5;word-break:break-word}
+/* 같은 줄 항목은 명칭(라벨) 높이를 맞춘다: 명칭이 2줄(긴 명칭 · 다국어)이어도 값은 같은 줄에 정렬 */
+.panel .g2>.kv,.panel .g3>.kv,.panel .g4>.kv{display:grid;grid-row:span 2;grid-template-rows:subgrid;row-gap:6px;align-content:start}
+.panel h5{margin:14px 0 8px;font-size:14px;display:flex;align-items:center;gap:6px}
+.panel h6{margin:20px 0 10px;font-size:13px;color:var(--g700)}
+.panel .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px 16px;padding-bottom:10px}
+.panel .nb{border-bottom:0;padding-bottom:4px}
+.panel .tag{background:var(--p1);color:var(--p7);font-size:12px;border-radius:10px;padding:2px 9px;font-weight:700}
+.panel .dev{background:var(--g900);color:#fff;border-radius:4px;padding:1px 8px;font-size:13px;font-weight:700}
+.s8{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:4px 0 6px}
+.slot{border:1px solid var(--g200);border-radius:4px;padding:8px;font-size:12.5px;line-height:1.35;min-height:46px;word-break:keep-all}
+.slot em{display:block;font-style:normal;color:var(--p7);font-size:11px;font-weight:700;margin-bottom:6px}
+.slot.off{background:var(--g100);color:var(--g400)}.slot.off em{color:var(--g400)}
+.slot small{display:block;color:var(--g500);font-size:11.5px;margin-top:4px}
+.swatch{display:inline-block;width:14px;height:14px;border:1px solid var(--g300);border-radius:3px;vertical-align:-2px;margin-right:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.chips span{border:1px solid var(--g200);border-radius:14px;padding:3px 10px;font-size:13px}
+.chips em{font-style:normal;color:var(--g500);font-size:12px;margin-left:2px}
+table.mini{font-size:13px}table.mini th{height:32px}table.mini td{height:34px}
+.field.sm{font-size:13px;margin-bottom:4px}.field.sm select{height:34px;width:200px}
+.ctabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.ctabs button{border:1px solid var(--g200);background:#fff;border-radius:16px;padding:4px 12px;font-size:12.5px;font-weight:600}
+.ctabs button.on{background:var(--g900);border-color:var(--g900);color:#fff}
+.sub2{border:1px solid var(--g150);border-radius:6px;padding:8px 14px 14px;background:#FCFCFD}
+.sg{display:flex;align-items:center;gap:12px}
+.vd{width:1px;height:28px;background:var(--g200);flex:none}
+.field select.dt{width:146px}
+.panel .pf{display:flex;justify-content:space-between;padding:14px 16px;border-top:1px solid var(--g150)}
+.panel .pf .b{min-width:120px;font-weight:700}
+td.l{max-width:320px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cb{width:20px;height:20px;accent-color:var(--g900);cursor:pointer}
+.go{border:0;background:transparent;font-size:18px;color:var(--g700);padding:4px 10px}
+.chg{font-size:12px;font-weight:700;padding:2px 8px;border-radius:10px}
+.chg.New{background:var(--g1);color:var(--g)}.chg.Changed{background:var(--o1);color:var(--o)}
+.empty td{height:180px;color:var(--g700);line-height:1.6}
+.pager{display:flex;justify-content:center;align-items:center;gap:4px;padding:16px 0}
+.pager button{min-width:30px;height:30px;border:0;background:transparent;font-size:13px;color:var(--g500);border-radius:50%}
+.pager button.on{color:var(--g900);font-weight:800}
+.pager button.nav{border:1px solid var(--g200);color:var(--g700)}
+.pager button:disabled{opacity:.35;cursor:default}
+/* modal / toast */
+.dim{position:absolute;inset:0;background:rgba(10,12,16,.45);display:flex;align-items:center;justify-content:center;z-index:20}
+.pop{width:360px;background:#fff;border-radius:6px;box-shadow:var(--shadow);text-align:center;padding:30px 20px 22px}
+.pop .ic{width:28px;height:28px;border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:16px}
+.ic.done{background:var(--p)}.ic.warn{background:var(--o)}.ic.err{background:#F0466A}
+.pop h3{margin:0 0 8px;font-size:17px}
+.pop p{margin:0 0 20px;font-size:13px;color:var(--g700);line-height:1.5}
+.pop .btns{display:flex;justify-content:center;gap:8px}
+.pop .btns button{min-width:104px;height:36px;border-radius:4px;font-weight:700;font-size:13px;border:1px solid var(--g200);background:#fff}
+.pop .btns .pri{background:var(--p);border-color:var(--p);color:#fff}
+.toast{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);background:var(--g900);color:#fff;border-radius:8px;padding:13px 24px;font-size:14px;font-weight:500;z-index:30;box-shadow:var(--shadow)}
+.legend{position:fixed;right:16px;bottom:16px;background:var(--tb-bg);color:var(--tb-ink);border-radius:10px;padding:10px 12px 10px 14px;font-size:12px;max-width:290px;line-height:1.6;z-index:90;box-shadow:var(--shadow)}
+.legend b{color:#fff}.legend button{float:right;border:0;background:transparent;color:var(--tb-ink2);font-size:14px;margin:-4px -4px 0 6px}
+@media (max-width:720px){.legend{display:none}}
+</style>
+</head>
+<body>
+<div class="tb">
+  <h1>Assay Pack Setting Prototype <small>T-IOS 2.0 · Web</small></h1>
+  <div class="opt">다음 Import 결과
+    <div class="seg" role="tablist" aria-label="Import 결과 시나리오">
+      <button data-a="scn" data-v="ok">정상</button><button data-a="scn" data-v="dup">같은 버전</button><button data-a="scn" data-v="invalid">양식 오류</button><button data-a="scn" data-v="type">형식 오류</button>
+    </div>
+  </div>
+  <div class="opt">사용자 <div class="seg" role="tablist" aria-label="사용자"><button data-a="mode" data-v="ti">T-IOS</button><button data-a="mode" data-v="li">L-IOS (조회 전용)</button></div></div>
+  <button class="tbtn" data-a="sample">샘플 파일 Import</button>
+  <div class="opt">등록 파일 없음 <button class="sw" id="swEmpty" data-a="empty" aria-label="등록 파일 없음"></button></div>
+  <button class="tbtn" data-a="reset">처음부터</button>
+  <span class="sp"></span>
+  <span class="crumb" id="crumb"></span>
+</div>
+<div class="stage"><div class="app" id="app"></div></div>
+<input type="file" id="file" accept=".json,.csv,.xlsx,.txt,.pdf" multiple hidden>
+<div class="legend" id="legend"><button data-a="legend" aria-label="닫기">✕</button>
+  <b>이렇게 확인해 보세요</b><br>
+  · 파일 종류 : Master / Pretreatment / Extraction / PCR, 10 · 30 · 50 · 100 items<br>
+  · 기간 : <b>Select Date Range</b> → Period Filters(Date · Period 탭) → <b>Apply</b> → Search, <b>Active only</b>로 활성 파일만<br>
+  · <b>Active</b> : 목록은 상태 태그만, 상세(›)에서 <b>Active</b> · <b>Inactive</b>로 바꾼 뒤 <b>Save</b> → 확인 팝업 (T-IOS만, 같은 제품은 1개만 활성, Master는 최신 버전 강제 활성)<br>
+  · 체크박스 선택 → <b>Delete</b> → 확인 팝업 → Toast<br>
+  · <b>Import</b> → Import file(여러 파일, 제한 없음) → <b>Import</b> → 완료 알림 (최신 버전 자동 활성)<br>
+  · 상단 「다음 Import 결과」로 같은 버전(덮어쓰기) · 양식 · 형식 오류 확인<br>
+  · 행(또는 <b>›</b>) 선택 → 우측 <b>File details</b> 패널(TI-STN-08-P): 파일 종류별 시약 정보, 바코드 Segment, 구성품 탭
+</div>
+<script>
+(function(){
+  var TYPES = ['Master','Pretreatment','Extraction','PCR'];
+  var KEY = {'Master':'master','Pretreatment':'pretreat','Extraction':'extraction','PCR':'pcr_gi-b1'};
+  /* 파일 종류별 시약 정보 (시약 정보 JSON 기준) */
+  var REAGENT = {
+    /* 마스터 정보: Reagent Product Name 없음, 최신 버전 자동 활성. 표 행은 JSON 필드 순서(ID → Name → Code) */
+    Master: { fileType: 'Master', basic: { productName: '-' },
+      testGroups: [['TEST_GROUP_1','RP','RP'],['TEST_GROUP_2','GI','GI'],['TEST_GROUP_3','HPV','HPV'],['TEST_GROUP_4','RTI','RTI']],
+      sampleTypes: [['SAMPLE_TYPE_1','Swab','Swab'],['SAMPLE_TYPE_2','Aspirate','Aspirate'],['SAMPLE_TYPE_3','BAL','BAL'],['SAMPLE_TYPE_4','Saliva','Saliva'],['SAMPLE_TYPE_5','Sputum','Sputum'],
+        ['SAMPLE_TYPE_6','Raw stool','Raw_stool'],['SAMPLE_TYPE_7','Cary-blair','Cary-blair'],['SAMPLE_TYPE_8','eNAT stool','eNAT_stool'],['SAMPLE_TYPE_9','Fecal swab','Fecal_swab'],
+        ['SAMPLE_TYPE_10','Thinprep','Thinprep'],['SAMPLE_TYPE_11','Surepath','Surepath'],['SAMPLE_TYPE_12','Cellpreserv','Cellpreserv'],['SAMPLE_TYPE_13','Urine','Urine'],['SAMPLE_TYPE_14','Semen','Semen']],
+      schemas: [
+        { id: 'BARCODE_SCHEMA_1', name: 'Pretreatment Reagent', length: 27, exp: 2, segs: [[1,'제조 일자',6],[2,'유효 기간',6],[3,'제품 고유 번호',4],[4,'연도',2],[5,'월',1],[6,'생산 번호',2],[7,'버퍼 정보',2],[8,'일련 번호',4]] },
+        { id: 'BARCODE_SCHEMA_2', name: 'STARMag UC Master', length: 25, exp: 2, segs: [[1,'제조 일자',6],[2,'유효 기간',6],[3,'제품 고유 번호',4],[4,'연도',2],[5,'월',1],[6,'생산 번호',2],[7,'일련 번호',4]] },
+        { id: 'BARCODE_SCHEMA_3', name: 'STARMag UC Tub', length: 27, exp: 2, segs: [[1,'제조 일자',6],[2,'유효 기간',6],[3,'제품 고유 번호',4],[4,'연도',2],[5,'월',1],[6,'생산 번호',2],[7,'버퍼 정보',2],[8,'일련 번호',4]] },
+        { id: 'BARCODE_SCHEMA_4', name: 'STARMag UC Tube', length: 17, exp: null, segs: [[1,'제품 고유 번호',4],[2,'구성품 정보',4],[3,'생산/입고 정보',5],[4,'일련 번호',4]] },
+        { id: 'BARCODE_SCHEMA_5', name: 'PCR Reagent Box', length: 25, exp: 2, segs: [[1,'제조 일자',6],[2,'유효 기간',6],[3,'제조 번호 (1)',4],[4,'제조 번호 (2)',5],[5,'일련 번호',4]] },
+        { id: 'BARCODE_SCHEMA_6', name: 'PCR Reagent Component', length: 20, exp: null, segs: [[1,'구성품 고유 번호',10],[2,'하이픈',1],[3,'생산/입고 년도 및 생산/입고 순서',4],[4,'하이픈',1],[5,'LOT별 생산 고유 번호',4]] }],
+      itemGroups: [['ITEM_GROUP_1','Tube'],['ITEM_GROUP_2','Tub'],['ITEM_GROUP_3','Tip'],['ITEM_GROUP_4','PCR reagent component'],['ITEM_GROUP_5','IC']],
+      sockets: [['PCR_REAGENT_SOCKET_COMPONENT_1','MOM','#FCFCFD'],['PCR_REAGENT_SOCKET_COMPONENT_2','TOM','#FCFCFD'],['PCR_REAGENT_SOCKET_COMPONENT_3','Buffer','#B3B3B3']] },
+    /* 바코드 segments: [segmentOrder, segmentCode, segmentName] (segmentName은 파일에 있을 때만) */
+    Pretreatment: { fileType: 'Pretreatment',
+      basic: { productName: 'PBS Standard Tube', productCode: 'PBS_Standard_Tube', maxRxns: 1, maxUsageCount: 1, itemGroupId: 'ITEM_GROUP_1', itemGroupName: 'Tube' },
+      barcode: { schemaId: 'BARCODE_SCHEMA_1', schemaName: 'Pretreatment Reagent', segments: [[3,'PR02','제품 고유 번호']] },
+      qty: { quantity: '1', baseUnit: 'ea', packagingUnit: 'rack' },
+      storage: { moduleCode: 'PrepConsumableStorage', unitCode: 'Trolley' } },
+    Extraction: { fileType: 'Extraction',
+      basic: { productName: 'STARMag Universal Cartridge Kit', productCode: 'STARMag_UC_Kit' },
+      barcode: { schemaId: 'BARCODE_SCHEMA_2', schemaName: 'STARMag UC Master', segments: [[3,'UC96','제품 고유 번호']] },
+      comps: [
+        { name: 'LB Tub', code: 'STARMag_UC_Kit_LB_TUB', maxRxns: 96, maxUsageCount: 10, itemGroupId: 'ITEM_GROUP_2', itemGroupName: 'Tub', barcode: { schemaId: 'BARCODE_SCHEMA_3', schemaName: 'STARMag UC Tub', segments: [[3,'UC96','제품 고유 번호'],[7,'LB','버퍼 정보']] },
+          qty: { quantity: '96', baseUnit: 'rxns', packagingUnit: 'tub' }, storage: { moduleCode: 'PrepConsumableStorage', unitCode: 'Trolley' } },
+        { name: 'MB Tube', code: 'STARMag_UC_Kit_MB_Tube', maxRxns: 96, maxUsageCount: 10, itemGroupId: 'ITEM_GROUP_1', itemGroupName: 'Tube', barcode: { schemaId: 'BARCODE_SCHEMA_4', schemaName: 'STARMag UC Tube', segments: [[1,'UC96','제품 고유 번호'],[2,'MB01','구성품 정보']] },
+          qty: { quantity: '96', baseUnit: 'rxns', packagingUnit: 'tube' }, storage: { moduleCode: 'FlexibleExtraction', unitCode: 'MbTubeStorage' } }] },
+    PCR: { fileType: 'PCR',
+      basic: { productName: 'Allplex™ GI-Bacteria(I) Assay', productCode: 'Allplex_GI-B1_Assay', testItemName: 'GI-B1', testItemCode: 'GI-B1', testGroupId: 'TEST_GROUP_2', testGroupCode: 'GI', isTestTargetSelectable: true,
+        testTargetNames: ['Sh/EI','Cam','Yer','Vib','CdB','Aer','Sal'],
+        sampleTypes: [['SAMPLE_TYPE_6','Raw_stool'],['SAMPLE_TYPE_7','Cary-blair'],['SAMPLE_TYPE_8','eNAT_stool'],['SAMPLE_TYPE_9','Fecal_swab']] },
+      barcode: { schemaId: 'BARCODE_SCHEMA_5', schemaName: 'PCR Reagent Box', segments: [[3,'GI04']] },
+      devices: { m9600: true, starlet: true },
+      comps: [
+        { name: '5X GI-B(I) MOM', code: 'Allplex_GI-B1_Assay_MOM', maxRxns: 100, maxUsageCount: 5, itemGroupId: 'ITEM_GROUP_4', itemGroupName: 'PCR reagent component', barcode: { schemaId: 'BARCODE_SCHEMA_6', schemaName: 'PCR Reagent Component', segments: [[1,'GI04XMOM00','구성품 고유 번호']] },
+          qty: { quantity: '100', baseUnit: 'rxns', packagingUnit: 'set' }, storage: { moduleCode: 'PlateSealing', unitCode: 'ColdStorage' },
+          socket: { id: 'PCR_REAGENT_SOCKET_COMPONENT_1', type: 'MOM', abbr: 'MOM', positions: [['A',1],['B',7]] } },
+        { name: 'GI-BP IC', code: 'Allplex_GI-B1_Assay_IC', maxRxns: 100, maxUsageCount: 5, itemGroupId: 'ITEM_GROUP_5', itemGroupName: 'IC', barcode: { schemaId: 'BARCODE_SCHEMA_6', schemaName: 'PCR Reagent Component', segments: [[1,'GIBPXIC000','구성품 고유 번호']] },
+          qty: { quantity: '100', baseUnit: 'rxns', packagingUnit: 'set' }, storage: { moduleCode: 'PrepConsumableStorage', unitCode: 'Trolley' }, socket: null }] } };
+  function pad(n){ return (n < 10 ? '0' : '') + n; }
+  /* 일시 표기 YYYY-MM-DD hh:mm:ss */
+  function fmt(d){ return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds()); }
+  var seq = 0;
+  /* 버전은 File type · Reagent Product Name별 누적, File name은 확장자 제외, User ID는 service */
+  function seedFiles(){
+    var out = [], ver = {}, t0 = new Date(2026, 9, 21, 14, 20, 31);
+    for (var i = 23; i >= 0; i--) {
+      var type = TYPES[i % 4]; ver[type] = (ver[type] || 0) + 1;
+      var reg = new Date(t0.getTime() - i * 6 * 864e5 - (i * 3797 % 30000) * 1000);
+      var cre = new Date(reg.getTime() - (18 + i % 9) * 3600e3 - (i * 1234 % 3000) * 1000);
+      out.push({ id: ++seq, name: 'ap_' + KEY[type] + '_v' + ver[type], type: type, product: REAGENT[type].basic.productName, reg: fmt(reg), created: fmt(cre), ver: 'v' + ver[type], user: 'service' });
+    }
+    return out.reverse();
+  }
+  var S;
+  function blankQ(){ return { name: '', type: 'All', dt: 'Registered', d1: '', d2: '', ptab: 'Date', punit: 'Day', pslider: null, activeOnly: false }; }
+  /* 활성(Active): File type · Reagent Product Name이 같은 파일 중 1개. Master는 항상 최신 버전 */
+  function keyOf(f){ return f.type + '|' + f.product; }
+  function seedActive(files){ var a = {}; files.forEach(function(f){ if (f.type !== 'Master' && !a[keyOf(f)]) a[keyOf(f)] = f.id; }); return a; }
+  function latestMaster(){ return S.files.filter(function(f){ return f.type === 'Master'; })[0]; }
+  function isActive(f){ if (f.type === 'Master') { var m = latestMaster(); return !!m && m.id === f.id; } return S.active[keyOf(f)] === f.id; }
+  function init(){
+    var files = seedFiles();
+    S = { files: files, active: seedActive(files), sel: {}, page: 1, size: 10, q: blankQ(), applied: null,
+          panel: null, comp: 0, modal: null, toast: null, scn: S ? S.scn : 'ok', li: S ? S.li : false, empty: false };
+  }
+  init();
+  var app = document.getElementById('app');
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
+  /* ── 검색: 등록 일시 최신순 ── */
+  function filtered(){
+    var list = S.empty ? [] : S.files, q = S.applied;
+    if (q) list = list.filter(function(f){
+      var d = (q.dt === 'Created' ? f.created : f.reg).slice(0, 10);
+      return (!q.name || f.name.toLowerCase().indexOf(q.name.toLowerCase()) >= 0) && (q.type === 'All' || f.type === q.type)
+        && (!q.d1 || d >= q.d1) && (!q.d2 || d <= q.d2) && (!q.activeOnly || isActive(f));
+    });
+    return list;
+  }
+  function ymd(d){ return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+  function curPage(){ return filtered().slice((S.page - 1) * S.size, S.page * S.size); }
+  /* Pagination (COMM-5-i): 10페이지씩, 2페이지 이하면 First/Last 없음 */
+  function pager(total, page, act){
+    var pages = Math.max(1, Math.ceil(total / S.size)), start = Math.floor((page - 1) / 10) * 10 + 1, end = Math.min(pages, start + 9), h = '', fl = pages > 2;
+    if (fl) h += '<button class="nav" data-a="' + act + '" data-p="1" ' + (page === 1 ? 'disabled' : '') + ' aria-label="처음">«</button>';
+    h += '<button class="nav" data-a="' + act + '" data-p="' + Math.max(1, page - 1) + '" ' + (page === 1 ? 'disabled' : '') + ' aria-label="이전">‹</button>';
+    for (var i = start; i <= end; i++) h += '<button data-a="' + act + '" data-p="' + i + '" class="' + (i === page ? 'on' : '') + '">' + i + '</button>';
+    h += '<button class="nav" data-a="' + act + '" data-p="' + Math.min(pages, page + 1) + '" ' + (page === pages ? 'disabled' : '') + ' aria-label="다음">›</button>';
+    if (fl) h += '<button class="nav" data-a="' + act + '" data-p="' + pages + '" ' + (page === pages ? 'disabled' : '') + ' aria-label="마지막">»</button>';
+    return '<div class="pager">' + h + '</div>';
+  }
+
+  /* ── 화면 ── */
+  function shell(inner){
+    return '<aside class="lnb"><div class="logo">CURECA<sup>' + (S.li ? 'LIOS' : 'TIOS') + '</sup></div>' +
+      ['Dashboard','Test Management','Sample Tracking','Instrument','Inventory','Statistical Analysis'].map(function(m){ return '<div class="mi">' + m + '</div>'; }).join('') +
+      '<div class="mi on">Setting <span>⌃</span></div><div class="sub">' +
+      ['Policy Setting','Protocol Setting','LIS Setting','System Setting','Account Setting','Tube Setting'].map(function(m){ return '<div>' + m + '</div>'; }).join('') +
+      '<div class="on">Assay Pack Setting</div></div><div class="user"><i></i>Keira Knightley</div></aside>' +
+      '<section class="main"><div class="gnb"><span><b>⇅ Running</b> Instrument · ' + (S.li ? 'T-IOS' : 'L-IOS') + '</span><span>Event <em class="er">● Error 3</em> <em class="wa">● Warning 2</em></span></div><div class="content">' + inner + '</div></section>' +
+      modal() + (S.toast ? '<div class="toast" role="status">' + esc(S.toast) + '</div>' : '');
+  }
+  function listView(){
+    var list = filtered(), total = list.length, pages = Math.max(1, Math.ceil(total / S.size));
+    if (S.page > pages) S.page = pages;
+    var cur = curPage();
+    var nSel = Object.keys(S.sel).length, onPage = cur.filter(function(f){ return S.sel[f.id]; }).length;
+    var q = S.q;
+    var h = '<div class="title"><h2>Assay Pack Setting</h2></div>' +
+      '<div class="card search">' +
+      '<div class="sg" role="group" aria-label="입력 검색">' +
+        '<label class="field">File name <input type="text" class="wide" data-in="name" value="' + esc(q.name) + '" placeholder="Enter file name"></label>' +
+        '<label class="field">File type <select data-in="type">' + ['All'].concat(TYPES).map(function(t){ return '<option' + (t === q.type ? ' selected' : '') + '>' + t + '</option>'; }).join('') + '</select></label></div>' +
+      '<span class="vd"></span>' +
+      '<div class="sg" role="group" aria-label="기간 검색"><span class="field">Period ' +
+        '<select data-in="dt" class="dt" aria-label="기간 유형">' + [['Registered','Registered Date'],['Created','Created Date']].map(function(o){ return '<option value="' + o[0] + '"' + (o[0] === q.dt ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select>' +
+        '<button type="button" class="pfield' + (q.d1 ? ' done' : '') + '" data-a="popen" aria-label="기간 선택"><i aria-hidden="true">▦</i>' + (q.d1 ? q.d1 + ' ~ ' + q.d2 : 'Select Date Range') + '</button></span></div>' +
+      '<span class="vd"></span><label class="chk"><input type="checkbox" data-in="activeOnly"' + (q.activeOnly ? ' checked' : '') + '> Active only</label>' +
+      '<span class="sp"></span><button class="b light" data-a="sreset">Reset</button><button class="b dark" data-a="search">Search</button></div>' +
+      (panelFile() ? '<div class="split">' : '') +
+      '<div class="card"><div class="listhead"><span>Items</span><b>' + total + '</b>' +
+      '<select class="psize" data-in="size" aria-label="노출 개수">' + [10, 30, 50, 100].map(function(n){ return '<option value="' + n + '"' + (n === S.size ? ' selected' : '') + '>' + n + ' items</option>'; }).join('') + '</select><span class="sp"></span>' +
+      (S.li ? '' : '<button class="b sm" data-a="del" ' + (nSel ? '' : 'disabled') + '>Delete</button>' +
+      '<button class="b sm" data-a="upload">Import</button>') + '</div>' +
+      '<table class="list' + (S.li ? ' ro' : '') + '"><thead><tr><th style="width:64px"><input type="checkbox" class="cb" data-a="all" aria-label="현재 페이지 전체 선택" ' + (cur.length && onPage === cur.length ? 'checked' : '') + ' ' + (cur.length ? '' : 'disabled') + '></th>' +
+      '<th>Product Name</th><th>Version</th><th>File type</th><th>File name</th><th>Registered Date/Time</th><th>Created Date/Time</th><th>User ID</th><th style="width:90px">Active</th><th style="width:90px;text-align:center;padding:0">Details</th></tr></thead><tbody>';
+    if (!total) h += '<tr class="empty"><td colspan="10">' + (S.applied && !S.empty && S.files.length ? 'No results found.' : (S.li ? 'No files found.' : 'No files found.<br>Click Import to add a file.')) + '</td></tr>';
+    cur.forEach(function(f){
+      var on = isActive(f), master = f.type === 'Master';
+      h += '<tr class="' + (S.sel[f.id] ? 'sel ' : '') + (S.panel === f.id ? 'act' : '') + '" data-a="rowpick" data-id="' + f.id + '"><td><input type="checkbox" class="cb" data-a="one" data-id="' + f.id + '" ' + (S.sel[f.id] ? 'checked' : '') + ' aria-label="' + esc(f.name) + ' 선택"></td>' +
+        '<td class="l" title="' + esc(prodLabel(f)) + '">' + esc(prodLabel(f)) + '</td><td>' + f.ver + '</td><td>' + f.type + '</td><td class="l" title="' + esc(f.name) + '">' + esc(f.name) + '</td><td>' + f.reg + '</td><td>' + f.created + '</td><td>' + f.user + '</td>' +
+        '<td>' + activeTag(on) + '</td>' +
+        '<td><button class="go" data-a="detail" data-id="' + f.id + '" aria-label="' + esc(f.name) + ' 상세 보기">›</button></td></tr>';
+    });
+    h += '</tbody></table>' + (total ? pager(total, S.page, 'page') : '') + '</div>';
+    if (panelFile()) h += panelView(panelFile()) + '</div>';
+    return h;
+  }
+  /* ── 우측 File details 패널 (TI-STN-08-P) ── */
+  function panelFile(){ return S.panel ? S.files.filter(function(f){ return f.id === S.panel; })[0] || null : null; }
+  function names(a, n){ return a.length ? a.slice(0, n).join(' · ') + (a.length > n ? ' +' + (a.length - n) + ' more' : '') : '-'; }
+  function panelView(f){
+    var R = REAGENT[f.type];
+    var kv = function(k, v){ return '<div class="kv"><span>' + k + '</span><b>' + v + '</b></div>'; };
+    return '<div class="card panel" role="region" aria-label="File details"><div class="ph"><h3>File details</h3><button class="x" data-a="pclose" aria-label="패널 닫기">✕</button></div><div class="pb">' +
+      '<h4>File Info</h4><div class="g2">' + kv('File name', esc(f.name)) + kv('File type', f.type) + kv('File Version', f.ver) + kv('File Created Date/Time', f.created) + kv('Active', activeView(f)) + '</div>' +
+      '<h4>Import Info</h4><div class="g2">' + kv('Registered Date/Time', f.reg) + kv('User ID', f.user) + '</div>' +
+      dataView(f, kv) +
+      '</div>' + (S.li ? '' : '<div class="pf"><button class="b" data-a="delone">Delete</button><button class="b dark" data-a="psave"' + (S.pend && S.pend.id === f.id ? '' : ' disabled') + '>Save</button></div>') + '</div>';
+  }
+  function activeTag(on){ return on ? '<span class="tag">Active</span>' : '<span class="tag off">Inactive</span>'; }
+  /* 상세 Active: 상태 태그 + (T-IOS) [Active] · [Inactive]로 바꾸기 → 하단 [Save]. Master는 최신 버전 고정, L-IOS는 보기만 */
+  function pendOn(f){ return S.pend && S.pend.id === f.id ? S.pend.on : isActive(f); }
+  function activeView(f){
+    var on = pendOn(f), h = '<span class="actv">' + activeTag(on);
+    if (f.type === 'Master') h += '<small>Latest Master is always active</small>';
+    else if (!S.li) h += '<button class="b sm" data-a="pflip">' + (on ? 'Inactive' : 'Active') + '</button>' + (S.pend && S.pend.id === f.id ? '<small>Not saved</small>' : '');
+    return h + '</span>';
+  }
+  /* 바코드 Segment: 파일에 들어온 개수만큼 Segment 순서대로 (개수 제한 없음) */
+  function segGrid(b){
+    return '<div class="s8" aria-label="' + esc(b.schemaName) + ' Segment">' + b.segments.slice().sort(function(x, y){ return x[0] - y[0]; })
+      .map(function(s){ return '<div class="slot"><em>Segment ' + s[0] + '</em>' + esc(s[1]) + (s[2] ? '<small>' + esc(s[2]) + '</small>' : '') + '</div>'; }).join('') + '</div>';
+  }
+  function compTabs(comps){
+    if (S.comp >= comps.length) S.comp = 0;
+    return '<div class="ctabs" role="tablist" aria-label="구성품">' + comps.map(function(c, i){ return '<button role="tab" aria-selected="' + (i === S.comp) + '" class="' + (i === S.comp ? 'on' : '') + '" data-a="comp" data-i="' + i + '">' + esc(c.name) + '</button>'; }).join('') + '</div>';
+  }
+  /* 수량 표기 (COMM-4-b): {수량} {단위} (1 {포장 단위}) */
+  /* R008: Display 없음 · Segments 개수 대신 「Segment Info」 라벨 · Master 제품명은 Master Info (T-IOS · L-IOS 공통) */
+  function qtyView(q, kv, tag){ return '<' + tag + '>Quantity Info</' + tag + '><div class="g4">' + kv('Quantity', q.quantity) + kv('Base Unit', q.baseUnit) + kv('Packaging Unit', q.packagingUnit) + '' + '</div>'; }
+  function barView(b, kv, tag, label){
+    return '<' + tag + '>Barcode Info</' + tag + '><div class="g2 nb">' + kv('Barcode Schema ID', b.schemaId) + kv(label || 'Schema Name', esc(b.schemaName)) + '</div><h6>Segment Info</h6>' + segGrid(b);
+  }
+  function prodLabel(f){ return f.type === 'Master' ? 'Master Info' : f.product; }
+  function storeView(s, kv, tag){ return '<' + tag + '>Storage Location Info</' + tag + '><div class="g2 nb">' + kv('Module Code', s.moduleCode) + kv('Unit Code', s.unitCode) + '</div>'; }
+  /* 시약 정보: JSON 순서대로 (fileInfo는 File Info · Upload Info에 표시) */
+  function chips(a){ return '<div class="chips">' + a.map(function(t){ return '<span>' + esc(t) + '</span>'; }).join('') + '</div>'; }
+  function miniTable(cols, rows){ return '<table class="mini"><thead><tr>' + cols.map(function(c){ return '<th>' + c + '</th>'; }).join('') + '</tr></thead><tbody>' + rows.map(function(r){ return '<tr>' + r.map(function(v){ return '<td>' + esc(v) + '</td>'; }).join('') + '</tr>'; }).join('') + '</tbody></table>'; }
+  /* 마스터 정보: testGroupInfo → sampleTypeInfo → barcodeSchemaInfo → itemGroupInfo → pcrReagentSocketComponentInfo */
+  function masterView(R, kv){
+    if (S.comp >= R.schemas.length) S.comp = 0;
+    var sc = R.schemas[S.comp];
+    return '<h4>Test Group Info</h4>' + miniTable(['Test Group ID','Test Group Name','Test Group Code'], R.testGroups) +
+      '<h4>Sample Type Info</h4>' + miniTable(['Sample Type ID','Sample Type Name','Sample Type Code'], R.sampleTypes) +
+      '<h4>Barcode Schema Info</h4><div class="ctabs" role="tablist" aria-label="바코드 스키마">' + R.schemas.map(function(s, i){ return '<button role="tab" aria-selected="' + (i === S.comp) + '" class="' + (i === S.comp ? 'on' : '') + '" data-a="comp" data-i="' + i + '">' + esc(s.name) + '</button>'; }).join('') + '</div>' +
+      '<div class="sub2"><div class="g4">' + kv('Barcode Schema ID', sc.id) + kv('Barcode Schema Name', esc(sc.name)) + kv('Barcode Length', sc.length) + kv('Expiration Date Segment Order', sc.exp == null ? '-' : sc.exp) + '</div>' +
+      '<h6>Segment Info (' + sc.segs.length + ')</h6>' + miniTable(['Segment Order','Segment Name','Segment Length'], sc.segs) + '</div>' +
+      '<h4>Item Group Info</h4>' + miniTable(['Item Group ID','Item Group Name'], R.itemGroups) +
+      '<h4>PCR Reagent Socket Component Info</h4><table class="mini"><thead><tr><th>Component ID</th><th>Component Type</th><th>Color Code</th></tr></thead><tbody>' +
+        R.sockets.map(function(s){ return '<tr><td>' + esc(s[0]) + '</td><td>' + esc(s[1]) + '</td><td><span class="swatch" style="background:' + s[2] + '"></span>' + s[2] + '</td></tr>'; }).join('') + '</tbody></table>';
+  }
+  function dataView(f, kv){
+    var R = REAGENT[f.type], b = R.basic, h = '';
+    if (f.type === 'Master') return masterView(R, kv);
+    if (f.type === 'Pretreatment') {
+      h += '<h4>Reagent Basic Info</h4><div class="g4">' + kv('Product Name', esc(b.productName)) + kv('Product Code', b.productCode) + kv('Max Rxns', b.maxRxns) + kv('Max Usage Count', b.maxUsageCount) + kv('Item Group ID', b.itemGroupId) + kv('Item Group Name', b.itemGroupName) + '</div>' +
+        barView(R.barcode, kv, 'h4') + qtyView(R.qty, kv, 'h4') + storeView(R.storage, kv, 'h4');
+    } else if (f.type === 'Extraction') {
+      var cp = R.comps[S.comp] || R.comps[0];
+      h += '<h4>Reagent Basic Info</h4><div class="g2">' + kv('Product Name', esc(b.productName)) + kv('Product Code', b.productCode) + '</div>' + barView(R.barcode, kv, 'h4') +
+        '<h4>Component Info</h4>' + compTabs(R.comps) + '<div class="sub2"><div class="g4">' +
+        kv('Component Name', esc(cp.name)) + kv('Component Code', cp.code) + kv('Max Rxns', cp.maxRxns) + kv('Max Usage Count', cp.maxUsageCount) + kv('Item Group ID', cp.itemGroupId) + kv('Item Group Name', cp.itemGroupName) + '</div>' +
+        barView(cp.barcode, kv, 'h6') + qtyView(cp.qty, kv, 'h6') + storeView(cp.storage, kv, 'h6') + '</div>';
+    } else {
+      var p = R.comps[S.comp] || R.comps[0];
+      h += '<h4>Reagent Basic Info</h4><div class="g4">' + kv('Product Name', esc(b.productName)) + kv('Product Code', b.productCode) + kv('Test Item Name', b.testItemName) + kv('Test Item Code', b.testItemCode) +
+          kv('Test Group ID', b.testGroupId) + kv('Test Group Code', b.testGroupCode) + kv('Test Target Selectable', b.isTestTargetSelectable ? 'Y' : 'N') + '</div>' +
+        '<h6>Test Target Names (' + b.testTargetNames.length + ')</h6><div class="chips">' + b.testTargetNames.map(function(t){ return '<span>' + esc(t) + '</span>'; }).join('') + '</div>' +
+        '<h6>Sample Type Mapping Info (' + b.sampleTypes.length + ')</h6>' + miniTable(['Sample Type ID','Sample Type Code'], b.sampleTypes) +
+        barView(R.barcode, kv, 'h4') +
+        '<h4>Extraction Device Availability</h4><div class="g4">' + kv('M9600', R.devices.m9600 ? 'Available' : 'Not available') + kv('STARlet', R.devices.starlet ? 'Available' : 'Not available') + '</div>' +
+        '<h4>Component Info</h4>' + compTabs(R.comps) + '<div class="sub2"><div class="g4">' +
+          kv('Component Name', esc(p.name)) + kv('Component Code', p.code) + kv('Max Rxns', p.maxRxns) + kv('Max Usage Count', p.maxUsageCount) + kv('Item Group ID', p.itemGroupId) + kv('Item Group Name', esc(p.itemGroupName)) + '</div>' +
+          barView(p.barcode, kv, 'h6', 'Barcode Scheme Name') + qtyView(p.qty, kv, 'h6') + storeView(p.storage, kv, 'h6') +
+          '<h6>PCR Socket Component Info</h6>' + (p.socket
+            ? '<div class="g3 nb">' + kv('Component ID', p.socket.id) + kv('Component Type', p.socket.type) + kv('Component Abbreviation', p.socket.abbr) + '</div>' +
+              '<h6>Socket Positions (' + p.socket.positions.length + ')</h6>' + miniTable(['Row','Column'], p.socket.positions)
+            : '<div class="g3 nb">' + kv('Component ID', '-') + kv('Component Type', '-') + kv('Socket Positions', '-') + '</div>') + '</div>';
+    }
+    return h;
+  }
+  function modal(){
+    var m = S.modal; if (!m) return '';
+    if (m.kind === 'upload') return uploadView(m);
+    if (m.kind === 'period') return periodView(m);
+    var ic = { done: '✓', warn: '!', err: '✕' }[m.icon];
+    return '<div class="dim" data-a="dimclick"><div class="pop" role="dialog" aria-modal="true" aria-label="' + esc(m.title) + '"><div class="ic ' + m.icon + '">' + ic + '</div><h3>' + esc(m.title) + '</h3><p>' + m.body + '</p><div class="btns">' +
+      m.btns.map(function(b){ return '<button class="' + (b.pri ? 'pri' : '') + '" data-a="' + b.a + '">' + esc(b.t) + '</button>'; }).join('') + '</div></div></div>';
+  }
+  function render(){
+    app.innerHTML = shell(listView());
+    document.querySelectorAll('[data-a=scn]').forEach(function(b){ b.classList.toggle('on', b.dataset.v === S.scn); });
+    document.getElementById('swEmpty').classList.toggle('on', S.empty);
+    var pf = panelFile(), cid = (pf ? 'TI-STN-08-P/File Data · Case. ' + pf.type : 'TI-STN-08 · 파일 목록').replace(/TI-/g, S.li ? 'LI-' : 'TI-');
+    if (S.modal) cid += ' · ' + S.modal.cid;
+    document.getElementById('crumb').textContent = cid;
+    var all = app.querySelector('[data-a=all]');
+    if (all) { var cur = curPage(), n = cur.filter(function(f){ return S.sel[f.id]; }).length; all.indeterminate = n > 0 && n < cur.length; }
+  }
+  var toastTimer;
+  function toast(t){ S.toast = t; render(); clearTimeout(toastTimer); toastTimer = setTimeout(function(){ S.toast = null; render(); }, 2000); }
+
+  /* ── 기간 선택: Period Filters 팝업 (공통 UX COMM-5-d Calendar 1~4) ── */
+  var MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var SL = { Week: { max: 15, step: 3, mul: 7 }, Month: { max: 10, step: 2, mul: 30 }, Year: { max: 5, step: 1, mul: 365 } };
+  var ERR = { fmt: 'Write the correct date format', bad: 'Invalid date', s: 'Start date must be lower than or equal to the end date', e: 'End date must be higher than or equal to the start date' };
+  function parseYmd(s){ var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || ''); if (!m) return null; var d = new Date(+m[1], +m[2] - 1, +m[3]); return d.getMonth() === +m[2] - 1 && d.getDate() === +m[3] ? d : null; }
+  function openPeriod(){
+    var q = S.q, t = new Date(), s = parseYmd(q.d1), e = parseYmd(q.d2);
+    /* 입력값 없음: 시작은 이전 월, 종료는 현재 월 / 있음: 시작일 · 종료일이 포함된 월 */
+    var sv = s || new Date(t.getFullYear(), t.getMonth() - 1, 1), ev = e || t;
+    S.modal = { kind: 'period', cid: 'Period Filters (COMM-5-d)', tab: q.d1 ? q.ptab : 'Date', unit: q.d1 ? q.punit : 'Day',
+      s: q.d1, e: q.d2, si: q.d1, ei: q.d2, err: {}, vs: { y: sv.getFullYear(), m: sv.getMonth() }, ve: { y: ev.getFullYear(), m: ev.getMonth() },
+      sl: q.pslider ? { unit: q.pslider.unit, n: q.pslider.n } : { unit: 'Week', n: 0 } };
+    render();
+  }
+  /* 선택 범위 : 최소 7일 ~ 최대 1년 (COMM-5-d) */
+  function span(m){ var a = parseYmd(m.s), b = parseYmd(m.e); return a && b ? Math.round((b - a) / 864e5) + 1 : 0; }
+  function canApply(m){ var n = span(m); return !!(n >= 7 && n <= 366 && !m.err.s && !m.err.e && (m.s !== S.q.d1 || m.e !== S.q.d2)); }
+  function periodView(m){
+    var units = m.tab === 'Date' ? ['Day','Month','Quarter','Year'] : ['Week','Month','Year'], cur = m.tab === 'Date' ? m.unit : m.sl.unit;
+    return '<div class="dim"><div class="pf" role="dialog" aria-modal="true" aria-label="Period Filters"><div class="mh"><h3>Period Filters</h3><button data-a="close" aria-label="닫기">✕</button></div>' +
+      '<div class="ptab"><div role="tablist">' + ['Date','Period'].map(function(t){ return '<button role="tab" aria-selected="' + (m.tab === t) + '" class="' + (m.tab === t ? 'on' : '') + '" data-a="ptab" data-v="' + t + '">' + t + '</button>'; }).join('') + '</div></div>' +
+      '<div class="pbody"><div class="punit">' + units.map(function(u){ return '<button class="' + (u === cur ? 'on' : '') + '" data-a="punit" data-v="' + u + '">' + u + '</button>'; }).join('') + '</div>' +
+      (m.tab === 'Date' ? '<div class="pcals">' + calView(m, 's') + calView(m, 'e') + '</div>' : sliderView(m)) + '</div>' +
+      '<div class="pfoot">' + pin(m, 's') + '<span class="tl">~</span>' + pin(m, 'e') + '<span class="prange">' + (span(m) && (span(m) < 7 || span(m) > 366) ? 'Select a period between 7 days and 1 year.' : '') + '</span><button class="apply" data-a="papply" ' + (canApply(m) ? '' : 'disabled') + '>Apply</button></div></div></div>';
+  }
+  function pin(m, k){ var e = m.err[k]; return '<label class="pin"><input data-in="p' + k + '" class="' + (e ? 'err' : '') + '" placeholder="Select Date" value="' + esc(m[k + 'i'] || '') + '" aria-label="' + (k === 's' ? '시작일' : '종료일') + '">' + (e ? '<small>' + e + '</small>' : '') + '</label>'; }
+  /* 선택 불가: 미래 날짜, 시작일보다 이른 종료일, 종료일보다 늦은 시작일 */
+  function blocked(m, k, a, b){ var today = ymd(new Date()); return a > today || (k === 'e' && m.s && b < m.s) || (k === 's' && m.e && a > m.e); }
+  function cell(m, k, a, b, label, extra){
+    var sel = k === 's' ? m.s === a : m.e === b, inR = m.s && m.e && a > m.s && b < m.e;
+    return '<button class="' + (extra || '') + (sel ? ' sel' : inR ? ' in' : '') + '" data-a="pset" data-k="' + k + '" data-s="' + a + '" data-e="' + b + '" ' + (blocked(m, k, a, b) ? 'disabled' : '') + '>' + label + '</button>';
+  }
+  function calView(m, k){
+    var v = m['v' + k], y = v.y, h = '<div class="pcal"><h5>' + (k === 's' ? 'Start' : 'End') + '</h5>', yrs = '';
+    for (var yy = 2000; yy <= new Date().getFullYear() + 10; yy++) yrs += '<option' + (yy === y ? ' selected' : '') + '>' + yy + '</option>';
+    if (m.unit === 'Day') {
+      h += '<div class="pnav"><select data-in="py' + k + '" aria-label="연도">' + yrs + '</select><select class="mo" data-in="pm' + k + '" aria-label="월">' + MON.map(function(n, i){ return '<option value="' + i + '"' + (i === v.m ? ' selected' : '') + '>' + n + '</option>'; }).join('') + '</select></div><div class="dgrid">' +
+        ['Sun','Mon','Tue','Wed','Thr','Fri','Sat'].map(function(d){ return '<span>' + d + '</span>'; }).join('');
+      var first = new Date(y, v.m, 1).getDay(), rows = Math.ceil((first + new Date(y, v.m + 1, 0).getDate()) / 7);
+      for (var i = 0; i < rows * 7; i++) { var d = new Date(y, v.m, 1 - first + i), ds = ymd(d); h += cell(m, k, ds, ds, d.getDate(), d.getMonth() !== v.m ? 'out' : ''); }
+      return h + '</div></div>';
+    }
+    var step = m.unit === 'Year' ? 9 : 1, base = m.unit === 'Year' ? y - 4 : y;
+    h += '<div class="pnav"><button data-a="pnav" data-k="' + k + '" data-d="-' + step + '" aria-label="이전">‹</button><b>' + (m.unit === 'Year' ? base + ' – ' + (base + 8) : y) + '</b><button data-a="pnav" data-k="' + k + '" data-d="' + step + '" aria-label="다음">›</button></div><div class="mgrid">';
+    var p2 = function(n){ return (n < 10 ? '0' : '') + n; };
+    if (m.unit === 'Month') for (var mo = 0; mo < 12; mo++) h += cell(m, k, y + '-' + p2(mo + 1) + '-01', y + '-' + p2(mo + 1) + '-' + new Date(y, mo + 1, 0).getDate(), MON[mo]);
+    if (m.unit === 'Quarter') for (var q = 0; q < 4; q++) h += cell(m, k, y + '-' + p2(q * 3 + 1) + '-01', y + '-' + p2(q * 3 + 3) + '-' + new Date(y, q * 3 + 3, 0).getDate(), 'Q' + (q + 1));
+    if (m.unit === 'Year') for (var j = 0; j < 9; j++) h += cell(m, k, (base + j) + '-01-01', (base + j) + '-12-31', base + j);
+    return h + '</div></div>';
+  }
+  function sliderView(m){
+    var c = SL[m.sl.unit], n = m.sl.n, ticks = '';
+    for (var i = 0; i <= c.max; i += c.step) ticks += '<span>' + i + (i ? '' : '<br>Today') + '</span>';
+    return '<div class="pslide"><p>Choose a Time Range to View Data</p><h4>Find Data From <b>' + n + ' ' + m.sl.unit + (n === 1 ? '' : 's') + '</b> Ago To Today!</h4>' +
+      '<input type="range" min="0" max="' + c.max + '" step="1" value="' + n + '" data-in="psl" aria-label="기간 길이"><div class="ticks">' + ticks + '</div></div>';
+  }
+  /* 슬라이더: 종료일 = 오늘(고정), 시작일 = 오늘 - 값 × (7 / 30 / 365)일 */
+  function slideTo(m, n){ var t = new Date(); m.sl.n = n; m.e = ymd(t); m.s = ymd(new Date(t.getFullYear(), t.getMonth(), t.getDate() - n * SL[m.sl.unit].mul)); m.si = m.s; m.ei = m.e; m.err = {}; }
+  /* 직접 입력: YYYYMMDD → YYYY-MM-DD, Focus Out 시 유효성 확인 */
+  function checkInput(m, k, val){
+    m[k + 'i'] = val; delete m.err.s; delete m.err.e;
+    if (!val) { m[k] = ''; return; }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(val)) { m.err[k] = ERR.fmt; m[k] = ''; return; }
+    var d = parseYmd(val); if (!d) { m.err[k] = ERR.bad; m[k] = ''; return; }
+    var o = k === 's' ? m.e : m.s;
+    if (o && (k === 's' ? val > o : val < o)) { m.err[k] = ERR[k]; m[k] = ''; return; }
+    m[k] = val; m['v' + k] = { y: d.getFullYear(), m: d.getMonth() };
+  }
+
+  /* ── Import: 여러 파일 선택(개수 · 용량 제한 없음) → 파일별 양식 확인 → (같은 버전이면 덮어쓰기 확인) → 등록 & 최신 버전 자동 활성 ── */
+  /* File type은 파일 안의 fileInfo.fileType으로 판별 (프로토타입은 파일명으로 대신) */
+  function guessType(name){ var n = name.toLowerCase(); return n.indexOf('master') >= 0 ? 'Master' : n.indexOf('pcr') >= 0 ? 'PCR' : n.indexOf('extract') >= 0 ? 'Extraction' : 'Pretreatment'; }
+  function mb(b){ return b >= 1048576 ? (b / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB'; }
+  function openUpload(files){ S.up = { kind: 'upload', cid: 'TI-STN-08-01 · Import file', files: [], over: false }; S.modal = S.up; if (files) pickFiles(files); else render(); }
+  function upAlert(cid, icon, title, body){ S.modal = { cid: cid, icon: icon, title: title, body: body, btns: [{ t: 'OK', a: 'upback', pri: true }] }; render(); }
+  /* json 외 파일이 있으면 Alert_041, 같은 파일명은 교체 */
+  function pickFiles(list){
+    list = Array.prototype.slice.call(list);
+    if (list.some(function(f){ return (f.name.split('.').pop() || '').toLowerCase() !== 'json'; })) return upAlert('Alert_041', 'err', 'Unsupported file type', 'Only .json files can be imported.');
+    list.forEach(function(f){ S.up.files = S.up.files.filter(function(x){ return x.name !== f.name; }).concat([{ name: f.name, size: f.size }]); });
+    S.modal = S.up; render();
+  }
+  function uploadView(m){
+    return '<div class="dim"><div class="mod" role="dialog" aria-modal="true" aria-label="Import file"><div class="mh"><h3>Import file</h3><button data-a="close" aria-label="닫기">✕</button></div><div class="mbd">' +
+      '<div class="dz' + (m.over ? ' over' : '') + '" data-dz="1"><i>↑</i>Drag and drop files here, or<button class="mb2" data-a="pick">Select files</button><small>json · Multiple files</small></div>' +
+      m.files.map(function(f, i){ return '<div class="fchip">▤ ' + esc(f.name) + ' <small>' + mb(f.size) + '</small><button data-a="unpick" data-i="' + i + '" aria-label="' + esc(f.name) + ' 빼기">✕</button></div>'; }).join('') +
+      '</div><div class="mf"><button class="mb2" data-a="close">Cancel</button><button class="mb2 pri" data-a="upgo" ' + (m.files.length ? '' : 'disabled') + '>Import</button></div></div></div>';
+  }
+  function verOf(name, type){ var m = name.match(/_v(\d+)/i); return m ? 'v' + m[1] : 'v' + (S.files.filter(function(f){ return f.type === type; }).length + 1); }
+  function sameVersion(type, ver){ var prod = REAGENT[type].basic.productName; return S.files.filter(function(f){ return f.type === type && f.product === prod && f.ver === ver; })[0]; }
+  function upGo(){
+    if (S.scn === 'invalid') { S.modal = { cid: 'Alert_040', icon: 'warn', title: 'Invalid file format', body: 'Some files do not match the import format.<br>Check the file contents and try again.', btns: [{ t: 'OK', a: 'upback', pri: true }] }; return render(); }
+    var items = S.up.files.map(function(f){ var type = guessType(f.name), ver = verOf(f.name, type), dup = sameVersion(type, ver); return { file: f, type: type, ver: ver, dup: dup ? dup.id : null }; });
+    S.up.items = items;
+    /* 같은 File type · Reagent Product Name · 버전이 있으면 덮어쓰기 여부 확인 (Confirm_028) */
+    if (items.some(function(x){ return x.dup; })) { S.modal = { cid: 'Confirm_028', icon: 'warn', title: 'Version already exists', body: 'Some files have versions that are already registered. Overwrite them?', btns: [{ t: 'Cancel', a: 'upback' }, { t: 'Overwrite', a: 'overwrite', pri: true }] }; return render(); }
+    applyUpload();
+  }
+  /* 등록 & 최신 버전 자동 활성 (같은 버전이면 기존 파일 교체) → Alert_039 */
+  function applyUpload(){
+    var now = new Date();
+    S.up.items.forEach(function(it, i){
+      if (it.dup) S.files = S.files.filter(function(x){ return x.id !== it.dup; });
+      var t = new Date(now.getTime() + i * 1000);
+      var f = { id: ++seq, name: it.file.name.replace(/\.json$/i, ''), type: it.type, product: REAGENT[it.type].basic.productName, reg: fmt(t), created: fmt(new Date(t.getTime() - 3600e3 * 5)), ver: it.ver, user: 'service' };
+      S.files.unshift(f); if (f.type !== 'Master') S.active[keyOf(f)] = f.id;
+    });
+    S.empty = false; S.applied = null; S.page = 1; S.sel = {}; S.up = null;
+    S.modal = { cid: 'Alert_039', icon: 'done', title: 'Import complete', body: 'The files have been imported successfully.', btns: [{ t: 'OK', a: 'close', pri: true }] };
+    render();
+  }
+  /* Active 토글: 켜기 Confirm_029(기존 활성 자동 비활성) · 끄기 Confirm_030, Master는 선택 불가 */
+  function askToggle(f){
+    /* Master는 최신 버전 강제 활성: 토글 선택 시 변경 불가 안내 (Alert_045) */
+    if (f.type === 'Master') { S.modal = { cid: 'Alert_045', icon: 'warn', title: 'Master version cannot be changed', body: 'The latest Master version is always applied.', btns: [{ t: 'OK', a: 'close', pri: true }] }; return render(); }
+    if (isActive(f)) { S.modal = { cid: 'Confirm_030', icon: 'warn', title: 'Deactivate this version?', body: 'No version of this product will be applied.', btns: [{ t: 'Cancel', a: 'close' }, { t: 'Deactivate', a: 'deactok', pri: true }], target: f.id }; return render(); }
+    var cur = S.files.filter(function(x){ return S.active[keyOf(f)] === x.id; })[0];
+    S.modal = { cid: 'Confirm_029', icon: 'warn', title: 'Activate this version?', body: cur ? 'The active version (' + cur.ver + ') will be deactivated.' : 'This version will be applied.', btns: [{ t: 'Cancel', a: 'close' }, { t: 'Activate', a: 'actok', pri: true }], target: f.id };
+    render();
+  }
+  function activeAlert(){ S.modal = { cid: 'Alert_042', icon: 'warn', title: 'Active file cannot be deleted', body: 'The selection includes an active file.<br>Deactivate it or deselect it and try again.', btns: [{ t: 'OK', a: 'close', pri: true }] }; render(); }
+
+  /* ── 이벤트 ── */
+  document.getElementById('file').addEventListener('change', function(e){ var fs = e.target.files; if (fs.length && S.up) pickFiles(fs); e.target.value = ''; });
+  /* 업로드 화면 끌어놓기 */
+  document.addEventListener('dragover', function(e){ var dz = e.target.closest && e.target.closest('[data-dz]'); if (!dz) return; e.preventDefault(); if (!S.up.over) { S.up.over = true; dz.classList.add('over'); } });
+  document.addEventListener('dragleave', function(e){ var dz = e.target.closest && e.target.closest('[data-dz]'); if (dz && !dz.contains(e.relatedTarget)) { S.up.over = false; dz.classList.remove('over'); } });
+  document.addEventListener('drop', function(e){ var dz = e.target.closest && e.target.closest('[data-dz]'); if (!dz) return; e.preventDefault(); S.up.over = false; if (e.dataTransfer.files.length) pickFiles(e.dataTransfer.files); else render(); });
+  document.addEventListener('input', function(e){
+    var k = e.target.dataset && e.target.dataset.in, m = S.modal; if (!k) return;
+    if (k === 'ps' || k === 'pe') {
+      var v = e.target.value; if (/^\d{8}$/.test(v)) { v = v.slice(0, 4) + '-' + v.slice(4, 6) + '-' + v.slice(6); e.target.value = v; }
+      m[k.slice(1) + 'i'] = v; return;
+    }
+    if (k === 'psl') {
+      slideTo(m, +e.target.value);
+      var h4 = app.querySelector('.pslide h4 b'); if (h4) h4.textContent = m.sl.n + ' ' + m.sl.unit + (m.sl.n === 1 ? '' : 's');
+      app.querySelector('[data-in=ps]').value = m.s; app.querySelector('[data-in=pe]').value = m.e; app.querySelector('[data-a=papply]').disabled = !canApply(m); return;
+    }
+    if (k !== 'size' && k !== 'activeOnly' && !/^p[ym][se]$/.test(k)) S.q[k] = e.target.value;
+  });
+  document.addEventListener('change', function(e){
+    var k = e.target.dataset && e.target.dataset.in, m = S.modal;
+    if (k === 'size') { S.size = +e.target.value; S.page = 1; render(); }
+    else if (k === 'ps' || k === 'pe') { checkInput(m, k.slice(1), e.target.value.trim()); render(); }
+    else if (k === 'psl') render();
+    else if (/^p[ym][se]$/.test(k)) { m['v' + k[2]][k[1] === 'y' ? 'y' : 'm'] = +e.target.value; render(); }
+    else if (k === 'type' || k === 'dt') { S.q[k] = e.target.value; render(); }
+    else if (k === 'activeOnly') { S.q.activeOnly = e.target.checked; render(); }
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && S.modal) { S.modal = null; S.up = null; render(); }
+    var k = e.key === 'Enter' && e.target.dataset && e.target.dataset.in;
+    if (k === 'ps' || k === 'pe') { e.preventDefault(); e.target.blur(); return; }
+    if (k) { e.preventDefault(); act('search'); }
+  });
+  document.addEventListener('click', function(e){
+    var el = e.target.closest('[data-a]'); if (!el) return;
+    if (el.dataset.a === 'dimclick' && e.target !== el) return;
+    act(el.dataset.a, el);
+  });
+  function act(a, el){
+    /* L-IOS는 조회 전용: Import · 삭제 · 활성 변경 없음 */
+    if (S.li && ['sample','upload','del','delone','pflip','psave'].indexOf(a) >= 0) return;
+    switch (a) {
+      case 'scn': S.scn = el.dataset.v; render(); break;
+      case 'mode': S.li = el.dataset.v === 'li'; S.sel = {}; S.modal = null; render(); break;
+      case 'overwrite': applyUpload(); break;
+      /* 상세 Active: [Active] · [Inactive]로 바꿔 두고 [Save]에서 확인 팝업 → 반영 */
+      case 'pflip': var pf = panelFile(); if (pf) { var nv = !pendOn(pf); S.pend = nv === isActive(pf) ? null : { id: pf.id, on: nv }; render(); } break;
+      case 'psave': var sf = panelFile(); if (sf && S.pend && S.pend.id === sf.id) askToggle(sf); break;
+      case 'actok':
+        var af = S.files.filter(function(x){ return x.id === S.modal.target; })[0]; S.active[keyOf(af)] = af.id; S.modal = null; S.pend = null;
+        toast(af.ver + ' has been activated.'); break;
+      case 'deactok':
+        var df = S.files.filter(function(x){ return x.id === S.modal.target; })[0]; delete S.active[keyOf(df)]; S.modal = null; S.pend = null;
+        toast(df.ver + ' has been deactivated.'); break;
+      case 'sample':
+        /* 샘플: Master · Pretreatment · PCR 3개 (같은 버전 시나리오는 현재 최신 버전으로) */
+        var add = S.scn === 'dup' ? 0 : 1, nx = function(t){ return S.files.filter(function(f){ return f.type === t; }).length + add; };
+        openUpload([{ name: 'ap_master_v' + nx('Master') + '.json', size: 0.8 * 1048576 }, { name: 'ap_pretreat_v' + nx('Pretreatment') + '.json', size: 0.3 * 1048576 },
+          { name: 'ap_pcr_gi-b1_v' + nx('PCR') + (S.scn === 'type' ? '.pdf' : '.json'), size: 2.4 * 1048576 }]); break;
+      case 'popen': openPeriod(); break;
+      case 'ptab':
+        var pm = S.modal; pm.tab = el.dataset.v; if (pm.tab === 'Period') slideTo(pm, pm.sl.n); render(); break;
+      case 'punit':
+        if (S.modal.tab === 'Date') S.modal.unit = el.dataset.v; else { S.modal.sl = { unit: el.dataset.v, n: 0 }; slideTo(S.modal, 0); }
+        render(); break;
+      case 'pset':
+        var pk = el.dataset.k, mm = S.modal; mm[pk] = pk === 's' ? el.dataset.s : el.dataset.e; mm[pk + 'i'] = mm[pk]; mm.err = {}; render(); break;
+      case 'pnav': var nv2 = S.modal['v' + el.dataset.k]; nv2.y += +el.dataset.d; render(); break;
+      case 'papply':
+        var am = S.modal; S.q.d1 = am.s; S.q.d2 = am.e; S.q.ptab = am.tab; S.q.punit = am.unit; S.q.pslider = am.tab === 'Period' ? am.sl : null; S.modal = null; render(); break;
+      case 'pick': document.getElementById('file').click(); break;
+      case 'unpick': S.up.files.splice(+el.dataset.i, 1); render(); break;
+      case 'upgo': upGo(); break;
+      case 'upback': S.modal = S.up; render(); break;
+      case 'empty': S.empty = !S.empty; S.sel = {}; S.page = 1; S.view = 'list'; render(); break;
+      case 'reset': init(); render(); break;
+      case 'legend': document.getElementById('legend').remove(); break;
+      case 'search': S.applied = JSON.parse(JSON.stringify(S.q)); S.page = 1; S.sel = {}; render(); break;
+      case 'sreset': S.q = blankQ(); S.applied = null; S.page = 1; S.sel = {}; render(); break;
+      case 'page': S.page = +el.dataset.p; render(); break;
+      case 'one': if (el.checked) S.sel[el.dataset.id] = true; else delete S.sel[el.dataset.id]; render(); break;
+      case 'all':
+        var cur = curPage(), every = cur.every(function(f){ return S.sel[f.id]; });
+        cur.forEach(function(f){ if (every) delete S.sel[f.id]; else S.sel[f.id] = true; }); render(); break;
+      case 'del':
+        if (S.files.some(function(f){ return S.sel[f.id] && isActive(f); })) { activeAlert(); break; }
+        S.modal = { cid: '팝업 정의 3-①', icon: 'warn', title: 'Delete the selected files?', body: 'Deleted file records cannot be restored.', btns: [{ t: 'Cancel', a: 'close' }, { t: 'Delete', a: 'delok', pri: true }] }; render(); break;
+      case 'delok':
+        var ids = Object.keys(S.sel).map(Number);
+        S.files = S.files.filter(function(f){ return ids.indexOf(f.id) < 0; }); if (ids.indexOf(S.panel) >= 0) S.panel = null; S.sel = {}; S.modal = null;
+        toast('The selected files have been deleted.'); break;
+      case 'upload': openUpload(); break;
+      case 'close': case 'dimclick': S.modal = null; S.up = null; render(); break;
+      case 'detail': case 'rowpick': if (S.panel !== +el.dataset.id) { S.comp = 0; S.pend = null; } S.panel = +el.dataset.id; render(); break;
+      case 'comp': S.comp = +el.dataset.i; render(); break;
+      case 'pclose': S.panel = null; S.pend = null; render(); break;
+      case 'delone':
+        if (isActive(panelFile())) { activeAlert(); break; }
+        S.modal = { cid: '팝업 정의 3-①', icon: 'warn', title: 'Delete the selected file?', body: 'Deleted file records cannot be restored.', btns: [{ t: 'Cancel', a: 'close' }, { t: 'Delete', a: 'deloneok', pri: true }] }; render(); break;
+      case 'deloneok':
+        var pid = S.panel; S.files = S.files.filter(function(x){ return x.id !== pid; }); delete S.sel[pid]; S.panel = null; S.modal = null;
+        toast('The file has been deleted.'); break;
+    }
+  }
+  render();
+})();
+</script>
+</body>
+</html>

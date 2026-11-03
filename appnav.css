@@ -1,0 +1,91 @@
+/* 공통 상단 메뉴 (모든 페이지 같은 위치 · 크기 · 왼쪽 정렬, 스크롤해도 상단 고정)
+   페이지마다 아래 마크업을 그대로 쓴다. 오른쪽 영역(.appnav-sp 뒤)만 페이지별로 다르다.
+   <nav class="appnav" aria-label="도구 메뉴">
+     <b class="appnav-brand">UX AI TEST › SH.L</b>
+     <a href="Setup.html">시작 안내</a> … <a aria-current="page">…</a>
+     <span class="appnav-sp"></span> (페이지별 상태 · 작업자)
+   </nav> */
+/* 모든 페이지 공통 레이아웃 (docs/UI_Layout_Proposal.html)
+   본문: 넓은 페이지 1440px · 읽는 페이지(시작 안내) 1200px, 좌우 여백 24px(좁은 화면 16px)
+   머리: 제목 26px · 설명 14px 한 줄 · 오른쪽 끝 주요 버튼, 위 24px · 아래 16px
+   카드: 모서리 12px · 안쪽 16px 20px · 사이 16px, 구역 사이 32px
+   글: 본문 14px / 1.6, 한글은 단어 단위 줄바꿈, 한 줄 정보는 .one-line(말줄임) */
+:root{
+  --page-max:1440px; --page-max-read:1200px; --page-gutter:24px; --page-top:24px;
+  --card-r:12px; --card-pad:16px 20px; --gap:16px; --section-gap:32px;
+}
+@media (max-width:760px){ :root{ --page-gutter:16px; --page-top:16px; } }
+html{word-break:keep-all;overflow-wrap:break-word}
+pre,code,kbd,.mono{word-break:normal;overflow-wrap:anywhere}
+.one-line{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.app-wrap{box-sizing:border-box;max-width:var(--page-max);margin:0 auto;padding:var(--page-top) var(--page-gutter) 64px}
+.app-wrap.read{max-width:var(--page-max-read)}
+/* 넓은 본문: UX 문서 · 변경 이력 · 사용량 통계 · 프로토타입 · 계정 관리. 좌우 여백은 appnav.js가 상단 메뉴 「UX 문서」 위치에 맞춘다 */
+.app-wrap.wide{max-width:none}
+.app-head{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;margin:0 0 16px}
+.app-head .app-head-t{flex:1;min-width:240px}
+.app-head h1{font-size:26px;line-height:1.3;margin:0 0 4px;letter-spacing:-.01em}
+.app-head p{margin:0;font-size:14px;line-height:1.6;color:var(--nav-ink2)}
+.app-head-act{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+/* 상단 메뉴: 흰 바(64px) · 왼쪽 로고 + 이름 · 메뉴는 둥근 버튼(지금 메뉴 = 연파랑 바탕 + 파랑 글자) ·
+   오른쪽 계정은 테두리 버튼(이름 · 내 정보) + 파랑 채운 버튼(로그아웃) */
+:root{
+  --nav-h:64px;
+  --nav-bg:#ffffff; --nav-line:#eceef2; --nav-ink:#1d2433; --nav-ink2:#4a5260; --nav-ink3:#7a8392; --nav-accent:#1570ef;
+  --nav-hover:#f3f5f8; --nav-on:#eaf2ff; --nav-btn-line:#cfd6e0;
+  --nav-ok:#1a7f37; --nav-ok-soft:#e3f4e8; --nav-red:#d93025; --nav-red-soft:#fdecea; --nav-chip:#f5f7fa; --nav-warn:#b35900;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --nav-bg:#171a20; --nav-line:#2a3039; --nav-ink:#e8ebf0; --nav-ink2:#b4bcc8; --nav-ink3:#8590a0; --nav-accent:#7fb0ff;
+    --nav-hover:#1e232b; --nav-on:#1c2a44; --nav-btn-line:#3a414c;
+    --nav-ok:#56d364; --nav-ok-soft:#16301d; --nav-red:#ff7b72; --nav-red-soft:#3a1f1e; --nav-chip:#1e232b; --nav-warn:#f0a24f;
+  }
+}
+:root[data-theme="dark"]{
+  --nav-bg:#171a20; --nav-line:#2a3039; --nav-ink:#e8ebf0; --nav-ink2:#b4bcc8; --nav-ink3:#8590a0; --nav-accent:#7fb0ff;
+  --nav-hover:#1e232b; --nav-on:#1c2a44; --nav-btn-line:#3a414c;
+  --nav-ok:#56d364; --nav-ok-soft:#16301d; --nav-red:#ff7b72; --nav-red-soft:#3a1f1e; --nav-chip:#1e232b; --nav-warn:#f0a24f;
+}
+.appnav{position:sticky;top:0;z-index:40;box-sizing:border-box;flex:none;height:var(--nav-h);margin:0;padding:0 24px;
+  display:flex;align-items:center;gap:4px;background:var(--nav-bg);border-bottom:1px solid var(--nav-line);
+  font:14px/1 Pretendard,-apple-system,"Segoe UI","Malgun Gothic",sans-serif;color:var(--nav-ink);overflow-x:auto;overflow-y:hidden;scrollbar-width:none}
+.appnav::-webkit-scrollbar{display:none}
+/* 로고: 파란 입체 블록(그림 파일 없이 CSS로) */
+.appnav-brand{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:800;letter-spacing:-.02em;color:var(--nav-ink);margin-right:40px;white-space:nowrap}
+.appnav-brand::before{content:"";flex:none;width:30px;height:30px;background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%231570ef' d='M16 2 29 9v14l-13 7L3 23V9z'/%3E%3Cpath fill='%2353a1ff' d='M16 2 29 9l-13 7L3 9z'/%3E%3Cpath fill='%230b4fc4' d='M16 16v14L3 23V9z'/%3E%3C/svg%3E")}
+/* 메뉴: 둥근 버튼. 현재 메뉴도 같은 굵기 → 메뉴 위치가 페이지마다 1px도 달라지지 않게 */
+.appnav a{display:flex;align-items:center;height:40px;padding:0 16px;border-radius:10px;font-size:14.5px;font-weight:500;color:var(--nav-ink);text-decoration:none;white-space:nowrap;transition:background .15s,color .15s}
+.appnav a:hover{background:var(--nav-hover)}
+.appnav a[aria-current="page"]{background:var(--nav-on);color:var(--nav-accent)}
+.appnav a:focus-visible{outline:2px solid var(--nav-accent);outline-offset:1px}
+.appnav-sp{flex:1;min-width:12px}
+.appnav-right{display:flex;align-items:center;gap:10px;white-space:nowrap}
+.appnav .badge{font-size:12px;font-weight:600;line-height:1.4;padding:2px 9px;border-radius:999px;background:var(--nav-chip);border:1px solid var(--nav-line);color:var(--nav-ink2);white-space:nowrap}
+.appnav .badge.on{background:var(--nav-ok-soft);color:var(--nav-ok);border-color:transparent}
+.appnav .badge.off{background:var(--nav-red-soft);color:var(--nav-red);border-color:transparent}
+/* Claude 사용 한도: 배경에 사용률 막대, 80% 이상 주황 · 95% 이상 빨강, 오래된 값은 흐리게 */
+.appnav .appnav-usage{position:relative;overflow:hidden;cursor:help;font-variant-numeric:tabular-nums}
+.appnav-usage i{position:absolute;left:0;top:0;bottom:0;background:var(--nav-accent);opacity:.13}
+.appnav-usage b{position:relative;font-weight:600}
+.appnav .appnav-usage.warn{color:var(--nav-warn);border-color:var(--nav-warn)}
+.appnav-usage.warn i{background:var(--nav-warn);opacity:.18}
+.appnav .appnav-usage.off{color:var(--nav-red);border-color:var(--nav-red)}
+.appnav-usage.off i{background:var(--nav-red);opacity:.18}
+.appnav .appnav-usage.old{opacity:.6}
+@media (max-width:1440px){ .appnav-usage .wk{display:none} }
+@media (max-width:1280px){ .appnav-usage .rs{display:none} }
+.appnav-user{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--nav-ink3)}
+.appnav-user[hidden],.appnav a[hidden]{display:none}
+/* 로그인한 계정: 이름(내 정보) · 로그아웃 */
+.appnav-acct{display:flex;align-items:center;gap:10px;white-space:nowrap}
+.appnav .appnav-acct a{height:40px;padding:0 16px;border:1px solid var(--nav-btn-line);border-radius:9px;background:var(--nav-bg);font-size:14px;font-weight:500}
+.appnav .appnav-acct a:hover{border-color:var(--nav-accent);background:var(--nav-bg)}
+.appnav .appnav-acct a[aria-current="page"]{border-color:var(--nav-accent);background:var(--nav-on)}
+.appnav-acct button{height:40px;padding:0 18px;border:1px solid var(--nav-accent);border-radius:9px;background:var(--nav-accent);color:#fff;font:inherit;font-size:14px;font-weight:500;cursor:pointer}
+.appnav-acct button:hover{filter:brightness(1.08)}
+:root[data-theme="dark"] .appnav-acct button{color:#0f1115}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .appnav-acct button{color:#0f1115}}
+.appnav-user input{box-sizing:border-box;width:110px;height:30px;padding:0 8px;border:1px solid var(--nav-line);border-radius:7px;background:var(--nav-bg);color:var(--nav-ink);font:inherit;font-size:13px}
+@media (max-width:1280px){ .appnav{padding:0 16px;gap:2px} .appnav-brand{margin-right:20px} .appnav a{padding:0 12px;font-size:14px} }
+@media (max-width:760px){ .appnav-brand{display:none} .appnav a{padding:0 9px;font-size:13px} }

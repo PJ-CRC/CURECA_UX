@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UX 문서</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="appnav.css">
+<style>
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --surface-2:#f3f6fb; --ink:#14171c; --ink-2:#4a5260; --ink-3:#7a8392;
+  --line:#e3e7ee; --accent:#2747d8; --accent-soft:#e6ebff; --red:#d93025; --red-soft:#fdecea;
+  --code-bg:#eef1f6; --shadow:0 1px 2px rgba(16,24,40,.05);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1115; --surface:#171a20; --surface-2:#1e232b; --ink:#e8ebf0; --ink-2:#b4bcc8; --ink-3:#8590a0;
+    --line:#2a3039; --accent:#8ea2ff; --accent-soft:#232c52; --red:#ff7b72; --red-soft:#3a1f1e; --code-bg:#222831; --shadow:none;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1115; --surface:#171a20; --surface-2:#1e232b; --ink:#e8ebf0; --ink-2:#b4bcc8; --ink-3:#8590a0;
+  --line:#2a3039; --accent:#8ea2ff; --accent-soft:#232c52; --red:#ff7b72; --red-soft:#3a1f1e; --code-bg:#222831; --shadow:none;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 Pretendard,-apple-system,"Segoe UI","Malgun Gothic",sans-serif;-webkit-font-smoothing:antialiased}
+/* 본문 너비 · 머리는 appnav.css 공통(.app-wrap 1440px · .app-head) */
+.app-head h1{font-weight:800}
+.hidden{display:none!important}
+/* UX 가이드 고르기: 한 줄 막대(내 작업 기준 · 선택(= 보는 가이드) · 적용 · 만드는 중 알림) */
+.gd{display:flex;align-items:center;gap:8px 10px;flex-wrap:wrap;min-height:48px;background:var(--surface);border:1px solid var(--line);border-radius:var(--card-r);padding:7px 12px;margin:0 0 var(--gap);box-shadow:var(--shadow);font-size:13.5px}
+.gd-lab{font-size:13px;font-weight:700;color:var(--ink);white-space:nowrap;cursor:help}
+.gd-lab .gd-by{font-weight:400}
+.gd select{min-width:200px;max-width:280px;height:32px;padding:0 8px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:13.5px}
+#gdApply{height:32px;padding:0 14px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:#fff;font:inherit;font-size:13.5px;font-weight:700;cursor:pointer}
+#gdApply:disabled{opacity:.4;cursor:default}
+:root[data-theme="dark"] #gdApply{color:#0f1115}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) #gdApply{color:#0f1115}}
+.gd-by{color:var(--ink-3);font-size:12.5px;white-space:nowrap}
+.gd-by:empty{display:none}
+.gd-btn{padding:8px 14px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:#fff;font:inherit;font-size:13.5px;font-weight:700;cursor:pointer;white-space:nowrap}
+.gd-btn:disabled{opacity:.5;cursor:default}
+:root[data-theme="dark"] .gd-btn{color:#0f1115}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .gd-btn{color:#0f1115}}
+.gd-jobs{display:flex;flex-wrap:wrap;gap:6px;margin-left:auto}
+.gd-jobs:empty{display:none}
+.gd-st{flex:none;display:inline-block;font-size:11px;font-weight:700;line-height:1.5;padding:0 6px;border-radius:999px;background:var(--surface);color:var(--ink-2)}
+.gd-st.wait{background:#fff1e0;color:#b35900}.gd-st.prog{background:var(--accent-soft);color:var(--accent)}.gd-st.bad{background:var(--red-soft);color:var(--red)}
+.gd-st.on{background:#e3f4e8;color:#1a7f37}
+.gd-st.fix{background:#fff1e0;color:#b35900;text-decoration:none}
+.gd-warn{margin:-8px 0 var(--gap);font-size:13px;color:#b35900}
+.gd-view{margin:0 0 var(--gap)}
+.gd-viewing:empty{display:none}
+.gd-viewing{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13.5px;color:var(--ink-2);margin:0 0 8px}
+.gd-viewing b{color:var(--ink)}
+.gd-viewing button{padding:5px 12px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;cursor:pointer}
+.gd-viewing button:hover{border-color:var(--accent)}
+.gd-view iframe{display:block;width:100%;height:calc(100vh - var(--nav-h) - 48px);min-height:560px;border:0;border-radius:var(--card-r);background:transparent}
+dialog.gd-dlg{border:1px solid var(--line);border-radius:14px;padding:0;width:min(640px,calc(100vw - 32px));background:var(--surface);color:var(--ink);box-shadow:0 20px 50px rgba(0,0,0,.25)}
+dialog.gd-dlg::backdrop{background:rgba(10,12,16,.45)}
+.gd-dlg form{padding:20px 22px}
+.gd-dlg h3{margin:0 0 4px;font-size:18px}
+.gd-dlg .gd-help{color:var(--ink-2);font-size:13.5px;margin:0 0 14px}
+.gd-dlg label{display:block;font-size:13px;font-weight:700;margin:12px 0 5px}
+.gd-dlg label span{font-weight:400;color:var(--ink-3)}
+.gd-dlg input,.gd-dlg textarea{width:100%;padding:9px 11px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:14px}
+.gd-dlg textarea{min-height:150px;resize:vertical;line-height:1.55}
+.gd-dlg input.bad{border-color:var(--red);background:var(--red-soft)}
+.gd-dlg .gd-msg{font-size:13px;margin-top:6px;min-height:18px}
+.gd-dlg .gd-msg.err{color:var(--red)}
+.gd-dlg .gd-act{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
+.gd-dlg .gd-act button{padding:9px 16px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:14px;cursor:pointer}
+.gd-dlg .gd-act button.pri{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
+.gd-dlg .gd-act button:disabled{opacity:.5;cursor:default}
+/* 참고 파일: 끌어다 놓기 · 눌러서 고르기, 고른 파일 목록(× 빼기) */
+.up-zone{display:flex;flex-direction:column;gap:3px;align-items:center;justify-content:center;padding:16px;border:1.5px dashed var(--line);border-radius:10px;background:var(--surface-2);text-align:center;cursor:pointer}
+.up-zone b{font-size:13.5px}
+.up-zone span{font-size:12.5px;color:var(--ink-3)}
+.up-zone:hover,.up-zone.drop{border-color:var(--accent);background:var(--accent-soft)}
+.up-zone:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.up-list{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:4px}
+.up-list:empty{display:none}
+.up-list li{display:flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;font-size:13px}
+.up-list li span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.up-list li small{color:var(--ink-3)}
+.up-list li button{border:0;background:none;color:var(--ink-3);font-size:15px;cursor:pointer;padding:0 4px}
+.up-list li button:hover{color:var(--red)}
+.spec-jobs{margin:0 0 12px}
+.spec-jobs:empty{display:none}
+/* 문서 종류 탭(공통 규칙 · 정의서 …) */
+.dtabs{display:flex;gap:4px;box-shadow:inset 0 -1px 0 var(--line);margin:0 0 var(--gap);overflow-x:auto;overflow-y:hidden}
+.dtabs button{flex:none;display:inline-flex;align-items:center;gap:6px;padding:10px 16px;border:0;border-bottom:2px solid transparent;background:none;color:var(--ink-2);font:inherit;font-size:14.5px;font-weight:600;cursor:pointer}
+.dtabs button:hover{color:var(--ink)}
+.dtabs button[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent);font-weight:700}
+.dtabs button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;border-radius:6px 6px 0 0}
+/* 보고 있는 가이드 이름: 작업 기준 고르기 막대 위 */
+.gd-name{margin:0 0 10px;font-size:24px;font-weight:800;line-height:1.3}
+.dcards{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.dcards:empty{display:none}
+.dcards a{display:block;height:100%;padding:16px 18px;background:var(--surface);border:1px solid var(--line);border-radius:var(--card-r);box-shadow:var(--shadow);color:inherit;text-decoration:none}
+.dcards a:hover{border-color:var(--accent)}
+.dcards b{display:block;font-size:15px;margin-bottom:4px}
+.dcards p{margin:0 0 8px;color:var(--ink-2);font-size:13.5px}
+.dcards span{color:var(--ink-3);font-size:12.5px}
+.dempty{padding:40px 20px;text-align:center;background:var(--surface);border:1px dashed var(--line);border-radius:var(--card-r);color:var(--ink-2)}
+.dempty b{display:block;font-size:15px;color:var(--ink);margin-bottom:6px}
+.dempty p{margin:0 auto;max-width:520px;font-size:13.5px}
+</style>
+</head>
+<body>
+<nav class="appnav" aria-label="도구 메뉴">
+  <b class="appnav-brand">Figma AI Run</b>
+  <a href="Setup.html">시작 안내</a>
+  <a href="Common_UX_Guide.html" aria-current="page">UX 문서</a>
+  <a href="Figma_Workbench.html">Figma Workbench</a>
+  <a href="Change_History.html">변경 이력</a>
+  <a href="Usage_Stats.html">사용량 통계</a>
+  <a href="Prototypes.html">프로토타입</a>
+  <span class="appnav-sp"></span>
+  <div class="appnav-right">
+    <label class="appnav-user">작업자 <input id="cuxUser" type="text" maxlength="20" placeholder="이름 입력" autocomplete="name"></label>
+  </div>
+</nav>
+<div class="app-wrap wide">
+<header class="app-head">
+  <div class="app-head-t">
+    <h1>UX 문서</h1>
+    <p class="one-line" title="공통 규칙(UX 가이드)과 정의서를 한곳에서 보고 관리합니다.">공통 규칙 · 정의서를 한곳에서 관리합니다</p>
+  </div>
+  <div class="app-head-act">
+    <button type="button" class="gd-btn" id="gdNew" data-doc="guide" title="기준이 될 Figma 링크나 참고 파일(md · pdf · 문서 · 이미지)을 주면 Claude가 그 내용으로 새 가이드를 만듭니다. 만든 가이드는 모든 작업자와 공유되고, 작업 기준은 각자 고릅니다.">＋ 새 가이드 만들기</button>
+    <button type="button" class="gd-btn" id="specNew" data-doc="spec" hidden title="기준이 될 Figma 링크나 참고 파일(md · pdf · 문서 · 이미지)을 주면 Claude가 그 내용으로 새 정의서를 만듭니다. 모든 작업자와 공유됩니다.">＋ 새 정의서 만들기</button>
+  </div>
+</header>
+
+<!-- 문서 종류 탭: 종류를 늘릴 때는 아래 탭 · 패널을 하나씩 더하고 스크립트의 DOCS에 추가한다.
+     문서는 .history/guides/{id}/meta.json의 kind로 나눈다(없으면 'guide' = 공통 규칙, 'spec' = 정의서). 보기 화면은 모두 UX_Guide.html?g={id} -->
+<div class="dtabs" role="tablist" aria-label="문서 종류">
+  <button type="button" role="tab" id="tab-guide" data-doc="guide" aria-controls="doc-guide" aria-selected="true">공통 규칙</button>
+  <button type="button" role="tab" id="tab-spec" data-doc="spec" aria-controls="doc-spec" aria-selected="false" tabindex="-1">정의서</button>
+</div>
+
+<div class="dpanel" role="tabpanel" id="doc-spec" aria-labelledby="tab-spec" hidden>
+  <div class="gd-jobs spec-jobs" id="specJobs"></div>
+  <ul class="dcards" id="specList" aria-label="정의서 목록"></ul>
+  <div class="dempty" id="specEmpty">
+    <b>아직 등록된 정의서가 없습니다</b>
+    <p>화면 · 기능 정의서처럼 화면을 만들 때 기준이 되는 문서를 이곳에 모읍니다. 오른쪽 위 「＋ 새 정의서 만들기」에 Figma 링크나 참고 파일(md 등)을 주면 Claude가 만듭니다.</p>
+  </div>
+</div>
+
+<!-- 새 가이드 · 정의서 만들기 창(두 탭이 같이 쓴다. 탭 패널 밖에 두어야 숨은 탭에서도 열린다) -->
+<dialog class="gd-dlg" id="gdDlg" aria-labelledby="gdDlgTitle">
+  <form id="gdForm" method="dialog" novalidate>
+    <h3 id="gdDlgTitle">새 UX 가이드 만들기</h3>
+    <p class="gd-help" id="gdHelp">Claude가 Figma 링크의 화면이나 올린 참고 파일을 읽고, 아래 작업 방법대로 정리합니다. 다 되면 목록에 나타납니다(요청 감시가 켜져 있어야 합니다).</p>
+    <label for="gdName" id="gdNameLab">가이드 이름</label>
+    <input id="gdName" type="text" maxlength="60" placeholder="예) CURECA 화면 설계 가이드" required>
+    <label for="gdLink">기준 Figma 링크 <span>(선택 · 파일 · 페이지 · 섹션 · 프레임 링크)</span></label>
+    <input id="gdLink" type="url" placeholder="https://www.figma.com/design/…?node-id=…">
+    <label>참고 파일 <span>(선택 · md · txt · pdf · docx · xlsx · csv · 이미지 등, 최대 10개 · 하나에 20MB 미만)</span></label>
+    <div class="up-zone" id="upZone" tabindex="0" role="button" aria-label="참고 파일 고르기">
+      <b>파일을 끌어다 놓거나 눌러서 고르세요</b>
+      <span>Figma 링크와 참고 파일 중 하나 이상은 있어야 합니다. 둘 다 주면 함께 참고합니다.</span>
+    </div>
+    <input type="file" id="upFile" multiple hidden accept=".md,.markdown,.txt,.csv,.tsv,.json,.html,.htm,.pdf,.docx,.xlsx,.pptx,.png,.jpg,.jpeg,.gif,.webp">
+    <ul class="up-list" id="upList"></ul>
+    <label for="gdText">작업 방법 <span>(무엇을 어떤 구성으로 정리할지)</span></label>
+    <textarea id="gdText" placeholder="예)&#10;- 이 페이지의 공통 컴포넌트(버튼 · 입력 · 팝업)를 정리하고 사용 규칙을 적어 줘&#10;- 레이아웃은 화면 유형별로 영역 크기를 표로&#10;- CURECA UX 가이드와 같은 목차 구성으로, 화면 캡처를 함께 넣어 줘"></textarea>
+    <label for="gdBy">요청자</label>
+    <input id="gdBy" type="text" maxlength="20" placeholder="이름">
+    <div class="gd-msg" id="gdMsg" role="status"></div>
+    <div class="gd-act"><button type="button" id="gdCancel">취소</button><button type="submit" class="pri" id="gdSend">요청 보내기</button></div>
+  </form>
+</dialog>
+
+<div class="dpanel" role="tabpanel" id="doc-guide" aria-labelledby="tab-guide">
+<h2 class="gd-name" id="gdName2">공통 규칙</h2>
+<section class="gd" aria-labelledby="gdTitle">
+  <label class="gd-lab" id="gdTitle" for="gdSel" title="이 PC(나)에만 적용됩니다. 이 PC의 Claude가 수정 요청을 처리할 때 이 가이드를 따르고, 다른 작업자는 각자 고릅니다.">내 작업 기준 <span class="gd-by">(<b id="gdFile">—</b>)</span></label>
+  <select id="gdSel"></select>
+  <button type="button" id="gdApply" disabled>적용</button>
+  <span class="gd-by" id="gdBy2"></span>
+  <span class="gd-jobs" id="gdJobs"></span>
+</section>
+<p class="gd-warn" id="gdWarn" hidden></p>
+
+<!-- 고른 가이드(처음엔 내 작업 기준 가이드)를 이 자리에 보여 준다. 만든 가이드가 없으면 아래 안내 -->
+<div class="gd-viewing" id="gdViewing"></div>
+<div class="gd-view" id="gdView" hidden>
+  <iframe id="gdFrame" title="UX 가이드"></iframe>
+</div>
+
+<div class="dempty" id="gdEmpty" hidden>
+  <b>아직 만든 공통 규칙 가이드가 없습니다</b>
+  <p>오른쪽 위 「＋ 새 가이드 만들기」에 기준 Figma 링크를 주면 Claude가 가이드를 만듭니다.</p>
+</div>
+</div><!-- /doc-guide -->
+</div>
+
+<script>
+/* 작업자 이름(cux.user, 로그인하면 appnav.js가 계정 이름으로 고정) · UX 가이드 목록 */
+(function(){
+  var userInput = document.getElementById('cuxUser');
+  try { userInput.value = localStorage.getItem('cux.user') || ''; } catch(e){}
+  userInput.addEventListener('input', function(){ try { localStorage.setItem('cux.user', userInput.value.trim()); } catch(e){} });
+
+  /* ── UX 가이드 목록 · 새 가이드 만들기: 요청은 작업 대기열(kind:'guide')로, Claude가 guides/{id}/에 만든다 ── */
+  (function(){
+    if (location.protocol === 'file:') { document.getElementById('gdNew').disabled = true; return; }
+    var $g = function(id){ return document.getElementById(id); };
+    var dlg = $g('gdDlg'), ST = {'대기':'wait', '진행 중':'prog', '실패':'bad', '보류':'bad'};
+    function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+    function parseFig(u){ var m = String(u || '').match(/figma\.com\/(?:design|file|proto)\/([A-Za-z0-9]+)/); return m ? m[1] : ''; }
+    function day(t){ return t ? String(t).slice(0, 10) : ''; }
+    /* 작업 기준 가이드: 시작 안내 작업 링크의 파일(없으면 UX AI TEST)마다 하나. 이 PC(나)에만 적용되고, 이 PC의 Claude가 요청을 처리할 때 따른다 */
+    var DEF_KEY = 'etCQFF3CTf1EA6C79d4BBf', workKey = DEF_KEY, workName = 'UX AI TEST', guideMap = {}, curGuide = '', viewId = null;
+    /* 본문: 고른 가이드의 보기 화면(끼워 넣기). 만든 가이드가 하나도 없으면 안내만 */
+    function show(){
+      var on = !!viewId;
+      $g('gdEmpty').hidden = on;
+      $g('gdView').hidden = !on;
+      if (on) {
+        var src = 'UX_Guide.html?g=' + encodeURIComponent(viewId) + '&embed=1';
+        if ($g('gdFrame').getAttribute('src') !== src) $g('gdFrame').setAttribute('src', src);
+      }
+      var title = viewId && guideMap[viewId] ? guideMap[viewId].title : '공통 규칙';
+      $g('gdName2').textContent = title;
+      $g('gdViewing').innerHTML = !viewId || viewId === curGuide ? ''
+        : '<span>「<b>' + esc(title) + '</b>」를 보기만 하는 중입니다. [적용]을 누르면 이 가이드가 내 작업 기준이 됩니다.</span><button type="button" id="gdBack">내 작업 기준 가이드 보기</button>';
+      var bk = $g('gdBack'); if (bk) bk.onclick = function(){ viewId = curGuide; load(); };
+    }
+    function load(){
+      Promise.all([
+        fetch('/api/guides', { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : { items: [] }; }).catch(function(){ return { items: [] }; }),
+        fetch('/api/jobs', { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : { items: [] }; }).catch(function(){ return { items: [] }; }),
+        fetch('/api/setup', { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; }),
+        fetch('/api/projects', { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; })
+      ]).then(function(d){
+        /* 문서는 meta.kind로 나눈다: 공통 규칙(guide, 없으면 이것) · 정의서(spec) */
+        var docs = d[0].items || [], all = d[1].items || [];
+        var guides = docs.filter(function(g){ return (g.kind || 'guide') === 'guide'; });
+        renderSpecs(docs.filter(function(g){ return g.kind === 'spec'; }));
+        /* 만드는 중인 작업: 가이드는 공통 규칙 막대 옆, 정의서(docKind:'spec')는 정의서 탭 위에 */
+        var making = all.filter(function(j){ return j.kind === 'guide' && j.status !== '완료'; });
+        var jobs = making.filter(function(j){ return j.docKind !== 'spec'; });
+        $g('specJobs').innerHTML = making.filter(function(j){ return j.docKind === 'spec'; }).map(jobChip).join('');
+        /* 가이드를 고친 뒤 Claude가 찾은 「고쳐야 할 화면」이 아직 반영 여부를 정하지 않은 채 남아 있으면 카드에 알린다 */
+        var fix = {}; all.forEach(function(j){ if (j.kind === 'guide-check' && j.status === '완료' && (j.items || []).length) fix[j.guide] = (fix[j.guide] || 0) + j.items.length; });
+        workKey = parseFig(d[2] && d[2].state && d[2].state.figmaUrl) || DEF_KEY;
+        var pj = d[3] && (d[3].projects || []).filter(function(p){ return p.key === workKey; })[0];
+        workName = pj && pj.name ? pj.name : workKey === DEF_KEY ? 'UX AI TEST' : workKey.slice(0, 6);
+        var ap = (d[0].applied || {})[workKey], cur = ap && ap.guideId || '';
+        guideMap = {}; guides.forEach(function(g){ guideMap[g.id] = g; });
+        if (cur && !guideMap[cur]) cur = '';   // 지운 가이드면 작업 기준 없음
+        curGuide = cur; $g('gdFile').textContent = workName;
+        /* 처음 열 때는 내 작업 기준 가이드, 작업 기준이 없으면 첫 가이드를 보여 준다 */
+        var first = guides.length ? guides[0].id : '';
+        if (viewId === null || !guideMap[viewId]) viewId = cur || first;
+        /* 선택 상자 = 보고 있는 가이드. 고르면 바로 그 가이드를 보여 주고, [적용]을 눌러야 내 작업 기준이 된다.
+           작업 기준이 없으면 맨 위에 「작업 기준 없음」(고를 수 없음)을 둔다.
+           목록이 바뀌지 않았으면 다시 그리지 않는다(펼친 선택 상자가 닫히지 않게) */
+        var sel = $g('gdSel');
+        var opts = (cur ? '' : '<option value="" disabled>작업 기준 없음 — 가이드를 고르고 [적용]</option>') +
+          guides.map(function(g){ return '<option value="' + esc(g.id) + '">' + esc(g.title) + (g.id === cur ? ' (내 작업 기준)' : '') + '</option>'; }).join('');
+        if (sel.dataset.opts !== opts) { sel.innerHTML = opts; sel.dataset.opts = opts; }
+        if (document.activeElement !== sel) sel.value = viewId;
+        sel.disabled = !guides.length;
+        $g('gdApply').disabled = !viewId || viewId === cur;
+        $g('gdBy2').textContent = viewId === cur && ap && ap.guideId === cur && ap.by ? '적용 · ' + String(ap.at || '').replace('T', ' ').slice(0, 16) : '';
+        /* 만드는 중인 가이드 · 가이드 수정 뒤 「고쳐야 할 화면」 확인이 남은 가이드는 선택 상자 옆에 작게 알린다 */
+        $g('gdJobs').innerHTML = jobs.map(jobChip).join('') + (viewId && fix[viewId] ? '<a class="gd-st fix" href="UX_Guide.html?g=' + encodeURIComponent(viewId) + '#fix">수정 반영 확인 ' + fix[viewId] + '</a>' : '');
+        show();
+        /* 기다리는 요청이 있는데 Claude가 감시하고 있지 않으면 알린다 */
+        var w = d[2] && d[2].env ? d[2].env.watcherSec : null, waiting = making.some(function(j){ return j.status === '대기'; });
+        $g('gdWarn').hidden = !(waiting && (w == null || w > 90));
+        $g('gdWarn').textContent = 'Claude 요청 감시가 꺼져 있어 아직 만들지 못하고 있습니다. Claude에게 「워크벤치 요청 감시 시작해줘」라고 요청하세요.';
+      });
+    }
+    /* 정의서: 카드 목록(누르면 보기 화면). 만들기 · 수정 요청은 다음 단계에서 공통 규칙과 같은 방식으로 더한다 */
+    function renderSpecs(specs){
+      $g('specEmpty').hidden = !!specs.length;
+      $g('specList').innerHTML = specs.map(function(s){
+        return '<li><a href="UX_Guide.html?g=' + encodeURIComponent(s.id) + '"><b>' + esc(s.title) + '</b>' + (s.summary ? '<p>' + esc(s.summary) + '</p>' : '') +
+          '<span>' + esc([s.fileName, day(s.updatedAt), s.rev ? '수정 ' + s.revs.length + '회' : '', s.by].filter(Boolean).join(' · ')) + '</span></a></li>';
+      }).join('');
+    }
+    /* 문서 종류 탭: 주소 ?doc=spec 으로 바로 열 수 있다. 머리의 버튼(data-doc)은 그 탭에서만 보인다 */
+    var DOCS = ['guide', 'spec'];
+    function selectDoc(doc, focus){
+      if (DOCS.indexOf(doc) < 0) doc = 'guide';
+      DOCS.forEach(function(k){
+        var on = k === doc, t = $g('tab-' + k);
+        t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1;
+        $g('doc-' + k).hidden = !on;
+        if (on && focus) t.focus();
+      });
+      Array.prototype.forEach.call(document.querySelectorAll('.app-head-act [data-doc]'), function(b){ b.hidden = b.dataset.doc !== doc; });
+      try { var u = new URL(location.href); if (doc === 'guide') u.searchParams.delete('doc'); else u.searchParams.set('doc', doc); history.replaceState(null, '', u); } catch(x){}
+    }
+    document.querySelector('.dtabs').addEventListener('click', function(e){ var b = e.target.closest('[data-doc]'); if (b) selectDoc(b.dataset.doc); });
+    document.querySelector('.dtabs').addEventListener('keydown', function(e){
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      var i = DOCS.indexOf(e.target.dataset.doc); if (i < 0) return;
+      e.preventDefault(); selectDoc(DOCS[(i + (e.key === 'ArrowRight' ? 1 : DOCS.length - 1)) % DOCS.length], true);
+    });
+    function msg(t, err){ $g('gdMsg').textContent = t || ''; $g('gdMsg').className = 'gd-msg' + (err ? ' err' : ''); }
+    /* 만드는 중 표시 한 개 */
+    function jobChip(j){
+      return '<span class="gd-st ' + (ST[j.status] || '') + '" title="' + esc(j.name + ' · ' + (j.note || (j.by ? j.by + ' · ' : '') + day(j.createdAt))) + '">' + esc(j.name) + ' ' + esc(j.status === '대기' ? '만들기 대기' : j.status === '진행 중' ? '만드는 중' : j.status) + '</span>';
+    }
+    /* 새 가이드 · 정의서 만들기 창: 같은 창을 종류만 바꿔 연다 */
+    var mkKind = '', ups = [];
+    var UP_EXT = /\.(md|markdown|txt|csv|tsv|json|html?|pdf|docx|xlsx|pptx|png|jpe?g|gif|webp)$/i, UP_MAX = 20 * 1024 * 1024, UP_N = 10;
+    function openMake(kind){
+      mkKind = kind; ups = []; renderUps();
+      $g('gdForm').reset(); msg(''); $g('gdLink').classList.remove('bad');
+      var sp = kind === 'spec';
+      $g('gdDlgTitle').textContent = sp ? '새 정의서 만들기' : '새 UX 가이드 만들기';
+      $g('gdNameLab').textContent = sp ? '정의서 이름' : '가이드 이름';
+      $g('gdName').placeholder = sp ? '예) 재고 화면 기능 정의서' : '예) CURECA 화면 설계 가이드';
+      $g('gdText').placeholder = sp
+        ? '예)\n- 올린 md의 기능 · 상태 정의를 화면별로 정리해 줘\n- 상태값 · 용어는 표로, 화면 이동은 [화면 ID] 화면명으로\n- CURECA UX 가이드와 같은 목차 구성으로'
+        : '예)\n- 이 페이지의 공통 컴포넌트(버튼 · 입력 · 팝업)를 정리하고 사용 규칙을 적어 줘\n- 레이아웃은 화면 유형별로 영역 크기를 표로\n- CURECA UX 가이드와 같은 목차 구성으로, 화면 캡처를 함께 넣어 줘';
+      $g('gdBy').value = userInput.value.trim();
+      dlg.showModal(); $g('gdName').focus();
+    }
+    $g('gdNew').onclick = function(){ openMake(''); };
+    $g('specNew').onclick = function(){ openMake('spec'); };
+    function renderUps(){
+      $g('upList').innerHTML = ups.map(function(f, i){
+        return '<li><span title="' + esc(f.name) + '">' + esc(f.name) + '</span><small>' + (f.size < 1048576 ? Math.max(1, Math.round(f.size / 1024)) + 'KB' : (f.size / 1048576).toFixed(1) + 'MB') + '</small><button type="button" data-i="' + i + '" aria-label="' + esc(f.name) + ' 빼기">×</button></li>';
+      }).join('');
+    }
+    function addUps(list){
+      var skip = [];
+      Array.prototype.forEach.call(list || [], function(f){
+        if (!UP_EXT.test(f.name)) skip.push(f.name + ': 올릴 수 없는 형식');
+        else if (f.size >= UP_MAX) skip.push(f.name + ': 20MB 이상');
+        else if (ups.length >= UP_N) skip.push(f.name + ': 최대 10개');
+        else if (!ups.some(function(u){ return u.name === f.name && u.size === f.size; })) ups.push(f);
+      });
+      renderUps();
+      msg(skip.length ? '올리지 못함 · ' + skip.join(' / ') : '', !!skip.length);
+    }
+    $g('upZone').onclick = function(){ $g('upFile').click(); };
+    $g('upZone').onkeydown = function(e){ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); $g('upFile').click(); } };
+    $g('upFile').onchange = function(){ addUps(this.files); this.value = ''; };
+    $g('upList').addEventListener('click', function(e){ var b = e.target.closest('button[data-i]'); if (b) { ups.splice(+b.dataset.i, 1); renderUps(); } });
+    ['dragenter', 'dragover'].forEach(function(t){ $g('upZone').addEventListener(t, function(e){ e.preventDefault(); this.classList.add('drop'); }); });
+    $g('upZone').addEventListener('dragleave', function(){ this.classList.remove('drop'); });
+    $g('upZone').addEventListener('drop', function(e){ e.preventDefault(); this.classList.remove('drop'); addUps(e.dataTransfer.files); });
+    /* 한 개씩 올려 임시 이름을 받는다 → 만들기 작업의 files */
+    function uploadUps(){
+      var out = [];
+      return ups.reduce(function(p, f, i){
+        return p.then(function(){
+          msg('참고 파일 올리는 중 ' + (i + 1) + ' / ' + ups.length + '…');
+          return fetch('/api/upload?name=' + encodeURIComponent(f.name), { method: 'POST', headers: { 'Content-Type': 'application/octet-stream' }, body: f })
+            .then(function(r){ return r.json(); }).then(function(d){ if (d.error) throw new Error(d.error); out.push({ tmp: d.tmp, name: d.name }); });
+        });
+      }, Promise.resolve()).then(function(){ return out; });
+    }
+    $g('gdCancel').onclick = function(){ dlg.close(); };
+    /* 선택 상자에서 고르면 그 가이드를 바로 보여 준다(보기만). [적용]을 눌러야 내 작업 기준이 된다 */
+    $g('gdSel').addEventListener('change', function(){ viewId = this.value; load(); });
+    $g('gdApply').addEventListener('click', function(){
+      var b = this, id = $g('gdSel').value; if (!guideMap[id]) return; var title = guideMap[id].title;
+      if (!confirm('내 작업 기준 가이드(' + workName + ' 파일)를 「' + title + '」(으)로 바꿀까요?\n이 PC(나)에만 적용됩니다. 다른 작업자에게는 영향이 없습니다.')) return;
+      b.disabled = true;
+      fetch('/api/guides', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'apply', fileKey: workKey, guideId: id, by: userInput.value.trim() }) })
+        .then(function(r){ return r.json(); })
+        .then(function(d){ if (d.error) throw new Error(d.error); curGuide = id; viewId = id; load(); })
+        .catch(function(x){ alert(x.message || '서버에 연결할 수 없습니다.'); b.disabled = false; });
+    });
+    $g('gdLink').addEventListener('input', function(){ this.classList.toggle('bad', !!this.value.trim() && !parseFig(this.value)); });
+    $g('gdForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      var name = $g('gdName').value.trim(), link = $g('gdLink').value.trim(), text = $g('gdText').value.trim(), by = $g('gdBy').value.trim();
+      var what = mkKind === 'spec' ? '정의서' : '가이드';
+      if (!name) { msg(what + ' 이름을 입력해 주세요.', true); $g('gdName').focus(); return; }
+      if (!link && !ups.length) { msg('Figma 링크를 넣거나 참고 파일을 올려 주세요(둘 중 하나 이상).', true); $g('gdLink').focus(); return; }
+      if (link && !parseFig(link)) { msg('Figma 링크(figma.com/design/…)를 붙여 넣어 주세요.', true); $g('gdLink').classList.add('bad'); $g('gdLink').focus(); return; }
+      if (!text) { msg('작업 방법을 적어 주세요. 어떤 내용을 어떤 구성으로 정리할지 적으면 됩니다.', true); $g('gdText').focus(); return; }
+      if (by) { userInput.value = by; try { localStorage.setItem('cux.user', by); } catch(x){} }
+      $g('gdSend').disabled = true; msg('보내는 중…');
+      uploadUps().then(function(files){
+        msg('보내는 중…');
+        return fetch('/api/jobs', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'add', kind: 'guide', docKind: mkKind, name: name, link: link, text: text, by: by, files: files }) });
+      })
+        .then(function(r){ return r.json(); })
+        .then(function(d){ if (d.error) throw new Error(d.error); dlg.close(); load(); })
+        .catch(function(x){ msg(x.message || '서버에 연결할 수 없습니다.', true); })
+        .then(function(){ $g('gdSend').disabled = false; });
+    });
+    selectDoc(new URLSearchParams(location.search).get('doc') || 'guide');
+    load(); setInterval(function(){ if (!document.hidden) load(); }, 10000);
+  })();
+})();
+</script>
+<script src="appnav.js" defer></script>
+</body>
+</html>
