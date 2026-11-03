@@ -4,6 +4,7 @@
     "admin":  false,
     "menus":  [
                   "guide",
+                  "guideEdit",
                   "workbench",
                   "history",
                   "usage",
@@ -16,5 +17,5 @@
     "hash":  "+q8dqC3c3CcTPF/NnYiBZKVinsg+iYgSIM+IF7sW6YE=",
     "pwAt":  "2026-11-02T17:33:07+09:00",
     "active":  true,
-    "updatedAt":  "2026-11-02T17:35:17+09:00"
+    "updatedAt":  "2026-11-03T15:35:27+09:00"
 }
