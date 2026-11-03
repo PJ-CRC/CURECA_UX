@@ -1,11 +1,11 @@
 {
     "id":  "daye_R001",
     "kind":  "request",
-    "status":  "대기",
-    "at":  "2026-11-03T17:24:28+09:00",
+    "status":  "보류",
+    "at":  "2026-11-03T17:56:02+09:00",
     "createdAt":  "2026-11-03T17:24:28+09:00",
     "by":  "정다예",
-    "doneBy":  "정다예",
+    "doneBy":  "Claude",
     "pc":  "DAYE",
     "reqId":  "R001",
     "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
@@ -16,7 +16,7 @@
     "type":  "일반",
     "layout":  "",
     "text":  "mobile섹션에 사각형 하나 만들어줘 200X250 으로",
-    "note":  "",
+    "note":  "Figma 연결이 안 돼 있어 반영하지 못했습니다.\n- 백그라운드 Claude 세션에서 Figma MCP 인증이 필요합니다(시작 안내 7단계 「Claude 로그인 · Figma 연결」에서 /mcp → figma 인증).\n- 인증 뒤 이 요청을 다시 「대기」로 바꾸면 SH.L 페이지 mobile 섹션에 200×250 사각형을 만듭니다.",
     "shot":  "",
     "images":  [
 
