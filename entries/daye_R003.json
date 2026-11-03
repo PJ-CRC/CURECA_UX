@@ -1,11 +1,11 @@
 {
     "id":  "daye_R003",
     "kind":  "request",
-    "status":  "대기",
-    "at":  "2026-11-03T18:10:55+09:00",
+    "status":  "진행 중",
+    "at":  "2026-11-03T18:11:25+09:00",
     "createdAt":  "2026-11-03T18:10:55+09:00",
     "by":  "정다예",
-    "doneBy":  "정다예",
+    "doneBy":  "Claude",
     "pc":  "DAYE",
     "reqId":  "R003",
     "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
@@ -16,7 +16,7 @@
     "type":  "일반",
     "layout":  "",
     "text":  "다시해줘",
-    "note":  "",
+    "note":  "R001(mobile 섹션에 200×250 사각형) 다시 진행 중",
     "shot":  "",
     "images":  [
 
