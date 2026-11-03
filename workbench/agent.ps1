@@ -67,6 +67,48 @@ function Stop-Session([string]$why) {
   # 안 끝나면 Claude가 띄운 명령까지 함께 끝낸다(프로세스 트리)
   try { if (-not $p.WaitForExit(10000)) { & taskkill.exe /PID $p.Id /T /F 2>&1 | Out-Null } } catch { }
   Log "세션 종료 ($why)"; $script:S = $null
+  $script:Ready = $null; $script:NextCheck = Get-Date   # 다음 세션 전에 로그인 · Figma 연결을 다시 확인
+}
+# 사용 한도 표시: CLI가 차례마다 보내는 rate_limit_event(5시간 · 주간 사용률)를 workbench/.plan_usage.json에 쓴다(상단 메뉴 「Claude 24% · …」, appnav.js)
+#  대화형 창은 get_usage로 쓰지만 백그라운드에는 그 도구가 없어, 다른 PC에서는 한도 표시가 아예 안 떴다
+function Save-Usage($ri) {
+  try {
+    $w = $ri.unifiedWindows; if (-not $w) { return }
+    $iso = { param($s) [DateTimeOffset]::FromUnixTimeSeconds([int64]$s).ToLocalTime().ToString('yyyy-MM-ddTHH:mm:sszzz') }
+    $list = New-Object Collections.ArrayList
+    if ($w.five_hour) { [void]$list.Add([ordered]@{ label = '5-hour limit'; percentUsed = [math]::Round(100 * [double]$w.five_hour.utilization); resetsAt = (& $iso $w.five_hour.resetsAt) }) }
+    if ($w.seven_day) { [void]$list.Add([ordered]@{ label = 'Weekly · all models'; percentUsed = [math]::Round(100 * [double]$w.seven_day.utilization); resetsAt = (& $iso $w.seven_day.resetsAt) }) }
+    if (-not $list.Count) { return }
+    $o = [ordered]@{ at = (Now); plan = ''; by = 'agent'; windows = $list.ToArray() }
+    [IO.File]::WriteAllText((Join-Path $WB '.plan_usage.json'), ($o | ConvertTo-Json -Depth 5 -Compress), $Utf8)
+  } catch { }
+}
+# CLI 명령을 짧게 실행해 출력(표준 + 오류)을 받는다. 시간이 넘으면 끊는다
+function Run-Cli([string]$cliArgs, [int]$sec) {
+  try {
+    $psi = New-Object Diagnostics.ProcessStartInfo
+    $psi.FileName = $Claude; $psi.Arguments = $cliArgs; $psi.WorkingDirectory = $Root
+    $psi.UseShellExecute = $false; $psi.CreateNoWindow = $true; $psi.RedirectStandardOutput = $true; $psi.RedirectStandardError = $true
+    $psi.StandardOutputEncoding = $Utf8; $psi.StandardErrorEncoding = $Utf8
+    $p = [Diagnostics.Process]::Start($psi); $o = $p.StandardOutput.ReadToEndAsync(); $e = $p.StandardError.ReadToEndAsync()
+    if (-not $p.WaitForExit($sec * 1000)) { & taskkill.exe /PID $p.Id /T /F 2>&1 | Out-Null; return '' }
+    return $o.Result + "`n" + $e.Result
+  } catch { return '' }
+}
+# 처리 전 준비 확인(토큰 안 씀): CLI 로그인(`claude auth status`) · Figma MCP 연결(`claude mcp list`의 figma 줄이 Connected)
+#  안 되어 있으면 요청을 보내지 않는다(보내면 Claude가 Figma 없이 「보류」로 돌려 요청이 쌓였다). 상태 login · figma로 시작 안내 7단계에 이유를 보인다
+function Check-Ready {
+  $a = Run-Cli 'auth status' 30
+  if ($a -match '"loggedIn"\s*:\s*false') {
+    Save-State 'login' 'Claude Code CLI에 로그인되어 있지 않습니다. 7단계 「Claude 로그인 · Figma 연결」 창에서 /login을 하세요.'; Log '준비 확인: CLI 로그인 안 됨'; return $false
+  }
+  $m = Run-Cli 'mcp list' 90
+  $lines = @(($m -split "`r?`n") | Where-Object { $_ -match '^\s*(claude\.ai )?figma\b[^:]*:' })
+  if (@($lines | Where-Object { $_ -match 'Connected' }).Count) { Log '준비 확인: 로그인 · Figma 연결됨'; return $true }
+  if (-not $m.Trim()) { Log '준비 확인: mcp list 응답 없음 — 그대로 진행'; return $true }   # 확인 자체가 안 되면 막지 않는다(처리 중 Claude가 판단)
+  $why = if (-not $lines.Count) { 'Figma MCP가 등록되어 있지 않음' } elseif (@($lines | Where-Object { $_ -match 'auth' }).Count) { 'Figma 인증 필요' } else { 'Figma 연결 실패' }
+  Save-State 'figma' ("Figma 연결이 안 되어 있습니다($why). 7단계 「Claude 로그인 · Figma 연결」 창에서 /mcp → figma → Authenticate를 하세요. 요청은 연결될 때까지 「대기」로 둡니다.")
+  Log ("준비 확인: $why`r`n" + ($lines -join "`r`n")); return $false
 }
 # 메시지 한 건을 보내고 result가 올 때까지 읽는다. 기다리는 동안 15초마다 상태를 쓴다
 function Send-Turn([string]$text) {
@@ -86,6 +128,7 @@ function Send-Turn([string]$text) {
     if ($null -eq $l) { $e = ''; try { if ($script:S.err.Wait(2000)) { $e = $script:S.err.Result } } catch { }; return @{ ok = $false; dead = $true; text = ($out.ToString() + $e).Trim() } }
     $m = $null; try { $m = $l | ConvertFrom-Json } catch { [void]$out.AppendLine($l); continue }
     # 모델 응답의 사용량 = 지금 컨텍스트 크기(입력 + 캐시 읽기 + 캐시 쓰기). 컨텍스트 창은 result의 modelUsage에서(없으면 200k)
+    if ($m.type -eq 'rate_limit_event') { Save-Usage $m.rate_limit_info }
     if ($m.type -eq 'system' -and $m.subtype -eq 'init') { $started = $true }
     if (-not $started -and -not ($m.type -eq 'result' -and $m.is_error)) { continue }   # 로그인 오류 등은 init 없이 올 수 있다
     if ($m.type -eq 'assistant' -and $m.message.usage) { $u = $m.message.usage; $script:S.ctx = [int64]$u.input_tokens + [int64]$u.cache_read_input_tokens + [int64]$u.cache_creation_input_tokens }
@@ -110,15 +153,25 @@ CLAUDE.md의 「Workbench 수정 요청 처리」와 「작업 대기열」 규�
 "@
 }
 
-Save-State 'idle' '요청을 기다리는 중'; Log "시작 (pid $PID, $Claude)"
+Save-State 'idle' '준비 확인 중 (Claude 로그인 · Figma 연결)'; Log "시작 (pid $PID, $Claude)"
 # 세션은 처리할 것이 생길 때 띄운다: 미리 띄우면 로그인 · Figma 연결 전에 뜬 세션을 계속 써서 Figma 도구 없이 처리했다
 $last = ''; $repeat = 0
+$script:Ready = $null; $script:NextCheck = Get-Date
 while ($true) {
   if (Test-Path $StopFile) { Remove-Item $StopFile -Force -ErrorAction SilentlyContinue; Stop-Session '중지'; Save-State 'stopped' '중지됨'; Log '중지'; exit 0 }
   # 세션 관리: 죽었거나 · 오래 쉬었거나 · 로그인 · 연결이 바뀌었으면 버린다(다음 처리 때 새로)
-  if (Test-Path $RenewFile) { Remove-Item $RenewFile -Force -ErrorAction SilentlyContinue; Stop-Session '로그인 · Figma 연결 창을 열어 새로 띄움' }
+  if (Test-Path $RenewFile) { Remove-Item $RenewFile -Force -ErrorAction SilentlyContinue; Stop-Session '로그인 · Figma 연결 창을 열어 새로 띄움'; $script:Ready = $null; $script:NextCheck = Get-Date }
   if ($script:S -and $script:S.p.HasExited) { Stop-Session '세션이 끝나 있음' }
   elseif ($script:S -and $script:S.turns -gt 0 -and ((Get-Date) - $script:S.last).TotalMinutes -ge $IdleMin) { Stop-Session "$IdleMin 분 쉼" }
+  # 준비 확인: 세션이 없고 아직 확인 전(또는 실패 뒤 2분)이면. 안 되어 있으면 요청을 보내지 않고 2분 뒤(또는 연결 창을 열면 바로) 다시 확인
+  if (-not $script:S -and $script:Ready -ne $true -and (Get-Date) -ge $script:NextCheck) {
+    $script:Ready = Check-Ready; $script:NextCheck = (Get-Date).AddMinutes(2)
+    if ($script:Ready) { Save-State 'idle' '요청을 기다리는 중' }
+  }
+  if ($script:Ready -eq $false) {
+    for ($i = 0; $i -lt 8; $i++) { if ((Test-Path $StopFile) -or (Test-Path $RenewFile)) { break }; Start-Sleep -Seconds 15; Save-State $null $null }
+    continue
+  }
   Save-State $null $null
   $out = (& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $WB 'watch_requests.ps1') -MaxMinutes 1 2>$null | Out-String).Trim()
   if (-not $out -or $out -eq 'TIMEOUT') { continue }
