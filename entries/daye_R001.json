@@ -1,0 +1,24 @@
+{
+    "id":  "daye_R001",
+    "kind":  "request",
+    "status":  "대기",
+    "at":  "2026-11-03T17:24:28+09:00",
+    "createdAt":  "2026-11-03T17:24:28+09:00",
+    "by":  "정다예",
+    "doneBy":  "정다예",
+    "pc":  "DAYE",
+    "reqId":  "R001",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L",
+    "frame":  "File Info",
+    "nodeId":  "491:33625",
+    "type":  "일반",
+    "layout":  "",
+    "text":  "mobile섹션에 사각형 하나 만들어줘 200X250 으로",
+    "note":  "",
+    "shot":  "",
+    "images":  [
+
+               ]
+}
