@@ -373,7 +373,7 @@ a{color:var(--accent)}
       s5: { done: !!c.claude, chip: c.claude ? ['ok', '완료'] : (e.claudeInstalled === false && !e.claudeCli ? ['bad', '설치 필요'] : ['wait', '확인 필요']) },
       s6: { done: !!c.connector, chip: c.connector ? ['ok', '완료'] : ['wait', '확인 필요'] },
       /* 백그라운드는 기다림(idle) · 처리 중(working)일 때만 완료. 오류 · 로그인 필요는 감시가 돌아도 요청을 처리하지 못한다 */
-      s7: { done: ag.alive ? (ag.status === 'idle' || ag.status === 'working') : watch, chip: ag.alive ? (ag.status === 'login' ? ['bad', '로그인 필요'] : ag.status === 'error' ? ['bad', '확인 필요'] : ag.status === 'working' ? ['ok', '처리 중'] : ['ok', '백그라운드 감시 중']) : watch ? ['ok', '감시 중 (Claude 창)'] : ['wait', '시작 대기'] },
+      s7: { done: ag.alive ? (ag.status === 'idle' || ag.status === 'working') : watch, chip: ag.alive ? (ag.status === 'login' ? ['bad', '로그인 필요'] : ag.status === 'figma' ? ['bad', 'Figma 연결 필요'] : ag.status === 'error' ? ['bad', '확인 필요'] : ag.status === 'working' ? ['ok', '처리 중'] : ['ok', '백그라운드 감시 중']) : watch ? ['ok', '감시 중 (Claude 창)'] : ['wait', '시작 대기'] },
       s8: { done: !!(e.historySync && e.historySync.ok),
             chip: e.historySync && e.historySync.ok ? ['ok', '연결됨'] : e.historySyncing ? ['wait', '연결 중…'] : e.gitInstalled === false ? ['bad', 'git 설치 필요'] :
               e.historySync ? ['bad', /로그인/.test(e.historySync.message) ? '로그인 필요' : '확인 필요'] : ['wait', '연결 대기'] }
@@ -441,7 +441,7 @@ a{color:var(--accent)}
     var ws = e.watcherSec, ag = e.agent || {};
     setMsg('agentEnv', !e.claudeCli ? ['wait', 'Claude Code CLI를 찾지 못했습니다. Claude 앱 Code 탭을 한 번 열면 함께 설치됩니다. (없으면 아래 「CLI가 없을 때」)'] :
       ag.alive && ag.stopping ? ['wait', '중지하는 중… 처리 중인 요청이 있으면 마친 뒤 멈춥니다.'] :
-      ag.alive ? (ag.status === 'login' ? ['bad', '로그인이 필요합니다: 「Claude 로그인 · Figma 연결」을 눌러 /login · /mcp를 진행하세요.'] :
+      ag.alive ? (ag.status === 'login' || ag.status === 'figma' ? ['bad', ag.msg || '로그인이 필요합니다: 「Claude 로그인 · Figma 연결」을 눌러 /login · /mcp를 진행하세요.'] :
         ag.status === 'error' ? ['bad', '백그라운드 감시: ' + (ag.msg || '오류')] :
         ['ok', '✓ 백그라운드 감시 중 (창 없음) — ' + (ag.msg || '') + ' · ' + ago(ag.sec)]) :
       ag.status === 'stopped' ? ['wait', '백그라운드 감시가 중지되어 있습니다.'] :

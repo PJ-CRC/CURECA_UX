@@ -25,6 +25,7 @@ my ($COMPACT_PCT, $IDLE_MIN, $TURN_MIN) = (80, 30, 20);
 my $J = JSON::PP->new->utf8->canonical;
 my %st = (status => 'idle', msg => '');
 my $S;   # { pid, in, out, buf, turns, last, ctx, win }
+my ($READY, $NEXT_CHECK) = (undef, 0);   # 준비 확인 결과(로그인 · Figma 연결), 다시 확인할 시각
 sub now { my $z = strftime('%z', localtime); $z =~ s/(\d\d)$/:$1/; return strftime('%Y-%m-%dT%H:%M:%S', localtime) . $z; }
 sub slurp { my ($f) = @_; open(my $h, '<:raw', $f) or return ''; local $/; my $d = <$h>; close $h; return $d // ''; }
 sub save_state {
@@ -63,6 +64,42 @@ sub stop_session {
   my ($why) = @_; return unless $S;
   close $S->{in}; my $t = time; while (waitpid($S->{pid}, WNOHANG) == 0) { if (time - $t > 10) { kill 'TERM', $S->{pid}; waitpid($S->{pid}, 0); last; } sleep 1; }
   close $S->{out}; logm("세션 종료 ($why)"); undef $S;
+  ($READY, $NEXT_CHECK) = (undef, 0);   # 다음 세션 전에 로그인 · Figma 연결을 다시 확인
+}
+# 사용 한도 표시: CLI가 차례마다 보내는 rate_limit_event(5시간 · 주간 사용률)를 workbench/.plan_usage.json에 쓴다(상단 메뉴 「Claude 24% · …」, appnav.js)
+#  대화형 창은 get_usage로 쓰지만 백그라운드에는 그 도구가 없어, 다른 PC에서는 한도 표시가 아예 안 떴다
+sub save_usage {
+  my ($ri) = @_; my $w = ref $ri eq 'HASH' ? $ri->{unifiedWindows} : undef; return unless ref $w eq 'HASH';
+  my $iso = sub { my $z = strftime('%z', localtime $_[0]); $z =~ s/(\d\d)$/:$1/; strftime('%Y-%m-%dT%H:%M:%S', localtime $_[0]) . $z };
+  my @list;
+  push @list, { label => '5-hour limit', percentUsed => int(100 * ($w->{five_hour}{utilization} // 0) + 0.5), resetsAt => $iso->($w->{five_hour}{resetsAt} // time) } if ref $w->{five_hour} eq 'HASH';
+  push @list, { label => 'Weekly · all models', percentUsed => int(100 * ($w->{seven_day}{utilization} // 0) + 0.5), resetsAt => $iso->($w->{seven_day}{resetsAt} // time) } if ref $w->{seven_day} eq 'HASH';
+  return unless @list;
+  if (open(my $h, '>:raw', "$WB/.plan_usage.json")) { print $h $J->encode({ at => now(), plan => '', by => 'agent', windows => \@list }); close $h; }
+}
+# CLI 명령을 짧게 실행해 출력(표준 + 오류)을 받는다. 시간이 넘으면 끊는다
+sub run_cli {
+  my ($sec, @a) = @_; my $out = '';
+  my $pid = open(my $h, '-|'); return '' unless defined $pid;
+  if (!$pid) { open(STDERR, '>&', \*STDOUT); chdir $ROOT; exec($claude, @a) or exit 127; }
+  my $ok = eval { local $SIG{ALRM} = sub { die "timeout\n" }; alarm $sec; local $/; $out = <$h>; alarm 0; 1 };
+  if (!$ok) { kill 'TERM', $pid; } close $h;
+  return $ok ? decode('UTF-8', $out // '') : '';
+}
+# 처리 전 준비 확인(토큰 안 씀): CLI 로그인(`claude auth status`) · Figma MCP 연결(`claude mcp list`의 figma 줄이 Connected)
+#  안 되어 있으면 요청을 보내지 않는다(보내면 Claude가 Figma 없이 「보류」로 돌려 요청이 쌓였다). 상태 login · figma로 시작 안내 7단계에 이유를 보인다
+sub check_ready {
+  my $a = run_cli(30, 'auth', 'status');
+  if ($a =~ /"loggedIn"\s*:\s*false/) {
+    save_state('login', 'Claude Code CLI에 로그인되어 있지 않습니다. 7단계 「Claude 로그인 · Figma 연결」 창에서 /login을 하세요.'); logm('준비 확인: CLI 로그인 안 됨'); return 0;
+  }
+  my $m = run_cli(90, 'mcp', 'list');
+  my @lines = grep { /^\s*(claude\.ai )?figma\b[^:]*:/i } split /\r?\n/, $m;
+  if (grep { /Connected/ } @lines) { logm('준비 확인: 로그인 · Figma 연결됨'); return 1; }
+  if ($m !~ /\S/) { logm('준비 확인: mcp list 응답 없음 — 그대로 진행'); return 1; }   # 확인 자체가 안 되면 막지 않는다(처리 중 Claude가 판단)
+  my $why = !@lines ? 'Figma MCP가 등록되어 있지 않음' : (grep { /auth/i } @lines) ? 'Figma 인증 필요' : 'Figma 연결 실패';
+  save_state('figma', "Figma 연결이 안 되어 있습니다($why). 7단계 「Claude 로그인 · Figma 연결」 창에서 /mcp → figma → Authenticate를 하세요. 요청은 연결될 때까지 「대기」로 둡니다.");
+  logm("준비 확인: $why\n" . join("\n", @lines)); return 0;
 }
 sub session_dead { return !$S || waitpid($S->{pid}, WNOHANG) != 0; }
 # 한 줄 읽기: 15초마다 상태를 쓰며 기다린다. 끝(EOF)이면 undef, 시간 초과면 ''
@@ -87,6 +124,7 @@ sub send_turn {
     return { ok => 0, dead => 1, text => $raw } unless defined $l;
     return { ok => 0, dead => 1, text => "응답이 $TURN_MIN 분 넘게 없음" } if $l eq '' && time > $until;
     my $m = eval { JSON::PP->new->decode($l) }; if (!$m) { $raw .= "$l\n"; next; }
+    save_usage($m->{rate_limit_info}) if ($m->{type} // '') eq 'rate_limit_event';
     $started = 1 if ($m->{type} // '') eq 'system' && ($m->{subtype} // '') eq 'init';
     next unless $started || (($m->{type} // '') eq 'result' && $m->{is_error});   # 로그인 오류 등은 init 없이 올 수 있다
     if (($m->{type} // '') eq 'assistant' && ref $m->{message} eq 'HASH' && ref $m->{message}{usage} eq 'HASH') {
@@ -110,14 +148,23 @@ sub make_prompt {
     . "- 요청은 감시 결과에 적힌 순서대로(우선순위 높음 먼저 · 먼저 등록한 것부터) 한 개씩 「진행 중」 → 처리 → 「완료」 순서로 한다. 모두 끝나면 처리 내용을 몇 줄로 요약하고 이번 차례를 끝낸다.\n";
 }
 
-save_state('idle', '요청을 기다리는 중'); logm("시작 (pid $$, $claude)");
+save_state('idle', '준비 확인 중 (Claude 로그인 · Figma 연결)'); logm("시작 (pid $$, $claude)");
 # 세션은 처리할 것이 생길 때 띄운다: 미리 띄우면 로그인 · Figma 연결 전에 뜬 세션을 계속 써서 Figma 도구 없이 처리했다
 my ($last, $repeat) = ('', 0);
 while (1) {
   if (-f $STOP) { unlink $STOP; stop_session('중지'); save_state('stopped', '중지됨'); logm('중지'); exit 0; }
-  if (-f $RENEW) { unlink $RENEW; stop_session('로그인 · Figma 연결 창을 열어 새로 띄움'); }
-  if ($S && session_dead()) { close $S->{in}; close $S->{out}; undef $S; logm('세션이 끝나 있음'); }
+  if (-f $RENEW) { unlink $RENEW; stop_session('로그인 · Figma 연결 창을 열어 새로 띄움'); ($READY, $NEXT_CHECK) = (undef, 0); }
+  if ($S && session_dead()) { close $S->{in}; close $S->{out}; undef $S; logm('세션이 끝나 있음'); ($READY, $NEXT_CHECK) = (undef, 0); }
   elsif ($S && $S->{turns} > 0 && time - $S->{last} >= $IDLE_MIN * 60) { stop_session("$IDLE_MIN 분 쉼"); }
+  # 준비 확인: 세션이 없고 아직 확인 전(또는 실패 뒤 2분)이면. 안 되어 있으면 요청을 보내지 않고 2분 뒤(또는 연결 창을 열면 바로) 다시 확인
+  if (!$S && !$READY && time >= $NEXT_CHECK) {
+    $READY = check_ready(); $NEXT_CHECK = time + 120;
+    save_state('idle', '요청을 기다리는 중') if $READY;
+  }
+  if (defined $READY && !$READY) {
+    for (1 .. 8) { last if -f $STOP || -f $RENEW; sleep 15; save_state(); }
+    next;
+  }
   save_state();
   my $out = `perl '$WB/watch_requests.pl' 1 2>/dev/null`; $out = decode('UTF-8', $out // ''); $out =~ s/^\s+|\s+$//g;
   next if $out eq '' || $out eq 'TIMEOUT';
