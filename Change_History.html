@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Change History</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="appnav.css">
+<style>
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --surface-2:#f3f6fb; --ink:#14171c; --ink-2:#4a5260; --ink-3:#7a8392;
+  --line:#e3e7ee; --accent:#2747d8; --accent-soft:#e6ebff; --red:#d93025; --red-soft:#fdecea;
+  --ok:#1a7f37; --ok-soft:#e3f4e8; --warn:#b35900; --warn-soft:#fff1e0;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1115; --surface:#171a20; --surface-2:#1e232b; --ink:#e8ebf0; --ink-2:#b4bcc8; --ink-3:#8590a0;
+    --line:#2a3039; --accent:#8ea2ff; --accent-soft:#232c52; --red:#ff7b72; --red-soft:#3a1f1e;
+    --ok:#56d364; --ok-soft:#16301d; --warn:#f0a24f; --warn-soft:#38270f;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1115; --surface:#171a20; --surface-2:#1e232b; --ink:#e8ebf0; --ink-2:#b4bcc8; --ink-3:#8590a0;
+  --line:#2a3039; --accent:#8ea2ff; --accent-soft:#232c52; --red:#ff7b72; --red-soft:#3a1f1e;
+  --ok:#56d364; --ok-soft:#16301d; --warn:#f0a24f; --warn-soft:#38270f;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 Pretendard,-apple-system,"Segoe UI","Malgun Gothic",sans-serif}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+.badge{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
+.badge.on{background:var(--ok-soft);color:var(--ok);border-color:transparent}
+.badge.off{background:var(--red-soft);color:var(--red);border-color:transparent}
+.app-head h1{font-weight:800}
+.app-head p{color:var(--ink-2)}
+/* 머리 오른쪽: 깃 동기화 상태 */
+.sync{font-size:13px;color:var(--ink-2)}
+.sync button{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:4px 12px;font-size:13px}
+.sync button:hover:not(:disabled){border-color:var(--accent)}
+.sync button:disabled{opacity:.5;cursor:default}
+.sync .msg{color:var(--ink-3);font-size:12.5px;max-width:260px}
+/* 거르기 막대 (한 줄) */
+.bar{display:flex;align-items:center;gap:8px 12px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:var(--card-r);padding:12px 20px;margin-bottom:var(--gap)}
+.bar input[type=search]{width:220px;max-width:100%;height:34px;padding:0 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:13px}
+.bar input[type=search]:focus,.bar select:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:transparent}
+.pills{display:flex;gap:4px;flex-wrap:wrap}
+.pills button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:3px 12px;font-size:13px;color:var(--ink-2)}
+.pills button:hover{border-color:var(--accent)}
+.pills button.on{background:var(--accent-soft);border-color:transparent;color:var(--accent);font-weight:700}
+.bar .sp{flex:1}
+.bar select{height:34px;padding:0 8px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:13px;max-width:200px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:none;padding:5px 12px;font-size:13px;white-space:nowrap}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button.on{background:var(--accent);color:#fff;font-weight:700}
+:root[data-theme="dark"] .seg button.on{color:#0f1115}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .seg button.on{color:#0f1115}}
+/* 목록 + 상세 */
+.split{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--gap);align-items:start}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--card-r)}
+.listcard{padding:8px}
+.listhd{display:flex;align-items:center;padding:6px 12px 8px;font-size:13px;color:var(--ink-3)}
+.list{list-style:none;margin:0;padding:0}
+.list > li + li{margin-top:2px}
+.it{display:block;width:100%;text-align:left;border:0;background:none;border-radius:8px;padding:8px 12px}
+.it:hover{background:var(--surface-2)}
+.it.on{background:var(--accent-soft)}
+.it:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.it .l1{display:flex;align-items:center;gap:8px;min-width:0}
+.it .l1 b{font-weight:700;font-size:14px}
+.it .l2{display:block;font-size:13px;color:var(--ink-3);margin-top:1px}
+.kind{flex:none;font-size:11px;font-weight:700;padding:1px 6px;border-radius:4px;background:var(--surface-2);color:var(--ink-3)}
+.kind.req{background:var(--accent-soft);color:var(--accent)}
+.kind.work{background:var(--ok-soft);color:var(--ok)}
+.it.on .kind{background:var(--surface)}
+.st{flex:none;font-size:12px;font-weight:700;padding:1px 8px;border-radius:999px;white-space:nowrap}
+.s-wait{background:var(--warn-soft);color:var(--warn)}
+.s-prog{background:var(--accent-soft);color:var(--accent)}
+.s-done{background:var(--ok-soft);color:var(--ok)}
+.s-hold{background:var(--surface-2);color:var(--ink-3)}
+.it.on .s-prog{background:var(--surface)}
+.empty{text-align:center;color:var(--ink-3);padding:40px 0;list-style:none}
+.inl{display:none;margin:4px 4px 12px;padding:16px 20px;border:1px solid var(--line);border-radius:var(--card-r);background:var(--surface)}
+.panel{display:none}
+/* 상세 */
+.dt h2{font-size:19px;line-height:1.4;margin:0 0 6px}
+.dt .meta{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:13px;color:var(--ink-2);margin-bottom:12px}
+.dt .meta span{white-space:nowrap}
+.dt .meta .st{font-size:12px}
+.dt .shot{display:block;margin:0 0 16px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2);overflow:hidden}
+.dt .shot img{display:block;width:100%;max-height:520px;object-fit:contain;object-position:top center}
+.dt .ims{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.dt .ims a{display:block;width:120px;height:90px;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface-2)}
+.dt .ims img{display:block;width:100%;height:100%;object-fit:cover}
+.dt h3{font-size:13px;font-weight:700;color:var(--ink-3);margin:16px 0 6px}
+.dt .req{margin:0;white-space:pre-wrap}
+.dt .ans{border-left:3px solid var(--accent);padding:2px 0 2px 14px}
+.dt .ans p{margin:0 0 6px}
+.dt .ans ul{margin:0 0 8px;padding-left:20px}
+.dt .ans li{margin:2px 0}
+.dt .ans > :last-child{margin-bottom:0}
+.dt .go{display:inline-block;margin-top:16px;color:var(--accent);text-decoration:none;font-size:13px;font-weight:600}
+.dt .go:hover{text-decoration:underline}
+.dt .none{color:var(--ink-3)}
+@media (min-width:900px){
+  /* 목록은 좁게(1/3, 최소 320), 상세는 넓게 */
+  .split{grid-template-columns:minmax(320px,1fr) minmax(0,2fr)}
+  .panel{display:block;position:sticky;top:calc(var(--nav-h) + 16px);max-height:calc(100vh - var(--nav-h) - 32px);overflow:auto;padding:16px 20px}
+}
+@media (max-width:899.98px){
+  li.open .inl{display:block}
+}
+.pager{display:flex;justify-content:center;align-items:center;gap:4px;margin-top:12px;flex-wrap:wrap}
+.pager:empty{display:none}
+.pager button{min-width:34px;height:34px;padding:0 8px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:13px}
+.pager button:hover:not(:disabled){border-color:var(--accent)}
+.pager button.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
+:root[data-theme="dark"] .pager button.on{color:#0f1115}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pager button.on{color:#0f1115}}
+.pager button:disabled{opacity:.35;cursor:default}
+.note{color:var(--ink-3);font-size:13px;margin:var(--section-gap) 0 0}
+</style>
+</head>
+<body>
+<nav class="appnav" aria-label="도구 메뉴">
+  <b class="appnav-brand">Figma AI Run</b>
+  <a href="Setup.html">시작 안내</a>
+  <a href="Common_UX_Guide.html">UX 문서</a>
+  <a href="Figma_Workbench.html">Figma Workbench</a>
+  <a href="Change_History.html" aria-current="page">변경 이력</a>
+  <a href="Usage_Stats.html">사용량 통계</a>
+  <a href="Prototypes.html">프로토타입</a>
+  <span class="appnav-sp"></span>
+  <div class="appnav-right">
+    <span class="badge" id="srv">확인 중…</span>
+  </div>
+</nav>
+<main class="app-wrap wide">
+  <header class="app-head">
+    <div class="app-head-t">
+      <h1>변경 이력</h1>
+      <p class="one-line" title="모든 작업자의 작업 이력(깃으로 공유)과 내 작업 요청을 최신순으로 모았습니다.">모든 작업자의 작업 이력(깃으로 공유)과 내 작업 요청을 최신순으로 모았습니다.</p>
+    </div>
+    <div class="app-head-act sync"><span class="msg one-line" id="syncMsg"></span><span class="badge" id="syncBadge">깃 확인 중…</span><button id="syncBtn" type="button">깃 동기화</button></div>
+  </header>
+  <div class="bar" role="search">
+    <input type="search" id="q" placeholder="검색 (요청 · 답변 · 화면 · 작업자)" aria-label="검색">
+    <div class="pills" id="stf" role="group" aria-label="처리 상태">
+      <button data-s="" class="on">전체</button><button data-s="대기">대기</button><button data-s="진행 중">진행 중</button><button data-s="완료">완료</button><button data-s="보류">보류</button>
+    </div>
+    <span class="sp"></span>
+    <div class="seg" id="filter" role="tablist" aria-label="이력 종류">
+      <button data-f="all" class="on">전체</button><button data-f="work">작업 이력 (공유)</button><button data-f="req">내 작업 요청</button>
+    </div>
+    <select id="whoSel" aria-label="작업자"><option value="">작업자 전체</option></select>
+    <select id="frameSel" aria-label="화면"><option value="">화면 전체</option></select>
+  </div>
+  <div class="split">
+    <section class="card listcard" aria-label="이력 목록">
+      <div class="listhd"><span id="total"></span></div>
+      <ul class="list" id="rows"><li class="empty">불러오는 중…</li></ul>
+      <nav class="pager" id="pager" aria-label="페이지"></nav>
+    </section>
+    <aside class="card panel dt" id="detail" aria-live="polite"></aside>
+  </div>
+  <p class="note">작업 이력은 요청을 등록하거나 상태(대기 · 진행 중 · 보류 · 완료)가 바뀔 때마다 남고, 깃(history 브랜치)으로 다른 작업자 PC와 맞춥니다(5초마다 확인, 이 화면도 5초마다 새로 그립니다). 요청을 지우면 이력에서도 빠집니다. 수정자는 「요청자 → 처리자」, 상세의 PC는 작업한 PC입니다. 캡처는 완료된 작업에만 붙습니다. 「내 작업 요청」은 이 PC에서 등록한 요청(모든 상태)입니다. Figma에서 직접 고친 내용은 Figma의 버전 기록(File › Show version history)에서 확인하세요.</p>
+</main>
+<script>
+(function(){
+  var PER = 10, BLOCK = 10, page = 1, filter = 'all', stF = '', q = '', whoF = '', frameF = '', rows = [], sig = '', sel = null, open = false;
+  var $ = function(id){ return document.getElementById(id); };
+  var wide = window.matchMedia('(min-width:900px)');
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function fmt(t){ return t ? t.replace('T', ' ').slice(0, 16) : ''; }
+  var ST = {'대기':'s-wait','진행 중':'s-prog','완료':'s-done','보류':'s-hold','Figma 반영':'s-done','가이드 저장':'s-prog','작업':'s-done'};
+  /* 상태 거르기: 요청이 아닌 작업 기록은 끝난 일이라 「완료」로 본다 */
+  function stGroup(s){ return s === '작업' || s === 'Figma 반영' || s === '가이드 저장' ? '완료' : s; }
+
+  /* Claude 답변을 문단 + 목록으로 (Figma_Workbench.html noteHtml과 같은 방식) */
+  function noteHtml(s){
+    var paras = String(s).replace(/\r/g, '').split('\n');
+    if (paras.length === 1) paras = s.split(/(?<=[.。])\s+(?=\S)|;\s+/);
+    var html = '', list = [];
+    function flush(){ if (list.length) { html += '<ul>' + list.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>'; list = []; } }
+    paras.forEach(function(p){
+      p = p.trim(); if (!p) return;
+      if (/^[-•·]\s+/.test(p)) { list.push(p.replace(/^[-•·]\s+/, '')); return; }
+      var parts = p.split(/\s+\/\s+/);
+      var head = parts.shift();
+      if (parts.length && /:\s*(.+)$/.test(head)) { var m = head.match(/^(.*?:)\s*(.+)$/); flush(); html += '<p>' + esc(m[1]) + '</p>'; list.push(m[2]); parts.forEach(function(x){ list.push(x); }); flush(); return; }
+      if (parts.length) { flush(); [head].concat(parts).forEach(function(x){ list.push(x); }); flush(); return; }
+      flush(); html += '<p>' + esc(head) + '</p>';
+    });
+    flush();
+    return html;
+  }
+
+  /* 작업 이력(공유, .history) + 이 PC 수정 요청(edit_requests.json)을 한 목록으로 */
+  function build(reqs, hist){
+    var out = [], logged = {};
+    (hist.items || []).forEach(function(h){
+      logged[h.id] = 1;
+      var who = h.by || '—'; if (h.doneBy && h.doneBy !== h.by) who += ' → ' + h.doneBy;
+      var first = String(h.text || '').split('\n')[0];
+      out.push({key:'h:' + h.id, kind:'work', mine:String(h.id).indexOf(hist.pcSlug + '_') === 0, at:h.at,
+        status:h.kind === 'request' ? (h.status || '완료') : '작업', who:who, people:[h.by, h.doneBy], pc:h.pc,
+        badge:h.reqId ? '작업 ' + h.reqId : '작업', title:h.reqId ? (h.frame || first) : (first || h.frame || '작업'),
+        frame:h.frame || '', page:h.page, file:h.fileName && h.fileName !== 'UX AI TEST' ? h.fileName : '', type:h.type, layout:h.layout,
+        text:h.text, note:h.note, shot:h.shot ? '.history/' + h.shot : '', nodeId:h.nodeId,
+        images:(h.images || []).map(function(x){ return {src:'.history/' + x, full:'.history/' + x}; })});
+    });
+    (reqs.items || []).forEach(function(r){
+      if (logged[hist.pcSlug + '_' + r.id]) return;
+      var who = r.author || '—'; if (r.updatedBy && r.updatedBy !== r.author) who += ' → ' + r.updatedBy;
+      out.push({key:'r:' + r.id, kind:'req', mine:true, at:r.updatedAt || r.createdAt, status:r.status, who:who, people:[r.author, r.updatedBy],
+        badge:'요청 ' + r.id, title:r.frame || r.id, frame:r.frame || '', page:r.page, file:r.fileName && r.fileName !== 'UX AI TEST' ? r.fileName : '',
+        type:r.type, layout:r.layout, text:r.text, note:r.note, nodeId:r.nodeId,
+        images:(r.images || []).map(function(m){ return {src:m.small || m.file, full:m.file}; })});
+    });
+    return out.sort(function(a, b){ return (Date.parse(b.at) || 0) - (Date.parse(a.at) || 0); });
+  }
+
+  /* 작업자 · 화면 선택 상자: 불러온 항목에서 만든다 (고른 값은 유지) */
+  function fillSel(id, values, label, cur){
+    var opts = '<option value="">' + label + ' 전체</option>' + values.map(function(v){ return '<option' + (v === cur ? ' selected' : '') + '>' + esc(v) + '</option>'; }).join('');
+    if ($(id).innerHTML !== opts) $(id).innerHTML = opts;
+    if (cur && values.indexOf(cur) < 0) { $(id).value = ''; return ''; }
+    return cur;
+  }
+  function uniq(a){ var m = {}; return a.filter(function(x){ if (!x || m[x]) return false; m[x] = 1; return true; }).sort(function(x, y){ return x.localeCompare(y, 'ko'); }); }
+  function fillSelects(){
+    whoF = fillSel('whoSel', uniq([].concat.apply([], rows.map(function(r){ return r.people || []; }))), '작업자', whoF);
+    frameF = fillSel('frameSel', uniq(rows.map(function(r){ return r.frame; })), '화면', frameF);
+  }
+
+  function listed(){
+    var qq = q.trim().toLowerCase();
+    return rows.filter(function(r){
+      if (filter === 'req' ? !r.mine : filter === 'work' && r.kind !== 'work') return false;
+      if (stF && stGroup(r.status) !== stF) return false;
+      if (whoF && (r.people || []).indexOf(whoF) < 0) return false;
+      if (frameF && r.frame !== frameF) return false;
+      if (qq && [r.badge, r.title, r.frame, r.page, r.who, r.text, r.note, r.type].join(' ').toLowerCase().indexOf(qq) < 0) return false;
+      return true;
+    });
+  }
+
+  function detailHtml(r){
+    if (!r) return '<p class="none">왼쪽 목록에서 항목을 고르세요.</p>';
+    var meta = ['<span class="st ' + (ST[r.status] || 's-hold') + '">' + esc(r.status) + '</span>', '<span>' + esc(fmt(r.at)) + '</span>', '<span>' + esc(r.who) + '</span>'];
+    if (r.pc) meta.push('<span>' + esc(r.pc) + '</span>');
+    if (r.file) meta.push('<span>[' + esc(r.file) + ']</span>');
+    if (r.page || r.frame) meta.push('<span>' + esc([r.page, r.frame].filter(Boolean).join(' › ')) + '</span>');
+    if (r.type) meta.push('<span>' + esc(r.type) + '</span>');
+    if (r.layout) meta.push('<span>레이아웃 ' + esc(r.layout) + '</span>');
+    var h = '<h2><span class="kind ' + r.kind + '">' + esc(r.badge) + '</span> ' + esc(r.title) + '</h2><div class="meta">' + meta.join('') + '</div>';
+    if (r.shot) h += '<a class="shot" href="' + esc(r.shot) + '" target="_blank" rel="noopener" title="원본 크기로 보기"><img loading="lazy" alt="' + esc(r.frame) + ' 캡처" src="' + esc(r.shot) + '"></a>';
+    if (r.text) h += '<h3>요청</h3><p class="req">' + esc(r.text) + '</p>';
+    if ((r.images || []).length) h += '<div class="ims">' + r.images.map(function(m, i){ return '<a href="' + esc(m.full) + '" target="_blank" rel="noopener" title="첨부 이미지 ' + (i + 1) + ' 크게 보기"><img loading="lazy" alt="첨부 이미지 ' + (i + 1) + '" src="' + esc(m.src) + '"></a>'; }).join('') + '</div>';
+    h += '<h3>Claude 답변</h3>' + (r.note ? '<div class="ans">' + noteHtml(r.note) + '</div>' : '<p class="none">아직 답변이 없습니다.</p>');
+    if (r.nodeId) h += '<a class="go" href="Figma_Workbench.html#' + esc(String(r.nodeId).replace(':', '-')) + '">Workbench에서 보기 ›</a>';
+    return h;
+  }
+
+  function render(){
+    var list = listed();
+    var pages = Math.max(1, Math.ceil(list.length / PER));
+    if (page > pages) page = pages;
+    $('total').textContent = '총 ' + list.length + '건 · ' + page + ' / ' + pages + ' 페이지';
+    var slice = list.slice((page - 1) * PER, page * PER);
+    /* 넓은 화면: 고른 건이 이 페이지에 없으면 첫 건을 고른다 */
+    var cur = null;
+    slice.forEach(function(r){ if (r.key === sel) cur = r; });
+    if (!cur && wide.matches && slice.length) { cur = slice[0]; sel = cur.key; }
+    $('rows').innerHTML = slice.length ? slice.map(function(r){
+      var on = cur && r.key === cur.key;
+      var l2 = [fmt(r.at), r.who, r.frame && r.title !== r.frame ? r.frame : (r.page || '')].filter(Boolean).join(' · ');
+      return '<li' + (on && open ? ' class="open"' : '') + '><button type="button" class="it' + (on ? ' on' : '') + '" data-k="' + esc(r.key) + '" aria-expanded="' + (on && (open || wide.matches)) + '">' +
+        '<span class="l1"><span class="kind ' + r.kind + '">' + esc(r.badge) + '</span><b class="one-line" title="' + esc(r.title) + '">' + esc(r.title) + '</b><span class="st ' + (ST[r.status] || 's-hold') + '">' + esc(r.status) + '</span></span>' +
+        '<span class="l2 one-line" title="' + esc(l2) + '">' + esc(l2) + '</span></button>' +
+        (on && open && !wide.matches ? '<div class="inl dt">' + detailHtml(r) + '</div>' : '') + '</li>';
+    }).join('') : '<li class="empty">' + (rows.length ? '조건에 맞는 이력이 없습니다.' : '변경 이력이 없습니다.') + '</li>';
+    if (wide.matches) $('detail').innerHTML = detailHtml(cur);
+    /* 페이지네이션: 10페이지 단위 블록 (COMM-5-i 규칙) */
+    var start = Math.floor((page - 1) / BLOCK) * BLOCK + 1, end = Math.min(pages, start + BLOCK - 1), h = '';
+    h += '<button data-p="1" ' + (page === 1 ? 'disabled' : '') + ' aria-label="처음">«</button>';
+    h += '<button data-p="' + Math.max(1, start - 1) + '" ' + (start === 1 ? 'disabled' : '') + ' aria-label="이전 10페이지">‹</button>';
+    for (var i = start; i <= end; i++) h += '<button data-p="' + i + '" class="' + (i === page ? 'on' : '') + '"' + (i === page ? ' aria-current="page"' : '') + '>' + i + '</button>';
+    h += '<button data-p="' + Math.min(pages, end + 1) + '" ' + (end === pages ? 'disabled' : '') + ' aria-label="다음 10페이지">›</button>';
+    h += '<button data-p="' + pages + '" ' + (page === pages ? 'disabled' : '') + ' aria-label="마지막">»</button>';
+    $('pager').innerHTML = pages > 1 ? h : '';
+  }
+  function reset(){ page = 1; if (wide.matches) sel = null; render(); }
+
+  $('rows').addEventListener('click', function(e){
+    if (e.target.closest('.inl')) return;
+    var b = e.target.closest('button.it'); if (!b) return;
+    var k = b.dataset.k;
+    if (wide.matches) { sel = k; open = false; }
+    else if (sel === k && open) open = false;
+    else { sel = k; open = true; }
+    render();
+    if (!wide.matches && open) { var n = $('rows').querySelector('button.it.on'); if (n) n.scrollIntoView({block:'nearest'}); }
+  });
+  $('pager').addEventListener('click', function(e){ var b = e.target.closest('button'); if (!b || b.disabled) return; page = +b.dataset.p; if (wide.matches) sel = null; render(); window.scrollTo({top:0, behavior:'smooth'}); });
+  $('filter').addEventListener('click', function(e){
+    var b = e.target.closest('button'); if (!b) return;
+    filter = b.dataset.f;
+    Array.prototype.forEach.call(this.children, function(x){ x.classList.toggle('on', x === b); });
+    reset();
+  });
+  $('stf').addEventListener('click', function(e){
+    var b = e.target.closest('button'); if (!b) return;
+    stF = b.dataset.s;
+    Array.prototype.forEach.call(this.children, function(x){ x.classList.toggle('on', x === b); });
+    reset();
+  });
+  $('q').addEventListener('input', function(){ q = this.value; reset(); });
+  $('whoSel').addEventListener('change', function(){ whoF = this.value; reset(); });
+  $('frameSel').addEventListener('change', function(){ frameF = this.value; reset(); });
+  (wide.addEventListener ? wide.addEventListener.bind(wide, 'change') : wide.addListener.bind(wide))(function(){ render(); });
+
+  function load(first){
+    if (location.protocol === 'file:') { setSrv(false); $('rows').innerHTML = '<li class="empty">Figma AI Run 실행 후 http://localhost:8765/Change_History.html 에서 열어 주세요.</li>'; return; }
+    Promise.all([
+      fetch('/api/requests', {cache:'no-store'}).then(function(r){ return r.json(); }),
+      fetch('/api/history', {cache:'no-store'}).then(function(r){ return r.json(); }).catch(function(){ return {items:[]}; })
+    ]).then(function(d){
+      setSrv(true); setSync(d[1]);
+      var s = d[0].version + '/' + (d[1].items || []).map(function(h){ return h.id + h.at + h.note + h.shot; }).join('|');
+      if (s !== sig) { sig = s; rows = build(d[0], d[1]); fillSelects(); render(); }
+    }).catch(function(){ setSrv(false); if (first) $('rows').innerHTML = '<li class="empty">서버에 연결할 수 없습니다.</li>'; });
+  }
+  /* 깃 동기화 상태: 받고 올리는 중 · 마지막 결과 */
+  function setSync(h){
+    var st = h.sync, b = $('syncBadge');
+    $('syncBtn').disabled = !!h.syncing;
+    if (h.syncing) { b.textContent = '깃 동기화 중…'; b.className = 'badge'; }
+    else if (!st) { b.textContent = '깃 동기화 전'; b.className = 'badge'; }
+    else { b.textContent = st.ok ? '깃 확인 ' + (st.checkedAt || st.at || '').slice(11, 19) : '깃 동기화 실패 ' + fmt(st.checkedAt || st.at).slice(5); b.className = 'badge ' + (st.ok ? 'on' : 'off'); }
+    var m = st && !h.syncing ? (st.ok && st.at ? '마지막으로 받은 · 올린 시각 ' + fmt(st.at).slice(5) : st.message) : '';
+    $('syncMsg').textContent = m; $('syncMsg').title = m || '';
+  }
+  $('syncBtn').addEventListener('click', function(){
+    this.disabled = true; $('syncBadge').textContent = '깃 동기화 중…';
+    fetch('/api/history', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({action:'sync'})})
+      .then(function(r){ return r.json(); }).then(setSync).catch(function(){});
+  });
+  function setSrv(on){ $('srv').textContent = on ? '로컬 서버 연결됨' : '서버 없음'; $('srv').className = 'badge ' + (on ? 'on' : 'off'); }
+  load(true);
+  setInterval(function(){ if (!document.hidden) load(false); }, 5000);
+})();
+</script>
+<script src="appnav.js" defer></script>
+</body>
+</html>

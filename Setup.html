@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workbench 시작 안내</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="appnav.css">
+<style>
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --surface-2:#f3f6fb; --ink:#14171c; --ink-2:#4a5260; --ink-3:#7a8392;
+  --line:#e3e7ee; --accent:#2747d8; --accent-soft:#e6ebff; --red:#d93025; --red-soft:#fdecea;
+  --ok:#1a7f37; --ok-soft:#e3f4e8; --warn:#b35900; --warn-soft:#fff1e0;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1115; --surface:#171a20; --surface-2:#1e232b; --ink:#e8ebf0; --ink-2:#b4bcc8; --ink-3:#8590a0;
+    --line:#2a3039; --accent:#8ea2ff; --accent-soft:#232c52; --red:#ff7b72; --red-soft:#3a1f1e;
+    --ok:#56d364; --ok-soft:#16301d; --warn:#f0a24f; --warn-soft:#38270f;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1115; --surface:#171a20; --surface-2:#1e232b; --ink:#e8ebf0; --ink-2:#b4bcc8; --ink-3:#8590a0;
+  --line:#2a3039; --accent:#8ea2ff; --accent-soft:#232c52; --red:#ff7b72; --red-soft:#3a1f1e;
+  --ok:#56d364; --ok-soft:#16301d; --warn:#f0a24f; --warn-soft:#38270f;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 Pretendard,-apple-system,"Segoe UI","Malgun Gothic",sans-serif}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--accent)}
+.badge{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
+.badge.on{background:var(--ok-soft);color:var(--ok);border-color:transparent}
+.badge.off{background:var(--red-soft);color:var(--red);border-color:transparent}
+
+.app-head p{color:var(--ink-2)}
+.sub{margin:0 0 16px}
+.prog{display:inline-flex;align-items:center;gap:10px;height:30px;padding:0 12px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+.bar{width:72px;height:6px;border-radius:999px;background:var(--surface);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
+.prog b{font-size:13px;white-space:nowrap}
+.note{background:var(--warn-soft);color:var(--warn);border-radius:8px;padding:10px 14px;font-size:13px;margin:0 0 16px}
+
+/* 넓은 화면(1100px 이상): 왼쪽 단계 목록(고정) + 오른쪽 고른 단계 · 좁은 화면: 단계가 세로로 이어짐 */
+.snav{display:none}
+.steps{min-width:0}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:var(--card-r);margin:0 0 var(--gap)}
+.step>summary{list-style:none;display:flex;align-items:center;gap:12px;padding:16px 20px;cursor:pointer}
+.step>summary::-webkit-details-marker{display:none}
+.num{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:13px;background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line)}
+.step.done .num{background:var(--ok);color:#fff;border-color:transparent}
+.step.cur{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.step.cur .num{background:var(--accent);color:#fff;border-color:transparent}
+.ttl{flex:1;font-weight:700;font-size:15px}
+.ttl small{display:block;font-weight:400;font-size:12.5px;color:var(--ink-3)}
+.chip{font-size:12px;font-weight:600;padding:2px 10px;border-radius:999px;white-space:nowrap;background:var(--surface-2);color:var(--ink-3)}
+.chip.ok{background:var(--ok-soft);color:var(--ok)}
+.chip.wait{background:var(--warn-soft);color:var(--warn)}
+.chip.bad{background:var(--red-soft);color:var(--red)}
+.body{padding:0 20px 16px 60px}
+.body ol,.body ul{margin:4px 0 12px;padding-left:20px}
+.body li{margin:3px 0}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0}
+.btn{height:34px;padding:0 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface);font-size:13.5px;font-weight:600;display:inline-flex;align-items:center;gap:6px;text-decoration:none;color:var(--ink)}
+.btn:hover{border-color:var(--accent)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn:disabled{opacity:.45;cursor:default}
+.inp{height:36px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:14px;flex:1;min-width:0}
+.inp:focus,.btn:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.path{display:flex;gap:6px;align-items:center;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:6px 6px 6px 12px;margin:8px 0}
+.path code{flex:1;font:12.5px Consolas,monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.path .btn{flex:none;height:28px;padding:0 10px;font-size:12.5px}
+.msg{font-size:13px;margin:6px 0 0}
+.msg.ok{color:var(--ok)} .msg.bad{color:var(--red)} .msg.wait{color:var(--warn)}
+.chk{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;margin-top:6px;cursor:pointer}
+.chk input{width:16px;height:16px;accent-color:var(--accent)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;font-size:13px;margin:8px 0}
+.kv dt{color:var(--ink-3)} .kv dd{margin:0;font-family:Consolas,monospace;overflow-wrap:anywhere}
+.hint{color:var(--ink-3);font-size:12.5px}
+.end{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:var(--gap)}
+.pager{display:none}
+@media (min-width:1100px){
+  .layout{display:grid;grid-template-columns:240px minmax(0,1fr);gap:var(--gap);align-items:start}
+  .snav{display:block;position:sticky;top:calc(var(--nav-h) + 16px);background:var(--surface);border:1px solid var(--line);border-radius:var(--card-r);padding:8px}
+  .snav ol{list-style:none;margin:0;padding:0}
+  .snav button{width:100%;display:flex;align-items:center;gap:10px;padding:8px 10px;border:0;border-radius:8px;background:none;text-align:left;font-size:13.5px;color:var(--ink-2)}
+  .snav button:hover{background:var(--surface-2)}
+  .snav button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+  .snav .sn{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:11.5px;font-weight:800;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-3)}
+  .snav .st{flex:1}
+  .snav li.done .sn{background:var(--ok-soft);color:var(--ok);border-color:transparent}
+  .snav li.cur .sn{background:var(--accent);color:#fff;border-color:transparent}
+  .snav li.sel button{background:var(--accent-soft);color:var(--accent);font-weight:700}
+  .steps .step{display:none;margin:0}
+  .steps .step.sel{display:block}
+  .steps .step>summary{cursor:default}
+  .pager{display:flex;gap:8px;justify-content:flex-end;margin-top:var(--gap)}
+}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:8px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.show{opacity:1}
+@media (max-width:600px){ .body{padding:0 16px 16px} .step>summary{padding:12px 14px} }
+</style>
+</head>
+<body>
+<nav class="appnav" aria-label="도구 메뉴">
+  <b class="appnav-brand">Figma AI Run</b>
+  <a href="Setup.html" aria-current="page">시작 안내</a>
+  <a href="Common_UX_Guide.html">UX 문서</a>
+  <a href="Figma_Workbench.html">Figma Workbench</a>
+  <a href="Change_History.html">변경 이력</a>
+  <a href="Usage_Stats.html">사용량 통계</a>
+  <a href="Prototypes.html">프로토타입</a>
+  <span class="appnav-sp"></span>
+  <div class="appnav-right">
+    <span class="badge" id="srv">확인 중…</span>
+  </div>
+</nav>
+
+<main class="app-wrap read">
+  <header class="app-head">
+    <div class="app-head-t">
+      <h1>Workbench 시작 안내</h1>
+      <p class="one-line" title="이 PC에서 Workbench로 Figma 수정 요청을 처리하려면 아래 8단계를 한 번만 해 두면 됩니다.">이 PC에서 Workbench로 Figma 수정 요청을 처리하려면 아래 8단계를 한 번만 해 두면 됩니다.</p>
+    </div>
+    <div class="app-head-act"><span class="prog"><span class="bar"><i id="barFill"></i></span><b id="progTxt">0 / 8 완료</b></span></div>
+  </header>
+  <p class="hint sub">처음 열면 <b>Claude · Figma 실행과 깃허브 연결을 자동으로 시작</b>하고, 끝난 단계는 저절로 체크됩니다.</p>
+  <p class="msg" id="autoMsg" hidden></p>
+  <p class="note" id="srvNote" hidden>로컬 서버에 연결할 수 없습니다. 폴더의 <b>Figma AI Run</b>(윈도우 <code>.bat</code> · 맥 <code>.app</code>)을 실행한 뒤, 열린 브라우저 창에서 이 페이지를 다시 여세요.</p>
+
+  <div class="layout">
+  <nav class="snav" aria-label="단계"><ol id="snav"></ol></nav>
+  <div class="steps" id="steps">
+  <!-- 1 -->
+  <details class="step" id="s1">
+    <summary><span class="num">1</span><span class="ttl">작업자 이름<small>요청 · 변경 이력에 남는 이름</small></span><span class="chip" data-chip></span></summary>
+    <div class="body">
+      <div class="row"><input class="inp" id="userName" maxlength="20" placeholder="예: 홍길동" autocomplete="name" aria-label="작업자 이름"><button class="btn pri" id="userSave">저장</button></div>
+      <p class="hint">Workbench · 가이드 상단의 「작업자」 칸과 같은 값입니다.</p>
+    </div>
+  </details>
+
+  <!-- 2 -->
+  <details class="step" id="s2">
+    <summary><span class="num">2</span><span class="ttl">Figma 데스크톱 앱 실행 · 로그인<small>플러그인은 데스크톱 앱에서만 등록됩니다</small></span><span class="chip" data-chip></span></summary>
+    <div class="body">
+      <p class="msg" id="figmaEnv"></p>
+      <ol>
+        <li>Figma 데스크톱 앱을 실행하고 <b>본인 계정</b>으로 로그인합니다.</li>
+        <li>작업 파일에 <b>편집 권한</b>이 있어야 합니다. 없으면 파일 소유자에게 초대를 요청하세요.</li>
+      </ol>
+      <div class="row">
+        <button class="btn pri" data-launch="figma">Figma 실행</button>
+        <button class="btn" data-install="figma">Figma 설치</button>
+      </div>
+      <label class="chk"><input type="checkbox" data-check="figma"> Figma에 로그인했어요</label>
+    </div>
+  </details>
+
+  <!-- 3 -->
+  <details class="step" id="s3">
+    <summary><span class="num">3</span><span class="ttl">작업할 Figma 링크<small>Figma에서 파일 또는 페이지 링크를 복사해 붙여 넣으세요</small></span><span class="chip" data-chip></span></summary>
+    <div class="body">
+      <ol>
+        <li>Figma에서 작업할 페이지를 엽니다.</li>
+        <li>오른쪽 위 <b>Share › Copy link</b> 또는 주소창의 링크를 복사합니다.</li>
+        <li>아래 칸에 붙여 넣고 <b>확인</b>을 누릅니다.</li>
+      </ol>
+      <div class="row"><input class="inp" id="figUrl" placeholder="https://www.figma.com/design/…" aria-label="Figma 링크"><button class="btn pri" id="figSave">확인</button></div>
+      <div class="row"><button class="btn" id="figDefault">기본 작업 링크 사용 (UX AI TEST)</button></div>
+      <div id="figInfo"></div>
+    </div>
+  </details>
+
+  <!-- 4 -->
+  <details class="step" id="s4">
+    <summary><span class="num">4</span><span class="ttl">Figma 플러그인 등록 · 실행<small>Common UX Sync — 캡처 자동 반영, 서버 연결</small></span><span class="chip" data-chip></span></summary>
+    <div class="body">
+      <ol>
+        <li>Figma 데스크톱 앱에서 3단계의 파일을 엽니다.</li>
+        <li>메뉴 › <b>Plugins › Development › Import plugin from manifest…</b></li>
+        <li>아래 파일을 고릅니다. <span id="pickTip">(경로를 복사해 파일 선택 창의 주소칸에 붙여 넣으면 빠릅니다)</span></li>
+      </ol>
+      <div class="path"><code id="manifestPath">…</code><button class="btn" data-copy="manifestPath">경로 복사</button></div>
+      <ol start="4">
+        <li><b>Plugins › Development › Common UX Sync</b>를 실행합니다.</li>
+        <li>플러그인 위쪽에 「서버 연결됨」이 보이면 끝입니다. 이 페이지도 자동으로 확인합니다.</li>
+      </ol>
+      <p class="msg" id="pluginEnv"></p>
+      <label class="chk"><input type="checkbox" data-check="plugin"> 플러그인에 「서버 연결됨」이 보여요</label>
+    </div>
+  </details>
+
+  <!-- 5 -->
+  <details class="step" id="s5">
+    <summary><span class="num">5</span><span class="ttl">Claude 앱 실행 · 작업 폴더 열기<small>Claude가 이 폴더의 규칙(CLAUDE.md)을 읽고 일합니다</small></span><span class="chip" data-chip></span></summary>
+    <div class="body">
+      <p class="msg" id="claudeEnv"></p>
+      <ol>
+        <li>Claude 데스크톱 앱을 실행하고 <b>본인 계정</b>으로 로그인합니다.</li>
+        <li>왼쪽 위 <b>Code</b> 탭으로 갑니다.</li>
+        <li>폴더 선택에서 아래 작업 폴더를 고릅니다.</li>
+      </ol>
+      <div class="path"><code id="rootPath">…</code><button class="btn" data-copy="rootPath">경로 복사</button><button class="btn" data-launch="folder" id="folderBtn">탐색기에서 열기</button></div>
+      <div class="row">
+        <button class="btn pri" data-launch="claude">Claude 실행</button>
+        <button class="btn" data-install="claude">Claude 설치</button>
+      </div>
+      <p class="hint" id="cliHint">터미널을 쓰는 경우: 작업 폴더에서 <code>claude</code>를 실행해도 됩니다 (Claude Code CLI).</p>
+      <div class="row" id="cliRow" hidden><button class="btn" data-launch="claude-cli">터미널에서 Claude Code 열기 (직접 작업)</button></div>
+      <label class="chk"><input type="checkbox" data-check="claude"> Claude Code 탭에서 이 폴더를 열었어요</label>
+    </div>
+  </details>
+
+  <!-- 6 -->
+  <details class="step" id="s6">
+    <summary><span class="num">6</span><span class="ttl">Claude에 Figma 연결<small>Claude가 본인 Figma 계정으로 파일을 고칩니다</small></span><span class="chip" data-chip></span></summary>
+    <div class="body">
+      <ol>
+        <li>Claude 앱 › <b>설정 › 커넥터(Connectors)</b>에서 <b>Figma</b>를 연결하고, 2단계와 같은 Figma 계정으로 로그인합니다.<br><span class="hint">CLI는 Claude 창에서 <code>/mcp</code> › figma › 인증</span></li>
+        <li>아래 문장을 복사해 Claude에 보냅니다. Claude가 작업 파일에 접근할 수 있는지 확인해 줍니다.</li>
+      </ol>
+      <div class="path"><code id="promptCheck">…</code><button class="btn" data-copy="promptCheck">문장 복사</button></div>
+      <label class="chk"><input type="checkbox" data-check="connector"> Claude가 Figma 파일 접근을 확인했어요</label>
+    </div>
+  </details>
+
+  <!-- 7 -->
+  <details class="step" id="s7">
+    <summary><span class="num">7</span><span class="ttl">요청 감시 (백그라운드)<small>창 없이 Claude가 Workbench 요청을 받아 Figma에 반영</small></span><span class="chip" data-chip></span></summary>
+    <div class="body">
+      <p class="msg" id="agentEnv"></p>
+      <ol>
+        <li><b>처음 한 번:</b> <b>「Claude 로그인 · Figma 연결」</b>을 누르면 Claude Code 창이 열립니다. 창에서 <code>/login</code> → 본인 Claude 계정으로 로그인, 이어서 <code>/mcp</code> → <b>figma</b> → <b>Authenticate</b> → 2단계와 같은 Figma 계정으로 승인합니다. 끝나면 창을 닫습니다.</li>
+        <li><b>「백그라운드 감시 시작」</b>을 누릅니다. 창은 뜨지 않고, 요청이 들어오면 Claude가 뒤에서 처리합니다. (아래 체크를 켜 두면 Figma AI Run을 실행할 때마다 자동으로 시작합니다.)</li>
+      </ol>
+      <div class="row" id="cliRow2" hidden>
+        <button class="btn" data-launch="claude-cli">Claude 로그인 · Figma 연결</button>
+        <button class="btn pri" data-launch="agent-start" id="agentStart">백그라운드 감시 시작</button>
+        <button class="btn" data-launch="agent-stop" id="agentStop">중지</button>
+      </div>
+      <p class="msg" id="watchEnv"></p>
+      <label class="hint" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="autoWatch"> Figma AI Run을 실행할 때 백그라운드 감시를 자동으로 시작</label>
+      <p class="hint">직접 작업할 때는 지금처럼 Claude 앱 Code 탭이나 터미널에서 Claude Code를 열어 쓰면 됩니다. 백그라운드 감시가 켜져 있으면 그 창에서는 감시를 따로 시작하지 않습니다(같은 요청을 두 번 처리하지 않게). 처리 기록은 <code>workbench/.agent.log</code>에 남습니다.</p>
+      <details class="hint"><summary>CLI가 없을 때 (Claude 앱 대화로 감시)</summary>
+        <div class="path"><code id="promptWatch">…</code><button class="btn" data-copy="promptWatch">문장 복사</button></div>
+        <p class="hint">문장을 복사해 Claude 앱 Code 탭 대화에 보내면 그 대화가 감시합니다. 감시 중에는 그 창을 닫지 마세요.</p>
+      </details>
+    </div>
+  </details>
+
+  <!-- 8 -->
+  <details class="step" id="s8">
+    <summary><span class="num">8</span><span class="ttl">작업 이력 공유 (깃허브 연결)<small>누가 · 어떤 프레임을 · 무엇을 고쳤는지 모든 작업자의 「변경 이력」에 보입니다</small></span><span class="chip" data-chip></span></summary>
+    <div class="body">
+      <p class="msg" id="gitEnv"></p>
+      <ol>
+        <li>처음이면 저장소 관리자에게 <b>깃허브 아이디</b>를 알려 초대를 받고, 메일 · 깃허브 알림에서 <b>수락</b>합니다. (깃허브 계정이 없으면 <a href="https://github.com/signup" target="_blank" rel="noopener">github.com</a>에서 만듭니다)</li>
+        <li><b>깃허브 연결</b>을 누릅니다. 열린 창이 git 설치부터 연결까지 차례로 진행합니다. <span id="loginTip">깃허브 로그인 창이 뜨면 브라우저에서 본인 계정으로 로그인합니다.</span></li>
+      </ol>
+      <div class="row"><button class="btn pri" data-launch="git-login">깃허브 연결</button></div>
+      <p class="hint">연결되면 요청이 완료되는 즉시 올리고, 5초마다 다른 작업자의 이력을 확인해 받습니다. 「변경 이력」의 [깃 동기화]로 바로 맞출 수도 있습니다.</p>
+    </div>
+  </details>
+
+  <div class="pager"><button class="btn" id="prevStep">이전 단계</button><button class="btn pri" id="nextStep">다음 단계</button></div>
+  </div>
+  </div>
+
+  <div class="end">
+    <button class="btn" id="reset">처음부터 다시</button>
+    <button class="btn pri" id="finish">Workbench로 이동</button>
+  </div>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  var API = '/api/setup';
+  /* 기본 프로젝트: UX AI TEST › SH.L */
+  var KEY = 'etCQFF3CTf1EA6C79d4BBf';
+  var PAGE = '129:104548';
+  var DEFAULT_URL = 'https://www.figma.com/design/' + KEY + '/UX-AI-TEST?node-id=' + PAGE.replace(':', '-');
+  var S = { state: { checks: {} }, env: null, online: false }, isMac = /Mac/.test(navigator.platform);
+  var $ = function(id){ return document.getElementById(id); };
+  var steps = ['s1','s2','s3','s4','s5','s6','s7','s8'];
+  var opened = false;
+  /* 넓은 화면: 고른 단계(sel)만 오른쪽에 보인다 */
+  var wide = window.matchMedia('(min-width:1100px)'), sel = null;
+  function select(id, scroll){
+    sel = id;
+    steps.forEach(function(x){
+      $(x).classList.toggle('sel', x === id);
+      var li = $('nav-' + x); li.classList.toggle('sel', x === id);
+      li.querySelector('button').setAttribute('aria-current', x === id ? 'step' : 'false');
+    });
+    $(id).open = true;
+    var i = steps.indexOf(id);
+    $('prevStep').disabled = i <= 0; $('nextStep').disabled = i >= steps.length - 1;
+    if (scroll && wide.matches) { var top = $('steps').getBoundingClientRect().top; if (top < 60) window.scrollBy(0, top - 60); }
+  }
+
+  function toast(t){ var e = $('toast'); e.textContent = t; e.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(function(){ e.classList.remove('show'); }, 1800); }
+  function store(k, v){ try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch(e){ return null; } }
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function parseFig(u){
+    var m = String(u || '').trim().match(/^https:\/\/(?:www\.)?figma\.com\/(?:design|file|proto)\/([A-Za-z0-9]+)(?:\/[^?#]*)?(?:\?([^#]*))?/);
+    if (!m) return null;
+    var node = ((m[2] || '').match(/(?:^|&)node-id=([0-9]+[-:][0-9]+)/) || [])[1] || '';
+    return { key: m[1], node: node.replace('-', ':') };
+  }
+  function sec(s){ return s == null ? null : s; }
+
+  function save(patch){
+    return fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(patch) })
+      .then(function(r){ return r.json(); })
+      .then(function(d){ if (d.error) throw new Error(d.error); S.state = d.state; S.env = d.env; render(); return d; });
+  }
+  function load(){
+    return fetch(API, { cache: 'no-store' }).then(function(r){ return r.json(); })
+      .then(function(d){
+        S.online = true; S.state = d.state || S.state; S.env = d.env;
+        if (!S.state.autoAt && !S.state.done && !S.autoRan) { S.autoRan = true; auto(); }
+        /* 링크 파일의 프레임 목록: 수정 가능 페이지 이름 · (다른 파일이면) 목록이 들어왔는지 */
+        var f = parseFig(S.state.figmaUrl);
+        if (!f) { S.cat = null; render(); return; }
+        return fetch('/api/catalog?key=' + encodeURIComponent(f.key), { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : null; })
+          .then(function(c){ S.cat = c; render(); }, function(){ S.cat = null; render(); });
+      })
+      .catch(function(){ S.online = false; render(); });
+  }
+  function checks(){ return S.state.checks || {}; }
+  function setCheck(k, v){ var c = Object.assign({}, checks()); c[k] = v; return save({ checks: c }); }
+
+  function status(){
+    var e = S.env || {}, c = checks(), fig = parseFig(S.state.figmaUrl);
+    var plugin = e.pluginSeenSec != null && e.pluginSeenSec < 600;
+    var ag = e.agent || {};
+    var watch = !!ag.alive || (e.watcherSec != null && e.watcherSec < 90);
+    return {
+      s1: { done: !!(S.state.user || '').trim(), chip: (S.state.user || '').trim() ? ['ok', S.state.user] : ['wait', '입력 필요'] },
+      s2: { done: !!c.figma, chip: c.figma ? ['ok', '완료'] : (e.figmaInstalled === false ? ['bad', '설치 필요'] : ['wait', '확인 필요']) },
+      s3: { done: !!fig, chip: fig ? (fig.key === KEY ? ['ok', edName() ? '연결됨 · ' + edName() : '연결됨'] : (S.cat ? ['ok', '연결됨 · 목록 받음'] : ['ok', '연결됨 · 목록 대기'])) : ['wait', '링크 필요'] },
+      s4: { done: plugin || !!c.plugin, chip: plugin ? ['ok', '플러그인 연결됨'] : (c.plugin ? ['ok', '완료'] : ['wait', '연결 대기']) },
+      s5: { done: !!c.claude, chip: c.claude ? ['ok', '완료'] : (e.claudeInstalled === false && !e.claudeCli ? ['bad', '설치 필요'] : ['wait', '확인 필요']) },
+      s6: { done: !!c.connector, chip: c.connector ? ['ok', '완료'] : ['wait', '확인 필요'] },
+      s7: { done: watch && ag.status !== 'login', chip: ag.alive ? (ag.status === 'login' ? ['bad', '로그인 필요'] : ag.status === 'error' ? ['bad', '확인 필요'] : ag.status === 'working' ? ['ok', '처리 중'] : ['ok', '백그라운드 감시 중']) : watch ? ['ok', '감시 중 (Claude 창)'] : ['wait', '시작 대기'] },
+      s8: { done: !!(e.historySync && e.historySync.ok),
+            chip: e.historySync && e.historySync.ok ? ['ok', '연결됨'] : e.historySyncing ? ['wait', '연결 중…'] : e.gitInstalled === false ? ['bad', 'git 설치 필요'] :
+              e.historySync ? ['bad', /로그인/.test(e.historySync.message) ? '로그인 필요' : '확인 필요'] : ['wait', '연결 대기'] }
+    };
+  }
+
+  function render(){
+    var srv = $('srv');
+    srv.textContent = S.online ? '서버 연결됨' : '서버 없음';
+    srv.className = 'badge ' + (S.online ? 'on' : 'off');
+    $('srvNote').hidden = S.online;
+    var st = status(), n = 0, cur = null;
+    steps.forEach(function(id){
+      var s = st[id], el = $(id);
+      if (s.done) n++; else if (!cur) cur = id;
+      el.classList.toggle('done', s.done);
+      var chip = el.querySelector('[data-chip]');
+      chip.className = 'chip ' + s.chip[0]; chip.textContent = s.chip[1];
+    });
+    steps.forEach(function(id, i){
+      $(id).classList.toggle('cur', id === cur);
+      var li = $('nav-' + id); li.classList.toggle('cur', id === cur); li.classList.toggle('done', st[id].done);
+      li.querySelector('.sn').textContent = st[id].done ? '✓' : i + 1;
+    });
+    if (!opened && S.env) {
+      opened = true;
+      steps.forEach(function(id){ $(id).open = !st[id].done && (id === cur || !cur); });
+      if (!cur) $('s7').open = true;
+      select(cur || 's7');
+    }
+    $('barFill').style.width = (n / steps.length * 100) + '%';
+    $('progTxt').textContent = n + ' / ' + steps.length + ' 완료';
+
+    var e = S.env || {}, c = checks();
+    document.querySelectorAll('[data-check]').forEach(function(b){ b.checked = !!c[b.dataset.check]; });
+    if (document.activeElement !== $('userName') && !$('userName').value) $('userName').value = S.state.user || store('cux.user') || '';
+    if (document.activeElement !== $('figUrl') && !$('figUrl').value) $('figUrl').value = S.state.figmaUrl || '';
+    $('manifestPath').textContent = e.manifest || '…';
+    $('rootPath').textContent = e.root || '…';
+    /* 맥: Finder · 파일 선택 창에서 ⌘⇧G로 경로 붙여넣기 */
+    isMac = e.os === 'mac';
+    $('folderBtn').textContent = isMac ? 'Finder에서 열기' : '탐색기에서 열기';
+    $('pickTip').textContent = isMac ? '(파일 선택 창에서 ⌘⇧G를 누르고 경로를 붙여 넣으면 빠릅니다)' : '(경로를 복사해 파일 선택 창의 주소칸에 붙여 넣으면 빠릅니다)';
+    setMsg('figmaEnv', e.figmaInstalled == null ? null : e.figmaInstalled ? ['ok', '✓ 이 PC에 Figma 데스크톱 앱이 설치되어 있습니다.'] : ['bad', 'Figma 데스크톱 앱을 찾지 못했습니다. 다운로드해 설치한 뒤 다시 확인하세요.']);
+    setMsg('claudeEnv', e.claudeInstalled == null ? null : e.claudeInstalled ? ['ok', '✓ 이 PC에 Claude 데스크톱 앱이 설치되어 있습니다.'] : e.claudeCli ? ['ok', '✓ Claude Code CLI가 설치되어 있습니다. (데스크톱 앱은 없음)'] : ['bad', 'Claude 데스크톱 앱을 찾지 못했습니다. 다운로드해 설치하세요.']);
+    var ps = e.pluginSeenSec;
+    setMsg('pluginEnv', ps != null && ps < 600 ? ['ok', '✓ 플러그인이 서버에 연결되었습니다. (' + ago(ps) + ')'] : ['wait', '플러그인 연결을 기다리는 중… 플러그인을 실행하면 자동으로 확인됩니다.']);
+    $('cliRow').hidden = $('cliRow2').hidden = !e.claudeCli;
+    $('cliHint').hidden = !!e.claudeCli;
+    $('autoWatch').checked = S.state.autoWatch !== false;   // 기본 켬
+    $('autoWatch').disabled = !e.claudeCli;
+    $('loginTip').textContent = isMac
+      ? '터미널 창에 8자리 코드가 나오면 Enter → 열린 브라우저에 코드를 넣고 본인 깃허브 계정으로 로그인 · 승인합니다. 토큰은 필요 없습니다.'
+      : '깃허브 로그인 창이 뜨면 [Sign in with your browser] → 브라우저에서 본인 계정으로 로그인 · 승인합니다. 토큰은 필요 없습니다.';
+    var hs = e.historySync;
+    setMsg('gitEnv', e.historySyncing ? ['wait', '깃허브에 연결하는 중…'] : hs && hs.ok ? ['ok', '✓ ' + hs.message] :
+      e.gitInstalled === false ? ['wait', 'git이 아직 없습니다. 깃허브 연결을 누르면 설치부터 진행합니다.'] : hs ? ['bad', hs.message] : ['wait', '깃허브 연결을 누르세요.']);
+    var ws = e.watcherSec, ag = e.agent || {};
+    setMsg('agentEnv', !e.claudeCli ? ['wait', 'Claude Code CLI를 찾지 못했습니다. Claude 앱 Code 탭을 한 번 열면 함께 설치됩니다. (없으면 아래 「CLI가 없을 때」)'] :
+      ag.alive && ag.stopping ? ['wait', '중지하는 중… 처리 중인 요청이 있으면 마친 뒤 멈춥니다.'] :
+      ag.alive ? (ag.status === 'login' ? ['bad', '로그인이 필요합니다: 「Claude 로그인 · Figma 연결」을 눌러 /login · /mcp를 진행하세요.'] :
+        ag.status === 'error' ? ['bad', '백그라운드 감시: ' + (ag.msg || '오류')] :
+        ['ok', '✓ 백그라운드 감시 중 (창 없음) — ' + (ag.msg || '') + ' · ' + ago(ag.sec)]) :
+      ag.status === 'stopped' ? ['wait', '백그라운드 감시가 중지되어 있습니다.'] :
+      ag.sec != null ? ['wait', '백그라운드 감시가 꺼져 있습니다. (마지막: ' + ago(ag.sec) + ')'] : ['wait', '처음이면 1 → 2 순서로 진행하세요.']);
+    $('agentStart').hidden = !!ag.alive; $('agentStop').hidden = !ag.alive;
+    setMsg('watchEnv', ag.alive ? null : ws != null && ws < 90 ? ['ok', '✓ Claude 창이 요청을 감시하고 있습니다. (' + (e.watcherHost || '') + ', ' + ago(ws) + ')'] : null);
+
+    var url = S.state.figmaUrl || DEFAULT_URL;
+    $('promptCheck').textContent = 'Figma 연결 확인해줘. 작업 파일: ' + url;
+    $('promptWatch').textContent = '워크벤치 요청 감시 시작해줘. 작업 파일: ' + url;
+    renderFig();
+    /* 한 줄(말줄임) 칸: 마우스를 올리면 전체 */
+    document.querySelectorAll('.path code').forEach(function(c){ c.title = c.textContent; });
+  }
+  function ago(s){ return s < 60 ? s + '초 전' : s < 3600 ? Math.round(s / 60) + '분 전' : Math.round(s / 3600) + '시간 전'; }
+  function setMsg(id, m){ var e = $(id); if (!m) { e.textContent = ''; return; } e.className = 'msg ' + m[0]; e.textContent = m[1]; }
+  /* 링크가 가리키는 페이지(수정 가능 페이지) 이름: 프레임 목록 기준 */
+  function edName(){ var p = S.cat && S.cat.pages ? S.cat.pages.filter(function(x){ return x.editable; })[0] : null; return p ? p.name : ''; }
+  function renderFig(){
+    var box = $('figInfo'), u = S.state.figmaUrl, f = parseFig(u);
+    if (!u) { box.innerHTML = ''; return; }
+    if (!f) { box.innerHTML = '<p class="msg bad">Figma 링크 형식이 아닙니다.</p>'; return; }
+    var same = f.key === KEY;
+    box.innerHTML =
+      '<dl class="kv"><dt>파일 키</dt><dd>' + f.key + '</dd><dt>노드</dt><dd>' + (f.node || '(페이지 지정 없음)') + '</dd></dl>' +
+      (same
+        ? '<p class="msg ok">✓ Workbench 작업 파일과 같은 파일입니다.' + (edName() ? ' 수정 가능 페이지: 「' + esc(edName()) + '」 (이 링크가 가리키는 페이지)' : '') + '</p>'
+        : '<p class="msg ok">✓ Workbench가 이 파일로 열립니다. (프로젝트 단위로 메뉴 · 수정 요청이 이 파일 기준으로 바뀝니다)</p>' +
+          (S.cat && S.cat.pages
+            ? '<p class="msg ok">✓ 프레임 목록 받음: ' + esc(S.cat.fileName || '') + ' · ' + S.cat.pages.length + '페이지 · ' + S.cat.pages.reduce(function(a, p){ return a + (p.frames || []).length; }, 0) + '프레임' +
+              (S.cat.pages.filter(function(p){ return p.editable; })[0] ? ' · 수정 페이지 ' + esc(S.cat.pages.filter(function(p){ return p.editable; })[0].name) : ' · 수정 페이지 없음(링크한 노드의 페이지에서 플러그인을 다시 실행하세요)') + '</p>'
+            : '<p class="msg wait">아직 프레임 목록이 없습니다. Workbench에서 <b>Claude에게 목록 만들기 요청</b>(권장 · 내 Figma에 부담 없음)을 누르거나, 4단계 플러그인을 이 파일의 작업 페이지에서 실행하세요. 링크가 가리키는 페이지가 수정 가능 페이지가 되고, 나머지 페이지는 보기 전용입니다.</p>')) +
+      '<div class="row"><button class="btn" data-launch="figma">Figma 앱에서 열기</button><a class="btn" href="' + u.replace(/"/g, '&quot;') + '" target="_blank" rel="noopener">브라우저에서 열기 ↗</a></div>';
+  }
+
+  var DONE = { folder: '작업 폴더를 열었습니다.', figma: 'Figma를 실행했습니다.', claude: 'Claude를 실행했습니다.', 'claude-cli': 'Claude Code 창을 열었습니다. 처음이면 /login · /mcp를 진행하세요.',
+    'agent-start': '백그라운드 감시를 시작했습니다(창 없음).', 'agent-stop': '중지했습니다. 처리 중인 요청이 있으면 마친 뒤 멈춥니다.',
+    'git-login': '깃허브 연결 창을 열었습니다. 창의 안내대로 진행하세요.', install: '설치를 시작했습니다. 설치 창의 안내를 따르세요.' };
+  function launch(app, what){
+    var body = { app: app };
+    if (app === 'figma') body.url = S.state.figmaUrl || DEFAULT_URL;
+    if (what) body.what = what;
+    return fetch(API + '/launch', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+      .then(function(r){ return r.json(); })
+      .then(function(d){ toast(d.error ? d.error : DONE[app]); setTimeout(load, 800); return !d.error; })
+      .catch(function(){ toast('서버에 연결할 수 없습니다.'); return false; });
+  }
+  /* 처음 연 PC: Claude · Figma 실행, 기본 작업 링크, 깃(없으면 설치 · 있으면 깃허브 연결)을 한 번에 시작한다 */
+  function auto(){
+    var e = S.env || {}, did = [], todo = [], p = { autoAt: new Date().toISOString() };
+    if (!S.state.figmaUrl) p.figmaUrl = DEFAULT_URL;
+    save(p).then(function(){
+      if (e.claudeInstalled) { launch('claude'); did.push('Claude 실행'); } else todo.push('Claude 설치(5단계)');
+      if (e.figmaInstalled) { setTimeout(function(){ launch('figma'); }, 1500); did.push('Figma 실행'); } else todo.push('Figma 설치(2단계)');
+      /* 이미 연결된 PC(예전에 로그인)면 창을 띄우지 않는다 */
+      if (!(e.historySync && e.historySync.ok)) { setTimeout(function(){ launch('git-login'); }, 3000); did.push('깃허브 연결' + (e.gitInstalled ? '' : '(git 설치부터)')); }
+      var m = $('autoMsg'); m.hidden = false; m.className = 'msg ok';
+      m.textContent = '자동으로 시작했습니다: ' + did.join(' · ') + '.' + (todo.length ? ' 남은 것: ' + todo.join(' · ') + '.' : '') +
+        ' 이름 입력(1단계), 플러그인(4단계), Claude에 Figma 연결(6단계), 감시 시작(7단계)은 아래 안내대로 진행하세요.';
+    });
+  }
+  function copy(id){
+    var t = $(id).textContent;
+    (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(function(){ toast('복사했습니다.'); }, function(){
+      var r = document.createRange(); r.selectNodeContents($(id)); var s = getSelection(); s.removeAllRanges(); s.addRange(r); toast('선택했습니다. ' + (isMac ? '⌘C' : 'Ctrl+C') + '로 복사하세요.');
+    });
+  }
+
+  $('autoWatch').addEventListener('change', function(){
+    var on = this.checked;
+    save({ autoWatch: on }).then(function(){ toast(on ? 'Figma AI Run을 실행할 때 백그라운드 감시를 자동으로 시작합니다.' : '백그라운드 감시 자동 시작을 껐습니다.'); });
+  });
+  document.addEventListener('click', function(ev){
+    var l = ev.target.closest('[data-launch]'); if (l) { launch(l.dataset.launch); return; }
+    var ins = ev.target.closest('[data-install]'); if (ins) { launch('install', ins.dataset.install); return; }
+    var cp = ev.target.closest('[data-copy]'); if (cp) { copy(cp.dataset.copy); return; }
+    var sb = ev.target.closest('[data-step]'); if (sb) { select(sb.dataset.step, true); return; }
+    /* 넓은 화면에서는 단계 제목을 눌러도 접히지 않는다 */
+    if (wide.matches && ev.target.closest('.steps .step>summary')) ev.preventDefault();
+  });
+  $('prevStep').onclick = function(){ var i = steps.indexOf(sel); if (i > 0) select(steps[i - 1], true); };
+  $('nextStep').onclick = function(){ var i = steps.indexOf(sel); if (i < steps.length - 1) select(steps[i + 1], true); };
+  document.addEventListener('change', function(ev){
+    var b = ev.target.closest('[data-check]'); if (b) setCheck(b.dataset.check, b.checked);
+  });
+  $('userSave').onclick = function(){
+    var v = $('userName').value.trim(); if (!v) { $('userName').focus(); return; }
+    store('cux.user', v); save({ user: v }).then(function(){ toast('저장했습니다.'); });
+  };
+  $('userName').addEventListener('keydown', function(e){ if (e.key === 'Enter') $('userSave').click(); });
+  $('figSave').onclick = function(){
+    var v = $('figUrl').value.trim();
+    if (!parseFig(v)) { S.state.figmaUrl = v; renderFig(); $('figUrl').focus(); return; }
+    save({ figmaUrl: v }).then(function(){ toast('링크를 저장했습니다.'); });
+  };
+  $('figUrl').addEventListener('keydown', function(e){ if (e.key === 'Enter') $('figSave').click(); });
+  $('figDefault').onclick = function(){ $('figUrl').value = DEFAULT_URL; $('figSave').click(); };
+  $('finish').onclick = function(){ save({ done: true }).then(function(){ location.href = 'Figma_Workbench.html'; }, function(){ location.href = 'Figma_Workbench.html'; }); };
+  $('reset').onclick = function(){
+    if (!confirm('이 PC의 시작 안내 진행 상태를 처음으로 되돌릴까요?')) return;
+    $('userName').value = ''; $('figUrl').value = ''; opened = false; S.autoRan = false;
+    save({ done: false, user: '', figmaUrl: '', checks: {}, autoAt: '' });
+  };
+
+  /* 단계 목록: 각 단계 제목(작은 설명 앞 글)으로 만든다 */
+  $('snav').innerHTML = steps.map(function(id, i){
+    var t = $(id).querySelector('.ttl').firstChild.textContent.trim();
+    return '<li id="nav-' + id + '"><button type="button" data-step="' + id + '"><span class="sn">' + (i + 1) + '</span><span class="st">' + (i + 1) + ' ' + esc(t) + '</span></button></li>';
+  }).join('');
+  select('s1');
+  load();
+  setInterval(load, 4000);
+})();
+</script>
+<script src="appnav.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --surface-2:#f3f6fb; --ink:#14171c; --ink-2:#4a5260; --ink-3:#7a8392;
+  --line:#e3e7ee; --accent:#2747d8; --red:#d93025; --red-soft:#fdecea;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1115; --surface:#171a20; --surface-2:#1e232b; --ink:#e8ebf0; --ink-2:#b4bcc8; --ink-3:#8590a0;
+    --line:#2a3039; --accent:#8ea2ff; --red:#ff7b72; --red-soft:#3a1f1e;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1115; --surface:#171a20; --surface-2:#1e232b; --ink:#e8ebf0; --ink-2:#b4bcc8; --ink-3:#8590a0;
+  --line:#2a3039; --accent:#8ea2ff; --red:#ff7b72; --red-soft:#3a1f1e;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 Pretendard,-apple-system,"Segoe UI","Malgun Gothic",sans-serif;display:flex;align-items:center;justify-content:center;padding:24px 16px}
+.card{width:100%;max-width:380px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:32px 28px 28px;box-shadow:0 8px 28px rgba(15,23,41,.08)}
+.brand{font-size:13px;font-weight:800;color:var(--accent);letter-spacing:.02em}
+h1{margin:6px 0 4px;font-size:22px;font-weight:800}
+.sub{margin:0 0 20px;color:var(--ink-3);font-size:13px}
+label{display:flex;flex-direction:column;gap:5px;font-size:12.5px;font-weight:700;color:var(--ink-2);margin-bottom:12px}
+input{height:42px;border:1px solid var(--line);border-radius:9px;background:var(--surface);padding:0 12px;font:inherit;font-size:15px;color:inherit}
+input:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:transparent}
+button{width:100%;height:44px;margin-top:6px;border:0;border-radius:9px;background:var(--accent);color:#fff;font:inherit;font-size:15px;font-weight:700;cursor:pointer}
+:root[data-theme="dark"] button{color:#0f1115}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) button{color:#0f1115}}
+button:disabled{opacity:.6;cursor:default}
+.err{min-height:20px;margin:10px 0 0;color:var(--red);font-size:13px}
+.foot{margin:18px 0 0;color:var(--ink-3);font-size:12px;line-height:1.5}
+</style>
+</head>
+<body>
+<form class="card" id="f" autocomplete="on">
+  <div class="brand">Figma AI Run</div>
+  <h1>로그인</h1>
+  <p class="sub">관리자에게 받은 아이디와 비밀번호로 로그인하세요. 이 PC에서는 로그아웃할 때까지 유지됩니다.</p>
+  <label>아이디<input id="id" name="username" autocomplete="username" autocapitalize="off" spellcheck="false" required></label>
+  <label>비밀번호<input id="pw" name="password" type="password" autocomplete="current-password" required></label>
+  <button id="go">로그인</button>
+  <p class="err" id="err" role="alert"></p>
+  <p class="foot">계정이 없거나 비밀번호를 잊었으면 최고관리자에게 요청하세요.</p>
+</form>
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  /* 탭 열림 알림(appnav.js와 같음): 로그인 화면만 열려 있어도 서버가 꺼지지 않게 */
+  var pageId = Math.random().toString(36).slice(2) + Date.now().toString(36);
+  function alive(){ fetch('/api/alive', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: pageId }) }).catch(function(){}); }
+  alive(); setInterval(alive, 20000);
+  window.addEventListener('pagehide', function(){ try { navigator.sendBeacon('/api/bye', JSON.stringify({ id: pageId })); } catch(x){} });
+  var next = new URLSearchParams(location.search).get('next') || '';
+  /* 같은 서버 안의 주소로만 돌아간다 */
+  if (!/^\/[^\/\\]/.test(next) || /Login\.html/.test(next)) next = '';
+  fetch('/api/me', { cache: 'no-store' }).then(function(r){ return r.json(); }).then(function(m){
+    if (!m.required || m.user) location.replace(next || '/' + m.first);
+  }).catch(function(){ $('err').textContent = '서버에 연결할 수 없습니다. Figma AI Run을 실행해 주세요.'; });
+  $('id').focus();
+  $('f').addEventListener('submit', function(e){
+    e.preventDefault();
+    $('go').disabled = true; $('err').textContent = '';
+    fetch('/api/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: $('id').value.trim(), pw: $('pw').value }) })
+      .then(function(r){ return r.json(); }).then(function(d){
+        if (d.error) throw new Error(d.error);
+        location.replace(next || '/' + d.first);
+      }).catch(function(err){ $('err').textContent = err.message || '로그인하지 못했습니다.'; $('pw').value = ''; $('pw').focus(); $('go').disabled = false; });
+  });
+})();
+</script>
+</body>
+</html>

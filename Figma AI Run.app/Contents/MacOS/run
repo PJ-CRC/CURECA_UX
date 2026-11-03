@@ -1,0 +1,75 @@
+#!/bin/bash
+# Figma AI Run.app (macOS) - 터미널 창 없이 Workbench 서버를 뒤에서 띄우고 브라우저를 연다
+#  - 서버: 같은 폴더의 guide_server_mac.pl (macOS 기본 Perl, 설치 없음)
+#  - 실행할 때마다 떠 있던 Workbench 서버를 끄고, 새 버전이 배포됐으면 받은 뒤(workbench/update.sh) 새로 띄운다(다시 열기 = 새로 시작)
+#  - 서버 끄기: 브라우저의 Workbench 탭을 모두 닫으면 3초 뒤 저절로 꺼진다
+#  - 기록: ~/Library/Logs/Figma AI Run.log
+PORT=8765
+URL="http://localhost:$PORT"
+SUPPORT="$HOME/Library/Application Support/UX_AI_TEST_Workbench"
+LOG="$HOME/Library/Logs/Figma AI Run.log"
+
+alert() {
+  /usr/bin/osascript - "$1" >/dev/null 2>&1 <<'APPLESCRIPT'
+on run argv
+  display dialog (item 1 of argv) with title "Figma AI Run" buttons {"확인"} default button 1 with icon caution
+end run
+APPLESCRIPT
+}
+# 지금 버전 서버인지(프로젝트 API 응답) 확인한다. 예전 서버가 남아 있으면 빈 화면이 뜰 수 있다
+up() { /usr/bin/curl -s --max-time 1 "$URL/api/projects" | /usr/bin/grep -q '"defaultKey"'; }
+# 8765를 잡고 있는 것(예전 Workbench 서버 등)을 묻지 않고 모두 끈다. 안 꺼지면 강제로 끈다
+holders() { /usr/sbin/lsof -nP -ti "tcp:$PORT" -sTCP:LISTEN 2>/dev/null; }
+free_port() {
+  /usr/bin/pkill -f 'guide_server' 2>/dev/null
+  pids="$(holders)"; [ -n "$pids" ] && kill $pids 2>/dev/null
+  for _ in 1 2 3 4 5 6 7 8 9 10; do [ -z "$(holders)" ] && return; sleep 0.3; done
+  pids="$(holders)"; [ -n "$pids" ] && kill -9 $pids 2>/dev/null
+  for _ in 1 2 3 4 5 6 7 8 9 10; do [ -z "$(holders)" ] && return; sleep 0.3; done
+}
+
+# 실행할 때마다 서버를 새로 띄운다: 떠 있던 Workbench 서버(예전 · 지금 버전 모두)를 끄고 시작
+# → 화면이 이상하면 앱을 닫았다 다시 열기만 하면 된다
+free_port
+
+# 작업 폴더 = 이 앱이 들어 있는 폴더
+APP="$(cd "$(dirname "$0")/../.." && pwd -P)"
+ROOT="$(dirname "$APP")"
+# 다운로드 직후(격리 표시가 붙은 상태)에는 macOS가 앱을 임시 위치(AppTranslocation)에서 실행해 작업 폴더를 못 찾는다.
+# 그때는 예전에 저장한 폴더를 쓰지 않고(새로 푼 버전이 아니라 예전 폴더가 열리던 문제) 매번 고르게 한 뒤,
+# 격리 표시를 지워 다음부터는 바로 열리게 한다.
+case "$APP" in */AppTranslocation/*) ROOT="" ;; esac
+if [ ! -f "$ROOT/guide_server_mac.pl" ]; then
+  ROOT="$(/usr/bin/osascript -e 'POSIX path of (choose folder with prompt "압축을 푼 UX_AI_TEST_Workbench 폴더를 선택하세요. (새로 푼 뒤 처음 한 번만)" default location (path to downloads folder))' 2>/dev/null)"
+  ROOT="${ROOT%/}"
+  [ -z "$ROOT" ] && exit 0
+  if [ ! -f "$ROOT/guide_server_mac.pl" ]; then
+    alert "선택한 폴더에 guide_server_mac.pl이 없습니다. 압축을 푼 UX_AI_TEST_Workbench 폴더를 선택해 주세요."
+    exit 1
+  fi
+  /usr/bin/xattr -dr com.apple.quarantine "$ROOT" 2>/dev/null
+fi
+mkdir -p "$SUPPORT" "$(dirname "$LOG")"
+
+PERL=/usr/bin/perl
+[ -x "$PERL" ] || PERL="$(command -v perl)"
+if [ -z "$PERL" ]; then
+  alert "이 Mac에서 Perl을 찾지 못했습니다. 터미널에서 xcode-select --install 을 실행해 개발자 도구를 설치한 뒤 다시 열어 주세요."
+  exit 1
+fi
+
+cd "$ROOT" || exit 1
+# 자동 업데이트: 관리자가 배포한 새 버전이 있으면 받아서 프로그램 파일을 바꾼다(workbench/update.sh)
+#  인터넷 · 로그인 문제로 안 되면 지금 버전으로 실행한다. 이 스크립트도 바뀔 수 있어 아래는 새 서버 파일로 띄운다
+[ -f "$ROOT/workbench/update.sh" ] && /bin/bash "$ROOT/workbench/update.sh" > /dev/null 2>&1
+# 앱이 끝나도 서버가 계속 돌도록 완전히 떼어 낸다
+( nohup "$PERL" ./guide_server_mac.pl "$PORT" > "$LOG" 2>&1 < /dev/null & )
+
+# 최대 15초 기다린다
+for _ in $(seq 1 60); do
+  sleep 0.25
+  if up; then /usr/bin/open "$URL/start"; exit 0; fi
+done
+alert "서버를 시작하지 못했습니다. 앱을 닫았다가 다시 열어 보세요. 기록 파일을 엽니다."
+/usr/bin/open -e "$LOG"
+exit 1

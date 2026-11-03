@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prototype</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="appnav.css">
+<style>
+:root{
+  --bg:#eef0f3; --surface:#ffffff; --surface-2:#f3f6fb; --ink:#14171c; --ink-2:#4a5260; --ink-3:#7a8392;
+  --line:#e1e5eb; --accent:#2747d8; --accent-soft:#e6ebff; --red:#d93025; --red-soft:#fdecea;
+  --ok:#1a7f37; --ok-soft:#e3f4e8; --warn:#b35900; --warn-soft:#fff1e0; --canvas:#d9dde3;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1115; --surface:#171a20; --surface-2:#1e232b; --ink:#e8ebf0; --ink-2:#b4bcc8; --ink-3:#8590a0;
+    --line:#2a3039; --accent:#8ea2ff; --accent-soft:#232c52; --red:#ff7b72; --red-soft:#3a1f1e;
+    --ok:#56d364; --ok-soft:#16301d; --warn:#f0a24f; --warn-soft:#38270f; --canvas:#0b0d10;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1115; --surface:#171a20; --surface-2:#1e232b; --ink:#e8ebf0; --ink-2:#b4bcc8; --ink-3:#8590a0;
+  --line:#2a3039; --accent:#8ea2ff; --accent-soft:#232c52; --red:#ff7b72; --red-soft:#3a1f1e;
+  --ok:#56d364; --ok-soft:#16301d; --warn:#f0a24f; --warn-soft:#38270f; --canvas:#0b0d10;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 Pretendard,-apple-system,"Segoe UI","Malgun Gothic",sans-serif;display:flex;flex-direction:column;overflow:hidden}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+.badge{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
+.badge.on{background:var(--ok-soft);color:var(--ok);border-color:transparent}
+.badge.off{background:var(--red-soft);color:var(--red);border-color:transparent}
+#pv{flex:1;min-height:0;display:flex}
+/* 왼쪽: 정보 · 화면 목록 · 수정 요청 */
+#side{flex:0 0 300px;display:flex;flex-direction:column;background:var(--surface);border-right:1px solid var(--line);min-height:0}
+.sh{padding:14px 16px 12px;border-bottom:1px solid var(--line)}
+.sh a.back{font-size:12.5px;color:var(--ink-3);text-decoration:none}
+.sh a.back:hover{color:var(--accent)}
+.sh h1{margin:4px 0 6px;font-size:18px;font-weight:800;line-height:1.35;word-break:keep-all}
+.chips{display:flex;flex-wrap:wrap;gap:4px}
+.chip{font-size:11.5px;font-weight:700;padding:1px 8px;border-radius:999px;background:var(--surface-2);color:var(--ink-2);white-space:nowrap}
+.chip.ok{background:var(--ok-soft);color:var(--ok)}
+.chip.warn{background:var(--warn-soft);color:var(--warn)}
+.chip.busy{background:var(--accent-soft);color:var(--accent)}
+.sb{flex:1;min-height:0;overflow:auto;padding:12px 16px 16px;display:flex;flex-direction:column;gap:14px}
+.sec h2{margin:0 0 6px;font-size:12.5px;font-weight:700;color:var(--ink-3)}
+.stale{border-radius:8px;background:var(--warn-soft);color:var(--warn);padding:8px 10px;font-size:12.5px}
+.stale ul{margin:4px 0 8px;padding-left:16px}
+.stale[hidden]{display:none}
+.scr{list-style:none;margin:0;padding:0}
+.scr button{display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:0;background:none;border-radius:7px;padding:5px 8px;font-size:13.5px;min-width:0}
+.scr button:hover{background:var(--surface-2)}
+.scr button.on{background:var(--accent-soft);color:var(--accent);font-weight:700}
+.scr .no{flex:none;width:20px;color:var(--ink-3);font-size:12px}
+.scr .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.scr .st{flex:none;font-size:11px;color:var(--ink-3)}
+.scr .wn{flex:none;width:7px;height:7px;border-radius:50%;background:var(--warn)}
+.flow{font-size:12.5px;color:var(--ink-2);white-space:pre-wrap;background:var(--surface-2);border-radius:8px;padding:8px 10px;margin:0}
+textarea{width:100%;min-height:80px;resize:vertical;border:1px solid var(--line);border-radius:8px;background:var(--surface);padding:8px 10px;font-size:13.5px}
+textarea:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:transparent}
+.btn{height:32px;padding:0 12px;border:1px solid var(--line);border-radius:7px;background:var(--surface);font-size:13px;font-weight:600;white-space:nowrap}
+.btn:hover:not(:disabled){border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.warn{background:var(--warn);border-color:var(--warn);color:#fff}
+.btn.danger{color:var(--red)}
+.btn:disabled{opacity:.45;cursor:default}
+.row{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:6px}
+.msg{font-size:12.5px;color:var(--ink-3)}
+.jobs{list-style:none;margin:0;padding:0;font-size:12.5px;color:var(--ink-2)}
+.jobs li{padding:6px 0;border-top:1px solid var(--line)}
+.jobs li:first-child{border-top:0}
+.jobs b{font-weight:700}
+.jobs .nt{display:block;color:var(--ink-3);white-space:pre-wrap}
+/* 오른쪽: 프로토타입 */
+#stageWrap{flex:1;min-width:0;display:flex;flex-direction:column}
+.vbar{display:flex;align-items:center;gap:6px;padding:5px 10px;min-height:40px;border-bottom:1px solid var(--line);background:var(--surface);flex-wrap:wrap}
+.vbar .t{flex:1;min-width:0;font-size:13px;color:var(--ink-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vbar .t b{color:var(--ink)}
+.tbtn{height:28px;padding:0 10px;border-radius:7px;border:1px solid var(--line);background:var(--surface);font-size:13px;white-space:nowrap}
+.tbtn:hover{border-color:var(--accent)}
+.tbtn.on{background:var(--accent-soft);color:var(--accent);border-color:transparent;font-weight:700}
+#stage{flex:1;min-height:0;overflow:auto;background:var(--canvas);position:relative}
+#box{position:relative;margin:0 auto;transform-origin:0 0}
+#frame{border:0;background:#fff;display:block;box-shadow:0 2px 12px rgba(0,0,0,.18)}
+.none{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--ink-2);text-align:center;padding:24px}
+.none[hidden]{display:none}
+.none b{color:var(--ink);font-size:15px}
+@media (max-width:760px){
+  body{overflow:auto;height:auto}
+  #pv{flex-direction:column}
+  #side{flex:none;border-right:0;border-bottom:1px solid var(--line)}
+  #stage{min-height:70vh}
+}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--surface);padding:8px 16px;border-radius:8px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:9}
+.toast.on{opacity:1}
+</style>
+</head>
+<body>
+<nav class="appnav" aria-label="도구 메뉴">
+  <b class="appnav-brand">Figma AI Run</b>
+  <a href="Setup.html">시작 안내</a>
+  <a href="Common_UX_Guide.html">UX 문서</a>
+  <a href="Figma_Workbench.html">Figma Workbench</a>
+  <a href="Change_History.html">변경 이력</a>
+  <a href="Usage_Stats.html">사용량 통계</a>
+  <a href="Prototypes.html" aria-current="page">프로토타입</a>
+  <span class="appnav-sp"></span>
+  <div class="appnav-right">
+    <span class="badge" id="srv">확인 중…</span>
+  </div>
+</nav>
+<main id="pv">
+  <aside id="side">
+    <div class="sh">
+      <a class="back" href="Prototypes.html">← 프로토타입 목록</a>
+      <h1 id="pName">불러오는 중…</h1>
+      <div class="chips" id="pChips"></div>
+    </div>
+    <div class="sb">
+      <div class="stale" id="stale" hidden></div>
+      <section class="sec"><h2>화면 <span id="scrCount"></span></h2><ul class="scr" id="scr"></ul></section>
+      <section class="sec" id="flowSec" hidden><h2>흐름</h2><p class="flow" id="flow"></p></section>
+      <section class="sec">
+        <h2>수정 요청</h2>
+        <textarea id="editText" placeholder="프로토타입에서 고칠 것을 적어 주세요. 예) 저장 후 토스트 문구를 「저장했습니다」로, 목록 행 클릭 시 상세 패널 열기"></textarea>
+        <div class="row"><button class="btn primary" id="editBtn">수정 요청</button><span class="msg" id="editMsg"></span></div>
+      </section>
+      <section class="sec" id="jobSec" hidden><h2>이 프로토타입 작업</h2><ul class="jobs" id="jobs"></ul></section>
+      <section class="sec"><div class="row"><a class="btn" id="figBtn" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;text-decoration:none">Figma ↗</a><button class="btn danger" id="delBtn">목록에서 지우기</button></div></section>
+    </div>
+  </aside>
+  <section id="stageWrap">
+    <div class="vbar">
+      <span class="t" id="vTitle"></span>
+      <button class="tbtn" id="restart">처음부터</button>
+      <button class="tbtn on" id="fitBtn" aria-pressed="true">화면 맞춤</button>
+      <a class="tbtn" id="newWin" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;text-decoration:none;color:inherit">새 창 ↗</a>
+    </div>
+    <div id="stage"><div id="box"><iframe id="frame" title="프로토타입"></iframe></div><div class="none" id="none" hidden></div></div>
+  </section>
+</main>
+<div class="toast" id="toast" role="status"></div>
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function store(k, v){ try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch(e){ return null; } }
+  function toast(t){ var el = $('toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(function(){ el.classList.remove('on'); }, 2000); }
+  function fmt(t){ var d = new Date(t); if (isNaN(d)) return ''; var p = function(n){ return (n < 10 ? '0' : '') + n; }; return (d.getMonth() + 1) + '/' + d.getDate() + ' ' + p(d.getHours()) + ':' + p(d.getMinutes()); }
+  function getJ(u){ return fetch(u, { cache: 'no-store' }).then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); }); }
+  function post(u, b){ return fetch(u, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(b) }).then(function(r){ return r.json(); }).then(function(d){ if (d.error) throw new Error(d.error); return d; }); }
+
+  var ID = new URLSearchParams(location.search).get('id') || '', P = null, JOBS = [], cur = '', fit = store('pv.fit') !== '0', loaded = false, sig = '';
+  var W = 1920, H = 1080;
+
+  /* 프로토타입 안의 화면 이동: 주소 #s={nodeId(:는 -)} · 프로토타입이 parent에 {type:'proto-screen', nodeId}로 알린다(만드는 규칙: CLAUDE.md) */
+  function show(nodeId){
+    cur = nodeId || '';
+    var src = P.dir + '/' + (P.entry || 'index.html') + (cur ? '#s=' + cur.replace(':', '-') : '');
+    $('frame').src = src; $('newWin').href = src;
+    renderScr();
+  }
+  window.addEventListener('message', function(e){
+    var m = e.data; if (!m || m.type !== 'proto-screen') return;
+    cur = String(m.nodeId || ''); renderScr();
+    if (m.width && m.height) { W = m.width; H = m.height; size(); }
+  });
+  function size(){
+    var st = $('stage'), f = $('frame'), b = $('box');
+    f.style.width = W + 'px'; f.style.height = H + 'px';
+    var s = fit ? Math.min(1, (st.clientWidth - 24) / W) : 1;
+    /* 줄인 만큼 오른쪽 · 아래 여백을 빼서 자리(레이아웃)도 줄인다(안 그러면 원래 크기만큼 스크롤이 생긴다) */
+    b.style.transform = 'scale(' + s + ')'; b.style.width = W + 'px'; b.style.height = H + 'px';
+    var left = Math.max(12, (st.clientWidth - W * s) / 2);
+    b.style.margin = '12px ' + (-W * (1 - s)) + 'px ' + (12 - H * (1 - s)) + 'px ' + left + 'px';
+  }
+  window.addEventListener('resize', size);
+  $('fitBtn').classList.toggle('on', fit); $('fitBtn').setAttribute('aria-pressed', fit);
+  $('fitBtn').addEventListener('click', function(){ fit = !fit; store('pv.fit', fit ? '1' : '0'); this.classList.toggle('on', fit); this.setAttribute('aria-pressed', fit); size(); });
+  $('restart').addEventListener('click', function(){ show(P.start || ''); });
+
+  function renderScr(){
+    if (!P) return;
+    var key = cur + '|' + JSON.stringify(P.stale || []) + '|' + (P.frames || []).length;
+    if (renderScr.key === key) return; renderScr.key = key;
+    var stale = {}; (P.stale || []).forEach(function(s){ stale[s.nodeId] = s; });
+    $('scrCount').textContent = (P.frames || []).length + '개';
+    $('scr').innerHTML = (P.frames || []).map(function(f, i){
+      return '<li><button data-id="' + esc(f.nodeId) + '" class="' + (f.nodeId === cur ? 'on' : '') + '" title="' + esc(f.page + ' · ' + f.nodeId) + '"><span class="no">' + (i + 1) + '</span><span class="nm">' + esc(f.name) + '</span>' +
+        (f.nodeId === P.start ? '<span class="st">시작</span>' : '') + (stale[f.nodeId] ? '<span class="wn" title="Figma가 바뀜"></span>' : '') + '</button></li>';
+    }).join('');
+    var f = (P.frames || []).filter(function(x){ return x.nodeId === cur; })[0];
+    $('vTitle').innerHTML = '<b>' + esc(P.name) + '</b>' + (f ? ' · ' + esc(f.name) : '');
+  }
+  $('scr').addEventListener('click', function(e){ var b = e.target.closest('button[data-id]'); if (b) show(b.dataset.id); });
+
+  function render(){
+    document.title = P.name + ' · 프로토타입';
+    $('pName').textContent = P.name;
+    var busy = JOBS.filter(function(j){ return j.status === '대기' || j.status === '진행 중'; })[0];
+    var st = (P.stale || []).length;
+    $('pChips').innerHTML = (busy ? '<span class="chip busy">' + (busy.kind === 'prototype-edit' ? '수정 중' : '맞추는 중') + ' · ' + esc(busy.status) + '</span>' : st ? '<span class="chip warn">갱신 필요 ' + st + '</span>' : '<span class="chip ok">최신</span>') +
+      '<span class="chip">' + esc(P.fileName || '') + '</span><span class="chip">' + esc(P.env || '') + '</span>' + (P.syncedAt ? '<span class="chip">맞춤 ' + esc(fmt(P.syncedAt)) + '</span>' : '');
+    $('stale').hidden = !st || !!busy;
+    /* 5초마다 다시 그려도 내용이 같으면 그대로 둔다(누르는 중인 버튼이 바뀌어 클릭이 사라지지 않게) */
+    var sh = st && !busy ? '<b>Figma에서 바뀐 화면이 있습니다</b><ul>' + P.stale.map(function(s){ return '<li>' + esc(s.name) + ' — ' + esc(s.why) + (s.at ? ' (' + esc(fmt(s.at)) + ')' : '') + '</li>'; }).join('') + '</ul><button class="btn warn" id="syncBtn">지금 반영</button>' : '';
+    if (render.sh !== sh) { render.sh = sh; $('stale').innerHTML = sh; }
+    $('flowSec').hidden = !P.text; $('flow').textContent = P.text || '';
+    $('figBtn').href = 'https://www.figma.com/design/' + P.fileKey + '/file' + (P.start ? '?node-id=' + P.start.replace(':', '-') : '');
+    var js = JOBS.slice(0, 5);
+    $('jobSec').hidden = !js.length;
+    $('jobs').innerHTML = js.map(function(j){ return '<li><b>' + esc(j.id) + '</b> ' + esc({ 'prototype': '만들기', 'prototype-edit': '수정', 'prototype-sync': 'Figma 맞추기' }[j.kind] || j.kind) + ' · ' + esc(j.status) + ' · ' + esc(fmt(j.updatedAt)) + (j.note ? '<span class="nt">' + esc(j.note) + '</span>' : '') + '</li>'; }).join('');
+    renderScr();
+  }
+  document.addEventListener('click', function(e){
+    if (!e.target.closest('#syncBtn')) return;
+    post('/api/jobs', { action: 'add', kind: 'prototype-sync', fileKey: P.fileKey, proto: P.id, name: P.name, text: 'Figma에서 바뀐 화면 맞추기: ' + P.stale.map(function(s){ return s.name; }).join(', '), frames: P.stale, by: store('cux.user') || '' })
+      .then(function(d){ toast(d.job.id + ' Figma 맞추기를 요청했습니다'); load(); }, function(err){ toast('요청 실패: ' + err.message); });
+  });
+  $('editBtn').addEventListener('click', function(){
+    var t = $('editText').value.trim(); if (!t) { $('editMsg').textContent = '고칠 내용을 적어 주세요.'; return; }
+    var f = (P.frames || []).filter(function(x){ return x.nodeId === cur; })[0];
+    post('/api/jobs', { action: 'add', kind: 'prototype-edit', fileKey: P.fileKey, proto: P.id, name: P.name + (f ? ' · ' + f.name : ''), text: t, frames: f ? [f] : [], by: store('cux.user') || '' })
+      .then(function(d){ $('editText').value = ''; $('editMsg').textContent = ''; toast(d.job.id + ' 수정을 요청했습니다'); load(); }, function(err){ $('editMsg').textContent = '요청 실패: ' + err.message; });
+  });
+  $('delBtn').addEventListener('click', function(){
+    if (!confirm('「' + P.name + '」을 목록에서 지울까요?\n파일은 prototypes/_trash 폴더로 옮겨져 되살릴 수 있습니다.')) return;
+    post('/api/prototypes', { action: 'delete', id: P.id }).then(function(){ location.href = 'Prototypes.html'; }, function(err){ toast('지우지 못했습니다: ' + err.message); });
+  });
+
+  function load(){
+    Promise.all([getJ('/api/prototypes'), getJ('/api/jobs')]).then(function(r){
+      $('srv').textContent = '로컬 서버 연결됨'; $('srv').className = 'badge on';
+      P = (r[0].items || []).filter(function(p){ return p.id === ID; })[0];
+      JOBS = (r[1].items || []).filter(function(j){ return j.proto === ID || (j.kind === 'prototype' && P && j.id === P.jobId); });
+      if (!P) { $('pName').textContent = '프로토타입을 찾지 못했습니다'; $('none').hidden = false; $('none').innerHTML = '<b>「' + esc(ID) + '」 프로토타입이 없습니다</b><a href="Prototypes.html">목록으로</a>'; return; }
+      /* 프로토타입 파일이 바뀌면(Claude가 고침) 보고 있던 화면으로 다시 연다 */
+      var s = P.updatedAt + '|' + P.syncedAt;
+      if (!loaded) { loaded = true; sig = s; if (P.width) { W = P.width; H = P.height || H; } show(location.hash.length > 3 ? location.hash.slice(3).replace('-', ':') : (P.start || '')); size(); }
+      else if (s !== sig) { sig = s; toast('프로토타입이 바뀌어 다시 불러옵니다'); show(cur); }
+      render();
+    }).catch(function(){ $('srv').textContent = '서버 없음'; $('srv').className = 'badge off'; if (!loaded) { $('pName').textContent = 'Figma AI Run 실행 후 열어 주세요'; } });
+  }
+  load();
+  setInterval(function(){ if (!document.hidden) load(); }, 5000);
+})();
+</script>
+<script src="appnav.js" defer></script>
+</body>
+</html>

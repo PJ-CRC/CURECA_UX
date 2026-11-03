@@ -1,0 +1,1179 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Figma Workbench</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="appnav.css">
+<style>
+:root{
+  --bg:#eef0f3; --surface:#ffffff; --surface-2:#f5f7fa; --ink:#14171c; --ink-2:#4a5260; --ink-3:#7a8392;
+  --line:#e1e5eb; --accent:#2747d8; --accent-soft:#e6ebff; --red:#d93025; --red-soft:#fdecea;
+  --ok:#1a7f37; --ok-soft:#e3f4e8; --warn:#b35900; --warn-soft:#fff1e0; --canvas:#d9dde3;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1115; --surface:#171a20; --surface-2:#1e232b; --ink:#e8ebf0; --ink-2:#b4bcc8; --ink-3:#8590a0;
+    --line:#2a3039; --accent:#8ea2ff; --accent-soft:#232c52; --red:#ff7b72; --red-soft:#3a1f1e;
+    --ok:#56d364; --ok-soft:#16301d; --warn:#f0a24f; --warn-soft:#38270f; --canvas:#0b0d10;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1115; --surface:#171a20; --surface-2:#1e232b; --ink:#e8ebf0; --ink-2:#b4bcc8; --ink-3:#8590a0;
+  --line:#2a3039; --accent:#8ea2ff; --accent-soft:#232c52; --red:#ff7b72; --red-soft:#3a1f1e;
+  --ok:#56d364; --ok-soft:#16301d; --warn:#f0a24f; --warn-soft:#38270f; --canvas:#0b0d10;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 Pretendard,-apple-system,"Segoe UI","Malgun Gothic",sans-serif;display:flex;flex-direction:column;overflow:hidden}
+button,select,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+.badge{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
+.badge.on{background:var(--ok-soft);color:var(--ok);border-color:transparent}
+.badge.off{background:var(--red-soft);color:var(--red);border-color:transparent}
+.req .who{color:var(--ink-2)}
+
+/* ── 프로젝트 탭(Figma처럼): 열어 둔 프로젝트(Figma 파일)를 탭으로 오간다. 탭 = ?p={fileKey} 주소라 Ctrl+클릭하면 새 창 ── */
+.ptabs{display:flex;align-items:flex-end;gap:4px;height:46px;padding:0 10px;background:var(--surface-2);border-bottom:1px solid var(--line);flex:0 0 auto;position:relative}
+.ptabs .tabs{display:flex;align-items:flex-end;gap:4px;min-width:0;overflow-x:auto;scrollbar-width:none}
+/* 탭 색: 프로젝트마다 하나(--tc, 파일 키로 정해 창마다 같다) */
+.ptab{--tc:var(--accent);display:flex;align-items:center;gap:8px;height:38px;padding:0 6px 0 12px;max-width:280px;min-width:0;border:1px solid transparent;border-bottom:0;border-radius:9px 9px 0 0;color:var(--ink-2);text-decoration:none;font-size:13.5px;white-space:nowrap;position:relative;background:color-mix(in srgb,var(--tc) 9%,var(--surface-2))}
+.ptab:hover{background:color-mix(in srgb,var(--tc) 16%,var(--surface-2))}
+.ptab .dot{width:10px;height:10px;border-radius:3px;background:var(--tc);flex:0 0 auto}
+.ptab.on{background:var(--surface);border-color:var(--line);color:var(--ink);font-weight:700;margin-bottom:-1px;height:40px}
+.ptab.on::before{content:"";position:absolute;left:-1px;right:-1px;top:-1px;height:3px;border-radius:9px 9px 0 0;background:var(--tc)}
+.ptab .nm{overflow:hidden;text-overflow:ellipsis}
+.ptab small{color:var(--ink-3);font-weight:500;font-size:12px;overflow:hidden;text-overflow:ellipsis}
+.ptab .x{width:22px;height:22px;border:0;border-radius:5px;background:none;color:var(--ink-3);font-size:15px;line-height:1;padding:0;flex:0 0 auto}
+.ptab .x:hover{background:var(--line);color:var(--ink)}
+.ptadd{height:32px;width:32px;margin:0 0 4px 2px;border:0;border-radius:8px;background:none;color:var(--ink-2);font-size:20px;line-height:1;flex:0 0 auto}
+.ptadd:hover,.ptadd[aria-expanded="true"]{background:var(--line);color:var(--ink)}
+.ppop{position:absolute;top:42px;z-index:30;width:360px;max-width:calc(100vw - 16px);padding:8px;border:1px solid var(--line);border-radius:10px;background:var(--surface);box-shadow:0 12px 32px rgba(15,23,41,.18)}
+.ppop[hidden]{display:none}
+.ppop .h{font-size:11.5px;font-weight:700;color:var(--ink-3);padding:4px 6px}
+.ppop .it{display:flex;flex-direction:column;width:100%;text-align:left;padding:7px 8px;border:0;border-radius:7px;background:none;font-size:13px}
+.ppop .it:hover{background:var(--surface-2)}
+.ppop .it small{color:var(--ink-3);font-size:11.5px}
+.ppop .pnote{margin:6px 6px 0;padding:7px 9px;border-radius:7px;background:var(--warn-soft);color:var(--warn);font-size:12.5px;line-height:1.5}
+.ppop .pnote[hidden]{display:none}
+.ppop .phint{margin:6px 6px 2px;font-size:11.5px;color:var(--ink-3)}
+.ppop .it .dot{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:7px;vertical-align:0}
+.ppop .none{font-size:12.5px;color:var(--ink-3);padding:4px 8px 8px}
+.ppop form{display:flex;gap:6px;padding:6px 6px 4px;border-top:1px solid var(--line);margin-top:6px}
+.ppop input{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);border-radius:7px;background:var(--surface);font-size:12.5px}
+.ppop form button{padding:0 10px;border:0;border-radius:7px;background:var(--accent);color:#fff;font-size:12.5px;font-weight:700;white-space:nowrap}
+.ro .mk{margin-left:6px;padding:2px 8px;border:1px solid currentColor;border-radius:6px;background:var(--surface);color:var(--warn);font-size:12px;font-weight:700;white-space:nowrap}
+.ro .mk:hover{background:var(--warn);color:var(--surface)}
+
+/* ── 본문: 왼쪽(작업 페이지 · 수정 요청) | 분할선 | 오른쪽(결과물 뷰어, 더 넓게) ── */
+#wb{flex:1;min-height:0;display:flex}
+#side{flex:0 0 var(--side-w,30%);min-width:300px;display:flex;flex-direction:column;background:var(--surface);min-height:0}
+#viewer{flex:1;min-width:0;display:flex;flex-direction:column;background:var(--surface)}
+.vbar{display:flex;align-items:center;gap:8px;padding:5px 10px;min-height:40px;box-sizing:border-box;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.crumb{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-3);min-width:0;flex:1}
+.crumb b{color:var(--ink);font-size:14.5px;white-space:nowrap}
+.crumb span{white-space:nowrap}
+.crumb code{font:12px Consolas,monospace;color:var(--ink-3);background:var(--surface-2);padding:1px 6px;border-radius:5px}
+.tools{display:flex;gap:4px;align-items:center}
+.tbtn{height:28px;min-width:28px;padding:0 8px;border-radius:7px;border:1px solid var(--line);background:var(--surface);font-size:13px;display:inline-flex;align-items:center;justify-content:center;gap:4px;white-space:nowrap}
+.tbtn:hover{border-color:var(--accent)}
+.tbtn.on{background:var(--accent-soft);color:var(--accent);border-color:transparent;font-weight:700}
+.tbtn:disabled{opacity:.4;cursor:default}
+.zoomv{font:12px Consolas,monospace;color:var(--ink-3);min-width:42px;text-align:center}
+#stage{flex:1;overflow:auto;background:var(--canvas);position:relative}
+#stage.grab{cursor:grab}#stage.grabbing{cursor:grabbing}
+#shot{display:block;margin:8px auto;box-shadow:0 2px 12px rgba(0,0,0,.18);background:#fff;max-width:none;user-select:none;-webkit-user-drag:none}
+#live{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--canvas);display:none}
+#stage.is-live #live{display:block}
+#stage.is-live #shot{display:none}
+.noshot{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:24px;color:var(--ink-2);font-size:13.5px}
+.noshot[hidden]{display:none}
+.noshot b{color:var(--ink);font-size:15px}
+.noshot p{margin:0;max-width:420px;line-height:1.6}
+.noshot .row{justify-content:center;margin-top:6px}
+/* 수정 요청 입력창: 이미지 아래 고정, 가운데 둥근 입력 상자(최대 900px) */
+.cmp-wrap{flex:none;padding:10px 16px 10px;background:var(--canvas);border-top:1px solid var(--line)}
+.composer{max-width:900px;margin:0 auto;gap:6px}
+/* 위 줄: 대상(왼쪽) · 선택 옵션(오른쪽으로 이어짐, 좁으면 아래로 줄바꿈) */
+.cmp-top{display:flex;align-items:center;gap:6px 12px;min-width:0;flex-wrap:wrap;font-size:12.5px}
+.cmp-top .target{flex:0 1 auto;min-width:0;font-size:12.5px;color:var(--ink-3);flex-wrap:nowrap;overflow:hidden;white-space:nowrap}
+.cmp-top .target b{font-size:13px;color:var(--ink);overflow:hidden;text-overflow:ellipsis}
+/* 선택 옵션: 종류마다 색을 달리한 칩 — 유형 파랑 · 우선순위 보통 초록 / 높음 빨강 · 레이아웃 보라(고르지 않으면 점선 회색) */
+.cmp-opts{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-left:auto}
+.cmp-opts select,.cmp-opts .lpick{height:28px;padding:0 8px;border:1px solid transparent;border-radius:999px;font-size:12.5px;font-weight:600;cursor:pointer}
+.cmp-opts select.opt-type{background:var(--accent-soft);color:var(--accent);border-color:color-mix(in srgb,var(--accent) 30%,transparent)}
+.cmp-opts select.opt-pri{background:var(--ok-soft);color:var(--ok);border-color:color-mix(in srgb,var(--ok) 30%,transparent)}
+.cmp-opts select.opt-pri[data-v="높음"]{background:var(--red-soft);color:var(--red);border-color:color-mix(in srgb,var(--red) 35%,transparent)}
+.cmp-opts .lpick{gap:5px;background:var(--surface);color:var(--ink-3);border:1px dashed var(--line);font-weight:500}
+.cmp-opts .lpick:hover,.cmp-opts .lpick[aria-expanded="true"]{border-color:#8b5cf6;color:#6d3fd6}
+.cmp-opts .lpick.on{background:#f1eaff;color:#6d3fd6;border:1px solid #c9b3f5;font-weight:600}
+:root[data-theme="dark"] .cmp-opts .lpick.on{background:#2a2142;color:#c4a8ff;border-color:#4d3a7a}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .cmp-opts .lpick.on{background:#2a2142;color:#c4a8ff;border-color:#4d3a7a}}
+.cmp-opts .lpick img{width:36px;height:20px}
+.cmp-opts select option{background:var(--surface);color:var(--ink)}
+.cmp-box{display:flex;align-items:flex-end;gap:6px;padding:7px 8px 7px 8px;border:1px solid var(--line);border-radius:16px;background:var(--surface);box-shadow:0 2px 10px rgba(16,24,40,.07);transition:border-color .15s,box-shadow .15s}
+.cmp-box:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+/* 입력창: 최대 5줄, 넘으면 스크롤 */
+.cmp-box textarea{flex:1;min-width:0;min-height:36px;max-height:calc(5 * 1.45em + 16px);overflow-y:auto;padding:8px 4px;border:0;background:none;resize:none;font-size:14.5px;line-height:1.45;outline:none}
+.cmp-box textarea:focus{outline:none}
+.cmp-ico,.cmp-send{flex:none;width:36px;height:36px;padding:0;border:0;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+.cmp-ico{background:none;color:var(--ink-2)}
+.cmp-ico:hover{background:var(--surface-2);color:var(--ink)}
+.cmp-ico[hidden]{display:none}
+.cmp-ico svg,.cmp-send svg{width:20px;height:20px}
+.cmp-send{background:var(--accent);color:#fff}
+.cmp-send:hover{filter:brightness(1.1)}
+.cmp-send:disabled{opacity:.4;cursor:default;filter:none}
+:root[data-theme="dark"] .cmp-send{color:#0f1115}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .cmp-send{color:#0f1115}}
+/* 아래 줄: 등록 안내 · 결과(왼쪽) · 이미지 첨부 안내(오른쪽) */
+.cmp-meta{display:flex;align-items:center;gap:10px;padding:0 4px;min-width:0}
+.cmp-meta .msg{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cmp-meta .hint{flex:none;font-size:12px;color:var(--ink-3)}
+.composer .atts{margin:0}
+.composer .atts[hidden]{display:none}
+.composer.drop .cmp-box{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.vfoot{display:flex;gap:10px;align-items:center;padding:3px 10px;font-size:12px;color:var(--ink-3);border-top:1px solid var(--line);white-space:nowrap;min-width:0}
+.vfoot>span{overflow:hidden;text-overflow:ellipsis;min-width:0}
+.vfoot .sp{flex:1}
+
+/* ── 분할선 ── */
+#split{flex:none;width:6px;cursor:col-resize;background:var(--bg);border-left:1px solid var(--line);border-right:1px solid var(--line);display:flex;align-items:center;justify-content:center;touch-action:none}
+#split::before{content:"";width:3px;height:44px;border-radius:2px;background:var(--ink-3);opacity:.5}
+#split:hover::before,#split.drag::before{background:var(--accent);opacity:1}
+#split:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+
+/* ── 왼쪽: 작업 페이지(위) + 수정 요청(아래) ── */
+.pane{display:flex;flex-direction:column;min-height:0;background:var(--surface)}
+.pane.menu-pane{flex:0 0 var(--menu-h,40%);min-height:120px}
+.pane.req-pane{flex:1 1 0;min-height:160px}
+/* 작업 페이지 · 수정 요청 사이 높이 조절선 */
+#vsplit{flex:none;height:6px;cursor:row-resize;background:var(--bg);border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:center;touch-action:none}
+#vsplit::before{content:"";width:44px;height:3px;border-radius:2px;background:var(--ink-3);opacity:.5}
+#vsplit:hover::before,#vsplit.drag::before{background:var(--accent);opacity:1}
+#vsplit:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+#side .phead{flex-wrap:nowrap;white-space:nowrap;min-width:0}
+#side .lhead{flex-wrap:wrap;row-gap:4px;white-space:nowrap}
+#side .phead .sub{overflow:hidden;text-overflow:ellipsis;min-width:0;margin-left:auto}
+#side .seg button{white-space:nowrap}
+.phead{display:flex;align-items:center;gap:8px;padding:7px 12px 6px;font-weight:800;font-size:13.5px}
+.phead .sub{font-weight:500;color:var(--ink-3);font-size:12.5px}
+.pbody{flex:1;overflow:auto;padding:0 12px 12px;min-height:0}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-left:auto}
+.seg button{border:0;background:var(--surface);padding:4px 12px;font-size:13px}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button.on{background:var(--accent);color:#fff;font-weight:700}
+:root[data-theme="dark"] .seg button.on{color:#0f1115}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .seg button.on{color:#0f1115}}
+.depth{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-bottom:8px}
+.depth label{display:flex;flex-direction:column;gap:3px;font-size:11.5px;color:var(--ink-3);font-weight:600;min-width:0}
+.depth select,.depth input{width:100%;padding:6px 8px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--ink);font-size:13px;min-width:0}
+/* 화면 트리: 화면 ID 묶음(COMM-5 › COMM-5-a …) › 프레임. 지금 보는 프레임의 묶음만 펼친다 */
+.tree,.tree ul{list-style:none;margin:0;padding:0}
+.tree ul{margin-left:13px;padding-left:8px;border-left:1px solid var(--line)}
+.trow{display:flex;align-items:center;gap:6px;padding:5px 8px 5px 2px;border-radius:6px;font-size:13px;line-height:1.35;cursor:pointer;user-select:none}
+.trow:hover{background:var(--surface-2)}
+.trow:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.trow.on{background:var(--accent-soft);color:var(--accent);font-weight:700}
+.trow .car{flex:none;width:14px;height:14px;color:var(--ink-3);transition:transform .12s}
+.trow .car.leaf{visibility:hidden}
+li[aria-expanded="true"]>.trow .car{transform:rotate(90deg)}
+li[aria-expanded="false"]>ul{display:none}
+.trow .lb{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.trow .ct{flex:none;color:var(--ink-3);font-size:11.5px;font-weight:500}
+.trow .op{flex:none;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--warn);color:#fff;font:700 10.5px/17px Pretendard,sans-serif;font-style:normal;text-align:center}
+.trow mark{background:var(--warn-soft);color:inherit;border-radius:3px}
+.mgroup{margin:10px 0 4px;font-size:12px;font-weight:700;color:var(--ink-3)}
+/* 작업 페이지 상태 줄: 페이지 선택 바로 아래. 작업 페이지면 초록, 보기 전용이면 주황 + 바꾸기 버튼 */
+.edbar{display:flex;align-items:center;gap:8px;margin:0 0 8px;padding:8px 10px;border-radius:8px;font-size:12.5px;line-height:1.45}
+.edbar[hidden]{display:none}
+.edbar.ok{background:var(--ok-soft);color:var(--ok)}
+.edbar.ro2{background:var(--warn-soft);color:var(--warn)}
+.edbar b{font-weight:700}
+.edbar .t{flex:1;min-width:0}
+.edbar button{flex:0 0 auto;height:30px;padding:0 12px;border:0;border-radius:7px;background:var(--accent);color:#fff;font-size:12.5px;font-weight:700;white-space:nowrap}
+.edbar button:hover{filter:brightness(1.1)}
+:root[data-theme="dark"] .edbar button{color:#0f1115}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .edbar button{color:#0f1115}}
+
+.form{display:grid;gap:8px}
+.target{display:flex;align-items:center;gap:6px;font-size:13px;flex-wrap:wrap}
+.target b{font-size:13.5px}
+.ro{margin:0;font-size:12.5px;line-height:1.5;color:var(--warn);background:var(--warn-soft);border-radius:7px;padding:6px 10px}
+.ro[hidden]{display:none}
+.ro.ol{color:var(--red);background:var(--red-soft);margin-top:6px}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.row select{padding:6px 8px;border:1px solid var(--line);border-radius:7px;background:var(--surface);font-size:13px}
+/* 레이아웃 선택: 버튼 → 9개 와이어프레임 이미지 중에서 고른다 */
+.lpick{display:inline-flex;align-items:center;gap:6px;max-width:100%;padding:4px 8px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--ink);font-size:13px;cursor:pointer}
+.lpick:hover,.lpick[aria-expanded="true"]{border-color:var(--accent)}
+.lpick img{width:56px;height:32px;object-fit:cover;object-position:left top;border-radius:3px;border:1px solid var(--line);flex:none}
+.lpick span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.lpick.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:600}
+.lpick svg{width:12px;height:12px;flex:none;color:var(--ink-3)}
+/* 화면 가운데 큰 창(모달)으로 3열 이미지를 보여 준다. Esc · 바깥 누르기로 닫힌다 */
+.lpop{width:min(1480px,calc(100vw - 32px));max-height:calc(100vh - 32px);padding:16px 20px 20px;border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--ink);box-shadow:0 24px 60px rgba(15,23,41,.3);overflow:auto}
+.lpop::backdrop{background:rgba(15,23,41,.45)}
+.lhd{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 10px;margin:0 2px 12px;font-size:15px}
+.lhd .sub{font-size:12.5px;color:var(--ink-3)}
+.lhd a{font-size:12.5px;color:var(--accent);text-decoration:none}
+.lhd .lx{margin-left:auto;border:0;background:none;font-size:22px;line-height:1;color:var(--ink-3);cursor:pointer;padding:0 4px}
+.lgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:900px){ .lgrid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:560px){ .lgrid{grid-template-columns:1fr} }
+.lopt{display:flex;flex-direction:column;gap:8px;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);text-align:left;font-size:14.5px;font-weight:600;line-height:1.35;cursor:pointer}
+.lhd .lnone{border:1px dashed var(--line);background:var(--surface);color:var(--ink-2);border-radius:8px;padding:4px 12px;font-size:12.5px;cursor:pointer}
+.lhd .lnone.on{border-style:solid;border-color:var(--accent);color:var(--accent);background:var(--accent-soft);font-weight:700}
+.lopt:hover{border-color:var(--accent)}
+.lopt.on{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft);background:var(--accent-soft);font-weight:700}
+.lopt img{display:block;width:100%;aspect-ratio:1152/663;object-fit:cover;object-position:left top;border-radius:5px;background:var(--surface-2)}
+.req .lay{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;color:var(--accent);background:var(--accent-soft);border-radius:5px;padding:1px 6px}
+textarea{width:100%;min-height:72px;resize:vertical;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:13.5px;line-height:1.55}
+textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-offset:-1px}
+/* 첨부 이미지: 붙여넣기(Ctrl+V) · 끌어다 놓기 · 파일 선택, 최대 5장 · 한 장 10MB 미만 */
+.atts{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:6px 0 8px}
+.att{position:relative;width:64px;height:64px;border:1px solid var(--line);border-radius:7px;overflow:hidden;background:var(--surface-2)}
+.att img{display:block;width:100%;height:100%;object-fit:cover}
+.att button{position:absolute;top:2px;right:2px;width:18px;height:18px;padding:0;border:0;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;font-size:12px;line-height:18px;cursor:pointer}
+.attadd{height:30px;padding:0 10px;border:1px dashed var(--line);border-radius:7px;background:var(--surface);color:var(--ink-2);font-size:12.5px;cursor:pointer}
+.attadd:hover{border-color:var(--accent);color:var(--accent)}
+.atts .hint{font-size:12px;color:var(--ink-3)}
+.form.drop{outline:2px dashed var(--accent);outline-offset:4px;border-radius:8px}
+.req .ims{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
+.req .ims a{display:block;width:48px;height:48px;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--surface-2)}
+.req .ims img{display:block;width:100%;height:100%;object-fit:cover}
+.actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.btn{padding:7px 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface);font-size:13px}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
+:root[data-theme="dark"] .btn.primary{color:#0f1115}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.primary{color:#0f1115}}
+.btn:disabled{opacity:.45;cursor:default}
+.msg{font-size:12.5px;color:var(--ink-2)}
+.msg.err{color:var(--red)}
+.lhead{display:flex;align-items:center;gap:8px;margin:14px 0 6px;font-weight:700;font-size:13px}
+.lhead .seg{margin-left:auto}
+.lhead .seg button{padding:3px 9px;font-size:12px}
+.reqs{list-style:none;margin:0;padding:0}
+.req{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:7px;background:var(--surface)}
+.req .h{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:12px;color:var(--ink-3)}
+.req .h b{color:var(--ink);font-size:12.5px}
+.req .h .sp{flex:1}
+.req .t{margin:5px 0 2px;white-space:pre-wrap;word-break:break-word;font-size:13.5px}
+.req .n{font-size:12.5px;color:var(--ink-2);background:var(--surface-2);border-radius:6px;padding:4px 8px;margin-top:4px;white-space:pre-wrap}
+.req select{padding:2px 6px;border:1px solid var(--line);border-radius:6px;background:var(--surface);font-size:12px}
+.req .x{border:0;background:none;color:var(--ink-3);font-size:12px;padding:2px 4px}
+.req .x:hover{color:var(--red)}
+.req .go{border:0;background:none;color:var(--accent);font-size:12px;padding:0}
+.st{font-size:11.5px;font-weight:700;padding:1px 7px;border-radius:999px}
+.st-대기{background:var(--warn-soft);color:var(--warn)}
+.st-진행{background:var(--accent-soft);color:var(--accent)}
+.st-완료{background:var(--ok-soft);color:var(--ok)}
+.st-보류{background:var(--surface-2);color:var(--ink-3)}
+.pri{font-size:11px;font-weight:700;color:var(--red)}
+.empty{color:var(--ink-3);font-size:13px;padding:8px 0}
+/* Claude 답변: 요청 한 줄 + Claude가 남긴 처리 메모 */
+.req .q{margin:4px 0 0;font-size:12.5px;color:var(--ink-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.req .a{margin-top:6px;padding:8px 10px;border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 7px 7px 0;font-size:13.5px;line-height:1.6;white-space:pre-wrap;word-break:break-word;color:var(--ink)}
+.req .a.wait{border-left-color:var(--line);background:var(--surface-2);color:var(--ink-3)}
+.req .a p{margin:0}
+.req .a p+p,.req .a p+ul,.req .a ul+p{margin-top:6px}
+.req .a ul{margin:4px 0 0;padding-left:18px;white-space:normal}
+.req .a li{margin:3px 0}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#1e232b;color:#fff;padding:9px 16px;border-radius:9px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:20}
+.toast.on{opacity:1}
+/* 좁은 화면: 뷰어 위, 작업 페이지 · 수정 요청 아래로 쌓고 페이지 전체 스크롤 */
+@media (max-width:860px){
+  body{overflow:auto;height:auto}
+  #wb{flex-direction:column-reverse}
+  #viewer{height:70vh;flex:none}
+  #split,#vsplit{display:none}
+  #side{flex:none;min-width:0}
+  .pane.menu-pane{flex:none}
+  .phead{flex-wrap:wrap}
+  .pbody{overflow:visible}
+}
+@media (max-width:520px){
+  .tools{width:100%;flex-wrap:wrap}
+  .depth{grid-template-columns:1fr}
+  .crumb span.c1{display:none}
+}
+</style>
+</head>
+<body>
+<nav class="appnav" aria-label="도구 메뉴">
+  <b class="appnav-brand">Figma AI Run</b>
+  <a href="Setup.html">시작 안내</a>
+  <a href="Common_UX_Guide.html">UX 문서</a>
+  <a href="Figma_Workbench.html" aria-current="page">Figma Workbench</a>
+  <a href="Change_History.html">변경 이력</a>
+  <a href="Usage_Stats.html">사용량 통계</a>
+  <a href="Prototypes.html">프로토타입</a>
+  <span class="appnav-sp"></span>
+  <div class="appnav-right">
+    <span class="badge" id="srv">확인 중…</span>
+    <label class="appnav-user">작업자 <input id="cuxUser" type="text" maxlength="20" placeholder="이름 입력" autocomplete="name"></label>
+  </div>
+</nav>
+
+<div class="ptabs" id="ptabs" role="tablist" aria-label="프로젝트">
+  <div class="tabs" id="ptabList"></div>
+  <button type="button" class="ptadd" id="ptAdd" aria-haspopup="true" aria-expanded="false" aria-controls="ppop" title="프로젝트 열기">+</button>
+  <div class="ppop" id="ppop" hidden>
+    <div class="h">다른 프로젝트 열기 (Figma 파일 단위)</div>
+    <div id="pList"></div>
+    <form id="pForm"><input id="pLink" type="url" placeholder="다른 Figma 파일(프로젝트) 링크" aria-label="다른 Figma 파일(프로젝트) 링크" required><button>열기</button></form>
+    <p class="pnote" id="pNote" hidden></p>
+    <p class="phint">페이지는 탭이 아니라 왼쪽 「구분 (페이지)」에서 바꿉니다.</p>
+  </div>
+</div>
+
+<main id="wb">
+  <aside id="side">
+    <div class="pane menu-pane" aria-label="작업 페이지 메뉴">
+      <div class="phead">작업 페이지 <span class="sub" id="count"></span>
+        
+      </div>
+      <div class="pbody">
+        <div class="depth">
+          <label>구분 (페이지)<select id="d1"></select></label>
+          <label>화면 찾기<input id="tsearch" type="search" placeholder="화면 ID · 프레임 이름" autocomplete="off" aria-label="화면 ID · 프레임 이름 검색"></label>
+        </div>
+        <div class="edbar" id="edBar" role="status" hidden></div>
+        <div id="menu"></div>
+      </div>
+    </div>
+    <div id="vsplit" role="separator" aria-orientation="horizontal" aria-label="작업 페이지 · 수정 요청 높이 조절" tabindex="0"></div>
+    <!-- 수정 요청 입력은 오른쪽 이미지 아래 입력창(#composer). 여기는 Claude 답변만 -->
+    <div class="pane req-pane" aria-label="Claude 답변">
+      <div class="phead">Claude 답변 <span class="sub" id="rcount"></span><span class="sub" id="reqTgt" hidden></span>
+        <div class="seg" id="rfilter"><button data-f="here" class="on">이 페이지</button><button data-f="recent">최근 전체</button></div>
+      </div>
+      <div class="pbody">
+        <ul class="reqs" id="reqs"></ul>
+        <div class="actions" style="margin-top:6px">
+          <button class="btn" id="copy">Claude 작업 요청문 복사</button>
+          <span class="msg">미완료 요청을 정리해 복사합니다. Claude에게 붙여 넣으면 Figma에 반영합니다.</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div id="split" role="separator" aria-orientation="vertical" aria-label="왼쪽 · 오른쪽 화면 크기 조절" tabindex="0"></div>
+  <section id="viewer" aria-label="작업 결과물">
+    <div class="vbar">
+      <div class="crumb" id="crumb"></div>
+      <div class="tools">
+        <button class="tbtn" id="prev" title="이전 페이지 (←)" aria-label="이전 페이지">‹</button>
+        <button class="tbtn" id="next" title="다음 페이지 (→)" aria-label="다음 페이지">›</button>
+        <button class="tbtn" id="zoomOut" title="축소" aria-label="축소">−</button>
+        <span class="zoomv" id="zoomv">100%</span>
+        <button class="tbtn" id="zoomIn" title="확대" aria-label="확대">+</button>
+        <button class="tbtn on" id="fitW" title="너비 맞춤">너비</button>
+        <button class="tbtn" id="fitA" title="전체 맞춤">전체</button>
+        <button class="tbtn" id="capBtn" title="이 프레임 캡처 다시 받기 (Figma 플러그인 또는 Claude가 받음)">캡처</button>
+        <button class="tbtn" id="liveBtn" title="Figma 실시간 보기 (Figma 로그인 필요 · 무거움)">실시간</button>
+        <a class="tbtn" id="openFig" target="_blank" rel="noopener" title="Figma에서 이 프레임 열기">Figma ↗</a>
+      </div>
+    </div>
+    <div id="stage" class="grab">
+      <img id="shot" alt="" draggable="false">
+      <iframe id="live" title="Figma 실시간 보기" allowfullscreen></iframe>
+      <div id="noshot" class="noshot" hidden></div>
+    </div>
+    <!-- 수정 요청 입력창: 이미지 아래에 고정. [+] 이미지 첨부 · 입력 · [↑] 등록, 아래 줄에 유형 · 우선순위 · 레이아웃.
+         입력한 내용은 workbench/edit_requests.json에 쌓인다 -->
+    <div class="cmp-wrap">
+      <div class="form composer" id="composer">
+        <!-- 위 줄: 왼쪽 대상 프레임, 그 옆에 선택 옵션(유형 · 우선순위 · 레이아웃) -->
+        <div class="cmp-top">
+          <div class="target">대상 <span id="tgtPage" class="badge"></span> <b id="tgt"></b> <code id="tgtId" class="badge"></code></div>
+          <div class="cmp-opts">
+            <select id="rtype" class="opt-type" aria-label="수정 유형" title="수정 유형">
+              <option selected>일반</option><option>텍스트 수정</option><option>레이아웃·배치</option><option>컬러·스타일</option><option>컴포넌트 교체</option>
+              <option>요소 추가</option><option>요소 삭제</option><option>신규 프레임</option><option>기타</option>
+            </select>
+            <select id="rpri" class="opt-pri" aria-label="우선순위" title="우선순위"><option value="보통">우선순위 보통</option><option value="높음">우선순위 높음</option></select>
+            <button type="button" class="lpick" id="lpick" aria-haspopup="dialog" aria-expanded="false" aria-controls="lpop"><img id="lpickImg" alt="" hidden><span id="lpickTxt">레이아웃 선택 안 함</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></button>
+          </div>
+        </div>
+        <p class="ro" id="roNote" hidden></p>
+        <p class="ro ol" id="olNote" hidden></p>
+        <div class="atts" id="atts" hidden><span id="attList" style="display:contents"></span></div>
+        <div class="cmp-box">
+          <button type="button" class="cmp-ico" id="attAdd" title="이미지 첨부 (붙여넣기 · 끌어다 놓기도 됩니다. 최대 5장, 한 장 10MB 미만)" aria-label="이미지 첨부"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M10 4v12M4 10h12"/></svg></button>
+          <input type="file" id="attFile" accept="image/png,image/jpeg,image/gif,image/webp" multiple hidden>
+          <textarea id="rtext" rows="1" placeholder="수정할 내용을 입력하세요. 예) 표 헤더 높이를 58로 통일"></textarea>
+          <button type="button" class="cmp-send" id="add" title="요청 등록 (Ctrl + Enter)" aria-label="요청 등록"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10 15V5M5.5 9.5 10 5l4.5 4.5"/></svg></button>
+        </div>
+        <!-- 아래 줄: 등록 안내 · 결과(왼쪽), 이미지 첨부 안내(오른쪽) -->
+        <div class="cmp-meta">
+          <span class="msg" id="msg">Ctrl + Enter로 등록</span>
+          <span class="hint" id="attHint">이미지는 [+] · 붙여넣기 · 끌어다 놓기 (최대 5장)</span>
+        </div>
+      </div>
+      <dialog class="lpop" id="lpop" aria-label="레이아웃 선택">
+        <div class="lhd"><b>레이아웃 선택</b><span class="sub">이 요청에 쓸 화면 구조를 고르세요</span><a href="docs/layout_structures/Layout_Structure.html" target="_blank" rel="noopener">구조 가이드 ↗</a><button type="button" class="lnone" id="lnone">선택 안 함</button><button type="button" class="lx" id="lpopX" aria-label="닫기">×</button></div>
+        <div class="lgrid" id="lgrid"></div>
+      </dialog>
+    </div>
+    <div class="vfoot"><span id="meta"></span><span class="sp"></span><span id="cap" title="Figma에서 고치면 캡처가 자동으로 바뀝니다(Common UX Sync 플러그인 실행 중일 때)"></span></div>
+  </section>
+</main>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+  /* 프로젝트(Figma 파일)마다 projects/{fileKey}/ 에 catalog.json(프레임 목록) · labels.json(화면 제목 · 라벨) · shots/ · shots_meta.json(캡처)이 있다 */
+  var DEFAULT_KEY = 'etCQFF3CTf1EA6C79d4BBf';   // 기본 프로젝트: UX AI TEST
+  var WB = { titles: {} }, $ = function(id){ return document.getElementById(id); };
+  var API = '/api/requests', online = false, reqData = {version:0, items:[]}, filter = 'here';
+  /* 공유 작업 이력(모든 작업자): 같은 프레임에 다른 작업자의 요청이 진행 중인지 본다 */
+  var HIST = { items: [], pcSlug: '' }, OL_MAX = 60 * 60 * 1000;   // 1시간 넘게 그대로인 요청은 겹침으로 보지 않는다(멈춘 PC)
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function store(k, v){ try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch(e){ return null; } }
+  /* 작업자 이름 — 가이드와 같은 키(cux.user) */
+  var userInput = $('cuxUser');
+  userInput.value = store('cux.user') || '';
+  userInput.addEventListener('input', function(){ store('cux.user', userInput.value.trim()); });
+  function who(){ return userInput.value.trim(); }
+  function toast(t){ var el = $('toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(function(){ el.classList.remove('on'); }, 1800); }
+
+  /* ── 작업 페이지 분류: 1 구분 = Figma 페이지 › 2 페이지 = 화면 ID(TI-STN-08 …) › 3 상세 = 프레임(TI-STN-08-P …) ──
+     작업 파일(프로젝트): 시작 안내 3단계 링크의 파일. 없으면 기본 프로젝트(UX AI TEST).
+     프레임 목록은 Figma 플러그인 또는 Claude가 만들어 서버로 보낸다(/api/catalog → projects/{fileKey}/catalog.json) */
+  var FILE = { key: DEFAULT_KEY, name: 'UX AI TEST', isDefault: true, node: '' };
+  var CAT = { pages: [] };
+  var label = {};
+  /* 화면 ID: 프레임 규칙의 앞부분. TI-STN-08-P → TI-STN-08, LI-RUN-02-01 → LI-RUN-02, COMM-5-d(1/5) → COMM-5-d */
+  function screenOf(name){
+    var m;
+    if ((m = name.match(/^((?:M-)?(?:TI|LI)-[A-Z]+(?:-\d+)?)(?=$|[-_ \/(\[])/))) return m[1];
+    if ((m = name.match(/^((?:M-)?COMM-\d(?:-[A-Za-z])?)(?![A-Za-z])/))) return m[1];
+    if ((m = name.match(/^LI_.*_((?:TI|LI)-[A-Z]+-\d+)$/))) return m[1];
+    if ((m = name.match(/^(Revision history|SB-List|SB-\d-[a-z]|M-RUN|M-Components|Example|시안)/))) return m[1];
+    return name;
+  }
+  var pages = [], byId = {};
+  function build(cat){
+  CAT = cat; pages = []; byId = {};
+  var seen = {};
+  CAT.pages.forEach(function(pg){
+    var frames = (pg.frames || []).slice();
+    var dup = {};
+    frames.forEach(function(f){
+      if (seen[f[0]]) return; seen[f[0]] = 1;
+      var o = { id: f[0], name: f[1], w: f[2], h: f[3], i: pages.length, page: pg.name, pageId: pg.id, editable: !!pg.editable };
+      o.d1 = pg.id; o.d1l = pg.name + (pg.editable ? '' : ' (보기 전용)');
+      o.d2 = pg.id + '|' + screenOf(f[1]); o.screen = screenOf(f[1]);
+      o.d2l = o.screen + (WB.titles[o.screen] ? ' · ' + WB.titles[o.screen] : '');
+      dup[f[1]] = (dup[f[1]] || 0) + 1;
+      /* labels.json 라벨에서 프레임명과 겹치는 말(P · 세부정의 등)은 빼고 덧붙인다 */
+      var extra = (label[f[0]] || '').split(' · ').filter(function(w){ return w && w !== 'P' && f[1].indexOf(w) < 0; }).join(' · ');
+      o.d3l = f[1] + (dup[f[1]] > 1 ? ' #' + dup[f[1]] : '') + (extra ? ' · ' + extra : '');
+      pages.push(o);
+    });
+  });
+  pages.forEach(function(p){ byId[p.id] = p; });
+  }
+  build(CAT);
+
+  var cur = null;
+
+  /* ── 메뉴 ── */
+  function opts(sel, list, valK, labK, v, cnt){
+    sel.innerHTML = list.map(function(p){ return '<option value="' + esc(p[valK]) + '"' + (p[valK] === v ? ' selected' : '') + '>' + esc(p[labK]) + (cnt ? ' (' + cnt(p) + ')' : '') + '</option>'; }).join('');
+  }
+  function openCount(id){ return reqData.items.filter(function(r){ return r.nodeId === id && r.status !== '완료'; }).length; }
+
+  /* ── 화면 트리 ──
+     묶음: COMM-5-a 같은 하위 화면 ID는 COMM-5 아래로, 나머지 화면 ID는 그 자체가 묶음이다.
+     노드 = { key, label(화면 ID), frames(그 화면의 프레임), kids(하위 화면) }
+     프레임이 하나뿐인 화면은 화면 ID만 보이는 잎(누르면 그 프레임), 여러 개면 펼쳐서 프레임 이름을 보인다 */
+  var openKeys = {}, query = '';
+  function parentScreen(s){ var m = s.match(/^((?:M-)?COMM-\d+)-[A-Za-z]$/); return m ? m[1] : ''; }
+  function buildTree(list){
+    var roots = [], byKey = {};
+    function node(key){ if (!byKey[key]) { byKey[key] = { key: key, label: key, frames: [], kids: [] }; } return byKey[key]; }
+    list.forEach(function(p){
+      var par = parentScreen(p.screen), n = node(p.screen);
+      n.frames.push(p);
+      if (n.placed) return; n.placed = true;
+      if (par) { var pn = node(par); pn.kids.push(n); if (!pn.placed) { pn.placed = true; roots.push(pn); } }
+      else roots.push(n);
+    });
+    return roots;
+  }
+  function allFrames(n){ return n.kids.reduce(function(a, k){ return a.concat(allFrames(k)); }, n.frames.slice()); }
+  function isLeaf(n){ return !n.kids.length && n.frames.length === 1; }
+  function hit(s){ return !query || s.toLowerCase().indexOf(query) >= 0; }
+  function mark(s){
+    if (!query) return esc(s); var i = s.toLowerCase().indexOf(query); if (i < 0) return esc(s);
+    return esc(s.slice(0, i)) + '<mark>' + esc(s.slice(i, i + query.length)) + '</mark>' + esc(s.slice(i + query.length));
+  }
+  function treeHtml(n){
+    var fs = allFrames(n), op = fs.reduce(function(a, x){ return a + openCount(x.id); }, 0);
+    var badge = op ? '<i class="op" title="미완료 요청">' + op + '</i>' : '';
+    var car = '<svg class="car' + (isLeaf(n) ? ' leaf' : '') + '" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 4l4 4-4 4"/></svg>';
+    if (isLeaf(n)) {
+      var f = n.frames[0];
+      if (!hit(n.label) && !hit(f.d3l)) return '';
+      return '<li role="treeitem" aria-selected="' + (f.id === cur.id) + '"><div class="trow' + (f.id === cur.id ? ' on' : '') + '" data-id="' + esc(f.id) + '" tabindex="-1" title="' + esc(f.d3l) + '">' + car + '<span class="lb">' + mark(n.label) + '</span>' + badge + '</div></li>';
+    }
+    /* 묶음: 자기 프레임(2개 이상이거나 하위 화면이 있을 때) → 하위 화면 순서 */
+    var inner = (n.frames.length > 1 || n.kids.length ? n.frames : []).map(function(f){
+      if (!hit(n.label) && !hit(f.d3l)) return '';
+      var o = openCount(f.id);
+      return '<li role="treeitem" aria-selected="' + (f.id === cur.id) + '"><div class="trow' + (f.id === cur.id ? ' on' : '') + '" data-id="' + esc(f.id) + '" tabindex="-1">' +
+        '<svg class="car leaf" viewBox="0 0 16 16" aria-hidden="true"></svg><span class="lb">' + mark(f.d3l) + '</span>' + (o ? '<i class="op">' + o + '</i>' : '') + '</div></li>';
+    }).join('') + n.kids.map(treeHtml).join('');
+    if (query && !inner && !hit(n.label)) return '';
+    var open = query ? true : !!openKeys[n.key];
+    return '<li role="treeitem" aria-expanded="' + open + '"><div class="trow" data-key="' + esc(n.key) + '" tabindex="-1">' + car +
+      '<span class="lb">' + mark(n.label) + '</span><span class="ct">' + fs.length + '</span>' + badge + '</div><ul role="group">' + inner + '</ul></li>';
+  }
+  /* 지금 프레임이 속한 묶음은 항상 펼친다 */
+  function openFor(p){ if (!p) return; openKeys[p.screen] = true; var par = parentScreen(p.screen); if (par) openKeys[par] = true; }
+  function renderMenu(){
+    var l1 = CAT.pages.map(function(pg){ return { d1: pg.id, d1l: (pg.editable ? '★ ' : '') + pg.name + (pg.frames === null ? ' (목록 대기)' : ' (' + pages.filter(function(p){ return p.d1 === pg.id; }).length + ')') + (pg.editable ? ' · 작업 페이지' : ' · 보기 전용') }; });
+    opts($('d1'), l1, 'd1', 'd1l', cur.d1); $('d1').disabled = false; $('tsearch').disabled = false;
+    var inD1 = pages.filter(function(p){ return p.d1 === cur.d1; });
+    var ed = edPage();
+    $('count').textContent = FILE.name + ' › ' + cur.page + ' · ' + inD1.length + '개 프레임' + (ed && ed !== cur.page ? ' · 수정 가능: ' + ed : ''); $('count').title = $('count').textContent;
+    /* 작업 페이지 상태 줄: 작업 페이지면 초록 안내, 보기 전용이면 주황 안내 + 바꾸기 버튼 */
+    var bar = $('edBar'); bar.hidden = false;
+    bar.className = 'edbar ' + (cur.editable ? 'ok' : 'ro2');
+    bar.innerHTML = cur.editable
+      ? '<span class="t">✓ <b>작업 페이지</b> · Claude가 이 페이지를 고칩니다</span>'
+      : '<span class="t"><b>보기 전용</b> · 지금 작업 페이지는 「' + esc(ed || '없음') + '」</span><button type="button" data-ed="' + esc(cur.pageId) + '">이 페이지를 작업 페이지로</button>';
+    var mg = '<div class="mgroup">' + esc(cur.d1l) + '</div>';
+    if (!inD1.length) { $('menu').innerHTML = mg + '<p class="empty">이 페이지에는 프레임이 없습니다.</p>'; return; }
+    var body = buildTree(inD1).map(treeHtml).join('');
+    $('menu').innerHTML = mg +
+      (body ? '<ul class="tree" role="tree" aria-label="화면 목록">' + body + '</ul>' : '<p class="empty">「' + esc($('tsearch').value) + '」에 맞는 화면이 없습니다.</p>');
+    /* 키보드 진입점: 지금 프레임 줄(없으면 첫 줄) */
+    var on = $('menu').querySelector('.trow.on') || $('menu').querySelector('.trow'); if (on) on.tabIndex = 0;
+  }
+  function revealCur(){ var on = $('menu').querySelector('.trow.on'); if (on) on.scrollIntoView({ block: 'nearest' }); }
+
+  /* ── 뷰어 ── */
+  var zoom = 1, fit = 'w', live = false;   // 실시간 보기는 무거워서 매번 꺼진 상태로 시작한다
+  var img = $('shot'), stage = $('stage');
+  /* 캡처 메타: 프레임을 캡처하면 projects/{fileKey}/shots_meta.json 에 시각 · 크기 · 형식(ext)이 남는다 */
+  var shotMeta = {}, jobs = [];
+  function metaOf(p){ return shotMeta[p.id] || null; }
+  function shotSrc(p){ var m = metaOf(p); return 'projects/' + FILE.key + '/shots/' + p.id.replace(':', '-') + '.' + ((m && m.ext) || 'png') + '?v=' + encodeURIComponent(m ? m.at : ''); }
+  function capText(p){
+    if (live) return 'Figma 실시간 보기';
+    var m = metaOf(p);
+    return m ? '캡처 ' + String(m.at || '').replace('T', ' ').slice(5, 16) + (m.by ? ' · ' + m.by : '') : '';
+  }
+  /* 캡처 받기: 작업 대기열(/api/jobs)에 넣으면 Figma 플러그인(켜져 있으면 바로) 또는 Claude가 받는다 */
+  function capJob(p){ return jobs.filter(function(j){ return j.kind === 'capture' && j.nodeId === p.id && (j.status === '대기' || j.status === '진행 중'); })[0]; }
+  function requestCapture(p){
+    if (!online) { toast('서버가 꺼져 있어 요청할 수 없습니다'); return; }
+    fetch('/api/jobs', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'add', kind: 'capture', fileKey: FILE.key, nodeId: p.id, name: p.name, by: who() }) })
+      .then(function(r){ return r.json(); }).then(function(d){ if (d.error) throw new Error(d.error); loadJobs(); toast('캡처를 요청했습니다'); })
+      .catch(function(e){ toast('요청 실패: ' + e.message); });
+  }
+  function loadJobs(){
+    return fetch('/api/jobs?key=' + encodeURIComponent(FILE.key), { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : { items: [] }; })
+      .then(function(d){ jobs = d.items || []; if (cur && !hasShot(cur)) renderNoShot(cur); }).catch(function(){});
+  }
+  function figUrl(p){ return 'https://www.figma.com/design/' + FILE.key + '/file?node-id=' + p.id.replace(':', '-'); }
+  function applyZoom(){
+    if (!cur) return;
+    var sw = stage.clientWidth - 16, sh = stage.clientHeight - 16;   // 이미지 둘레 8px
+    if (fit === 'w') zoom = Math.max(0.05, sw / cur.w);
+    else if (fit === 'a') zoom = Math.max(0.03, Math.min(sw / cur.w, sh / cur.h));
+    img.style.width = Math.round(cur.w * zoom) + 'px';
+    $('zoomv').textContent = Math.round(zoom * 100) + '%';
+    $('fitW').classList.toggle('on', fit === 'w'); $('fitA').classList.toggle('on', fit === 'a');
+  }
+  function setZoom(z){ fit = null; zoom = Math.min(2, Math.max(0.05, z)); applyZoom(); }
+  /* 캡처가 없으면 실시간 보기를 자동으로 열지 않는다(Figma 뷰어를 통째로 받아 무겁다). [캡처 받기] · [실시간 보기]를 고르게 한다 */
+  function hasShot(p){ return !!shotMeta[p.id]; }
+  function renderNoShot(p){
+    var j = capJob(p), box = $('noshot');
+    box.innerHTML = '<b>이 프레임은 아직 캡처가 없습니다</b>' +
+      (j ? '<p>캡처 요청됨(' + esc(j.status) + '). Figma에서 Common UX Sync 플러그인이 켜져 있으면 곧 들어오고, 아니면 Claude가 받습니다.</p>'
+         : '<p>캡처를 받으면 다음부터 바로 보입니다. 실시간 보기는 Figma 뷰어를 통째로 불러와 느립니다.</p>') +
+      '<div class="row">' + (j ? '' : '<button class="btn primary" data-nx="cap">캡처 받기</button>') + '<button class="btn" data-nx="live">실시간 보기</button></div>';
+  }
+  var liveOnce = false;   // 캡처 없는 프레임에서 [실시간 보기]를 누른 경우(이 프레임만)
+  function renderViewer(){
+    var p = cur, inPage = navList(p.d1), lv = live || liveOnce;
+    $('crumb').innerHTML = '<span class="c1">' + esc(p.d1l) + ' ›</span><span class="c1">' + esc(p.screen) + ' ›</span><b>' + esc(p.name) + '</b><code>' + p.id + '</code>';
+    var m = metaOf(p); if (m && m.w) { p.w = m.w; p.h = m.h; }
+    if (hasShot(p)) { img.src = shotSrc(p); img.alt = p.name + ' 프레임 캡처'; img.style.display = ''; } else { img.removeAttribute('src'); img.alt = ''; img.style.display = 'none'; }
+    $('noshot').hidden = lv || hasShot(p); if (!lv && !hasShot(p)) renderNoShot(p);
+    $('openFig').href = figUrl(p);
+    $('meta').textContent = p.w + ' × ' + p.h + ' · ' + (inPage.indexOf(p) + 1) + ' / ' + inPage.length;
+    $('cap').textContent = lv ? 'Figma 실시간 보기 (Figma 로그인 필요)' : hasShot(p) ? capText(p) : '캡처 없음';
+    $('liveBtn').classList.toggle('on', lv); stage.classList.toggle('is-live', lv);
+    var liveUrl = 'https://embed.figma.com/design/' + FILE.key + '/file?node-id=' + p.id.replace(':', '-') + '&embed-host=share';
+    if (lv && $('live').getAttribute('src') !== liveUrl) $('live').src = liveUrl;
+    if (!lv) $('live').removeAttribute('src');
+    stage.scrollTop = 0; stage.scrollLeft = 0;
+    applyZoom();
+  }
+  /* 수정 가능 페이지 = 작업 링크가 가리키는 페이지 (프레임 목록의 editable) */
+  function edPage(){ var e = CAT && CAT.pages ? CAT.pages.filter(function(pg){ return pg.editable; })[0] : null; return e ? e.name : ''; }
+  function edId(c){ var e = c && c.pages ? c.pages.filter(function(pg){ return pg.editable; })[0] : null; return e ? e.id : ''; }
+  /* 작업 페이지 바꾸기: 이 프로젝트의 작업 링크를 그 페이지로 → 서버가 수정 가능 페이지 · 시작 안내 링크(같은 파일이면)를 바꾼다 */
+  function setEditable(pageId, pageName, lead){
+    if (!online) { toast('서버가 꺼져 있어 바꿀 수 없습니다'); return; }
+    var ed = edPage();
+    if (!confirm((lead || '') + '작업 페이지를 「' + pageName + '」로 바꿀까요?\n\n' + (ed ? '「' + ed + '」는 보기 전용이 됩니다. ' : '') +
+      'Claude와 Figma 플러그인도 이제 「' + pageName + '」만 고칩니다.\n이미 등록한 다른 페이지 요청은 처리할 때 「보류」가 됩니다.')) return;
+    fetch('/api/projects', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'editable', key: FILE.key, pageId: pageId }) })
+      .then(function(r){ return r.json(); }).then(function(d){
+        if (d.error) throw new Error(d.error);
+        FILE.link = d.project.link;
+        PROJ.forEach(function(p){ if (p.key === FILE.key) { p.editablePageName = pageName; p.link = d.project.link; } }); renderTabs();
+        return loadCatalog(false).then(function(){ toast('작업 페이지를 「' + pageName + '」로 바꿨습니다'); });
+      }).catch(function(e){ toast('바꾸지 못했습니다: ' + e.message); });
+  }
+  /* 같은 파일 · 같은 프레임에 다른 작업자(다른 PC)의 「대기 · 진행 중」 요청 */
+  function overlaps(nodeId){
+    var now = Date.now();
+    return (HIST.items || []).filter(function(h){
+      return h.kind === 'request' && String(h.id).indexOf(HIST.pcSlug + '_') !== 0 && (h.fileKey || DEFAULT_KEY) === FILE.key && h.nodeId === nodeId &&
+        (h.status === '대기' || h.status === '진행 중') && now - (Date.parse(h.at) || 0) < OL_MAX;
+    });
+  }
+  function olText(list){
+    return list.map(function(h){ return (h.by || '이름 없음') + (h.pc ? '(' + h.pc + ')' : '') + ' ' + h.reqId + ' · ' + h.status + ' — 「' + String(h.text || '').split('\n')[0].slice(0, 40) + '」'; }).join(' / ');
+  }
+  function renderTarget(){
+    $('tgt').textContent = cur.name; $('tgtId').textContent = cur.id; $('tgtPage').textContent = cur.page; $('reqTgt').textContent = cur.name; $('reqTgt').title = cur.page + ' › ' + cur.name;
+    /* 수정 가능 페이지 밖: 요청은 등록되지만 Claude가 반영하지 않고 「보류」로 둔다 (CLAUDE.md 범위) */
+    var ed = edPage();
+    $('roNote').hidden = cur.editable;
+    $('roNote').innerHTML = esc(cur.page) + ' 페이지는 보기 전용입니다. ' + (ed ? '지금 작업 페이지는 「' + esc(ed) + '」입니다. ' : '') +
+      '이대로 등록하면 Claude가 반영하지 않고 「보류」로 둡니다.<button type="button" class="mk" id="mkEd">이 페이지를 작업 페이지로</button>';
+    $('mkEd').onclick = function(){ setEditable(cur.pageId, cur.page); };
+    var ol = overlaps(cur.id);
+    $('olNote').hidden = !ol.length;
+    $('olNote').textContent = ol.length ? '다른 작업자가 이 프레임을 수정 요청 중입니다: ' + olText(ol) + '. 등록하면 Claude가 그 요청이 끝난 뒤 이어서 처리합니다.' : '';
+  }
+
+  function go(id, push){
+    var p = byId[id]; if (!p) return;
+    if (!cur || cur.id !== p.id) liveOnce = false;
+    cur = p; openFor(p);
+    renderMenu(); revealCur(); renderViewer(); renderTarget(); renderReqs();
+    store('wb.cur.' + FILE.key, id); if (FILE.isDefault) store('wb.cur', id);
+    if (push !== false && location.hash !== '#' + id.replace(':', '-')) history.replaceState(null, '', '#' + id.replace(':', '-'));
+  }
+  /* 넘기기 순서 = 작업 페이지 목록(트리)에 보이는 순서: 묶음마다 자기 프레임 → 하위 화면 */
+  function navList(d1){
+    return buildTree(pages.filter(function(x){ return x.d1 === d1; })).reduce(function(a, n){ return a.concat(allFrames(n)); }, []);
+  }
+  function step(d){
+    var list = navList(cur.d1), i = list.indexOf(cur) + d;
+    if (i >= 0 && i < list.length) go(list[i].id);
+  }
+
+  /* 1 구분(페이지)을 바꾸면 그 페이지에서 마지막으로 본 프레임, 없으면 첫 프레임 */
+  $('d1').onchange = function(){
+    var pid = $('d1').value, last = store('wb.last.' + pid), first = pages.filter(function(x){ return x.d1 === pid; })[0];
+    store('wb.last.' + cur.d1, cur.id);
+    if (!first) {
+      var pg = CAT.pages.filter(function(x){ return x.id === pid; })[0];
+      $('d1').value = cur.d1;
+      /* 프레임이 없는 페이지도 작업 페이지로 정할 수 있다(새 화면을 그 페이지에 만들 때) */
+      if (pg && pg.frames !== null && !pg.editable) { setEditable(pg.id, pg.name, '「' + pg.name + '」 페이지에는 프레임이 없습니다.\n'); return; }
+      toast(pg && pg.frames === null ? 'Figma에서 이 페이지를 열면 목록이 들어옵니다' : '이 페이지에는 프레임이 없습니다');
+      return;
+    }
+    go(byId[last] && byId[last].d1 === pid ? last : first.id);
+  };
+  $('edBar').addEventListener('click', function(e){ var b = e.target.closest('[data-ed]'); if (b && cur) setEditable(b.dataset.ed, cur.page); });
+  /* 트리: 묶음 줄은 펼치기/접기, 프레임 줄은 그 프레임으로 */
+  function toggle(key, open){ openKeys[key] = open === undefined ? !openKeys[key] : open; try { store('wb.open.' + FILE.key, JSON.stringify(openKeys)); } catch(x){} renderMenu(); }
+  $('menu').addEventListener('click', function(e){
+    var r = e.target.closest('.trow'); if (!r) return;
+    if (r.dataset.id) { go(r.dataset.id); return; }
+    if (!query) toggle(r.dataset.key);
+    var again = $('menu').querySelector('.trow[data-key="' + r.dataset.key + '"]'); if (again) again.focus();
+  });
+  /* ↑↓ 이동, → 펼치기 · 첫 하위, ← 접기 · 상위, Enter · Space 선택 */
+  $('menu').addEventListener('keydown', function(e){
+    var r = e.target.closest('.trow'); if (!r) return;
+    var rows = Array.prototype.filter.call($('menu').querySelectorAll('.trow'), function(x){ return x.offsetParent !== null; });
+    var i = rows.indexOf(r), li = r.parentNode, exp = li.getAttribute('aria-expanded'), k = e.key;
+    var focus = function(x){ if (!x) return; rows.forEach(function(y){ y.tabIndex = -1; }); x.tabIndex = 0; x.focus(); };
+    if (k === 'ArrowDown') focus(rows[i + 1]);
+    else if (k === 'ArrowUp') focus(rows[i - 1]);
+    else if (k === 'ArrowRight') { if (exp === 'false' && !query) { toggle(r.dataset.key, true); focus($('menu').querySelector('.trow[data-key="' + r.dataset.key + '"]')); } else if (exp === 'true') focus(rows[i + 1]); }
+    else if (k === 'ArrowLeft') {
+      if (exp === 'true' && !query) { toggle(r.dataset.key, false); focus($('menu').querySelector('.trow[data-key="' + r.dataset.key + '"]')); }
+      else { var up = li.parentNode.closest('li'); if (up) focus(up.querySelector('.trow')); }
+    }
+    else if (k === 'Enter' || k === ' ') r.click();
+    else return;
+    e.preventDefault(); e.stopPropagation();
+  });
+  /* 검색: 맞는 화면과 그 묶음만 남기고 펼친다 */
+  $('tsearch').addEventListener('input', function(){ query = this.value.trim().toLowerCase(); if (cur) renderMenu(); });
+  $('tsearch').addEventListener('keydown', function(e){
+    if (e.key === 'Escape') { this.value = ''; query = ''; if (cur) { renderMenu(); revealCur(); } }
+    if (e.key === 'ArrowDown') { var f = $('menu').querySelector('.trow'); if (f) { e.preventDefault(); f.tabIndex = 0; f.focus(); } }
+    if (e.key === 'Enter') { var leaf = $('menu').querySelector('.trow[data-id]'); if (leaf) { e.preventDefault(); go(leaf.dataset.id); } }
+  });
+  $('prev').onclick = function(){ step(-1); }; $('next').onclick = function(){ step(1); };
+  $('zoomIn').onclick = function(){ setZoom(zoom * 1.25); };
+  $('zoomOut').onclick = function(){ setZoom(zoom / 1.25); };
+  $('fitW').onclick = function(){ fit = 'w'; applyZoom(); };
+  $('fitA').onclick = function(){ fit = 'a'; applyZoom(); };
+  $('liveBtn').onclick = function(){
+    if (live || liveOnce) { live = false; liveOnce = false; } else live = true;
+    if (!live) $('live').removeAttribute('src');
+    renderViewer();
+    if (live) toast('Figma에 로그인되어 있어야 보입니다');
+  };
+  $('capBtn').onclick = function(){ if (cur) requestCapture(cur); };
+  $('noshot').addEventListener('click', function(e){
+    var b = e.target.closest('[data-nx]'); if (!b || !cur) return;
+    if (b.dataset.nx === 'cap') requestCapture(cur);
+    else { liveOnce = true; renderViewer(); toast('Figma에 로그인되어 있어야 보입니다'); }
+  });
+  img.addEventListener('dblclick', function(e){
+    var r = img.getBoundingClientRect(), fx = (e.clientX - r.left) / r.width, fy = (e.clientY - r.top) / r.height;
+    setZoom(zoom < 0.95 ? 1 : (stage.clientWidth - 32) / cur.w);
+    stage.scrollLeft = fx * img.offsetWidth - stage.clientWidth / 2 + 16; stage.scrollTop = fy * img.offsetHeight - stage.clientHeight / 2 + 16;
+  });
+  /* 드래그로 이동 */
+  (function(){
+    var sx, sy, sl, st, on = false;
+    stage.addEventListener('pointerdown', function(e){ if (live || e.button !== 0) return; on = true; sx = e.clientX; sy = e.clientY; sl = stage.scrollLeft; st = stage.scrollTop; stage.classList.add('grabbing'); });
+    window.addEventListener('pointermove', function(e){ if (!on) return; stage.scrollLeft = sl - (e.clientX - sx); stage.scrollTop = st - (e.clientY - sy); });
+    window.addEventListener('pointerup', function(){ on = false; stage.classList.remove('grabbing'); });
+  })();
+  stage.addEventListener('wheel', function(e){ if (!e.ctrlKey || live) return; e.preventDefault(); setZoom(zoom * (e.deltaY < 0 ? 1.1 : 1 / 1.1)); }, {passive:false});
+  window.addEventListener('resize', applyZoom);
+  document.addEventListener('keydown', function(e){
+    if (/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
+    if (e.key === 'ArrowLeft') step(-1); if (e.key === 'ArrowRight') step(1);
+  });
+
+  /* ── 분할선 ── */
+  (function(){
+    // 왼쪽(작업 페이지 · 수정 요청) 너비 %. 기본 30%, 결과물 뷰어가 항상 더 넓게 최대 45%
+    var sp = $('split'), side = $('side'), drag = false;
+    var saved = parseFloat(store('wb.side')); if (saved >= 20 && saved <= 45) side.style.setProperty('--side-w', saved + '%');
+    function set(pct){ pct = Math.min(45, Math.max(20, pct)); side.style.setProperty('--side-w', pct + '%'); store('wb.side', pct); applyZoom(); }
+    sp.addEventListener('pointerdown', function(e){ drag = true; sp.classList.add('drag'); sp.setPointerCapture(e.pointerId); });
+    sp.addEventListener('pointermove', function(e){ if (!drag) return; set(e.clientX / window.innerWidth * 100); });
+    sp.addEventListener('pointerup', function(){ drag = false; sp.classList.remove('drag'); });
+    sp.addEventListener('keydown', function(e){
+      var cur = parseFloat(getComputedStyle(side).getPropertyValue('--side-w')) || 30;
+      if (e.key === 'ArrowLeft') { set(cur - 3); e.preventDefault(); } if (e.key === 'ArrowRight') { set(cur + 3); e.preventDefault(); }
+    });
+  })();
+  (function(){
+    // 작업 페이지(위) 높이 %. 기본 40%, 15~75%
+    var sp = $('vsplit'), side = $('side'), drag = false;
+    var saved = parseFloat(store('wb.menuH')); if (saved >= 15 && saved <= 75) side.style.setProperty('--menu-h', saved + '%');
+    function set(pct){ pct = Math.min(75, Math.max(15, pct)); side.style.setProperty('--menu-h', pct + '%'); store('wb.menuH', pct); }
+    function pct(y){ var r = side.getBoundingClientRect(); return (y - r.top) / r.height * 100; }
+    sp.addEventListener('pointerdown', function(e){ drag = true; sp.classList.add('drag'); sp.setPointerCapture(e.pointerId); e.preventDefault(); });
+    sp.addEventListener('pointermove', function(e){ if (drag) set(pct(e.clientY)); });
+    sp.addEventListener('pointerup', function(){ drag = false; sp.classList.remove('drag'); });
+    sp.addEventListener('keydown', function(e){
+      var cur = parseFloat(getComputedStyle(side).getPropertyValue('--menu-h')) || 40;
+      if (e.key === 'ArrowUp') { set(cur - 3); e.preventDefault(); } if (e.key === 'ArrowDown') { set(cur + 3); e.preventDefault(); }
+    });
+  })();
+
+  /* ── 수정 요청 ── */
+  /* 레이아웃: 레이아웃 구조 가이드(docs/layout_structures)의 와이어프레임 9개에서 이미지로 고른다. 요청의 layout에 「2. 목록 (테이블)」처럼 남는다 */
+  var LAYOUTS = [[1, '대시보드', '01_dashboard'], [2, '목록 (테이블)', '02_table'], [3, '목록 + 상세 패널', '03_table_detail_panel'],
+    [4, '상태 모니터링', '04_status_monitor'], [5, '탭 + 장비 매트릭스', '05_tabs_matrix'], [6, '탭 + 목록 · 상세 분할', '06_tabs_list_detail'],
+    [7, '카드 선택', '07_card_select'], [8, '단계 진행', '08_stepper'], [9, '차트 + 필터 패널', '09_chart_filter']];
+  var LDIR = 'docs/layout_structures/';
+  function lname(l){ return l[0] + '. ' + l[1]; }
+  var layout = +store('wb.layout') || 0;
+  function renderLayout(){
+    var l = LAYOUTS[layout - 1];
+    $('lpick').classList.toggle('on', !!l);
+    $('lpickTxt').textContent = l ? '레이아웃 ' + lname(l) : '레이아웃 선택 안 함';
+    $('lpickImg').hidden = !l; if (l) $('lpickImg').src = LDIR + l[2] + '.png';
+    $('lnone').classList.toggle('on', !layout);
+    $('lgrid').innerHTML = LAYOUTS.map(function(x){
+      return '<button type="button" class="lopt' + (x[0] === layout ? ' on' : '') + '" data-n="' + x[0] + '" aria-pressed="' + (x[0] === layout) + '"><img src="' + LDIR + x[2] + '.png" alt="" loading="lazy"><span>' + esc(lname(x)) + '</span></button>';
+    }).join('');
+  }
+  function lpop(open){
+    var d = $('lpop');
+    if (open && !d.open) { d.showModal(); var on = $('lgrid').querySelector('.lopt.on'); if (on) on.focus(); }
+    if (!open && d.open) d.close();
+    $('lpick').setAttribute('aria-expanded', String(!!open));
+  }
+  function setLayout(n){ layout = n; store('wb.layout', String(n)); renderLayout(); }
+  $('lpick').onclick = function(){ lpop(true); };
+  $('lpopX').onclick = function(){ lpop(false); };
+  $('lnone').onclick = function(){ setLayout(0); lpop(false); };
+  $('lgrid').addEventListener('click', function(e){ var b = e.target.closest('.lopt'); if (!b) return; setLayout(+b.dataset.n); lpop(false); });
+  /* 바깥(어두운 부분)을 누르면 닫는다. Esc는 dialog가 닫는다 */
+  $('lpop').addEventListener('click', function(e){ if (e.target === this) lpop(false); });
+  $('lpop').addEventListener('close', function(){ $('lpick').setAttribute('aria-expanded', 'false'); $('lpick').focus(); });
+  renderLayout();
+
+  function fmt(t){ return (t || '').replace('T', ' ').slice(5, 16); }
+  /* 요청은 파일(프로젝트)별로 본다. fileKey가 없는 예전 요청은 UX AI TEST 요청이다 */
+  function sameFile(r){ return (r.fileKey || DEFAULT_KEY) === FILE.key; }
+  /* 요청 목록은 「변경 이력」에서 본다. 여기는 요청마다 Claude가 남긴 답변(처리 메모)을 보여 준다 */
+  var WAIT = {'대기': 'Claude가 아직 처리하지 않았습니다.', '진행 중': 'Claude가 처리하고 있습니다…', '보류': '보류되었습니다.', '완료': '처리했습니다.'};
+  /* 답변을 읽기 좋게: 줄바꿈은 그대로, 한 줄로 이어 쓴 메모는 문장(「. 」) · 「 / 」 · 「; 」에서 나눈다.
+     「- 」로 시작하거나 「 / 」로 나뉜 줄은 목록으로, 나머지는 문단으로 보여 준다 */
+  function noteHtml(s){
+    var paras = String(s).replace(/\r/g, '').split('\n');
+    if (paras.length === 1) paras = s.split(/(?<=[.。])\s+(?=\S)|;\s+/);
+    var html = '', list = [];
+    function flush(){ if (list.length) { html += '<ul>' + list.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>'; list = []; } }
+    paras.forEach(function(p){
+      p = p.trim(); if (!p) return;
+      if (/^[-•·]\s+/.test(p)) { list.push(p.replace(/^[-•·]\s+/, '')); return; }
+      var parts = p.split(/\s+\/\s+/);
+      var head = parts.shift();
+      if (parts.length && /:\s*(.+)$/.test(head)) { var m = head.match(/^(.*?:)\s*(.+)$/); flush(); html += '<p>' + esc(m[1]) + '</p>'; list.push(m[2]); parts.forEach(function(x){ list.push(x); }); flush(); return; }
+      if (parts.length) { flush(); [head].concat(parts).forEach(function(x){ list.push(x); }); flush(); return; }
+      flush(); html += '<p>' + esc(head) + '</p>';
+    });
+    flush();
+    return html;
+  }
+  function renderReqs(){
+    var items = (reqData.items || []).filter(sameFile);
+    if (!cur) { $('rcount').textContent = ''; $('reqs').innerHTML = '<li class="empty">프레임 목록이 들어오면 요청을 등록할 수 있습니다.</li>'; return; }
+    var list = filter === 'here' ? items.filter(function(r){ return r.nodeId === cur.id; })
+             : items.slice().sort(function(a, b){ return String(b.updatedAt || '').localeCompare(String(a.updatedAt || '')); }).slice(0, 10);
+    $('rcount').textContent = filter === 'here' ? '이 페이지 ' + list.length + '건' : '최근 ' + list.length + '건';
+    $('reqs').innerHTML = list.length ? list.map(function(r){
+      var stc = 'st-' + String(r.status).split(' ')[0];
+      return '<li class="req" data-id="' + esc(r.id) + '"><div class="h"><b>' + esc(r.id) + '</b><span class="st ' + stc + '">' + esc(r.status) + '</span>' +
+        (r.nodeId !== cur.id ? '<button class="go" data-go="' + esc(r.nodeId) + '">' + esc(r.frame) + ' ›</button>' : '') +
+        '<span class="sp"></span><span class="who">' + esc(r.author || '이름 없음') + '</span><span title="등록 ' + esc(r.createdAt) + ' / 변경 ' + esc(r.updatedAt) + '">' + fmt(r.updatedAt || r.createdAt) + '</span>' +
+        '</div><div class="q" title="' + esc(r.text) + '">요청 · ' + esc(String(r.text || '').split('\n')[0]) + '</div>' +
+        ((r.images || []).length ? '<div class="ims">' + r.images.map(function(m){ return '<a href="' + esc(m.file) + '" target="_blank" rel="noopener" title="' + esc(m.name || '첨부 이미지') + ' · 원본 보기"><img loading="lazy" alt="첨부 이미지" src="' + esc(m.small || m.file) + '"></a>'; }).join('') + '</div>' : '') +
+        '<div class="a' + (r.note ? '' : ' wait') + '">' + (r.note ? noteHtml(r.note) : esc(WAIT[r.status] || '')) + '</div></li>';
+    }).join('') : '<li class="empty">' + (filter === 'here' ? '이 페이지에 Claude 답변이 없습니다. 요청을 등록하면 처리 후 여기에 답변이 나옵니다.' : '요청이 없습니다.') + '</li>';
+  }
+  function post(body){
+    body.by = who();
+    return fetch(API, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body)})
+      .then(function(r){ return r.json(); }).then(function(d){ if (d.error) throw new Error(d.error); reqData = d; renderReqs(); if (cur) renderMenu(); return d; });
+  }
+  function say(t, err){ $('msg').textContent = t; $('msg').className = 'msg' + (err ? ' err' : ''); }
+  function add(){
+    var t = $('rtext').value.trim();
+    if (!online) { say('로컬 서버가 꺼져 있어 저장할 수 없습니다. Figma AI Run을 실행해 주세요.', true); return; }
+    if (!cur) { say('이 파일의 프레임 목록이 들어온 뒤 요청할 수 있습니다.', true); return; }
+    if (!t) { say('수정 내용을 입력해 주세요.', true); $('rtext').focus(); return; }
+    if (!who()) { say('상단의 「작업자」에 이름을 입력해 주세요. 누가 요청했는지 기록됩니다.', true); userInput.focus(); return; }
+    var ol = overlaps(cur.id);
+    if (ol.length && !confirm('다른 작업자가 이 프레임을 수정 요청 중입니다.\n\n' + olText(ol).replace(/ \/ /g, '\n') + '\n\n등록하면 Claude가 그 요청이 끝난 뒤 이어서 처리합니다. 등록할까요?')) return;
+    $('add').disabled = true;
+    var n = atts.length;
+    uploadAtts().then(function(images){
+      return post({action:'add', nodeId:cur.id, frame:cur.name, page:cur.page, fileKey:FILE.key, fileName:FILE.name, editable:cur.editable, type:$('rtype').value, priority:$('rpri').value, layout: layout ? lname(LAYOUTS[layout - 1]) : '', text:t, images:images});
+    })
+      .then(function(d){ $('rtext').value = ''; growText(); store('wb.draft.' + FILE.key, ''); clearAtts(); setLayout(0); lpop(false); say(d.items[0].id + ' 요청을 등록했습니다.' + (n ? ' (이미지 ' + n + '장)' : '')); filter = 'here'; syncFilter(); renderReqs(); })
+      .catch(function(e){ say('등록 실패: ' + e.message, true); })
+      .then(function(){ $('add').disabled = false; });
+  }
+  $('add').onclick = add;
+
+  /* 첨부 이미지: 원본은 그대로 올리고(이 PC에만 둔다), 작업 이력(깃 공유)용으로 긴 변 1600 JPG 사본을 브라우저에서 만들어 함께 올린다 */
+  var ATT_MAX = 5, ATT_SIZE = 10 * 1024 * 1024, ATT_TYPES = {'image/png':'png', 'image/jpeg':'jpg', 'image/gif':'gif', 'image/webp':'webp'};
+  var ATT_HINT = $('attHint').textContent, atts = [];
+  function renderAtts(){
+    $('attList').innerHTML = atts.map(function(a, i){
+      return '<span class="att" title="' + esc(a.file.name) + ' · ' + (a.file.size / 1048576).toFixed(1) + 'MB"><img src="' + a.url + '" alt="첨부 이미지 ' + (i + 1) + '"><button type="button" data-i="' + i + '" aria-label="첨부 이미지 ' + (i + 1) + ' 빼기">×</button></span>';
+    }).join('');
+    $('attAdd').hidden = atts.length >= ATT_MAX;
+    $('atts').hidden = !atts.length;
+    $('attHint').textContent = atts.length ? atts.length + ' / ' + ATT_MAX + '장' : ATT_HINT;
+  }
+  function addFiles(list){
+    var skip = [];
+    Array.prototype.forEach.call(list || [], function(f){
+      var nm = f.name || '붙여넣은 이미지';
+      if (!ATT_TYPES[f.type]) skip.push(nm + ': 이미지(PNG · JPG · GIF · WEBP)가 아님');
+      else if (f.size >= ATT_SIZE) skip.push(nm + ': 10MB 이상');
+      else if (atts.length >= ATT_MAX) skip.push(nm + ': 최대 5장');
+      else atts.push({file:f, url:URL.createObjectURL(f)});
+    });
+    renderAtts();
+    if (skip.length) say('첨부하지 못함 · ' + skip.join(' / '), true);
+  }
+  function clearAtts(){ atts.forEach(function(a){ URL.revokeObjectURL(a.url); }); atts = []; renderAtts(); }
+  function smallCopy(a){
+    return new Promise(function(res){
+      var im = new Image();
+      im.onload = function(){
+        var k = Math.min(1, 1600 / Math.max(im.naturalWidth, im.naturalHeight)), cv = document.createElement('canvas');
+        cv.width = Math.max(1, Math.round(im.naturalWidth * k)); cv.height = Math.max(1, Math.round(im.naturalHeight * k));
+        var g = cv.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, cv.width, cv.height); g.drawImage(im, 0, 0, cv.width, cv.height);
+        cv.toBlob(function(b){ res(b); }, 'image/jpeg', 0.85);
+      };
+      im.onerror = function(){ res(null); };
+      im.src = a.url;
+    });
+  }
+  function upload(blob, ext){
+    return fetch('/api/attach?ext=' + ext, {method:'POST', headers:{'Content-Type':'application/octet-stream'}, body:blob})
+      .then(function(r){ return r.json(); }).then(function(d){ if (d.error) throw new Error(d.error); return d.tmp; });
+  }
+  /* 한 장씩 원본 → 사본 순서로 올린다. 결과 [{name, tmp, small}]를 요청 등록에 넘긴다 */
+  function uploadAtts(){
+    var out = [];
+    return atts.reduce(function(p, a, i){
+      return p.then(function(){
+        say('이미지 올리는 중 ' + (i + 1) + ' / ' + atts.length + '…');
+        var x = {name:a.file.name || ''};
+        return upload(a.file, ATT_TYPES[a.file.type]).then(function(t){ x.tmp = t; return smallCopy(a); })
+          .then(function(b){ return b ? upload(b, 'jpg') : ''; }).then(function(s){ x.small = s; out.push(x); });
+      });
+    }, Promise.resolve()).then(function(){ return out; });
+  }
+  $('attAdd').onclick = function(){ $('attFile').click(); };
+  $('attFile').onchange = function(){ addFiles(this.files); this.value = ''; };
+  $('attList').addEventListener('click', function(e){
+    var b = e.target.closest('button[data-i]'); if (!b) return;
+    var a = atts.splice(+b.dataset.i, 1)[0]; if (a) URL.revokeObjectURL(a.url); renderAtts();
+  });
+  $('rtext').addEventListener('paste', function(e){
+    var fs = Array.prototype.filter.call((e.clipboardData && e.clipboardData.files) || [], function(f){ return /^image\//.test(f.type); });
+    if (fs.length) { e.preventDefault(); addFiles(fs); }
+  });
+  (function(){
+    var form = $('rtext').closest('.form'), depth = 0;
+    function hasFiles(e){ return e.dataTransfer && Array.prototype.indexOf.call(e.dataTransfer.types || [], 'Files') >= 0; }
+    form.addEventListener('dragenter', function(e){ if (!hasFiles(e)) return; e.preventDefault(); depth++; form.classList.add('drop'); });
+    form.addEventListener('dragover', function(e){ if (hasFiles(e)) e.preventDefault(); });
+    form.addEventListener('dragleave', function(){ if (--depth <= 0) { depth = 0; form.classList.remove('drop'); } });
+    form.addEventListener('drop', function(e){ if (!hasFiles(e)) return; e.preventDefault(); depth = 0; form.classList.remove('drop'); addFiles(e.dataTransfer.files); });
+  })();
+  $('rtext').addEventListener('keydown', function(e){ if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); add(); } });
+  /* 입력창은 글 길이에 맞춰 늘어난다(최대 5줄 = CSS max-height, 그 뒤로는 스크롤) */
+  function growText(){ var t = $('rtext'); t.style.height = 'auto'; t.style.height = Math.min(parseFloat(getComputedStyle(t).maxHeight) || 9999, t.scrollHeight) + 'px'; }
+  /* 우선순위 칩 색: 보통 초록 · 높음 빨강 */
+  function priColor(){ $('rpri').dataset.v = $('rpri').value; }
+  $('rpri').addEventListener('change', priColor); priColor();
+  $('rtext').addEventListener('input', function(){ store('wb.draft.' + FILE.key, $('rtext').value); growText(); });
+  $('reqs').addEventListener('click', function(e){
+    var g = e.target.closest('[data-go]'); if (g) go(g.dataset.go);
+  });
+  function syncFilter(){ Array.prototype.forEach.call($('rfilter').children, function(b){ b.classList.toggle('on', b.dataset.f === filter); }); }
+  $('rfilter').addEventListener('click', function(e){ var b = e.target.closest('button'); if (!b) return; filter = b.dataset.f; syncFilter(); renderReqs(); });
+  $('copy').onclick = function(){
+    var open = (reqData.items || []).filter(function(r){ return sameFile(r) && r.status !== '완료' && r.status !== '보류'; });
+    if (!open.length) { toast('미완료 요청이 없습니다'); return; }
+    var edPages = CAT.pages.filter(function(pg){ return pg.editable; }).map(function(pg){ return pg.name; }).join(', ') || '없음';
+    var txt = '[Figma 수정 요청] ' + FILE.name + ' (fileKey ' + FILE.key + ') · 수정은 ' + edPages + ' 페이지만, 다른 페이지 요청은 「보류」\n' +
+      '아래 요청을 Figma에 반영하고, 처리 후 workbench/edit_requests.json의 상태를 「완료」로 바꾸고 처리 메모를 남겨줘. 반영한 프레임은 projects/' + FILE.key + '/shots 캡처도 갱신해줘.\n\n' +
+      open.slice().reverse().map(function(r){ var pg = r.page || (byId[r.nodeId] ? byId[r.nodeId].page : edPage()); return '- ' + r.id + ' [' + pg + ' › ' + r.frame + ' · ' + r.nodeId + '] ' + r.type + (r.priority === '높음' ? ' · 우선순위 높음' : '') + (r.layout ? ' · 레이아웃 ' + r.layout : '') + (r.author ? ' · 요청자 ' + r.author : '') + '\n  ' + r.text.replace(/\n/g, '\n  ') + ((r.images || []).length ? '\n  첨부 이미지: ' + r.images.map(function(m){ return m.file; }).join(', ') : ''); }).join('\n');
+    (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject())
+      .then(function(){ toast(open.length + '건 요청문을 복사했습니다'); })
+      .catch(function(){ window.prompt('아래 내용을 복사해 주세요', txt); });
+  };
+
+  function pollShots(){
+    fetch('projects/' + FILE.key + '/shots_meta.json', {cache:'no-store'}).then(function(r){ return r.ok ? r.json() : {}; }).then(function(m){
+      var before = cur && shotMeta[cur.id] ? shotMeta[cur.id].at : '';
+      shotMeta = m || {};
+      var after = cur && shotMeta[cur.id] ? shotMeta[cur.id].at : '';
+      if (cur && after && after !== before) {
+        /* 보고 있는 프레임이 Figma에서 바뀌었으면 스크롤 위치를 지키며 이미지만 교체 */
+        var m2 = shotMeta[cur.id]; if (m2.w) { cur.w = m2.w; cur.h = m2.h; }
+        var sl = stage.scrollLeft, st = stage.scrollTop;
+        img.onload = function(){ applyZoom(); stage.scrollLeft = sl; stage.scrollTop = st; img.onload = null; };
+        $('noshot').hidden = true; img.style.display = ''; img.alt = cur.name + ' 프레임 캡처'; img.src = shotSrc(cur); $('cap').textContent = capText(cur);
+        if (before && !live) toast('Figma 변경 사항을 반영했습니다');
+      }
+    }).catch(function(){});
+  }
+  function poll(first){
+    if (location.protocol === 'file:') { if (first) setSrv(false); return; }
+    pollShots();
+    fetch('/api/history', {cache:'no-store'}).then(function(r){ return r.ok ? r.json() : null; }).then(function(h){
+      if (!h) return; var sig = JSON.stringify((h.items || []).map(function(x){ return x.id + x.status + x.at; }));
+      if (sig !== HIST.sig) { HIST = { items: h.items || [], pcSlug: h.pcSlug || '', sig: sig }; if (cur) renderTarget(); }
+    }).catch(function(){});
+    fetch(API, {cache:'no-store'}).then(function(r){ if (!r.ok) throw 0; return r.json(); }).then(function(d){
+      if (!online) setSrv(true);
+      if (d.version !== reqData.version) { reqData = d; renderReqs(); if (cur) renderMenu(); }
+    }).catch(function(){ if (first || online) setSrv(false); });
+  }
+  function setSrv(on){
+    online = on;
+    $('srv').textContent = on ? '로컬 서버 연결됨' : '서버 없음 · 요청 저장 불가';
+    $('srv').className = 'badge ' + (on ? 'on' : 'off');
+    $('add').disabled = !on;
+    if (!on) say('요청을 저장하려면 Figma AI Run 실행 후 http://localhost:8765/Figma_Workbench.html 에서 열어 주세요.', true);
+    else say('Ctrl + Enter로 등록');
+    renderReqs();
+  }
+
+  /* 시작: 시작 안내에 넣은 Figma 링크의 파일을 연다 */
+  function parseFig(u){
+    var m = String(u || '').match(/figma\.com\/(?:design|file|proto)\/([A-Za-z0-9]+)(?:\/[^?#]*)?(?:\?([^#]*))?/); if (!m) return null;
+    var node = ((m[2] || '').match(/(?:^|&)node-id=([0-9]+[-:][0-9]+)/) || [])[1] || '';
+    return { key: m[1], node: node.replace('-', ':') };
+  }
+  function start(){
+    var h = location.hash.slice(1).replace('-', ':');
+    var ed = pages.filter(function(x){ return x.editable; });
+    /* 처음 보는 프레임: 작업 링크가 가리키는 프레임 → 그 링크의 페이지(수정 가능 페이지) 첫 프레임 */
+    var home = byId[FILE.node] || ed[0] || pages[0];
+    var saved = store('wb.cur.' + FILE.key) || (FILE.isDefault ? store('wb.cur') : '');
+    try { openKeys = JSON.parse(store('wb.open.' + FILE.key) || '{}') || {}; } catch(x){ openKeys = {}; }
+    if (!home) { showWaiting(); return; }
+    go(byId[h] ? h : (byId[saved] ? saved : home.id), false);
+    if (live) $('cap').textContent = capText(cur);
+  }
+  /* 목록이 아직 없으면: 무거운 실시간 보기는 열지 않고, 목록 만드는 두 가지 방법을 보여 준다 */
+  function catJob(){ return jobs.filter(function(j){ return j.kind === 'catalog' && (j.status === '대기' || j.status === '진행 중'); })[0]; }
+  function showWaiting(){
+    cur = null;
+    $('count').textContent = FILE.name;
+    $('d1').innerHTML = ''; $('d1').disabled = true; $('tsearch').disabled = true; $('edBar').hidden = true;
+    var j = catJob();
+    $('menu').innerHTML = '<div class="mgroup">' + esc(FILE.name) + '</div><p class="ro">이 파일의 프레임 목록이 아직 없습니다. 둘 중 하나로 만들어 주세요.</p>' +
+      '<p class="msg"><b>① Claude에게 요청 (권장)</b> · 내 Figma 앱에 부담 없이 Claude가 Figma 클라우드에서 전체 목록을 만듭니다. Claude가 요청 감시 중이어야 합니다.</p>' +
+      (j ? '<p class="msg">요청됨(' + esc(j.id) + ' · ' + esc(j.status) + ') · 목록이 들어오면 자동으로 바뀝니다.</p>' : '<div class="actions"><button class="btn primary" id="askCat">Claude에게 목록 만들기 요청</button></div>') +
+      '<p class="msg"><b>② Figma 플러그인</b> · Figma 데스크톱 앱에서 이 파일의 작업 페이지를 열고 <b>Plugins › Development › Common UX Sync</b>를 실행하면 그 페이지 목록이 바로 들어옵니다.</p>';
+    $('crumb').innerHTML = '<b>' + esc(FILE.name) + '</b><code>' + esc(FILE.key) + '</code>';
+    $('openFig').href = 'https://www.figma.com/design/' + FILE.key + '/file' + (FILE.node ? '?node-id=' + FILE.node.replace(':', '-') : '');
+    stage.classList.remove('is-live'); img.removeAttribute('src'); $('live').removeAttribute('src');
+    $('noshot').hidden = false; $('noshot').innerHTML = '<b>프레임 목록을 기다리는 중</b><p>왼쪽에서 목록 만들기를 요청해 주세요. 파일을 바로 보려면 「Figma ↗」로 엽니다.</p>';
+    $('cap').textContent = ''; $('meta').textContent = '';
+    $('tgt').textContent = '-'; $('tgtId').textContent = ''; $('tgtPage').textContent = FILE.name; $('roNote').hidden = true;
+    var b = $('askCat'); if (b) b.onclick = function(){
+      if (!online) { toast('서버가 꺼져 있어 요청할 수 없습니다'); return; }
+      fetch('/api/jobs', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'add', kind: 'catalog', fileKey: FILE.key, link: FILE.link || '', name: FILE.name, by: who() }) })
+        .then(function(r){ return r.json(); }).then(function(d){ if (d.error) throw new Error(d.error); toast('Claude에게 목록 만들기를 요청했습니다'); return loadJobs(); }).then(function(){ if (!cur) showWaiting(); })
+        .catch(function(e){ toast('요청 실패: ' + e.message); });
+    };
+    renderReqs();
+  }
+  function loadLabels(){
+    return fetch('projects/' + FILE.key + '/labels.json', { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(l){ WB.titles = (l && l.titles) || {}; label = (l && l.labels) || {}; }).catch(function(){});
+  }
+  function loadCatalog(first){
+    /* 서버 API가 없거나(예전 서버) 실패하면 프로젝트 폴더의 catalog.json을 직접 읽는다 */
+    var direct = function(){ return fetch('projects/' + FILE.key + '/catalog.json', { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; }); };
+    return fetch('/api/catalog?key=' + encodeURIComponent(FILE.key), { cache: 'no-store' })
+      .then(function(r){ return r.ok ? r.json() : direct(); }, direct).then(function(c){
+      if (!c || !c.pages) { if (first) showWaiting(); else if (!cur) showWaiting(); return false; }
+      /* 작업 페이지만 바뀐 목록(다른 창 · 이 창의 「작업 페이지로」)도 다시 그린다 */
+      if (CAT && CAT.savedAt === c.savedAt && edId(CAT) === edId(c) && !first) return true;
+      FILE.name = c.fileName || FILE.name;
+      var keep = cur && cur.id; build(c);
+      if (keep && byId[keep]) go(keep, false); else start();
+      if (!first) toast('페이지 · 프레임 목록을 받았습니다');
+      return true;
+    }).catch(function(){ if (first) showWaiting(); return false; });
+  }
+  window.addEventListener('hashchange', function(){ var id = location.hash.slice(1).replace('-', ':'); if (byId[id] && cur && id !== cur.id) go(id, false); });
+  /* ── 프로젝트 탭: 열어 둔 프로젝트 목록(wb.tabs)은 이 브라우저의 모든 창이 같이 쓰고, 보고 있는 프로젝트는 창마다 주소(?p=)로 정한다 ── */
+  var PROJ = [], TABS = [];
+  function projOf(k){ return PROJ.filter(function(p){ return p.key === k; })[0]; }
+  function pname(k){ var p = projOf(k); return (p && p.name) || (k === FILE.key ? FILE.name : 'Figma 파일 ' + k.slice(0, 6)); }
+  function readTabs(){ try { TABS = JSON.parse(store('wb.tabs') || '[]') || []; } catch(x){ TABS = []; } TABS = TABS.filter(function(k){ return /^[A-Za-z0-9]{10,64}$/.test(k); }); }
+  function saveTabs(){ store('wb.tabs', JSON.stringify(TABS)); }
+  function purl(k){ return 'Figma_Workbench.html?p=' + encodeURIComponent(k); }
+  /* 탭 색: 파일 키로 정한다(창 · 순서가 달라도 같은 프로젝트는 같은 색) */
+  var TAB_COLORS = ['#2747d8', '#0f8a6a', '#d9480f', '#7c3aed', '#c2255c', '#0b7285', '#b08900'];
+  function tcolor(k){ var h = 0; for (var i = 0; i < k.length; i++) h = (h * 31 + k.charCodeAt(i)) >>> 0; return TAB_COLORS[h % TAB_COLORS.length]; }
+  function renderTabs(){
+    $('ptabList').innerHTML = TABS.map(function(k){
+      var p = projOf(k), on = k === FILE.key, ed = p && p.editablePageName;
+      return '<a class="ptab' + (on ? ' on' : '') + '" style="--tc:' + tcolor(k) + '" role="tab" aria-selected="' + on + '" href="' + purl(k) + '" data-k="' + esc(k) + '" title="' + esc(pname(k) + (ed ? ' · 작업 페이지 ' + ed : '') + ' — Ctrl+클릭: 새 창') + '">' +
+        '<i class="dot" aria-hidden="true"></i><span class="nm">' + esc(pname(k)) + '</span>' + (ed ? '<small>' + esc(ed) + '</small>' : '') +
+        (TABS.length > 1 ? '<button type="button" class="x" data-x="' + esc(k) + '" aria-label="' + esc(pname(k)) + ' 탭 닫기">×</button>' : '') + '</a>';
+    }).join('');
+    var rest = PROJ.filter(function(p){ return TABS.indexOf(p.key) < 0; });
+    $('pList').innerHTML = rest.length ? rest.map(function(p){
+      return '<button type="button" class="it" data-k="' + esc(p.key) + '"><span><i class="dot" style="background:' + tcolor(p.key) + '"></i>' + esc(p.name || 'Figma 파일 ' + p.key.slice(0, 6)) + '</span><small>' +
+        esc((p.editablePageName ? '작업 페이지 ' + p.editablePageName : '작업 페이지 없음') + (p.hasCatalog ? '' : ' · 프레임 목록 없음')) + '</small></button>';
+    }).join('') : '<div class="none">다른 프로젝트가 없습니다. 아래에 Figma 파일 링크를 넣으면 추가됩니다.</div>';
+  }
+  function openTab(k, newWin){
+    if (TABS.indexOf(k) < 0) { TABS.push(k); saveTabs(); }
+    if (newWin) window.open(purl(k), '_blank'); else location.href = purl(k);
+  }
+  $('ptabList').addEventListener('click', function(e){
+    var x = e.target.closest('[data-x]');
+    if (x) {
+      e.preventDefault();
+      var k = x.dataset.x, i = TABS.indexOf(k); if (i < 0 || TABS.length < 2) return;
+      TABS.splice(i, 1); saveTabs();
+      if (k === FILE.key) location.href = purl(TABS[Math.min(i, TABS.length - 1)]); else renderTabs();
+    }
+  });
+  function ppop(open){ $('ppop').hidden = !open; $('pNote').hidden = true; $('ptAdd').setAttribute('aria-expanded', open); if (open) { $('ppop').style.left = Math.min($('ptAdd').offsetLeft, innerWidth - $('ppop').offsetWidth - 8) + 'px'; } }
+  $('ptAdd').addEventListener('click', function(){ ppop($('ppop').hidden); });
+  document.addEventListener('click', function(e){ if (!$('ppop').hidden && !e.target.closest('#ppop,#ptAdd')) ppop(false); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !$('ppop').hidden) ppop(false); });
+  $('pList').addEventListener('click', function(e){ var b = e.target.closest('[data-k]'); if (b) openTab(b.dataset.k, e.ctrlKey || e.metaKey); });
+  $('pForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var f = parseFig($('pLink').value); if (!f) { toast('Figma 파일 링크가 아닙니다'); return; }
+    var hash = f.node ? '#' + f.node.replace(':', '-') : '';
+    /* 탭 = 프로젝트(Figma 파일). 지금 보는 파일의 링크면 아무것도 바꾸지 않고, 페이지는 왼쪽에서 바꾸라고 안내한다 */
+    if (f.key === FILE.key) {
+      $('pNote').hidden = false;
+      $('pNote').textContent = '이미 열린 프로젝트(' + FILE.name + ')입니다. 같은 파일의 다른 페이지는 왼쪽 「구분 (페이지)」에서 고르고 「이 페이지를 작업 페이지로」를 누르세요.';
+      return;
+    }
+    if (projOf(f.key)) { if (TABS.indexOf(f.key) < 0) { TABS.push(f.key); saveTabs(); } location.href = purl(f.key) + hash; return; }
+    fetch('/api/projects', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'add', link: $('pLink').value.trim() }) })
+      .then(function(r){ return r.json(); }).then(function(d){ if (d.error) throw new Error(d.error); TABS.push(d.project.key); saveTabs(); location.href = purl(d.project.key) + hash; })
+      .catch(function(e){ toast('추가하지 못했습니다: ' + e.message); });
+  });
+  /* 다른 창에서 탭을 열거나 닫으면 이 창의 탭 줄도 맞춘다 */
+  window.addEventListener('storage', function(e){ if (e.key === 'wb.tabs') { readTabs(); if (TABS.indexOf(FILE.key) < 0) TABS.push(FILE.key); renderTabs(); } });
+
+  /* 작업 파일 정하기: 주소의 ?p= → 마지막으로 본 탭 → 시작 안내 링크의 파일 → 기본(UX AI TEST)
+     → 그 프로젝트의 라벨 · 캡처 메타 · 목록 · 작업 대기열을 불러온다 */
+  var getJ = function(u){ return fetch(u, { cache: 'no-store' }).then(function(r){ return r.json(); }).catch(function(){ return null; }); };
+  (location.protocol === 'file:' ? Promise.reject() : Promise.all([getJ('/api/setup'), getJ('/api/projects')]))
+    .then(function(r){
+      var sf = parseFig(r[0] && r[0].state && r[0].state.figmaUrl);
+      PROJ = (r[1] && r[1].projects) || [];
+      readTabs();
+      var want = new URLSearchParams(location.search).get('p') || '', last = store('wb.proj') || '';
+      var key = /^[A-Za-z0-9]{10,64}$/.test(want) ? want : (TABS.indexOf(last) >= 0 ? last : (sf ? sf.key : DEFAULT_KEY));
+      var p = projOf(key), pf = parseFig(p && p.link) || (sf && sf.key === key ? sf : null);
+      FILE = { key: key, name: (p && p.name) || (key === DEFAULT_KEY ? 'UX AI TEST' : 'Figma 파일 ' + key.slice(0, 6)), isDefault: key === DEFAULT_KEY,
+        node: pf ? pf.node : '', link: (p && p.link) || (sf && sf.key === key ? r[0].state.figmaUrl : '') };
+      if (sf && TABS.indexOf(sf.key) < 0 && !TABS.length) TABS.push(sf.key);
+      if (TABS.indexOf(key) < 0) TABS.push(key);
+      saveTabs(); store('wb.proj', key);
+      if (want !== key) history.replaceState(null, '', purl(key) + location.hash);
+    }, function(){ TABS = [FILE.key]; })
+    .then(function(){
+      renderTabs(); document.title = FILE.name + ' · Figma Workbench';
+      $('rtext').value = store('wb.draft.' + FILE.key) || '';
+      growText();
+      return Promise.all([loadLabels(), loadJobs()]);
+    })
+    .then(function(){ poll(true); return new Promise(function(res){ setTimeout(res, 300); }); })
+    .then(function(){ return loadCatalog(true); })
+    .then(function(){
+      setInterval(function(){ if (!document.hidden) poll(false); }, 3000);
+      /* 플러그인 · Claude가 목록이나 캡처를 새로 보내면(다른 PC · 파일 수정 후) 반영 */
+      setInterval(function(){ if (!document.hidden) { loadCatalog(false); loadJobs(); } }, 5000);
+    });
+})();
+</script>
+<script src="appnav.js" defer></script>
+</body>
+</html>

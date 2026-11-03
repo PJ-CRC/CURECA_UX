@@ -1,0 +1,23 @@
+{
+  "id": "assay-pack",
+  "name": "Assay Pack Setting",
+  "fileKey": "etCQFF3CTf1EA6C79d4BBf",
+  "fileName": "UX AI TEST",
+  "env": "T-IOS",
+  "start": "260:30414",
+  "frames": [
+    { "nodeId": "260:30414", "name": "TI-STN-08", "page": "SH.L" },
+    { "nodeId": "344:31083", "name": "TI-STN-08-P", "page": "SH.L" },
+    { "nodeId": "517:31943", "name": "TI-STN-08-01", "page": "SH.L" }
+  ],
+  "text": "파일 목록 · 검색(파일명 · 형식 · 기간) · 삭제\nImport → 업로드 팝업(정상 · 같은 버전 · 양식 오류 · 형식 오류 시나리오) → 업로드 데이터 확인\nT-IOS / L-IOS(조회 전용) 사용자 전환",
+  "entry": "index.html",
+  "format": "single",
+  "width": 1920,
+  "height": 1080,
+  "by": "Claude",
+  "jobId": "",
+  "createdAt": "2026-10-21T17:42:57+09:00",
+  "updatedAt": "2026-10-30T10:30:00+09:00",
+  "syncedAt": "2026-10-30T10:30:00+09:00"
+}

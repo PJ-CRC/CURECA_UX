@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>레이아웃 구조 가이드</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root{
+  --bg:#f5f6f8; --surface:#ffffff; --surface-2:#f1f3f6; --ink:#16202f; --ink-2:#4a5466; --ink-3:#7c8597;
+  --line:#e2e6ec; --accent:#2747d8; --accent-soft:#e8ecff; --tag:#eef1f5;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1115; --surface:#171a20; --surface-2:#1e232b; --ink:#e8ebf0; --ink-2:#b4bcc8; --ink-3:#8590a0;
+    --line:#2a3039; --accent:#8ea2ff; --accent-soft:#232c52; --tag:#232932;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1115; --surface:#171a20; --surface-2:#1e232b; --ink:#e8ebf0; --ink-2:#b4bcc8; --ink-3:#8590a0;
+  --line:#2a3039; --accent:#8ea2ff; --accent-soft:#232c52; --tag:#232932;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:16px}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.7 Pretendard,-apple-system,"Segoe UI","Malgun Gothic",sans-serif;word-break:keep-all;overflow-wrap:break-word}
+/* 괄호 설명은 쪼개지지 않게: 한 줄에 안 들어가면 괄호 전체가 다음 줄로 */
+.nb{display:inline-block;font-style:normal}
+a{color:var(--accent)}
+code{font:13px Consolas,"SF Mono",monospace;background:var(--tag);padding:1px 6px;border-radius:5px}
+.page{display:grid;grid-template-columns:240px minmax(0,1fr);gap:40px;max-width:1280px;margin:0 auto;padding:40px 24px 80px}
+/* 목차 */
+.toc{position:sticky;top:24px;align-self:start;font-size:13.5px}
+.toc b{display:block;font-size:12px;color:var(--ink-3);letter-spacing:.04em;margin:0 0 8px}
+.toc a{display:block;padding:5px 10px;border-radius:7px;color:var(--ink-2);text-decoration:none}
+.toc a:hover{background:var(--surface-2);color:var(--ink)}
+.toc .sub{padding-left:22px;font-size:13px}
+/* 본문 */
+header h1{font-size:30px;line-height:1.3;margin:0 0 10px;letter-spacing:-.01em}
+.lead{color:var(--ink-2);margin:0 0 18px;max-width:760px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 8px}
+.meta span{font-size:12.5px;padding:3px 10px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--ink-2)}
+section{margin-top:56px}
+h2{font-size:22px;margin:0 0 6px;letter-spacing:-.01em}
+h3{font-size:15px;margin:22px 0 8px}
+.desc{color:var(--ink-2);margin:0 0 16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--surface-2);font-size:12.5px;color:var(--ink-2);font-weight:700;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.n{white-space:nowrap;font-variant-numeric:tabular-nums}
+/* 공통 틀 수치 */
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.spec .nb{white-space:nowrap}
+.spec{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.spec b{display:block;font-size:24px;line-height:1.2;font-variant-numeric:tabular-nums}
+.spec span{display:block;margin-top:4px;font-size:12.5px;line-height:1.55;color:var(--ink-3)}
+/* 레이아웃 */
+.layout{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.layout figure{margin:0;background:#d5d9df;padding:20px;border-bottom:1px solid var(--line)}
+.layout img{display:block;width:100%;height:auto;border-radius:6px;box-shadow:0 6px 24px rgba(15,23,41,.18)}
+.layout .body{padding:22px 24px 26px}
+.layout .head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;margin:0 0 6px}
+.layout .head h2{margin:0}
+.layout .from{font-size:12.5px;color:var(--ink-3)}
+.use{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:14px 0 4px}
+.use div{background:var(--surface-2);border-radius:10px;padding:12px 14px;font-size:14px}
+.use b{display:block;font-size:12.5px;color:var(--ink-3);margin-bottom:2px}
+/* 테이블 텍스트 정렬: 정렬별 해당 요소 */
+.align{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.align>div{background:var(--surface-2);border-radius:10px;padding:14px 16px;font-size:14px}
+.align b{display:block;font-size:14px;margin-bottom:6px}
+.align ul{margin:0;padding-left:18px}
+.align li{margin:3px 0;line-height:1.55}
+ul.rules{margin:6px 0 0;padding-left:20px}
+ul.rules li{margin:3px 0}
+.pick td:first-child{font-weight:600}
+footer{margin-top:64px;color:var(--ink-3);font-size:13px}
+@media (max-width:900px){
+  .page{grid-template-columns:1fr;gap:24px;padding:24px 16px 64px}
+  .toc{position:static;display:flex;flex-wrap:wrap;gap:4px}
+  .toc b{width:100%}
+  .toc .sub{padding-left:10px}
+  .layout figure{padding:10px}
+  .layout .body{padding:18px 16px 20px}
+  header h1{font-size:24px}
+}
+</style>
+</head>
+<body>
+<div class="page">
+<nav class="toc" aria-label="목차">
+  <b>목차</b>
+  <a href="#overview">개요</a>
+  <a href="#shell">공통 틀</a>
+  <a href="#pick">레이아웃 고르기</a>
+  <a class="sub" href="#l1">1. 대시보드</a>
+  <a class="sub" href="#l2">2. 목록 (테이블)</a>
+  <a class="sub" href="#align">　· 테이블 텍스트 정렬</a>
+  <a class="sub" href="#l3">3. 목록 + 상세 패널</a>
+  <a class="sub" href="#l4">4. 상태 모니터링</a>
+  <a class="sub" href="#l5">5. 탭 + 장비 매트릭스</a>
+  <a class="sub" href="#l6">6. 탭 + 목록 · 상세 분할</a>
+  <a class="sub" href="#l7">7. 카드 선택</a>
+  <a class="sub" href="#l8">8. 단계 진행</a>
+  <a class="sub" href="#l9">9. 차트 + 필터 패널</a>
+</nav>
+
+<main>
+<header id="overview">
+  <h1>레이아웃 구조 가이드</h1>
+  <p class="lead">CURECA 화면을 새로 설계할 때 공통으로 쓰는 기본 레이아웃 9가지입니다. 실제 화면에서 영역 위치와 크기를 재서 정리했습니다. 새 화면은 먼저 아래 「레이아웃 고르기」에서 가까운 유형을 고른 뒤, 그 유형의 영역 크기와 규칙을 따릅니다.</p>
+  <div class="meta">
+    <span>기준 해상도 1920 × 1031</span>
+    <span>최종 작성일 2026-10-27</span>
+  </div>
+</header>
+
+<section id="shell">
+  <h2>공통 틀</h2>
+  <p class="desc">모든 레이아웃이 같은 틀 위에 올라갑니다. 본문만 레이아웃별로 다릅니다.</p>
+  <div class="specs">
+    <div class="spec"><b>218px</b><span>좌측 사이드바 <em class="nb">(메뉴 1 · 2단, 하단 사용자)</em></span></div>
+    <div class="spec"><b>48px</b><span>상단 상태바 <em class="nb">(장비 상태 · 이벤트)</em></span></div>
+    <div class="spec"><b>34px</b><span>페이지 제목 <em class="nb">(상태바 아래 9px)</em></span></div>
+    <div class="spec"><b>31px</b><span>본문 좌우 여백 <em class="nb">(본문 폭 1639px)</em></span></div>
+    <div class="spec"><b>16px</b><span>영역 사이 간격 <em class="nb">(카드 · 바)</em></span></div>
+  </div>
+  <h3>배치 원칙</h3>
+  <ul class="rules">
+    <li>본문 배경은 옅은 회색, 영역(검색 바 · 테이블 · 카드)은 흰 카드로 올립니다.</li>
+    <li>폭이 고정인 보조 영역(우측 패널 · 게이지 · 상세 패널)과 화면 폭에 따라 늘어나는 주 영역(테이블 · 차트 · 매트릭스)을 나눕니다.</li>
+    <li>위에서 아래로 「제목 → 검색 · 필터 → 건수 · 일괄 작업 → 본문 → 페이지네이션 · 하단 버튼」 순서를 지킵니다.</li>
+    <li>화면 단위 버튼(저장 · 다음)은 오른쪽 아래, 영역 단위 버튼(Add · Import)은 그 영역의 오른쪽 위에 둡니다.</li>
+  </ul>
+</section>
+
+<section id="pick">
+  <h2>레이아웃 고르기</h2>
+  <p class="desc">화면이 하는 일에 맞춰 고릅니다.</p>
+  <div class="tbl"><table class="pick">
+    <thead><tr><th>화면이 하는 일</th><th>레이아웃</th><th>기준 화면</th></tr></thead>
+    <tbody>
+      <tr><td>여러 상태를 한눈에 요약</td><td><a href="#l1">1. 대시보드</a></td><td>Dashboard</td></tr>
+      <tr><td>항목을 찾아 목록으로 보고 상세 화면으로 이동</td><td><a href="#l2">2. 목록 (테이블)</a></td><td>Tube Setting</td></tr>
+      <tr><td>목록을 유지한 채 상세를 바로 확인 · 수정</td><td><a href="#l3">3. 목록 + 상세 패널</a></td><td>Assay Pack Setting</td></tr>
+      <tr><td>진행 중인 작업의 진행률을 반복 카드로 표시</td><td><a href="#l4">4. 상태 모니터링</a></td><td>Test Status</td></tr>
+      <tr><td>여러 장비 · 모듈을 같은 항목으로 비교</td><td><a href="#l5">5. 탭 + 장비 매트릭스</a></td><td>Instrument</td></tr>
+      <tr><td>분류 목록에서 하나를 골라 오른쪽에서 자세히</td><td><a href="#l6">6. 탭 + 목록 · 상세 분할</a></td><td>Inventory (Consumables)</td></tr>
+      <tr><td>여러 작업 중 하나를 고르는 첫 화면</td><td><a href="#l7">7. 카드 선택</a></td><td>Carrier Setup</td></tr>
+      <tr><td>순서가 정해진 작업을 단계별로 안내</td><td><a href="#l8">8. 단계 진행</a></td><td>Carrier Setup (Socket into tray)</td></tr>
+      <tr><td>기간 · 항목을 바꿔 가며 추이를 분석</td><td><a href="#l9">9. 차트 + 필터 패널</a></td><td>Test Analytics</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="l1"><article class="layout">
+  <figure><img src="01_dashboard.png" alt="대시보드 와이어프레임: 좌측 본문에 요약 지표 · 진행 현황 · 장비 상태, 우측 432px 열에 필요 소모품 · 폐기물 상태" loading="lazy"></figure>
+  <div class="body">
+    <div class="head"><h2>1. 대시보드</h2><span class="from">기준 화면: Dashboard · 1920 × 1031</span></div>
+    <p class="desc">현황을 한 화면에 요약합니다. 가변 폭 본문 열과 432px 고정 우측 열의 2열 구조입니다. 페이지 제목 없이 바로 카드가 시작합니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>영역</th><th>크기</th><th>내용 · 규칙</th></tr></thead>
+      <tbody>
+        <tr><td>요약 지표 카드</td><td class="n">1190 × 146</td><td>KPI 4개 (Orders · Pending · In Progress · Completed)</td></tr>
+        <tr><td>진행 현황 패널</td><td class="n">1190 × 276</td><td>좌측 게이지 + 우측 요약 수치 · 공정별 진행률, [More]</td></tr>
+        <tr><td>장비 상태 매트릭스</td><td class="n">1190 × 496</td><td>모듈 열 반복, 상태 · 도어 · 이벤트 행</td></tr>
+        <tr><td>우측 열 (2개 카드)</td><td class="n">432 고정</td><td>필요 소모품 · 폐기물 상태: 상태 칩(Empty · Low 등) + 목록, [More]</td></tr>
+      </tbody>
+    </table></div>
+    <h3>규칙</h3>
+    <ul class="rules"><li>카드마다 제목 오른쪽에 [More]로 해당 상세 화면으로 이동합니다.</li><li>경고성 정보(부족 · 가득 참)는 우측 열에 모아 상태 칩으로 강조합니다.</li></ul>
+  </div>
+</article></section>
+
+<section id="l2"><article class="layout">
+  <figure><img src="02_table.png" alt="목록 테이블 와이어프레임: 검색 바, 건수 바, 테이블, 페이지네이션" loading="lazy"></figure>
+  <div class="body">
+    <div class="head"><h2>2. 목록 (테이블)</h2><span class="from">기준 화면: Tube Setting · 1920 × 1031</span></div>
+    <p class="desc">가장 기본이 되는 목록 화면입니다. 위에서 아래로 검색 → 건수 · 작업 → 테이블 → 페이지네이션 순서입니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>영역</th><th>크기</th><th>내용 · 규칙</th></tr></thead>
+      <tbody>
+        <tr><td>검색 · 필터 바</td><td class="n">1639 × 68</td><td>왼쪽 입력 · 선택, 오른쪽 [Reset] · [Search]</td></tr>
+        <tr><td>건수 · 일괄 작업</td><td class="n">1639 × 56</td><td>왼쪽 Items 건수 · 표시 개수, 오른쪽 [Add] · [Delete] · [Import]</td></tr>
+        <tr><td>테이블</td><td class="n">1639 × 가변</td><td>헤더 정렬, 행 오른쪽 끝 상세 › , 10행 기준</td></tr>
+        <tr><td>페이지네이션</td><td class="n">512 × 32</td><td>가운데 정렬 (COMM-5-i)</td></tr>
+      </tbody>
+    </table></div>
+    <h3>규칙</h3>
+    <ul class="rules"><li>상세 이동은 행 끝 › 버튼으로 통일합니다.</li><li>결과가 없으면 테이블 자리에 빈 상태 문구를 둡니다.</li><li>열 안의 글자 정렬은 아래 「테이블 텍스트 정렬」을 따릅니다.</li></ul>
+
+    <h3 id="align">테이블 텍스트 정렬</h3>
+    <p class="desc">열에 들어가는 데이터 종류에 따라 정렬을 정합니다.</p>
+    <div class="align">
+      <div><b>좌측 정렬</b>
+        <ul>
+          <li>이름 <em class="nb">(ID, 모듈명, 유닛명 등)</em></li>
+          <li>~ Type</li>
+          <li>소모품 수량</li>
+          <li>라벨</li>
+        </ul>
+      </div>
+      <div><b>중앙 정렬</b>
+        <ul>
+          <li>컴포넌트만 있는 열 <em class="nb">(체크박스 · 버튼 · 아이콘 등)</em></li>
+          <li>한 글자 데이터 <em class="nb">(Y/N)</em></li>
+          <li>날짜</li>
+          <li>수치</li>
+        </ul>
+      </div>
+      <div><b>우측 정렬</b>
+        <ul>
+          <li>Usage</li>
+          <li>개수</li>
+          <li>금액</li>
+        </ul>
+      </div>
+    </div>
+    <h3>예외</h3>
+    <ul class="rules">
+      <li>한 테이블에서 특정 정렬의 비율이 높으면, 비중이 높은 정렬로 통일할 수 있습니다. 예: 5개 열이 좌측, 1개 열이 중앙이면 6개 열 모두 좌측 정렬</li>
+      <li>위아래 2단으로 구성된 테이블 헤더는 중앙 정렬을 적용합니다.</li>
+    </ul>
+  </div>
+</article></section>
+
+<section id="l3"><article class="layout">
+  <figure><img src="03_table_detail_panel.png" alt="목록과 상세 패널 와이어프레임: 왼쪽 828px 테이블, 오른쪽 811px 상세 패널" loading="lazy"></figure>
+  <div class="body">
+    <div class="head"><h2>3. 목록 + 상세 패널</h2><span class="from">기준 화면: Assay Pack Setting · 1920 × 1031</span></div>
+    <p class="desc">목록을 보면서 선택한 항목의 상세를 오른쪽 패널에서 바로 봅니다. 패널이 열리면 테이블이 828px로 좁아지고, 닫으면 2번 목록과 같아집니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>영역</th><th>크기</th><th>내용 · 규칙</th></tr></thead>
+      <tbody>
+        <tr><td>검색 · 필터 바</td><td class="n">1639 × 68</td><td>2번과 같음</td></tr>
+        <tr><td>테이블 (패널 열림)</td><td class="n">828 × 가변</td><td>선택한 행 강조, 페이지네이션은 테이블 폭 가운데</td></tr>
+        <tr><td>상세 패널</td><td class="n">811 고정</td><td>헤더 48px(제목 · 닫기) · 스크롤 본문 · 하단 버튼 44px</td></tr>
+        <tr><td>패널 본문</td><td class="n">779 × 673</td><td>섹션(File Info · Import Info …)별 2열 · 4열 항목</td></tr>
+        <tr><td>패널 하단</td><td class="n">775 × 44</td><td>왼쪽 [Delete], 오른쪽 [Save] (바뀐 게 있을 때만 활성)</td></tr>
+      </tbody>
+    </table></div>
+    <h3>규칙</h3>
+    <ul class="rules"><li>다른 행의 상세(›)를 누르면 패널 내용만 바뀝니다.</li><li>패널 본문만 스크롤하고, 헤더와 하단 버튼은 고정합니다.</li><li>테이블 열 정렬은 2번의 <a href="#align">테이블 텍스트 정렬</a>을 따릅니다.</li></ul>
+  </div>
+</article></section>
+
+<section id="l4"><article class="layout">
+  <figure><img src="04_status_monitor.png" alt="상태 모니터링 와이어프레임: 상단 진행 게이지와 요약, 아래 배치 카드 반복" loading="lazy"></figure>
+  <div class="body">
+    <div class="head"><h2>4. 상태 모니터링</h2><span class="from">기준 화면: Test Status · 1920 × 1129</span></div>
+    <p class="desc">진행 중인 작업 전체 요약을 위에 두고, 아래에 같은 구조의 카드를 반복합니다. 내용이 길어지면 화면이 세로로 늘어납니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>영역</th><th>크기</th><th>내용 · 규칙</th></tr></thead>
+      <tbody>
+        <tr><td>진행 게이지</td><td class="n">273 × 216</td><td>남은 시간 · 진행률 원형 게이지, 경과 · 예상 시간</td></tr>
+        <tr><td>요약 수치</td><td class="n">1284 × 95</td><td>진행 · 완료 · 실패 · 대기 (상태 색)</td></tr>
+        <tr><td>공정별 진행률</td><td class="n">1284 × 111</td><td>5단계 진행 막대 + 단계별 건수</td></tr>
+        <tr><td>배치 카드</td><td class="n">1565 × 약 190</td><td>왼쪽 273px 배치 정보 + 오른쪽 요약 수치 · 공정별 진행률, 반복</td></tr>
+      </tbody>
+    </table></div>
+    <h3>규칙</h3>
+    <ul class="rules"><li>전체 요약과 배치 카드는 같은 좌우 구조(273px + 가변)를 씁니다.</li><li>상태 색은 진행 · 완료 · 실패 · 대기 순서로 고정합니다.</li></ul>
+  </div>
+</article></section>
+
+<section id="l5"><article class="layout">
+  <figure><img src="05_tabs_matrix.png" alt="탭과 장비 매트릭스 와이어프레임: 탭, 그룹 헤더, 행 이름 열과 모듈 열 반복, 범례" loading="lazy"></figure>
+  <div class="body">
+    <div class="head"><h2>5. 탭 + 장비 매트릭스</h2><span class="from">기준 화면: Instrument · 1920 × 1031</span></div>
+    <p class="desc">여러 장비(모듈)를 같은 항목으로 나란히 비교합니다. 탭으로 전체 · 모듈별 화면을 나눕니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>영역</th><th>크기</th><th>내용 · 규칙</th></tr></thead>
+      <tbody>
+        <tr><td>탭</td><td class="n">1638 × 48</td><td>Overview + 모듈별 탭</td></tr>
+        <tr><td>그룹 헤더</td><td class="n">높이 34</td><td>모듈 묶음 (Prep System · Dx System), 묶음별 배경색</td></tr>
+        <tr><td>행 이름 열</td><td class="n">150 고정</td><td>연결 · 상태 · 도어 · 이벤트</td></tr>
+        <tr><td>모듈 열</td><td class="n">1420 / 모듈 수</td><td>이름 · 활성 수 · 이미지 · [View All] · 상태 값</td></tr>
+        <tr><td>범례</td><td class="n">높이 30</td><td>오른쪽 아래, 연결 · 상태 색 설명</td></tr>
+      </tbody>
+    </table></div>
+    <h3>규칙</h3>
+    <ul class="rules"><li>모든 모듈 열은 같은 폭 · 같은 행 순서를 씁니다.</li><li>오류는 모듈 이미지 위 툴팁으로 알립니다.</li></ul>
+  </div>
+</article></section>
+
+<section id="l6"><article class="layout">
+  <figure><img src="06_tabs_list_detail.png" alt="탭과 목록 상세 분할 와이어프레임: 상태 필터 칩, 왼쪽 688px 카드 목록, 오른쪽 873px 상세" loading="lazy"></figure>
+  <div class="body">
+    <div class="head"><h2>6. 탭 + 목록 · 상세 분할</h2><span class="from">기준 화면: Inventory · 1920 × 1240</span></div>
+    <p class="desc">분류별 카드 목록에서 하나를 고르면 오른쪽에 상세를 보여 줍니다. 3번과 달리 상세가 겹치지 않고 항상 함께 보입니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>영역</th><th>크기</th><th>내용 · 규칙</th></tr></thead>
+      <tbody>
+        <tr><td>탭</td><td class="n">1001 × 48</td><td>Summary · Overview · Consumables …</td></tr>
+        <tr><td>상태 필터 칩</td><td class="n">447 × 50</td><td>부족 · 낮음 · 충분 (건수 포함)</td></tr>
+        <tr><td>보조 버튼</td><td class="n">오른쪽 위</td><td>[Refresh] · 도움말 ⓘ</td></tr>
+        <tr><td>카테고리 카드 목록</td><td class="n">688 고정</td><td>분류별 카드(이름 · 남은 수량 · 필요 수량 · 상태), 선택 카드 강조</td></tr>
+        <tr><td>선택 항목 상세</td><td class="n">873 × 가변</td><td>항목별 위치 · 수량 표, [Item details]</td></tr>
+      </tbody>
+    </table></div>
+    <h3>규칙</h3>
+    <ul class="rules"><li>왼쪽 선택 상태와 오른쪽 제목 색을 맞춰 어느 항목인지 보이게 합니다.</li><li>부족 수량은 빨간색, 낮음은 주황색으로 통일합니다.</li></ul>
+  </div>
+</article></section>
+
+<section id="l7"><article class="layout">
+  <figure><img src="07_card_select.png" alt="카드 선택 와이어프레임: 안내 문구와 300px 카드 5개, 카드별 설명" loading="lazy"></figure>
+  <div class="body">
+    <div class="head"><h2>7. 카드 선택 (가이드)</h2><span class="from">기준 화면: Carrier Setup · 1920 × 1031</span></div>
+    <p class="desc">여러 작업 중 하나를 고르는 시작 화면입니다. 같은 크기의 카드를 가로로 나열합니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>영역</th><th>크기</th><th>내용 · 규칙</th></tr></thead>
+      <tbody>
+        <tr><td>안내 문구</td><td class="n">한 줄</td><td>무엇을 고르는지 설명</td></tr>
+        <tr><td>선택 카드</td><td class="n">300 × 545</td><td>이미지 버튼, 카드 간격 21px, 최대 5개</td></tr>
+        <tr><td>카드별 설명</td><td class="n">높이 72</td><td>카드 아래 1~3줄 설명</td></tr>
+      </tbody>
+    </table></div>
+    <h3>규칙</h3>
+    <ul class="rules"><li>카드가 5개를 넘으면 2줄로 나누거나 목록형(2번)으로 바꿉니다.</li><li>카드를 누르면 8번 단계 진행 화면으로 이어집니다.</li></ul>
+  </div>
+</article></section>
+
+<section id="l8"><article class="layout">
+  <figure><img src="08_stepper.png" alt="단계 진행 와이어프레임: 단계 표시, 왼쪽 안내 이미지, 오른쪽 작업 순서와 진행 상태, 오른쪽 아래 버튼" loading="lazy"></figure>
+  <div class="body">
+    <div class="head"><h2>8. 단계 진행 (스텝)</h2><span class="from">기준 화면: Carrier Setup (Socket into tray) · 1920 × 1031</span></div>
+    <p class="desc">순서가 정해진 작업을 단계별로 안내합니다. 왼쪽에 그림, 오른쪽에 할 일과 진행 상태를 둡니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>영역</th><th>크기</th><th>내용 · 규칙</th></tr></thead>
+      <tbody>
+        <tr><td>단계 표시</td><td class="n">1586 × 43</td><td>STEP 1 · 2 · 3, 현재 단계 강조</td></tr>
+        <tr><td>안내 이미지</td><td class="n">881 × 486</td><td>지금 단계의 작업 그림</td></tr>
+        <tr><td>작업 순서 안내</td><td class="n">640 × 240</td><td>번호 목록</td></tr>
+        <tr><td>진행 상태 카드</td><td class="n">599 × 158</td><td>채운 수 · 진행 막대, [Delete]</td></tr>
+        <tr><td>다음 · 완료 버튼</td><td class="n">210 × 44</td><td>오른쪽 아래, 조건을 채우면 활성</td></tr>
+      </tbody>
+    </table></div>
+    <h3>규칙</h3>
+    <ul class="rules"><li>단계를 건너뛸 수 없으면 다음 버튼은 조건을 채울 때까지 비활성입니다.</li><li>이미지와 안내 문구는 같은 단계 내용을 가리켜야 합니다.</li></ul>
+  </div>
+</article></section>
+
+<section id="l9"><article class="layout">
+  <figure><img src="09_chart_filter.png" alt="차트와 필터 패널 와이어프레임: 왼쪽 요약 표와 차트, 범례, 오른쪽 440px 지표 · 기간 · 범례 · 보기 패널" loading="lazy"></figure>
+  <div class="body">
+    <div class="head"><h2>9. 차트 + 필터 패널</h2><span class="from">기준 화면: Test Analytics · 1920 × 1031</span></div>
+    <p class="desc">왼쪽에 결과(요약 표 · 차트), 오른쪽 고정 패널에 조건(지표 · 기간 · 범례 · 보기)을 둡니다. 조건을 바꾸면 왼쪽이 바로 갱신됩니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>영역</th><th>크기</th><th>내용 · 규칙</th></tr></thead>
+      <tbody>
+        <tr><td>결과 카드</td><td class="n">1200 × 870</td><td>제목 · [Export] / 요약 표 78px / 차트 552px / 범례 41px</td></tr>
+        <tr><td>조건 패널</td><td class="n">440 고정</td><td>지표(탭 버튼) · 기간(일 · 월 · 날짜) · 범례 · 항목 선택 · 보기(차트 · 표)</td></tr>
+      </tbody>
+    </table></div>
+    <h3>규칙</h3>
+    <ul class="rules"><li>조건은 오른쪽 패널에만 둡니다. 차트 위에는 제목과 [Export]만 둡니다.</li><li>범례 색은 오른쪽 항목 선택 버튼 색과 같게 씁니다.</li></ul>
+  </div>
+</article></section>
+
+<footer>수치는 1920 × 1031 화면에서 잰 값이며, 본문 가변 영역은 화면 폭에 따라 늘어납니다.</footer>
+</main>
+</div>
+</body>
+</html>
