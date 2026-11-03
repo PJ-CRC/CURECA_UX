@@ -159,6 +159,14 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
   $('rows').addEventListener('click', function(e){ var r = e.target.closest('tr[data-id]'); if (r) pick(r.dataset.id); });
   $('newBtn').addEventListener('click', function(){ fresh(); $('fId').focus(); });
   $('cancelBtn').addEventListener('click', fresh);
+  /* 「UX 문서 · 수정 요청」은 UX 문서를 볼 수 있어야 한다: 켜면 UX 문서도 켜고, UX 문서를 끄면 함께 끈다 */
+  $('fMenus').addEventListener('change', function(e){
+    var c = e.target, box = $('fMenus');
+    var g = box.querySelector('input[value="guide"]'), ge = box.querySelector('input[value="guideEdit"]');
+    if (!g || !ge) return;
+    if (c === ge && ge.checked) g.checked = true;
+    if (c === g && !g.checked) ge.checked = false;
+  });
   $('allOn').addEventListener('click', function(){ [].forEach.call($('fMenus').querySelectorAll('input:not(:disabled)'), function(c){ c.checked = true; }); });
   $('allOff').addEventListener('click', function(){ [].forEach.call($('fMenus').querySelectorAll('input:not(:disabled)'), function(c){ c.checked = false; }); });
   function post(b){ return fetch('/api/accounts', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(b) }).then(function(r){ return r.json(); }).then(function(d){ if (d.error) throw new Error(d.error); return d; }); }

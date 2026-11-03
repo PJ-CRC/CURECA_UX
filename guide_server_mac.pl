@@ -439,6 +439,8 @@ my $ACCT_DIR = "$HIST_DIR/accounts";
 my @MENUS = (
   { key => 'setup', label => '시작 안내', pages => ['Setup.html'], always => 1 },   # 권한 설정 없이 누구나
   { key => 'guide', label => 'UX 문서', pages => ['Common_UX_Guide.html', 'UX_Guide.html'] },
+  # UX 문서 수정 요청(화면 없는 권한): 새 가이드 · 정의서 만들기, 항목 수정 요청, 연관 항목 찾기 · 반영 요청. 없으면 UX 문서는 보기만
+  { key => 'guideEdit', label => 'UX 문서 · 수정 요청', pages => [] },
   { key => 'workbench', label => 'Figma Workbench', pages => ['Figma_Workbench.html'] },
   { key => 'history', label => '변경 이력', pages => ['Change_History.html'] },
   { key => 'usage', label => '사용량 통계', pages => ['Usage_Stats.html'] },
@@ -486,14 +488,17 @@ sub current_user {
   return undef if !$a || (defined $a->{active} && !$a->{active}) || str($a->{pwAt}) ne str($s->{login}{pwAt});
   return $a;
 }
+# UX 문서를 고칠 수 있는가(만들기 · 수정 요청 · 연관 항목 찾기): 브라우저 화면에서 온 요청만 검사한다(Claude · 플러그인은 그대로). $IS_BROWSER는 요청마다 handle이 정한다
+our $IS_BROWSER = 0;
+sub can_edit_docs { return 1 if !$IS_BROWSER || !auth_required(); my $u = current_user(); return $u && grep({ $_ eq 'guideEdit' } user_menus($u)) ? 1 : 0; }
 sub pick_menus { my ($a) = @_; my %ok = map { $_ => 1 } @MENU_KEYS; return grep { $ok{$_} } @{ ref $a->{menus} eq 'ARRAY' ? $a->{menus} : [] }; }
 sub user_menus { my ($a) = @_; return () unless $a; return map { $_->{key} } @MENUS if $a->{admin}; my %p = map { $_ => 1 } pick_menus($a); return map { $_->{key} } grep { $_->{always} || $p{ $_->{key} } } @MENUS; }
 sub me_info {
   my $req = auth_required(); my $u = $req ? current_user() : undef;
   my @allowed = $req ? user_menus($u) : (@MENU_KEYS, @ALWAYS_KEYS); my %al = map { $_ => 1 } @allowed;
   # 처음 열 페이지: 고른 메뉴 중 첫째(없으면 시작 안내)
-  my ($first) = map { $_->{pages}[0] } grep { !$_->{always} && $al{ $_->{key} } } @MENUS;
-  ($first) = map { $_->{pages}[0] } grep { $al{ $_->{key} } } @MENUS unless $first;
+  my ($first) = map { $_->{pages}[0] } grep { !$_->{always} && @{ $_->{pages} } && $al{ $_->{key} } } @MENUS;
+  ($first) = map { $_->{pages}[0] } grep { @{ $_->{pages} } && $al{ $_->{key} } } @MENUS unless $first;
   my $ns = need_sync(); my $hs = $ns ? eval { read_json($SYNC_STAT) } : undef; $hs = {} unless ref $hs eq 'HASH';
   return { required => $req ? JSON::PP::true : JSON::PP::false,
     needSync => $ns ? JSON::PP::true : JSON::PP::false, syncMsg => str($hs->{message}), syncBusy => $hs->{busy} ? JSON::PP::true : JSON::PP::false,
@@ -653,6 +658,8 @@ sub jobs_post {
   if ($act eq 'add') {
     my ($kind, $key, $nid) = (str($b->{kind}), str($b->{fileKey}), str($b->{nodeId}));
     die "알 수 없는 작업: $kind\n" unless grep { $kind eq $_ } qw(capture catalog guide guide-check guide-edit text prototype prototype-edit prototype-sync);
+    # UX 문서 만들기 · 수정 요청 · 연관 항목 찾기는 「UX 문서 · 수정 요청」 권한이 있어야 한다(없으면 보기만)
+    die "UX 문서를 고칠 권한이 없습니다(보기만 가능). 최고관리자에게 「UX 문서 · 수정 요청」 권한을 요청하세요.\n" if $kind =~ /^guide(-edit|-check)?$/ && !can_edit_docs();
     # 프로토타입(이 PC에만, prototypes/{id}/): 만들기(prototype, 고른 화면 frames) · 수정 요청(prototype-edit) · Figma 바뀐 화면 맞추기(prototype-sync)
     my @pfr = ref $b->{frames} eq 'ARRAY' ? grep { ref $_ eq 'HASH' && str($_->{nodeId}) =~ /^\d+:\d+$/ } @{ $b->{frames} } : ();
     if ($kind eq 'prototype') {
@@ -900,6 +907,7 @@ sub handle {
   if ($path eq '/api/logout' && $method eq 'POST') { write_login(undef); return respond_json($sock, 200, { ok => JSON::PP::true }); }
   #  브라우저 페이지(Sec-Fetch-Site 머리글이 있고 Figma 플러그인이 아닌 것)만 막는다. Claude(curl) · 플러그인은 그대로
   my $is_browser = defined $hdr->{'sec-fetch-site'} && !(defined $origin && $origin eq 'null');
+  $IS_BROWSER = $is_browser ? 1 : 0;
   if ($path eq '/start' && auth_required()) {
     my $mi = me_info(); my $to = '/Login.html';
     if ($mi->{user}) { $to = '/' . $mi->{first}; $to = '/Setup.html' if !read_setup()->{done} && grep { $_ eq 'setup' } @{ $mi->{allowed} }; }
@@ -964,6 +972,8 @@ sub handle {
       my $g = $body->();
       # 가이드 고치기: guide.md는 그대로 두고 수정본을 새 파일로 남긴다(여러 PC가 고쳐도 깃 충돌이 없다)
       if (str($g->{action}) eq 'save') {
+        die "UX 문서를 고칠 권한이 없습니다(보기만 가능). 최고관리자에게 「UX 문서 · 수정 요청」 권한을 요청하세요.
+" unless can_edit_docs();
         my ($gid, $md) = (str($g->{id}), str($g->{md}));
         die "가이드를 찾지 못했습니다: $gid\n" unless $gid =~ /^[A-Za-z0-9_-]{1,64}$/ && -f "$GUIDE_ROOT/$gid/meta.json";
         die "가이드 내용이 비어 있습니다.\n" unless $md =~ /\S/;
