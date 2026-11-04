@@ -1,0 +1,26 @@
+{
+    "id":  "brex-gram-2_R001",
+    "kind":  "request",
+    "reqId":  "R001",
+    "at":  "2026-11-04T18:03:14+09:00",
+    "from":  "2026-11-04T18:02:31+09:00",
+    "by":  "하승현",
+    "doneBy":  "Claude",
+    "pc":  "BREX_GRAM_2",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.H",
+    "frame":  "Revision history",
+    "nodeId":  "208:9187",
+    "text":  "사각형 하나 그려줘.\n500x600",
+    "models":  {
+                   "claude-opus-5-5":  9
+               },
+    "calls":  9,
+    "input":  17,
+    "cacheWrite":  8697,
+    "cacheRead":  605765,
+    "output":  3130,
+    "total":  617609,
+    "usd":  0.2534
+}
