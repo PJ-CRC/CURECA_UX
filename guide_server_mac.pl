@@ -77,7 +77,7 @@ my $PC_NAME = decode('UTF-8', hostname()); $PC_NAME =~ s/\.local$//;
 my $SYNC_NOW = "$ROOT/workbench/.history_sync_now";
 my ($sync_pid, $sync_want, $sync_last) = (0, 0, 0);
 my %TYPES = (html => 'text/html; charset=utf-8', png => 'image/png', css => 'text/css; charset=utf-8', js => 'application/javascript; charset=utf-8',
-  json => 'application/json; charset=utf-8', md => 'text/plain; charset=utf-8', svg => 'image/svg+xml', jpg => 'image/jpeg', jpeg => 'image/jpeg', gif => 'image/gif', webp => 'image/webp');
+  json => 'application/json; charset=utf-8', md => 'text/plain; charset=utf-8', csv => 'text/plain; charset=utf-8', gs => 'text/plain; charset=utf-8', svg => 'image/svg+xml', jpg => 'image/jpeg', jpeg => 'image/jpeg', gif => 'image/gif', webp => 'image/webp');
 
 # ── 공통 ──
 sub now_iso { my $z = strftime('%z', localtime); $z =~ s/(\d\d)(\d\d)$/$1:$2/; return strftime('%Y-%m-%dT%H:%M:%S', localtime) . $z; }
@@ -190,6 +190,8 @@ sub requests_post {
       fileKey => str($b->{fileKey}), fileName => str($b->{fileName}), editable => ($b->{editable} ? JSON::PP::true : JSON::PP::false), type => str($b->{type}),
       priority => str($b->{priority}), layout => str($b->{layout}), text => $txt, status => '대기', note => '', author => str($b->{by}), updatedBy => str($b->{by}), createdAt => $now, updatedAt => $now };
     $items[0]{images} = $imgs if @$imgs;
+    # 화면설계서 작업대기에서 만든 요청: 반영할 반영 대기 줄 [{doc, file, n, cid}] — 완료되면 Claude가 「반영 완료 (날짜)」로
+    $items[0]{fixRows} = [ map { { doc => str($_->{doc}), file => str($_->{file}), n => str($_->{n}), cid => str($_->{cid}) } } grep { ref $_ eq 'HASH' } @{ $b->{fixRows} }[0 .. ($#{ $b->{fixRows} } < 199 ? $#{ $b->{fixRows} } : 199)] ] if ref $b->{fixRows} eq 'ARRAY' && @{ $b->{fixRows} };
     hist_from_request($items[0]);
   } elsif ($act eq 'update') {
     my ($hit) = grep { str($_->{id}) eq str($b->{id}) } @items; die "요청을 찾지 못했습니다: " . str($b->{id}) . "\n" unless $hit;
@@ -258,6 +260,97 @@ sub set_editable_page {
   my $p = read_proj($k); if ($p) { $p->{editablePageId} = $pg->{id}; $p->{editablePageName} = $pg->{name}; save_proj($p); }
   return 1;
 }
+# 일정/작업 구글 시트 연결: .history/config/sheet.json(깃으로 모든 PC 공유, 웹으로 내보내지 않음) · 받은 값 사본 workbench/.sheet_cache/
+#  Apps Script 웹 앱(tools/google-sheet-bridge.gs)에 curl로 보낸다. 웹 앱은 302로 결과 주소에 보내고 curl -L이 GET으로 따라간다
+my $SHEET_CONF = "$HIST_DIR/config/sheet.json";
+my $SHEET_CACHE = "$ROOT/workbench/.sheet_cache";
+sub sheet_conf { my $c = eval { read_json($SHEET_CONF) }; return ref $c eq 'HASH' ? $c : {}; }
+sub me_name { my $u = current_user(); return $u ? str($u->{name}) : str(read_setup()->{user}); }
+sub sheet_call {
+  my ($q) = @_; my $cf = sheet_conf();
+  die "구글 시트가 아직 연결되지 않았습니다. 일정/작업의 [시트 연결]에서 웹 앱 주소와 비밀값을 넣어 주세요.\n" unless str($cf->{webapp}) ne '' && str($cf->{token}) ne '';
+  $q->{token} = str($cf->{token});
+  make_path($SHEET_CACHE); my $tmp = "$SHEET_CACHE/.req_$$.json";
+  write_bytes($tmp, JSON::PP->new->utf8->encode($q));
+  open(my $p, '-|', 'curl', '-sS', '-L', '--max-time', '60', '-H', 'Content-Type: application/json; charset=utf-8', '--data-binary', "\@$tmp", str($cf->{webapp}))
+    or do { unlink $tmp; die "curl을 실행하지 못했습니다.\n" };
+  binmode $p; local $/; my $txt = <$p>; close $p; my $rc = $?; unlink $tmp;
+  die "구글 시트에 닿지 못했습니다(curl " . ($rc >> 8) . ").\n" if $rc;
+  $txt = str($txt); $txt =~ s/^\s+|\s+$//g;
+  unless ($txt =~ /^\{/) {
+    # 구글 오류 페이지: 스크립트 오류 글(예: TypeError … ('Code' 파일, 30행))을 꺼내 보여 준다
+    (my $plain = decode('UTF-8', $txt)) =~ s{<(script|style)[^>]*>.*?</\1>}{ }gs;
+    if ($plain =~ />\s*([^<>]*(?:Error|Exception|행\))[^<>]*)</) {   # (<title>오류</title>는 건너뜀)
+      (my $e = $1) =~ s/^\s+|\s+$//g; $e =~ s/&#39;/'/g; $e =~ s/&quot;/"/g; $e =~ s/&amp;/&/g;
+      die "시트 스크립트 오류: $e — tools/google-sheet-bridge.gs 최신본으로 바꾸고 새 버전으로 다시 배포해 주세요.\n";
+    }
+    die "웹 앱 응답이 JSON이 아닙니다. 배포의 액세스 권한이 「모든 사용자」인지, 웹 앱 주소가 /exec로 끝나는지 확인해 주세요.\n";
+  }
+  if ($txt =~ /^\{"error"/) { my $e = eval { JSON::PP->new->utf8->decode($txt)->{error} }; die str($e) . "\n"; }
+  return $txt;   # UTF-8 바이트 그대로
+}
+# 회의록(공유): .history/minutes/{id}.md — 머리말 id · date · title · attendees · by · createdAt · updatedBy · updatedAt + 본문(내용)
+my $MIN_DIR = "$HIST_DIR/minutes";
+sub read_minute {
+  my ($f) = @_; my $raw = read_bytes($f); return undef unless defined $raw;
+  my $t = decode('UTF-8', $raw); $t =~ s/\r\n/\n/g;
+  return undef unless $t =~ s/^---\n(.*?)\n---\n?//s;
+  my %o; for (split /\n/, $1) { $o{$1} = do { (my $v = $2) =~ s/^\s+|\s+$//g; $v } if /^([A-Za-z]+):\s?(.*)$/; }
+  ($o{id}) = $f =~ m{([^/]+)\.md$} unless $o{id};
+  $t =~ s/\s+$//; $o{body} = $t; return \%o;
+}
+# 각자 작성(메모): .history/minutes/{id}.notes/{작성자 ID}.md — 작성자 ID = 로그인 계정 ID(없으면 PC 이름)
+sub note_key { my $u = current_user(); return $u && str($u->{id}) ne '' ? lc(str($u->{id})) : $PC_SLUG; }
+sub read_notes {
+  my ($id) = @_; my $nd = "$MIN_DIR/$id.notes"; my @l;
+  if (opendir(my $d, $nd)) {
+    for my $f (sort readdir $d) { next unless $f =~ /^(.+)\.md$/; my $k = $1; my $n = read_minute("$nd/$f") or next;
+      push @l, { author => str($n->{author}), authorId => (str($n->{authorId}) ne '' ? str($n->{authorId}) : $k), updatedAt => str($n->{updatedAt}), body => str($n->{body}) }; }
+    closedir $d;
+  }
+  return [ sort { $a->{updatedAt} cmp $b->{updatedAt} } @l ];
+}
+sub minutes_get {
+  my @l; opendir(my $d, $MIN_DIR) or return { items => [], me => note_key() };
+  for (sort readdir $d) { next unless /\.md$/; my $m = read_minute("$MIN_DIR/$_"); next unless $m; $m->{notes} = read_notes($m->{id}); push @l, $m; } closedir $d;
+  return { items => [ sort { str($b->{date}) cmp str($a->{date}) } @l ], me => note_key() };
+}
+sub minutes_post {
+  my ($b) = @_; my $id = str($b->{id});
+  die "잘못된 회의록 ID입니다.\n" if $id ne '' && $id !~ /^m[0-9a-z-]{6,40}$/;
+  if (str($b->{action}) eq 'delete') {
+    die "회의록을 찾지 못했습니다.\n" unless $id ne '' && -f "$MIN_DIR/$id.md";
+    unlink "$MIN_DIR/$id.md"; if (-d "$MIN_DIR/$id.notes") { unlink glob("$MIN_DIR/$id.notes/*"); rmdir "$MIN_DIR/$id.notes"; }
+    $sync_want = 1; return { ok => JSON::PP::true };
+  }
+  if (str($b->{action}) eq 'note') {
+    die "회의록을 찾지 못했습니다.\n" unless $id ne '' && -f "$MIN_DIR/$id.md";
+    my $nf = "$MIN_DIR/$id.notes/" . note_key() . '.md';
+    (my $nb = str($b->{body})) =~ s/\r\n/\n/g; $nb =~ s/\s+$//;
+    if ($nb eq '') { unlink $nf; }
+    else { make_path("$MIN_DIR/$id.notes"); write_bytes($nf, encode('UTF-8', "---\nauthor: " . me_name() . "\nauthorId: " . note_key() . "\nupdatedAt: " . now_iso() . "\n---\n$nb\n")); }
+    $sync_want = 1; return { ok => JSON::PP::true, notes => read_notes($id) };
+  }
+  die "알 수 없는 작업입니다.\n" unless str($b->{action}) eq 'save';
+  (my $date = str($b->{date})) =~ s/^\s+|\s+$//g; $date =~ s/T/ /;
+  die "일시를 넣어 주세요(예: 2026-11-03 10:00).\n" unless $date =~ /^\d{4}-\d{2}-\d{2}( \d{2}:\d{2})?$/;
+  (my $title = str($b->{title})) =~ s/[\r\n]+/ /g; $title =~ s/^\s+|\s+$//g; die "제목을 넣어 주세요.\n" if $title eq '';
+  my $att = join(' / ', grep { $_ ne '' } map { (my $x = $_) =~ s/^\s+|\s+$//g; $x } split /\r?\n/, str($b->{attendees}));
+  my $old;
+  if ($id eq '') { (my $d8 = $date) =~ s/\D//g; $id = 'm' . substr($d8, 0, 8) . '-' . sprintf('%06x', int(rand(0xffffff))); }
+  else { $old = read_minute("$MIN_DIR/$id.md"); }
+  my ($me, $now) = (me_name(), now_iso());
+  $me = str($b->{by}) if !$main::IS_BROWSER && str($b->{by}) ne '';   # Claude(curl)가 요약 정리할 때 by:'Claude'
+  my ($created, $by) = $old ? (str($old->{createdAt}), str($old->{by})) : ($now, $me);
+  # summary: 요약 정리한 때(「{시각} · {메모 쓴 사람들}」). 요약이 아닌 저장은 예전 값 그대로
+  my $sum = str($b->{summary}) ne '' ? "$now · " . (str($b->{summary}) =~ s/[\r\n]+/ /gr) : $old ? str($old->{summary}) : '';
+  (my $body = str($b->{body})) =~ s/\r\n/\n/g; $body =~ s/\s+$//;
+  make_path($MIN_DIR);
+  write_bytes("$MIN_DIR/$id.md", encode('UTF-8', "---\nid: $id\ndate: $date\ntitle: $title\nattendees: $att\nby: $by\ncreatedAt: $created\nupdatedBy: $me\nupdatedAt: $now\nsummary: $sum\n---\n$body\n"));
+  $sync_want = 1;
+  return { ok => JSON::PP::true, item => read_minute("$MIN_DIR/$id.md") };
+}
+sub sheet_query { my ($target, $k) = @_; my ($v) = $target =~ /[?&]$k=([^&]*)/; $v = str($v); $v =~ tr/+/ /; $v =~ s/%([0-9A-Fa-f]{2})/chr(hex($1))/eg; return decode('UTF-8', $v); }
 # 프로토타입 목록(이 PC에만): prototypes/{id}/meta.json + Figma가 바뀐 화면(stale)
 #  바뀐 화면 = 프로토타입을 맞춘 뒤(syncedAt) 캡처가 새로 들어온 프레임(shots_meta) · 다른 작업자가 완료한 요청(공유 이력)의 프레임
 sub prototypes_get {
@@ -457,6 +550,7 @@ sub attach_post {
 my $ACCT_DIR = "$HIST_DIR/accounts";
 my @MENUS = (
   { key => 'setup', label => '시작 안내', pages => ['Setup.html'], always => 1 },   # 권한 설정 없이 누구나
+  { key => 'plan', label => '일정/작업', pages => ['Work.html'], write => '일정(구글 시트) 칸 수정, 시트 연결 설정' },   # 일정 · 주간 진행 현황 · 화면설계서 작업대기 · 회의록 · 임시 정책 · 논의·결정
   # write: 쓰기 권한으로 할 수 있는 것(계정 관리 화면 설명). 없으면 읽기만 있는 메뉴
   { key => 'guide', label => 'UX 문서', pages => ['Common_UX_Guide.html', 'UX_Guide.html'], write => '새 가이드 · 정의서 만들기, 항목 수정 요청, 연관 항목 찾기 · 반영 요청' },
   { key => 'workbench', label => 'Figma Workbench', pages => ['Figma_Workbench.html'], write => '수정 요청 등록 · 답하기 · 다시 진행, 캡처 · 목록 요청, 프로젝트 추가 · 작업 페이지 바꾸기' },
@@ -526,7 +620,7 @@ sub can_write {
 }
 sub ro_msg { my ($k) = @_; my ($m) = grep { $_->{key} eq $k } @MENUS; my $l = $m ? $m->{label} : $k; return "「$l」 메뉴는 읽기 권한만 있습니다(보기만 가능). 최고관리자에게 「$l · 쓰기」 권한을 요청하세요.\n"; }
 # 작업 대기열 종류 → 메뉴(쓰기 권한 확인용)
-sub job_menu { my ($k) = @_; return 'guide' if $k =~ /^guide(-edit|-check)?$/; return 'proto' if $k =~ /^prototype/; return 'workbench'; }
+sub job_menu { my ($k) = @_; return 'guide' if $k =~ /^guide(-edit|-check)?$/; return 'plan' if $k eq 'minutes' || $k eq 'plan'; return 'proto' if $k =~ /^prototype/; return 'workbench'; }
 sub user_menus { my ($a) = @_; return () unless $a; return map { $_->{key} } @MENUS if $a->{admin}; my %p = map { $_ => 1 } pick_menus($a); return map { $_->{key} } grep { $_->{always} || $p{ $_->{key} } } @MENUS; }
 sub me_info {
   my $req = auth_required(); my $u = $req ? current_user() : undef;
@@ -617,16 +711,31 @@ sub guides_get {
     for my $d (grep { !/^[._]/ && -d "$GUIDE_ROOT/$_" } readdir $dh) {
       my $m = eval { read_json("$GUIDE_ROOT/$d/meta.json") }; next unless ref $m eq 'HASH';
       # 수정본: rev/{시각}_{PC}.md (+ 같은 이름 .json {by, at, note, base}). 가장 최근 수정본이 지금 내용이다(없으면 guide.md)
-      my @revs;
+      #  파일형 문서(meta.format 'files', meta.files = 파일 순서): 원본은 files/{파일}, 수정본은 rev/{시각}_{PC}/{파일}(+ .json의 file). 파일마다 가장 최근 수정본이 지금 내용
+      my @revs; my $is_files = str($m->{format}) eq 'files';
       if (opendir(my $rh, "$GUIDE_ROOT/$d/rev")) {
-        for my $f (sort grep { /\.md$/ } readdir $rh) {
-          (my $r = $f) =~ s/\.md$//; my $i = eval { read_json("$GUIDE_ROOT/$d/rev/$r.json") } || {};
-          push @revs, { rev => $r, at => str($i->{at}), by => str($i->{by}), note => str($i->{note}), base => str($i->{base}) };
+        my %seen; my @names = sort grep { !$seen{$_}++ } map { (my $x = $_) =~ s/\.(md|json)$//; $x } grep { /\.(md|json)$/ && !/\.check-/ && -f "$GUIDE_ROOT/$d/rev/$_" } readdir $rh;
+        for my $r (@names) {
+          my $i = eval { read_json("$GUIDE_ROOT/$d/rev/$r.json") } || {};
+          next if !$is_files && !-f "$GUIDE_ROOT/$d/rev/$r.md";
+          next if $is_files && !(str($i->{file}) ne '' && -f "$GUIDE_ROOT/$d/rev/$r/" . str($i->{file}));
+          # UX 문서 변경이력: 수정 요청 글(req) · 그 수정 뒤 찾은 고칠 화면 · 연관 항목(checks: rev/{rev}.check-{PC}-{작업 ID}.json, 깃으로 공유)
+          my @checks = grep { ref $_ eq 'HASH' } map { eval { read_json($_) } } glob(quotemeta("$GUIDE_ROOT/$d/rev/$r") . '.check-*.json');
+          push @revs, { rev => $r, at => str($i->{at}), by => str($i->{by}), note => str($i->{note}), base => str($i->{base}), req => str($i->{req}), jobId => str($i->{jobId}), file => str($i->{file}), checks => \@checks };
         }
         closedir $rh;
       }
       my $last = $revs[-1];
-      $m->{mdPath} = $last ? ".history/guides/$d/rev/$last->{rev}.md" : ".history/guides/$d/guide.md";
+      if ($is_files) {
+        # 파일마다 지금 내용 위치(fileList [{path, mdPath, rev}]). 문서 전체 mdPath는 없다(Claude · 화면은 fileList를 읽는다)
+        #  원본 폴더: meta.filesDir(없으면 'files', 빈 값이면 문서 폴더 바로 아래 — 예: .history/guides/rule/schedule.md)
+        my $fdir = exists $m->{filesDir} ? str($m->{filesDir}) : 'files';
+        $m->{fileList} = [ map { my $p = str($_); my ($cur, $cr) = ($fdir ne '' ? "$fdir/$p" : $p, '');
+          for my $r (@revs) { ($cur, $cr) = ("rev/$r->{rev}/" . ($p =~ s{\.\./}{_up/}gr), $r->{rev}) if $r->{file} eq $p; }
+          { path => $p, mdPath => ".history/guides/$d/$cur", rev => $cr } } @{ ref $m->{files} eq 'ARRAY' ? $m->{files} : [] } ];
+        $m->{mdPath} = '';
+      }
+      else { $m->{mdPath} = $last ? ".history/guides/$d/rev/$last->{rev}.md" : ".history/guides/$d/guide.md"; }
       $m->{rev} = $last ? $last->{rev} : ''; $m->{revs} = \@revs;
       $m->{updatedAt} = $last->{at} if $last && $last->{at} ne '';
       push @list, $m;
@@ -694,7 +803,7 @@ sub jobs_post {
   my $act = str($b->{action});
   if ($act eq 'add') {
     my ($kind, $key, $nid) = (str($b->{kind}), str($b->{fileKey}), str($b->{nodeId}));
-    die "알 수 없는 작업: $kind\n" unless grep { $kind eq $_ } qw(capture catalog guide guide-check guide-edit text prototype prototype-edit prototype-sync);
+    die "알 수 없는 작업: $kind\n" unless grep { $kind eq $_ } qw(capture catalog guide guide-check guide-edit text prototype prototype-edit prototype-sync minutes plan);
     # 쓰기 권한: UX 문서 만들기 · 수정 요청 · 연관 항목 찾기는 UX 문서, 프로토타입 요청은 프로토타입, 캡처 · 목록은 Workbench 쓰기(없으면 보기만)
     die ro_msg(job_menu($kind)) unless can_write(job_menu($kind));
     # 프로토타입(이 PC에만, prototypes/{id}/): 만들기(prototype, 고른 화면 frames) · 수정 요청(prototype-edit) · Figma 바뀐 화면 맞추기(prototype-sync)
@@ -727,11 +836,25 @@ sub jobs_post {
       die "Figma 링크를 넣거나 참고 파일을 올려 주세요.\n" if trim($b->{link}) eq '' && !@srcs;
       die "Figma 링크 형식이 아닙니다.\n" if trim($b->{link}) ne '' && !key_ok($key);
     }
+    # 일정/작업의 임시 정책 · 논의 처리(plan): sub pv-new · pv-decide · answer · answer-apply (윈도우 서버와 같다)
+    if ($kind eq 'plan') {
+      ($nid, $key) = ('', ''); my $sub = str($b->{sub}); my $tg = str($b->{target});
+      die "알 수 없는 처리: $sub\n" unless $sub =~ /^(pv-new|pv-decide|answer|answer-apply)$/;
+      die "잘못된 항목 ID: $tg\n" if $sub ne 'pv-new' && $tg !~ /^(PV|PD|CA)-\d{4}(-[A-Z])?$/;
+      ($hit) = grep { $_->{kind} eq 'plan' && str($_->{target}) eq $tg && str($_->{sub}) eq 'pv-decide' && ($_->{status} eq '대기' || $_->{status} eq '진행 중') } @items if $sub eq 'pv-decide';
+    }
+    # 회의록 요약 정리(minutes): 각자 작성한 메모를 Claude가 합쳐 본문(정리본)을 쓴다. 같은 회의록에 대기 · 진행 중이 있으면 그것을 돌려준다
+    if ($kind eq 'minutes') {
+      ($nid, $key) = ('', ''); my $mi = str($b->{minute});
+      die "회의록을 찾지 못했습니다: $mi\n" unless $mi =~ /^m[0-9a-z-]{6,40}$/ && -f "$MIN_DIR/$mi.md";
+      die "각자 작성한 내용이 아직 없습니다.\n" unless @{ read_notes($mi) };
+      ($hit) = grep { $_->{kind} eq 'minutes' && str($_->{minute}) eq $mi && ($_->{status} eq '대기' || $_->{status} eq '진행 중') } @items;
+    }
     # 정의서 연관 항목 찾기(guide-check, scope:'spec')는 정의서에 기준 파일이 없으면 파일 없이(문서 · 프로토타입만) 받는다
     #  문서 수정 요청(guide-edit) · 참고 파일로만 만드는 가이드 · 정의서(guide)도 파일 없이 받는다
-    die($kind eq 'guide' ? "Figma 링크 형식이 아닙니다.\n" : "잘못된 파일 키입니다.\n") unless key_ok($key) || ($key eq '' && (($kind eq 'guide-check' && str($b->{scope}) eq 'spec') || $kind eq 'guide-edit' || $kind eq 'guide'));
+    die($kind eq 'guide' ? "Figma 링크 형식이 아닙니다.\n" : "잘못된 파일 키입니다.\n") unless key_ok($key) || ($key eq '' && (($kind eq 'guide-check' && str($b->{scope}) eq 'spec') || $kind eq 'minutes' || $kind eq 'plan' || $kind eq 'guide-edit' || $kind eq 'guide'));
     die "잘못된 nodeId: $nid\n" if ($kind eq 'capture' || $kind eq 'text') && $nid !~ /^\d+:\d+$/;
-    ($hit) = grep { $_->{kind} eq $kind && $_->{fileKey} eq $key && str($_->{nodeId}) eq $nid && ($_->{status} eq '대기' || $_->{status} eq '진행 중') } @items unless $kind =~ /^(guide|guide-check|guide-edit|text|prototype|prototype-edit|prototype-sync)$/;
+    ($hit) = grep { $_->{kind} eq $kind && $_->{fileKey} eq $key && str($_->{nodeId}) eq $nid && ($_->{status} eq '대기' || $_->{status} eq '진행 중') } @items unless $kind =~ /^(plan|minutes|guide|guide-check|guide-edit|text|prototype|prototype-edit|prototype-sync)$/;
     # 프로토타입 맞추기는 같은 프로토타입에 아직 「대기」인 것이 있으면 새로 만들지 않는다(여러 번 고쳐도 한 번에 맞춘다)
     ($hit) = grep { $_->{kind} eq $kind && str($_->{proto}) eq str($b->{proto}) && $_->{status} eq '대기' } @items if $kind eq 'prototype-sync';
     unless ($hit) {
@@ -741,8 +864,11 @@ sub jobs_post {
         status => '대기', note => '', by => str($b->{by}), takenBy => '', createdAt => $now, updatedAt => $now };
       # guide-check 범위: '' = 가이드(작업 기준 파일의 화면만), 'spec' = 정의서(화면 · 다른 문서 · 프로토타입)
       $hit->{scope} = str($b->{scope}) eq 'spec' ? 'spec' : '' if $kind eq 'guide-check';
-      # 새 가이드 · 정의서: 문서 종류(docKind '' = 가이드, 'spec' = 정의서)와 올린 참고 파일(workbench/job_files/{작업 ID}/, 이 PC에만)
-      if ($kind eq 'guide') { $hit->{docKind} = str($b->{docKind}) eq 'spec' ? 'spec' : ''; $hit->{files} = save_uploads($hit->{id}, @srcs); }
+      $hit->{file} = str($b->{file}) if $kind eq 'guide-edit' && str($b->{file}) ne '';   # 파일형 문서의 수정 요청: 고칠 파일
+      $hit->{minute} = str($b->{minute}) if $kind eq 'minutes';
+      if ($kind eq 'plan') { $hit->{sub} = str($b->{sub}); $hit->{target} = str($b->{target}); $hit->{plan} = $b->{plan}; }
+      # 새 가이드 · 정의서: 문서 종류(docKind '' = UX가이드, 'rule' 작업규칙 · 'policy' 정책서 · 'data' 기준데이터 · 'spec' 화면 정의서)와 올린 참고 파일(workbench/job_files/{작업 ID}/, 이 PC에만)
+      if ($kind eq 'guide') { $hit->{docKind} = str($b->{docKind}) =~ /^(spec|rule|policy|data)$/ ? str($b->{docKind}) : ''; $hit->{files} = save_uploads($hit->{id}, @srcs); }
       if ($kind =~ /^prototype/) {
         $hit->{proto} = str($b->{proto}); $hit->{start} = str($b->{start}); $hit->{env} = str($b->{env});
         $hit->{frames} = [ map { { nodeId => str($_->{nodeId}), name => str($_->{name}), page => str($_->{page}) } } @pfr ];
@@ -766,7 +892,17 @@ sub jobs_post {
   } else { die "알 수 없는 action: $act\n"; }
   splice(@items, 300) if @items > 300;
   write_json($JOB_FILE, { version => ($j->{version} || 0) + 1, items => \@items });
+  # UX 문서 변경이력: 문서 수정 뒤 찾은 고칠 화면 · 연관 항목(guide-check)은 그 수정본 옆에 남겨 깃으로 공유한다(작업 대기열은 이 PC에만 있으므로)
+  save_check_log($hit) if $act eq 'update' && $hit && str($hit->{kind}) eq 'guide-check';
   return { ok => JSON::PP::true, job => $hit };
+}
+# guide-check 결과 → .history/guides/{문서}/rev/{revTo}.check-{PC}-{작업 ID}.json {jobId, pc, by, at, status, note, scope, fileKey, items}
+#  상태가 바뀔 때마다(완료 → 반영 · 반영 안 함) 덮어쓴다. 바뀐 수정본(revTo)이 없으면 남기지 않는다
+sub save_check_log {
+  my ($j) = @_; my ($gid, $rv) = (str($j->{guide}), str($j->{revTo}));
+  return unless $gid =~ /^[A-Za-z0-9_-]{1,64}$/ && $rv =~ /^[A-Za-z0-9_-]{1,80}$/ && -f "$GUIDE_ROOT/$gid/rev/$rv.json";
+  eval { write_json("$GUIDE_ROOT/$gid/rev/$rv.check-$PC_SLUG-" . str($j->{id}) . '.json', { jobId => str($j->{id}), pc => $PC_NAME, by => str($j->{by}), at => now_iso(),
+    status => str($j->{status}), note => str($j->{note}), scope => str($j->{scope}), fileKey => str($j->{fileKey}), items => (ref $j->{items} eq 'ARRAY' ? $j->{items} : []) }); $sync_want = 1; };
 }
 
 # ── 시작 안내 POST ──
@@ -914,7 +1050,7 @@ sub idle_check {
 # ── HTTP ──
 sub respond {
   my ($sock, $code, $type, $body, $extra) = @_;
-  my %txt = (200 => 'OK', 204 => 'No Content', 302 => 'Found', 400 => 'Bad Request', 403 => 'Forbidden', 404 => 'Not Found');
+  my %txt = (200 => 'OK', 204 => 'No Content', 302 => 'Found', 400 => 'Bad Request', 403 => 'Forbidden', 404 => 'Not Found', 502 => 'Bad Gateway');
   $body = '' unless defined $body;
   my $h = "HTTP/1.1 $code " . ($txt{$code} || 'OK') . "\r\nContent-Type: $type\r\nContent-Length: " . length($body) . "\r\n" .
     "Access-Control-Allow-Origin: *\r\nAccess-Control-Allow-Headers: Content-Type\r\nAccess-Control-Allow-Methods: GET, POST, OPTIONS\r\n" .
@@ -939,7 +1075,7 @@ sub handle {
   my $body = sub { my $d = length($raw) ? $JSON->decode($raw) : {}; return ref $d eq 'HASH' ? $d : {}; };
 
   # ── 로그인 · 메뉴 권한 ── 계정 파일은 어디에도 내보내지 않는다(해시라도)
-  return respond($sock, 404, 'text/plain', 'not found') if $path =~ m{^/\.history/accounts};
+  return respond($sock, 404, 'text/plain', 'not found') if $path =~ m{^/\.history/(?:accounts|config)};   # 계정 · 시트 연결 비밀값
   if ($path eq '/api/me' && $method eq 'GET') { return respond_json($sock, 200, me_info()); }
   if ($path eq '/api/login' && $method eq 'POST') {
     my $b = $body->(); my $a = read_account($b->{id});
@@ -968,7 +1104,7 @@ sub handle {
       }
       my %al = map { $_ => 1 } user_menus($u); my $need;
       for my $m (@MENUS) { if ((grep { $_ eq $rel0 } @{ $m->{pages} }) || ($m->{key} eq 'proto' && $rel0 =~ m{^prototypes/})) { $need = $m->{key}; last; } }
-      my %api = ('/api/usage' => 'usage', '/api/prototypes' => 'proto', '/api/accounts' => 'accounts'); $need = $api{$path} if $api{$path};
+      my %api = ('/api/usage' => 'usage', '/api/prototypes' => 'proto', '/api/accounts' => 'accounts', '/api/sheet' => 'plan', '/api/sheet/data' => 'plan', '/api/minutes' => 'plan', '/api/plan/files' => 'plan'); $need = $api{$path} if $api{$path};
       if ($need && !$al{$need}) {
         return respond_json($sock, 403, { error => '이 메뉴를 쓸 권한이 없습니다.' }) if $path =~ m{^/api/};
         return respond($sock, 302, 'text/plain', '', "Location: /" . me_info()->{first} . "\r\n");
@@ -976,8 +1112,8 @@ sub handle {
       # 쓰기 권한: 바꾸는 요청(POST)은 그 메뉴의 쓰기가 있어야 한다(읽기만이면 403). 작업 대기열 · 가이드 저장은 처리할 때 종류를 보고 확인
       #  요청(/api/requests)은 Workbench · 변경 이력(다시 진행 · 답하기) · UX 문서(연관 화면 반영 요청)에서 온다
       if ($method eq 'POST' && $is_browser) {
-        my %wmap = ('/api/requests' => [qw(workbench history guide)], '/api/attach' => ['workbench'], '/api/projects' => ['workbench'], '/api/catalog' => ['workbench'],
-          '/api/shots' => ['workbench'], '/api/upload' => ['guide'], '/api/prototypes' => ['proto']);
+        my %wmap = ('/api/requests' => [qw(workbench history guide plan)], '/api/attach' => ['workbench'], '/api/projects' => ['workbench'], '/api/catalog' => ['workbench'],
+          '/api/shots' => ['workbench'], '/api/upload' => ['guide'], '/api/prototypes' => ['proto'], '/api/sheet' => ['plan'], '/api/minutes' => ['plan']);
         if ($wmap{$path} && !can_write(@{ $wmap{$path} })) { (my $m = ro_msg($wmap{$path}[0])) =~ s/\n$//; return respond_json($sock, 403, { error => $m }); }
       }
     }
@@ -1012,6 +1148,84 @@ sub handle {
   if ($path =~ m{^/api/setup} && $method eq 'POST') { my $o = setup_post($path, $body->(), $origin); return respond_json($sock, 200, $o) if $o; }
   if ($path eq '/api/shots' && $method eq 'POST') { return respond_json($sock, 200, shots_post($body->())); }
   if ($path eq '/api/projects' && $method eq 'GET') { return respond_json($sock, 200, projects_get()); }
+  # 파일 여러 개를 한 번에: POST /api/files {paths:['.history/guides/…']} → {files:{경로: 글}} (.history/guides · minutes 아래만)
+  if ($path eq '/api/files' && $method eq 'POST') {
+    my $b = $body->(); my %out; my $n = 0;
+    for my $p (@{ ref $b->{paths} eq 'ARRAY' ? $b->{paths} : [] }) {
+      last if ++$n > 2000;
+      (my $rp = str($p)) =~ s/%([0-9A-Fa-f]{2})/chr(hex($1))/eg; $rp =~ s{\\}{/}g; $rp =~ s{^/+}{};
+      next unless $rp =~ m{^\.history/(guides|minutes)/};
+      my @seg; for (split m{/}, $rp) { if ($_ eq '..') { pop @seg; } elsif ($_ ne '.' && $_ ne '') { push @seg, $_; } }
+      my $norm = join('/', @seg); next unless $norm =~ m{^\.history/(guides|minutes)/};
+      my $raw = read_bytes("$ROOT/" . encode('UTF-8', $norm)); next unless defined $raw;
+      $out{str($p)} = decode('UTF-8', $raw);
+    }
+    return respond_json($sock, 200, { files => \%out });
+  }
+  # 일정/작업 탭이 읽는 저장소 폴더의 md 목록(하위 closed/ 포함)
+  if ($path eq '/api/plan/files' && $method eq 'GET') {
+    my $dir = sheet_query($target, 'dir');
+    die "알 수 없는 폴더: $dir
+" unless $dir =~ /^(provisional|pending|customer-agenda|decisions|screen-fixes)$/;
+    my $base = "$HIST_DIR/guides/$dir"; my @fl;
+    for my $sub ('', 'closed/') { opendir(my $d, "$base/$sub") or next; for (sort readdir $d) { next unless /\.md$/ && -f "$base/$sub$_"; push @fl, { path => "$dir/$sub$_", url => ".history/guides/$dir/$sub$_", closed => ($sub ? JSON::PP::true : JSON::PP::false) }; } closedir $d; }
+    return respond_json($sock, 200, { files => \@fl });
+  }
+  # 회의록(공유 md) · 일정/작업 ↔ 구글 시트 (윈도우 서버와 같다)
+  if ($path eq '/api/minutes' && $method eq 'GET') { return respond_json($sock, 200, minutes_get()); }
+  if ($path eq '/api/minutes' && $method eq 'POST') { return respond_json($sock, 200, minutes_post($body->())); }
+  if ($path eq '/api/sheet' && $method eq 'GET') {
+    my $cf = sheet_conf();
+    return respond_json($sock, 200, { configured => (str($cf->{webapp}) ne '' && str($cf->{token}) ne '') ? JSON::PP::true : JSON::PP::false,
+      (map { $_ => str($cf->{$_}) } qw(sheetUrl wbsGid minutes by at)), cols => (ref $cf->{cols} eq 'HASH' ? $cf->{cols} : undef), canWrite => can_write('plan') ? JSON::PP::true : JSON::PP::false });
+  }
+  if ($path eq '/api/sheet/data' && $method eq 'GET') {
+    my %q = (action => 'read'); my $g = sheet_query($target, 'gid'); my $n = sheet_query($target, 'name');
+    $q{gid} = $g if $g ne ''; $q{sheet} = $n if $n ne ''; $q{style} = 1 if sheet_query($target, 'style') ne '';   # 시트 모양(색 · 숨김 · 병합 …)도
+    (my $ck = "${g}_$n") =~ s/[^A-Za-z0-9_\x{AC00}-\x{D7A3}-]/_/g; $ck = "$SHEET_CACHE/" . encode('UTF-8', $ck) . '.json';
+    # cache=1: 마지막으로 받은 사본을 바로 준다(화면이 먼저 보여 주고 뒤에서 새로 받는다)
+    if (sheet_query($target, 'cache') ne '' && -f $ck) {
+      return respond($sock, 200, 'application/json; charset=utf-8', '{"cache":true,"cachedAt":"' . strftime('%Y-%m-%dT%H:%M:%S', localtime((stat $ck)[9])) . '","data":' . read_bytes($ck) . '}');
+    }
+    my $work = sub {
+      my $txt = eval { sheet_call(\%q) };
+      if (defined $txt) { make_path($SHEET_CACHE); write_bytes($ck, $txt); }
+      else {
+        (my $err = str($@)) =~ s/\n$//;
+        return respond_json($sock, 502, { error => $err }) unless -f $ck;
+        $txt = '{"cached":true,"error":' . JSON::PP->new->utf8->encode([$err]) =~ s/^\[|\]$//gr . ',"data":' . read_bytes($ck) . '}';
+      }
+      respond($sock, 200, 'application/json; charset=utf-8', $txt);
+    };
+    # 시트 읽기는 수십 초 걸릴 수 있어 손자 프로세스가 답한다(서버는 그동안 다른 요청을 처리). fork가 안 되면 여기서
+    my $pid = fork();
+    if (defined $pid && $pid == 0) { my $p2 = fork(); if (defined $p2 && $p2 == 0) { eval { $work->() }; POSIX::_exit(0); } POSIX::_exit(0); }
+    if (defined $pid) { waitpid($pid, 0); return; }
+    return $work->();
+  }
+  if ($path eq '/api/sheet' && $method eq 'POST') {
+    my $b = $body->(); my $act = str($b->{action});
+    if ($act eq 'config') {
+      my $old = sheet_conf();
+      (my $wa = str($b->{webapp})) =~ s/^\s+|\s+$//g;
+      die "웹 앱 주소는 https://script.google.com/macros/s/…/exec 형식입니다.\n" if $wa ne '' && $wa !~ m{^https://script\.google\.com/macros/s/[A-Za-z0-9_-]+/exec$};
+      $wa = str($old->{webapp}) if $wa eq '';   # 웹 앱 주소 · 비밀값은 비워 보내면 지금 값 그대로
+      (my $tk = str($b->{token})) =~ s/^\s+|\s+$//g; $tk = str($old->{token}) if $tk eq '';
+      my %cf = (webapp => $wa, token => $tk, by => me_name(), at => now_iso());
+      for (qw(sheetUrl wbsGid minutes)) { ($cf{$_} = str($b->{$_})) =~ s/^\s+|\s+$//g; }
+      $cf{cols} = ref $b->{cols} eq 'HASH' ? $b->{cols} : undef;   # 열 맞추기(화면이 정한 열 → 항목)
+      make_path("$HIST_DIR/config"); write_json($SHEET_CONF, \%cf); $sync_want = 1;
+      return respond_json($sock, 200, { ok => JSON::PP::true });
+    }
+    if ($act eq 'test') { return respond($sock, 200, 'application/json; charset=utf-8', sheet_call({ action => 'sheets' })); }
+    if ($act eq 'write') {
+      my @cells = map { { row => int($_->{row} || 0), col => int($_->{col} || 0), value => str($_->{value}) } } @{ ref $b->{cells} eq 'ARRAY' ? $b->{cells} : [] };
+      die "바꿀 칸이 없습니다.\n" unless @cells;
+      my %q = (action => 'write', cells => \@cells); $q{gid} = str($b->{gid}) if str($b->{gid}) ne ''; $q{sheet} = str($b->{name}) if str($b->{name}) ne '';
+      return respond($sock, 200, 'application/json; charset=utf-8', sheet_call(\%q));
+    }
+    die "알 수 없는 작업입니다.\n";
+  }
   if ($path eq '/api/prototypes' && $method eq 'GET') { return respond_json($sock, 200, prototypes_get()); }
   if ($path eq '/api/prototypes' && $method eq 'POST') { return respond_json($sock, 200, prototypes_post($body->())); }
   if ($path eq '/api/projects' && $method eq 'POST') { return respond_json($sock, 200, projects_post($body->(), $origin)); }
@@ -1028,8 +1242,15 @@ sub handle {
         die "가이드 내용이 너무 깁니다.\n" if length($md) > 2000000;
         make_path("$GUIDE_ROOT/$gid/rev");
         my $rev = strftime('%Y%m%d-%H%M%S', localtime) . "_$PC_SLUG"; $md =~ s/\r\n/\n/g;
-        write_bytes("$GUIDE_ROOT/$gid/rev/$rev.md", encode('UTF-8', $md));
-        write_json("$GUIDE_ROOT/$gid/rev/$rev.json", { rev => $rev, by => str($g->{by}), at => now_iso(), note => str($g->{note}), base => str($g->{base}), pc => $PC_NAME });
+        # 파일형 문서: 고친 파일 하나만 rev/{rev}/{파일}로(file은 meta.files에 있는 이름이어야 한다)
+        my $gm = eval { read_json("$GUIDE_ROOT/$gid/meta.json") } || {}; my $file = '';
+        if (str($gm->{format}) eq 'files') {
+          ($file = str($g->{file})) =~ s{\\}{/}g; my @fl = ref $gm->{files} eq 'ARRAY' ? @{ $gm->{files} } : ();
+          die "고칠 파일을 정해 주세요(file: " . join(', ', @fl) . ").\n" unless $file ne '' && grep { $_ eq $file } @fl;
+          my $fp = "$GUIDE_ROOT/$gid/rev/$rev/" . ($file =~ s{\.\./}{_up/}gr); (my $fd = $fp) =~ s{/[^/]+$}{}; make_path($fd);   # 문서 폴더 밖 파일(../constitution.md)은 rev 안 _up/으로
+          write_bytes($fp, encode('UTF-8', $md));
+        } else { write_bytes("$GUIDE_ROOT/$gid/rev/$rev.md", encode('UTF-8', $md)); }
+        write_json("$GUIDE_ROOT/$gid/rev/$rev.json", { rev => $rev, by => str($g->{by}), at => now_iso(), note => str($g->{note}), base => str($g->{base}), pc => $PC_NAME, req => str($g->{request}), jobId => str($g->{jobId}), file => $file });
         $sync_want = 1;
         my $out = guides_get(); $out->{saved} = $rev;
         return respond_json($sock, 200, $out);

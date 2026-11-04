@@ -39,6 +39,7 @@ workbench/jobs.json
 workbench/req_images/
 workbench/job_files/
 workbench/.run/
+workbench/.sheet_cache/
 # 프로젝트(Figma 파일)는 PC마다 따로(기본 프로젝트 없음, 시작 안내 3단계 링크로 정한다)
 projects/
 # 검토용 초안 문서(로컬 전용)

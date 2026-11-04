@@ -65,7 +65,7 @@ pre,code,kbd,.mono{word-break:normal;overflow-wrap:anywhere}
 .appnav .badge.on{background:var(--nav-ok-soft);color:var(--nav-ok);border-color:transparent}
 .appnav .badge.off{background:var(--nav-red-soft);color:var(--nav-red);border-color:transparent}
 /* Claude 사용 한도: 배경에 사용률 막대, 80% 이상 주황 · 95% 이상 빨강, 오래된 값은 흐리게 */
-.appnav .appnav-usage{position:relative;overflow:hidden;cursor:help;font-variant-numeric:tabular-nums}
+.appnav .appnav-usage{position:relative;overflow:hidden;cursor:help;font-variant-numeric:tabular-nums;white-space:nowrap;flex:none}
 .appnav-usage i{position:absolute;left:0;top:0;bottom:0;background:var(--nav-accent);opacity:.13}
 .appnav-usage b{position:relative;font-weight:600}
 .appnav .appnav-usage.warn{color:var(--nav-warn);border-color:var(--nav-warn)}

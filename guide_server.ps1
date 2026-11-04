@@ -236,17 +236,36 @@ function Read-Guides {
       if (-not (Test-Path $mf)) { continue }
       try { $m = [IO.File]::ReadAllText($mf, $Utf8) | ConvertFrom-Json } catch { continue }
       # 수정본: rev/{시각}_{PC}.md (+ 같은 이름 .json {by, at, note, base}). 가장 최근 수정본이 지금 내용이다(없으면 guide.md)
-      $revs = @()
+      #  파일형 문서(meta.format 'files', meta.files = 파일 순서): 원본은 files/{파일}, 수정본은 rev/{시각}_{PC}/{파일}(+ .json의 file). 파일마다 가장 최근 수정본이 지금 내용
+      $revs = @(); $isFiles = [string]$m.format -eq 'files'
       $rd = P $d.FullName 'rev'
       if (Test-Path $rd) {
-        foreach ($f in Get-ChildItem $rd -Filter *.md | Sort-Object Name) {
-          $info = $null; $jf = [IO.Path]::ChangeExtension($f.FullName, '.json')
+        $names = @(Get-ChildItem $rd -File | Where-Object { $_.Name -notmatch '\.check-' -and $_.Extension -in '.md', '.json' } | ForEach-Object { $_.BaseName } | Sort-Object -Unique)
+        foreach ($rn in $names) {
+          $info = $null; $jf = P $rd ($rn + '.json')
           if (Test-Path $jf) { try { $info = [IO.File]::ReadAllText($jf, $Utf8) | ConvertFrom-Json } catch {} }
-          $revs += [ordered]@{ rev = $f.BaseName; at = [string]$info.at; by = [string]$info.by; note = [string]$info.note; base = [string]$info.base }
+          if (-not $isFiles -and -not (Test-Path (P $rd ($rn + '.md')))) { continue }
+          if ($isFiles -and -not ([string]$info.file -and (Test-Path (P (P $rd $rn) ([string]$info.file))))) { continue }
+          # UX 문서 변경이력: 수정 요청 글(req) · 그 수정 뒤 찾은 고칠 화면 · 연관 항목(checks: rev/{rev}.check-{PC}-{작업 ID}.json, 깃으로 공유)
+          $checks = @()
+          foreach ($cf in Get-ChildItem $rd -Filter ($rn + '.check-*.json') -ErrorAction SilentlyContinue) { try { $checks += ([IO.File]::ReadAllText($cf.FullName, $Utf8) | ConvertFrom-Json) } catch {} }
+          $revs += [ordered]@{ rev = $rn; at = [string]$info.at; by = [string]$info.by; note = [string]$info.note; base = [string]$info.base; req = [string]$info.req; jobId = [string]$info.jobId; file = [string]$info.file; checks = @($checks) }
         }
       }
       $last = $(if ($revs.Count) { $revs[-1] } else { $null })
-      $m | Add-Member -NotePropertyName mdPath -NotePropertyValue $(if ($last) { ".history/guides/$($d.Name)/rev/$($last.rev).md" } else { ".history/guides/$($d.Name)/guide.md" }) -Force
+      if ($isFiles) {
+        # 파일마다 지금 내용 위치(fileList [{path, mdPath, rev}]). 문서 전체 mdPath는 없다(Claude · 화면은 fileList를 읽는다)
+        #  원본 폴더: meta.filesDir(없으면 'files', 빈 값이면 문서 폴더 바로 아래 — 예: .history/guides/rule/schedule.md)
+        $fdir = $(if ($m.PSObject.Properties['filesDir']) { [string]$m.filesDir } else { 'files' })
+        $fl = @(foreach ($p in @($m.files)) {
+          $cur = $(if ($fdir) { "$fdir/$p" } else { [string]$p }); $cr = ''
+          foreach ($r in $revs) { if ($r.file -eq $p) { $cur = "rev/$($r.rev)/" + ([string]$p -replace '\.\./', '_up/'); $cr = $r.rev } }
+          [ordered]@{ path = [string]$p; mdPath = ".history/guides/$($d.Name)/$cur"; rev = $cr }
+        })
+        $m | Add-Member -NotePropertyName fileList -NotePropertyValue @($fl) -Force
+        $m | Add-Member -NotePropertyName mdPath -NotePropertyValue '' -Force
+      }
+      else { $m | Add-Member -NotePropertyName mdPath -NotePropertyValue $(if ($last) { ".history/guides/$($d.Name)/rev/$($last.rev).md" } else { ".history/guides/$($d.Name)/guide.md" }) -Force }
       $m | Add-Member -NotePropertyName rev -NotePropertyValue $(if ($last) { $last.rev } else { '' }) -Force
       $m | Add-Member -NotePropertyName revs -NotePropertyValue @($revs) -Force
       if ($last -and $last.at) { $m | Add-Member -NotePropertyName updatedAt -NotePropertyValue $last.at -Force }
@@ -257,6 +276,14 @@ function Read-Guides {
     try { $a = [IO.File]::ReadAllText($GuideApply, $Utf8) | ConvertFrom-Json; foreach ($p in $a.PSObject.Properties) { $applied[$p.Name] = $p.Value } } catch {}
   }
   return [ordered]@{ items = @($list | Sort-Object { [string]$_.updatedAt } -Descending); applied = $applied }
+}
+# guide-check 결과 → .history/guides/{문서}/rev/{revTo}.check-{PC}-{작업 ID}.json {jobId, pc, by, at, status, note, scope, fileKey, items}
+#  상태가 바뀔 때마다(완료 → 반영 · 반영 안 함) 덮어쓴다. 바뀐 수정본(revTo)이 없으면 남기지 않는다
+function Save-CheckLog($j) {
+  $gid = [string]$j.guide; $rv = [string]$j.revTo
+  if ($gid -notmatch '^[A-Za-z0-9_-]{1,64}$' -or $rv -notmatch '^[A-Za-z0-9_-]{1,80}$' -or -not (Test-Path (P $GuideRoot $gid 'rev' ($rv + '.json')))) { return }
+  $o = [ordered]@{ jobId = [string]$j.id; pc = $PcName; by = [string]$j.by; at = (Now); status = [string]$j.status; note = [string]$j.note; scope = [string]$j.scope; fileKey = [string]$j.fileKey; items = @($j.items | Where-Object { $_ }) }
+  try { [IO.File]::WriteAllText((P $GuideRoot $gid 'rev' ('{0}.check-{1}-{2}.json' -f $rv, $PcSlug, $j.id)), ($o | ConvertTo-Json -Depth 6), $Utf8); $script:SyncWant = $true } catch {}
 }
 # 요청이 끝나면 그 구간의 사용량을 따로 띄운 프로세스가 남긴다(대화 기록을 읽느라 몇 초 걸릴 수 있어 서버를 막지 않는다)
 function Start-Usage($id) {
@@ -294,6 +321,7 @@ function Read-Setup {
 $AcctDir = P $HistDir 'accounts'
 $Menus = @(
   [ordered]@{ key = 'setup'; label = '시작 안내'; pages = @('Setup.html'); always = $true },   # 권한 설정 없이 누구나
+  [ordered]@{ key = 'plan'; label = '일정/작업'; pages = @('Work.html'); write = '일정(구글 시트) 칸 수정, 시트 연결 설정' },   # 일정 · 주간 진행 현황 · 화면설계서 작업대기 · 회의록 · 임시 정책 · 논의·결정
   # write: 쓰기 권한으로 할 수 있는 것(계정 관리 화면 설명). 없으면 읽기만 있는 메뉴
   [ordered]@{ key = 'guide'; label = 'UX 문서'; pages = @('Common_UX_Guide.html', 'UX_Guide.html'); write = '새 가이드 · 정의서 만들기, 항목 수정 요청, 연관 항목 찾기 · 반영 요청' },
   [ordered]@{ key = 'workbench'; label = 'Figma Workbench'; pages = @('Figma_Workbench.html'); write = '수정 요청 등록 · 답하기 · 다시 진행, 캡처 · 목록 요청, 프로젝트 추가 · 작업 페이지 바꾸기' },
@@ -373,9 +401,88 @@ function Can-Write([string[]]$keys) {
   $u = Current-User; if (-not $u) { return $false }
   $w = @(User-Writes $u); foreach ($k in $keys) { if ($w -contains $k) { return $true } }; return $false
 }
+# 일정/작업 구글 시트 연결: .history/config/sheet.json(깃으로 모든 PC 공유, 웹으로 내보내지 않음) · 받은 값 사본 workbench/.sheet_cache/
+$SheetConf = P $HistDir 'config' 'sheet.json'
+$SheetCache = P $Root 'workbench' '.sheet_cache'
+function Sheet-Conf { if (Test-Path $SheetConf) { try { return [IO.File]::ReadAllText($SheetConf, $Utf8) | ConvertFrom-Json } catch {} }; return [pscustomobject]@{} }
+function Me-Name { $u = Current-User; if ($u) { return [string]$u.name }; return [string](Read-Setup).user }
+# 웹 앱에 JSON으로 보내고 받은 글을 그대로 돌려준다(오류면 throw). 웹 앱은 302로 결과 주소에 보내고, .NET이 GET으로 따라간다
+function Sheet-Call($q) {
+  $cf = Sheet-Conf
+  if (-not $cf.webapp -or -not $cf.token) { throw '구글 시트가 아직 연결되지 않았습니다. 일정/작업의 [시트 연결]에서 웹 앱 주소와 비밀값을 넣어 주세요.' }
+  $q.token = [string]$cf.token
+  [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
+  try {
+    $r = Invoke-WebRequest -Uri ([string]$cf.webapp) -Method Post -Body $Utf8.GetBytes(($q | ConvertTo-Json -Depth 6 -Compress)) -ContentType 'application/json; charset=utf-8' -UseBasicParsing -TimeoutSec 60
+  } catch { throw ('구글 시트에 닿지 못했습니다: ' + $_.Exception.Message) }
+  return (Sheet-Check $Utf8.GetString($r.RawContentStream.ToArray()))
+}
+# 시트 읽기는 수십 초 걸릴 수 있어 기다리지 않고 보내 둔다(그동안 다른 요청을 처리). 끝나면 Sheet-Tick이 답한다
+Add-Type -AssemblyName System.Net.Http
+$SheetHttp = $null; $SheetPending = New-Object System.Collections.ArrayList
+function Sheet-Start($c, $q, [string]$ck) {
+  $cf = Sheet-Conf
+  if (-not $cf.webapp -or -not $cf.token) { SendJson $c 502 @{ error = '구글 시트가 아직 연결되지 않았습니다. 일정/작업의 [시트 연결]에서 웹 앱 주소와 비밀값을 넣어 주세요.' }; return }
+  $q.token = [string]$cf.token
+  [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
+  if (-not $script:SheetHttp) { $script:SheetHttp = New-Object System.Net.Http.HttpClient; $script:SheetHttp.Timeout = [TimeSpan]::FromSeconds(90) }
+  $content = New-Object System.Net.Http.StringContent(($q | ConvertTo-Json -Depth 6 -Compress), $Utf8, 'application/json')
+  [void]$script:SheetPending.Add(@{ c = $c; ck = $ck; task = $script:SheetHttp.PostAsync([string]$cf.webapp, $content) })
+}
+function Sheet-Tick {
+  foreach ($p in @($script:SheetPending)) {
+    if (-not $p.task.IsCompleted) { continue }
+    [void]$script:SheetPending.Remove($p)
+    $c = $p.c; $ck = $p.ck
+    try {
+      try {
+        if ($p.task.IsFaulted -or $p.task.IsCanceled) { $ex = $p.task.Exception; $msg = if ($ex) { $ex.GetBaseException().Message } else { '시간 초과' }; throw ('구글 시트에 닿지 못했습니다: ' + $msg) }
+        $txt = Sheet-Check $Utf8.GetString($p.task.Result.Content.ReadAsByteArrayAsync().Result)
+        if (-not (Test-Path $SheetCache)) { New-Item -ItemType Directory -Force $SheetCache | Out-Null }
+        [IO.File]::WriteAllText($ck, $txt, (New-Object Text.UTF8Encoding $false))
+      } catch {
+        # 시트에 닿지 못하면 마지막으로 받은 값을 함께 보낸다(화면은 「마지막으로 받은 값」 표시)
+        $err = $_.Exception.Message
+        if (Test-Path $ck) { $txt = '{"cached":true,"error":' + ($err | ConvertTo-Json) + ',"data":' + [IO.File]::ReadAllText($ck, $Utf8) + '}' } else { SendJson $c 502 @{ error = $err }; continue }
+      }
+      Send $c 200 'application/json; charset=utf-8' $Utf8.GetBytes($txt)
+    } catch {}
+  }
+}
+function Sheet-Check([string]$txt) {
+  $txt = $txt.Trim()
+  if (-not $txt.StartsWith('{')) {
+    # 구글 오류 페이지: 스크립트 오류 글(예: TypeError … ('Code' 파일, 30행))을 꺼내 보여 준다
+    $plain = [regex]::Replace($txt, '(?s)<(script|style)[^>]*>.*?</\1>', ' ')
+    $m = [regex]::Match($plain, '>\s*([^<>]*(?:Error|Exception|행\))[^<>]*)<')   # (<title>오류</title>는 건너뜀)
+    if ($m.Success) { throw ('시트 스크립트 오류: ' + [Net.WebUtility]::HtmlDecode($m.Groups[1].Value.Trim()) + ' — tools/google-sheet-bridge.gs 최신본으로 바꾸고 새 버전으로 다시 배포해 주세요.') }
+    throw '웹 앱 응답이 JSON이 아닙니다. 배포의 액세스 권한이 「모든 사용자」인지, 웹 앱 주소가 /exec로 끝나는지 확인해 주세요.'
+  }
+  if ($txt.StartsWith('{"error"')) { throw ([string]($txt | ConvertFrom-Json).error) }
+  return $txt
+}
+# 회의록(공유): .history/minutes/{id}.md (작업 이력과 함께 깃으로 모든 PC에)
+$MinDir = P $HistDir 'minutes'
+function Read-Minute([string]$f) {
+  if (-not (Test-Path $f)) { return $null }
+  $t = [IO.File]::ReadAllText($f, $Utf8) -replace '\r\n', "`n"
+  $m = [regex]::Match($t, '^---\n([\s\S]*?)\n---\n?'); if (-not $m.Success) { return $null }
+  $o = [ordered]@{}
+  foreach ($l in $m.Groups[1].Value.Split("`n")) { $k = [regex]::Match($l, '^([A-Za-z]+):\s?(.*)$'); if ($k.Success) { $o[$k.Groups[1].Value] = $k.Groups[2].Value.Trim() } }
+  if (-not $o.id) { $o.id = [IO.Path]::GetFileNameWithoutExtension($f) }
+  $o.body = $t.Substring($m.Length).TrimEnd()
+  return [pscustomobject]$o
+}
+# 회의록 각자 작성: 작성자 키 = 로그인 계정 ID(없으면 PC 이름)
+function Note-Key { $u = Current-User; if ($u -and $u.id) { return ([string]$u.id).ToLower() }; return $PcSlug }
+function Read-Notes([string]$id) {
+  $nd = P $MinDir ($id + '.notes'); $l = @()
+  if (Test-Path $nd) { foreach ($f in Get-ChildItem $nd -Filter *.md) { $n = Read-Minute $f.FullName; if ($n) { $l += [pscustomobject]@{ author = [string]$n.author; authorId = $(if ($n.authorId) { [string]$n.authorId } else { $f.BaseName }); updatedAt = [string]$n.updatedAt; body = [string]$n.body } } } }
+  return @($l | Sort-Object { $_.updatedAt })
+}
 function Ro-Msg([string]$key) { $l = ($Menus | Where-Object { $_.key -eq $key } | Select-Object -First 1).label; return "「$l」 메뉴는 읽기 권한만 있습니다(보기만 가능). 최고관리자에게 「$l · 쓰기」 권한을 요청하세요." }
 # 작업 대기열 종류 → 메뉴(쓰기 권한 확인용)
-function Job-Menu([string]$kind) { if ($kind -in 'guide', 'guide-edit', 'guide-check') { return 'guide' }; if ($kind -like 'prototype*') { return 'proto' }; return 'workbench' }
+function Job-Menu([string]$kind) { if ($kind -in 'guide', 'guide-edit', 'guide-check') { return 'guide' }; if ($kind -in 'minutes', 'plan') { return 'plan' }; if ($kind -like 'prototype*') { return 'proto' }; return 'workbench' }
 function User-Menus($a) { if (-not $a) { return @() }; if ($a.admin) { return @($Menus | ForEach-Object { $_.key }) }; $p = Pick-Menus $a; return @($Menus | Where-Object { $_.always -or $p -contains $_.key } | ForEach-Object { $_.key }) }
 function Me-Info {
   $req = Auth-Required; $u = $null; if ($req) { $u = Current-User }
@@ -526,7 +633,7 @@ function Send($c, [int]$code, [string]$type, [byte[]]$bytes) {
 }
 function SendJson($c, [int]$code, $obj) { Send $c $code 'application/json; charset=utf-8' $Utf8.GetBytes(($obj | ConvertTo-Json -Depth 10)) }
 
-$types = @{ '.html'='text/html; charset=utf-8'; '.png'='image/png'; '.jpg'='image/jpeg'; '.jpeg'='image/jpeg'; '.gif'='image/gif'; '.webp'='image/webp';'.css'='text/css'; '.js'='application/javascript'; '.json'='application/json; charset=utf-8'; '.md'='text/plain; charset=utf-8' }
+$types = @{ '.html'='text/html; charset=utf-8'; '.png'='image/png'; '.jpg'='image/jpeg'; '.jpeg'='image/jpeg'; '.gif'='image/gif'; '.webp'='image/webp';'.css'='text/css'; '.js'='application/javascript'; '.json'='application/json; charset=utf-8'; '.md'='text/plain; charset=utf-8'; '.csv'='text/plain; charset=utf-8'; '.gs'='text/plain; charset=utf-8' }
 $l = New-Object System.Net.HttpListener
 $l.Prefixes.Add("http://localhost:$Port/")
 try { $l.Start() } catch {
@@ -590,8 +697,9 @@ while ($l.IsListening) {
   # 1초마다 깨어나 탭 상태 · 이력 동기화를 본다
   Sync-Tick
   if ((Get-Date) -ge $AutoWatchAt) { Auto-Watch $AutoWatchFirst; $AutoWatchFirst = $false; $AutoWatchAt = (Get-Date).AddSeconds(120) }
+  if ($SheetPending.Count) { Sheet-Tick }
   if (-not $ar) { $ar = $l.BeginGetContext($null, $null) }
-  if (-not $ar.AsyncWaitHandle.WaitOne(1000)) { Idle-Check; continue }
+  if (-not $ar.AsyncWaitHandle.WaitOne($(if ($SheetPending.Count) { 200 } else { 1000 }))) { Idle-Check; continue }
   $c = $l.EndGetContext($ar); $ar = $null
   try {
     $req = $c.Request
@@ -608,6 +716,7 @@ while ($l.IsListening) {
 
     # ── 로그인 · 메뉴 권한 ──
     #  계정 파일은 어디에도 내보내지 않는다(해시라도)
+    if ($path -like '/.history/config*') { Send $c 404 'text/plain' $Utf8.GetBytes('not found'); continue }   # 시트 연결 비밀값
     if ($path -like '/.history/accounts*') { Send $c 404 'text/plain' $Utf8.GetBytes('not found'); continue }
     if ($path -eq '/api/me' -and $req.HttpMethod -eq 'GET') { SendJson $c 200 (Me-Info); continue }
     if ($path -eq '/api/login' -and $req.HttpMethod -eq 'POST') {
@@ -636,7 +745,7 @@ while ($l.IsListening) {
         }
         $allowed = @(User-Menus $u); $need = $null
         foreach ($m in $Menus) { if ($m.pages -contains $rel0 -or ($m.key -eq 'proto' -and $rel0 -like 'prototypes/*')) { $need = $m.key; break } }
-        $api = @{ '/api/usage' = 'usage'; '/api/prototypes' = 'proto'; '/api/accounts' = 'accounts' }
+        $api = @{ '/api/usage' = 'usage'; '/api/prototypes' = 'proto'; '/api/accounts' = 'accounts'; '/api/sheet' = 'plan'; '/api/sheet/data' = 'plan'; '/api/minutes' = 'plan'; '/api/plan/files' = 'plan' }
         if ($api.ContainsKey($path)) { $need = $api[$path] }
         if ($need -and $allowed -notcontains $need) {
           if ($path -like '/api/*') { SendJson $c 403 @{ error = '이 메뉴를 쓸 권한이 없습니다.' }; continue }
@@ -645,7 +754,7 @@ while ($l.IsListening) {
         # 쓰기 권한: 바꾸는 요청(POST)은 그 메뉴의 쓰기가 있어야 한다(읽기만이면 403). 작업 대기열 · 가이드 저장은 처리할 때 종류를 보고 확인
         #  요청(/api/requests)은 Workbench · 변경 이력(다시 진행 · 답하기) · UX 문서(연관 화면 반영 요청)에서 온다
         if ($req.HttpMethod -eq 'POST' -and $isBrowser) {
-          $wmap = @{ '/api/requests' = @('workbench', 'history', 'guide'); '/api/attach' = @('workbench'); '/api/projects' = @('workbench'); '/api/catalog' = @('workbench'); '/api/shots' = @('workbench'); '/api/upload' = @('guide'); '/api/prototypes' = @('proto') }
+          $wmap = @{ '/api/requests' = @('workbench', 'history', 'guide', 'plan'); '/api/attach' = @('workbench'); '/api/projects' = @('workbench'); '/api/catalog' = @('workbench'); '/api/shots' = @('workbench'); '/api/upload' = @('guide'); '/api/prototypes' = @('proto'); '/api/sheet' = @('plan'); '/api/minutes' = @('plan') }
           if ($wmap.ContainsKey($path) -and -not (Can-Write $wmap[$path])) { SendJson $c 403 @{ error = (Ro-Msg $wmap[$path][0]) }; continue }
         }
       }
@@ -835,6 +944,126 @@ while ($l.IsListening) {
       # defaultKey: 예전 이름 그대로(Figma AI Run 실행 파일이 이 글자로 지금 서버인지 확인한다). 값은 시작 안내 작업 링크의 파일(없으면 빈 값)
       SendJson $c 200 @{ defaultKey = (Work-Key); workKey = (Work-Key); projects = @($list) }; continue
     }
+    # 일정/작업 ↔ 구글 시트(Apps Script 웹 앱 tools/google-sheet-bridge.gs를 거쳐 읽고 쓴다)
+    #  GET /api/sheet → 연결 정보(비밀값은 보내지 않음) · GET /api/sheet/data?gid=|name= → 그 탭 값(웹 앱 응답 그대로)
+    #  POST /api/sheet {action:'config', sheetUrl, webapp, token(빈 값이면 그대로), wbsGid, minutes} · {action:'write', gid|name, cells:[{row, col, value}]} · {action:'test'}
+    # 회의록(공유): .history/minutes/{id}.md — 머리말 id · date · title · attendees · by · createdAt · updatedAt · updatedBy + 본문(내용)
+    #  GET /api/minutes → {items:[{id, date, title, attendees, body, by, …}]} · POST {action:'save', id?, date, title, attendees, body} · {action:'delete', id}
+    #  각자 작성(메모): .history/minutes/{id}.notes/{작성자 ID}.md — 머리말 author · authorId · updatedAt + 본문. POST {action:'note', id, body}(빈 글이면 지움)
+    #  요약 정리: POST /api/jobs {action:'add', kind:'minutes', minute:id} → Claude가 메모를 합쳐 본문(정리본)을 쓴다(save의 summary)
+    # 파일 여러 개를 한 번에(화면이 정의서 · 정책 파일 수백 개를 하나씩 받으면 느리다): POST /api/files {paths:['.history/guides/…']} → {files:{경로: 글}}
+    #  .history/guides · .history/minutes 아래만, 계정 · 시트 연결 정보는 안 됨
+    if ($path -eq '/api/files' -and $req.HttpMethod -eq 'POST') {
+      $body = (New-Object IO.StreamReader($req.InputStream, $Utf8)).ReadToEnd() | ConvertFrom-Json
+      Add-Type -AssemblyName System.Web
+      $sb = New-Object System.Text.StringBuilder; [void]$sb.Append('{"files":{'); $first = $true
+      foreach ($p in @($body.paths | Select-Object -First 2000)) {
+        $rp = [Uri]::UnescapeDataString([string]$p).Replace('\', '/').TrimStart('/')
+        if ($rp -notmatch '^\.history/(guides|minutes)/') { continue }
+        # rules/../constitution.md 같은 경로는 풀어서 확인(.history/guides · minutes 밖으로는 못 나감)
+        $fp = [IO.Path]::GetFullPath((P $Root $rp))
+        if (-not ($fp.StartsWith([IO.Path]::GetFullPath((P $HistDir 'guides')) + [IO.Path]::DirectorySeparatorChar) -or $fp.StartsWith([IO.Path]::GetFullPath((P $HistDir 'minutes')) + [IO.Path]::DirectorySeparatorChar))) { continue }
+        if ($fp -like '*\config\*' -or $fp -like '*\accounts\*' -or -not (Test-Path $fp -PathType Leaf)) { continue }
+        if (-not $first) { [void]$sb.Append(',') }; $first = $false
+        [void]$sb.Append('"' + [Web.HttpUtility]::JavaScriptStringEncode([string]$p) + '":"' + [Web.HttpUtility]::JavaScriptStringEncode([IO.File]::ReadAllText($fp, $Utf8)) + '"')
+      }
+      [void]$sb.Append('}}')
+      Send $c 200 'application/json; charset=utf-8' $Utf8.GetBytes($sb.ToString()); continue
+    }
+    # 일정/작업 탭이 읽는 저장소 폴더의 md 목록(하위 closed/ 포함): GET /api/plan/files?dir=provisional|pending|customer-agenda|decisions|screen-fixes
+    if ($path -eq '/api/plan/files' -and $req.HttpMethod -eq 'GET') {
+      $dir = [string]$req.QueryString['dir']
+      if ($dir -notin 'provisional', 'pending', 'customer-agenda', 'decisions', 'screen-fixes') { throw "알 수 없는 폴더: $dir" }
+      $base = P $GuideRoot $dir; $fl = @()
+      if (Test-Path $base) { foreach ($f in Get-ChildItem $base -Recurse -File -Filter *.md) { $rel = $f.FullName.Substring($base.Length + 1).Replace('\', '/'); $fl += [ordered]@{ path = "$dir/$rel"; url = ".history/guides/$dir/$rel"; closed = ($rel -like 'closed/*'); at = $f.LastWriteTime.ToString('yyyy-MM-ddTHH:mm:ss') } } }
+      SendJson $c 200 @{ files = @($fl) }; continue
+    }
+    if ($path -eq '/api/minutes' -and $req.HttpMethod -eq 'GET') {
+      $list = @()
+      if (Test-Path $MinDir) { foreach ($f in Get-ChildItem $MinDir -Filter *.md) { $m = Read-Minute $f.FullName; if ($m) { $m | Add-Member -NotePropertyName notes -NotePropertyValue @(Read-Notes ([string]$m.id)) -Force; $list += $m } } }
+      SendJson $c 200 @{ items = @($list | Sort-Object { [string]$_.date } -Descending); me = (Note-Key) }; continue
+    }
+    if ($path -eq '/api/minutes' -and $req.HttpMethod -eq 'POST') {
+      $body = (New-Object IO.StreamReader($req.InputStream, $Utf8)).ReadToEnd() | ConvertFrom-Json
+      $id = [string]$body.id
+      if ($id -and $id -notmatch '^m[0-9a-z-]{6,40}$') { throw '잘못된 회의록 ID입니다.' }
+      if ($body.action -eq 'delete') {
+        $mf = P $MinDir ($id + '.md'); if (-not $id -or -not (Test-Path $mf)) { throw '회의록을 찾지 못했습니다.' }
+        Remove-Item $mf -Force; $nd = P $MinDir ($id + '.notes'); if (Test-Path $nd) { Remove-Item $nd -Recurse -Force }
+        $script:SyncWant = $true; SendJson $c 200 @{ ok = $true }; continue
+      }
+      if ($body.action -eq 'note') {
+        if (-not $id -or -not (Test-Path (P $MinDir ($id + '.md')))) { throw '회의록을 찾지 못했습니다.' }
+        $nd = P $MinDir ($id + '.notes'); $nf = P $nd ((Note-Key) + '.md')
+        $nb = (([string]$body.body) -replace '\r\n', "`n").TrimEnd()
+        if (-not $nb) { if (Test-Path $nf) { Remove-Item $nf -Force } }
+        else {
+          if (-not (Test-Path $nd)) { New-Item -ItemType Directory -Force $nd | Out-Null }
+          [IO.File]::WriteAllText($nf, "---`nauthor: $(Me-Name)`nauthorId: $(Note-Key)`nupdatedAt: $(Now)`n---`n$nb`n", (New-Object Text.UTF8Encoding $false))
+        }
+        $script:SyncWant = $true; SendJson $c 200 @{ ok = $true; notes = @(Read-Notes $id) }; continue
+      }
+      if ($body.action -ne 'save') { throw '알 수 없는 작업입니다.' }
+      $date = ([string]$body.date).Trim() -replace 'T', ' '
+      if ($date -notmatch '^\d{4}-\d{2}-\d{2}( \d{2}:\d{2})?$') { throw '일시를 넣어 주세요(예: 2026-11-03 10:00).' }
+      $title = (([string]$body.title) -replace '[\r\n]+', ' ').Trim(); if (-not $title) { throw '제목을 넣어 주세요.' }
+      $att = ((([string]$body.attendees) -split '\r?\n' | ForEach-Object { $_.Trim() } | Where-Object { $_ }) -join ' / ')
+      $old = $null
+      if (-not $id) { $id = 'm' + ($date -replace '[^0-9]', '').Substring(0, 8) + '-' + ([Guid]::NewGuid().ToString('N').Substring(0, 6)) }
+      else { $old = Read-Minute (P $MinDir ($id + '.md')) }
+      $me = Me-Name; $now = Now
+      if (-not $isBrowser -and [string]$body.by) { $me = [string]$body.by }   # Claude(curl)가 요약 정리할 때 by:'Claude'
+      $created = if ($old) { [string]$old.createdAt } else { $now }; $by = if ($old) { [string]$old.by } else { $me }
+      # summary: 요약 정리한 때(「{시각} · {메모 쓴 사람들}」). 요약이 아닌 저장은 예전 값을 그대로 둔다
+      $sum = if ([string]$body.summary) { "$now · " + (([string]$body.summary) -replace '[\r\n]+', ' ') } elseif ($old) { [string]$old.summary } else { '' }
+      $txt = "---`nid: $id`ndate: $date`ntitle: $title`nattendees: $att`nby: $by`ncreatedAt: $created`nupdatedBy: $me`nupdatedAt: $now`nsummary: $sum`n---`n" + (([string]$body.body) -replace '\r\n', "`n").TrimEnd() + "`n"
+      if (-not (Test-Path $MinDir)) { New-Item -ItemType Directory -Force $MinDir | Out-Null }
+      [IO.File]::WriteAllText((P $MinDir ($id + '.md')), $txt, (New-Object Text.UTF8Encoding $false))
+      $script:SyncWant = $true
+      SendJson $c 200 @{ ok = $true; item = (Read-Minute (P $MinDir ($id + '.md'))) }; continue
+    }
+    if ($path -eq '/api/sheet' -and $req.HttpMethod -eq 'GET') {
+      $cf = Sheet-Conf
+      SendJson $c 200 @{ configured = [bool]($cf.webapp -and $cf.token); sheetUrl = [string]$cf.sheetUrl; wbsGid = [string]$cf.wbsGid; minutes = [string]$cf.minutes; cols = $cf.cols; by = [string]$cf.by; at = [string]$cf.at; canWrite = (Can-Write @('plan')) }; continue
+    }
+    if ($path -eq '/api/sheet/data' -and $req.HttpMethod -eq 'GET') {
+      $q = @{ action = 'read' }; $wantCache = $false
+      # (QueryString은 한글을 시스템 코드페이지로 풀어 깨뜨리므로 주소를 UTF-8로 직접 푼다)
+      foreach ($kv in ([string]$req.Url.Query).TrimStart('?').Split('&')) {
+        $p2 = $kv.Split('=', 2); if ($p2.Count -lt 2) { continue }
+        $val = [Uri]::UnescapeDataString($p2[1].Replace('+', ' '))
+        if ($p2[0] -eq 'gid' -and $val) { $q.gid = $val } elseif ($p2[0] -eq 'name' -and $val) { $q.sheet = $val } elseif ($p2[0] -eq 'style' -and $val) { $q.style = 1 } elseif ($p2[0] -eq 'cache' -and $val) { $wantCache = $true }
+      }
+      $ck = P $SheetCache (((([string]$q.gid) + '_' + ([string]$q.sheet)) -replace '[^A-Za-z0-9가-힣_-]', '_') + '.json')
+      # cache=1: 마지막으로 받은 사본을 바로 준다(화면이 먼저 보여 주고 뒤에서 새로 받는다). 사본이 없으면 시트에서 받는다
+      if ($wantCache) { $wantCache = $false; if (Test-Path $ck) { Send $c 200 'application/json; charset=utf-8' $Utf8.GetBytes('{"cache":true,"cachedAt":"' + (Get-Item $ck).LastWriteTime.ToString('yyyy-MM-ddTHH:mm:ss') + '","data":' + [IO.File]::ReadAllText($ck, $Utf8) + '}'); continue } }
+      Sheet-Start $c $q $ck; continue   # 답은 끝나면 Sheet-Tick이 보낸다
+    }
+    if ($path -eq '/api/sheet' -and $req.HttpMethod -eq 'POST') {
+      $body = (New-Object IO.StreamReader($req.InputStream, $Utf8)).ReadToEnd() | ConvertFrom-Json
+      switch ([string]$body.action) {
+        'config' {
+          $old = Sheet-Conf
+          $wa = ([string]$body.webapp).Trim(); if ($wa -and $wa -notmatch '^https://script\.google\.com/macros/s/[A-Za-z0-9_-]+/exec$') { throw '웹 앱 주소는 https://script.google.com/macros/s/…/exec 형식입니다.' }
+          if (-not $wa) { $wa = [string]$old.webapp }   # 웹 앱 주소 · 비밀값은 비워 보내면 지금 값 그대로
+          $tk = ([string]$body.token).Trim(); if (-not $tk) { $tk = [string]$old.token }
+          $cf = [ordered]@{ sheetUrl = ([string]$body.sheetUrl).Trim(); webapp = $wa; token = $tk; wbsGid = ([string]$body.wbsGid).Trim(); minutes = ([string]$body.minutes).Trim(); cols = $body.cols; by = (Me-Name); at = (Now) }
+          $d = Split-Path $SheetConf; if (-not (Test-Path $d)) { New-Item -ItemType Directory -Force $d | Out-Null }
+          [IO.File]::WriteAllText($SheetConf, ($cf | ConvertTo-Json), (New-Object Text.UTF8Encoding $false))
+          $script:SyncWant = $true
+          SendJson $c 200 @{ ok = $true }; continue
+        }
+        'test' { $txt = Sheet-Call @{ action = 'sheets' }; Send $c 200 'application/json; charset=utf-8' $Utf8.GetBytes($txt); continue }
+        'write' {
+          $cells = @(@($body.cells) | ForEach-Object { @{ row = [int]$_.row; col = [int]$_.col; value = [string]$_.value } })
+          if (-not $cells.Count) { throw '바꿀 칸이 없습니다.' }
+          $q = @{ action = 'write'; cells = $cells }
+          if ($body.gid) { $q.gid = [string]$body.gid }; if ($body.name) { $q.sheet = [string]$body.name }
+          $txt = Sheet-Call $q; Send $c 200 'application/json; charset=utf-8' $Utf8.GetBytes($txt); continue
+        }
+        default { throw '알 수 없는 작업입니다.' }
+      }
+    }
     # 프로토타입 목록(이 PC에만): prototypes/{id}/meta.json + Figma가 바뀐 화면(stale)
     #  바뀐 화면 = 프로토타입을 맞춘 뒤(syncedAt) 캡처가 새로 들어온 프레임(shots_meta) · 다른 작업자가 완료한 요청(공유 이력)의 프레임
     if ($path -eq '/api/prototypes' -and $req.HttpMethod -eq 'GET') {
@@ -964,7 +1193,7 @@ while ($l.IsListening) {
             $kind = [string]$body.kind; $key = [string]$body.fileKey; $nid = [string]$body.nodeId
             # 쓰기 권한: UX 문서 만들기 · 수정 요청 · 연관 항목 찾기는 UX 문서, 프로토타입 요청은 프로토타입, 캡처 · 목록은 Workbench 쓰기(없으면 보기만)
             if (-not (Can-Write (Job-Menu $kind))) { throw (Ro-Msg (Job-Menu $kind)) }
-            if ($kind -notin 'capture', 'catalog', 'guide', 'guide-check', 'guide-edit', 'text', 'prototype', 'prototype-edit', 'prototype-sync') { throw "알 수 없는 작업: $kind" }
+            if ($kind -notin 'capture', 'catalog', 'guide', 'guide-check', 'guide-edit', 'text', 'prototype', 'prototype-edit', 'prototype-sync', 'minutes', 'plan') { throw "알 수 없는 작업: $kind" }
             # 프로토타입(이 PC에만, prototypes/{id}/): 만들기(prototype, 고른 화면 frames) · 수정 요청(prototype-edit) · Figma 바뀐 화면 맞추기(prototype-sync)
             if ($kind -eq 'prototype') {
               $nid = ''
@@ -997,10 +1226,25 @@ while ($l.IsListening) {
             # 정의서 연관 항목 찾기(guide-check, scope:'spec')는 정의서에 기준 파일이 없으면 파일 없이(문서 · 프로토타입만) 받는다
             #  문서 수정 요청(guide-edit)도 기준 파일이 없는 문서면 파일 없이 받는다
             #  참고 파일로만 만드는 가이드 · 정의서(guide, 링크 없음)도 파일 없이 받는다
-            $specNoFile = -not $key -and (($kind -eq 'guide-check' -and [string]$body.scope -eq 'spec') -or $kind -in 'guide-edit', 'guide')
+            # 회의록 요약 정리(minutes): 각자 작성한 메모를 Claude가 합쳐 본문(정리본)을 쓴다. 같은 회의록에 대기 · 진행 중이 있으면 그것을 돌려준다
+            if ($kind -eq 'minutes') {
+              $nid = ''; $key = ''
+              if ([string]$body.minute -notmatch '^m[0-9a-z-]{6,40}$' -or -not (Test-Path (P $MinDir ([string]$body.minute + '.md')))) { throw "회의록을 찾지 못했습니다: $($body.minute)" }
+              if (-not @(Read-Notes ([string]$body.minute)).Count) { throw '각자 작성한 내용이 아직 없습니다.' }
+              $hit = $items | Where-Object { $_.kind -eq 'minutes' -and $_.minute -eq [string]$body.minute -and $_.status -in '대기', '진행 중' } | Select-Object -First 1
+            }
+            # 일정/작업의 임시 정책 · 논의 처리(plan): Claude가 규칙(provisional-policy · discussion-answer)대로 파일을 고친다
+            #  sub: pv-new(새 임시 정책) · pv-decide(승인 · 반려, target PV-xxxx) · answer(답 → Claude가 정리안을 보여 줌, target PD-xxxx · CA-xxxx) · answer-apply(정리안 확인 → 반영)
+            if ($kind -eq 'plan') {
+              $nid = ''; $key = ''
+              if ([string]$body.sub -notin 'pv-new', 'pv-decide', 'answer', 'answer-apply') { throw "알 수 없는 처리: $($body.sub)" }
+              if ([string]$body.sub -ne 'pv-new' -and [string]$body.target -notmatch '^(PV|PD|CA)-\d{4}(-[A-Z])?$') { throw "잘못된 항목 ID: $($body.target)" }
+              if ([string]$body.sub -eq 'pv-decide') { $hit = $items | Where-Object { $_.kind -eq 'plan' -and $_.target -eq [string]$body.target -and $_.sub -eq 'pv-decide' -and $_.status -in '대기', '진행 중' } | Select-Object -First 1 }
+            }
+            $specNoFile = -not $key -and (($kind -eq 'guide-check' -and [string]$body.scope -eq 'spec') -or $kind -in 'guide-edit', 'guide', 'minutes', 'plan')
             if (-not (Test-Key $key) -and -not $specNoFile) { throw $(if ($kind -eq 'guide') { 'Figma 링크 형식이 아닙니다.' } else { '잘못된 파일 키입니다.' }) }
             if ($kind -in 'capture', 'text' -and $nid -notmatch '^\d+:\d+$') { throw "잘못된 nodeId: $nid" }
-            if ($kind -notin 'guide', 'guide-check', 'guide-edit', 'text', 'prototype', 'prototype-edit', 'prototype-sync') { $hit = $items | Where-Object { $_.kind -eq $kind -and $_.fileKey -eq $key -and $_.nodeId -eq $nid -and $_.status -in '대기', '진행 중' } | Select-Object -First 1 }
+            if ($kind -notin 'guide', 'guide-check', 'guide-edit', 'text', 'prototype', 'prototype-edit', 'prototype-sync', 'minutes', 'plan') { $hit = $items | Where-Object { $_.kind -eq $kind -and $_.fileKey -eq $key -and $_.nodeId -eq $nid -and $_.status -in '대기', '진행 중' } | Select-Object -First 1 }
             # 프로토타입 맞추기는 같은 프로토타입에 아직 「대기」인 것이 있으면 새로 만들지 않는다(여러 번 고쳐도 한 번에 맞춘다)
             if ($kind -eq 'prototype-sync') { $hit = $items | Where-Object { $_.kind -eq $kind -and $_.proto -eq [string]$body.proto -and $_.status -eq '대기' } | Select-Object -First 1 }
             if (-not $hit) {
@@ -1008,9 +1252,13 @@ while ($l.IsListening) {
               $hit = [pscustomobject]@{ id = ('J{0:000}' -f $n); kind = $kind; fileKey = $key; nodeId = $nid; name = ([string]$body.name).Trim(); link = [string]$body.link; text = ([string]$body.text).Trim(); guide = $(if ($kind -in 'guide-check', 'guide-edit') { [string]$body.guide } else { '' }); revFrom = [string]$body.revFrom; revTo = [string]$body.revTo; items = $(if ($kind -eq 'text') { , @($body.items) } else { , @() }); status = '대기'; note = ''; by = [string]$body.by; takenBy = ''; createdAt = $now; updatedAt = $now }
               # guide-check 범위: '' = 가이드(작업 기준 파일의 화면만), 'spec' = 정의서(화면 · 다른 문서 · 프로토타입)
               if ($kind -eq 'guide-check') { $hit | Add-Member -NotePropertyName scope -NotePropertyValue $(if ([string]$body.scope -eq 'spec') { 'spec' } else { '' }) }
-              # 새 가이드 · 정의서: 문서 종류(docKind '' = 가이드, 'spec' = 정의서)와 올린 참고 파일(workbench/job_files/{작업 ID}/, 이 PC에만)
+              # 파일형 문서의 수정 요청: 고칠 파일(meta.files의 이름, 보기 화면이 고른 항목의 파일)
+              if ($kind -eq 'guide-edit' -and [string]$body.file) { $hit | Add-Member -NotePropertyName file -NotePropertyValue ([string]$body.file) }
+              if ($kind -eq 'minutes') { $hit | Add-Member -NotePropertyName minute -NotePropertyValue ([string]$body.minute) }
+              if ($kind -eq 'plan') { $hit | Add-Member -NotePropertyName sub -NotePropertyValue ([string]$body.sub); $hit | Add-Member -NotePropertyName target -NotePropertyValue ([string]$body.target); $hit | Add-Member -NotePropertyName plan -NotePropertyValue $body.plan }
+              # 새 가이드 · 정의서: 문서 종류(docKind '' = UX가이드, 'rule' 작업규칙 · 'policy' 정책서 · 'data' 기준데이터 · 'spec' 화면 정의서)와 올린 참고 파일(workbench/job_files/{작업 ID}/, 이 PC에만)
               if ($kind -eq 'guide') {
-                $hit | Add-Member -NotePropertyName docKind -NotePropertyValue $(if ([string]$body.docKind -eq 'spec') { 'spec' } else { '' })
+                $hit | Add-Member -NotePropertyName docKind -NotePropertyValue $(if ([string]$body.docKind -in 'spec', 'rule', 'policy', 'data') { [string]$body.docKind } else { '' })
                 $hit | Add-Member -NotePropertyName files -NotePropertyValue (Save-Uploads $hit.id $srcs)
               }
               if ($kind -like 'prototype*') {
@@ -1046,6 +1294,8 @@ while ($l.IsListening) {
         if ($items.Count -gt 300) { $items = $items[0..299] }
         $j = [pscustomobject]@{ version = [int]$j.version + 1; items = @($items) }
         [IO.File]::WriteAllText($JobFile, ($j | ConvertTo-Json -Depth 8), $Utf8)
+        # UX 문서 변경이력: 문서 수정 뒤 찾은 고칠 화면 · 연관 항목(guide-check)은 그 수정본 옆에 남겨 깃으로 공유한다(작업 대기열은 이 PC에만 있으므로)
+        if ($body.action -eq 'update' -and $hit -and $hit.kind -eq 'guide-check') { Save-CheckLog $hit }
         SendJson $c 200 @{ ok = $true; job = $hit }; continue
       }
     }
@@ -1082,8 +1332,16 @@ while ($l.IsListening) {
           if ($md.Length -gt 2000000) { throw '가이드 내용이 너무 깁니다.' }
           $rd = P $GuideRoot $gid 'rev'; if (-not (Test-Path $rd)) { New-Item -ItemType Directory -Force $rd | Out-Null }
           $rev = (Get-Date).ToString('yyyyMMdd-HHmmss') + '_' + $PcSlug
-          [IO.File]::WriteAllText((P $rd ($rev + '.md')), $md.Replace("`r`n", "`n"), $Utf8)
-          [IO.File]::WriteAllText((P $rd ($rev + '.json')), ([ordered]@{ rev = $rev; by = [string]$body.by; at = (Now); note = [string]$body.note; base = [string]$body.base; pc = $PcName } | ConvertTo-Json), $Utf8)
+          # 파일형 문서: 고친 파일 하나만 rev/{rev}/{파일}로(file은 meta.files에 있는 이름이어야 한다)
+          $gm = [IO.File]::ReadAllText((P $GuideRoot $gid 'meta.json'), $Utf8) | ConvertFrom-Json; $file = ''
+          if ([string]$gm.format -eq 'files') {
+            $file = ([string]$body.file).Replace('\', '/')
+            if (-not $file -or @($gm.files) -notcontains $file) { throw "고칠 파일을 정해 주세요(file: $(@($gm.files) -join ', '))." }
+            $fp = P (P $rd $rev) (($file -replace '\.\./', '_up/').Replace('/', [IO.Path]::DirectorySeparatorChar)); New-Item -ItemType Directory -Force (Split-Path $fp -Parent) | Out-Null   # 문서 폴더 밖 파일(../constitution.md)은 rev 안 _up/으로
+            [IO.File]::WriteAllText($fp, $md.Replace("`r`n", "`n"), $Utf8)
+          }
+          else { [IO.File]::WriteAllText((P $rd ($rev + '.md')), $md.Replace("`r`n", "`n"), $Utf8) }
+          [IO.File]::WriteAllText((P $rd ($rev + '.json')), ([ordered]@{ rev = $rev; by = [string]$body.by; at = (Now); note = [string]$body.note; base = [string]$body.base; pc = $PcName; req = [string]$body.request; jobId = [string]$body.jobId; file = $file } | ConvertTo-Json), $Utf8)
           $SyncWant = $true
           $out = Read-Guides; $out['saved'] = $rev
           SendJson $c 200 $out; continue
@@ -1159,6 +1417,8 @@ while ($l.IsListening) {
           $imgs = Save-Attach $rid $body.images
           $items = @([pscustomobject]@{ id = $rid; nodeId = [string]$body.nodeId; frame = [string]$body.frame; page = [string]$body.page; fileKey = [string]$body.fileKey; fileName = [string]$body.fileName; editable = [bool]$body.editable; type = [string]$body.type; priority = [string]$body.priority; layout = [string]$body.layout; text = $txt; status = '대기'; note = ''; author = [string]$body.by; updatedBy = [string]$body.by; createdAt = $now; updatedAt = $now }) + $items
           if ($imgs.Count) { $items[0] | Add-Member -NotePropertyName images -NotePropertyValue $imgs }
+          # 화면설계서 작업대기에서 만든 요청: 반영할 반영 대기 줄 [{doc:'screens'|'screen-fixes', file, n}] — 완료되면 Claude가 그 줄을 「반영 완료 (날짜)」로
+          if ($body.fixRows) { $items[0] | Add-Member -NotePropertyName fixRows -NotePropertyValue @($body.fixRows | Select-Object -First 200 | ForEach-Object { [ordered]@{ doc = [string]$_.doc; file = [string]$_.file; n = [string]$_.n; cid = [string]$_.cid } }) }
           Hist-FromRequest $items[0]
         }
         'update' {
