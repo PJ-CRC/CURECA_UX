@@ -1,0 +1,9 @@
+코드명,UI 표기 (영문),UI 표기 (한글),검사 단계,근거
+SampleStorage,Sample Storage,검체 저장소,Sample Preparation,씨젠 상태 정보 261021 > Module; 검사 단계
+PrepConsumableStorage,Prep Consumable Storage,전처리 소모품 저장소,Sample Preparation,씨젠 상태 정보 261021 > Module; 검사 단계
+SamplePreparation,Sample Preparation,검체 준비,Sample Preparation,씨젠 상태 정보 261021 > Module; 검사 단계
+HtExtraction,High-throughput Extraction,대용량 핵산 추출,Nucleic Acid Extraction,씨젠 상태 정보 261021 > Module; 검사 단계
+FlexibleExtraction,Flexible Extraction,맞춤형 핵산 추출,Nucleic Acid Extraction,씨젠 상태 정보 261021 > Module; 검사 단계
+PcrSetup,PCR Setup,PCR 셋업,PCR Setup,씨젠 상태 정보 261021 > Module; 검사 단계
+PlateSealing,Plate Sealing,플레이트 실링,Plate Sealing,씨젠 상태 정보 261021 > Module; 검사 단계
+UniversalPcr,Universal PCR,유니버설 PCR,PCR,씨젠 상태 정보 261021 > Module; 검사 단계
