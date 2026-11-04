@@ -286,6 +286,24 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
 .req .a p+p,.req .a p+ul,.req .a ul+p{margin-top:6px}
 .req .a ul{margin:4px 0 0;padding-left:18px;white-space:normal}
 .req .a li{margin:3px 0}
+.req .retry{margin-top:6px;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-3)}
+.req .retry button{padding:4px 10px;border:1px solid var(--accent);border-radius:7px;background:var(--surface);color:var(--accent);font-size:12.5px;font-weight:700;cursor:pointer}
+.req .retry button:hover{background:var(--accent-soft)}
+.req .retry button:disabled{opacity:.5;cursor:default}
+.req .qa{margin-top:6px;padding:6px 10px;border-radius:7px;background:var(--surface-2);font-size:12.5px;line-height:1.5;display:flex;flex-direction:column;gap:2px}
+.req .qa .qq{color:var(--ink-3)}
+.req .qa .qr{color:var(--ink)}
+.req .qa i{font-style:normal;color:var(--ink-3);margin-left:6px;font-size:11.5px}
+.req .ask{margin-top:6px;padding:9px 11px;border:1px solid var(--warn);border-radius:8px;background:var(--warn-soft)}
+.req .ask .aq{margin:0 0 7px;font-size:13.5px;font-weight:700;color:var(--ink);white-space:pre-wrap}
+.req .ask .opts{display:flex;flex-wrap:wrap;gap:6px}
+.req .ask .opt{padding:5px 11px;border:1px solid var(--accent);border-radius:7px;background:var(--surface);color:var(--accent);font-size:12.5px;font-weight:700;cursor:pointer}
+.req .ask .opt:hover{background:var(--accent-soft)}
+.req .ask .opt.del{border-color:var(--red);color:var(--red)}
+.req .ask .opt:disabled,.req .ask .af button:disabled{opacity:.5;cursor:default}
+.req .ask .af{display:flex;gap:6px;margin-top:7px}
+.req .ask .af input{flex:1;min-width:0;padding:5px 9px;border:1px solid var(--line);border-radius:7px;background:var(--surface);font-size:13px;color:var(--ink)}
+.req .ask .af button{padding:5px 12px;border:0;border-radius:7px;background:var(--accent);color:#fff;font-size:12.5px;font-weight:700;cursor:pointer}
 .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#1e232b;color:#fff;padding:9px 16px;border-radius:9px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:20}
 .toast.on{opacity:1}
 /* 좁은 화면: 뷰어 위, 작업 페이지 · 수정 요청 아래로 쌓고 페이지 전체 스크롤 */
@@ -850,12 +868,60 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     flush();
     return html;
   }
+  /* 「보류」 요청 다시 진행: Claude 미연결 · Figma 인증 등으로 보류된 요청을 「대기」로 돌린다(답변은 비운다).
+     「겹침 대기」는 다른 작업자 요청이 끝나면 감시가 알아서 이어 처리하므로 버튼을 두지 않는다 */
+  function canRetry(r){ return r.status === '보류' && !hasAsk(r) && String(r.note || '').indexOf('겹침 대기') !== 0; }
+  /* Claude의 질문 · 선택지(ask {q, options:[{label, action?, ids?}], free}) — 답하면 요청에 쌓이고(replies) 다시 「대기」로 Claude가 이어서 처리한다.
+     선택지 action: 없음(그 글을 답으로) · done(더 할 일 없이 완료) · delete(ids 요청을 지우고 완료). 입력 중인 답은 다시 그려도 남게 drafts에 둔다 */
+  var drafts = {};
+  function hasAsk(r){ return !!(r.ask && r.ask.q); }
+  function askHtml(r){
+    var h = (r.replies || []).map(function(x){
+      return '<div class="qa"><span class="qq">Claude 질문 · ' + esc(String(x.q || '').split('\n')[0]) + '</span><span class="qr">' + esc(x.by || '') + ' 답 · ' + esc(x.text) + '<i>' + fmt(x.at) + '</i></span></div>';
+    }).join('');
+    if (!hasAsk(r)) return h;
+    var opts = (r.ask.options || []).map(function(o, i){
+      return '<button type="button" class="opt' + (o.action === 'delete' ? ' del' : '') + '" data-ask="' + esc(r.id) + '" data-i="' + i + '">' + esc(o.label) + '</button>';
+    }).join('');
+    var free = r.ask.free !== false;
+    return h + '<div class="ask" data-ask-id="' + esc(r.id) + '"><p class="aq">' + esc(r.ask.q) + '</p>' + (opts ? '<div class="opts">' + opts + '</div>' : '') +
+      (free ? '<div class="af"><input type="text" placeholder="직접 답하기 (Enter로 보내기)" aria-label="' + esc(r.id) + ' 질문에 답하기" data-draft="' + esc(r.id) + '" value="' + esc(drafts[r.id] || '') + '"><button type="button" data-send="' + esc(r.id) + '">보내기</button></div>' : '') + '</div>';
+  }
+  function answer(id, text, resolve, btn){
+    if (!online) { say('로컬 서버가 꺼져 있어 보낼 수 없습니다. Figma AI Run을 실행해 주세요.', true); return Promise.resolve(); }
+    if (btn) btn.disabled = true;
+    return post({action:'answer', id:id, text:text, resolve:!!resolve})
+      .then(function(){ delete drafts[id]; renderReqs(); say(id + (resolve ? ' 요청을 「완료」로 마쳤습니다.' : ' 답을 보냈습니다. 백그라운드 Claude가 이어서 처리합니다.')); })
+      .catch(function(e){ if (btn) btn.disabled = false; say('답 보내기 실패: ' + e.message, true); });
+  }
+  function pickOption(id, i, btn){
+    var r = (reqData.items || []).filter(function(x){ return x.id === id; })[0]; if (!r || !hasAsk(r)) return;
+    var o = (r.ask.options || [])[i]; if (!o) return;
+    if (o.action === 'delete') {
+      var ids = (o.ids || []).filter(function(x){ return x !== id; });
+      if (!ids.length || !confirm(ids.join(', ') + ' 요청을 지웁니다. 첨부 이미지와 작업 이력도 함께 지워지고 되돌릴 수 없습니다. 지울까요?')) return;
+      btn.disabled = true;
+      ids.reduce(function(p, x){ return p.then(function(){ return post({action:'delete', id:x}); }); }, Promise.resolve())
+        .then(function(){ return answer(id, o.label + ' (' + ids.join(', ') + ' 지움)', true, null); })
+        .catch(function(e){ btn.disabled = false; say('지우기 실패: ' + e.message, true); });
+      return;
+    }
+    answer(id, o.label, o.action === 'done', btn);
+  }
+  function retry(id, btn){
+    if (!online) { say('로컬 서버가 꺼져 있어 바꿀 수 없습니다. Figma AI Run을 실행해 주세요.', true); return; }
+    btn.disabled = true;
+    post({action:'update', id:id, status:'대기', note:''})
+      .then(function(){ say(id + ' 요청을 다시 「대기」로 돌렸습니다. 백그라운드 Claude가 곧 처리합니다.'); })
+      .catch(function(e){ btn.disabled = false; say('다시 진행 실패: ' + e.message, true); });
+  }
   function renderReqs(){
     var items = (reqData.items || []).filter(sameFile);
     if (!cur) { $('rcount').textContent = ''; $('reqs').innerHTML = '<li class="empty">프레임 목록이 들어오면 요청을 등록할 수 있습니다.</li>'; return; }
     var list = filter === 'here' ? items.filter(function(r){ return r.nodeId === cur.id; })
              : items.slice().sort(function(a, b){ return String(b.updatedAt || '').localeCompare(String(a.updatedAt || '')); }).slice(0, 10);
     $('rcount').textContent = filter === 'here' ? '이 페이지 ' + list.length + '건' : '최근 ' + list.length + '건';
+    var ae = document.activeElement, typing = ae && ae.dataset && $('reqs').contains(ae) ? ae.dataset.draft : '';
     $('reqs').innerHTML = list.length ? list.map(function(r){
       var stc = 'st-' + String(r.status).split(' ')[0];
       return '<li class="req" data-id="' + esc(r.id) + '"><div class="h"><b>' + esc(r.id) + '</b><span class="st ' + stc + '">' + esc(r.status) + '</span>' +
@@ -863,8 +929,12 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
         '<span class="sp"></span><span class="who">' + esc(r.author || '이름 없음') + '</span><span title="등록 ' + esc(r.createdAt) + ' / 변경 ' + esc(r.updatedAt) + '">' + fmt(r.updatedAt || r.createdAt) + '</span>' +
         '</div><div class="q" title="' + esc(r.text) + '">요청 · ' + esc(String(r.text || '').split('\n')[0]) + '</div>' +
         ((r.images || []).length ? '<div class="ims">' + r.images.map(function(m){ return '<a href="' + esc(m.file) + '" target="_blank" rel="noopener" title="' + esc(m.name || '첨부 이미지') + ' · 원본 보기"><img loading="lazy" alt="첨부 이미지" src="' + esc(m.small || m.file) + '"></a>'; }).join('') + '</div>' : '') +
-        '<div class="a' + (r.note ? '' : ' wait') + '">' + (r.note ? noteHtml(r.note) : esc(WAIT[r.status] || '')) + '</div></li>';
+        '<div class="a' + (r.note ? '' : ' wait') + '">' + (r.note ? noteHtml(r.note) : esc(WAIT[r.status] || '')) + '</div>' +
+        askHtml(r) +
+        (canRetry(r) ? '<div class="retry"><button type="button" data-retry="' + esc(r.id) + '">다시 진행</button>원인(Claude 연결 · Figma 인증 등)을 해결했으면 다시 「대기」로 돌려 처리합니다.</div>' : '') + '</li>';
     }).join('') : '<li class="empty">' + (filter === 'here' ? '이 페이지에 Claude 답변이 없습니다. 요청을 등록하면 처리 후 여기에 답변이 나옵니다.' : '요청이 없습니다.') + '</li>';
+    /* 답을 입력하던 칸은 다시 그린 뒤에도 커서를 그대로 */
+    if (typing) { var el = $('reqs').querySelector('[data-draft="' + typing + '"]'); if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length); } }
   }
   function post(body){
     body.by = who();
@@ -971,6 +1041,19 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
   $('rtext').addEventListener('input', function(){ store('wb.draft.' + FILE.key, $('rtext').value); growText(); });
   $('reqs').addEventListener('click', function(e){
     var g = e.target.closest('[data-go]'); if (g) go(g.dataset.go);
+    var rb = e.target.closest('[data-retry]'); if (rb) retry(rb.dataset.retry, rb);
+    var ob = e.target.closest('[data-ask]'); if (ob) pickOption(ob.dataset.ask, +ob.dataset.i, ob);
+    var sb = e.target.closest('[data-send]'); if (sb) sendDraft(sb.dataset.send, sb);
+  });
+  function sendDraft(id, btn){
+    var t = String(drafts[id] || '').trim();
+    if (!t) { say('답을 입력해 주세요.', true); var inp = $('reqs').querySelector('[data-draft="' + id + '"]'); if (inp) inp.focus(); return; }
+    answer(id, t, false, btn);
+  }
+  $('reqs').addEventListener('input', function(e){ var d = e.target.closest('[data-draft]'); if (d) drafts[d.dataset.draft] = d.value; });
+  $('reqs').addEventListener('keydown', function(e){
+    var d = e.target.closest('[data-draft]'); if (!d || e.key !== 'Enter' || e.isComposing) return;
+    e.preventDefault(); sendDraft(d.dataset.draft, d.parentNode.querySelector('[data-send]'));
   });
   function syncFilter(){ Array.prototype.forEach.call($('rfilter').children, function(b){ b.classList.toggle('on', b.dataset.f === filter); }); }
   $('rfilter').addEventListener('click', function(e){ var b = e.target.closest('button'); if (!b) return; filter = b.dataset.f; syncFilter(); renderReqs(); });

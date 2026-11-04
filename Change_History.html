@@ -101,6 +101,25 @@ button{cursor:pointer}
 .dt .ans > :last-child{margin-bottom:0}
 .dt .go{display:inline-block;margin-top:16px;color:var(--accent);text-decoration:none;font-size:13px;font-weight:600}
 .dt .go:hover{text-decoration:underline}
+.dt .retry{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-top:12px;font-size:12.5px;color:var(--ink-3)}
+.dt .retry button{padding:6px 14px;border:1px solid var(--accent);border-radius:8px;background:var(--surface);color:var(--accent);font-size:13px;font-weight:700;cursor:pointer}
+.dt .retry button:hover{background:var(--accent-soft)}
+.dt .retry button:disabled{opacity:.5;cursor:default}
+.dt .retry-other{margin-top:12px;font-size:12.5px}
+.dt .qa{margin-top:10px;padding:8px 12px;border-radius:8px;background:var(--surface-2);font-size:13px;line-height:1.55;display:flex;flex-direction:column;gap:2px}
+.dt .qa .qq{color:var(--ink-3)}
+.dt .qa i{font-style:normal;color:var(--ink-3);font-size:12px}
+.dt .ask{margin-top:12px;padding:12px 14px;border:1px solid var(--warn);border-radius:10px;background:var(--warn-soft)}
+.dt .ask .aq{margin:0 0 9px;font-weight:700;white-space:pre-wrap}
+.dt .ask .none{margin:0}
+.dt .ask .opts{display:flex;flex-wrap:wrap;gap:8px}
+.dt .ask .opt{padding:6px 14px;border:1px solid var(--accent);border-radius:8px;background:var(--surface);color:var(--accent);font-size:13px;font-weight:700;cursor:pointer}
+.dt .ask .opt:hover{background:var(--accent-soft)}
+.dt .ask .opt.del{border-color:var(--red);color:var(--red)}
+.dt .ask button:disabled{opacity:.5;cursor:default}
+.dt .ask .af{display:flex;gap:8px;margin-top:9px}
+.dt .ask .af input{flex:1;min-width:0;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:13.5px;color:var(--ink)}
+.dt .ask .af button{padding:7px 14px;border:0;border-radius:8px;background:var(--accent);color:#fff;font-size:13px;font-weight:700;cursor:pointer}
 .dt .none{color:var(--ink-3)}
 @media (min-width:900px){
   /* 목록은 좁게(1/3, 최소 320), 상세는 넓게 */
@@ -202,19 +221,20 @@ button{cursor:pointer}
       logged[h.id] = 1;
       var who = h.by || '—'; if (h.doneBy && h.doneBy !== h.by) who += ' → ' + h.doneBy;
       var first = String(h.text || '').split('\n')[0];
-      out.push({key:'h:' + h.id, kind:'work', mine:String(h.id).indexOf(hist.pcSlug + '_') === 0, at:h.at,
+      var mine = String(h.id).indexOf(hist.pcSlug + '_') === 0;
+      out.push({key:'h:' + h.id, kind:'work', mine:mine, rid:mine && h.kind === 'request' ? h.reqId : '', at:h.at,
         status:h.kind === 'request' ? (h.status || '완료') : '작업', who:who, people:[h.by, h.doneBy], pc:h.pc,
         badge:h.reqId ? '작업 ' + h.reqId : '작업', title:h.reqId ? (h.frame || first) : (first || h.frame || '작업'),
         frame:h.frame || '', page:h.page, file:h.fileName || '', type:h.type, layout:h.layout,
-        text:h.text, note:h.note, shot:h.shot ? '.history/' + h.shot : '', nodeId:h.nodeId,
+        text:h.text, note:h.note, ask:h.ask, replies:h.replies, shot:h.shot ? '.history/' + h.shot : '', nodeId:h.nodeId,
         images:(h.images || []).map(function(x){ return {src:'.history/' + x, full:'.history/' + x}; })});
     });
     (reqs.items || []).forEach(function(r){
       if (logged[hist.pcSlug + '_' + r.id]) return;
       var who = r.author || '—'; if (r.updatedBy && r.updatedBy !== r.author) who += ' → ' + r.updatedBy;
-      out.push({key:'r:' + r.id, kind:'req', mine:true, at:r.updatedAt || r.createdAt, status:r.status, who:who, people:[r.author, r.updatedBy],
+      out.push({key:'r:' + r.id, kind:'req', mine:true, rid:r.id, at:r.updatedAt || r.createdAt, status:r.status, who:who, people:[r.author, r.updatedBy],
         badge:'요청 ' + r.id, title:r.frame || r.id, frame:r.frame || '', page:r.page, file:r.fileName || '',
-        type:r.type, layout:r.layout, text:r.text, note:r.note, nodeId:r.nodeId,
+        type:r.type, layout:r.layout, text:r.text, note:r.note, ask:r.ask, replies:r.replies, nodeId:r.nodeId,
         images:(r.images || []).map(function(m){ return {src:m.small || m.file, full:m.file}; })});
     });
     return out.sort(function(a, b){ return (Date.parse(b.at) || 0) - (Date.parse(a.at) || 0); });
@@ -258,11 +278,31 @@ button{cursor:pointer}
     if (r.text) h += '<h3>요청</h3><p class="req">' + esc(r.text) + '</p>';
     if ((r.images || []).length) h += '<div class="ims">' + r.images.map(function(m, i){ return '<a href="' + esc(m.full) + '" target="_blank" rel="noopener" title="첨부 이미지 ' + (i + 1) + ' 크게 보기"><img loading="lazy" alt="첨부 이미지 ' + (i + 1) + '" src="' + esc(m.src) + '"></a>'; }).join('') + '</div>';
     h += '<h3>Claude 답변</h3>' + (r.note ? '<div class="ans">' + noteHtml(r.note) + '</div>' : '<p class="none">아직 답변이 없습니다.</p>');
+    /* Claude 질문과 답(replies): 이 PC 요청이면 선택지 버튼 · 직접 답하기, 다른 PC 요청은 보기만 */
+    (r.replies || []).forEach(function(x){
+      h += '<div class="qa"><span class="qq">Claude 질문 · ' + esc(String(x.q || '').split('\n')[0]) + '</span><span class="qr">' + esc(x.by || '') + ' 답 · ' + esc(x.text) + ' <i>' + esc(fmt(x.at)) + '</i></span></div>';
+    });
+    var asking = !!(r.ask && r.ask.q);
+    if (asking) {
+      h += '<div class="ask"><p class="aq">' + esc(r.ask.q) + '</p>';
+      if (r.rid) {
+        var opts = (r.ask.options || []).map(function(o, i){ return '<button type="button" class="opt' + (o.action === 'delete' ? ' del' : '') + '" data-ask="' + esc(r.rid) + '" data-i="' + i + '">' + esc(o.label) + '</button>'; }).join('');
+        if (opts) h += '<div class="opts">' + opts + '</div>';
+        if (r.ask.free !== false) h += '<div class="af"><input type="text" placeholder="직접 답하기 (Enter로 보내기)" aria-label="질문에 답하기" data-draft="' + esc(r.rid) + '" value="' + esc(drafts[r.rid] || '') + '"><button type="button" data-send="' + esc(r.rid) + '">보내기</button></div>';
+      } else h += '<p class="none">다른 PC(' + esc(r.pc || '') + ')의 요청이라 그 PC에서 답할 수 있습니다.</p>';
+      h += '</div>';
+    }
+    /* 이 PC 요청이 「보류」면(겹침 대기 · 질문 중 제외) 다시 「대기」로 돌리는 버튼. 다른 PC 요청은 그 PC에서만 바꿀 수 있다 */
+    if (asking) {}
+    else if (r.rid && r.status === '보류' && String(r.note || '').indexOf('겹침 대기') !== 0)
+      h += '<div class="retry"><button type="button" data-retry="' + esc(r.rid) + '">다시 진행</button><span>원인(Claude 연결 · Figma 인증 등)을 해결했으면 다시 「대기」로 돌려 처리합니다.</span></div>';
+    else if (!r.mine && r.status === '보류') h += '<p class="none retry-other">다른 PC(' + esc(r.pc || '') + ')의 요청이라 그 PC의 Workbench · 변경 이력에서 다시 진행할 수 있습니다.</p>';
     if (r.nodeId) h += '<a class="go" href="Figma_Workbench.html#' + esc(String(r.nodeId).replace(':', '-')) + '">Workbench에서 보기 ›</a>';
     return h;
   }
 
   function render(){
+    var ae = document.activeElement, typing = ae && ae.dataset ? ae.dataset.draft : '';
     var list = listed();
     var pages = Math.max(1, Math.ceil(list.length / PER));
     if (page > pages) page = pages;
@@ -289,6 +329,8 @@ button{cursor:pointer}
     h += '<button data-p="' + Math.min(pages, end + 1) + '" ' + (end === pages ? 'disabled' : '') + ' aria-label="다음 10페이지">›</button>';
     h += '<button data-p="' + pages + '" ' + (page === pages ? 'disabled' : '') + ' aria-label="마지막">»</button>';
     $('pager').innerHTML = pages > 1 ? h : '';
+    /* 답을 입력하던 칸은 다시 그린 뒤에도 커서를 그대로 */
+    if (typing) { var el = document.querySelector('[data-draft="' + typing + '"]'); if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length); } }
   }
   function reset(){ page = 1; if (wide.matches) sel = null; render(); }
 
@@ -301,6 +343,52 @@ button{cursor:pointer}
     else { sel = k; open = true; }
     render();
     if (!wide.matches && open) { var n = $('rows').querySelector('button.it.on'); if (n) n.scrollIntoView({block:'nearest'}); }
+  });
+  /* 다시 진행 · 질문에 답하기: 넓은 화면은 오른쪽 상세, 좁은 화면은 목록 안 상세에 버튼이 있다 */
+  var drafts = {};
+  function me(){ return window.WB_ME && window.WB_ME.user ? window.WB_ME.user.name : ''; }
+  function reqPost(body){
+    body.by = me();
+    return fetch('/api/requests', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)})
+      .then(function(r){ return r.json(); }).then(function(d){ if (d.error) throw new Error(d.error); return d; });
+  }
+  function done(){ sig = ''; load(false); }
+  function answer(id, text, resolve, b){
+    if (b) b.disabled = true;
+    return reqPost({action:'answer', id:id, text:text, resolve:!!resolve}).then(function(){ delete drafts[id]; done(); })
+      .catch(function(err){ if (b) b.disabled = false; alert(id + ' 답 보내기 실패: ' + err.message); });
+  }
+  function sendDraft(id, b){
+    var t = String(drafts[id] || '').trim(); if (!t) { alert('답을 입력해 주세요.'); return; }
+    answer(id, t, false, b);
+  }
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-retry]');
+    if (b) {
+      var id = b.dataset.retry; b.disabled = true;
+      reqPost({action:'update', id:id, status:'대기', note:''}).then(done)
+        .catch(function(err){ b.disabled = false; alert(id + ' 다시 진행 실패: ' + err.message); });
+      return;
+    }
+    var s = e.target.closest('[data-send]'); if (s) { sendDraft(s.dataset.send, s); return; }
+    var o = e.target.closest('[data-ask]'); if (!o) return;
+    var rid = o.dataset.ask, row = rows.filter(function(x){ return x.rid === rid && x.ask; })[0];
+    var opt = row && (row.ask.options || [])[+o.dataset.i]; if (!opt) return;
+    if (opt.action === 'delete') {
+      var ids = (opt.ids || []).filter(function(x){ return x !== rid; });
+      if (!ids.length || !confirm(ids.join(', ') + ' 요청을 지웁니다. 첨부 이미지와 작업 이력도 함께 지워지고 되돌릴 수 없습니다. 지울까요?')) return;
+      o.disabled = true;
+      ids.reduce(function(p, x){ return p.then(function(){ return reqPost({action:'delete', id:x}); }); }, Promise.resolve())
+        .then(function(){ return answer(rid, opt.label + ' (' + ids.join(', ') + ' 지움)', true, null); })
+        .catch(function(err){ o.disabled = false; alert('지우기 실패: ' + err.message); });
+      return;
+    }
+    answer(rid, opt.label, opt.action === 'done', o);
+  });
+  document.addEventListener('input', function(e){ var d = e.target.closest('[data-draft]'); if (d) drafts[d.dataset.draft] = d.value; });
+  document.addEventListener('keydown', function(e){
+    var d = e.target.closest && e.target.closest('[data-draft]'); if (!d || e.key !== 'Enter' || e.isComposing) return;
+    e.preventDefault(); sendDraft(d.dataset.draft, d.parentNode.querySelector('[data-send]'));
   });
   $('pager').addEventListener('click', function(e){ var b = e.target.closest('button'); if (!b || b.disabled) return; page = +b.dataset.p; if (wide.matches) sel = null; render(); window.scrollTo({top:0, behavior:'smooth'}); });
   $('filter').addEventListener('click', function(e){

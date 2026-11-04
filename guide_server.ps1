@@ -162,6 +162,7 @@ function Hist-FromRequest($r) {
     id = $name; kind = 'request'; status = [string]$r.status; at = [string]$r.updatedAt; createdAt = [string]$r.createdAt; by = [string]$r.author; doneBy = [string]$r.updatedBy; pc = $PcName
     reqId = [string]$r.id; fileKey = [string]$r.fileKey; fileName = [string]$r.fileName; page = [string]$r.page; frame = [string]$r.frame; nodeId = [string]$r.nodeId
     type = [string]$r.type; layout = [string]$r.layout; text = [string]$r.text; note = [string]$r.note; shot = $shot; images = $att
+    ask = $r.ask; replies = @($r.replies | Where-Object { $_ })
   })
 }
 function Hist-Remove($id) {
@@ -1112,9 +1113,28 @@ while ($l.IsListening) {
           if (-not $hit) { throw "요청을 찾지 못했습니다: $($body.id)" }
           # 「진행 중」이 될 때마다 사용량 구간의 시작 시각을 새로 잡는다
           if ($body.status -eq '진행 중' -and $hit.status -ne '진행 중') { $hit | Add-Member -NotePropertyName startedAt -NotePropertyValue $now -Force }
+          # Claude의 질문 · 선택지(ask {q, options:[{label, action?, ids?}], free}): 함께 보내면 그것으로, 상태만 바뀌면 지난 질문은 지운다
+          if ($body.PSObject.Properties['ask']) { $hit | Add-Member -NotePropertyName ask -NotePropertyValue $body.ask -Force }
+          elseif ($body.status -and [string]$body.status -ne [string]$hit.status) { $hit | Add-Member -NotePropertyName ask -NotePropertyValue $null -Force }
           if ($body.status) { $hit.status = [string]$body.status }
           if ($null -ne $body.note) { $hit.note = [string]$body.note }
           if ($null -ne $body.text -and ([string]$body.text).Trim()) { $hit.text = ([string]$body.text).Trim() }
+          $hit.updatedAt = $now
+          if ($body.by) { $hit | Add-Member -NotePropertyName updatedBy -NotePropertyValue ([string]$body.by) -Force }
+          Hist-FromRequest $hit
+        }
+        # 사람의 답: Claude 질문(ask)에 고르거나 적은 답을 replies에 쌓고 다시 「대기」로(Claude가 요청 · 답을 함께 읽고 이어서 처리).
+        #  resolve면 더 할 일 없이 「완료」(예: 「그대로 두기」). 지난 질문은 replies의 q로 남긴다
+        'answer' {
+          $hit = $items | Where-Object { $_.id -eq $body.id } | Select-Object -First 1
+          if (-not $hit) { throw "요청을 찾지 못했습니다: $($body.id)" }
+          $txt = ([string]$body.text).Trim()
+          if (-not $txt) { throw '답을 고르거나 입력해 주세요.' }
+          $q = if ($hit.ask) { [string]$hit.ask.q } else { [string]$hit.note }
+          $rep = [pscustomobject]@{ at = $now; by = [string]$body.by; q = $q; text = $txt }
+          $hit | Add-Member -NotePropertyName replies -NotePropertyValue (@($hit.replies | Where-Object { $_ }) + $rep) -Force
+          $hit | Add-Member -NotePropertyName ask -NotePropertyValue $null -Force
+          if ($body.resolve) { $hit.status = '완료' } else { $hit.status = '대기'; $hit.note = '' }
           $hit.updatedAt = $now
           if ($body.by) { $hit | Add-Member -NotePropertyName updatedBy -NotePropertyValue ([string]$body.by) -Force }
           Hist-FromRequest $hit
