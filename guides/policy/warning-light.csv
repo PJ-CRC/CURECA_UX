@@ -1,0 +1,27 @@
+순서,이전 상태,트리거 (조건),이벤트 발생,현재 상태,경광등 표시,근거
+1,-,-,-,Power Off,Lamp Off,씨젠 상태 정보 261021 > 경광등 시나리오
+2,Power Off,Power On,-,Booting,White,씨젠 상태 정보 261021 > 경광등 시나리오
+3,Booting,Booting 완료,-,Not Initialized,Blue,씨젠 상태 정보 261021 > 경광등 시나리오
+4,Not Initialized,-,Warning,Not Initialized,Yellow,씨젠 상태 정보 261021 > 경광등 시나리오
+5,Not Initialized,-,Error,Error,Red,씨젠 상태 정보 261021 > 경광등 시나리오
+6,Not Initialized,초기화 시작,-,Initializing,Yellow Blink,씨젠 상태 정보 261021 > 경광등 시나리오
+7,Initializing,-,Warning,Initializing,Yellow Blink,씨젠 상태 정보 261021 > 경광등 시나리오
+8,Initializing,-,Error,Initializing,Yellow Blink,씨젠 상태 정보 261021 > 경광등 시나리오
+9,Initializing,초기화 완료 AND 초기화 작업 진행 중 Warning 발생,-,Ready,Yellow,씨젠 상태 정보 261021 > 경광등 시나리오
+10,Initializing,초기화 완료 AND 초기화 작업 진행 중 Error 발생,-,Error,Red,씨젠 상태 정보 261021 > 경광등 시나리오
+11,Initializing,초기화 완료,-,Ready,Green,씨젠 상태 정보 261021 > 경광등 시나리오
+12,Ready,-,Warning,Ready,Yellow,씨젠 상태 정보 261021 > 경광등 시나리오
+13,Ready,-,Error,Error,Red,씨젠 상태 정보 261021 > 경광등 시나리오
+14,Ready,(샘플 Trolley 도킹 OR STAT 내 샘플 장착) AND 소모품 부족,-,Ready,Blue Blink,씨젠 상태 정보 261021 > 경광등 시나리오
+15,Ready,검사 시작,-,Running,Green Blink,씨젠 상태 정보 261021 > 경광등 시나리오
+16,Running,-,Warning,Running,Yellow Blink,씨젠 상태 정보 261021 > 경광등 시나리오
+17,Running,-,Error,Partial Running or Error,Red Blink,씨젠 상태 정보 261021 > 경광등 시나리오
+18,Running,저장 장치 또는 폐기함 열림,-,Running,Blue Blink,씨젠 상태 정보 261021 > 경광등 시나리오
+19,Running,모듈 상태가 Paused로 전환,-,Partial Running or Paused,Yellow Blink,씨젠 상태 정보 261021 > 경광등 시나리오
+20,Running,검사 중단 시작,-,Stopping,Yellow Blink,씨젠 상태 정보 261021 > 경광등 시나리오
+21,Stopping,-,Warning,Stopping,Yellow Blink,씨젠 상태 정보 261021 > 경광등 시나리오
+22,Stopping,-,Error,Stopping,Yellow Blink,씨젠 상태 정보 261021 > 경광등 시나리오
+23,Stopping,검사 중단 완료 AND 검사 중단 작업 진행 중 Warning 발생,,Ready,Yellow,씨젠 상태 정보 261021 > 경광등 시나리오
+24,Stopping,검사 중단 완료 AND 검사 중단 작업 진행 중 Error 발생,,Error,Red,씨젠 상태 정보 261021 > 경광등 시나리오
+25,Stopping,검사 중단 완료,-,Ready,Green,씨젠 상태 정보 261021 > 경광등 시나리오
+26,Running,검사 완료,-,Ready,Green,씨젠 상태 정보 261021 > 경광등 시나리오
