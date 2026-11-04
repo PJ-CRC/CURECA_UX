@@ -78,10 +78,40 @@ function Save-Usage($ri) {
     $list = New-Object Collections.ArrayList
     if ($w.five_hour) { [void]$list.Add([ordered]@{ label = '5-hour limit'; percentUsed = [math]::Round(100 * [double]$w.five_hour.utilization); resetsAt = (& $iso $w.five_hour.resetsAt) }) }
     if ($w.seven_day) { [void]$list.Add([ordered]@{ label = 'Weekly · all models'; percentUsed = [math]::Round(100 * [double]$w.seven_day.utilization); resetsAt = (& $iso $w.seven_day.resetsAt) }) }
-    if (-not $list.Count) { return }
-    $o = [ordered]@{ at = (Now); plan = ''; by = 'agent'; windows = $list.ToArray() }
-    [IO.File]::WriteAllText((Join-Path $WB '.plan_usage.json'), ($o | ConvertTo-Json -Depth 5 -Compress), $Utf8)
+    Write-Usage $list
   } catch { }
+}
+function Write-Usage($list) {
+  if (-not $list.Count) { return }
+  $o = [ordered]@{ at = (Now); plan = ''; by = 'agent'; windows = $list.ToArray() }
+  [IO.File]::WriteAllText((Join-Path $WB '.plan_usage.json'), ($o | ConvertTo-Json -Depth 5 -Compress), $Utf8)
+}
+# 요청이 없을 때도 5분마다 한도 확인: `claude -p /usage`는 모델을 부르지 않아 토큰을 쓰지 않는다(Claude Code가 계정 사용량을 글로 알려 줌)
+#  「Current session: 26% used · resets Nov 4, 2pm (Asia/Seoul)」 · 「Current week (all models): 49% used · resets Nov 6, 3pm」를 읽는다.
+#  글 형식이 바뀌어 못 읽으면 그냥 넘어간다(처리할 때 받는 rate_limit_event로는 계속 갱신)
+$UsageMin = 5
+function Reset-Time([string]$s) {
+  $s = ($s -replace '\(.*?\)', '').Trim()
+  if ($s -notmatch '(?i)^([A-Za-z]{3})[a-z]*\.?\s+(\d{1,2}),?\s+(\d{1,2})(?::(\d{2}))?\s*(am|pm)') { return '' }
+  $mon = [array]::IndexOf(@('jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'), $Matches[1].ToLower()) + 1
+  if ($mon -lt 1) { return '' }
+  $h = [int]$Matches[3] % 12; if ($Matches[5].ToLower() -eq 'pm') { $h += 12 }
+  $now = Get-Date
+  try { $t = Get-Date -Year $now.Year -Month $mon -Day ([int]$Matches[2]) -Hour $h -Minute ([int]('0' + $Matches[4])) -Second 0 } catch { return '' }
+  if ($t -lt $now.AddDays(-2)) { $t = $t.AddYears(1) }   # 12월에 본 1월 초기화
+  return $t.ToString('yyyy-MM-ddTHH:mm:sszzz')
+}
+function Probe-Usage {
+  $o = Run-Cli '-p /usage' 60
+  $list = New-Object Collections.ArrayList
+  foreach ($w in @(@('Current session', '5-hour limit'), @('Current week \(all models\)', 'Weekly · all models'))) {
+    if ($o -match ('(?m)^\s*' + $w[0] + ':\s*(\d+)% used([^\r\n]*)')) {
+      $pct = [int]$Matches[1]; $rest = $Matches[2]; $rs = ''
+      if ($rest -match 'resets\s+(.+)$') { $rs = Reset-Time $Matches[1] }
+      [void]$list.Add([ordered]@{ label = $w[1]; percentUsed = $pct; resetsAt = $rs })
+    }
+  }
+  if ($list.Count) { Write-Usage $list } else { Log ('한도 확인: /usage를 읽지 못함 ' + ($o -replace '\s+', ' ').Substring(0, [Math]::Min(120, ($o -replace '\s+', ' ').Length))) }
 }
 # CLI 명령을 짧게 실행해 출력(표준 + 오류)을 받는다. 시간이 넘으면 끊는다
 function Run-Cli([string]$cliArgs, [int]$sec) {
@@ -156,9 +186,11 @@ CLAUDE.md의 「Workbench 수정 요청 처리」와 「작업 대기열」 규�
 Save-State 'idle' '준비 확인 중 (Claude 로그인 · Figma 연결)'; Log "시작 (pid $PID, $Claude)"
 # 세션은 처리할 것이 생길 때 띄운다: 미리 띄우면 로그인 · Figma 연결 전에 뜬 세션을 계속 써서 Figma 도구 없이 처리했다
 $last = ''; $repeat = 0
-$script:Ready = $null; $script:NextCheck = Get-Date
+$script:Ready = $null; $script:NextCheck = Get-Date; $script:NextUsage = Get-Date
 while ($true) {
   if (Test-Path $StopFile) { Remove-Item $StopFile -Force -ErrorAction SilentlyContinue; Stop-Session '중지'; Save-State 'stopped' '중지됨'; Log '중지'; exit 0 }
+  # 한도 표시 갱신(5분마다, 토큰 안 씀). 로그인 전이면 실패하고 넘어간다
+  if ((Get-Date) -ge $script:NextUsage) { $script:NextUsage = (Get-Date).AddMinutes($UsageMin); Probe-Usage }
   # 세션 관리: 죽었거나 · 오래 쉬었거나 · 로그인 · 연결이 바뀌었으면 버린다(다음 처리 때 새로)
   if (Test-Path $RenewFile) { Remove-Item $RenewFile -Force -ErrorAction SilentlyContinue; Stop-Session '로그인 · Figma 연결 창을 열어 새로 띄움'; $script:Ready = $null; $script:NextCheck = Get-Date }
   if ($script:S -and $script:S.p.HasExited) { Stop-Session '세션이 끝나 있음' }
