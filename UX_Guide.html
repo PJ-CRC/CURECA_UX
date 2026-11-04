@@ -259,7 +259,8 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
   }).catch(function(){});
   load();
 
-  function appliedKeys(){ return Object.keys(applied).filter(function(k){ return applied[k].guideId === id; }); }
+  /* 이 문서를 작업 기준으로 적용한 파일들: 공통 규칙(guideId) · 종류별 적용(docs.{종류}.id, 정의서 등) */
+  function appliedKeys(){ return Object.keys(applied).filter(function(k){ var a = applied[k] || {}, ds = a.docs || {}; return a.guideId === id || Object.keys(ds).some(function(t){ return ds[t] && ds[t].id === id; }); }); }
   function head(m){
     document.title = m.title || 'UX Guide';
     /* 돌아가기: 그 문서 종류의 탭으로 (정의서 kind:'spec') */

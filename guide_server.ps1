@@ -1089,13 +1089,22 @@ while ($l.IsListening) {
           SendJson $c 200 $out; continue
         }
         if ($body.action -ne 'apply') { throw "알 수 없는 action: $($body.action)" }
-        $key = [string]$body.fileKey; $gid = [string]$body.guideId
+        # 문서 종류(카테고리)마다 하나씩 적용: kind 'guide'(공통 규칙, 없으면 이것) · 'spec'(정의서) …  guideId = 그 종류의 문서 id('' = 그 종류는 작업 기준 없음)
+        #  guide_apply.json {fileKey: {fileKey, guideId(공통 규칙, 예전 형식 그대로), by, pc, at, docs: {종류: {id, by, at}}}}
+        $key = [string]$body.fileKey; $gid = [string]$body.guideId; $kind = [string]$body.kind; if (-not $kind) { $kind = 'guide' }
         if (-not (Test-Key $key)) { throw '잘못된 파일 키입니다.' }
-        if ($gid -and ($gid -notmatch '^[A-Za-z0-9_-]{1,64}$' -or -not (Test-Path (P $GuideRoot $gid 'meta.json')))) { throw "가이드를 찾지 못했습니다: $gid" }
+        if ($kind -notmatch '^[a-z]{1,20}$') { throw "알 수 없는 문서 종류: $kind" }
+        if ($gid -and ($gid -notmatch '^[A-Za-z0-9_-]{1,64}$' -or -not (Test-Path (P $GuideRoot $gid 'meta.json')))) { throw "문서를 찾지 못했습니다: $gid" }
+        if ($gid) { $mk = 'guide'; try { $mk2 = [string]([IO.File]::ReadAllText((P $GuideRoot $gid 'meta.json'), $Utf8) | ConvertFrom-Json).kind; if ($mk2) { $mk = $mk2 } } catch {}; if ($mk -ne $kind) { throw "종류가 다른 문서입니다($mk): $gid" } }
         # 이 PC에만 적용한다(다른 작업자는 각자 고른다)
         $a = [ordered]@{}
         if (Test-Path $GuideApply) { try { foreach ($p in ([IO.File]::ReadAllText($GuideApply, $Utf8) | ConvertFrom-Json).PSObject.Properties) { $a[$p.Name] = $p.Value } } catch {} }
-        $a[$key] = [ordered]@{ fileKey = $key; guideId = $gid; by = [string]$body.by; pc = $PcName; at = (Now) }
+        $old = $a[$key]; $docs = [ordered]@{}
+        if ($old -and $old.docs) { foreach ($p in $old.docs.PSObject.Properties) { $docs[$p.Name] = $p.Value } }
+        elseif ($old -and $old.guideId) { $docs['guide'] = [ordered]@{ id = [string]$old.guideId; by = [string]$old.by; at = [string]$old.at } }   # 예전 형식
+        $docs[$kind] = [ordered]@{ id = $gid; by = [string]$body.by; at = (Now) }
+        $gd = $docs['guide']
+        $a[$key] = [ordered]@{ fileKey = $key; guideId = $(if ($gd) { [string]$gd.id } else { '' }); by = [string]$body.by; pc = $PcName; at = (Now); docs = $docs }
         [IO.File]::WriteAllText($GuideApply, ($a | ConvertTo-Json -Depth 4), $Utf8)
       }
       SendJson $c 200 (Read-Guides); continue

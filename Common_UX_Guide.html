@@ -34,10 +34,10 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 Pretendard,-ap
 .gd-lab{font-size:13px;font-weight:700;color:var(--ink);white-space:nowrap;cursor:help}
 .gd-lab .gd-by{font-weight:400}
 .gd select{min-width:200px;max-width:280px;height:32px;padding:0 8px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:13.5px}
-#gdApply{height:32px;padding:0 14px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:#fff;font:inherit;font-size:13.5px;font-weight:700;cursor:pointer}
-#gdApply:disabled{opacity:.4;cursor:default}
-:root[data-theme="dark"] #gdApply{color:#0f1115}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) #gdApply{color:#0f1115}}
+#gdApply,#spApply{height:32px;padding:0 14px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:#fff;font:inherit;font-size:13.5px;font-weight:700;cursor:pointer}
+#gdApply:disabled,#spApply:disabled{opacity:.4;cursor:default}
+:root[data-theme="dark"] #gdApply,:root[data-theme="dark"] #spApply{color:#0f1115}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) #gdApply,:root:not([data-theme="light"]) #spApply{color:#0f1115}}
 .gd-by{color:var(--ink-3);font-size:12.5px;white-space:nowrap}
 .gd-by:empty{display:none}
 .gd-btn{padding:8px 14px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:#fff;font:inherit;font-size:13.5px;font-weight:700;cursor:pointer;white-space:nowrap}
@@ -106,6 +106,8 @@ html.doc-ro #gdNew,html.doc-ro #specNew{display:none!important}
 .dcards b{display:block;font-size:15px;margin-bottom:4px}
 .dcards p{margin:0 0 8px;color:var(--ink-2);font-size:13.5px}
 .dcards span{color:var(--ink-3);font-size:12.5px}
+.dcards a.cur{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset,var(--shadow)}
+.dcards em.cur{display:inline-block;margin:0 0 6px;padding:1px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:11.5px;font-style:normal;font-weight:700}
 .dempty{padding:40px 20px;text-align:center;background:var(--surface);border:1px dashed var(--line);border-radius:var(--card-r);color:var(--ink-2)}
 .dempty b{display:block;font-size:15px;color:var(--ink);margin-bottom:6px}
 .dempty p{margin:0 auto;max-width:520px;font-size:13.5px}
@@ -145,6 +147,13 @@ html.doc-ro #gdNew,html.doc-ro #specNew{display:none!important}
 </div>
 
 <div class="dpanel" role="tabpanel" id="doc-spec" aria-labelledby="tab-spec" hidden>
+  <!-- 정의서도 공통 규칙처럼 파일마다 하나를 내 작업 기준으로 적용한다(이 PC에만). Claude는 적용한 정의서만 읽는다 -->
+  <section class="gd" id="spBar" aria-labelledby="spTitle" hidden>
+    <label class="gd-lab" id="spTitle" for="spSel" title="이 PC(나)에만 적용됩니다. 이 PC의 Claude가 수정 요청을 처리할 때 적용한 정의서만 따르고, 다른 작업자는 각자 고릅니다.">내 작업 기준 정의서 <span class="gd-by">(<b id="spFile">—</b>)</span></label>
+    <select id="spSel"></select>
+    <button type="button" id="spApply" disabled>적용</button>
+    <span class="gd-by" id="spBy"></span>
+  </section>
   <div class="gd-jobs spec-jobs" id="specJobs"></div>
   <ul class="dcards" id="specList" aria-label="정의서 목록"></ul>
   <div class="dempty" id="specEmpty">
@@ -244,7 +253,7 @@ html.doc-ro #gdNew,html.doc-ro #specNew{display:none!important}
         /* 문서는 meta.kind로 나눈다: 공통 규칙(guide, 없으면 이것) · 정의서(spec) */
         var docs = d[0].items || [], all = d[1].items || [];
         var guides = docs.filter(function(g){ return (g.kind || 'guide') === 'guide'; });
-        renderSpecs(docs.filter(function(g){ return g.kind === 'spec'; }));
+        var specs = docs.filter(function(g){ return g.kind === 'spec'; });
         /* 만드는 중인 작업: 가이드는 공통 규칙 막대 옆, 정의서(docKind:'spec')는 정의서 탭 위에 */
         var making = all.filter(function(j){ return j.kind === 'guide' && j.status !== '완료'; });
         var jobs = making.filter(function(j){ return j.docKind !== 'spec'; });
@@ -255,6 +264,7 @@ html.doc-ro #gdNew,html.doc-ro #specNew{display:none!important}
         var pj = d[3] && (d[3].projects || []).filter(function(p){ return p.key === workKey; })[0];
         workName = pj && pj.name ? pj.name : workKey ? workKey.slice(0, 6) : '작업 링크 없음';
         var ap = (d[0].applied || {})[workKey], cur = ap && ap.guideId || '';
+        renderSpecs(specs, ap && ap.docs && ap.docs.spec);
         guideMap = {}; guides.forEach(function(g){ guideMap[g.id] = g; });
         if (cur && !guideMap[cur]) cur = '';   // 지운 가이드면 작업 기준 없음
         curGuide = cur; $g('gdFile').textContent = workName;
@@ -281,14 +291,39 @@ html.doc-ro #gdNew,html.doc-ro #specNew{display:none!important}
         $g('gdWarn').textContent = 'Claude 요청 감시가 꺼져 있어 아직 만들지 못하고 있습니다. Claude에게 「워크벤치 요청 감시 시작해줘」라고 요청하세요.';
       });
     }
-    /* 정의서: 카드 목록(누르면 보기 화면). 만들기 · 수정 요청은 다음 단계에서 공통 규칙과 같은 방식으로 더한다 */
-    function renderSpecs(specs){
+    /* 정의서: 위에 「내 작업 기준 정의서」 선택 · 적용(파일마다 하나, 이 PC에만), 아래 카드 목록(누르면 보기 화면, 적용한 카드는 표시) */
+    var specMap = {}, curSpec = '';
+    function renderSpecs(specs, sa){
+      specMap = {}; specs.forEach(function(s){ specMap[s.id] = s; });
+      curSpec = sa && sa.id && specMap[sa.id] ? sa.id : '';   // 지운 정의서면 작업 기준 없음
       $g('specEmpty').hidden = !!specs.length;
+      $g('spBar').hidden = !specs.length;
+      $g('spFile').textContent = workName || '작업 링크 없음';
+      var sel = $g('spSel');
+      var opts = '<option value="">작업 기준 없음 (정의서를 쓰지 않음)</option>' +
+        specs.map(function(s){ return '<option value="' + esc(s.id) + '">' + esc(s.title) + (s.id === curSpec ? ' (내 작업 기준)' : '') + '</option>'; }).join('');
+      if (sel.dataset.opts !== opts) { sel.innerHTML = opts; sel.dataset.opts = opts; sel.value = curSpec; }
+      if (document.activeElement !== sel && !sel.dataset.picked) sel.value = curSpec;
+      $g('spApply').disabled = !workKey || sel.value === curSpec;
+      $g('spBy').textContent = curSpec && sa.at ? '적용 · ' + String(sa.at).replace('T', ' ').slice(0, 16) : '';
       $g('specList').innerHTML = specs.map(function(s){
-        return '<li><a href="UX_Guide.html?g=' + encodeURIComponent(s.id) + '"><b>' + esc(s.title) + '</b>' + (s.summary ? '<p>' + esc(s.summary) + '</p>' : '') +
+        var on = s.id === curSpec;
+        return '<li><a' + (on ? ' class="cur"' : '') + ' href="UX_Guide.html?g=' + encodeURIComponent(s.id) + '">' + (on ? '<em class="cur">내 작업 기준</em>' : '') + '<b>' + esc(s.title) + '</b>' + (s.summary ? '<p>' + esc(s.summary) + '</p>' : '') +
           '<span>' + esc([s.fileName, day(s.updatedAt), s.rev ? '수정 ' + s.revs.length + '회' : '', s.by].filter(Boolean).join(' · ')) + '</span></a></li>';
       }).join('');
     }
+    $g('spSel').addEventListener('change', function(){ this.dataset.picked = '1'; $g('spApply').disabled = !workKey || this.value === curSpec; });
+    $g('spApply').addEventListener('click', function(){
+      var b = this, id = $g('spSel').value; if (id && !specMap[id]) return;
+      var what = id ? '「' + specMap[id].title + '」(으)로 바꿀까요?' : '「작업 기준 없음」으로 바꿀까요? (Claude가 정의서를 보지 않습니다)';
+      if (!confirm('내 작업 기준 정의서(' + workName + ' 파일)를 ' + what + '\n이 PC(나)에만 적용됩니다. 다른 작업자에게는 영향이 없습니다.')) return;
+      b.disabled = true;
+      fetch('/api/guides', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'apply', kind: 'spec', fileKey: workKey, guideId: id, by: userInput.value.trim() }) })
+        .then(function(r){ return r.json(); })
+        .then(function(d){ if (d.error) throw new Error(d.error); delete $g('spSel').dataset.picked; load(); })
+        .catch(function(x){ alert(x.message || '서버에 연결할 수 없습니다.'); b.disabled = false; });
+    });
     /* 문서 종류 탭: 주소 ?doc=spec 으로 바로 열 수 있다. 머리의 버튼(data-doc)은 그 탭에서만 보인다 */
     var DOCS = ['guide', 'spec'];
     function selectDoc(doc, focus){
@@ -373,7 +408,7 @@ html.doc-ro #gdNew,html.doc-ro #specNew{display:none!important}
       if (!confirm('내 작업 기준 가이드(' + workName + ' 파일)를 「' + title + '」(으)로 바꿀까요?\n이 PC(나)에만 적용됩니다. 다른 작업자에게는 영향이 없습니다.')) return;
       b.disabled = true;
       fetch('/api/guides', { method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'apply', fileKey: workKey, guideId: id, by: userInput.value.trim() }) })
+        body: JSON.stringify({ action: 'apply', kind: 'guide', fileKey: workKey, guideId: id, by: userInput.value.trim() }) })
         .then(function(r){ return r.json(); })
         .then(function(d){ if (d.error) throw new Error(d.error); curGuide = id; viewId = id; load(); })
         .catch(function(x){ alert(x.message || '서버에 연결할 수 없습니다.'); b.disabled = false; });

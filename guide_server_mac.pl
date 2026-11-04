@@ -67,7 +67,7 @@ my $UP_TMP = "$UP_DIR/_tmp";
 my ($UP_MAX, $UP_MAX_N) = (20 * 1024 * 1024, 10);
 my %UP_EXT = map { $_ => 1 } qw(md markdown txt csv tsv json html htm pdf docx xlsx pptx png jpg jpeg gif webp);
 # UX 가이드(공유): .history/guides/{id}/ (meta.json · guide.md · rev/ · images/)
-# 작업 기준 가이드는 PC(작업자)마다 따로 고른다: workbench/guide_apply.json {fileKey: {guideId, by, at}} (공유하지 않음)
+# 작업 기준 문서는 PC(작업자)마다 따로 고른다: workbench/guide_apply.json {fileKey: {guideId, by, at, docs: {종류: {id, by, at}}}} (공유하지 않음, 종류마다 하나)
 my $GUIDE_ROOT = "$HIST_DIR/guides";
 my $PROTO_ROOT = "$ROOT/prototypes";   # 프로토타입(이 PC에만): prototypes/{id}/meta.json · index.html · screens/
 my $GUIDE_APPLY = "$ROOT/workbench/guide_apply.json";
@@ -1035,12 +1035,19 @@ sub handle {
         return respond_json($sock, 200, $out);
       }
       die "알 수 없는 action: " . str($g->{action}) . "\n" unless str($g->{action}) eq 'apply';
-      my ($key, $gid) = (str($g->{fileKey}), str($g->{guideId}));
+      # 문서 종류(카테고리)마다 하나씩 적용: kind 'guide'(공통 규칙, 없으면 이것) · 'spec'(정의서) …  guideId = 그 종류의 문서 id('' = 그 종류는 작업 기준 없음)
+      #  guide_apply.json {fileKey: {fileKey, guideId(공통 규칙, 예전 형식 그대로), by, pc, at, docs: {종류: {id, by, at}}}}
+      my ($key, $gid, $kind) = (str($g->{fileKey}), str($g->{guideId}), str($g->{kind}) || 'guide');
       die "잘못된 파일 키입니다.\n" unless key_ok($key);
-      die "가이드를 찾지 못했습니다: $gid\n" if $gid ne '' && ($gid !~ /^[A-Za-z0-9_-]{1,64}$/ || !-f "$GUIDE_ROOT/$gid/meta.json");
+      die "알 수 없는 문서 종류: $kind\n" unless $kind =~ /^[a-z]{1,20}$/;
+      die "문서를 찾지 못했습니다: $gid\n" if $gid ne '' && ($gid !~ /^[A-Za-z0-9_-]{1,64}$/ || !-f "$GUIDE_ROOT/$gid/meta.json");
+      if ($gid ne '') { my $m = eval { read_json("$GUIDE_ROOT/$gid/meta.json") } || {}; my $mk = str($m->{kind}) || 'guide'; die "종류가 다른 문서입니다($mk): $gid\n" if $mk ne $kind; }
       # 이 PC에만 적용한다(다른 작업자는 각자 고른다)
       my $ga = (-f $GUIDE_APPLY ? eval { read_json($GUIDE_APPLY) } : undef) || {};
-      $ga->{$key} = { fileKey => $key, guideId => $gid, by => str($g->{by}), pc => $PC_NAME, at => now_iso() };
+      my $old = ref $ga->{$key} eq 'HASH' ? $ga->{$key} : {};
+      my %docs = ref $old->{docs} eq 'HASH' ? %{ $old->{docs} } : (str($old->{guideId}) ne '' ? (guide => { id => str($old->{guideId}), by => str($old->{by}), at => str($old->{at}) }) : ());   # 예전 형식
+      $docs{$kind} = { id => $gid, by => str($g->{by}), at => now_iso() };
+      $ga->{$key} = { fileKey => $key, guideId => (ref $docs{guide} eq 'HASH' ? str($docs{guide}{id}) : ''), by => str($g->{by}), pc => $PC_NAME, at => now_iso(), docs => \%docs };
       write_json($GUIDE_APPLY, $ga);
     }
     return respond_json($sock, 200, guides_get());
