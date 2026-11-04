@@ -1,0 +1,1422 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>일정/작업</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="appnav.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<style>
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --surface-2:#f3f6fb; --ink:#14171c; --ink-2:#4a5260; --ink-3:#7a8392;
+  --line:#e3e7ee; --accent:#2747d8; --accent-soft:#e6ebff; --shadow:0 1px 2px rgba(16,24,40,.05);
+  --warn-bg:#fff6e0; --warn-ink:#8a5a00; --ok:#1a7f37; --ok-soft:#e3f4e8; --bad:#c62828; --bad-soft:#fdecec; --rev:#7a3fd1; --rev-soft:#f1e9fd;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1115; --surface:#171a20; --surface-2:#1e232b; --ink:#e8ebf0; --ink-2:#b4bcc8; --ink-3:#8590a0;
+    --line:#2a3039; --accent:#8ea2ff; --accent-soft:#232c52; --shadow:none;
+    --warn-bg:#3a2e12; --warn-ink:#f2c46d; --ok:#56d364; --ok-soft:#173222; --bad:#ff7b72; --bad-soft:#3a1d1d; --rev:#c39bff; --rev-soft:#2c2142;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1115; --surface:#171a20; --surface-2:#1e232b; --ink:#e8ebf0; --ink-2:#b4bcc8; --ink-3:#8590a0;
+  --line:#2a3039; --accent:#8ea2ff; --accent-soft:#232c52; --shadow:none;
+  --warn-bg:#3a2e12; --warn-ink:#f2c46d; --ok:#56d364; --ok-soft:#173222; --bad:#ff7b72; --bad-soft:#3a1d1d; --rev:#c39bff; --rev-soft:#2c2142;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 Pretendard,-apple-system,"Segoe UI","Malgun Gothic",sans-serif;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer}
+.app-head h1{font-weight:800}
+.btn{height:36px;padding:0 14px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:14px;font-weight:600;white-space:nowrap}
+.btn:hover:not(:disabled){border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.sm{height:30px;padding:0 10px;font-size:13px}
+.btn:disabled{opacity:.45;cursor:default}
+.btn:focus-visible,.icon:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* 하위 메뉴 탭(UX 문서 탭과 같은 모양) */
+.dtabs{display:flex;gap:4px;box-shadow:inset 0 -1px 0 var(--line);margin:0 0 var(--gap);overflow-x:auto;overflow-y:hidden}
+.dtabs button{flex:none;padding:10px 16px;border:0;border-bottom:2px solid transparent;background:none;color:var(--ink-2);font-size:14.5px;font-weight:600}
+.dtabs button:hover{color:var(--ink)}
+.dtabs button[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent);font-weight:700}
+.dtabs button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;border-radius:6px 6px 0 0}
+.dtabs .cnt{margin-left:6px;font-size:12.5px;font-weight:600;color:var(--ink-3)}
+.dtabs .cnt.hot{display:inline-block;min-width:20px;padding:0 6px;border-radius:10px;background:var(--warn-bg);color:var(--warn-ink);text-align:center}
+.wpanel h2{margin:0 0 6px;font-size:22px;font-weight:800}
+.wpanel .intro{margin:0 0 16px;color:var(--ink-2);font-size:14px}
+.wempty{padding:40px 20px;text-align:center;background:var(--surface);border:1px dashed var(--line);border-radius:var(--card-r);color:var(--ink-2)}
+.wempty b{display:block;font-size:15px;color:var(--ink);margin-bottom:6px}
+.wempty p{margin:0 auto 4px;max-width:620px;font-size:13.5px}
+.wempty .btn{margin-top:12px}
+/* 공통 카드 · 표 */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--card-r);padding:18px 20px;box-shadow:var(--shadow);margin-bottom:16px;min-width:0}
+.card h3{margin:0 0 12px;font-size:16px;font-weight:800}
+.card h3 small{margin-left:6px;font-size:12.5px;font-weight:500;color:var(--ink-3)}
+.tbl-wrap{overflow:auto;border:1px solid var(--line);border-radius:10px}
+table.t{width:100%;border-collapse:collapse;font-size:13.5px}
+table.t th{background:var(--surface-2);color:var(--ink-2);font-weight:700;text-align:left;padding:9px 12px;white-space:nowrap;border-bottom:1px solid var(--line)}
+table.t td{padding:9px 12px;border-top:1px solid var(--line);vertical-align:top}
+table.t tr:first-child td{border-top:0}
+table.t td.num,table.t th.num{text-align:right;font-variant-numeric:tabular-nums}
+table.t td.nw{white-space:nowrap}
+.muted{color:var(--ink-3)}
+.pill{display:inline-block;padding:1px 9px;border-radius:999px;font-size:12.5px;font-weight:600;background:var(--surface-2);color:var(--ink-2);white-space:nowrap;border:1px solid var(--line)}
+.pill.done{background:var(--ok-soft);color:var(--ok);border-color:transparent}
+.pill.prog{background:var(--accent-soft);color:var(--accent);border-color:transparent}
+.pill.review{background:var(--rev-soft);color:var(--rev);border-color:transparent}
+.pill.warn{background:var(--warn-bg);color:var(--warn-ink);border-color:transparent}
+.chip{display:inline-block;margin:2px 4px 2px 0;padding:0 7px;border-radius:6px;background:var(--accent-soft);color:var(--accent);font:600 12.5px/1.8 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:nowrap}
+/* 주 이동 */
+.wkbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.icon{width:40px;height:40px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-size:18px;line-height:1}
+.icon:hover{border-color:var(--accent)}
+.wk-range{font-size:20px;font-weight:800;font-variant-numeric:tabular-nums}
+.wk-now{padding:2px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:12.5px;font-weight:700}
+.wk-sp{flex:1}
+.wk-at{font-size:12.5px;color:var(--ink-3)}
+.notice{margin:0 0 16px;padding:12px 16px;border-radius:10px;background:var(--warn-bg);color:var(--ink);font-size:13.5px}
+.notice b{color:var(--warn-ink)}
+.notice.bad{background:var(--bad-soft)}
+.notice.bad b{color:var(--bad)}
+/* 숫자 카드 */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:8px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--card-r);padding:16px 20px;min-height:116px}
+.stat.main{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.stat .l{font-size:13px;color:var(--ink-2)}
+.stat .v{font-size:30px;font-weight:800;line-height:1.5;font-variant-numeric:tabular-nums}
+.stat .s{font-size:12.5px;color:var(--ink-3)}
+.rule{margin:0 0 16px;font-size:12.5px;color:var(--ink-3)}
+/* 주요 작업 내용 */
+.kv{display:grid;grid-template-columns:120px 1fr;gap:6px 16px;padding:14px 18px;border-radius:10px;background:var(--surface-2);font-size:14px}
+.kv dt{color:var(--ink-3)}
+.kv dd{margin:0;font-weight:600}
+.kv dd small{font-weight:400;color:var(--ink-3)}
+.sub{margin:18px 0 8px;font-size:14px;font-weight:800}
+.sub:first-child{margin-top:0}
+ul.list{margin:0;padding-left:18px}
+ul.list li{margin:2px 0}
+/* 회의 · 차주 */
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+.two .card{margin-bottom:16px}
+.car-head{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.car-head h3{margin:0;flex:1}
+.car-pos{font-size:12.5px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.icon.sm{width:30px;height:30px;font-size:14px;border-radius:8px}
+.mt{border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.mt h4{margin:0 0 2px;font-size:15px;font-weight:800}
+.mt .d{font-size:12.5px;color:var(--ink-3);margin-bottom:8px}
+.mt dl{margin:0;display:grid;grid-template-columns:72px 1fr;gap:6px 12px;font-size:13.5px;max-height:460px;overflow:auto;padding-right:4px}
+.mt dt{color:var(--ink-3)}
+.mt dd{margin:0;white-space:pre-wrap;word-break:break-word}
+.dots{display:flex;justify-content:center;gap:6px;margin-top:10px}
+.dots button{width:8px;height:8px;padding:0;border:0;border-radius:50%;background:var(--line)}
+.dots button[aria-current="true"]{background:var(--accent)}
+/* 일정(시트 그대로) */
+.bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.bar input[type=search],.bar select{height:36px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font:inherit;font-size:14px}
+.bar input[type=search]{width:260px;max-width:100%}
+.bar .sp{flex:1}
+.bar .hint{font-size:12.5px;color:var(--ink-3)}
+.refreshing{color:var(--accent);font-weight:600}
+.blreq{display:flex;align-items:center;gap:8px;justify-content:flex-end;margin:0 0 8px}
+.blreq .muted{margin-right:auto;font-size:13px}
+.sheet{max-height:calc(100vh - 330px);min-height:320px;overflow:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table.sh{border-collapse:separate;border-spacing:0;font-size:12.5px;width:max-content;min-width:100%}
+table.sh th,table.sh td{padding:4px 8px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);max-width:300px;vertical-align:middle;white-space:pre-wrap;word-break:break-word;line-height:1.45}
+table.sh td{min-width:56px}
+table.sh .g{min-width:24px;width:24px;max-width:24px;padding:2px 0;text-align:center;font-size:10.5px;white-space:nowrap;overflow:hidden}
+table.sh thead th.g{font-weight:600}
+table.sh .today{box-shadow:inset 2px 0 0 #e53935}
+table.sh .fz{position:sticky;z-index:1;background:var(--surface)}
+table.sh thead .fz{z-index:4;background:var(--surface-2)}
+table.sh .fz-end{box-shadow:inset -2px 0 0 var(--line)}
+table.sh .dd{display:block;padding:0 10px;border-radius:999px;text-align:center;font-size:12px;font-weight:600;white-space:nowrap;line-height:1.7}
+table.sh .dd.plain{background:none;text-align:left;padding:0;border-radius:0;font-weight:400}
+table.sh .dd.plain::after{content:"";display:inline-block;margin-left:6px;border:4px solid transparent;border-top-color:var(--ink-3);vertical-align:-1px}
+table.sh thead th{min-width:56px;text-align:center !important;vertical-align:bottom;background:var(--surface-2);font-weight:700;color:var(--ink-2);text-align:left;z-index:2}
+table.sh th.rn,table.sh td.rn{position:sticky;left:0;background:var(--surface-2);color:var(--ink-3);text-align:right;font-weight:500;min-width:44px;z-index:1}
+table.sh td.empty,table.sh th.empty{min-width:24px}
+table.sh thead th.rn{z-index:3}
+table.sh td.ed{cursor:text}
+table.sh td.ed:hover{box-shadow:inset 0 0 0 2px var(--accent-soft)}
+table.sh td.fx{color:var(--ink-3)}
+table.sh td.saving{opacity:.5}
+table.sh td.just{background:var(--ok-soft)}
+table.sh td select{width:100%;min-width:110px;height:28px;border:2px solid var(--accent);border-radius:6px;background:var(--surface);color:var(--ink);font:inherit;font-size:12.5px}
+table.sh td textarea{width:100%;min-width:140px;min-height:30px;padding:4px 6px;border:2px solid var(--accent);border-radius:4px;background:var(--surface);color:var(--ink);font:inherit;resize:vertical}
+/* 회의록 */
+.mgrid{display:grid;grid-template-columns:minmax(260px,400px) minmax(0,1fr);gap:16px;align-items:start}
+.mgrid .card{margin:0}
+.mlist{padding:12px;max-height:calc(100vh - 260px);overflow:auto;position:sticky;top:12px}
+.mhead{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:4px 6px 10px}
+.mimport{width:100%;margin-bottom:8px}
+.mgrp summary{display:flex;justify-content:space-between;padding:8px 8px;font-weight:800;cursor:pointer;list-style:none}
+.mgrp summary::-webkit-details-marker{display:none}
+.mgrp summary span:first-child::before{content:"▾ ";color:var(--ink-3);font-size:11px}
+.mgrp:not([open]) summary span:first-child::before{content:"▸ "}
+.mitem{display:block;width:100%;text-align:left;border:0;background:none;border-radius:10px;padding:10px 12px;margin:2px 0}
+.mitem:hover{background:var(--surface-2)}
+.mitem[aria-current="true"]{background:var(--accent-soft)}
+.mitem b{display:block;font-size:14px;font-weight:700;line-height:1.45}
+.mitem span{display:block;font-size:12.5px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mitem:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.mright{padding:24px 28px;min-height:360px}
+.mtop{display:flex;align-items:flex-start;gap:8px}
+.mtop h3{flex:1;margin:0;font-size:20px;font-weight:800;line-height:1.4}
+.matt{margin:6px 0 0;color:var(--ink-2);font-size:14px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.mcontent h4{margin:20px 0 8px;font-size:15px;font-weight:800}
+.mtext{white-space:pre-wrap;word-break:break-word;font-size:14.5px;line-height:1.75}
+.mmeta{margin:24px 0 0;font-size:12px;color:var(--ink-3)}
+/* 작업대기 · 임시 정책 · 논의·결정 */
+.minp{width:100%;height:34px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font:inherit;font-size:13.5px}
+.mitem .chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;white-space:normal;overflow:visible}
+button.pill{cursor:pointer;font:inherit;font-size:12.5px;font-weight:600}
+.pill.on{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+.pill.bad{background:var(--bad-soft);color:var(--bad);border-color:transparent}
+.pill.seg{padding:3px 12px}
+.mhead .pill.seg{margin-right:2px}
+.btn.bad{color:var(--bad);border-color:var(--bad);background:var(--surface)}
+.mtop .btn,.mtop .pill{flex:none}
+.h4{margin:22px 0 8px;font-size:15px;font-weight:800}
+.mdv{font-size:14px;line-height:1.7;word-break:break-word}
+.mdv p{margin:6px 0}
+.mdv ul,.mdv ol{margin:6px 0;padding-left:20px}
+.mdv table{width:100%;border-collapse:collapse;margin:8px 0;font-size:13.5px}
+.mdv th{background:var(--surface-2);text-align:left;padding:8px 10px;border:1px solid var(--line);color:var(--ink-2)}
+.mdv td{padding:8px 10px;border:1px solid var(--line);vertical-align:top}
+.mdv code{padding:1px 6px;border-radius:5px;background:var(--surface-2);font-size:12.5px}
+.mdv h2,.mdv h3,.mdv h4{font-size:15px;font-weight:800;margin:18px 0 6px}
+.abgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:12px}
+.abcard{border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.abcard h4{margin:0 0 8px;font-size:15px;font-weight:800}
+.notice.same{background:var(--rev-soft)}
+.notice.same b{color:var(--rev)}
+.segs{display:inline-flex;gap:2px;padding:3px;border:1px solid var(--line);border-radius:12px;background:var(--surface);margin-bottom:14px}
+.seg2{border:0;background:none;padding:8px 18px;border-radius:9px;font-weight:700;color:var(--ink-2)}
+.seg2 span{display:inline-block;min-width:20px;margin-left:6px;padding:0 6px;border-radius:10px;background:var(--surface-2);font-size:12px}
+.seg2.on{background:var(--accent-soft);color:var(--accent)}
+.propose{margin-top:16px;padding:14px 16px;border:2px solid var(--accent);border-radius:12px;background:var(--surface)}
+.propose h4{margin:0 0 4px;font-size:15px;font-weight:800}
+.dbody{margin-top:18px;padding-top:12px;border-top:1px solid var(--line)}
+.mright .kv dd{font-weight:500}
+.msec{display:flex;align-items:center;gap:8px;margin:20px 0 8px}
+.msec h4{margin:0 !important;flex:1;font-size:15px;font-weight:800}
+.msec h4 .muted{font-weight:600;font-size:13px;margin-left:4px}
+.msum{margin:-2px 0 8px;font-size:12px;color:var(--ink-3)}
+.mnotes{margin-top:24px;padding-top:4px;border-top:1px solid var(--line)}
+.note{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;background:var(--surface)}
+.note.mine{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent-soft)}
+.note header{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.note header b{font-size:14px}
+.note header .muted{flex:1;font-size:12px}
+.note .mtext{font-size:14px;line-height:1.7}
+.nedit{border:2px solid var(--accent);border-radius:10px;padding:12px 14px;margin:8px 0}
+.nedit label{display:block;font-size:13px;font-weight:700;margin-bottom:4px}
+.nedit textarea{display:block;width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font:inherit;font-size:14px;line-height:1.6;resize:vertical;margin-bottom:8px}
+.mform h3{margin:0 0 12px;font-size:18px;font-weight:800}
+.mform label{display:block;margin:0 0 12px;font-size:13px;font-weight:700}
+.mform input,.mform textarea{display:block;width:100%;margin-top:4px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font:inherit;font-size:14px;font-weight:400}
+.mform textarea{resize:vertical;line-height:1.6}
+.mrow{display:flex;gap:12px;flex-wrap:wrap}
+.mrow .grow{flex:1;min-width:220px}
+.macts{display:flex;align-items:center;gap:8px;justify-content:flex-end}
+.macts .muted{flex:1;font-size:13px}
+.mt h4 a{color:inherit;text-decoration:none}
+.mt h4 a:hover{text-decoration:underline}
+@media (max-width:900px){ .mgrid{grid-template-columns:minmax(0,1fr)} .mlist{position:static;max-height:none} }
+/* 시트 연결 창 */
+dialog{width:min(720px,calc(100vw - 32px));border:1px solid var(--line);border-radius:14px;padding:0;background:var(--surface);color:var(--ink)}
+dialog::backdrop{background:rgba(10,14,20,.45)}
+.dlg{padding:22px 24px}
+.dlg h3{margin:0 0 4px;font-size:18px;font-weight:800}
+.dlg ol{margin:8px 0 16px;padding-left:20px;font-size:13.5px;color:var(--ink-2)}
+.dlg ol li{margin:3px 0}
+.dlg label{display:block;margin:10px 0 4px;font-size:13px;font-weight:700}
+.dlg input{width:100%;height:36px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font:inherit;font-size:13.5px}
+.dlg .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.dlg .acts{display:flex;gap:8px;justify-content:flex-end;align-items:center;margin-top:18px}
+.dlg .acts .msg{flex:1;font-size:13px;color:var(--ink-2)}
+.dlg .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px 12px}
+.dlg .cols select{width:100%;height:32px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);font:inherit;font-size:13px}
+.dlg details{margin-top:14px;font-size:13.5px}
+.dlg summary{cursor:pointer;font-weight:700}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);padding:10px 18px;border-radius:10px;background:var(--ink);color:var(--bg);font-size:13.5px;z-index:50;box-shadow:0 6px 20px rgba(0,0,0,.2)}
+@media (max-width:900px){ .stats{grid-template-columns:repeat(2,minmax(0,1fr))} .two{grid-template-columns:minmax(0,1fr)} .kv{grid-template-columns:90px 1fr} .dlg .row2,.dlg .cols{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<nav class="appnav" aria-label="도구 메뉴">
+  <b class="appnav-brand">Figma AI Run</b>
+  <a href="Setup.html">시작 안내</a>
+  <a href="Work.html" aria-current="page">일정/작업</a>
+  <a href="Common_UX_Guide.html">UX 문서</a>
+  <a href="Figma_Workbench.html">Figma Workbench</a>
+  <a href="Change_History.html">변경 이력</a>
+  <a href="Usage_Stats.html">사용량 통계</a>
+  <a href="Prototypes.html">프로토타입</a>
+  <span class="appnav-sp"></span>
+  <div class="appnav-right"></div>
+</nav>
+<div class="app-wrap wide">
+<header class="app-head">
+  <div class="app-head-t">
+    <h1>일정/작업</h1>
+    <p class="one-line">업무 현황과 우리가 작업할 내역을 봅니다. 일정은 구글 시트와 연결되어 있어 여기서 고치면 시트에 바로 들어갑니다</p>
+  </div>
+  <div class="app-head-act">
+    <button class="btn" id="reload" type="button">새로고침</button>
+    <button class="btn w-only" id="connBtn" type="button">시트 연결</button>
+    <a class="btn" id="openSheet" href="#" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;text-decoration:none;color:inherit">스프레드시트 열기</a>
+  </div>
+</header>
+
+<!-- 하위 메뉴: 주소 ?tab=schedule|weekly|backlog|minutes|provisional|decisions 로 바로 열 수 있다 -->
+<div class="dtabs" role="tablist" aria-label="일정/작업 하위 메뉴" id="tabs"></div>
+<div id="panels"></div>
+</div>
+
+<dialog id="dlg" aria-labelledby="dlgT">
+  <form class="dlg" method="dialog" id="dlgForm">
+    <h3 id="dlgT">구글 시트 연결</h3>
+    <p class="muted" style="margin:0;font-size:13.5px">시트는 공개하지 않습니다. 시트 편집 권한이 있는 사람이 한 번만 아래처럼 연결하면 모든 작업자 PC에 공유됩니다.</p>
+    <ol>
+      <li>구글 시트 › 확장 프로그램 › Apps Script를 열고(따로 만든 스크립트도 됨), <a href="tools/google-sheet-bridge.gs" target="_blank" rel="noopener">연결 스크립트</a> 내용을 붙여 넣고 저장 <button class="btn sm" type="button" id="copyGs">스크립트 복사</button></li>
+      <li>프로젝트 설정(톱니) › 스크립트 속성 › 이름 <b>TOKEN</b>, 값은 아무도 모를 긴 글(아래 비밀값과 같게) <button class="btn sm" type="button" id="genTok">비밀값 만들기</button></li>
+      <li>배포 › 새 배포 › 유형 「웹 앱」, 실행 사용자 「나」, 액세스 권한 「모든 사용자」 › 배포 › 권한 허용</li>
+      <li>나온 웹 앱 URL을 아래에 넣고 [연결 확인]</li>
+    </ol>
+    <label for="fSheet">스프레드시트 주소</label>
+    <input id="fSheet" type="url" placeholder="https://docs.google.com/spreadsheets/d/…/edit?gid=…">
+    <label for="fWeb">웹 앱 주소</label>
+    <input id="fWeb" type="url" placeholder="https://script.google.com/macros/s/…/exec">
+    <label for="fTok">비밀값(TOKEN)</label>
+    <input id="fTok" type="text" autocomplete="off" spellcheck="false">
+    <div class="row2">
+      <div><label for="fGid">일정 탭 gid</label><input id="fGid" type="text" inputmode="numeric" placeholder="425564699 (2-2.WBS(간소))"></div>
+      <div><label for="fMin">회의록 탭 이름</label><input id="fMin" type="text" placeholder="0.회의록"></div>
+    </div>
+    <details id="colBox" hidden>
+      <summary>열 맞추기 (자동으로 찾은 열이 틀리면 고르기)</summary>
+      <div class="cols" id="cols"></div>
+    </details>
+    <div class="acts">
+      <span class="msg" id="dlgMsg" role="status"></span>
+      <button class="btn" value="cancel" type="submit" formnovalidate>닫기</button>
+      <button class="btn primary" id="dlgSave" type="button">저장 · 연결 확인</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function toast(t){ var d = document.createElement('div'); d.className = 'toast'; d.setAttribute('role', 'status'); d.textContent = t; document.body.appendChild(d); setTimeout(function(){ d.remove(); }, 2600); }
+  function api(url, body){
+    var o = body ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {};
+    return fetch(url, o).then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ if (!r.ok || (j && j.error && !j.cached)) throw new Error((j && j.error) || ('HTTP ' + r.status)); return j; }); });
+  }
+  var DEF_SHEET = 'https://docs.google.com/spreadsheets/d/1S5tPFtNn77FLcaVBvWFO-Z48St2NxovfOoldWf6jO1w/edit?gid=425564699#gid=425564699';
+  var DEF_MIN = '0.회의록';
+  var WD = ['일', '월', '화', '수', '목', '금', '토'];
+
+  /* ── 탭 ── */
+  var TABS = [
+    { k: 'schedule', label: '일정', about: '구글 시트의 일정(WBS) 탭을 그대로 봅니다. 쓰기 권한이 있으면 칸을 눌러 바로 고칠 수 있고, 시트에 바로 들어갑니다.' },
+    { k: 'weekly', label: '주간 진행 현황', about: '' },
+    { k: 'backlog', label: '화면설계서 작업대기', about: '화면설계서의 반영 대기 목록 중 아직 화면에 반영하지 않은 것을 메뉴 · 화면별로 봅니다.' },
+    { k: 'minutes', label: '회의록', about: '회의록을 봅니다.' },
+    { k: 'provisional', label: '임시 정책', about: '공통 자료에 아직 없지만 작업에 먼저 쓰는 임시 정책과 승인 · 반려 상태를 봅니다.' },
+    { k: 'decisions', label: '논의·결정', about: '협의 대기 · 고객 논의 항목과 그 결정을 봅니다.' }
+  ];
+  $('tabs').innerHTML = TABS.map(function(t, i){
+    return '<button type="button" role="tab" id="tab-' + t.k + '" data-tab="' + t.k + '" aria-controls="panel-' + t.k + '" aria-selected="' + (i ? 'false' : 'true') + '"' + (i ? ' tabindex="-1"' : '') + '>' + esc(t.label) + '<span class="cnt" id="cnt-' + t.k + '"></span></button>';
+  }).join('');
+  $('panels').innerHTML = TABS.map(function(t, i){
+    var inner = true ? '<div id="body-' + t.k + '"></div>' :
+      '<h2>' + esc(t.label) + '</h2><p class="intro">' + esc(t.about) + '</p><div class="wempty"><b>준비 중입니다</b><p>세부 구성은 정해지는 대로 이 자리에 채웁니다.</p></div>';
+    return '<section class="wpanel" role="tabpanel" id="panel-' + t.k + '" aria-labelledby="tab-' + t.k + '"' + (i ? ' hidden' : '') + '>' + inner + '</section>';
+  }).join('');
+  var cur = 'schedule';
+  function select(k, focus){
+    if (!TABS.some(function(t){ return t.k === k; })) k = TABS[0].k;
+    cur = k;
+    TABS.forEach(function(t){
+      var on = t.k === k, b = $('tab-' + t.k);
+      b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1;
+      $('panel-' + t.k).hidden = !on;
+      if (on && focus) b.focus();
+    });
+    try { var u = new URL(location.href); if (k === TABS[0].k) u.searchParams.delete('tab'); else u.searchParams.set('tab', k); history.replaceState(null, '', u); } catch(x){}
+    if (k === 'weekly') renderWeekly();
+    if (k === 'minutes') renderMinutes();
+    if (k === 'backlog') renderBacklog();
+    if (k === 'provisional') renderPv();
+    if (k === 'decisions') renderDisc();
+  }
+  $('tabs').addEventListener('click', function(e){ var b = e.target.closest('[data-tab]'); if (b) select(b.dataset.tab); });
+  $('tabs').addEventListener('keydown', function(e){
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    var i = TABS.map(function(t){ return t.k; }).indexOf(e.target.dataset.tab); if (i < 0) return;
+    e.preventDefault(); select(TABS[(i + (e.key === 'ArrowRight' ? 1 : TABS.length - 1)) % TABS.length].k, true);
+  });
+  function setCnt(k, n, hot){ var el = $('cnt-' + k); if (!el) return; el.textContent = n == null ? '' : Number(n).toLocaleString(); el.className = 'cnt' + (hot && n ? ' hot' : ''); }
+
+  /* ── 날짜 ── */
+  function day0(d){ return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+  function monday(d){ d = day0(d); var w = (d.getDay() + 6) % 7; d.setDate(d.getDate() - w); return d; }
+  function addD(d, n){ var x = new Date(d); x.setDate(x.getDate() + n); return x; }
+  function md(d){ return (d.getMonth() + 1) + '/' + d.getDate(); }
+  function mdw(d){ return md(d) + '(' + WD[d.getDay()] + ')'; }
+  // 시트의 날짜 글 → Date 목록. 「11/6」 「11.6」 「2026-11-06」 「2026. 11. 6」 「26.11.06」 「11월 6일」. 해가 없으면 오늘과 가까운 해
+  var DRE = /(?:(\d{4}|\d{2})\s*[.\-\/년]\s*)?(\d{1,2})\s*[.\-\/월]\s*(\d{1,2})(?!\d)/g;
+  function dates(s){
+    var out = [], m, now = new Date(); s = String(s || ''); DRE.lastIndex = 0;
+    while ((m = DRE.exec(s))) {
+      var mo = +m[2], da = +m[3]; if (mo < 1 || mo > 12 || da < 1 || da > 31) continue;
+      var y = m[1] ? +m[1] : 0; if (y && y < 100) y += 2000;
+      if (!y) { y = now.getFullYear(); var c = new Date(y, mo - 1, da); if (c - now > 183 * 864e5) y--; else if (now - c > 183 * 864e5) y++; }
+      out.push(new Date(y, mo - 1, da));
+    }
+    return out;
+  }
+  function inWeek(d, mon){ return d && d >= mon && d < addD(mon, 7); }
+
+  /* ── 시트 → 표 해석 ── */
+  var KW = /메뉴|업무|작업|상태|담당|완료|시작|마감|기간|일정|공유|UX|UI|비고|구분|화면|일자|날짜|제목|안건|참석/i;
+  // 머리줄: 위 15줄 중 낱말이 가장 많이 맞는 줄. 바로 아래 줄도 머리말 같으면(날짜 없음 · 짧은 낱말) 두 줄 머리말(위 칸이 비면 앞 칸 이름을 이어 씀)
+  function table(values){
+    var V = values || [], best = -1, bi = 0;
+    for (var i = 0; i < Math.min(15, V.length); i++) {
+      var n = 0; (V[i] || []).forEach(function(c){ if (c && String(c).length <= 20 && KW.test(c)) n++; });
+      if (n > best) { best = n; bi = i; }
+    }
+    var H1 = V[bi] || [], H2 = V[bi + 1] || [], two = false, hn = 0, dn = 0;
+    H2.forEach(function(c){ if (!c) return; if (dates(c).length) dn++; else if (String(c).length <= 14 && KW.test(c)) hn++; });
+    if (hn >= 2 && dn === 0) two = true;
+    var width = 0; V.forEach(function(r){ if (r && r.length > width) width = r.length; });
+    var rows = two ? [bi, bi + 1] : [bi], start = bi + (two ? 2 : 1), gantt = {};
+    // 간트 눈금 줄(날짜 「6/22」 · 요일 「월」이 5칸 넘게 늘어선 줄)은 머리말로 보고, 그 칸이 있는 열은 간트 열
+    while (start < V.length) {
+      var ax = 0; (V[start] || []).forEach(function(c){ if (/^\s*(\d{1,2}\/\d{1,2}|[월화수목금토일])\s*$/.test(c)) ax++; });
+      if (ax < 5) break;
+      (V[start] || []).forEach(function(c, j){ if (String(c || '').trim()) gantt[j] = 1; });
+      rows.push(start); start++;
+    }
+    var labels = [], top = '';
+    for (var j = 0; j < width; j++) {
+      var a = String(H1[j] || '').trim(), b = two ? String(H2[j] || '').trim() : '';
+      if (a) top = a;
+      var l = two ? (b ? ((a || top) + ' ' + b) : a) : a;
+      // 머리말이 두 칸을 덮은 경우(예: 「업무 구분(메뉴 또는 작업명)」 아래 메뉴 · 작업명): 바로 다음 빈 칸은 「… (이어서)」
+      if (!l && !gantt[j] && j > 0 && labels[j - 1] && !/\(이어서\)$/.test(labels[j - 1])) l = labels[j - 1] + ' (이어서)';
+      labels.push((l || '').replace(/\s+/g, ' ').trim());
+    }
+    return { head: bi, rows: rows, start: start, labels: labels, width: width, gantt: gantt };
+  }
+  // 항목 → 열 찾기(앞에서 쓴 열은 다시 쓰지 않음)
+  // [항목, 이름, 맞는 머리말(앞의 것부터 찾음)]
+  var FIELDS = [
+    ['uxStatus', 'UX 상태', [/^UX.*(상태|진행)/i]], ['uiStatus', 'UI 상태', [/^UI.*(상태|진행)/i]],
+    ['uxOwner', 'UX 담당', [/^UX(\s*담당(자)?)?$/i]], ['uiOwner', 'UI 담당', [/^UI(\s*담당(자)?)?$/i]],
+    ['status', '업무 상태', [/^(업무\s*)?상태$|진행\s*(상태|현황)|^상태/]], ['owner', '담당자', [/담당/]],
+    ['task', '업무명', [/업무\s*(내역|명|내용)$|작업\s*(내역|명|내용)$/, /^업무$|^항목|^내용/, /메뉴.*\(이어서\)$/, /\(이어서\)$/]],
+    ['menu', '메뉴', [/메뉴|화면\s*명/, /^구분$/]],
+    ['share', '개발사 공유일', [/공유/]], ['start', '시작일', [/시작/]], ['end', '완료일(마감)', [/완료\s*일|마감|종료|작업\s*완료/]], ['period', '기간', [/기간|일정/]]
+  ];
+  function guessCols(labels, saved){
+    var used = {}, cols = {};
+    if (saved) Object.keys(saved).forEach(function(f){ var i = labels.indexOf(saved[f]); if (saved[f] === '') cols[f] = -1; else if (i >= 0) { cols[f] = i; used[i] = 1; } });
+    FIELDS.forEach(function(f){
+      if (cols[f[0]] !== undefined) return;
+      cols[f[0]] = -1;
+      f[2].some(function(re){
+        for (var i = 0; i < labels.length; i++) if (!used[i] && labels[i] && re.test(labels[i])) { cols[f[0]] = i; used[i] = 1; return true; }
+      });
+    });
+    return cols;
+  }
+  function done(s){ return /완료|done|closed?/i.test(s) && !/미\s*완료|미완/.test(s); }
+  function cat(s){ s = String(s || ''); if (done(s)) return 'done'; if (/리뷰|review/i.test(s)) return 'review'; if (/진행|작업\s*중|in\s*progress|ing\b/i.test(s)) return 'prog'; return 'etc'; }
+  var CATN = { done: '완료', review: '리뷰 중(예정)', prog: '진행 중', etc: '' };
+  function wbsItems(sheet){
+    if (!sheet || !sheet.values) return null;
+    var V = sheet.values, T = table(V), C = guessCols(T.labels, (conf && conf.cols) || null), out = [];
+    function g(r, f){ var i = C[f]; return i >= 0 ? String(r[i] == null ? '' : r[i]).trim() : ''; }
+    var hid = {}; (sheet.hr || []).forEach(function(x){ hid[x] = 1; });   // 시트에서 숨긴 줄(접은 그룹 · 예전 줄)은 세지 않는다
+    for (var i = T.start; i < V.length; i++) {
+      if (hid[i]) continue;
+      var r = V[i] || []; if (!r.some(function(c){ return String(c || '').trim(); })) continue;
+      var task = g(r, 'task'), menu = g(r, 'menu'); if (!task && !menu) continue;
+      var st = g(r, 'status');
+      if (!st && (C.uxStatus >= 0 || C.uiStatus >= 0)) {
+        var ux = g(r, 'uxStatus'), ui = g(r, 'uiStatus');
+        // UX 완료 · UI 완료(또는 작업필요X · 비어 있음)면 완료, UX만 완료면 진행 중, 그 밖에는 UX 상태
+        if (done(ux) && (done(ui) || !ui || /필요\s*X|불필요|N\/?A|^-$/i.test(ui))) st = '완료';
+        else if (done(ux)) st = '진행 중'; else st = ux || '(시작 전)';
+      }
+      var own = g(r, 'owner');
+      if (!own) { var uo = g(r, 'uxOwner'), io = g(r, 'uiOwner'); own = [uo && uo !== '-' ? 'UX ' + uo : '', io && io !== '-' ? 'UI ' + io : ''].filter(Boolean).join(' · '); }
+      var pd = dates(g(r, 'period')), sd = dates(g(r, 'start'))[0] || pd[0] || null, ed = dates(g(r, 'end'));
+      ed = ed[ed.length - 1] || (pd.length > 1 ? pd[pd.length - 1] : null) || (C.end < 0 && C.start < 0 ? pd[0] : null) || null;
+      out.push({ row: i, menu: menu, task: task, status: st, cat: cat(st), owner: own, start: sd, end: ed, share: dates(g(r, 'share'))[0] || null });
+    }
+    return { items: out, cols: C, labels: T.labels, T: T };
+  }
+
+  /* ── 상태 ── */
+  var conf = null, wbs = null, mins = null, mlist = null, pols = null, pvs = null, week = monday(new Date()), mtIdx = 0;
+  var loading = { wbs: false, mins: false };
+  function sheetUrl(){ return (conf && conf.sheetUrl) || DEF_SHEET; }
+  function gidOf(){ var g = conf && conf.wbsGid; if (!g) { var m = /[#&?]gid=(\d+)/.exec(sheetUrl()); g = m ? m[1] : ''; } return g; }
+  function minName(){ return (conf && conf.minutes) || DEF_MIN; }
+  function canWrite(){ return !!(conf && conf.canWrite) && !document.documentElement.classList.contains('perm-ro'); }
+
+  function loadConf(){
+    return api('/api/sheet').then(function(j){ conf = j; }).catch(function(e){ conf = { configured: false, error: e.message }; })
+      .then(function(){ $('openSheet').href = sheetUrl(); });
+  }
+  function loadSheet(q){ return api('/api/sheet/data?' + q).then(function(j){ if (j.cached) { var d = j.data || {}; d.cached = true; d.error = j.error; return d; } return j; }); }
+  // 시트는 읽는 데 수십 초 걸린다: 서버가 마지막으로 받은 사본(cache=1)을 먼저 그리고, 뒤에서 새로 받아 바꾼다
+  //  (sheetFresh: 이번 페이지에서 시트를 새로 받았는지 — 받는 중에는 「새로 받는 중」 표시)
+  var sheetFresh = { wbs: false, mins: false };
+  function cacheFirst(q, set, key, after){
+    var got = false;
+    var first = api('/api/sheet/data?cache=1&' + q).then(function(j){ if (j && j.cache && j.data && !got) { var d = j.data; d.cachedAt = j.cachedAt; set(d); after(); } }).catch(function(){});
+    return first.then(function(){
+      return loadSheet(q).then(function(d){ got = true; set(d); sheetFresh[key] = true; }).catch(function(e){ if (!(key === 'wbs' ? wbs : mins) || !(key === 'wbs' ? wbs : mins).values) set({ error: e.message, values: null }); });
+    });
+  }
+  function loadWbs(){
+    if (!conf || !conf.configured) { wbs = null; return Promise.resolve(); }
+    loading.wbs = true; sheetFresh.wbs = false; renderSchedule();
+    return cacheFirst('style=1&gid=' + encodeURIComponent(gidOf()), function(d){ wbs = d; }, 'wbs', function(){ renderSchedule(); if (cur === 'weekly') renderWeekly(); })
+      .then(function(){ loading.wbs = false; });
+  }
+  function loadMins(){
+    if (!conf || !conf.configured) { mins = null; return Promise.resolve(); }
+    loading.mins = true; sheetFresh.mins = false;
+    return cacheFirst('name=' + encodeURIComponent(minName()), function(d){ mins = d; }, 'mins', function(){ renderMinutes(); if (cur === 'weekly') renderWeekly(); })
+      .then(function(){ loading.mins = false; });
+  }
+  // 정책서(.history/guides/policy): 정책 파일 머리말의 id · title · domain · date, 수정본(rev)의 날짜
+  function frontOf(t){ var m = /^---\r?\n([\s\S]*?)\r?\n---/.exec(t || ''), o = {}; if (m) m[1].split(/\r?\n/).forEach(function(l){ var k = /^([A-Za-z_]+):\s*(.*)$/.exec(l); if (k) o[k[1]] = k[2].trim(); }); return o; }
+  function loadPols(){
+    return api('/api/guides').then(function(g){
+      var doc = (g.items || []).filter(function(i){ return i.id === 'policy'; })[0];
+      if (!doc) { pols = []; return; }
+      var fl = (doc.fileList || []).filter(function(f){ return /POL-[A-Z]+-\d+\.md$/i.test(f.path); });
+      return getTexts(fl.map(function(f){ return f.mdPath; })).then(function(ts){
+        pols = fl.map(function(f, i){
+          var fm = frontOf(ts[i]), rd = /^(\d{4})(\d{2})(\d{2})/.exec(f.rev || '');
+          return { id: fm.id || f.path.replace(/^.*\/|\.md$/g, ''), title: fm.title || '', domain: (fm.domain || f.path.split('/')[0]).toUpperCase(), date: dates(fm.date)[0] || null, status: fm.status || '', rev: rd ? new Date(+rd[1], +rd[2] - 1, +rd[3]) : null };
+        });
+      });
+    }).catch(function(){ pols = []; });
+  }
+  // 임시 정책(주간 진행 현황용 pvs)은 임시 정책 탭이 읽은 PVS에서 만든다(loadPvDocs)
+  function loadPvs(){ return Promise.resolve(); }
+
+  /* ── 일정 탭(시트 그대로 · 고치기) ── */
+  var fq = '', fcat = '', showG = false;
+  function notConnected(){
+    return '<div class="wempty"><b>구글 시트가 아직 연결되지 않았습니다</b><p>일정은 구글 시트 「2-2.WBS(간소)」 탭을 그대로 보여 주고, 여기서 고치면 시트에 바로 들어갑니다.</p>' +
+      '<p>시트 편집 권한이 있는 사람이 한 번만 [시트 연결]을 하면 모든 작업자 PC에 공유됩니다.</p>' +
+      (canWrite() ? '<button class="btn primary" type="button" data-act="conn">시트 연결</button>' : '<p class="muted">「일정/작업 · 쓰기」 권한이 있는 사람에게 연결을 요청하세요.</p>') + '</div>';
+  }
+  function srcNote(d){
+    if (!d) return '';
+    if (d.cached) return '<p class="notice bad"><b>시트에 닿지 못해 마지막으로 받은 값을 보여 줍니다</b> · ' + esc(d.error || '') + (d.at ? ' · 받은 시각 ' + esc(new Date(d.at).toLocaleString()) : '') + '</p>';
+    if (d.error) return '<p class="notice bad"><b>시트를 읽지 못했습니다</b> · ' + esc(d.error) + '</p>';
+    return '';
+  }
+  function renderSchedule(){
+    var el = $('body-schedule'); if (!el) return;
+    var head = '<h2>일정</h2><p class="intro">' + esc(TABS[0].about) + '</p>';
+    if (!conf) { el.innerHTML = head + '<p class="muted">불러오는 중…</p>'; return; }
+    if (!conf.configured) { el.innerHTML = head + notConnected(); return; }
+    if (loading.wbs && !wbs) { el.innerHTML = head + '<p class="muted">시트를 읽는 중…</p>'; return; }
+    if (!wbs || !wbs.values) { el.innerHTML = head + srcNote(wbs || { error: '값이 없습니다.' }); return; }
+    var W = wbsItems(wbs), T = W.T, V = wbs.values, set = function(l){ var o = {}; (l || []).forEach(function(p){ o[Array.isArray(p) ? p[0] + ',' + p[1] : p] = 1; }); return o; };
+    var fx = set(wbs.fx), dv = set(wbs.dv), hidR = set(wbs.hr), hidC = set(wbs.hc), BG = wbs.bg || [], FC = wbs.fc || [], FW = wbs.fw || [];
+    var byRow = {}; W.items.forEach(function(it){ byRow[it.row] = it; });
+    var q = fq.trim().toLowerCase(), filt = !!(q || fcat), edit = canWrite() && !wbs.cached, shown = 0;
+    function val(i, j){ return String((V[i] || [])[j] == null ? '' : V[i][j]); }
+    function bg(i, j){ return (BG[i] || [])[j] || ''; }
+    var h = head + srcNote(wbs) +
+      '<div class="bar"><input type="search" id="sq" placeholder="업무 · 담당자 · 메뉴 찾기" value="' + esc(fq) + '" aria-label="일정 찾기">' +
+      '<select id="sc" aria-label="상태로 거르기"><option value="">상태 전체</option><option value="prog">진행 중</option><option value="review">리뷰 중(예정)</option><option value="done">완료</option><option value="etc">그 밖(시작 전 등)</option></select>' +
+      ((wbs.hr || []).length || (wbs.hc || []).length ? '<label class="hint" style="display:inline-flex;gap:4px;align-items:center"><input type="checkbox" id="sg"' + (showG ? ' checked' : '') + '>숨긴 행 · 열 보기</label>' : '') +
+      '<span class="sp"></span><span class="hint">' + esc(wbs.name || '') + ' · ' + (edit ? '칸을 누르면 고칠 수 있습니다(드롭다운 칸은 목록에서 고름 · 글 칸은 Enter 저장 · Esc 취소, 수식 칸 제외)' : '보기 전용') + (wbs.at ? ' · ' + esc(new Date(wbs.at).toLocaleTimeString()) + ' 기준' : '') + (loading.wbs && !sheetFresh.wbs ? ' · <b class="refreshing">시트에서 새로 받는 중…</b>' : '') + '</span></div>';
+    // 열: 시트에서 숨긴 열은 빼고(「숨긴 행 · 열 보기」면 보임), 머리말 아래로 값도 색도 없는 열은 뺀다
+    var cols = [];
+    for (var j = 0; j < T.width; j++) {
+      if (hidC[j] && !showG) continue;
+      for (var i2 = T.head; i2 < V.length; i2++) if (val(i2, j).trim() || bg(i2, j)) { cols.push(j); break; }
+    }
+    // 오늘 열(간트 날짜 눈금 줄에서 「11/4」)
+    var tdy = md(new Date()), todayC = -1;
+    T.rows.forEach(function(ri){ cols.forEach(function(j){ if (T.gantt[j] && val(ri, j).trim() === tdy) todayC = j; }); });
+    // 줄: 머리말 줄 + 내용 줄(숨긴 줄 · 빈 줄 빼고, 찾기 · 거르기)
+    var hrows = T.rows.filter(function(ri){ return (!hidR[ri] || showG) && cols.some(function(j){ return val(ri, j).trim() || bg(ri, j); }); });
+    var brows = [];
+    for (var i = T.start; i < V.length; i++) {
+      if (hidR[i] && !showG) continue;
+      if (!cols.some(function(j){ return val(i, j).trim() || bg(i, j); })) continue;
+      if (q && (V[i] || []).join(' ').toLowerCase().indexOf(q) < 0) continue;
+      if (fcat) { var it = byRow[i]; if (!it || it.cat !== fcat) continue; }
+      brows.push(i);
+    }
+    shown = brows.length;
+    // 병합: 찾기 · 거르기 중이 아니면 보이는 줄 · 열만큼 rowspan · colspan (머리말 · 내용 구역 안에서만)
+    function spans(rows){
+      var out = {}, ri = {}, ci = {}; rows.forEach(function(r, k){ ri[r] = k; }); cols.forEach(function(c, k){ ci[c] = k; });
+      if (filt) return out;
+      (wbs.mg || []).forEach(function(m){
+        var vr = rows.filter(function(r){ return r >= m[0] && r < m[0] + m[2]; }), vc = cols.filter(function(c){ return c >= m[1] && c < m[1] + m[3]; });
+        if (!vr.length || !vc.length || (vr.length === 1 && vc.length === 1)) return;
+        // 보이는 칸이 이어져 있을 때만(중간에 다른 줄이 끼면 그대로 둔다)
+        if (ri[vr[vr.length - 1]] - ri[vr[0]] !== vr.length - 1 || ci[vc[vc.length - 1]] - ci[vc[0]] !== vc.length - 1) return;
+        vr.forEach(function(r){ vc.forEach(function(c){ out[r + ',' + c] = 'x'; }); });
+        out[vr[0] + ',' + vc[0]] = { r: vr.length, c: vc.length, src: m[0] + ',' + m[1] };
+      });
+      return out;
+    }
+    function cell(tag, i, j, sp){
+      var s = sp && sp[i + ',' + j]; if (s === 'x') return '';
+      var src = s && s.src ? s.src.split(',') : [i, j], v = val(+src[0], +src[1]), b = bg(+src[0], +src[1]), f = (FC[src[0]] || [])[src[1]] || '', w = (FW[src[0]] || [])[src[1]];
+      var cls = [], st = [];
+      if (T.gantt[j]) cls.push('g'); if (j === todayC) cls.push('today');
+      if (tag === 'td') { if (fx[i + ',' + j]) cls.push('fx'); else if (edit && !T.gantt[j]) cls.push('ed'); }
+      if (b) { st.push('background:' + b); st.push('color:' + (f || '#14171c')); } else if (f && f !== '#000000') st.push('color:' + f);
+      if (w) st.push('font-weight:700');
+      var body = esc(v);
+      if (tag === 'td' && dv[i + ',' + j]) { var c = chip(v); body = v ? (c ? '<span class="dd" style="background:' + c[0] + ';color:' + c[1] + '">' + esc(v) + '</span>' : '<span class="dd plain">' + esc(v) + '</span>') : ''; }
+      return '<' + tag + (s && s.r > 1 ? ' rowspan="' + s.r + '"' : '') + (s && s.c > 1 ? ' colspan="' + s.c + '"' : '') + ' data-r="' + i + '" data-c="' + j + '"' +
+        (cls.length ? ' class="' + cls.join(' ') + '"' : '') + (st.length ? ' style="' + st.join(';') + '"' : '') + (fx[i + ',' + j] ? ' title="수식 칸(시트에서 고치세요)"' : '') + '>' + body + '</' + tag + '>';
+    }
+    var hs = spans(hrows), bs = spans(brows);
+    var th = hrows.map(function(ri){ return '<tr><th class="rn">' + (ri + 1) + '</th>' + cols.map(function(j){ return cell('th', ri, j, hs); }).join('') + '</tr>'; }).join('');
+    var tb = brows.map(function(i){ return '<tr><td class="rn">' + (i + 1) + '</td>' + cols.map(function(j){ return cell('td', i, j, bs); }).join('') + '</tr>'; }).join('');
+    h += '<div class="sheet" id="sheetBox"><table class="sh"><thead>' + th + '</thead><tbody>' + (tb || '<tr><td class="rn"></td><td colspan="' + cols.length + '" class="muted">맞는 줄이 없습니다.</td></tr>') + '</tbody></table></div>' +
+      '<p class="rule">' + shown.toLocaleString() + '줄' + ((wbs.hr || []).length && !showG ? ' · 시트에서 숨긴 줄 ' + wbs.hr.length + '개 빠짐' : '') + (todayC >= 0 ? ' · 빨간 선 = 오늘' : '') + '</p>';
+    var keep = document.activeElement && document.activeElement.id === 'sq', sel = keep ? document.activeElement.selectionStart : 0;
+    var box0 = $('sheetBox'), sl = box0 ? box0.scrollLeft : null, stp = box0 ? box0.scrollTop : 0;
+    el.innerHTML = h; $('sc').value = fcat;
+    if (keep) { $('sq').focus(); try { $('sq').setSelectionRange(sel, sel); } catch(x){} }
+    // 고정 열: 시트의 고정 열, 모르면 간트 날짜 열 앞까지
+    var g0 = Object.keys(T.gantt).map(Number).sort(function(a, b){ return a - b; })[0] || 0;
+    stickSheet(wbs.fzc || g0, todayC, sl, stp);
+    setCnt('schedule', null);
+  }
+  // 드롭다운 칸 색(시트의 칩 색과 같게). 맞는 것이 없으면 글자 + ▾
+  var CHIPS = [[/^완료$/, '#8a8f98', '#fff'], [/진행/, '#e53935', '#fff'], [/^대기$/, '#ffe082', '#5d4300'], [/리뷰/, '#8e5bd6', '#fff'], [/범위|제외/, '#bdbdbd', '#2b2b2b'],
+    [/필요\s*X/i, '#e6e6e6', '#444'], [/^T\/L$/, '#bfe6f7', '#0b4a66'], [/^T-only$/, '#7c4dce', '#fff'], [/^L-only$/, '#0097a7', '#fff'], [/^기타$/, '#e6e6e6', '#333']];
+  function chip(v){ for (var i = 0; i < CHIPS.length; i++) if (CHIPS[i][0].test(String(v).trim())) return [CHIPS[i][1], CHIPS[i][2]]; return null; }
+  // 머리말 줄 · 시트의 고정 열은 스크롤해도 보이게, 처음 열 때는 오늘 열로
+  function stickSheet(fzc, todayC, sl, stp){
+    var box = $('sheetBox'); if (!box) return;
+    var top = 0;
+    box.querySelectorAll('thead tr').forEach(function(tr){ tr.querySelectorAll('th').forEach(function(th){ th.style.top = top + 'px'; }); top += tr.offsetHeight; });
+    var rn = box.querySelector('.rn'), left = rn ? rn.offsetWidth : 0, fzw = left;
+    if (fzc > 0) {
+      var first = box.querySelector('tbody tr') || box.querySelector('thead tr');
+      // 고정 열 = 시트 열 번호가 fzc보다 작은 칸. 줄마다 그 칸들을 왼쪽에 붙인다(병합 칸은 그 줄의 첫 칸 위치 기준)
+      var pos = {}, x = left;
+      // 고정 영역이 화면 폭의 60%를 넘으면 그 앞 열까지만 고정(간트가 보이게)
+      var lim = box.clientWidth * 0.6, stop = false;
+      if (first) first.querySelectorAll('[data-c]').forEach(function(c){ var j = +c.dataset.c; if (stop || j >= fzc || +c.colSpan > 1) return; if (x + c.offsetWidth > lim) { stop = true; return; } pos[j] = x; x += c.offsetWidth; });
+      fzw = x;
+      box.querySelectorAll('[data-c]').forEach(function(c){ var j = +c.dataset.c; if (j < fzc && pos[j] != null) { c.classList.add('fz'); c.style.left = pos[j] + 'px'; if (j === Math.max.apply(null, Object.keys(pos).map(Number))) c.classList.add('fz-end'); } });
+    }
+    if (sl != null) { box.scrollLeft = sl; box.scrollTop = stp; }
+    else if (todayC >= 0) { var t = box.querySelector('[data-c="' + todayC + '"]'); if (t) box.scrollLeft = Math.max(0, t.offsetLeft - fzw - 24 * 3); }
+  }
+  document.addEventListener('input', function(e){ if (e.target.id === 'sq') { fq = e.target.value; renderSchedule(); } });
+  document.addEventListener('change', function(e){ if (e.target.id === 'sc') { fcat = e.target.value; renderSchedule(); } else if (e.target.id === 'sg') { showG = e.target.checked; renderSchedule(); } });
+  // 칸 고치기
+  document.addEventListener('click', function(e){
+    var td = e.target.closest('table.sh td.ed'); if (!td || td.querySelector('textarea,select')) return;
+    var r = +td.dataset.r, c = +td.dataset.c, old = String((wbs.values[r] || [])[c] == null ? '' : wbs.values[r][c]);
+    // 드롭다운 칸이면 시트와 같은 값 목록에서 고르게(글 입력 없음)
+    var dvi = (wbs.dv || []).filter(function(p){ return p[0] === r && p[1] === c; })[0], list = dvi && dvi[2] >= 0 && wbs.dvl ? wbs.dvl[dvi[2]] : null;
+    var ta;
+    if (list) {
+      var opts = list.slice(); if (old && opts.indexOf(old) < 0) opts.unshift(old);
+      td.innerHTML = '<select aria-label="' + (r + 1) + '행 ' + (c + 1) + '열 고르기"><option value=""' + (old ? '' : ' selected') + '>(비움)</option>' +
+        opts.map(function(o){ return '<option' + (o === old ? ' selected' : '') + '>' + esc(o) + '</option>'; }).join('') + '</select>';
+      ta = td.querySelector('select'); ta.focus(); try { ta.showPicker(); } catch(x){}
+      ta.addEventListener('change', function(){ close(true); });
+    } else {
+      td.innerHTML = '<textarea aria-label="' + (r + 1) + '행 ' + (c + 1) + '열 고치기">' + esc(old) + '</textarea>';
+      ta = td.querySelector('textarea'); ta.focus(); ta.select();
+    }
+    var fin = false;
+    function close(save){
+      if (fin) return; fin = true;
+      var v = ta.value;
+      if (!save || v === old) { renderSchedule(); return; }
+      td.textContent = v; td.classList.add('saving');
+      api('/api/sheet', { action: 'write', gid: gidOf(), cells: [{ row: r + 1, col: c + 1, value: v }] }).then(function(){
+        if (!wbs.values[r]) wbs.values[r] = []; wbs.values[r][c] = v;
+        renderSchedule();
+        var n = document.querySelector('#sheetBox td[data-r="' + r + '"][data-c="' + c + '"]'); if (n) { n.classList.add('just'); setTimeout(function(){ n.classList.remove('just'); }, 1500); }
+        toast((r + 1) + '행 ' + (c + 1) + '열을 시트에 저장했습니다.');
+        if (cur === 'weekly') renderWeekly();
+      }).catch(function(err){ renderSchedule(); alert('시트에 저장하지 못했습니다.\n' + err.message); });
+    }
+    ta.addEventListener('keydown', function(k){
+      if (k.key === 'Escape') { k.preventDefault(); close(false); }
+      else if (k.key === 'Enter' && !k.shiftKey && !k.isComposing && !list) { k.preventDefault(); close(true); }
+    });
+    ta.addEventListener('blur', function(){ close(!list); });
+  });
+
+  /* ── 주간 진행 현황 ── */
+  function pill(it){ var c = it.cat; return '<span class="pill ' + (c === 'etc' ? '' : c) + '">' + esc(it.status || '-') + '</span>'; }
+  function period(it){ return (it.start ? md(it.start) : '') + (it.start || it.end ? ' ~ ' : '-') + (it.end ? md(it.end) : ''); }
+  function name(it){ return (it.menu ? '<span class="muted">' + esc(it.menu) + '</span> · ' : '') + esc(it.task || '-'); }
+  // 회의: 회의록(md, 공유) + 시트 회의록 중 아직 md로 옮기지 않은 것
+  function whenKey(s){
+    s = String(s || ''); var d = /(\d{4})[-.\/]\s*(\d{1,2})[-.\/]\s*(\d{1,2})/.exec(s), t = /(\d{1,2}):(\d{2})/.exec(s.replace(/^[^)]*\)/, '') || s);
+    if (!d) return '';
+    function p(n){ return ('0' + n).slice(-2); }
+    return d[1] + '-' + p(d[2]) + '-' + p(d[3]) + (t ? ' ' + p(t[1]) + ':' + t[2] : '');
+  }
+  // 시트 회의의 일시(「2026-11-03(화) 10:00~」 → 2026-11-03 10:00, 해가 없는 「11/5」는 읽은 날짜로)
+  function sKey(s){ var k = whenKey(s.when); if (k) return k; var d = s.date; return d ? d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2) : ''; }
+  function mdMeet(m){
+    var d = /^(\d{4})-(\d{2})-(\d{2})/.exec(m.date || ''); if (!d) return null;
+    return { date: new Date(+d[1], +d[2] - 1, +d[3]), when: fmtWhen(m.date), title: m.title, key: m.date + '|' + m.title, id: m.id,
+      fields: [['참석', String(m.attendees || '').split(' / ').join('\n')], ['내용', m.body || '']].filter(function(f){ return f[1]; }) };
+  }
+  function meetings(){
+    var S = sheetMeetings(), md = (mlist || []).map(mdMeet).filter(Boolean);
+    if (!S && !mlist) return null;
+    var keys = {}; md.forEach(function(m){ keys[m.key] = 1; });
+    var rest = ((S && S.items) || []).filter(function(s){ return !keys[sKey(s) + '|' + s.title]; });
+    return { items: md.concat(rest), noDate: !!(S && S.noDate) && !md.length, sheetRest: rest };
+  }
+  function sheetMeetings(){
+    if (!mins || !mins.values) return null;
+    var V = mins.values, out = [];
+    // 블록 형식(왼쪽 칸 「미팅 일시 · 참석 · 주제 · 내용 · 기타」, 바로 오른쪽 칸이 값): 「미팅 일시」 줄마다 회의 하나
+    var DK = /^(미팅|회의)\s*(일시|일자|날짜)$|^일시$/, cur = null;
+    V.forEach(function(r){
+      r = r || [];
+      for (var j = 0; j < r.length - 1; j++) {
+        var k = String(r[j] || '').trim(); if (!k) continue;
+        var v = String(r[j + 1] || '').trim();
+        if (DK.test(k)) { var d = dates(v)[0]; cur = d ? { date: d, when: v, title: '', fields: [] } : null; if (cur) out.push(cur); }
+        else if (cur && k.length <= 12) { if (/^(주제|제목|안건|회의명)$/.test(k)) cur.title = v; else if (v) cur.fields.push([k, v]); }
+        break;
+      }
+    });
+    if (out.length) return { items: out };
+    var T = table(V), L = T.labels, di = -1, ti = -1;
+    L.forEach(function(l, i){ if (di < 0 && /일자|날짜|일시|회의\s*일|date/i.test(l)) di = i; });
+    L.forEach(function(l, i){ if (ti < 0 && i !== di && /제목|안건|회의\s*명|주제|title/i.test(l)) ti = i; });
+    if (di < 0) return { items: [], noDate: true };
+    for (var i = T.start; i < V.length; i++) {
+      var r = V[i] || [], d = dates(r[di])[0]; if (!d) continue;
+      var f = []; L.forEach(function(l, j){ if (j !== di && j !== ti && String(r[j] || '').trim()) f.push([l || ('열 ' + (j + 1)), String(r[j]).trim()]); });
+      out.push({ date: d, title: ti >= 0 ? String(r[ti] || '').trim() : '', fields: f });
+    }
+    return { items: out };
+  }
+  function renderWeekly(){
+    var el = $('body-weekly'); if (!el) return;
+    var mon = week, sun = addD(mon, 6), nmon = addD(mon, 7), thisWeek = +mon === +monday(new Date());
+    var W = wbs && wbs.values ? wbsItems(wbs) : null, items = W ? W.items : [];
+    var due = items.filter(function(it){ return inWeek(it.end, mon); }).sort(function(a, b){ return a.end - b.end; });
+    var n = { prog: 0, review: 0, done: 0 }; due.forEach(function(it){ if (n[it.cat] != null) n[it.cat]++; });
+    var h = '<div class="wkbar"><button class="icon" type="button" data-wk="-1" aria-label="지난주">‹</button>' +
+      '<span class="wk-range">' + mdw(mon) + ' – ' + mdw(sun) + '</span><button class="icon" type="button" data-wk="1" aria-label="다음주">›</button>' +
+      (thisWeek ? '<span class="wk-now">이번 주</span>' : '<button class="btn sm" type="button" data-wk="0">이번 주로</button>') +
+      '<span class="wk-sp"></span>' + (wbs && wbs.at ? '<span class="wk-at">시트 ' + esc(new Date(wbs.at).toLocaleString()) + ' 기준</span>' : '') + '</div>';
+    // 안내
+    var src = conf && conf.configured ? ('일정은 스프레드시트 「' + esc((wbs && wbs.name) || '일정') + '」 탭, 회의는 「' + esc(minName()) + '」 탭, 정책은 UX 문서(정책서 · 임시 정책)를 보고 채웠습니다. 시트를 고치고 [새로고침]하면 숫자도 바뀝니다.')
+      : '구글 시트가 아직 연결되지 않아 일정 · 회의 숫자는 비어 있습니다. 정책은 UX 문서(정책서 · 임시 정책)를 보고 채웠습니다.';
+    h += '<p class="notice"><b>안내</b> · ' + src + '</p>' + (wbs && (wbs.cached || wbs.error) ? srcNote(wbs) : '');
+    if (loading.wbs && !wbs) h += '<p class="muted">시트를 읽는 중…</p>'; else if (loading.wbs && !sheetFresh.wbs) h += '<p class="muted" style="margin:-8px 0 12px;font-size:12.5px"><b class="refreshing">저장된 사본으로 보여 주는 중 · 시트에서 새로 받는 중…</b></p>';
+    // 숫자 카드
+    h += '<div class="stats">' +
+      '<div class="stat main"><div class="l">이번 주 마감 업무 · 총</div><div class="v">' + due.length + '</div><div class="s">작업 완료일 기준</div></div>' +
+      '<div class="stat"><div class="l">진행 중</div><div class="v">' + n.prog + '</div></div>' +
+      '<div class="stat"><div class="l">리뷰 중(예정)</div><div class="v">' + n.review + '</div></div>' +
+      '<div class="stat"><div class="l">완료</div><div class="v">' + n.done + '</div></div></div>' +
+      '<p class="rule">시트 한 줄이 한 건입니다. 업무 상태는 UX 완료 · UI 완료(또는 작업필요X)면 완료, UX만 완료면 진행 중, 그 밖에는 UX 상태(시트에 업무 상태 열이 있으면 그 값). 시작 전 등은 총에만 들어갑니다.</p>';
+    // 이번 주 마감 업무 내역
+    h += '<section class="card"><h3>이번 주 마감 업무 내역</h3>' + (due.length ?
+      '<div class="tbl-wrap"><table class="t"><thead><tr><th>업무명</th><th>상태</th><th>담당자</th><th>기간</th></tr></thead><tbody>' +
+      due.map(function(it){ return '<tr><td>' + name(it) + '</td><td class="nw">' + pill(it) + '</td><td>' + esc(it.owner || '-') + '</td><td class="nw">' + period(it) + '</td></tr>'; }).join('') +
+      '</tbody></table></div>' : '<p class="muted" style="margin:0">' + (W ? '이번 주에 마감하는 업무가 없습니다.' : '시트 연결 전입니다.') + '</p>') + '</section>';
+    // 개발사 공유 대상(시트에 공유일 열이 있을 때)
+    if (W && W.cols.share >= 0) {
+      var sh = items.filter(function(it){ return inWeek(it.share, mon); }), g = {}, nd = 0;
+      sh.forEach(function(it){ var k = it.menu || '(메뉴 없음)'; (g[k] = g[k] || { n: 0, d: it.share }).n++; if (it.cat !== 'done') nd++; });
+      var ks = Object.keys(g);
+      h += '<section class="card"><h3>개발사 공유 대상<small>개발사 공유일 기준</small></h3>' + (sh.length ?
+        '<p style="margin:0 0 10px"><b style="font-size:20px">' + sh.length + '건</b> · 메뉴 ' + ks.length + '개' + (nd ? ' · <span class="pill warn">아직 완료 아님 ' + nd + '건</span>' : '') + '</p>' +
+        '<div class="tbl-wrap"><table class="t"><thead><tr><th>메뉴</th><th class="num">건수</th><th>공유일</th></tr></thead><tbody>' +
+        ks.map(function(k){ return '<tr><td>' + esc(k) + '</td><td class="num">' + g[k].n + '</td><td class="nw">' + md(g[k].d) + '</td></tr>'; }).join('') + '</tbody></table></div>'
+        : '<p class="muted" style="margin:0">이번 주에 공유할 업무가 없습니다.</p>') + '</section>';
+    }
+    // 주요 작업 내용: 정책 변동 사항 · 주요 내용
+    var P = pols || [], nw = P.filter(function(p){ return inWeek(p.date, mon); }), ch = P.filter(function(p){ return inWeek(p.rev, mon) && !(p.date && p.date >= mon); });
+    var doms = {}; nw.forEach(function(p){ (doms[p.domain] = doms[p.domain] || []).push(p); });
+    var PV = pvs || [], pvWait = PV.filter(function(p){ return /대기/.test(p.status); }), pvNew = PV.filter(function(p){ return inWeek(p.date, mon); });
+    var doneW = items.filter(function(it){ return it.cat === 'done' && inWeek(it.end, mon); });
+    h += '<section class="card"><h3>주요 작업 내용</h3>' +
+      '<h4 class="sub">정책 변동 사항</h4><dl class="kv">' +
+      '<dt>신규</dt><dd>' + (pols ? nw.length + '건 · ' + Object.keys(doms).length + '개 영역' : '불러오는 중…') + '</dd>' +
+      '<dt>변경</dt><dd>' + (pols ? ch.length + '건 <small>(지난주까지 있던 정책 중 이번 주에 고친 것)</small>' : '') + (ch.length ? '<br>' + ch.map(function(p){ return '<span class="chip" title="' + esc(p.title) + '">' + esc(p.id) + '</span>'; }).join('') : '') + '</dd>' +
+      '<dt>임시 정책</dt><dd>' + (pvs ? '승인 대기 ' + pvWait.length + '건' + (pvWait.length ? ' · ' + pvWait.map(function(p){ return '<a class="chip" href="Common_UX_Guide.html?doc=policy" title="' + esc(p.title) + '">' + esc(p.id) + '</a>'; }).join('') : '') : '불러오는 중…') + '</dd></dl>' +
+      '<h4 class="sub">주요 내용</h4>' + (function(){
+        var li = [];
+        doneW.forEach(function(it){ li.push('<li>' + name(it) + ' <span class="pill done">완료</span></li>'); });
+        pvNew.forEach(function(p){ li.push('<li>임시 정책 <span class="chip">' + esc(p.id) + '</span>' + esc(p.title) + ' <span class="muted">(' + esc(p.status) + (p.by ? ' · ' + esc(p.by) : '') + ')</span></li>'); });
+        ch.forEach(function(p){ li.push('<li>정책 수정 <span class="chip">' + esc(p.id) + '</span>' + esc(p.title) + '</li>'); });
+        return li.length ? '<ul class="list">' + li.join('') + '</ul>' : '<p class="muted" style="margin:0">이번 주에 완료한 업무 · 새 임시 정책 · 정책 수정이 없습니다.</p>';
+      })() + '</section>';
+    // 회의 내역(이번 주, 여러 개면 넘겨 보기) · 차주 일정
+    var M = meetings(), mw = M ? M.items.filter(function(m){ return inWeek(m.date, mon); }).sort(function(a, b){ return a.date - b.date; }) : [];
+    if (mtIdx >= mw.length) mtIdx = 0;
+    var mt = mw[mtIdx];
+    var meetHtml = '<section class="card" aria-roledescription="carousel" aria-label="이번 주 회의 내역"><div class="car-head"><h3>회의 내역</h3>' +
+      (mw.length > 1 ? '<span class="car-pos">' + (mtIdx + 1) + ' / ' + mw.length + '</span><button class="icon sm" type="button" data-mt="-1" aria-label="이전 회의">‹</button><button class="icon sm" type="button" data-mt="1" aria-label="다음 회의">›</button>' : '') + '</div>' +
+      (!mw.length && !mlist ? '<p class="muted" style="margin:0">회의록을 읽는 중…</p>' :
+        !mw.length && loading.mins && !mins ? '<p class="muted" style="margin:0">회의록을 읽는 중…</p>' :
+        !mw.length && mins && mins.error && !mins.values ? '<p class="muted" style="margin:0">「' + esc(minName()) + '」 탭을 읽지 못했습니다: ' + esc(mins.error) + '</p>' :
+        M && M.noDate ? '<p class="muted" style="margin:0">「' + esc(minName()) + '」 탭에서 날짜 열(일자 · 날짜 · 일시)을 찾지 못했습니다.</p>' :
+        !mt ? '<p class="muted" style="margin:0">이번 주 회의가 없습니다.</p>' :
+        '<div class="mt" aria-live="polite"><h4>' + (mt.id ? '<a href="?tab=minutes&amp;m=' + esc(mt.id) + '" data-mopen="' + esc(mt.id) + '">' + esc(mt.title || '회의') + '</a>' : esc(mt.title || '회의')) + '</h4><div class="d">' + esc(mt.when || mdw(mt.date)) + '</div><dl>' +
+          mt.fields.map(function(f){ return '<dt>' + esc(f[0]) + '</dt><dd>' + esc(f[1]) + '</dd>'; }).join('') + '</dl></div>' +
+          (mw.length > 1 ? '<div class="dots">' + mw.map(function(_, i){ return '<button type="button" data-mtgo="' + i + '" aria-label="' + (i + 1) + '번째 회의"' + (i === mtIdx ? ' aria-current="true"' : '') + '></button>'; }).join('') + '</div>' : '')) + '</section>';
+    var nx = items.filter(function(it){ var s = it.start || it.end, e = it.end || it.start; return s && e && s < addD(nmon, 7) && e >= nmon; }).sort(function(a, b){ return (a.end || a.start) - (b.end || b.start); });
+    var nextHtml = '<section class="card"><h3>차주 일정<small>' + mdw(nmon) + ' – ' + mdw(addD(nmon, 6)) + '</small></h3>' + (nx.length ?
+      '<div class="tbl-wrap"><table class="t"><thead><tr><th>업무명</th><th>상태</th><th>담당자</th><th>기간</th></tr></thead><tbody>' +
+      nx.map(function(it){ return '<tr><td>' + name(it) + '</td><td class="nw">' + pill(it) + '</td><td>' + esc(it.owner || '-') + '</td><td class="nw">' + period(it) + '</td></tr>'; }).join('') + '</tbody></table></div>'
+      : '<p class="muted" style="margin:0">' + (W ? '다음 주에 잡힌 업무가 없습니다.' : '시트 연결 전입니다.') + '</p>') + '</section>';
+    h += '<div class="two">' + meetHtml + nextHtml + '</div>';
+    el.innerHTML = h;
+
+  }
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-wk],[data-mt],[data-mtgo],[data-act]'); if (!b) return;
+    if (b.dataset.act === 'conn') return openDlg();
+    if (b.dataset.wk != null) { var d = +b.dataset.wk; week = d ? addD(week, d * 7) : monday(new Date()); mtIdx = 0; renderWeekly(); var f = document.querySelector('[data-wk="' + (d || 1) + '"]'); if (f) f.focus(); return; }
+    var M = meetings(), cnt = M ? M.items.filter(function(m){ return inWeek(m.date, week); }).length : 0; if (!cnt) return;
+    if (b.dataset.mt != null) mtIdx = (mtIdx + +b.dataset.mt + cnt) % cnt; else mtIdx = +b.dataset.mtgo;
+    renderWeekly(); var g = document.querySelector('[data-mt="' + (b.dataset.mt || 1) + '"]'); if (g && b.dataset.mt) g.focus();
+  });
+
+  /* ══ 저장소 문서 읽기(화면설계서 작업대기 · 임시 정책 · 논의·결정 공통) ══ */
+  function getText(url){ return fetch(encodeURI(url), { cache: 'no-store' }).then(function(r){ return r.ok ? r.text() : ''; }).catch(function(){ return ''; }); }
+  // 여러 파일을 한 번에(/api/files): 서버가 하나씩 처리해 수백 개를 따로 받으면 느리다. 안 되면 하나씩
+  function getTexts(urls){
+    if (!urls.length) return Promise.resolve([]);
+    return api('/api/files', { paths: urls }).then(function(j){ var o = j.files || {}; if (!Object.keys(o).length) throw 0; return urls.map(function(u){ return o[u] || ''; }); })
+      .catch(function(){ return pool(urls, 8, getText); });
+  }
+  // 화면에 그린 자료를 이 브라우저에 남겨 두었다가 다음에 들어오면 먼저 보여 준다(그 뒤 새로 받아 바꾼다)
+  var SNAP = 'wb.work.';
+  function snapSave(k, v){ try { localStorage.setItem(SNAP + k, JSON.stringify({ at: Date.now(), v: v })); } catch(x){} }
+  function snapLoad(k){ try { var s = JSON.parse(localStorage.getItem(SNAP + k) || 'null'); return s && s.v; } catch(x){ return null; } }
+  function pool(list, n, fn){   // 동시에 n개씩
+    var i = 0, out = new Array(list.length);
+    function next(){ if (i >= list.length) return Promise.resolve(); var k = i++; return Promise.resolve(fn(list[k], k)).then(function(v){ out[k] = v; return next(); }); }
+    var w = []; for (var x = 0; x < Math.min(n, list.length); x++) w.push(next());
+    return Promise.all(w).then(function(){ return out; });
+  }
+  function fm(t){ var m = /^﻿?---\r?\n([\s\S]*?)\r?\n---\r?\n?/.exec(t || ''), o = {}; if (m) m[1].split(/\r?\n/).forEach(function(l){ var k = /^([A-Za-z_]+):\s*(.*)$/.exec(l); if (k) o[k[1]] = k[2].trim(); }); return { meta: o, body: m ? t.slice(m[0].length) : (t || '') }; }
+  function cells(l){ return l.replace(/^\s*\||\|\s*$/g, '').split('|').map(function(c){ return c.trim(); }); }
+  // 표(머리줄 다음 --- 줄 아래 행들): 첫 표 또는 lines 범위 안의 표
+  function mdTable(lines){
+    var rows = [], head = null;
+    for (var i = 0; i < lines.length; i++) {
+      var l = lines[i]; if (!/^\s*\|/.test(l)) { if (head && rows.length) break; continue; }
+      if (!head) { head = cells(l); continue; }
+      if (/^\s*\|[\s:|-]+\|\s*$/.test(l)) continue;
+      rows.push(cells(l));
+    }
+    return { head: head || [], rows: rows };
+  }
+  // ## 절 나누기: {제목: [줄]}
+  function secsOf(t){ var o = { _: [] }, cur = '_'; String(t || '').split(/\r?\n/).forEach(function(l){ var h = /^##\s+(.+?)\s*$/.exec(l); if (h) { cur = h[1]; o[cur] = []; } else o[cur].push(l); }); return o; }
+  function kvTable(lines){ var o = {}; mdTable(lines).rows.forEach(function(r){ if (r[0]) o[r[0]] = r[1] || ''; }); return o; }
+  function md(t){ if (!window.marked) return '<div class="mtext">' + esc(t) + '</div>'; return '<div class="mdv">' + marked.parse(String(t || ''), { breaks: false }) + '</div>'; }
+  if (window.marked) marked.use({ renderer: { html: function(h){ return esc(typeof h === 'string' ? h : h && h.text); } } });
+  function today(){ var d = new Date(); return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
+  function stPill(s){ s = String(s || ''); var c = /승인 대기|^대기|협의 대기|논의 전/.test(s) ? 'warn' : /^승인|반영 완료|결정|합의/.test(s) ? 'done' : /반려|기각/.test(s) ? 'bad' : /논의 중|보류/.test(s) ? 'prog' : ''; return '<span class="pill ' + c + '">' + esc(s || '-') + '</span>'; }
+
+  /* Claude 처리 작업(kind 'plan')의 지금 상태: 항목 ID마다 가장 최근 것 */
+  var pjobs = {}, pjTimer = null;
+  function loadPlanJobs(){
+    return api('/api/jobs').then(function(j){
+      var o = {}; (j.items || []).forEach(function(x){ if (x.kind === 'plan') { var k = x.target || ('new:' + x.id); if (!o[k] || String(x.createdAt) > String(o[k].createdAt)) o[k] = x; } });
+      var was = Object.keys(pjobs).filter(function(k){ return /대기|진행 중/.test(pjobs[k].status) && pjobs[k].status !== '확인 대기'; });
+      pjobs = o;
+      var busy = Object.keys(o).filter(function(k){ return (o[k].status === '대기' || o[k].status === '진행 중'); });
+      clearTimeout(pjTimer); if (busy.length) pjTimer = setTimeout(function(){ loadPlanJobs().then(function(){ renderPlanTabs(); }); }, 8000);
+      if (was.length && was.some(function(k){ return !o[k] || !(o[k].status === '대기' || o[k].status === '진행 중'); })) return loadPlan(true);
+    }).catch(function(){});
+  }
+  function jobState(id){
+    var j = pjobs[id]; if (!j) return '';
+    if (j.status === '대기' || j.status === '진행 중') return '<span class="pill prog">Claude가 처리 중' + (j.status === '대기' ? '(대기)' : '') + '</span>';
+    if (j.status === '실패' || j.status === '보류') return '<span class="pill warn" title="' + esc(j.note || '') + '">Claude ' + esc(j.status) + '</span>';
+    return '';
+  }
+  function addPlanJob(sub, target, plan, name){
+    return api('/api/jobs', { action: 'add', kind: 'plan', sub: sub, target: target || '', plan: plan, name: name || target || '', text: name || '', by: myName });
+  }
+  function renderPlanTabs(){ if (cur === 'backlog') renderBacklog(); if (cur === 'provisional') renderPv(); if (cur === 'decisions') renderDisc(); }
+  var planLoaded = false;
+  function loadPlan(again){
+    return Promise.all([loadBacklog(), loadFixReqs(), loadPvDocs(), loadDisc(), again ? null : loadPlanJobs()]).then(function(){ planLoaded = true; renderPlanTabs(); });
+  }
+
+  /* ══ 화면설계서 작업대기: 화면 정의서(screens) 파일마다 「## 반영 대기 목록」 + screen-fixes/{CID}.md ══
+     (rules/screen-spec.md 4절: 상태가 「대기」로 시작하는 줄을 센다. 메뉴 담당자 = _menu.md owner) */
+  var BL = null, blSel = '', blAll = false, blKind = '', blQ = '';
+  function loadBacklog(){
+    return api('/api/guides').then(function(g){
+      var doc = (g.items || []).filter(function(i){ return i.id === 'screens'; })[0];
+      var fl = doc ? (doc.fileList || []).filter(function(f){ return /\.md$/i.test(f.path) && !/(^|\/)readme\.md$/i.test(f.path); }) : [];
+      return api('/api/plan/files?dir=screen-fixes').catch(function(){ return { files: [] }; }).then(function(sf){
+        var list = fl.map(function(f){ return { url: f.mdPath, path: f.path, rev: f.rev, fix: false }; })
+          .concat((sf.files || []).filter(function(f){ return !/readme\.md$/i.test(f.path); }).map(function(f){ return { url: f.url, path: f.path, fix: true }; }));
+        return getTexts(list.map(function(f){ return f.url; })).then(function(ts){ return list.map(function(f, i){ return { f: f, t: ts[i] }; }); });
+      });
+    }).then(function(all){
+      var menus = {}, screens = [];
+      all.forEach(function(x){
+        var p = fm(x.t), dir = x.f.fix ? '' : x.f.path.split('/')[0];
+        if (/_menu\.md$/i.test(x.f.path)) { menus[dir] = { name: p.meta.menu || dir, owner: p.meta.owner || '' }; return; }
+        var S = secsOf(p.body), key = Object.keys(S).filter(function(k){ return /^반영 대기 목록/.test(k); })[0]; if (!key) return;
+        var T = mdTable(S[key]), H = T.head.map(function(h){ return h.replace(/\s/g, ''); });
+        function col(n){ var i = H.indexOf(n); return i; }
+        var ci = { n: col('#'), kind: col('구분'), now: col('지금'), to: col('바꿀것'), why: col('근거'), st: col('상태') };
+        var rows = T.rows.map(function(r){ return { n: r[ci.n] || '', kind: r[ci.kind] || '', now: r[ci.now] || '', to: r[ci.to] || '', why: r[ci.why] || '', st: r[ci.st] || '' }; });
+        var h1 = /^#\s+(.+)$/m.exec(p.body);
+        screens.push({ cid: p.meta.cid || x.f.path.replace(/^.*\/|\.md$/g, ''), figma: p.meta.figma || '', title: (p.meta.title || (h1 ? h1[1] : '')).replace(/^\S+\s+/, function(m){ return /^[A-Z]{2}-/.test(m) ? '' : m; }), author: p.meta.author || '', dir: x.f.fix ? '(screen-fixes)' : dir, menu: p.meta.menu || '', path: x.f.path, fix: x.f.fix, rev: x.f.rev, rows: rows,
+          wait: rows.filter(function(r){ return /^대기/.test(r.st); }) });
+      });
+      screens.forEach(function(s){ var m = menus[s.dir]; s.menuName = m ? m.name : (s.menu || s.dir); s.owner = m ? m.owner : ''; s.check = s.wait.filter(function(r){ return /확인 필요/.test(r.st + ' ' + r.to); }).length; });
+      BL = { screens: screens }; snapSave('bl', BL);
+      var n = 0; screens.forEach(function(s){ n += s.wait.length; }); setCnt('backlog', n);
+    }).catch(function(e){ BL = { screens: [], error: e.message }; });
+  }
+  // 화면 정의서 머리말 figma: 링크 → 파일 키 · 노드 ID
+  function figOf(u){ var k = /figma\.com\/(?:design|file)\/([A-Za-z0-9]+)/.exec(u || ''), n = /node-id=(\d+)[-:](\d+)/.exec(u || ''); return k && n ? { key: k[1], node: n[1] + ':' + n[2] } : null; }
+  // 작업대기에서 만든 Workbench 요청(fixRows)을 줄마다: {doc|파일|번호 → 요청}
+  var fixReq = {};
+  function fixKey(s, r){ return (s.fix ? 'screen-fixes' : 'screens') + '|' + (s.fix ? s.path.replace(/^screen-fixes\//, '') : s.path) + '|' + r.n; }
+  function loadFixReqs(){
+    return api('/api/requests').then(function(j){
+      var o = {};
+      (j.items || []).forEach(function(q){ (q.fixRows || []).forEach(function(f){ var k = f.doc + '|' + f.file + '|' + f.n; if (!o[k] || String(q.createdAt) > String(o[k].createdAt)) o[k] = q; }); });
+      fixReq = o;
+    }).catch(function(){});
+  }
+  function blPickCount(){ var n = document.querySelectorAll('.blpick:checked').length, el = $('blPickN'); if (el) el.textContent = '고른 줄 ' + n; }
+  function renderBacklog(){
+    var el = $('body-backlog'); if (!el) return;
+    if (!BL) { el.innerHTML = '<p class="muted">화면 정의서를 읽는 중…</p>'; return; }
+    var S = BL.screens, q = blQ.trim().toLowerCase();
+    var waitN = 0, chk = 0; S.forEach(function(s){ waitN += s.wait.length; chk += s.check; });
+    var act = S.filter(function(s){ return s.wait.length; }), mg = {};
+    act.forEach(function(s){ (mg[s.menuName] = mg[s.menuName] || { name: s.menuName, owner: s.owner, list: [], n: 0 }).list.push(s); mg[s.menuName].n += s.wait.length; });
+    var groups = Object.keys(mg).map(function(k){ return mg[k]; }).sort(function(a, b){ return b.n - a.n; });
+    groups.forEach(function(g){ g.list.sort(function(a, b){ return b.wait.length - a.wait.length; }); });
+    if (!blSel || !S.some(function(s){ return s.cid === blSel; })) blSel = act.length ? groups[0].list[0].cid : '';
+    var h = '<div class="stats">' +
+      '<div class="stat main"><div class="l">반영 대기</div><div class="v">' + waitN.toLocaleString() + '</div><div class="s">상태가 「대기」인 줄</div></div>' +
+      '<div class="stat"><div class="l">작업 대기 화면</div><div class="v">' + act.length + '</div><div class="s">전체 화면 ' + S.length + '개</div></div>' +
+      '<div class="stat"><div class="l">확인 필요</div><div class="v">' + chk + '</div></div>' +
+      '<div class="stat"><div class="l">메뉴</div><div class="v">' + groups.length + '</div></div></div>' +
+      '<p class="rule">작업규칙 · 정책서 · UX가이드 · 기준데이터가 바뀌면 Claude가 고쳐야 할 화면의 「반영 대기 목록」에 줄을 더합니다. 화면을 다시 그린 뒤 상태를 「반영 완료 (날짜)」로 바꾸면 빠집니다.</p>';
+    var left = '<div class="mhead"><input type="search" id="blq" class="minp" placeholder="CID · 화면 이름 찾기" value="' + esc(blQ) + '" aria-label="화면 찾기"></div>' +
+      groups.map(function(g){
+        var list = g.list.filter(function(s){ return !q || (s.cid + ' ' + s.title).toLowerCase().indexOf(q) >= 0; }); if (!list.length) return '';
+        return '<details class="mgrp" open><summary><span>' + esc(g.name) + ' <small class="muted">' + esc(g.owner || '담당자 미정') + '</small></span><span class="muted">' + g.n + '</span></summary>' +
+          list.map(function(s){ return '<button type="button" class="mitem" data-bl="' + esc(s.cid) + '"' + (s.cid === blSel ? ' aria-current="true"' : '') + '><b>' + esc(s.cid) + '</b><span>' + esc(s.title || '') + '</span><span class="chips"><span class="pill warn">대기 ' + s.wait.length + '</span>' + (s.check ? '<span class="pill">확인 필요 ' + s.check + '</span>' : '') + (s.author ? '<span class="pill">' + esc(s.author) + '</span>' : '') + '</span></button>'; }).join('') + '</details>';
+      }).join('') + (act.length ? '' : '<p class="muted" style="margin:8px">반영 대기 줄이 없습니다.</p>');
+    var s = S.filter(function(x){ return x.cid === blSel; })[0], right;
+    if (!s) right = '<div class="wempty"><b>고칠 화면이 없습니다</b></div>';
+    else {
+      var kinds = {}; s.rows.forEach(function(r){ if (r.kind) kinds[r.kind] = (kinds[r.kind] || 0) + 1; });
+      var W = canWrite(), fig = figOf(s.figma);
+      var rows = s.rows.filter(function(r){ return (blAll || /^대기/.test(r.st)) && (!blKind || r.kind === blKind); });
+      right = '<div class="mtop"><h3>' + esc(s.cid) + ' ' + esc(s.title || '') + '</h3>' +
+        '<a class="btn sm" href="UX_Guide.html?g=screens#' + encodeURIComponent(s.cid) + '" target="_blank" rel="noopener">화면 정의서에서 보기</a></div>' +
+        '<p class="matt">' + esc(s.menuName) + (s.author ? ' · 작성자 ' + esc(s.author) : '') + ' · 반영 대기 ' + s.wait.length + '줄 / 전체 ' + s.rows.length + '줄 · <code>' + esc(s.fix ? s.path : 'screens/' + s.path) + '</code>' + (s.rev ? ' · 수정본 ' + esc(s.rev) : '') + '</p>' +
+        '<div class="bar" style="margin-top:12px"><label class="hint" style="display:inline-flex;gap:4px;align-items:center"><input type="checkbox" id="blAll"' + (blAll ? ' checked' : '') + '>반영 완료 · 불필요도 보기</label>' +
+        '<span class="sp"></span>' + ['<button type="button" class="pill' + (blKind ? '' : ' on') + '" data-blk="">전체</button>'].concat(Object.keys(kinds).map(function(k){ return '<button type="button" class="pill' + (blKind === k ? ' on' : '') + '" data-blk="' + esc(k) + '">' + esc(k) + ' ' + kinds[k] + '</button>'; })).join('') + '</div>' +
+        // 반영 대기 줄을 골라 Workbench 수정 요청으로(이미 요청한 줄은 요청 번호 · 상태를 보여 주고 고를 수 없다)
+        (W && s.wait.length ? '<div class="blreq"><span class="muted" id="blPickN">고른 줄 0</span>' + (fig ? '' : '<span class="pill warn">이 화면에 Figma 링크(figma:)가 없어 요청을 만들 수 없습니다</span>') +
+          '<button class="btn sm primary" type="button" data-blreq' + (fig ? '' : ' disabled') + '>고른 줄로 Workbench 수정 요청</button></div>' : '') +
+        '<div class="tbl-wrap"><table class="t"><thead><tr>' + (W ? '<th style="width:34px"><input type="checkbox" id="blPickAll" aria-label="요청 안 한 대기 줄 모두 고르기"></th>' : '') + '<th class="num">#</th><th>구분</th><th>지금</th><th>바꿀 것</th><th>근거</th><th>상태</th></tr></thead><tbody>' +
+        (rows.length ? rows.map(function(r){
+          var rq = fixReq[fixKey(s, r)], can = W && /^대기/.test(r.st) && !(rq && /^(대기|진행 중|보류)$/.test(rq.status));
+          return '<tr>' + (W ? '<td>' + (can ? '<input type="checkbox" class="blpick" value="' + esc(r.n) + '" aria-label="' + esc(r.n) + '번 줄 고르기">' : '') + '</td>' : '') +
+            '<td class="num">' + esc(r.n) + '</td><td class="nw">' + esc(r.kind) + '</td><td>' + esc(r.now) + '</td><td>' + esc(r.to) + '</td><td>' + esc(r.why) + '</td><td class="nw">' + stPill(r.st) +
+            (rq ? '<br><a class="pill ' + (rq.status === '완료' ? 'done' : rq.status === '보류' ? 'warn' : 'prog') + '" href="Figma_Workbench.html?p=' + encodeURIComponent(rq.fileKey || '') + '" title="Workbench 수정 요청">' + esc(rq.id) + ' ' + esc(rq.status) + '</a>' : '') + '</td></tr>';
+        }).join('') : '<tr><td colspan="7" class="muted">맞는 줄이 없습니다.</td></tr>') +
+        '</tbody></table></div>';
+    }
+    var keep = document.activeElement && document.activeElement.id === 'blq';
+    el.innerHTML = h + '<div class="mgrid"><aside class="card mlist" aria-label="작업 대기 화면">' + left + '</aside><section class="card mright">' + right + '</section></div>';
+    if (keep) { var qi = $('blq'); qi.focus(); qi.setSelectionRange(qi.value.length, qi.value.length); }
+  }
+
+  /* ══ 임시 정책: provisional/PV-*.md (+ closed/) — rules/provisional-policy.md ══ */
+  var PVS = null, pvSel = '', pvFilter = '승인 대기', pvForm = null, pvMsg = '';
+  function loadPvDocs(){
+    return api('/api/plan/files?dir=provisional').then(function(j){
+      var fl = (j.files || []).filter(function(f){ return /\/PV-[^\/]+\.md$/i.test(f.path); });
+      return getTexts(fl.map(function(f){ return f.url; })).then(function(ts){ return fl.map(function(f, i){ return { f: f, t: ts[i] }; }); });
+    }).then(function(all){
+      PVS = all.map(function(x){
+        var t = x.t.replace(/\r\n/g, '\n'), h = /^#\s+(PV-\d+)\s*(.*)$/m.exec(t) || [], S = secsOf(t), head = kvTable(S._);
+        var ab = /\(A\/B 선택\)/.test(h[2] || ''), imp = S['영향 화면'] ? mdTable(S['영향 화면']).rows.length : 0, dec = S['결정'] ? mdTable(S['결정']).rows.filter(function(r){ return r[0]; }) : [];
+        return { id: h[1] || x.f.path.replace(/^.*\/|\.md$/g, ''), title: String(h[2] || '').replace(/\s*\(A\/B 선택\)\s*$/, ''), ab: ab, head: head, S: S, t: t, closed: x.f.closed, path: x.f.path,
+          status: head['상태'] || '', policy: head['바꾸는 정책'] || '', by: head['작성자'] || '', date: head['등록일'] || '', impact: imp, dec: dec };
+      }).sort(function(a, b){ return b.id.localeCompare(a.id); });
+      // 같은 정책을 바꾸는 승인 대기 PV끼리 표시(바꾸는 정책의 정책 ID)
+      PVS.forEach(function(p){ p.pols = (p.policy.match(/POL-[A-Z]+-\d+/g) || []); });
+      PVS.forEach(function(p){ p.same = PVS.filter(function(o){ return o !== p && /승인 대기/.test(o.status) && /승인 대기/.test(p.status) && o.pols.some(function(x){ return p.pols.indexOf(x) >= 0; }); }).map(function(o){ return o.id; }); });
+      setCnt('provisional', PVS.filter(function(p){ return /승인 대기/.test(p.status); }).length, true);
+      pvs = PVS.filter(function(p){ return !p.closed; }).map(function(p){ return { id: p.id, title: p.title, status: p.status, by: p.by, date: dates(p.date)[0] || null }; });
+      snapSave('pv', PVS);
+    }).catch(function(){ PVS = PVS || []; pvs = pvs || []; });
+  }
+  function renderPv(){
+    var el = $('body-provisional'); if (!el) return;
+    if (!PVS) { el.innerHTML = '<p class="muted">임시 정책을 읽는 중…</p>'; return; }
+    if (pvForm && $('pvF')) pvForm = pvFormRead();
+    var W = canWrite(), F = ['승인 대기', '승인', '반려'];
+    var list = PVS.filter(function(p){ return pvFilter === '승인' ? /^승인$|^A안 승인|^B안 승인/.test(p.status) : p.status.indexOf(pvFilter) === 0; });
+    if (!pvForm && (!pvSel || !PVS.some(function(p){ return p.id === pvSel; }))) pvSel = list[0] ? list[0].id : '';
+    var left = '<div class="mhead">' + F.map(function(f){ var n = PVS.filter(function(p){ return f === '승인' ? /^승인$|^[AB]안 승인/.test(p.status) : p.status.indexOf(f) === 0; }).length; return '<button type="button" class="pill seg' + (pvFilter === f ? ' on' : '') + '" data-pvf="' + f + '">' + f + ' ' + n + '</button>'; }).join('') +
+      (W ? '<button class="btn sm" type="button" data-pvnew style="margin-left:auto">＋ 새 임시 정책</button>' : '') + '</div>' +
+      (list.length ? list.map(function(p){
+        return '<button type="button" class="mitem" data-pv="' + esc(p.id) + '"' + (p.id === pvSel && !pvForm ? ' aria-current="true"' : '') + '><b>' + esc(p.title) + '</b><span>' + esc(p.id) + ' · ' + esc(p.policy.replace(/\s*\(.*$/, '')) + (p.by ? ' · ' + esc(p.by) : '') + (p.date ? ' · ' + esc(p.date) : '') + '</span>' +
+          '<span class="chips">' + stPill(p.status) + (p.ab ? '<span class="pill review">A/B</span>' : '') + p.same.map(function(s){ return '<span class="pill review" title="같은 정책을 바꾸는 승인 대기 임시 정책">같은 정책 ' + esc(s) + '</span>'; }).join('') + (p.impact ? '<span class="pill">영향 화면 ' + p.impact + '</span>' : '') + jobState(p.id) + '</span></button>';
+      }).join('') : '<p class="muted" style="margin:8px">' + esc(pvFilter) + ' 임시 정책이 없습니다.</p>');
+    var right;
+    if (pvForm) right = pvFormHtml();
+    else {
+      var p = PVS.filter(function(x){ return x.id === pvSel; })[0];
+      if (!p) right = '<div class="wempty"><b>임시 정책이 없습니다</b><p>Claude가 작업 중 기존 정책을 바꿔야 할 때, 또는 [＋ 새 임시 정책]으로 등록합니다.</p></div>';
+      else {
+        var busy = pjobs[p.id] && /^(대기|진행 중)$/.test(pjobs[p.id].status), wait = /승인 대기/.test(p.status);
+        var btn = W && wait ? (p.ab ? '<button class="btn primary" type="button" data-pvd="A안 승인"' + (busy ? ' disabled' : '') + '>A안 승인</button><button class="btn primary" type="button" data-pvd="B안 승인"' + (busy ? ' disabled' : '') + '>B안 승인</button>'
+          : '<button class="btn primary" type="button" data-pvd="승인"' + (busy ? ' disabled' : '') + '>승인</button>') + '<button class="btn bad" type="button" data-pvd="반려"' + (busy ? ' disabled' : '') + '>반려</button>' : '';
+        right = '<div class="mtop"><div style="flex:1"><h3>' + esc(p.id) + ' ' + esc(p.title) + (p.ab ? ' (A/B 선택)' : '') + '</h3><p class="matt" style="border:0;padding:0">' + (p.ab ? '같은 규칙을 다르게 바꾼 임시 정책들을 합친 문서' : esc([p.by, p.date].filter(Boolean).join(' · '))) + ' · <code>' + esc(p.path) + '</code></p></div>' + jobState(p.id) + btn + '</div>' +
+          (pvMsg ? '<p class="notice">' + pvMsg + '</p>' : '') +
+          '<dl class="kv" style="margin:16px 0">' + ['상태', '바꾸는 정책', '작성자', '등록일', '기준 공통 규칙 버전', '고객 확인'].filter(function(k){ return p.head[k]; }).map(function(k){ return '<dt>' + k + '</dt><dd>' + (k === '상태' ? stPill(p.head[k]) + (p.ab ? ' <span class="pill review">A/B</span>' : '') : esc(p.head[k])) + '</dd>'; }).join('') + '</dl>' +
+          (p.same.length ? '<p class="notice same"><b>같은 정책을 바꾸는 임시 정책</b> · ' + p.same.map(function(s){ return '<button type="button" class="chip" data-pv="' + esc(s) + '">' + esc(s) + '</button>'; }).join(' ') + ' — 승인하기 전에 함께 확인하세요.</p>' : '') +
+          (p.ab ? pvAbHtml(p) : Object.keys(p.S).filter(function(k){ return k !== '_'; }).map(function(k){ return '<h4 class="h4">' + esc(k) + '</h4>' + md(p.S[k].join('\n')); }).join(''));
+      }
+    }
+    el.innerHTML = '<div class="mgrid"><aside class="card mlist" aria-label="임시 정책 목록">' + left + '</aside><section class="card mright">' + right + '</section></div>';
+  }
+  function pvAbHtml(p){
+    var ks = Object.keys(p.S).filter(function(k){ return k !== '_'; }), opts = ks.filter(function(k){ return /^[A-Z]안/.test(k); });
+    var diff = ks.filter(function(k){ return /두 안의 차이|안의 차이/.test(k); })[0];
+    var h = diff ? '<h4 class="h4">' + esc(diff) + '</h4>' + md(p.S[diff].join('\n')) : '';
+    h += '<div class="abgrid">' + opts.map(function(k){ return '<div class="abcard"><h4>' + esc(k) + '</h4>' + md(p.S[k].join('\n')) + '</div>'; }).join('') + '</div>';
+    ks.filter(function(k){ return k !== diff && opts.indexOf(k) < 0; }).forEach(function(k){ h += '<h4 class="h4">' + esc(k) + '</h4>' + md(p.S[k].join('\n')); });
+    return h;
+  }
+  function pvFormHtml(){
+    var f = pvForm;
+    return '<form class="mform" id="pvF"><h3>새 임시 정책</h3><p class="muted" style="margin:-6px 0 12px;font-size:13px">적으면 Claude가 규칙(rules/provisional-policy.md)대로 등록합니다. 같은 정책을 바꾸는 승인 대기 임시 정책이 있으면 그 문서에 합치거나 A/B 선택 문서로 만듭니다.</p>' +
+      '<label>제목<input id="pvT" required value="' + esc(f.title) + '" placeholder="예: PCR Setup Door 잠금 해제 조건"></label>' +
+      '<label>바꾸는 정책<input id="pvP" required value="' + esc(f.policy) + '" placeholder="예: POL-EQP-008 규칙 5 · POL-EQP-008 추가"></label>' +
+      '<label>바꾸는 내용<textarea id="pvC" rows="6" required>' + esc(f.change) + '</textarea></label>' +
+      '<label>이유와 근거<textarea id="pvR" rows="4" placeholder="예: 2026-11-04 회의 결정, 고객 답 기다림">' + esc(f.reason) + '</textarea></label>' +
+      '<div class="mrow"><label class="grow">적용한 화면(CID)<input id="pvS" value="' + esc(f.screens) + '" placeholder="예: LI-INS-01-P, LI-INS-02-T"></label>' +
+      '<label>고객 확인<select id="pvK" class="minp"><option' + (f.cust === '필요 없음' ? ' selected' : '') + '>필요 없음</option><option' + (f.cust === '기다림' ? ' selected' : '') + '>기다림</option></select></label></div>' +
+      '<div class="macts"><span class="muted" id="pvMsgF" role="status"></span><button class="btn" type="button" data-pvcancel>취소</button><button class="btn primary" type="submit">Claude에게 등록 요청</button></div></form>';
+  }
+  function pvFormRead(){ return { title: $('pvT').value, policy: $('pvP').value, change: $('pvC').value, reason: $('pvR').value, screens: $('pvS').value, cust: $('pvK').value }; }
+
+  /* ══ 논의·결정: 내부 논의 pending/PD-*.md · 고객 논의 customer-agenda/agenda.md (rules/discussion-answer.md) ══ */
+  var DISC = null, dTab = 'pd', dSel = '', dForm = null;
+  function loadDisc(){
+    return Promise.all([api('/api/plan/files?dir=pending').catch(function(){ return { files: [] }; }), getText('.history/guides/customer-agenda/agenda.md')]).then(function(r){
+      var fl = (r[0].files || []).filter(function(f){ return /\/PD-[^\/]+\.md$/i.test(f.path); });
+      return getTexts(fl.map(function(f){ return f.url; })).then(function(ts){ return fl.map(function(f, i){ return { f: f, t: ts[i] }; }); }).then(function(all){
+        var pd = all.map(function(x){
+          var t = x.t.replace(/\r\n/g, '\n'), h = /^#\s+(PD-\d+)\s*(.*)$/m.exec(t) || [], S = secsOf(t), head = kvTable(S._);
+          return { id: h[1] || x.f.path.replace(/^.*\/|\.md$/g, ''), title: h[2] || '', status: head['상태'] || '', head: head, S: S, t: t, path: x.f.path, closed: x.f.closed, by: head['제안자'] || '', date: head['제안일'] || '' };
+        }).sort(function(a, b){ return (a.closed - b.closed) || a.id.localeCompare(b.id); });
+        var T = mdTable(String(r[1] || '').split(/\r?\n/)), H = T.head;
+        var ca = T.rows.filter(function(x){ return /^CA-\d+/.test(x[0]); }).map(function(x){ var o = {}; H.forEach(function(k, i){ o[k] = x[i] || ''; }); return { id: x[0], title: String(o['내용'] || '').split(/[.:]\s/)[0].slice(0, 60), o: o, status: o['상태'] || '', path: 'customer-agenda/agenda.md' }; });
+        DISC = { pd: pd, ca: ca }; snapSave('disc', DISC);
+        var open = pd.filter(function(p){ return !p.closed; }).length + ca.filter(function(c){ return c.status !== '결정'; }).length;
+        setCnt('decisions', open);
+      });
+    }).catch(function(){ DISC = { pd: [], ca: [] }; });
+  }
+  function renderDisc(){
+    var el = $('body-decisions'); if (!el) return;
+    if (!DISC) { el.innerHTML = '<p class="muted">논의 항목을 읽는 중…</p>'; return; }
+    if (dForm && $('dF')) dForm = { text: $('dA').value, date: $('dD').value, basis: $('dB').value };
+    var W = canWrite(), L = DISC[dTab];
+    if (!dForm && (!dSel || !L.some(function(x){ return x.id === dSel; }))) dSel = L[0] ? L[0].id : '';
+    var openN = function(k){ return DISC[k].filter(function(x){ return k === 'pd' ? !x.closed : x.status !== '결정'; }).length; };
+    var top = '<div class="segs"><button type="button" class="seg2' + (dTab === 'pd' ? ' on' : '') + '" data-dt="pd">내부 논의 <span>' + openN('pd') + '</span></button><button type="button" class="seg2' + (dTab === 'ca' ? ' on' : '') + '" data-dt="ca">고객 논의 <span>' + openN('ca') + '</span></button></div>';
+    var left = L.length ? L.map(function(x){
+      return '<button type="button" class="mitem" data-d="' + esc(x.id) + '"' + (x.id === dSel ? ' aria-current="true"' : '') + '><b>' + esc(x.title || x.id) + '</b><span>' + esc(x.id) + (x.by ? ' · ' + esc(x.by) : '') + (x.date || (x.o && x.o['등록일']) ? ' · ' + esc(x.date || x.o['등록일']) : '') + '</span><span class="chips">' + stPill(x.status) + (x.closed ? '<span class="pill">닫힘</span>' : '') + jobState(x.id) + '</span></button>';
+    }).join('') : '<p class="muted" style="margin:8px">항목이 없습니다.</p>';
+    var x = L.filter(function(i){ return i.id === dSel; })[0], right;
+    if (!x) right = '<div class="wempty"><b>항목이 없습니다</b></div>';
+    else {
+      var j = pjobs[x.id], busy = j && /^(대기|진행 중)$/.test(j.status), confirmWait = j && j.status === '확인 대기';
+      var canAns = W && !x.closed && x.status !== '결정' && !busy && !confirmWait;
+      right = '<div class="mtop"><div style="flex:1"><h3>' + esc(x.title || x.id) + '</h3><p class="matt" style="border:0;padding:0">' + esc(x.id) + ' · <code>' + esc(x.path) + '</code></p></div>' + stPill(x.status) + jobState(x.id) +
+        (canAns && !dForm ? '<button class="btn primary" type="button" data-dans>답변하기</button>' : '') + '</div>';
+      if (confirmWait) right += '<section class="propose"><h4>Claude 정리안 · 확인해 주세요</h4><p class="muted" style="margin:0 0 8px;font-size:13px">확인하면 항목 파일 · 공통 자료(또는 임시 정책) · 반영 대기 목록을 이대로 고칩니다(rules/discussion-answer.md 3단계).</p>' + md(j.note || '') +
+        (W ? '<div class="macts"><button class="btn" type="button" data-dre>다시 답하기</button><button class="btn primary" type="button" data-dok>확인 · 반영</button></div>' : '') + '</section>';
+      if (dForm) right += '<form class="mform" id="dF" style="margin-top:16px"><h3>답변하기</h3>' +
+        '<label>답<textarea id="dA" rows="6" required placeholder="정한 내용을 적어 주세요. Claude가 결정 · 바뀌는 것 · 확인 필요로 정리해 보여 주고, 확인하면 반영합니다.">' + esc(dForm.text) + '</textarea></label>' +
+        '<div class="mrow"><label>답한 날짜<input type="date" id="dD" value="' + esc(dForm.date) + '"></label><label class="grow">근거' + (dTab === 'ca' ? '(고객 답: 회의록 · 메일)' : '') + '<input id="dB" value="' + esc(dForm.basis) + '" placeholder="예: 2026-11-04 회의록, 메일"></label></div>' +
+        (mlist && mlist.length ? '<p class="muted" style="font-size:12.5px;margin:-4px 0 8px">최근 회의록: ' + mlist.slice(0, 4).map(function(m){ return '<button type="button" class="chip" data-dmin="' + esc(m.date.slice(0, 10) + ' ' + m.title) + '">' + esc(m.date.slice(5, 10) + ' ' + m.title) + '</button>'; }).join(' ') + '</p>' : '') +
+        '<div class="macts"><span class="muted" id="dMsg" role="status"></span><button class="btn" type="button" data-dcancel>취소</button><button class="btn primary" type="submit">Claude에게 보내기</button></div></form>';
+      right += '<div class="dbody">' + (dTab === 'pd' ? md(x.t.replace(/^#\s+.*\n/, '')) : '<dl class="kv">' + Object.keys(x.o).filter(function(k){ return k !== 'ID'; }).map(function(k){ return '<dt>' + esc(k) + '</dt><dd>' + esc(x.o[k] || '-') + '</dd>'; }).join('') + '</dl>') + '</div>';
+    }
+    el.innerHTML = top + '<div class="mgrid"><aside class="card mlist" aria-label="논의 항목">' + left + '</aside><section class="card mright">' + right + '</section></div>';
+  }
+
+  // 세 탭의 누르기 · 보내기
+  document.addEventListener('input', function(e){ if (e.target.id === 'blq') { blQ = e.target.value; renderBacklog(); } });
+  document.addEventListener('change', function(e){
+    if (e.target.id === 'blAll') { blAll = e.target.checked; renderBacklog(); }
+    if (e.target.id === 'blPickAll') { document.querySelectorAll('.blpick').forEach(function(c){ c.checked = e.target.checked; }); blPickCount(); }
+    if (e.target.classList && e.target.classList.contains('blpick')) blPickCount();
+  });
+  // 고른 반영 대기 줄 → Workbench 수정 요청(유형 「화면설계서 반영」). 요청에 fixRows를 담아, 완료되면 Claude가 그 줄을 「반영 완료 (날짜)」로 바꾼다
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-blreq]'); if (!b) return;
+    var s = BL && BL.screens.filter(function(x){ return x.cid === blSel; })[0], fig = s && figOf(s.figma); if (!s || !fig) return;
+    var picks = Array.prototype.map.call(document.querySelectorAll('.blpick:checked'), function(c){ return c.value; });
+    if (!picks.length) { alert('반영할 줄을 골라 주세요.'); return; }
+    var rows = s.rows.filter(function(r){ return picks.indexOf(r.n) >= 0; });
+    var text = '화면설계서 작업대기 · ' + s.cid + ' ' + (s.title || '') + '의 반영 대기 ' + rows.length + '줄을 Figma 화면에 반영해 주세요.\n' +
+      rows.map(function(r){ return '- ' + r.n + '. [' + r.kind + '] 지금: ' + r.now + ' → 바꿀 것: ' + r.to + (r.why ? ' (근거: ' + r.why + ')' : ''); }).join('\n');
+    if (!confirm(s.cid + ' 화면의 ' + rows.length + '줄로 Workbench 수정 요청을 만듭니다.\n요청이 「완료」되면 Claude가 이 줄들을 「반영 완료」로 바꿉니다.')) return;
+    b.disabled = true;
+    api('/api/requests', { action: 'add', fileKey: fig.key, fileName: '', nodeId: fig.node, frame: s.cid + (s.title ? ' ' + s.title : ''), page: '', editable: true, type: '화면설계서 반영', priority: '보통', layout: '', text: text, by: myName,
+      fixRows: rows.map(function(r){ return { doc: s.fix ? 'screen-fixes' : 'screens', file: s.fix ? s.path.replace(/^screen-fixes\//, '') : s.path, n: r.n, cid: s.cid }; }) })
+      .then(function(j){ return loadFixReqs().then(function(){ renderBacklog(); var id = j && j.items && j.items[0] && j.items[0].id; toast((id ? id + ' ' : '') + '수정 요청을 만들었습니다. Workbench · 변경 이력에서 진행을 볼 수 있습니다.'); }); })
+      .catch(function(err){ b.disabled = false; alert('요청을 만들지 못했습니다.\n' + err.message); });
+  });
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-bl],[data-blk],[data-pvf],[data-pv],[data-pvnew],[data-pvcancel],[data-pvd],[data-dt],[data-d],[data-dans],[data-dcancel],[data-dre],[data-dok],[data-dmin]'); if (!b) return;
+    var d = b.dataset;
+    if (d.bl != null) { blSel = d.bl; blKind = ''; return renderBacklog(); }
+    if (d.blk != null) { blKind = d.blk; return renderBacklog(); }
+    if (d.pvf != null) { pvFilter = d.pvf; pvSel = ''; return renderPv(); }
+    if (d.pv != null) { pvSel = d.pv; pvForm = null; pvMsg = ''; var t = PVS.filter(function(p){ return p.id === d.pv; })[0]; if (t && t.status.indexOf(pvFilter) !== 0 && !(pvFilter === '승인' && /승인$/.test(t.status))) pvFilter = /승인 대기/.test(t.status) ? '승인 대기' : /반려/.test(t.status) ? '반려' : '승인'; return renderPv(); }
+    if (b.hasAttribute('data-pvnew')) { pvForm = { title: '', policy: '', change: '', reason: '', screens: '', cust: '필요 없음' }; return renderPv(); }
+    if (b.hasAttribute('data-pvcancel')) { pvForm = null; return renderPv(); }
+    if (d.pvd != null) {
+      var p = PVS.filter(function(x){ return x.id === pvSel; })[0]; if (!p) return;
+      var dec = d.pvd, rej = dec === '반려';
+      var memo = prompt((rej ? '반려 사유(꼭 적어 주세요)' : dec + ' 메모(없으면 비워 두세요)') + ' — ' + p.id, '');
+      if (memo === null) return; if (rej && !memo.trim()) { alert('반려는 사유를 적어야 합니다.'); return; }
+      if (!confirm(p.id + ' 「' + p.title + '」을(를) ' + dec + '합니다.' + (p.same.length ? '\n같은 정책을 바꾸는 승인 대기 임시 정책: ' + p.same.join(', ') : '') + '\nClaude가 파일의 상태 · 결정 칸을 고치고 ' + (rej ? 'closed/로 옮깁니다.' : '영향 화면의 반영 대기 목록에 줄을 더합니다.'))) return;
+      b.disabled = true;
+      addPlanJob('pv-decide', p.id, { decision: dec, memo: memo.trim(), date: today(), by: myName }, p.id + ' ' + dec).then(loadPlanJobs).then(function(){ pvMsg = '<b>' + esc(dec) + '</b> 요청을 보냈습니다. 요청 감시 중인 Claude가 파일을 고치면 목록이 바뀝니다.'; renderPv(); })
+        .catch(function(err){ b.disabled = false; alert(err.message); });
+      return;
+    }
+    if (d.dt != null) { dTab = d.dt; dSel = ''; dForm = null; return renderDisc(); }
+    if (d.d != null) { if (dForm && !confirm('쓰던 답을 버리고 이동할까요?')) return; dSel = d.d; dForm = null; return renderDisc(); }
+    if (b.hasAttribute('data-dans') || b.hasAttribute('data-dre')) { dForm = { text: '', date: today(), basis: '' }; return renderDisc(); }
+    if (b.hasAttribute('data-dcancel')) { dForm = null; return renderDisc(); }
+    if (d.dmin != null) { var bi = $('dB'); if (bi) bi.value = (bi.value ? bi.value + ', ' : '') + d.dmin + ' 회의록'; return; }
+    if (b.hasAttribute('data-dok')) {
+      var j = pjobs[dSel]; if (!j) return; b.disabled = true;
+      addPlanJob('answer-apply', dSel, { from: j.id, proposal: j.note || '', answer: (j.plan || {}).answer, date: (j.plan || {}).date, basis: (j.plan || {}).basis, by: myName }, dSel + ' 정리안 반영')
+        .then(function(){ return api('/api/jobs', { action: 'update', id: j.id, status: '완료', note: (j.note || '') + '\n\n(확인: ' + myName + ' · 반영 요청)' }); })
+        .then(loadPlanJobs).then(function(){ renderDisc(); toast('확인했습니다. Claude가 정리안대로 반영합니다.'); }).catch(function(err){ b.disabled = false; alert(err.message); });
+    }
+  });
+  document.addEventListener('submit', function(e){
+    if (e.target.id === 'pvF') {
+      e.preventDefault(); var f = pvFormRead();
+      if (!f.title.trim() || !f.policy.trim() || !f.change.trim()) { $('pvMsgF').textContent = '제목 · 바꾸는 정책 · 바꾸는 내용을 적어 주세요.'; return; }
+      addPlanJob('pv-new', '', { title: f.title.trim(), policy: f.policy.trim(), change: f.change.trim(), reason: f.reason.trim(), screens: f.screens.trim(), customer: f.cust, by: myName, date: today() }, '새 임시 정책: ' + f.title.trim())
+        .then(loadPlanJobs).then(function(){ pvForm = null; pvMsg = ''; renderPv(); toast('새 임시 정책 등록을 요청했습니다. Claude가 등록하면 목록에 나옵니다.'); })
+        .catch(function(err){ $('pvMsgF').textContent = err.message; });
+    }
+    if (e.target.id === 'dF') {
+      e.preventDefault(); var a = $('dA').value.trim(), dd = $('dD').value, bs = $('dB').value.trim();
+      if (!a) { $('dMsg').textContent = '답을 적어 주세요.'; return; }
+      if (dTab === 'ca' && !bs) { $('dMsg').textContent = '고객 답은 근거(회의록 · 메일)를 적어 주세요.'; return; }
+      addPlanJob('answer', dSel, { answer: a, date: dd, basis: bs, by: myName, kind: dTab }, dSel + ' 답변').then(loadPlanJobs)
+        .then(function(){ dForm = null; renderDisc(); toast('답을 보냈습니다. Claude가 정리안을 만들면 여기서 확인합니다.'); })
+        .catch(function(err){ $('dMsg').textContent = err.message; });
+    }
+  });
+
+  /* ── 시트 연결 창 ── */
+  function openDlg(){
+    $('fSheet').value = sheetUrl(); $('fWeb').value = ''; $('fTok').value = '';
+    $('fWeb').placeholder = conf && conf.configured ? '바꿀 때만 입력 (지금 연결되어 있음)' : 'https://script.google.com/macros/s/…/exec';
+    $('fTok').placeholder = conf && conf.configured ? '바꿀 때만 입력' : '「비밀값 만들기」로 만들고 스크립트 속성 TOKEN에도 같게';
+    $('fGid').value = (conf && conf.wbsGid) || gidOf(); $('fMin').value = minName(); $('dlgMsg').textContent = '';
+    var W = wbs && wbs.values ? wbsItems(wbs) : null;
+    $('colBox').hidden = !W;
+    if (W) $('cols').innerHTML = FIELDS.map(function(f){
+      var cur = W.cols[f[0]];
+      return '<label>' + esc(f[1]) + '<select data-f="' + f[0] + '"><option value="">(없음)</option>' + W.labels.map(function(l, i){ return l ? '<option value="' + esc(l) + '"' + (i === cur ? ' selected' : '') + '>' + esc(l) + '</option>' : ''; }).join('') + '</select></label>';
+    }).join('');
+    $('dlg').showModal(); gsText = ''; gsLoad().catch(function(){});
+  }
+  $('connBtn').addEventListener('click', openDlg);
+
+  /* ── 회의록(md, .history/minutes, 깃 공유) ── */
+  var msel = new URLSearchParams(location.search).get('m') || '', medit = null, mbusy = false;
+  var minMe = '', myName = '', nedit = '', ntext = null, ntext0 = '';   // 나(작성자 ID · 이름), 고치는 중인 내 작성분(회의록 ID)과 글
+  function loadMd(){ return api('/api/minutes').then(function(j){ mlist = j.items || []; minMe = j.me || ''; snapSave('min', { items: mlist, me: minMe }); }).catch(function(){ mlist = mlist || []; }); }
+  api('/api/me').then(function(j){ myName = (j.user && (j.user.name || j.user.id)) || ''; }).catch(function(){});
+  function fmtWhen(s){
+    var d = /^(\d{4})-(\d{2})-(\d{2})(?:\s+(\d{2}:\d{2}))?/.exec(s || ''); if (!d) return esc(s);
+    return d[1] + '-' + d[2] + '-' + d[3] + '(' + WD[new Date(+d[1], +d[2] - 1, +d[3]).getDay()] + ')' + (d[4] ? ' ' + d[4] : '');
+  }
+  // 목록 두 번째 줄: 본문의 [주제] 들, 없으면 참석 요약(「씨젠 2명 · 브렉스 4명」)
+  function msub(m){
+    var tp = [], seen = {};
+    String(m.body || '').split('\n').forEach(function(l){ var x = /^\s*\[([^\]]{1,30})\]/.exec(l); if (x && !seen[x[1]] && tp.length < 5) { seen[x[1]] = 1; tp.push(x[1].trim()); } });
+    var nc = (m.notes || []).length ? '작성 ' + m.notes.length + '명 · ' : '';
+    if (tp.length) return nc + tp.join(', ');
+    if (nc) return nc + (m.summary ? '요약 정리됨' : '요약 전');
+    return String(m.attendees || '').split(' / ').map(function(g){
+      var x = /^([^-:]+?)\s*[-:]\s*(.+)$/.exec(g); return x ? x[1].trim() + ' ' + x[2].split(',').filter(function(s){ return s.trim(); }).length + '명' : g;
+    }).join(' · ');
+  }
+  function mbody(t){
+    // 「## 소제목」은 소제목, 나머지는 줄 그대로
+    var out = '', buf = [];
+    function flush(){ if (buf.length) { out += '<div class="mtext">' + esc(buf.join('\n').replace(/^\n+|\n+$/g, '')) + '</div>'; buf = []; } }
+    String(t || '').split('\n').forEach(function(l){ var h = /^#{1,4}\s+(.+)$/.exec(l); if (h) { flush(); out += '<h4>' + esc(h[1]) + '</h4>'; } else buf.push(l); });
+    flush(); return out;
+  }
+  function renderMinutes(){
+    var el = $('body-minutes'); if (!el) return;
+    if (medit && $('mform')) { medit.date = $('mDate').value.replace('T', ' '); medit.title = $('mTitle').value; medit.attendees = $('mAtt').value.split('\n').join(' / '); medit.body = $('mBody').value; }   // 다시 그려도 쓰던 글 유지
+    if (nedit && $('nText')) ntext = $('nText').value;   // 다시 그려도 쓰던 내 작성분 유지
+    var L = mlist || [], W = canWrite();
+    setCnt('minutes', mlist ? L.length : null);
+    if (!mlist) { el.innerHTML = '<p class="muted">회의록을 읽는 중…</p>'; return; }
+    if (!medit && (!msel || !L.some(function(m){ return m.id === msel; }))) msel = L[0] ? L[0].id : '';
+    var S = meetings(), rest = S && S.sheetRest ? S.sheetRest : [];
+    // 왼쪽: 월별 묶음(최신이 위)
+    var groups = [], gm = {};
+    L.forEach(function(m){ var k = String(m.date || '').slice(0, 7); if (!gm[k]) { gm[k] = []; groups.push(k); } gm[k].push(m); });
+    var thisY = String(new Date().getFullYear());
+    var left = '<div class="mhead"><b>회의록 ' + L.length + '건</b>' + (W ? '<button class="btn sm primary" type="button" data-mnew>＋ 새 회의록</button>' : '') + '</div>' +
+      (W && rest.length ? '<button class="btn sm mimport" type="button" data-mimport>시트 회의록 가져오기 (' + rest.length + '건)</button>' : '') +
+      (L.length ? groups.map(function(k){
+        var y = k.slice(0, 4), mo = +k.slice(5, 7);
+        return '<details class="mgrp" open><summary><span>' + (y === thisY ? '' : y + '년 ') + mo + '월</span><span class="muted">' + gm[k].length + '</span></summary>' +
+          gm[k].map(function(m){
+            return '<button type="button" class="mitem" data-mid="' + esc(m.id) + '"' + (m.id === msel && !(medit && !medit.id) ? ' aria-current="true"' : '') + '><b>' + fmtWhen(m.date) + ' · ' + esc(m.title) + '</b><span>' + esc(msub(m)) + '</span></button>';
+          }).join('') + '</details>';
+      }).join('') : '<p class="muted" style="margin:8px 4px">아직 작성한 회의록이 없습니다.</p>');
+    // 오른쪽: 보기 · 작성 · 수정
+    var right;
+    if (medit) {
+      var e = medit;
+      right = '<form class="mform" id="mform"><h3>' + (e.id ? '회의록 수정' : '새 회의록') + '</h3>' +
+        '<div class="mrow"><label>일시<input type="datetime-local" id="mDate" required value="' + esc(String(e.date || '').replace(' ', 'T')) + '"></label>' +
+        '<label class="grow">제목<input type="text" id="mTitle" required maxlength="120" value="' + esc(e.title || '') + '" placeholder="예: 화면 논의 및 질의사항"></label></div>' +
+        '<label>참석자<textarea id="mAtt" rows="2" placeholder="줄마다 한 회사(예: 씨젠 - 김의식 차장, 노경민 차장)">' + esc(String(e.attendees || '').split(' / ').join('\n')) + '</textarea></label>' +
+        '<label>내용<textarea id="mBody" rows="18" placeholder="[주제] 로 묶어 쓰면 목록에 주제가 보입니다. 「## 기타」처럼 쓰면 소제목이 됩니다.">' + esc(e.body || '') + '</textarea></label>' +
+        '<div class="macts"><span class="muted" id="mMsg" role="status"></span><button class="btn" type="button" data-mcancel>취소</button><button class="btn primary" type="submit"' + (mbusy ? ' disabled' : '') + '>저장</button></div></form>';
+    } else {
+      var m = L.filter(function(x){ return x.id === msel; })[0];
+      right = !m ? '<div class="wempty"><b>회의록이 없습니다</b><p>' + (W ? '[＋ 새 회의록]으로 작성하세요.' : '「일정/작업 · 쓰기」 권한이 있는 사람이 작성할 수 있습니다.') + '</p></div>' :
+        '<div class="mview"><div class="mtop"><h3>' + fmtWhen(m.date) + ' ' + esc(m.title) + '</h3>' +
+          (W ? '<button class="btn sm" type="button" data-medit>수정</button><button class="btn sm" type="button" data-mdel>지우기</button>' : '') + '</div>' +
+          (m.attendees ? '<p class="matt">참석: ' + esc(String(m.attendees).split(' / ').join(' · ')) + '</p>' : '') +
+          // 정리본(본문): 각자 작성한 내용을 [요약 정리]로 Claude가 합쳐 쓴다(직접 [수정]해도 된다)
+          '<div class="mcontent"><div class="msec"><h4>정리본</h4>' + sumBar(m, W) + '</div>' +
+            (m.summary ? '<p class="msum">요약 정리 · ' + esc(String(m.summary).replace('T', ' ').replace(/:\d\d\+\d\d:\d\d/, '')) + '</p>' : '') +
+            (mbody(m.body) || '<p class="muted">아직 정리본이 없습니다. 참석자가 각자 작성한 뒤 [요약 정리]를 누르면 Claude가 합쳐 씁니다.</p>') + '</div>' +
+          notesHtml(m, W) +
+          '<p class="mmeta">' + esc(m.by || '') + ' 등록' + (m.updatedBy && m.updatedAt !== m.createdAt ? ' · ' + esc(m.updatedBy) + ' ' + esc(String(m.updatedAt).slice(0, 16).replace('T', ' ')) + ' 수정' : '') + ' · .history/minutes/' + esc(m.id) + '.md</p></div>';
+    }
+    el.innerHTML = '<div class="mgrid"><aside class="card mlist" aria-label="회의록 목록">' + left + '</aside><section class="card mright">' + right + '</section></div>';
+    if (medit) { var f = $('mTitle'); if (f && !medit.focused) { (medit.id ? f : $('mDate')).focus(); medit.focused = true; } }
+  }
+  /* 각자 작성: 참석자마다 자기 내용을 쓴다(.history/minutes/{id}.notes/{작성자}.md). 내 것만 고친다 */
+  function noteTime(t){ return String(t || '').slice(5, 16).replace('T', ' ').replace('-', '/'); }
+  function notesHtml(m, W){
+    var N = m.notes || [], mine = N.filter(function(n){ return n.authorId === minMe; })[0];
+    var h = '<div class="mnotes"><div class="msec"><h4>각자 작성 <span class="muted">' + N.length + '</span></h4>' +
+      (W && !mine && nedit !== m.id ? '<button class="btn sm" type="button" data-nnew>＋ 내 내용 작성</button>' : '') + '</div>';
+    if (W && nedit === m.id) {
+      h += '<div class="nedit"><label for="nText">' + esc(myName || '내') + ' 작성</label><textarea id="nText" rows="10" placeholder="회의에서 내가 들은 · 정리한 내용을 적어 주세요. [주제] 로 묶어 쓰면 요약할 때 잘 합쳐집니다.">' + esc(ntext != null ? ntext : (mine ? mine.body : '')) + '</textarea>' +
+        '<div class="macts"><span class="muted" id="nMsg" role="status">' + (mine ? '모두 지우고 저장하면 내 작성분이 지워집니다.' : '') + '</span><button class="btn sm" type="button" data-ncancel>취소</button><button class="btn sm primary" type="button" data-nsave>저장</button></div></div>';
+    }
+    if (!N.length && nedit !== m.id) h += '<p class="muted" style="margin:6px 0 0">아직 각자 작성한 내용이 없습니다.</p>';
+    N.forEach(function(n){
+      if (n.authorId === minMe && nedit === m.id) return;
+      h += '<article class="note' + (n.authorId === minMe ? ' mine' : '') + '"><header><b>' + esc(n.author || n.authorId) + '</b><span class="muted">' + esc(noteTime(n.updatedAt)) + '</span>' +
+        (W && n.authorId === minMe ? '<button class="btn sm" type="button" data-nedit>수정</button>' : '') + '</header><div class="mtext">' + esc(n.body) + '</div></article>';
+    });
+    return h + '</div>';
+  }
+  // 요약 정리 버튼 · 진행 상태(작업 대기열 kind 'minutes')
+  function sumBar(m, W){
+    var j = mjobs[m.id], busy = j && (j.status === '대기' || j.status === '진행 중'), n = (m.notes || []).length;
+    var st = busy ? '<span class="pill prog">Claude가 요약 중' + (j.status === '대기' ? '(대기)' : '') + '</span>' :
+      j && j.status === '실패' ? '<span class="pill warn" title="' + esc(j.note || '') + '">요약 실패</span>' : '';
+    return st + (W ? '<button class="btn sm primary" type="button" data-msum' + (busy || !n ? ' disabled' : '') + ' title="' + (n ? '각자 작성한 ' + n + '건을 합쳐 정리본을 씁니다' : '각자 작성한 내용이 없습니다') + '">' + (m.body ? '다시 요약 정리' : '요약 정리') + '</button>' : '');
+  }
+  var mjobs = {}, mjTimer = null;
+  function loadMjobs(){
+    return api('/api/jobs').then(function(j){
+      var o = {}; (j.items || []).forEach(function(x){ if (x.kind === 'minutes' && x.minute && (!o[x.minute] || String(x.createdAt) > String(o[x.minute].createdAt))) o[x.minute] = x; });
+      var wasBusy = Object.keys(mjobs).some(function(k){ return mjobs[k].status === '대기' || mjobs[k].status === '진행 중'; });
+      mjobs = o;
+      var busy = Object.keys(o).some(function(k){ return o[k].status === '대기' || o[k].status === '진행 중'; });
+      clearTimeout(mjTimer); if (busy) mjTimer = setTimeout(function(){ loadMjobs().then(function(){ if (cur === 'minutes') renderMinutes(); }); }, 8000);
+      if (wasBusy && !busy) return loadMd().then(function(){ toast('요약 정리가 끝났습니다.'); });
+    }).catch(function(){});
+  }
+  function mPick(id){ msel = id; medit = null; nedit = ''; ntext = null; try { var u = new URL(location.href); u.searchParams.set('m', id); history.replaceState(null, '', u); } catch(x){} renderMinutes(); }
+  function nowLocal(){ var d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 16).replace('T', ' ').replace(/:\d\d$/, ':00'); }
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-mid],[data-mnew],[data-medit],[data-mdel],[data-mcancel],[data-mimport],[data-mopen],[data-nnew],[data-nedit],[data-ncancel],[data-nsave],[data-msum]'); if (!b) return;
+    if (b.dataset.mopen) { select('minutes'); mPick(b.dataset.mopen); return; }
+    if (b.dataset.mid != null) { if ((medit || (nedit && ntext !== null && $('nText') && $('nText').value !== ntext0)) && !confirm('작성 중인 내용을 버리고 이동할까요?')) return; return mPick(b.dataset.mid); }
+    // 각자 작성: 내 내용 쓰기 · 고치기 · 저장
+    if (b.hasAttribute('data-nnew') || b.hasAttribute('data-nedit')) { nedit = msel; ntext = null; renderMinutes(); var t = $('nText'); if (t) { ntext0 = t.value; t.focus(); t.scrollIntoView({ block: 'nearest' }); } return; }
+    if (b.hasAttribute('data-ncancel')) { nedit = ''; ntext = null; return renderMinutes(); }
+    if (b.hasAttribute('data-nsave')) {
+      var txt = $('nText').value; b.disabled = true; $('nMsg').textContent = '저장하는 중…';
+      api('/api/minutes', { action: 'note', id: msel, body: txt }).then(function(){ nedit = ''; ntext = null; return loadMd(); })
+        .then(function(){ renderMinutes(); toast(txt.trim() ? '내 작성분을 저장했습니다. 모든 작업자에게 공유됩니다.' : '내 작성분을 지웠습니다.'); })
+        .catch(function(err){ b.disabled = false; var m2 = $('nMsg'); if (m2) m2.textContent = err.message; });
+      return;
+    }
+    if (b.hasAttribute('data-msum')) {
+      var mm = (mlist || []).filter(function(x){ return x.id === msel; })[0]; if (!mm) return;
+      var nn = (mm.notes || []).length;
+      if (!confirm('각자 작성한 ' + nn + '건(' + mm.notes.map(function(n){ return n.author; }).join(', ') + ')을 Claude가 합쳐 정리본을 씁니다.' + (mm.body ? '\n지금 정리본은 새 요약으로 바뀝니다.' : '') + '\n요청할까요?')) return;
+      b.disabled = true;
+      api('/api/jobs', { action: 'add', kind: 'minutes', minute: mm.id, name: mm.title, text: '각자 작성 ' + nn + '건 요약 정리', by: myName })
+        .then(function(){ return loadMjobs(); }).then(function(){ renderMinutes(); toast('요약 정리를 요청했습니다. 요청 감시 중인 Claude가 정리하면 여기 바로 나옵니다.'); })
+        .catch(function(err){ b.disabled = false; alert(err.message); });
+      return;
+    }
+    if (b.hasAttribute('data-mnew')) { medit = { date: nowLocal(), title: '', attendees: '', body: '' }; return renderMinutes(); }
+    if (b.hasAttribute('data-mcancel')) { medit = null; return renderMinutes(); }
+    var m = (mlist || []).filter(function(x){ return x.id === msel; })[0];
+    if (b.hasAttribute('data-medit') && m) { medit = { id: m.id, date: m.date, title: m.title, attendees: m.attendees, body: m.body }; return renderMinutes(); }
+    if (b.hasAttribute('data-mdel') && m) {
+      if (!confirm('「' + m.title + '」 회의록을 지울까요? 모든 작업자에게서 지워집니다.')) return;
+      api('/api/minutes', { action: 'delete', id: m.id }).then(function(){ msel = ''; return loadMd(); }).then(function(){ renderMinutes(); toast('회의록을 지웠습니다.'); }).catch(function(err){ alert(err.message); });
+      return;
+    }
+    if (b.hasAttribute('data-mimport')) {
+      var rest = (meetings() || {}).sheetRest || []; if (!rest.length) return;
+      if (!confirm('시트 「' + minName() + '」의 회의 ' + rest.length + '건을 회의록(md)으로 옮길까요? 시트는 그대로 둡니다.')) return;
+      b.disabled = true; var n = 0;
+      rest.reduce(function(p, s){
+        return p.then(function(){
+          var att = '', body = [];
+          s.fields.forEach(function(f){ if (/^참석/.test(f[0])) att = f[1]; else if (/^내용$/.test(f[0])) body.unshift(f[1]); else body.push('## ' + f[0] + '\n' + f[1]); });
+          return api('/api/minutes', { action: 'save', date: sKey(s), title: s.title || '회의', attendees: att, body: body.join('\n\n') }).then(function(){ n++; b.textContent = '옮기는 중… ' + n + ' / ' + rest.length; });
+        });
+      }, Promise.resolve()).then(loadMd).then(function(){ renderMinutes(); toast(n + '건을 옮겼습니다.'); }).catch(function(err){ alert('옮기다 멈췄습니다(' + n + '건 완료).\n' + err.message); loadMd().then(renderMinutes); });
+    }
+  });
+  document.addEventListener('submit', function(e){
+    if (e.target.id !== 'mform') return; e.preventDefault();
+    var d = $('mDate').value.replace('T', ' ');
+    medit.date = d; medit.title = $('mTitle').value; medit.attendees = $('mAtt').value.split('\n').join(' / '); medit.body = $('mBody').value;
+    mbusy = true; $('mMsg').textContent = '저장하는 중…';
+    api('/api/minutes', { action: 'save', id: medit.id || '', date: d, title: medit.title, attendees: $('mAtt').value, body: medit.body }).then(function(j){
+      mbusy = false; medit = null; msel = j.item && j.item.id; return loadMd();
+    }).then(function(){ mPick(msel); toast('회의록을 저장했습니다. 모든 작업자에게 공유됩니다.'); if (cur === 'weekly') renderWeekly(); })
+      .catch(function(err){ mbusy = false; var m = $('mMsg'); if (m) m.textContent = err.message; });
+  });
+  $('genTok').addEventListener('click', function(){ var a = new Uint8Array(24); crypto.getRandomValues(a); $('fTok').value = Array.prototype.map.call(a, function(x){ return ('0' + x.toString(16)).slice(-2); }).join(''); $('fTok').select(); });
+  // 스크립트 복사: 창을 열 때 미리 받아 두고(누른 순간 바로 복사해야 브라우저가 막지 않음), 안 되면 옛 방식 → 그래도 안 되면 글 상자로 보여 줌
+  //  (알림은 창(dialog) 위에 보이도록 창 안 글로)
+  var gsText = '';
+  function gsLoad(){ if (gsText) return Promise.resolve(gsText); return fetch('tools/google-sheet-bridge.gs', { cache: 'no-store' }).then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); }).then(function(t){ gsText = t; return t; }); }
+  function copyOld(t){
+    var ta = document.createElement('textarea'); ta.value = t; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;left:-9999px;top:0';
+    $('dlgForm').appendChild(ta); ta.select(); var ok = false; try { ok = document.execCommand('copy'); } catch(x){} ta.remove(); return ok;
+  }
+  function copyDone(ok){
+    var b = $('copyGs');
+    if (ok) { b.textContent = '복사됨 ✓'; $('dlgMsg').textContent = '연결 스크립트를 복사했습니다. Apps Script의 Code.gs 내용을 모두 지우고 붙여 넣은 뒤 저장하세요.'; setTimeout(function(){ b.textContent = '스크립트 복사'; }, 2500); return; }
+    $('dlgMsg').textContent = '자동 복사가 막혀 있습니다. 아래 상자에서 Ctrl+A → Ctrl+C로 복사하세요.';
+    var box = $('gsBox'); if (!box) { box = document.createElement('textarea'); box.id = 'gsBox'; box.readOnly = true; box.rows = 8; box.style.cssText = 'width:100%;margin-top:8px;font:12px/1.5 ui-monospace,Consolas,monospace'; b.closest('li').appendChild(box); }
+    box.value = gsText; box.focus(); box.select();
+  }
+  $('copyGs').addEventListener('click', function(){
+    if (gsText) {
+      // 누른 순간 바로 복사(execCommand). 안 되면 클립보드 API(1.5초 안에 답이 없으면 글 상자)
+      if (copyOld(gsText)) return copyDone(true);
+      if (!navigator.clipboard) return copyDone(false);
+      var settled = false, tm = setTimeout(function(){ if (!settled) { settled = true; copyDone(false); } }, 1500);
+      navigator.clipboard.writeText(gsText).then(function(){ if (!settled) { settled = true; clearTimeout(tm); copyDone(true); } }, function(){ if (!settled) { settled = true; clearTimeout(tm); copyDone(false); } });
+      return;
+    }
+    gsLoad().then(function(t){ copyDone(copyOld(t)); }).catch(function(e){ $('dlgMsg').textContent = '스크립트를 읽지 못했습니다(' + e.message + '). 「연결 스크립트」 링크를 열어 복사하세요.'; });
+  });
+  $('fSheet').addEventListener('change', function(){ var m = /[#&?]gid=(\d+)/.exec($('fSheet').value); if (m) $('fGid').value = m[1]; });
+  $('dlgSave').addEventListener('click', function(){
+    var web = $('fWeb').value.trim();
+    if (!web && !(conf && conf.configured)) { $('dlgMsg').textContent = '웹 앱 주소를 넣어 주세요.'; $('fWeb').focus(); return; }
+    if (!$('fTok').value.trim() && !(conf && conf.configured)) { $('dlgMsg').textContent = '비밀값을 넣어 주세요.'; $('fTok').focus(); return; }
+    var cols = null;
+    if (!$('colBox').hidden) { cols = {}; document.querySelectorAll('#cols select').forEach(function(s){ cols[s.dataset.f] = s.value; }); }
+    var body = { action: 'config', sheetUrl: $('fSheet').value.trim(), webapp: web, token: $('fTok').value.trim(), wbsGid: $('fGid').value.trim(), minutes: $('fMin').value.trim(), cols: cols };
+    // 웹 앱 주소 · 비밀값을 비워 두면 서버가 지금 값을 그대로 둔다
+    $('dlgSave').disabled = true; $('dlgMsg').textContent = '저장하고 연결을 확인하는 중…';
+    api('/api/sheet', body).then(function(){ return api('/api/sheet', { action: 'test' }); }).then(function(j){
+      var names = (j.sheets || []).map(function(s){ return s.name; });
+      $('dlgMsg').textContent = '연결되었습니다 · 탭 ' + names.length + '개' + (names.indexOf($('fMin').value.trim()) < 0 ? ' · 회의록 탭 이름을 찾지 못했습니다(' + names.filter(function(n){ return /회의/.test(n); }).join(', ') + ')' : '');
+      return loadConf().then(reloadAll);
+    }).catch(function(e){ $('dlgMsg').textContent = '연결하지 못했습니다: ' + e.message; loadConf(); })
+      .then(function(){ $('dlgSave').disabled = false; });
+  });
+
+  function reloadAll(){
+    renderSchedule(); renderWeekly();
+    // 서버는 한 번에 하나씩 처리하므로 빠른 것(회의록 · 정책)을 먼저 부르고 시트(느림)는 뒤에
+    var fast = [Promise.all([loadMd(), loadMjobs()]).then(function(){ renderMinutes(); }), loadPols(), loadPvs(), loadPlan()];
+    return Promise.all(fast.concat([loadWbs().then(function(){ renderSchedule(); if (cur === 'weekly') renderWeekly(); }), loadMins().then(function(){ renderMinutes(); })]))
+      .then(function(){ renderWeekly(); });
+  }
+  $('reload').addEventListener('click', function(){ wbs = null; mins = null; loadConf().then(reloadAll).then(function(){ toast('새로 읽었습니다.'); }); });
+  // 지난번에 받아 둔 자료로 먼저 그린다(메뉴를 옮겼다 돌아와도 바로 보임). 새 자료가 오면 바뀐다
+  (function(){
+    var b = snapLoad('bl'), p = snapLoad('pv'), d = snapLoad('disc'), m = snapLoad('min');
+    if (b && b.screens) { BL = b; var n = 0; b.screens.forEach(function(s){ n += (s.wait || []).length; }); setCnt('backlog', n); }
+    if (p && p.length) { PVS = p; pvs = p.filter(function(x){ return !x.closed; }).map(function(x){ return { id: x.id, title: x.title, status: x.status, by: x.by, date: dates(x.date)[0] || null }; }); setCnt('provisional', p.filter(function(x){ return /승인 대기/.test(x.status); }).length, true); }
+    if (d && d.pd) { DISC = d; setCnt('decisions', d.pd.filter(function(x){ return !x.closed; }).length + d.ca.filter(function(x){ return x.status !== '결정'; }).length); }
+    if (m && m.items) { mlist = m.items; minMe = m.me || ''; }
+  })();
+  select(new URLSearchParams(location.search).get('tab') || TABS[0].k);
+  loadConf().then(reloadAll);
+})();
+</script>
+<script src="appnav.js" defer></script>
+</body>
+</html>

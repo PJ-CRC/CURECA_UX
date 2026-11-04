@@ -83,6 +83,9 @@ table{border-collapse:collapse;width:100%;font-size:13.8px}
 th,td{padding:8px 11px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
 th{background:var(--surface-2);font-weight:700;white-space:nowrap}
 tr:last-child td{border-bottom:none}
+/* 넓은 표: 칸 폭은 widen()이 정하고(표 폭 = 칸 폭 합), 상세보다 좁으면 상세 폭까지 늘어난다. 한글은 낱말 단위로 줄바꿈 */
+table.wide{table-layout:fixed;min-width:100%}
+table.wide td{word-break:keep-all;overflow-wrap:anywhere}
 .main img{display:block;max-width:100%;height:auto;border:1px solid var(--line);border-radius:8px;background:#fff;margin:12px 0 4px;cursor:zoom-in}
 .main p>em:only-child{display:block;font-size:12.5px;color:var(--ink-3);font-style:normal}
 /* 대분류를 고르면 하위 항목을 폴더 모양 카드로 보여 준다(색은 순서대로 돌아가며, 글자는 어두운 색 고정)
@@ -101,6 +104,57 @@ tr:last-child td{border-bottom:none}
 .kid .ft{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto;padding-top:14px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
 .kid .ft span:last-child{font-size:18px;font-weight:400;letter-spacing:0}
 .pager{display:flex;justify-content:space-between;gap:10px;margin-top:28px;padding-top:16px;border-top:1px solid var(--line)}
+.docpath{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:14px 0 0;font-size:12.5px;color:var(--ink-3)}
+.docpath code{padding:2px 8px;border-radius:6px;background:var(--surface-2);color:var(--ink-2);font-size:12.5px}
+.docpath span{color:var(--ink-3)}
+/* 창 높이에 맞춤(넓은 화면): 왼쪽 목차와 오른쪽 상세를 같은 높이로, 스크롤은 각자 안에서. 높이는 fit()이 --fit으로 정한다 */
+.layout.fit{height:var(--fit);align-items:stretch}
+.layout.fit .side{position:static;max-height:none;height:100%}
+.layout.fit .main{height:100%;overflow:auto;min-height:0}
+html.embed.fitted,html.embed.fitted body{overflow:hidden}
+/* 화면 정의서(meta.view 'screens'): 왼쪽 메뉴별 화면 목록 · 오른쪽 화면 정보 · 반영 대기 목록 */
+:root{--sc-warn:#b35900;--sc-warn-soft:#fff1e0}
+:root[data-theme="dark"]{--sc-warn:#f0a24f;--sc-warn-soft:#38270f}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--sc-warn:#f0a24f;--sc-warn-soft:#38270f}}
+.sc-grp>.node .sc-cnt{margin-left:auto;color:var(--ink-3);font-size:12.5px;font-weight:600}
+.tree ul.sc-list{border-left:0;margin:2px 0 6px;padding:0}
+.sc-it{display:flex;flex-direction:column;align-items:flex-start;gap:2px;width:100%;text-align:left;border:0;background:none;border-radius:9px;padding:9px 12px;color:var(--ink);cursor:pointer}
+.sc-it:hover{background:var(--surface-2)}
+.sc-it.cur{background:var(--accent-soft)}
+.sc-it b{font-size:14.5px;font-weight:700;line-height:1.35}
+.sc-it span{font-size:12.5px;color:var(--ink-3)}
+.sc-it i{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px;font-style:normal}
+.sc-chip{display:inline-block;padding:1px 8px;border-radius:7px;background:var(--surface-2);color:var(--ink-2);font-size:11.5px;font-style:normal;font-weight:600;white-space:nowrap}
+.sc-chip.warn{background:var(--sc-warn-soft);color:var(--sc-warn)}
+.sc-chip.big{font-size:12.5px;padding:3px 10px;border-radius:8px}
+.sc-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--line);margin-bottom:18px}
+.sc-title{margin:0;font-size:22px;font-weight:800;line-height:1.3}
+.sc-sub{margin:4px 0 0!important;color:var(--ink-2);font-size:14px}
+.sc-pv{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:12px 16px;border-radius:12px;background:var(--sc-warn-soft);color:var(--ink);font-size:14px;margin:0 0 14px}
+.sc-pv b{color:var(--sc-warn)}
+.sc-pvst{color:var(--sc-warn);font-size:12.5px}
+.sc-info{display:grid;grid-template-columns:160px minmax(0,1fr);gap:8px 16px;margin:0 0 6px;padding:16px 20px;border-radius:12px;background:var(--surface-2);font-size:14px}
+.sc-info dt{color:var(--ink-3)}
+.sc-info dd{margin:0;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.sc-info a{color:var(--accent)}
+.sc-id{display:inline-block;padding:1px 8px;border-radius:6px;border:0;background:var(--accent-soft);color:var(--accent);font:12.5px ui-monospace,Consolas,monospace;cursor:default}
+button.sc-id{cursor:pointer}
+button.sc-id:hover{text-decoration:underline}
+.sc-muted{color:var(--ink-3);font-size:13px}
+.main h3.sc-h{font-size:17px;margin:24px 0 10px}
+.sc-filter{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+.sc-filter button{padding:5px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);font:inherit;font-size:13px;cursor:pointer}
+.sc-filter button b{font-weight:700}
+.sc-filter button.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+table.sc-fix{width:100%;font-size:13.5px}
+table.sc-fix td{vertical-align:top}
+table.sc-fix td.k{white-space:nowrap}
+.sc-st{display:inline-block;padding:1px 8px;border-radius:7px;background:var(--surface-2);color:var(--ink-2);font-size:12px;font-weight:600;white-space:nowrap}
+.sc-st.ok{background:var(--ok-soft);color:var(--ok)}
+.sc-st.warn{background:var(--sc-warn-soft);color:var(--sc-warn)}
+.sc-st.off{color:var(--ink-3)}
+.sc-body{border-top:1px solid var(--line);padding-top:6px}
+@media (max-width:760px){ .sc-info{grid-template-columns:1fr} .sc-head{flex-direction:column} }
 .pager button{border:1px solid var(--accent);background:var(--accent-soft);color:var(--accent);font-weight:700;border-radius:8px;padding:8px 14px;font-size:13.5px;max-width:48%;text-align:left}
 .pager button:hover{background:var(--accent);color:#fff}
 :root[data-theme="dark"] .pager button:hover{color:#0f1115}
@@ -125,6 +179,8 @@ details.how pre{white-space:pre-wrap}
 .editor textarea{width:100%;min-height:180px;padding:12px 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);font:14px/1.6 Pretendard,-apple-system,"Segoe UI","Malgun Gothic",sans-serif;resize:vertical}
 .editor input{width:100%;padding:8px 11px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:14px;margin-top:8px}
 .editor .tip{font-size:12.5px;color:var(--ink-3);margin:6px 0 0}
+.edit-pane{margin:28px 0 8px;padding:18px 20px;border:2px solid var(--accent);border-radius:12px;background:var(--surface)}
+.edit-pane h3{margin:0 0 10px;font-size:16px;font-weight:800}
 .editor .act{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
 .btn{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 14px;font-size:13.5px}
 .btn:hover{border-color:var(--accent)}
@@ -178,6 +234,7 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
 <nav class="appnav" aria-label="도구 메뉴">
   <b class="appnav-brand">Figma AI Run</b>
   <a href="Setup.html">시작 안내</a>
+  <a href="Work.html">일정/작업</a>
   <a href="Common_UX_Guide.html" aria-current="page">UX 문서</a>
   <a href="Figma_Workbench.html">Figma Workbench</a>
   <a href="Change_History.html">변경 이력</a>
@@ -219,6 +276,10 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
   /* 가이드는 작업 이력과 함께 깃으로 공유되는 .history/guides/{id}/ 에 있다. 고친 내용은 rev/ 수정본으로 쌓이고 가장 최근 것이 지금 내용이다 */
   var base = '.history/guides/' + id + '/';
   var G = null, applied = {}, names = {}, editPage = {}, meta = {}, head0 = '', secs = [], byId = {}, cur = null, open = {}, editing = false;
+  /* UX 문서 카테고리(meta.kind) 이름. UX가이드 외 카테고리(작업규칙 · 정책서 · 기준데이터 · 화면 정의서)는 고치면 늘 「연관 항목 찾기」로 이어진다(scope 'spec') */
+  var KL = { guide: 'UX가이드', rule: '작업규칙', policy: '정책서', data: '기준데이터', spec: '화면 정의서' };
+  function kindName(k){ return KL[k || 'guide'] || '문서'; }
+  function isDocKind(k){ return !!k && k !== 'guide'; }
   function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
   function fail(t){ $('title').textContent = 'UX 가이드'; $('main').innerHTML = '<p class="empty">' + esc(t) + '</p>'; $('tree').innerHTML = ''; $('editBtn').hidden = true; }
   function toast(t){ var e = document.createElement('div'); e.className = 'toast'; e.setAttribute('role', 'status'); e.textContent = t; document.body.appendChild(e); setTimeout(function(){ e.remove(); }, 5000); }
@@ -243,14 +304,109 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
       return G;
     });
   }
+  /* 파일형 문서(meta.format 'files'): 파일(fileList, 순서대로)마다 지금 내용을 읽어 하나로 보인다.
+     파일 하나 = 대분류 하나(파일의 # 제목 → ##, ## → ###, ### → #### 로 한 칸씩 내림). FILEMAP[n] = n번째 대분류의 파일 */
+  var FILES = null, FILEMAP = null;
+  /* 파일형 문서의 원본 폴더(문서 폴더 기준, 끝에 /): meta.filesDir — 없으면 'files/', 빈 값이면 문서 폴더 바로 아래(예: .history/guides/rule/schedule.md) */
+  // 문서 경로 보기: 「rules/../constitution.md」 → 「constitution.md」(깃 저장소의 실제 위치)
+  function npath(p){ var o = []; String(p).split('/').forEach(function(s){ if (s === '..') o.pop(); else if (s && s !== '.') o.push(s); }); return o.join('/'); }
+  function fdirOf(m){ var d = m && m.filesDir !== undefined ? String(m.filesDir) : 'files'; return d ? d.replace(/\/+$/, '') + '/' : ''; }
+  /* 제목 단계 내리기(코드 블록 안은 그대로): n칸 */
+  function demote(t, n){
+    var fence = false, add = new Array((n || 1) + 1).join('#');
+    return String(t).split('\n').map(function(l){
+      if (/^\s*(```|~~~)/.test(l)) fence = !fence;
+      return !fence && /^#{1,5}\s/.test(l) ? (add + l).replace(/^#{7,}/, '######') : l;
+    }).join('\n').replace(/\s+$/, '');
+  }
+  /* 파일 맨 위 머리말(--- 사이 key: value)을 떼어 낸다 */
+  function front(t){
+    var m = t.match(/^---\n([\s\S]*?)\n---\n?/); if (!m) return { fm: null, body: t };
+    var fm = []; m[1].split('\n').forEach(function(l){ var x = l.match(/^([A-Za-z_][\w-]*):\s?(.*)$/); if (x) fm.push([x[1], x[2].trim()]); });
+    return { fm: fm, body: t.slice(m[0].length) };
+  }
+  function cell(s){ return String(s == null ? '' : s).replace(/\r?\n/g, ' ').replace(/\|/g, '\\|').trim(); }
+  function fmTable(fm){
+    var rows = fm.filter(function(r){ return r[1] && r[1] !== '[]'; });
+    return rows.length ? '| 항목 | 값 |\n| --- | --- |\n' + rows.map(function(r){ return '| `' + r[0] + '` | ' + cell(r[1].replace(/^\[(.*)\]$/, '$1')) + ' |'; }).join('\n') + '\n' : '';
+  }
+  /* CSV(따옴표 · 칸 안 줄바꿈 처리) → 행 배열 */
+  function csvRows(t){
+    var rows = [], row = [], f = '', q = false;
+    for (var i = 0; i < t.length; i++) {
+      var c = t[i];
+      if (q) { if (c === '"') { if (t[i + 1] === '"') { f += '"'; i++; } else q = false; } else f += c; }
+      else if (c === '"') q = true;
+      else if (c === ',') { row.push(f); f = ''; }
+      else if (c === '\n') { row.push(f); rows.push(row); row = []; f = ''; }
+      else if (c !== '\r') f += c;
+    }
+    if (f !== '' || row.length) { row.push(f); rows.push(row); }
+    return rows.filter(function(r){ return r.some(function(x){ return x.trim(); }); });
+  }
+  function csvTable(t){
+    var rows = csvRows(t); if (!rows.length) return '(빈 표)';
+    var w = rows[0].length;
+    return '| ' + rows[0].map(cell).join(' | ') + ' |\n|' + new Array(w + 1).join(' --- |') + '\n' +
+      rows.slice(1).map(function(r){ var x = r.slice(0, w); while (x.length < w) x.push(''); return '| ' + x.map(cell).join(' | ') + ' |'; }).join('\n') + '\n\n*' + (rows.length - 1) + '행*';
+  }
+  /* 파일 하나 → 문서 조각. lv = 이 파일 제목이 놓일 단계(2 = ## 대분류, 3 = ### 항목). 머리말은 제목 아래 표로, CSV는 표로 */
+  function chunk(m, path, t, lv){
+    t = String(t || '').replace(/^﻿/, '').replace(/\r\n/g, '\n');
+    var title = (m.titles && m.titles[path]) || '', H = new Array(lv + 1).join('#');
+    if (/\.csv$/i.test(path)) return H + ' ' + (title || path) + '\n\n' + csvTable(t);
+    var f = front(t), d = demote(f.body, lv - 1), lines = d.split('\n');
+    var hi = -1; for (var i = 0; i < lines.length; i++) { if (/^#{1,6}\s/.test(lines[i])) { hi = i; break; } }
+    if (hi < 0 || lines[hi].indexOf(H + ' ') !== 0) { lines.unshift(H + ' ' + (title || path), ''); hi = 0; }
+    else if (title) lines[hi] = H + ' ' + title;
+    if (f.fm) lines.splice(hi + 1, 0, '', fmTable(f.fm));
+    return lines.join('\n').replace(/\s+$/, '');
+  }
+  /* 파일형 문서를 하나로: layout 'files'(기본: 파일 = 대분류) · 'folders'(맨 위 폴더 = 대분류, 파일 = 항목. meta.groups로 폴더 이름 · 순서, 맨 위 파일은 ''). meta.overview 파일은 「개요」로.
+     FILEMAP = 대분류 · 항목 제목마다 그 파일(문서 순서대로, 폴더 대분류는 '') */
+  function combine(m, texts){
+    var lay = m.layout || 'files', pieces = [{ t: '# ' + (m.title || id) + '\n\n' + (m.summary ? m.summary + '\n\n' : ''), f: '' }], byPath = {};
+    FILES.forEach(function(f, i){ byPath[f.path] = texts[i]; });
+    if (m.overview && byPath[m.overview] != null) pieces[0].t += demote(front(String(byPath[m.overview]).replace(/^﻿/, '').replace(/\r\n/g, '\n')).body, 2) + '\n\n';
+    var list = FILES.filter(function(f){ return f.path !== m.overview; });
+    if (lay === 'folders') {
+      var groups = {}, order = [];
+      list.forEach(function(f){ var g = f.path.indexOf('/') > 0 ? f.path.split('/')[0] : '.'; if (!groups[g]) { groups[g] = []; order.push(g); } groups[g].push(f); });
+      var G0 = m.groups || {}, go = m.groupOrder || Object.keys(G0);   // 폴더 순서: meta.groupOrder(없으면 groups 순서), 나머지는 파일 순서대로
+      var keys = go.filter(function(k){ return groups[k]; }).concat(order.filter(function(k){ return go.indexOf(k) < 0; }));
+      keys.forEach(function(k){
+        pieces.push({ t: '## ' + (G0[k] || k || '기타') + '\n\n', f: '' });
+        groups[k].forEach(function(f){ pieces.push({ t: chunk(m, f.path, byPath[f.path], 3) + '\n\n', f: f.path }); });
+      });
+    } else list.forEach(function(f){ pieces.push({ t: chunk(m, f.path, byPath[f.path], 2) + '\n\n', f: f.path }); });
+    /* split()과 같은 규칙으로 제목을 세며 주인 파일을 적는다 */
+    FILEMAP = []; var fence = false, l1 = false, md = '';
+    pieces.forEach(function(p, pi){
+      p.t.split('\n').forEach(function(l){
+        if (/^\s*(```|~~~)/.test(l)) fence = !fence;
+        var x = !fence && l.match(/^(#{1,3})\s/); if (!x || (pi === 0 && x[1] === '#')) return;
+        if (x[1] === '##') { l1 = true; FILEMAP.push(p.f); } else if (x[1] === '###' && l1) FILEMAP.push(p.f);
+      });
+      md += p.t;
+    });
+    return md;
+  }
   function load(keepSec){
     return info().then(function(g){
       if (!g) throw 0;
-      return Promise.all([
-        fetch(base + 'meta.json', { cache: 'no-store' }).then(function(r){ if (!r.ok) throw 0; return r.json(); }),
-        fetch(g.mdPath || base + 'guide.md', { cache: 'no-store' }).then(function(r){ if (!r.ok) throw 0; return r.text(); })
-      ]);
-    }).then(function(d){ meta = d[0]; head(meta); build(d[1], keepSec); fixes(); itemDates(); }, function(){ fail('이 가이드를 찾지 못했습니다: ' + id); });
+      var metaP = fetch(base + 'meta.json', { cache: 'no-store' }).then(function(r){ if (!r.ok) throw 0; return r.json(); });
+      if (g.fileList && g.fileList.length) {
+        FILES = g.fileList;
+        // 파일이 많으면(정책서 93 · 화면 정의서 187) 한 번에 받는다(/api/files). 안 되면 하나씩
+        var paths = FILES.map(function(f){ return f.mdPath; });
+        var textsP = post('/api/files', { paths: paths }).then(function(j){ var o = (j && j.files) || {}; if (!Object.keys(o).length && paths.length) throw 0; return paths.map(function(p){ return o[p] || ''; }); })
+          .catch(function(){ return Promise.all(FILES.map(function(f){ return fetch(f.mdPath, { cache: 'no-store' }).then(function(r){ return r.ok ? r.text() : ''; }); })); });
+        return Promise.all([metaP, textsP])
+          .then(function(d){ return d[0].view === 'screens' ? [d[0], null, d[1]] : [d[0], combine(d[0], d[1])]; });
+      }
+      FILES = FILEMAP = null;
+      return Promise.all([metaP, fetch(g.mdPath || base + 'guide.md', { cache: 'no-store' }).then(function(r){ if (!r.ok) throw 0; return r.text(); })]);
+    }).then(function(d){ meta = d[0]; head(meta); fit(); if (d[2]) { scBuild(d[2]); fixes(); return; } build(d[1], keepSec); fixes(); itemDates(); }, function(){ fail('이 가이드를 찾지 못했습니다: ' + id); });
   }
   /* 권한: 「UX 문서 · 쓰기」가 없으면 보기만 — 수정 요청 버튼 · 수정 반영 안내(연관 항목 찾기 등)를 숨긴다(서버도 막는다) */
   fetch('/api/me', { cache: 'no-store' }).then(function(r){ return r.json(); }).then(function(m){
@@ -263,8 +419,8 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
   function appliedKeys(){ return Object.keys(applied).filter(function(k){ var a = applied[k] || {}, ds = a.docs || {}; return a.guideId === id || Object.keys(ds).some(function(t){ return ds[t] && ds[t].id === id; }); }); }
   function head(m){
     document.title = m.title || 'UX Guide';
-    /* 돌아가기: 그 문서 종류의 탭으로 (정의서 kind:'spec') */
-    var bk = document.querySelector('.back'); if (bk) bk.href = m.kind === 'spec' ? 'Common_UX_Guide.html?doc=spec' : 'Common_UX_Guide.html#gdTitle';
+    /* 돌아가기: 그 문서 카테고리의 탭으로 (?doc=kind, 없으면 UX가이드) */
+    var bk = document.querySelector('.back'); if (bk) bk.href = 'Common_UX_Guide.html?doc=' + (m.kind || 'guide');
     $('title').textContent = m.title || id;
     var pills = [], keys = appliedKeys();
     if (keys.length) pills.push('<span class="pill on">내 작업 기준 <b>' + esc(keys.map(function(k){ return names[k] || k.slice(0, 6); }).join(', ')) + '</b></span>');
@@ -297,6 +453,28 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
     });
     return { head: head.join(''), secs: out };
   }
+  /* 넓은 표(칸 4개 이상, 기준데이터 CSV 등): 칸마다 가장 긴 글이 2줄 안팎으로 들어가는 폭을 준다(머리글보다 좁지 않게, 80~480px).
+     칸 폭을 다 더한 것이 표 폭이고, 상세보다 넓으면 좌우로 스크롤된다(.tbl). 좁으면 상세 폭에 맞춰 늘어난다 */
+  var measureCtx = null;
+  function textW(s, bold){
+    if (!measureCtx) measureCtx = document.createElement('canvas').getContext('2d');
+    measureCtx.font = (bold ? '700 ' : '400 ') + '13.8px Pretendard, "Malgun Gothic", sans-serif';
+    return measureCtx.measureText(String(s).replace(/\s+/g, ' ').trim()).width;
+  }
+  function widen(t){
+    var rows = t.rows; if (!rows.length || rows[0].cells.length < 4) return;
+    var n = rows[0].cells.length, need = [];
+    for (var c = 0; c < n; c++) {
+      var head = rows[0].cells[c] ? textW(rows[0].cells[c].textContent, true) : 0, body = 0;
+      for (var r = 1; r < rows.length; r++) { var cl = rows[r].cells[c]; if (cl) body = Math.max(body, textW(cl.textContent)); }
+      need.push(Math.round(Math.min(480, Math.max(80, head, body / 2 * 1.15 + 12)) + 22));   // 낱말 단위 줄바꿈 여유 15%, 22 = 칸 좌우 여백
+    }
+    t.classList.add('wide');
+    var cg = document.createElement('colgroup');
+    need.forEach(function(px){ var col = document.createElement('col'); col.style.width = px + 'px'; cg.appendChild(col); });
+    t.insertBefore(cg, t.firstChild);
+    t.style.width = need.reduce(function(a, b){ return a + b; }, 0) + 'px';
+  }
   function render(raw){
     var box = document.createElement('div');
     box.innerHTML = marked.parse(raw);
@@ -305,7 +483,7 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
       if (s && !/^(https?:|data:|\/)/.test(s)) im.setAttribute('src', base + s.replace(/^\.\//, ''));
       im.loading = 'lazy';
     });
-    box.querySelectorAll('table').forEach(function(t){ var w = document.createElement('div'); w.className = 'tbl'; t.parentNode.insertBefore(w, t); w.appendChild(t); });
+    box.querySelectorAll('table').forEach(function(t){ var w = document.createElement('div'); w.className = 'tbl'; t.parentNode.insertBefore(w, t); w.appendChild(t); widen(t); });
     box.querySelectorAll('a[href^="http"]').forEach(function(a){ a.target = '_blank'; a.rel = 'noopener'; });
     return box;
   }
@@ -314,8 +492,9 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
     var sp = split(md), n = 0, grp = null;
     head0 = sp.head; secs = []; byId = {};
     sp.secs.forEach(function(s){
-      if (s.level === 0) { if (!s.raw.trim()) return; s.id = 'overview'; }
-      else s.id = 's' + (++n);
+      // 「개요」(첫 ## 앞 글)는 보이지 않는다. 저장할 때 그대로 두도록 머리 글(head0)에 붙여 둔다
+      if (s.level === 0) { head0 += s.raw; return; }
+      s.id = 's' + (++n);
       var t = document.createElement('div'); t.innerHTML = marked.parseInline(s.title); s.label = t.textContent.trim() || s.title;
       s.kids = []; s.parent = null;
       if (s.level === 1) grp = s; else if (s.level === 2 && grp) { s.parent = grp; grp.kids.push(s); }
@@ -323,6 +502,8 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
       s.text = (s.label + ' ' + s.box.textContent).toLowerCase();
       secs.push(s); byId[s.id] = s;
     });
+    /* 파일형 문서: 대분류 · 항목마다 그 파일(수정 요청 · 아래 경로 표시에 쓴다) */
+    if (FILEMAP) { var hi = 0; secs.forEach(function(s){ if (s.level >= 1) s.file = FILEMAP[hi++] || (s.parent ? s.parent.file : '') || ''; }); }
     if (!secs.length) { fail('가이드 내용이 비어 있습니다.'); return; }
     var want = keepIdx != null ? (secs[keepIdx] || secs[0]).id : decodeURIComponent(location.hash.slice(1));
     show(byId[want] ? want : secs[0].id, true);
@@ -332,21 +513,30 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
   /* 항목별 작성일 · 수정일: 처음 내용(guide.md, meta.createdAt)과 수정본(rev/*.md)을 차례로 비교한다.
      작성일 = 그 제목이 처음 나온 판, 수정일 = 내용이 마지막으로 바뀐 판. 폴더 카드 아래 줄에 쓴다 */
   var DATES = {}, datesFor = null;
-  function dkey(s){ return s.level + '|' + String(s.title).trim(); }
+  function dkey(s){ return (s.file ? s.file + '|' : '') + s.level + '|' + String(s.title).trim(); }
   function itemDates(){
     var revs = (G && G.revs) || [], key = revs.map(function(r){ return r.rev; }).join(',');
     if (datesFor === key) { paintDates(); return; }
     datesFor = key;
-    var vers = [{ url: base + 'guide.md', at: String(meta.createdAt || '').slice(0, 10) }].concat(revs.map(function(r){
-      return { url: base + 'rev/' + r.rev + '.md', at: String(r.at || '').slice(0, 10) || String(r.rev).replace(/^(\d{4})(\d\d)(\d\d).*/, '$1-$2-$3') };
+    function rat(r){ return String(r.at || '').slice(0, 10) || String(r.rev).replace(/^(\d{4})(\d\d)(\d\d).*/, '$1-$2-$3'); }
+    /* 파일형 문서는 파일마다 원본(files/) → 그 파일의 수정본(rev/{rev}/{파일}) 순서로 비교한다 */
+    var vers = FILES ? [].concat.apply([], FILES.map(function(f){
+      return [{ url: base + fdirOf(meta) + f.path, at: String(meta.createdAt || '').slice(0, 10), file: f.path }].concat(revs.filter(function(r){ return r.file === f.path; }).map(function(r){
+        return { url: base + 'rev/' + r.rev + '/' + f.path, at: rat(r), file: f.path };
+      }));
+    })) : [{ url: base + 'guide.md', at: String(meta.createdAt || '').slice(0, 10) }].concat(revs.map(function(r){
+      return { url: base + 'rev/' + r.rev + '.md', at: rat(r) };
     }));
     Promise.all(vers.map(function(v){ return fetch(v.url, { cache: 'no-store' }).then(function(r){ return r.ok ? r.text() : null; }).catch(function(){ return null; }); }))
       .then(function(mds){
         var d = {}, prev = {};
         mds.forEach(function(md, i){
           if (md == null) return;
-          split(md).secs.forEach(function(s){
+          /* 파일형 문서는 화면과 같은 조각으로 만들어 비교한다(폴더 대분류형은 앞에 빈 대분류를 붙여 항목 단계를 맞춤) */
+          var lv = (meta.layout === 'folders') ? 3 : 2;
+          split(vers[i].file ? (lv === 3 ? '## _\n\n' : '') + chunk(meta, vers[i].file, md, lv) : md).secs.forEach(function(s){
             if (!s.level) return;
+            s.file = vers[i].file;
             var k = dkey(s), b = body(s).trim();
             if (!d[k]) d[k] = { c: vers[i].at, u: vers[i].at }; else if (prev[k] !== b) d[k].u = vers[i].at;
             prev[k] = b;
@@ -363,7 +553,182 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
     });
   }
 
+  /* 창 높이에 맞춤: 넓은 화면(목차 · 상세 두 칸)에서 목차와 상세를 남은 창 높이로 같게, 스크롤은 상세 안에서(좁은 화면은 그대로 페이지 스크롤) */
+  function fit(){
+    var lay = $('layout'), wide = window.innerWidth > 860;
+    lay.classList.toggle('fit', wide); document.documentElement.classList.toggle('fitted', wide);
+    if (!wide) return;
+    var top = lay.getBoundingClientRect().top + (document.documentElement.classList.contains('embed') ? 0 : window.scrollY);
+    var h = Math.max(300, window.innerHeight - top - (document.documentElement.classList.contains('embed') ? 4 : 16));
+    lay.style.setProperty('--fit', h + 'px');
+    /* 아래 여백 때문에 페이지가 아직 넘치면(바깥 스크롤이 생기면) 그만큼 더 줄인다 — 스크롤은 상세 안에서만 */
+    var over = document.documentElement.scrollHeight - window.innerHeight;
+    if (over > 0) lay.style.setProperty('--fit', Math.max(300, h - over) + 'px');
+  }
+  /* 다른 항목으로 가면 상세 맨 위로(맞춤일 때는 상세 안을, 아니면 페이지를) */
+  function toTop(){
+    if ($('layout').classList.contains('fit')) $('main').scrollTop = 0;
+    else window.scrollTo({ top: $('main').getBoundingClientRect().top + scrollY - 70, behavior: 'smooth' });
+  }
+  window.addEventListener('resize', fit);
+  if (window.ResizeObserver) new ResizeObserver(fit).observe($('fixes'));   // 위쪽 수정 결과 패널이 생기거나 바뀌면 다시 맞춤
+  setTimeout(fit, 0);
+
+  /* ── 화면 정의서(meta.view 'screens'): 메뉴 폴더마다 CID 화면설계서(머리말 + 본문 + 반영 대기 목록), 메뉴 정보는 _menu.md ──
+     왼쪽 = 메뉴별 화면 목록(표시: 임시 정책 포함 · 규칙 버전 기록 전), 오른쪽 = 화면 정보 · 임시 정책 · 반영 대기 목록 · 설계 내용 */
+  var SC = null, scCur = '', scOpen = {}, scKind = '', PVST = {};
+  function listOf(v){ v = String(v || '').trim().replace(/^\[|\]$/g, ''); return v ? v.split(',').map(function(x){ return x.trim(); }).filter(Boolean) : []; }
+  function fmObj(fm){ var o = {}; (fm || []).forEach(function(r){ o[r[0]] = r[1]; }); return o; }
+  function uniq(a){ var s = {}; return a.filter(function(x){ if (!x || s[x]) return false; s[x] = 1; return true; }); }
+  var CID_RE = /\b(?:LI|TI)-[A-Z]{2,5}(?:-[A-Z0-9]{1,4})*\b/g;
+  function cells(l){ return l.replace(/^\s*\|/, '').replace(/\|\s*$/, '').split(/(?<!\\)\|/).map(function(c){ return c.trim().replace(/\\\|/g, '|'); }); }
+  /* 본문의 「## 반영 대기 목록」 표 → [{no, kind, now, to, why, st}] */
+  function fixRows(body){
+    var m = body.match(/^##\s+반영 대기 목록\s*\n([\s\S]*?)(?=^##\s|(?![\s\S]))/m); if (!m) return [];
+    var ls = m[1].split('\n').filter(function(l){ return /^\s*\|/.test(l); }); if (ls.length < 2) return [];
+    var hd = cells(ls[0]), ix = function(n){ return hd.indexOf(n); };
+    return ls.slice(2).map(function(l){ var c = cells(l); return { no: c[ix('#')] || '', kind: c[ix('구분')] || '', now: c[ix('지금')] || '', to: c[ix('바꿀 것')] || '', why: c[ix('근거')] || '', st: c[ix('상태')] || '' }; });
+  }
+  function scBuild(texts){
+    SC = { menus: [], byCid: {}, overview: '' }; var menus = {}, order = [];
+    FILES.forEach(function(f, i){
+      var t = String(texts[i] || '').replace(/^﻿/, '').replace(/\r\n/g, '\n'), parts = f.path.split('/');
+      if (parts.length < 2) { if (/readme\.md$/i.test(f.path)) SC.overview = t; return; }
+      var k = parts[0], mn = menus[k]; if (!mn) { mn = menus[k] = { key: k, name: k, cids: [], screens: [] }; order.push(k); }
+      var fr = front(t), o = fmObj(fr.fm);
+      if (/_menu\.md$/.test(f.path)) { mn.name = o.menu || k; mn.cids = listOf(o.cids); mn.owner = o.owner || ''; mn.file = f.path; return; }
+      if (!o.cid) return;
+      var s = { cid: o.cid, o: o, body: fr.body, file: f.path, rev: f.rev, menu: k };
+      mn.screens.push(s); SC.byCid[o.cid] = s;
+    });
+    var mo = meta.menuOrder || [];
+    SC.menus = mo.filter(function(k){ return menus[k]; }).concat(order.filter(function(k){ return mo.indexOf(k) < 0; })).map(function(k){ return menus[k]; });
+    SC.menus.forEach(function(mn){
+      mn.screens.sort(function(a, b){ var ia = mn.cids.indexOf(a.cid), ib = mn.cids.indexOf(b.cid); ia = ia < 0 ? 999 : ia; ib = ib < 0 ? 999 : ib; return ia - ib || a.cid.localeCompare(b.cid); });
+    });
+    var all = Object.keys(SC.byCid).map(function(c){ return SC.byCid[c]; });
+    all.forEach(function(s){
+      var pl = (s.body.match(/^-\s*관련 정책:(.*)$/m) || [])[1] || '';
+      s.pols = uniq(listOf(s.o.policies).concat(pl.match(/POL-[A-Z]{3}-\d{3}/g) || []));
+      s.pvs = listOf(s.o.provisional);
+      s.fixes = fixRows(s.body);
+      var cl = (s.body.match(/^-\s*호출 위치:(.*)$/m) || [])[1] || '';
+      s.calls = (cl.match(CID_RE) || []).filter(function(c){ return c !== s.cid; });
+    });
+    /* 부르는 화면: 「호출 위치」에 적힌 화면 + 본문에서 이 화면 CID를 적은 다른 화면 */
+    all.forEach(function(s){
+      var re = new RegExp('\\b' + s.cid.replace(/-/g, '\\-') + '\\b');
+      s.callers = uniq(s.calls.concat(all.filter(function(t){ return t !== s && re.test(t.body); }).map(function(t){ return t.cid; })));
+    });
+    var want = decodeURIComponent(location.hash.slice(1));
+    var first = SC.byCid[want] ? want : (SC.menus[0] && SC.menus[0].screens[0] ? SC.menus[0].screens[0].cid : '');
+    if (!first) { fail('화면 정의서 파일이 없습니다.'); return; }
+    scShow(first, true);
+  }
+  function scChips(s){
+    return (s.pvs.length ? '<em class="sc-chip warn">임시 정책 포함</em>' : '') + (!s.o.rules_version ? '<em class="sc-chip">규칙 버전 기록 전</em>' : '');
+  }
+  function scTree(q){
+    var h = '';
+    SC.menus.forEach(function(mn){
+      var list = mn.screens.filter(function(s){ return !q || (s.cid + ' ' + (s.o.title || '') + ' ' + mn.name).toLowerCase().indexOf(q) >= 0 || s.body.toLowerCase().indexOf(q) >= 0; });
+      if (q && !list.length) return;
+      var open = q ? true : !!scOpen[mn.key];
+      h += '<li class="sc-grp"><button type="button" class="node grp" data-scg="' + esc(mn.key) + '" aria-expanded="' + open + '"><span class="tw' + (open ? ' open' : '') + '">▸</span><span class="lbl">' + esc(mn.name) + '</span><span class="sc-cnt">' + list.length + '</span></button>';
+      if (open) h += '<ul class="sc-list">' + list.map(function(s){
+        return '<li><button type="button" class="sc-it' + (s.cid === scCur ? ' cur' : '') + '" data-sc="' + esc(s.cid) + '"><b>' + esc(s.o.title || s.cid) + '</b><span>' + esc(s.cid) + '</span>' + (scChips(s) ? '<i>' + scChips(s) + '</i>' : '') + '</button></li>';
+      }).join('') + '</ul>';
+      h += '</li>';
+    });
+    $('tree').innerHTML = h || '<li class="side-empty">맞는 화면이 없습니다.</li>';
+  }
+  function idChip(x){
+    var t = String(x).trim(); if (!t) return '';
+    if (SC.byCid[t]) return '<button type="button" class="sc-id" data-sc="' + esc(t) + '">' + esc(t) + '</button>';
+    return '<code class="sc-id">' + esc(t) + '</code>';
+  }
+  /* 근거 칸: ID(POL- · PV- · Confirm_ · Alert_ · CID)는 칩으로, 나머지는 글로 */
+  function whyHtml(t){
+    var ids = t.match(/\b(?:POL-[A-Z]{3}-\d{3}|PV-\d{4}(?:-[A-Z])?|PD-\d{4}|CR-\d{4}|(?:Confirm|Alert|Info|Warning)_\d{3})\b/g);
+    if (ids && t.replace(/\b(?:POL-[A-Z]{3}-\d{3}|PV-\d{4}(?:-[A-Z])?|PD-\d{4}|CR-\d{4}|(?:Confirm|Alert|Info|Warning)_\d{3})\b|[,\s·/]/g, '').length < 2) return uniq(ids).map(idChip).join(' ');
+    return marked.parseInline(t);
+  }
+  function scShow(cid, first){
+    var s = SC.byCid[cid]; if (!s) return;
+    scCur = cid; scKind = ''; scOpen[s.menu] = true;
+    var o = s.o, mn = SC.menus.filter(function(m){ return m.key === s.menu; })[0] || { name: s.menu };
+    var row = function(k, v){ return v ? '<dt>' + esc(k) + '</dt><dd>' + v + '</dd>' : ''; };
+    var h = '<div class="sc-head"><div><h2 class="sc-title">' + esc(cid + ' ' + (o.title || '')) + '</h2><p class="sc-sub">' + esc([o.path, o.type, o.version ? 'Ver ' + o.version : ''].filter(Boolean).join(' · ')) + '</p></div>' +
+      (s.pvs.length ? '<span class="sc-chip warn big">임시 정책 포함</span>' : '') + '</div>';
+    if (s.pvs.length) h += '<div class="sc-pv"><b>이 화면은 임시 정책을 따릅니다</b> · ' + s.pvs.map(function(p){ return '<code class="sc-id">' + esc(p) + '</code>' + (PVST[p] ? ' <span class="sc-pvst">' + esc(PVST[p]) + '</span>' : ''); }).join(' ') + ' <span>승인되면 공통 규칙 새 버전에 맞추고 이 표시를 뗍니다.</span></div>';
+    h += '<dl class="sc-info">' + row('작성자', esc(o.author || '')) + row('Service Mode', esc(listOf(o.service_mode).join(', '))) + row('User Type', esc(listOf(o.user_type).join(', '))) +
+      row('공통 규칙 버전', o.rules_version ? '<code class="sc-id">' + esc(o.rules_version) + '</code>' : '<span class="sc-chip">기록 전</span>') +
+      row('임시 정책', s.pvs.map(idChip).join(' ')) + row('관련 정책', s.pols.map(idChip).join(' ')) + row('짝 화면', o.pair_cid ? idChip(o.pair_cid) + (o.tl_relation ? ' <span class="sc-muted">' + esc(o.tl_relation) + '</span>' : '') : '') +
+      row('부르는 화면', s.callers.map(idChip).join(' ')) + row('날짜', esc(o.date || '')) +
+      row('Figma', o.figma ? '<a href="' + esc(o.figma) + '" target="_blank" rel="noopener">작업방 ' + esc(mn.name) + (o.figma_region ? ' ' + esc(o.figma_region) : '') + '</a>' : '') + '</dl>';
+    var kinds = uniq(s.fixes.map(function(f){ return f.kind; }));
+    h += '<h3 class="sc-h">반영 대기 목록</h3>' + (s.fixes.length
+      ? '<div class="sc-filter" role="group" aria-label="구분">' + ['전체'].concat(kinds).map(function(k, i){ var n = i ? s.fixes.filter(function(f){ return f.kind === k; }).length : s.fixes.length; return '<button type="button" data-kind="' + (i ? esc(k) : '') + '"' + (i ? '' : ' class="on"') + '>' + esc(k) + ' <b>' + n + '</b></button>'; }).join('') + '</div><div class="tbl" id="scFix"></div>'
+      : '<p class="sc-muted">반영 대기 목록이 없습니다.</p>');
+    /* 설계 내용: 본문에서 맨 위 # 제목과 반영 대기 목록 절을 뺀 나머지(원문 그대로) */
+    var rest = s.body.replace(/^#\s+[^\n]*\n/, '').replace(/^##\s+반영 대기 목록\s*\n[\s\S]*?(?=^##\s|(?![\s\S]))/m, '');
+    h += '<h3 class="sc-h">화면 설계 내용</h3><div class="sc-body"></div>';
+    h += '<p class="docpath" title="' + esc(base + s.file) + '">문서 경로 <code>' + esc(npath(id + '/' + fdirOf(meta) + s.file)) + '</code>' + (s.rev ? '<span>수정본 ' + esc(s.rev) + '</span>' : '') + '</p>';
+    var m = $('main'); m.innerHTML = h;
+    var bx = render(demote(rest, 1)); Array.prototype.forEach.call(bx.childNodes, function(x){ m.querySelector('.sc-body').appendChild(x.cloneNode(true)); });
+    scFix();
+    $('editBtn').hidden = false; $('editBtn').disabled = false; $('editBtn').title = '「' + cid + '」 화면 정의서 수정 요청';
+    $('tocCur').textContent = '목차 · ' + cid;
+    scTree($('q').value.trim().toLowerCase());
+    var it = $('tree').querySelector('.sc-it.cur'); if (it && first) it.scrollIntoView({ block: 'nearest' });
+    if (!first) { history.replaceState(null, '', '#' + cid); if (window.innerWidth <= 860) { $('side').classList.add('fold'); $('tocBtn').setAttribute('aria-expanded', 'false'); } toTop(); }
+    s.pvs.forEach(function(p){
+      if (PVST[p] !== undefined) return; PVST[p] = '';
+      /* 임시 정책 상태: .history/guides/provisional/{PV}.md가 있으면 그 상태(없으면 표시하지 않음) */
+      fetch('.history/guides/provisional/' + encodeURIComponent(p) + '.md', { cache: 'no-store' }).then(function(r){ return r.ok ? r.text() : ''; }).then(function(t){
+        var st = (fmObj(front(t.replace(/\r\n/g, '\n')).fm).status) || ((t.match(/상태\s*[:|]\s*([^\n|]+)/) || [])[1] || '').trim();
+        if (st) { PVST[p] = st; if (scCur === cid) scShow(cid, true); }
+      }).catch(function(){});
+    });
+  }
+  function scFix(){
+    var s = SC.byCid[scCur], box = $('scFix'); if (!s || !box) return;
+    var list = s.fixes.filter(function(f){ return !scKind || f.kind === scKind; });
+    box.innerHTML = '<table class="sc-fix"><thead><tr><th>#</th><th>구분</th><th>지금</th><th>바꿀 것</th><th>근거</th><th>상태</th></tr></thead><tbody>' + list.map(function(f){
+      var st = String(f.st), cls = /^반영 완료/.test(st) ? 'ok' : /^반영 불필요/.test(st) ? 'off' : /확인 필요/.test(st) ? 'warn' : '';
+      return '<tr><td>' + esc(f.no) + '</td><td class="k">' + esc(f.kind) + '</td><td>' + marked.parseInline(f.now) + '</td><td>' + marked.parseInline(f.to) + '</td><td>' + whyHtml(f.why) + '</td><td><span class="sc-st ' + cls + '">' + esc(st) + '</span></td></tr>';
+    }).join('') + '</tbody></table>';
+    Array.prototype.forEach.call($('main').querySelectorAll('.sc-filter button'), function(b){ b.classList.toggle('on', b.dataset.kind === scKind); });
+  }
+  // 수정 요청 창: 지금 보이는 문서 내용 맨 아래(이전 · 다음 항목 위)에 붙이고 그 자리로 스크롤
+  function editPane(title, body){
+    var m = $('main'), ed = document.createElement('section');
+    ed.className = 'edit-pane'; ed.setAttribute('aria-label', '수정 요청');
+    ed.innerHTML = '<h3>' + title + '</h3><div class="editor">' + body +
+      '<div class="act"><button type="button" class="btn" id="edCancel">취소</button><button type="button" class="btn pri" id="edSave">Claude에게 수정 요청</button></div></div>';
+    m.insertBefore(ed, m.querySelector('.pager') || null);
+    ed.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    $('edText').focus({ preventScroll: true });
+    return ed;
+  }
+  function scEdit(){
+    var s = SC.byCid[scCur]; if (!s || editing) return;
+    editing = true; $('editBtn').disabled = true;
+    var ed = editPane('「' + esc(s.cid + ' ' + (s.o.title || '')) + '」 수정 요청',
+      '<textarea id="edText" aria-label="수정 요청 내용" placeholder="무엇을 어떻게 고칠지 적어 주세요.&#10;예) 반영 대기 목록 5번(오타)을 반영 완료로 바꿔 줘&#10;예) 디스크립션 3절의 활성화 조건을 POL-EQP-008 기준으로 고쳐 줘"></textarea>' +
+      '<p class="tip">이 화면 정의서 파일(<code>' + esc(npath(id + '/' + fdirOf(meta) + s.file)) + '</code>)을 Claude가 고칩니다. 고친 뒤 이 화면 위에 결과가 나옵니다(요청 감시가 켜져 있어야 합니다).</p>');
+    $('edCancel').onclick = function(){ editing = false; ed.remove(); $('editBtn').disabled = false; };
+    $('edSave').onclick = function(){
+      var text = $('edText').value.trim(); if (!text) { $('edText').focus(); return; }
+      this.disabled = true;
+      post('/api/jobs', { action: 'add', kind: 'guide-edit', guide: id, fileKey: '', name: s.cid + ' ' + (s.o.title || ''), text: text, by: user(), file: s.file })
+        .then(function(){ editing = false; scShow(s.cid, true); fixes(); toast('수정 요청을 보냈습니다. Claude가 고치면 이 화면 위에 결과가 나옵니다.'); })
+        .catch(function(x){ $('edSave').disabled = false; alert(x.message || '요청하지 못했습니다.'); });
+    };
+  }
+
   function tree(q){
+    if (SC) { scTree(q); return; }
     var h = '', hit = function(s){ return !q || s.text.indexOf(q) >= 0; };
     function label(t){ var e = esc(t); if (!q) return e; var i = t.toLowerCase().indexOf(q); return i < 0 ? e : esc(t.slice(0, i)) + '<mark>' + esc(t.slice(i, i + q.length)) + '</mark>' + esc(t.slice(i + q.length)); }
     secs.filter(function(s){ return s.level <= 1; }).forEach(function(g){
@@ -390,7 +755,8 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
     if (s.parent) m.insertAdjacentHTML('beforeend', '<div class="crumb"><button type="button" data-go="' + s.parent.id + '">' + esc(s.parent.label) + '</button> ›</div>');
     m.insertAdjacentHTML('beforeend', '<div class="sec-row"><h2 class="sec"></h2></div>');
     /* 수정 요청은 머리 오른쪽 버튼(지금 항목 기준) */
-    $('editBtn').hidden = false; $('editBtn').disabled = false; $('editBtn').title = '「' + s.label + '」 항목 수정 요청';
+    $('editBtn').hidden = !!(FILES && !s.file);   // 파일형 문서의 폴더 대분류 · 개요는 고칠 파일이 없다
+    $('editBtn').disabled = false; $('editBtn').title = '「' + s.label + '」 항목 수정 요청';
     m.querySelector('h2.sec').textContent = s.label;
     Array.prototype.forEach.call(s.box.childNodes, function(x){ m.appendChild(x.cloneNode(true)); });
     if (s.kids && s.kids.length) {
@@ -415,9 +781,14 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
     var i = secs.indexOf(s), pv = secs[i - 1], nx = secs[i + 1];
     m.insertAdjacentHTML('beforeend', '<div class="pager">' + (pv ? '<button type="button" data-go="' + pv.id + '"><small>‹ 이전</small>' + esc(pv.label) + '</button>' : '<span></span>') +
       (nx ? '<button type="button" data-go="' + nx.id + '" style="text-align:right"><small>다음 ›</small>' + esc(nx.label) + '</button>' : '') + '</div>');
+    /* 파일형 문서: 이 항목이 들어 있는 깃 문서 경로(예: rule/schedule.md). 마우스를 올리면 지금 내용 파일의 전체 경로 */
+    if (s.file) {
+      var fl = (FILES || []).filter(function(f){ return f.path === s.file; })[0];
+      m.insertAdjacentHTML('beforeend', '<p class="docpath" title="' + esc(fl ? fl.mdPath : '') + '">문서 경로 <code>' + esc(npath(id + '/' + fdirOf(meta) + s.file)) + '</code>' + (fl && fl.rev ? '<span>수정본 ' + esc(fl.rev) + '</span>' : '') + '</p>');
+    }
     $('tocCur').textContent = '목차 · ' + s.label;
     tree($('q').value.trim().toLowerCase());
-    if (!first) { history.replaceState(null, '', '#' + s.id); if (window.innerWidth <= 860) { $('side').classList.add('fold'); $('tocBtn').setAttribute('aria-expanded', 'false'); } window.scrollTo({ top: $('main').getBoundingClientRect().top + scrollY - 70, behavior: 'smooth' }); }
+    if (!first) { history.replaceState(null, '', '#' + s.id); if (window.innerWidth <= 860) { $('side').classList.add('fold'); $('tocBtn').setAttribute('aria-expanded', 'false'); } toTop(); }
   }
 
   /* 머리 버튼으로 여닫는 패널(수정 이력) */
@@ -431,18 +802,16 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
     if (editing || !cur) return;
     var s = cur; editing = true;
     $('editBtn').disabled = true;
-    var m = $('main');
-    m.innerHTML = '<div class="crumb">' + esc(s.parent ? s.parent.label + ' › ' : '') + esc(s.label) + ' · 수정 요청</div>' +
-      '<div class="editor"><textarea id="edText" aria-label="수정 요청 내용" placeholder="무엇을 어떻게 고칠지 적어 주세요.&#10;예) 날짜 표기를 YYYY.MM.DD hh:mm으로 바꿔 줘&#10;예) 표에 「Paused」 상태 설명을 추가해 줘"></textarea>' +
-      '<p class="tip">이 항목(「' + esc(s.label) + '」)을 기준으로 Claude가 가이드를 고칩니다. 다른 항목에 걸친 수정도 적어도 됩니다. 고친 뒤 이 화면 위에 결과가 나옵니다(요청 감시가 켜져 있어야 합니다).</p>' +
-      '<div class="act"><button type="button" class="btn" id="edCancel">취소</button><button type="button" class="btn pri" id="edSave">Claude에게 수정 요청</button></div></div>';
-    $('edText').focus();
-    $('edCancel').onclick = function(){ editing = false; show(s.id, true); };
+    // 수정 창은 지금 문서 내용 아래에(내용을 보면서 적게)
+    var ed = editPane('「' + esc(s.label) + '」 수정 요청',
+      '<textarea id="edText" aria-label="수정 요청 내용" placeholder="무엇을 어떻게 고칠지 적어 주세요.&#10;예) 날짜 표기를 YYYY.MM.DD hh:mm으로 바꿔 줘&#10;예) 표에 「Paused」 상태 설명을 추가해 줘"></textarea>' +
+      '<p class="tip">이 항목(「' + esc(s.label) + '」)을 기준으로 Claude가 문서를 고칩니다. 다른 항목에 걸친 수정도 적어도 됩니다. 고친 뒤 이 화면 위에 결과가 나옵니다(요청 감시가 켜져 있어야 합니다).</p>');
+    $('edCancel').onclick = function(){ editing = false; ed.remove(); $('editBtn').disabled = false; };
     $('edSave').onclick = function(){
       var text = $('edText').value.trim();
       if (!text) { $('edText').focus(); return; }
       this.disabled = true;
-      post('/api/jobs', { action: 'add', kind: 'guide-edit', guide: id, fileKey: meta.fileKey, name: s.label, text: text, by: user() })
+      post('/api/jobs', { action: 'add', kind: 'guide-edit', guide: id, fileKey: meta.fileKey, name: s.label, text: text, by: user(), file: s.file || '' })
         .then(function(){ editing = false; show(s.id, true); fixes(); toast('수정 요청을 보냈습니다. Claude가 고치면 이 화면 위에 결과가 나옵니다.'); })
         .catch(function(x){ $('edSave').disabled = false; alert(x.message || '요청하지 못했습니다.'); });
     };
@@ -456,11 +825,11 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
   function itemType(it){ return it.type === 'doc' || it.type === 'proto' ? it.type : 'screen'; }
   function itemHead(it){
     var t = itemType(it);
-    if (t === 'doc') { var dd = docs[it.doc] || {}; return { title: (it.docTitle || dd.title || it.doc) + (it.section ? ' › ' + it.section : ''), sub: (dd.kind === 'spec' ? '정의서' : '가이드') }; }
+    if (t === 'doc') { var dd = docs[it.doc] || {}; return { title: (it.docTitle || dd.title || it.doc) + (it.section ? ' › ' + it.section : ''), sub: kindName(dd.kind) }; }
     if (t === 'proto') return { title: it.name || it.proto, sub: '프로토타입' + (it.frame ? ' · ' + it.frame : '') };
     return { title: it.frame || it.nodeId, sub: (it.page || '') + (it.nodeId ? ' · ' + it.nodeId : '') };
   }
-  function steps(n){ return '<div class="steps">' + (meta.kind === 'spec' ? ['① 정의서 수정', '② 연관 항목 찾기', '③ 반영 여부 선택', '④ 수정 요청'] : ['① 가이드 수정', '② 고칠 화면 찾기', '③ 반영 여부 선택', '④ 수정 요청']).map(function(t, i){ return '<span class="' + (i + 1 < n ? 'ok' : i + 1 === n ? 'on' : '') + '">' + t + '</span>'; }).join('') + '</div>'; }
+  function steps(n){ return '<div class="steps">' + (isDocKind(meta.kind) ? ['① ' + kindName(meta.kind) + ' 수정', '② 연관 항목 찾기', '③ 반영 여부 선택', '④ 수정 요청'] : ['① 가이드 수정', '② 고칠 화면 찾기', '③ 반영 여부 선택', '④ 수정 요청']).map(function(t, i){ return '<span class="' + (i + 1 < n ? 'ok' : i + 1 === n ? 'on' : '') + '">' + t + '</span>'; }).join('') + '</div>'; }
   function fixes(){
     return Promise.all([
       fetch('/api/jobs', { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : { items: [] }; }).catch(function(){ return { items: [] }; }),
@@ -474,19 +843,19 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
       if (g) { applied = d[1].applied || applied; if (lastRev !== null && g.rev !== lastRev && !editing) load(Math.max(0, secs.indexOf(cur))); lastRev = g.rev; }
       /* 다른 문서(가이드 · 정의서) 정보: 연관 항목 반영 때 그 문서의 수정 요청을 만든다 */
       docs = {}; (d[1].items || []).forEach(function(x){ docs[x.id] = x; });
-      /* 가이드는 내 작업 기준일 때만, 정의서는 늘 「연관 항목 찾기」로 이어진다 */
-      var mine = appliedKeys().length > 0, spec = meta.kind === 'spec', h = '';
-      var DOC = spec ? '정의서' : '가이드';
+      /* UX가이드는 내 작업 기준일 때만, 다른 카테고리(작업규칙 · 정책서 · 기준데이터 · 화면 정의서)는 늘 「연관 항목 찾기」로 이어진다 */
+      var mine = appliedKeys().length > 0, spec = isDocKind(meta.kind), h = '';
+      var DOC = kindName(meta.kind);
       edits.forEach(function(j){
         var what = '「' + (j.name || '') + '」 ' + (j.text || '');
         if (j.status === '대기' || j.status === '진행 중') {
           h += '<section class="fix"><h3>' + DOC + ' 수정 요청 · ' + (j.status === '대기' ? '대기' : 'Claude가 고치는 중') + '</h3>' + steps(1) + '<p>' + esc(what) + '</p></section>';
         } else if (j.status === '완료') {
           var next = spec || mine;
-          h += '<section class="fix" id="fix"><h3>Claude가 ' + DOC + '를 고쳤습니다' + (spec ? ' — 연관된 화면 · 문서도 고쳐야 할 수 있습니다' : mine ? ' — 이미 작업한 화면도 고쳐야 할 수 있습니다' : '') + '</h3>' + steps(next ? 2 : 1) +
+          h += '<section class="fix" id="fix"><h3>Claude가 ' + DOC + ' 수정을 마쳤습니다' + (spec ? ' — 연관된 화면 · 문서도 고쳐야 할 수 있습니다' : mine ? ' — 이미 작업한 화면도 고쳐야 할 수 있습니다' : '') + '</h3>' + steps(next ? 2 : 1) +
             '<p>요청: ' + esc(what) + '</p>' + (j.note ? '<p>고친 내용: ' + esc(j.note) + '</p>' : '') +
             (spec
-              ? '<p>Claude가 바뀐 내용과 연관된 곳을 찾아 목록을 만듭니다: ' + (meta.fileKey ? '<b>' + esc(names[meta.fileKey] || meta.fileName || meta.fileKey.slice(0, 6)) + '</b> 수정 가능 페이지의 화면 · ' : '') + '같은 내용을 쓰는 다른 가이드 · 정의서 항목 · 프로토타입. 무엇을 어떻게 고칠지 보고 반영할 것만 고르면 됩니다(아직 아무것도 고치지 않습니다).</p>' +
+              ? '<p>Claude가 바뀐 내용과 연관된 곳을 찾아 목록을 만듭니다: ' + (meta.fileKey ? '<b>' + esc(names[meta.fileKey] || meta.fileName || meta.fileKey.slice(0, 6)) + '</b> 수정 가능 페이지의 화면 · ' : '') + '같은 내용을 쓰는 다른 UX 문서 항목 · 프로토타입. 무엇을 어떻게 고칠지 보고 반영할 것만 고르면 됩니다(아직 아무것도 고치지 않습니다).</p>' +
                 '<div class="act"><button type="button" class="btn pri" data-check="' + j.id + '">연관 항목 찾기 요청</button><button type="button" class="btn" data-done="' + j.id + '">나중에</button></div>'
               : mine
               ? '<p>이 가이드는 내 <b>' + esc(appliedKeys().map(function(k){ return names[k] || k.slice(0, 6); }).join(', ')) + '</b> 파일 작업 기준입니다. Claude가 그 파일의 수정 가능 페이지에서 바뀐 내용과 다른 화면을 찾아 목록을 만듭니다(Figma는 아직 고치지 않습니다).</p>' +
@@ -537,12 +906,12 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
       var ej = edits.filter(function(x){ return x.id === b.dataset.check; })[0]; if (!ej) return;
       b.disabled = true;
       var note = '「' + (ej.name || '') + '」 ' + (ej.note || ej.text || '');
-      /* 정의서: 정의서의 기준 파일(없으면 파일 없이) 하나로, 화면 · 문서 · 프로토타입을 찾는다. 가이드: 내 작업 기준 파일마다 화면을 찾는다 */
-      var keys = meta.kind === 'spec' ? [meta.fileKey || ''] : appliedKeys();
+      /* UX가이드 외 카테고리: 그 문서의 기준 파일(없으면 파일 없이) 하나로, 화면 · 문서 · 프로토타입을 찾는다. UX가이드: 내 작업 기준 파일마다 화면을 찾는다 */
+      var keys = isDocKind(meta.kind) ? [meta.fileKey || ''] : appliedKeys();
       Promise.all(keys.map(function(k){
-        return post('/api/jobs', { action: 'add', kind: 'guide-check', guide: id, fileKey: k, scope: meta.kind === 'spec' ? 'spec' : '', name: meta.title || id, text: note, revFrom: ej.revFrom || 'guide.md', revTo: ej.revTo || '', by: user() });
+        return post('/api/jobs', { action: 'add', kind: 'guide-check', guide: id, fileKey: k, scope: isDocKind(meta.kind) ? 'spec' : '', name: meta.title || id, text: note, revFrom: ej.revFrom || 'guide.md', revTo: ej.revTo || '', by: user() });
       })).then(function(){ return post('/api/jobs', { action: 'update', id: ej.id, status: '확인', note: ej.note || '' }); })
-        .then(function(){ fixes(); toast('요청했습니다. Claude가 ' + (meta.kind === 'spec' ? '연관 항목' : '고칠 화면') + '을 찾으면 여기에 목록이 나옵니다.'); })
+        .then(function(){ fixes(); toast('요청했습니다. Claude가 ' + (isDocKind(meta.kind) ? '연관 항목' : '고칠 화면') + '을 찾으면 여기에 목록이 나옵니다.'); })
         .catch(function(x){ b.disabled = false; alert(x.message || '요청하지 못했습니다.'); });
       return;
     }
@@ -556,7 +925,7 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
       if (!picks.length) { alert('반영할 항목을 하나 이상 고르세요.'); return; }
       if (!confirm('항목 ' + picks.length + '개를 수정 요청으로 등록할까요?\n요청 감시 중인 Claude가 바뀐 내용대로 차례로 고칩니다.')) return;
       b.disabled = true;
-      var ed = editPage[j.fileKey] || '', ids = [], DOCN = meta.kind === 'spec' ? '정의서' : '가이드';
+      var ed = editPage[j.fileKey] || '', ids = [], DOCN = kindName(meta.kind);
       var why = '「' + (meta.title || id) + '」 ' + DOCN + ' 수정(' + (j.text || '') + ')에 맞게 고쳐 주세요. ';
       /* 한 건씩 차례로 등록(번호가 겹치지 않게): 화면 → Workbench 수정 요청, 문서 → 그 문서의 수정 요청(guide-edit), 프로토타입 → 프로토타입 수정 요청 */
       picks.reduce(function(p, it){
@@ -584,16 +953,22 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
   });
 
   $('tree').addEventListener('click', function(e){
+    var sg = e.target.closest('[data-scg]'); if (sg) { scOpen[sg.dataset.scg] = !scOpen[sg.dataset.scg]; scTree($('q').value.trim().toLowerCase()); return; }
+    var si = e.target.closest('[data-sc]'); if (si) { scShow(si.dataset.sc); return; }
     var tw = e.target.closest('[data-tw]');
     if (tw) { var g = byId[tw.dataset.tw]; open[g.id] = !tw.classList.contains('open'); tree($('q').value.trim().toLowerCase()); return; }
     var b = e.target.closest('[data-id]'); if (b) show(b.dataset.id);
   });
-  $('editBtn').onclick = function(){ edit(); };
+  $('editBtn').onclick = function(){ if (SC) scEdit(); else edit(); };
   ['revBox'].forEach(function(pid){
     $('revBtn').onclick = function(){ var on = $(pid).hidden; panel(pid, on); if (on) $(pid).scrollIntoView({ block: 'nearest', behavior: 'smooth' }); };
     $(pid).addEventListener('toggle', function(){ if (!this.open && !this.hidden) panel(pid, false); });
   });
   $('main').addEventListener('click', function(e){
+    if (SC) {
+      var fk = e.target.closest('[data-kind]'); if (fk) { scKind = fk.dataset.kind; scFix(); return; }
+      var sc = e.target.closest('[data-sc]'); if (sc) { scShow(sc.dataset.sc); return; }
+    }
     if (e.target.closest('[data-edit]')) { edit(); return; }
     var go = e.target.closest('[data-go]'); if (go) { show(go.dataset.go); return; }
     var im = e.target.closest('img'); if (!im || editing) return;
@@ -602,7 +977,7 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
   /* 검색: 제목 · 내용에 글자가 있는 항목만 트리에 남긴다 */
   $('q').addEventListener('input', function(){ tree(this.value.trim().toLowerCase()); });
   $('tocBtn').onclick = function(){ var f = $('side').classList.toggle('fold'); this.setAttribute('aria-expanded', String(!f)); };
-  window.addEventListener('hashchange', function(){ var h = decodeURIComponent(location.hash.slice(1)); if (byId[h] && byId[h] !== cur) show(h); });
+  window.addEventListener('hashchange', function(){ var h = decodeURIComponent(location.hash.slice(1)); if (SC) { if (SC.byCid[h] && h !== scCur) scShow(h); return; } if (byId[h] && byId[h] !== cur) show(h); });
   window.addEventListener('beforeunload', function(e){ if (editing) { e.preventDefault(); e.returnValue = ''; } });
   function closeLb(){ $('lb').classList.remove('on'); $('lbImg').removeAttribute('src'); }
   $('lbClose').onclick = closeLb;

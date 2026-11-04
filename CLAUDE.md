@@ -40,11 +40,11 @@
 2. `TIMEOUT`이면 다시 실행한다. `JOBS`면 아래 「작업 대기열」대로, `PENDING`이면 요청마다 아래 순서로 처리한 뒤 다시 실행한다. **처리 순서는 `PENDING`에 적힌 순서**다(감시가 우선순위 「높음」 먼저, 같은 우선순위는 먼저 등록한 것부터 정렬해 둔다. `RESUME`도 같다).
    0. 대상 파일 = 요청의 `fileKey`(없으면 시작 안내 작업 링크의 파일, 둘 다 없으면 「보류」). **수정 가능 페이지가 아니면 반영하지 않는다.** 요청의 `page`가 그 파일의 지금 수정 가능 페이지(project.json editablePageName)일 때만 반영한다. 아니면 상태를 「보류」로 바꾸고 note에 「○○ 페이지는 보기 전용입니다. 담당자 확인 필요」를 남긴다.
    1. 상태를 「진행 중」으로: `POST http://localhost:8765/api/requests` `{action:'update', id, status:'진행 중', note, by:'Claude'}`
-   2. Figma(대상 파일 · 수정 가능 페이지)에 반영한다. **작업 기준 문서를 먼저 확인한다 — UX 문서의 카테고리(공통 규칙 · 정의서 …)마다 「적용」한 문서 하나씩만 읽는다**:
-      - `GET /api/guides`의 `applied[fileKey]`(**이 PC 작업자가 고른 작업 기준**, `workbench/guide_apply.json`, 공유하지 않음). `docs: {종류: {id}}`가 카테고리별 적용 문서다(`guide` 공통 규칙 · `spec` 정의서, 앞으로 늘어도 같다). `docs`가 없는 예전 형식이면 `guideId`가 공통 규칙이다. id가 빈 값이면 그 카테고리는 작업 기준 없음.
-      - 적용한 문서마다 **지금 내용**(`items[].mdPath`, 고친 적이 있으면 가장 최근 수정본 `rev/…md`)을 읽는다. **적용하지 않은 가이드 · 정의서는 같은 카테고리에 여러 개 있어도 읽지 않고 따르지 않는다.**
-      - 공통 규칙(가이드) = 구성 · 크기 · 컴포넌트 · 표기, 정의서 = 그 화면의 용어 · 값 · 상태 · 동작 · 화면 이동. 둘이 어긋나면 화면 내용은 정의서, 공통 구성 · 컴포넌트 · 표기는 가이드를 따르고 note에 어긋난 점을 적는다. 문서와 요청이 어긋나면 요청을 따르되 note에 그렇게 적는다.
-      - note 마지막 줄에 `작업 기준: {공통 규칙 제목 또는 「없음」} · 정의서 {제목 또는 「없음」}`을 적는다(기본 문서는 없다. 하나도 없으면 요청 내용과 그 파일의 기존 화면을 따른다).
+   2. Figma(대상 파일 · 수정 가능 페이지)에 반영한다. **작업 기준 문서를 먼저 확인한다 — UX 문서의 카테고리(작업규칙 · 정책서 · UX가이드 · 기준데이터 · 화면 정의서)마다 「적용」한 문서 하나씩만 읽는다**:
+      - `GET /api/guides`의 `applied[fileKey]`(**이 PC 작업자가 고른 작업 기준**, `workbench/guide_apply.json`, 공유하지 않음). `docs: {종류: {id}}`가 카테고리별 적용 문서다(`rule` 작업규칙 · `policy` 정책서 · `guide` UX가이드 · `data` 기준데이터 · `spec` 화면 정의서, 앞으로 늘어도 같다). `docs`가 없는 예전 형식이면 `guideId`가 UX가이드다. id가 빈 값이면 그 카테고리는 작업 기준 없음.
+      - 적용한 문서마다 **지금 내용**(`items[].mdPath`, 고친 적이 있으면 가장 최근 수정본 `rev/…md`)을 읽는다. **파일형 문서**(`format:'files'`, 예: CURECA 작업규칙)는 `mdPath`가 비어 있고 `items[].fileList[].mdPath`(파일마다 지금 내용)를 읽는다 — 작업규칙(`rules`)은 모두, 정책서(`policy`)는 `README.md`와 요청 화면 CID를 머리말 `cids`에 둔 정책 파일 · 그 정책이 `data`로 가리키는 기준 자료만, 기준데이터(`glossary`)는 `glossary.md`와 요청에 걸린 표만, 화면 정의서(`screens`)는 요청 화면의 CID 파일(`{메뉴}/{CID}.md`)과 짝 CID 파일만 읽는다(파일이 많아 다 읽지 않는다). **적용하지 않은 문서는 같은 카테고리에 여러 개 있어도 읽지 않고 따르지 않는다.**
+      - 역할: 작업규칙 = 작업 방식(순서 · 확인 항목 · 산출물 형식, 이 처리 절차에도 따른다) · 정책서 = 업무 규칙(권한 · 상태 전이 · 예외 처리) · UX가이드 = 구성 · 크기 · 컴포넌트 · 표기 · 기준데이터 = 코드 · 상태값 · 단위 · 표기 값 · 화면 정의서 = 그 화면의 용어 · 값 · 상태 · 동작 · 화면 이동. 어긋나면 화면 내용은 화면 정의서 → 정책서 → 기준데이터 순, 공통 구성 · 컴포넌트 · 표기는 UX가이드를 따르고 note에 어긋난 점을 적는다. 문서와 요청이 어긋나면 요청을 따르되 note에 그렇게 적는다.
+      - note 마지막 줄에 `작업 기준: 작업규칙 {제목|없음} · 정책서 {제목|없음} · UX가이드 {제목|없음} · 기준데이터 {제목|없음} · 화면 정의서 {제목|없음}`을 적는다(기본 문서는 없다. 하나도 없으면 요청 내용과 그 파일의 기존 화면을 따른다).
       - 프로토타입은 여기서 고치지 않고, 완료 뒤 6번으로 맞춘다.
    3. 반영한 프레임의 캡처를 갱신한다(아래 「캡처」).
    4. `Common_UX_Changelog.md` 맨 위에 항목을 추가한다.
@@ -107,14 +107,54 @@
 - 계정 = `.history/accounts/{id}.json` `{id, name, admin, menus, writes, salt, hash, iter, active, createdAt, updatedAt, pwAt}` — 비밀번호는 **PBKDF2-SHA256(100000회) 해시만**, 원문은 어디에도 남기지 않는다. 작업 이력과 함께 깃으로 모든 PC에 공유된다(한 계정 한 파일). 서버는 이 폴더를 웹으로 내보내지 않는다.
 - **최고관리자는 1명**(`brex`, `admin: true`): 메뉴 전부 + 「계정 관리」(`Accounts.html`: 계정 추가 · 이름 · 메뉴 · 사용 중지 · 비밀번호 초기화 · 지우기). 최고관리자는 지우거나 중지할 수 없다. 누구나 「내 정보」(`Account.html`)에서 자기 비밀번호를 바꾼다.
 - **시작 안내(`Setup.html`) · 내 정보는 권한 설정 대상이 아니다**: 로그인한 모든 계정이 쓴다(서버 메뉴 `always`). 계정 관리 화면의 메뉴 선택에도 나오지 않는다.
-- 고르는 메뉴 키: `guide` UX 문서(공통 규칙 · 정의서, + 문서 보기 `UX_Guide.html`) · `workbench` · `history` 변경 이력 · `usage` 사용량 통계 · `proto` 프로토타입(+ `prototypes/`). 허용되지 않은 페이지는 첫 허용 메뉴로, API(`/api/usage` · `/api/prototypes` · `/api/accounts`)는 403.
+- 고르는 메뉴 키: `plan` 일정/작업(`Work.html`, 상단 메뉴에서 시작 안내 다음. 하위 탭: 일정 · 주간 진행 현황 · 화면설계서 작업대기 · 회의록 · 임시 정책 · 논의·결정 — 일정 · 주간 진행 현황은 구글 시트 연결(아래 「일정/작업 · 구글 시트」), 나머지는 세부가 정해지는 대로) · `guide` UX 문서(작업규칙 · 정책서 · UX가이드 · 기준데이터 · 화면 정의서 · 변경이력, + 문서 보기 `UX_Guide.html`) · `workbench` · `history` 변경 이력 · `usage` 사용량 통계 · `proto` 프로토타입(+ `prototypes/`). 허용되지 않은 페이지는 첫 허용 메뉴로, API(`/api/usage` · `/api/prototypes` · `/api/accounts` · `/api/sheet`)는 403.
 - **메뉴마다 읽기 · 쓰기**(v0.10.1): 계정의 `menus`가 읽기(보기만), `writes`가 쓰기(수정 요청 등 바꾸기도. 읽기 메뉴 안에서만). 계정 관리에서 메뉴마다 「없음 · 읽기 · 쓰기」로 고른다(사용량 통계는 쓰기 없음).
-  - 쓰기로 되는 것: UX 문서 = 새 가이드 · 정의서 만들기, 항목 수정 요청, 연관 항목 찾기 · 반영 요청(jobs `guide` · `guide-edit` · `guide-check`, guides `save`, `/api/upload`) · Workbench = 수정 요청 등록 · 답하기 · 다시 진행 · 지우기, 캡처 · 목록 요청, 프로젝트 추가 · 작업 페이지 바꾸기(`/api/requests` · `/api/attach` · `/api/projects` · `/api/catalog` · `/api/shots`, jobs `capture` · `catalog`) · 변경 이력 = 다시 진행 · 답하기(`/api/requests`) · 프로토타입 = 만들기 · 수정 요청 · 맞추기 · 지우기(jobs `prototype*`, `/api/prototypes`). `/api/requests`는 Workbench · 변경 이력 · UX 문서(반영 요청) 쓰기 중 하나면 된다.
+  - 쓰기로 되는 것: 일정/작업 = 일정(구글 시트) 칸 수정 · 시트 연결(`POST /api/sheet`) · UX 문서 = 새 가이드 · 정의서 만들기, 항목 수정 요청, 연관 항목 찾기 · 반영 요청(jobs `guide` · `guide-edit` · `guide-check`, guides `save`, `/api/upload`) · Workbench = 수정 요청 등록 · 답하기 · 다시 진행 · 지우기, 캡처 · 목록 요청, 프로젝트 추가 · 작업 페이지 바꾸기(`/api/requests` · `/api/attach` · `/api/projects` · `/api/catalog` · `/api/shots`, jobs `capture` · `catalog`) · 변경 이력 = 다시 진행 · 답하기(`/api/requests`) · 프로토타입 = 만들기 · 수정 요청 · 맞추기 · 지우기(jobs `prototype*`, `/api/prototypes`). `/api/requests`는 Workbench · 변경 이력 · UX 문서(반영 요청) 쓰기 중 하나면 된다.
   - 읽기만이면 화면에 「보기 전용」 표시, 바꾸는 버튼(`.w-only`)이 숨고(`html.perm-ro`, appnav.js), 서버가 그 POST를 403 · 오류로 막는다.
   - `writes`가 없는 예전 계정은 고른 메뉴 모두 쓰기(UX 문서만 예전 `guideEdit`이 있을 때). 최고관리자는 전부 쓰기. `/api/me`의 `writes`.
 - 권한 검사는 **브라우저 페이지에서 온 요청만**(`Sec-Fetch-Site` 머리글, Origin이 `null`이 아님). **Claude(curl) · Figma 플러그인은 로그인 없이 그대로** 쓴다. Claude는 계정 파일을 직접 고치지 않는다(사용자가 요청하면 화면 · API로).
 - 작업자 이름(요청 · 이력의 작성자, Workbench 「작업자」 칸 · 시작 안내 1단계)은 로그인한 계정 이름으로 고정된다.
 - 서버 API: `GET /api/me`, `POST /api/login` · `/api/logout` · `/api/me/password {current, next}`, `GET/POST /api/accounts {action: add|update|delete}`(최고관리자).
+
+## 일정/작업 · 구글 시트
+
+- 시트(기본 `1S5tPFtNn77FLcaVBvWFO-Z48St2NxovfOoldWf6jO1w`, 일정 = 「2-2.WBS 연동」 gid `425564699`(머리말 4행 + 간트 날짜 눈금 2줄, 간트 열은 기본으로 숨김), 회의 = 「0.회의록」(왼쪽 칸 「미팅 일시 · 참석 · 주제 · 내용 · 기타」 블록이 회의 하나))는 공개하지 않는다. **Apps Script 웹 앱**(`tools/google-sheet-bridge.gs`, 시트 소유자 권한으로 실행 · 액세스 「모든 사용자」 · 스크립트 속성 `TOKEN`이 맞는 요청만)을 거쳐 서버가 읽고 쓴다.
+- 연결 정보 `.history/config/sheet.json` {sheetUrl, webapp, token, wbsGid, minutes, cols(열 맞추기 {항목: 머리말}), by, at} — 깃으로 모든 PC에 공유, 웹으로 내보내지 않는다(`/.history/config` 404). 화면 「시트 연결」(일정/작업 쓰기)에서 넣는다. 웹 앱 주소 · 비밀값을 비워 보내면 그대로 둔다. Claude는 이 파일을 직접 고치지 않는다.
+- API: `GET /api/sheet`(연결 정보, 비밀값 없음 · canWrite) · `GET /api/sheet/data?gid=|name=`(그 탭 `{name, gid, values, fx(수식 칸), at}`, 시트에 닿지 못하면 마지막 사본 `workbench/.sheet_cache/`를 `{cached, error, data}`로) · `POST /api/sheet {action:'config'|'test'|'write', gid|name, cells:[{row, col, value}](1부터)}`. 읽기 = `plan` 읽기, POST = `plan` 쓰기.
+- 일정 탭: 시트 모양 그대로(`style=1`로 배경 · 글자색 · 굵기 · 숨긴 행 · 열 · 병합 · 드롭다운 칸 · 고정 열을 함께 받음). 숨긴 줄 · 열은 빼고(「숨긴 행 · 열 보기」), 드롭다운 값은 칩 색(완료 · 진행 중 · 대기 · T/L · T-only · L-only …)이고 고칠 때는 시트와 같은 값 목록(`dvl`)에서 고른다(글 입력 없음), 간트 열은 셀 배경색이 막대, 오늘 열은 빨간 선, 고정 열은 왼쪽에 붙임(화면 폭 60%까지). 주간 진행 현황도 숨긴 줄은 세지 않는다. 쓰기 권한이면 칸을 눌러 고치면 그 칸만 시트에 쓴다(수식 칸 제외).
+- 주간 진행 현황(월~일, ‹ › 주 이동): 마감 = 작업 완료일이 그 주인 줄. 업무 상태 = 상태 열, 없으면 UX 완료 · UI 완료(또는 작업필요X)면 완료, UX만 완료면 진행 중, 그 밖에는 UX 상태. 개발사 공유 대상(공유일 열이 있을 때) · 정책 변동(정책서 `date`가 그 주 = 신규, 수정본이 그 주 = 변경, 임시 정책 `provisional/PV-*.md` 승인 대기) · 주요 내용 · 영역별 신규 정책 · 회의 내역(회의록 탭에서 날짜가 그 주인 줄, 여러 개면 넘겨 보기) · 차주 일정.
+
+## 일정/작업 · 회의록
+
+- 회의록은 md 파일 `.history/minutes/{id}.md`(id `m{YYYYMMDD}-{6자}`)로 저장되고 작업 이력과 함께 깃으로 모든 PC에 공유된다. 머리말 `id · date(YYYY-MM-DD HH:MM) · title · attendees(회사마다 「 / 」로 이음) · by · createdAt · updatedBy · updatedAt`, 그 아래 본문(내용, `## 소제목` · `[주제]` 줄).
+- API: `GET /api/minutes`(최신순) · `POST /api/minutes {action:'save', id?, date, title, attendees, body}` · `{action:'delete', id}`. 읽기 = `plan` 읽기, 쓰기 = `plan` 쓰기.
+- 화면(회의록 탭): 왼쪽 월별 목록(최신이 위, 두 번째 줄은 본문의 [주제] 또는 참석 요약), 오른쪽 보기 · 작성 · 수정. 시트 「0.회의록」에만 있는 회의는 [시트 회의록 가져오기]로 md로 옮긴다(시트는 그대로). 주간 진행 현황의 회의 내역은 md + 아직 옮기지 않은 시트 회의.
+- Claude가 회의록을 쓰거나 고칠 때도 이 API를 쓴다(파일을 직접 커밋하지 않는다).
+- **각자 작성**: 참석자마다 자기 내용을 `.history/minutes/{id}.notes/{작성자 ID}.md`(머리말 author · authorId · updatedAt + 본문)에 쓴다. `POST /api/minutes {action:'note', id, body}`(로그인 계정 ID, 없으면 PC 이름. 빈 글이면 지움). `GET /api/minutes`의 item마다 `notes:[{author, authorId, updatedAt, body}]`, 맨 위 `me`.
+- **요약 정리(작업 대기열 kind `minutes`)**: 화면의 [요약 정리]가 `{kind:'minutes', minute:{회의록 ID}, name, text, by}` 작업을 쌓는다(`JOBS`에 나온다). 처리:
+  1. 「진행 중」으로. `GET /api/minutes`에서 그 회의록(`id === minute`)의 `notes`와 지금 정리본(`body`)을 읽는다.
+  2. 모든 작성분을 합쳐 **정리본 하나**로 쓴다: 같은 내용은 하나로, 서로 다르면 둘 다 남기고 누가 말했는지 `(이름)`을 붙인다. 회의 흐름대로 `[주제]` 줄로 묶고 그 아래 `- ` 항목, 결정 · 할 일은 `ㄴ 결정:` · `ㄴ 할 일(담당, 기한):`처럼 드러나게, 맨 끝에 필요하면 `## 기타`. 작성분에 없는 내용은 만들지 않는다. 지금 정리본이 있으면 거기 있던 내용도 빠뜨리지 않는다.
+  3. `POST /api/minutes {action:'save', id, date, title, attendees(줄마다), body:{정리본}, summary:'{작성자 이름들}', by:'Claude'}`(UTF-8 파일로) → 머리말 `summary`에 「시각 · 이름들」이 남는다.
+  4. `POST /api/jobs {action:'update', id, status:'완료', note:'작성 N건 → 정리본'}`. 사용량은 `usage.ps1 -Title "회의록 요약: {제목}"`. `Common_UX_Changelog.md`에는 쓰지 않는다.
+
+## 일정/작업 · 화면설계서 작업대기 · 임시 정책 · 논의·결정
+
+**기준 규칙**: `.history/guides/rules/`의 `screen-spec.md`(반영 대기 목록) · `provisional-policy.md`(PV) · `discussion-answer.md`(PD · CA 답) · `change-flow.md` · `status-lifecycle.md`. 아래는 프로그램과 이어지는 부분만 적는다. 저장소 파일(`.history/guides/…`)을 고칠 때 화면 정의서(`screens/…`)는 파일형 문서라 `POST /api/guides {action:'save', id:'screens', file, md}`로 수정본을 남기고, 그 밖의 폴더(`provisional/` · `pending/` · `customer-agenda/` · `screen-fixes/` · `decisions/`)는 파일을 직접 고친다(UTF-8, 서버가 깃으로 공유).
+
+- **화면설계서 작업대기 탭**: 화면 정의서 파일마다 `## 반영 대기 목록` 표(`| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |`)와 `screen-fixes/{CID}.md`를 모아 보인다(상태가 「대기」로 시작하는 줄을 센다. 메뉴 담당자 = `_menu.md` owner).
+  - **[고른 줄로 Workbench 수정 요청]**: 줄을 골라 요청을 만든다(유형 `화면설계서 반영`, 위치 = 화면 머리말 `figma:` 링크의 파일 키 · 노드, `page`는 빈 값). 요청에 `fixRows:[{doc:'screens'|'screen-fixes', file, n, cid}]`가 담긴다. 이미 요청한 줄은 요청 번호 · 상태가 보이고 다시 고를 수 없다.
+  - 이 요청을 처리할 때: `page`가 비어 있으면 `use_figma`로 그 노드의 페이지를 찾아 수정 가능 페이지인지 확인한다(아니면 평소처럼 「보류」). 요청 글의 줄마다 「바꿀 것」대로 Figma를 고친다.
+  - **완료하면 그 줄을 「반영 완료」로**: 「완료」로 바꾸기 전에 `fixRows`의 줄마다 상태 칸을 `반영 완료 (YYYY-MM-DD)`로 바꾼다 — `doc:'screens'`는 그 화면 파일(`screens/{file}`)의 지금 내용을 고쳐 `POST /api/guides {action:'save', id:'screens', file, md, note:'반영 완료: R0xx', request:'R0xx 완료', by:'Claude'}`, `doc:'screen-fixes'`는 `.history/guides/screen-fixes/{file}`을 직접 고친다. 반영하지 못한 줄은 그대로 두고 note에 적는다. 한 요청 안의 줄은 한 번에 저장한다.
+- **문서가 바뀌면 반영 대기 줄을 더한다**: 작업규칙 · 정책서 · UX가이드 · 기준데이터의 guide-edit이 끝나면, 이어서 그 변경으로 고쳐야 할 화면을 찾아(guide-check `scope:'spec'`와 같은 방법 — 정책은 머리말 `cids`, 용어 · 값은 화면 본문 검색) **그 화면 파일의 `## 반영 대기 목록`에 줄을 더한다**: 구분(정책 반영 · 표기 · 디스크립션 …), 지금, 바꿀 것(`디스크립션에 넣음: …`, 정해지지 않은 부분은 `확인 필요: …`), 근거(`{문서 ID} {수정본} {항목}`), 상태 `대기`. 화면 파일이 없는 CID는 `screen-fixes/{CID}.md`(templates/screen-fix.md). guide-edit 완료 note와 guide-check items에 더한 화면 수를 적는다.
+- **임시 정책 탭**(`provisional/PV-*.md`, closed/ 포함): [승인] · [A안 승인] · [B안 승인] · [반려]와 [＋ 새 임시 정책]은 작업 대기열 kind **`plan`**으로 쌓인다(`{sub, target, plan}`). 
+  - `sub:'pv-decide'`(target PV ID, plan `{decision, memo, date, by}`): 「진행 중」 → PV 머리 표 `상태`를 승인 · 반려로(A/B는 `A안 승인`/`B안 승인`), `## 결정` 표에 `| 날짜 | 결정 | 결정자 | 메모 |` 줄 추가. 반려는 사유 필수, 파일을 `provisional/closed/`로 옮긴다. 승인은 `## 영향 화면` 표의 CID마다 반영 대기 줄(근거 PV ID, 상태 `대기`)을 더한다(공통 자료 반영 · closed/ 이동은 승인 담당자가 정책을 고친 뒤 — note에 남은 일로 적는다). → 「완료」, note에 바꾼 파일 · 더한 줄 수.
+  - `sub:'pv-new'`(plan `{title, policy, change, reason, screens, customer, by, date}`): provisional-policy.md 4 · 6절대로 등록(번호 = provisional · closed 중 가장 큰 번호 + 1, 같은 정책의 승인 대기 PV가 있으면 같은 내용이면 그 PV에 합치고, 다르면 A/B 선택 문서). 영향 화면 표는 Claude 초안. → 「완료」, note에 PV ID.
+- **논의·결정 탭**(내부 논의 = `pending/PD-*.md`, 고객 논의 = `customer-agenda/agenda.md`의 CA 줄): [답변하기]는 discussion-answer.md 순서를 두 단계로 나눈다.
+  - `sub:'answer'`(target PD · CA ID, plan `{answer, date, basis, by, kind}`): 파일을 고치지 않는다. 정리안을 만들어 job note에 마크다운으로 쓰고 상태를 **「확인 대기」**로: `**결정**`(정책서 문장) · `**바뀌는 것**`(항목 파일 결과 · 상태, 공통 자료 또는 PV, 반영 대기 줄을 더할 화면) · `**확인 필요**`. 답이 모호하면 「보류」와 질문.
+  - 사람이 화면에서 [확인 · 반영]을 누르면 `sub:'answer-apply'`(plan `{from, proposal, answer, date, basis, by}`)가 쌓인다 → 정리안대로 항목 파일(PD 미팅 결과 · 상태 / CA 결정 · 상태 `결정`), 공통 자료(승인 담당자의 답이면 정책 수정, 아니면 PV 등록 — discussion-answer.md 4절), 반영 대기 줄을 고치고 「완료」, note에 바꾼 파일 · 줄 수. [다시 답하기]는 새 `answer`.
+- **회의록 · Workbench에서 생기는 항목**: 
+  - 회의록 요약 정리(kind `minutes`) 때 정리본에서 **정해진 것 · 논의가 남은 것**을 찾아 규칙대로 올린다: 기존 정책을 바꾸기로 했으면 PV(근거 = `{날짜} 회의록 {회의록 ID}`), 우리끼리 더 논의할 것은 PD(`## 미팅 결과`에 그 회의), 고객 답을 기다리는 것은 CA(agenda.md 줄 추가 · 화면에 임시 적용했으면 PV와 연결). 이미 있는 PV · PD · CA면 새로 만들지 않고 그 파일의 미팅 결과 · 결정에 적는다. 요약 job note에 만든 · 고친 ID를 적는다.
+  - Workbench 수정 요청을 처리하다 기존 정책 · 화면 정의와 다르게 고쳐야 하면(요청을 따르되) PV를 등록하고, 정할 수 없어 「보류」하는 요청은 PD로 올려 요청 note에 ID를 적는다(헌법 2조: 저장소에 기록해야 효력).
 
 ## 작업 이력 공유 (깃)
 
@@ -125,7 +165,7 @@
 
 ## 작업 대기열 (`workbench/jobs.json`, `JOBS J0xx`)
 
-Workbench의 「캡처 받기」 · 「Claude에게 목록 만들기 요청」, UX 문서 「공통 규칙」 탭의 「새 가이드 만들기」, 가이드 보기 화면의 「수정 요청」 · 「고칠 화면 찾기 요청」, 프로토타입의 「만들기 요청」 · 「수정 요청」 · 「지금 반영」이 쌓인다. `GET /api/jobs`로 읽고, 작업마다 처리한 뒤 `POST /api/jobs {action:'update', id, status:'완료'|'실패', note}`.
+Workbench의 「캡처 받기」 · 「Claude에게 목록 만들기 요청」, UX 문서 각 탭의 「새 {카테고리} 만들기」, 가이드 보기 화면의 「수정 요청」 · 「고칠 화면 찾기 요청」, 프로토타입의 「만들기 요청」 · 「수정 요청」 · 「지금 반영」이 쌓인다. `GET /api/jobs`로 읽고, 작업마다 처리한 뒤 `POST /api/jobs {action:'update', id, status:'완료'|'실패', note}`.
 
 - **catalog (프레임 목록 만들기)**: 내 Figma 앱이 아니라 Figma 클라우드(`use_figma`)에서 만든다.
   1. `use_figma`로 그 파일의 페이지 목록(id · 이름)을 받는다. 이름이 구분선(`----` 등)인 페이지는 뺀다.
@@ -133,12 +173,12 @@ Workbench의 「캡처 받기」 · 「Claude에게 목록 만들기 요청」, 
   3. 작업의 `link`(없으면 project.json의 link)의 node-id가 있는 페이지를 `editablePageId`로 한다.
   4. `{fileKey, fileName, editablePageId, by:'Claude', pages:[{id, name, editable, frames}]}`를 UTF-8 파일로 만들어 `POST /api/catalog`.
 - **capture (캡처 받기)**: `get_screenshot`(fileKey, nodeId, `maxDimension`은 **원본 크기**가 되게 프레임의 긴 변(max(w, h)), 단 8000을 넘으면 8000)으로 받은 PNG를(응답의 URL을 curl로 받는다) base64로 `{fileKey, nodeId, name, w, h(원본 크기), by:'Claude', png}` 파일에 담아 `POST /api/shots`. 서버가 `projects/{fileKey}/shots`와 `shots_meta.json`을 갱신한다.
-- **guide (새 UX 가이드 · 정의서 만들기)**: 작업의 `name`(이름) · `link`(기준 Figma 링크, `fileKey` · `nodeId`, **선택**) · `files`(올린 참고 파일 `[{path, name, size}]`, **선택**, `workbench/job_files/{작업 ID}/` 이 PC에만) · `text`(작업 방법) · `by`(요청자) · `docKind`(`''` 가이드 · `'spec'` 정의서)로 만든다. 링크와 참고 파일 중 하나 이상은 늘 있다. **Figma는 읽기만 한다**(수정 가능 페이지와 상관없다).
+- **guide (새 UX 문서 만들기 — 모든 카테고리)**: 작업의 `name`(이름) · `link`(기준 Figma 링크, `fileKey` · `nodeId`, **선택**) · `files`(올린 참고 파일 `[{path, name, size}]`, **선택**, `workbench/job_files/{작업 ID}/` 이 PC에만) · `text`(작업 방법) · `by`(요청자) · `docKind`(카테고리: `''` UX가이드 · `'rule'` 작업규칙 · `'policy'` 정책서 · `'data'` 기준데이터 · `'spec'` 화면 정의서)로 만든다. 링크와 참고 파일 중 하나 이상은 늘 있다. **Figma는 읽기만 한다**(수정 가능 페이지와 상관없다).
   1. 상태를 「진행 중」으로 바꾼다. 작업 방법이 모호해 무엇을 정리할지 정할 수 없으면 「보류」로 바꾸고 note에 질문을 남긴다.
   1-1. **참고 파일**(`files`)이 있으면 모두 읽는다: md · txt · csv · json · html은 Read, pdf · 이미지는 Read(pdf는 쪽 범위), docx · xlsx · pptx는 해당 스킬(docx · xlsx · pptx)이나 압축을 풀어 글을 읽는다. 링크가 없으면 참고 파일만으로 만들고(2 · 3 건너뜀, 이미지 캡처 없음, `fileKey` ''), 둘 다 있으면 참고 파일의 내용 · 구성을 기준으로 Figma 화면을 근거 · 캡처로 함께 쓴다. 파일 내용과 Figma가 어긋나면 작업 방법을 따르고 note에 적는다.
   2. 범위(링크가 있을 때): `nodeId`가 페이지면 그 페이지, 섹션 · 프레임이면 그 아래, 없으면 파일의 페이지 목록에서 작업 방법에 맞는 페이지를 고른다.
   3. (링크가 있을 때) `use_figma`로 구조(섹션 · 최상위 프레임 이름 · 크기), 화면 글(디스크립션 · 제목), 많이 쓴 컴포넌트(INSTANCE의 메인 컴포넌트 이름 빈도) · 색 · 글꼴을 읽는다. 한글이 많으면 `escape()`로 받거나 나눠 받는다(「주의」). 필요한 프레임만 `get_screenshot`으로 본다.
-  4. `.history/guides/{id}/`에 쓴다(작업 이력과 함께 서버가 깃으로 모든 작업자에게 공유한다. Claude가 직접 커밋하지 않는다). id는 `g{YYYYMMDD}-{PC 이름 소문자}-{작업 ID}`(예: `g20261028-brex-06-J003`, 여러 PC의 작업 번호가 겹치지 않게), 정의서는 앞 글자 `s`(예: `s20261103-brex-06-J007`).
+  4. `.history/guides/{id}/`에 쓴다(작업 이력과 함께 서버가 깃으로 모든 작업자에게 공유한다. Claude가 직접 커밋하지 않는다). id는 `g{YYYYMMDD}-{PC 이름 소문자}-{작업 ID}`(예: `g20261028-brex-06-J003`, 여러 PC의 작업 번호가 겹치지 않게). 카테고리마다 앞 글자가 다르다: UX가이드 `g` · 작업규칙 `r` · 정책서 `p` · 기준데이터 `d` · 화면 정의서 `s`(예: `s20261103-brex-06-J007`).
      - `guide.md`: `# 제목`, 소개 문단(보기 화면의 「개요」), 그다음 `## 대분류` › `### 상세 항목`으로 쓴다. 보기 화면은 왼쪽이 이 목차 트리, 오른쪽이 고른 항목의 내용이다(대분류를 고르면 그 소개와 하위 항목 카드). 기준 Figma에 목차가 있으면 그 구조를 그대로 따른다. 작업 방법을 따르고, 구성은 **CURECA UX 가이드(`g20261028-brex-06-J003`) 구조를 본보기**로 한다(지금 내용 `mdPath`를 열어 본다):
        - 맨 앞 「개요」: 무엇을 기준으로 정리했는지 한 문단 + 안내 인용(`>`) + `### 프레임 구성`(기준 문서 프레임 크기 · 구성 표).
        - `## 0. 문서 구성 (목차)`(+ `### CID 규칙`) 다음에 `## 1. …` ~ `## N. …` 대분류. 대분류마다 첫 문단은 한 줄 소개(대분류 화면 · 폴더 카드 위에 보인다).
@@ -146,27 +186,38 @@ Workbench의 「캡처 받기」 · 「Claude에게 목록 만들기 요청」, 
        - 항목 안: 규칙 표 · 목록, Figma 캡처(`![…](images/…)` + `*설명*`), 컴포넌트 대분류는 맨 앞에 Figma 컴포넌트 항목.
        표는 마크다운 표로, 이미지는 `![설명](images/파일.png)`와 다음 줄 `*설명*`으로 넣는다. HTML 태그는 쓰지 않는다(글자로 보인다).
      - `images/`: `get_screenshot`(긴 변 1600 이하) 응답의 URL을 curl로 받아 저장한다. 대화에 base64로 넣지 않는다.
-     - `meta.json`(UTF-8): `{id, kind(정의서면 'spec', 가이드는 빼거나 'guide'), title, summary(한두 문장), link, fileKey, fileName, scope(범위 페이지 · 섹션 이름 또는 「참고 파일」), frames(참고한 프레임 수), sources(참고 파일 이름 목록), by, request(작업 방법 원문), jobId, createdAt, updatedAt}`
+     - `meta.json`(UTF-8): `{id, kind(작업의 docKind: 'rule' · 'policy' · 'data' · 'spec', UX가이드는 빼거나 'guide'), title, summary(한두 문장), link, fileKey, fileName, scope(범위 페이지 · 섹션 이름 또는 「참고 파일」), frames(참고한 프레임 수), sources(참고 파일 이름 목록), by, request(작업 방법 원문), jobId, createdAt, updatedAt}`
      - 참고 파일 원본은 `.history`로 옮기지 않는다(이 PC에만). 「개요」에 무엇(파일 이름 · Figma 링크)을 기준으로 정리했는지 적는다.
-  5. `POST /api/jobs {action:'update', id, status:'완료', guide:{가이드 id}, note:'섹션 N개 · 참고 프레임 M개 · 참고 파일 K개'}`. 가이드는 UX 문서 「공통 규칙」 탭 위쪽 가이드 목록에, 정의서는 「정의서」 탭 카드에 나타나고(모든 작업자), `UX_Guide.html?g={id}`에서 본다. 작업 기준으로 쓸지는 작업자가 각자 탭마다 「내 작업 기준」 선택 상자 + [적용]으로 정한다(공통 규칙 하나 · 정의서 하나, 그 PC에만 적용, Claude가 정하지 않는다. `POST /api/guides {action:'apply', kind:'guide'|'spec', fileKey, guideId}`).
-  6. `Common_UX_Changelog.md` 맨 위에 `## [가이드] {제목} · 날짜 (요청: {by})` 항목을 쓴다. 사용량은 `workbench/usage.ps1 -From {진행 중으로 바꾼 시각} -By {by} -Title "가이드: {제목}"`(맥 `usage.pl`)으로 남긴다.
-- **UX 문서 · 문서 종류**: 「UX 문서」 메뉴(`Common_UX_Guide.html`)는 탭으로 문서 종류를 나눈다. 「공통 규칙」(만든 가이드만. 예전 기본 「Common UX 작성 가이드」(`Common_UX_Guide.md` · `images/`)는 2026-11-03에 지웠다) · 「정의서」(`?doc=spec`). 문서는 모두 `.history/guides/{id}/`에 같은 형식으로 두고 `meta.json`의 `kind`로 나눈다(없으면 `guide`, 정의서는 `spec`). 만들기는 둘 다 위 guide 작업(정의서는 `docKind:'spec'` → meta `kind:'spec'`, 「정의서」 탭의 「＋ 새 정의서 만들기」). 정의서도 보기 화면 [수정 요청](guide-edit)으로 고치고, 고치면 늘 「연관 항목 찾기」로 이어진다(아래 guide-check).
-- **가이드 수정본**: 가이드를 고치면 `.history/guides/{id}/rev/{시각}_{PC}.md`(+ `.json` {by, at, note, base})로 남긴다(`POST /api/guides {action:'save', id, md, note, by, base}`). `guide.md`는 처음 만든 그대로 두고, 지금 내용은 가장 최근 수정본이다(`GET /api/guides`의 `mdPath` · `rev` · `revs`).
+  5. `POST /api/jobs {action:'update', id, status:'완료', guide:{가이드 id}, note:'섹션 N개 · 참고 프레임 M개 · 참고 파일 K개'}`. UX가이드는 UX 문서 「UX가이드」 탭 위쪽 목록에, 다른 카테고리는 그 탭(작업규칙 · 정책서 · 기준데이터 · 화면 정의서) 카드에 나타나고(모든 작업자), `UX_Guide.html?g={id}`에서 본다. 작업 기준으로 쓸지는 작업자가 각자 탭마다 「내 작업 기준」 선택 상자 + [적용]으로 정한다(카테고리마다 하나, 그 PC에만 적용, Claude가 정하지 않는다. `POST /api/guides {action:'apply', kind:'rule'|'policy'|'guide'|'data'|'spec', fileKey, guideId}`).
+  6. **`Common_UX_Changelog.md`에는 쓰지 않는다** — UX 문서의 만듦 · 수정은 UX 문서 「변경이력」 탭에만 남는다(아래). 사용량은 `workbench/usage.ps1 -From {진행 중으로 바꾼 시각} -By {by} -Title "{카테고리 이름}: {제목}"`(맥 `usage.pl`)으로 남긴다.
+- **UX 문서 · 카테고리(탭)**: 「UX 문서」 메뉴(`Common_UX_Guide.html`)는 탭 **작업규칙 | 정책서 | UX가이드 | 기준데이터 | 화면 정의서 | 변경이력**으로 나눈다(`?doc=rule|policy|guide|data|spec|log`, 없으면 작업규칙). 예전 「공통 규칙」 가이드는 UX가이드(`kind` 없음 = `guide`), 예전 「정의서」는 화면 정의서(`spec`)다. 예전 기본 「Common UX 작성 가이드」(`Common_UX_Guide.md` · `images/`)는 2026-11-03에 지웠다.
+  - 문서는 모두 `.history/guides/{id}/`에 같은 형식으로 두고 `meta.json`의 `kind`로 나눈다. 만들기는 모두 위 guide 작업(탭의 「＋ 새 {카테고리} 만들기」, `docKind` → meta `kind`).
+  - UX가이드 탭은 고른 가이드를 바로 보여 주고, 다른 카테고리 탭은 카드 목록이다. 어느 탭이든 위쪽 「내 작업 기준」 선택 + [적용](카테고리마다 하나).
+  - **모든 카테고리 문서는 수정할 수 있다**(「UX 문서 · 쓰기」 권한자만): 보기 화면 항목의 [수정 요청](guide-edit) → Claude가 고친다. UX가이드 외 카테고리는 고치면 늘 「연관 항목 찾기」로 이어진다(아래 guide-check `scope:'spec'`).
+  - **UX 문서의 수정 내용은 UX 문서 「변경이력」 탭에만 기록한다**: `Common_UX_Changelog.md` · 작업 이력(`/api/history`, 「변경 이력」 메뉴)에는 남기지 않는다. 기록은 문서 정보 그대로다 — 생성(meta `createdAt` · `request` · `scope`), 수정본(`rev/{rev}.json` {by, at, note, base, **req**(수정 요청 글), **jobId**}), 수정해야 할 화면 · 연관 항목(서버가 guide-check 작업을 바꿀 때마다 `rev/{revTo}.check-{PC}-{작업 ID}.json` {status, items, note …}로 남김, 깃 공유).
+  - 「변경이력」 탭(UX가이드 보기처럼): 왼쪽은 카테고리(작업규칙 · 정책서 · UX가이드 · 기준데이터 · 화면 정의서)별 생성 · 수정 목록(최신순, `.history/guides/_log.json`의 `since` 이전 기록은 숨김 — 2026-11-04 이전 기록은 사용자 요청으로 지움), 오른쪽은 고른 기록의 수정 일자 · 누가 · 문서 ID · 수정본 · 수정 내용 · 수정 요청 · 바뀐 줄(이전 수정본과 비교) · 수정해야 할 화면 · 연관 항목(반영 여부)이다.
+- **파일형 문서**(`meta.format:'files'`): 원본 md 파일들을 그대로 둔 문서다. **카테고리 폴더에 실제 파일을 바로 둔다**: 「CURECA 작업규칙」 = `.history/guides/rules/`(id `rules`, 룰 문서 13개 `change-flow.md` … `weekly-status.md` + `meta.json`, 헌법은 깃허브 원본처럼 `.history/guides/constitution.md` — meta.files에 `../constitution.md`로, 수정본은 `rev/{rev}/_up/constitution.md`). **`.history/guides/` 아래 경로 · 내용은 깃허브 원본 CURECA_AI 저장소와 같게 둔다**(옮기거나 링크를 바꾸지 않는다). 같은 방식으로 정책서 = `.history/guides/policy/`(id `policy`, `layout:'folders'` — 영역 폴더 `com` · `acc` … = 대분류, 정책 파일 = 항목, `README.md`는 개요, 맨 위 md · csv는 「기준 자료」 대분류), 기준데이터 = `.history/guides/glossary/`(id `glossary`, kind `data`, 파일 = 대분류), 화면 정의서 = `.history/guides/screens/`(id `screens`, kind `spec`, `view:'screens'` — 메뉴 폴더 · `_menu.md` · CID 파일). 세 폴더 모두 사용자가 둔 원본 그대로이고 `meta.json`만 더했다(2026-11-04).
+  - 보기: 파일 맨 위 머리말(`---` 사이 key: value)은 제목 아래 표로, CSV는 표로 보인다(`meta.titles`로 표 제목). 화면 정의서는 왼쪽 메뉴별 화면 목록(「임시 정책 포함」 · 「규칙 버전 기록 전」 표시), 오른쪽 화면 정보(작성자 · Service Mode · User Type · 공통 규칙 버전 · 임시 정책 · 관련 정책 · 짝 화면 · 부르는 화면 · Figma) · 반영 대기 목록(구분 거르기) · 설계 내용으로 보인다. 관련 정책 = 머리말 `policies` + 본문 「관련 정책:」 줄, 부르는 화면 = 「호출 위치:」 줄 + 본문에서 그 CID를 적은 다른 화면.
+  - 원본 위치: `.history/guides/{id}/{meta.filesDir}/{파일}` — `filesDir`가 빈 값이면 문서 폴더 바로 아래(rules가 이것), 없으면 `files/`. `meta.files`가 파일과 순서. 수정본은 `rev/{시각}_{PC}/{파일}`(+ `rev/{시각}_{PC}.json`의 `file`). 파일마다 가장 최근 수정본이 지금 내용이고 `GET /api/guides`의 `fileList [{path, mdPath, rev}]`로 알 수 있다. `guide.md`는 없다.
+  - 보기 화면은 파일 하나를 대분류 하나로(파일의 `#` → `##`, `##` → `###`로 한 칸씩 내려) 보이고, 항목 아래에 문서 경로(`.history/guides` 기준, 예: `rules/schedule.md`)를 보인다.
+  - 만들기: guide 작업의 참고 파일이 md이고 「그대로 구성」 · 「파일로 관리」를 요청하면 파일형으로 만든다(파일 내용은 글자 하나 바꾸지 않고, `meta.format:'files'` · `files` · `filesDir`). 폴더 이름은 요청대로(작업규칙은 `rules`, 원본 저장소와 같은 이름).
+  - 수정: guide-edit 작업에 `file`(고칠 파일)이 온다. 그 파일의 지금 내용만 고쳐 `POST /api/guides {action:'save', id, file, md:{그 파일 전체}, …}`로 저장한다(다른 파일은 그대로, 원본 파일은 고치지 않고 수정본으로 남긴다). guide-check의 `revFrom` · `revTo`는 그 파일의 수정본이고, 비교는 `rev/{rev}/{file}`(처음이면 원본)끼리 한다.
+- **문서 수정본**(모든 카테고리): 고치면 `.history/guides/{id}/rev/{시각}_{PC}.md`(+ `.json` {by, at, note, base, req, jobId})로 남긴다(`POST /api/guides {action:'save', id, md, note, by, base, request, jobId}`). `guide.md`는 처음 만든 그대로 두고, 지금 내용은 가장 최근 수정본이다(`GET /api/guides`의 `mdPath` · `rev` · `revs`).
 - **guide-edit (가이드 수정 요청)**: 사람이 보기 화면 항목의 [수정 요청]에 글로 적으면 쌓인다. 작업의 `guide`(가이드 id) · `name`(요청한 항목 제목) · `text`(무엇을 어떻게 고칠지) · `by`. **Figma는 고치지 않는다.**
-  1. 「진행 중」으로 바꾼다. 지금 내용(`mdPath`)을 읽고, `name` 항목을 중심으로 `text`대로 고친다. 요청과 관계없는 부분은 글자 하나 바꾸지 않는다. `##` › `###` 구조를 지킨다(「가이드 작성」 규칙과 같다).
-  2. `POST /api/guides {action:'save', id, md, by:'Claude', note:'{항목}: {고친 내용 한 줄}', base:{지금 rev, 없으면 'guide.md'}}` → 응답의 `saved`가 새 수정본이다.
+  1. 「진행 중」으로 바꾼다. 지금 내용(`mdPath`, 파일형 문서는 작업의 `file` 하나의 `fileList[].mdPath`)을 읽고, `name` 항목을 중심으로 `text`대로 고친다. 요청과 관계없는 부분은 글자 하나 바꾸지 않는다. `##` › `###` 구조를 지킨다(「가이드 작성」 규칙과 같다).
+  2. `POST /api/guides {action:'save', id, md, by:'Claude', note:'{항목}: {고친 내용 한 줄}', base:{지금 rev, 없으면 'guide.md'}, request:'{항목}: {작업의 text 그대로}', jobId:{작업 ID}}` → 응답의 `saved`가 새 수정본이다(`request` · `jobId`는 UX 문서 변경이력에 보인다).
   3. `POST /api/jobs {action:'update', id, status:'완료', revFrom:{base}, revTo:{saved}, note:'고친 내용 요약'}`. 보기 화면 위에 결과가 나오고, 그 가이드를 작업 기준으로 쓰는 사람에게는 「고칠 화면 찾기 요청」(guide-check)이 이어서 안내된다. 요청이 모호하면 고치지 말고 「보류」와 질문을 note에.
-  4. `Common_UX_Changelog.md` 맨 위에 `## [가이드] {가이드 제목} 수정 · 날짜 (요청: {by})` 항목을 쓴다.
+  4. `Common_UX_Changelog.md`에는 쓰지 않는다(UX 문서 「변경이력」에 수정본 · 요청 글로 남는다).
 - **guide-check (가이드 수정 반영 · 고칠 화면 찾기)**: 가이드 수정(guide-edit)이 끝난 뒤 사람이 「고칠 화면 찾기 요청」을 누르면 쌓인다(그 가이드가 그 사람 PC의 작업 기준일 때만 안내된다). 작업의 `guide`(가이드 id) · `fileKey`(그 가이드가 작업 기준인 파일) · `revFrom` → `revTo`(바뀌기 전 · 뒤 수정본, `guide.md`면 처음 내용) · `text`(무엇을 고쳤는지). **Figma는 고치지 않는다.**
   1. 「진행 중」으로 바꾼다. `.history/guides/{guide}/` 아래 `revFrom` · `revTo` 내용을 비교해 바뀐 규칙을 정리한다.
   2. 그 파일의 **수정 가능 페이지**(project.json editablePageName)에서 바뀐 규칙이 적용되는 프레임을 찾는다. 작업 이력(`.history/entries`의 그 fileKey 요청) · 프레임 목록(catalog.json)으로 후보를 좁히고, `use_figma`로 실제 내용(글 · 크기 · 컴포넌트)을 읽어 바뀐 규칙과 다른지 확인한다.
   3. `POST /api/jobs {action:'update', id, status:'완료', items:[{nodeId, frame, page, change}], note:'후보 N개 중 M개 수정 필요'}`. `change`는 그 화면에서 무엇을 어떻게 고칠지 한두 문장. 고칠 화면이 없으면 `items: []`와 note에 이유. 판단이 어려우면 「보류」와 질문을 note에.
-  4. 보기 화면에 「고쳐야 할 화면」 목록이 나오고, 사람이 반영할 화면을 골라 [선택한 화면 수정 요청]을 누르면 Workbench 수정 요청(type `가이드 반영`)으로 등록된다 → 평소 요청 처리 순서대로 반영한다. 작업은 「반영」(또는 「반영 안 함」)으로 바뀐다.
-  - **정의서 연관 항목 찾기(`scope:'spec'`)**: 정의서(`meta.kind:'spec'`)를 고치면(guide-edit 완료) 작업 기준과 상관없이 늘 「연관 항목 찾기 요청」이 안내되고, 같은 guide-check 작업으로 쌓인다(`fileKey`는 정의서의 기준 파일, 없으면 빈 값). **Figma · 문서는 고치지 않는다.** 위 1번처럼 바뀐 내용을 정리한 뒤 세 곳을 찾는다:
+  4. 보기 화면에 「고쳐야 할 화면」 목록이 나오고, 사람이 반영할 화면을 골라 [선택한 화면 수정 요청]을 누르면 Workbench 수정 요청(type `UX가이드 반영`)으로 등록된다 → 평소 요청 처리 순서대로 반영한다. 작업은 「반영」(또는 「반영 안 함」)으로 바뀐다.
+  - **연관 항목 찾기(`scope:'spec'`, UX가이드 외 카테고리)**: 작업규칙 · 정책서 · 기준데이터 · 화면 정의서(`meta.kind`가 `guide`가 아닌 문서)를 고치면(guide-edit 완료) 작업 기준과 상관없이 늘 「연관 항목 찾기 요청」이 안내되고, 같은 guide-check 작업으로 쌓인다(`fileKey`는 그 문서의 기준 파일, 없으면 빈 값). **Figma · 문서는 고치지 않는다.** 위 1번처럼 바뀐 내용을 정리한 뒤 세 곳을 찾는다:
     - **화면**(`fileKey`가 있을 때): 그 파일 수정 가능 페이지에서 바뀐 정의와 다른 화면 → `{type:'screen', nodeId, frame, page, change}`
-    - **문서**: 다른 가이드 · 정의서(`.history/guides/*/`의 지금 내용 `mdPath`)에서 같은 용어 · 값 · 규칙을 쓰는 항목 → `{type:'doc', doc:{가이드 id}, docTitle, section:{### 항목 제목 그대로}, change}`
+    - **문서**: 다른 UX 문서(모든 카테고리, `.history/guides/*/`의 지금 내용 `mdPath`)에서 같은 용어 · 값 · 규칙을 쓰는 항목 → `{type:'doc', doc:{가이드 id}, docTitle, section:{### 항목 제목 그대로}, change}`
     - **프로토타입**: `prototypes/*/meta.json`에서 그 화면 · 내용을 쓰는 프로토타입 → `{type:'proto', proto:{id}, name, fileKey, nodeId, frame, change}`
-    - `POST /api/jobs {action:'update', id, status:'완료', items:[…], note:'화면 N · 문서 M · 프로토타입 K'}`. 사람이 고르면 화면은 Workbench 수정 요청(type `정의서 반영`), 문서는 그 문서의 guide-edit(이름 = section), 프로토타입은 prototype-edit으로 등록된다 → 평소 순서대로 처리한다.
+    - `POST /api/jobs {action:'update', id, status:'완료', items:[…], note:'화면 N · 문서 M · 프로토타입 K'}`. 사람이 고르면 화면은 Workbench 수정 요청(type `{카테고리 이름} 반영`, 예: `화면 정의서 반영`), 문서는 그 문서의 guide-edit(이름 = section), 프로토타입은 prototype-edit으로 등록된다 → 평소 순서대로 처리한다.
 - **text (글 수정, 플러그인 몫)**: Claude가 Pretendard처럼 `use_figma`에서 못 불러오는 폰트의 글을 바꿀 때 만든다. 감시(`JOBS`)에는 나오지 않는다.
   1. `use_figma`로 바꿀 TEXT 레이어 id와 지금 글을 읽는다. 수정 가능 페이지의 레이어만 된다(플러그인이 다른 페이지는 거부한다).
   2. `POST /api/jobs {action:'add', kind:'text', fileKey, nodeId:{프레임 id}, name:{프레임 이름}, text:{무엇을 바꾸는지 한 줄}, by:'Claude', items:[{nodeId:{TEXT id}, find:{바꿀 부분}, replace:{새 글}}]}` (UTF-8 파일로). `find`가 있으면 그 부분만 바꿔 앞뒤 스타일을 지키고, 비우면 글 전체를 `replace`로 바꾼다.
@@ -201,4 +252,4 @@ Workbench의 「캡처 받기」 · 「Claude에게 목록 만들기 요청」, 
 - PowerShell로 json · js를 쓸 때는 `[IO.File]::WriteAllText(path, text, (New-Object Text.UTF8Encoding $false))`. `Get-Content`/`Set-Content` 기본 인코딩은 한글을 깨뜨린다.
 - `use_figma` 결과로 한글이 많은 텍스트를 그대로 돌려받으면 응답이 잘린다. U+2028(줄 구분자)가 섞인 텍스트는 파싱 오류가 나므로 `split(String.fromCharCode(0x2028))`로 바꿔서 돌려받는다.
 - 화면 디스크립션은 프레임 안 「Frame 1」 패널의 행(Description 인스턴스)이다. 화면 이동은 `[화면 ID] 화면명` 형식으로 적는다.
-- 공통 UX 규칙(COMM-*) · 화면 정의는 이 PC 작업자가 그 파일에 카테고리마다 적용한 문서(`GET /api/guides`의 `applied[fileKey].docs`, 공통 규칙 하나 · 정의서 하나)만 기준으로 한다. 적용하지 않은 문서는 보지 않는다. 기본 문서는 없다.
+- 공통 UX 규칙(COMM-*) · 화면 정의는 이 PC 작업자가 그 파일에 카테고리마다 적용한 문서(`GET /api/guides`의 `applied[fileKey].docs`, 작업규칙 · 정책서 · UX가이드 · 기준데이터 · 화면 정의서 각 하나)만 기준으로 한다. 적용하지 않은 문서는 보지 않는다. 기본 문서는 없다.
