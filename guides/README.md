@@ -14,9 +14,8 @@ CURECA(T-IOS, L-IOS) UX 기획의 헌법, 공통 룰, 정책서, 화면설계서
 CURECA_AI/
 ├── README.md            저장소 안내 (이 파일)
 ├── CLAUDE.md            Claude 작업 진입점: 무엇을 어떤 순서로 읽는지
-├── constitution.md      헌법
 ├── sources.md           기준 출처 목록 (Claude가 근거로 쓰는 자료)
-├── rules/               공통 룰 문서
+├── rules/               헌법(constitution.md)과 공통 룰 문서
 ├── glossary/            용어집
 ├── language-set/        언어셋 (6개 언어 문구)
 ├── policy/              정책서와 우리가 관리하는 기준 자료 (Service Mode, 권한, 장비 상태, 알럿)
