@@ -1,0 +1,32 @@
+{
+   "by" : "ìµê³ ê´ë¦¬ì",
+   "createdAt" : "2026-11-04T10:36:00+09:00",
+   "fileKey" : "",
+   "fileName" : "",
+   "frames" : 0,
+   "id" : "r20261104-brex-06-cureca",
+   "jobId" : "",
+   "kind" : "rule",
+   "link" : "",
+   "request" : "ì§ê¸ ë§ëë ìì ê·ì¹ì 'CURECA ììê·ì¹'ì¼ë¡ ì´ë¦ì ì¬ì©. ì ë¬í md íì¼ ë´ì©ì¼ë¡ ìì±(ì°ì  ì ë¬í md íì¼ë¤ì ê·¸ëë¡ êµ¬ì±)",
+   "scope" : "ì°¸ê³  íì¼",
+   "sources" : [
+      "constitution.md",
+      "change-flow.md",
+      "claude-work.md",
+      "discussion-answer.md",
+      "figma-sync.md",
+      "language-set.md",
+      "policy-writing.md",
+      "provisional-policy.md",
+      "repository-and-id.md",
+      "schedule.md",
+      "screen-spec.md",
+      "status-lifecycle.md",
+      "terminology-review.md",
+      "weekly-status.md"
+   ],
+   "summary" : "CURECA_AI ì ì¥ìì íë²ê³¼ ë£° ë¬¸ì 13ê°(ë³ê²½ íë¦ Â· Claude ìì ê·ì¹ Â· ì ì±ì ìì± Â· ìì ì ì± Â· íë©´ì¤ê³ì Â· ë¬¸ì ìí ë±)ë¥¼ ìë¬¸ ê·¸ëë¡ ëª¨ì ììê·ì¹ìëë¤.",
+   "title" : "CURECA ììê·ì¹",
+   "updatedAt" : "2026-11-04T10:36:00+09:00"
+}
