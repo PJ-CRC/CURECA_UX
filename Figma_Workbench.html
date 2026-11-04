@@ -94,6 +94,7 @@ button{cursor:pointer}
 .noshot .row{justify-content:center;margin-top:6px}
 /* 수정 요청 입력창: 이미지 아래 고정, 가운데 둥근 입력 상자(최대 900px) */
 .cmp-wrap{flex:none;padding:10px 16px 10px;background:var(--canvas);border-top:1px solid var(--line)}
+.ro-note{flex:none;padding:12px 16px;background:var(--warn-soft);color:var(--warn);font-size:13px;font-weight:600;border-top:1px solid var(--line)}
 .composer{max-width:900px;margin:0 auto;gap:6px}
 /* 위 줄: 대상(왼쪽) · 선택 옵션(오른쪽으로 이어짐, 좁으면 아래로 줄바꿈) */
 .cmp-top{display:flex;align-items:center;gap:6px 12px;min-width:0;flex-wrap:wrap;font-size:12.5px}
@@ -346,7 +347,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
   <div class="ppop" id="ppop" hidden>
     <div class="h">다른 프로젝트 열기 (Figma 파일 단위)</div>
     <div id="pList"></div>
-    <form id="pForm"><input id="pLink" type="url" placeholder="다른 Figma 파일(프로젝트) 링크" aria-label="다른 Figma 파일(프로젝트) 링크" required><button>열기</button></form>
+    <form id="pForm" class="w-only"><input id="pLink" type="url" placeholder="다른 Figma 파일(프로젝트) 링크" aria-label="다른 Figma 파일(프로젝트) 링크" required><button>열기</button></form>
     <p class="pnote" id="pNote" hidden></p>
     <p class="phint">페이지는 탭이 아니라 왼쪽 「구분 (페이지)」에서 바꿉니다.</p>
   </div>
@@ -394,7 +395,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
         <button class="tbtn" id="zoomIn" title="확대" aria-label="확대">+</button>
         <button class="tbtn on" id="fitW" title="너비 맞춤">너비</button>
         <button class="tbtn" id="fitA" title="전체 맞춤">전체</button>
-        <button class="tbtn" id="capBtn" title="이 프레임 캡처 다시 받기 (Figma 플러그인 또는 Claude가 받음)">캡처</button>
+        <button class="tbtn w-only" id="capBtn" title="이 프레임 캡처 다시 받기 (Figma 플러그인 또는 Claude가 받음)">캡처</button>
         <button class="tbtn" id="liveBtn" title="Figma 실시간 보기 (Figma 로그인 필요 · 무거움)">실시간</button>
         <a class="tbtn" id="openFig" target="_blank" rel="noopener" title="Figma에서 이 프레임 열기">Figma ↗</a>
       </div>
@@ -406,7 +407,8 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     </div>
     <!-- 수정 요청 입력창: 이미지 아래에 고정. [+] 이미지 첨부 · 입력 · [↑] 등록, 아래 줄에 유형 · 우선순위 · 레이아웃.
          입력한 내용은 workbench/edit_requests.json에 쌓인다 -->
-    <div class="cmp-wrap">
+    <div class="ro-only ro-note">보기 전용 권한입니다. 수정 요청 · 캡처 · 프로젝트 추가는 「Figma Workbench · 쓰기」 권한이 있어야 합니다(최고관리자에게 요청).</div>
+    <div class="cmp-wrap w-only">
       <div class="form composer" id="composer">
         <!-- 위 줄: 왼쪽 대상 프레임, 그 옆에 선택 옵션(유형 · 우선순위 · 레이아웃) -->
         <div class="cmp-top">
@@ -567,7 +569,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     bar.className = 'edbar ' + (cur.editable ? 'ok' : 'ro2');
     bar.innerHTML = cur.editable
       ? '<span class="t">✓ <b>작업 페이지</b> · Claude가 이 페이지를 고칩니다</span>'
-      : '<span class="t"><b>보기 전용</b> · 지금 작업 페이지는 「' + esc(ed || '없음') + '」</span><button type="button" data-ed="' + esc(cur.pageId) + '">이 페이지를 작업 페이지로</button>';
+      : '<span class="t"><b>보기 전용</b> · 지금 작업 페이지는 「' + esc(ed || '없음') + '」</span><button type="button" class="w-only" data-ed="' + esc(cur.pageId) + '">이 페이지를 작업 페이지로</button>';
     var mg = '<div class="mgroup">' + esc(cur.d1l) + '</div>';
     if (!inD1.length) { $('menu').innerHTML = mg + '<p class="empty">이 페이지에는 프레임이 없습니다.</p>'; return; }
     var body = buildTree(inD1).map(treeHtml).join('');
@@ -674,7 +676,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     var ed = edPage();
     $('roNote').hidden = cur.editable;
     $('roNote').innerHTML = esc(cur.page) + ' 페이지는 보기 전용입니다. ' + (ed ? '지금 작업 페이지는 「' + esc(ed) + '」입니다. ' : '') +
-      '이대로 등록하면 Claude가 반영하지 않고 「보류」로 둡니다.<button type="button" class="mk" id="mkEd">이 페이지를 작업 페이지로</button>';
+      '이대로 등록하면 Claude가 반영하지 않고 「보류」로 둡니다.<button type="button" class="mk w-only" id="mkEd">이 페이지를 작업 페이지로</button>';
     $('mkEd').onclick = function(){ setEditable(cur.pageId, cur.page); };
     var ol = overlaps(cur.id);
     $('olNote').hidden = !ol.length;
@@ -884,8 +886,8 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       return '<button type="button" class="opt' + (o.action === 'delete' ? ' del' : '') + '" data-ask="' + esc(r.id) + '" data-i="' + i + '">' + esc(o.label) + '</button>';
     }).join('');
     var free = r.ask.free !== false;
-    return h + '<div class="ask" data-ask-id="' + esc(r.id) + '"><p class="aq">' + esc(r.ask.q) + '</p>' + (opts ? '<div class="opts">' + opts + '</div>' : '') +
-      (free ? '<div class="af"><input type="text" placeholder="직접 답하기 (Enter로 보내기)" aria-label="' + esc(r.id) + ' 질문에 답하기" data-draft="' + esc(r.id) + '" value="' + esc(drafts[r.id] || '') + '"><button type="button" data-send="' + esc(r.id) + '">보내기</button></div>' : '') + '</div>';
+    return h + '<div class="ask" data-ask-id="' + esc(r.id) + '"><p class="aq">' + esc(r.ask.q) + '</p>' + (opts ? '<div class="opts w-only">' + opts + '</div>' : '') +
+      (free ? '<div class="af w-only"><input type="text" placeholder="직접 답하기 (Enter로 보내기)" aria-label="' + esc(r.id) + ' 질문에 답하기" data-draft="' + esc(r.id) + '" value="' + esc(drafts[r.id] || '') + '"><button type="button" data-send="' + esc(r.id) + '">보내기</button></div>' : '') + '</div>';
   }
   function answer(id, text, resolve, btn){
     if (!online) { say('로컬 서버가 꺼져 있어 보낼 수 없습니다. Figma AI Run을 실행해 주세요.', true); return Promise.resolve(); }
@@ -931,7 +933,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
         ((r.images || []).length ? '<div class="ims">' + r.images.map(function(m){ return '<a href="' + esc(m.file) + '" target="_blank" rel="noopener" title="' + esc(m.name || '첨부 이미지') + ' · 원본 보기"><img loading="lazy" alt="첨부 이미지" src="' + esc(m.small || m.file) + '"></a>'; }).join('') + '</div>' : '') +
         '<div class="a' + (r.note ? '' : ' wait') + '">' + (r.note ? noteHtml(r.note) : esc(WAIT[r.status] || '')) + '</div>' +
         askHtml(r) +
-        (canRetry(r) ? '<div class="retry"><button type="button" data-retry="' + esc(r.id) + '">다시 진행</button>원인(Claude 연결 · Figma 인증 등)을 해결했으면 다시 「대기」로 돌려 처리합니다.</div>' : '') + '</li>';
+        (canRetry(r) ? '<div class="retry w-only"><button type="button" data-retry="' + esc(r.id) + '">다시 진행</button>원인(Claude 연결 · Figma 인증 등)을 해결했으면 다시 「대기」로 돌려 처리합니다.</div>' : '') + '</li>';
     }).join('') : '<li class="empty">' + (filter === 'here' ? '이 페이지에 Claude 답변이 없습니다. 요청을 등록하면 처리 후 여기에 답변이 나옵니다.' : '요청이 없습니다.') + '</li>';
     /* 답을 입력하던 칸은 다시 그린 뒤에도 커서를 그대로 */
     if (typing) { var el = $('reqs').querySelector('[data-draft="' + typing + '"]'); if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length); } }
@@ -1132,7 +1134,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     var j = catJob();
     $('menu').innerHTML = '<div class="mgroup">' + esc(FILE.name) + '</div><p class="ro">이 파일의 프레임 목록이 아직 없습니다. 둘 중 하나로 만들어 주세요.</p>' +
       '<p class="msg"><b>① Claude에게 요청 (권장)</b> · 내 Figma 앱에 부담 없이 Claude가 Figma 클라우드에서 전체 목록을 만듭니다. Claude가 요청 감시 중이어야 합니다.</p>' +
-      (j ? '<p class="msg">요청됨(' + esc(j.id) + ' · ' + esc(j.status) + ') · 목록이 들어오면 자동으로 바뀝니다.</p>' : '<div class="actions"><button class="btn primary" id="askCat">Claude에게 목록 만들기 요청</button></div>') +
+      (j ? '<p class="msg">요청됨(' + esc(j.id) + ' · ' + esc(j.status) + ') · 목록이 들어오면 자동으로 바뀝니다.</p>' : '<div class="actions w-only"><button class="btn primary" id="askCat">Claude에게 목록 만들기 요청</button></div>') +
       '<p class="msg"><b>② Figma 플러그인</b> · Figma 데스크톱 앱에서 이 파일의 작업 페이지를 열고 <b>Plugins › Development › Common UX Sync</b>를 실행하면 그 페이지 목록이 바로 들어옵니다.</p>';
     $('crumb').innerHTML = '<b>' + esc(FILE.name) + '</b><code>' + esc(FILE.key) + '</code>';
     $('openFig').href = 'https://www.figma.com/design/' + FILE.key + '/file' + (FILE.node ? '?node-id=' + FILE.node.replace(':', '-') : '');
@@ -1236,9 +1238,11 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     .then(function(r){
       var sf = parseFig(r[0] && r[0].state && r[0].state.figmaUrl);
       PROJ = (r[1] && r[1].projects) || [];
-      readTabs();
+      /* 이 설치에 등록된 프로젝트 · 시작 안내 링크의 파일만 연다: 브라우저에 남은 예전 탭 · 주소(?p=)로 다른 설치의 프로젝트(예: SH.L TEST)가 열리지 않게 */
+      var known = function(k){ return !!projOf(k) || !!(sf && sf.key === k); };
+      readTabs(); TABS = TABS.filter(known);
       var want = new URLSearchParams(location.search).get('p') || '', last = store('wb.proj') || '';
-      var key = /^[A-Za-z0-9]{10,64}$/.test(want) ? want : (sf ? sf.key : (TABS.indexOf(last) >= 0 ? last : ''));
+      var key = /^[A-Za-z0-9]{10,64}$/.test(want) && known(want) ? want : (sf ? sf.key : (TABS.indexOf(last) >= 0 ? last : ''));
       if (!key) throw NO_LINK;
       var p = projOf(key), pf = parseFig(p && p.link) || (sf && sf.key === key ? sf : null);
       FILE = { key: key, name: (p && p.name) || 'Figma 파일 ' + key.slice(0, 6),

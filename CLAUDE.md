@@ -5,6 +5,7 @@
 ## 범위
 
 - Workbench는 **프로젝트(Figma 파일) 단위**다. 작업 파일은 시작 안내 3단계에 넣은 링크의 파일이다. **기본 프로젝트는 없다**(링크가 없으면 Workbench는 시작 안내 3단계로 안내하고, 파일 키 없이 온 요청 · 캡처는 그 링크의 파일로 본다).
+  - 시작 안내 상태(`setup.json`)는 설치 폴더 밖(PC별)이라 다시 설치해도 남는다. 그래서 **새로 설치한 폴더를 처음 켜면**(`projects/` 없음 · `workbench/.installed` 없음) 서버가 예전 작업 링크 · 완료 표시를 비운다(이름 · 로그인은 그대로). Workbench는 이 설치에 등록된 프로젝트 · 시작 안내 링크의 파일만 연다(브라우저에 남은 예전 탭 · `?p=`는 무시).
 - 파일마다 **수정 가능 페이지는 하나**다. 다른 페이지는 읽기만 한다.
   - 모든 파일 같음: 시작 안내 링크(작업 링크)가 가리키는 노드의 페이지(`projects/{fileKey}/project.json`의 editablePageId · editablePageName, catalog.json에서 `editable: true`). 링크를 바꾸면 서버가 바로 바꾼다.
   - 기준은 **project.json의 작업 링크 하나**다. 서버는 프레임 목록을 받을 때(플러그인 · Claude)와 켤 때마다 링크로 수정 가능 페이지를 다시 정한다. 보내온 `editablePageId`는 링크로 정하지 못할 때만 쓴다.
@@ -98,10 +99,14 @@
 ## 계정 · 메뉴 권한
 
 - 계정이 하나라도 있으면(`.history/accounts/*.json`) Workbench 페이지는 **로그인**해야 쓴다(`Login.html`). 로그인은 PC마다 유지된다(PC별 `setup.json`의 `login {id, pwAt}`, 비밀번호가 바뀌면 다시 로그인). **새 PC**(계정 파일도 없고 공유 이력을 한 번도 받지 못함)도 처음 실행하면 로그인 화면부터 뜨고, 그 화면에서 [깃허브 연결]로 이력 · 계정을 받은 뒤 로그인한다(`/api/me`의 `needSync`, 그동안 `/api/setup/launch`만 로그인 없이 된다). 이력을 받았는데도 계정 파일이 하나도 없으면 예전처럼 로그인 없이 쓴다.
-- 계정 = `.history/accounts/{id}.json` `{id, name, admin, menus, salt, hash, iter, active, createdAt, updatedAt, pwAt}` — 비밀번호는 **PBKDF2-SHA256(100000회) 해시만**, 원문은 어디에도 남기지 않는다. 작업 이력과 함께 깃으로 모든 PC에 공유된다(한 계정 한 파일). 서버는 이 폴더를 웹으로 내보내지 않는다.
+- 계정 = `.history/accounts/{id}.json` `{id, name, admin, menus, writes, salt, hash, iter, active, createdAt, updatedAt, pwAt}` — 비밀번호는 **PBKDF2-SHA256(100000회) 해시만**, 원문은 어디에도 남기지 않는다. 작업 이력과 함께 깃으로 모든 PC에 공유된다(한 계정 한 파일). 서버는 이 폴더를 웹으로 내보내지 않는다.
 - **최고관리자는 1명**(`brex`, `admin: true`): 메뉴 전부 + 「계정 관리」(`Accounts.html`: 계정 추가 · 이름 · 메뉴 · 사용 중지 · 비밀번호 초기화 · 지우기). 최고관리자는 지우거나 중지할 수 없다. 누구나 「내 정보」(`Account.html`)에서 자기 비밀번호를 바꾼다.
 - **시작 안내(`Setup.html`) · 내 정보는 권한 설정 대상이 아니다**: 로그인한 모든 계정이 쓴다(서버 메뉴 `always`). 계정 관리 화면의 메뉴 선택에도 나오지 않는다.
-- 고르는 메뉴 키: `guide` UX 문서(공통 규칙 · 정의서, + 문서 보기 `UX_Guide.html`. **보기만**) · `guideEdit` UX 문서 · 수정 요청(화면 없는 권한: 새 가이드 · 정의서 만들기, 항목 [수정 요청], 연관 항목 찾기 · 반영 요청. 계정 관리에서 켜면 `guide`도 함께 켜진다. 없으면 그 버튼이 숨고 서버가 jobs `guide` · `guide-edit` · `guide-check` 추가와 guides `save`를 오류로 막는다(브라우저 화면만, Claude · 플러그인은 그대로)) · `workbench` · `history` 변경 이력 · `usage` 사용량 통계 · `proto` 프로토타입(+ `prototypes/`). 허용되지 않은 페이지는 첫 허용 메뉴로, API(`/api/usage` · `/api/prototypes` · `/api/accounts`)는 403.
+- 고르는 메뉴 키: `guide` UX 문서(공통 규칙 · 정의서, + 문서 보기 `UX_Guide.html`) · `workbench` · `history` 변경 이력 · `usage` 사용량 통계 · `proto` 프로토타입(+ `prototypes/`). 허용되지 않은 페이지는 첫 허용 메뉴로, API(`/api/usage` · `/api/prototypes` · `/api/accounts`)는 403.
+- **메뉴마다 읽기 · 쓰기**(v0.10.1): 계정의 `menus`가 읽기(보기만), `writes`가 쓰기(수정 요청 등 바꾸기도. 읽기 메뉴 안에서만). 계정 관리에서 메뉴마다 「없음 · 읽기 · 쓰기」로 고른다(사용량 통계는 쓰기 없음).
+  - 쓰기로 되는 것: UX 문서 = 새 가이드 · 정의서 만들기, 항목 수정 요청, 연관 항목 찾기 · 반영 요청(jobs `guide` · `guide-edit` · `guide-check`, guides `save`, `/api/upload`) · Workbench = 수정 요청 등록 · 답하기 · 다시 진행 · 지우기, 캡처 · 목록 요청, 프로젝트 추가 · 작업 페이지 바꾸기(`/api/requests` · `/api/attach` · `/api/projects` · `/api/catalog` · `/api/shots`, jobs `capture` · `catalog`) · 변경 이력 = 다시 진행 · 답하기(`/api/requests`) · 프로토타입 = 만들기 · 수정 요청 · 맞추기 · 지우기(jobs `prototype*`, `/api/prototypes`). `/api/requests`는 Workbench · 변경 이력 · UX 문서(반영 요청) 쓰기 중 하나면 된다.
+  - 읽기만이면 화면에 「보기 전용」 표시, 바꾸는 버튼(`.w-only`)이 숨고(`html.perm-ro`, appnav.js), 서버가 그 POST를 403 · 오류로 막는다.
+  - `writes`가 없는 예전 계정은 고른 메뉴 모두 쓰기(UX 문서만 예전 `guideEdit`이 있을 때). 최고관리자는 전부 쓰기. `/api/me`의 `writes`.
 - 권한 검사는 **브라우저 페이지에서 온 요청만**(`Sec-Fetch-Site` 머리글, Origin이 `null`이 아님). **Claude(curl) · Figma 플러그인은 로그인 없이 그대로** 쓴다. Claude는 계정 파일을 직접 고치지 않는다(사용자가 요청하면 화면 · API로).
 - 작업자 이름(요청 · 이력의 작성자, Workbench 「작업자」 칸 · 시작 안내 1단계)은 로그인한 계정 이름으로 고정된다.
 - 서버 API: `GET /api/me`, `POST /api/login` · `/api/logout` · `/api/me/password {current, next}`, `GET/POST /api/accounts {action: add|update|delete}`(최고관리자).

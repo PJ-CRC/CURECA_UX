@@ -287,15 +287,15 @@ button{cursor:pointer}
       h += '<div class="ask"><p class="aq">' + esc(r.ask.q) + '</p>';
       if (r.rid) {
         var opts = (r.ask.options || []).map(function(o, i){ return '<button type="button" class="opt' + (o.action === 'delete' ? ' del' : '') + '" data-ask="' + esc(r.rid) + '" data-i="' + i + '">' + esc(o.label) + '</button>'; }).join('');
-        if (opts) h += '<div class="opts">' + opts + '</div>';
-        if (r.ask.free !== false) h += '<div class="af"><input type="text" placeholder="직접 답하기 (Enter로 보내기)" aria-label="질문에 답하기" data-draft="' + esc(r.rid) + '" value="' + esc(drafts[r.rid] || '') + '"><button type="button" data-send="' + esc(r.rid) + '">보내기</button></div>';
+        if (opts) h += '<div class="opts w-only">' + opts + '</div>';
+        if (r.ask.free !== false) h += '<div class="af w-only"><input type="text" placeholder="직접 답하기 (Enter로 보내기)" aria-label="질문에 답하기" data-draft="' + esc(r.rid) + '" value="' + esc(drafts[r.rid] || '') + '"><button type="button" data-send="' + esc(r.rid) + '">보내기</button></div>';
       } else h += '<p class="none">다른 PC(' + esc(r.pc || '') + ')의 요청이라 그 PC에서 답할 수 있습니다.</p>';
       h += '</div>';
     }
     /* 이 PC 요청이 「보류」면(겹침 대기 · 질문 중 제외) 다시 「대기」로 돌리는 버튼. 다른 PC 요청은 그 PC에서만 바꿀 수 있다 */
     if (asking) {}
     else if (r.rid && r.status === '보류' && String(r.note || '').indexOf('겹침 대기') !== 0)
-      h += '<div class="retry"><button type="button" data-retry="' + esc(r.rid) + '">다시 진행</button><span>원인(Claude 연결 · Figma 인증 등)을 해결했으면 다시 「대기」로 돌려 처리합니다.</span></div>';
+      h += '<div class="retry w-only"><button type="button" data-retry="' + esc(r.rid) + '">다시 진행</button><span>원인(Claude 연결 · Figma 인증 등)을 해결했으면 다시 「대기」로 돌려 처리합니다.</span></div>';
     else if (!r.mine && r.status === '보류') h += '<p class="none retry-other">다른 PC(' + esc(r.pc || '') + ')의 요청이라 그 PC의 Workbench · 변경 이력에서 다시 진행할 수 있습니다.</p>';
     if (r.nodeId) h += '<a class="go" href="Figma_Workbench.html#' + esc(String(r.nodeId).replace(':', '-')) + '">Workbench에서 보기 ›</a>';
     return h;

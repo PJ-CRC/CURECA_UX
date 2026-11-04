@@ -122,13 +122,13 @@ textarea:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:
       <div class="stale" id="stale" hidden></div>
       <section class="sec"><h2>화면 <span id="scrCount"></span></h2><ul class="scr" id="scr"></ul></section>
       <section class="sec" id="flowSec" hidden><h2>흐름</h2><p class="flow" id="flow"></p></section>
-      <section class="sec">
+      <section class="sec w-only">
         <h2>수정 요청</h2>
         <textarea id="editText" placeholder="프로토타입에서 고칠 것을 적어 주세요. 예) 저장 후 토스트 문구를 「저장했습니다」로, 목록 행 클릭 시 상세 패널 열기"></textarea>
         <div class="row"><button class="btn primary" id="editBtn">수정 요청</button><span class="msg" id="editMsg"></span></div>
       </section>
       <section class="sec" id="jobSec" hidden><h2>이 프로토타입 작업</h2><ul class="jobs" id="jobs"></ul></section>
-      <section class="sec"><div class="row"><a class="btn" id="figBtn" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;text-decoration:none">Figma ↗</a><button class="btn danger" id="delBtn">목록에서 지우기</button></div></section>
+      <section class="sec"><div class="row"><a class="btn" id="figBtn" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;text-decoration:none">Figma ↗</a><button class="btn danger w-only" id="delBtn">목록에서 지우기</button></div></section>
     </div>
   </aside>
   <section id="stageWrap">
@@ -205,7 +205,7 @@ textarea:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:
       '<span class="chip">' + esc(P.fileName || '') + '</span><span class="chip">' + esc(P.env || '') + '</span>' + (P.syncedAt ? '<span class="chip">맞춤 ' + esc(fmt(P.syncedAt)) + '</span>' : '');
     $('stale').hidden = !st || !!busy;
     /* 5초마다 다시 그려도 내용이 같으면 그대로 둔다(누르는 중인 버튼이 바뀌어 클릭이 사라지지 않게) */
-    var sh = st && !busy ? '<b>Figma에서 바뀐 화면이 있습니다</b><ul>' + P.stale.map(function(s){ return '<li>' + esc(s.name) + ' — ' + esc(s.why) + (s.at ? ' (' + esc(fmt(s.at)) + ')' : '') + '</li>'; }).join('') + '</ul><button class="btn warn" id="syncBtn">지금 반영</button>' : '';
+    var sh = st && !busy ? '<b>Figma에서 바뀐 화면이 있습니다</b><ul>' + P.stale.map(function(s){ return '<li>' + esc(s.name) + ' — ' + esc(s.why) + (s.at ? ' (' + esc(fmt(s.at)) + ')' : '') + '</li>'; }).join('') + '</ul><button class="btn warn w-only" id="syncBtn">지금 반영</button>' : '';
     if (render.sh !== sh) { render.sh = sh; $('stale').innerHTML = sh; }
     $('flowSec').hidden = !P.text; $('flow').textContent = P.text || '';
     $('figBtn').href = 'https://www.figma.com/design/' + P.fileKey + '/file' + (P.start ? '?node-id=' + P.start.replace(':', '-') : '');

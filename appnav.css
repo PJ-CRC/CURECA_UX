@@ -78,6 +78,11 @@ pre,code,kbd,.mono{word-break:normal;overflow-wrap:anywhere}
 .appnav-user{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--nav-ink3)}
 .appnav-user[hidden],.appnav a[hidden]{display:none}
 /* 로그인한 계정: 이름(내 정보) · 로그아웃 */
+/* 읽기 · 쓰기 권한: 쓰기가 없는 메뉴 페이지는 html.perm-ro(appnav.js) — 바꾸는 버튼(.w-only)은 숨기고 보기 전용 안내(.ro-only)를 보인다 */
+html.perm-ro .w-only{display:none!important}
+.ro-only{display:none}
+html.perm-ro .ro-only{display:block}
+.appnav-ro{background:var(--nav-chip);color:var(--nav-warn);font-weight:700;margin-right:10px;cursor:help}
 .appnav-acct{display:flex;align-items:center;gap:10px;white-space:nowrap}
 .appnav .appnav-acct a{height:40px;padding:0 16px;border:1px solid var(--nav-btn-line);border-radius:9px;background:var(--nav-bg);font-size:14px;font-weight:500}
 .appnav .appnav-acct a:hover{border-color:var(--nav-accent);background:var(--nav-bg)}
