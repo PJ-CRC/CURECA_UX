@@ -91,6 +91,11 @@
     if (!m.user) { location.replace('/Login.html?next=' + encodeURIComponent(location.pathname + location.search + location.hash)); return; }
     window.WB_ME = m;
     var pageMenu = {}; (m.menus || []).forEach(function(x){ (x.pages || [x.page]).forEach(function(p){ pageMenu[p] = x.key; }); });
+    /* 읽기 · 쓰기: 이 페이지 메뉴의 쓰기 권한이 없으면 html.perm-ro — 페이지의 .w-only(수정 요청 등 바꾸는 버튼)를 숨기고 .ro-only 안내를 보인다(서버도 막는다) */
+    window.WB_CAN_WRITE = function(k){ return (m.writes || []).indexOf(k) >= 0; };
+    var curMenu = (m.menus || []).filter(function(x){ return x.key === pageMenu[location.pathname.replace(/^\//, '')]; })[0];
+    var ro = !!(curMenu && curMenu.write && !window.WB_CAN_WRITE(curMenu.key));
+    document.documentElement.classList.toggle('perm-ro', ro);
     [].forEach.call(nav.querySelectorAll('a[href]'), function(a){
       var p = (a.getAttribute('href') || '').split(/[?#]/)[0], k = pageMenu[p];
       if (k && m.allowed.indexOf(k) < 0) a.hidden = true;
@@ -101,6 +106,11 @@
       var sp = nav.querySelector('.appnav-sp'); nav.insertBefore(acc, sp);
     }
     var right = nav.querySelector('.appnav-right');
+    if (right && ro) {
+      var rb = document.createElement('span'); rb.className = 'badge appnav-ro'; rb.textContent = '보기 전용';
+      rb.title = '「' + curMenu.label + '」 메뉴는 읽기 권한만 있습니다. 쓰기(' + curMenu.write + ')는 최고관리자에게 「' + curMenu.label + ' · 쓰기」 권한을 요청하세요.';
+      right.insertBefore(rb, right.firstChild);
+    }
     if (right) {
       var box = document.createElement('span'); box.className = 'appnav-acct';
       box.innerHTML = '<a href="Account.html" title="내 정보 · 비밀번호 변경"></a><button type="button">로그아웃</button>';

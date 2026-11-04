@@ -450,18 +450,19 @@ sub attach_post {
 }
 # ── 계정 · 메뉴 권한 ── (윈도우 guide_server.ps1과 같다)
 #  계정 = .history/accounts/{id}.json (작업 이력과 함께 깃으로 모든 PC에 공유, 한 계정 한 파일)
-#   {id, name, admin(최고관리자 1명), menus:[메뉴 키], salt, hash(PBKDF2-SHA256 100000회, base64), iter, active, createdAt, updatedAt, pwAt}
+#   {id, name, admin(최고관리자 1명), menus:[읽기 메뉴 키], writes:[쓰기 메뉴 키], salt, hash(PBKDF2-SHA256 100000회, base64), iter, active, createdAt, updatedAt, pwAt}
+#  메뉴마다 읽기(보기만) · 쓰기(수정 요청 등 바꾸기도). 쓰기는 읽기를 포함한다. 시작 안내는 권한과 상관없이 누구나
+#  writes가 없는 예전 계정: 고른 메뉴는 모두 쓰기(UX 문서만 예전 guideEdit이 있을 때)
 #  로그인은 PC마다 유지한다: setup.json의 login {id, pwAt}. 계정 파일이 하나도 없으면 로그인 없이 모두 쓴다
 my $ACCT_DIR = "$HIST_DIR/accounts";
 my @MENUS = (
   { key => 'setup', label => '시작 안내', pages => ['Setup.html'], always => 1 },   # 권한 설정 없이 누구나
-  { key => 'guide', label => 'UX 문서', pages => ['Common_UX_Guide.html', 'UX_Guide.html'] },
-  # UX 문서 수정 요청(화면 없는 권한): 새 가이드 · 정의서 만들기, 항목 수정 요청, 연관 항목 찾기 · 반영 요청. 없으면 UX 문서는 보기만
-  { key => 'guideEdit', label => 'UX 문서 · 수정 요청', pages => [] },
-  { key => 'workbench', label => 'Figma Workbench', pages => ['Figma_Workbench.html'] },
-  { key => 'history', label => '변경 이력', pages => ['Change_History.html'] },
+  # write: 쓰기 권한으로 할 수 있는 것(계정 관리 화면 설명). 없으면 읽기만 있는 메뉴
+  { key => 'guide', label => 'UX 문서', pages => ['Common_UX_Guide.html', 'UX_Guide.html'], write => '새 가이드 · 정의서 만들기, 항목 수정 요청, 연관 항목 찾기 · 반영 요청' },
+  { key => 'workbench', label => 'Figma Workbench', pages => ['Figma_Workbench.html'], write => '수정 요청 등록 · 답하기 · 다시 진행, 캡처 · 목록 요청, 프로젝트 추가 · 작업 페이지 바꾸기' },
+  { key => 'history', label => '변경 이력', pages => ['Change_History.html'], write => '보류 요청 다시 진행, Claude 질문에 답하기' },
   { key => 'usage', label => '사용량 통계', pages => ['Usage_Stats.html'] },
-  { key => 'proto', label => '프로토타입', pages => ['Prototypes.html', 'Prototype.html', 'Assay_Pack_Prototype.html'] },
+  { key => 'proto', label => '프로토타입', pages => ['Prototypes.html', 'Prototype.html', 'Assay_Pack_Prototype.html'], write => '만들기 · 수정 요청, Figma 맞추기, 지우기' },
   { key => 'accounts', label => '계정 관리', pages => ['Accounts.html'], admin => 1 },
 );
 my @MENU_KEYS = map { $_->{key} } grep { !$_->{admin} && !$_->{always} } @MENUS;   # 계정마다 고르는 메뉴
@@ -507,8 +508,25 @@ sub current_user {
 }
 # UX 문서를 고칠 수 있는가(만들기 · 수정 요청 · 연관 항목 찾기): 브라우저 화면에서 온 요청만 검사한다(Claude · 플러그인은 그대로). $IS_BROWSER는 요청마다 handle이 정한다
 our $IS_BROWSER = 0;
-sub can_edit_docs { return 1 if !$IS_BROWSER || !auth_required(); my $u = current_user(); return $u && grep({ $_ eq 'guideEdit' } user_menus($u)) ? 1 : 0; }
+my @WRITE_KEYS = map { $_->{key} } grep { $_->{write} } @MENUS;   # 쓰기를 고를 수 있는 메뉴
 sub pick_menus { my ($a) = @_; my %ok = map { $_ => 1 } @MENU_KEYS; return grep { $ok{$_} } @{ ref $a->{menus} eq 'ARRAY' ? $a->{menus} : [] }; }
+# 쓰기 메뉴: 최고관리자는 전부. writes가 있으면 그것(읽기 메뉴 안에서만), 없으면(예전 계정) 고른 메뉴 모두 · UX 문서는 guideEdit이 있을 때
+sub user_writes {
+  my ($a) = @_; return () unless $a; return @WRITE_KEYS if $a->{admin};
+  my %p = map { $_ => 1 } pick_menus($a); my %w = map { $_ => 1 } @WRITE_KEYS;
+  return grep { $w{$_} && $p{$_} } @{ $a->{writes} } if ref $a->{writes} eq 'ARRAY';
+  my $ge = grep { $_ eq 'guideEdit' } @{ ref $a->{menus} eq 'ARRAY' ? $a->{menus} : [] };
+  return grep { $w{$_} && ($_ ne 'guide' || $ge) } pick_menus($a);
+}
+# 쓰기 권한 확인: 브라우저 화면에서 온 요청만(Claude · 플러그인은 그대로). 계정을 쓰지 않으면 모두 쓰기. 키 중 하나라도 쓰기면 된다
+sub can_write {
+  my @keys = @_; return 1 if !$IS_BROWSER || !auth_required();
+  my $u = current_user() or return 0; my %w = map { $_ => 1 } user_writes($u);
+  return (grep { $w{$_} } @keys) ? 1 : 0;
+}
+sub ro_msg { my ($k) = @_; my ($m) = grep { $_->{key} eq $k } @MENUS; my $l = $m ? $m->{label} : $k; return "「$l」 메뉴는 읽기 권한만 있습니다(보기만 가능). 최고관리자에게 「$l · 쓰기」 권한을 요청하세요.\n"; }
+# 작업 대기열 종류 → 메뉴(쓰기 권한 확인용)
+sub job_menu { my ($k) = @_; return 'guide' if $k =~ /^guide(-edit|-check)?$/; return 'proto' if $k =~ /^prototype/; return 'workbench'; }
 sub user_menus { my ($a) = @_; return () unless $a; return map { $_->{key} } @MENUS if $a->{admin}; my %p = map { $_ => 1 } pick_menus($a); return map { $_->{key} } grep { $_->{always} || $p{ $_->{key} } } @MENUS; }
 sub me_info {
   my $req = auth_required(); my $u = $req ? current_user() : undef;
@@ -519,32 +537,34 @@ sub me_info {
   my $ns = need_sync(); my $hs = $ns ? eval { read_json($SYNC_STAT) } : undef; $hs = {} unless ref $hs eq 'HASH';
   return { required => $req ? JSON::PP::true : JSON::PP::false,
     needSync => $ns ? JSON::PP::true : JSON::PP::false, syncMsg => str($hs->{message}), syncBusy => $hs->{busy} ? JSON::PP::true : JSON::PP::false,
-    user => $u ? { id => $u->{id}, name => $u->{name}, admin => $u->{admin} ? JSON::PP::true : JSON::PP::false, menus => [@allowed] } : undef,
-    menus => [ map { { key => $_->{key}, label => $_->{label}, page => $_->{pages}[0], pages => $_->{pages}, admin => $_->{admin} ? JSON::PP::true : JSON::PP::false } } @MENUS ],
-    allowed => [@allowed], first => $first || 'Account.html' };
+    user => $u ? { id => $u->{id}, name => $u->{name}, admin => $u->{admin} ? JSON::PP::true : JSON::PP::false, menus => [@allowed], writes => [ user_writes($u) ] } : undef,
+    menus => [ map { { key => $_->{key}, label => $_->{label}, page => $_->{pages}[0], pages => $_->{pages}, admin => $_->{admin} ? JSON::PP::true : JSON::PP::false, write => str($_->{write}) } } @MENUS ],
+    allowed => [@allowed], writes => [ $req ? user_writes($u) : @WRITE_KEYS ], first => $first || 'Account.html' };
 }
 sub write_login {
   my ($a) = @_; my $s = read_setup();
   if ($a) { $s->{login} = { id => $a->{id}, pwAt => $a->{pwAt}, at => now_iso() }; $s->{user} = str($a->{name}); } else { delete $s->{login}; }
   make_path($SETUP_DIR); write_json($SETUP_FILE, $s);
 }
-sub public_account { my ($a) = @_; return { id => $a->{id}, name => $a->{name}, admin => $a->{admin} ? JSON::PP::true : JSON::PP::false, menus => [ $a->{admin} ? user_menus($a) : pick_menus($a) ],
+sub public_account { my ($a) = @_; return { id => $a->{id}, name => $a->{name}, admin => $a->{admin} ? JSON::PP::true : JSON::PP::false, menus => [ $a->{admin} ? user_menus($a) : pick_menus($a) ], writes => [ user_writes($a) ],
   active => (defined $a->{active} && !$a->{active}) ? JSON::PP::false : JSON::PP::true, createdAt => $a->{createdAt}, updatedAt => $a->{updatedAt}, pwAt => $a->{pwAt} }; }
 sub accounts_post {
   my ($b) = @_; my $id = lc(trim($b->{id})); my %ok = map { $_ => 1 } @MENU_KEYS;
   my @menus = grep { $ok{$_} } @{ ref $b->{menus} eq 'ARRAY' ? $b->{menus} : [] }; my $act = str($b->{action}); my $pw = str($b->{pw});
+  my %pm = map { $_ => 1 } @menus; my %wk = map { $_ => 1 } @WRITE_KEYS;
+  my @writes = grep { $wk{$_} && $pm{$_} } @{ ref $b->{writes} eq 'ARRAY' ? $b->{writes} : [] };   # 쓰기는 읽기 메뉴 안에서만
   if ($act eq 'add') {
     die "아이디는 영문 소문자 · 숫자 · . _ - 로 3~32자입니다.\n" unless $id =~ /^[a-z0-9._-]{3,32}$/;
     die "이미 있는 아이디입니다: $id\n" if read_account($id);
     die "이름을 입력해 주세요.\n" if trim($b->{name}) eq '';
     die "비밀번호는 8자 이상이어야 합니다.\n" if length($pw) < 8;
     my $cu = current_user();
-    my $a = { id => $id, name => trim($b->{name}), admin => JSON::PP::false, menus => \@menus, active => JSON::PP::true, createdAt => now_iso(), createdBy => $cu ? $cu->{id} : '' };
+    my $a = { id => $id, name => trim($b->{name}), admin => JSON::PP::false, menus => \@menus, writes => \@writes, active => JSON::PP::true, createdAt => now_iso(), createdBy => $cu ? $cu->{id} : '' };
     set_pw($a, $pw); save_account($a);
   } elsif ($act eq 'update') {
     my $a = read_account($id) or die "계정을 찾지 못했습니다: $id\n";
     $a->{name} = trim($b->{name}) if trim($b->{name}) ne '';
-    unless ($a->{admin}) { $a->{menus} = \@menus if exists $b->{menus}; $a->{active} = $b->{active} ? JSON::PP::true : JSON::PP::false if exists $b->{active}; }
+    unless ($a->{admin}) { if (exists $b->{menus}) { $a->{menus} = \@menus; $a->{writes} = \@writes; } $a->{active} = $b->{active} ? JSON::PP::true : JSON::PP::false if exists $b->{active}; }
     if (length $pw) { die "비밀번호는 8자 이상이어야 합니다.\n" if length($pw) < 8; set_pw($a, $pw); }
     save_account($a);
     my $s = read_setup(); write_login($a) if ref $s->{login} eq 'HASH' && str($s->{login}{id}) eq $id;   # 내 계정이면 이 PC 로그인도 새 값으로
@@ -675,8 +695,8 @@ sub jobs_post {
   if ($act eq 'add') {
     my ($kind, $key, $nid) = (str($b->{kind}), str($b->{fileKey}), str($b->{nodeId}));
     die "알 수 없는 작업: $kind\n" unless grep { $kind eq $_ } qw(capture catalog guide guide-check guide-edit text prototype prototype-edit prototype-sync);
-    # UX 문서 만들기 · 수정 요청 · 연관 항목 찾기는 「UX 문서 · 수정 요청」 권한이 있어야 한다(없으면 보기만)
-    die "UX 문서를 고칠 권한이 없습니다(보기만 가능). 최고관리자에게 「UX 문서 · 수정 요청」 권한을 요청하세요.\n" if $kind =~ /^guide(-edit|-check)?$/ && !can_edit_docs();
+    # 쓰기 권한: UX 문서 만들기 · 수정 요청 · 연관 항목 찾기는 UX 문서, 프로토타입 요청은 프로토타입, 캡처 · 목록은 Workbench 쓰기(없으면 보기만)
+    die ro_msg(job_menu($kind)) unless can_write(job_menu($kind));
     # 프로토타입(이 PC에만, prototypes/{id}/): 만들기(prototype, 고른 화면 frames) · 수정 요청(prototype-edit) · Figma 바뀐 화면 맞추기(prototype-sync)
     my @pfr = ref $b->{frames} eq 'ARRAY' ? grep { ref $_ eq 'HASH' && str($_->{nodeId}) =~ /^\d+:\d+$/ } @{ $b->{frames} } : ();
     if ($kind eq 'prototype') {
@@ -736,6 +756,7 @@ sub jobs_post {
     if ($hit) { $hit->{status} = '진행 중'; $hit->{takenBy} = str($b->{by}); $hit->{updatedAt} = $now; }
   } elsif ($act eq 'update') {
     ($hit) = grep { str($_->{id}) eq str($b->{id}) } @items; die "작업을 찾지 못했습니다: " . str($b->{id}) . "\n" unless $hit;
+    die ro_msg(job_menu(str($hit->{kind}))) unless can_write(job_menu(str($hit->{kind})));   # 화면에서 바꾸는 것(예: 고칠 화면 「반영」)
     $hit->{status} = str($b->{status}) if str($b->{status}) ne '';
     $hit->{note} = str($b->{note}) if defined $b->{note};
     $hit->{guide} = str($b->{guide}) if str($b->{guide}) ne '';   # 만든 가이드 id
@@ -952,6 +973,13 @@ sub handle {
         return respond_json($sock, 403, { error => '이 메뉴를 쓸 권한이 없습니다.' }) if $path =~ m{^/api/};
         return respond($sock, 302, 'text/plain', '', "Location: /" . me_info()->{first} . "\r\n");
       }
+      # 쓰기 권한: 바꾸는 요청(POST)은 그 메뉴의 쓰기가 있어야 한다(읽기만이면 403). 작업 대기열 · 가이드 저장은 처리할 때 종류를 보고 확인
+      #  요청(/api/requests)은 Workbench · 변경 이력(다시 진행 · 답하기) · UX 문서(연관 화면 반영 요청)에서 온다
+      if ($method eq 'POST' && $is_browser) {
+        my %wmap = ('/api/requests' => [qw(workbench history guide)], '/api/attach' => ['workbench'], '/api/projects' => ['workbench'], '/api/catalog' => ['workbench'],
+          '/api/shots' => ['workbench'], '/api/upload' => ['guide'], '/api/prototypes' => ['proto']);
+        if ($wmap{$path} && !can_write(@{ $wmap{$path} })) { (my $m = ro_msg($wmap{$path}[0])) =~ s/\n$//; return respond_json($sock, 403, { error => $m }); }
+      }
     }
   }
   # 내 비밀번호 바꾸기 {current, next}
@@ -993,8 +1021,7 @@ sub handle {
       my $g = $body->();
       # 가이드 고치기: guide.md는 그대로 두고 수정본을 새 파일로 남긴다(여러 PC가 고쳐도 깃 충돌이 없다)
       if (str($g->{action}) eq 'save') {
-        die "UX 문서를 고칠 권한이 없습니다(보기만 가능). 최고관리자에게 「UX 문서 · 수정 요청」 권한을 요청하세요.
-" unless can_edit_docs();
+        die ro_msg('guide') unless can_write('guide');
         my ($gid, $md) = (str($g->{id}), str($g->{md}));
         die "가이드를 찾지 못했습니다: $gid\n" unless $gid =~ /^[A-Za-z0-9_-]{1,64}$/ && -f "$GUIDE_ROOT/$gid/meta.json";
         die "가이드 내용이 비어 있습니다.\n" unless $md =~ /\S/;
@@ -1099,6 +1126,22 @@ print "  종료: 브라우저의 Workbench 탭을 모두 닫으면 저절로 꺼
 
 # 켤 때 한 번 로그인 셸 PATH를 받아 둔다(백그라운드 감시 · git · claude가 쓴다)
 load_shell_path();
+# 새로 설치한 폴더(처음 켬 · projects 없음): PC에 남은 시작 안내(setup.json, 설치 폴더 밖)의 작업 링크 · 완료 표시를 비운다.
+#  예전 설치의 링크(예: UX AI TEST › SH.L TEST)가 새 설치의 Workbench 기본 프로젝트로 잡히지 않게. 이름 · 로그인 · 체크는 그대로
+{
+  my $flag = "$ROOT/workbench/.installed";
+  unless (-f $flag) {
+    if (!-d $PROJ_ROOT && -f $SETUP_FILE) {
+      my $s = read_setup();
+      if (str($s->{figmaUrl}) ne '') {
+        $s->{figmaUrl} = ''; $s->{done} = JSON::PP::false; $s->{updatedAt} = now_iso();
+        make_path($SETUP_DIR); write_json($SETUP_FILE, $s);
+        print "  새 설치: 예전 작업 링크를 비웠습니다. 시작 안내 3단계에서 작업할 Figma 링크를 넣으세요.\n";
+      }
+    }
+    write_bytes($flag, now_iso());
+  }
+}
 hist_backfill();
 fix_editable_pages();
 my $auto_watch_at = time + 5;   # 켠 지 5초 뒤: 백그라운드 감시가 꺼져 있으면 시작. 그 뒤 2분마다 확인해 죽었으면 다시 시작(사용자가 중지한 것은 제외)

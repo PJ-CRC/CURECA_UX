@@ -14,6 +14,7 @@ workbench/.plan_usage.json
 workbench/.agent.json
 workbench/.agent_stop
 workbench/.agent_renew
+workbench/.installed
 workbench/.agent.log
 workbench/.agent_prompt.txt
 workbench/.agent_out.txt

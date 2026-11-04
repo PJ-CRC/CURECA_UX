@@ -400,9 +400,9 @@ html.doc-ro #gdNew,html.doc-ro #specNew{display:none!important}
         .then(function(){ $g('gdSend').disabled = false; });
     });
     selectDoc(new URLSearchParams(location.search).get('doc') || 'guide');
-    /* 권한: 「UX 문서 · 수정 요청」(guideEdit)이 없으면 보기만 — 만들기 버튼을 숨긴다(서버도 막는다) */
+    /* 권한: 「UX 문서 · 쓰기」가 없으면 보기만 — 만들기 버튼을 숨긴다(서버도 막는다) */
     fetch('/api/me', { cache: 'no-store' }).then(function(r){ return r.json(); }).then(function(m){
-      var can = !m.required || (m.user && (m.allowed || []).indexOf('guideEdit') >= 0);
+      var can = !m.required || (m.user && (m.writes || []).indexOf('guide') >= 0);
       document.documentElement.classList.toggle('doc-ro', !can);
     }).catch(function(){});
     load(); setInterval(function(){ if (!document.hidden) load(); }, 10000);

@@ -286,19 +286,20 @@ function Read-Setup {
 }
 # ── 계정 · 메뉴 권한 ──
 #  계정 = .history/accounts/{id}.json (작업 이력과 함께 깃으로 모든 PC에 공유, 한 계정 한 파일이라 충돌이 적다)
-#   {id, name, admin(최고관리자 1명), menus:[메뉴 키], salt, hash(PBKDF2-SHA256 100000회, base64), iter, active, createdAt, updatedAt, pwAt}
+#   {id, name, admin(최고관리자 1명), menus:[읽기 메뉴 키], writes:[쓰기 메뉴 키], salt, hash(PBKDF2-SHA256 100000회, base64), iter, active, createdAt, updatedAt, pwAt}
+#  메뉴마다 읽기(보기만) · 쓰기(수정 요청 등 바꾸기도). 쓰기는 읽기를 포함한다. 시작 안내는 권한과 상관없이 누구나
+#  writes가 없는 예전 계정: 고른 메뉴는 모두 쓰기(UX 문서만 예전 guideEdit이 있을 때)
 #  로그인은 PC마다 유지한다: setup.json의 login {id, pwAt}. 비밀번호가 바뀌면(pwAt 다름) 다시 로그인
 #  계정 파일이 하나도 없으면 로그인 없이 모두 쓴다(처음 설치 · 깃 연결 전)
 $AcctDir = P $HistDir 'accounts'
 $Menus = @(
   [ordered]@{ key = 'setup'; label = '시작 안내'; pages = @('Setup.html'); always = $true },   # 권한 설정 없이 누구나
-  [ordered]@{ key = 'guide'; label = 'UX 문서'; pages = @('Common_UX_Guide.html', 'UX_Guide.html') },
-  # UX 문서 수정 요청(화면 없는 권한): 새 가이드 · 정의서 만들기, 항목 수정 요청, 연관 항목 찾기 · 반영 요청. 없으면 UX 문서는 보기만
-  [ordered]@{ key = 'guideEdit'; label = 'UX 문서 · 수정 요청'; pages = @() },
-  [ordered]@{ key = 'workbench'; label = 'Figma Workbench'; pages = @('Figma_Workbench.html') },
-  [ordered]@{ key = 'history'; label = '변경 이력'; pages = @('Change_History.html') },
+  # write: 쓰기 권한으로 할 수 있는 것(계정 관리 화면 설명). 없으면 읽기만 있는 메뉴
+  [ordered]@{ key = 'guide'; label = 'UX 문서'; pages = @('Common_UX_Guide.html', 'UX_Guide.html'); write = '새 가이드 · 정의서 만들기, 항목 수정 요청, 연관 항목 찾기 · 반영 요청' },
+  [ordered]@{ key = 'workbench'; label = 'Figma Workbench'; pages = @('Figma_Workbench.html'); write = '수정 요청 등록 · 답하기 · 다시 진행, 캡처 · 목록 요청, 프로젝트 추가 · 작업 페이지 바꾸기' },
+  [ordered]@{ key = 'history'; label = '변경 이력'; pages = @('Change_History.html'); write = '보류 요청 다시 진행, Claude 질문에 답하기' },
   [ordered]@{ key = 'usage'; label = '사용량 통계'; pages = @('Usage_Stats.html') },
-  [ordered]@{ key = 'proto'; label = '프로토타입'; pages = @('Prototypes.html', 'Prototype.html', 'Assay_Pack_Prototype.html') },
+  [ordered]@{ key = 'proto'; label = '프로토타입'; pages = @('Prototypes.html', 'Prototype.html', 'Assay_Pack_Prototype.html'); write = '만들기 · 수정 요청, Figma 맞추기, 지우기' },
   [ordered]@{ key = 'accounts'; label = '계정 관리'; pages = @('Accounts.html'); admin = $true }
 )
 $MenuKeys = @($Menus | Where-Object { -not $_.admin -and -not $_.always } | ForEach-Object { $_.key })   # 계정마다 고르는 메뉴
@@ -356,9 +357,25 @@ function Current-User {
   if (-not $a -or $a.active -eq $false -or [string]$a.pwAt -ne [string]$s.login.pwAt) { return $null }
   return $a
 }
-# UX 문서를 고칠 수 있는가(만들기 · 수정 요청 · 연관 항목 찾기): 브라우저 화면에서 온 요청만 검사한다(Claude · 플러그인은 그대로)
-function Can-EditDocs { if (-not $isBrowser -or -not (Auth-Required)) { return $true }; $u = Current-User; return [bool]($u -and (@(User-Menus $u) -contains 'guideEdit')) }
+$WriteKeys = @($Menus | Where-Object { $_.write } | ForEach-Object { $_.key })   # 쓰기를 고를 수 있는 메뉴
 function Pick-Menus($a) { return @(@($a.menus) | Where-Object { $MenuKeys -contains $_ }) }
+# 쓰기 메뉴: 최고관리자는 전부. writes가 있으면 그것(읽기 메뉴 안에서만), 없으면(예전 계정) 고른 메뉴 모두 · UX 문서는 guideEdit이 있을 때
+function User-Writes($a) {
+  if (-not $a) { return @() }
+  if ($a.admin) { return @($WriteKeys) }
+  $p = Pick-Menus $a
+  if ($a.PSObject.Properties['writes']) { return @(@($a.writes) | Where-Object { $WriteKeys -contains $_ -and $p -contains $_ }) }
+  return @($p | Where-Object { $WriteKeys -contains $_ -and ($_ -ne 'guide' -or @($a.menus) -contains 'guideEdit') })
+}
+# 쓰기 권한 확인: 브라우저 화면에서 온 요청만(Claude · 플러그인은 그대로). 계정을 쓰지 않으면 모두 쓰기. 키 중 하나라도 쓰기면 된다
+function Can-Write([string[]]$keys) {
+  if (-not $isBrowser -or -not (Auth-Required)) { return $true }
+  $u = Current-User; if (-not $u) { return $false }
+  $w = @(User-Writes $u); foreach ($k in $keys) { if ($w -contains $k) { return $true } }; return $false
+}
+function Ro-Msg([string]$key) { $l = ($Menus | Where-Object { $_.key -eq $key } | Select-Object -First 1).label; return "「$l」 메뉴는 읽기 권한만 있습니다(보기만 가능). 최고관리자에게 「$l · 쓰기」 권한을 요청하세요." }
+# 작업 대기열 종류 → 메뉴(쓰기 권한 확인용)
+function Job-Menu([string]$kind) { if ($kind -in 'guide', 'guide-edit', 'guide-check') { return 'guide' }; if ($kind -like 'prototype*') { return 'proto' }; return 'workbench' }
 function User-Menus($a) { if (-not $a) { return @() }; if ($a.admin) { return @($Menus | ForEach-Object { $_.key }) }; $p = Pick-Menus $a; return @($Menus | Where-Object { $_.always -or $p -contains $_.key } | ForEach-Object { $_.key }) }
 function Me-Info {
   $req = Auth-Required; $u = $null; if ($req) { $u = Current-User }
@@ -369,9 +386,9 @@ function Me-Info {
   $ns = Need-Sync; $hs = $null; if ($ns) { try { $hs = [IO.File]::ReadAllText($SyncStat, $Utf8) | ConvertFrom-Json } catch {} }
   return [ordered]@{ required = $req
     needSync = $ns; syncMsg = $(if ($hs) { [string]$hs.message } else { '' }); syncBusy = $(if ($hs) { [bool]$hs.busy } else { $false })
-    user =$(if ($u) { [ordered]@{ id = $u.id; name = $u.name; admin = [bool]$u.admin; menus = @($allowed) } } else { $null })
-    menus = @($Menus | ForEach-Object { [ordered]@{ key = $_.key; label = $_.label; page = $_.pages[0]; pages = $_.pages; admin = [bool]$_.admin } })
-    allowed = @($allowed); first = $(if ($first) { $first } else { 'Account.html' }) }
+    user =$(if ($u) { [ordered]@{ id = $u.id; name = $u.name; admin = [bool]$u.admin; menus = @($allowed); writes = @(User-Writes $u) } } else { $null })
+    menus = @($Menus | ForEach-Object { [ordered]@{ key = $_.key; label = $_.label; page = $_.pages[0]; pages = $_.pages; admin = [bool]$_.admin; write = [string]$_.write } })
+    allowed = @($allowed); writes = @(if ($req) { User-Writes $u } else { $WriteKeys }); first = $(if ($first) { $first } else { 'Account.html' }) }
 }
 function Write-Login($a) {
   $s = Read-Setup
@@ -381,7 +398,7 @@ function Write-Login($a) {
   [IO.File]::WriteAllText($SetupFile, ($s | ConvertTo-Json -Depth 5), $Utf8)
 }
 # menus는 늘 배열로: $( )로 감싸면 메뉴가 1개일 때 배열이 풀려 글자로 나간다(화면 a.menus.map 오류)
-function Public-Account($a) { [ordered]@{ id = $a.id; name = $a.name; admin = [bool]$a.admin; menus = @(if ($a.admin) { User-Menus $a } else { Pick-Menus $a }); active = ($a.active -ne $false); createdAt = $a.createdAt; updatedAt = $a.updatedAt; pwAt = $a.pwAt } }
+function Public-Account($a) { [ordered]@{ id = $a.id; name = $a.name; admin = [bool]$a.admin; menus = @(if ($a.admin) { User-Menus $a } else { Pick-Menus $a }); writes = @(User-Writes $a); active = ($a.active -ne $false); createdAt = $a.createdAt; updatedAt = $a.updatedAt; pwAt = $a.pwAt } }
 function Find-Claude {
   # Claude 데스크톱 앱: 맥 /Applications/Claude.app, 윈도우 Microsoft Store(MSIX) 또는 일반 설치
   if ($script:ClaudeApp) { return $script:ClaudeApp }
@@ -545,6 +562,25 @@ function Idle-Check {
   Stop-Server 'Workbench 탭을 모두 닫아 서버를 껐습니다.'
 }
 
+# 새로 설치한 폴더(처음 켬 · projects 없음): PC에 남은 시작 안내(setup.json, 설치 폴더 밖)의 작업 링크 · 완료 표시를 비운다.
+#  예전 설치의 링크(예: UX AI TEST › SH.L TEST)가 새 설치의 Workbench 기본 프로젝트로 잡히지 않게. 이름 · 로그인 · 체크는 그대로
+$InstallFlag = P $Root 'workbench' '.installed'
+if (-not (Test-Path $InstallFlag)) {
+  if (-not (Test-Path $ProjRoot) -and (Test-Path $SetupFile)) {
+    try {
+      $s = Read-Setup
+      if ([string]$s.figmaUrl) {
+        $s | Add-Member -NotePropertyName figmaUrl -NotePropertyValue '' -Force
+        $s | Add-Member -NotePropertyName done -NotePropertyValue $false -Force
+        $s | Add-Member -NotePropertyName updatedAt -NotePropertyValue (Get-Date).ToString('yyyy-MM-ddTHH:mm:sszzz') -Force
+        [IO.File]::WriteAllText($SetupFile, ($s | ConvertTo-Json -Depth 5), $Utf8)
+        Write-Host '  새 설치: 예전 작업 링크를 비웠습니다. 시작 안내 3단계에서 작업할 Figma 링크를 넣으세요.' -ForegroundColor Yellow
+      }
+    } catch {}
+  }
+  try { [IO.File]::WriteAllText($InstallFlag, (Get-Date).ToString('o'), $Utf8) } catch {}
+}
+
 Hist-Backfill
 Fix-EditablePages
 $AutoWatchAt = (Get-Date).AddSeconds(5)   # 켠 지 5초 뒤: 백그라운드 감시가 꺼져 있으면 시작. 그 뒤 2분마다 확인해 죽었으면 다시 시작(사용자가 중지한 것은 제외)
@@ -606,6 +642,12 @@ while ($l.IsListening) {
           if ($path -like '/api/*') { SendJson $c 403 @{ error = '이 메뉴를 쓸 권한이 없습니다.' }; continue }
           $c.Response.Redirect('/' + (Me-Info).first); $c.Response.Close(); continue
         }
+        # 쓰기 권한: 바꾸는 요청(POST)은 그 메뉴의 쓰기가 있어야 한다(읽기만이면 403). 작업 대기열 · 가이드 저장은 처리할 때 종류를 보고 확인
+        #  요청(/api/requests)은 Workbench · 변경 이력(다시 진행 · 답하기) · UX 문서(연관 화면 반영 요청)에서 온다
+        if ($req.HttpMethod -eq 'POST' -and $isBrowser) {
+          $wmap = @{ '/api/requests' = @('workbench', 'history', 'guide'); '/api/attach' = @('workbench'); '/api/projects' = @('workbench'); '/api/catalog' = @('workbench'); '/api/shots' = @('workbench'); '/api/upload' = @('guide'); '/api/prototypes' = @('proto') }
+          if ($wmap.ContainsKey($path) -and -not (Can-Write $wmap[$path])) { SendJson $c 403 @{ error = (Ro-Msg $wmap[$path][0]) }; continue }
+        }
       }
     }
     # 내 비밀번호 바꾸기 {current, next}
@@ -624,25 +666,26 @@ while ($l.IsListening) {
       if ($req.HttpMethod -eq 'GET') {
         # ($l은 서버 HttpListener라 쓰면 안 된다)
         $acctList = @(Read-Accounts | Sort-Object @{ e = { -not $_.admin } }, @{ e = { [string]$_.id } } | ForEach-Object { Public-Account $_ })
-        SendJson $c 200 @{ items = $acctList; menus = @($Menus | Where-Object { $MenuKeys -contains $_.key } | ForEach-Object { [ordered]@{ key = $_.key; label = $_.label } }) }; continue
+        SendJson $c 200 @{ items = $acctList; menus = @($Menus | Where-Object { $MenuKeys -contains $_.key } | ForEach-Object { [ordered]@{ key = $_.key; label = $_.label; write = [string]$_.write } }) }; continue
       }
       $body = (New-Object IO.StreamReader($req.InputStream, $Utf8)).ReadToEnd() | ConvertFrom-Json
       $id = ([string]$body.id).Trim().ToLower()
       $pickMenus = @(@($body.menus) | Where-Object { $MenuKeys -contains $_ })   # ($Menus와 이름이 같으면 PowerShell은 대소문자를 가리지 않아 전역 메뉴 목록을 덮어쓴다)
+      $pickWrites = @(@($body.writes) | Where-Object { $WriteKeys -contains $_ -and $pickMenus -contains $_ })   # 쓰기는 읽기 메뉴 안에서만
       switch ([string]$body.action) {
         'add' {
           if ($id -notmatch '^[a-z0-9._-]{3,32}$') { throw '아이디는 영문 소문자 · 숫자 · . _ - 로 3~32자입니다.' }
           if (Read-Account $id) { throw "이미 있는 아이디입니다: $id" }
           if (-not ([string]$body.name).Trim()) { throw '이름을 입력해 주세요.' }
           if (([string]$body.pw).Length -lt 8) { throw '비밀번호는 8자 이상이어야 합니다.' }
-          $a = [pscustomobject]@{ id = $id; name = ([string]$body.name).Trim(); admin = $false; menus = $pickMenus; active = $true; createdAt = (Now); createdBy = (Current-User).id }
+          $a = [pscustomobject]@{ id = $id; name = ([string]$body.name).Trim(); admin = $false; menus = $pickMenus; writes = $pickWrites; active = $true; createdAt = (Now); createdBy = (Current-User).id }
           Set-Pw $a ([string]$body.pw); Save-Account $a
         }
         'update' {
           $a = Read-Account $id; if (-not $a) { throw "계정을 찾지 못했습니다: $id" }
           if (([string]$body.name).Trim()) { $a.name = ([string]$body.name).Trim() }
           if (-not $a.admin) {
-            if ($null -ne $body.menus) { $a.menus = $pickMenus }
+            if ($null -ne $body.menus) { $a.menus = $pickMenus; $a | Add-Member -NotePropertyName writes -NotePropertyValue $pickWrites -Force }
             if ($null -ne $body.active) { $a | Add-Member -NotePropertyName active -NotePropertyValue ([bool]$body.active) -Force }
           }
           if (([string]$body.pw).Length) { if (([string]$body.pw).Length -lt 8) { throw '비밀번호는 8자 이상이어야 합니다.' }; Set-Pw $a ([string]$body.pw) }
@@ -919,8 +962,8 @@ while ($l.IsListening) {
         switch ([string]$body.action) {
           'add' {
             $kind = [string]$body.kind; $key = [string]$body.fileKey; $nid = [string]$body.nodeId
-            # UX 문서 만들기 · 수정 요청 · 연관 항목 찾기는 「UX 문서 · 수정 요청」 권한이 있어야 한다(없으면 보기만)
-            if ($kind -in 'guide', 'guide-edit', 'guide-check' -and -not (Can-EditDocs)) { throw 'UX 문서를 고칠 권한이 없습니다(보기만 가능). 최고관리자에게 「UX 문서 · 수정 요청」 권한을 요청하세요.' }
+            # 쓰기 권한: UX 문서 만들기 · 수정 요청 · 연관 항목 찾기는 UX 문서, 프로토타입 요청은 프로토타입, 캡처 · 목록은 Workbench 쓰기(없으면 보기만)
+            if (-not (Can-Write (Job-Menu $kind))) { throw (Ro-Msg (Job-Menu $kind)) }
             if ($kind -notin 'capture', 'catalog', 'guide', 'guide-check', 'guide-edit', 'text', 'prototype', 'prototype-edit', 'prototype-sync') { throw "알 수 없는 작업: $kind" }
             # 프로토타입(이 PC에만, prototypes/{id}/): 만들기(prototype, 고른 화면 frames) · 수정 요청(prototype-edit) · Figma 바뀐 화면 맞추기(prototype-sync)
             if ($kind -eq 'prototype') {
@@ -988,6 +1031,7 @@ while ($l.IsListening) {
           'update' {
             $hit = $items | Where-Object { $_.id -eq $body.id } | Select-Object -First 1
             if (-not $hit) { throw "작업을 찾지 못했습니다: $($body.id)" }
+            if (-not (Can-Write (Job-Menu ([string]$hit.kind)))) { throw (Ro-Msg (Job-Menu ([string]$hit.kind))) }   # 화면에서 바꾸는 것(예: 고칠 화면 「반영」)
             if ($body.status) { $hit.status = [string]$body.status }
             if ($null -ne $body.note) { $hit.note = [string]$body.note }
             if ($body.guide) { $hit | Add-Member -NotePropertyName guide -NotePropertyValue ([string]$body.guide) -Force }   # 만든 가이드 id
@@ -1031,7 +1075,7 @@ while ($l.IsListening) {
         $body = (New-Object IO.StreamReader($req.InputStream, $Utf8)).ReadToEnd() | ConvertFrom-Json
         # 가이드 고치기: guide.md는 그대로 두고 수정본을 새 파일로 남긴다(여러 PC가 고쳐도 깃 충돌이 없다)
         if ($body.action -eq 'save') {
-          if (-not (Can-EditDocs)) { throw 'UX 문서를 고칠 권한이 없습니다(보기만 가능). 최고관리자에게 「UX 문서 · 수정 요청」 권한을 요청하세요.' }
+          if (-not (Can-Write 'guide')) { throw (Ro-Msg 'guide') }
           $gid = [string]$body.id; $md = [string]$body.md
           if ($gid -notmatch '^[A-Za-z0-9_-]{1,64}$' -or -not (Test-Path (P $GuideRoot $gid 'meta.json'))) { throw "가이드를 찾지 못했습니다: $gid" }
           if (-not $md.Trim()) { throw '가이드 내용이 비어 있습니다.' }
