@@ -40,7 +40,12 @@
 2. `TIMEOUT`이면 다시 실행한다. `JOBS`면 아래 「작업 대기열」대로, `PENDING`이면 요청마다 아래 순서로 처리한 뒤 다시 실행한다. **처리 순서는 `PENDING`에 적힌 순서**다(감시가 우선순위 「높음」 먼저, 같은 우선순위는 먼저 등록한 것부터 정렬해 둔다. `RESUME`도 같다).
    0. 대상 파일 = 요청의 `fileKey`(없으면 시작 안내 작업 링크의 파일, 둘 다 없으면 「보류」). **수정 가능 페이지가 아니면 반영하지 않는다.** 요청의 `page`가 그 파일의 지금 수정 가능 페이지(project.json editablePageName)일 때만 반영한다. 아니면 상태를 「보류」로 바꾸고 note에 「○○ 페이지는 보기 전용입니다. 담당자 확인 필요」를 남긴다.
    1. 상태를 「진행 중」으로: `POST http://localhost:8765/api/requests` `{action:'update', id, status:'진행 중', note, by:'Claude'}`
-   2. Figma(대상 파일 · 수정 가능 페이지)에 반영한다. **작업 기준 가이드를 먼저 확인한다**: `GET /api/guides`의 `applied[fileKey].guideId`(**이 PC 작업자가 고른 작업 기준**, `workbench/guide_apply.json`, 공유하지 않음)가 있으면 그 가이드의 **지금 내용**(`items[].mdPath`, 고친 적이 있으면 가장 최근 수정본 `rev/…md`)을 읽고 그 규칙(구성 · 크기 · 컴포넌트 · 표기)을 따른다. 작업 기준 가이드가 없으면(기본 가이드는 없다) 요청 내용과 그 파일의 기존 화면을 따르고 note 마지막 줄에 「작업 기준 가이드 없음」이라고 적는다. 가이드와 요청이 어긋나면 요청을 따르되 note에 그렇게 적는다. 프로토타입은 여기서 고치지 않고, 완료 뒤 6번으로 맞춘다.
+   2. Figma(대상 파일 · 수정 가능 페이지)에 반영한다. **작업 기준 문서를 먼저 확인한다 — UX 문서의 카테고리(공통 규칙 · 정의서 …)마다 「적용」한 문서 하나씩만 읽는다**:
+      - `GET /api/guides`의 `applied[fileKey]`(**이 PC 작업자가 고른 작업 기준**, `workbench/guide_apply.json`, 공유하지 않음). `docs: {종류: {id}}`가 카테고리별 적용 문서다(`guide` 공통 규칙 · `spec` 정의서, 앞으로 늘어도 같다). `docs`가 없는 예전 형식이면 `guideId`가 공통 규칙이다. id가 빈 값이면 그 카테고리는 작업 기준 없음.
+      - 적용한 문서마다 **지금 내용**(`items[].mdPath`, 고친 적이 있으면 가장 최근 수정본 `rev/…md`)을 읽는다. **적용하지 않은 가이드 · 정의서는 같은 카테고리에 여러 개 있어도 읽지 않고 따르지 않는다.**
+      - 공통 규칙(가이드) = 구성 · 크기 · 컴포넌트 · 표기, 정의서 = 그 화면의 용어 · 값 · 상태 · 동작 · 화면 이동. 둘이 어긋나면 화면 내용은 정의서, 공통 구성 · 컴포넌트 · 표기는 가이드를 따르고 note에 어긋난 점을 적는다. 문서와 요청이 어긋나면 요청을 따르되 note에 그렇게 적는다.
+      - note 마지막 줄에 `작업 기준: {공통 규칙 제목 또는 「없음」} · 정의서 {제목 또는 「없음」}`을 적는다(기본 문서는 없다. 하나도 없으면 요청 내용과 그 파일의 기존 화면을 따른다).
+      - 프로토타입은 여기서 고치지 않고, 완료 뒤 6번으로 맞춘다.
    3. 반영한 프레임의 캡처를 갱신한다(아래 「캡처」).
    4. `Common_UX_Changelog.md` 맨 위에 항목을 추가한다.
    5. 상태를 「완료」로 바꾸고 note에 처리 내용을 짧게 남긴다. 해석이 모호하면 「보류」로 바꾸고 note에 질문을 남긴다.
@@ -143,7 +148,7 @@ Workbench의 「캡처 받기」 · 「Claude에게 목록 만들기 요청」, 
      - `images/`: `get_screenshot`(긴 변 1600 이하) 응답의 URL을 curl로 받아 저장한다. 대화에 base64로 넣지 않는다.
      - `meta.json`(UTF-8): `{id, kind(정의서면 'spec', 가이드는 빼거나 'guide'), title, summary(한두 문장), link, fileKey, fileName, scope(범위 페이지 · 섹션 이름 또는 「참고 파일」), frames(참고한 프레임 수), sources(참고 파일 이름 목록), by, request(작업 방법 원문), jobId, createdAt, updatedAt}`
      - 참고 파일 원본은 `.history`로 옮기지 않는다(이 PC에만). 「개요」에 무엇(파일 이름 · Figma 링크)을 기준으로 정리했는지 적는다.
-  5. `POST /api/jobs {action:'update', id, status:'완료', guide:{가이드 id}, note:'섹션 N개 · 참고 프레임 M개 · 참고 파일 K개'}`. 가이드는 UX 문서 「공통 규칙」 탭 위쪽 가이드 목록에, 정의서는 「정의서」 탭 카드에 나타나고(모든 작업자), `UX_Guide.html?g={id}`에서 본다. 작업 기준으로 쓸지는 작업자가 각자 목록의 「내 작업 기준 가이드」 선택 상자로 정한다(그 PC에만 적용, Claude가 정하지 않는다).
+  5. `POST /api/jobs {action:'update', id, status:'완료', guide:{가이드 id}, note:'섹션 N개 · 참고 프레임 M개 · 참고 파일 K개'}`. 가이드는 UX 문서 「공통 규칙」 탭 위쪽 가이드 목록에, 정의서는 「정의서」 탭 카드에 나타나고(모든 작업자), `UX_Guide.html?g={id}`에서 본다. 작업 기준으로 쓸지는 작업자가 각자 탭마다 「내 작업 기준」 선택 상자 + [적용]으로 정한다(공통 규칙 하나 · 정의서 하나, 그 PC에만 적용, Claude가 정하지 않는다. `POST /api/guides {action:'apply', kind:'guide'|'spec', fileKey, guideId}`).
   6. `Common_UX_Changelog.md` 맨 위에 `## [가이드] {제목} · 날짜 (요청: {by})` 항목을 쓴다. 사용량은 `workbench/usage.ps1 -From {진행 중으로 바꾼 시각} -By {by} -Title "가이드: {제목}"`(맥 `usage.pl`)으로 남긴다.
 - **UX 문서 · 문서 종류**: 「UX 문서」 메뉴(`Common_UX_Guide.html`)는 탭으로 문서 종류를 나눈다. 「공통 규칙」(만든 가이드만. 예전 기본 「Common UX 작성 가이드」(`Common_UX_Guide.md` · `images/`)는 2026-11-03에 지웠다) · 「정의서」(`?doc=spec`). 문서는 모두 `.history/guides/{id}/`에 같은 형식으로 두고 `meta.json`의 `kind`로 나눈다(없으면 `guide`, 정의서는 `spec`). 만들기는 둘 다 위 guide 작업(정의서는 `docKind:'spec'` → meta `kind:'spec'`, 「정의서」 탭의 「＋ 새 정의서 만들기」). 정의서도 보기 화면 [수정 요청](guide-edit)으로 고치고, 고치면 늘 「연관 항목 찾기」로 이어진다(아래 guide-check).
 - **가이드 수정본**: 가이드를 고치면 `.history/guides/{id}/rev/{시각}_{PC}.md`(+ `.json` {by, at, note, base})로 남긴다(`POST /api/guides {action:'save', id, md, note, by, base}`). `guide.md`는 처음 만든 그대로 두고, 지금 내용은 가장 최근 수정본이다(`GET /api/guides`의 `mdPath` · `rev` · `revs`).
@@ -196,4 +201,4 @@ Workbench의 「캡처 받기」 · 「Claude에게 목록 만들기 요청」, 
 - PowerShell로 json · js를 쓸 때는 `[IO.File]::WriteAllText(path, text, (New-Object Text.UTF8Encoding $false))`. `Get-Content`/`Set-Content` 기본 인코딩은 한글을 깨뜨린다.
 - `use_figma` 결과로 한글이 많은 텍스트를 그대로 돌려받으면 응답이 잘린다. U+2028(줄 구분자)가 섞인 텍스트는 파싱 오류가 나므로 `split(String.fromCharCode(0x2028))`로 바꿔서 돌려받는다.
 - 화면 디스크립션은 프레임 안 「Frame 1」 패널의 행(Description 인스턴스)이다. 화면 이동은 `[화면 ID] 화면명` 형식으로 적는다.
-- 공통 UX 규칙(COMM-*)은 이 PC 작업자가 그 파일에 고른 작업 기준 가이드(`GET /api/guides`의 `applied`)를 기준으로 한다. 기본 가이드는 없다.
+- 공통 UX 규칙(COMM-*) · 화면 정의는 이 PC 작업자가 그 파일에 카테고리마다 적용한 문서(`GET /api/guides`의 `applied[fileKey].docs`, 공통 규칙 하나 · 정의서 하나)만 기준으로 한다. 적용하지 않은 문서는 보지 않는다. 기본 문서는 없다.
