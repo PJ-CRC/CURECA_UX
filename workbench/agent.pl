@@ -15,6 +15,7 @@ use IPC::Open3;
 use IO::Select;
 use Symbol qw(gensym);
 use POSIX qw(strftime :sys_wait_h);
+use Time::Local qw(timelocal);
 use Sys::Hostname;
 use Encode qw(encode decode);
 
@@ -74,8 +75,35 @@ sub save_usage {
   my @list;
   push @list, { label => '5-hour limit', percentUsed => int(100 * ($w->{five_hour}{utilization} // 0) + 0.5), resetsAt => $iso->($w->{five_hour}{resetsAt} // time) } if ref $w->{five_hour} eq 'HASH';
   push @list, { label => 'Weekly · all models', percentUsed => int(100 * ($w->{seven_day}{utilization} // 0) + 0.5), resetsAt => $iso->($w->{seven_day}{resetsAt} // time) } if ref $w->{seven_day} eq 'HASH';
-  return unless @list;
+  write_usage(@list);
+}
+sub write_usage {
+  my @list = @_; return unless @list;
   if (open(my $h, '>:raw', "$WB/.plan_usage.json")) { print $h $J->encode({ at => now(), plan => '', by => 'agent', windows => \@list }); close $h; }
+}
+# 요청이 없을 때도 5분마다 한도 확인: `claude -p /usage`는 모델을 부르지 않아 토큰을 쓰지 않는다(Claude Code가 계정 사용량을 글로 알려 줌)
+#  「Current session: 26% used · resets Nov 4, 2pm (Asia/Seoul)」 · 「Current week (all models): 49% used · resets Nov 6, 3pm」를 읽는다.
+#  글 형식이 바뀌어 못 읽으면 그냥 넘어간다(처리할 때 받는 rate_limit_event로는 계속 갱신)
+my $USAGE_MIN = 5;
+sub reset_time {
+  my ($s) = @_; $s =~ s/\(.*?\)//g; $s =~ s/^\s+|\s+$//g;
+  return '' unless $s =~ /^([A-Za-z]{3})[a-z]*\.?\s+(\d{1,2}),?\s+(\d{1,2})(?::(\d{2}))?\s*(am|pm)/i;
+  my %mon = (jan => 0, feb => 1, mar => 2, apr => 3, may => 4, jun => 5, jul => 6, aug => 7, sep => 8, oct => 9, nov => 10, dec => 11);
+  my $m = $mon{ lc $1 }; return '' unless defined $m;
+  my ($d, $h, $mi, $ap) = ($2, $3 % 12, $4 // 0, lc $5); $h += 12 if $ap eq 'pm';
+  my $y = (localtime)[5] + 1900;
+  my $t = eval { timelocal(0, $mi, $h, $d, $m, $y) } // return '';
+  $t = eval { timelocal(0, $mi, $h, $d, $m, $y + 1) } // $t if $t < time - 2 * 86400;   # 12월에 본 1월 초기화
+  my $z = strftime('%z', localtime $t); $z =~ s/(\d\d)$/:$1/; return strftime('%Y-%m-%dT%H:%M:%S', localtime $t) . $z;
+}
+sub probe_usage {
+  my $o = run_cli(60, '-p', '/usage'); my @list;
+  for my $w (['Current session', '5-hour limit'], ['Current week \(all models\)', 'Weekly · all models']) {
+    next unless $o =~ /^\s*$w->[0]:\s*(\d+)% used([^\r\n]*)/m;
+    my ($pct, $rest) = ($1 + 0, $2); my $rs = $rest =~ /resets\s+(.+)$/ ? reset_time($1) : '';
+    push @list, { label => $w->[1], percentUsed => $pct, resetsAt => $rs };
+  }
+  if (@list) { write_usage(@list); } else { (my $x = $o) =~ s/\s+/ /g; logm('한도 확인: /usage를 읽지 못함 ' . substr($x, 0, 120)); }
 }
 # CLI 명령을 짧게 실행해 출력(표준 + 오류)을 받는다. 시간이 넘으면 끊는다
 sub run_cli {
@@ -151,8 +179,11 @@ sub make_prompt {
 save_state('idle', '준비 확인 중 (Claude 로그인 · Figma 연결)'); logm("시작 (pid $$, $claude)");
 # 세션은 처리할 것이 생길 때 띄운다: 미리 띄우면 로그인 · Figma 연결 전에 뜬 세션을 계속 써서 Figma 도구 없이 처리했다
 my ($last, $repeat) = ('', 0);
+my $next_usage = 0;
 while (1) {
   if (-f $STOP) { unlink $STOP; stop_session('중지'); save_state('stopped', '중지됨'); logm('중지'); exit 0; }
+  # 한도 표시 갱신(5분마다, 토큰 안 씀). 로그인 전이면 실패하고 넘어간다
+  if (time >= $next_usage) { $next_usage = time + $USAGE_MIN * 60; probe_usage(); }
   if (-f $RENEW) { unlink $RENEW; stop_session('로그인 · Figma 연결 창을 열어 새로 띄움'); ($READY, $NEXT_CHECK) = (undef, 0); }
   if ($S && session_dead()) { close $S->{in}; close $S->{out}; undef $S; logm('세션이 끝나 있음'); ($READY, $NEXT_CHECK) = (undef, 0); }
   elsif ($S && $S->{turns} > 0 && time - $S->{last} >= $IDLE_MIN * 60) { stop_session("$IDLE_MIN 분 쉼"); }
