@@ -3,6 +3,7 @@
     "name":  "하승현",
     "admin":  false,
     "menus":  [
+                  "plan",
                   "guide",
                   "workbench",
                   "history",
@@ -15,10 +16,11 @@
     "hash":  "MQAVc7Y8ypjolHIF1tPYUsAUb1V6FEs2+wtu+IxPug0=",
     "pwAt":  "2026-11-02T17:33:27+09:00",
     "writes":  [
+                   "plan",
                    "guide",
                    "workbench",
                    "history"
                ],
     "active":  true,
-    "updatedAt":  "2026-11-04T09:37:02+09:00"
+    "updatedAt":  "2026-11-04T16:29:15+09:00"
 }
