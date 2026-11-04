@@ -16,11 +16,9 @@
     "hash":  "CPRGAAX3qhEDSGmssm9uMUulmquY5aT8EyDF4FuWpNg=",
     "pwAt":  "2026-11-02T17:35:06+09:00",
     "writes":  [
-                   "plan",
-                   "guide",
                    "workbench",
                    "history"
                ],
     "active":  true,
-    "updatedAt":  "2026-11-04T16:29:12+09:00"
+    "updatedAt":  "2026-11-04T16:51:43+09:00"
 }
