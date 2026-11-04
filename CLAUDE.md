@@ -44,6 +44,11 @@
    4. `Common_UX_Changelog.md` 맨 위에 항목을 추가한다.
    5. 상태를 「완료」로 바꾸고 note에 처리 내용을 짧게 남긴다. 해석이 모호하면 「보류」로 바꾸고 note에 질문을 남긴다.
       - note는 Workbench 「Claude 답변」에 그대로 보인다. **줄바꿈(`\n`)으로 나눠 쓴다**: 첫 줄에 요약 한 문장, 그 아래 고친 곳을 `- 화면: 무엇 → 어떻게`처럼 한 줄에 하나씩, 참고 · 확인 필요는 마지막 줄에.
+      - **질문 · 선택지(`ask`)**: 사람이 답해야 이어갈 수 있으면 note와 함께 `ask`를 보낸다. Workbench · 변경 이력에 질문과 버튼 · 답 입력칸이 보인다.
+        - 보류 + 질문: `{action:'update', id, status:'보류', note, ask:{q:'질문 한 문장', options:[{label:'고를 답 1'}, {label:'고를 답 2'}], free:true}}`. 선택지는 2~4개, 짧게(그대로 답이 된다). 고를 답이 없으면 `options:[]` + `free:true`(직접 입력만).
+        - 완료 + 다음 행동 제안(예: 같은 요청이 여러 건): `{status:'완료', note, ask:{q, options:[{label:'R001 · R002 지우기', action:'delete', ids:['R001','R002']}, {label:'그대로 두기', action:'done'}], free:false}}`. `action`: 없음(그 글을 답으로 다시 「대기」) · `done`(더 할 일 없이 「완료」) · `delete`(`ids` 요청을 지우고 「완료」, 사람이 확인 창에서 한 번 더 고른다).
+        - 사람이 답하면 서버가 `replies[]`에 `{at, by, q, text}`를 쌓고 `ask`를 지운 뒤 「대기」로 돌린다(→ `PENDING`). **요청에 `replies`가 있으면 원래 요청(`text`)과 마지막 답을 함께 읽고 그 답대로 이어서 처리한다.** 같은 질문을 다시 하지 않는다. 상태만 바꾸는 update는 지난 `ask`를 지운다.
+      - **보류 요청 다시 진행**: 사람이 Workbench · 변경 이력의 「다시 진행」(질문이 없는 「보류」, 겹침 대기 제외)을 누르면 note를 비우고 「대기」로 돌아온다. 처음 요청처럼 처리한다.
       - 서버가 요청의 등록 · 상태 변경(진행 중 · 보류 · 완료)마다 작업 이력을 남기고 깃으로 공유한다(다른 작업자도 본다). 완료일 때 그때 캡처를 붙이므로 캡처(3)를 완료(5)보다 먼저 한다.
       - **토큰 사용량**: 서버가 「진행 중」이 된 시각(startedAt)을 적고, 「완료」가 되면 `workbench/usage.ps1`(맥 `usage.pl`)로 그 구간 사용량을 `.history/usage/`에 남긴다(「사용량 통계」 페이지). 그래서 요청이 여러 개면 **한 요청씩** 「진행 중」으로 바꾸고 끝낸 뒤 다음 요청을 시작한다(한꺼번에 진행 중으로 두면 구간이 겹친다).
    6. **프로토타입 맞추기**: 완료한 뒤 `GET /api/prototypes`에서 이 프레임이 「갱신 필요」(`stale`)인 프로토타입이 있으면, 프로토타입마다 `POST /api/jobs {action:'add', kind:'prototype-sync', fileKey, proto:{id}, name, text:'R0xx 반영', frames:{stale}, by:'Claude'}`를 쌓는다(같은 프로토타입에 「대기」가 있으면 서버가 합친다). 요청은 기다리게 하지 않고, 다음 감시(`JOBS`)에서 아래 「작업 대기열 › prototype-sync」대로 맞춘다.
@@ -54,7 +59,7 @@
   - Workbench는 같은 프레임에 다른 작업자의 「대기 · 진행 중」 요청이 있으면 등록할 때 경고한다(막지는 않는다).
 - 요청 없이 채팅으로 Figma를 고쳤으면 작업 이력을 직접 남긴다: `POST /api/history {action:'add', by:작업자 이름, doneBy:'Claude', title, text, fileKey, fileName, page, frame, nodeId}` (캡처를 먼저 갱신하면 함께 남는다).
   - 사용량도 직접 남긴다: 윈도우 `powershell -NoProfile -ExecutionPolicy Bypass -File workbench/usage.ps1 -From {작업 시작 시각 ISO} -By {작업자} -Title {작업 내용} [-Frame · -NodeId · -FileKey · -FileName · -Page]`, 맥 `perl workbench/usage.pl --from … --by … --title …`. 시작 시각은 그 작업을 부탁받은 사용자 메시지 시각이다.
-- 요청 데이터: `workbench/edit_requests.json` (`items[]`: id, nodeId, frame, page, fileKey, fileName, editable, type, priority, layout, text, status, note, author, images)
+- 요청 데이터: `workbench/edit_requests.json` (`items[]`: id, nodeId, frame, page, fileKey, fileName, editable, type, priority, layout, text, status, note, author, images, ask, replies)
 - **첨부 이미지**: 요청에 `images: [{file, small, name, size}]`가 있으면 처리 전에 **원본 `file`**(`workbench/req_images/{요청 ID}_{n}.{ext}`, 이 PC에만)을 Read로 열어 보고, 요청 글과 함께 해석한다(「이 화면처럼」, 빨간 표시 부분 등). 이미지와 글이 어긋나거나 이미지로 알 수 없으면 「보류」와 질문을 note에.
   - Workbench 수정 요청 칸에서 붙여넣기 · 끌어다 놓기 · 파일 선택으로 넣는다. 최대 5장, 한 장 10MB 미만(PNG · JPG · GIF · WEBP). 원본을 `POST /api/attach?ext=` → `{tmp}`로 먼저 올리고, `add`의 `images:[{tmp, small, name}]`로 등록하면 서버가 요청 ID 이름으로 옮긴다.
   - 작업 이력(깃 공유)에는 원본이 아니라 브라우저가 만든 줄인 사본(긴 변 1600 JPG, `small`)만 `.history/attach/{PC}_{요청 ID}_{n}.jpg`로 올린다. 요청을 지우면 원본 · 사본 모두 지운다.

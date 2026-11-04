@@ -195,9 +195,24 @@ sub requests_post {
     my ($hit) = grep { str($_->{id}) eq str($b->{id}) } @items; die "요청을 찾지 못했습니다: " . str($b->{id}) . "\n" unless $hit;
     # 「진행 중」이 될 때마다 사용량 구간의 시작 시각을 새로 잡는다
     $hit->{startedAt} = $now if str($b->{status}) eq '진행 중' && str($hit->{status}) ne '진행 중';
+    # Claude의 질문 · 선택지(ask {q, options:[{label, action?, ids?}], free}): 함께 보내면 그것으로, 상태만 바뀌면 지난 질문은 지운다
+    if (exists $b->{ask}) { $hit->{ask} = $b->{ask}; }
+    elsif (str($b->{status}) ne '' && str($b->{status}) ne str($hit->{status})) { $hit->{ask} = undef; }
     $hit->{status} = str($b->{status}) if str($b->{status}) ne '';
     $hit->{note} = str($b->{note}) if defined $b->{note};
     $hit->{text} = trim($b->{text}) if defined $b->{text} && trim($b->{text}) ne '';
+    $hit->{updatedAt} = $now;
+    $hit->{updatedBy} = str($b->{by}) if str($b->{by}) ne '';
+    hist_from_request($hit);
+  } elsif ($act eq 'answer') {
+    # 사람의 답: Claude 질문(ask)에 고르거나 적은 답을 replies에 쌓고 다시 「대기」로(Claude가 요청 · 답을 함께 읽고 이어서 처리).
+    #  resolve면 더 할 일 없이 「완료」(예: 「그대로 두기」). 지난 질문은 replies의 q로 남긴다
+    my ($hit) = grep { str($_->{id}) eq str($b->{id}) } @items; die "요청을 찾지 못했습니다: " . str($b->{id}) . "\n" unless $hit;
+    my $txt = trim($b->{text}); die "답을 고르거나 입력해 주세요.\n" unless length $txt;
+    my $q = ref $hit->{ask} eq 'HASH' ? str($hit->{ask}{q}) : str($hit->{note});
+    $hit->{replies} = [ (grep { ref $_ eq 'HASH' } @{ ref $hit->{replies} eq 'ARRAY' ? $hit->{replies} : [] }), { at => $now, by => str($b->{by}), q => $q, text => $txt } ];
+    $hit->{ask} = undef;
+    if ($b->{resolve}) { $hit->{status} = '완료'; } else { $hit->{status} = '대기'; $hit->{note} = ''; }
     $hit->{updatedAt} = $now;
     $hit->{updatedBy} = str($b->{by}) if str($b->{by}) ne '';
     hist_from_request($hit);
@@ -372,7 +387,8 @@ sub hist_from_request {
   }
   save_hist_entry($name, { id => $name, kind => 'request', status => str($r->{status}), at => str($r->{updatedAt}), createdAt => str($r->{createdAt}), by => str($r->{author}), doneBy => str($r->{updatedBy}), pc => $PC_NAME,
     reqId => str($r->{id}), fileKey => str($r->{fileKey}), fileName => str($r->{fileName}), page => str($r->{page}), frame => str($r->{frame}), nodeId => str($r->{nodeId}),
-    type => str($r->{type}), layout => str($r->{layout}), text => str($r->{text}), note => str($r->{note}), shot => $shot, images => \@att });
+    type => str($r->{type}), layout => str($r->{layout}), text => str($r->{text}), note => str($r->{note}), shot => $shot, images => \@att,
+    ask => (ref $r->{ask} eq 'HASH' ? $r->{ask} : undef), replies => [ grep { ref $_ eq 'HASH' } @{ ref $r->{replies} eq 'ARRAY' ? $r->{replies} : [] } ] });
 }
 # 첨부 이미지: 먼저 올린 임시 파일(/api/attach)을 요청 ID 이름으로 옮긴다(최대 5장)
 #  원본 workbench/req_images/{id}_{n}.{ext}, 줄인 사본(긴 변 1600 JPG, 브라우저가 만든다) {id}_{n}_s.jpg
