@@ -3,8 +3,8 @@
     "name":  "서보경",
     "admin":  false,
     "menus":  [
+                  "plan",
                   "guide",
-                  "guideEdit",
                   "workbench",
                   "history",
                   "usage",
@@ -16,6 +16,13 @@
     "iter":  100000,
     "hash":  "+q8dqC3c3CcTPF/NnYiBZKVinsg+iYgSIM+IF7sW6YE=",
     "pwAt":  "2026-11-02T17:33:07+09:00",
+    "writes":  [
+                   "plan",
+                   "guide",
+                   "workbench",
+                   "history",
+                   "proto"
+               ],
     "active":  true,
-    "updatedAt":  "2026-11-03T15:35:27+09:00"
+    "updatedAt":  "2026-11-04T16:29:06+09:00"
 }
