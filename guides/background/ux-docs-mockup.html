@@ -1,0 +1,1330 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>일정·UX 문서 예시</title>
+<style>
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --surface-2:#f3f6fb; --ink:#14171c; --ink-2:#4a5260; --ink-3:#7a8392;
+  --line:#e3e7ee; --accent:#2747d8; --accent-soft:#e6ebff; --red:#d93025; --red-soft:#fdecea;
+  --ok:#1a7f37; --ok-soft:#e3f4e8; --warn:#9a5b00; --warn-soft:#fff3dc; --code-bg:#eef1f6;
+  --grp:#7c3aed; --grp-soft:#f1eafe;
+  --r:12px; --gap:16px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1115; --surface:#171a20; --surface-2:#1e232b; --ink:#e8ebf0; --ink-2:#b4bcc8; --ink-3:#8590a0;
+    --line:#2a3039; --accent:#8ea2ff; --accent-soft:#232c52; --red:#ff7b72; --red-soft:#3a1f1e;
+    --ok:#56d364; --ok-soft:#16301d; --warn:#f0a24f; --warn-soft:#3a2a12; --code-bg:#222831;
+    --grp:#c4a5ff; --grp-soft:#2c2244;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1115; --surface:#171a20; --surface-2:#1e232b; --ink:#e8ebf0; --ink-2:#b4bcc8; --ink-3:#8590a0;
+  --line:#2a3039; --accent:#8ea2ff; --accent-soft:#232c52; --red:#ff7b72; --red-soft:#3a1f1e;
+  --ok:#56d364; --ok-soft:#16301d; --warn:#f0a24f; --warn-soft:#3a2a12; --code-bg:#222831;
+  --grp:#c4a5ff; --grp-soft:#2c2244;
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.55 "Pretendard","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif}
+button,input,textarea{font:inherit;color:inherit}
+a{color:var(--accent)}
+.wrap{max-width:1440px;margin:0 auto;padding:20px 24px 48px}
+@media (max-width:760px){.wrap{padding:16px 16px 40px}}
+
+/* 머리 */
+.head{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:flex-end;justify-content:space-between;margin-bottom:14px}
+.head h1{margin:0;font-size:22px;letter-spacing:-.01em}
+.head p{margin:2px 0 0;color:var(--ink-2)}
+.head-act{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ver{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-weight:600}
+.ver small{color:var(--ink-3);font-weight:500}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:none;padding:6px 10px;cursor:pointer;color:var(--ink-2)}
+.seg button[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent);font-weight:700}
+.search{min-width:0;width:220px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+@media (max-width:760px){.search{width:100%}}
+.tog{display:inline-flex;gap:6px;align-items:center;color:var(--ink-2);cursor:pointer}
+
+/* 탭 */
+.tabs{display:flex;gap:2px;box-shadow:inset 0 -1px 0 var(--line);overflow-x:auto;scrollbar-width:none;margin-bottom:var(--gap)}
+.tabs button{flex:none;display:inline-flex;align-items:center;gap:6px;padding:10px 14px;border:0;border-bottom:2px solid transparent;background:none;color:var(--ink-2);font-weight:600;font-size:14.5px;cursor:pointer}
+.tabs button[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent);font-weight:700}
+.tabs .cnt{font-size:12px;padding:0 6px;border-radius:999px;background:var(--surface-2);color:var(--ink-3)}
+.tabs .cnt.hot{background:var(--warn-soft);color:var(--warn)}
+
+/* 설명 */
+.note{border:1px dashed var(--accent);background:var(--accent-soft);border-radius:var(--r);padding:12px 16px;margin-bottom:var(--gap);display:grid;grid-template-columns:auto 1fr;gap:4px 12px}
+.note b{color:var(--accent);white-space:nowrap}
+.note span{color:var(--ink)}
+body.no-note .note{display:none}
+
+/* 2단 */
+.split{display:grid;grid-template-columns:320px minmax(0,1fr);gap:var(--gap);align-items:start}
+@media (max-width:900px){.split{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+.list{padding:8px;max-height:calc(100vh - 220px);overflow:auto}
+@media (max-width:900px){.list{max-height:none}}
+.filters{display:flex;flex-wrap:wrap;gap:6px;padding:6px 6px 10px;border-bottom:1px solid var(--line);margin-bottom:6px}
+.chipbtn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:2px 10px;cursor:pointer;color:var(--ink-2);font-size:13px}
+.chipbtn[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);background:var(--accent-soft);font-weight:600}
+.addbtn{margin-left:auto;border:1px solid var(--accent);color:var(--accent);background:none;border-radius:8px;padding:2px 10px;cursor:pointer;font-size:13px;font-weight:600}
+details.grp{margin:2px 0}
+details.grp>summary{list-style:none;cursor:pointer;padding:6px 8px;border-radius:8px;color:var(--ink-2);font-weight:700;font-size:13px;display:flex;justify-content:space-between}
+details.grp>summary::-webkit-details-marker{display:none}
+details.grp>summary::before{content:"▸";margin-right:6px;color:var(--ink-3)}
+details.grp[open]>summary::before{content:"▾"}
+details.grp>summary span:first-child{flex:1}
+.item{display:block;width:100%;text-align:left;border:0;background:none;padding:8px 10px;border-radius:8px;cursor:pointer}
+.item:hover{background:var(--surface-2)}
+.item[aria-current="true"]{background:var(--accent-soft)}
+.item .t{display:block;font-weight:600}
+.item .s{display:block;color:var(--ink-3);font-size:12.5px;margin-top:1px}
+.item .bs{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.item.hide{display:none}
+
+/* 배지·칩 */
+.b{display:inline-block;font-size:12px;line-height:18px;padding:0 7px;border-radius:999px;background:var(--surface-2);color:var(--ink-2);white-space:nowrap}
+.b.ok{background:var(--ok-soft);color:var(--ok)}
+.b.warn{background:var(--warn-soft);color:var(--warn)}
+.b.red{background:var(--red-soft);color:var(--red)}
+.b.acc{background:var(--accent-soft);color:var(--accent)}
+.b.grp{background:var(--grp-soft);color:var(--grp)}
+.b.ex{background:none;border:1px dashed var(--ink-3);color:var(--ink-3);line-height:16px}
+.id{display:inline-block;font:12.5px/20px ui-monospace,Consolas,monospace;padding:0 7px;border-radius:6px;background:var(--code-bg);color:var(--accent);border:0;cursor:pointer;margin:1px 2px 1px 0}
+.id:hover{text-decoration:underline}
+
+/* 문서 */
+.doc{padding:20px 24px;min-height:420px}
+@media (max-width:760px){.doc{padding:16px}}
+.dhead{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:flex-start;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:14px}
+.dhead h2{margin:0;font-size:19px}
+.dhead .sub{color:var(--ink-2);margin-top:2px}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:7px 14px;cursor:pointer;font-weight:600}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+:root[data-theme="dark"] .btn.pri{color:#0f1115}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.pri{color:#0f1115}}
+.btn.dan{color:var(--red);border-color:var(--red)}
+a.btn{display:inline-block;text-decoration:none;color:var(--ink)}
+.kv{display:grid;grid-template-columns:140px minmax(0,1fr);gap:6px 14px;margin:0 0 16px;padding:12px 14px;background:var(--surface-2);border-radius:10px}
+@media (max-width:560px){.kv{grid-template-columns:minmax(0,1fr)}}
+.kv dt{color:var(--ink-3)}
+.kv dd{margin:0}
+.doc h3{font-size:15px;margin:20px 0 8px}
+.doc ol,.doc ul{margin:0;padding-left:20px}
+.doc li{margin:3px 0}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tblw{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+.tbl th,.tbl td{border-bottom:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+.tbl th{background:var(--surface-2);color:var(--ink-2);font-weight:600;white-space:nowrap}
+.tbl tr:last-child td{border-bottom:0}
+.banner{border-radius:10px;padding:10px 14px;margin:0 0 14px;background:var(--warn-soft);color:var(--ink)}
+.banner b{color:var(--warn)}
+.banner.grp{background:var(--grp-soft)}
+.banner.grp b{color:var(--grp)}
+.skel{height:10px;border-radius:6px;background:var(--surface-2);margin:10px 0}
+.skel.s2{width:82%}.skel.s3{width:64%}
+.muted{color:var(--ink-3)}
+.ab{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:700px){.ab{grid-template-columns:minmax(0,1fr)}}
+.ab>div{border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.ab h4{margin:0 0 6px;font-size:14px}
+.confirm{border:1px solid var(--accent);border-radius:10px;padding:12px 14px;margin:0 0 14px;background:var(--accent-soft)}
+.confirm textarea{width:100%;min-height:56px;margin:6px 0;border:1px solid var(--line);border-radius:8px;padding:8px;background:var(--surface)}
+.confirm .warnline{color:var(--warn);font-weight:600;margin-bottom:6px}
+.confirm .err{color:var(--red);font-size:13px;min-height:18px}
+.result{border-radius:10px;padding:12px 14px;margin:0 0 14px;background:var(--ok-soft)}
+.result code{background:var(--surface);padding:0 4px;border-radius:4px}
+.toc{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
+.reset{background:none;border:0;color:var(--accent);cursor:pointer;padding:0;text-decoration:underline}
+
+/* 프로그램 위쪽 메뉴 (Figma AI Run) */
+.appnav{position:sticky;top:0;z-index:20;height:64px;display:flex;align-items:center;gap:20px;padding:0 24px;background:var(--surface);border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;white-space:nowrap}
+.navs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
+.navs button{flex:none;border:0;background:none;padding:9px 14px;border-radius:10px;font-size:15px;color:var(--ink);cursor:pointer;white-space:nowrap}
+.navs button:hover{background:var(--surface-2)}
+.navs button[aria-current="page"]{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.navs button .new{font-size:10px;font-weight:700;color:#fff;background:var(--red);border-radius:999px;padding:0 5px;margin-left:4px;vertical-align:2px}
+.nav-r{display:flex;gap:8px;align-items:center;flex:none}
+.pill{font-size:12.5px;font-weight:600;color:var(--ink-2);background:var(--surface-2);border-radius:999px;padding:4px 10px}
+.btn.blue{background:#1570ef;border-color:#1570ef;color:#fff}
+@media (max-width:900px){.nav-r .pill,.nav-r .btn{display:none}.appnav{padding:0 16px}}
+.demo{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;justify-content:flex-end;padding:6px 24px;border-bottom:1px dashed var(--line);font-size:13px;color:var(--ink-3)}
+@media (max-width:760px){.demo{padding:6px 16px;justify-content:flex-start}}
+.head h1{font-size:28px}
+.btn.big{padding:10px 18px;background:var(--accent);border-color:var(--accent);color:#fff;border-radius:10px}
+:root[data-theme="dark"] .btn.big{color:#0f1115}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.big{color:#0f1115}}
+.placeholder{padding:60px 20px;text-align:center;color:var(--ink-3);border:1px dashed var(--line);border-radius:var(--r);background:var(--surface)}
+
+/* 일정 (간트) */
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+.tools select{border:1px solid var(--line);border-radius:8px;padding:5px 8px;background:var(--surface)}
+.legend{display:flex;flex-wrap:wrap;gap:12px;margin-left:auto;font-size:12.5px;color:var(--ink-2)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:4px}
+.gwrap{overflow:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);max-height:calc(100vh - 290px)}
+.gt{border-collapse:separate;border-spacing:0;font-size:12.5px}
+.gt th,.gt td{border-bottom:1px solid var(--line);white-space:nowrap;padding:0}
+.gt thead th{position:sticky;background:var(--surface-2);z-index:3;color:var(--ink-2);font-weight:600}
+.gt thead tr:nth-child(1) th{top:0;height:26px}
+.gt thead tr:nth-child(2) th{top:26px;height:22px}
+.gt thead tr:nth-child(3) th{top:48px;height:20px;font-weight:500;color:var(--ink-3)}
+.gt .c{position:sticky;background:var(--surface);z-index:2;padding:6px 8px;text-align:left}
+.gt thead .c{z-index:4;background:var(--surface-2)}
+.gt .c1{left:0;width:300px;min-width:300px;max-width:300px;white-space:normal}
+.gt .c2{left:300px;width:96px;min-width:96px;padding:4px}
+.gt .c3{left:396px;width:128px;min-width:128px;padding:4px}
+.gt .c4{left:524px;width:96px;min-width:96px;padding:4px;border-right:1px solid var(--line)}
+@media (max-width:760px){.gt .c1{width:200px;min-width:200px;max-width:200px}.gt .c2{left:200px}.gt .c3{left:296px}.gt .c4{left:424px}}
+.gt .d{width:22px;min-width:22px;text-align:center;border-left:1px solid var(--line)}
+.gt .d.mon{border-left:1px solid var(--ink-3)}
+.gt td.d{height:30px}
+.gt .today{box-shadow:inset 2px 0 0 var(--red),inset -2px 0 0 var(--red)}
+.gt thead .today{color:var(--red)}
+.gt td.ux{background:#d9ead3}.gt td.ui{background:#fff2cc}.gt td.now{background:#12cc44}
+:root[data-theme="dark"] .gt td.ux{background:#2b4a2a} :root[data-theme="dark"] .gt td.ui{background:#4a4220}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .gt td.ux{background:#2b4a2a}:root:not([data-theme="light"]) .gt td.ui{background:#4a4220}}
+.gt tr.gh td{background:var(--surface-2);font-weight:700;color:var(--ink-2)}
+.gt tr.gh td.c{background:var(--surface-2)}
+.gt tr.sub .c1{padding-left:26px;color:var(--ink-2)}
+.plat{display:inline-block;font-size:11px;font-weight:700;color:var(--ink-3);border:1px solid var(--line);border-radius:4px;padding:0 4px;margin-right:6px}
+.tbd{color:var(--ink-3);font-size:12px;padding-left:8px}
+.cell-in{width:100%;border:1px solid transparent;border-radius:6px;background:transparent;padding:4px 6px;font-size:12.5px}
+.cell-in:hover,.cell-in:focus{border-color:var(--line);background:var(--surface)}
+.per{width:100%;border:1px solid var(--line);border-radius:6px;background:var(--surface);padding:4px 6px;font-size:12.5px;cursor:pointer;text-align:left}
+.per.empty{color:var(--ink-3);border-style:dashed}
+.perpop{position:absolute;z-index:30;width:280px;background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);padding:12px 14px;display:grid;gap:8px}
+.perpop label{display:grid;grid-template-columns:40px 1fr;align-items:center;gap:8px;font-size:13px}
+.perpop input{border:1px solid var(--line);border-radius:6px;padding:4px 6px;background:var(--surface)}
+.perpop .err{color:var(--red);font-size:12.5px}
+
+/* 이번 주 */
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:16px}
+@media (max-width:900px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;cursor:default}
+.tile .k{color:var(--ink-2);font-size:13px}
+.tile .v{font-size:26px;font-weight:700;margin-top:2px}
+.tile .s{color:var(--ink-3);font-size:12.5px}
+.tile[data-gotab]{cursor:pointer}
+.tile[data-gotab]:hover{border-color:var(--accent)}
+.weekhead{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.weekhead h2{margin:0;font-size:18px}
+.two{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:16px;margin-top:16px}
+@media (max-width:900px){.two{grid-template-columns:minmax(0,1fr)}}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.box h3{margin:0 0 8px;font-size:15px}
+.mtext{white-space:pre-wrap;line-height:1.7}
+.chipbtn.chk[aria-pressed="false"]{opacity:.55}
+.tbl.bl tr.blm{cursor:pointer}
+.tbl.bl tr.blm:hover td{background:var(--surface-2)}
+.tbl.bl tr.bls>td{background:var(--surface-2);padding:8px 12px 12px}
+.bar{position:relative;height:20px;background:var(--surface-2);border-radius:6px;overflow:hidden}
+.bar i{position:absolute;left:0;top:0;bottom:0;background:var(--accent-soft);border-right:2px solid var(--accent)}
+.bar span{position:relative;padding-left:8px;font-weight:700;line-height:20px}
+.segbar{display:flex;gap:0;margin:0 0 12px;border:1px solid var(--line);border-radius:10px;overflow:hidden;width:max-content;max-width:100%;background:var(--surface)}
+.segbar button{border:0;background:none;padding:9px 18px;font-weight:600;color:var(--ink-2);cursor:pointer;display:inline-flex;gap:6px;align-items:center}
+.segbar button+button{border-left:1px solid var(--line)}
+.segbar button[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent)}
+.chat{border:1px solid var(--accent);border-radius:12px;padding:12px 14px;margin:0 0 16px;background:var(--surface-2);display:grid;gap:10px}
+.chat textarea{width:100%;min-height:64px;border:1px solid var(--line);border-radius:8px;padding:8px;background:var(--surface)}
+.msg{display:grid;gap:2px}
+.msg .who{font-size:12px;color:var(--ink-3);font-weight:600}
+.msg.me{justify-items:end}
+.msg .bub{max-width:92%;border-radius:10px;padding:8px 12px;background:var(--surface);border:1px solid var(--line)}
+.msg.me .bub{background:var(--accent-soft);border-color:transparent}
+.sumbox{margin-top:6px}
+.sumbox ul{margin:4px 0 0}
+</style>
+</head>
+<body>
+<header class="appnav">
+  <div class="logo"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 29 9v14l-13 7-13-7V9z" fill="#1570ef"/><path d="M16 2 29 9l-13 7L3 9z" fill="#5b9bff"/><path d="M16 16v14l13-7V9z" fill="#0b4fc4"/></svg>Figma AI Run</div>
+  <nav class="navs" aria-label="프로그램 메뉴">
+    <button type="button" data-page="start">시작 안내</button>
+    <button type="button" data-page="work">일정/작업<span class="new">새</span></button>
+    <button type="button" data-page="docs">UX 문서</button>
+    <button type="button" data-page="wb">Figma Workbench</button>
+    <button type="button" data-page="chg">변경 이력</button>
+    <button type="button" data-page="usage">사용량 통계</button>
+    <button type="button" data-page="proto">프로토타입</button>
+  </nav>
+  <div class="nav-r"><span class="pill">v0.7.2</span><button type="button" class="btn">서보경</button><button type="button" class="btn blue">로그아웃</button></div>
+</header>
+<div class="demo">
+  <span>예시 조작 (실제 화면에는 없음)</span>
+  <div class="seg" role="group" aria-label="보는 사람">
+    <button type="button" data-role="writer" aria-pressed="false">작성자로 보기</button>
+    <button type="button" data-role="approver" aria-pressed="true">승인 담당자로 보기</button>
+  </div>
+  <label class="tog"><input type="checkbox" id="noteTog" checked> 설명 보기</label>
+</div>
+<div class="wrap">
+  <header class="head">
+    <div>
+      <h1 id="ptitle"></h1>
+      <p id="psub"></p>
+    </div>
+    <div class="head-act">
+      <span id="pact"></span>
+      <input class="search" id="q" type="search" placeholder="이 탭에서 찾기 (ID, 제목)" aria-label="이 탭에서 찾기">
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="탭" id="tabs"></nav>
+  <div class="note" id="note"></div>
+  <div class="segbar" id="segbar" hidden></div>
+  <div class="split" id="split">
+    <aside class="card list" id="list" aria-label="목록"></aside>
+    <main class="card doc" id="doc" aria-live="polite"></main>
+  </div>
+  <div id="custom" hidden></div>
+  <div id="other" class="placeholder" hidden>지금 프로그램 화면 그대로입니다. 이 예시는 "일정/작업"과 "UX 문서"만 보여 줍니다.</div>
+</div>
+
+<script>
+(function(){
+var role = 'approver';
+var state = { page:'work', tab:'sched', tabByPage:{ work:'sched', docs:'rules' }, sel:{} };
+var pv = {
+  'PV-0001': { status:'승인 대기', decisions:[] },
+  'PV-0002': { status:'승인 대기', decisions:[] },
+  'PV-0003': { status:'승인 대기', decisions:[] }
+};
+var PV0 = JSON.parse(JSON.stringify(pv));
+
+function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+function b(t, k){ return '<span class="b ' + (k||'') + '">' + esc(t) + '</span>'; }
+function idl(id){ return '<button type="button" class="id" data-go="' + esc(id) + '">' + esc(id) + '</button>'; }
+function skel(){ return '<div class="skel"></div><div class="skel s2"></div><div class="skel s3"></div><div class="skel"></div><div class="skel s2"></div>'; }
+function stBadge(s){ return b(s, s==='승인 대기'?'warn':s==='승인'?'ok':s==='반려'?'red':''); }
+
+// ID → 탭
+function tabOf(id){
+  if (/^POL-/.test(id)) return 'policy';
+  if (/^PV-/.test(id)) return 'prov';
+  if (/^(PD|CA)-/.test(id)) return 'disc';
+  if (/^(LI|TI)-/.test(id)) return 'screen';
+  if (/^(Alert|Confirm|MS_)/.test(id)) return 'data';
+  if (/^COMM-/.test(id)) return 'guide';
+  if (/^M-/.test(id)) return 'minutes';
+  return null;
+}
+
+var TABS = [
+ { id:'sched', page:'work', name:'일정', cnt:'', custom:function(){ return renderSched(); },
+   note:[['원본','Google 스프레드시트 "1.CURECA-2026_Part2" › 2-2.WBS(간소). 일정은 지금처럼 시트가 원본. 프로그램에서 고친 것은 시트에 씀'],['보여 줄 것','시트와 같은 모양: 왼쪽 항목(Part · 구분 · 플랫폼 · 업무 · 담당자 · 상태 · 기간), 오른쪽 날짜 칸(UX 초록 · UI 노랑 · 진행 중 진한 초록, 오늘 빨간 선). 담당자 · 상태로 거르기. 담당자 입력, 상태 드롭다운, 기간을 누르면 달력에서 시작 · 종료일 선택 → 날짜 칸 자동 칠함. [새로고침]으로 시트에서 고친 내용 바로 반영'],['요청','R15 스프레드시트 일정 읽고 쓰기']] },
+ { id:'week', page:'work', name:'주간 진행 현황', cnt:'', custom:function(){ return renderWeek(); },
+   note:[['원본','일정 시트(기간 종료일), 대표 저장소(정책서 · 임시 정책), 회의록 시트'],['보여 줄 것','이번 주 마감 업무 내역(업무 단위, 총 · 진행 중 · 리뷰(예정) 중 · 완료), 정책 변동 사항(신규 · 변경 · 임시 정책, 정책 ID를 누르면 문서로), 회의 내역(없으면 미진행), 다음 주 마감 예정. 작성 방법은 rules/weekly-status.md'],['요청','R17 주간 진행 현황']] },
+ { id:'screenwait', page:'work', name:'화면설계서 작업대기', cnt:'1,049', custom:function(){ return renderBacklog(); },
+   note:[['원본','screens/{메뉴}/{CID}.md의 반영 대기 목록 표 (상태가 "대기"로 시작하는 줄), 메뉴 담당자는 screens/{메뉴}/_menu.md의 owner'],['보여 줄 것','UX 담당자 칩(여러 명 체크), 요약 숫자(반영 대기 · 작업 대기 화면 · 확인 필요 · 메뉴), 구분 칩, 메뉴별 표(많은 순, 막대) → 누르면 화면 목록 → 화면 정의서 반영 대기 목록으로'],['요청','R22 화면설계서 작업대기. 규칙은 rules/screen-spec.md 4절']] },
+ { id:'minutes', page:'work', name:'회의록', cnt:'5',
+   note:[['원본','같은 스프레드시트 › 0.회의록 (미팅 일시 · 참석 · 주제 · 내용 · 기타)'],['보여 줄 것','왼쪽 회의 목록(최근 순), 오른쪽 회의 내용(일시 · 참석 · 주제 · 내용 · 기타)'],['요청','R15 스프레드시트 회의록 읽기. 회의 결정을 정책 근거로 잇는 구조(회의 ID)는 추후']],
+   groups:[
+    { name:'11월', open:true, items:[ { id:'M-1103', t:'2026-11-03(화) 10:00 · 화면 논의 및 질의사항', s:'씨젠 2명 · 브렉스 4명' } ]},
+    { name:'10월', open:true, items:[
+      { id:'M-1026', t:'2026-10-26(월) 13:30 · 화면 논의 및 질의사항', s:'Assay pack, Trolley info, 모바일, Event History' },
+      { id:'M-1023', t:'2026-10-23(목) 13:00 · 화면 논의 및 질의사항', s:'Assay pack, 검사 항목 및 검체 타입' },
+      { id:'M-1021', t:'2026-10-21(수) 16:00 · 화면 논의 및 질의사항', s:'Waste bin, Protocol, Inventory, Cost Setting' },
+      { id:'M-1020', t:'2026-10-20(화) 10:00 · 화면 논의 및 질의사항', s:'일정, 구동 리포트, 모바일, 다중관제' } ]}
+   ]},
+ { id:'rules', page:'docs', name:'작업 규칙', cnt:'15',
+   note:[['원본','constitution.md, CLAUDE.md, rules/*.md'],['보여 줄 것','문서 목록과 본문(목차 포함), 머리말 "상태" 줄의 버전·날짜'],['요청','R1 대표 저장소 읽기, R2 탭 구성']],
+   groups:[
+    { name:'기본', open:true, items:[
+      { id:'constitution', t:'헌법', s:'constitution.md · 모든 룰과 작업에 우선', bs:[['v1.4','ok']] },
+      { id:'CLAUDE', t:'Claude 작업 지침 (진입점)', s:'CLAUDE.md · 무엇을 어떤 순서로 읽는지', bs:[['초안 v0.1','']] } ]},
+    { name:'룰 문서', open:true, items:[
+      { id:'claude-work', t:'Claude 작업 규칙', s:'rules/claude-work.md', bs:[['초안 v0.5','']] },
+      { id:'change-flow', t:'변경 흐름', s:'rules/change-flow.md', bs:[['초안 v0.4','']] },
+      { id:'provisional-policy', t:'임시 정책', s:'rules/provisional-policy.md', bs:[['초안 v0.5','']] },
+      { id:'policy-writing', t:'정책서 쓰기', s:'rules/policy-writing.md', bs:[['초안 v0.2','']] },
+      { id:'screen-spec', t:'화면 정의서', s:'rules/screen-spec.md', bs:[['1 · 3 · 4절','warn']] },
+      { id:'repository-and-id', t:'저장소와 ID', s:'rules/repository-and-id.md', bs:[['초안 v0.3','']] },
+      { id:'status-lifecycle', t:'상태와 전달', s:'rules/status-lifecycle.md', bs:[['초안 v0.1','']] },
+      { id:'figma-sync', t:'Figma 맞추기', s:'rules/figma-sync.md', bs:[['초안 v0.1','']] },
+      { id:'language-set', t:'언어셋', s:'rules/language-set.md', bs:[['초안 v0.2','']] },
+      { id:'terminology-review', t:'용어 검토', s:'rules/terminology-review.md', bs:[['작성 전','warn']] },
+      { id:'weekly-status', t:'주간 진행 현황', s:'rules/weekly-status.md', bs:[['초안 v0.2','']] },
+      { id:'discussion-answer', t:'논의 항목 답변', s:'rules/discussion-answer.md', bs:[['초안 v0.1','']] },
+      { id:'schedule', t:'일정', s:'rules/schedule.md', bs:[['초안 v0.1','']] } ]}
+   ]},
+ { id:'policy', page:'docs', name:'정책서', cnt:'80',
+   note:[['원본','policy/{영역}/POL-*.md (머리말 YAML + 정의 · 규칙 · 예외 · 근거 · 변경 이력)'],['보여 줄 것','영역별 목록, 머리말 카드, 관련 화면·알럿·임시 정책 ID 링크, 이 정책을 바꾸려는 임시 정책'],['요청','R3 머리말 카드와 ID 링크']],
+   groups:[
+    { name:'EQP 장비', open:true, items:[
+      { id:'POL-EQP-001', t:'CURECA Status 구조', bs:[['확정','ok']] },
+      { id:'POL-EQP-002', t:'장비 통합 상태 전환', bs:[['확정','ok']] },
+      { id:'POL-EQP-003', t:'Initialize, Stop, Run, Quick Start 버튼', bs:[['확정','ok']] },
+      { id:'POL-EQP-004', t:'Pausing과 Paused', bs:[['확정','ok']] },
+      { id:'POL-EQP-005', t:'Run-time', bs:[['확정','ok']] },
+      { id:'POL-EQP-006', t:'Spare Storage', bs:[['확정','ok']] },
+      { id:'POL-EQP-007', t:'경광등', bs:[['확정','ok']] },
+      { id:'POL-EQP-008', t:'Door 잠금 해제와 자동 잠금', bs:[['확정','ok'],['임시 정책 2','warn']] },
+      { id:'POL-EQP-009', t:'Management (Enabled 설정)', bs:[['확정','ok']] },
+      { id:'POL-EQP-010', t:'Error Rate', bs:[['확정','ok']] } ]},
+    { name:'ACC 계정·권한', count:9, items:[] }, { name:'COM 공통', count:6, items:[] },
+    { name:'EVT 이벤트', count:3, items:[] }, { name:'INV 재고', count:7, items:[] },
+    { name:'LOD 적재', count:5, items:[] }, { name:'MAT 소모품·시약', count:10, items:[] },
+    { name:'SMP 검체', count:10, items:[] }, { name:'STA 통계', count:6, items:[] },
+    { name:'SYS 시스템', count:4, items:[] }, { name:'TST 검사', count:10, items:[] }
+   ]},
+ { id:'guide', page:'docs', name:'UX 가이드', cnt:'',
+   note:[['원본','Common UX 최종본 V2.2.00 (Figma DY common UX, COMM-0 ~ COMM-5). 고칠 곳은 common-ux/feedback.md'],['보여 줄 것','왼쪽 목차 트리(대분류 → 항목), 오른쪽 항목 내용과 Figma 프레임 그림. 항목마다 관련 정책 · 기준 데이터 링크와 걸려 있는 수정 요청'],['요청','R2 탭 구성, R14 UX 가이드를 대표 저장소에서 읽기 (모두 같은 가이드를 씀)']],
+   groups:[
+    { name:'0. 문서 구성', items:[ { id:'COMM-0', t:'목차', s:'COMM-0' } ]},
+    { name:'1. Overview', items:[ { id:'COMM-1-a', t:'Gesture / Input Interaction Guide', s:'COMM-1-a' } ]},
+    { name:'2. Navigation', items:[ { id:'COMM-2-a', t:'GNB / LNB', s:'COMM-2-a' }, { id:'COMM-2-b', t:'Profile Icon', s:'COMM-2-b', bs:[['수정 요청 1','warn']] } ]},
+    { name:'3. Layout', items:[ { id:'COMM-3-a(1/2)', t:'Base Frame Area · 기본 프레임', s:'COMM-3-a(1/2)', bs:[['수정 요청 1','warn']] }, { id:'COMM-3-a(2/2)', t:'Base Frame Area · 모드별 LNB', s:'COMM-3-a(2/2)', bs:[['수정 요청 4','warn']] } ]},
+    { name:'4. Writing', open:true, items:[
+      { id:'COMM-4-a(1/4)', t:'Data Notation · 날짜 · 순서 · Module명', s:'COMM-4-a(1/4)' },
+      { id:'COMM-4-a(2/4)', t:'Data Notation · 장비 상태 · 컨트롤러', s:'COMM-4-a(2/4)', bs:[['수정 요청 2','warn']] },
+      { id:'COMM-4-a(3/4)', t:'Data Notation · 모듈 · Unit 상태', s:'COMM-4-a(3/4)' },
+      { id:'COMM-4-a(4/4)', t:'Data Notation · 검사 · 재고 · 이벤트', s:'COMM-4-a(4/4)' },
+      { id:'COMM-4-b(1/5)', t:'Consumables and Reagents · 공통', s:'COMM-4-b(1/5)' },
+      { id:'COMM-4-b(2/5)', t:'Consumables and Reagents · 분류', s:'COMM-4-b(2/5)' },
+      { id:'COMM-4-b(3/5)', t:'Consumables and Reagents · 정렬', s:'COMM-4-b(3/5)' },
+      { id:'COMM-4-b(4/5)', t:'Consumables and Reagents · 혼합 목록 정렬', s:'COMM-4-b(4/5)' },
+      { id:'COMM-4-b(5/5)', t:'Consumables and Reagents · 수량 표기', s:'COMM-4-b(5/5)' } ]},
+    { name:'5. Component', count:23, items:[] }
+   ]},
+ { id:'data', page:'docs', name:'기준 데이터', cnt:'20',
+   note:[['원본','glossary/*.csv, policy/*.csv (알럿 · 권한 · Service Mode · 상태 전환 · 경광등), ia/ia-screens.csv, reference/'],['보여 줄 것','표 보기(검색 · 필터 · 정렬 · 열 고정). 용어집은 "쓰지 않는 표현"으로 찾아도 표준어 줄이 나옴'],['요청','R4 CSV 표 보기']],
+   groups:[
+    { name:'용어', open:true, items:[
+      { id:'terms', t:'용어집', s:'glossary/terms.csv', bs:[['표준어 · 쓰지 않는 표현','acc']] },
+      { id:'status-values', t:'상태값', s:'glossary/status-values.csv' },
+      { id:'modules', t:'Module · Unit', s:'glossary/modules.csv, module-units.csv' },
+      { id:'materials', t:'소모품 · 시약', s:'glossary/consumables.csv, pcr-reagents.csv' },
+      { id:'tests', t:'검사 항목 · 검체 종류', s:'glossary/test-items.csv, sample-types.csv, test-stages.csv' } ]},
+    { name:'정책 표', open:true, items:[
+      { id:'alerts', t:'알럿 카탈로그', s:'policy/alert-catalog.csv' },
+      { id:'alerts-ms', t:'Material Setup 알럿', s:'policy/alert-catalog-ms.csv' },
+      { id:'perm', t:'권한표', s:'policy/permission-matrix.csv' },
+      { id:'svc', t:'Service Mode', s:'policy/service-mode-matrix.csv' },
+      { id:'trans', t:'장비 통합 상태 전환', s:'policy/integrated-state-transitions.csv' },
+      { id:'light', t:'경광등', s:'policy/warning-light.csv' },
+      { id:'ia', t:'IA 화면 목록', s:'ia/ia-screens.csv' } ]},
+    { name:'원본 자료', items:[
+      { id:'ref-customer', t:'고객사 제공 자료', s:'reference/customer/ (씨젠 상태 정보, 소모품·시약)' },
+      { id:'ref-updates', t:'비교 기록', s:'reference/updates/' },
+      { id:'ref-team', t:'담당자 정책서', s:'reference/team/' } ]}
+   ]},
+ { id:'screen', page:'docs', name:'화면 정의서', cnt:'187',
+   note:[['원본','screens/{메뉴}/{CID}.md, screens/{메뉴}/_menu.md'],['보여 줄 것','메뉴별 목록, 머리말 카드(공통 규칙 버전 · 임시 정책 포함), 관련 정책 링크, 반영 대기 목록 표(구분 · 상태 필터). 답변으로 새로 더해진 반영 대기 목록은 "새로 추가"로 표시'],['요청','R3 ID 링크, R5 화면별 공통 규칙 버전, R12 오래된 버전 화면 모아 보기(2차), R21 반영 대기 목록 표시']],
+   groups:[
+    { name:'Instruments', open:true, items:[
+      { id:'LI-INS-01-P', t:'Door Control Popup', s:'LI-INS-01-P', bs:[['임시 정책 포함','warn'],['규칙 버전 기록 전','']] },
+      { id:'LI-INS-01-T', t:'Overview Tab', s:'LI-INS-01-T' },
+      { id:'LI-INS-02-T', t:'All Tab', s:'LI-INS-02-T' },
+      { id:'LI-INS-02-01-P', t:'Management Popup', s:'LI-INS-02-01-P' },
+      { id:'TI-INS-01-T', t:'Overview Tab', s:'TI-INS-01-T' },
+      { id:'TI-INS-02-T', t:'All Tab', s:'TI-INS-02-T' },
+      { id:'TI-INS-02-01-P', t:'Management Popup', s:'TI-INS-02-01-P' } ]},
+    { name:'Material Setup', count:53, items:[] }, { name:'Setting', count:39, items:[] },
+    { name:'Statistical Analysis', count:17, items:[] }, { name:'Inventory', count:16, items:[] },
+    { name:'Sample Tracking', count:16, items:[] }, { name:'Information', count:8, items:[] },
+    { name:'Event History', count:6, items:[] }, { name:'Login', count:6, items:[] },
+    { name:'Run', count:6, items:[] }, { name:'Profile', count:4, items:[] },
+    { name:'Test Management', count:4, items:[] }, { name:'Dashboard', count:2, items:[] },
+    { name:'Dashboard All', count:2, items:[] }, { name:'Quick Start', count:1, items:[] }
+   ]},
+ { id:'prov', page:'work', name:'임시 정책', cnt:'3', hot:true,
+   note:[['원본','provisional/PV-*.md (닫힌 것은 provisional/closed/)'],['보여 줄 것','왼쪽 목록(상태 필터 · 같은 정책 묶음 · A/B 표시), 오른쪽 문서, 위쪽 [승인] · [반려]. 승인 담당자에게만 버튼이 보임'],['요청','R6 임시 정책 탭, R7 버튼과 커밋, R8 승인 담당자 계정, R9 같은 정책 경고, R10 [새 임시 정책](2차)']],
+   filters:['승인 대기','승인','반려'],
+   groups:[
+    { name:'목록', open:true, items:[
+      { id:'PV-0003', t:'PCR Setup Door 잠금 해제 조건', s:'POL-EQP-008 규칙 5 · 김OO / 이OO', ex:true, ab:true, grp:'POL-EQP-008' },
+      { id:'PV-0002', t:'Account Setting 목록과 삭제·수정 범위', s:'POL-ACC-001, POL-ACC-002 · 서보경 · 2026-11-02', imp:1 },
+      { id:'PV-0001', t:'Run 중 잠금 해제 후 Door를 열지 않은 경우 Paused 유지', s:'POL-EQP-008 추가 · 서보경 · 2026-11-02', imp:4, grp:'POL-EQP-008' } ]}
+   ]},
+ { id:'disc', page:'work', name:'논의·결정', cnt:'18', seg:true,
+   note:[['원본','pending/PD-*.md (내부 논의), background/worklist.md "다시 확인할 것", policy/policy-backlog.md, customer-agenda/agenda.md (고객 논의)'],['보여 줄 것','위쪽에서 내부 논의 / 고객 논의를 골라 나눠 봄. 왼쪽은 트리 없이 한 줄 목록(종류 · 상태 표시), 오른쪽은 항목 내용과 영향받는 정책 · 화면 ID 링크. [답변하기]: Claude와 대화 → 정리 확인 → 커밋, 화면 정의서 반영 대기 목록까지'],['요청','R3 ID 링크, R19 논의·결정 나눠 보기, R20 [답변하기]와 Claude 대화 (순서: rules/discussion-answer.md)']],
+   groups:[
+    { key:'in', name:'내부 논의', items:[
+      { id:'PD-0001', t:'버튼·라벨 대소문자 규칙', kind:'협의 대기', st:'대기' },
+      { id:'PD-0002', t:'SMTP Setting의 [Save] 범위', kind:'협의 대기', st:'대기' },
+      { id:'PD-0003', t:'Total Sample·STAT Sample에 STAT Storage Sample을 셈하는 방법', kind:'협의 대기', st:'대기' },
+      { id:'PD-0004', t:'Material Setup 스캔 화면의 [Next] 버튼', kind:'협의 대기', st:'대기' },
+      { id:'PD-0005', t:'PCR Socket을 다시 스캔할 때 기존 데이터 처리', kind:'협의 대기', st:'대기' },
+      { id:'MS3-a', t:'G10 Socket에 PK·IC를 함께 넣을 때 칸 배정과 카운터', kind:'다시 확인할 것', st:'멈춤' },
+      { id:'MS8', t:'Loading 화면을 따로 둘지, [OK] 버튼', kind:'다시 확인할 것', st:'멈춤' },
+      { id:'MS9', t:'Empty Waste Bin·RGE의 예전 알럿 ID를 MS 목록에 넣을지', kind:'다시 확인할 것', st:'멈춤' },
+      { id:'backlog', t:'정책서에 아직 없는 확정 내용', s:'policy/policy-backlog.md', kind:'정책서 보충' } ]},
+    { key:'cust', name:'고객 논의', items:[
+      { id:'CA-0001', t:'Error Rate 표시 위치', st:'논의 전' }, { id:'CA-0002', t:'Error 모듈 복구', st:'논의 전' },
+      { id:'CA-0003', t:'Account Setting 목록과 삭제·수정 범위', st:'논의 전', pvlink:'PV-0002' },
+      { id:'CA-0004', t:'장비 통합 상태에 따라 Logout을 막을지', st:'논의 전' }, { id:'CA-0005', t:'HPV, RTI 검사군 안 조합 검사', st:'논의 전' },
+      { id:'CA-0006', t:'계정이 CURECA마다 따로 있는지', st:'논의 전' }, { id:'CA-0007', t:'Empty Waste Bin을 Main Mode에서도', st:'논의 전' },
+      { id:'CA-0008', t:'Test Order [Import] 파일 형식', st:'논의 전' }, { id:'CA-0009', t:'View Trolley Info', st:'논의 전' } ]}
+   ]},
+ { id:'hist', page:'docs', name:'변경 이력', cnt:'',
+   note:[['원본','대표 저장소 버전 태그(rules-v*), git 커밋, 각 문서의 변경 이력 표'],['보여 줄 것','버전마다 바뀐 문서 · 승인한 임시 정책 · 고칠 화면, 최근 커밋(누가 · 무엇을 · 왜)'],['요청','R5 공통 규칙 버전, R11 반영 작업(2차)']],
+   groups:[
+    { name:'공통 규칙 버전', open:true, items:[
+      { id:'rules-v0.1', t:'rules-v0.1', s:'첫 버전 태그를 붙이면 이렇게 보임', ex:true } ]},
+    { name:'최근 커밋', open:true, items:[
+      { id:'f0359df', t:'임시 정책 상태 "검토 중"을 "승인 대기"로', s:'f0359df · 서보경 · 2026-11-03' },
+      { id:'64c93be', t:'겹치는 임시 정책 확인과 A/B 선택 문서', s:'64c93be · 서보경 · 2026-11-03' },
+      { id:'b55993c', t:'임시 정책 절차를 가볍게 (헌법 v1.4)', s:'b55993c · 서보경 · 2026-11-03' },
+      { id:'106d6d0', t:'임시 정책 영향 화면, 승인·반려 메뉴 제안', s:'106d6d0 · 서보경 · 2026-11-03' },
+      { id:'12958ff', t:'승인 담당자 반영·화면 규칙 버전 기록 (헌법 v1.3)', s:'12958ff · 서보경 · 2026-11-03' } ]}
+   ]}
+];
+
+// ---------- 문서 ----------
+function generic(it, extra){
+  var memo = '';
+  if (tabOf(it.id) === 'screen' && MEMO_ADD[it.id]) {
+    memo = '<h3>반영 대기 목록</h3><p class="muted" style="margin:0 0 6px">화면을 다시 그릴 때 이 메모를 디스크립션과 화면 예시에 반영합니다.</p><div class="tblw"><table class="tbl"><thead><tr><th>#</th><th>구분</th><th>지금</th><th>바꿀 것</th><th>근거</th><th>상태</th></tr></thead><tbody>' + memoRows(it.id, 1) + '</tbody></table></div>';
+  }
+  return '<div class="dhead"><div><h2>' + esc(it.t) + '</h2><div class="sub">' + esc(it.s || it.id) + '</div></div></div>' +
+    (extra || '') + memo + '<p class="muted">파일 내용을 그대로 보여 줍니다.</p>' + skel();
+}
+// 답변으로 더해진 반영 대기 목록
+var MEMO_ADD = {};
+function memoRows(cid, start){
+  return (MEMO_ADD[cid] || []).map(function(m, i){ return '<tr style="background:var(--ok-soft)"><td>' + (start + i) + '</td><td>정책 반영</td><td class="muted">-</td><td>' + esc(m.text) + '</td><td>' + idl(m.from) + (m.pol ? ' ' + idl(m.pol) : '') + '</td><td>' + b('새로 추가','ok') + '</td></tr>'; }).join('');
+}
+
+// ---------- 답변하기 (Claude와 대화 → 확인 → 커밋) ----------
+var ANS = {
+ 'PD-0005': { sample:'다시 스캔하면 기존 데이터를 지우지 않고 이어서 적재해. 8월 정책서의 리셋 문장은 빼 줘.',
+   decision:'데이터가 있는 PCR Socket을 다시 스캔하면 기존 데이터를 리셋하지 않고 이어서 적재함. 8월 정책서의 "스캔 시 리셋" 문장은 쓰지 않음.',
+   pol:'POL-MAT-010', polText:'예외에 "PCR Socket을 다시 스캔하면 이어서 적재" 추가',
+   memos:[['LI-TSS-PSI-LPR-02','디스크립션에 넣음: 데이터가 있는 PCR Socket을 다시 스캔하면 이어서 적재함. 화면 예시도 기존 수량이 남은 상태로'],['LI-TSS-PSI-LPR-03','디스크립션에 넣음: 다시 스캔해도 기존 데이터는 리셋되지 않음'],['LI-TSS-PSI-LMM-01','디스크립션에 넣음: MM Tube Socket도 같은 기준']] },
+ 'CA-0003': { sample:'고객 확인 결과 PV-0002 내용대로 진행. 11/5 회의에서 확인함.', customer:true,
+   decision:'고객이 PV-0002 내용을 그대로 확인함 (근거: 11/5 회의).',
+   pol:'POL-ACC-001', polText:'PV-0002 내용(목록 범위, 삭제 · 수정 범위)을 규칙으로 더함',
+   memos:[['TI-STN-05','디스크립션에 넣음: Admin에게는 Service 계정을 목록에서 빼고 보여 줌. 화면 예시도 Admin 로그인 기준 목록에 Service 계정 없이'],['TI-STN-05-03-P','디스크립션에 넣음: 자기 계정과 마지막 Service 계정은 삭제 불가, Alert_047'],['TI-STN-05-01-P','확인 필요: User Type 선택지에 Service를 둘지']] }
+};
+var ansState = {};
+function newSt(S, approver){ return S.customer ? '결정' : (approver ? '반영 완료' : '합의'); }
+function ansPanel(id){
+  var a = ansState[id]; if (!a) return '';
+  var S = ANS[id] || { decision:'(답변 내용을 정리한 결정 문장)', memos:[] };
+  var bub = function(who, html){ return '<div class="msg ' + who + '"><div class="who">' + (who==='me' ? '나' : 'Claude') + '</div><div class="bub">' + html + '</div></div>'; };
+  var h = '<div class="chat">';
+  if (a.step === 1) {
+    h += bub('cl', '이 항목에 대한 답을 적어 주세요. 정리해서 무엇이 바뀌는지 보여 드린 뒤, 확인을 받으면 커밋합니다.') +
+      '<textarea id="ansText" placeholder="답변">' + esc(S.sample || '') + '</textarea><div class="acts"><button type="button" class="btn" data-anscancel>닫기</button><button type="button" class="btn pri" data-anssend>보내기</button></div>';
+  }
+  if (a.step >= 2) {
+    var approver = role === 'approver';
+    var polLine = S.pol ? (approver
+      ? '<li>공통 자료: ' + idl(S.pol) + ' ' + esc(S.polText) + '. 승인 담당자라 바로 반영하고 공통 규칙 버전을 올립니다.</li>'
+      : '<li>공통 자료: 직접 고치지 않고 임시 정책 <b>PV-0004</b>로 등록합니다 (' + idl(S.pol) + ' ' + esc(S.polText) + '). 승인 담당자가 승인하면 반영됩니다.</li>') : '';
+    if (S.customer && !approver) polLine = '<li>' + idl('PV-0002') + ' 고객 답 표에 받은 날짜 · 결과 · 근거를 적습니다. 승인 대기는 그대로입니다.</li>';
+    h += bub('me', esc(a.text)) +
+      bub('cl', '<b>이렇게 정리했습니다. 맞는지 확인해 주세요.</b><div class="sumbox"><div><span class="muted">결정</span> ' + esc(S.decision) + '</div>' +
+        '<div class="muted" style="margin-top:6px">바뀌는 것</div><ul><li>' + idl(id) + ' 결과 칸에 결정과 날짜를 적고 상태를 "' + newSt(S, approver) + '"로</li>' + polLine +
+        (S.memos.length ? '<li>화면 정의서 반영 대기 목록 ' + S.memos.length + '건 (다음에 그 화면을 그릴 때 반영)<ul>' + S.memos.map(function(m){ return '<li>' + idl(m[0]) + ' ' + esc(m[1]) + '</li>'; }).join('') + '</ul></li>' : '') +
+        '</ul></div>' + (a.fix ? '<div class="muted">고친 점: ' + esc(a.fix) + '</div>' : ''));
+    if (a.step === 2) h += '<textarea id="ansFix" placeholder="고칠 점이 있으면 적어 주세요 (없으면 그대로 커밋)"></textarea><div class="acts"><button type="button" class="btn" data-ansfix>고쳐 달라고 하기</button><button type="button" class="btn pri" data-anscommit>확인하고 커밋</button></div>';
+    if (a.step === 3) h += bub('cl', '<b>커밋했습니다.</b> <code>' + esc(a.msg) + '</code><br><span class="muted">예시라 실제로 저장하지 않았습니다.</span> 반영 대기 목록에 줄이 더해진 화면: ' + S.memos.map(function(m){ return idl(m[0]); }).join(''));
+  }
+  return h + '</div>';
+}
+function ansCommit(id){
+  var S = ANS[id] || { memos:[] }, approver = role === 'approver';
+  S.memos.forEach(function(m){ (MEMO_ADD[m[0]] = MEMO_ADD[m[0]] || []).push({ text:m[1], from:id, pol:S.pol }); });
+  var it = findItem('disc', id); if (it) it.st = newSt(S, approver);
+  ansState[id].msg = id + ' 답변 반영' + (S.pol ? (approver ? ': ' + S.pol + ' 고침' : ': 임시 정책 PV-0004 등록') : '') + (S.memos.length ? ', 반영 대기 목록 ' + S.memos.length + '건' : '');
+  ansState[id].step = 3;
+}
+
+var DOCS = {
+ constitution: function(){
+  return '<div class="dhead"><div><h2>헌법</h2><div class="sub">constitution.md · 모든 룰과 작업에 우선합니다</div></div><div class="acts">' + b('v1.4','ok') + b('2026-11-03') + '</div></div>' +
+   '<div class="toc"><span class="b">최상위 원칙</span><span class="b">1조</span><span class="b">2조</span><span class="b">3조</span><span class="b acc">4조</span><span class="b">5조</span><span class="b">6조</span><span class="b">7조</span><span class="b">8조</span><span class="b">9조</span><span class="b">10조</span><span class="b">개정</span></div>' +
+   '<h3>4조. 공통 자료는 승인 담당자가 승인한 것만 반영하고, 화면은 작성자가 책임진다</h3>' +
+   '<p>정책서, 룰 문서 등 공통 자료(팀 프로그램의 UX 문서)는 승인 담당자 1명만 고친다. 작업 중 기존 정책을 바꿔야 하면 작성자는 공통 자료를 직접 고치지 않고 임시 정책으로 등록해 그 기준으로 작업한다. 승인 담당자는 작성자와 의견을 나눠 승인하거나 반려하고, 승인한 것만 공통 자료에 반영한다. 화면설계서는 작성자가 책임지고 고치며, 화면마다 따른 공통 규칙 버전과 적용한 임시 정책을 남긴다. …</p>' +
+   '<h3>개정 이력</h3><div class="tblw"><table class="tbl"><thead><tr><th>버전</th><th>날짜</th><th>내용</th></tr></thead><tbody>' +
+   '<tr><td>v1.3</td><td>2026-11-03</td><td>4조: 공통 자료는 담당자 1명이 반영, 기존 정책 변경은 임시 정책으로 작업, 화면에 공통 규칙 버전 기록</td></tr>' +
+   '<tr><td>v1.4</td><td>2026-11-03</td><td>4조: 회의 조건을 빼고 승인 담당자가 작성자와 의견을 나눠 승인·반려</td></tr></tbody></table></div>';
+ },
+ 'POL-EQP-008': function(){
+  var open = ['PV-0001','PV-0003'].filter(function(k){ return pv[k].status==='승인 대기'; });
+  return '<div class="dhead"><div><h2>POL-EQP-008 Door 잠금 해제와 자동 잠금</h2><div class="sub">Door는 L-IOS Door Control로만 잠금 해제하며, 닫히면 5초 뒤 자동으로 잠기고 다시 잠그는 버튼은 없음</div></div><div class="acts">' + b('확정','ok') + (role==='writer' ? '<button type="button" class="btn" data-newpv>임시 정책 등록</button>' : '') + '</div></div>' +
+   (open.length ? '<div class="banner"><b>이 정책을 바꾸려는 임시 정책 ' + open.length + '건</b> · ' + open.map(idl).join(' ') + ' 승인 전에는 공통 규칙에 들어가지 않습니다.</div>' : '') +
+   '<dl class="kv"><dt>영역 · 메뉴</dt><dd>EQP · Instruments, Dashboard, Material Setup</dd>' +
+   '<dt>관련 화면</dt><dd>' + ['LI-INS-01-P','LI-INS-01-T','LI-INS-02-T','TI-INS-02-T','LI-DAS','TI-DAS'].map(idl).join('') + '</dd>' +
+   '<dt>알럿</dt><dd>' + idl('Confirm_008') + '</dd><dt>데이터</dt><dd><span class="b">policy/equipment-states.md</span> <span class="b">glossary/status-values.csv</span></dd>' +
+   '<dt>날짜</dt><dd>2026-11-02</dd></dl>' +
+   '<h3>정의</h3><ul><li>Door: Module 상단(일부 하단)의 유리문. Unit Type이 Door인 Unit</li><li>장비 모듈 도어 잠금 상태: Locked / Unlocked, 장비 모듈 도어 열림 상태: Open / Closed</li></ul>' +
+   '<h3>규칙</h3><ol><li>Door는 기본으로 Locked이며, 잠금 해제를 거쳐야 Open이 가능함.</li><li>잠금 해제는 L-IOS Door Control Popup(' + idl('LI-INS-01-P') + ')의 [Unlock]으로 요청함.</li><li>사용자가 화면에서 Door를 다시 잠그는 기능은 없음. Door를 닫으면 5초 뒤 자동으로 Locked가 됨.</li><li>장비 통합 상태가 Initializing 또는 Stopping일 때 Door 잠금 해제는 불가.</li><li>장비 통합 상태가 Running 또는 Partial Running일 때 Flexible Extraction, PCR Setup, Universal PCR의 Door 잠금 해제는 불가. ' + (pv['PV-0003'].status==='승인 대기' ? b('PV-0003에서 바꾸려 함','warn') : '') + '</li><li>장비 통합 상태가 Running, Partial Running, Paused일 때 Sample Storage, Prep Consumable Storage, Sample Preparation, High-throughput Extraction, Plate Sealing의 Door는 조건부로 잠금 해제 가능.</li><li>…</li></ol>' +
+   '<h3>예외</h3><ul><li>Run 중 잠금을 해제한 뒤 Door를 한 번도 열지 않은 경우의 동작은 아직 정의되지 않음. 임시 정책 ' + idl('PV-0001') + '을 따름.</li></ul>' +
+   '<h3>변경 이력</h3><div class="tblw"><table class="tbl"><thead><tr><th>버전</th><th>날짜</th><th>내용</th><th>근거</th></tr></thead><tbody><tr><td></td><td>2026-11-02</td><td>최초 작성 (이전 ID: 팀원 POL-INS-01)</td><td>' + idl('PV-0001') + '</td></tr></tbody></table></div>';
+ },
+ 'COMM-4-a(2/4)': function(){
+  var st = [
+   ['NotInitialized','Not Initialized','초기화 필요','초기화가 수행되지 않은 상태','초기화 안내 팝업, 초기화 관련 메뉴만 접근 가능'],
+   ['Initializing','Initializing','초기화 중','초기화 진행 중','로딩 · 진행바 표시, 모든 기능 제한'],
+   ['Ready','Ready','준비 완료','검사를 시작할 수 있는 상태','모든 기능 사용 가능, 작업 시작 버튼 활성화'],
+   ['Running','Running','가동 중','검사 정상 진행 중','중지(Stop) 기능 제공'],
+   ['PartialRunning','Partial Running','부분 가동 중','일부 모듈 Running, 일부 Paused 또는 Error',''],
+   ['Paused','Paused','일시 정지','일부 모듈 Paused, Running 모듈 없음','-']
+  ];
+  return '<div class="dhead"><div><h2>4-a. Data Notation Rules (2/4) · 장비 상태 · 컨트롤러</h2><div class="sub">COMM-4-a(2/4) · 4. Writing · CURECA 장비 전체의 구동 상태값과 구동 컨트롤러, 장비 통합 상태 처리 조건, 도어 잠금 해제 조건</div></div><div class="acts">' + b('V2.2.00','ok') + '<a class="btn" href="https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=355-53300" target="_blank" rel="noopener">Figma에서 보기</a></div></div>' +
+   '<div class="banner"><b>이 항목에 걸린 수정 요청 2건</b> (common-ux/feedback.md) · #1 Partial Running의 UX action이 Stopping과 같은 문장 · #2 Paused의 발생 Case, UX action이 "-". 모든 프레임 공통 1건(#9 화면 정보 Ver·Date)도 있습니다.</div>' +
+   '<dl class="kv"><dt>관련 정책</dt><dd>' + ['POL-EQP-001','POL-EQP-002','POL-EQP-003','POL-EQP-008'].map(idl).join('') + '</dd><dt>기준 데이터</dt><dd><span class="b">glossary/status-values.csv</span> <span class="b">policy/integrated-state-transitions.csv</span></dd></dl>' +
+   '<div style="border:1px dashed var(--line);border-radius:10px;padding:28px;text-align:center;color:var(--ink-3);margin-bottom:14px">Figma 프레임 그림 (누르면 크게)</div>' +
+   '<h3>전체 CURECA 구동 상태값</h3><div class="tblw"><table class="tbl"><thead><tr><th>코드명</th><th>UI (영문)</th><th>UI (한글)</th><th>설명</th><th>UX action</th></tr></thead><tbody>' +
+   st.map(function(r){ return '<tr>' + r.map(function(c){ return '<td>' + esc(c) + '</td>'; }).join('') + '</tr>'; }).join('') +
+   '</tbody></table></div>' +
+   '<h3>구동 컨트롤러 (버튼)</h3><div class="tblw"><table class="tbl"><thead><tr><th>버튼</th><th>내용</th><th>활성화 조건</th></tr></thead><tbody>' +
+   '<tr><td>Initialize</td><td>장비 초기화</td><td>Not Initialized</td></tr><tr><td>Stop</td><td>진행 중인 검사 중단(폐기) → Initializing → Ready</td><td>Running · Partial Running</td></tr>' +
+   '<tr><td>Run</td><td>검사 실행, Run Preparation 페이지로 진입</td><td>Ready · Running · Partial Running</td></tr><tr><td>Quick Start</td><td>요약 팝업 하나로 검사 실행</td><td>Run과 같음</td></tr></tbody></table></div>' +
+   '<p class="muted" style="margin-top:8px">일부만 예시로 넣었습니다. 실제로는 가이드 본문 전체를 보여 줍니다.</p>';
+ },
+ terms: function(){
+  var rows = [
+   ['계정·권한','User Type','User Type','계정에 부여된 사용자 구분','유저타입; 유저 타입; 사용자 타입; 계정 유형; Account Type; 등급','확정'],
+   ['장비','Door','Door','Unit Type이 Door인 Unit. Module 상단(일부 하단)의 유리문','도어; 문(Door를 뜻할 때); 상태값 Lock / Unlock / Close','확정'],
+   ['팀 내부','언어셋','language-set','6개 언어 문구를 관리하는 엑셀 문서','랭기지 셋; 랭귀지셋; 다국어 문서; i18n','확정'],
+   ['팀 내부','임시 정책','provisional policy (ID: PV)','공통 자료에 아직 없지만 작업에 먼저 쓰는 정책','미확정 정책; 미결 정책','확정'],
+   ['팀 내부','승인 담당자','approver','공통 자료(UX 문서)를 고칠 수 있는 한 사람','규칙 담당자; 검토자','확정']
+  ];
+  return '<div class="dhead"><div><h2>용어집</h2><div class="sub">glossary/terms.csv · 표준어와 쓰지 않는 표현</div></div></div>' +
+   '<input class="search" id="tq" type="search" placeholder="예: 유저타입 → User Type" aria-label="용어집에서 찾기" style="width:100%;max-width:360px;margin-bottom:10px">' +
+   '<div class="tblw"><table class="tbl" id="tt"><thead><tr><th>분류</th><th>표준어</th><th>영문 · 화면 라벨</th><th>정의</th><th>쓰지 않는 표현</th><th>상태</th></tr></thead><tbody>' +
+   rows.map(function(r){ return '<tr>' + r.map(function(c,i){ return '<td>' + (i===5 ? b(c,'ok') : i===1 ? '<b>' + esc(c) + '</b>' : esc(c)) + '</td>'; }).join('') + '</tr>'; }).join('') +
+   '</tbody></table></div><p class="muted" style="margin-top:8px">일부 줄만 예시로 넣었습니다. 실제로는 CSV 전체를 표로 보여 줍니다.</p>';
+ },
+ 'LI-INS-01-P': function(){
+  var rows = [
+   ['1','디스크립션','"통합 상태가 Ready, Paused, Error 상태일 경우, Unlock all doors 버튼 사용 가능"','장비 통합 상태가 Ready, Error, Paused, Not Initialized일 때 활성화로 고치고 정책 ID로 참조','POL-EQP-008'],
+   ['4','알럿','확인 문구 "Do you want to continue? Finishing current task, then pausing…"','알럿 카탈로그 Confirm_008("Unlock the door?")과 다름. 어느 쪽이 맞는지 확인','Confirm_008'],
+   ['5','디스크립션','Ruuning, Lcok','Running, Lock','오타'],
+   ['6','정책 반영','Lock 버튼 없음 (다시 잠그는 기능 없음)','디스크립션에 Door를 닫으면 5초 뒤 자동 잠금, Run Start 때 자동 잠금을 정책 ID로 참조','POL-EQP-008'],
+   ['7','디스크립션','"Unlock 1개라도 해당 되면 Module의 상태값은 Paused로 변경됨"','뜻은 맞음. 표현만 정리','POL-EQP-004']
+  ];
+  return '<div class="dhead"><div><h2>LI-INS-01-P Door Control Popup</h2><div class="sub">Instruments &gt; Overview &gt; Door Control · Popup · Ver 2.1.06</div></div><div class="acts">' + b('임시 정책 포함','warn') + '</div></div>' +
+   '<div class="banner"><b>이 화면은 임시 정책을 따릅니다</b> · ' + idl('PV-0001') + ' ' + stBadge(pv['PV-0001'].status) + ' 승인되면 공통 규칙 새 버전에 맞추고 이 표시를 뗍니다.</div>' +
+   '<dl class="kv"><dt>작성자</dt><dd>서보경</dd><dt>Service Mode</dt><dd>Main Mode, Console Mode</dd><dt>User Type</dt><dd>Service, Admin, User</dd>' +
+   '<dt>공통 규칙 버전</dt><dd>' + b('기록 전','') + ' <span class="muted">최신 rules-v0.1과 다르면 "최신 아님"으로 표시</span></dd>' +
+   '<dt>임시 정책</dt><dd>' + idl('PV-0001') + '</dd><dt>관련 정책</dt><dd>' + ['POL-EQP-004','POL-EQP-008','POL-LOD-001'].map(idl).join('') + '</dd>' +
+   '<dt>부르는 화면</dt><dd>' + ['LI-INS-01-T','LI-INS-02-T','LI-DAS','LI-TSS-DXI','LI-TSS-WBM'].map(idl).join('') + '</dd>' +
+   '<dt>Figma</dt><dd><a href="https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3878-152475" target="_blank" rel="noopener">작업방 Instruments 2.1 1차</a></dd></dl>' +
+   '<h3>반영 대기 목록</h3><div class="filters" style="border:0;padding:0 0 8px"><button type="button" class="chipbtn" aria-pressed="true">전체 8</button><button type="button" class="chipbtn" aria-pressed="false">디스크립션</button><button type="button" class="chipbtn" aria-pressed="false">정책 반영</button><button type="button" class="chipbtn" aria-pressed="false">알럿</button><button type="button" class="chipbtn" aria-pressed="false">문구</button></div>' +
+   '<div class="tblw"><table class="tbl"><thead><tr><th>#</th><th>구분</th><th>지금</th><th>바꿀 것</th><th>근거</th><th>상태</th></tr></thead><tbody>' +
+   rows.map(function(r){ return '<tr><td>' + r[0] + '</td><td>' + esc(r[1]) + '</td><td>' + esc(r[2]) + '</td><td>' + esc(r[3]) + '</td><td>' + (/^(POL|Confirm)/.test(r[4]) ? idl(r[4]) : esc(r[4])) + '</td><td>' + b('대기') + '</td></tr>'; }).join('') +
+   memoRows('LI-INS-01-P', 9) + '</tbody></table></div>';
+ },
+ 'PD-0005': function(){
+  return '<div class="dhead"><div><h2>PD-0005 PCR Socket을 다시 스캔할 때 기존 데이터 처리</h2><div class="sub">팀 논의 · 제안 서보경 · 2026-11-03</div></div><div class="acts"></div></div>' +
+   '<dl class="kv"><dt>대상 자료</dt><dd>' + idl('POL-MAT-008') + idl('POL-MAT-010') + ' Material Setup &gt; Load PCR Reagents · Load MM Tubes</dd><dt>영향 화면</dt><dd>' + ['LI-TSS-PSI-LPR-02','LI-TSS-PSI-LPR-03','LI-TSS-PSI-LMM-01'].map(idl).join('') + '</dd></dl>' +
+   '<h3>제안 내용</h3><ul><li>8월 정책서: PCR 전용 Socket은 스캔하는 시점에 기존 데이터가 리셋되고 새 정보로 갱신됨</li><li>담당자 적재 정책서와 지금 화면: PCR box가 있는 Socket을 다시 스캔하면 이어서 적재함</li><li>사용자 의견: 8월 문장은 지우는 쪽이 맞아 보이나, 1세트를 넣은 뒤 다시 작업할 수 있으므로 팀원과 논의 후 정함</li></ul>';
+ },
+ 'CA-0003': function(){
+  return '<div class="dhead"><div><h2>CA-0003 Account Setting 목록과 삭제·수정 범위</h2><div class="sub">고객 논의 · 등록 2026-11-02</div></div><div class="acts"></div></div>' +
+   '<div class="banner"><b>임시 정책으로 먼저 적용 중</b> · ' + idl('PV-0002') + ' ' + stBadge(pv['PV-0002'].status) + ' 고객 답을 받으면 임시 정책에 적고 승인 담당자가 정합니다.</div>' +
+   '<dl class="kv"><dt>관련 정책 · 화면</dt><dd>' + idl('PV-0002') + ' ' + ['TI-STN-05','TI-STN-05-03-P'].map(idl).join('') + '</dd><dt>지금 화면 · 자료</dt><dd>목록 범위 "Admin이 생성한 모든 계정", 삭제 제한 없음</dd><dt>결정</dt><dd class="muted">아직 없음</dd></dl>' +
+   '<h3>내용</h3><p>Admin에게는 Service 계정을 숨기고 Service에게는 모든 계정을 보여 줌, Service 계정은 최소 1개 남김, Admin은 다른 Admin 계정 수정 가능, 자기 계정 삭제 불가(' + idl('Alert_047') + ')</p>';
+ },
+ 'rules-v0.1': function(){
+  return '<div class="dhead"><div><h2>rules-v0.1</h2><div class="sub">첫 공통 규칙 버전 태그를 붙이면 이렇게 보입니다</div></div><div class="acts">' + b('예시','ex') + '</div></div>' +
+   '<dl class="kv"><dt>반영한 사람</dt><dd>승인 담당자</dd><dt>날짜</dt><dd>(태그를 붙인 날)</dd></dl>' +
+   '<h3>바뀐 문서</h3><ul><li>' + idl('POL-EQP-008') + ' 예외 1줄 더함 (PV-0001 반영)</li><li>constitution.md v1.4</li></ul>' +
+   '<h3>승인한 임시 정책</h3><p>' + idl('PV-0001') + '</p>' +
+   '<h3>새 버전에 맞출 화면</h3><div class="tblw"><table class="tbl"><thead><tr><th>CID</th><th>작성자</th><th>이유</th></tr></thead><tbody>' +
+   '<tr><td>' + idl('LI-INS-01-P') + '</td><td>서보경</td><td>PV-0001 적용 화면. "임시 정책 포함" 떼기</td></tr>' +
+   '<tr><td>' + idl('LI-INS-02-T') + '</td><td>서보경</td><td>PV-0001 영향 화면 (확인 필요)</td></tr></tbody></table></div>';
+ }
+};
+
+// 임시 정책 문서
+function pvHead(id, title, sub, ab){
+  var st = pv[id].status, btns = '';
+  if (role === 'approver' && st === '승인 대기') {
+    btns = ab ? '<button type="button" class="btn pri" data-dec="A안 승인">A안 승인</button><button type="button" class="btn pri" data-dec="B안 승인">B안 승인</button><button type="button" class="btn dan" data-dec="반려">반려</button>'
+              : '<button type="button" class="btn pri" data-dec="승인">승인</button><button type="button" class="btn dan" data-dec="반려">반려</button>';
+  }
+  return '<div class="dhead"><div><h2>' + esc(id + ' ' + title) + '</h2><div class="sub">' + sub + '</div></div><div class="acts">' + btns + '</div></div>' +
+    '<div id="confirmBox"></div>' + (pv[id].result ? '<div class="result">' + pv[id].result + '</div>' : '');
+}
+function decTable(id){
+  var d = pv[id].decisions;
+  return '<h3>결정</h3><div class="tblw"><table class="tbl"><thead><tr><th>날짜</th><th>결정</th><th>결정자</th><th>메모</th></tr></thead><tbody>' +
+    (d.length ? d.map(function(r){ return '<tr><td>' + r.date + '</td><td>' + esc(r.dec) + '</td><td>승인 담당자</td><td>' + esc(r.memo) + '</td></tr>'; }).join('') : '<tr><td colspan="4" class="muted">아직 없음</td></tr>') +
+    '</tbody></table></div>';
+}
+DOCS['PV-0001'] = function(){
+  return pvHead('PV-0001','Run 중 잠금 해제 후 Door를 열지 않은 경우 Paused 유지','작성자 서보경 · 등록 2026-11-02') +
+   '<dl class="kv"><dt>상태</dt><dd>' + stBadge(pv['PV-0001'].status) + '</dd><dt>바꾸는 정책</dt><dd>' + idl('POL-EQP-008') + ' 추가 (예외) · 관련 ' + idl('POL-EQP-004') + '</dd><dt>기준 공통 규칙 버전</dt><dd>없음 (태그 전 등록)</dd><dt>고객 확인</dt><dd>기다림 (고객이 아직 정의하지 않음)</dd></dl>' +
+   '<div class="banner grp"><b>같은 정책을 바꾸는 임시 정책</b> · ' + idl('PV-0003') + ' POL-EQP-008 규칙 5. 함께 보고 승인합니다.</div>' +
+   '<h3>바꾸는 내용</h3><p>장비 통합 상태가 Running, Partial Running, Paused일 때 Door 잠금을 해제해 Module이 Paused가 된 뒤 사용자가 Door를 한 번도 열지 않으면, 그 Module은 Paused를 계속 유지함.</p>' +
+   '<h3>이유와 근거</h3><ul><li>고객이 아직 정의하지 않음. 8월 정책서의 규칙은 Run 중 잠금 해제가 불가하던 때의 규칙이라 지금 경우를 다루지 않음</li><li>2026-11-02 사용자 결정: 정의될 때까지 Paused 유지로 진행</li></ul>' +
+   '<h3>적용한 화면</h3><p>' + idl('LI-INS-01-P') + '</p>' +
+   '<h3>영향 화면</h3><div class="tblw"><table class="tbl"><thead><tr><th>CID</th><th>작성자</th><th>영향</th><th>내용</th></tr></thead><tbody>' +
+   '<tr><td>' + idl('LI-INS-02-T') + '</td><td>서보경</td><td>' + b('확인 필요','warn') + '</td><td>Door 영역에 Closed·Unlocked이면서 Module은 Paused인 조합이 생김. 화면 예시에 넣을지</td></tr>' +
+   '<tr><td>' + idl('TI-INS-02-T') + '</td><td>서보경</td><td>' + b('확인 필요','warn') + '</td><td>Door 영역 표시가 LI-INS-02-T와 같음</td></tr>' +
+   '<tr><td>' + idl('LI-TSS-DXI') + '</td><td>BREX</td><td>' + b('확인 필요','warn') + '</td><td>Run 중에 이 화면에서 잠금 해제 후 Door를 열지 않는 경우가 생기는지</td></tr>' +
+   '<tr><td>' + idl('LI-TSS-WBM') + '</td><td>BREX</td><td>' + b('확인 필요','warn') + '</td><td>LI-TSS-DXI와 같음</td></tr></tbody></table></div>' + decTable('PV-0001');
+};
+DOCS['PV-0002'] = function(){
+  return pvHead('PV-0002','Account Setting 목록과 삭제·수정 범위','작성자 서보경 · 등록 2026-11-02') +
+   '<dl class="kv"><dt>상태</dt><dd>' + stBadge(pv['PV-0002'].status) + '</dd><dt>바꾸는 정책</dt><dd>' + idl('POL-ACC-001') + idl('POL-ACC-002') + ' 추가</dd><dt>고객 확인</dt><dd>기다림 ' + idl('CA-0003') + '</dd></dl>' +
+   '<h3>바꾸는 내용</h3><ol><li>Admin이 보면 Service 계정은 목록에서 빼고 보여 줌.</li><li>Service가 보면 모든 계정을 보여 줌.</li><li>Service 계정은 최소 1개를 남겨야 함.</li><li>Admin은 다른 Admin 계정을 수정할 수 있음.</li><li>자기 계정은 지울 수 없음.</li><li>3·5에 걸리는 삭제는 ' + idl('Alert_047') + '을 보여 주고 지우지 않음.</li></ol>' +
+   '<h3>적용한 화면</h3><p>' + idl('TI-STN-05') + idl('TI-STN-05-03-P') + '</p>' +
+   '<h3>영향 화면</h3><div class="tblw"><table class="tbl"><thead><tr><th>CID</th><th>작성자</th><th>영향</th><th>내용</th></tr></thead><tbody><tr><td>' + idl('TI-STN-05-01-P') + '</td><td>정다예</td><td>' + b('확인 필요','warn') + '</td><td>User Type 라디오가 User·Admin뿐. Service가 Service 계정을 만들 수 있는지</td></tr></tbody></table></div>' + decTable('PV-0002');
+};
+DOCS['PV-0003'] = function(){
+  return pvHead('PV-0003','PCR Setup Door 잠금 해제 조건 (A/B 선택)','가상 예시 · 같은 규칙을 다르게 바꾼 두 임시 정책을 Claude가 합친 문서', true) +
+   '<div class="banner"><b>예시 화면용 가상 항목입니다.</b> 실제 저장소에는 없습니다.</div>' +
+   '<dl class="kv"><dt>상태</dt><dd>' + stBadge(pv['PV-0003'].status) + ' ' + b('A/B','grp') + '</dd><dt>바꾸는 정책</dt><dd>' + idl('POL-EQP-008') + ' 규칙 5</dd></dl>' +
+   '<h3>두 안의 차이</h3><div class="tblw"><table class="tbl"><thead><tr><th></th><th>A안 (PV-0003)</th><th>B안 (PV-0003-B)</th></tr></thead><tbody>' +
+   '<tr><td>다른 점</td><td>Running일 때 PCR Setup Door도 Pausing을 거쳐 조건부로 잠금 해제</td><td>지금처럼 잠금 해제 불가. 대신 Door Control에 불가 이유를 보여 줌</td></tr>' +
+   '<tr><td>이 안을 고르면 고칠 화면</td><td>' + idl('LI-INS-02-T') + ' (B안 적용)</td><td>' + idl('LI-INS-01-P') + ' (A안 적용)</td></tr></tbody></table></div>' +
+   '<div class="ab" style="margin-top:12px"><div><h4>A안 ' + b('PV-0003','') + '</h4><p class="muted">김OO · 2026-11-04</p><p>바꾸는 내용, 이유와 근거, 적용한 화면</p>' + skel() + '</div>' +
+   '<div><h4>B안 ' + b('PV-0003-B','') + '</h4><p class="muted">이OO · 2026-11-05</p><p>바꾸는 내용, 이유와 근거, 적용한 화면</p>' + skel() + '</div></div>' +
+   '<div class="banner grp" style="margin-top:14px"><b>같은 정책을 바꾸는 임시 정책</b> · ' + idl('PV-0001') + ' POL-EQP-008 추가 (예외)</div>' + decTable('PV-0003');
+};
+
+// ---------- 회의록 ----------
+DOCS['M-1103'] = function(){
+  return '<div class="dhead"><div><h2>2026-11-03(화) 10:00~ 화면 논의 및 질의사항</h2><div class="sub">참석: 씨젠 - 김의식 차장, 노경민 차장 · 브렉스 - 서보경, 정다예, 하승현, 이상헌</div></div>' +
+   '</div>' +
+   '<h3>내용</h3><div class="mtext">[일정/업무 범위]\n- 추가/수정된 언어 약 600개 법인 검토 예정 : 현업 내부 일정 검토 후 전달\n- 올해 모바일 범위는 웹으로 진행 (알림 X)\nㄴ 12월까지 디자인 진행, 11월 중순부터 기획 진행\n\n[Material Setup]\n- 시약/소모품은 필요수량보다 더 넣을 수 있음 (현재수량 / 필요 수량 : 10 / 5)\n- A 트롤리와 데이터가 물려져 있는 트레이를 B트롤리 기준으로 다시 찍을 경우 Required Quantity는 아래와 같이 표기함\nㄴ 허용하는 방향으로 진행 (A 트롤리에 물려있는 데이터는 마이너스 처리)\nㄴ 현재 장착된 물품, 필요 물품 모두 리스팅\nㄴ 단, 현재 장착된 물품이 해당 검체 트롤리에 필요하지 않은 소모품일 경우 필요 수량을 - 로 표기함\nㄴ 트레이 정책 추가 필요 : remove로 트레이 데이터를 삭제할 경우 트롤리 정보도 함께 삭제 (브렉스 내부 논의)</div>' +
+   '<h3>기타</h3><div class="mtext">[운영 후 검토 사항]\n- 트롤리에 물려있는 Required Quantity와 현재 장착된 정보를 구분 필요\n- 검체 트롤리에 연결되어 있는 소모품 트롤리를 전체(한번에) 리셋할 수 있는 기능 고민</div>';
+};
+
+// ---------- 일정 ----------
+var STATUSES = ['미정','대기','진행 중','리뷰(예정) 중','디스크립션 작성','완료'];
+var SCHED = [
+ { g:'2.1 2차 · 2.1.1x' },
+ { p:'L/T', t:'*setting - Assay Pack 관리', who:'이상헌', st:'완료', s:'10/21', e:'10/29' },
+ { sub:1, t:'ㄴUI', who:'김애경', st:'완료', s:'10/26', e:'10/30' },
+ { p:'T-IOS', t:'*Statistical Analysis Event 통계', who:'정다예', st:'완료', s:'10/20', e:'10/27' },
+ { sub:1, t:'ㄴUI', who:'조형진', st:'완료', s:'10/26', e:'10/30' },
+ { p:'T-IOS', t:'*다중 관제', who:'서보경', st:'완료', s:'10/20', e:'10/27' },
+ { sub:1, t:'ㄴUI', who:'김애경', st:'완료', s:'10/23', e:'10/28' },
+ { p:'L/T', t:'Event History - Effect 항목 추가', who:'서보경', st:'완료', s:'10/26', e:'10/26' },
+ { sub:1, t:'ㄴUI', who:'김애경', st:'완료', s:'10/26', e:'10/27' },
+ { p:'L-IOS', t:'MS - 적재 아이템 업데이트 기능 추가 및 알럿 추가', who:'하승현', st:'진행 중', s:'11/2', e:'11/6' },
+ { g:'언어셋 2차 · 2.2' },
+ { p:'L/T', t:'2차 언어 대상 추출', who:'하승현', st:'대기' },
+ { p:'L/T', t:'1단계 - 초안 작성(브렉스)', who:'하승현', st:'미정' },
+ { p:'L/T', t:'2단계 - 검증 진행(씨젠) - 고유명사', who:'하승현', st:'미정' },
+ { p:'L/T', t:'3단계 - 남은 6개 언어 추출 및 해외법인 검토 / 한국어 작업', who:'하승현', st:'미정' },
+ { p:'L/T', t:'4단계 - UX/UI 작업', who:'모두', st:'미정' },
+ { g:'모바일 · 2.2', memo:'11/3 회의: 11월 중순부터 기획, 12월까지 디자인' },
+ { p:'T-IOS', t:'Common UX 작업', who:'이상헌/정다예', st:'미정' },
+ { p:'T-IOS', t:'Login', who:'정다예', st:'미정' },
+ { p:'T-IOS', t:'Event History', who:'서보경', st:'미정' },
+ { p:'T-IOS', t:"Dashboard - Today's Order", who:'서보경', st:'미정' },
+ { p:'T-IOS', t:'Dashboard - Test Status', who:'정다예', st:'미정' },
+ { p:'T-IOS', t:'Dashboard - Inventory summary', who:'이상헌', st:'미정' },
+ { p:'T-IOS', t:'Dashboard - Instrument Status', who:'이상헌', st:'미정' },
+ { p:'T-IOS', t:'Samples', who:'정다예', st:'미정' }
+];
+SCHED.forEach(function(r, i){ r.i = i; });
+var sf = { who:'전체', st:'전체' }, lastRead = '09:00', saved = '';
+function days(){
+  var out = [], d = new Date(2026, 9, 19), end = new Date(2026, 11, 31);
+  for (; d <= end; d.setDate(d.getDate()+1)) { var w = d.getDay(); if (w>0 && w<6) out.push({ m:d.getMonth()+1, d:d.getDate(), w:'일월화수목금토'[w], key:(d.getMonth()+1)+'/'+d.getDate() }); }
+  return out;
+}
+function dnum(s){ var p = s.split('/'); return (+p[0])*100 + (+p[1]); }
+function toIso(s){ if (!s) return ''; var p = s.split('/'); return '2026-' + String(p[0]).padStart(2,'0') + '-' + String(p[1]).padStart(2,'0'); }
+function fromIso(v){ if (!v) return ''; var p = v.split('-'); return (+p[1]) + '/' + (+p[2]); }
+function barCls(r){ if (r.st==='진행 중') return 'now'; return r.sub ? 'ui' : 'ux'; }
+function renderSched(){
+  var ds = days(), today = '11/4';
+  var whos = ['전체','서보경','정다예','하승현','이상헌','김애경','조형진'];
+  var h = '<div class="tools"><select id="fWho" aria-label="담당자로 거르기">' + whos.map(function(w){ return '<option' + (sf.who===w?' selected':'') + '>' + w + '</option>'; }).join('') + '</select>' +
+    ['전체'].concat(STATUSES).map(function(s){ return '<button type="button" class="chipbtn" data-sst="' + s + '" aria-pressed="' + (sf.st===s) + '">' + s + '</button>'; }).join('') +
+    '<button type="button" class="btn" data-refresh title="스프레드시트를 다시 읽어 시트에서 고친 내용을 바로 반영">⟳ 새로고침</button><span class="muted" style="font-size:12.5px">시트에서 읽은 시각 ' + lastRead + (saved ? ' · ' + esc(saved) : '') + '</span>' +
+    '<span class="legend"><span><i style="background:#d9ead3"></i>UX</span><span><i style="background:#fff2cc"></i>UI</span><span><i style="background:#12cc44"></i>진행 중</span><span><i style="background:var(--red);width:3px"></i>오늘 11/4</span></span></div>';
+  var months = [], prev = 0;
+  ds.forEach(function(x){ if (x.m!==prev) { months.push({ m:x.m, n:0 }); prev = x.m; } months[months.length-1].n++; });
+  h += '<div class="gwrap" id="gwrap"><table class="gt"><thead><tr><th class="c c1" rowspan="3">업무</th><th class="c c2" rowspan="3">담당자</th><th class="c c3" rowspan="3">상태</th><th class="c c4" rowspan="3">기간</th>' +
+    months.map(function(m){ return '<th class="d mon" colspan="' + m.n + '" style="text-align:left;padding-left:6px">' + m.m + '월</th>'; }).join('') + '</tr><tr>' +
+    ds.map(function(x){ return '<th class="d' + (x.w==='월'?' mon':'') + (x.key===today?' today':'') + '"' + (x.key===today?' id="todayCol"':'') + '>' + x.d + '</th>'; }).join('') + '</tr><tr>' +
+    ds.map(function(x){ return '<th class="d' + (x.w==='월'?' mon':'') + (x.key===today?' today':'') + '">' + x.w + '</th>'; }).join('') + '</tr></thead><tbody>';
+  SCHED.forEach(function(r){
+    if (r.g) { h += '<tr class="gh"><td class="c c1">' + esc(r.g) + (r.memo ? ' <span class="muted" style="font-weight:500">· ' + esc(r.memo) + '</span>' : '') + '</td><td class="c c2"></td><td class="c c3"></td><td class="c c4"></td><td colspan="' + ds.length + '"></td></tr>'; return; }
+    if (sf.who!=='전체' && r.who.indexOf(sf.who)<0) return;
+    if (sf.st!=='전체' && r.st!==sf.st) return;
+    var per = r.s ? (r.s===r.e ? r.s : r.s + '~' + r.e) : '날짜 선택';
+    h += '<tr' + (r.sub?' class="sub"':'') + '><td class="c c1">' + (r.p ? '<span class="plat">' + esc(r.p) + '</span>' : '') + esc(r.t) + '</td>' +
+      '<td class="c c2"><input class="cell-in" data-who="' + r.i + '" value="' + esc(r.who) + '" aria-label="담당자"></td>' +
+      '<td class="c c3"><select class="cell-in" data-st="' + r.i + '" aria-label="상태">' + STATUSES.map(function(s){ return '<option' + (r.st===s?' selected':'') + '>' + s + '</option>'; }).join('') + '</select></td>' +
+      '<td class="c c4"><button type="button" class="per' + (r.s?'':' empty') + '" data-per="' + r.i + '">' + per + '</button></td>';
+    h += ds.map(function(x){ var k = dnum(x.key), on = r.s && k>=dnum(r.s) && k<=dnum(r.e); return '<td class="d' + (on?' '+barCls(r):'') + (x.w==='월'?' mon':'') + (x.key===today?' today':'') + '"></td>'; }).join('');
+    h += '</tr>';
+  });
+  h += '</tbody></table></div><div class="perpop" id="perpop" hidden></div>' +
+    '<p class="muted" style="margin-top:8px">담당자 · 상태 · 기간을 여기서 고치면 스프레드시트에 바로 씁니다(R15). 시트에서 고친 것은 [새로고침]으로 바로 반영됩니다. 이 예시는 저장하지 않고, 2-2.WBS(간소)의 일부 줄만 옮겼습니다(2.1 2차 줄의 기간은 시트에 칠해진 칸 그대로).</p>';
+  return h;
+}
+function afterSched(){
+  var fw = document.getElementById('fWho');
+  if (fw) fw.addEventListener('change', function(){ sf.who = fw.value; render(); });
+  document.querySelectorAll('[data-who]').forEach(function(el){ el.addEventListener('change', function(){ SCHED[+el.dataset.who].who = el.value; saved = '담당자 저장함'; render(); }); });
+  document.querySelectorAll('[data-st]').forEach(function(el){ el.addEventListener('change', function(){ SCHED[+el.dataset.st].st = el.value; saved = '상태 저장함'; render(); }); });
+  var gw = document.getElementById('gwrap'), tc = document.getElementById('todayCol');
+  if (gw && tc) gw.scrollLeft = Math.max(0, tc.offsetLeft - 620 - 154);
+}
+function openPer(i, btn){
+  var r = SCHED[i], pop = document.getElementById('perpop'), rect = btn.getBoundingClientRect();
+  pop.innerHTML = '<b>' + esc(r.t) + '</b><label>시작<input type="date" id="pS" min="2026-10-01" max="2026-12-31" value="' + toIso(r.s) + '"></label><label>종료<input type="date" id="pE" min="2026-10-01" max="2026-12-31" value="' + toIso(r.e) + '"></label><div class="err" id="pErr"></div>' +
+    '<div class="acts"><button type="button" class="btn" data-perclr="' + i + '">지우기</button><button type="button" class="btn" data-perclose>닫기</button><button type="button" class="btn pri" data-perok="' + i + '">적용</button></div>';
+  pop.hidden = false;
+  pop.style.top = (window.scrollY + rect.bottom + 6) + 'px';
+  pop.style.left = Math.max(8, Math.min(window.scrollX + rect.left, window.scrollX + document.documentElement.clientWidth - 300)) + 'px';
+  document.getElementById('pS').focus();
+}
+
+// ---------- 주간 진행 현황 ----------
+var WEEKS = [
+ { s:'10/26', e:'10/30', label:'10/26(월) – 10/30(금)' },
+ { s:'11/2', e:'11/6', label:'11/2(월) – 11/6(금)', cur:true },
+ { s:'11/9', e:'11/13', label:'11/9(월) – 11/13(금)' }
+];
+var wk = 1;
+var MEET = [
+ { d:'11/3', id:'M-1103', t:'11/3(화) 10:00 · 화면 논의 및 질의사항', pts:[
+   '모바일: 올해는 웹으로 진행(알림 없음). 11월 중순부터 기획, 12월까지 디자인',
+   '언어셋: 추가 · 수정된 약 600개를 법인에서 검토 예정',
+   'Material Setup: 시약 · 소모품은 필요 수량보다 더 넣을 수 있음. 다른 트롤리 기준으로 다시 찍으면 기존 트롤리 데이터는 마이너스 처리',
+   '트레이: remove로 트레이 데이터를 지우면 트롤리 정보도 함께 삭제 (브렉스 내부 논의)' ] },
+ { d:'10/26', id:'M-1026', t:'10/26(월) 13:30 · 화면 논의 및 질의사항', pts:[
+   'Assay pack: 적용 여부는 목록에서 보기만, Detail에서 설정',
+   'Trolley info: 2뎁스 메뉴. 검체 트롤리는 모든 검체가 소진된 뒤 회수 트롤리에 도착하는 시점에 리셋',
+   '모바일: 모바일웹 기준으로 작업 예정 (개발사 확인)',
+   'Event History: Event Popup에도 effect 항목 추가' ] }
+];
+var POLNEW = [
+ ['ACC 계정·권한', [['POL-ACC-001','User Type과 권한'],['POL-ACC-002','계정 생성'],['POL-ACC-003','초기 비밀번호 변경'],['POL-ACC-004','로그아웃과 종료'],['POL-ACC-005','ID 조건'],['POL-ACC-006','비밀번호 조건'],['POL-ACC-007','계정 잠금'],['POL-ACC-008','Session Timeout'],['POL-ACC-009','Profile 정보 수정']]],
+ ['COM 공통', [['POL-COM-001','플랫폼 구성'],['POL-COM-002','지원 해상도'],['POL-COM-003','Module 구성 운영'],['POL-COM-004','운영 언어'],['POL-COM-005','여러 대 CURECA 운영'],['POL-COM-006','파일 내보내기 형식']]],
+ ['EQP 장비', [['POL-EQP-001','CURECA Status 구조'],['POL-EQP-002','장비 통합 상태 전환'],['POL-EQP-003','Initialize, Stop, Run, Quick Start 버튼'],['POL-EQP-004','Pausing과 Paused'],['POL-EQP-005','Run-time'],['POL-EQP-006','Spare Storage'],['POL-EQP-007','경광등'],['POL-EQP-008','Door 잠금 해제와 자동 잠금'],['POL-EQP-009','Management (Enabled 설정)'],['POL-EQP-010','Error Rate']]],
+ ['EVT 이벤트', [['POL-EVT-001','Event 구분과 표시'],['POL-EVT-002','Event 상태 변경과 Notes'],['POL-EVT-003','Event Message Popup 노출']]],
+ ['INV 재고', [['POL-INV-001','Inventory 화면 구성과 데이터 기준'],['POL-INV-002','Remaining Qty, Capacity, 사용량 집계'],['POL-INV-003','Required Qty와 재고 상태'],['POL-INV-004','Reagent Expiration Date, 재사용, 폐기'],['POL-INV-005','Waste Bin/Bottle 상태와 Fill Level'],['POL-INV-006','Usage History와 품목 In/Out 시점'],['POL-INV-007','PCR Reagent 구성과 입고 단위']]],
+ ['LOD 적재', [['POL-LOD-001','Trolley 도킹과 교체'],['POL-LOD-002','Load Materials (Dx Storage 적재)'],['POL-LOD-003','STAT Storage'],['POL-LOD-004','Cold Storage PCR Rack, Sealer Film, Cap 보충'],['POL-LOD-005','Empty Waste Bin (비움 처리)']]],
+ ['MAT 소모품·시약 적재', [['POL-MAT-001','Material Setup 구성과 적재 계층'],['POL-MAT-002','변경 예정 상태와 [Done] 저장'],['POL-MAT-003','신규 작업 컨펌'],['POL-MAT-004','Remove'],['POL-MAT-005','스캔 순서와 하이라이팅 적재'],['POL-MAT-006','Sample 적재'],['POL-MAT-007','Consumable·Reagent 적재'],['POL-MAT-008','PK/IC Tube, PCR Reagent, MM Tube Socket 구성'],['POL-MAT-009','Group Lots'],['POL-MAT-010','Carrier 데이터 리셋']]],
+ ['SMP 검체', [['POL-SMP-001','Sample 상태와 전환'],['POL-SMP-002','검사 시작·종료 시각'],['POL-SMP-003','재검사'],['POL-SMP-004','Batch와 Batch 카드'],['POL-SMP-005','Sample 단위와 Product 단위 표기'],['POL-SMP-006','검사 시작 후 오더 취소'],['POL-SMP-007','Run 준비와 시작 조건'],['POL-SMP-008','STAT 검사'],['POL-SMP-009','Today’s Orders와 검사 진행률'],['POL-SMP-010','Plate 상태']]],
+ ['STA 통계', [['POL-STA-001','Statistical Analysis 화면 구성과 접근'],['POL-STA-002','통계 조회 기간 (Date Range)'],['POL-STA-003','통계 필터, Legend, Table, Export 공통'],['POL-STA-004','Test Analytics 지표 산출'],['POL-STA-005','Test Forecasting'],['POL-STA-006','Instrument, Inventory, Event 통계 산출']]],
+ ['SYS 시스템', [['POL-SYS-001','LIS 연동 설정'],['POL-SYS-002','LIS Code Mapping'],['POL-SYS-003','SMTP 연동'],['POL-SYS-004','Log 내보내기와 파일 위치']]],
+ ['TST 검사 설정', [['POL-TST-001','Policy Setting 공통'],['POL-TST-002','Test Cut-off Time'],['POL-TST-003','Cost Setting'],['POL-TST-004','추출 장치 할당 정책'],['POL-TST-005','Extraction Module Usage Setting'],['POL-TST-006','Protocol Setting'],['POL-TST-007','M9600 Extraction Protocol 설정 제약'],['POL-TST-008','Assay Pack 관리'],['POL-TST-009','Tube Setting'],['POL-TST-010','검사 항목과 조합 검사']]]
+];
+function inWeek(d, w){ var k = dnum(d); return k >= dnum(w.s) && k <= dnum(w.e); }
+function stCls(s){ return s==='완료'?'ok':s==='진행 중'?'acc':s==='대기'?'warn':''; }
+// 업무 단위: 업무 줄 + 그 아래 ㄴUI 줄을 한 건으로 묶음
+function units(){
+  var out = [], cur = null;
+  SCHED.forEach(function(r){
+    if (r.g) { cur = null; return; }
+    if (!r.sub) { cur = { p:r.p, t:r.t, ux:r, ui:[] }; out.push(cur); }
+    else if (cur) cur.ui.push(r);
+  });
+  out.forEach(function(u){
+    var rows = [u.ux].concat(u.ui), ds = rows.filter(function(r){ return r.s; });
+    u.s = ds.length ? ds.map(function(r){ return r.s; }).sort(function(a,b){ return dnum(a)-dnum(b); })[0] : '';
+    u.e = ds.length ? ds.map(function(r){ return r.e; }).sort(function(a,b){ return dnum(b)-dnum(a); })[0] : '';
+    if (rows.every(function(r){ return r.st==='완료'; })) u.st = '완료';
+    else if (u.ux.st==='완료' && u.ui.length) u.st = '진행 중';
+    else u.st = u.ux.st;
+  });
+  return out;
+}
+function taskTable(rows){
+  if (!rows.length) return '<p class="muted" style="margin:0">해당 업무 없음</p>';
+  return '<div class="tblw"><table class="tbl"><thead><tr><th>업무</th><th>상태</th><th>UX</th><th>UI</th><th>기간</th></tr></thead><tbody>' +
+    rows.map(function(u){
+      var ui = u.ui.length ? u.ui.map(function(r){ return esc(r.who) + ' ' + b(r.st, stCls(r.st)); }).join('<br>') : '<span class="muted">-</span>';
+      return '<tr><td>' + (u.p ? '<span class="plat">' + esc(u.p) + '</span>' : '') + esc(u.t) + '</td><td>' + b(u.st, stCls(u.st)) + '</td><td>' + esc(u.ux.who) + ' ' + b(u.ux.st, stCls(u.ux.st)) + '</td><td>' + ui + '</td><td>' + esc(u.s===u.e ? u.e : u.s + '~' + u.e) + '</td></tr>';
+    }).join('') + '</tbody></table></div>';
+}
+function renderWeek(){
+  var w = WEEKS[wk], tasks = units();
+  var due = tasks.filter(function(u){ return u.e && inWeek(u.e, w); });
+  var nextW = WEEKS[wk+1] || { s:'11/16', e:'11/20' };
+  var nextDue = tasks.filter(function(u){ return u.e && inWeek(u.e, nextW); });
+  var cnt = {}; STATUSES.forEach(function(s){ cnt[s] = 0; }); due.forEach(function(u){ cnt[u.st] = (cnt[u.st]||0) + 1; });
+  var undecided = tasks.filter(function(u){ return !u.e; }).length;
+  var meets = MEET.filter(function(m){ return inWeek(m.d, w); });
+  var pvWait = Object.keys(pv).filter(function(k){ return pv[k].status==='승인 대기'; });
+  var isPolWeek = w.cur;
+  var h = '<div class="weekhead"><button type="button" class="btn" data-wk="-1" aria-label="지난주"' + (wk===0?' disabled':'') + '>‹</button><h2>' + w.label + '</h2><button type="button" class="btn" data-wk="1" aria-label="다음 주"' + (wk===WEEKS.length-1?' disabled':'') + '>›</button>' + (w.cur ? b('이번 주','acc') : '') + '</div>' +
+   '<div class="banner"><b>예시</b> · 일정 시트의 일부 줄, 회의록 시트, 대표 저장소를 보고 채웠습니다. 일정 탭에서 기간 · 상태를 바꾸면 여기 숫자도 바뀝니다. PV-0003은 가상 예시입니다.</div>' +
+   '<div class="tiles" style="grid-template-columns:repeat(auto-fit,minmax(104px,1fr))">' +
+   '<div class="tile" data-gotab="sched" style="border-color:var(--accent)"><div class="k">이번 주 마감 업무 · 총</div><div class="v">' + due.length + '</div><div class="s">업무(메뉴) 단위</div></div>' +
+   ['진행 중','리뷰(예정) 중','완료'].map(function(s){ return '<div class="tile" data-gotab="sched"><div class="k">' + esc(s) + '</div><div class="v"' + (cnt[s] ? '' : ' style="color:var(--ink-3)"') + '>' + cnt[s] + '</div></div>'; }).join('') + '</div>' +
+   '<p class="muted" style="margin:-6px 0 12px;font-size:12.5px">업무 줄과 그 아래 UI 줄을 한 건으로 셉니다. 마감은 둘 중 늦은 종료일, 상태는 둘 다 완료면 완료 · UX만 완료면 진행 중 · 그 밖에는 UX 줄 상태.</p>' +
+   '<div class="box"><h3>이번 주 마감 업무 내역</h3>' + taskTable(due) + '</div>';
+  // 정책 변동 사항
+  h += '<div class="box" style="margin-top:16px"><h3>정책 변동 사항</h3>';
+  if (!isPolWeek) {
+    h += '<p class="muted" style="margin:0">' + (wk===0 ? '이 주에는 정책서 변동이 없습니다 (정책서는 11/2부터 저장소에 작성).' : '아직 지나지 않은 주입니다.') + '</p>';
+  } else {
+    var total = POLNEW.reduce(function(a, g){ return a + g[1].length; }, 0);
+    h += '<dl class="kv" style="grid-template-columns:120px minmax(0,1fr)"><dt>신규</dt><dd><b>' + total + '건</b> · ' + POLNEW.length + '개 영역 (정책서를 처음 작성한 주)</dd><dt>변경</dt><dd>0건 <span class="muted">(지난주까지 있던 정책 중 바뀐 것)</span></dd><dt>임시 정책</dt><dd>승인 대기 ' + pvWait.length + '건 · ' + pvWait.map(idl).join('') + '</dd></dl>' +
+      '<h4 style="margin:12px 0 6px">주요 내용</h4><ul>' +
+      '<li>' + idl('POL-SMP-007') + ' Run 준비와 시작 조건: 유효기간이 지난 Reagent는 Dx에서 폐기, Prep에서는 Trolley로 돌려보냄 (8월 정책서와 다름)</li>' +
+      '<li>' + idl('POL-INV-007') + ' PCR Reagent 구성과 입고 단위: 한 박스에서 나온 구성품끼리만 묶어 씀. IC는 Tube 단위로 Prep Trolley, MOM을 포함한 나머지는 Set로 Cold Storage</li>' +
+      '<li>' + idl('POL-LOD-003') + ' STAT Storage: Sample Socket만 받음</li>' +
+      '<li>' + idl('POL-COM-006') + ' 파일 내보내기 형식: Run Report · Log Export를 빼고 .csv, Test Order Import는 .csv와 엑셀</li>' +
+      '<li>임시 정책 ' + idl('PV-0001') + ' (POL-EQP-008 예외), ' + idl('PV-0002') + ' (Account Setting 목록과 삭제 · 수정 범위) 등록, 승인 대기</li></ul>' +
+      '<h4 style="margin:12px 0 6px">영역별 신규 정책</h4>' +
+      POLNEW.map(function(g){ return '<details class="grp"><summary><span>' + esc(g[0]) + '</span><span class="muted">' + g[1].length + '</span></summary><p style="margin:4px 10px 8px">' + g[1].map(function(p){ return idl(p[0]) + ' ' + esc(p[1]); }).join('<br>') + '</p></details>'; }).join('');
+  }
+  h += '</div>';
+  // 회의 내역, 다음 주
+  h += '<div class="two"><div class="box"><h3>회의 내역</h3>' +
+    (meets.length ? meets.map(function(m){ return '<p style="margin:0 0 6px"><button type="button" class="id" data-go="' + m.id + '">' + esc(m.t) + '</button></p><ul>' + m.pts.map(function(p){ return '<li>' + esc(p) + '</li>'; }).join('') + '</ul>'; }).join('') : '<p style="margin:0">' + b('미진행','') + ' <span class="muted">이 주의 회의록이 아직 없습니다.</span></p>') +
+    '</div><div class="box"><h3>다음 주 마감 예정</h3>' + (nextDue.length
+      ? '<div class="tblw"><table class="tbl"><thead><tr><th>마감할 업무</th><th>담당자</th></tr></thead><tbody>' + nextDue.map(function(u){ return '<tr><td>' + esc(u.t) + '</td><td>' + esc([u.ux.who].concat(u.ui.map(function(r){ return r.who; })).join(', ')) + '</td></tr>'; }).join('') + '</tbody></table></div>'
+      : '<p class="muted" style="margin:0">다음 주에 마감할 업무 없음</p>') + '</div></div>';
+  return h;
+}
+
+var BL_SCR = [
+ ['dashboard','LI-DAS','Dashboard','서보경',7,1,'표기:2,디스크립션:2,정책 반영:2,참조 프레임:1'],
+ ['dashboard','TI-DAS','Dashboard','서보경',8,1,'디스크립션:4,표기:3,문구:1'],
+ ['dashboard-all','TI-ADS-P','Edit Display Name Popup','서보경',4,1,'정책 반영:1,화면 정보:1,문구:1,화면 글자:1'],
+ ['dashboard-all','TI-ADS','Dashboard(All)','서보경',5,1,'디스크립션:3,표기:2'],
+ ['event-history','LI-EVT-01-P','Event History Detail','서보경',3,0,'디스크립션:1,정책 반영:1,표기:1'],
+ ['event-history','LI-EVT-02-P','Event Message Popup','서보경',3,0,'표기:1,디스크립션:1,정책 반영:1'],
+ ['event-history','LI-EVT-P','Event History','서보경',5,0,'정책 반영:3,표기:2'],
+ ['event-history','TI-EVT-01-P','Event History Detail','서보경',3,0,'표기:1,디스크립션:1,정책 반영:1'],
+ ['event-history','TI-EVT-02-P','Event Message Popup','서보경',4,0,'디스크립션:2,표기:1,정책 반영:1'],
+ ['event-history','TI-EVT-P','Event History','서보경',5,0,'표기:3,디스크립션:1,정책 반영:1'],
+ ['information','LI-INF-01-P','Release Notes Popup','서보경',2,0,'디스크립션:1,화면 정보:1'],
+ ['information','LI-INF-02-P','Installation information Popup','서보경',2,0,'디스크립션:1,화면 정보:1'],
+ ['information','LI-INF','Information','서보경',4,1,'표기:1,화면 글자:1,디스크립션:1,화면 정보:1'],
+ ['information','TI-INF-01-P','Release Notes Popup','서보경',3,0,'디스크립션:1,화면 정보:1,표기:1'],
+ ['information','TI-INF-02-P','Installation information Popup','서보경',3,2,'디스크립션:3'],
+ ['information','TI-INF-03-01','Run Report','정다예',8,3,'디스크립션:4,화면 글자:1,표기:1,화면 정보:1,권한:1'],
+ ['information','TI-INF-03-02','Run Report Detail','정다예',12,3,'디스크립션:9,표기:1,권한:1,화면 정보:1'],
+ ['information','TI-INF','Information','서보경',5,2,'표기:2,디스크립션:1,화면 정보:1,화면 글자:1'],
+ ['instruments','LI-INS-01-P','Door Control Popup','서보경',8,1,'디스크립션:4,문구:2,정책 반영:1,알럿:1'],
+ ['instruments','LI-INS-01-T','Overview Tab','서보경',5,0,'디스크립션:3,표기:1,문구:1'],
+ ['instruments','LI-INS-02-01-P','Management Popup','서보경',4,0,'디스크립션:3,정책 반영:1'],
+ ['instruments','LI-INS-02-T','All Tab','서보경',7,1,'표기:6,디스크립션:1'],
+ ['instruments','TI-INS-01-T','Overview Tab','서보경',6,0,'디스크립션:3,화면 정보:1,표기:1,알럿:1'],
+ ['instruments','TI-INS-02-01-P','Management Popup','서보경',8,0,'정책 반영:3,디스크립션:3,알럿:1,표기:1'],
+ ['instruments','TI-INS-02-T','All Tab','서보경',7,1,'표기:7'],
+ ['inventory','LI-IVT-01-T','Inventory Summary','서보경',8,2,'표기:2,디스크립션:2,상태값:2,화면 정보:1,문구:1'],
+ ['inventory','LI-IVT-02-T','Inventory Overview','서보경',4,1,'디스크립션:2,표기:1,화면 정보:1'],
+ ['inventory','LI-IVT-03-T-P','Consumables Item details popup','서보경',3,0,'디스크립션:1,화면 정보:1,화면 글자:1'],
+ ['inventory','LI-IVT-03-T','Inventory Consumables','서보경',3,0,'디스크립션:1,상태값:1,화면 정보:1'],
+ ['inventory','LI-IVT-04-T-P','Reagent Item details Popup','서보경',4,0,'디스크립션:2,화면 정보:2'],
+ ['inventory','LI-IVT-04-T','Inventory Reagent','서보경',4,1,'디스크립션:1,상태값:1,화면 정보:1,화면 글자:1'],
+ ['inventory','LI-IVT-05-T','Waste Bin/Bottle','정다예',3,1,'디스크립션:2,화면 정보:1'],
+ ['inventory','LI-IVT-06-T','Inventory Usage History','서보경',7,0,'디스크립션:3,화면 글자:2,정책 반영:1,화면 정보:1'],
+ ['inventory','TI-IVT-01-T','Inventory Summary','서보경',11,1,'디스크립션:5,표기:3,상태값:2,문구:1'],
+ ['inventory','TI-IVT-02-T','Inventory Overview','서보경',8,2,'디스크립션:4,표기:2,화면 정보:1,문구:1'],
+ ['inventory','TI-IVT-03-T-P','Consumables Item details popup','서보경',5,0,'디스크립션:3,화면 글자:2'],
+ ['inventory','TI-IVT-03-T','Inventory Consumables','서보경',11,2,'디스크립션:5,화면 글자:2,상태값:2,문구:1,정책 반영:1'],
+ ['inventory','TI-IVT-04-T-P','Reagent Item details Popup','서보경',8,1,'디스크립션:5,화면 글자:2,화면 정보:1'],
+ ['inventory','TI-IVT-04-T','Inventory Reagent','서보경',13,1,'디스크립션:7,표기:2,상태값:2,화면 글자:1,정책 반영:1'],
+ ['inventory','TI-IVT-05-T','Waste Bin/Bottle','정다예',10,2,'디스크립션:7,표기:1,화면 글자:1,화면 정보:1'],
+ ['inventory','TI-IVT-06-T','Inventory Usage History','서보경',10,1,'디스크립션:5,화면 글자:3,표기:1,정책 반영:1'],
+ ['login','LI-LOG-01-P','Reset Initial Password','정다예',4,0,'정책 반영:2,디스크립션:1,화면 정보:1'],
+ ['login','LI-LOG-01','Sign in','정다예',2,0,'디스크립션:1,화면 정보:1'],
+ ['login','LI-LOG-02-P','Account Locked','정다예',2,0,'정책 반영:1,디스크립션:1'],
+ ['login','TI-LOG-01-P','Reset Initial Password','정다예',6,0,'디스크립션:2,정책 반영:2,문구:1,화면 정보:1'],
+ ['login','TI-LOG-01','Sign in','정다예',3,0,'디스크립션:1,화면 정보:1,표기:1'],
+ ['login','TI-LOG-02-P','Account Locked','정다예',4,0,'표기:1,디스크립션:1,정책 반영:1,화면 정보:1'],
+ ['material-setup','LI-TSS-CMP-01','Select positions to delete','BREX',12,4,'디스크립션:5,알럿:3,표기:1,화면 정보:1,컴포넌트:1,공통:1'],
+ ['material-setup','LI-TSS-DXI-01','STAT storage','BREX',9,2,'표기:2,화면:2,디스크립션:2,공통:1,화면 정보:1,정책 반영:1'],
+ ['material-setup','LI-TSS-DXI-02','DWP/Spin Tip storage','BREX',12,4,'표기:4,화면:2,디스크립션:2,알럿:1,공통:1,화면 데이터:1,화면 정보:1'],
+ ['material-setup','LI-TSS-DXI-03','MB Tube storage','BREX',7,1,'표기:2,화면 정보:1,공통:1,디스크립션:1,화면:1,화면·디스크립션:1'],
+ ['material-setup','LI-TSS-DXI-04','Buffer Cartridge storage','BREX',8,3,'표기:2,디스크립션:1,정책 반영:1,화면:1,화면 정보:1,화면 데이터:1,공통:1'],
+ ['material-setup','LI-TSS-DXI-05','Tip/PCR Plate storage','BREX',9,3,'표기:3,디스크립션:2,공통:1,화면 정보:1,화면:1,화면·디스크립션:1'],
+ ['material-setup','LI-TSS-DXI-06','Cold storage','BREX',8,3,'디스크립션:3,공통:1,화면 정보:1,표기:1,화면:1,IA:1'],
+ ['material-setup','LI-TSS-DXI-07','Sealer Film storage','BREX',10,3,'디스크립션:4,표기:2,화면:2,공통:1,IA:1'],
+ ['material-setup','LI-TSS-DXI-08','Buffer Cartridge Cap Refill','BREX',7,4,'디스크립션:2,문구:1,화면:1,공통:1,화면 데이터:1,표기:1'],
+ ['material-setup','LI-TSS-DXI-09','Tub Cap Refill','BREX',11,2,'디스크립션:3,화면:3,표기:2,세부 정의:1,공통:1,화면 데이터:1'],
+ ['material-setup','LI-TSS-DXI','Load Materials','BREX',10,2,'디스크립션:5,화면:2,표기:1,공통:1,화면 정보:1'],
+ ['material-setup','LI-TSS-LTG-01-01','Scan for Lot grouping','BREX',6,2,'화면 정보:2,표기:1,공통:1,알럿:1,디스크립션:1'],
+ ['material-setup','LI-TSS-LTG-01-02','Confirm the Lot grouping','BREX',4,1,'화면·디스크립션:1,문구:1,화면:1,공통:1'],
+ ['material-setup','LI-TSS-LTG-02-01','Scan the IC tube','BREX',9,2,'화면 정보:2,알럿:2,표기:1,공통:1,화면:1,디스크립션:1,정책 반영:1'],
+ ['material-setup','LI-TSS-LTG-02-02','Confirm the IC setup','BREX',5,1,'화면 정보:1,공통:1,문구:1,화면:1,화면·디스크립션:1'],
+ ['material-setup','LI-TSS-LTG','Group Lots','BREX',2,0,'공통:1,디스크립션:1'],
+ ['material-setup','LI-TSS-PSI-01','Select Trolley','BREX',8,4,'디스크립션:4,IA:1,정책 반영:1,표기:1,공통:1'],
+ ['material-setup','LI-TSS-PSI-LCR-01-01','Check the Consumable & reagent','BREX',8,3,'화면 데이터:3,정책 반영:1,문구:1,IA:1,공통:1,표기:1'],
+ ['material-setup','LI-TSS-PSI-LCR-01-02','Scan the tray','BREX',9,4,'화면 데이터:3,디스크립션:2,문구:1,표기:1,공통:1,화면 정보:1'],
+ ['material-setup','LI-TSS-PSI-LCR-01-03-01','STEP 1. Guide','BREX',5,2,'디스크립션:2,공통:1,알럿:1,문구:1'],
+ ['material-setup','LI-TSS-PSI-LCR-01-03','Scan loaded socket','BREX',13,8,'디스크립션:4,화면 데이터:3,공통:1,화면 정보:1,표기:1,문구:1,정책 반영:1,IA:1'],
+ ['material-setup','LI-TSS-PSI-LCR-01-04','Confirm the socket','BREX',7,1,'화면 데이터:2,공통:1,표기:1,문구:1,화면:1,IA:1'],
+ ['material-setup','LI-TSS-PSI-LCR-02-01','Scan the trolley','BREX',5,2,'표기:1,화면 정보:1,공통:1,디스크립션:1,문구:1'],
+ ['material-setup','LI-TSS-PSI-LCR-02-02','Scan loaded tray','BREX',10,2,'표기:2,화면 정보:2,알럿:1,디스크립션:1,정책 반영:1,문구:1,화면:1,공통:1'],
+ ['material-setup','LI-TSS-PSI-LCR-02-03','Confirm the trolley','BREX',7,1,'화면 정보:2,표기:1,공통:1,화면:1,디스크립션:1,문구:1'],
+ ['material-setup','LI-TSS-PSI-LCR','Load Consumables and Reagents into Trolley','BREX',5,0,'디스크립션:2,화면:1,화면 정보:1,공통:1'],
+ ['material-setup','LI-TSS-PSI-LMM-01','Scan the socket','BREX',7,3,'디스크립션:3,화면 정보:1,공통:1,표기:1,정책 반영:1'],
+ ['material-setup','LI-TSS-PSI-LMM-02','Insert the MM tube','BREX',5,0,'디스크립션:2,표기:1,공통:1,정책 반영:1'],
+ ['material-setup','LI-TSS-PSI-LMM-03','Confirm the socket','BREX',7,1,'문구:1,디스크립션:1,정책 반영:1,화면:1,표기:1,화면 정보:1,공통:1'],
+ ['material-setup','LI-TSS-PSI-LPR-01','Check the PCR reagent','BREX',4,2,'공통:1,화면 데이터:1,표기:1,정책 반영:1'],
+ ['material-setup','LI-TSS-PSI-LPR-02','Scan the socket','BREX',7,2,'디스크립션:2,화면:1,표기:1,화면 정보:1,화면 데이터:1,공통:1'],
+ ['material-setup','LI-TSS-PSI-LPR-03','Scan the PCR reagent','BREX',11,3,'디스크립션:4,화면 데이터:2,표기:1,공통:1,알럿:1,문구:1,화면:1'],
+ ['material-setup','LI-TSS-PSI-LPR-04','Confirm the socket','BREX',7,0,'화면:2,디스크립션:1,문구:1,공통:1,화면 정보:1,표기:1'],
+ ['material-setup','LI-TSS-PSI-PKI-01','Check the PK/IC tube','BREX',5,2,'공통:1,화면 데이터:1,화면 정보:1,표기:1,정책 반영:1'],
+ ['material-setup','LI-TSS-PSI-PKI-02','Scan the socket','BREX',8,3,'디스크립션:3,화면 데이터:2,표기:1,화면 정보:1,공통:1'],
+ ['material-setup','LI-TSS-PSI-PKI-03','Scan the PK/IC tube','BREX',8,1,'디스크립션:2,문구:2,공통:1,화면 데이터:1,표기:1,알럿:1'],
+ ['material-setup','LI-TSS-PSI-PKI-04','Confirm the socket','BREX',8,0,'문구:2,표기:1,화면 정보:1,공통:1,화면 데이터:1,디스크립션:1,화면:1'],
+ ['material-setup','LI-TSS-PSI-SAM-01-01','Scan the sample tube','BREX',7,3,'알럿:2,표기:1,공통:1,화면 정보:1,IA:1,디스크립션:1'],
+ ['material-setup','LI-TSS-PSI-SAM-01-02','Scan the socket','BREX',6,4,'디스크립션:2,화면:1,표기:1,공통:1,화면 정보:1'],
+ ['material-setup','LI-TSS-PSI-SAM-01-03','Insert the sample tube','BREX',7,3,'디스크립션:2,알럿:1,화면:1,표기:1,화면 정보:1,공통:1'],
+ ['material-setup','LI-TSS-PSI-SAM-01-04','Confirm the socket scan','BREX',5,0,'표기:1,공통:1,화면 정보:1,화면:1,문구:1'],
+ ['material-setup','LI-TSS-PSI-SAM-02-01','Scan the tray','BREX',6,3,'문구:1,디스크립션:1,알럿:1,화면 정보:1,공통:1,표기:1'],
+ ['material-setup','LI-TSS-PSI-SAM-02-02','Scan loaded socket','BREX',7,2,'화면 정보:1,공통:1,표기:1,문구:1,디스크립션:1,화면:1,알럿:1'],
+ ['material-setup','LI-TSS-PSI-SAM-02-03','Confirm the tray scan','BREX',5,0,'화면:1,문구:1,공통:1,화면 정보:1,표기:1'],
+ ['material-setup','LI-TSS-PSI-SAM-03-01','Scan the trolley','BREX',6,3,'화면 정보:1,공통:1,표기:1,디스크립션:1,문구:1,알럿:1'],
+ ['material-setup','LI-TSS-PSI-SAM-03-02','Scan loaded tray','BREX',8,3,'표기:2,디스크립션:2,화면:2,화면 정보:1,공통:1'],
+ ['material-setup','LI-TSS-PSI-SAM-03-03','Confirm the trolley scan','BREX',6,0,'화면:1,문구:1,디스크립션:1,공통:1,화면 정보:1,표기:1'],
+ ['material-setup','LI-TSS-PSI-SAM','Load Samples into Trolley','BREX',5,1,'화면:2,디스크립션:1,화면 정보:1,공통:1'],
+ ['material-setup','LI-TSS-PSI','Prepare Carrier','BREX',7,0,'디스크립션:2,화면 정보:2,화면:1,공통:1,표기:1'],
+ ['material-setup','LI-TSS-RGE-01','View Trolley Info','BREX',7,5,'화면:2,화면 정보:2,알럿:1,디스크립션:1,표기:1'],
+ ['material-setup','LI-TSS-RGE-02','View Trolley Info','BREX',10,5,'화면:3,디스크립션:2,화면 정보:2,문구:1,표기:1,화면 데이터:1'],
+ ['material-setup','LI-TSS-WBM-P','Confirm Empty','BREX',9,5,'디스크립션:4,화면 정보:2,알럿:1,표기:1,공통:1'],
+ ['material-setup','LI-TSS-WBM','Empty Waste Bin','BREX',8,2,'화면:2,디스크립션:1,화면·디스크립션:1,알럿:1,공통:1,화면 정보:1,표기:1'],
+ ['profile','LI-CPW-01-P','Profile (General)','정다예',2,1,'화면 글자:1,정책 반영:1'],
+ ['profile','LI-CPW-02-P','Profile (Change Password)','정다예',1,0,'디스크립션:1'],
+ ['profile','TI-CPW-01-P','Profile (General)','정다예',4,1,'정책 반영:1,디스크립션:1,화면 글자:1,화면 정보:1'],
+ ['profile','TI-CPW-02-P','Profile (Change Password)','정다예',2,0,'디스크립션:1,화면 정보:1'],
+ ['quick-start','LI-QUK','Quick Start','정다예',14,3,'디스크립션:6,알럿:2,상태값:2,표기:2,정책 반영:1,화면 정보:1'],
+ ['run','LI-RUN-01','Run Preparation','정다예',6,2,'디스크립션:5,화면 정보:1'],
+ ['run','LI-RUN-02-01','Run Preparation','정다예',8,2,'디스크립션:5,문구:1,화면 정보:1,표기:1'],
+ ['run','LI-RUN-02','Run Preparation','정다예',10,1,'디스크립션:5,표기:2,화면 정보:1,문구:1,정책 반영:1'],
+ ['run','LI-RUN-03','Run Preparation','정다예',13,3,'디스크립션:5,표기:3,정책 반영:2,문구:1,화면 정보:1,상태값:1'],
+ ['run','LI-RUN-04','Run Preparation','정다예',8,1,'디스크립션:5,표기:2,상태값:1'],
+ ['run','LI-RUN-P','Run Preparation Popup','정다예',10,3,'디스크립션:5,표기:2,화면 정보:2,문구:1'],
+ ['sample-tracking','LI-SPT-01-01','Samples Details','정다예',4,1,'디스크립션:2,T/L 차이:1,화면 정보:1'],
+ ['sample-tracking','LI-SPT-01-02','Protocol Info - Pre-Treatment Protocol','정다예',3,1,'화면 정보:2,디스크립션:1'],
+ ['sample-tracking','LI-SPT-01-03','Protocol Info - Extraction Protocol','정다예',4,1,'화면 정보:3,화면 글자:1'],
+ ['sample-tracking','LI-SPT-01','Samples','정다예',7,3,'디스크립션:4,T/L 차이:1,정책 반영:1,화면 정보:1'],
+ ['sample-tracking','LI-SPT-02-01','96-DWP Details','정다예',2,0,'T/L 차이:1,디스크립션:1'],
+ ['sample-tracking','LI-SPT-02','96-DWP','정다예',5,0,'디스크립션:2,정책 반영:1,T/L 차이:1,상태값:1'],
+ ['sample-tracking','LI-SPT-03-01','PCR Plate Details','정다예',3,0,'디스크립션:1,화면 글자:1,화면 정보:1'],
+ ['sample-tracking','LI-SPT-03','PCR Plate','정다예',6,0,'디스크립션:2,화면 정보:1,상태값:1,정책 반영:1,T/L 차이:1'],
+ ['sample-tracking','TI-SPT-01-01','Samples Details','정다예',10,2,'디스크립션:8,화면 정보:1,표기:1'],
+ ['sample-tracking','TI-SPT-01-02','Protocol Info - Pre-Treatment Protocol','정다예',4,1,'화면 정보:2,디스크립션:2'],
+ ['sample-tracking','TI-SPT-01-03','Protocol Info - Extraction Protocol','정다예',5,3,'디스크립션:2,화면 정보:2,화면 글자:1'],
+ ['sample-tracking','TI-SPT-01','Samples','정다예',9,5,'디스크립션:5,화면 정보:2,T/L 차이:1,정책 반영:1'],
+ ['sample-tracking','TI-SPT-02-01','96-DWP Details','정다예',6,2,'디스크립션:4,화면 글자:1,화면 정보:1'],
+ ['sample-tracking','TI-SPT-02','96-DWP','정다예',7,0,'디스크립션:3,정책 반영:1,T/L 차이:1,상태값:1,화면 정보:1'],
+ ['sample-tracking','TI-SPT-03-01','PCR Plate Details','정다예',8,2,'디스크립션:4,화면 정보:2,T/L 차이:1,화면 글자:1'],
+ ['sample-tracking','TI-SPT-03','PCR Plate','정다예',6,0,'디스크립션:2,상태값:1,화면 글자:1,T/L 차이:1,정책 반영:1'],
+ ['setting','LI-STN-01-02','Extraction Module Usage Setting','BREX',1,0,'표기:1'],
+ ['setting','LI-STN-01-04','Analyze Breakpoint','BREX',1,0,'화면 정보:1'],
+ ['setting','LI-STN-01','Policy Setting','BREX',2,0,'정책 반영:1,디스크립션:1'],
+ ['setting','LI-STN-02','System Setting','서보경',6,0,'정책 반영:3,디스크립션:1,화면 글자:1,표기:1'],
+ ['setting','LI-STN-03-01-02-01','Protocol Details','BREX',1,0,'화면 정보:1'],
+ ['setting','LI-STN-03-01-02','Pre-Treatment Protocol Setting','BREX',1,0,'화면 정보:1'],
+ ['setting','LI-STN-03-01','Pre-Treatment Protocol','BREX',1,0,'디스크립션:1'],
+ ['setting','LI-STN-03-02-02','Extraction Protocol Setting','BREX',1,0,'화면 정보:1'],
+ ['setting','LI-STN-08','Assay Pack Setting','이상헌',1,0,'디스크립션:1'],
+ ['setting','TI-STN-01-01','Cost Setting','BREX',4,0,'표기:2,디스크립션:1,정책 반영:1'],
+ ['setting','TI-STN-01-02','Extraction Module Usage Setting','BREX',3,0,'표기:2,화면 정보:1'],
+ ['setting','TI-STN-01-03','Comparison Simulation','BREX',1,0,'표기:1'],
+ ['setting','TI-STN-01-04','Analyze Breakpoint','BREX',1,1,'디스크립션:1'],
+ ['setting','TI-STN-01','Policy Setting','BREX',6,0,'정책 반영:3,디스크립션:2,화면 정보:1'],
+ ['setting','TI-STN-02','System Setting','서보경',8,0,'정책 반영:3,디스크립션:2,표기:1,문구:1,화면 글자:1'],
+ ['setting','TI-STN-03-01-01','Pre-Treatment Protocol Modify','BREX',2,0,'알럿:1,정책 반영:1'],
+ ['setting','TI-STN-03-01-02-01-M','Protocol Details (Modify)','BREX',3,1,'정책 반영:1,디스크립션:1,알럿:1'],
+ ['setting','TI-STN-03-01-02-01-V','Protocol Details (View)','BREX',1,0,'표기:1'],
+ ['setting','TI-STN-03-01-02','Pre-Treatment Protocol Setting','BREX',1,0,'표기:1'],
+ ['setting','TI-STN-03-01','Pre-Treatment Protocol','BREX',4,1,'표기:2,정책 반영:1,디스크립션:1'],
+ ['setting','TI-STN-03-02-02-M','Extraction Protocol Setting (Modify)','BREX',1,0,'정책 반영:1'],
+ ['setting','TI-STN-03-02-02-V','Extraction Protocol Setting (View)','BREX',1,0,'디스크립션:1'],
+ ['setting','TI-STN-03-02','Extraction Protocol','BREX',1,0,'디스크립션:1'],
+ ['setting','TI-STN-04-01-T','Interface Configuration','서보경',4,0,'디스크립션:2,정책 반영:1,화면 글자:1'],
+ ['setting','TI-STN-04-02-T','Code Mapping','서보경',3,0,'디스크립션:2,표기:1'],
+ ['setting','TI-STN-05-01-P','Create New User','정다예',4,0,'디스크립션:2,문구:1,정책 반영:1'],
+ ['setting','TI-STN-05-02-P','Account Created','정다예',3,0,'화면 정보:2,디스크립션:1'],
+ ['setting','TI-STN-05-03-P','User Details','정다예',2,0,'정책 반영:1,디스크립션:1'],
+ ['setting','TI-STN-05','Account Setting','정다예',3,0,'정책 반영:2,디스크립션:1'],
+ ['setting','TI-STN-06','SMTP Setting','정다예',3,1,'디스크립션:2,화면 글자:1'],
+ ['setting','TI-STN-08-P','Assay Pack File Details','이상헌',1,0,'화면 정보:1'],
+ ['setting','TI-STN-08','Assay Pack Setting','이상헌',2,1,'화면 정보:2'],
+ ['setting','TI-SVS-01-P','Sample Tube Details','BREX',1,0,'알럿:1'],
+ ['setting','TI-SVS-01','Sample Tube Setting','BREX',2,1,'정책 반영:1,화면 정보:1'],
+ ['statistical-analysis','TI-STA-01-01','Test Count - Chart','정다예',6,1,'디스크립션:3,정책 반영:2,화면 정보:1'],
+ ['statistical-analysis','TI-STA-01-02','Test Count - Table','정다예',5,1,'정책 반영:2,디스크립션:2,화면 정보:1'],
+ ['statistical-analysis','TI-STA-02-01','Test Ratio (%) - Chart','정다예',7,1,'정책 반영:3,디스크립션:2,화면 글자:1,화면 정보:1'],
+ ['statistical-analysis','TI-STA-02-02','Test Ratio (%) - Table','정다예',4,1,'정책 반영:2,화면 정보:1,디스크립션:1'],
+ ['statistical-analysis','TI-STA-03-01','Test TAT - Chart','정다예',7,1,'디스크립션:3,정책 반영:2,화면 정보:1,표기:1'],
+ ['statistical-analysis','TI-STA-03-02','Test TAT - Table','정다예',6,1,'정책 반영:3,화면 정보:1,디스크립션:1,화면 글자:1'],
+ ['statistical-analysis','TI-STA-04-01','Avg. Test Cost - Chart','정다예',9,2,'디스크립션:6,정책 반영:2,화면 정보:1'],
+ ['statistical-analysis','TI-STA-04-02','Avg. Test Cost - Table','정다예',5,2,'정책 반영:3,화면 정보:1,디스크립션:1'],
+ ['statistical-analysis','TI-STA-05-01','Instrument Run-time - Chart','정다예',9,1,'화면 정보:3,디스크립션:2,정책 반영:2,표기:1,케이스:1'],
+ ['statistical-analysis','TI-STA-05-02','Instrument Run-time - Table','정다예',5,0,'정책 반영:2,디스크립션:1,표기:1,화면 정보:1'],
+ ['statistical-analysis','TI-STA-05','Test Forecasting','정다예',7,1,'디스크립션:4,표기:1,화면 정보:1,화면 글자:1'],
+ ['statistical-analysis','TI-STA-06-01','Instrument Error Rate - Chart','정다예',10,0,'디스크립션:3,정책 반영:3,표기:2,화면 정보:2'],
+ ['statistical-analysis','TI-STA-06-02','Instrument Error Rate - Table','정다예',7,0,'디스크립션:3,정책 반영:2,표기:1,화면 정보:1'],
+ ['statistical-analysis','TI-STA-07-01','소모품 및 시약 사용량 - Chart','정다예',12,1,'디스크립션:5,화면 정보:3,정책 반영:2,표기:2'],
+ ['statistical-analysis','TI-STA-07-02','소모품 및 시약 사용량 - Table','정다예',6,0,'정책 반영:3,화면 정보:1,표기:1,디스크립션:1'],
+ ['statistical-analysis','TI-STA-08-01','Event 통계 - Chart','정다예',8,1,'디스크립션:3,화면 정보:3,정책 반영:1,표기:1'],
+ ['statistical-analysis','TI-STA-08-02','Event 통계 - Table','정다예',5,0,'디스크립션:2,정책 반영:1,화면 정보:1,표기:1'],
+ ['test-management','LI-TMG-01','Test Order','정다예',7,3,'디스크립션:5,정책 반영:1,T/L 차이:1'],
+ ['test-management','LI-TMG-02','Test Status','정다예',5,2,'디스크립션:4,표기:1'],
+ ['test-management','TI-TMG-01','Test Order','정다예',8,4,'디스크립션:6,T/L 차이:1,정책 반영:1'],
+ ['test-management','TI-TMG-02','Test Status','정다예',8,2,'디스크립션:4,표기:2,화면 정보:1,정책 반영:1'],
+];
+
+// ---------- 화면설계서 작업대기 ----------
+var BL_MENU = {
+ 'dashboard':['Dashboard','서보경',2], 'dashboard-all':['Dashboard All','서보경',2], 'event-history':['Event History','',6],
+ 'information':['Information','서보경',8], 'instruments':['Instruments','서보경',7], 'inventory':['Inventory','서보경',16],
+ 'login':['Login','',6], 'material-setup':['Material Setup','서보경',53], 'profile':['Profile','',4],
+ 'quick-start':['Quick Start','정다예',1], 'run':['Run','정다예',6], 'sample-tracking':['Sample Tracking','정다예',16],
+ 'setting':['Setting','',39], 'statistical-analysis':['Statistical Analysis','정다예',17], 'test-management':['Test Management','정다예',4]
+};
+var BL_OWNERS = ['서보경','정다예','하승현','이상헌','담당자 미정'];
+var BL_KINDS = ['디스크립션','표기','화면 정보','정책 반영','공통','화면','문구','알럿'];
+var bl = { owners:{}, kind:'전체', open:{} };
+BL_OWNERS.forEach(function(o){ bl.owners[o] = true; });
+function blOwner(m){ return BL_MENU[m][1] || '담당자 미정'; }
+function blKindCount(s, kind){
+  if (kind === '전체') return s[4];
+  var n = 0;
+  s[6].split(',').forEach(function(p){ var kv = p.split(':'), k = kv[0], v = +kv[1];
+    if (kind === '그 밖' ? BL_KINDS.indexOf(k) < 0 : k === kind) n += v; });
+  return n;
+}
+function blRows(){
+  return BL_SCR.filter(function(s){ return bl.owners[blOwner(s[0])]; })
+    .map(function(s){ return { m:s[0], cid:s[1], t:s[2], who:s[3], wait:blKindCount(s, bl.kind), chk:s[5], kinds:s[6] }; })
+    .filter(function(r){ return r.wait > 0; });
+}
+function topKinds(str, n){ return str.split(',').slice(0, n).map(function(p){ var kv = p.split(':'); return b(kv[0] + ' ' + kv[1], ''); }).join(' '); }
+function renderBacklog(){
+  var all = BL_SCR.map(function(s){ return { m:s[0], wait:s[4] }; });
+  var ownerCnt = {}; BL_OWNERS.forEach(function(o){ ownerCnt[o] = 0; });
+  all.forEach(function(r){ ownerCnt[blOwner(r.m)] += r.wait; });
+  var rows = blRows();
+  var tot = rows.reduce(function(a, r){ return a + r.wait; }, 0);
+  var chk = bl.kind === '전체' ? rows.reduce(function(a, r){ return a + r.chk; }, 0) : null;
+  var menus = {}; rows.forEach(function(r){ (menus[r.m] = menus[r.m] || []).push(r); });
+  var mkeys = Object.keys(menus).sort(function(a, b2){ return sum(menus[b2]) - sum(menus[a]); });
+  function sum(list){ return list.reduce(function(a, r){ return a + r.wait; }, 0); }
+  var maxM = mkeys.length ? sum(menus[mkeys[0]]) : 1;
+  var kindCnt = {}; ['전체'].concat(BL_KINDS, ['그 밖']).forEach(function(k){
+    kindCnt[k] = BL_SCR.filter(function(s){ return bl.owners[blOwner(s[0])]; }).reduce(function(a, s){ return a + blKindCount(s, k); }, 0); });
+
+  var h = '<div class="tools"><span class="muted" style="font-size:13px;font-weight:600">UX 담당자</span>' +
+    BL_OWNERS.map(function(o){ return '<button type="button" class="chipbtn chk" data-blo="' + o + '" aria-pressed="' + !!bl.owners[o] + '">' + (bl.owners[o] ? '✓ ' : '') + o + ' <span class="muted">' + ownerCnt[o] + '</span></button>'; }).join('') +
+    '<button type="button" class="reset" data-blo="*">모두 선택</button><span class="legend">2026-11-04 기준 · 저장소 화면 정의서에서 계산</span></div>';
+  h += '<div class="tiles">' +
+    '<div class="tile" style="border-color:var(--accent)"><div class="k">반영 대기 목록</div><div class="v">' + tot.toLocaleString() + '</div><div class="s">' + (bl.kind==='전체' ? '상태가 "대기"인 줄' : '구분: ' + esc(bl.kind)) + '</div></div>' +
+    '<div class="tile"><div class="k">작업 대기 화면</div><div class="v">' + rows.length + '</div><div class="s">반영할 메모가 있는 화면</div></div>' +
+    '<div class="tile"><div class="k">확인 필요</div><div class="v">' + (chk === null ? '-' : chk) + '</div><div class="s">정해지지 않아 먼저 답이 필요한 줄</div></div>' +
+    '<div class="tile"><div class="k">메뉴</div><div class="v">' + mkeys.length + '</div><div class="s">작업 대기 화면이 있는 메뉴</div></div></div>';
+  h += '<div class="filters" style="border:0;padding:0 0 10px"><span class="muted" style="font-size:13px;font-weight:600;margin-right:4px">구분</span>' +
+    ['전체'].concat(BL_KINDS, ['그 밖']).map(function(k){ return '<button type="button" class="chipbtn" data-blk="' + k + '" aria-pressed="' + (bl.kind===k) + '">' + k + ' <span class="muted">' + kindCnt[k] + '</span></button>'; }).join('') + '</div>';
+  h += '<div class="box" style="padding:0"><div class="tblw" style="border:0"><table class="tbl bl"><thead><tr><th>메뉴</th><th>UX 담당자</th><th>작업 대기 화면</th><th style="min-width:200px">반영 대기</th><th>확인 필요</th><th>많은 구분</th></tr></thead><tbody>';
+  if (!mkeys.length) h += '<tr><td colspan="6" class="muted">고른 담당자의 작업 대기가 없습니다.</td></tr>';
+  mkeys.forEach(function(m){
+    var list = menus[m].sort(function(a, b2){ return b2.wait - a.wait; }), w = sum(list), c = list.reduce(function(a, r){ return a + r.chk; }, 0);
+    var kc = {}; list.forEach(function(r){ r.kinds.split(',').forEach(function(p){ var kv = p.split(':'); kc[kv[0]] = (kc[kv[0]]||0) + (+kv[1]); }); });
+    var tk = Object.keys(kc).sort(function(a, b2){ return kc[b2] - kc[a]; }).slice(0, 3).map(function(k){ return b(k + ' ' + kc[k], ''); }).join(' ');
+    var open = bl.open[m];
+    h += '<tr class="blm" data-blm="' + m + '"><td><b>' + (open ? '▾ ' : '▸ ') + esc(BL_MENU[m][0]) + '</b></td><td>' + (BL_MENU[m][1] ? esc(BL_MENU[m][1]) : '<span class="muted">미정</span>') + '</td><td>' + list.length + ' / ' + BL_MENU[m][2] + '</td>' +
+      '<td><div class="bar"><i style="width:' + Math.max(2, Math.round(w / maxM * 100)) + '%"></i><span>' + w + '</span></div></td><td>' + (bl.kind==='전체' ? (c ? b(String(c), 'warn') : '<span class="muted">0</span>') : '<span class="muted">-</span>') + '</td><td>' + tk + '</td></tr>';
+    if (open) {
+      h += '<tr class="bls"><td colspan="6"><div class="tblw"><table class="tbl"><thead><tr><th>화면</th><th>작성자</th><th>반영 대기</th><th>확인 필요</th><th>구분</th></tr></thead><tbody>' +
+        list.map(function(r){ return '<tr><td>' + idl(r.cid) + ' ' + esc(r.t) + '</td><td>' + esc(r.who) + '</td><td>' + r.wait + '</td><td>' + (r.chk ? b(String(r.chk), 'warn') : '<span class="muted">0</span>') + '</td><td>' + topKinds(r.kinds, 3) + '</td></tr>'; }).join('') +
+        '</tbody></table></div></td></tr>';
+    }
+  });
+  h += '</tbody></table></div></div><p class="muted" style="margin-top:8px">메뉴를 누르면 화면 목록이 열리고, 화면 ID를 누르면 그 화면 정의서의 반영 대기 목록으로 갑니다. 화면을 다시 그려 반영하면 그 줄의 상태가 "반영 완료"로 바뀌어 여기서 빠집니다.</p>';
+  return h;
+}
+
+// ---------- 그리기 ----------
+var curFilter = { prov:'승인 대기' };
+var curSeg = 'in';
+function tabDef(id){ for (var i=0;i<TABS.length;i++) if (TABS[i].id===id) return TABS[i]; }
+function findItem(tab, id){ var t = tabDef(tab); for (var g=0; g<t.groups.length; g++) for (var i=0;i<t.groups[g].items.length;i++) if (t.groups[g].items[i].id===id) return t.groups[g].items[i]; }
+
+function renderTabs(){
+  var waiting = Object.keys(pv).filter(function(k){ return pv[k].status==='승인 대기'; }).length;
+  document.getElementById('tabs').innerHTML = TABS.filter(function(t){ return t.page===state.page; }).map(function(t){
+    var c = t.id==='prov' ? String(waiting) : t.cnt;
+    return '<button type="button" role="tab" data-tab="' + t.id + '" aria-selected="' + (t.id===state.tab) + '">' + esc(t.name) + (c ? ' <span class="cnt' + (t.id==='prov' && waiting ? ' hot' : '') + '">' + c + '</span>' : '') + '</button>';
+  }).join('');
+}
+function renderNote(){
+  var t = tabDef(state.tab);
+  document.getElementById('note').innerHTML = t.note.map(function(n){ return '<b>' + esc(n[0]) + '</b><span>' + esc(n[1]) + '</span>'; }).join('');
+}
+function itemBadges(it){
+  var bs = (it.bs || []).map(function(x){ return b(x[0], x[1]); });
+  if (state.tab==='prov') {
+    bs.unshift(stBadge(pv[it.id].status));
+    if (it.ab) bs.push(b('A/B','grp'));
+    if (it.grp) bs.push(b('같은 정책 ' + it.grp.replace('POL-',''),'grp'));
+    if (it.imp) bs.push(b('영향 화면 ' + it.imp,''));
+    if (it.ex) bs.push(b('예시','ex'));
+  } else if (it.ex) bs.push(b('예시','ex'));
+  return bs.length ? '<span class="bs">' + bs.join('') + '</span>' : '';
+}
+function renderList(){
+  var t = tabDef(state.tab), sel = state.sel[state.tab], h = '';
+  if (t.seg) {
+    var g = t.groups.filter(function(x){ return x.key===curSeg; })[0];
+    g.items.forEach(function(it){
+      var bs = [];
+      if (it.kind) bs.push(b(it.kind, it.kind==='협의 대기'?'acc':it.kind==='다시 확인할 것'?'warn':''));
+      if (it.st) bs.push(b(it.st, ''));
+      if (it.pvlink) bs.push(b(it.pvlink, 'warn'));
+      h += '<button type="button" class="item" data-id="' + esc(it.id) + '" aria-current="' + (it.id===sel) + '"><span class="t">' + esc(it.t) + '</span><span class="s">' + esc(it.s || it.id) + '</span><span class="bs">' + bs.join('') + '</span></button>';
+    });
+    document.getElementById('list').innerHTML = h; applySearch(); return;
+  }
+  if (t.filters) {
+    h += '<div class="filters">' + t.filters.map(function(f){ return '<button type="button" class="chipbtn" data-filter="' + f + '" aria-pressed="' + (curFilter.prov===f) + '">' + f + '</button>'; }).join('') +
+      '<button type="button" class="addbtn" data-newpv>+ 새 임시 정책</button></div>';
+  }
+  t.groups.forEach(function(g){
+    var items = g.items.filter(function(it){ return !t.filters || pv[it.id].status===curFilter.prov; });
+    var n = g.count != null ? g.count : items.length;
+    h += '<details class="grp"' + (g.open ? ' open' : '') + '><summary><span>' + esc(g.name) + '</span><span class="muted">' + n + '</span></summary>';
+    if (!items.length) h += '<p class="muted" style="margin:4px 10px 8px;font-size:13px">' + (g.count ? '펼치면 이 메뉴의 문서가 나옵니다 (예시에서는 생략)' : '해당 항목 없음') + '</p>';
+    items.forEach(function(it){
+      h += '<button type="button" class="item" data-id="' + esc(it.id) + '" aria-current="' + (it.id===sel) + '"><span class="t">' + esc(it.t) + '</span>' + (it.s ? '<span class="s">' + esc(it.s) + '</span>' : (/^[A-Z]/.test(it.id) && it.id!==it.t ? '<span class="s">' + esc(it.id) + '</span>' : '')) + itemBadges(it) + '</button>';
+    });
+    h += '</details>';
+  });
+  document.getElementById('list').innerHTML = h;
+  applySearch();
+}
+function renderDoc(){
+  var id = state.sel[state.tab], el = document.getElementById('doc');
+  if (!id) { el.innerHTML = '<p class="muted">왼쪽 목록에서 문서를 고르세요.</p>'; return; }
+  var it = findItem(state.tab, id) || { id:id, t:id };
+  el.innerHTML = DOCS[id] ? DOCS[id]() : generic(it);
+  if (state.tab === 'disc' && it.kind !== '정책서 보충') {
+    var head = el.querySelector('.dhead'), acts = head.querySelector('.acts');
+    if (!acts) { acts = document.createElement('div'); acts.className = 'acts'; head.appendChild(acts); }
+    if (it.st) acts.insertAdjacentHTML('afterbegin', b(it.st, it.st==='반영 완료'?'ok':it.st==='합의'?'acc':''));
+    if (!ansState[id] || ansState[id].step === 3) acts.insertAdjacentHTML('beforeend', '<button type="button" class="btn pri" data-ans>' + (ansState[id] ? '다시 답변하기' : '답변하기') + '</button>');
+    head.insertAdjacentHTML('afterend', ansPanel(id));
+  }
+  if (id === 'terms') {
+    var q = document.getElementById('tq');
+    q.addEventListener('input', function(){ var v = q.value.trim().toLowerCase(); document.querySelectorAll('#tt tbody tr').forEach(function(tr){ tr.style.display = !v || tr.textContent.toLowerCase().indexOf(v) >= 0 ? '' : 'none'; }); });
+  }
+}
+function applySearch(){
+  var v = document.getElementById('q').value.trim().toLowerCase();
+  document.querySelectorAll('#list .item').forEach(function(x){ x.classList.toggle('hide', !!v && x.textContent.toLowerCase().indexOf(v) < 0); });
+}
+var PAGES = {
+  work:{ t:'일정/작업', s:'업무 현황과 우리가 작업할 내역을 봅니다. 임시 정책 승인과 논의 항목도 여기서 처리합니다.',
+    act:'<a class="btn" href="https://docs.google.com/spreadsheets/d/1S5tPFtNn77FLcaVBvWFO-Z48St2NxovfOoldWf6jO1w/edit?gid=94187704#gid=94187704" target="_blank" rel="noopener">스프레드시트 열기</a>' },
+  docs:{ t:'UX 문서', s:'작업 규칙 · 정책서 · UX 가이드 · 기준 데이터 · 화면 정의서를 한곳에서 봅니다. 모든 Claude가 일하기 전에 이 내용을 읽습니다.',
+    act:'<span class="ver" title="대표 저장소 기준 브랜치의 최신 공통 규칙 버전 (R5)">공통 규칙 rules-v0.1 <small>예시 · 아직 태그 없음</small></span>' }
+};
+function render(){
+  document.querySelectorAll('[data-page]').forEach(function(x){ if (x.dataset.page===state.page) x.setAttribute('aria-current','page'); else x.removeAttribute('aria-current'); });
+  var known = !!PAGES[state.page];
+  ['tabs','note','split','custom'].forEach(function(id){ document.getElementById(id).hidden = !known; });
+  document.querySelector('.head').hidden = !known;
+  document.getElementById('other').hidden = known;
+  if (!known) return;
+  var P = PAGES[state.page];
+  document.getElementById('ptitle').textContent = P.t;
+  document.getElementById('psub').textContent = P.s;
+  document.getElementById('pact').innerHTML = P.act;
+  renderTabs(); renderNote();
+  var t = tabDef(state.tab);
+  document.getElementById('q').hidden = !!t.custom;
+  document.getElementById('split').hidden = !!t.custom;
+  var sb = document.getElementById('segbar');
+  sb.hidden = !t.seg;
+  if (t.seg) sb.innerHTML = t.groups.map(function(g){ return '<button type="button" data-seg="' + g.key + '" aria-pressed="' + (g.key===curSeg) + '">' + esc(g.name) + ' <span class="cnt b">' + g.items.length + '</span></button>'; }).join('');
+  document.getElementById('custom').hidden = !t.custom;
+  if (t.custom) {
+    document.getElementById('custom').innerHTML = t.custom();
+    if (state.tab === 'sched') afterSched();
+  } else { renderList(); renderDoc(); }
+}
+
+var DEFAULT = { minutes:'M-1103', rules:'constitution', policy:'POL-EQP-008', guide:'COMM-4-a(2/4)', data:'terms', screen:'LI-INS-01-P', prov:'PV-0001', disc:'PD-0005', hist:'rules-v0.1' };
+Object.keys(DEFAULT).forEach(function(k){ state.sel[k] = DEFAULT[k]; });
+
+function go(id){
+  var tab = tabOf(id); if (!tab) return;
+  state.page = tabDef(tab).page; state.tab = tab; state.tabByPage[state.page] = tab;
+  if (tab==='disc') curSeg = /^CA-/.test(id) ? 'cust' : 'in';
+  if (tab==='prov' && pv[id]) curFilter.prov = pv[id].status;
+  state.sel[tab] = id;
+  render();
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+// 승인·반려
+function openConfirm(dec){
+  var id = state.sel.prov, box = document.getElementById('confirmBox');
+  var others = tabDef('prov').groups[0].items.filter(function(x){ var me = findItem('prov', id); return x.id!==id && me.grp && x.grp===me.grp && pv[x.id].status==='승인 대기'; });
+  var reject = dec === '반려';
+  box.innerHTML = '<div class="confirm">' + (others.length && !reject ? '<div class="warnline">같은 정책(' + esc(findItem('prov',id).grp) + ')을 바꾸는 승인 대기 임시 정책이 있습니다: ' + others.map(function(o){ return esc(o.id); }).join(', ') + '. 함께 확인하세요.</div>' : '') +
+    '<b>' + esc(id) + ' ' + esc(dec) + '</b>' + '<textarea id="memo" placeholder="' + (reject ? '반려 사유 (꼭 적어야 합니다)' : '메모 (선택)') + '"></textarea><div class="err" id="err"></div>' +
+    '<div class="acts"><button type="button" class="btn" data-cancel>취소</button><button type="button" class="btn ' + (reject ? 'dan' : 'pri') + '" data-ok="' + esc(dec) + '">' + esc(dec) + ' 확정</button></div></div>';
+  document.getElementById('memo').focus();
+}
+function confirmDec(dec){
+  var id = state.sel.prov, memo = document.getElementById('memo').value.trim();
+  if (dec==='반려' && !memo) { document.getElementById('err').textContent = '반려 사유를 적어 주세요.'; return; }
+  var today = new Date(), ds = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
+  pv[id].status = dec==='반려' ? '반려' : '승인';
+  pv[id].decisions.push({ date:ds, dec:dec, memo:memo });
+  var msg = dec==='반려' ? id + ' 반려: ' + memo : id + ' ' + dec;
+  pv[id].result = '<b>예시라 실제로 저장하지 않았습니다.</b> 실제 프로그램에서는 PV 파일의 "상태" 줄을 <code>' + esc(pv[id].status) + '</code> 상태로 바꾸고, "결정" 표에 한 줄을 더하고' + (dec==='반려' ? ', 파일을 <code>provisional/closed/</code>로 옮기고' : '') + ', 대표 저장소에 커밋합니다: <code>' + esc(msg) + '</code> ' +
+    (dec!=='반려' ? '다음은 승인 담당자가 공통 규칙에 반영하고 버전을 올리는 일입니다(R11). ' : '') + '<button type="button" class="reset" data-reset>예시 처음으로</button>';
+  curFilter.prov = pv[id].status;
+  render();
+}
+
+document.addEventListener('click', function(e){
+  var t;
+  if ((t = e.target.closest('[data-page]'))) { state.page = t.dataset.page; if (state.tabByPage[state.page]) state.tab = state.tabByPage[state.page]; render(); return; }
+  if ((t = e.target.closest('[data-tab]'))) { state.tab = t.dataset.tab; state.tabByPage[state.page] = state.tab; render(); return; }
+  if ((t = e.target.closest('[data-gotab]'))) { state.tab = t.dataset.gotab; state.tabByPage.work = state.tab; render(); window.scrollTo(0,0); return; }
+  if ((t = e.target.closest('[data-wk]'))) { wk = Math.max(0, Math.min(WEEKS.length-1, wk + (+t.dataset.wk))); render(); return; }
+  if ((t = e.target.closest('[data-ans]'))) { ansState[state.sel.disc] = { step:1 }; renderDoc(); return; }
+  if ((t = e.target.closest('[data-anscancel]'))) { delete ansState[state.sel.disc]; renderDoc(); return; }
+  if ((t = e.target.closest('[data-anssend]'))) { var tx = document.getElementById('ansText').value.trim(); if (!tx) return; ansState[state.sel.disc] = { step:2, text:tx }; renderDoc(); return; }
+  if ((t = e.target.closest('[data-ansfix]'))) { var fx = document.getElementById('ansFix').value.trim(); if (fx) { ansState[state.sel.disc].fix = fx; } renderDoc(); return; }
+  if ((t = e.target.closest('[data-anscommit]'))) { ansCommit(state.sel.disc); render(); return; }
+  if ((t = e.target.closest('[data-blo]'))) { var o = t.dataset.blo; if (o === '*') BL_OWNERS.forEach(function(x){ bl.owners[x] = true; }); else bl.owners[o] = !bl.owners[o]; render(); return; }
+  if ((t = e.target.closest('[data-blk]'))) { bl.kind = t.dataset.blk; render(); return; }
+  if ((t = e.target.closest('[data-blm]')) && !e.target.closest('[data-go]')) { var mm = t.dataset.blm; bl.open[mm] = !bl.open[mm]; render(); return; }
+  if ((t = e.target.closest('[data-seg]'))) { curSeg = t.dataset.seg; var gg = tabDef('disc').groups.filter(function(x){ return x.key===curSeg; })[0]; if (!gg.items.some(function(x){ return x.id===state.sel.disc; })) state.sel.disc = gg.items[0].id; render(); return; }
+  if ((t = e.target.closest('[data-sst]'))) { sf.st = t.dataset.sst; render(); return; }
+  if ((t = e.target.closest('[data-per]'))) { openPer(+t.dataset.per, t); return; }
+  if ((t = e.target.closest('[data-perclose]'))) { document.getElementById('perpop').hidden = true; return; }
+  if ((t = e.target.closest('[data-perclr]'))) { var rc = SCHED[+t.dataset.perclr]; delete rc.s; delete rc.e; saved = '기간 지움'; render(); return; }
+  if ((t = e.target.closest('[data-perok]'))) {
+    var s = document.getElementById('pS').value, en = document.getElementById('pE').value;
+    if (!s) { document.getElementById('pErr').textContent = '시작일을 고르세요.'; return; }
+    if (!en) en = s;
+    if (en < s) { document.getElementById('pErr').textContent = '종료일이 시작일보다 빠릅니다.'; return; }
+    var rr = SCHED[+t.dataset.perok]; rr.s = fromIso(s); rr.e = fromIso(en); saved = '기간 저장함'; render(); return;
+  }
+  if ((t = e.target.closest('[data-refresh]'))) { var n = new Date(); lastRead = String(n.getHours()).padStart(2,'0') + ':' + String(n.getMinutes()).padStart(2,'0'); saved = '다시 읽음 (예시라 실제 시트는 읽지 않음)'; render(); return; }
+  if (!e.target.closest('#perpop')) { var pp = document.getElementById('perpop'); if (pp) pp.hidden = true; }
+  if ((t = e.target.closest('.item'))) { state.sel[state.tab] = t.dataset.id; render(); return; }
+  if ((t = e.target.closest('[data-go]'))) { go(t.dataset.go); return; }
+  if ((t = e.target.closest('[data-filter]'))) { curFilter.prov = t.dataset.filter; var f = tabDef('prov').groups[0].items.filter(function(x){ return pv[x.id].status===curFilter.prov; }); if (f.length) state.sel.prov = f[0].id; render(); return; }
+  if ((t = e.target.closest('[data-dec]'))) { openConfirm(t.dataset.dec); return; }
+  if ((t = e.target.closest('[data-cancel]'))) { document.getElementById('confirmBox').innerHTML = ''; return; }
+  if ((t = e.target.closest('[data-ok]'))) { confirmDec(t.dataset.ok); return; }
+  if ((t = e.target.closest('[data-reset]'))) { pv = JSON.parse(JSON.stringify(PV0)); curFilter.prov = '승인 대기'; state.sel.prov = 'PV-0001'; render(); return; }
+  if ((t = e.target.closest('[data-newpv]'))) { alert('[새 임시 정책] (R10, 2차): 바꿀 내용을 받아 Claude 작업으로 넘깁니다. Claude가 템플릿대로 PV 파일을 만들고, 같은 정책을 바꾸는 승인 대기 임시 정책이 있는지 확인합니다.'); return; }
+  if ((t = e.target.closest('[data-role]'))) { role = t.dataset.role; document.querySelectorAll('[data-role]').forEach(function(x){ x.setAttribute('aria-pressed', String(x===t)); }); renderDoc(); return; }
+});
+document.getElementById('q').addEventListener('input', applySearch);
+document.getElementById('noteTog').addEventListener('change', function(e){ document.body.classList.toggle('no-note', !e.target.checked); });
+render();
+})();
+</script>
+</body>
+</html>
