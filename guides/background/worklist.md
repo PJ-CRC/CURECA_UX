@@ -9,7 +9,7 @@
 | # | 작업 | 산출물 | 상태 |
 | --- | --- | --- | --- |
 | 0 | 저장소 뼈대 | 폴더, README, 변경 흐름 룰, 협의 대기 템플릿 | 완료 |
-| 1 | 헌법 v0.2 → v1.0 | `rules/constitution.md` | 완료 (v1.2, 팀 검토 대기) |
+| 1 | 헌법 v0.2 → v1.0 | `constitution.md` | 완료 (v1.2, 팀 검토 대기) |
 | 2 | Claude 작업 규칙: 작업 유형별 실행 순서와 로딩 순서 | `CLAUDE.md`, `rules/claude-work.md` | 초안 v0.4 (남은 4개 항목은 다른 룰이 정해진 뒤) |
 | 3 | 용어집 v0: 용어 후보 수집과 표준어 정리 | `glossary/glossary.md`, `glossary/terms.csv` | 완료: v0 확정 51개 (2026-10-30). 새 용어는 작업하면서 추가 |
 | 4 | 다국어: 흐름 초안은 작성. 언어셋 관리 체계는 언어셋 담당자가 담당 Claude와 협의해 초안을 고쳐 감 | `rules/language-set.md`, `language-set/` | 초안 v0.1 (담당자 협의 대기) |

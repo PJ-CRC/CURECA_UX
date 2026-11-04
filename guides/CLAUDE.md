@@ -6,7 +6,7 @@
 
 ## 작업 시작 순서
 
-1. [rules/constitution.md](rules/constitution.md) — 헌법. 모든 룰과 작업에 우선합니다.
+1. [constitution.md](constitution.md) — 헌법. 모든 룰과 작업에 우선합니다.
 2. [rules/claude-work.md](rules/claude-work.md) — 작업 유형, 공통 순서, 보고 형식.
 3. 요청을 작업 유형으로 분류하고, `rules/claude-work.md`의 공통 순서대로 진행합니다.
 

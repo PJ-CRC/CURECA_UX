@@ -51,7 +51,7 @@
 
 | 섹션 | 저장소 위치 | 목록 단위 | 문서 화면에서 보여 줄 것 |
 | --- | --- | --- | --- |
-| 작업 규칙 | `rules/constitution.md`, `CLAUDE.md`, `rules/*.md` | 문서 | 본문, 목차, 상태(머리말 상태 줄) |
+| 작업 규칙 | `constitution.md`, `CLAUDE.md`, `rules/*.md` | 문서 | 본문, 목차, 상태(머리말 상태 줄) |
 | 정책서 | `policy/{영역}/POL-*.md` | 영역 → 정책 | 머리말 카드(ID, 제목, 요약, 상태, 버전, 날짜, 관련 메뉴, 관련 화면 CID 칩, 알럿 칩, 데이터, 임시 정책), 본문(정의, 규칙, 예외, 근거, 변경 이력) |
 | UX 가이드 | Common UX 최종본 V2.2.00 (지금은 Figma DY common UX와 프로그램 `.history/guides/`), 고칠 곳 `common-ux/feedback.md` | 목차 트리(대분류 → 항목) | 항목 내용과 Figma 프레임 그림, 관련 정책 · 기준 데이터 링크, 그 항목에 걸린 수정 요청 |
 | 기준 데이터 | `glossary/*.csv`, `policy/*.csv` (알럿, 권한, Service Mode, 상태 전환, 경광등), `ia/ia-screens.csv` | 표 | 검색·필터·정렬이 되는 표. 용어집은 "쓰지 않는 표현"으로 검색해도 표준어를 찾아 줌 |
