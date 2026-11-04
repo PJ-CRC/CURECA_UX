@@ -1,11 +1,11 @@
 {
     "id":  "brex-gram-2_R001",
     "kind":  "request",
-    "status":  "대기",
-    "at":  "2026-11-04T18:02:12+09:00",
+    "status":  "진행 중",
+    "at":  "2026-11-04T18:02:31+09:00",
     "createdAt":  "2026-11-04T18:02:12+09:00",
     "by":  "하승현",
-    "doneBy":  "하승현",
+    "doneBy":  "Claude",
     "pc":  "BREX_GRAM_2",
     "reqId":  "R001",
     "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
@@ -16,7 +16,7 @@
     "type":  "일반",
     "layout":  "",
     "text":  "사각형 하나 그려줘.\n500x600",
-    "note":  "",
+    "note":  "사각형(500x600) 추가 중",
     "shot":  "",
     "images":  [
 
