@@ -57,8 +57,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 Pretendard,-ap
 .gd-viewing b{color:var(--ink)}
 .gd-viewing button{padding:5px 12px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;cursor:pointer}
 .gd-viewing button:hover{border-color:var(--accent)}
-html.lowfit .app-wrap{padding-bottom:12px}
-.gd-view iframe{display:block;width:100%;height:var(--fit,calc(100vh - var(--nav-h) - 48px));min-height:360px;border:0;border-radius:var(--card-r);background:transparent}
+.gd-view iframe{display:block;width:100%;height:var(--fit,calc(100vh - var(--nav-h) - 48px));min-height:360px;overflow:hidden;border:0;border-radius:var(--card-r);background:transparent}
 dialog.gd-dlg{border:1px solid var(--line);border-radius:14px;padding:0;width:min(640px,calc(100vw - 32px));background:var(--surface);color:var(--ink);box-shadow:0 20px 50px rgba(0,0,0,.25)}
 dialog.gd-dlg::backdrop{background:rgba(10,12,16,.45)}
 .gd-dlg form{padding:20px 22px}
@@ -592,27 +591,24 @@ html.doc-ro #docNew{display:none!important}
       var ev = logEvents().filter(function(x){ return x.key === logSel; })[0]; if (ev) showLog(ev);
       if (window.matchMedia('(max-width:900px)').matches) $g('logDetail').scrollIntoView({ block: 'start', behavior: 'smooth' });
     });
-    /* 창 높이에 맞춤: 보이는 탭의 문서 보기(iframe)와 변경이력 목록 · 상세가 남은 창 높이를 채운다(바깥 페이지는 스크롤되지 않고, 스크롤은 안에서) */
+    /* 문서 보기(iframe)는 안쪽 내용 높이 그대로(UX_Guide.html이 postMessage로 알려 줌) → 페이지 전체가 스크롤된다(안쪽 스크롤 없음)
+       변경이력 목록 · 상세는 남은 창 높이를 채운다(스크롤은 각자 안에서) */
+    window.addEventListener('message', function(e){
+      var d = e.data; if (e.origin !== location.origin || !d || d.type !== 'ux-guide-h') return;
+      [].forEach.call(document.querySelectorAll('.gd-view iframe'), function(f){ if (f.contentWindow === e.source) f.style.setProperty('--fit', Math.max(360, Math.ceil(d.h)) + 'px'); });
+    });
     function fitPage(){
       var wide = window.innerWidth > 900;
       [].forEach.call(document.querySelectorAll('.dpanel:not([hidden]) .gd-view:not([hidden]) iframe, .dpanel:not([hidden]) .lg'), function(el){
-        var isLg = el.classList.contains('lg');
-        if (isLg) el.classList.toggle('fit', wide);
-        if (isLg && !wide) { el.style.removeProperty('--fit'); return; }
+        /* 숨은 탭에서 열린 보기 화면은 보일 때 크기 변경을 알지 못한다 → 안쪽도 다시 재게 알린다(같은 서버 페이지) */
+        if (!el.classList.contains('lg')) { try { el.contentWindow.dispatchEvent(new Event('resize')); } catch(x){} return; }
+        el.classList.toggle('fit', wide);
+        if (!wide) { el.style.removeProperty('--fit'); return; }
         var top = el.getBoundingClientRect().top + window.scrollY, min = 360;
-        /* 낮은 창(윈도우 배율 200% · 노트북): 남은 높이가 모자라면 문서 보기를 창 높이(상단 메뉴 아래 전부)로 두고 바깥 페이지를 스크롤한다
-           — 위 제목 · 탭 · 작업 기준 줄이 높이를 다 먹어 목차 · 내용 · 입력창이 안 보이던 것 */
-        var navH = (document.querySelector('.appnav') || {}).offsetHeight || 0, full = window.innerHeight - navH - 12;
-        var h = window.innerHeight - top - 16, low = h < 480;
-        document.documentElement.classList.toggle('lowfit', low);   // 아래 여백을 줄여 끝까지 내리면 문서 보기가 상단 메뉴 바로 아래에 꼭 맞게
-        if (low) h = Math.max(min, full);
-        else h = Math.max(min, h);
+        var h = Math.max(min, window.innerHeight - top - 16);
         el.style.setProperty('--fit', h + 'px');
-        /* 아래 여백 때문에 바깥 페이지가 아직 넘치면 그만큼 더 줄인다(낮은 창은 바깥 스크롤을 쓰므로 줄이지 않음) */
         var over = document.documentElement.scrollHeight - window.innerHeight;
-        if (over > 0 && !low) el.style.setProperty('--fit', Math.max(min, h - over) + 'px');
-        /* 숨은 탭에서 열린 보기 화면은 보일 때 크기 변경을 알지 못한다 → 안쪽도 다시 맞추게 알린다(같은 서버 페이지) */
-        if (!isLg) { try { el.contentWindow.dispatchEvent(new Event('resize')); } catch(x){} }
+        if (over > 0) el.style.setProperty('--fit', Math.max(min, h - over) + 'px');
       });
     }
     window.addEventListener('resize', fitPage);

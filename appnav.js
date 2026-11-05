@@ -8,17 +8,7 @@
 (function(){
   var nav = document.querySelector('.appnav'); if (!nav || location.protocol === 'file:') return;
 
-  /* ── 넓은 본문(.app-wrap.wide): 최대 너비 없이, 좌우 여백 = 상단 메뉴 「UX 문서」의 왼쪽 위치 ──
-     본문이 그 메뉴 아래에서 시작하고 오른쪽도 같은 여백. 그러면 본문이 1000px보다 좁아지는 화면은 공통 여백 */
-  (function(){
-    var wrap = document.querySelector('.app-wrap.wide'); if (!wrap) return;
-    function fit(){
-      var a = nav.querySelector('a[href="Common_UX_Guide.html"]'), x = a ? Math.round(a.getBoundingClientRect().left) : 0;
-      wrap.style.paddingLeft = wrap.style.paddingRight = x > 0 && innerWidth - 2 * x >= 1000 ? x + 'px' : '';
-    }
-    fit(); window.addEventListener('resize', fit);
-    if (window.ResizeObserver) new ResizeObserver(fit).observe(nav);   // 메뉴(계정 메뉴 등)가 나중에 바뀌어도
-  })();
+  /* 넓은 본문(.app-wrap.wide)의 좌우 여백은 appnav.css에서 창 폭의 비율로 정한다(화면마다 보이는 양이 같게) */
 
   /* ── 버전 · 자동 업데이트 알림 ── */
   Promise.all([
