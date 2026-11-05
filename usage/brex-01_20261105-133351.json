@@ -1,0 +1,26 @@
+{
+    "id":  "brex-01_20261105-133351",
+    "kind":  "work",
+    "reqId":  "",
+    "at":  "2026-11-05T13:33:51+09:00",
+    "from":  "2026-11-05T13:33:33+09:00",
+    "by":  "서보경",
+    "doneBy":  "Claude",
+    "pc":  "BREX_01",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "작업규칙: CURECA 작업규칙 2. 언어셋",
+    "models":  {
+                   "claude-opus-5-5":  6
+               },
+    "calls":  6,
+    "input":  12,
+    "cacheWrite":  5604,
+    "cacheRead":  653995,
+    "output":  3854,
+    "total":  663465,
+    "usd":  0.2528
+}

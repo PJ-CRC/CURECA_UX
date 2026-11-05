@@ -1,0 +1,26 @@
+{
+    "id":  "brex-01_20261105-133354",
+    "kind":  "work",
+    "reqId":  "",
+    "at":  "2026-11-05T13:33:54+09:00",
+    "from":  "2026-11-05T13:33:38+09:00",
+    "by":  "서보경",
+    "doneBy":  "Claude",
+    "pc":  "BREX_01",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "작업규칙: change-flow.md 6절 보류 안내",
+    "models":  {
+                   "claude-opus-5-5":  8
+               },
+    "calls":  8,
+    "input":  16,
+    "cacheWrite":  7363,
+    "cacheRead":  873968,
+    "output":  5467,
+    "total":  886814,
+    "usd":  0.3431
+}
