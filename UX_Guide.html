@@ -47,7 +47,20 @@ a.pill:hover{border-color:var(--accent)}
 .side{position:sticky;top:calc(var(--nav-h) + 12px);max-height:calc(100vh - var(--nav-h) - 24px);display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
 .side-head{padding:12px;border-bottom:1px solid var(--line)}
 .side-head input{width:100%;padding:8px 11px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:14px}
-.tree{list-style:none;margin:0;padding:8px;overflow:auto;flex:1}
+.tree{list-style:none;margin:0;padding:8px;overflow:auto;flex:1;min-height:0}
+/* 수정 요청 입력창: 목록 · 내용 아래에 따로 한 줄(왼쪽 대상 · 가운데 입력 · 오른쪽 보내기). 쓰기 권한이 없으면 숨고 목록 · 내용이 그만큼 늘어난다 */
+.ask{display:flex;align-items:stretch;gap:12px;margin-top:12px;padding:12px 14px;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
+.ask-t{flex:none;width:220px;display:flex;flex-direction:column;justify-content:center;gap:2px;min-width:0}
+.ask-t span{font-size:12.5px;font-weight:700;color:var(--ink-3)}
+.ask-t b{font-size:14px;color:var(--accent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ask textarea{flex:1;min-width:0;box-sizing:border-box;height:58px;min-height:58px;max-height:160px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2);color:var(--ink);font:inherit;font-size:13.5px;line-height:1.5;resize:vertical}
+.ask textarea:focus{outline:2px solid var(--accent);outline-offset:-1px;background:var(--surface)}
+.ask-act{flex:none;width:170px;display:flex;flex-direction:column;justify-content:center;gap:4px}
+.ask-act .btn{width:100%}
+.ask-act span{font-size:12px;color:var(--ink-3);min-height:16px;line-height:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ask[aria-disabled="true"] textarea,.ask[aria-disabled="true"] .btn{opacity:.5;pointer-events:none}
+html.doc-ro .ask{display:none}
+@media (max-width:860px){ .ask{flex-direction:column} .ask-t,.ask-act{width:auto} }
 .tree ul{list-style:none;margin:2px 0 4px;padding:0 0 0 14px;border-left:1px solid var(--line);margin-left:15px}
 .tree li{margin:1px 0}
 .node{display:flex;align-items:center;gap:6px;width:100%;text-align:left;border:0;background:none;border-radius:7px;padding:7px 8px;font-size:14px;color:var(--ink-2);line-height:1.35}
@@ -269,6 +282,12 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
     <ul class="tree" id="tree" role="tree"><li class="side-empty">불러오는 중…</li></ul>
   </aside>
   <main class="main" id="main" aria-live="polite"><p class="empty">불러오는 중…</p></main></div>
+<!-- 수정 요청 입력창: 목록 · 내용 아래에 따로(Workbench처럼). 지금 보고 있는 항목을 Claude에게 고쳐 달라고 요청한다(guide-edit) -->
+<form class="ask" id="ask" aria-label="수정 요청">
+  <div class="ask-t"><span>수정 요청</span><b id="askTarget">—</b></div>
+  <textarea id="askText" rows="2" placeholder="이 항목에서 무엇을 어떻게 고칠지 적어 주세요."></textarea>
+  <div class="ask-act"><button type="submit" class="btn pri" id="askSend">Claude에게 수정 요청</button><span id="askMsg" role="status"></span></div>
+</form>
 </div>
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="이미지 크게 보기"><button type="button" id="lbClose">닫기 ✕</button><div class="cap" id="lbCap"></div><img id="lbImg" alt=""></div>
 <script>
@@ -501,12 +520,16 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
       var t = document.createElement('div'); t.innerHTML = marked.parseInline(s.title); s.label = t.textContent.trim() || s.title;
       s.kids = []; s.parent = null;
       if (s.level === 1) grp = s; else if (s.level === 2 && grp) { s.parent = grp; grp.kids.push(s); }
-      s.box = render(body(s));
-      s.text = (s.label + ' ' + s.box.textContent).toLowerCase();
       secs.push(s); byId[s.id] = s;
     });
     /* 파일형 문서: 대분류 · 항목마다 그 파일(수정 요청 · 아래 경로 표시에 쓴다) */
     if (FILEMAP) { var hi = 0; secs.forEach(function(s){ if (s.level >= 1) s.file = FILEMAP[hi++] || (s.parent ? s.parent.file : '') || ''; }); }
+    /* 한 번에 보기(작업규칙 · meta.whole): 대분류를 누르면 그 아래 항목까지 순서대로 한 화면에(목차에는 대분류만) */
+    if (meta && (meta.whole || (meta.kind === 'rule' && meta.whole !== false))) {
+      secs.forEach(function(s){ if (s.level === 2 && s.parent) s.parent.raw += s.raw; });
+      secs = secs.filter(function(s){ if (s.level === 2 && s.parent) { delete byId[s.id]; return false; } s.kids = []; return true; });
+    }
+    secs.forEach(function(s){ s.box = render(body(s)); s.text = (s.label + ' ' + s.box.textContent).toLowerCase(); });
     if (!secs.length) { fail('가이드 내용이 비어 있습니다.'); return; }
     var want = keepIdx != null ? (secs[keepIdx] || secs[0]).id : findSec(decodeURIComponent(location.hash.slice(1)));
     show(byId[want] ? want : secs[0].id, true);
@@ -574,7 +597,7 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
     else window.scrollTo({ top: $('main').getBoundingClientRect().top + scrollY - 70, behavior: 'smooth' });
   }
   window.addEventListener('resize', fit);
-  if (window.ResizeObserver) new ResizeObserver(fit).observe($('fixes'));   // 위쪽 수정 결과 패널이 생기거나 바뀌면 다시 맞춤
+  if (window.ResizeObserver) { var roFit = new ResizeObserver(fit); roFit.observe($('fixes')); roFit.observe($('ask')); }   // 위쪽 수정 결과 패널 · 아래 수정 요청 입력창 크기가 바뀌면 다시 맞춤
   setTimeout(fit, 0);
 
   /* ── 화면 정의서(meta.view 'screens'): 메뉴 폴더마다 CID 화면설계서(머리말 + 본문 + 반영 대기 목록), 메뉴 정보는 _menu.md ──
@@ -681,7 +704,7 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
     var bx = render(demote(rest, 1)); Array.prototype.forEach.call(bx.childNodes, function(x){ m.querySelector('.sc-body').appendChild(x.cloneNode(true)); });
     scFix();
     $('editBtn').hidden = false; $('editBtn').disabled = false; $('editBtn').title = '「' + cid + '」 화면 정의서 수정 요청';
-    $('tocCur').textContent = '목차 · ' + cid;
+    $('tocCur').textContent = '목차 · ' + cid; askSet();
     scTree($('q').value.trim().toLowerCase());
     var it = $('tree').querySelector('.sc-it.cur'); if (it && first) it.scrollIntoView({ block: 'nearest' });
     if (!first) { history.replaceState(null, '', '#' + cid); if (window.innerWidth <= 860) { $('side').classList.add('fold'); $('tocBtn').setAttribute('aria-expanded', 'false'); } toTop(); }
@@ -789,7 +812,7 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
       var fl = (FILES || []).filter(function(f){ return f.path === s.file; })[0];
       m.insertAdjacentHTML('beforeend', '<p class="docpath" title="' + esc(fl ? fl.mdPath : '') + '">문서 경로 <code>' + esc(npath(id + '/' + fdirOf(meta) + s.file)) + '</code>' + (fl && fl.rev ? '<span>수정본 ' + esc(fl.rev) + '</span>' : '') + '</p>');
     }
-    $('tocCur').textContent = '목차 · ' + s.label;
+    $('tocCur').textContent = '목차 · ' + s.label; askSet();
     tree($('q').value.trim().toLowerCase());
     if (!first) { history.replaceState(null, '', '#' + s.id); if (window.innerWidth <= 860) { $('side').classList.add('fold'); $('tocBtn').setAttribute('aria-expanded', 'false'); } toTop(); }
   }
@@ -962,7 +985,33 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
     if (tw) { var g = byId[tw.dataset.tw]; open[g.id] = !tw.classList.contains('open'); tree($('q').value.trim().toLowerCase()); return; }
     var b = e.target.closest('[data-id]'); if (b) show(b.dataset.id);
   });
-  $('editBtn').onclick = function(){ if (SC) scEdit(); else edit(); };
+  /* ── 수정 요청 입력창(목록 아래, Workbench처럼): 지금 보는 항목을 대상으로 guide-edit 작업을 쌓는다 ── */
+  function askTarget(){
+    if (SC) { var c = SC.byCid[scCur]; return c ? { name: c.cid + ' ' + (c.o.title || ''), file: c.file, fileKey: '' } : null; }
+    if (!cur) return null;
+    if (FILES && !cur.file) return null;   // 파일형 문서의 폴더 대분류는 고칠 파일이 없다
+    return { name: cur.label, file: cur.file || '', fileKey: meta.fileKey };
+  }
+  function askSet(){
+    var t = askTarget();
+    $('askTarget').textContent = t ? t.name : '항목을 고르세요';
+    $('ask').setAttribute('aria-disabled', t ? 'false' : 'true');
+    $('askText').placeholder = t ? '「' + t.name + '」에서 무엇을 어떻게 고칠지 적어 주세요.\n예) 3조 2항의 표현을 「…」로 바꿔 줘' : '왼쪽 목록에서 고칠 항목을 고르세요.';
+  }
+  $('ask').addEventListener('submit', function(e){
+    e.preventDefault();
+    var t = askTarget(), text = $('askText').value.trim();
+    if (!t) return;
+    if (!text) { $('askMsg').textContent = '고칠 내용을 적어 주세요.'; $('askText').focus(); return; }
+    $('askSend').disabled = true; $('askMsg').textContent = '보내는 중…';
+    post('/api/jobs', { action: 'add', kind: 'guide-edit', guide: id, fileKey: t.fileKey || '', name: t.name, text: text, by: user(), file: t.file })
+      .then(function(){ $('askText').value = ''; $('askMsg').textContent = ''; fixes(); toast('「' + t.name + '」 수정 요청을 보냈습니다. Claude가 고치면 이 화면 위에 결과가 나옵니다.'); })
+      .catch(function(x){ $('askMsg').textContent = x.message || '요청하지 못했습니다.'; })
+      .then(function(){ $('askSend').disabled = false; });
+  });
+  $('askText').addEventListener('keydown', function(e){ if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); $('ask').requestSubmit(); } });
+  // 머리의 [수정 요청]은 입력창으로 이동
+  $('editBtn').onclick = function(){ $('askText').focus(); $('ask').scrollIntoView({ block: 'nearest' }); };
   ['revBox'].forEach(function(pid){
     $('revBtn').onclick = function(){ var on = $(pid).hidden; panel(pid, on); if (on) $(pid).scrollIntoView({ block: 'nearest', behavior: 'smooth' }); };
     $(pid).addEventListener('toggle', function(){ if (!this.open && !this.hidden) panel(pid, false); });

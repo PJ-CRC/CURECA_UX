@@ -156,7 +156,9 @@ table.sh td textarea{width:100%;min-width:140px;min-height:30px;padding:4px 6px;
 .mgrid{display:grid;grid-template-columns:minmax(260px,400px) minmax(0,1fr);gap:16px;align-items:start}
 .mgrid .card{margin:0}
 .mlist{padding:12px;max-height:calc(100vh - 260px);overflow:auto;position:sticky;top:12px}
-.mhead{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:4px 6px 10px}
+.mhead{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:4px 6px 10px;min-height:44px;box-sizing:border-box}   /* 버튼이 숨어도(보기 전용) 높이가 같게 */
+/* 임시 정책 목록 머리: 상태 뱃지는 늘 왼쪽부터(새 임시 정책 버튼이 없어도), 버튼은 오른쪽 끝 */
+.mhead.pvh{justify-content:flex-start;gap:4px;flex-wrap:wrap}
 .mimport{width:100%;margin-bottom:8px}
 .mrange{display:flex;align-items:center;gap:6px;padding:0 6px 6px}
 .mrange input{flex:1;min-width:0;height:34px;padding:0 8px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font-size:13px}
@@ -215,7 +217,7 @@ button.pill{cursor:pointer;font:inherit;font-size:12.5px;font-weight:600}
 .propose h4{margin:0 0 4px;font-size:15px;font-weight:800}
 .dbody{margin-top:18px;padding-top:12px;border-top:1px solid var(--line)}
 .mright .kv dd{font-weight:500}
-.msec{display:flex;align-items:center;gap:8px;margin:20px 0 8px}
+.msec{display:flex;align-items:center;gap:8px;margin:20px 0 8px;min-height:32px}   /* 요약 정리 · 내 내용 작성 버튼이 숨어도 높이가 같게 */
 .msec h4{margin:0 !important;flex:1;font-size:15px;font-weight:800}
 .msec h4 .muted{font-weight:600;font-size:13px;margin-left:4px}
 .msum{margin:-2px 0 8px;font-size:12px;color:var(--ink-3)}
@@ -280,8 +282,9 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     <p class="one-line">업무 현황과 우리가 작업할 내역을 봅니다. 일정은 구글 시트와 연결되어 있어 여기서 고치면 시트에 바로 들어갑니다</p>
   </div>
   <div class="app-head-act">
-    <button class="btn" id="reload" type="button">새로고침</button>
+    <!-- 권한에 따라 숨는 버튼(w-only)은 맨 왼쪽에: 숨어도 나머지 버튼 자리가 움직이지 않는다 -->
     <button class="btn w-only" id="connBtn" type="button">시트 연결</button>
+    <button class="btn" id="reload" type="button">새로고침</button>
     <a class="btn" id="openSheet" href="#" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;text-decoration:none;color:inherit">스프레드시트 열기</a>
   </div>
 </header>
@@ -1017,7 +1020,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     var W = canWrite(), F = ['승인 대기', '승인', '반려'];
     var list = PVS.filter(function(p){ return pvFilter === '승인' ? /^승인$|^A안 승인|^B안 승인/.test(p.status) : p.status.indexOf(pvFilter) === 0; });
     if (!pvForm && (!pvSel || !PVS.some(function(p){ return p.id === pvSel; }))) pvSel = list[0] ? list[0].id : '';
-    var left = '<div class="mhead">' + F.map(function(f){ var n = PVS.filter(function(p){ return f === '승인' ? /^승인$|^[AB]안 승인/.test(p.status) : p.status.indexOf(f) === 0; }).length; return '<button type="button" class="pill seg' + (pvFilter === f ? ' on' : '') + '" data-pvf="' + f + '">' + f + ' ' + n + '</button>'; }).join('') +
+    var left = '<div class="mhead pvh">' + F.map(function(f){ var n = PVS.filter(function(p){ return f === '승인' ? /^승인$|^[AB]안 승인/.test(p.status) : p.status.indexOf(f) === 0; }).length; return '<button type="button" class="pill seg' + (pvFilter === f ? ' on' : '') + '" data-pvf="' + f + '">' + f + ' ' + n + '</button>'; }).join('') +
       (W ? '<button class="btn sm" type="button" data-pvnew style="margin-left:auto">＋ 새 임시 정책</button>' : '') + '</div>' +
       (list.length ? list.map(function(p){
         return '<button type="button" class="mitem" data-pv="' + esc(p.id) + '"' + (p.id === pvSel && !pvForm ? ' aria-current="true"' : '') + '><b>' + esc(p.title) + '</b><span>' + esc(p.id) + ' · ' + esc(p.policy.replace(/\s*\(.*$/, '')) + (p.by ? ' · ' + esc(p.by) : '') + (p.date ? ' · ' + esc(p.date) : '') + '</span>' +

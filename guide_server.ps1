@@ -474,6 +474,17 @@ function Sheet-Check([string]$txt) {
   if ($txt.StartsWith('{"error"')) { throw ([string]($txt | ConvertFrom-Json).error) }
   return $txt
 }
+# git을 실행해 출력을 UTF-8로 받는다(PowerShell 기본 받기는 한글 경로 · 내용을 깨뜨린다). 실패하면 빈 글
+function Git-Utf8([string[]]$a) {
+  try {
+    $psi = New-Object System.Diagnostics.ProcessStartInfo; $psi.FileName = 'git'
+    $psi.Arguments = (($a | ForEach-Object { '"' + ($_ -replace '"', '\"') + '"' }) -join ' ')
+    $psi.UseShellExecute = $false; $psi.RedirectStandardOutput = $true; $psi.RedirectStandardError = $true; $psi.CreateNoWindow = $true
+    $psi.StandardOutputEncoding = $Utf8
+    $pr = [System.Diagnostics.Process]::Start($psi); $o = $pr.StandardOutput.ReadToEnd(); [void]$pr.StandardError.ReadToEnd(); $pr.WaitForExit(15000) | Out-Null
+    if ($pr.ExitCode) { return '' }; return $o
+  } catch { return '' }
+}
 # 회의록(공유): .history/minutes/{id}.md (작업 이력과 함께 깃으로 모든 PC에)
 $MinDir = P $HistDir 'minutes'
 function Read-Minute([string]$f) {
@@ -759,7 +770,7 @@ while ($l.IsListening) {
         }
         $allowed = @(User-Menus $u); $need = $null
         foreach ($m in $Menus) { if ($m.pages -contains $rel0 -or ($m.key -eq 'proto' -and $rel0 -like 'prototypes/*')) { $need = $m.key; break } }
-        $api = @{ '/api/usage' = 'usage'; '/api/prototypes' = 'proto'; '/api/accounts' = 'accounts'; '/api/sheet' = 'plan'; '/api/sheet/data' = 'plan'; '/api/minutes' = 'plan'; '/api/plan/files' = 'plan' }
+        $api = @{ '/api/usage' = 'usage'; '/api/prototypes' = 'proto'; '/api/accounts' = 'accounts'; '/api/sheet' = 'plan'; '/api/sheet/data' = 'plan'; '/api/minutes' = 'plan'; '/api/plan/files' = 'plan'; '/api/guides/gitlog' = 'guide'; '/api/guides/gitfile' = 'guide' }
         if ($api.ContainsKey($path)) { $need = $api[$path] }
         if ($need -and $allowed -notcontains $need) {
           if ($path -like '/api/*') { SendJson $c 403 @{ error = '이 메뉴를 쓸 권한이 없습니다.' }; continue }
@@ -1338,6 +1349,33 @@ while ($l.IsListening) {
     }
     if ($path -eq '/api/usage' -and $req.HttpMethod -eq 'GET') { SendJson $c 200 (Read-Usage); continue }
     # UX 가이드(공유): 목록 · 이 PC의 파일별 작업 기준 가이드 · 바꾸기 {action:'apply', fileKey, guideId('' = 작업 기준 없음), by}
+    # UX 문서 변경이력용 깃 기록: 파일을 직접 바꿔 넣은 것(수정 요청이 아닌 것)도 변경이력에 보이게
+    #  GET /api/guides/gitlog?since=ISO → {items:[{hash, at, by, msg, files:[{st, path, from}]}]} (guides/ 아래, rev/ · 연관 항목 결과 · meta.json 제외)
+    #  GET /api/guides/gitfile?hash=&path=&prev=1 → 그 커밋(prev=1이면 바로 앞)의 파일 글(없으면 빈 글)
+    if ($path -eq '/api/guides/gitlog' -and $req.HttpMethod -eq 'GET') {
+      $since = [string]$req.QueryString['since']; if ($since -notmatch '^[0-9T:+.\-]{10,40}$') { $since = '' }
+      $args0 = @('-C', $HistDir, '-c', 'core.quotepath=false', 'log', '--name-status', '--date=iso-strict', '--pretty=format:@@%H|%ad|%an|%s', '-n', '300')
+      if ($since) { $args0 += "--since=$since" }
+      $args0 += @('--', 'guides')
+      $txt = Git-Utf8 $args0; $items = @(); $curC = $null
+      foreach ($ln in ($txt -split "`n")) {
+        $ln = $ln.TrimEnd("`r")
+        if ($ln.StartsWith('@@')) { $p = $ln.Substring(2).Split('|', 4); $curC = [ordered]@{ hash = $p[0]; at = $p[1]; by = $p[2]; msg = $(if ($p.Count -gt 3) { $p[3] } else { '' }); files = @() }; $items += $curC; continue }
+        if (-not $curC -or -not $ln.Trim()) { continue }
+        $c2 = $ln.Split("`t"); $st = $c2[0].Substring(0, 1); $fp = $c2[$c2.Count - 1]; $from = $(if ($c2.Count -gt 2) { $c2[1] } else { '' })
+        if ($fp -notlike 'guides/*' -or $fp -match '/rev/|\.check-[^/]*\.json$|/meta\.json$|^guides/_log\.json$') { continue }
+        $curC.files += [ordered]@{ st = $st; path = $fp.Substring(7); from = $(if ($from) { $from.Substring([Math]::Min(7, $from.Length)) } else { '' }) }
+      }
+      SendJson $c 200 @{ items = @($items | Where-Object { $_.files.Count }) }; continue
+    }
+    if ($path -eq '/api/guides/gitfile' -and $req.HttpMethod -eq 'GET') {
+      $h = [string]$req.QueryString['hash']; $fp = ''
+      foreach ($kv in ([string]$req.Url.Query).TrimStart('?').Split('&')) { $p2 = $kv.Split('=', 2); if ($p2.Count -eq 2 -and $p2[0] -eq 'path') { $fp = [Uri]::UnescapeDataString($p2[1].Replace('+', ' ')) } }
+      if ($h -notmatch '^[0-9a-f]{7,40}$' -or -not $fp -or $fp -match '\.\.' -or $fp -match '^(accounts|config)/') { throw '잘못된 요청입니다.' }
+      $ref = $(if ([string]$req.QueryString['prev']) { "$h^" } else { $h })
+      $t = Git-Utf8 @('-C', $HistDir, 'show', "${ref}:guides/$fp")
+      Send $c 200 'text/plain; charset=utf-8' $Utf8.GetBytes([string]$t); continue
+    }
     if ($path -eq '/api/guides') {
       if ($req.HttpMethod -eq 'POST') {
         $body = (New-Object IO.StreamReader($req.InputStream, $Utf8)).ReadToEnd() | ConvertFrom-Json

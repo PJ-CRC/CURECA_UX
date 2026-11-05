@@ -1115,7 +1115,7 @@ sub handle {
       }
       my %al = map { $_ => 1 } user_menus($u); my $need;
       for my $m (@MENUS) { if ((grep { $_ eq $rel0 } @{ $m->{pages} }) || ($m->{key} eq 'proto' && $rel0 =~ m{^prototypes/})) { $need = $m->{key}; last; } }
-      my %api = ('/api/usage' => 'usage', '/api/prototypes' => 'proto', '/api/accounts' => 'accounts', '/api/sheet' => 'plan', '/api/sheet/data' => 'plan', '/api/minutes' => 'plan', '/api/plan/files' => 'plan'); $need = $api{$path} if $api{$path};
+      my %api = ('/api/usage' => 'usage', '/api/prototypes' => 'proto', '/api/accounts' => 'accounts', '/api/sheet' => 'plan', '/api/sheet/data' => 'plan', '/api/minutes' => 'plan', '/api/plan/files' => 'plan', '/api/guides/gitlog' => 'guide', '/api/guides/gitfile' => 'guide'); $need = $api{$path} if $api{$path};
       if ($need && !$al{$need}) {
         return respond_json($sock, 403, { error => '이 메뉴를 쓸 권한이 없습니다.' }) if $path =~ m{^/api/};
         return respond($sock, 302, 'text/plain', '', "Location: /" . me_info()->{first} . "\r\n");
@@ -1241,6 +1241,30 @@ sub handle {
   if ($path eq '/api/prototypes' && $method eq 'POST') { return respond_json($sock, 200, prototypes_post($body->())); }
   if ($path eq '/api/projects' && $method eq 'POST') { return respond_json($sock, 200, projects_post($body->(), $origin)); }
   # UX 가이드(공유): 목록 · 이 PC의 파일별 작업 기준 가이드 · 바꾸기 {action:'apply', fileKey, guideId('' = 작업 기준 없음), by}
+  # UX 문서 변경이력용 깃 기록(윈도우 서버와 같다): 파일을 직접 바꿔 넣은 것도 변경이력에 보이게
+  if ($path eq '/api/guides/gitlog' && $method eq 'GET') {
+    my $since = sheet_query($target, 'since'); $since = '' unless $since =~ /^[0-9T:+.\-]{10,40}$/;
+    my @a = ('git', '-C', $HIST_DIR, '-c', 'core.quotepath=false', 'log', '--name-status', '--date=iso-strict', '--pretty=format:@@%H|%ad|%an|%s', '-n', '300', ($since ? ("--since=$since") : ()), '--', 'guides');
+    my $txt = ''; if (open(my $p, '-|', @a)) { local $/; binmode $p; $txt = <$p> // ''; close $p; }
+    $txt = decode('UTF-8', $txt);
+    my (@items, $cur);
+    for my $ln (split /\n/, $txt) {
+      $ln =~ s/\r$//;
+      if ($ln =~ /^@@(.*)$/) { my @p = split /\|/, $1, 4; $cur = { hash => $p[0], at => $p[1], by => $p[2], msg => $p[3] // '', files => [] }; push @items, $cur; next; }
+      next unless $cur && $ln =~ /\S/;
+      my @c = split /\t/, $ln; my $st = substr($c[0], 0, 1); my $fp = $c[-1]; my $from = @c > 2 ? $c[1] : '';
+      next unless $fp =~ m{^guides/} && $fp !~ m{/rev/|\.check-[^/]*\.json$|/meta\.json$|^guides/_log\.json$};
+      push @{ $cur->{files} }, { st => $st, path => substr($fp, 7), from => ($from ne '' ? substr($from, 7) : '') };
+    }
+    return respond_json($sock, 200, { items => [ grep { @{ $_->{files} } } @items ] });
+  }
+  if ($path eq '/api/guides/gitfile' && $method eq 'GET') {
+    my $h = sheet_query($target, 'hash'); my $fp = sheet_query($target, 'path');
+    die "잘못된 요청입니다.\n" unless $h =~ /^[0-9a-f]{7,40}$/ && $fp ne '' && $fp !~ /\.\./ && $fp !~ m{^(accounts|config)/};
+    my $ref = sheet_query($target, 'prev') ne '' ? "$h^" : $h;
+    my $t = ''; if (open(my $p, '-|', 'git', '-C', $HIST_DIR, 'show', "$ref:guides/" . encode('UTF-8', $fp))) { local $/; binmode $p; $t = <$p> // ''; close $p; }
+    return respond($sock, 200, 'text/plain; charset=utf-8', $t);
+  }
   if ($path eq '/api/guides') {
     if ($method eq 'POST') {
       my $g = $body->();
