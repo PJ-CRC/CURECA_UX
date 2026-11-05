@@ -389,6 +389,8 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     <div class="vbar">
       <div class="crumb" id="crumb"></div>
       <div class="tools">
+        <!-- 권한에 따라 숨는 버튼(w-only)은 맨 왼쪽에: 숨어도 나머지 도구 자리가 움직이지 않는다 -->
+        <button class="tbtn w-only" id="capBtn" title="이 프레임 캡처 다시 받기 (Figma 플러그인 또는 Claude가 받음)">캡처</button>
         <button class="tbtn" id="prev" title="이전 페이지 (←)" aria-label="이전 페이지">‹</button>
         <button class="tbtn" id="next" title="다음 페이지 (→)" aria-label="다음 페이지">›</button>
         <button class="tbtn" id="zoomOut" title="축소" aria-label="축소">−</button>
@@ -396,7 +398,6 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
         <button class="tbtn" id="zoomIn" title="확대" aria-label="확대">+</button>
         <button class="tbtn on" id="fitW" title="너비 맞춤">너비</button>
         <button class="tbtn" id="fitA" title="전체 맞춤">전체</button>
-        <button class="tbtn w-only" id="capBtn" title="이 프레임 캡처 다시 받기 (Figma 플러그인 또는 Claude가 받음)">캡처</button>
         <button class="tbtn" id="liveBtn" title="Figma 실시간 보기 (Figma 로그인 필요 · 무거움)">실시간</button>
         <a class="tbtn" id="openFig" target="_blank" rel="noopener" title="Figma에서 이 프레임 열기">Figma ↗</a>
       </div>
