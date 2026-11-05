@@ -17,12 +17,11 @@
     "hash":  "ekr6FXFOVxP3eeBzmdYud9KPqHdH6i1pGC4+1m3mgqg=",
     "pwAt":  "2026-10-30T10:56:37+09:00",
     "writes":  [
-                   "plan",
                    "guide",
                    "workbench",
                    "history",
                    "proto"
                ],
     "active":  true,
-    "updatedAt":  "2026-11-04T16:29:09+09:00"
+    "updatedAt":  "2026-11-05T09:46:54+09:00"
 }
