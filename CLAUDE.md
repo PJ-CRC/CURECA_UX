@@ -39,7 +39,7 @@
    - **사용 한도 표시**: 감시를 시작할 때와 감시가 끝나 깰 때마다(`PENDING` · `RESUME` · `JOBS` · `TIMEOUT`) `mcp__ccd_session_mgmt__get_usage`로 이 계정의 사용 한도를 읽는다. 결과를 `workbench/.plan_usage.json`에 `{at(지금 시각 ISO), plan, windows:[{label, percentUsed, resetsAt}]}`로 덮어쓴다(Write 도구, UTF-8). 상단 메뉴에 버전 앞에 「Claude 24% · 1시간 33분 후 초기화 · 주간 4%」로 보인다(appnav.js). 이 PC 작업자 본인 것만이고 공유하지 않는다. 도구가 없거나 `plan.status`가 ok가 아니면 건너뛴다. 이것 때문에 따로 깨우지는 않는다.
 2. `TIMEOUT`이면 다시 실행한다. `JOBS`면 아래 「작업 대기열」대로, `PENDING`이면 요청마다 아래 순서로 처리한 뒤 다시 실행한다. **처리 순서는 `PENDING`에 적힌 순서**다(감시가 우선순위 「높음」 먼저, 같은 우선순위는 먼저 등록한 것부터 정렬해 둔다. `RESUME`도 같다).
    0. 대상 파일 = 요청의 `fileKey`(없으면 시작 안내 작업 링크의 파일, 둘 다 없으면 「보류」). **수정 가능 페이지가 아니면 반영하지 않는다.** 요청의 `page`가 그 파일의 지금 수정 가능 페이지(project.json editablePageName)일 때만 반영한다. 아니면 상태를 「보류」로 바꾸고 note에 「○○ 페이지는 보기 전용입니다. 담당자 확인 필요」를 남긴다.
-   1. 상태를 「진행 중」으로: `POST http://localhost:8765/api/requests` `{action:'update', id, status:'진행 중', note, by:'Claude'}`
+   1. 상태를 「진행 중」으로: `POST http://localhost:8765/api/requests` `{action:'update', id, status:'진행 중', note, by:'Claude'}` — 서버가 「이미 진행 중」으로 거절하면 다른 Claude 세션이 처리 중이니 그 요청은 건너뛴다
    2. Figma(대상 파일 · 수정 가능 페이지)에 반영한다. **작업 기준 문서를 먼저 확인한다 — UX 문서의 카테고리(작업규칙 · 정책서 · UX가이드 · 기준데이터 · 화면 정의서)마다 「적용」한 문서 하나씩만 읽는다**:
       - `GET /api/guides`의 `applied[fileKey]`(**이 PC 작업자가 고른 작업 기준**, `workbench/guide_apply.json`, 공유하지 않음). `docs: {종류: {id}}`가 카테고리별 적용 문서다(`rule` 작업규칙 · `policy` 정책서 · `guide` UX가이드 · `data` 기준데이터 · `spec` 화면 정의서, 앞으로 늘어도 같다). `docs`가 없는 예전 형식이면 `guideId`가 UX가이드다. id가 빈 값이면 그 카테고리는 작업 기준 없음.
       - 적용한 문서마다 **지금 내용**(`items[].mdPath`, 고친 적이 있으면 가장 최근 수정본 `rev/…md`)을 읽는다. **파일형 문서**(`format:'files'`, 예: CURECA 작업규칙)는 `mdPath`가 비어 있고 `items[].fileList[].mdPath`(파일마다 지금 내용)를 읽는다 — 작업규칙(`rules`)은 모두, 정책서(`policy`)는 `README.md`와 요청 화면 CID를 머리말 `cids`에 둔 정책 파일 · 그 정책이 `data`로 가리키는 기준 자료만, 기준데이터(`glossary`)는 `glossary.md`와 요청에 걸린 표만, 화면 정의서(`screens`)는 요청 화면의 CID 파일(`{메뉴}/{CID}.md`)과 짝 CID 파일만 읽는다(파일이 많아 다 읽지 않는다). **적용하지 않은 문서는 같은 카테고리에 여러 개 있어도 읽지 않고 따르지 않는다.**
@@ -166,7 +166,10 @@
 
 ## 작업 대기열 (`workbench/jobs.json`, `JOBS J0xx`)
 
-Workbench의 「캡처 받기」 · 「Claude에게 목록 만들기 요청」, UX 문서 각 탭의 「새 {카테고리} 만들기」, 가이드 보기 화면의 「수정 요청」 · 「고칠 화면 찾기 요청」, 프로토타입의 「만들기 요청」 · 「수정 요청」 · 「지금 반영」이 쌓인다. `GET /api/jobs`로 읽고, 작업마다 처리한 뒤 `POST /api/jobs {action:'update', id, status:'완료'|'실패', note}`.
+Workbench의 「캡처 받기」 · 「Claude에게 목록 만들기 요청」, UX 문서 각 탭의 「새 {카테고리} 만들기」, 가이드 보기 화면의 「수정 요청」 · 「고칠 화면 찾기 요청」, 프로토타입의 「만들기 요청」 · 「수정 요청」 · 「지금 반영」이 쌓인다. `GET /api/jobs`로 읽고, 작업마다 처리한 뒤 `POST /api/jobs {action:'update', id, status:'완료'
+
+- **같은 작업 · 요청을 두 번 처리하지 않는다**: 서버는 이미 「진행 중」인 작업(`/api/jobs`) · 요청(`/api/requests`)을 다시 「진행 중」으로 바꾸려 하면 「이미 진행 중」 오류를 돌려준다(백그라운드 감시와 Claude 창이 함께 처리하던 것을 막음, 2026-11-05 J028). 이 오류를 받으면 다른 Claude 세션이 처리 중이니 **그 항목은 건너뛴다**. 내가 처리하다 끊겨 다시 이어야 할 때만 `force:true`를 붙인다.
+- **사용량**: 끝낸(완료 · 보류 · 실패) 작업마다 `workbench/usage.ps1 -From {「진행 중」으로 바꾼 시각} -By {작업의 by} -Title "{종류}: {이름} ({작업 ID})"`(맥 `usage.pl`)로 남긴다. 종류 이름은 「사용량 통계」가 나눠 보이는 말로 쓴다: UX 문서 = 카테고리 이름(작업규칙 · 정책서 · UX가이드 · 기준데이터 · 화면 정의서), 연관 항목 = 「연관 항목 찾기」 · 「고칠 화면 찾기」, 「회의록 요약」, 「임시 정책」 · 「논의·결정」(plan), 「프로토타입」, 「목록 만들기」 · 「캡처」. Workbench 요청(R0xx)은 서버가 완료 때 자동으로 남긴다.|'실패', note}`.
 
 - **catalog (프레임 목록 만들기)**: 내 Figma 앱이 아니라 Figma 클라우드(`use_figma`)에서 만든다.
   1. `use_figma`로 그 파일의 페이지 목록(id · 이름)을 받는다. 이름이 구분선(`----` 등)인 페이지는 뺀다.
@@ -210,11 +213,13 @@ Workbench의 「캡처 받기」 · 「Claude에게 목록 만들기 요청」, 
   2. `POST /api/guides {action:'save', id, md, by:'Claude', note:'{항목}: {고친 내용 한 줄}', base:{지금 rev, 없으면 'guide.md'}, request:'{항목}: {작업의 text 그대로}', jobId:{작업 ID}}` → 응답의 `saved`가 새 수정본이다(`request` · `jobId`는 UX 문서 변경이력에 보인다).
   3. `POST /api/jobs {action:'update', id, status:'완료', revFrom:{base}, revTo:{saved}, note:'고친 내용 요약'}`. 보기 화면 위에 결과가 나오고, 그 가이드를 작업 기준으로 쓰는 사람에게는 「고칠 화면 찾기 요청」(guide-check)이 이어서 안내된다. 요청이 모호하면 고치지 말고 「보류」와 질문을 note에.
   4. `Common_UX_Changelog.md`에는 쓰지 않는다(UX 문서 「변경이력」에 수정본 · 요청 글로 남는다).
+  5. **사용량**: 완료(또는 보류 · 실패)로 바꾼 뒤 `workbench/usage.ps1 -From {「진행 중」으로 바꾼 시각} -By {작업의 by} -Title "{카테고리 이름}: {항목 이름} ({작업 ID})"`(맥 `usage.pl`, 카테고리 이름 = 작업규칙 · 정책서 · UX가이드 · 기준데이터 · 화면 정의서)로 남긴다(「사용량 통계」 종류 「UX 문서」).
 - **guide-check (가이드 수정 반영 · 고칠 화면 찾기)**: 가이드 수정(guide-edit)이 끝난 뒤 사람이 「고칠 화면 찾기 요청」을 누르면 쌓인다(그 가이드가 그 사람 PC의 작업 기준일 때만 안내된다). 작업의 `guide`(가이드 id) · `fileKey`(그 가이드가 작업 기준인 파일) · `revFrom` → `revTo`(바뀌기 전 · 뒤 수정본, `guide.md`면 처음 내용) · `text`(무엇을 고쳤는지). **Figma는 고치지 않는다.**
   1. 「진행 중」으로 바꾼다. `.history/guides/{guide}/` 아래 `revFrom` · `revTo` 내용을 비교해 바뀐 규칙을 정리한다.
   2. 그 파일의 **수정 가능 페이지**(project.json editablePageName)에서 바뀐 규칙이 적용되는 프레임을 찾는다. 작업 이력(`.history/entries`의 그 fileKey 요청) · 프레임 목록(catalog.json)으로 후보를 좁히고, `use_figma`로 실제 내용(글 · 크기 · 컴포넌트)을 읽어 바뀐 규칙과 다른지 확인한다.
   3. `POST /api/jobs {action:'update', id, status:'완료', items:[{nodeId, frame, page, change}], note:'후보 N개 중 M개 수정 필요'}`. `change`는 그 화면에서 무엇을 어떻게 고칠지 한두 문장. 고칠 화면이 없으면 `items: []`와 note에 이유. 판단이 어려우면 「보류」와 질문을 note에.
   4. 보기 화면에 「고쳐야 할 화면」 목록이 나오고, 사람이 반영할 화면을 골라 [선택한 화면 수정 요청]을 누르면 Workbench 수정 요청(type `UX가이드 반영`)으로 등록된다 → 평소 요청 처리 순서대로 반영한다. 작업은 「반영」(또는 「반영 안 함」)으로 바뀐다.
+  5. **사용량**: 완료(또는 보류 · 실패)로 바꾼 뒤 `usage.ps1 -From {「진행 중」으로 바꾼 시각} -By {작업의 by} -Title "{고칠 화면 찾기|연관 항목 찾기}: {가이드 제목} ({작업 ID})"`로 남긴다(「사용량 통계」 종류 「연관 항목」). 아래 `scope:'spec'`도 같다.
   - **연관 항목 찾기(`scope:'spec'`, UX가이드 외 카테고리)**: 작업규칙 · 정책서 · 기준데이터 · 화면 정의서(`meta.kind`가 `guide`가 아닌 문서)를 고치면(guide-edit 완료) 작업 기준과 상관없이 늘 「연관 항목 찾기 요청」이 안내되고, 같은 guide-check 작업으로 쌓인다(`fileKey`는 그 문서의 기준 파일, 없으면 빈 값). **Figma · 문서는 고치지 않는다.** 위 1번처럼 바뀐 내용을 정리한 뒤 세 곳을 찾는다:
     - **화면**(`fileKey`가 있을 때): 그 파일 수정 가능 페이지에서 바뀐 정의와 다른 화면 → `{type:'screen', nodeId, frame, page, change}`
     - **문서**: 다른 UX 문서(모든 카테고리, `.history/guides/*/`의 지금 내용 `mdPath`)에서 같은 용어 · 값 · 규칙을 쓰는 항목 → `{type:'doc', doc:{가이드 id}, docTitle, section:{### 항목 제목 그대로}, change}`

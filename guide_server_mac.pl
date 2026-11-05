@@ -195,6 +195,8 @@ sub requests_post {
     hist_from_request($items[0]);
   } elsif ($act eq 'update') {
     my ($hit) = grep { str($_->{id}) eq str($b->{id}) } @items; die "요청을 찾지 못했습니다: " . str($b->{id}) . "\n" unless $hit;
+    # 같은 요청을 두 Claude 세션이 함께 처리하지 않게: 이미 「진행 중」이면 다시 「진행 중」으로 바꿀 수 없다(force로만)
+    die "이미 진행 중인 요청입니다(다른 Claude 세션이 처리 중): " . str($hit->{id}) . ". 이 요청은 건너뛰세요.\n" if str($b->{status}) eq '진행 중' && str($hit->{status}) eq '진행 중' && !$b->{force};
     # 「진행 중」이 될 때마다 사용량 구간의 시작 시각을 새로 잡는다
     $hit->{startedAt} = $now if str($b->{status}) eq '진행 중' && str($hit->{status}) ne '진행 중';
     # Claude의 질문 · 선택지(ask {q, options:[{label, action?, ids?}], free}): 함께 보내면 그것으로, 상태만 바뀌면 지난 질문은 지운다
@@ -894,6 +896,9 @@ sub jobs_post {
   } elsif ($act eq 'update') {
     ($hit) = grep { str($_->{id}) eq str($b->{id}) } @items; die "작업을 찾지 못했습니다: " . str($b->{id}) . "\n" unless $hit;
     die ro_msg(job_menu(str($hit->{kind}))) unless can_write(job_menu(str($hit->{kind})));   # 화면에서 바꾸는 것(예: 고칠 화면 「반영」)
+    # 같은 작업을 두 Claude 세션이 함께 처리하지 않게: 이미 「진행 중」이면 다시 「진행 중」으로 바꿀 수 없다(force로만)
+    die "이미 진행 중인 작업입니다(다른 Claude 세션이 처리 중): " . str($hit->{id}) . ". 이 작업은 건너뛰세요.
+" if str($b->{status}) eq '진행 중' && str($hit->{status}) eq '진행 중' && !$b->{force};
     $hit->{status} = str($b->{status}) if str($b->{status}) ne '';
     $hit->{note} = str($b->{note}) if defined $b->{note};
     $hit->{guide} = str($b->{guide}) if str($b->{guide}) ne '';   # 만든 가이드 id
