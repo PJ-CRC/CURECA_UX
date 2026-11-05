@@ -1,0 +1,26 @@
+{
+    "id":  "brex-01_20261105-133505",
+    "kind":  "work",
+    "reqId":  "",
+    "at":  "2026-11-05T13:35:05+09:00",
+    "from":  "2026-11-05T13:34:34+09:00",
+    "by":  "서보경",
+    "doneBy":  "Claude",
+    "pc":  "BREX_01",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "연관 항목 찾기: screen-spec.md 흐름 보류 (J020)",
+    "models":  {
+                   "claude-opus-5-5":  10
+               },
+    "calls":  10,
+    "input":  22,
+    "cacheWrite":  14586,
+    "cacheRead":  1200470,
+    "output":  6928,
+    "total":  1222006,
+    "usd":  0.4954
+}
