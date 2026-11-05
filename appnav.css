@@ -23,8 +23,9 @@ code,kbd,pre,samp,.mono{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular
 .one-line{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .app-wrap{box-sizing:border-box;max-width:var(--page-max);margin:0 auto;padding:var(--page-top) var(--page-gutter) 64px}
 .app-wrap.read{max-width:var(--page-max-read)}
-/* 넓은 본문: UX 문서 · 변경 이력 · 사용량 통계 · 프로토타입 · 계정 관리. 좌우 여백은 appnav.js가 상단 메뉴 「UX 문서」 위치에 맞춘다 */
-.app-wrap.wide{max-width:none}
+/* 넓은 본문: 일정/작업 · UX 문서 · 변경 이력 · 사용량 통계 · 프로토타입 · 계정 관리.
+   좌우 여백 = 창 폭의 6%(작아도 공통 여백) — 창 폭 · 화면 배율이 달라도 본문이 늘 창의 같은 비율(약 88%)을 쓴다 */
+.app-wrap.wide{max-width:none;padding-left:max(var(--page-gutter), 6vw);padding-right:max(var(--page-gutter), 6vw)}
 .app-head{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;margin:0 0 16px}
 .app-head .app-head-t{flex:1;min-width:240px}
 .app-head h1{font-size:26px;font-weight:800;line-height:1.3;margin:0 0 4px;letter-spacing:-.01em}

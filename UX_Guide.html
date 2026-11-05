@@ -247,7 +247,9 @@ html.embed .appnav,html.embed .back,html.embed #title{display:none}
 /* 보기만 가능한 계정(UX 문서 · 수정 요청 권한 없음): 수정 요청 · 수정 반영 안내 숨김 */
 html.doc-ro #editBtn,html.doc-ro #fixes{display:none!important}
 html.embed .app-wrap{max-width:none;padding:0 0 24px}
-html.embed .side{top:12px;max-height:calc(100vh - 24px)}
+/* UX 문서 안(iframe): iframe이 내용 높이라 sticky가 듣지 않는다 → 목차 위치 · 높이는 stickSide()가 바깥 페이지 스크롤에 맞춰 정한다 */
+html.embed .side{position:relative;top:auto;max-height:none;will-change:transform}
+html.embed,html.embed body{overflow:hidden}
 @media (max-width:860px){
   .layout{grid-template-columns:1fr}
   .side{position:static;max-height:none}
@@ -592,26 +594,44 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
     });
   }
 
-  /* 창 높이에 맞춤: 넓은 화면(목차 · 상세 두 칸)에서 목차와 상세를 남은 창 높이로 같게, 스크롤은 상세 안에서(좁은 화면은 그대로 페이지 스크롤) */
-  function fit(){
-    var lay = $('layout'), wide = window.innerWidth > 860;
-    lay.classList.toggle('fit', wide); document.documentElement.classList.toggle('fitted', wide);
-    if (!wide) return;
-    var top = lay.getBoundingClientRect().top + (document.documentElement.classList.contains('embed') ? 0 : window.scrollY);
-    /* 아래 수정 요청 입력창이 늘 보이게: 창이 낮으면(맥 노트북 등) 목차 · 상세를 160px까지 줄인다 */
-    var h = Math.max(160, window.innerHeight - top - (document.documentElement.classList.contains('embed') ? 4 : 16));
-    lay.style.setProperty('--fit', h + 'px');
-    /* 아래 입력창 · 여백 때문에 페이지가 아직 넘치면(바깥 스크롤이 생기면) 그만큼 더 줄인다 — 스크롤은 상세 안에서만 */
-    var over = document.documentElement.scrollHeight - window.innerHeight;
-    if (over > 0) lay.style.setProperty('--fit', Math.max(160, h - over) + 'px');
+  /* 페이지 전체가 스크롤된다(목차 · 내용 · 결과 패널 · 입력창이 위에서 아래로 이어짐, 입력창을 늘리면 아래로 길어짐).
+     목차는 화면에 붙어 따라온다: 따로 연 페이지는 CSS sticky, UX 문서 안(embed, iframe)은 바깥 페이지 스크롤에 맞춰 옮긴다.
+     embed는 내용 높이를 바깥 페이지에 알려 iframe이 그 높이가 된다(Common_UX_Guide.html 'ux-guide-h') */
+  var EMBED = document.documentElement.classList.contains('embed');
+  function outer(){ try { return window.frameElement && window.parent !== window ? window.parent : null; } catch(x){ return null; } }
+  function stickSide(){
+    var P = outer(); if (!P) return;
+    var side = $('side'), lay = $('layout');
+    if (window.innerWidth <= 860) { side.style.transform = ''; side.style.maxHeight = ''; return; }
+    var nav = P.document.querySelector('.appnav'), navH = nav ? nav.offsetHeight : 0;
+    side.style.maxHeight = Math.max(240, P.innerHeight - navH - 24) + 'px';
+    var want = navH + 12 - (window.frameElement.getBoundingClientRect().top + lay.getBoundingClientRect().top);
+    side.style.transform = 'translateY(' + Math.round(Math.max(0, Math.min(want, lay.offsetHeight - side.offsetHeight))) + 'px)';
   }
-  /* 다른 항목으로 가면 상세 맨 위로(맞춤일 때는 상세 안을, 아니면 페이지를) */
+  function fit(){
+    $('layout').classList.remove('fit'); document.documentElement.classList.remove('fitted');
+    if (!EMBED) return;
+    var P = outer(), w = document.querySelector('.app-wrap');
+    if (P && w) P.postMessage({ type: 'ux-guide-h', h: w.offsetTop + w.offsetHeight }, location.origin);   // 화면 위치가 아니라 문서 기준 높이
+    stickSide();
+  }
+  /* 다른 항목으로 가면 상세 맨 위로(지나 내려가 있을 때만) */
   function toTop(){
-    if ($('layout').classList.contains('fit')) $('main').scrollTop = 0;
-    else window.scrollTo({ top: $('main').getBoundingClientRect().top + scrollY - 70, behavior: 'smooth' });
+    var P = outer(), m = $('main');
+    if (P) {
+      var nav = P.document.querySelector('.appnav'), y = P.scrollY + window.frameElement.getBoundingClientRect().top + m.getBoundingClientRect().top - (nav ? nav.offsetHeight : 0) - 12;
+      if (P.scrollY > y) P.scrollTo({ top: y, behavior: 'smooth' });
+    } else {
+      var y2 = m.getBoundingClientRect().top + scrollY - 76;
+      if (scrollY > y2) window.scrollTo({ top: y2, behavior: 'smooth' });
+    }
   }
   window.addEventListener('resize', fit);
-  if (window.ResizeObserver) { var roFit = new ResizeObserver(fit); roFit.observe($('fixes')); roFit.observe($('ask')); }   // 아래 수정 결과 패널 · 수정 요청 입력창 크기가 바뀌면 다시 맞춤
+  if (EMBED) {
+    var P0 = outer();
+    if (P0) { P0.addEventListener('scroll', stickSide, { passive: true }); P0.addEventListener('resize', stickSide); window.addEventListener('pagehide', function(){ try { P0.removeEventListener('scroll', stickSide); P0.removeEventListener('resize', stickSide); } catch(x){} }); }
+  }
+  if (window.ResizeObserver) { var roFit = new ResizeObserver(fit); roFit.observe(document.querySelector('.app-wrap')); }   // 내용 · 결과 패널 · 입력창 높이가 바뀌면 바깥 iframe 높이도
   setTimeout(fit, 0);
 
   /* ── 화면 정의서(meta.view 'screens'): 메뉴 폴더마다 CID 화면설계서(머리말 + 본문 + 반영 대기 목록), 메뉴 정보는 _menu.md ──
