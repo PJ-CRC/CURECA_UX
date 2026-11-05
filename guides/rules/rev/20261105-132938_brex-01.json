@@ -1,0 +1,11 @@
+{
+    "rev":  "20261105-132938_brex-01",
+    "by":  "Claude",
+    "at":  "2026-11-05T13:29:38+09:00",
+    "note":  "policy-writing.md: 공통(COM) 정책과 Common UX B안: 가이드에 있는 규칙은 COMM ID로 잇고 공통 정책으로 옮기지 않음 (원본 d0bd094)",
+    "base":  "",
+    "pc":  "BREX_01",
+    "req":  "헌법: C:\\Users\\exroc\\Documents\\CURECA_AI 여기 파일 읽고 ux문서에 반영되어야하는 내역 찾아서 경로에 잇는 파일의 내용으로 업데이트해줘",
+    "jobId":  "J010",
+    "file":  "policy-writing.md"
+}
