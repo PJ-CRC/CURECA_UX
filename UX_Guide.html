@@ -622,7 +622,8 @@ html.embed,html.embed body{overflow:hidden}
       var ask = $('ask'), below = ask.offsetParent ? ask.getBoundingClientRect().bottom - lay.getBoundingClientRect().bottom - grow : 0;
       /* 입력창 아래 여백(이 페이지 + UX 문서 안이면 바깥 페이지의 iframe 아래)까지 빼서 늘리기 전에는 페이지가 스크롤되지 않게 */
       var wrap = document.querySelector('.app-wrap'), tail = wrap.getBoundingClientRect().bottom - ask.getBoundingClientRect().bottom;
-      if (P) tail += P.document.documentElement.scrollHeight - (P.scrollY + window.frameElement.getBoundingClientRect().bottom);
+      /* 바깥은 내용 끝(.app-wrap 아래) 기준 — 문서 높이(scrollHeight)는 창보다 작아지지 않아, 쓰면 줄어든 만큼 또 줄어드는 되먹임이 생긴다 */
+      if (P) { var ow = P.document.querySelector('.app-wrap'); if (ow) tail += Math.max(0, ow.getBoundingClientRect().bottom - window.frameElement.getBoundingClientRect().bottom); }
       var h = W.innerHeight - top - below - tail;
       /* 낮은 창: 위 제목 · 탭이 높이를 다 먹으면 목차 · 상세를 창 높이(상단 메뉴 아래)로 두고 페이지를 스크롤해 본다 */
       if (h < 200) h = W.innerHeight - navOf(W) - 24;
