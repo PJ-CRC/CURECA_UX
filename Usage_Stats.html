@@ -128,6 +128,11 @@ td .clamp{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;o
 td .sub{display:block;color:var(--ink-3);font-size:12px;margin-top:2px}
 td.usd{font-weight:700}
 .kind{display:inline-block;font-size:11px;font-weight:700;padding:1px 6px;border-radius:4px;background:var(--ok-soft);color:var(--ok);margin-right:6px;vertical-align:1px}
+/* 종류별 색: 요청 = 초록(기본), UX 문서 · 연관 항목 = 파랑, 회의록 · 임시 정책 = 주황, 그 밖 = 회색 */
+.kind[data-k="UX 문서"],.kind[data-k="연관 항목"]{background:var(--accent-soft,#eaf2ff);color:var(--accent,#1570ef)}
+.kind[data-k="회의록"],.kind[data-k="임시 정책 · 논의"]{background:#fff1e0;color:#b35900}
+.kind[data-k="Figma 직접 수정"]{background:var(--ok-soft);color:var(--ok)}
+.kind[data-k="프로토타입"],.kind[data-k="목록 · 캡처"],.kind[data-k="기타"]{background:var(--surface-2);color:var(--ink-3)}
 .empty{text-align:center;color:var(--ink-3);padding:36px 0}
 .pager{display:flex;justify-content:center;align-items:center;gap:4px;margin-top:14px;flex-wrap:wrap}
 .pager button{min-width:34px;height:34px;padding:0 8px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:13px}
@@ -180,6 +185,7 @@ td.usd{font-weight:700}
     </div>
     <div class="app-head-act">
       <select id="who" aria-label="작업자"><option value="">작업자 전체</option></select>
+      <select id="kindSel" aria-label="작업 종류"><option value="">종류 전체</option></select>
       <div class="seg" id="period" role="tablist" aria-label="기간">
         <button data-p="week">이번 주</button><button data-p="month">이번 달</button><button data-p="all" class="on">전체</button>
       </div>
@@ -229,7 +235,7 @@ td.usd{font-weight:700}
 <div class="tip" id="tip" hidden></div>
 <script>
 (function(){
-  var PER = 10, BLOCK = 10, page = 1, period = 'all', who = '', day = '', det = false, mixMode = 'tok', sortMode = 'new', items = [], pricing = null, sig = '';
+  var PER = 10, BLOCK = 10, page = 1, period = 'all', who = '', kind = '', day = '', det = false, mixMode = 'tok', sortMode = 'new', items = [], pricing = null, sig = '';
   var $ = function(id){ return document.getElementById(id); };
   function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
   function fmt(t){ return t ? t.replace('T', ' ').slice(0, 16) : ''; }
@@ -238,6 +244,21 @@ td.usd{font-weight:700}
   function short(n){ n = n || 0; return n >= 1e8 ? (n / 1e8).toFixed(2) + '억' : n >= 1e4 ? (n / 1e4).toFixed(1) + '만' : num(n); }
   function usd(v){ v = v || 0; return '$' + (v >= 100 ? v.toFixed(0) : v >= 1 ? v.toFixed(2) : v.toFixed(3)); }
   function name(u){ return u.by || '(이름 없음)'; }
+
+  /* 작업 종류: 요청(R0xx)은 reqId, 그 밖은 Claude가 남긴 제목 앞말(CLAUDE.md 「작업 대기열 › 사용량」)로 나눈다 */
+  var KINDS = ['요청', 'Figma 직접 수정', 'UX 문서', '연관 항목', '회의록', '임시 정책 · 논의', '프로토타입', '목록 · 캡처', '기타'];
+  function kindOf(u){
+    if (u.reqId) return '요청';
+    var t = String(u.text || '').trim();
+    if (/연관 항목|화면 찾기/.test(t)) return '연관 항목';
+    if (/^(작업규칙|정책서|UX ?가이드|가이드 수정|기준 ?데이터|화면 ?정의서)/.test(t)) return 'UX 문서';
+    if (/^회의록/.test(t)) return '회의록';
+    if (/^(임시 정책|논의|PV-|PD-|CA-)/.test(t)) return '임시 정책 · 논의';
+    if (/^프로토타입/.test(t)) return '프로토타입';
+    if (/^(목록 만들기|캡처|프레임 목록)/.test(t)) return '목록 · 캡처';
+    if (u.frame || u.nodeId || u.fileKey) return 'Figma 직접 수정';   // 요청 없이 채팅으로 Figma를 고친 것(CLAUDE.md)
+    return '기타';
+  }
   function pad(n){ return (n < 10 ? '0' : '') + n; }
   function dkey(d){ return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
   function dayOf(u){ var t = Date.parse(u.at); return t ? dkey(new Date(t)) : ''; }
@@ -335,7 +356,7 @@ td.usd{font-weight:700}
 
   function render(){
     $('tip').hidden = true;
-    var base = items.filter(inPeriod), list = who ? base.filter(function(u){ return name(u) === who; }) : base, s = sum(list);
+    var base = items.filter(inPeriod).filter(function(u){ return !kind || kindOf(u) === kind; }), list = who ? base.filter(function(u){ return name(u) === who; }) : base, s = sum(list);
     /* 금액 환산 중 종류별 비중(단가는 모델마다 달라 토큰 비율로 보여 준다) */
     $('cards').innerHTML =
       '<div class="card"><div class="k">작업 수</div><div class="v">' + num(s.n) + '건</div><div class="s">API 호출 ' + num(s.calls) + '회</div></div>' +
@@ -374,7 +395,7 @@ td.usd{font-weight:700}
     $('rows').innerHTML = rows.length ? rows.slice((page - 1) * PER, page * PER).map(function(u){
       var proj = u.fileName ? '[' + esc(u.fileName) + '] ' : '';
       return '<tr><td class="date">' + esc(fmt(u.at)) + '</td>' +
-        '<td><span class="kind">' + (u.reqId ? '작업 ' + esc(u.reqId) : '작업') + '</span>' + proj + (u.frame ? '<b>' + esc(u.frame) + '</b>' : '') +
+        '<td><span class="kind" data-k="' + esc(kindOf(u)) + '">' + (u.reqId ? '요청 ' + esc(u.reqId) : esc(kindOf(u))) + '</span>' + proj + (u.frame ? '<b>' + esc(u.frame) + '</b>' : '') +
           '<span class="clamp" title="' + esc(u.text) + '">' + esc(u.text) + '</span><span class="sub one-line">API 호출 ' + num(u.calls) + '회 · ' + esc(Object.keys(u.models || {}).join(', ')) + '</span></td>' +
         '<td class="who"><span class="one-line" style="display:block">' + esc(name(u)) + '</span><small class="one-line">' + esc(u.pc) + '</small></td>' +
         '<td class="n d" data-k="입력">' + num(u.input) + '</td><td class="n d" data-k="캐시 쓰기">' + num(u.cacheWrite) + '</td><td class="n d" data-k="캐시 읽기">' + num(u.cacheRead) + '</td><td class="n d" data-k="출력">' + num(u.output) + '</td>' +
@@ -398,6 +419,9 @@ td.usd{font-weight:700}
     render();
   });
   $('who').addEventListener('change', function(){ who = this.value; page = 1; render(); });
+  /* 작업 종류(요청 · UX 문서 · 연관 항목 · 회의록 …): 고르면 카드 · 그래프 · 목록 모두 그 종류만 */
+  $('kindSel').innerHTML = '<option value="">종류 전체</option>' + KINDS.map(function(k){ return '<option>' + esc(k) + '</option>'; }).join('');
+  $('kindSel').addEventListener('change', function(){ kind = this.value; page = 1; render(); });
   function pickWho(r){ who = who === r.dataset.who ? '' : r.dataset.who; page = 1; render(); }
   $('users').addEventListener('click', function(e){ var r = e.target.closest('[data-who]'); if (r) pickWho(r); });
   $('users').addEventListener('keydown', function(e){ var r = e.target.closest('[data-who]'); if (r && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); pickWho(r); } });
