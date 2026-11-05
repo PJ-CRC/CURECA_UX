@@ -1,0 +1,26 @@
+{
+    "id":  "brex-01_20261105-133702",
+    "kind":  "work",
+    "reqId":  "",
+    "at":  "2026-11-05T13:37:02+09:00",
+    "from":  "2026-11-05T13:37:00+09:00",
+    "by":  "서보경",
+    "doneBy":  "Claude",
+    "pc":  "BREX_01",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "작업규칙 연관 항목 찾기: 2. 상태값 (J026)",
+    "models":  {
+                   "claude-opus-5-5":  1
+               },
+    "calls":  1,
+    "input":  2,
+    "cacheWrite":  3322,
+    "cacheRead":  135477,
+    "output":  906,
+    "total":  139707,
+    "usd":  0.0718
+}
