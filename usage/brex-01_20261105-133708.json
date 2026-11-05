@@ -1,0 +1,26 @@
+{
+    "id":  "brex-01_20261105-133708",
+    "kind":  "work",
+    "reqId":  "",
+    "at":  "2026-11-05T13:37:08+09:00",
+    "from":  "2026-11-05T13:36:39+09:00",
+    "by":  "서보경",
+    "doneBy":  "Claude",
+    "pc":  "BREX_01",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "연관 항목 찾기: status-lifecycle.md 흐름 보류 (J025 · J024 · J023)",
+    "models":  {
+                   "claude-opus-5-5":  11
+               },
+    "calls":  11,
+    "input":  26,
+    "cacheWrite":  15163,
+    "cacheRead":  1476526,
+    "output":  7462,
+    "total":  1499177,
+    "usd":  0.5660
+}
