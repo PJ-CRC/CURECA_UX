@@ -1,0 +1,26 @@
+{
+    "id":  "brex-01_20261105-104830",
+    "kind":  "work",
+    "reqId":  "",
+    "at":  "2026-11-05T10:48:30+09:00",
+    "from":  "2026-11-05T10:47:53+09:00",
+    "by":  "서보경",
+    "doneBy":  "Claude",
+    "pc":  "BREX_01",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "UX가이드: Common UX 문서 수 확인 (J009)",
+    "models":  {
+                   "claude-opus-5-5":  19
+               },
+    "calls":  19,
+    "input":  44,
+    "cacheWrite":  23363,
+    "cacheRead":  2212275,
+    "output":  8415,
+    "total":  2244097,
+    "usd":  0.7978
+}
