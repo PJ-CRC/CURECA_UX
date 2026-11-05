@@ -1,0 +1,19 @@
+{
+    "id":  "g20261105-daye-J001",
+    "kind":  "guide",
+    "title":  "Common UX 가이드 _1105",
+    "summary":  "UX AI TEST 파일 Common UX 페이지(2.2) 기준으로 입력 액션 · GNB/LNB · 기본 프레임 · 상태값 · 소모품/시약 표기와 컴포넌트 23개(5-a ~ 5-w) 규칙, PC 컴포넌트 · MO 목차를 정리했습니다.",
+    "link":  "https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=355-53300\u0026t=iH5mZGF7YeEAjhGh-1",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "scope":  "Common UX 페이지",
+    "frames":  43,
+    "sources":  [
+
+                ],
+    "by":  "정다예",
+    "request":  "CURECA UX 가이드 규칙을 따라서 기준 피그마 링크에 있는 내용들을 MD화 해줘",
+    "jobId":  "J001",
+    "createdAt":  "2026-11-05T14:03:21+09:00",
+    "updatedAt":  "2026-11-05T14:03:21+09:00"
+}

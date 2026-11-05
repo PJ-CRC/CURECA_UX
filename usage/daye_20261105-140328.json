@@ -1,0 +1,26 @@
+{
+    "id":  "daye_20261105-140328",
+    "kind":  "work",
+    "reqId":  "",
+    "at":  "2026-11-05T14:03:28+09:00",
+    "from":  "2026-11-05T13:49:07+09:00",
+    "by":  "정다예",
+    "doneBy":  "Claude",
+    "pc":  "DAYE",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "UX가이드: Common UX 가이드 _1105",
+    "models":  {
+                   "claude-opus-5-5":  37
+               },
+    "calls":  37,
+    "input":  76,
+    "cacheWrite":  134108,
+    "cacheRead":  4722256,
+    "output":  62999,
+    "total":  4919439,
+    "usd":  3.2776
+}
