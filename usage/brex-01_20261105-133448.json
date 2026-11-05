@@ -1,0 +1,26 @@
+{
+    "id":  "brex-01_20261105-133448",
+    "kind":  "work",
+    "reqId":  "",
+    "at":  "2026-11-05T13:34:48+09:00",
+    "from":  "2026-11-05T13:34:40+09:00",
+    "by":  "서보경",
+    "doneBy":  "Claude",
+    "pc":  "BREX_01",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "작업규칙 연관 항목 찾기: J017 · J018 · J019",
+    "models":  {
+                   "claude-opus-5-5":  3
+               },
+    "calls":  3,
+    "input":  6,
+    "cacheWrite":  5259,
+    "cacheRead":  355004,
+    "output":  2760,
+    "total":  363029,
+    "usd":  0.1683
+}
