@@ -83,6 +83,35 @@
   }
   loadUsage(); setInterval(loadUsage, 60000); setInterval(drawUsage, 30000);
 
+  /* ── 시작 안내 경고: 8단계 중 안 된 것이 있으면 「시작 안내」 메뉴 옆에 붉은 「!」(마우스를 올리면 단계 목록) ──
+     완료 기준은 Setup.html status()와 같다(바꿀 때 둘 다 고친다). 1분마다 다시 확인 */
+  var SETUP_STEPS = ['작업자 이름', 'Figma 데스크톱 앱', '작업할 Figma 링크', 'Figma 플러그인', 'Claude 앱', 'Claude에 Figma 연결', '요청 감시', '작업 이력 공유(깃허브)'];
+  function setupMissing(d){
+    var s = d.state || {}, e = d.env || {}, c = s.checks || {}, ag = e.agent || {};
+    var fig = /^https:\/\/(?:www\.)?figma\.com\/(?:design|file|proto)\/[A-Za-z0-9]+/.test(String(s.figmaUrl || '').trim());
+    var watch = !!ag.alive || (e.watcherSec != null && e.watcherSec < 90);
+    var ok = [
+      !!String(s.user || '').trim(), !!c.figma, fig, (e.pluginSeenSec != null && e.pluginSeenSec < 600) || !!c.plugin,
+      !!c.claude, !!c.connector, ag.alive ? (ag.status === 'idle' || ag.status === 'working') : watch, !!(e.historySync && e.historySync.ok)
+    ];
+    return SETUP_STEPS.map(function(t, i){ return ok[i] ? null : (i + 1) + '. ' + t; }).filter(Boolean);
+  }
+  /* 시작 안내 페이지는 상태가 바뀔 때마다 받은 값으로 바로 고친다: window.WB_SETUP_WARN({state, env}) */
+  function setupWarn(data){
+    var a = nav.querySelector('a[href="Setup.html"]'); if (!a) return;
+    (data ? Promise.resolve(data) : fetch('/api/setup', { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : null; })).then(function(d){
+      if (!d || !d.env) return;
+      var miss = setupMissing(d), w = a.querySelector('.appnav-warn');
+      if (!w) { w = document.createElement('span'); w.className = 'appnav-warn'; w.setAttribute('role', 'img'); a.appendChild(w); }
+      w.hidden = !miss.length; if (!miss.length) { a.removeAttribute('title'); return; }
+      w.textContent = '!';   // 개수는 마우스를 올리면(「! 2」는 작게 보면 12로 읽힌다)
+      w.setAttribute('aria-label', '시작 안내에서 안 된 단계 ' + miss.length + '개');
+      a.title = '시작 안내에서 안 된 단계가 있습니다:\n' + miss.join('\n');
+    }).catch(function(){});
+  }
+  window.WB_SETUP_WARN = setupWarn;
+  setupWarn(); setInterval(function(){ setupWarn(); }, 60000);
+
   /* ── 로그인 · 메뉴 권한 ──
      계정이 있으면(.history/accounts) 로그인한 계정의 메뉴만 보이고, 오른쪽에 이름(내 정보) · 로그아웃.
      작업자 이름 칸은 계정 이름으로 고정한다(요청 · 이력의 작성자). 서버도 페이지 · API를 막는다(이 표시는 화면 정리) */
