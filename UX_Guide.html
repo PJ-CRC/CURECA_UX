@@ -246,7 +246,9 @@ details.how pre{white-space:pre-wrap}
 html.embed body{background:transparent}
 html.embed .appnav,html.embed .back,html.embed #title{display:none}
 /* 보기만 가능한 계정(UX 문서 · 수정 요청 권한 없음): 수정 요청 · 수정 반영 안내 숨김 */
-html.doc-ro #editBtn,html.doc-ro #fixes{display:none!important}
+html.doc-ro #fixes{display:none!important}
+/* 위쪽 「수정 요청」 버튼은 쓰지 않는다(목록 · 내용 아래 수정 요청 입력창으로). 스크립트가 참조하므로 요소는 두고 늘 숨김 */
+#editBtn{display:none!important}
 html.embed .app-wrap{max-width:none;padding:0 0 24px}
 /* UX 문서 안(iframe): iframe이 내용 높이라 sticky가 듣지 않는다 → 목차 위치 · 높이는 stickSide()가 바깥 페이지 스크롤에 맞춰 정한다 */
 html.embed .side{position:relative;top:auto;max-height:none;will-change:transform}
@@ -622,7 +624,8 @@ html.embed,html.embed body{overflow:hidden}
       var ask = $('ask'), below = ask.offsetParent ? ask.getBoundingClientRect().bottom - lay.getBoundingClientRect().bottom - grow : 0;
       /* 입력창 아래 여백(이 페이지 + UX 문서 안이면 바깥 페이지의 iframe 아래)까지 빼서 늘리기 전에는 페이지가 스크롤되지 않게 */
       var wrap = document.querySelector('.app-wrap'), tail = wrap.getBoundingClientRect().bottom - ask.getBoundingClientRect().bottom;
-      if (P) tail += P.document.documentElement.scrollHeight - (P.scrollY + window.frameElement.getBoundingClientRect().bottom);
+      /* 바깥은 내용 끝(.app-wrap 아래) 기준 — 문서 높이(scrollHeight)는 창보다 작아지지 않아, 쓰면 줄어든 만큼 또 줄어드는 되먹임이 생긴다 */
+      if (P) { var ow = P.document.querySelector('.app-wrap'); if (ow) tail += Math.max(0, ow.getBoundingClientRect().bottom - window.frameElement.getBoundingClientRect().bottom); }
       var h = W.innerHeight - top - below - tail;
       /* 낮은 창: 위 제목 · 탭이 높이를 다 먹으면 목차 · 상세를 창 높이(상단 메뉴 아래)로 두고 페이지를 스크롤해 본다 */
       if (h < 200) h = W.innerHeight - navOf(W) - 24;
