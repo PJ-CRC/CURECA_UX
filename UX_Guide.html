@@ -585,11 +585,12 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
     lay.classList.toggle('fit', wide); document.documentElement.classList.toggle('fitted', wide);
     if (!wide) return;
     var top = lay.getBoundingClientRect().top + (document.documentElement.classList.contains('embed') ? 0 : window.scrollY);
-    var h = Math.max(300, window.innerHeight - top - (document.documentElement.classList.contains('embed') ? 4 : 16));
+    /* 아래 수정 요청 입력창이 늘 보이게: 창이 낮으면(맥 노트북 등) 목차 · 상세를 160px까지 줄인다 */
+    var h = Math.max(160, window.innerHeight - top - (document.documentElement.classList.contains('embed') ? 4 : 16));
     lay.style.setProperty('--fit', h + 'px');
-    /* 아래 여백 때문에 페이지가 아직 넘치면(바깥 스크롤이 생기면) 그만큼 더 줄인다 — 스크롤은 상세 안에서만 */
+    /* 아래 입력창 · 여백 때문에 페이지가 아직 넘치면(바깥 스크롤이 생기면) 그만큼 더 줄인다 — 스크롤은 상세 안에서만 */
     var over = document.documentElement.scrollHeight - window.innerHeight;
-    if (over > 0) lay.style.setProperty('--fit', Math.max(300, h - over) + 'px');
+    if (over > 0) lay.style.setProperty('--fit', Math.max(160, h - over) + 'px');
   }
   /* 다른 항목으로 가면 상세 맨 위로(맞춤일 때는 상세 안을, 아니면 페이지를) */
   function toTop(){
