@@ -1,3 +1,474 @@
+# Common UX 가이드 _1105
+
+UX AI TEST 파일의 **Common UX** 페이지(`355:53300`, Common UX 2.2 · V2.2.00 · 2026-10-30)를 기준으로 정리한 UX 가이드다. 화면을 설계하거나 기존 화면을 고칠 때 이 규칙을 따른다. 구성은 CURECA UX 가이드(`g20261028-brex-06-J003`)를 본보기로 했고, 1~4장은 그 가이드와 Figma 내용이 같아 같은 글을 쓰고 캡처만 새로 받았다. 5장 컴포넌트는 2.2 목차에 맞춰 **23개(5-a ~ 5-w)**로 새로 정리했다. 상태값 · 표기 정의는 씨젠이 공유하는 「CURECA 시스템 구성 요소 및 상태 정보」 문서를 최우선으로 한다.
+
+> 왼쪽 목차는 Figma 문서의 목차(COMM-0)와 같은 구조다. 대분류를 누르면 그 아래 항목이, 항목을 누르면 세부 내용이 오른쪽에 나온다. 그림을 누르면 크게 볼 수 있다. 모바일(MO) 정의는 「6. Mobile」에 목록으로 정리했다.
+
+### 프레임 구성
+
+| 구분 | 크기 | 구성 |
+|---|---|---|
+| 표지 (`Cover`) | 1920 × 1080 | CURECA · Common UX |
+| 변경 이력 (`Revision History`) | 1920 × 495 | 버전 · 변경날짜 · 기능 · 변경사항 · 페이지 · 담당자 (V2.2.00 · 26/10/30 · All) |
+| 목차 (`COMM-0`) | 1920 × 1295 | 대분류 1~5와 각 상세 프레임 CID · 이름, 기존 번호 |
+| 대분류 표지 (`COMM-1` ~ `COMM-5`) | 1920 × 1080 | `Title`(Common UX · 대분류명 · 번호) + `Items`(하위 CID · 이름) |
+| 상세 프레임 (`COMM-1-a` …) | 폭 1920, 높이는 내용에 맞춤 | `Header` + `Body` |
+| 컴포넌트 (`P-Components (PC)`) | 7360 × 25548 | PC 컴포넌트 모음(Navigation · Status · Button · Input · List · Overlay · Feedback · Icon) |
+| 모바일 (`M-COMM-*`, `Connon UX (Mobile)` 섹션) | 1920 × 내용 | MO 목차 · MO 정의 화면 |
+
+- **Header 항목**: 대분류(예: `5. Component`) · 제목(예: `5-a. Accordion`) · 기존 번호(예: `기존 COMM-5-a`) · 한 줄 설명(「…합니다.」)
+- **Body**: `Type n` 블록마다 예시 그림 + 「상태 · 정의 · 동작 · 조건 · 크기」 표 + 「번호 · 영역 · 동작」 표.
+- 한 주제가 길면 `(1/2)`, `(1/4)`처럼 나눠 프레임을 이어 붙인다.
+
+## 0. 문서 구성 (목차)
+
+![COMM-0 목차](images/comm-0.png)
+*COMM-0 · 목차 (V2.2.00, 2026-10-30)*
+
+문서는 5개 대분류로 구성한다. 대분류마다 표지 프레임 1장과 상세 프레임이 이어진다.
+
+| 대분류 | 표지 | 상세 프레임 |
+|---|---|---|
+| 1. Overview | `COMM-1` | `COMM-1-a` Gesture / Input Interaction Guide |
+| 2. Navigation | `COMM-2` | `COMM-2-a` GNB / LNB (기존 SB-2-a), `COMM-2-b` Profile Icon (기존 SB-2-b) |
+| 3. Layout | `COMM-3` | `COMM-3-a` Base Frame Area (1/2 · 2/2) |
+| 4. Writing | `COMM-4` | `COMM-4-a` Data Notation Rules (1/4 ~ 4/4), `COMM-4-b` Data Notation Rules for Consumables and Reagents (1/5 ~ 5/5) |
+| 5. Component | `COMM-5` | `COMM-5-a` ~ `COMM-5-w` 23개 (아래 「5. Component」 번호표) |
+
+### CID 규칙
+
+- 형식: `COMM-{대분류 번호}-{소분류 알파벳}` · 나눈 프레임은 `({현재}/{전체})`를 붙인다(예: `COMM-4-a(2/4)`).
+- 컴포넌트 번호는 **알파벳 순서**로 매긴다. 2.2에서 Breadcrumb · Info Box · Tab이 더해져 번호가 다시 바뀌었다. 기존 번호는 「5. Component」의 대응표로 찾는다.
+- 모바일은 `M-COMM-{n}`을 쓰고 번호는 PC `COMM-{n}`과 같다(「6. Mobile」).
+
+## 1. Overview
+
+Tablet 제스처와 PC 외부 입력(마우스 · 키보드) 액션을 정의한다.
+
+### 1-a. Gesture / Input Interaction Guide
+
+Tablet 제스처와 PC 외부 입력(마우스 · 키보드)의 액션 가이드를 정의한다.
+
+![COMM-1-a](images/comm-1-a.png)
+*COMM-1-a · Gesture / Input Interaction Guide*
+
+**Tablet** — 제스처를 사용할 경우 아래 액션을 따른다.
+
+| 이름 | 정의 |
+|---|---|
+| 탭 (Tap) | 화면의 일정 부분을 눌렀다가 떼는 동작. 버튼처럼 명확한 경우에는 표기 생략 가능 |
+| 당겨서 새로고침 (Pull to refresh) | 당겨서 새로 고침 기능 사용 |
+| 스와이프 (Swipe) | 화면의 두 지점을 일직선으로 이동했다가 떼는 동작. 화면을 수평으로 이동할 수 있음 |
+| 스크롤 (Scroll) | 수직 · 수평 또는 어떤 방향으로든 밀어서 콘텐츠 사이를 이동 |
+
+**PC** — 마우스 · 키보드 같은 외부 입력을 쓸 경우 아래 액션을 따른다.
+
+| 이름 | 정의 |
+|---|---|
+| 클릭 (Click) | 마우스나 트랙패드로 버튼 · 링크 같은 요소를 클릭해 탐색 · 작업을 수행하는 필수 과정 |
+| 프레스드 (Pressed) | 컴포넌트를 눌렀을 때의 상태 |
+| 호버 (Hover) | 컴포넌트 위로 커서를 올려 추가 정보 · 도구 설명 · 옵션을 표시 |
+| 드래그 앤 드롭 (Drag and Drop) | 항목을 클릭한 채 새 위치로 이동. 파일 탐색기 · 카드 순서 바꾸기 등에 사용 |
+| 키보드 단축키 (Keyboard Shortcuts) | 메뉴를 거치지 않고 명령 실행. 표기는 `[키보드 단축키]`로 통일 (예: `[Ctrl + c]`) |
+| 스크롤 (Scroll) | 마우스 휠 · 트랙패드 스와이프로 수직 · 수평 탐색 |
+| 마우스 오른쪽 버튼 (컨텍스트 메뉴) | 선택한 개체 · 영역과 관련된 추가 옵션 제공 |
+
+## 2. Navigation
+
+시스템(L-IOS · T-IOS)별 GNB · LNB 구성과 사용자 권한별 프로필 아이콘을 정의한다.
+
+### 2-a. GNB / LNB
+
+시스템(L-IOS · T-IOS)별 GNB · LNB 구성을 정의한다. (기존 SB-2-a)
+
+![COMM-2-a](images/comm-2-a.png)
+*COMM-2-a · GNB / LNB*
+
+**GNB 표시 항목**: 시스템 표시(LIOS / TIOS) · Running 상태 · 연결 장비(Instrument · T-IOS · D.A PC 또는 L-IOS · D.A PC) · Event(Error 건수 · Warning 건수) · 일시(예: `2026-04-10 11:30`)
+
+| Case | 시스템 | LNB 1Depth 메뉴 |
+|---|---|---|
+| Case 1 | L-IOS | Dashboard · Material Setup · Test Management · Sample Tracking · Instrument · Inventory · Setting · Information, 아래쪽 Quick Start · Run · User Name · Shut Down |
+| Case 2 | T-IOS — L-IOS가 여러 대 | All Dashboard · Dashboard · Test Management · Sample Tracking · Inventory · Statistical Analysis · Setting · Information, GNB에 L-IOS 선택(예: `CURECA(1)`) |
+| Case 3 | T-IOS — L-IOS가 한 대 | Case 2와 같고 All Dashboard · L-IOS 선택 없음 |
+
+### 2-b. Profile Icon
+
+사용자 권한별 프로필 아이콘을 정의한다. (기존 SB-2-b)
+
+![COMM-2-b](images/comm-2-b.png)
+*COMM-2-b · Profile Icon*
+
+| 권한 | 표시 예 |
+|---|---|
+| User | `UserA01` (사용자 이름) |
+| Admin | `Admin` |
+| Service | `Service` |
+
+## 3. Layout
+
+L-IOS · T-IOS 화면의 기본 프레임과 모드별 LNB 노출 · 기능 동작을 정의한다.
+
+### 3-a. Base Frame Area (1/2) · 기본 프레임
+
+L-IOS · T-IOS 화면의 기본 프레임(GNB · LNB · Contents 영역)과 사용자 유형에 따른 프로그램 종료 버튼을 정의한다.
+
+![COMM-3-a(1/2)](images/comm-3-a-1.png)
+*COMM-3-a(1/2) · Base Frame Area*
+
+**L-IOS 영역 정의**
+
+| 번호 | 영역 | 설명 |
+|---|---|---|
+| 1 | GNB | 네트워크 상태 · Running 구동 상태 · Event 발생 건수 · 접속 환경 기준 일시 |
+| 1 | Event 건수 | Event Level별로 Status가 Open인 개수 합. 최대 3자리(999)까지, 넘어도 999로 표기 |
+| 2 | LNB | 2Depth 노출: 각 1Depth의 하위 메뉴 노출 |
+| 2.1 | 1Depth Menu | Dashboard, Material Setup, Test Management, Sample Tracking, Instrument, Inventory, Setting, Run, Quick Start, Information, Exit / Shut Down |
+| 3 | [더보기] 버튼 (Dot 아이콘) | 클릭 시 Profile · Logout 노출 (3 상세) |
+| 4 | 프로그램 종료 버튼 | 사용자 유형에 따라 버튼명 · 노출 항목이 다름 (Case 1 · 2) |
+| 5 | Contents 영역 | 각 페이지의 Contents 노출 |
+
+**L-IOS 2Depth 메뉴 예**: Material Setup › Group Lots · Prepare Carrier · Load Materials · Empty Waste Bin / Test Management › Test Order · Test Status / Sample Tracking › Samples · 96-DWP · PCR Plate / Setting › Policy · System · Protocol · Tube · AssayPack Setting / Information › Program · Manual
+
+**사용자 유형에 따른 종료 버튼**
+
+| Case | 사용자 | 버튼 | 동작 |
+|---|---|---|---|
+| Case 1 | Admin / User | `[Shut Down]` | 시스템 종료만 가능. 클릭 시 팝업 `Confirm_020` |
+| Case 2 | Service | `[Exit]` | 프로그램 종료 · 시스템 종료 중 선택. 클릭 시 「Exit · Choose an option.」 팝업 |
+
+- Case 2 › 4 상세: 4.1 `[Exit Program]`(Service일 때만 노출, 클릭 시 `Confirm_019`) · 4.2 `[Shut Down]`(클릭 시 `Confirm_020`)
+
+**T-IOS 영역 정의**
+
+| 번호 | 영역 | 설명 |
+|---|---|---|
+| 6 | GNB L-IOS 선택 | L-IOS가 여러 대면 드롭다운 노출, 한 대면 미노출 |
+| — | GNB | 네트워크 상태 · Running 구동 상태 · Event 건수 · 일시 |
+| — | LNB 1Depth | Dashboard, Test Management, Sample Tracking, Instrument, Inventory, Statistical Analysis, Setting, Information |
+| — | 2Depth 예 | Statistical Analysis › Test Analytics · Instruments · Test Forecasting / Setting › Policy · Protocol · LIS · System · Account · SMTP · AssayPack · Tube Setting / Information › Run Report · Program · Manual |
+| — | Contents 영역 | 각 페이지의 Contents 노출 |
+
+**3 상세 — [더보기] 선택 시 노출 항목 (L-IOS · T-IOS 공통)**
+
+| 번호 | 항목 | 동작 |
+|---|---|---|
+| 3.1 | Profile | L-IOS: 팝업 `LI-CPW-P`(비밀번호 · 아이디 · 이메일 변경). Console · TSS 모드에서는 미노출 / T-IOS: 팝업 `TI-CPW-P`(비밀번호 · 아이디 · 이메일 변경, 이벤트 알람 노출 여부) |
+| 3.2 | Logout | 팝업 `Confirm_018` |
+
+### 3-a. Base Frame Area (2/2) · 모드별 LNB
+
+L-IOS 모드(Main · Console · TSS)별 LNB 노출 메뉴와 메뉴 단위 기능 동작 여부를 정의한다.
+
+![COMM-3-a(2/2)](images/comm-3-a-2.png)
+*COMM-3-a(2/2) · 모드별 LNB 노출 메뉴*
+
+| Case | 모드 | LNB 노출 |
+|---|---|---|
+| Case 1 | Main | 전체 메뉴 (Dashboard · Material Setup · Test Management · Sample Tracking · Instrument · Inventory · Setting · Information · Quick Start · Run) |
+| Case 2 | Console | Main 기준, 모드에서 쓰지 않는 메뉴는 미노출 (그림 참고) |
+| Case 3 | TSS | Main 기준, 모드에서 쓰지 않는 메뉴는 미노출 (그림 참고) |
+
+- 메뉴 단위 모드별 기능 동작 표: Menu(1)~(4) · Function · Main · Console · TSS 열에 `O = 동작`, `X = 미동작`으로 적는다.
+- Function 값이 `All`이면서 `X`인 항목은 그 모드에서 **메뉴 자체를 노출하지 않는다.** (예: Profile은 Console · TSS에서 X)
+- 대상 기능 예: Login · Logout · Profile · Event History(View · Status Control · Note Writing) · Initialize · Stop · Door Control · Group Lots · Prepare Carrier(Load Samples · Socket · Tray · Consumables and Reagents …) · Load Materials(PK/IC · PCR Reagents · MM Tubes) · Empty Waste Bin · Settings
+
+## 4. Writing
+
+화면 표기 형식과 상태값, 소모품 · 시약 표기 규칙을 정의한다.
+
+### 4-a. Data Notation Rules (1/4) · 날짜 · 순서 · Module명
+
+날짜 · 시간, 검사 항목 · 검체 유형, 소모품 · 시약, Module명을 화면에 표기하는 형태와 노출 순서를 정의한다.
+
+![COMM-4-a(1/4)](images/comm-4-a-1.png)
+*COMM-4-a(1/4)*
+
+**날짜 · 시간 (한국 / 영문 공통)**
+
+| 상황 | 형태 | 예시 | 비고 |
+|---|---|---|---|
+| 년 · 월 · 일 · 시각 | `YYYY-MM-DD hh:mm` | 2026-03-05 10:22 | 영역이 좁으면 `YY` 허용 |
+| 년 · 월 · 일 | `YYYY-MM-DD` | 2026-03-05 | 영역이 좁으면 `YY` 허용 |
+| 기간 | `YYYY-MM-DD ~ YYYY-MM-DD` | 2026-03-05 ~ 2026-03-10 | 영역이 좁으면 Day 생략 가능 |
+| BO 공통 | `YYYY-MM-DD` | 2026-03-05 | |
+| 시 · 분 | `hh:mm` | 10:22 | |
+
+**검사 항목 · 검체 유형 노출 순서**
+
+| 구분 | 표기 | 노출 순서 |
+|---|---|---|
+| Product | 검사 항목명 | 검사 항목 약어 기준 알파벳 오름차순 |
+| Sample Type | 검체 유형 약어 | 검체 유형 풀네임 기준 알파벳 오름차순 |
+
+**소모품 · 시약**: 함께 노출되는 페이지는 **소모품 → 시약** 순서. 각각 UI 표기명 알파벳 오름차순(기본), 페이지별 정의가 있으면 그 정의를 따른다. 수량 표기는 4-b를 따른다.
+
+**Module명**
+
+| 조건 | 표기 | 예 | 노출 순서 |
+|---|---|---|---|
+| 같은 Type 모듈 1대 | Module type명 | Sample Storage | 각 페이지별 상이 |
+| 같은 Type 모듈 2대 이상 | `ModuleType(index)` | Sample Storage(1) | 각 페이지별 상이 |
+
+### 4-a. Data Notation Rules (2/4) · 장비 상태 · 컨트롤러
+
+CURECA 장비 전체의 구동 상태값과 구동 컨트롤러, 장비 통합 상태 처리 조건, 도어 잠금 해제 조건을 정의한다. 씨젠이 공유하는 「CURECA 시스템 구성 요소 및 상태 정보」 문서를 참고해 작성했고, 그 문서를 최우선으로 따른다.
+
+![COMM-4-a(2/4)](images/comm-4-a-2.png)
+*COMM-4-a(2/4)*
+
+**전체 CURECA 구동 상태값**
+
+| 코드명 | UI (영문) | UI (한글) | 설명 | 발생 Case | UX action |
+|---|---|---|---|---|---|
+| NotInitialized | Not Initialized | 초기화 필요 | 초기화가 수행되지 않은 상태 | 전원 인가 후 초기화가 완료되지 않은 경우 | 초기화 안내 팝업, 초기화 관련 메뉴만 접근 가능 |
+| Initializing | Initializing | 초기화 중 | 초기화 진행 중 | 초기화 프로세스 실행 시 | 로딩 · 진행바 표시, 모든 기능 제한, 완료 시 「준비 완료」 전환 · 안내 |
+| Ready | Ready | 준비 완료 | 검사를 시작할 수 있는 상태 | 초기화, 중지 완료 또는 작업 종료 후 | 모든 기능 사용 가능, 작업 시작 버튼 활성화 |
+| Running | Running | 가동 중 | 검사 정상 진행 중 (모듈 1대라도 Running, Error 없음) | 작업(검사) 시작 시 | 중지(Stop) 기능 제공 |
+| PartialRunning | Partial Running | 부분 가동 중 | 일부 모듈 Running, 일부 Paused 또는 Error | 1대 이상 모듈 구동 중일 때 일부 모듈에서 Error 발생 시 | 장비 중지 진행 상태 표시 및 팝업으로 중지 중 로딩 · 진행바, 모든 기능 일시 제한, 완료 시 「준비 완료」 자동 전환 ⚠️ |
+| Stopping | Stopping | 가동 중지 중 | 사용자 Run Stop 요청으로 정지 중 (전체 장비 Stop) | 사용자가 중지 버튼을 눌렀을 때 | 중지 진행 팝업 · 진행바, 모든 기능 일시 제한, 완료 시 「준비 완료」 |
+| Paused | Paused | 일시 정지 | 일부 모듈 Paused, Running 모듈 없음 | | |
+| Error | Error | 오류 | 가동 중 모든 모듈 Error, 또는 비가동 중 일부 모듈 Error | 1대 이상 모듈이 구동 중일 때 모든 모듈이 Error인 경우 / 모든 모듈이 구동 중이 아닐 때 1대 이상 모듈이 Error인 경우 | 상황별 상이 |
+
+- ⚠️ Figma의 PartialRunning UX action이 Stopping과 거의 같은 문구다. 복사 실수일 수 있어 확인이 필요하다.
+
+**구동 컨트롤러 (버튼)**
+
+| 버튼 | 내용 | 활성화 조건 |
+|---|---|---|
+| Initialize | 장비 초기화. 로딩 · 진행바, 모든 기능 제한, 완료 시 「준비 완료」 전환 | Not Initialized 상태 |
+| Stop | 진행 중인 검사 중단(폐기) → Initializing → Ready | Running · Partial Running. 그 외 상태값일 때는 버튼 비활성화 |
+| Run | 검사 실행, 「Run Preparation」 페이지로 진입 | Ready · Running · Partial Running |
+| Quick Start | 「Quick start」 팝업 노출. Run Preparation 3~4단계 대신 요약 팝업 하나로 검사 실행 | Ready · Running · Partial Running 상태일 때만 활성화 |
+
+**장비 통합 상태 처리 조건 (이전 상태 → 다음 상태)**
+
+| 다음 상태 | 이전 상태 | 트리거 · 모듈 조건 |
+|---|---|---|
+| NotInitialized | (부팅) | 초기화 전 모든 모듈 NotInitialized. 아닌 모듈이 있으면 Error |
+| Initializing | NotInitialized | Initialize 클릭 |
+| Ready | Initializing | Initialize 완료 신호 + 모든 모듈 Ready |
+| Ready | Stopping | Run Stop 완료 신호 + 모든 모듈 Ready |
+| Ready | Error | 모듈 상태 변화로 모든 모듈 Ready |
+| Running | Ready | Run Start 클릭. Run 완료 전에는 모든 모듈이 Ready여도 Running 유지 |
+| Running | PartialRunning · Paused · Error | 모든 모듈이 Ready 또는 Running |
+| PartialRunning | Running | (Running ≥ 1) AND (Pausing · Paused · Error ≥ 1) |
+| Stopping | Running · PartialRunning · Paused | Run Stop 클릭, 완료 신호까지 유지 |
+| Paused | Running | 모든 모듈이 Paused |
+| Paused | PartialRunning | Paused ≥ 1 AND Running = 0 AND Pausing = 0 AND Error = 0 |
+| Error | Initializing | Initialize 완료 신호 + Error 모듈 ≥ 1 |
+| Error | Ready · Stopping · Paused | Error 모듈 ≥ 1 |
+| Error | Running | 모든 모듈이 Error, 또는 Run 완료 시 Error 모듈 ≥ 1 |
+| Error | PartialRunning | Error ≥ 1 AND Running = 0 AND Pausing = 0 |
+
+- 통신 단절 · 프로그램 오류는 즉시 Error.
+- ※ Run 완료: Prep · Dx에 할당된 모든 검체의 검사가 끝나고 결과가 D.A PC를 통해 T-IOS로 모두 전달된 경우(L-IOS에서 최종 판단).
+
+**도어 잠금 해제 (상태별)**
+
+| 장비 상태 | 검사 진행 중 | 도어 개방 |
+|---|---|---|
+| Not Initialized | X | 허용 |
+| Initializing | X | **불가** |
+| Ready | X | 허용 |
+| Running | O | 조건부 허용 |
+| Partial Running | O | 조건부 허용 |
+| Stopping | O | **불가** |
+| Paused | O | 조건부 허용 |
+| Error | X | 허용 |
+| Error | O | 조건부 허용 |
+
+- 조건부 허용은 아래 모듈 · 도어만 연다.
+
+| 모듈 | 도어 | 사용자 작업 |
+|---|---|---|
+| Sample Storage | Left Door / Right Door | 투입 / 회수 Trolley 교체 |
+| Prep Consumable Storage | Door | 소모품 Trolley 교체 |
+| Sample Preparation | Rear Door (단디메카) · Door (로체시스템즈) | 폐기함 비우기 |
+| High-throughput Extraction | Door | DWP 필름 폐기함 비우기 (표준형만. 맞춤형은 서랍형이라 가동 중 개방 불가) |
+| Plate Sealing | Door | Sealer 필름 보충 · 폐기함 비우기 (PCR Setup과 함께 판단, 둘 중 하나라도 Running이면 둘 다 Paused 후 개방) |
+
+- 도어 잠금 해제는 L-IOS의 **Unlock** 버튼으로 요청한다.
+- 모듈이 Running이면 진행 중인 작업 단위를 마친 뒤 해제하고, 검사 중에 해제되면 그 모듈을 Paused로 바꾼다.
+
+### 4-a. Data Notation Rules (3/4) · 모듈 · Unit 상태
+
+장비 모듈과 하위 Unit(Device · Storage · Waste Bin)의 상태값과 Module별 Unit 구성 정보를 정의한다.
+
+![COMM-4-a(3/4)](images/comm-4-a-3.png)
+*COMM-4-a(3/4)*
+
+**Module 구동 상태값**
+
+| 코드명 | 한글 | 설명 |
+|---|---|---|
+| NotInitialized | 초기화 필요 | 초기화되지 않은 상태 |
+| Initializing | 초기화 중 | 초기화 중 |
+| Ready | 준비 완료 | 가동 가능 |
+| Running | 가동 중 | 가동 중 |
+| Stopping | 가동 중지 중 | 사용자 중지 요청으로 중지 작업 중 |
+| Pausing | 일시 정지 중 | 도어 잠금 해제 요청으로 일시 정지 작업 중 |
+| Paused | 일시 정지 | 도어 잠금 해제, 또는 서랍형 저장 장치가 열린 상태에서 접근이 필요한 경우 |
+| Error | 오류 | 고장 · 장애, 또는 가동 중 소모품 부족 · 폐기함 만재 |
+
+**Module 단위 상태값**
+
+| 항목 | 값 (한글) | 설명 |
+|---|---|---|
+| 연결 | Connected / Disconnected | 시스템과 연결 · 미연결 |
+| Door Status | Open(열림) / Closed(닫힘) | 문 열림 · 닫힘 |
+| Lock | Unlocked(잠금 해제) / Locked(잠김) | Front door(유리문) 잠금 상태 |
+
+**Unit 상태값**
+
+| Unit | 값 | 설명 |
+|---|---|---|
+| Device (예: M9600) | Idle 등 | Device 구동 상태 |
+| Storage — Docking | Undocked(도킹 해제) / Docked(도킹됨) | Trolley 미장착 · drawer 열림 / 장착 · 닫힘 |
+| Storage — Type | RT / Refrigerator | 상온 / 냉장 저장 장치 |
+| Waste Bin — Full status | Available(여유) / AlmostFull(만재 임박) / Full(가득 참) | 적재율 70% 미만 / 70% 이상 / 100%. 카운팅 기반이며 최대 개수 초과 후 만재 센서 미작동 시 Almost Full로 노출 |
+
+### 4-a. Data Notation Rules (4/4) · 검사 · 재고 · 이벤트
+
+검체 · Plate · 검사 배치의 진행 상태와 재고 · 시약 만료 상태, 이벤트 정보를 정의한다.
+
+![COMM-4-a(4/4)](images/comm-4-a-4.png)
+*COMM-4-a(4/4)*
+
+**Sample 상태값**
+
+| 코드명 | 한글 | 설명 |
+|---|---|---|
+| Ordered | 검사 접수 | 오더 접수, 검사 시작 전 (TSS로 Socket 구성 → Run Start) |
+| Ready | 검사 준비 | 배치 시작 후 검체 로딩 전 |
+| Running | 검사 진행 중 | 검체 로딩 후 검사 중 |
+| Completed | 검사 완료 | 정상 완료 |
+| Failed | 검사 실패 | 장비 · 시스템 오류 또는 Stop으로 진행 중 Plate 폐기(하위 Sample까지 Fail) |
+| NotTested | 검사 미수행 | 바코드 훼손 · 불일치로 검사 진행 불가 |
+
+**Plate 상태값**: Running(96-DWP: Sample Preparation ~ PCR Setup / PCR-Plate: PCR Setup ~ PCR) · Completed(96-DWP: PCR Plate로 옮겨질 때 / PCR-Plate: PCR에서 Out될 때) · Failed
+
+**검사 배치 완료 상태값**
+
+| 값 | 조건 |
+|---|---|
+| Completed | 배치 내 모든 검사가 Completed |
+| Failed | 모든 검사가 Failed |
+| NotTested | 모든 검사가 Not Tested |
+| PartiallyCompleted (검사 부분 완료) | Completed가 하나 이상이면서 Failed 또는 Not Tested가 하나 이상 |
+| Stopped (검사 중지) | 사용자가 배치 검사를 중지 |
+
+**재고 · 시약 만료**
+
+| 구분 | 값 (한글) | 조건 |
+|---|---|---|
+| 재고 | Sufficient(충분) | 잔여 수량 ≥ 필요 수량 |
+| 재고 | Low(부족 임박) | 잔여 수량 < 필요 수량이나 가동 가능 |
+| 재고 | Insufficient(부족) | 잔여 수량 0, 가동 중단 |
+| 시약 | Valid(유효) | 만료일까지 30일 이상 |
+| 시약 | Warning · Under 30 days(만료 임박) | 30일 미만 |
+| 시약 | Expired(만료) | 만료됨 |
+
+**이벤트**
+
+| 구분 | 값 | 설명 |
+|---|---|---|
+| 등급 | Warning(경고) | 가동은 가능하나 인지 · 예방 조치 필요 (센서 불안정, 소모품 부족 임박 등) |
+| 등급 | Error(오류) | 고장 · 장애 · 운영 문제로 가동 불가 · 중단 |
+| 종류 | Instrument · Inventory · Sample · System | 장비 · 재고 · 검체 · 시스템(통신 장애 등) |
+| 상태 | Open(확인 필요) / Closed(확인됨) | 처리 전 / 처리 후 |
+
+### 4-b. Consumables and Reagents (1/5) · 공통
+
+소모품 · 시약 표시 순서, 문자열 정렬, Tip 용량 · 그룹명 표기, 재고 0 표기, 입고 단위 수량 기준을 정의한다.
+
+![COMM-4-b(1/5)](images/comm-4-b-1.png)
+*COMM-4-b(1/5)*
+
+| 항목 | 규칙 |
+|---|---|
+| 표시 순서 | 함께 표시하면 소모품 → 시약 |
+| 문자열 정렬 | 오름차순, 대소문자 무시, 숫자는 문자로 비교 (`1000 μL Tip` → `300 μL Tip` → `Wide Bore Tip`) |
+| Tip 용량 | 숫자와 μL 사이를 띄어 씀 (`1000 μL Tip`) |
+| 그룹명 | itemGroupName은 단수형 기준: Tub, Tube, DWP (Tub이 Tube보다 먼저) |
+| 재고 0 | Remaining Qty가 0이면 `0`으로 표기 |
+| 입고 단위 수량 | 시스템이 입고 단위별로 보유한 카운트 값 기준. 새 단위가 장착되면 그때부터 카운팅, 역산 · 균등 배분하지 않음 (예: Rack 10 / 30 / 10 → `50 ea (3 racks)`) |
+
+### 4-b. Consumables and Reagents (2/5) · 분류
+
+소모품과 시약을 카드 · 그룹으로 분류하는 기준과 시약 태그(Chip)를 정의한다.
+
+![COMM-4-b(2/5)](images/comm-4-b-2.png)
+*COMM-4-b(2/5)*
+
+**소모품**
+
+- **그룹화**: 아이템명의 공통 단어로 묶는다 (Tip → Tips, Tube → Tubes). DWP는 Plates 그룹에 넣는다.
+- **비그룹화**: 묶이지 않는 아이템. 카드형에서는 아이템명이 카드 제목이 된다 (예: Sealing Film, Stool Swab).
+
+**시약**
+
+| 항목 | 규칙 |
+|---|---|
+| 카드 | fileType으로 구분. Pretreatment는 고정 카드 「Pretreatment Reagents」 1개(아이템명 = Product Name), Extraction · PCR은 Product Name별 카드(아이템명 = componentName) |
+| 아이템 | 같은 Storage에 입고되는 구성품은 쉼표로 묶어 1개 아이템 (구성품명 오름차순, 예: `BB Tub, EB Tub, WB1 Tub, WB2 Tub, WB3 Tub`) |
+| 그룹 | 모두 itemGroupName으로 그룹화 · 비그룹화. 그룹은 정렬에만 쓰고 화면에 구분선 · 소제목은 표시하지 않음 |
+| 태그 (Chip) | Pretreatment = Sample Preparation, Extraction = Nucleic Acid Extraction, PCR = PCR |
+
+### 4-b. Consumables and Reagents (3/5) · 정렬 (카드형 · 목록형)
+
+소모품 · 시약 목록의 정렬 순서를 카드형 · 목록형 기준으로 정의한다. 목록형은 그룹명만 표시하지 않는다.
+
+![COMM-4-b(3/5)](images/comm-4-b-3.png)
+*COMM-4-b(3/5)*
+
+**소모품**: 그룹화 먼저, 비그룹화 나중 → 그룹명 오름차순 → 그룹 내 아이템명 오름차순 / 비그룹화는 아이템명 오름차순
+
+> 예(카드형): Plates(96-DWP → PCR Plate) → Tips(1000 μL Tip → 300 μL Tip → Wide Bore Tip) → Tubes(Empty Standard Tube → MM Tube) → Sealing Film → Stool Swab
+>
+> 예(목록형, 그룹명 없음): 96-DWP → PCR Plate → 1000 μL Tip → 300 μL Tip → Wide Bore Tip → Empty Standard Tube → MM Tube → Sealing Film → Stool Swab
+>
+> 화면 예: 소모품 카드형 `LI-IVT-03-T`, 시약 카드형 `LI-IVT-04-T` (예: Pretreatment Reagents · Tub `LB Tub (Prep) → PBS Tub → Saline Tub`, STARMag M96 Kit · DWP `EB DWP → LB DWP → MB DWP → WB1 DWP → WB2 DWP`, 비그룹 Spin Tip은 뒤)
+
+**시약**
+
+- 구성품까지 보이는 목록: Pretreatment → Extraction → PCR → Product Name → itemGroupName 그룹화 먼저 · 비그룹화 나중 → 아이템명
+- Product Name만 보이는 목록(예: Policy Setting › Cost Setting): 유형(Pretreatment → Extraction → PCR) → Product Name
+
+### 4-b. Consumables and Reagents (4/5) · 혼합 목록 정렬
+
+소모품 · 시약이 섞인 구성품 단위 목록(예: Inventory › Overview 탭)의 정렬 순서를 정의한다.
+
+![COMM-4-b(4/5)](images/comm-4-b-4.png)
+*COMM-4-b(4/5)*
+
+| 항목 | 규칙 |
+|---|---|
+| 순서 | 소모품 → 시약, 그룹화 먼저 · 비그룹화 나중 |
+| fileType | 시약의 fileType 정렬은 쓰지 않음. 다른 fileType이라도 itemGroupName이 같으면 한 그룹 |
+| 그룹화 | itemGroupName 오름차순 → 그룹 내 아이템명 오름차순 |
+| 비그룹화 | 아이템명 오름차순 |
+| 예외 | Overview 탭만: PCR 시약은 구성품명 대신 Product Name으로 표기, Product Name 오름차순 |
+
+> 화면 예: `LI-IVT-02-T` Overview · Prep Consumable Storage / Plate Sealing. 수량은 `288 ea (3 racks)`, `300 rxns (3 sets)`처럼 4-b(5/5)를 따른다. Prep Consumable Storage: Plates → Tips → Tubes → Stool Swab, 시약 Tube `ASL Standard Tube → PBS Standard Tube → PK Tube → Prelyser Standard Tube → Saline Standard Tube` / Plate Sealing: 비그룹 `Sealing Film (1) → Sealing Film (2)`, PCR은 Product Name 오름차순
+
+### 4-b. Consumables and Reagents (5/5) · 수량 표기
+
+소모품 · 시약의 재고 수량을 수량과 입고 단위 개수로 표기하는 형식을 정의한다. `n` = 시스템이 카운팅해 보유한 입고 단위 개수.
+
+![COMM-4-b(5/5)](images/comm-4-b-5.png)
+*COMM-4-b(5/5)*
+
+| 구분 | 형식 | 예 |
+|---|---|---|
+| 소모품 · 묶음 입고 | `{수량} ea ({n} {단위})` | 480 ea (5 racks), 14 ea (1 socket) |
+| 소모품 · 낱개 입고 | `{수량} ea` | 100 ea, 200 ea |
+| 시약 | `{수량} rxns ({n} {단위})` | 200 rxns (2 racks), 288 rxns (3 DWPs) |
+
+- **단수 · 복수**: 단위가 1개면 단수, 2개 이상이면 복수(단위명 뒤에 s) — `1 rack / 2 racks`, `1 tube / 2 tubes`, `1 DWP / 2 DWPs`, `1 set / 2 sets`, `1 socket / 2 sockets`
+- **묶음 아이템**: 구성품 수량을 합산하지 않는다(구성품 수량이 모두 같다는 전제).
+- baseUnit이 ea인 아이템(예: Buffer Cartridge Cap)은 `15 ea (3 sets)`처럼 표기한다.
+
 ## 5. Component
 
 Figma 목차(COMM-0)에 정의된 컴포넌트 23개(5-a ~ 5-w)의 번호와 상세 규칙이다.
