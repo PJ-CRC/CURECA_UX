@@ -1030,10 +1030,11 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       if (!p) right = '<div class="wempty"><b>임시 정책이 없습니다</b><p>Claude가 작업 중 기존 정책을 바꿔야 할 때, 또는 [＋ 새 임시 정책]으로 등록합니다.</p></div>';
       else {
         var busy = pjobs[p.id] && /^(대기|진행 중)$/.test(pjobs[p.id].status), wait = /승인 대기/.test(p.status);
-        var btn = W && wait ? (p.ab ? '<button class="btn primary" type="button" data-pvd="A안 승인"' + (busy ? ' disabled' : '') + '>A안 승인</button><button class="btn primary" type="button" data-pvd="B안 승인"' + (busy ? ' disabled' : '') + '>B안 승인</button>'
+        var btn = wait && canApprove('pv') ? (p.ab ? '<button class="btn primary" type="button" data-pvd="A안 승인"' + (busy ? ' disabled' : '') + '>A안 승인</button><button class="btn primary" type="button" data-pvd="B안 승인"' + (busy ? ' disabled' : '') + '>B안 승인</button>'
           : '<button class="btn primary" type="button" data-pvd="승인"' + (busy ? ' disabled' : '') + '>승인</button>') + '<button class="btn bad" type="button" data-pvd="반려"' + (busy ? ' disabled' : '') + '>반려</button>' : '';
         right = '<div class="mtop"><div style="flex:1"><h3>' + esc(p.id) + ' ' + esc(p.title) + (p.ab ? ' (A/B 선택)' : '') + '</h3><p class="matt" style="border:0;padding:0">' + (p.ab ? '같은 규칙을 다르게 바꾼 임시 정책들을 합친 문서' : esc([p.by, p.date].filter(Boolean).join(' · '))) + ' · <code>' + esc(p.path) + '</code></p></div>' + jobState(p.id) + btn + '</div>' +
           (pvMsg ? '<p class="notice">' + pvMsg + '</p>' : '') +
+          (wait && myApproves && !canApprove('pv') ? '<p class="muted" style="margin:10px 0 0;font-size:13px">승인 · 반려는 「임시 정책 승인 · 반려」 권한이 있는 사람만 할 수 있습니다(계정 관리 › 승인 권한).</p>' : '') +
           '<dl class="kv" style="margin:16px 0">' + ['상태', '바꾸는 정책', '작성자', '등록일', '기준 공통 규칙 버전', '고객 확인'].filter(function(k){ return p.head[k]; }).map(function(k){ return '<dt>' + k + '</dt><dd>' + (k === '상태' ? stPill(p.head[k]) + (p.ab ? ' <span class="pill review">A/B</span>' : '') : esc(p.head[k])) + '</dd>'; }).join('') + '</dl>' +
           (p.same.length ? '<p class="notice same"><b>같은 정책을 바꾸는 임시 정책</b> · ' + p.same.map(function(s){ return '<button type="button" class="chip" data-pv="' + esc(s) + '">' + esc(s) + '</button>'; }).join(' ') + ' — 승인하기 전에 함께 확인하세요.</p>' : '') +
           (p.ab ? pvAbHtml(p) : Object.keys(p.S).filter(function(k){ return k !== '_'; }).map(function(k){ return '<h4 class="h4">' + esc(k) + '</h4>' + md(p.S[k].join('\n')); }).join(''));
@@ -1239,7 +1240,9 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   var mFrom = '', mTo = '', mQuick = '';   // 회의록 기간 거르기(YYYY-MM-DD), 빠른 선택(week · month · 3m)
   var minMe = '', myName = '', nedit = '', ntext = null, ntext0 = '';   // 나(작성자 ID · 이름), 고치는 중인 내 작성분(회의록 ID)과 글
   function loadMd(){ return api('/api/minutes').then(function(j){ mlist = j.items || []; minMe = j.me || ''; snapSave('min', { items: mlist, me: minMe }); }).catch(function(){ mlist = mlist || []; }); }
-  api('/api/me').then(function(j){ myName = (j.user && (j.user.name || j.user.id)) || ''; }).catch(function(){});
+  var myApproves = null;   // 내 승인 권한(/api/me approves). 받기 전(null)에는 버튼을 숨긴다
+  api('/api/me').then(function(j){ myName = (j.user && (j.user.name || j.user.id)) || ''; myApproves = [].concat(j.approves || []); if (cur === 'provisional') renderPv(); }).catch(function(){ myApproves = []; });
+  function canApprove(k){ return !!myApproves && myApproves.indexOf(k) >= 0; }
   function fmtWhen(s){
     var d = /^(\d{4})-(\d{2})-(\d{2})(?:\s+(\d{2}:\d{2}))?/.exec(s || ''); if (!d) return esc(s);
     return d[1] + '-' + d[2] + '-' + d[3] + '(' + WD[new Date(+d[1], +d[2] - 1, +d[3]).getDay()] + ')' + (d[4] ? ' ' + d[4] : '');

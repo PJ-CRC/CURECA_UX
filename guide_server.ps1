@@ -395,6 +395,19 @@ function User-Writes($a) {
   if ($a.PSObject.Properties['writes']) { return @(@($a.writes) | Where-Object { $WriteKeys -contains $_ -and $p -contains $_ }) }
   return @($p | Where-Object { $WriteKeys -contains $_ -and ($_ -ne 'guide' -or @($a.menus) -contains 'guideEdit') })
 }
+# 승인 권한(메뉴 권한과 따로): 계정 approves에 고른 항목만. 최고관리자는 전부. 승인할 것이 생기면 여기 한 줄 더한다
+#  key = 계정 파일 · 화면 · 서버에서 쓰는 이름, label = 계정 관리 화면 이름, menu · where = 어디서 쓰는지(설명)
+$Approvals = @(
+  [ordered]@{ key = 'pv'; label = '임시 정책 승인 · 반려'; menu = 'plan'; where = '일정/작업 › 임시 정책 [승인] · [A/B안 승인] · [반려]' }
+)
+$ApproveKeys = @($Approvals | ForEach-Object { $_.key })
+function User-Approves($a) { if (-not $a) { return @() }; if ($a.admin) { return @($ApproveKeys) }; return @(@($a.approves) | Where-Object { $ApproveKeys -contains $_ }) }
+# 승인 권한 확인: 브라우저 화면에서 온 요청만(Claude · 플러그인은 그대로). 계정을 쓰지 않으면 모두 된다
+function Can-Approve([string]$key) {
+  if (-not $isBrowser -or -not (Auth-Required)) { return $true }
+  $u = Current-User; if (-not $u) { return $false }
+  return (@(User-Approves $u) -contains $key)
+}
 # 쓰기 권한 확인: 브라우저 화면에서 온 요청만(Claude · 플러그인은 그대로). 계정을 쓰지 않으면 모두 쓰기. 키 중 하나라도 쓰기면 된다
 function Can-Write([string[]]$keys) {
   if (-not $isBrowser -or -not (Auth-Required)) { return $true }
@@ -493,7 +506,8 @@ function Me-Info {
   $ns = Need-Sync; $hs = $null; if ($ns) { try { $hs = [IO.File]::ReadAllText($SyncStat, $Utf8) | ConvertFrom-Json } catch {} }
   return [ordered]@{ required = $req
     needSync = $ns; syncMsg = $(if ($hs) { [string]$hs.message } else { '' }); syncBusy = $(if ($hs) { [bool]$hs.busy } else { $false })
-    user =$(if ($u) { [ordered]@{ id = $u.id; name = $u.name; admin = [bool]$u.admin; menus = @($allowed); writes = @(User-Writes $u) } } else { $null })
+    user =$(if ($u) { [ordered]@{ id = $u.id; name = $u.name; admin = [bool]$u.admin; menus = @($allowed); writes = @(User-Writes $u); approves = @(User-Approves $u) } } else { $null })
+    approves = @(if ($req) { User-Approves $u } else { $ApproveKeys })
     menus = @($Menus | ForEach-Object { [ordered]@{ key = $_.key; label = $_.label; page = $_.pages[0]; pages = $_.pages; admin = [bool]$_.admin; write = [string]$_.write } })
     allowed = @($allowed); writes = @(if ($req) { User-Writes $u } else { $WriteKeys }); first = $(if ($first) { $first } else { 'Account.html' }) }
 }
@@ -505,7 +519,7 @@ function Write-Login($a) {
   [IO.File]::WriteAllText($SetupFile, ($s | ConvertTo-Json -Depth 5), $Utf8)
 }
 # menus는 늘 배열로: $( )로 감싸면 메뉴가 1개일 때 배열이 풀려 글자로 나간다(화면 a.menus.map 오류)
-function Public-Account($a) { [ordered]@{ id = $a.id; name = $a.name; admin = [bool]$a.admin; menus = @(if ($a.admin) { User-Menus $a } else { Pick-Menus $a }); writes = @(User-Writes $a); active = ($a.active -ne $false); createdAt = $a.createdAt; updatedAt = $a.updatedAt; pwAt = $a.pwAt } }
+function Public-Account($a) { [ordered]@{ id = $a.id; name = $a.name; admin = [bool]$a.admin; menus = @(if ($a.admin) { User-Menus $a } else { Pick-Menus $a }); writes = @(User-Writes $a); approves = @(User-Approves $a); active = ($a.active -ne $false); createdAt = $a.createdAt; updatedAt = $a.updatedAt; pwAt = $a.pwAt } }
 function Find-Claude {
   # Claude 데스크톱 앱: 맥 /Applications/Claude.app, 윈도우 Microsoft Store(MSIX) 또는 일반 설치
   if ($script:ClaudeApp) { return $script:ClaudeApp }
@@ -775,19 +789,20 @@ while ($l.IsListening) {
       if ($req.HttpMethod -eq 'GET') {
         # ($l은 서버 HttpListener라 쓰면 안 된다)
         $acctList = @(Read-Accounts | Sort-Object @{ e = { -not $_.admin } }, @{ e = { [string]$_.id } } | ForEach-Object { Public-Account $_ })
-        SendJson $c 200 @{ items = $acctList; menus = @($Menus | Where-Object { $MenuKeys -contains $_.key } | ForEach-Object { [ordered]@{ key = $_.key; label = $_.label; write = [string]$_.write } }) }; continue
+        SendJson $c 200 @{ items = $acctList; menus = @($Menus | Where-Object { $MenuKeys -contains $_.key } | ForEach-Object { [ordered]@{ key = $_.key; label = $_.label; write = [string]$_.write } }); approvals = @($Approvals) }; continue
       }
       $body = (New-Object IO.StreamReader($req.InputStream, $Utf8)).ReadToEnd() | ConvertFrom-Json
       $id = ([string]$body.id).Trim().ToLower()
       $pickMenus = @(@($body.menus) | Where-Object { $MenuKeys -contains $_ })   # ($Menus와 이름이 같으면 PowerShell은 대소문자를 가리지 않아 전역 메뉴 목록을 덮어쓴다)
       $pickWrites = @(@($body.writes) | Where-Object { $WriteKeys -contains $_ -and $pickMenus -contains $_ })   # 쓰기는 읽기 메뉴 안에서만
+      $pickApproves = @(@($body.approves) | Where-Object { $ApproveKeys -contains $_ })   # 승인 권한(메뉴 권한과 따로, 담당자 수 제한 없음)
       switch ([string]$body.action) {
         'add' {
           if ($id -notmatch '^[a-z0-9._-]{3,32}$') { throw '아이디는 영문 소문자 · 숫자 · . _ - 로 3~32자입니다.' }
           if (Read-Account $id) { throw "이미 있는 아이디입니다: $id" }
           if (-not ([string]$body.name).Trim()) { throw '이름을 입력해 주세요.' }
           if (([string]$body.pw).Length -lt 8) { throw '비밀번호는 8자 이상이어야 합니다.' }
-          $a = [pscustomobject]@{ id = $id; name = ([string]$body.name).Trim(); admin = $false; menus = $pickMenus; writes = $pickWrites; active = $true; createdAt = (Now); createdBy = (Current-User).id }
+          $a = [pscustomobject]@{ id = $id; name = ([string]$body.name).Trim(); admin = $false; menus = $pickMenus; writes = $pickWrites; approves = $pickApproves; active = $true; createdAt = (Now); createdBy = (Current-User).id }
           Set-Pw $a ([string]$body.pw); Save-Account $a
         }
         'update' {
@@ -795,6 +810,7 @@ while ($l.IsListening) {
           if (([string]$body.name).Trim()) { $a.name = ([string]$body.name).Trim() }
           if (-not $a.admin) {
             if ($null -ne $body.menus) { $a.menus = $pickMenus; $a | Add-Member -NotePropertyName writes -NotePropertyValue $pickWrites -Force }
+            if ($null -ne $body.approves) { $a | Add-Member -NotePropertyName approves -NotePropertyValue $pickApproves -Force }
             if ($null -ne $body.active) { $a | Add-Member -NotePropertyName active -NotePropertyValue ([bool]$body.active) -Force }
           }
           if (([string]$body.pw).Length) { if (([string]$body.pw).Length -lt 8) { throw '비밀번호는 8자 이상이어야 합니다.' }; Set-Pw $a ([string]$body.pw) }
@@ -1192,7 +1208,8 @@ while ($l.IsListening) {
           'add' {
             $kind = [string]$body.kind; $key = [string]$body.fileKey; $nid = [string]$body.nodeId
             # 쓰기 권한: UX 문서 만들기 · 수정 요청 · 연관 항목 찾기는 UX 문서, 프로토타입 요청은 프로토타입, 캡처 · 목록은 Workbench 쓰기(없으면 보기만)
-            if (-not (Can-Write (Job-Menu $kind))) { throw (Ro-Msg (Job-Menu $kind)) }
+            # 승인 · 반려(plan pv-decide)는 메뉴 쓰기 대신 승인 권한으로 확인한다(아래)
+            if (-not ($kind -eq 'plan' -and [string]$body.sub -eq 'pv-decide') -and -not (Can-Write (Job-Menu $kind))) { throw (Ro-Msg (Job-Menu $kind)) }
             if ($kind -notin 'capture', 'catalog', 'guide', 'guide-check', 'guide-edit', 'text', 'prototype', 'prototype-edit', 'prototype-sync', 'minutes', 'plan') { throw "알 수 없는 작업: $kind" }
             # 프로토타입(이 PC에만, prototypes/{id}/): 만들기(prototype, 고른 화면 frames) · 수정 요청(prototype-edit) · Figma 바뀐 화면 맞추기(prototype-sync)
             if ($kind -eq 'prototype') {
@@ -1239,7 +1256,8 @@ while ($l.IsListening) {
               $nid = ''; $key = ''
               if ([string]$body.sub -notin 'pv-new', 'pv-decide', 'answer', 'answer-apply') { throw "알 수 없는 처리: $($body.sub)" }
               if ([string]$body.sub -ne 'pv-new' -and [string]$body.target -notmatch '^(PV|PD|CA)-\d{4}(-[A-Z])?$') { throw "잘못된 항목 ID: $($body.target)" }
-              if ([string]$body.sub -eq 'pv-decide') { $hit = $items | Where-Object { $_.kind -eq 'plan' -and $_.target -eq [string]$body.target -and $_.sub -eq 'pv-decide' -and $_.status -in '대기', '진행 중' } | Select-Object -First 1 }
+              if ([string]$body.sub -eq 'pv-decide' -and -not (Can-Approve 'pv')) { throw '임시 정책 승인 · 반려 권한이 없습니다. 최고관리자에게 「승인 권한 · 임시 정책 승인 · 반려」를 요청하세요.' }
+              if ([string]$body.sub -eq 'pv-decide') { $hit =$items | Where-Object { $_.kind -eq 'plan' -and $_.target -eq [string]$body.target -and $_.sub -eq 'pv-decide' -and $_.status -in '대기', '진행 중' } | Select-Object -First 1 }
             }
             $specNoFile = -not $key -and (($kind -eq 'guide-check' -and [string]$body.scope -eq 'spec') -or $kind -in 'guide-edit', 'guide', 'minutes', 'plan')
             if (-not (Test-Key $key) -and -not $specNoFile) { throw $(if ($kind -eq 'guide') { 'Figma 링크 형식이 아닙니다.' } else { '잘못된 파일 키입니다.' }) }

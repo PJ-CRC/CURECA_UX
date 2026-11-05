@@ -76,6 +76,10 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
 .seg input:focus-visible+span{outline:2px solid var(--accent);outline-offset:-2px}
 .seg input:disabled+span{opacity:.6;cursor:default}
 .chip.w{background:var(--accent-soft);color:var(--accent)}
+.chip.ap{background:#f1e9fd;color:#7a3fd1}
+.mrow.ap{grid-template-columns:auto 1fr;cursor:pointer}
+.mrow.ap input{margin:0;width:16px;height:16px}
+.mrow.ap small{grid-column:2}
 .mh{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:var(--ink-2)}
 .mh button{border:0;background:none;color:var(--accent);font-size:12px;padding:0}
 .sw{display:flex;align-items:center;gap:8px;font-size:13.5px;margin-bottom:14px}
@@ -121,6 +125,9 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
       <div class="mh">메뉴 권한 <button type="button" id="allOn">전부 쓰기</button><button type="button" id="allRead">전부 읽기</button><button type="button" id="allOff">없음</button></div>
       <div class="menus" id="fMenus"></div>
       <p class="sub" style="margin:-4px 0 12px">읽기는 보기만, 쓰기는 수정 요청 등 바꾸기까지 됩니다. 시작 안내 · 내 정보는 권한과 상관없이 모든 계정이 씁니다.</p>
+      <div class="mh">승인 권한</div>
+      <div class="menus" id="fApproves"></div>
+      <p class="sub" style="margin:-4px 0 12px">메뉴 권한과 따로 줍니다(여러 명에게 줄 수 있음). 체크한 사람에게만 승인 · 반려 버튼이 보입니다.</p>
       <label class="sw" id="activeRow"><input type="checkbox" id="fActive" checked> 사용 (끄면 로그인할 수 없음)</label>
       <div class="row"><button class="btn primary" id="saveBtn">저장</button><button class="btn" type="button" id="cancelBtn">새로 입력</button><span style="flex:1"></span><button class="btn danger sm" type="button" id="delBtn" hidden>지우기</button></div>
       <div class="msg" id="msg" role="status"></div>
@@ -132,14 +139,21 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
   var $ = function(id){ return document.getElementById(id); };
   function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
   function fmt(t){ var d = new Date(t); if (isNaN(d)) return ''; var p = function(n){ return (n < 10 ? '0' : '') + n; }; return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes()); }
-  var ITEMS = [], MENUS = [], LAB = {}, sel = null;
+  var ITEMS = [], MENUS = [], LAB = {}, APPR = [], ALAB = {}, sel = null;
+  function setApproves(list, all, lock){ [].forEach.call($('fApproves').querySelectorAll('input[name="ap"]'), function(c){ c.checked = !!all || list.indexOf(c.value) >= 0; c.disabled = !!lock; }); }
+  function approvesOf(){ return [].map.call($('fApproves').querySelectorAll('input[name="ap"]:checked'), function(c){ return c.value; }); }
   function say(t, ok){ $('msg').textContent = t; $('msg').className = 'msg ' + (ok ? 'ok' : 'bad'); }
   function load(keep){
     return fetch('/api/accounts', { cache: 'no-store' }).then(function(r){ return r.json(); }).then(function(d){
       if (d.error) throw new Error(d.error);
       $('srv').textContent = '로컬 서버 연결됨'; $('srv').className = 'badge on';
       /* 메뉴가 1개면 예전 서버가 배열 대신 글자로 보냈다 → 늘 배열로 */
-      ITEMS = (d.items || []).map(function(a){ a.menus = [].concat(a.menus || []); a.writes = [].concat(a.writes || []); return a; }); MENUS = [].concat(d.menus || []); MENUS.forEach(function(m){ LAB[m.key] = m.label; });
+      ITEMS = (d.items || []).map(function(a){ a.menus = [].concat(a.menus || []); a.writes = [].concat(a.writes || []); a.approves = [].concat(a.approves || []); return a; }); MENUS = [].concat(d.menus || []); MENUS.forEach(function(m){ LAB[m.key] = m.label; });
+      /* 승인 권한(메뉴 권한과 따로): 항목마다 체크 */
+      APPR = [].concat(d.approvals || []); APPR.forEach(function(p){ ALAB[p.key] = p.label; });
+      $('fApproves').innerHTML = APPR.length ? APPR.map(function(p){
+        return '<label class="mrow ap"><input type="checkbox" name="ap" value="' + esc(p.key) + '"><b>' + esc(p.label) + '</b><small>' + esc(p.where || '') + '</small></label>';
+      }).join('') : '<p class="sub">승인할 항목이 아직 없습니다.</p>';
       /* 메뉴마다 없음 · 읽기 · 쓰기(쓰기가 없는 메뉴는 없음 · 읽기) */
       $('fMenus').innerHTML = MENUS.map(function(m){
         var opts = [['none', '없음'], ['read', '읽기']].concat(m.write ? [['write', '쓰기']] : []);
@@ -154,7 +168,8 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
   function renderRows(){
     $('rows').innerHTML = ITEMS.map(function(a){
       return '<tr data-id="' + esc(a.id) + '" class="' + (sel === a.id ? 'on' : '') + '"><td class="id">' + esc(a.id) + '</td><td>' + esc(a.name) + (a.admin ? ' <span class="chip adm">최고관리자</span>' : '') + '</td>' +
-        '<td><div class="chips">' + (a.admin ? '<span class="chip adm">전부 쓰기</span>' : a.menus.length ? a.menus.map(function(k){ var w = a.writes.indexOf(k) >= 0; return '<span class="chip' + (w ? ' w' : '') + '">' + esc(LAB[k] || k) + ' · ' + (w ? '쓰기' : '읽기') + '</span>'; }).join('') : '<span class="chip off">없음</span>') + '</div></td>' +
+        '<td><div class="chips">' + (a.admin ? '<span class="chip adm">전부 쓰기</span>' : a.menus.length ? a.menus.map(function(k){ var w = a.writes.indexOf(k) >= 0; return '<span class="chip' + (w ? ' w' : '') + '">' + esc(LAB[k] || k) + ' · ' + (w ? '쓰기' : '읽기') + '</span>'; }).join('') : '<span class="chip off">없음</span>') +
+          (!a.admin && a.approves.length ? a.approves.map(function(k){ return '<span class="chip ap">승인 · ' + esc(ALAB[k] || k) + '</span>'; }).join('') : '') + '</div></td>' +
         '<td>' + (a.active ? '<span class="chip ok">사용</span>' : '<span class="chip off">중지</span>') + '</td><td style="color:var(--ink-3);font-size:12.5px">' + esc(fmt(a.updatedAt)) + '</td></tr>';
     }).join('') || '<tr><td colspan="5">계정이 없습니다.</td></tr>';
   }
@@ -174,7 +189,7 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
     $('fTitle').textContent = '계정 추가'; $('fSub').textContent = '아이디는 만든 뒤 바꿀 수 없습니다.';
     $('fId').value = ''; $('fId').readOnly = false; $('fName').value = ''; $('fPw').value = ''; $('fPw').placeholder = '';
     $('pwLabel').innerHTML = '비밀번호 <small>8자 이상</small>';
-    setMenus(['workbench'], ['workbench'], false, false); $('fActive').checked = true; $('activeRow').hidden = true; $('delBtn').hidden = true; say('');
+    setMenus(['workbench'], ['workbench'], false, false); setApproves([], false, false); $('fActive').checked = true; $('activeRow').hidden = true; $('delBtn').hidden = true; say('');
   }
   function pick(id){
     var a = ITEMS.filter(function(x){ return x.id === id; })[0]; if (!a) { fresh(); return; }
@@ -182,7 +197,7 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
     $('fTitle').textContent = a.name + ' 수정'; $('fSub').textContent = a.admin ? '최고관리자: 이름 · 비밀번호만 바꿀 수 있습니다.' : '만든 날 ' + fmt(a.createdAt) + ' · 비밀번호 바꾼 날 ' + fmt(a.pwAt);
     $('fId').value = a.id; $('fId').readOnly = true; $('fName').value = a.name; $('fPw').value = ''; $('fPw').placeholder = '바꿀 때만 입력';
     $('pwLabel').innerHTML = '비밀번호 초기화 <small>비우면 그대로 · 바꾸면 그 사람은 다시 로그인</small>';
-    setMenus(a.menus, a.writes, a.admin, a.admin); $('fActive').checked = a.active; $('fActive').disabled = a.admin; $('activeRow').hidden = false; $('delBtn').hidden = a.admin; say('');
+    setMenus(a.menus, a.writes, a.admin, a.admin); setApproves(a.approves, a.admin, a.admin); $('fActive').checked = a.active; $('fActive').disabled = a.admin; $('activeRow').hidden = false; $('delBtn').hidden = a.admin; say('');
   }
   $('rows').addEventListener('click', function(e){ var r = e.target.closest('tr[data-id]'); if (r) pick(r.dataset.id); });
   $('newBtn').addEventListener('click', function(){ fresh(); $('fId').focus(); });
@@ -196,7 +211,7 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
     e.preventDefault();
     var menus = MENUS.filter(function(m){ return levelOf(m.key) !== 'none'; }).map(function(m){ return m.key; });
     var writes = MENUS.filter(function(m){ return levelOf(m.key) === 'write'; }).map(function(m){ return m.key; });
-    var b = { action: sel ? 'update' : 'add', id: $('fId').value.trim().toLowerCase(), name: $('fName').value.trim(), pw: $('fPw').value, menus: menus, writes: writes };
+    var b = { action: sel ? 'update' : 'add', id: $('fId').value.trim().toLowerCase(), name: $('fName').value.trim(), pw: $('fPw').value, menus: menus, writes: writes, approves: approvesOf() };
     if (sel) b.active = $('fActive').checked;
     if (!sel && !menus.length && !confirm('사용할 메뉴가 하나도 없습니다. 이대로 만들까요? (로그인하면 「시작 안내」 · 「내 정보」만 보입니다)')) return;
     $('saveBtn').disabled = true;
