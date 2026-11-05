@@ -51,6 +51,10 @@ a{color:var(--accent)}
 .step.done .num{background:var(--ok);color:#fff;border-color:transparent}
 .step.cur{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
 .step.cur .num{background:var(--accent);color:#fff;border-color:transparent}
+/* 연결 안 됨 · 오류(칩이 bad): 지금 단계 표시(파랑)보다 앞서 붉게 — 연결된 것처럼 보이지 않게 */
+.step.bad{border-color:var(--red);box-shadow:0 0 0 3px var(--red-soft)}
+.step.bad .num{background:var(--red);color:#fff;border-color:transparent}
+.step.bad .ttl small{color:var(--red)}
 .ttl{flex:1;font-weight:700;font-size:15px}
 .ttl small{display:block;font-weight:400;font-size:12.5px;color:var(--ink-3)}
 .chip{font-size:12px;font-weight:600;padding:2px 10px;border-radius:999px;white-space:nowrap;background:var(--surface-2);color:var(--ink-3)}
@@ -101,6 +105,8 @@ a{color:var(--accent)}
   .snav .st{flex:1}
   .snav li.done .sn{background:var(--ok-soft);color:var(--ok);border-color:transparent}
   .snav li.cur .sn{background:var(--accent);color:#fff;border-color:transparent}
+  .snav li.bad .sn{background:var(--red);color:#fff;border-color:transparent}
+  .snav li.bad .st{color:var(--red);font-weight:700}
   .snav li.sel button{background:var(--accent-soft);color:var(--accent);font-weight:700}
   .steps .step{display:none;margin:0}
   .steps .step.sel{display:block}
@@ -374,7 +380,7 @@ a{color:var(--accent)}
       s5: { done: !!c.claude, chip: c.claude ? ['ok', '완료'] : (e.claudeInstalled === false && !e.claudeCli ? ['bad', '설치 필요'] : ['wait', '확인 필요']) },
       s6: { done: !!c.connector, chip: c.connector ? ['ok', '완료'] : ['wait', '확인 필요'] },
       /* 백그라운드는 기다림(idle) · 처리 중(working)일 때만 완료. 오류 · 로그인 필요는 감시가 돌아도 요청을 처리하지 못한다 */
-      s7: { done: ag.alive ? (ag.status === 'idle' || ag.status === 'working') : watch, chip: ag.alive ? (ag.status === 'login' ? ['bad', '로그인 필요'] : ag.status === 'figma' ? ['bad', 'Figma 연결 필요'] : ag.status === 'error' ? ['bad', '확인 필요'] : ag.status === 'working' ? ['ok', '처리 중'] : ['ok', '백그라운드 감시 중']) : watch ? ['ok', '감시 중 (Claude 창)'] : ['wait', '시작 대기'] },
+      s7: { done: ag.alive ? (ag.status === 'idle' || ag.status === 'working') : watch, chip: ag.alive ? (ag.status === 'login' ? ['bad', '로그인 필요'] : ag.status === 'figma' ? ['bad', 'Figma 연결 필요'] : ag.status === 'error' ? ['bad', '확인 필요'] : ag.status === 'working' ? ['ok', '처리 중'] : ['ok', '백그라운드 감시 중']) : watch ? ['ok', '감시 중 (Claude 창)'] : ['bad', ag.status === 'stopped' ? '중지됨' : '감시 꺼짐'] },
       s8: { done: !!(e.historySync && e.historySync.ok),
             chip: e.historySync && e.historySync.ok ? ['ok', '연결됨'] : e.historySyncing ? ['wait', '연결 중…'] : e.gitInstalled === false ? ['bad', 'git 설치 필요'] :
               e.historySync ? ['bad', /로그인/.test(e.historySync.message) ? '로그인 필요' : '확인 필요'] : ['wait', '연결 대기'] }
@@ -391,12 +397,13 @@ a{color:var(--accent)}
       var s = st[id], el = $(id);
       if (s.done) n++; else if (!cur) cur = id;
       el.classList.toggle('done', s.done);
+      el.classList.toggle('bad', !s.done && s.chip[0] === 'bad');
       var chip = el.querySelector('[data-chip]');
       chip.className = 'chip ' + s.chip[0]; chip.textContent = s.chip[1];
     });
     steps.forEach(function(id, i){
       $(id).classList.toggle('cur', id === cur);
-      var li = $('nav-' + id); li.classList.toggle('cur', id === cur); li.classList.toggle('done', st[id].done);
+      var li = $('nav-' + id); li.classList.toggle('cur', id === cur); li.classList.toggle('done', st[id].done); li.classList.toggle('bad', !st[id].done && st[id].chip[0] === 'bad');
       li.querySelector('.sn').textContent = st[id].done ? '✓' : i + 1;
     });
     if (!opened && S.env) {
@@ -440,13 +447,14 @@ a{color:var(--accent)}
     setMsg('gitEnv', e.historySyncing ? ['wait', '깃허브에 연결하는 중…'] : hs && hs.ok ? ['ok', '✓ ' + hs.message] :
       e.gitInstalled === false ? ['wait', 'git이 아직 없습니다. 깃허브 연결을 누르면 설치부터 진행합니다.'] : hs ? ['bad', hs.message] : ['wait', '깃허브 연결을 누르세요.']);
     var ws = e.watcherSec, ag = e.agent || {};
-    setMsg('agentEnv', !e.claudeCli ? ['wait', 'Claude Code CLI를 찾지 못했습니다. Claude 앱 Code 탭을 한 번 열면 함께 설치됩니다. (없으면 아래 「CLI가 없을 때」)'] :
+    var off = ws != null && ws < 90 ? 'wait' : 'bad';   // 백그라운드가 꺼져도 Claude 창이 감시 중이면 주황(요청은 처리됨)
+    setMsg('agentEnv', !e.claudeCli ? ['bad','Claude Code CLI를 찾지 못했습니다. Claude 앱 Code 탭을 한 번 열면 함께 설치됩니다. (없으면 아래 「CLI가 없을 때」)'] :
       ag.alive && ag.stopping ? ['wait', '중지하는 중… 처리 중인 요청이 있으면 마친 뒤 멈춥니다.'] :
       ag.alive ? (ag.status === 'login' || ag.status === 'figma' ? ['bad', ag.msg || '로그인이 필요합니다: 「Claude 로그인 · Figma 연결」을 눌러 /login · /mcp를 진행하세요.'] :
         ag.status === 'error' ? ['bad', '백그라운드 감시: ' + (ag.msg || '오류')] :
         ['ok', '✓ 백그라운드 감시 중 (창 없음) — ' + (ag.msg || '') + ' · ' + ago(ag.sec)]) :
-      ag.status === 'stopped' ? ['wait', '백그라운드 감시가 중지되어 있습니다.'] :
-      ag.sec != null ? ['wait', '백그라운드 감시가 꺼져 있습니다. (마지막: ' + ago(ag.sec) + ')'] : ['wait', '처음이면 1 → 2 순서로 진행하세요.']);
+      ag.status === 'stopped' ? [off, '백그라운드 감시가 중지되어 있습니다.' + (off === 'bad' ? ' 요청이 처리되지 않습니다.' : '') + ''] :
+      ag.sec != null ? [off, '백그라운드 감시가 꺼져 있습니다.' + (off === 'bad' ? ' 요청이 처리되지 않습니다.' : '') + ' (마지막: ' + ago(ag.sec) + ')'] : [off, '백그라운드 감시가 꺼져 있습니다. 처음이면 1 → 2 순서로 진행하세요.']);
     $('agentStart').hidden = !!ag.alive; $('agentStop').hidden = !ag.alive;
     setMsg('watchEnv', ag.alive ? null : ws != null && ws < 90 ? ['ok', '✓ Claude 창이 요청을 감시하고 있습니다. (' + (e.watcherHost || '') + ', ' + ago(ws) + ')'] : null);
 
