@@ -44,6 +44,7 @@ a.pill:hover{border-color:var(--accent)}
 
 /* 두 칸: 목차 트리 340 | 내용 */
 .layout{display:grid;grid-template-columns:340px minmax(0,1fr);gap:var(--gap);align-items:start}
+@media (max-width:1000px){ .layout{grid-template-columns:260px minmax(0,1fr)} }   /* 화면 배율이 크면(200%) 목차를 좁혀 상세를 넓게 */
 .side{position:sticky;top:calc(var(--nav-h) + 12px);max-height:calc(100vh - var(--nav-h) - 24px);display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
 .side-head{padding:12px;border-bottom:1px solid var(--line)}
 .side-head input{width:100%;padding:8px 11px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:14px}
@@ -60,7 +61,7 @@ a.pill:hover{border-color:var(--accent)}
 .ask-act span{font-size:12px;color:var(--ink-3);min-height:16px;line-height:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ask[aria-disabled="true"] textarea,.ask[aria-disabled="true"] .btn{opacity:.5;pointer-events:none}
 html.doc-ro .ask{display:none}
-@media (max-width:860px){ .ask{flex-direction:column} .ask-t,.ask-act{width:auto} }
+@media (max-width:720px){ .ask{flex-direction:column} .ask-t,.ask-act{width:auto} }
 /* 수정 진행 · 결과 패널: 목차 · 내용과 입력창 사이. 길면 그 안에서 스크롤(창 높이의 40%까지) */
 #fixes:not(:empty){margin-top:12px;max-height:40vh;overflow:auto;border-radius:12px}
 #fixes .fix{margin:0 0 8px}
@@ -250,7 +251,7 @@ html.embed .app-wrap{max-width:none;padding:0 0 24px}
 /* UX 문서 안(iframe): iframe이 내용 높이라 sticky가 듣지 않는다 → 목차 위치 · 높이는 stickSide()가 바깥 페이지 스크롤에 맞춰 정한다 */
 html.embed .side{position:relative;top:auto;max-height:none;will-change:transform}
 html.embed,html.embed body{overflow:hidden}
-@media (max-width:860px){
+@media (max-width:720px){
   .layout{grid-template-columns:1fr}
   .side{position:static;max-height:none}
   .side.fold .tree,.side.fold .side-head input{display:none}
@@ -594,32 +595,49 @@ html.embed,html.embed body{overflow:hidden}
     });
   }
 
-  /* 페이지 전체가 스크롤된다(목차 · 내용 · 결과 패널 · 입력창이 위에서 아래로 이어짐, 입력창을 늘리면 아래로 길어짐).
-     목차는 화면에 붙어 따라온다: 따로 연 페이지는 CSS sticky, UX 문서 안(embed, iframe)은 바깥 페이지 스크롤에 맞춰 옮긴다.
-     embed는 내용 높이를 바깥 페이지에 알려 iframe이 그 높이가 된다(Common_UX_Guide.html 'ux-guide-h') */
+  /* 목차 · 상세는 창 높이에 맞춘다(넓은 화면: 둘이 같은 높이, 상세 안에서 스크롤 — 아래 결과 패널 · 입력창까지 한 화면에).
+     그 아래(결과 패널 · 입력창)는 페이지 흐름: 입력창을 늘리면 아래로 길어지고 페이지 전체가 스크롤된다(위 목차 · 상세 높이는 그대로).
+     UX 문서 안(embed, iframe)은 바깥 창 높이로 맞추고, 내용 높이를 바깥 페이지에 알려 iframe이 그 높이가 된다(Common_UX_Guide.html 'ux-guide-h').
+     좁은 화면(720px 이하)은 맞추지 않고 그대로 페이지 스크롤, 목차는 따라온다(embed는 stickSide). */
   var EMBED = document.documentElement.classList.contains('embed');
   function outer(){ try { return window.frameElement && window.parent !== window ? window.parent : null; } catch(x){ return null; } }
+  function navOf(W){ var n = W.document.querySelector('.appnav'); return n ? n.offsetHeight : 0; }
   function stickSide(){
     var P = outer(); if (!P) return;
     var side = $('side'), lay = $('layout');
-    if (window.innerWidth <= 860) { side.style.transform = ''; side.style.maxHeight = ''; return; }
-    var nav = P.document.querySelector('.appnav'), navH = nav ? nav.offsetHeight : 0;
+    if (lay.classList.contains('fit') || window.innerWidth <= 720) { side.style.transform = ''; side.style.maxHeight = ''; return; }
+    var navH = navOf(P);
     side.style.maxHeight = Math.max(240, P.innerHeight - navH - 24) + 'px';
     var want = navH + 12 - (window.frameElement.getBoundingClientRect().top + lay.getBoundingClientRect().top);
     side.style.transform = 'translateY(' + Math.round(Math.max(0, Math.min(want, lay.offsetHeight - side.offsetHeight))) + 'px)';
   }
   function fit(){
-    $('layout').classList.remove('fit'); document.documentElement.classList.remove('fitted');
-    if (!EMBED) return;
-    var P = outer(), w = document.querySelector('.app-wrap');
-    if (P && w) P.postMessage({ type: 'ux-guide-h', h: w.offsetTop + w.offsetHeight }, location.origin);   // 화면 위치가 아니라 문서 기준 높이
+    var lay = $('layout'), P = outer(), W = P || window, wide = window.innerWidth > 720;
+    lay.classList.toggle('fit', wide); document.documentElement.classList.toggle('fitted', wide);
+    if (wide) {
+      /* 목차 · 상세 위쪽이 (스크롤하지 않았을 때) 바깥 창에서 어디인지 */
+      var top = P ? P.scrollY + window.frameElement.getBoundingClientRect().top + lay.getBoundingClientRect().top : lay.getBoundingClientRect().top + window.scrollY;
+      /* 아래 결과 패널 · 입력창(늘리기 전 높이) */
+      var ta = $('askText'), grow = ta && ta.offsetParent ? Math.max(0, ta.offsetHeight - (parseFloat(getComputedStyle(ta).minHeight) || 0)) : 0;
+      var ask = $('ask'), below = ask.offsetParent ? ask.getBoundingClientRect().bottom - lay.getBoundingClientRect().bottom - grow : 0;
+      /* 입력창 아래 여백(이 페이지 + UX 문서 안이면 바깥 페이지의 iframe 아래)까지 빼서 늘리기 전에는 페이지가 스크롤되지 않게 */
+      var wrap = document.querySelector('.app-wrap'), tail = wrap.getBoundingClientRect().bottom - ask.getBoundingClientRect().bottom;
+      if (P) tail += P.document.documentElement.scrollHeight - (P.scrollY + window.frameElement.getBoundingClientRect().bottom);
+      var h = W.innerHeight - top - below - tail;
+      /* 낮은 창: 위 제목 · 탭이 높이를 다 먹으면 목차 · 상세를 창 높이(상단 메뉴 아래)로 두고 페이지를 스크롤해 본다 */
+      if (h < 200) h = W.innerHeight - navOf(W) - 24;
+      lay.style.setProperty('--fit', Math.max(200, Math.round(h)) + 'px');
+    }
+    if (EMBED && P) { var w = document.querySelector('.app-wrap'); P.postMessage({ type: 'ux-guide-h', h: w.offsetTop + w.offsetHeight }, location.origin); }
     stickSide();
   }
-  /* 다른 항목으로 가면 상세 맨 위로(지나 내려가 있을 때만) */
+  /* 다른 항목으로 가면 상세 맨 위로(맞춤일 때는 상세 안을, 아니면 지나 내려가 있을 때만 페이지를) */
   function toTop(){
-    var P = outer(), m = $('main');
+    var m = $('main');
+    if ($('layout').classList.contains('fit')) { m.scrollTop = 0; return; }
+    var P = outer();
     if (P) {
-      var nav = P.document.querySelector('.appnav'), y = P.scrollY + window.frameElement.getBoundingClientRect().top + m.getBoundingClientRect().top - (nav ? nav.offsetHeight : 0) - 12;
+      var y = P.scrollY + window.frameElement.getBoundingClientRect().top + m.getBoundingClientRect().top - navOf(P) - 12;
       if (P.scrollY > y) P.scrollTo({ top: y, behavior: 'smooth' });
     } else {
       var y2 = m.getBoundingClientRect().top + scrollY - 76;
@@ -629,9 +647,9 @@ html.embed,html.embed body{overflow:hidden}
   window.addEventListener('resize', fit);
   if (EMBED) {
     var P0 = outer();
-    if (P0) { P0.addEventListener('scroll', stickSide, { passive: true }); P0.addEventListener('resize', stickSide); window.addEventListener('pagehide', function(){ try { P0.removeEventListener('scroll', stickSide); P0.removeEventListener('resize', stickSide); } catch(x){} }); }
+    if (P0) { P0.addEventListener('scroll', stickSide, { passive: true }); P0.addEventListener('resize', fit); window.addEventListener('pagehide', function(){ try { P0.removeEventListener('scroll', stickSide); P0.removeEventListener('resize', fit); } catch(x){} }); }
   }
-  if (window.ResizeObserver) { var roFit = new ResizeObserver(fit); roFit.observe(document.querySelector('.app-wrap')); }   // 내용 · 결과 패널 · 입력창 높이가 바뀌면 바깥 iframe 높이도
+  if (window.ResizeObserver) { var roFit = new ResizeObserver(fit); roFit.observe($('fixes')); roFit.observe($('ask')); roFit.observe(document.querySelector('.app-wrap')); }   // 결과 패널 · 입력창 · 내용 높이가 바뀌면 다시 맞춤(바깥 iframe 높이도)
   setTimeout(fit, 0);
 
   /* ── 화면 정의서(meta.view 'screens'): 메뉴 폴더마다 CID 화면설계서(머리말 + 본문 + 반영 대기 목록), 메뉴 정보는 _menu.md ──
@@ -741,7 +759,7 @@ html.embed,html.embed body{overflow:hidden}
     $('tocCur').textContent = '목차 · ' + cid; askSet();
     scTree($('q').value.trim().toLowerCase());
     var it = $('tree').querySelector('.sc-it.cur'); if (it && first) it.scrollIntoView({ block: 'nearest' });
-    if (!first) { history.replaceState(null, '', '#' + cid); if (window.innerWidth <= 860) { $('side').classList.add('fold'); $('tocBtn').setAttribute('aria-expanded', 'false'); } toTop(); }
+    if (!first) { history.replaceState(null, '', '#' + cid); if (window.innerWidth <= 720) { $('side').classList.add('fold'); $('tocBtn').setAttribute('aria-expanded', 'false'); } toTop(); }
     s.pvs.forEach(function(p){
       if (PVST[p] !== undefined) return; PVST[p] = '';
       /* 임시 정책 상태: .history/guides/provisional/{PV}.md가 있으면 그 상태(없으면 표시하지 않음) */
@@ -848,7 +866,7 @@ html.embed,html.embed body{overflow:hidden}
     }
     $('tocCur').textContent = '목차 · ' + s.label; askSet();
     tree($('q').value.trim().toLowerCase());
-    if (!first) { history.replaceState(null, '', '#' + s.id); if (window.innerWidth <= 860) { $('side').classList.add('fold'); $('tocBtn').setAttribute('aria-expanded', 'false'); } toTop(); }
+    if (!first) { history.replaceState(null, '', '#' + s.id); if (window.innerWidth <= 720) { $('side').classList.add('fold'); $('tocBtn').setAttribute('aria-expanded', 'false'); } toTop(); }
   }
 
   /* 머리 버튼으로 여닫는 패널(수정 이력) */
