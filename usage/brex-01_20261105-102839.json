@@ -1,0 +1,26 @@
+{
+    "id":  "brex-01_20261105-102839",
+    "kind":  "work",
+    "reqId":  "",
+    "at":  "2026-11-05T10:28:39+09:00",
+    "from":  "2026-11-05T10:28:22+09:00",
+    "by":  "서보경",
+    "doneBy":  "Claude",
+    "pc":  "BREX_01",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "작업규칙: 헌법 비교 (J007)",
+    "models":  {
+                   "claude-opus-5-5":  7
+               },
+    "calls":  7,
+    "input":  18,
+    "cacheWrite":  5956,
+    "cacheRead":  752013,
+    "output":  3194,
+    "total":  761181,
+    "usd":  0.2620
+}
