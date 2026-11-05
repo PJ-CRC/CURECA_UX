@@ -2,12 +2,25 @@
     "jobId":  "J012",
     "pc":  "BREX_01",
     "by":  "서보경",
-    "at":  "2026-11-05T13:30:53+09:00",
-    "status":  "진행 중",
-    "note":  "바뀐 규칙 5개 파일 기준 연관 항목 찾는 중",
+    "at":  "2026-11-05T13:31:59+09:00",
+    "status":  "완료",
+    "note":  "문서 2 · 화면 0 · 프로토타입 0\n- 바뀐 규칙: 번역 언어 6개(독일어), 공통 정책 B안(가이드 규칙은 COMM ID로 바로 잇기), screen-spec 8절 Common UX 따르기, 작업방 → 공유방 → 개발사 흐름 보류\n- 화면: 작업의 기준 Figma 파일(fileKey)이 없어 Figma 화면은 찾지 않음\n- 정책서 · 기준데이터 · 화면 정의서: 언어 · B안과 어긋나는 곳 없음(POL-COM-004는 이미 7개 언어, TI/LI-STN-02의 6개 언어 줄 R08은 이미 「제외」, R10이 7개 언어로 「대기」)\n- 프로토타입(assay-pack): 관계없음\n참고: 화면 정의서에 COMM-5 참조가 98곳 있고 Connon UX 번호(예: COMM-5-j(4/4) Alert)와 PC 번호가 섞여 있다. 가이드 5장을 PC 기준으로 맞춘 뒤 화면 정의서 참조 번호도 한 번에 맞추는 것을 권함",
     "scope":  "spec",
     "fileKey":  "",
     "items":  [
-
+                  {
+                      "type":  "doc",
+                      "doc":  "rules",
+                      "docTitle":  "CURECA 작업규칙 (rules/language-set.md)",
+                      "section":  "2. 언어셋",
+                      "change":  "「나머지 5개 언어 번역도 고객사를 통해 받습니다」를 「나머지 6개 언어」로 고친다. 이번 수정에서 5절 · 흐름은 6개(독일어 포함)로 바뀌었는데 2절(18줄)만 5개로 남아 있다(제공 언어 7개 − 영어 = 6개). 원본 CURECA_AI에도 같은 줄이 남아 있어 원본도 함께 고쳐야 한다."
+                  },
+                  {
+                      "type":  "doc",
+                      "doc":  "g20261028-brex-06-J003",
+                      "docTitle":  "CURECA UX 가이드",
+                      "section":  "5. Component",
+                      "change":  "policy-writing B안 · screen-spec v1.3 8절로 디스크립션이 Common UX 가이드 번호(COMM ID, Common UX - PC 기준 5-a ~ 5-w)로 바로 잇게 됐는데, 이 가이드 5장은 Connon UX 번호(5-a ~ 5-t, Tab 없음, 예: 5-g Dropdown · 5-p Table)라 PC 번호(5-g Data Table · 5-m Popup 등)와 맞지 않는다. 5장 항목 번호 · 이름 · 내용을 Common UX - PC 기준으로 맞춘다(common-ux/feedback.md 16번)."
+                  }
               ]
 }
