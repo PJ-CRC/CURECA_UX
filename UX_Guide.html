@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>UX Guide</title>
+<title>UX 문서</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="appnav.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
@@ -75,7 +75,7 @@ a.pill:hover{border-color:var(--accent)}
 .main li{margin:3px 0}
 .main blockquote{background:var(--accent-soft);border-left:3px solid var(--accent);padding:8px 14px;border-radius:6px;margin:12px 0;font-size:14px}
 .main blockquote p{margin:4px 0}
-code{font-family:"JetBrains Mono",Consolas,monospace;font-size:.88em;background:var(--code-bg);padding:1px 6px;border-radius:5px}
+code{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.88em;background:var(--code-bg);padding:1px 6px;border-radius:5px}
 pre{background:var(--code-bg);padding:12px 14px;border-radius:8px;overflow-x:auto;font-size:13px;line-height:1.5;margin:10px 0}
 pre code{background:none;padding:0}
 .tbl{overflow-x:auto;margin:10px 0;border:1px solid var(--line);border-radius:8px}
@@ -137,7 +137,7 @@ html.embed.fitted,html.embed.fitted body{overflow:hidden}
 .sc-info dt{color:var(--ink-3)}
 .sc-info dd{margin:0;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .sc-info a{color:var(--accent)}
-.sc-id{display:inline-block;padding:1px 8px;border-radius:6px;border:0;background:var(--accent-soft);color:var(--accent);font:12.5px ui-monospace,Consolas,monospace;cursor:default}
+.sc-id{display:inline-block;padding:1px 8px;border-radius:6px;border:0;background:var(--accent-soft);color:var(--accent);font:12.5px "JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;cursor:default}
 button.sc-id{cursor:pointer}
 button.sc-id:hover{text-decoration:underline}
 .sc-muted{color:var(--ink-3);font-size:13px}
@@ -155,7 +155,10 @@ table.sc-fix td.k{white-space:nowrap}
 .sc-st.off{color:var(--ink-3)}
 .sc-body{border-top:1px solid var(--line);padding-top:6px}
 @media (max-width:760px){ .sc-info{grid-template-columns:1fr} .sc-head{flex-direction:column} }
-.pager button{border:1px solid var(--accent);background:var(--accent-soft);color:var(--accent);font-weight:700;border-radius:8px;padding:8px 14px;font-size:13.5px;max-width:48%;text-align:left}
+/* 이전 · 다음 버튼: 폭 · 높이 고정(긴 이름은 두 줄까지, 넘치면 …, 마우스를 올리면 전체 이름) */
+.pager button{flex:none;width:280px;max-width:calc(50% - 5px);height:68px;display:flex;flex-direction:column;justify-content:center;gap:2px;overflow:hidden;border:1px solid var(--accent);background:var(--accent-soft);color:var(--accent);font-weight:700;border-radius:8px;padding:8px 14px;font-size:13.5px;line-height:1.35;text-align:left}
+.pager button.nx{text-align:right;margin-left:auto}
+.pager .pg-t{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:keep-all;overflow-wrap:anywhere}
 .pager button:hover{background:var(--accent);color:#fff}
 :root[data-theme="dark"] .pager button:hover{color:#0f1115}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pager button:hover{color:#0f1115}}
@@ -418,7 +421,7 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
   /* 이 문서를 작업 기준으로 적용한 파일들: 공통 규칙(guideId) · 종류별 적용(docs.{종류}.id, 정의서 등) */
   function appliedKeys(){ return Object.keys(applied).filter(function(k){ var a = applied[k] || {}, ds = a.docs || {}; return a.guideId === id || Object.keys(ds).some(function(t){ return ds[t] && ds[t].id === id; }); }); }
   function head(m){
-    document.title = m.title || 'UX Guide';
+    document.title = m.title || 'UX 문서';
     /* 돌아가기: 그 문서 카테고리의 탭으로 (?doc=kind, 없으면 UX가이드) */
     var bk = document.querySelector('.back'); if (bk) bk.href = 'Common_UX_Guide.html?doc=' + (m.kind || 'guide');
     $('title').textContent = m.title || id;
@@ -505,7 +508,7 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
     /* 파일형 문서: 대분류 · 항목마다 그 파일(수정 요청 · 아래 경로 표시에 쓴다) */
     if (FILEMAP) { var hi = 0; secs.forEach(function(s){ if (s.level >= 1) s.file = FILEMAP[hi++] || (s.parent ? s.parent.file : '') || ''; }); }
     if (!secs.length) { fail('가이드 내용이 비어 있습니다.'); return; }
-    var want = keepIdx != null ? (secs[keepIdx] || secs[0]).id : decodeURIComponent(location.hash.slice(1));
+    var want = keepIdx != null ? (secs[keepIdx] || secs[0]).id : findSec(decodeURIComponent(location.hash.slice(1)));
     show(byId[want] ? want : secs[0].id, true);
   }
   function fullMd(){ return head0 + secs.map(function(s){ return s.raw; }).join(''); }
@@ -620,7 +623,7 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
       var re = new RegExp('\\b' + s.cid.replace(/-/g, '\\-') + '\\b');
       s.callers = uniq(s.calls.concat(all.filter(function(t){ return t !== s && re.test(t.body); }).map(function(t){ return t.cid; })));
     });
-    var want = decodeURIComponent(location.hash.slice(1));
+    var want = scFind(decodeURIComponent(location.hash.slice(1)));
     var first = SC.byCid[want] ? want : (SC.menus[0] && SC.menus[0].screens[0] ? SC.menus[0].screens[0].cid : '');
     if (!first) { fail('화면 정의서 파일이 없습니다.'); return; }
     scShow(first, true);
@@ -779,8 +782,8 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
     }
     /* 이전 · 다음 항목 */
     var i = secs.indexOf(s), pv = secs[i - 1], nx = secs[i + 1];
-    m.insertAdjacentHTML('beforeend', '<div class="pager">' + (pv ? '<button type="button" data-go="' + pv.id + '"><small>‹ 이전</small>' + esc(pv.label) + '</button>' : '<span></span>') +
-      (nx ? '<button type="button" data-go="' + nx.id + '" style="text-align:right"><small>다음 ›</small>' + esc(nx.label) + '</button>' : '') + '</div>');
+    m.insertAdjacentHTML('beforeend', '<div class="pager">' + (pv ? '<button type="button" data-go="' + pv.id + '" title="' + esc(pv.label) + '"><small>‹ 이전</small><span class="pg-t">' + esc(pv.label) + '</span></button>' : '<span></span>') +
+      (nx ? '<button type="button" class="nx" data-go="' + nx.id + '" title="' + esc(nx.label) + '"><small>다음 ›</small><span class="pg-t">' + esc(nx.label) + '</span></button>' : '') + '</div>');
     /* 파일형 문서: 이 항목이 들어 있는 깃 문서 경로(예: rule/schedule.md). 마우스를 올리면 지금 내용 파일의 전체 경로 */
     if (s.file) {
       var fl = (FILES || []).filter(function(f){ return f.path === s.file; })[0];
@@ -977,7 +980,44 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
   /* 검색: 제목 · 내용에 글자가 있는 항목만 트리에 남긴다 */
   $('q').addEventListener('input', function(){ tree(this.value.trim().toLowerCase()); });
   $('tocBtn').onclick = function(){ var f = $('side').classList.toggle('fold'); this.setAttribute('aria-expanded', String(!f)); };
-  window.addEventListener('hashchange', function(){ var h = decodeURIComponent(location.hash.slice(1)); if (SC) { if (SC.byCid[h] && h !== scCur) scShow(h); return; } if (byId[h] && byId[h] !== cur) show(h); });
+  window.addEventListener('hashchange', function(){ var h = decodeURIComponent(location.hash.slice(1)); if (SC) { h = scFind(h); if (SC.byCid[h] && h !== scCur) scShow(h); return; } h = findSec(h); if (byId[h] && byId[h] !== cur) show(h); });
+  /* 주소 #… 로 항목 열기: #s3(항목 번호) · #f=com/POL-COM-001.md(파일) · #POL-COM-001(정책 · 항목 ID) · 화면 정의서는 #LI-INS-01-P(CID) */
+  function findSec(h){
+    if (!h || byId[h]) return h;
+    var f = /^f=(.+)$/.exec(h), s;
+    if (f) s = secs.filter(function(x){ return x.file === f[1]; })[0];
+    else s = secs.filter(function(x){ return x.level && (String(x.label).indexOf(h + ' ') === 0 || x.label === h || (x.file && x.file.replace(/^.*\//, '') === h + '.md')); })[0];
+    return s ? s.id : h;
+  }
+  function scFind(h){
+    if (!h || SC.byCid[h]) return h;
+    var f = /^f=(.+)$/.exec(h); if (!f) return h;
+    var hit = Object.keys(SC.byCid).filter(function(c){ return SC.byCid[c].file === f[1]; })[0];
+    return hit || h;
+  }
+  /* 문서 안 링크(예: [terms.csv](terms.csv), ../policy/service-mode.md): 그 파일 기준 상대 경로라 보기 화면 주소로는 열리지 않는다.
+     → 이 문서의 파일이면 그 항목으로, 다른 UX 문서의 파일이면 그 문서 보기로, 그 밖은 원본 파일을 새 탭으로 */
+  $('main').addEventListener('click', function(e){
+    var a = e.target.closest('a[href]'); if (!a) return;
+    var href = a.getAttribute('href') || '';
+    if (/^(https?:|mailto:|#|\/)/i.test(href) || /UX_Guide\.html|Common_UX_Guide\.html|Work\.html/.test(href)) return;
+    e.preventDefault();
+    var curFile = SC ? (SC.byCid[scCur] && SC.byCid[scCur].file) : (cur && cur.file);
+    var dir = (id + '/' + fdirOf(meta) + (curFile ? curFile.replace(/[^\/]*$/, '') : ''));
+    var target = npath(dir + href.split('#')[0]);   // .history/guides 기준 경로(예: glossary/terms.csv)
+    var mine = npath(id + '/' + fdirOf(meta));
+    if (FILES && target.indexOf(mine + '/') === 0 || (FILES && !mine)) {
+      var rel = mine ? target.slice(mine.length + 1) : target;
+      // 이 문서의 파일(문서 폴더 밖 파일은 meta.files의 ../ 경로와 맞춘다)
+      var fp = (FILES || []).filter(function(x){ return x.path === rel || npath(mine + '/' + x.path) === target; })[0];
+      if (fp) { location.hash = 'f=' + fp.path; return; }
+    }
+    if (FILES) { var up = (FILES || []).filter(function(x){ return npath(id + '/' + fdirOf(meta) + x.path) === target; })[0]; if (up) { location.hash = 'f=' + up.path; return; } }
+    var seg = target.split('/')[0], rest = target.slice(seg.length + 1);
+    if (['rules', 'policy', 'glossary', 'screens'].indexOf(seg) >= 0 && seg !== id && rest) { location.href = 'UX_Guide.html?g=' + seg + (document.documentElement.classList.contains('embed') ? '&embed=1' : '') + '#f=' + encodeURIComponent(rest); return; }
+    if (target === 'constitution.md') { location.href = 'UX_Guide.html?g=rules' + (document.documentElement.classList.contains('embed') ? '&embed=1' : '') + '#f=' + encodeURIComponent('../constitution.md'); return; }
+    window.open('.history/guides/' + target, '_blank', 'noopener');
+  });
   window.addEventListener('beforeunload', function(e){ if (editing) { e.preventDefault(); e.returnValue = ''; } });
   function closeLb(){ $('lb').classList.remove('on'); $('lbImg').removeAttribute('src'); }
   $('lbClose').onclick = closeLb;

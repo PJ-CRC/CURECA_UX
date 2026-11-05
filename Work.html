@@ -51,7 +51,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .wempty p{margin:0 auto 4px;max-width:620px;font-size:13.5px}
 .wempty .btn{margin-top:12px}
 /* 공통 카드 · 표 */
-.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--card-r);padding:18px 20px;box-shadow:var(--shadow);margin-bottom:16px;min-width:0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--card-r);padding:var(--card-pad);box-shadow:var(--shadow);margin-bottom:16px;min-width:0}
 .card h3{margin:0 0 12px;font-size:16px;font-weight:800}
 .card h3 small{margin-left:6px;font-size:12.5px;font-weight:500;color:var(--ink-3)}
 .tbl-wrap{overflow:auto;border:1px solid var(--line);border-radius:10px}
@@ -67,7 +67,7 @@ table.t td.nw{white-space:nowrap}
 .pill.prog{background:var(--accent-soft);color:var(--accent);border-color:transparent}
 .pill.review{background:var(--rev-soft);color:var(--rev);border-color:transparent}
 .pill.warn{background:var(--warn-bg);color:var(--warn-ink);border-color:transparent}
-.chip{display:inline-block;margin:2px 4px 2px 0;padding:0 7px;border-radius:6px;background:var(--accent-soft);color:var(--accent);font:600 12.5px/1.8 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:nowrap}
+.chip{display:inline-block;margin:2px 4px 2px 0;padding:0 7px;border-radius:6px;background:var(--accent-soft);color:var(--accent);font:600 12.5px/1.8 "JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:nowrap}
 /* 주 이동 */
 .wkbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
 .icon{width:40px;height:40px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-size:18px;line-height:1}
@@ -99,7 +99,11 @@ ul.list{margin:0;padding-left:18px}
 ul.list li{margin:2px 0}
 /* 회의 · 차주 */
 .two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
-.two .card{margin-bottom:16px}
+/* 회의 내역 · 차주 일정: 높이를 같게 고정(내용이 길면 카드 안에서 스크롤) */
+.two .card{margin-bottom:16px;height:520px;display:flex;flex-direction:column;overflow:hidden}
+.two .card>.tbl-wrap{flex:1;min-height:0;overflow:auto}
+.two .card>.mt{flex:1;min-height:0;display:flex;flex-direction:column}
+.two .card>.mt dl{flex:1;min-height:0}
 .car-head{display:flex;align-items:center;gap:8px;margin-bottom:12px}
 .car-head h3{margin:0;flex:1}
 .car-pos{font-size:12.5px;color:var(--ink-3);font-variant-numeric:tabular-nums}
@@ -107,7 +111,7 @@ ul.list li{margin:2px 0}
 .mt{border:1px solid var(--line);border-radius:10px;padding:14px 16px}
 .mt h4{margin:0 0 2px;font-size:15px;font-weight:800}
 .mt .d{font-size:12.5px;color:var(--ink-3);margin-bottom:8px}
-.mt dl{margin:0;display:grid;grid-template-columns:72px 1fr;gap:6px 12px;font-size:13.5px;max-height:460px;overflow:auto;padding-right:4px}
+.mt dl{margin:0;display:grid;grid-template-columns:72px 1fr;align-content:start;gap:6px 12px;font-size:13.5px;overflow:auto;padding-right:4px}
 .mt dt{color:var(--ink-3)}
 .mt dd{margin:0;white-space:pre-wrap;word-break:break-word}
 .dots{display:flex;justify-content:center;gap:6px;margin-top:10px}
@@ -120,6 +124,8 @@ ul.list li{margin:2px 0}
 .bar .sp{flex:1}
 .bar .hint{font-size:12.5px;color:var(--ink-3)}
 .refreshing{color:var(--accent);font-weight:600}
+.idl{color:var(--accent);font-weight:600;text-decoration:none;border-bottom:1px dashed currentColor}
+.idl:hover{border-bottom-style:solid}
 .blreq{display:flex;align-items:center;gap:8px;justify-content:flex-end;margin:0 0 8px}
 .blreq .muted{margin-right:auto;font-size:13px}
 .sheet{max-height:calc(100vh - 330px);min-height:320px;overflow:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
@@ -154,8 +160,8 @@ table.sh td textarea{width:100%;min-width:140px;min-height:30px;padding:4px 6px;
 .mimport{width:100%;margin-bottom:8px}
 .mgrp summary{display:flex;justify-content:space-between;padding:8px 8px;font-weight:800;cursor:pointer;list-style:none}
 .mgrp summary::-webkit-details-marker{display:none}
-.mgrp summary span:first-child::before{content:"▾ ";color:var(--ink-3);font-size:11px}
-.mgrp:not([open]) summary span:first-child::before{content:"▸ "}
+.mgrp summary span:first-child::before{content:"";display:inline-block;width:0;height:0;margin:0 8px 2px 2px;border:5px solid transparent;border-top-color:var(--ink-3);border-bottom:0;vertical-align:middle}
+.mgrp:not([open]) summary span:first-child::before{border:5px solid transparent;border-left-color:var(--ink-3);border-right:0;margin:0 9px 0 3px}
 .mitem{display:block;width:100%;text-align:left;border:0;background:none;border-radius:10px;padding:10px 12px;margin:2px 0}
 .mitem:hover{background:var(--surface-2)}
 .mitem[aria-current="true"]{background:var(--accent-soft)}
@@ -370,6 +376,8 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   function addD(d, n){ var x = new Date(d); x.setDate(x.getDate() + n); return x; }
   function md(d){ return (d.getMonth() + 1) + '/' + d.getDate(); }
   function mdw(d){ return md(d) + '(' + WD[d.getDay()] + ')'; }
+  function mtTime(w){ var m = /(\d{1,2}:\d{2}(?:\s*~\s*\d{1,2}:\d{2})?)/.exec(w || ''); return m ? ' ' + m[1] : ''; }   // 회의 일시 글에서 시각만(10:00 · 10:00 ~ 11:30)
+  function ymd(d){ return d ? d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2) : ''; }   // 주간 진행 현황 날짜 표기(yyyy-mm-dd)
   // 시트의 날짜 글 → Date 목록. 「11/6」 「11.6」 「2026-11-06」 「2026. 11. 6」 「26.11.06」 「11월 6일」. 해가 없으면 오늘과 가까운 해
   var DRE = /(?:(\d{4}|\d{2})\s*[.\-\/년]\s*)?(\d{1,2})\s*[.\-\/월]\s*(\d{1,2})(?!\d)/g;
   function dates(s){
@@ -676,7 +684,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
 
   /* ── 주간 진행 현황 ── */
   function pill(it){ var c = it.cat; return '<span class="pill ' + (c === 'etc' ? '' : c) + '">' + esc(it.status || '-') + '</span>'; }
-  function period(it){ return (it.start ? md(it.start) : '') + (it.start || it.end ? ' ~ ' : '-') + (it.end ? md(it.end) : ''); }
+  function period(it){ return (it.start ? ymd(it.start) : '') + (it.start || it.end ? ' ~ ' : '-') + (it.end ? ymd(it.end) : ''); }
   function name(it){ return (it.menu ? '<span class="muted">' + esc(it.menu) + '</span> · ' : '') + esc(it.task || '-'); }
   // 회의: 회의록(md, 공유) + 시트 회의록 중 아직 md로 옮기지 않은 것
   function whenKey(s){
@@ -733,7 +741,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     var due = items.filter(function(it){ return inWeek(it.end, mon); }).sort(function(a, b){ return a.end - b.end; });
     var n = { prog: 0, review: 0, done: 0 }; due.forEach(function(it){ if (n[it.cat] != null) n[it.cat]++; });
     var h = '<div class="wkbar"><button class="icon" type="button" data-wk="-1" aria-label="지난주">‹</button>' +
-      '<span class="wk-range">' + mdw(mon) + ' – ' + mdw(sun) + '</span><button class="icon" type="button" data-wk="1" aria-label="다음주">›</button>' +
+      '<span class="wk-range">' + ymd(mon) + ' – ' + ymd(sun) + '</span><button class="icon" type="button" data-wk="1" aria-label="다음주">›</button>' +
       (thisWeek ? '<span class="wk-now">이번 주</span>' : '<button class="btn sm" type="button" data-wk="0">이번 주로</button>') +
       '<span class="wk-sp"></span>' + (wbs && wbs.at ? '<span class="wk-at">시트 ' + esc(new Date(wbs.at).toLocaleString()) + ' 기준</span>' : '') + '</div>';
     // 안내
@@ -761,7 +769,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       h += '<section class="card"><h3>개발사 공유 대상<small>개발사 공유일 기준</small></h3>' + (sh.length ?
         '<p style="margin:0 0 10px"><b style="font-size:20px">' + sh.length + '건</b> · 메뉴 ' + ks.length + '개' + (nd ? ' · <span class="pill warn">아직 완료 아님 ' + nd + '건</span>' : '') + '</p>' +
         '<div class="tbl-wrap"><table class="t"><thead><tr><th>메뉴</th><th class="num">건수</th><th>공유일</th></tr></thead><tbody>' +
-        ks.map(function(k){ return '<tr><td>' + esc(k) + '</td><td class="num">' + g[k].n + '</td><td class="nw">' + md(g[k].d) + '</td></tr>'; }).join('') + '</tbody></table></div>'
+        ks.map(function(k){ return '<tr><td>' + esc(k) + '</td><td class="num">' + g[k].n + '</td><td class="nw">' + ymd(g[k].d) + '</td></tr>'; }).join('') + '</tbody></table></div>'
         : '<p class="muted" style="margin:0">이번 주에 공유할 업무가 없습니다.</p>') + '</section>';
     }
     // 주요 작업 내용: 정책 변동 사항 · 주요 내용
@@ -792,11 +800,11 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
         !mw.length && mins && mins.error && !mins.values ? '<p class="muted" style="margin:0">「' + esc(minName()) + '」 탭을 읽지 못했습니다: ' + esc(mins.error) + '</p>' :
         M && M.noDate ? '<p class="muted" style="margin:0">「' + esc(minName()) + '」 탭에서 날짜 열(일자 · 날짜 · 일시)을 찾지 못했습니다.</p>' :
         !mt ? '<p class="muted" style="margin:0">이번 주 회의가 없습니다.</p>' :
-        '<div class="mt" aria-live="polite"><h4>' + (mt.id ? '<a href="?tab=minutes&amp;m=' + esc(mt.id) + '" data-mopen="' + esc(mt.id) + '">' + esc(mt.title || '회의') + '</a>' : esc(mt.title || '회의')) + '</h4><div class="d">' + esc(mt.when || mdw(mt.date)) + '</div><dl>' +
+        '<div class="mt" aria-live="polite"><h4>' + (mt.id ? '<a href="?tab=minutes&amp;m=' + esc(mt.id) + '" data-mopen="' + esc(mt.id) + '">' + esc(mt.title || '회의') + '</a>' : esc(mt.title || '회의')) + '</h4><div class="d">' + esc(ymd(mt.date) + mtTime(mt.when)) + '</div><dl>' +
           mt.fields.map(function(f){ return '<dt>' + esc(f[0]) + '</dt><dd>' + esc(f[1]) + '</dd>'; }).join('') + '</dl></div>' +
           (mw.length > 1 ? '<div class="dots">' + mw.map(function(_, i){ return '<button type="button" data-mtgo="' + i + '" aria-label="' + (i + 1) + '번째 회의"' + (i === mtIdx ? ' aria-current="true"' : '') + '></button>'; }).join('') + '</div>' : '')) + '</section>';
     var nx = items.filter(function(it){ var s = it.start || it.end, e = it.end || it.start; return s && e && s < addD(nmon, 7) && e >= nmon; }).sort(function(a, b){ return (a.end || a.start) - (b.end || b.start); });
-    var nextHtml = '<section class="card"><h3>차주 일정<small>' + mdw(nmon) + ' – ' + mdw(addD(nmon, 6)) + '</small></h3>' + (nx.length ?
+    var nextHtml = '<section class="card"><h3>차주 일정<small>' + ymd(nmon) + ' – ' + ymd(addD(nmon, 6)) + '</small></h3>' + (nx.length ?
       '<div class="tbl-wrap"><table class="t"><thead><tr><th>업무명</th><th>상태</th><th>담당자</th><th>기간</th></tr></thead><tbody>' +
       nx.map(function(it){ return '<tr><td>' + name(it) + '</td><td class="nw">' + pill(it) + '</td><td>' + esc(it.owner || '-') + '</td><td class="nw">' + period(it) + '</td></tr>'; }).join('') + '</tbody></table></div>'
       : '<p class="muted" style="margin:0">' + (W ? '다음 주에 잡힌 업무가 없습니다.' : '시트 연결 전입니다.') + '</p>') + '</section>';
@@ -1024,7 +1032,29 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       }
     }
     el.innerHTML = '<div class="mgrid"><aside class="card mlist" aria-label="임시 정책 목록">' + left + '</aside><section class="card mright">' + right + '</section></div>';
+    linkIds(el.querySelector('.mright'));
   }
+  /* 글 안의 ID를 링크로: 화면 CID → 화면 정의서, POL-… → 정책서 그 정책, CA-… · PD-… → 논의·결정, PV-… → 임시 정책
+     (버튼 · 입력 칸 · 이미 링크인 곳은 건드리지 않는다) */
+  var ID_RE = /\b(POL-[A-Z]+-\d{3}|CA-\d{4}|PD-\d{4}|PV-\d{4}(?:-[A-Z])?|(?:TI|LI|MI|TL)-[A-Z0-9]+(?:-[A-Z0-9]+)+)\b/g;
+  function idLink(id){
+    if (/^POL-/.test(id)) return '<a class="idl" href="UX_Guide.html?g=policy#' + id + '" title="정책서에서 보기">' + id + '</a>';
+    if (/^(CA|PD)-/.test(id)) return '<a class="idl" href="#" data-goid="' + id + '" title="논의·결정에서 보기">' + id + '</a>';
+    if (/^PV-/.test(id)) return '<a class="idl" href="#" data-gopv="' + id.replace(/-[A-Z]$/, '') + '" title="임시 정책에서 보기">' + id + '</a>';
+    var known = !BL || BL.screens.some(function(s){ return s.cid === id; });
+    return known ? '<a class="idl" href="UX_Guide.html?g=screens#' + id + '" title="화면 정의서에서 보기">' + id + '</a>' : id;
+  }
+  function linkIds(root){
+    if (!root) return;
+    var w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: function(n){ return n.parentNode.closest('a,button,input,textarea,select,form,.mitem,code,h3') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT; } }), list = [];
+    while (w.nextNode()) { ID_RE.lastIndex = 0; if (ID_RE.test(w.currentNode.nodeValue)) list.push(w.currentNode); }
+    list.forEach(function(n){ var s = document.createElement('span'); s.innerHTML = esc(n.nodeValue).replace(ID_RE, function(m){ return idLink(m); }); n.parentNode.replaceChild(s, n); });
+  }
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('[data-goid],[data-gopv]'); if (!a) return; e.preventDefault();
+    if (a.dataset.gopv) { pvSel = a.dataset.gopv; pvForm = null; select('provisional'); return; }
+    var id = a.dataset.goid; dTab = /^CA-/.test(id) ? 'ca' : 'pd'; dSel = id; dForm = null; select('decisions');
+  });
   function pvAbHtml(p){
     var ks = Object.keys(p.S).filter(function(k){ return k !== '_'; }), opts = ks.filter(function(k){ return /^[A-Z]안/.test(k); });
     var diff = ks.filter(function(k){ return /두 안의 차이|안의 차이/.test(k); })[0];
@@ -1092,6 +1122,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       right += '<div class="dbody">' + (dTab === 'pd' ? md(x.t.replace(/^#\s+.*\n/, '')) : '<dl class="kv">' + Object.keys(x.o).filter(function(k){ return k !== 'ID'; }).map(function(k){ return '<dt>' + esc(k) + '</dt><dd>' + esc(x.o[k] || '-') + '</dd>'; }).join('') + '</dl>') + '</div>';
     }
     el.innerHTML = top + '<div class="mgrid"><aside class="card mlist" aria-label="논의 항목">' + left + '</aside><section class="card mright">' + right + '</section></div>';
+    linkIds(el.querySelector('.dbody'));
   }
 
   // 세 탭의 누르기 · 보내기
@@ -1365,7 +1396,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     var b = $('copyGs');
     if (ok) { b.textContent = '복사됨 ✓'; $('dlgMsg').textContent = '연결 스크립트를 복사했습니다. Apps Script의 Code.gs 내용을 모두 지우고 붙여 넣은 뒤 저장하세요.'; setTimeout(function(){ b.textContent = '스크립트 복사'; }, 2500); return; }
     $('dlgMsg').textContent = '자동 복사가 막혀 있습니다. 아래 상자에서 Ctrl+A → Ctrl+C로 복사하세요.';
-    var box = $('gsBox'); if (!box) { box = document.createElement('textarea'); box.id = 'gsBox'; box.readOnly = true; box.rows = 8; box.style.cssText = 'width:100%;margin-top:8px;font:12px/1.5 ui-monospace,Consolas,monospace'; b.closest('li').appendChild(box); }
+    var box = $('gsBox'); if (!box) { box = document.createElement('textarea'); box.id = 'gsBox'; box.readOnly = true; box.rows = 8; box.style.cssText = 'width:100%;margin-top:8px;font:12px/1.5 "JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace'; b.closest('li').appendChild(box); }
     box.value = gsText; box.focus(); box.select();
   }
   $('copyGs').addEventListener('click', function(){
