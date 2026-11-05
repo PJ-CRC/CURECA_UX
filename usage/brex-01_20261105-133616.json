@@ -1,0 +1,26 @@
+{
+    "id":  "brex-01_20261105-133616",
+    "kind":  "work",
+    "reqId":  "",
+    "at":  "2026-11-05T13:36:16+09:00",
+    "from":  "2026-11-05T13:36:01+09:00",
+    "by":  "서보경",
+    "doneBy":  "Claude",
+    "pc":  "BREX_01",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "작업규칙: CURECA 작업규칙 6. 폐기",
+    "models":  {
+                   "claude-opus-5-5":  3
+               },
+    "calls":  3,
+    "input":  5,
+    "cacheWrite":  2710,
+    "cacheRead":  384200,
+    "output":  3026,
+    "total":  389941,
+    "usd":  0.1591
+}
