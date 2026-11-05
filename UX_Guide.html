@@ -61,6 +61,18 @@ a.pill:hover{border-color:var(--accent)}
 .ask[aria-disabled="true"] textarea,.ask[aria-disabled="true"] .btn{opacity:.5;pointer-events:none}
 html.doc-ro .ask{display:none}
 @media (max-width:860px){ .ask{flex-direction:column} .ask-t,.ask-act{width:auto} }
+/* 수정 진행 · 결과 패널: 목차 · 내용과 입력창 사이. 길면 그 안에서 스크롤(창 높이의 40%까지) */
+#fixes:not(:empty){margin-top:12px;max-height:40vh;overflow:auto;border-radius:12px}
+#fixes .fix{margin:0 0 8px}
+#fixes .fix:last-child{margin-bottom:0}
+#fixes .fix + .fix{margin-top:0}
+/* 낮은 창: 입력창을 한 줄 높이로 */
+@media (max-height:760px){
+  .ask{padding:8px 12px;margin-top:8px}
+  .ask textarea{height:40px;min-height:40px}
+  .ask-t span,.ask-act span{display:none}
+  #fixes:not(:empty){max-height:30vh}
+}
 .tree ul{list-style:none;margin:2px 0 4px;padding:0 0 0 14px;border-left:1px solid var(--line);margin-left:15px}
 .tree li{margin:1px 0}
 .node{display:flex;align-items:center;gap:6px;width:100%;text-align:left;border:0;background:none;border-radius:7px;padding:7px 8px;font-size:14px;color:var(--ink-2);line-height:1.35}
@@ -272,7 +284,6 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
   </div>
 </header>
 <details class="how" id="revBox" hidden><summary>수정 이력</summary><ul class="revs" id="revList"></ul></details>
-<div id="fixes"></div>
 <div class="layout" id="layout">
   <aside class="side fold" id="side" aria-label="목차">
     <div class="side-head">
@@ -282,6 +293,8 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
     <ul class="tree" id="tree" role="tree"><li class="side-empty">불러오는 중…</li></ul>
   </aside>
   <main class="main" id="main" aria-live="polite"><p class="empty">불러오는 중…</p></main></div>
+<!-- Claude 수정 진행 · 결과(수정 요청 → 연관 항목 찾기 → 반영 선택): 입력창 바로 위. 위쪽에 두면 목차 · 내용이 밀려 낮은 화면에서 안 보였다 -->
+<div id="fixes"></div>
 <!-- 수정 요청 입력창: 목록 · 내용 아래에 따로(Workbench처럼). 지금 보고 있는 항목을 Claude에게 고쳐 달라고 요청한다(guide-edit) -->
 <form class="ask" id="ask" aria-label="수정 요청">
   <div class="ask-t"><span>수정 요청</span><b id="askTarget">—</b></div>
@@ -598,7 +611,7 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
     else window.scrollTo({ top: $('main').getBoundingClientRect().top + scrollY - 70, behavior: 'smooth' });
   }
   window.addEventListener('resize', fit);
-  if (window.ResizeObserver) { var roFit = new ResizeObserver(fit); roFit.observe($('fixes')); roFit.observe($('ask')); }   // 위쪽 수정 결과 패널 · 아래 수정 요청 입력창 크기가 바뀌면 다시 맞춤
+  if (window.ResizeObserver) { var roFit = new ResizeObserver(fit); roFit.observe($('fixes')); roFit.observe($('ask')); }   // 아래 수정 결과 패널 · 수정 요청 입력창 크기가 바뀌면 다시 맞춤
   setTimeout(fit, 0);
 
   /* ── 화면 정의서(meta.view 'screens'): 메뉴 폴더마다 CID 화면설계서(머리말 + 본문 + 반영 대기 목록), 메뉴 정보는 _menu.md ──
@@ -743,13 +756,13 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
     editing = true; $('editBtn').disabled = true;
     var ed = editPane('「' + esc(s.cid + ' ' + (s.o.title || '')) + '」 수정 요청',
       '<textarea id="edText" aria-label="수정 요청 내용" placeholder="무엇을 어떻게 고칠지 적어 주세요.&#10;예) 반영 대기 목록 5번(오타)을 반영 완료로 바꿔 줘&#10;예) 디스크립션 3절의 활성화 조건을 POL-EQP-008 기준으로 고쳐 줘"></textarea>' +
-      '<p class="tip">이 화면 정의서 파일(<code>' + esc(npath(id + '/' + fdirOf(meta) + s.file)) + '</code>)을 Claude가 고칩니다. 고친 뒤 이 화면 위에 결과가 나옵니다(요청 감시가 켜져 있어야 합니다).</p>');
+      '<p class="tip">이 화면 정의서 파일(<code>' + esc(npath(id + '/' + fdirOf(meta) + s.file)) + '</code>)을 Claude가 고칩니다. 고친 뒤 입력창 위에 결과가 나옵니다(요청 감시가 켜져 있어야 합니다).</p>');
     $('edCancel').onclick = function(){ editing = false; ed.remove(); $('editBtn').disabled = false; };
     $('edSave').onclick = function(){
       var text = $('edText').value.trim(); if (!text) { $('edText').focus(); return; }
       this.disabled = true;
       post('/api/jobs', { action: 'add', kind: 'guide-edit', guide: id, fileKey: '', name: s.cid + ' ' + (s.o.title || ''), text: text, by: user(), file: s.file })
-        .then(function(){ editing = false; scShow(s.cid, true); fixes(); toast('수정 요청을 보냈습니다. Claude가 고치면 이 화면 위에 결과가 나옵니다.'); })
+        .then(function(){ editing = false; scShow(s.cid, true); fixes(); toast('수정 요청을 보냈습니다. Claude가 고치면 입력창 위에 결과가 나옵니다.'); })
         .catch(function(x){ $('edSave').disabled = false; alert(x.message || '요청하지 못했습니다.'); });
     };
   }
@@ -832,14 +845,14 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
     // 수정 창은 지금 문서 내용 아래에(내용을 보면서 적게)
     var ed = editPane('「' + esc(s.label) + '」 수정 요청',
       '<textarea id="edText" aria-label="수정 요청 내용" placeholder="무엇을 어떻게 고칠지 적어 주세요.&#10;예) 날짜 표기를 YYYY.MM.DD hh:mm으로 바꿔 줘&#10;예) 표에 「Paused」 상태 설명을 추가해 줘"></textarea>' +
-      '<p class="tip">이 항목(「' + esc(s.label) + '」)을 기준으로 Claude가 문서를 고칩니다. 다른 항목에 걸친 수정도 적어도 됩니다. 고친 뒤 이 화면 위에 결과가 나옵니다(요청 감시가 켜져 있어야 합니다).</p>');
+      '<p class="tip">이 항목(「' + esc(s.label) + '」)을 기준으로 Claude가 문서를 고칩니다. 다른 항목에 걸친 수정도 적어도 됩니다. 고친 뒤 입력창 위에 결과가 나옵니다(요청 감시가 켜져 있어야 합니다).</p>');
     $('edCancel').onclick = function(){ editing = false; ed.remove(); $('editBtn').disabled = false; };
     $('edSave').onclick = function(){
       var text = $('edText').value.trim();
       if (!text) { $('edText').focus(); return; }
       this.disabled = true;
       post('/api/jobs', { action: 'add', kind: 'guide-edit', guide: id, fileKey: meta.fileKey, name: s.label, text: text, by: user(), file: s.file || '' })
-        .then(function(){ editing = false; show(s.id, true); fixes(); toast('수정 요청을 보냈습니다. Claude가 고치면 이 화면 위에 결과가 나옵니다.'); })
+        .then(function(){ editing = false; show(s.id, true); fixes(); toast('수정 요청을 보냈습니다. Claude가 고치면 입력창 위에 결과가 나옵니다.'); })
         .catch(function(x){ $('edSave').disabled = false; alert(x.message || '요청하지 못했습니다.'); });
     };
   }
@@ -1006,7 +1019,7 @@ html.embed .side{top:12px;max-height:calc(100vh - 24px)}
     if (!text) { $('askMsg').textContent = '고칠 내용을 적어 주세요.'; $('askText').focus(); return; }
     $('askSend').disabled = true; $('askMsg').textContent = '보내는 중…';
     post('/api/jobs', { action: 'add', kind: 'guide-edit', guide: id, fileKey: t.fileKey || '', name: t.name, text: text, by: user(), file: t.file })
-      .then(function(){ $('askText').value = ''; $('askMsg').textContent = ''; fixes(); toast('「' + t.name + '」 수정 요청을 보냈습니다. Claude가 고치면 이 화면 위에 결과가 나옵니다.'); })
+      .then(function(){ $('askText').value = ''; $('askMsg').textContent = ''; fixes(); toast('「' + t.name + '」 수정 요청을 보냈습니다. Claude가 고치면 입력창 위에 결과가 나옵니다.'); })
       .catch(function(x){ $('askMsg').textContent = x.message || '요청하지 못했습니다.'; })
       .then(function(){ $('askSend').disabled = false; });
   });
