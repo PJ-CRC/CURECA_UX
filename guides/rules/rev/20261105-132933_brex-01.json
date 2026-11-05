@@ -1,0 +1,11 @@
+{
+    "rev":  "20261105-132933_brex-01",
+    "by":  "Claude",
+    "at":  "2026-11-05T13:29:33+09:00",
+    "note":  "claude-work.md: Common UX 점검 항목 · 자료 우선순위(우리 기준 \u003e Common UX \u003e 기존 화면) 추가, 작업 12 공유방 · 개발사 흐름 보류 표시 (원본 0366812)",
+    "base":  "",
+    "pc":  "BREX_01",
+    "req":  "헌법: C:\\Users\\exroc\\Documents\\CURECA_AI 여기 파일 읽고 ux문서에 반영되어야하는 내역 찾아서 경로에 잇는 파일의 내용으로 업데이트해줘",
+    "jobId":  "J010",
+    "file":  "claude-work.md"
+}
