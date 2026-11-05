@@ -556,7 +556,7 @@ my @MENUS = (
   { key => 'workbench', label => 'Figma Workbench', pages => ['Figma_Workbench.html'], write => '수정 요청 등록 · 답하기 · 다시 진행, 캡처 · 목록 요청, 프로젝트 추가 · 작업 페이지 바꾸기' },
   { key => 'history', label => '변경 이력', pages => ['Change_History.html'], write => '보류 요청 다시 진행, Claude 질문에 답하기' },
   { key => 'usage', label => '사용량 통계', pages => ['Usage_Stats.html'] },
-  { key => 'proto', label => '프로토타입', pages => ['Prototypes.html', 'Prototype.html', 'Assay_Pack_Prototype.html'], write => '만들기 · 수정 요청, Figma 맞추기, 지우기' },
+  { key => 'proto', label => '프로토타입', pages => ['Prototypes.html', 'Prototype.html'], write => '만들기 · 수정 요청, Figma 맞추기, 지우기' },
   { key => 'accounts', label => '계정 관리', pages => ['Accounts.html'], admin => 1 },
 );
 my @MENU_KEYS = map { $_->{key} } grep { !$_->{admin} && !$_->{always} } @MENUS;   # 계정마다 고르는 메뉴

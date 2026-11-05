@@ -44,8 +44,8 @@ $list = New-Object System.Collections.Generic.List[string]
 foreach ($f in $files) { $list.Add($f) }
 foreach ($f in $wb) { $list.Add("workbench\$f") }
 # 프로토타입 · 프로젝트(Figma 파일)는 PC마다 따로라 넣지 않는다(기본 프로젝트 · 예시 프로토타입 없음)
-# 빼는 것: 검토용 초안 문서
-$skip = '^docs\\(ui_proposal\\|UI_Layout_Proposal\.html$|Plan_Update_and_Accounts\.md$)'
+# 배포에서 뺄 docs 파일이 생기면 여기 정규식에 더한다
+$skip = '^$'   # 배포에서 뺄 docs 파일(지금은 없음)
 foreach ($d in 'docs','figma_plugin','.claude','Figma AI Run.app') {
   Get-ChildItem -LiteralPath (Join-Path $Src $d) -Recurse -File -Force | Where-Object { $_.Name -ne 'settings.local.json' } | ForEach-Object { $rel = $_.FullName.Substring($Src.Length + 1); if ($rel -notmatch $skip) { $list.Add($rel) } }
 }

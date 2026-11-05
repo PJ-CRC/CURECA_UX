@@ -28,7 +28,7 @@ Figma 파일을 프로젝트 단위로 다루는 Workbench(수정 요청 · Clau
 | `Setup.html` | 첫 실행 시작 안내. 처음 열면 Claude · Figma 실행, 기본 작업 링크, git 설치 또는 깃허브 연결을 자동으로 시작. 작업 링크 · 플러그인 · Figma 연결 · 요청 감시 · 작업 이력 공유까지 8단계로 안내하고 상태를 자동 확인 |
 | `docs/Workbench_Setup_Other_PC.md` | 다른 PC · 본인 Figma · Claude 계정으로 Workbench를 실행하고 요청을 처리하는 준비 절차 |
 | `CLAUDE.md` | Claude Code가 이 폴더에서 따르는 작업 규칙 (범위, 요청 처리 순서, 캡처 갱신) |
-| `Prototypes.html` · `Prototype.html` | 프로토타입 목록 · 만들기(화면 고르기) · 보기. Claude가 만든 동작형 HTML 프로토타입이 이 PC의 `prototypes/{id}/`에 쌓인다(예시: `prototypes/assay-pack`, Assay Pack Setting T-IOS 2.0). `Assay_Pack_Prototype.html`은 그 보기로 넘겨 준다 |
+| `Prototypes.html` · `Prototype.html` | 프로토타입 목록 · 만들기(화면 고르기) · 보기. Claude가 만든 동작형 HTML 프로토타입이 이 PC의 `prototypes/{id}/`에 쌓인다(예시: `prototypes/assay-pack`, Assay Pack Setting T-IOS 2.0). |
 | `Login.html` · `Account.html` · `Accounts.html` | 로그인 · 내 정보(비밀번호 변경) · 계정 관리(최고관리자). 계정은 `.history/accounts/{id}.json`(비밀번호는 해시)으로 깃을 통해 모든 PC에 공유되고, 계정마다 쓸 수 있는 메뉴를 정한다 |
 | `Change_History.html` | 변경 이력: 모든 작업자의 작업 이력(깃 공유) · 이 PC 수정 요청을 최신순으로 표시. 10개씩 페이지네이션, 종류 필터, [깃 동기화] |
 | `workbench/history_sync.ps1` · `.sh` | 작업 이력(`.history/`)을 깃 `history` 브랜치로 받고 올림. 서버가 뒤에서 실행 |
