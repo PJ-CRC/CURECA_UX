@@ -1,0 +1,13 @@
+{
+    "jobId":  "J023",
+    "pc":  "BREX_01",
+    "by":  "서보경",
+    "at":  "2026-11-05T13:36:49+09:00",
+    "status":  "완료",
+    "note":  "화면 0 · 문서 0 · 프로토타입 0 (J024와 같은 수정)\n- 화면: 기준 Figma 파일(fileKey)이 없어 찾지 않음 · 프로토타입: 관계없음\n- 흐름 보류와 관련된 문서는 이미 모두 안내가 붙음: figma-sync 2절 · screen-spec 0 · 5절 · change-flow 6절 · status-lifecycle 2 · 6절\n- repository-and-id 6절(개발사 전달 후 버전) · weekly-status 4절(개발사 공유 대상)은 보류가 풀린 뒤 절차라 그대로 둠\n- 헌법 6조는 J011 · J017에서 이미 후보로 올림(개정 절차 확인 필요)",
+    "scope":  "spec",
+    "fileKey":  "",
+    "items":  [
+
+              ]
+}
