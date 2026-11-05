@@ -1,0 +1,26 @@
+{
+    "id":  "brex-01_20261105-133004",
+    "kind":  "work",
+    "reqId":  "",
+    "at":  "2026-11-05T13:30:04+09:00",
+    "from":  "2026-11-05T13:28:24+09:00",
+    "by":  "서보경",
+    "doneBy":  "Claude",
+    "pc":  "BREX_01",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "작업규칙: CURECA 작업규칙 원본 반영 (J010)",
+    "models":  {
+                   "claude-opus-5-5":  41
+               },
+    "calls":  41,
+    "input":  83,
+    "cacheWrite":  61056,
+    "cacheRead":  3005919,
+    "output":  20557,
+    "total":  3087615,
+    "usd":  1.5011
+}
