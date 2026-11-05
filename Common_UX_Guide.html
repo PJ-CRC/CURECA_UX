@@ -57,6 +57,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 Pretendard,-ap
 .gd-viewing b{color:var(--ink)}
 .gd-viewing button{padding:5px 12px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;cursor:pointer}
 .gd-viewing button:hover{border-color:var(--accent)}
+html.lowfit .app-wrap{padding-bottom:12px}
 .gd-view iframe{display:block;width:100%;height:var(--fit,calc(100vh - var(--nav-h) - 48px));min-height:360px;border:0;border-radius:var(--card-r);background:transparent}
 dialog.gd-dlg{border:1px solid var(--line);border-radius:14px;padding:0;width:min(640px,calc(100vw - 32px));background:var(--surface);color:var(--ink);box-shadow:0 20px 50px rgba(0,0,0,.25)}
 dialog.gd-dlg::backdrop{background:rgba(10,12,16,.45)}
@@ -599,11 +600,17 @@ html.doc-ro #docNew{display:none!important}
         if (isLg) el.classList.toggle('fit', wide);
         if (isLg && !wide) { el.style.removeProperty('--fit'); return; }
         var top = el.getBoundingClientRect().top + window.scrollY, min = 360;
-        var h = Math.max(min, window.innerHeight - top - 16);
+        /* 낮은 창(윈도우 배율 200% · 노트북): 남은 높이가 모자라면 문서 보기를 창 높이(상단 메뉴 아래 전부)로 두고 바깥 페이지를 스크롤한다
+           — 위 제목 · 탭 · 작업 기준 줄이 높이를 다 먹어 목차 · 내용 · 입력창이 안 보이던 것 */
+        var navH = (document.querySelector('.appnav') || {}).offsetHeight || 0, full = window.innerHeight - navH - 12;
+        var h = window.innerHeight - top - 16, low = h < 480;
+        document.documentElement.classList.toggle('lowfit', low);   // 아래 여백을 줄여 끝까지 내리면 문서 보기가 상단 메뉴 바로 아래에 꼭 맞게
+        if (low) h = Math.max(min, full);
+        else h = Math.max(min, h);
         el.style.setProperty('--fit', h + 'px');
-        /* 아래 여백 때문에 바깥 페이지가 아직 넘치면 그만큼 더 줄인다 */
+        /* 아래 여백 때문에 바깥 페이지가 아직 넘치면 그만큼 더 줄인다(낮은 창은 바깥 스크롤을 쓰므로 줄이지 않음) */
         var over = document.documentElement.scrollHeight - window.innerHeight;
-        if (over > 0) el.style.setProperty('--fit', Math.max(min, h - over) + 'px');
+        if (over > 0 && !low) el.style.setProperty('--fit', Math.max(min, h - over) + 'px');
         /* 숨은 탭에서 열린 보기 화면은 보일 때 크기 변경을 알지 못한다 → 안쪽도 다시 맞추게 알린다(같은 서버 페이지) */
         if (!isLg) { try { el.contentWindow.dispatchEvent(new Event('resize')); } catch(x){} }
       });

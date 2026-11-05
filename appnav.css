@@ -100,3 +100,22 @@ html.perm-ro .ro-only{display:block}
 .appnav-user input{box-sizing:border-box;width:110px;height:30px;padding:0 8px;border:1px solid var(--nav-line);border-radius:7px;background:var(--nav-bg);color:var(--nav-ink);font:inherit;font-size:13px}
 @media (max-width:1280px){ .appnav{padding:0 16px;gap:2px} .appnav-brand{margin-right:20px} .appnav a{padding:0 12px;font-size:14px} }
 @media (max-width:760px){ .appnav-brand{display:none} .appnav a{padding:0 9px;font-size:13px} }
+/* 화면 배율이 큰 PC(윈도우 200% · 작은 노트북: 창이 1366px 이하) — 메뉴 · 계정 · 로그아웃이 오른쪽으로 밀려 잘리지 않게
+   이름은 로고만 남기고, 버전 · 사용 한도는 짧게 */
+@media (max-width:1366px){
+  .appnav{gap:2px;padding:0 12px}
+  .appnav-brand{font-size:0;gap:0;margin-right:10px}
+  .appnav a{padding:0 10px;font-size:13.5px}
+  .appnav .appnav-ver{display:none}
+  .appnav-right{gap:6px}
+  .appnav .appnav-acct a,.appnav-acct button{height:34px;padding:0 10px;font-size:13px}
+}
+/* 낮은 창(세로 760px 이하: 윈도우 150~200% · 노트북) — 위쪽 메뉴 · 제목을 줄여 본문이 보이게. 제목 아래 설명 한 줄은 숨김 */
+@media (max-height:760px){
+  :root{ --nav-h:52px; --page-top:12px; }
+  .appnav a{height:36px}
+  .appnav .appnav-acct a,.appnav-acct button{height:34px}
+  .app-head{margin-bottom:10px}
+  .app-head h1{font-size:21px;margin-bottom:0}
+  .app-head .app-head-t > p{display:none}
+}
