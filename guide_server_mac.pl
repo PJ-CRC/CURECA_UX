@@ -613,6 +613,13 @@ sub user_writes {
   return grep { $w{$_} && ($_ ne 'guide' || $ge) } pick_menus($a);
 }
 # 쓰기 권한 확인: 브라우저 화면에서 온 요청만(Claude · 플러그인은 그대로). 계정을 쓰지 않으면 모두 쓰기. 키 중 하나라도 쓰기면 된다
+# 승인 권한(메뉴 권한과 따로): 계정 approves에 고른 항목만. 최고관리자는 전부. 승인할 것이 생기면 여기 한 줄 더한다(윈도우 서버와 같다)
+my @APPROVALS = (
+  { key => 'pv', label => '임시 정책 승인 · 반려', menu => 'plan', where => '일정/작업 › 임시 정책 [승인] · [A/B안 승인] · [반려]' },
+);
+my @APPROVE_KEYS = map { $_->{key} } @APPROVALS;
+sub user_approves { my ($a) = @_; return () unless $a; return @APPROVE_KEYS if $a->{admin}; my %k = map { $_ => 1 } @APPROVE_KEYS; return grep { $k{$_} } @{ ref $a->{approves} eq 'ARRAY' ? $a->{approves} : [] }; }
+sub can_approve { my ($key) = @_; return 1 if !$IS_BROWSER || !auth_required(); my $u = current_user() or return 0; return (grep { $_ eq $key } user_approves($u)) ? 1 : 0; }
 sub can_write {
   my @keys = @_; return 1 if !$IS_BROWSER || !auth_required();
   my $u = current_user() or return 0; my %w = map { $_ => 1 } user_writes($u);
@@ -631,7 +638,8 @@ sub me_info {
   my $ns = need_sync(); my $hs = $ns ? eval { read_json($SYNC_STAT) } : undef; $hs = {} unless ref $hs eq 'HASH';
   return { required => $req ? JSON::PP::true : JSON::PP::false,
     needSync => $ns ? JSON::PP::true : JSON::PP::false, syncMsg => str($hs->{message}), syncBusy => $hs->{busy} ? JSON::PP::true : JSON::PP::false,
-    user => $u ? { id => $u->{id}, name => $u->{name}, admin => $u->{admin} ? JSON::PP::true : JSON::PP::false, menus => [@allowed], writes => [ user_writes($u) ] } : undef,
+    user => $u ? { id => $u->{id}, name => $u->{name}, admin => $u->{admin} ? JSON::PP::true : JSON::PP::false, menus => [@allowed], writes => [ user_writes($u) ], approves => [ user_approves($u) ] } : undef,
+    approves => [ $req ? user_approves($u) : @APPROVE_KEYS ],
     menus => [ map { { key => $_->{key}, label => $_->{label}, page => $_->{pages}[0], pages => $_->{pages}, admin => $_->{admin} ? JSON::PP::true : JSON::PP::false, write => str($_->{write}) } } @MENUS ],
     allowed => [@allowed], writes => [ $req ? user_writes($u) : @WRITE_KEYS ], first => $first || 'Account.html' };
 }
@@ -640,25 +648,26 @@ sub write_login {
   if ($a) { $s->{login} = { id => $a->{id}, pwAt => $a->{pwAt}, at => now_iso() }; $s->{user} = str($a->{name}); } else { delete $s->{login}; }
   make_path($SETUP_DIR); write_json($SETUP_FILE, $s);
 }
-sub public_account { my ($a) = @_; return { id => $a->{id}, name => $a->{name}, admin => $a->{admin} ? JSON::PP::true : JSON::PP::false, menus => [ $a->{admin} ? user_menus($a) : pick_menus($a) ], writes => [ user_writes($a) ],
+sub public_account { my ($a) = @_; return { id => $a->{id}, name => $a->{name}, admin => $a->{admin} ? JSON::PP::true : JSON::PP::false, menus => [ $a->{admin} ? user_menus($a) : pick_menus($a) ], writes => [ user_writes($a) ], approves => [ user_approves($a) ],
   active => (defined $a->{active} && !$a->{active}) ? JSON::PP::false : JSON::PP::true, createdAt => $a->{createdAt}, updatedAt => $a->{updatedAt}, pwAt => $a->{pwAt} }; }
 sub accounts_post {
   my ($b) = @_; my $id = lc(trim($b->{id})); my %ok = map { $_ => 1 } @MENU_KEYS;
   my @menus = grep { $ok{$_} } @{ ref $b->{menus} eq 'ARRAY' ? $b->{menus} : [] }; my $act = str($b->{action}); my $pw = str($b->{pw});
   my %pm = map { $_ => 1 } @menus; my %wk = map { $_ => 1 } @WRITE_KEYS;
   my @writes = grep { $wk{$_} && $pm{$_} } @{ ref $b->{writes} eq 'ARRAY' ? $b->{writes} : [] };   # 쓰기는 읽기 메뉴 안에서만
+  my %ak = map { $_ => 1 } @APPROVE_KEYS; my @approves = grep { $ak{$_} } @{ ref $b->{approves} eq 'ARRAY' ? $b->{approves} : [] };   # 승인 권한(담당자 수 제한 없음)
   if ($act eq 'add') {
     die "아이디는 영문 소문자 · 숫자 · . _ - 로 3~32자입니다.\n" unless $id =~ /^[a-z0-9._-]{3,32}$/;
     die "이미 있는 아이디입니다: $id\n" if read_account($id);
     die "이름을 입력해 주세요.\n" if trim($b->{name}) eq '';
     die "비밀번호는 8자 이상이어야 합니다.\n" if length($pw) < 8;
     my $cu = current_user();
-    my $a = { id => $id, name => trim($b->{name}), admin => JSON::PP::false, menus => \@menus, writes => \@writes, active => JSON::PP::true, createdAt => now_iso(), createdBy => $cu ? $cu->{id} : '' };
+    my $a = { id => $id, name => trim($b->{name}), admin => JSON::PP::false, menus => \@menus, writes => \@writes, approves => \@approves, active => JSON::PP::true, createdAt => now_iso(), createdBy => $cu ? $cu->{id} : '' };
     set_pw($a, $pw); save_account($a);
   } elsif ($act eq 'update') {
     my $a = read_account($id) or die "계정을 찾지 못했습니다: $id\n";
     $a->{name} = trim($b->{name}) if trim($b->{name}) ne '';
-    unless ($a->{admin}) { if (exists $b->{menus}) { $a->{menus} = \@menus; $a->{writes} = \@writes; } $a->{active} = $b->{active} ? JSON::PP::true : JSON::PP::false if exists $b->{active}; }
+    unless ($a->{admin}) { if (exists $b->{menus}) { $a->{menus} = \@menus; $a->{writes} = \@writes; } $a->{approves} = \@approves if exists $b->{approves}; $a->{active} = $b->{active} ? JSON::PP::true : JSON::PP::false if exists $b->{active}; }
     if (length $pw) { die "비밀번호는 8자 이상이어야 합니다.\n" if length($pw) < 8; set_pw($a, $pw); }
     save_account($a);
     my $s = read_setup(); write_login($a) if ref $s->{login} eq 'HASH' && str($s->{login}{id}) eq $id;   # 내 계정이면 이 PC 로그인도 새 값으로
@@ -805,7 +814,8 @@ sub jobs_post {
     my ($kind, $key, $nid) = (str($b->{kind}), str($b->{fileKey}), str($b->{nodeId}));
     die "알 수 없는 작업: $kind\n" unless grep { $kind eq $_ } qw(capture catalog guide guide-check guide-edit text prototype prototype-edit prototype-sync minutes plan);
     # 쓰기 권한: UX 문서 만들기 · 수정 요청 · 연관 항목 찾기는 UX 문서, 프로토타입 요청은 프로토타입, 캡처 · 목록은 Workbench 쓰기(없으면 보기만)
-    die ro_msg(job_menu($kind)) unless can_write(job_menu($kind));
+    # 승인 · 반려(plan pv-decide)는 메뉴 쓰기 대신 승인 권한으로 확인한다(아래)
+    die ro_msg(job_menu($kind)) unless ($kind eq 'plan' && str($b->{sub}) eq 'pv-decide') || can_write(job_menu($kind));
     # 프로토타입(이 PC에만, prototypes/{id}/): 만들기(prototype, 고른 화면 frames) · 수정 요청(prototype-edit) · Figma 바뀐 화면 맞추기(prototype-sync)
     my @pfr = ref $b->{frames} eq 'ARRAY' ? grep { ref $_ eq 'HASH' && str($_->{nodeId}) =~ /^\d+:\d+$/ } @{ $b->{frames} } : ();
     if ($kind eq 'prototype') {
@@ -841,6 +851,7 @@ sub jobs_post {
       ($nid, $key) = ('', ''); my $sub = str($b->{sub}); my $tg = str($b->{target});
       die "알 수 없는 처리: $sub\n" unless $sub =~ /^(pv-new|pv-decide|answer|answer-apply)$/;
       die "잘못된 항목 ID: $tg\n" if $sub ne 'pv-new' && $tg !~ /^(PV|PD|CA)-\d{4}(-[A-Z])?$/;
+      die "임시 정책 승인 · 반려 권한이 없습니다. 최고관리자에게 「승인 권한 · 임시 정책 승인 · 반려」를 요청하세요.\n" if $sub eq 'pv-decide' && !can_approve('pv');
       ($hit) = grep { $_->{kind} eq 'plan' && str($_->{target}) eq $tg && str($_->{sub}) eq 'pv-decide' && ($_->{status} eq '대기' || $_->{status} eq '진행 중') } @items if $sub eq 'pv-decide';
     }
     # 회의록 요약 정리(minutes): 각자 작성한 메모를 Claude가 합쳐 본문(정리본)을 쓴다. 같은 회의록에 대기 · 진행 중이 있으면 그것을 돌려준다
@@ -1131,7 +1142,7 @@ sub handle {
   # 계정 관리(최고관리자만, 위에서 권한 확인)
   if ($path eq '/api/accounts' && $method eq 'GET') {
     my @l = map { public_account($_) } sort { ($b->{admin} ? 1 : 0) <=> ($a->{admin} ? 1 : 0) || str($a->{id}) cmp str($b->{id}) } read_accounts();
-    return respond_json($sock, 200, { items => \@l, menus => [ map { { key => $_->{key}, label => $_->{label} } } grep { !$_->{admin} && !$_->{always} } @MENUS ] });
+    return respond_json($sock, 200, { items => \@l, menus => [ map { { key => $_->{key}, label => $_->{label}, write => str($_->{write}) } } grep { !$_->{admin} && !$_->{always} } @MENUS ], approvals => \@APPROVALS });
   }
   if ($path eq '/api/accounts' && $method eq 'POST') { return respond_json($sock, 200, accounts_post($body->())); }
 

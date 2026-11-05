@@ -112,6 +112,7 @@
   - 쓰기로 되는 것: 일정/작업 = 일정(구글 시트) 칸 수정 · 시트 연결(`POST /api/sheet`) · UX 문서 = 새 가이드 · 정의서 만들기, 항목 수정 요청, 연관 항목 찾기 · 반영 요청(jobs `guide` · `guide-edit` · `guide-check`, guides `save`, `/api/upload`) · Workbench = 수정 요청 등록 · 답하기 · 다시 진행 · 지우기, 캡처 · 목록 요청, 프로젝트 추가 · 작업 페이지 바꾸기(`/api/requests` · `/api/attach` · `/api/projects` · `/api/catalog` · `/api/shots`, jobs `capture` · `catalog`) · 변경 이력 = 다시 진행 · 답하기(`/api/requests`) · 프로토타입 = 만들기 · 수정 요청 · 맞추기 · 지우기(jobs `prototype*`, `/api/prototypes`). `/api/requests`는 Workbench · 변경 이력 · UX 문서(반영 요청) 쓰기 중 하나면 된다.
   - 읽기만이면 화면에 「보기 전용」 표시, 바꾸는 버튼(`.w-only`)이 숨고(`html.perm-ro`, appnav.js), 서버가 그 POST를 403 · 오류로 막는다.
   - `writes`가 없는 예전 계정은 고른 메뉴 모두 쓰기(UX 문서만 예전 `guideEdit`이 있을 때). 최고관리자는 전부 쓰기. `/api/me`의 `writes`.
+- **승인 권한**(메뉴 권한과 따로, v0.12.0): 계정의 `approves`(예: `["pv"]`). 계정 관리 「승인 권한」에서 항목마다 체크하고, 담당자 수는 제한하지 않는다. 최고관리자는 전부. 항목 목록은 서버의 `$Approvals`(맥 `@APPROVALS`) — 지금은 `pv` 임시 정책 승인 · 반려(일정/작업 › 임시 정책 [승인] · [A/B안 승인] · [반려]). 승인할 것이 생기면 이 목록에 한 줄 더하고 그 버튼 · 서버에서 `Can-Approve`(`can_approve`)로 확인한다. 승인 · 반려(job plan `pv-decide`)는 메뉴 쓰기 대신 승인 권한으로만 막는다. `/api/me`의 `approves`, `/api/accounts`의 `approvals`.
 - 권한 검사는 **브라우저 페이지에서 온 요청만**(`Sec-Fetch-Site` 머리글, Origin이 `null`이 아님). **Claude(curl) · Figma 플러그인은 로그인 없이 그대로** 쓴다. Claude는 계정 파일을 직접 고치지 않는다(사용자가 요청하면 화면 · API로).
 - 작업자 이름(요청 · 이력의 작성자, Workbench 「작업자」 칸 · 시작 안내 1단계)은 로그인한 계정 이름으로 고정된다.
 - 서버 API: `GET /api/me`, `POST /api/login` · `/api/logout` · `/api/me/password {current, next}`, `GET/POST /api/accounts {action: add|update|delete}`(최고관리자).
