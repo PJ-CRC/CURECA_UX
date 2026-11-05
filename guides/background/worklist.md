@@ -34,10 +34,11 @@
 - [x] **화면 폴더 구성:** `screens/<IA Lv.1 메뉴>/<CID>.md`, 1·2차는 머리말 `figma_region` (2026-11-02 확정, `rules/screen-spec.md` 3절)
 - [ ] **결정 기록(ADR):** 어떤 결정을 기록할지, 템플릿
 - [ ] **장비 상태 정의서와 씨젠 상태 정보 문서의 관계:** 씨젠 문서를 원본으로 `reference/customer/`에 두고, 우리 정의서(`policy/equipment-states.md`)는 그 문서를 출처로 인용하는 방식 제안 (원본을 받은 뒤 확정)
-- [ ] **Common UX 이전 방식:** 최종본 V2.2.00 (2026-10-30) 나옴. 저장소로 옮기는 방법
+- [x] **Common UX 이전 방식:** (2026-11-04 정함) 저장소로 옮기지 않음. Figma "Common UX - PC" 페이지 링크가 항상 최신본 (`sources.md`, `rules/screen-spec.md` 8절)
 - [x] **회의록 정리 방식 (2026-11-04 정함, `rules/meeting-notes.md`):** 진행 방식, 저장 위치, 기존 스프레드시트 회의록을 옮길지 (작업 유형 18번)
 - [ ] **다국어 세부:** `rules/language-set.md` 6절 목록 (언어셋 담당자 협의)
-- [ ] **Common UX 공통 정책 정리 (2026-11-04 추가):** `common-ux/common-policy-candidates.md`의 새 공통 정책 16개(날짜 · 시간 표기, 노출 순서, 표 · 정렬 · 페이지, 검색, 입력과 검증, 팝업, 알럿 · 토스트, 툴팁, 로딩, 날짜 고르기, 드롭다운, 스크롤, 입력 방법 등)를 Common UX 정의를 먼저 옮겨 1차로 쓰고(POL-COM-007부터), 부족한 부분과 다른 점 7개는 질문으로 채워 감. 화면을 새로 그리기 전에 해 두면 디스크립션은 정책 ID로만 잇게 됨
+- [ ] **보류: 작업방 → 공유방 → 개발사 흐름 (2026-11-05):** 기존 화면을 모두 신규 작업방으로 옮긴 뒤(이행 기간이 끝난 뒤) 정의함. 그때까지 작업방 작업만. 대상: `rules/figma-sync.md` 2절, `rules/claude-work.md` 작업 유형 12, 고객 컨펌 · 개발사 공유 페이지, 전달 상태
+- [ ] **Common UX 정리 (2026-11-04 추가, 2026-11-05 B안으로 바꿈):** (1) 적용된 Common UX 가이드의 5장을 Figma Common UX - PC에 맞추고 용어집 결정(수정 요청 목록)을 넣음. (2) 가이드에 없거나 다르게 정한 3가지(날짜 · 시간 장비 기준과 초 단위, L-IOS 표 줄 수, 숫자 표기 PD-0008)만 공통 정책(POL-COM-007부터)으로 임시 정책 등록. 나머지는 디스크립션이 가이드 번호로 바로 잇음 (`common-ux/common-policy-candidates.md`)
 - [ ] **언어셋 관리 체계 (화면설계서 규칙 정리 뒤, 2026-11-04 추가):** 언어셋 관리를 저장소로 옮기고 관리 주체를 Claude로 함. 초안 원본은 `language-set/source/CURECA_Language Set_v0.03.xlsx`, 분석과 답변은 `language-set/analysis-v0.03.md`. 정할 것:
   - 저장소에 두는 형식(엑셀 원본 / CSV 표), `LID-{메뉴}-###` 체계와 재사용(ref) 규칙 이어받기, 공통 시트(A~D)의 역할
   - **화면설계서를 새로 만들거나 고치면 자동으로 언어셋에 더하고 관리하는 흐름:** 화면 MD "문구" 표 ↔ 언어셋 목록, 새 문구에 LID 붙이기, 같은 문구 재사용, 바뀐 문구 · 안 쓰게 된 문구 처리, 번역 요청 목록(`language-set/translation-requests.csv`)과의 관계
@@ -61,7 +62,7 @@
 - [ ] 고객사 제공 파일(상태 정보, 시약 정보): 파일 형식, 갱신 주기, 원본 전달. 특히 씨젠 문서 "CURECA 시스템 구성 요소 및 상태 정보" (Common UX COMM-4-a의 원본, 최우선 기준)
 - [x] **씨젠 "소모품 및 시약 정보" 새 버전: 261102 받아 반영 (2026-11-03, 검사 항목 261102도 함께). 품목 표 `glossary/consumables.csv`, `glossary/pcr-reagents.csv` 만듦. 남은 것: 261022 검토의 다른 내용 3개(MM Tube, Tub 수량 단위, Buffer Cartridge Cap)는 Common UX와 맞춰 볼 것 (`reference/updates/2026-11-03_소모품·시약_검사항목.md`)** 이전 메모: 받으면 작업 유형 22 절차로 261022(`reference/customer/consumables-reagents/`)와 비교해 반영. 261022 검토 결과와 확인 필요 3개(MM Tube 수량 단위, Tub 수량 단위, Buffer Cartridge Cap)는 `background/teammate-review.md` 1-2. 반영할 때 품목 표(`glossary/consumables.csv`, `glossary/pcr-reagents.csv`)도 만들기
 - [x] 장비 상태 정의서 확인 7개 (2026-11-02 답변 반영, `policy/equipment-states.md` v0.2)
-- [ ] Common UX 수정 요청 9개를 Common UX 담당 팀원에게 전달 (`common-ux/feedback.md`)
+- [ ] Common UX 수정 요청 16건(철회 1건 제외 15건, 모두 전달 전)을 Common UX 담당 팀원에게 전달 (`common-ux/feedback.md`, 2026-11-05 다시 정리)
 - [ ] 언어셋 담당자에게 `rules/language-set.md` 초안 공유. 현재 기준 언어셋(엑셀)은 v0.03 받음 (2026-11-04, `language-set/analysis-v0.03.md` 6절 질문 7개 답 대기)
 - [x] IA 수정본: v1.15 받음 (2026-11-02, `ia/`)
 - [ ] 정책서 정제에 쓸 Figma 화면 링크

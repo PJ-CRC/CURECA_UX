@@ -6,7 +6,7 @@ Claude가 근거로 읽는 자료의 목록입니다. 이 목록 밖의 자료�
 
 | 자료 | 기준 출처 | 비고 |
 | --- | --- | --- |
-| Common UX | [UX-AI-TEST > DY common UX (지금 페이지 이름 "Common UX - PC")](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=355-53300) (COMM-0 ~ COMM-5) | 최종본 V2.2.00 (2026-10-30). 컴포넌트(5장) 번호 · 내용도 이 페이지 기준(2026-11-04). SH.L TEST › Connon UX와 팀 프로그램 "CURECA UX 가이드"는 기준이 아님. 고칠 곳은 `common-ux/feedback.md` |
+| Common UX | **팀 프로그램 UX 문서 › UX가이드에서 "적용"한 가이드 문서(MD)** (원본). 한 벌만 둠(모바일 등 다른 대상은 다른 가이드를 적용). 반영 대상 Figma: [UX-AI-TEST > Common UX - PC](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=355-53300) (예전 이름 DY common UX, COMM-0 ~ COMM-5) | 2026-11-05 사용자 결정: 적용된 가이드 문서가 원본이자 최신본이고, 가이드를 고친 뒤 Figma Common UX 페이지에 반영함. Figma 페이지는 원본이 아님. 지금 적용된 가이드는 "CURECA UX 가이드"(`g20261028-brex-06-J003`, SH.L TEST › Connon UX에서 옮김)로, 5장 번호 · 일부 내용이 Figma Common UX - PC(V2.2.00)와 다름 → 가이드를 맞출 것(`common-ux/common-policy-candidates.md`). 고칠 곳은 `common-ux/feedback.md` |
 | 화면 | [1-2. CURECA 기획 디자인 작업방 Part.2](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/1-2.-CURECA_%EA%B8%B0%ED%9A%8D-%EB%94%94%EC%9E%90%EC%9D%B8-%EC%9E%91%EC%97%85%EB%B0%A9-Part.2-?node-id=1-11) 메뉴별 페이지 12개: Login, Dashboard, Event History, Run/Quick Start, Test Management, Sample Tracking, Instrument, Inventory, Statistical Analysis, Profile / Information, Setting, Material Setup(2차) | Material Setup(1차) 페이지는 근거로 쓰지 않음. 같은 CID가 2.1 1차·2차 영역에 함께 있으면 2차(민트색) 영역 화면이 최신 (`rules/figma-sync.md` 1절) |
 | 화면 (신규 작업방) | Figma `eCzV8BJIXt1MGdKr3S4fgI` (2026-11-03 만듦) | 새로 그린 메뉴(`_menu.md`의 `redrawn`이 있는 메뉴)는 이 파일과 화면 MD가 기준. 위 기존 작업방은 이행 기간에 아직 새로 그리지 않은 메뉴만 읽음 (`rules/screen-spec.md` 0절) |
 | 정책서 | 같은 작업방의 정책서_2026.08.28 페이지 | 정책서 현행화 전까지 기준. 화면 디스크립션에 흩어진 정책도 함께 정제 예정 |
