@@ -1,0 +1,26 @@
+{
+    "id":  "brex-01_20261105-133109",
+    "kind":  "work",
+    "reqId":  "",
+    "at":  "2026-11-05T13:31:09+09:00",
+    "from":  "2026-11-05T13:30:05+09:00",
+    "by":  "서보경",
+    "doneBy":  "Claude",
+    "pc":  "BREX_01",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "작업규칙 연관 항목 찾기: CURECA 작업규칙",
+    "models":  {
+                   "claude-opus-5-5":  21
+               },
+    "calls":  21,
+    "input":  39,
+    "cacheWrite":  53168,
+    "cacheRead":  1917935,
+    "output":  12827,
+    "total":  1983969,
+    "usd":  1.0656
+}

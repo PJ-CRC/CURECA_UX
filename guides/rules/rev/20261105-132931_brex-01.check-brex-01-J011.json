@@ -2,9 +2,9 @@
     "jobId":  "J011",
     "pc":  "BREX_01",
     "by":  "서보경",
-    "at":  "2026-11-05T13:30:59+09:00",
+    "at":  "2026-11-05T13:31:09+09:00",
     "status":  "완료",
-    "note":  "후보 문서 4곳 · 화면 0 · 프로토타입 0\n- 문서: 헌법 6조 · change-flow 6절 · screen-spec 5절이 개발사 전달 흐름 보류와 맞지 않음, language-set 2절에 「나머지 5개 언어」가 남음\n- 화면: 기준 Figma 파일(fileKey)이 없어 찾지 않음\n- 프로토타입: assay-pack은 바뀐 규칙과 관계없음\n- 정책서 · 기준데이터 · 화면 정의서 · CURECA UX 가이드: 바뀐 규칙과 어긋나는 곳 없음(공통 정책 POL-COM-001~006은 가이드 규칙을 옮겨 쓰지 않아 B안과 맞음)\n참고: 4곳 모두 CURECA_AI 원본에도 같은 문구가 있으니, 고칠 때 원본도 함께 고쳐야 다음 동기화 때 되돌아가지 않음",
+    "note":  "화면 0 · 문서 3 · 프로토타입 0\n- 화면: 기준 Figma 파일(fileKey)이 없어 찾지 않음\n- 문서: 작업규칙 안에서 바뀐 내용과 어긋난 3곳(language-set 2절 언어 수, change-flow 6절 · screen-spec 5절 개발사 전달 보류 안내)\n- 정책서(POL-COM-004 7개 언어) · 화면 정의서(TI/LI-STN-02 R10) · 기준데이터 · UX가이드는 바뀐 내용과 맞음. 공통(COM) 정책에 Common UX 가이드 규칙을 옮겨 쓴 항목 없음(B안과 맞음)\n- 참고: 헌법 6조(반영 방향 저장소 → 작업 → 고객 컨펌 → 개발사 공유)는 보류와 충돌하지 않아 대상에서 뺌",
     "scope":  "spec",
     "fileKey":  "",
     "items":  [
@@ -12,33 +12,25 @@
                       "type":  "doc",
                       "doc":  "rules",
                       "docTitle":  "CURECA 작업규칙",
-                      "file":  "../constitution.md",
-                      "section":  "6조. 반영은 한 방향으로만 흐른다",
-                      "change":  "「저장소 → 작업 페이지 → 고객 컨펌 페이지 → 개발사 공유 페이지」 순서 중 고객 컨펌 · 개발사 공유 단계는 2026-11-05 결정으로 이행 기간이 끝날 때까지 보류됨(figma-sync 2절). 헌법에 보류 안내를 덧붙일지 개정 절차(「개정」)대로 확인 필요."
-                  },
-                  {
-                      "type":  "doc",
-                      "doc":  "rules",
-                      "docTitle":  "CURECA 작업규칙",
-                      "file":  "change-flow.md",
-                      "section":  "6. 개발사 전달",
-                      "change":  "개발사 전달 흐름이 보류됨(figma-sync 2절 · claude-work 유형 12). 이 절 머리에 「이행 기간이 끝날 때까지 보류」 안내를 더함."
-                  },
-                  {
-                      "type":  "doc",
-                      "doc":  "rules",
-                      "docTitle":  "CURECA 작업규칙",
-                      "file":  "screen-spec.md",
-                      "section":  "5. 신규 작업방 구성 (2026-11-04)",
-                      "change":  "「고객 컨펌 페이지 · 개발사 공유 페이지 … 내보내는 방법은 figma-sync 2절에서 정합니다」 줄에 0절처럼 「그 흐름은 이행 기간이 끝날 때까지 보류(2026-11-05)」를 더함."
-                  },
-                  {
-                      "type":  "doc",
-                      "doc":  "rules",
-                      "docTitle":  "CURECA 작업규칙",
-                      "file":  "language-set.md",
                       "section":  "2. 언어셋",
-                      "change":  "「나머지 5개 언어 번역도 고객사를 통해 받습니다」 → 「나머지 6개 언어」(5절 번역 요청이 독일어 포함 6개로 바뀜, 제공 언어 7개)."
+                      "file":  "language-set.md",
+                      "change":  "language-set.md 2절 \"나머지 5개 언어 번역도 고객사를 통해 받습니다\"가 이번에 바뀐 5절(번역 요청 6개 언어, 독일어 포함)과 어긋남 → \"나머지 6개 언어\"로 고침"
+                  },
+                  {
+                      "type":  "doc",
+                      "doc":  "rules",
+                      "docTitle":  "CURECA 작업규칙",
+                      "section":  "6. 개발사 전달",
+                      "file":  "change-flow.md",
+                      "change":  "figma-sync.md 2절에서 작업방 → 공유방 → 개발사 흐름을 보류(2026-11-05)했으나 change-flow.md 6절에는 보류 안내가 없음 → \"이행 기간이 끝날 때까지 보류 (rules/figma-sync.md 2절)\" 한 줄 추가"
+                  },
+                  {
+                      "type":  "doc",
+                      "doc":  "rules",
+                      "docTitle":  "CURECA 작업규칙",
+                      "section":  "이전 버전 · 전달본",
+                      "file":  "screen-spec.md",
+                      "change":  "screen-spec.md 5절 \"고객 컨펌 페이지 · 개발사 공유 페이지 … 내보내는 방법은 figma-sync.md 2절에서 정합니다\"에 0절처럼 보류(2026-11-05, 이행 기간 뒤 정의) 안내를 더해 맞춤"
                   }
               ]
 }
