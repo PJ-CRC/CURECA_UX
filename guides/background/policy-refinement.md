@@ -72,7 +72,7 @@ CID마다 `screen-fixes/<CID>.md`로 옮김 (2026-11-02).
 - Instruments: 기획 화면 7개 옮김 (`screens/instruments/`). 옮기면서 찾은 고칠 점은 각 파일 "반영 대기 목록"
 - E8 답 (2026-11-02): Door 잠금이 해제되면 장비 통합 상태와 관계없이 Module은 Paused. Door가 여러 개인 Module은 하나라도 해제되면 Paused → POL-EQP-004 규칙 1·2, `glossary/status-values.csv`
 - E9 답 (2026-11-02): Door가 다시 잠기면 Paused 전 상태로 돌아감 (Run 중이면 Running, 아니면 Ready). 장비 통합 상태는 모든 Module이 Paused일 때 Paused, Run 중 1대라도 Paused면 Partial Running. Run 중이 아닐 때 일부만 Paused면 통합 상태는 바뀌지 않음 → POL-EQP-002 규칙 3~5, POL-EQP-004 규칙 7·8. 씨젠 전환표에 Run 중이 아닐 때 Paused 전환이 없어 새 버전 때 확인
-- Dashboard (TI-DAS, LI-DAS), Dashboard (All) (TI-ADS, TI-ADS-P): 2.1 2차 영역에서 옮김. POL-EQP-001·009 `cids`에 TI-ADS 추가
+- Dashboard (TI-DAS, LI-DAS), Dashboard(All) (TI-ADS, TI-ADS-P): 2.1 2차 영역에서 옮김. POL-EQP-001·009 `cids`에 TI-ADS 추가
 - 다른 영역 정책 재료 (그 영역 정책을 쓸 때 화면 MD에서 가져옴): Today’s Orders 집계 기준과 Test Cut-off Time 리셋(SMP·TST, TI-DAS 1), Inventory Status·Waste Bin/Bottle Status 노출 조건(INV, TI-DAS 6·7), Display Name 30자(TI-ADS-P)
 
 ## ACC (계정·권한·로그인)
@@ -149,7 +149,7 @@ CID마다 `screen-fixes/<CID>.md`로 옮김 (2026-11-02).
 
 | # | 질문 | 출처 |
 | --- | --- | --- |
-| S1 | CURECA가 여러 대일 때(Dashboard (All), 최대 3대) LIS 설정과 Code Mapping을 CURECA마다 두는지, T-IOS 하나에 하나인지 ("LIS와 CURECA 1:1") | POL-SYS-001, TI-ADS |
+| S1 | CURECA가 여러 대일 때(Dashboard(All), 최대 3대) LIS 설정과 Code Mapping을 CURECA마다 두는지, T-IOS 하나에 하나인지 ("LIS와 CURECA 1:1") | POL-SYS-001, TI-ADS |
 | S2 | SMTP를 Enable에서 Disable로 바꿔 저장할 수 있는지 (지금 디스크립션은 Disable이면 [Save] 비활성화) | TI-STN-06 5 |
 
 ## TST (검사 정책) 1부: Policy Setting
@@ -224,7 +224,7 @@ CID마다 `screen-fixes/<CID>.md`로 옮김 (2026-11-02).
 | T2 | PCR Protocol Setting 선택지는 Cyclic-CMTA와 End Point-CMTA (두 번째 줄은 설명). 제가 잘못 읽음 | POL-TST-001 규칙 7, TI-STN-01 |
 | T3 | Allow Protocol Changes Before Test = Run 준비의 Check Test Protocol 단계를 쓸지. Off면 Apply한 Protocol을 쓰고 Step 4를 건너뜀 | POL-TST-001 규칙 8, 반영 대기 추가할 것 5 닫음 |
 | C1 | 이번 버전은 6개 언어. 다시 그릴 때 다국어 디스크립션 추가 | POL-COM-004, `screen-fixes/README.md` 공통 항목, TI/LI-STN-02 반영 대기 목록 |
-| S1 | LIS 설정과 Code Mapping은 CURECA마다. 상단 CURECA 선택으로 장비를 바꿔 보며, Dashboard (All)는 2대 이상 고객만 | POL-COM-005, POL-SYS-001 규칙 7, POL-SYS-002 규칙 6 |
+| S1 | LIS 설정과 Code Mapping은 CURECA마다. 상단 CURECA 선택으로 장비를 바꿔 보며, Dashboard(All)는 2대 이상 고객만 | POL-COM-005, POL-SYS-001 규칙 7, POL-SYS-002 규칙 6 |
 | S2 | SMTP [Save] 범위는 화면 설계자와 팀 논의 | 협의 대기 PD-0002 |
 
 **남은 질문**
@@ -268,7 +268,7 @@ CID마다 `screen-fixes/<CID>.md`로 옮김 (2026-11-02).
 | POL-SMP-009 | Today’s Orders와 검사 진행률 | 없음 (화면 디스크립션) | |
 
 - 팀원 POL-SMP-03 (Plate 상태값)은 SM1 답을 받고 POL-SMP-010으로 씀
-- 관련 화면 MD의 "관련 정책"을 SMP ID로 채움 (Test Management, Sample Tracking, Run, Quick Start, Dashboard, Dashboard (All), Information Report)
+- 관련 화면 MD의 "관련 정책"을 SMP ID로 채움 (Test Management, Sample Tracking, Run, Quick Start, Dashboard, Dashboard(All), Information Report)
 
 ### 판정 대기
 

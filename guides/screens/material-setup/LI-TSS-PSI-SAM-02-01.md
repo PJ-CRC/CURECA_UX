@@ -69,14 +69,14 @@ Description Number (2), Frame (1), Button/Secondary_1Button_44 (1)
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | Ver 2.0 (2026-06-15) | 버전 메모(v2.1.05)를 반영한 Ver로 | 버전 메모 | 대기 (확인 필요) |
-| 2 | 문구 | "Scan the QR code on the empty tray." | Sample이 적재된 Tray도 스캔할 수 있음(LI-TSS-PSI-SAM-02-03 1 "빈 tray or 검체 적재 tray"). 문구에서 "empty"를 뺄지 | LI-TSS-PSI-SAM-02-03 1 | 대기 (확인 필요) |
-| 3 | 알럿 | Tray가 아닌 코드 스캔 케이스 없음 | MS_Alert_001은 넣지 않음. MS 목록에 명시한 경우에만 적용 (2026-11-03 사용자 답변 MS4) | `policy/alert-catalog-ms.csv` MS_Alert_001, 2026-11-03 사용자 답변 (MS4) | 대기 |
-| 4 | 디스크립션 | 2 [Next], 2-1 Scan 내용 없음 | LI-TSS-PSI-SAM-01-01 반영 대기 목록 3과 같이 | 디스크립션 | 대기 (확인 필요) |
-| 5 | 표기 | "소모품/시약", "tray", "팝업" | Consumable/Reagent, Tray, Popup | `glossary/terms.csv` | 대기 |
-| 6 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
+| R01 | 화면 정보 | Ver 2.0 (2026-06-15) | 버전 메모(v2.1.05)를 반영한 Ver로 | 버전 메모 | 대기 (확인 필요) |
+| R02 | 문구 | "Scan the QR code on the empty tray." | Sample이 적재된 Tray도 스캔할 수 있음(LI-TSS-PSI-SAM-02-03 1 "빈 tray or 검체 적재 tray"). 문구에서 "empty"를 뺄지 | LI-TSS-PSI-SAM-02-03 1 | 대기 (확인 필요) |
+| R03 | 알럿 | Tray가 아닌 코드 스캔 케이스 없음 | MS_Alert_001은 넣지 않음. MS 목록에 명시한 경우에만 적용 (2026-11-03 사용자 답변 MS4) | `policy/alert-catalog-ms.csv` MS_Alert_001, 2026-11-03 사용자 답변 (MS4) | 대기 |
+| R04 | 디스크립션 | 2 [Next], 2-1 Scan 내용 없음 | LI-TSS-PSI-SAM-01-01 반영 대기 목록 3과 같이 | 디스크립션 | 대기 (확인 필요) |
+| R05 | 표기 | "소모품/시약", "tray", "팝업" | Consumable/Reagent, Tray, Popup | `glossary/terms.csv` | 대기 |
+| R06 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
 
 ## 변경 이력
 

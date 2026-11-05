@@ -85,14 +85,14 @@ Table (26), Square (9), 1 Depth (7), Description Number (4), Table/Filled Table 
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 디스크립션 | 0 "평균 소요 시간", 2·2-2 "소요 시간 합계"가 다름 (TI-STA-03-01 반영 대기 목록 1과 같음) | 디스크립션에 넣음: Test TAT는 합계 지표임. "평균" 문구를 지우고 합계로 씀. 화면 예시 값도 합계로 보여 줌 | POL-STA-004 정의 | 대기 |
-| 2 | 화면 글자 | Test TAT 행 예시 값이 2칸만 있음 (8.5, 5.2) | 예시 데이터 채움 | 화면 글자 | 대기 |
-| 3 | 화면 정보 | Figma 화면 이름 "Test Analytics _ Test TAT", IA 이름 "Test TAT - Table" | 하나로 통일 | `ia/ia-screens.csv` | 대기 (확인 필요) |
-| 4 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
-| 5 | 정책 반영 | 검사 건수 집계 기준이 없음 | 디스크립션에 넣음: 검사 건수는 오더 기준으로 세며 Completed, Failed와 관계없이 모두 셈 | POL-STA-004 정의 | 대기 |
-| 6 | 정책 반영 | TAT 시작·끝 시점이 없음 | TI-STA-03-01 반영 대기 목록 4와 같음 (Sample Start ~ End Date/Time의 합계) | POL-STA-004 정의 | 대기 |
+| R01 | 디스크립션 | 0 "평균 소요 시간", 2·2-2 "소요 시간 합계"가 다름 (TI-STA-03-01 반영 대기 목록 1과 같음) | 디스크립션에 넣음: Test TAT는 합계 지표임. "평균" 문구를 지우고 합계로 씀. 화면 예시 값도 합계로 보여 줌 | POL-STA-004 정의 | 대기 |
+| R02 | 화면 글자 | Test TAT 행 예시 값이 2칸만 있음 (8.5, 5.2) | 예시 데이터 채움 | 화면 글자 | 대기 |
+| R03 | 화면 정보 | Figma 화면 이름 "Test Analytics _ Test TAT", IA 이름 "Test TAT - Table" | 하나로 통일 | `ia/ia-screens.csv` | 대기 (확인 필요) |
+| R04 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
+| R05 | 정책 반영 | 검사 건수 집계 기준이 없음 | 디스크립션에 넣음: 검사 건수는 오더 기준으로 세며 Completed, Failed와 관계없이 모두 셈 | POL-STA-004 정의 | 대기 |
+| R06 | 정책 반영 | TAT 시작·끝 시점이 없음 | TI-STA-03-01 반영 대기 목록 4와 같음 (Sample Start ~ End Date/Time의 합계) | POL-STA-004 정의 | 대기 |
 
 ## 변경 이력
 

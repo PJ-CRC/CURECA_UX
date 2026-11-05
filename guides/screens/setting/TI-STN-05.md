@@ -104,11 +104,11 @@ figma_region: 2.1 2차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 디스크립션 | 2 "행 클릭 시 계정 상세 팝업 : TI-STN-05-02-P" | TI-STN-05-03-P (User Details). 05-02-P는 Account Created | `ia/ia-screens.csv` | 대기 |
-| 2 | 정책 반영 | 목록 범위 "Admin이 생성한 모든 계정", User Type 필터 All/Admin/User. Service 계정이 목록에 나오는지, Service가 만든 계정은 어떻게 되는지 없음 | 임시 정책 PV-0002 반영 (Admin에게 Service 계정 숨김, Service 계정 최소 1개, 자기 계정 삭제 불가 Alert_047) | PV-0002, CA-0003 | 대기 |
-| 3 | 정책 반영 | 삭제 제한 없음 (자기 계정, 로그인 중인 계정, 마지막 Admin 삭제) | 임시 정책 PV-0002 반영 (Admin에게 Service 계정 숨김, Service 계정 최소 1개, 자기 계정 삭제 불가 Alert_047) | PV-0002, CA-0003 | 대기 |
+| R01 | 디스크립션 | 2 "행 클릭 시 계정 상세 팝업 : TI-STN-05-02-P" | TI-STN-05-03-P (User Details). 05-02-P는 Account Created | `ia/ia-screens.csv` | 대기 |
+| R02 | 정책 반영 | 목록 범위 "Admin이 생성한 모든 계정", User Type 필터 All/Admin/User. Service 계정이 목록에 나오는지, Service가 만든 계정은 어떻게 되는지 없음 | 임시 정책 PV-0002 반영 (Admin에게 Service 계정 숨김, Service 계정 최소 1개, 자기 계정 삭제 불가 Alert_047) | PV-0002, CA-0003 | 대기 |
+| R03 | 정책 반영 | 삭제 제한 없음 (자기 계정, 로그인 중인 계정, 마지막 Admin 삭제) | 임시 정책 PV-0002 반영 (Admin에게 Service 계정 숨김, Service 계정 최소 1개, 자기 계정 삭제 불가 Alert_047) | PV-0002, CA-0003 | 대기 |
 
 ## 변경 이력
 

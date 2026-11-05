@@ -141,17 +141,17 @@ Description Number (8), Frame (1), Accordion/Default (1), Tool Tip/Default (1), 
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면·디스크립션 | 디스크립션은 [Remove] 삭제인데 화면에 Remove 버튼이 남아 있음 | 화면에서 Remove 버튼을 지움. 디스크립션도 Remove 없이 씀: Tip·PCR Plate는 같은 재료이고 순서를 갖지 않아 하나를 골라 지우는 것이 의미가 없음. 화면 예시도 Remove 없이 | 2026-11-03 사용자 답변 (MS6-a) | 대기 |
-| 2 | 화면 정보 | Ver 2.0 (2026-06-15) | 버전 메모(v2.1.12까지) 반영 Ver | 버전 메모 | 대기 (확인 필요) |
-| 3 | 표기 | 타이틀 "PCR Setup (N) > 1000 μL Tip storage", 예시 "PcrSetup (2)" (코드명) | PCR Setup (2) > 1000μL Tip Storage. "300 μL Tip Storage(1)"은 300μL Tip Storage (1) | `glossary/modules.csv`, `glossary/module-units.csv` | 대기 (확인 필요) |
-| 4 | 표기 | μL 앞 띄어쓰기: 품목 "1000 μL Tip"(consumables), Unit "1000μL Tip Storage"(module-units) | 두 용어집 사이 통일 | `glossary/consumables.csv`, `glossary/module-units.csv` | 대기 (확인 필요) |
-| 5 | 디스크립션 | 3 출력 "적재된 시약 수" (Tip·PCR Plate는 Consumable) | 적재된 Consumable 수 | 디스크립션 3 | 대기 |
-| 6 | 디스크립션 | 4 "PCR Tip" | Tip (1000 μL Tip, 300 μL Tip) | `glossary/consumables.csv` | 대기 |
-| 7 | 화면 | 카운터 "02/12"와 "N/M"이 겹쳐 있음 | 하나만 | 디스크립션 3 | 대기 |
-| 8 | 표기 | "소모품", "시약", "유효기간", "Stoage", "Toast 팝업" | Consumable, Reagent, Expiration Date, Storage, Toast | `glossary/terms.csv`, 오타 | 대기 |
-| 9 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
+| R01 | 화면·디스크립션 | 디스크립션은 [Remove] 삭제인데 화면에 Remove 버튼이 남아 있음 | 화면에서 Remove 버튼을 지움. 디스크립션도 Remove 없이 씀: Tip·PCR Plate는 같은 재료이고 순서를 갖지 않아 하나를 골라 지우는 것이 의미가 없음. 화면 예시도 Remove 없이 | 2026-11-03 사용자 답변 (MS6-a) | 대기 |
+| R02 | 화면 정보 | Ver 2.0 (2026-06-15) | 버전 메모(v2.1.12까지) 반영 Ver | 버전 메모 | 대기 (확인 필요) |
+| R03 | 표기 | 타이틀 "PCR Setup (N) > 1000 μL Tip storage", 예시 "PcrSetup (2)" (코드명) | PCR Setup (2) > 1000μL Tip Storage. "300 μL Tip Storage(1)"은 300μL Tip Storage (1) | `glossary/modules.csv`, `glossary/module-units.csv` | 대기 (확인 필요) |
+| R04 | 표기 | μL 앞 띄어쓰기: 품목 "1000 μL Tip"(consumables), Unit "1000μL Tip Storage"(module-units) | 두 용어집 사이 통일 | `glossary/consumables.csv`, `glossary/module-units.csv` | 대기 (확인 필요) |
+| R05 | 디스크립션 | 3 출력 "적재된 시약 수" (Tip·PCR Plate는 Consumable) | 적재된 Consumable 수 | 디스크립션 3 | 대기 |
+| R06 | 디스크립션 | 4 "PCR Tip" | Tip (1000 μL Tip, 300 μL Tip) | `glossary/consumables.csv` | 대기 |
+| R07 | 화면 | 카운터 "02/12"와 "N/M"이 겹쳐 있음 | 하나만 | 디스크립션 3 | 대기 |
+| R08 | 표기 | "소모품", "시약", "유효기간", "Stoage", "Toast 팝업" | Consumable, Reagent, Expiration Date, Storage, Toast | `glossary/terms.csv`, 오타 | 대기 |
+| R09 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
 
 ## 변경 이력
 

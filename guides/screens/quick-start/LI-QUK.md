@@ -133,22 +133,22 @@ Table (11), Table/Filled Table Cell (10), Description Number (9), Interface/Chec
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 디스크립션 | 0 표출 항목에 Check test protocol(5), Check waste bin/bottle(6)이 빠짐. "시약 유효기한 상태"는 4-1 문구만 남음 (v2.1.04에서 Under 30 Days 삭제) | 표출 항목을 1~6과 맞춤 | 디스크립션, 버전 메모 | 대기 |
-| 2 | 디스크립션 | 4 "nsufficient" | Insufficient | 오타 | 대기 |
-| 3 | 상태값 | 3 Insufficient "재고가 0인", Low "재고가 부족한" | TI-IVT-03-T 반영 대기 목록 1과 같이 (정의는 상태값 표, 화면 문구는 예시) | `glossary/status-values.csv 재고 상태`, POL-INV-003 | 대기 |
-| 4 | 상태값 | 4 Reagent에 재고 상태(Insufficient / Low / Sufficient)를 씀 | 디스크립션에 넣음: Reagent도 Consumable과 같은 재고 상태(Sufficient, Low, Insufficient)를 씀 | `glossary/status-values.csv 재고 상태`, POL-INV-003 | 대기 |
-| 5 | 표기 | 4-1 "유효기한", 버전 메모 "유효기간" | Expiration Date | `glossary/terms.csv` | 대기 |
-| 6 | 디스크립션 | 2 "(트롤리에 도킹된)" | STAT Storage Sample을 Total Sample·STAT Sample에 어떻게 셈할지 팀 논의 후 정함 | PD-0003, LI-RUN-01 2 | 대기 (확인 필요) |
-| 7 | 디스크립션 | 5 Protocol은 Applied 값만 보여 줌. Allow Protocol Changes Before Test가 ON이어도 Quick Start에서는 바꿀 수 없는지 설명 없음 | 디스크립션에 넣음: Quick Start는 Protocol Setting의 Applied Protocol로만 Run함. Allow Protocol Changes Before Test가 On이어도 여기서는 Protocol을 고를 수 없음 | POL-SMP-007 규칙 8 | 대기 |
-| 8 | 디스크립션 | 6 "장비 내 waste bin/bottle", "폐기함", 화면 "Check waste bin/bottle" | Waste Bin/Bottle | `glossary/terms.csv` | 대기 |
-| 9 | 표기 | 화면 "SG protocol" | LI-RUN-02-01 반영 대기 목록 6과 같이 통일 | 화면 글자 | 대기 |
-| 10 | 알럿 | 7 [Cancel] → Confirm_001. 카탈로그 Confirm_001 조건은 "Quick Start 진행 중 [X] 선택 시" | 조건을 [Cancel]로 맞추거나 [X]를 화면에 둠 | `policy/alert-catalog.csv` Confirm_001 | 대기 (확인 필요) |
-| 11 | 알럿 | 8 [Quick Start] → Confirm_002. 카탈로그 조건은 "[Run Start] 선택 시" | 조건에 Quick Start 추가 | `policy/alert-catalog.csv` Confirm_002 | 대기 |
-| 12 | 디스크립션 | 0 "Run 실행 조건" 내용이 없음 (LI-RUN-P 항목을 가리키는 것으로 보임) | LI-RUN-P 항목으로 적고, POL-EQP-003 규칙 6(장비 통합 상태)과 함께 적음 | POL-EQP-003 | 대기 |
-| 13 | 화면 정보 | 경로 "LNB > Quick Start / Test Status > Quick Start" | IA 경로 Quick Start. Test Status 화면(TI-TMG-02/LI-TMG-02)에 Quick Start 진입이 있는지 확인 | `ia/ia-screens.csv` | 대기 (확인 필요) |
-| 14 | 정책 반영 | 4-1 만료 Reagent 안내 "Expired reagents are discarded or returned unused, depending on the instrument." | LI-RUN-03 반영 대기 목록 13과 같이 문구 유지. 만료 Reagent가 있어도 [Quick Start]를 할 수 있음 | POL-INV-004 규칙 4, POL-SMP-007 규칙 3 | 대기 |
+| R01 | 디스크립션 | 0 표출 항목에 Check test protocol(5), Check waste bin/bottle(6)이 빠짐. "시약 유효기한 상태"는 4-1 문구만 남음 (v2.1.04에서 Under 30 Days 삭제) | 표출 항목을 1~6과 맞춤 | 디스크립션, 버전 메모 | 대기 |
+| R02 | 디스크립션 | 4 "nsufficient" | Insufficient | 오타 | 대기 |
+| R03 | 상태값 | 3 Insufficient "재고가 0인", Low "재고가 부족한" | TI-IVT-03-T 반영 대기 목록 1과 같이 (정의는 상태값 표, 화면 문구는 예시) | `glossary/status-values.csv 재고 상태`, POL-INV-003 | 대기 |
+| R04 | 상태값 | 4 Reagent에 재고 상태(Insufficient / Low / Sufficient)를 씀 | 디스크립션에 넣음: Reagent도 Consumable과 같은 재고 상태(Sufficient, Low, Insufficient)를 씀 | `glossary/status-values.csv 재고 상태`, POL-INV-003 | 대기 |
+| R05 | 표기 | 4-1 "유효기한", 버전 메모 "유효기간" | Expiration Date | `glossary/terms.csv` | 대기 |
+| R06 | 디스크립션 | 2 "(트롤리에 도킹된)" | STAT Storage Sample을 Total Sample·STAT Sample에 어떻게 셈할지 팀 논의 후 정함 | PD-0003, LI-RUN-01 2 | 대기 (확인 필요) |
+| R07 | 디스크립션 | 5 Protocol은 Applied 값만 보여 줌. Allow Protocol Changes Before Test가 ON이어도 Quick Start에서는 바꿀 수 없는지 설명 없음 | 디스크립션에 넣음: Quick Start는 Protocol Setting의 Applied Protocol로만 Run함. Allow Protocol Changes Before Test가 On이어도 여기서는 Protocol을 고를 수 없음 | POL-SMP-007 규칙 8 | 대기 |
+| R08 | 디스크립션 | 6 "장비 내 waste bin/bottle", "폐기함", 화면 "Check waste bin/bottle" | Waste Bin/Bottle | `glossary/terms.csv` | 대기 |
+| R09 | 표기 | 화면 "SG protocol" | LI-RUN-02-01 반영 대기 목록 6과 같이 통일 | 화면 글자 | 대기 |
+| R10 | 알럿 | 7 [Cancel] → Confirm_001. 카탈로그 Confirm_001 조건은 "Quick Start 진행 중 [X] 선택 시" | 조건을 [Cancel]로 맞추거나 [X]를 화면에 둠 | `policy/alert-catalog.csv` Confirm_001 | 대기 (확인 필요) |
+| R11 | 알럿 | 8 [Quick Start] → Confirm_002. 카탈로그 조건은 "[Run Start] 선택 시" | 조건에 Quick Start 추가 | `policy/alert-catalog.csv` Confirm_002 | 대기 |
+| R12 | 디스크립션 | 0 "Run 실행 조건" 내용이 없음 (LI-RUN-P 항목을 가리키는 것으로 보임) | LI-RUN-P 항목으로 적고, POL-EQP-003 규칙 6(장비 통합 상태)과 함께 적음 | POL-EQP-003 | 대기 |
+| R13 | 화면 정보 | 경로 "LNB > Quick Start / Test Status > Quick Start" | IA 경로 Quick Start. Test Status 화면(TI-TMG-02/LI-TMG-02)에 Quick Start 진입이 있는지 확인 | `ia/ia-screens.csv` | 대기 (확인 필요) |
+| R14 | 정책 반영 | 4-1 만료 Reagent 안내 "Expired reagents are discarded or returned unused, depending on the instrument." | LI-RUN-03 반영 대기 목록 13과 같이 문구 유지. 만료 Reagent가 있어도 [Quick Start]를 할 수 있음 | POL-INV-004 규칙 4, POL-SMP-007 규칙 3 | 대기 |
 
 ## 변경 이력
 

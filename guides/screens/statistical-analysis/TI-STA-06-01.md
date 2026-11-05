@@ -124,18 +124,18 @@ Description Number (10), Square (6), 1 Depth (6), 2 Depth (5), Form/CheckBox (5)
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 정책 반영 | 권한표에서 Statistical Analysis는 User Type 모두 O, Error Rate 표시는 Service만 (Instrument 행에만 있음). 이 화면은 디스크립션 1에서 Service만 노출 | 디스크립션 그대로: Error Rate Trend Tab은 User Type이 Service일 때만 보여 줌. 권한표에 Error Rate Trend 행 추가함 | `policy/permission-matrix.csv`, POL-STA-001 규칙 2 | 대기 |
-| 2 | 표기 | "Account Type이 Sevice" | User Type이 Service | `glossary/terms.csv`, 오타 | 대기 |
-| 3 | 정책 반영 | 산출식 "(에러 횟수 / 전체 구동 횟수) * 100", 구동 횟수는 "DWP 입고 기준", 에러 횟수는 씨젠 정의 예정. POL-EQP-010은 Consumable 부족·Waste Bin Full 중단을 제외 | 디스크립션에 넣음: 총 가동 횟수와 가동 실패 횟수는 POL-EQP-010의 Module별 기준으로 셈. "DWP 입고 기준 +1" 문구는 지움 | POL-STA-006 규칙 6, POL-EQP-010 | 대기 |
-| 4 | 디스크립션 | 3 "가동 시간 단위 정보 : (Unit : %)" | 에러율 단위 정보 | 디스크립션 | 대기 |
-| 5 | 디스크립션 | 3-3 참고 "TI-STA-06-02/Case 1" (없는 프레임) | TI-STA-06-01/Case > Case 1 | 케이스 | 대기 |
-| 6 | 화면 정보 | 케이스 프레임 이름은 TI-STA-06-01/Case, 패널 CID는 "TI-STA-05-01/Case" | TI-STA-06-01/Case | Figma 화면 정보 | 대기 |
-| 7 | 화면 정보 | TI-STA-05(Test Forecasting)와 CID 계층이 겹침 ("TI-STA-05_Skeleton" 참조 포함), Figma 경로와 IA 경로가 다름 | TI-STA-05-01 반영 대기 목록 1, 2와 같음 | `ia/change-requests.md` 1·2 | 대기 |
-| 8 | 표기 | 차트 범례 "Prep Consumable / Storage(1)" (줄바꿈), "Prep Consumable Storage(1)" | Prep Consumable Storage (1) | `glossary/terms.csv` Module | 대기 |
-| 9 | 디스크립션 | "장비 별", "에러율" | Module / Unit, Error Rate | `glossary/terms.csv`, `screen-fixes/README.md` | 대기 |
-| 10 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
+| R01 | 정책 반영 | 권한표에서 Statistical Analysis는 User Type 모두 O, Error Rate 표시는 Service만 (Instrument 행에만 있음). 이 화면은 디스크립션 1에서 Service만 노출 | 디스크립션 그대로: Error Rate Trend Tab은 User Type이 Service일 때만 보여 줌. 권한표에 Error Rate Trend 행 추가함 | `policy/permission-matrix.csv`, POL-STA-001 규칙 2 | 대기 |
+| R02 | 표기 | "Account Type이 Sevice" | User Type이 Service | `glossary/terms.csv`, 오타 | 대기 |
+| R03 | 정책 반영 | 산출식 "(에러 횟수 / 전체 구동 횟수) * 100", 구동 횟수는 "DWP 입고 기준", 에러 횟수는 씨젠 정의 예정. POL-EQP-010은 Consumable 부족·Waste Bin Full 중단을 제외 | 디스크립션에 넣음: 총 가동 횟수와 가동 실패 횟수는 POL-EQP-010의 Module별 기준으로 셈. "DWP 입고 기준 +1" 문구는 지움 | POL-STA-006 규칙 6, POL-EQP-010 | 대기 |
+| R04 | 디스크립션 | 3 "가동 시간 단위 정보 : (Unit : %)" | 에러율 단위 정보 | 디스크립션 | 대기 |
+| R05 | 디스크립션 | 3-3 참고 "TI-STA-06-02/Case 1" (없는 프레임) | TI-STA-06-01/Case > Case 1 | 케이스 | 대기 |
+| R06 | 화면 정보 | 케이스 프레임 이름은 TI-STA-06-01/Case, 패널 CID는 "TI-STA-05-01/Case" | TI-STA-06-01/Case | Figma 화면 정보 | 대기 |
+| R07 | 화면 정보 | TI-STA-05(Test Forecasting)와 CID 계층이 겹침 ("TI-STA-05_Skeleton" 참조 포함), Figma 경로와 IA 경로가 다름 | TI-STA-05-01 반영 대기 목록 1, 2와 같음 | `ia/change-requests.md` 1·2 | 대기 |
+| R08 | 표기 | 차트 범례 "Prep Consumable / Storage(1)" (줄바꿈), "Prep Consumable Storage(1)" | Prep Consumable Storage (1) | `glossary/terms.csv` Module | 대기 |
+| R09 | 디스크립션 | "장비 별", "에러율" | Module / Unit, Error Rate | `glossary/terms.csv`, `screen-fixes/README.md` | 대기 |
+| R10 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
 
 ## 변경 이력
 

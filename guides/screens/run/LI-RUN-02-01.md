@@ -130,16 +130,16 @@ Form/Radio BTN (18), Table (16), Description (16), Title (10), Description Numbe
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | CID LI-RUN-02-01은 Check Consumables(LI-RUN-02)의 하위처럼 보이고 IA 순서도 Check Consumables 다음이나, 화면은 Step 2 (Check Consumables 앞) | 단계 순서와 CID·IA 순서를 맞출지 확인 | `ia/ia-screens.csv`, 화면 글자 | 대기 (확인 필요) |
-| 2 | 디스크립션 | 1 "Step 3, Step 4은 비활성화" (단계는 5개) | Step 3 ~ Step 5 비활성 | 화면 글자 | 대기 |
-| 3 | 디스크립션 | 3 Extraction Protocol에 "선택(Default)" 항목이 없음 (2에는 있음) | 2와 같이 Applied Protocol 선택 상태를 적음 | 디스크립션 2 | 대기 |
-| 4 | 디스크립션 | 2-1 "Modified by", 3-1 "Modified ID" | Modified by (화면 글자) | 화면 글자 | 대기 |
-| 5 | 디스크립션 | 2-1 "사용자가 Protocol 시 입력한" | 사용자가 Protocol 생성 시 입력한 (빠진 말로 보임) | 디스크립션 | 대기 |
-| 6 | 표기 | Protocol Name "Seegene Protocol", 디스크립션 "SG Protocol", 화면 배지 "SG protocol" | 하나로 통일 | 화면 글자 | 대기 |
-| 7 | 디스크립션 | 고른 Protocol이 이번 Run에만 쓰이는지, Protocol Setting의 Applied도 바뀌는지 없음 | 디스크립션에 넣음: 여기서 고른 Protocol은 이번 Run에만 쓰이고, Protocol Setting의 Applied Protocol은 바뀌지 않음 | POL-SMP-007 규칙 5 | 대기 |
-| 8 | 문구 | 2-2 "into the trolley" | Trolley 표기 확인 (문장 안 소문자) | `glossary/terms.csv` Trolley | 대기 (확인 필요) |
+| R01 | 화면 정보 | CID LI-RUN-02-01은 Check Consumables(LI-RUN-02)의 하위처럼 보이고 IA 순서도 Check Consumables 다음이나, 화면은 Step 2 (Check Consumables 앞) | 단계 순서와 CID·IA 순서를 맞출지 확인 | `ia/ia-screens.csv`, 화면 글자 | 대기 (확인 필요) |
+| R02 | 디스크립션 | 1 "Step 3, Step 4은 비활성화" (단계는 5개) | Step 3 ~ Step 5 비활성 | 화면 글자 | 대기 |
+| R03 | 디스크립션 | 3 Extraction Protocol에 "선택(Default)" 항목이 없음 (2에는 있음) | 2와 같이 Applied Protocol 선택 상태를 적음 | 디스크립션 2 | 대기 |
+| R04 | 디스크립션 | 2-1 "Modified by", 3-1 "Modified ID" | Modified by (화면 글자) | 화면 글자 | 대기 |
+| R05 | 디스크립션 | 2-1 "사용자가 Protocol 시 입력한" | 사용자가 Protocol 생성 시 입력한 (빠진 말로 보임) | 디스크립션 | 대기 |
+| R06 | 표기 | Protocol Name "Seegene Protocol", 디스크립션 "SG Protocol", 화면 배지 "SG protocol" | 하나로 통일 | 화면 글자 | 대기 |
+| R07 | 디스크립션 | 고른 Protocol이 이번 Run에만 쓰이는지, Protocol Setting의 Applied도 바뀌는지 없음 | 디스크립션에 넣음: 여기서 고른 Protocol은 이번 Run에만 쓰이고, Protocol Setting의 Applied Protocol은 바뀌지 않음 | POL-SMP-007 규칙 5 | 대기 |
+| R08 | 문구 | 2-2 "into the trolley" | Trolley 표기 확인 (문장 안 소문자) | `glossary/terms.csv` Trolley | 대기 (확인 필요) |
 
 ## 변경 이력
 

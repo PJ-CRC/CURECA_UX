@@ -255,21 +255,21 @@ Description Number (16), Status (12), Description (7), Chip (6), Square (5), Ico
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | 3-6 [Item details] → "LI-RUN-03-P" | LI-IVT-04-T-P (IA에서 Run > Check Reagents의 Item details) | `ia/ia-screens.csv` | 대기 |
-| 2 | 상태값 | Reagent에 재고 상태(Insufficient / Low / Sufficient)를 씀 | 디스크립션에 넣음: Reagent도 Consumable과 같은 재고 상태(Sufficient, Low, Insufficient)를 씀 | `glossary/status-values.csv 재고 상태`, POL-INV-003 | 대기 |
-| 3 | 표기 | 1 "sufficient", 화면 "#Nucleic acid extraction", 2-1 "nucleic acid extraction" | Sufficient, Nucleic Acid Extraction | `glossary/status-values.csv`, `glossary/terms.csv` | 대기 |
-| 4 | 표기 | 수량 단위가 화면 "rxns", 디스크립션 "반응 수T"·"T", 3-5 예시는 "개" | 하나로 통일 | 화면 글자, 디스크립션 | 대기 (확인 필요) |
-| 5 | 표기 | 3-3 "유효기간" | Expiration Date | `glossary/terms.csv` (유효기간은 쓰지 않는 표현) | 대기 |
-| 6 | 디스크립션 | 3-3 아래에 번호 없는 "Capacity" 설명 ("해당 화면설계에 없으나") | 번호를 따로 두고 Case1 프레임 참조 | 디스크립션, LI-RUN-03/Case1 | 대기 |
-| 7 | 디스크립션 | 5 "Capacit" | Capacity | 오타 | 대기 |
-| 8 | 문구 | 5 Tooltip Status "Low(partial shortage), Insufficient(no stock)" | LI-RUN-02 반영 대기 목록 3과 같이 | `glossary/status-values.csv` 재고 상태 | 대기 (확인 필요) |
-| 9 | 디스크립션 | 2-3·3-4 "소모품", "차감되지 않는며", "단,장비", "RUN" | 시약(Reagent), 차감되지 않으며, 단, 장비, Run | 오타, `glossary/terms.csv` | 대기 |
-| 10 | 디스크립션 | 2-1 PCR Reagent 목록이 화면 카드에 없음 (예시에는 Pretreatment Reagents와 Kit 2개만) | 화면 예시에 PCR 카드 추가 여부 확인 | 화면 글자 | 대기 (확인 필요) |
-| 11 | 디스크립션 | 1 Chip "Default : 모든 탭이 미선택" | 모든 Chip이 미선택 | 디스크립션 | 대기 |
-| 12 | 정책 반영 | Reagent가 Insufficient·Low이거나 Expiration Date가 지났을 때 [Run Start]가 되는지 설명 없음 | 디스크립션에 넣음: 재고 상태와 Expiration Date와 관계없이 다음 단계로 넘어가 [Run Start]를 할 수 있음. 없는 Reagent는 그것을 쓰는 단계에 이르렀을 때 Error가 됨 | POL-SMP-007 규칙 3·4 | 대기 |
-| 13 | 정책 반영 | 3-3 만료 Reagent 안내 "Expired reagents are discarded or returned unused, depending on the instrument." | 문구는 정책과 맞으므로 유지: Dx 시스템은 폐기, Prep 시스템은 쓰지 않고 Trolley로 반환 | POL-INV-004 규칙 4, POL-SMP-007 규칙 3 | 대기 |
+| R01 | 화면 정보 | 3-6 [Item details] → "LI-RUN-03-P" | LI-IVT-04-T-P (IA에서 Run > Check Reagents의 Item details) | `ia/ia-screens.csv` | 대기 |
+| R02 | 상태값 | Reagent에 재고 상태(Insufficient / Low / Sufficient)를 씀 | 디스크립션에 넣음: Reagent도 Consumable과 같은 재고 상태(Sufficient, Low, Insufficient)를 씀 | `glossary/status-values.csv 재고 상태`, POL-INV-003 | 대기 |
+| R03 | 표기 | 1 "sufficient", 화면 "#Nucleic acid extraction", 2-1 "nucleic acid extraction" | Sufficient, Nucleic Acid Extraction | `glossary/status-values.csv`, `glossary/terms.csv` | 대기 |
+| R04 | 표기 | 수량 단위가 화면 "rxns", 디스크립션 "반응 수T"·"T", 3-5 예시는 "개" | 하나로 통일 | 화면 글자, 디스크립션 | 대기 (확인 필요) |
+| R05 | 표기 | 3-3 "유효기간" | Expiration Date | `glossary/terms.csv` (유효기간은 쓰지 않는 표현) | 대기 |
+| R06 | 디스크립션 | 3-3 아래에 번호 없는 "Capacity" 설명 ("해당 화면설계에 없으나") | 번호를 따로 두고 Case1 프레임 참조 | 디스크립션, LI-RUN-03/Case1 | 대기 |
+| R07 | 디스크립션 | 5 "Capacit" | Capacity | 오타 | 대기 |
+| R08 | 문구 | 5 Tooltip Status "Low(partial shortage), Insufficient(no stock)" | LI-RUN-02 반영 대기 목록 3과 같이 | `glossary/status-values.csv` 재고 상태 | 대기 (확인 필요) |
+| R09 | 디스크립션 | 2-3·3-4 "소모품", "차감되지 않는며", "단,장비", "RUN" | 시약(Reagent), 차감되지 않으며, 단, 장비, Run | 오타, `glossary/terms.csv` | 대기 |
+| R10 | 디스크립션 | 2-1 PCR Reagent 목록이 화면 카드에 없음 (예시에는 Pretreatment Reagents와 Kit 2개만) | 화면 예시에 PCR 카드 추가 여부 확인 | 화면 글자 | 대기 (확인 필요) |
+| R11 | 디스크립션 | 1 Chip "Default : 모든 탭이 미선택" | 모든 Chip이 미선택 | 디스크립션 | 대기 |
+| R12 | 정책 반영 | Reagent가 Insufficient·Low이거나 Expiration Date가 지났을 때 [Run Start]가 되는지 설명 없음 | 디스크립션에 넣음: 재고 상태와 Expiration Date와 관계없이 다음 단계로 넘어가 [Run Start]를 할 수 있음. 없는 Reagent는 그것을 쓰는 단계에 이르렀을 때 Error가 됨 | POL-SMP-007 규칙 3·4 | 대기 |
+| R13 | 정책 반영 | 3-3 만료 Reagent 안내 "Expired reagents are discarded or returned unused, depending on the instrument." | 문구는 정책과 맞으므로 유지: Dx 시스템은 폐기, Prep 시스템은 쓰지 않고 Trolley로 반환 | POL-INV-004 규칙 4, POL-SMP-007 규칙 3 | 대기 |
 
 ## 변경 이력
 

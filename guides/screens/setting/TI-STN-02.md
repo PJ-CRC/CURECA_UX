@@ -107,17 +107,18 @@ figma_region: 2.1 1차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 디스크립션 | 0 "데이터 백업, 복구"와 3~5-1 설명이 남아 있음 | 3~5(또는 4~5)는 취소선으로 이미 제거됨. 0의 "데이터 백업, 복구" 문구만 정리 | Figma 취소선, 버전 메모 v2.1.03 | 대기 |
-| 2 | 표기 | Languge, Seting, Cureca, Patial Running | Language, Setting, CURECA, Partial Running | 오타, `glossary/terms.csv` | 대기 |
-| 3 | 정책 반영 | Session Timeout 기본 On/Off가 없음, Ready·Not Initialized일 때만 적용한다는 조건이 없음 | 기본 Off, 장비 통합 상태가 Ready·Not Initialized일 때만 적용 | POL-ACC-008 | 대기 |
-| 4 | 문구 | "Automatically locks the system after a period of inactivity." (디스크립션은 자동 로그아웃) | 로그아웃 뜻으로 문구 정리 | 디스크립션 2 | 대기 |
-| 5 | 정책 반영 | 계정 잠금 해제 시간 설정 항목이 화면에 없음 (Account Locked 화면은 "관리자가 설정한 제한 시간") | 설정 항목 두지 않음 (잠금 시간 5분 고정) | POL-ACC-007 | 반영 불필요 |
-| 6 | 화면 글자 | 단위 "분" (한국어) | min 등 영어 표기 | `rules/language-set.md` | 대기 |
-| 7 | 디스크립션 | 6-2 "L only ... USB 저장 팝업" (T-IOS 화면에 L-IOS 동작) | T-IOS 동작만 남김 | 디스크립션 | 대기 |
-| 8 | 정책 반영 | 1 Language "현재 기준, English만 제공" | 6개 언어(영어, 한국어, 포르투갈어, 스페인어, 이탈리아어, 프랑스어) 중 선택, 기본 English | POL-COM-004 | 대기 |
-| 9 | 정책 반영 | 6-2 [Export] "전체 로그를 하나의 파일로 Packaging 하여 지정된 폴더 경로에 저장" | 디스크립션에는 고른 기간의 Log를 내려받는다고만 적음. 파일 형식·구성은 정하지 않음 (Service User Type이 장비 파악에 쓰는 자료, 개발에서 묶어 내보냄) | POL-SYS-004 규칙 2 | 대기 |
+| R01 | 디스크립션 | 0 "데이터 백업, 복구"와 3~5-1 설명이 남아 있음 | 3~5(또는 4~5)는 취소선으로 이미 제거됨. 0의 "데이터 백업, 복구" 문구만 정리 | Figma 취소선, 버전 메모 v2.1.03 | 대기 |
+| R02 | 표기 | Languge, Seting, Cureca, Patial Running | Language, Setting, CURECA, Partial Running | 오타, `glossary/terms.csv` | 대기 |
+| R03 | 정책 반영 | Session Timeout 기본 On/Off가 없음, Ready·Not Initialized일 때만 적용한다는 조건이 없음 | 기본 Off, 장비 통합 상태가 Ready·Not Initialized일 때만 적용 | POL-ACC-008 | 대기 |
+| R04 | 문구 | "Automatically locks the system after a period of inactivity." (디스크립션은 자동 로그아웃) | 로그아웃 뜻으로 문구 정리 | 디스크립션 2 | 대기 |
+| R05 | 정책 반영 | 계정 잠금 해제 시간 설정 항목이 화면에 없음 (Account Locked 화면은 "관리자가 설정한 제한 시간") | 설정 항목 두지 않음 (잠금 시간 5분 고정) | POL-ACC-007 | 제외 (2026-11-04, 바꿀 것 칸 참고) |
+| R06 | 화면 글자 | 단위 "분" (한국어) | min 등 영어 표기 | `rules/language-set.md` | 대기 |
+| R07 | 디스크립션 | 6-2 "L only ... USB 저장 팝업" (T-IOS 화면에 L-IOS 동작) | T-IOS 동작만 남김 | 디스크립션 | 대기 |
+| R08 | 정책 반영 | 1 Language "현재 기준, English만 제공" | 6개 언어(영어, 한국어, 포르투갈어, 스페인어, 이탈리아어, 프랑스어) 중 선택, 기본 English | POL-COM-004 | 제외 (2026-11-04, R10으로 대체) |
+| R09 | 정책 반영 | 6-2 [Export] "전체 로그를 하나의 파일로 Packaging 하여 지정된 폴더 경로에 저장" | 디스크립션에는 고른 기간의 Log를 내려받는다고만 적음. 파일 형식·구성은 정하지 않음 (Service User Type이 장비 파악에 쓰는 자료, 개발에서 묶어 내보냄) | POL-SYS-004 규칙 2 | 대기 |
+| R10 | 정책 반영 | 1 Language "현재 기준, English만 제공" | 디스크립션에 넣음: 7개 언어(영어, 한국어, 독일어, 포르투갈어, 스페인어, 이탈리아어, 프랑스어) 중 선택, 기본 English. 화면 예시도 Language 목록에 7개 언어 | POL-COM-004 (2026-11-04 7개 언어 정정), 짝 LI-STN-02-R10 | 대기 |
 
 ## 변경 이력
 

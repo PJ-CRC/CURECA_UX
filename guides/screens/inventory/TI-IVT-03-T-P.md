@@ -105,13 +105,13 @@ Description Number (7), Item_Segment Tabs (6), Frame (1), Component 4 (1), Page 
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 글자 | 합계 "2,021 (22 rack)" (단위 없음). Run 화면 프레임은 "2,021 ea (22 rack)" | 2,021 ea (22 racks) | 3 표기 방식, LI-IVT-03-T-P Run 프레임 | 대기 |
-| 2 | 화면 글자 | 예시 줄에 Inbound Date 값이 없음 (열은 5개, 값은 4개) | 날짜 예시를 넣음 | 화면 글자 | 대기 |
-| 3 | 디스크립션 | 2-1 "DX 서랍식 입고" | Dx 시스템 Storage의 Drawer | `glossary/terms.csv` Drawer, Dx 시스템 | 대기 |
-| 4 | 디스크립션 | "소모품", "바코드" 한국어 혼용 | Consumable, Barcode | `glossary/terms.csv` | 대기 |
-| 5 | 디스크립션 | 5 [Close]와 6 [X]의 동작이 같은 말을 다르게 씀 | 하나의 문장으로 통일 | 디스크립션 | 대기 |
+| R01 | 화면 글자 | 합계 "2,021 (22 rack)" (단위 없음). Run 화면 프레임은 "2,021 ea (22 rack)" | 2,021 ea (22 racks) | 3 표기 방식, LI-IVT-03-T-P Run 프레임 | 대기 |
+| R02 | 화면 글자 | 예시 줄에 Inbound Date 값이 없음 (열은 5개, 값은 4개) | 날짜 예시를 넣음 | 화면 글자 | 대기 |
+| R03 | 디스크립션 | 2-1 "DX 서랍식 입고" | Dx 시스템 Storage의 Drawer | `glossary/terms.csv` Drawer, Dx 시스템 | 대기 |
+| R04 | 디스크립션 | "소모품", "바코드" 한국어 혼용 | Consumable, Barcode | `glossary/terms.csv` | 대기 |
+| R05 | 디스크립션 | 5 [Close]와 6 [X]의 동작이 같은 말을 다르게 씀 | 하나의 문장으로 통일 | 디스크립션 | 대기 |
 
 ## 변경 이력
 

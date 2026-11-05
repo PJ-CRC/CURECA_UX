@@ -132,18 +132,18 @@ Description Number (8), Button/Secondary_1Button_44 (5), Button/Tertiary_1Button
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | IA | IA Type "Popup", 기획 화면은 LNB가 있는 페이지 형태이고 LI-TSS-DXI 7은 "화면으로 이동" | Type 확인 (Page로 고칠지) | `ia/ia-screens.csv`, LI-TSS-DXI 7 | 대기 (확인 필요) |
-| 2 | 디스크립션 | 6 모듈명 "[LI-TSS-DXI] 화면에서 스캔한 모듈명"인데 이 화면은 스캔이 아니라 [Load Sealing Film] 버튼으로 들어오고 1 드롭다운으로 모듈을 고름 | 6을 1과 합침 | LI-TSS-DXI 7, 디스크립션 1 | 대기 |
-| 3 | 디스크립션 | 2 최대 입력 100, Total films = 입력 + Remaining (예시 Remaining 20, Total 120) | Total 상한(Sealer 용량) 확인. Sealing Film 기본값 100 ea | `glossary/consumables.csv` Sealing Film "입력항목 (기본값:100 ea)" | 대기 (확인 필요) |
-| 4 | 디스크립션 | 5 Case 2 "모든 모듈 인덱스가 Apply되지 않은 경우" | 일부 모듈 인덱스만 Apply된 경우 (MS_Confirm_019 조건) | MS_Confirm_019 | 대기 |
-| 5 | 디스크립션 | 5 "물리적으로 Storage unlit을 닫을 경우" — Sealer Film은 Sealer door를 닫음 | Sealer door. "unlit"은 unit 오타 | 오타, 화면 글자 "Close the sealer door" | 대기 |
-| 6 | 화면 | Toast "Applied film count for Plate seling(1)" | Plate Sealing (1) | 오타, `glossary/modules.csv` | 대기 |
-| 7 | 표기 | "Plate sealing (N)", 버전 메모 "Reset rlsmd" | Plate Sealing (2), "Reset 기능" | `glossary/modules.csv`, 오타(한/영 전환) | 대기 |
-| 8 | 화면 | Required Quantity Accordion이 있음 (Sealing Film은 입력형) | Sealer별 필요 수량을 보여 줄지 확인 | LI-TSS-DXI-02 세부 정의 | 대기 (확인 필요) |
-| 9 | 표기 | "실러 필름", "토스트 팝업", "플레이스 홀더", "모듈" | Sealing Film, Toast, Placeholder, Module | `glossary/terms.csv`, `glossary/consumables.csv` | 대기 |
-| 10 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
+| R01 | IA | IA Type "Popup", 기획 화면은 LNB가 있는 페이지 형태이고 LI-TSS-DXI 7은 "화면으로 이동" | Type 확인 (Page로 고칠지) | `ia/ia-screens.csv`, LI-TSS-DXI 7 | 대기 (확인 필요) |
+| R02 | 디스크립션 | 6 모듈명 "[LI-TSS-DXI] 화면에서 스캔한 모듈명"인데 이 화면은 스캔이 아니라 [Load Sealing Film] 버튼으로 들어오고 1 드롭다운으로 모듈을 고름 | 6을 1과 합침 | LI-TSS-DXI 7, 디스크립션 1 | 대기 |
+| R03 | 디스크립션 | 2 최대 입력 100, Total films = 입력 + Remaining (예시 Remaining 20, Total 120) | Total 상한(Sealer 용량) 확인. Sealing Film 기본값 100 ea | `glossary/consumables.csv` Sealing Film "입력항목 (기본값:100 ea)" | 대기 (확인 필요) |
+| R04 | 디스크립션 | 5 Case 2 "모든 모듈 인덱스가 Apply되지 않은 경우" | 일부 모듈 인덱스만 Apply된 경우 (MS_Confirm_019 조건) | MS_Confirm_019 | 대기 |
+| R05 | 디스크립션 | 5 "물리적으로 Storage unlit을 닫을 경우" — Sealer Film은 Sealer door를 닫음 | Sealer door. "unlit"은 unit 오타 | 오타, 화면 글자 "Close the sealer door" | 대기 |
+| R06 | 화면 | Toast "Applied film count for Plate seling(1)" | Plate Sealing (1) | 오타, `glossary/modules.csv` | 대기 |
+| R07 | 표기 | "Plate sealing (N)", 버전 메모 "Reset rlsmd" | Plate Sealing (2), "Reset 기능" | `glossary/modules.csv`, 오타(한/영 전환) | 대기 |
+| R08 | 화면 | Required Quantity Accordion이 있음 (Sealing Film은 입력형) | Sealer별 필요 수량을 보여 줄지 확인 | LI-TSS-DXI-02 세부 정의 | 대기 (확인 필요) |
+| R09 | 표기 | "실러 필름", "토스트 팝업", "플레이스 홀더", "모듈" | Sealing Film, Toast, Placeholder, Module | `glossary/terms.csv`, `glossary/consumables.csv` | 대기 |
+| R10 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
 
 ## 변경 이력
 

@@ -97,15 +97,15 @@ Table (52), Square (6), 1 Depth (6), 2 Depth (5), Form/CheckBox (5), Description
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 디스크립션 | 1 "누적 가동 시간 각각 표출" (TI-STA-05-02에서 복사된 것으로 보임) | 누적 Error Rate | 디스크립션 | 대기 |
-| 2 | 디스크립션 | 2 "가동율 단위 정보 (Unit : %)" | Error Rate 단위 정보 | 디스크립션 | 대기 |
-| 3 | 디스크립션 | 2-3 Total 행의 계산(비율을 합할 수 없음)이 정의되지 않음 | 디스크립션에 넣음: 표는 선택한 조회 기간 동안 Legend 항목별 누적 Error Rate를 보여 줌. Total 행은 비율을 더하지 않고, 선택한 Module 전체의 실패 횟수 합 ÷ 전체 횟수 합 × 100으로 계산함. 화면 예시 Total 값도 이 방식으로 | POL-STA-006 규칙 9 | 대기 |
-| 4 | 정책 반영 | 권한과 산출 기준 | TI-STA-06-01 반영 대기 목록 1, 3과 같음 | POL-STA-006 규칙 6, POL-EQP-010 | 대기 |
-| 5 | 표기 | "Prep Consumable Storage(1)" | Prep Consumable Storage (1) | `glossary/terms.csv` Module | 대기 |
-| 6 | 화면 정보 | TI-STA-05(Test Forecasting)와 CID 계층이 겹침, Figma 경로와 IA 경로가 다름 | TI-STA-05-01 반영 대기 목록 1, 2와 같음 | `ia/change-requests.md` 1·2 | 대기 |
-| 7 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
+| R01 | 디스크립션 | 1 "누적 가동 시간 각각 표출" (TI-STA-05-02에서 복사된 것으로 보임) | 누적 Error Rate | 디스크립션 | 대기 |
+| R02 | 디스크립션 | 2 "가동율 단위 정보 (Unit : %)" | Error Rate 단위 정보 | 디스크립션 | 대기 |
+| R03 | 디스크립션 | 2-3 Total 행의 계산(비율을 합할 수 없음)이 정의되지 않음 | 디스크립션에 넣음: 표는 선택한 조회 기간 동안 Legend 항목별 누적 Error Rate를 보여 줌. Total 행은 비율을 더하지 않고, 선택한 Module 전체의 실패 횟수 합 ÷ 전체 횟수 합 × 100으로 계산함. 화면 예시 Total 값도 이 방식으로 | POL-STA-006 규칙 9 | 대기 |
+| R04 | 정책 반영 | 권한과 산출 기준 | TI-STA-06-01 반영 대기 목록 1, 3과 같음 | POL-STA-006 규칙 6, POL-EQP-010 | 대기 |
+| R05 | 표기 | "Prep Consumable Storage(1)" | Prep Consumable Storage (1) | `glossary/terms.csv` Module | 대기 |
+| R06 | 화면 정보 | TI-STA-05(Test Forecasting)와 CID 계층이 겹침, Figma 경로와 IA 경로가 다름 | TI-STA-05-01 반영 대기 목록 1, 2와 같음 | `ia/change-requests.md` 1·2 | 대기 |
+| R07 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
 
 ## 변경 이력
 

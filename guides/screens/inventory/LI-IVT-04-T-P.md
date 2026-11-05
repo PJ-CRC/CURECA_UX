@@ -46,12 +46,12 @@ figma_region: 2.1 2차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | 프레임 이름과 화면 정보 CID "LI-IVT-04-T" | LI-IVT-04-T-P | `ia/ia-screens.csv` | 대기 |
-| 2 | 화면 정보 | 같은 CID 프레임이 두 곳에 있음: Inventory 페이지(Ver 2.1.04, 서보경), Run 페이지(Ver 2.1.11, 정다예). 0·2 구성과 2-1 단위 표기가 다름 | LI-IVT-03-T-P 반영 대기 목록 1과 같이 Inventory 원본 기준 | POL-INV-001 규칙 8 | 대기 |
-| 3 | 디스크립션 | "유효기한", "흡입한 회수", "반응 수T" | Expiration Date, 흡입한 횟수, rxns | TI-IVT-04-T-P 반영 대기 목록 2~4 | 대기 |
-| 4 | 디스크립션 | 2-1 "DX 서랍식 입고", "해당 소모품의 위치 값" | Dx 시스템 Storage의 Drawer, 해당 Reagent의 위치 값 | `glossary/terms.csv` | 대기 |
+| R01 | 화면 정보 | 프레임 이름과 화면 정보 CID "LI-IVT-04-T" | LI-IVT-04-T-P | `ia/ia-screens.csv` | 대기 |
+| R02 | 화면 정보 | 같은 CID 프레임이 두 곳에 있음: Inventory 페이지(Ver 2.1.04, 서보경), Run 페이지(Ver 2.1.11, 정다예). 0·2 구성과 2-1 단위 표기가 다름 | LI-IVT-03-T-P 반영 대기 목록 1과 같이 Inventory 원본 기준 | POL-INV-001 규칙 8 | 대기 |
+| R03 | 디스크립션 | "유효기한", "흡입한 회수", "반응 수T" | Expiration Date, 흡입한 횟수, rxns | TI-IVT-04-T-P 반영 대기 목록 2~4 | 대기 |
+| R04 | 디스크립션 | 2-1 "DX 서랍식 입고", "해당 소모품의 위치 값" | Dx 시스템 Storage의 Drawer, 해당 Reagent의 위치 값 | `glossary/terms.csv` | 대기 |
 
 ## 변경 이력
 

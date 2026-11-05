@@ -59,12 +59,12 @@ figma_region: 2.1 2차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 디스크립션 | Notes "최대 500자 → 300자" | 300자 (500자는 취소선으로 제거됨) | Figma 취소선, POL-EVT-002 | 반영 불필요 (취소선) |
-| 2 | 디스크립션 | 6, 7 "닫기" 중복 | 하나로 | 디스크립션 | 대기 |
-| 3 | 정책 반영 | Status·Notes "공통 UX 참고 : COMM-3-a" | POL-EVT-002 참조 | POL-EVT-002 | 대기 |
-| 4 | 표기 | Module "FlexibleExtraction", Unit "Starlet" | Flexible Extraction (1), STARlet | `glossary/modules.csv` | 대기 |
+| R01 | 디스크립션 | Notes "최대 500자 → 300자" | 300자 (500자는 취소선으로 제거됨) | Figma 취소선, POL-EVT-002 | 제외 (2026-11-04, 취소선) |
+| R02 | 디스크립션 | 6, 7 "닫기" 중복 | 하나로 | 디스크립션 | 대기 |
+| R03 | 정책 반영 | Status·Notes "공통 UX 참고 : COMM-3-a" | POL-EVT-002 참조 | POL-EVT-002 | 대기 |
+| R04 | 표기 | Module "FlexibleExtraction", Unit "Starlet" | Flexible Extraction (1), STARlet | `glossary/modules.csv` | 대기 |
 
 ## 변경 이력
 

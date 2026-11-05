@@ -101,13 +101,13 @@ Table (26), Square (6), 1 Depth (6), 2 Depth (5), Description Number (5), Dropdo
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | TI-STA-05(Test Forecasting)와 CID 계층이 겹침, Figma 경로와 IA 경로가 다름 | TI-STA-05-01 반영 대기 목록 1, 2와 같음 | `ia/change-requests.md` 1·2 | 대기 |
-| 2 | 디스크립션 | Tab, Date Range, Legend, Export 설명 없음 | TI-STA-05-01 1, 2, 4, 5, 6과 같음을 적음 | 디스크립션 | 대기 |
-| 3 | 정책 반영 | 셀 값의 표시 단위(시간, 분 버림)가 없음 | POL-EQP-005 규칙 4와 맞춤 | POL-EQP-005 | 대기 |
-| 4 | 표기 | "Prep Consumable Storage(1)" 등 이름과 번호 붙여 씀 (다른 프레임) | Prep Consumable Storage (1) | `glossary/terms.csv` Module | 대기 |
-| 5 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
+| R01 | 화면 정보 | TI-STA-05(Test Forecasting)와 CID 계층이 겹침, Figma 경로와 IA 경로가 다름 | TI-STA-05-01 반영 대기 목록 1, 2와 같음 | `ia/change-requests.md` 1·2 | 대기 |
+| R02 | 디스크립션 | Tab, Date Range, Legend, Export 설명 없음 | TI-STA-05-01 1, 2, 4, 5, 6과 같음을 적음 | 디스크립션 | 대기 |
+| R03 | 정책 반영 | 셀 값의 표시 단위(시간, 분 버림)가 없음 | POL-EQP-005 규칙 4와 맞춤 | POL-EQP-005 | 대기 |
+| R04 | 표기 | "Prep Consumable Storage(1)" 등 이름과 번호 붙여 씀 (다른 프레임) | Prep Consumable Storage (1) | `glossary/terms.csv` Module | 대기 |
+| R05 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
 
 ## 변경 이력
 

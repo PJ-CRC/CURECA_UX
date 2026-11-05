@@ -3,7 +3,7 @@ cid: TI-ADS
 pair_cid:
 tl_relation: 단독
 title: Dashboard(All)
-path: Dashboard (All)
+path: Dashboard(All)
 type: Page
 version: 2.1.14
 date: 2026-10-30
@@ -102,13 +102,13 @@ Description (18), Description Number (10), Status (9), Divider (9), Interface/Pe
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 디스크립션 | 0 "최대 3개 장비까지 보여지는 구조이며" 문장이 끊김 | 문장 완성 (3대를 넘으면 어떻게 보이는지 확인) | 디스크립션 | 대기 (확인 필요) |
-| 2 | 표기 | 장비명 형식이 디스크립션은 "CURECA (Index)", 화면은 "CURECA(1)", "CURECA #3" | CURECA (1) 형식으로 통일 | 이름 (번호) 띄어쓰기 | 대기 |
-| 3 | 표기 | Not tested | Not Tested | `glossary/status-values.csv` | 대기 |
-| 4 | 디스크립션 | 9 "지정된 4개의 상태값" | 장비 모듈 상태 Ready, Running, Paused, Error로 명시 (POL-EQP-001) | POL-EQP-001 | 대기 |
-| 5 | 디스크립션 | 10 "사용 여부가 '사용' 상태인 Module" | Enabled인 Module (POL-EQP-009) | POL-EQP-009 | 대기 |
+| R01 | 디스크립션 | 0 "최대 3개 장비까지 보여지는 구조이며" 문장이 끊김 | 문장 완성 (3대를 넘으면 어떻게 보이는지 확인) | 디스크립션 | 대기 (확인 필요) |
+| R02 | 표기 | 장비명 형식이 디스크립션은 "CURECA (Index)", 화면은 "CURECA(1)", "CURECA #3" | CURECA (1) 형식으로 통일 | 이름 (번호) 띄어쓰기 | 대기 |
+| R03 | 표기 | Not tested | Not Tested | `glossary/status-values.csv` | 대기 |
+| R04 | 디스크립션 | 9 "지정된 4개의 상태값" | 장비 모듈 상태 Ready, Running, Paused, Error로 명시 (POL-EQP-001) | POL-EQP-001 | 대기 |
+| R05 | 디스크립션 | 10 "사용 여부가 '사용' 상태인 Module" | Enabled인 Module (POL-EQP-009) | POL-EQP-009 | 대기 |
 
 ## 변경 이력
 

@@ -128,16 +128,16 @@ Frame/Instrument_Status (32), Tag Status (16), Description (15), Description Num
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 표기 | Inventory Status 탭 "Empty | Low" | Insufficient / Low (디스크립션 6과 LI-DAS는 Insufficient) | `glossary/status-values.csv` 재고 상태 | 대기 |
-| 2 | 표기 | "270 rxns (3 sockets)" (LI-DAS는 "3 sets") | Reagent 수량 표기 규칙으로 하나로 통일 | `glossary/glossary.md` 표기 규칙, Common UX COMM-4-b | 대기 (확인 필요) |
-| 3 | 디스크립션 | 4 "CURECA 전체 구동 상태", "전체 Cureca 구동 상태 값" | 장비 통합 상태 (POL-EQP-001·002 참조) | `glossary/terms.csv` | 대기 |
-| 4 | 디스크립션 | "Cureca", "Lis" | CURECA, LIS | `glossary/terms.csv` | 대기 |
-| 5 | 디스크립션 | 번호 2가 없음 (1 다음 3) | 번호 정리 | 디스크립션 | 대기 |
-| 6 | 디스크립션 | "Dashboard Info 페이지"를 참고하라고만 적음 | 정의는 정책 ID로 참조 (Today’s Orders 집계 기준은 SMP·TST 정책, 노출 조건은 INV 정책을 쓸 때 옮김) | 헌법 3조 | 대기 |
-| 7 | 표기 | Module 이름과 번호 붙여 씀: High-throughput Extraction(1), PCR Setup(1) | High-throughput Extraction (1) | 이름 (번호) 띄어쓰기 | 대기 |
-| 8 | 문구 | Event 툴팁 예시 "ER-0112, 유닛의 상태를 확인해주세요." (한국어) | 영어 화면 문구로 | `rules/language-set.md` | 대기 |
+| R01 | 표기 | Inventory Status 탭 "Empty | Low" | Insufficient / Low (디스크립션 6과 LI-DAS는 Insufficient) | `glossary/status-values.csv` 재고 상태 | 대기 |
+| R02 | 표기 | "270 rxns (3 sockets)" (LI-DAS는 "3 sets") | Reagent 수량 표기 규칙으로 하나로 통일 | `glossary/glossary.md` 표기 규칙, Common UX COMM-4-b | 대기 (확인 필요) |
+| R03 | 디스크립션 | 4 "CURECA 전체 구동 상태", "전체 Cureca 구동 상태 값" | 장비 통합 상태 (POL-EQP-001·002 참조) | `glossary/terms.csv` | 대기 |
+| R04 | 디스크립션 | "Cureca", "Lis" | CURECA, LIS | `glossary/terms.csv` | 대기 |
+| R05 | 디스크립션 | 번호 2가 없음 (1 다음 3) | 번호 정리 | 디스크립션 | 대기 |
+| R06 | 디스크립션 | "Dashboard Info 페이지"를 참고하라고만 적음 | 정의는 정책 ID로 참조 (Today’s Orders 집계 기준은 SMP·TST 정책, 노출 조건은 INV 정책을 쓸 때 옮김) | 헌법 3조 | 대기 |
+| R07 | 표기 | Module 이름과 번호 붙여 씀: High-throughput Extraction(1), PCR Setup(1) | High-throughput Extraction (1) | 이름 (번호) 띄어쓰기 | 대기 |
+| R08 | 문구 | Event 툴팁 예시 "ER-0112, 유닛의 상태를 확인해주세요." (한국어) | 영어 화면 문구로 | `rules/language-set.md` | 대기 |
 
 ## 변경 이력
 

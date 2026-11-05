@@ -158,17 +158,17 @@ Description Number (10), Square (6), 1 Depth (6), 2 Depth (5), Dropdown Outlined
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | IA에서 TI-STA-05는 Test Forecasting인데 Run-time이 TI-STA-05-01·05-02로 그 아래 번호를 씀. 디스크립션 "TI-STA-05_Skeleton"도 같은 번호 | Test Forecasting이 TI-STA-09로 바뀌므로 Run-time CID(TI-STA-05-01·05-02)는 그대로 둠 | `ia/change-requests.md` 2 | 대기 |
-| 2 | 화면 정보 | Figma 경로 "Statistical Analysis > Instrument", IA 경로 "Statistical Analysis > Test Analytics > Instrument Run-time - Chart" | 메뉴 구조는 Statistical Analysis > Test Analytics / Instrument / Inventory / Event (Figma 기준). IA 수정 요청함 | `ia/change-requests.md` 1, POL-STA-001 규칙 1 | 대기 |
-| 3 | 정책 반영 | 산출식 "상태가 Running 중인 시간의 총합"만 있음. 표시 단위(분 버림), 집계 대상(Module, Device) 없음 | POL-EQP-005 규칙 1, 4와 맞춤 | POL-EQP-005 | 대기 |
-| 4 | 디스크립션 | "장비 별", "장비 항목" (Module·Unit을 뜻함) | Module / Unit | `glossary/terms.csv` Instrument | 대기 |
-| 5 | 표기 | 다른 프레임의 "Prep Consumable Storage(1)", "Sample Preparation(1)" 등 이름과 번호 붙여 씀 | Prep Consumable Storage (1) | `glossary/terms.csv` Module | 대기 |
-| 6 | 케이스 | TI-STA-05-01/Case에 Case 3이 두 번 | 번호 정리 | 케이스 | 대기 |
-| 7 | 디스크립션 | 2 Segmented Control에 "첫번째 탭" | 첫 번째 항목 (Tab과 Segment Control 구분) | `glossary/terms.csv` Tab | 대기 |
-| 8 | 화면 정보 | Figma 화면 이름 "Statistical Analysis", IA 이름 "Instrument Run-time - Chart" | 하나로 통일 | `ia/ia-screens.csv` | 대기 (확인 필요) |
-| 9 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
+| R01 | 화면 정보 | IA에서 TI-STA-05는 Test Forecasting인데 Run-time이 TI-STA-05-01·05-02로 그 아래 번호를 씀. 디스크립션 "TI-STA-05_Skeleton"도 같은 번호 | Test Forecasting이 TI-STA-09로 바뀌므로 Run-time CID(TI-STA-05-01·05-02)는 그대로 둠 | `ia/change-requests.md` 2 | 대기 |
+| R02 | 화면 정보 | Figma 경로 "Statistical Analysis > Instrument", IA 경로 "Statistical Analysis > Test Analytics > Instrument Run-time - Chart" | 메뉴 구조는 Statistical Analysis > Test Analytics / Instrument / Inventory / Event (Figma 기준). IA 수정 요청함 | `ia/change-requests.md` 1, POL-STA-001 규칙 1 | 대기 |
+| R03 | 정책 반영 | 산출식 "상태가 Running 중인 시간의 총합"만 있음. 표시 단위(분 버림), 집계 대상(Module, Device) 없음 | POL-EQP-005 규칙 1, 4와 맞춤 | POL-EQP-005 | 대기 |
+| R04 | 디스크립션 | "장비 별", "장비 항목" (Module·Unit을 뜻함) | Module / Unit | `glossary/terms.csv` Instrument | 대기 |
+| R05 | 표기 | 다른 프레임의 "Prep Consumable Storage(1)", "Sample Preparation(1)" 등 이름과 번호 붙여 씀 | Prep Consumable Storage (1) | `glossary/terms.csv` Module | 대기 |
+| R06 | 케이스 | TI-STA-05-01/Case에 Case 3이 두 번 | 번호 정리 | 케이스 | 대기 |
+| R07 | 디스크립션 | 2 Segmented Control에 "첫번째 탭" | 첫 번째 항목 (Tab과 Segment Control 구분) | `glossary/terms.csv` Tab | 대기 |
+| R08 | 화면 정보 | Figma 화면 이름 "Statistical Analysis", IA 이름 "Instrument Run-time - Chart" | 하나로 통일 | `ia/ia-screens.csv` | 대기 (확인 필요) |
+| R09 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
 
 ## 변경 이력
 

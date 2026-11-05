@@ -83,12 +83,12 @@ Description Number (5), Table (4), Arrow/Chevron_Up (3), Interface/Close (1), Dr
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 디스크립션 | "Account Type의 Sevice일 경우만 노출" | User Type이 Service일 때만 | `glossary/terms.csv` | 대기 |
-| 2 | 정책 반영 | 조회 전용임이 디스크립션에 분명하지 않음 | L-IOS는 모든 User Type이 조회만 (Enabled 변경 없음) | POL-EQP-009 | 대기 |
-| 3 | 디스크립션 | Error Rate 표시 위치 | 고객 논의 중(CA-0001) | POL-EQP-010 | 대기 (고객 논의) |
-| 4 | 디스크립션 | Datail | Detail | 오타 | 대기 |
+| R01 | 디스크립션 | "Account Type의 Sevice일 경우만 노출" | User Type이 Service일 때만 | `glossary/terms.csv` | 대기 |
+| R02 | 정책 반영 | 조회 전용임이 디스크립션에 분명하지 않음 | L-IOS는 모든 User Type이 조회만 (Enabled 변경 없음) | POL-EQP-009 | 대기 |
+| R03 | 디스크립션 | Error Rate 표시 위치 | 고객 논의 중(CA-0001) | POL-EQP-010 | 대기 (고객 논의) |
+| R04 | 디스크립션 | Datail | Detail | 오타 | 대기 |
 
 ## 변경 이력
 

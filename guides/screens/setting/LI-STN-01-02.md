@@ -42,9 +42,9 @@ figma_region: 2.1 2차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 표기 | 검사 항목 "RP1A", "Allplex_HPV28" | 검사 항목 UI 표기 | `glossary/test-items.csv` | 대기 |
+| R01 | 표기 | 검사 항목 "RP1A", "Allplex_HPV28" | 검사 항목 UI 표기 | `glossary/test-items.csv` | 대기 |
 
 ## 변경 이력
 

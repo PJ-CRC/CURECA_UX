@@ -86,17 +86,17 @@ Table/Filled Table Cell (26), Frame/Instrument_Status (19), Tag Status (18), Des
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 표기 | Connected 항목 상태값 "Connected / Unconnected" | Connected / Disconnected | `glossary/status-values.csv` 연결 상태 | 대기 |
-| 2 | 디스크립션 | 2-1 Error Rate가 남아 있음. 버전 메모 v2.1.01은 "Error Rate 제거(2-1)" | 취소선으로 이미 제거됨. 표시 위치는 고객 논의 중(CA-0001) | POL-EQP-010 | 반영 불필요 (취소선) |
-| 3 | 표기 | Module Details (Sample Preparation): STAT Storage (Upper), STAT Storage (Lower) | STAT Storage | `glossary/module-units.csv`, `glossary/review-v0.md` | 대기 |
-| 4 | 표기 | Module Details (Sample Preparation): Tip Waste Bin (Upper/Lower), Film Waste Bin (Upper/Lower) | Waste Bin (Upper), Waste Bin (Lower) | 같음 | 대기 |
-| 5 | 표기 | Liquid Waste Bottle(Upper), Sample Storage(2) 등 이름과 번호 붙여 씀 | Liquid Waste Bottle (Upper), Sample Storage (2) | 이름 (번호) 띄어쓰기 | 대기 |
-| 6 | 표기 | Waste Status | Waste Bin/Bottle Status | `glossary/terms.csv` | 대기 |
-| 7 | 디스크립션 | 4-1 [Run-time Info] 설명이 남아 있음 | 취소선으로 이미 제거됨 | Figma 취소선 | 반영 불필요 (취소선) |
-| 8 | 디스크립션 | 3 "Unlock을 클릭 시,", 3-1 "클릭 시," 문장이 끊김 | [Unlock]을 누르면 Door Control 흐름(POL-EQP-008)으로 정리. Confirm_008 문구 확인 필요 | POL-EQP-008, `policy/alert-catalog.md` 3절 | 대기 |
-| 9 | 표기 | T-IO S, Account type | T-IOS, User Type | 오타, `glossary/terms.csv` | 대기 |
+| R01 | 표기 | Connected 항목 상태값 "Connected / Unconnected" | Connected / Disconnected | `glossary/status-values.csv` 연결 상태 | 대기 |
+| R02 | 디스크립션 | 2-1 Error Rate가 남아 있음. 버전 메모 v2.1.01은 "Error Rate 제거(2-1)" | 취소선으로 이미 제거됨. 표시 위치는 고객 논의 중(CA-0001) | POL-EQP-010 | 제외 (2026-11-04, 취소선) |
+| R03 | 표기 | Module Details (Sample Preparation): STAT Storage (Upper), STAT Storage (Lower) | STAT Storage | `glossary/module-units.csv`, `glossary/review-v0.md` | 대기 |
+| R04 | 표기 | Module Details (Sample Preparation): Tip Waste Bin (Upper/Lower), Film Waste Bin (Upper/Lower) | Waste Bin (Upper), Waste Bin (Lower) | 같음 | 대기 |
+| R05 | 표기 | Liquid Waste Bottle(Upper), Sample Storage(2) 등 이름과 번호 붙여 씀 | Liquid Waste Bottle (Upper), Sample Storage (2) | 이름 (번호) 띄어쓰기 | 대기 |
+| R06 | 표기 | Waste Status | Waste Bin/Bottle Status | `glossary/terms.csv` | 대기 |
+| R07 | 디스크립션 | 4-1 [Run-time Info] 설명이 남아 있음 | 취소선으로 이미 제거됨 | Figma 취소선 | 제외 (2026-11-04, 취소선) |
+| R08 | 디스크립션 | 3 "Unlock을 클릭 시,", 3-1 "클릭 시," 문장이 끊김 | [Unlock]을 누르면 Door Control 흐름(POL-EQP-008)으로 정리. Confirm_008 문구 확인 필요 | POL-EQP-008, `policy/alert-catalog.md` 3절 | 대기 |
+| R09 | 표기 | T-IO S, Account type | T-IOS, User Type | 오타, `glossary/terms.csv` | 대기 |
 
 ## 변경 이력
 

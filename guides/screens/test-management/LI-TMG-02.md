@@ -46,13 +46,13 @@ figma_region: 2.1 2차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 표기 | 1 "Patial Running", 화면 글자 "Not tested" | Partial Running, Not Tested | `glossary/terms.csv` | 대기 |
-| 2 | 디스크립션 | 1 "CURECA 구동 상태", "장비 구동 상태" | 장비 통합 상태 | `glossary/terms.csv` | 대기 |
-| 3 | 디스크립션 | 1 상태별 동작에 Initializing, Stopping, Paused 없음 | 장비 통합 상태값 전체 기준으로 정함 | `glossary/status-values.csv` | 대기 (확인 필요) |
-| 4 | 디스크립션 | 3 Batch 카드 유지·초기화 시점이 모호함 | 한 문장으로 | TI-TMG-02 반영 대기 목록 6 | 대기 (확인 필요) |
-| 5 | 디스크립션 | 2-2 "Progress>Total", 3-2 "Progress/Total" 표기 다름 | 하나로 | 디스크립션 | 대기 |
+| R01 | 표기 | 1 "Patial Running", 화면 글자 "Not tested" | Partial Running, Not Tested | `glossary/terms.csv` | 대기 |
+| R02 | 디스크립션 | 1 "CURECA 구동 상태", "장비 구동 상태" | 장비 통합 상태 | `glossary/terms.csv` | 대기 |
+| R03 | 디스크립션 | 1 상태별 동작에 Initializing, Stopping, Paused 없음 | 장비 통합 상태값 전체 기준으로 정함 | `glossary/status-values.csv` | 대기 (확인 필요) |
+| R04 | 디스크립션 | 3 Batch 카드 유지·초기화 시점이 모호함 | 한 문장으로 | TI-TMG-02 반영 대기 목록 6 | 대기 (확인 필요) |
+| R05 | 디스크립션 | 2-2 "Progress>Total", 3-2 "Progress/Total" 표기 다름 | 하나로 | 디스크립션 | 대기 |
 
 ## 변경 이력
 

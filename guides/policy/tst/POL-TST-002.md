@@ -3,7 +3,7 @@ id: POL-TST-002
 title: Test Cut-off Time
 summary: Today’s Orders를 하루 단위로 나누는 마감 시각이며 기본값은 06:00으로, 이 시각이 되면 전날 오더 집계를 마감하고 새로 집계함
 domain: TST
-menus: [Setting, Dashboard, Dashboard (All)]
+menus: [Setting, Dashboard, Dashboard(All)]
 cids: [TI-STN-01, LI-STN-01, TI-DAS, LI-DAS, TI-ADS]
 status: 확정
 version:

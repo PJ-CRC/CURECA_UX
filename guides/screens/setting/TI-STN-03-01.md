@@ -71,12 +71,12 @@ figma_region: 2.1 2차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 정책 반영 | Protocol을 바꿀 수 있는 상태 조건이 디스크립션에 없음 | 디스크립션에 넣음: 장비 통합 상태가 Not Initialized 또는 Ready일 때만 추가·복사·수정·삭제 가능, 그 밖의 상태에서는 [Edit]·[Copy]·[Modify] 비활성 | POL-TST-006 규칙 3 | 대기 |
-| 2 | 디스크립션 | Items 최대 개수가 없음 (Extraction Protocol은 최대 25개) | 최대 개수 확인 | TI-STN-03-02 3 | 대기 (확인 필요) |
-| 3 | 표기 | 출력 형식 "yyyy-mm-dd hh-mm-ss" | YYYY-MM-DD hh:mm:ss (다른 화면과 같게) | 디스크립션 | 대기 |
-| 4 | 표기 | Tap, Pagenation | Tab, Pagination | 오타 | 대기 |
+| R01 | 정책 반영 | Protocol을 바꿀 수 있는 상태 조건이 디스크립션에 없음 | 디스크립션에 넣음: 장비 통합 상태가 Not Initialized 또는 Ready일 때만 추가·복사·수정·삭제 가능, 그 밖의 상태에서는 [Edit]·[Copy]·[Modify] 비활성 | POL-TST-006 규칙 3 | 대기 |
+| R02 | 디스크립션 | Items 최대 개수가 없음 (Extraction Protocol은 최대 25개) | 최대 개수 확인 | TI-STN-03-02 3 | 대기 (확인 필요) |
+| R03 | 표기 | 출력 형식 "yyyy-mm-dd hh-mm-ss" | YYYY-MM-DD hh:mm:ss (다른 화면과 같게) | 디스크립션 | 대기 |
+| R04 | 표기 | Tap, Pagenation | Tab, Pagination | 오타 | 대기 |
 
 ## 변경 이력
 

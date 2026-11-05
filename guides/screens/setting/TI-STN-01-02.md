@@ -52,11 +52,11 @@ figma_region: 2.1 2차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | 화면 이름 "Device Usage Setting" | Extraction Module Usage Setting (IA) | IA | 대기 |
-| 2 | 표기 | 검사 항목 예시가 RP1~GI-P 일부 | 검사 항목은 `glossary/test-items.csv` 30개 기준. 기본값은 씨젠 검사 항목 261102의 추출 장치 매핑(M9600, STARlet) | `glossary/test-items.csv`, 반영 대기 추가할 것 10 | 대기 |
-| 3 | 표기 | "얼럿 배너" | Alert 배너 (문구 ID 확인) | `glossary/terms.csv` | 대기 |
+| R01 | 화면 정보 | 화면 이름 "Device Usage Setting" | Extraction Module Usage Setting (IA) | IA | 대기 |
+| R02 | 표기 | 검사 항목 예시가 RP1~GI-P 일부 | 검사 항목은 `glossary/test-items.csv` 30개 기준. 기본값은 씨젠 검사 항목 261102의 추출 장치 매핑(M9600, STARlet) | `glossary/test-items.csv`, 반영 대기 추가할 것 10 | 대기 |
+| R03 | 표기 | "얼럿 배너" | Alert 배너 (문구 ID 확인) | `glossary/terms.csv` | 대기 |
 
 ## 변경 이력
 

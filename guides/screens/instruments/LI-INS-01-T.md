@@ -70,13 +70,13 @@ Frame/Instrument_Status (54), Table/Filled Table Cell (25), Tag Status (16), Des
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 디스크립션 | "Cureca 장비의 현황" | CURECA | `glossary/terms.csv` | 대기 |
-| 2 | 디스크립션 | 3-2가 "Total / In Use / Not in Use" | 화면(v2.1.06)은 "Enabled n · Total n (Disabled n)". 화면과 POL-EQP-009의 Enabled 표기에 맞춤 | Figma 버전 메모 v2.1.06 | 대기 |
-| 3 | 표기 | Enablde, Dignosctics | Enabled, Diagnostics | 오타 | 대기 |
-| 4 | 디스크립션 | 6 "기능 활성화 조건 - 공통 UX 참고 : COMM-3-a" | Door Control 잠금 해제 조건은 POL-EQP-008 참조 | POL-EQP-008 | 대기 |
-| 5 | 문구 | Door 버튼 라벨이 화면은 "Door Control", 디스크립션은 "Unlock 버튼" | 하나로 통일 | 화면 글자와 디스크립션 6 | 대기 |
+| R01 | 디스크립션 | "Cureca 장비의 현황" | CURECA | `glossary/terms.csv` | 대기 |
+| R02 | 디스크립션 | 3-2가 "Total / In Use / Not in Use" | 화면(v2.1.06)은 "Enabled n · Total n (Disabled n)". 화면과 POL-EQP-009의 Enabled 표기에 맞춤 | Figma 버전 메모 v2.1.06 | 대기 |
+| R03 | 표기 | Enablde, Dignosctics | Enabled, Diagnostics | 오타 | 대기 |
+| R04 | 디스크립션 | 6 "기능 활성화 조건 - 공통 UX 참고 : COMM-3-a" | Door Control 잠금 해제 조건은 POL-EQP-008 참조 | POL-EQP-008 | 대기 |
+| R05 | 문구 | Door 버튼 라벨이 화면은 "Door Control", 디스크립션은 "Unlock 버튼" | 하나로 통일 | 화면 글자와 디스크립션 6 | 대기 |
 
 ## 변경 이력
 

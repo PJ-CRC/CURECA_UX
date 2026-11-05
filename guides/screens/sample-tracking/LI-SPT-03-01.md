@@ -46,11 +46,11 @@ figma_region: 2.1 2차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 글자 | Plate Info 라벨 "Product Total", "Product STAT" (디스크립션 1-1과 T-IOS는 Total Products, STAT Products) | Total Products, STAT Products | 디스크립션 1-1 | 대기 |
-| 2 | 화면 정보 | 1·3-1 케이스 참조가 96-DWP Details 케이스 | LI-SPT-03-01/Case | 케이스 프레임 | 대기 |
-| 3 | 디스크립션 | TI-SPT-03-01 반영 대기 목록 3~7과 같음 | TI-SPT-03-01과 같이 | TI-SPT-03-01 | 대기 |
+| R01 | 화면 글자 | Plate Info 라벨 "Product Total", "Product STAT" (디스크립션 1-1과 T-IOS는 Total Products, STAT Products) | Total Products, STAT Products | 디스크립션 1-1 | 대기 |
+| R02 | 화면 정보 | 1·3-1 케이스 참조가 96-DWP Details 케이스 | LI-SPT-03-01/Case | 케이스 프레임 | 대기 |
+| R03 | 디스크립션 | TI-SPT-03-01 반영 대기 목록 3~7과 같음 | TI-SPT-03-01과 같이 | TI-SPT-03-01 | 대기 |
 
 ## 변경 이력
 

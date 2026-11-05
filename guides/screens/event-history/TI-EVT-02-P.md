@@ -98,12 +98,12 @@ figma_region: 2.1 1차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 정책 반영 | 0 "Profile에 추가 예정, 지금은 모두 노출" | Profile > General의 Event notifications(On이면 노출, 기본 On)로 정리 | POL-EVT-003, TI-CPW-01-P (v2.1.11) | 대기 |
-| 2 | 디스크립션 | 3 Type "Instrument, Consumable, Reagent" | Instrument, Inventory, Sample, System | `glossary/status-values.csv` | 대기 |
-| 3 | 디스크립션 | 8 "Event Detail Popup(LI-EVT-01-P)" | TI-EVT-01-P | IA | 대기 |
-| 4 | 표기 | Eorrer, warning, High-throughput Extraction(1) | Error, Warning, High-throughput Extraction (1) | 오타, 이름 (번호) | 대기 |
+| R01 | 정책 반영 | 0 "Profile에 추가 예정, 지금은 모두 노출" | Profile > General의 Event notifications(On이면 노출, 기본 On)로 정리 | POL-EVT-003, TI-CPW-01-P (v2.1.11) | 대기 |
+| R02 | 디스크립션 | 3 Type "Instrument, Consumable, Reagent" | Instrument, Inventory, Sample, System | `glossary/status-values.csv` | 대기 |
+| R03 | 디스크립션 | 8 "Event Detail Popup(LI-EVT-01-P)" | TI-EVT-01-P | IA | 대기 |
+| R04 | 표기 | Eorrer, warning, High-throughput Extraction(1) | Error, Warning, High-throughput Extraction (1) | 오타, 이름 (번호) | 대기 |
 
 ## 변경 이력
 

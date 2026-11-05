@@ -167,15 +167,15 @@ Description Number (13), 1 Depth (7), Square (4), Interface/Info_Circle_Outlined
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 표기 | 화면 "Forcasted Test" | Forecasted Test | 오타 | 대기 |
-| 2 | 디스크립션 | 1 "오늘 포한" | 오늘 포함 | 오타 | 대기 |
-| 3 | 디스크립션 | 2 Weeks 선택 시 "15일 미래 데이터 예측" (2주는 14일) | 디스크립션에 넣음: 2 Weeks는 15일 예측이 맞음 (툴팁 "15d" 유지) | POL-STA-005 규칙 7 | 대기 |
-| 4 | 화면 정보 | IA에서 TI-STA-05는 Test Forecasting, TI-STA-05-01·05-02는 Instrument Run-time으로 CID 계층이 겹침 | IA 수정 후 Test Forecasting CID를 TI-STA-09로 바꿈 | `ia/change-requests.md` 2 | 대기 |
-| 5 | 디스크립션 | 2 "{Product 선택 값} Tests Count Prediction", 화면 "All Tests Count Prediction" | 문구 확인 (Tests Count / Test Count) | 화면 글자 | 대기 (확인 필요) |
-| 6 | 화면 글자 | 2-3 Predicted Change 예시 5%가 2-1 Average 6,504 대비 2-2 Max 9,500 계산과 맞지 않음 | 예시 데이터 맞춤 | 디스크립션 2-3 | 대기 |
-| 7 | 디스크립션 | 예측 계산 방식(모델)이 없음 | 디스크립션에 넣음: 예측 계산 방식은 개발에서 관리하므로 디스크립션에 식을 적지 않음 | POL-STA-005 규칙 9 | 대기 |
+| R01 | 표기 | 화면 "Forcasted Test" | Forecasted Test | 오타 | 대기 |
+| R02 | 디스크립션 | 1 "오늘 포한" | 오늘 포함 | 오타 | 대기 |
+| R03 | 디스크립션 | 2 Weeks 선택 시 "15일 미래 데이터 예측" (2주는 14일) | 디스크립션에 넣음: 2 Weeks는 15일 예측이 맞음 (툴팁 "15d" 유지) | POL-STA-005 규칙 7 | 대기 |
+| R04 | 화면 정보 | IA에서 TI-STA-05는 Test Forecasting, TI-STA-05-01·05-02는 Instrument Run-time으로 CID 계층이 겹침 | IA 수정 후 Test Forecasting CID를 TI-STA-09로 바꿈 | `ia/change-requests.md` 2 | 대기 |
+| R05 | 디스크립션 | 2 "{Product 선택 값} Tests Count Prediction", 화면 "All Tests Count Prediction" | 문구 확인 (Tests Count / Test Count) | 화면 글자 | 대기 (확인 필요) |
+| R06 | 화면 글자 | 2-3 Predicted Change 예시 5%가 2-1 Average 6,504 대비 2-2 Max 9,500 계산과 맞지 않음 | 예시 데이터 맞춤 | 디스크립션 2-3 | 대기 |
+| R07 | 디스크립션 | 예측 계산 방식(모델)이 없음 | 디스크립션에 넣음: 예측 계산 방식은 개발에서 관리하므로 디스크립션에 식을 적지 않음 | POL-STA-005 규칙 9 | 대기 |
 
 ## 변경 이력
 

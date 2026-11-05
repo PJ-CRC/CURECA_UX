@@ -74,13 +74,13 @@ figma_region: 2.1 2차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | Figma 프레임 이름 "TI-SPT-01-02" (화면 정보 CID는 TI-SPT-01-03) | 프레임 이름 TI-SPT-01-03 | `ia/ia-screens.csv` | 대기 |
-| 2 | 화면 정보 | 화면 이름 "Samples Details", 경로 "Sample Tracking > Samples Details > Protocol Info" | IA 이름 "Protocol Info - Extraction Protocol" | `ia/ia-screens.csv` | 대기 |
-| 3 | 화면 글자 | 범위 표기 Temp.(˚C) "(0~2,000)" (Volume과 같은 범위) | Extraction Protocol Setting 화면의 범위와 맞춤 | TI-STN-03-02-02-M, POL-TST-007 | 대기 (확인 필요) |
-| 4 | 디스크립션 | 2 "Run Preparation 단계에서 선택한 프로토콜", "Applied된 프로토콜" | TI-SPT-01-02 반영 대기 목록 3과 같이 | POL-TST-006 | 대기 (확인 필요) |
-| 5 | 디스크립션 | 3 "Protocol setting", 3 참조가 M9600용(-M)만 있음 (STARlet용 -V 없음) | Protocol Setting, 추출 장치별 참조 | `screens/setting/TI-STN-03-02-02-V.md` | 대기 (확인 필요) |
+| R01 | 화면 정보 | Figma 프레임 이름 "TI-SPT-01-02" (화면 정보 CID는 TI-SPT-01-03) | 프레임 이름 TI-SPT-01-03 | `ia/ia-screens.csv` | 대기 |
+| R02 | 화면 정보 | 화면 이름 "Samples Details", 경로 "Sample Tracking > Samples Details > Protocol Info" | IA 이름 "Protocol Info - Extraction Protocol" | `ia/ia-screens.csv` | 대기 |
+| R03 | 화면 글자 | 범위 표기 Temp.(˚C) "(0~2,000)" (Volume과 같은 범위) | Extraction Protocol Setting 화면의 범위와 맞춤 | TI-STN-03-02-02-M, POL-TST-007 | 대기 (확인 필요) |
+| R04 | 디스크립션 | 2 "Run Preparation 단계에서 선택한 프로토콜", "Applied된 프로토콜" | TI-SPT-01-02 반영 대기 목록 3과 같이 | POL-TST-006 | 대기 (확인 필요) |
+| R05 | 디스크립션 | 3 "Protocol setting", 3 참조가 M9600용(-M)만 있음 (STARlet용 -V 없음) | Protocol Setting, 추출 장치별 참조 | `screens/setting/TI-STN-03-02-02-V.md` | 대기 (확인 필요) |
 
 ## 변경 이력
 

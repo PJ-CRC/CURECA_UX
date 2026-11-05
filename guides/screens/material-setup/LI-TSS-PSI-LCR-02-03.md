@@ -69,15 +69,15 @@ Description Number (3), Button/Secondary_1Button_44 (2), Frame (1)
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | 화면 이름 "Prepare Carrier(3/3)", 경로 "Load consumables and reagents > Prepare Carrier(3/3)" | IA "Confirm the trolley" | `ia/ia-screens.csv` | 대기 |
-| 2 | 화면 정보 | Ver 2.0 (2026-06-15) | 버전 메모(v2.1.05)를 반영한 Ver로 | 버전 메모 | 대기 (확인 필요) |
-| 3 | 디스크립션 | 2 [Add New] "스캔 시 →" | 선택 시 → | 디스크립션 | 대기 |
-| 4 | 문구 | "go to the Carrier manual screen" | [Finish]는 LI-TSS-PSI-LCR로 감. 화면 이름과 맞게 | 디스크립션 3 | 대기 |
-| 5 | 화면 | 버튼 "Add new" | [Add New] | 디스크립션 2 | 대기 |
-| 6 | 표기 | "검체", "trolley", "팝업" | Sample, Trolley, Popup | `glossary/terms.csv` | 대기 |
-| 7 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
+| R01 | 화면 정보 | 화면 이름 "Prepare Carrier(3/3)", 경로 "Load consumables and reagents > Prepare Carrier(3/3)" | IA "Confirm the trolley" | `ia/ia-screens.csv` | 대기 |
+| R02 | 화면 정보 | Ver 2.0 (2026-06-15) | 버전 메모(v2.1.05)를 반영한 Ver로 | 버전 메모 | 대기 (확인 필요) |
+| R03 | 디스크립션 | 2 [Add New] "스캔 시 →" | 선택 시 → | 디스크립션 | 대기 |
+| R04 | 문구 | "go to the Carrier manual screen" | [Finish]는 LI-TSS-PSI-LCR로 감. 화면 이름과 맞게 | 디스크립션 3 | 대기 |
+| R05 | 화면 | 버튼 "Add new" | [Add New] | 디스크립션 2 | 대기 |
+| R06 | 표기 | "검체", "trolley", "팝업" | Sample, Trolley, Popup | `glossary/terms.csv` | 대기 |
+| R07 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
 
 ## 변경 이력
 

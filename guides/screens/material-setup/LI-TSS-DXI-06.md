@@ -129,16 +129,16 @@ Description Number (6), Accordion/Default (1), Tool Tip/Default (1), Frame (1), 
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | IA | IA 이름 "Cold storage" | Cold Storage (Unit UI 표기) | `glossary/module-units.csv` | 대기 |
-| 2 | 화면 정보 | Ver 2.0 (2026-06-15) | 버전 메모(v2.1.12까지) 반영 Ver | 버전 메모 | 대기 (확인 필요) |
-| 3 | 화면 | 카운터 "02/12"와 "01/28"이 겹쳐 있음. 디스크립션은 PCR reagent·MM Tube 각각 N/M 두 개 | 카운터 구성 정함 | 디스크립션 2 | 대기 (확인 필요) |
-| 4 | 디스크립션 | Case 1 "MM tube socket"도 유효기간 검사 (MM Tube는 Consumable) | MS_Alert_003은 PCR socket만 | `glossary/consumables.csv` MM Tube | 대기 (확인 필요) |
-| 5 | 디스크립션 | 예시 "Plate sealing (2)" | Plate Sealing (2) | `glossary/modules.csv` | 대기 |
-| 6 | 디스크립션 | 2 카운팅 "Plate sealing 내부 영역 스캔" | Cold Storage slot 스캔 | `glossary/module-units.csv` | 대기 |
-| 7 | 표기 | "시약", "PCR 시약", "소모품/시약", "유효기간", "MM tube", "Toast 팝업" | Reagent, PCR Reagent, Consumable/Reagent, Expiration Date, MM Tube, Toast | `glossary/terms.csv` | 대기 |
-| 8 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
+| R01 | IA | IA 이름 "Cold storage" | Cold Storage (Unit UI 표기) | `glossary/module-units.csv` | 대기 |
+| R02 | 화면 정보 | Ver 2.0 (2026-06-15) | 버전 메모(v2.1.12까지) 반영 Ver | 버전 메모 | 대기 (확인 필요) |
+| R03 | 화면 | 카운터 "02/12"와 "01/28"이 겹쳐 있음. 디스크립션은 PCR reagent·MM Tube 각각 N/M 두 개 | 카운터 구성 정함 | 디스크립션 2 | 대기 (확인 필요) |
+| R04 | 디스크립션 | Case 1 "MM tube socket"도 유효기간 검사 (MM Tube는 Consumable) | MS_Alert_003은 PCR socket만 | `glossary/consumables.csv` MM Tube | 대기 (확인 필요) |
+| R05 | 디스크립션 | 예시 "Plate sealing (2)" | Plate Sealing (2) | `glossary/modules.csv` | 대기 |
+| R06 | 디스크립션 | 2 카운팅 "Plate sealing 내부 영역 스캔" | Cold Storage slot 스캔 | `glossary/module-units.csv` | 대기 |
+| R07 | 표기 | "시약", "PCR 시약", "소모품/시약", "유효기간", "MM tube", "Toast 팝업" | Reagent, PCR Reagent, Consumable/Reagent, Expiration Date, MM Tube, Toast | `glossary/terms.csv` | 대기 |
+| R08 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
 
 ## 변경 이력
 

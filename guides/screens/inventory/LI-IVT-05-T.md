@@ -38,11 +38,11 @@ figma_region: 2.1 2차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | IA 화면 이름 "Waste bin", 화면 "Waste Bin/Bottle" | IA를 Waste Bin/Bottle로 | `ia/ia-screens.csv` | 대기 (확인 필요) |
-| 2 | 디스크립션 | "Waste Status", "Moule(index)", "[3-6]", Waste Bin만 기준으로 한 노출 조건, 한국어 혼용 | TI-IVT-05-T 반영 대기 목록 2~5·8과 같음 | TI-IVT-05-T | 대기 |
-| 3 | 디스크립션 | 3-3·3-5 Confirm Empty 위치 "Material Setup > Empty Waste Bin" | 비움 처리는 L-IOS Material Setup > Empty Waste Bin에서 함. T-IOS는 관제용이라 비움 기능 없음. 지금은 Console Mode에서만 제공 (Main Mode 제공 여부는 고객 논의 CA-0007) | POL-INV-005 규칙 5·6, `policy/service-mode-matrix.csv` | 대기 |
+| R01 | 화면 정보 | IA 화면 이름 "Waste bin", 화면 "Waste Bin/Bottle" | IA를 Waste Bin/Bottle로 | `ia/ia-screens.csv` | 대기 (확인 필요) |
+| R02 | 디스크립션 | "Waste Status", "Moule(index)", "[3-6]", Waste Bin만 기준으로 한 노출 조건, 한국어 혼용 | TI-IVT-05-T 반영 대기 목록 2~5·8과 같음 | TI-IVT-05-T | 대기 |
+| R03 | 디스크립션 | 3-3·3-5 Confirm Empty 위치 "Material Setup > Empty Waste Bin" | 비움 처리는 L-IOS Material Setup > Empty Waste Bin에서 함. T-IOS는 관제용이라 비움 기능 없음. 지금은 Console Mode에서만 제공 (Main Mode 제공 여부는 고객 논의 CA-0007) | POL-INV-005 규칙 5·6, `policy/service-mode-matrix.csv` | 대기 |
 
 ## 변경 이력
 

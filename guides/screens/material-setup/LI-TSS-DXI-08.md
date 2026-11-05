@@ -75,15 +75,15 @@ Square (3), Popup/Data Popup (2), layout/spacing (2), Description Number (2), To
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 디스크립션 | 1-1 "디폴트 : 활성화"와 "활성화 조건 : 아래 정의 중 한 개 이상 만족 시" | 디폴트 비활성, 조건 충족 시 활성으로 정리 | 디스크립션 | 대기 (확인 필요) |
-| 2 | 디스크립션 | 활성화 조건 "FEM 장비 내부에서 Cap 흡착 시, Cap이 없을 경우" | FEM = Flexible Extraction Module인지. 장비가 Cap 없음을 L-IOS에 알려 주는지 확인 | 디스크립션 1-1 | 대기 (확인 필요) |
-| 3 | 화면 | 닫기 버튼 없음 | Popup 닫기 정의 | 화면 글자 | 대기 (확인 필요) |
-| 4 | 문구 | 버튼 "Confirm refill", 안내 문구 "[Confirm Refill]" | 대소문자 통일 | 화면 글자 | 대기 |
-| 5 | 화면 데이터 | "five Spare Caps" | Buffer Cartridge Cap 5 ea (1 set) — 품목 표에 없음 | LI-TSS-DXI-02 세부 정의, `glossary/consumables.csv` | 대기 (확인 필요) |
-| 6 | 표기 | "모듈", "모듈 인덱스" | Module, Module index | `glossary/terms.csv` | 대기 |
-| 7 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
+| R01 | 디스크립션 | 1-1 "디폴트 : 활성화"와 "활성화 조건 : 아래 정의 중 한 개 이상 만족 시" | 디폴트 비활성, 조건 충족 시 활성으로 정리 | 디스크립션 | 대기 (확인 필요) |
+| R02 | 디스크립션 | 활성화 조건 "FEM 장비 내부에서 Cap 흡착 시, Cap이 없을 경우" | FEM = Flexible Extraction Module인지. 장비가 Cap 없음을 L-IOS에 알려 주는지 확인 | 디스크립션 1-1 | 대기 (확인 필요) |
+| R03 | 화면 | 닫기 버튼 없음 | Popup 닫기 정의 | 화면 글자 | 대기 (확인 필요) |
+| R04 | 문구 | 버튼 "Confirm refill", 안내 문구 "[Confirm Refill]" | 대소문자 통일 | 화면 글자 | 대기 |
+| R05 | 화면 데이터 | "five Spare Caps" | Buffer Cartridge Cap 5 ea (1 set) — 품목 표에 없음 | LI-TSS-DXI-02 세부 정의, `glossary/consumables.csv` | 대기 (확인 필요) |
+| R06 | 표기 | "모듈", "모듈 인덱스" | Module, Module index | `glossary/terms.csv` | 대기 |
+| R07 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
 
 ## 변경 이력
 

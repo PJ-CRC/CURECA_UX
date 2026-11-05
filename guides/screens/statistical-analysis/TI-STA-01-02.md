@@ -95,13 +95,13 @@ Table (107), Square (22), Description (12), Table/Filled Table Cell (11), 1 Dept
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 디스크립션 | 2-2 "데이터가 0인 경우에도 0으로 노출", 2-3 "데이터가 없을 경우 ‘-’" (0과 데이터 없음의 구분이 적혀 있지 않음) | 디스크립션에 넣음: 실제 값이 0이면 0, 데이터가 없으면 '-'. 화면 예시도 두 경우를 구분해 보여 줌 | POL-STA-003 규칙 6 | 대기 |
-| 2 | 디스크립션 | Filter Options(Date Range, Legend, View)와 Export 설명 없음 | TI-STA-01-01 5, 6과 같음을 적음 | 디스크립션 | 대기 |
-| 3 | 화면 정보 | Figma 화면 이름 "Test Analytics _ Test Count", IA 이름 "Test Count - Table" | 하나로 통일 | `ia/ia-screens.csv` | 대기 (확인 필요) |
-| 4 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
-| 5 | 정책 반영 | 검사 건수 집계 기준이 없음 | 디스크립션에 넣음: 검사 건수는 오더 기준으로 세며 Completed, Failed와 관계없이 모두 셈 | POL-STA-004 정의 | 대기 |
+| R01 | 디스크립션 | 2-2 "데이터가 0인 경우에도 0으로 노출", 2-3 "데이터가 없을 경우 ‘-’" (0과 데이터 없음의 구분이 적혀 있지 않음) | 디스크립션에 넣음: 실제 값이 0이면 0, 데이터가 없으면 '-'. 화면 예시도 두 경우를 구분해 보여 줌 | POL-STA-003 규칙 6 | 대기 |
+| R02 | 디스크립션 | Filter Options(Date Range, Legend, View)와 Export 설명 없음 | TI-STA-01-01 5, 6과 같음을 적음 | 디스크립션 | 대기 |
+| R03 | 화면 정보 | Figma 화면 이름 "Test Analytics _ Test Count", IA 이름 "Test Count - Table" | 하나로 통일 | `ia/ia-screens.csv` | 대기 (확인 필요) |
+| R04 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
+| R05 | 정책 반영 | 검사 건수 집계 기준이 없음 | 디스크립션에 넣음: 검사 건수는 오더 기준으로 세며 Completed, Failed와 관계없이 모두 셈 | POL-STA-004 정의 | 대기 |
 
 ## 변경 이력
 

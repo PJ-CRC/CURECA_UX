@@ -45,13 +45,13 @@ figma_region: 2.1 2차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 디스크립션 | 3 ".CVS" | .CSV | 오타 | 대기 |
-| 2 | T/L 차이 | 3 [Export]가 T-IOS와 다름. IA는 짝 화면 동일 | 파일 형식은 T-IOS·L-IOS 모두 .csv. 저장 방법만 다름: T-IOS는 OS 파일 탐색기, L-IOS는 경로 저장·USB 저장 Popup (COMM-5-j(4/4)) | POL-COM-006 규칙 1·3·4 | 대기 |
-| 3 | 상태값 | 1-2 Status 목록에 Not Tested, 2-1 Status "검체의 검사 진행 상태" | Status 목록에서 Not Tested를 뺌: All, Running, Completed, Failed. Status는 Plate 상태 (POL-SMP-010) | `glossary/status-values.csv`, POL-SMP-010 | 대기 |
-| 4 | 디스크립션 | 1-3 Default "Start Date/Time"과 목록 "Start Date" 표기 다름, 2-1 "모듈" | TI-SPT-02 반영 대기 목록 3·6과 같이 | 디스크립션 | 대기 |
-| 5 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
+| R01 | 디스크립션 | 3 ".CVS" | .CSV | 오타 | 대기 |
+| R02 | T/L 차이 | 3 [Export]가 T-IOS와 다름. IA는 짝 화면 동일 | 파일 형식은 T-IOS·L-IOS 모두 .csv. 저장 방법만 다름: T-IOS는 OS 파일 탐색기, L-IOS는 경로 저장·USB 저장 Popup (COMM-5-j(4/4)) | POL-COM-006 규칙 1·3·4 | 대기 |
+| R03 | 상태값 | 1-2 Status 목록에 Not Tested, 2-1 Status "검체의 검사 진행 상태" | Status 목록에서 Not Tested를 뺌: All, Running, Completed, Failed. Status는 Plate 상태 (POL-SMP-010) | `glossary/status-values.csv`, POL-SMP-010 | 대기 |
+| R04 | 디스크립션 | 1-3 Default "Start Date/Time"과 목록 "Start Date" 표기 다름, 2-1 "모듈" | TI-SPT-02 반영 대기 목록 3·6과 같이 | 디스크립션 | 대기 |
+| R05 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
 
 ## 변경 이력
 

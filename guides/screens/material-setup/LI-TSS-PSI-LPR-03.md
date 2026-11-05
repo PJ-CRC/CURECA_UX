@@ -122,19 +122,19 @@ Description Number (5), Frame (1), Button/Secondary_1Button_44 (1), Button/Terti
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 | Step 표시 "STEP 2 Check the PCR reagent" | STEP 1 | 화면 글자 | 대기 |
-| 2 | 화면 데이터 | LCR Reagent 줄이 남아 있음. 예시 RP1·RP3·GI-V는 LPR-01(RP1·RP2·GI-V)과 다름 | 지움, 예시 통일 | LI-TSS-PSI-LPR-01 | 대기 |
-| 3 | 알럿 | 하이라이트 단계에서 PCR box 외 코드 스캔 케이스 없음 | 디스크립션에 넣음: 이 화면에서 하위 항목이 아닌 코드를 스캔하면 MS_Alert_001 (MS 목록에 명시된 "하이라이팅 화면의 하위 항목 외 스캔") | `policy/alert-catalog-ms.csv` MS_Alert_001, 2026-11-03 사용자 답변 (MS4) | 대기 |
-| 4 | 디스크립션 | 오류 Case 번호가 1, 3, 4…로 2가 빠짐 (취소선 Case 2) | 번호 다시 매김 | 디스크립션 1 | 대기 |
-| 5 | 디스크립션 | MS_Confirm_016이 "정상)" 아래에 있고 OK 뒤 동작 없음 | OK 선택 시 → 동의 기록 후 다음 스캔 ([Done] 시 반영) | MS_Confirm_016 | 대기 |
-| 6 | 디스크립션 | 세부 정의 "[Allplex HPV 28] 스캔 시 → 아래 노출 정의에 따름"과 "→ 순번 없이 이미지 only 노출"이 같은 조건으로 두 번 | 두 번째가 HPV 외 제품인지 확인 | 세부 정의 | 대기 (확인 필요) |
-| 7 | 화면 데이터 | "Allplex HPV 28" | Allplex™ HPV28 Detection | `glossary/pcr-reagents.csv` | 대기 |
-| 8 | 디스크립션 | 1 "Lot 구성하지 않은 PCR box" 판단 (IC tube 없는 box는 Lot 없이 적재)와 MS_Alert_025(유효기간 다른 box)의 판단 순서 | 정책에서 정함 | MS_Alert_024·025, POL-INV-007 | 대기 (확인 필요) |
-| 9 | 문구 | "Load the reagent tube into the highlighted slot." (스캔은 PCR box) | box를 넣는지 tube를 넣는지 맞춤 | 화면 글자 | 대기 (확인 필요) |
-| 10 | 표기 | "boxs", "유효기간", "PCR 시약", "socket", "팝업" | boxes, Expiration Date, PCR Reagent, Socket, Popup | 오타, `glossary/terms.csv` | 대기 |
-| 11 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
+| R01 | 화면 | Step 표시 "STEP 2 Check the PCR reagent" | STEP 1 | 화면 글자 | 대기 |
+| R02 | 화면 데이터 | LCR Reagent 줄이 남아 있음. 예시 RP1·RP3·GI-V는 LPR-01(RP1·RP2·GI-V)과 다름 | 지움, 예시 통일 | LI-TSS-PSI-LPR-01 | 대기 |
+| R03 | 알럿 | 하이라이트 단계에서 PCR box 외 코드 스캔 케이스 없음 | 디스크립션에 넣음: 이 화면에서 하위 항목이 아닌 코드를 스캔하면 MS_Alert_001 (MS 목록에 명시된 "하이라이팅 화면의 하위 항목 외 스캔") | `policy/alert-catalog-ms.csv` MS_Alert_001, 2026-11-03 사용자 답변 (MS4) | 대기 |
+| R04 | 디스크립션 | 오류 Case 번호가 1, 3, 4…로 2가 빠짐 (취소선 Case 2) | 번호 다시 매김 | 디스크립션 1 | 대기 |
+| R05 | 디스크립션 | MS_Confirm_016이 "정상)" 아래에 있고 OK 뒤 동작 없음 | OK 선택 시 → 동의 기록 후 다음 스캔 ([Done] 시 반영) | MS_Confirm_016 | 대기 |
+| R06 | 디스크립션 | 세부 정의 "[Allplex HPV 28] 스캔 시 → 아래 노출 정의에 따름"과 "→ 순번 없이 이미지 only 노출"이 같은 조건으로 두 번 | 두 번째가 HPV 외 제품인지 확인 | 세부 정의 | 대기 (확인 필요) |
+| R07 | 화면 데이터 | "Allplex HPV 28" | Allplex™ HPV28 Detection | `glossary/pcr-reagents.csv` | 대기 |
+| R08 | 디스크립션 | 1 "Lot 구성하지 않은 PCR box" 판단 (IC tube 없는 box는 Lot 없이 적재)와 MS_Alert_025(유효기간 다른 box)의 판단 순서 | 정책에서 정함 | MS_Alert_024·025, POL-INV-007 | 대기 (확인 필요) |
+| R09 | 문구 | "Load the reagent tube into the highlighted slot." (스캔은 PCR box) | box를 넣는지 tube를 넣는지 맞춤 | 화면 글자 | 대기 (확인 필요) |
+| R10 | 표기 | "boxs", "유효기간", "PCR 시약", "socket", "팝업" | boxes, Expiration Date, PCR Reagent, Socket, Popup | 오타, `glossary/terms.csv` | 대기 |
+| R11 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
 
 ## 변경 이력
 

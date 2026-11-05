@@ -175,18 +175,18 @@ Interface/triangle-exclamation_Solid (14), Description Number (12), Item_Segment
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | IA 화면 이름 "Waste bin", 화면 "Waste Bin/Bottle" | IA를 Waste Bin/Bottle로 | `ia/ia-screens.csv`, 화면 정보 | 대기 (확인 필요) |
-| 2 | 표기 | 0 "상태 값(Waste Status)" | Waste Bin/Bottle Status | `glossary/terms.csv` | 대기 |
-| 3 | 디스크립션 | 0 "Moule(index)" | Module (index) | 오타 | 대기 |
-| 4 | 디스크립션 | 3-3 "[3-6] 최대 개수 도달/초과 후…" (3-6 없음) | 번호 지움 | 디스크립션 | 대기 |
-| 5 | 디스크립션 | 2·3 "Waste Bin이 존재하지 않는 모듈은 제외", "Waste Bin이 1개이상 존재하는 Module" | Waste Bin/Bottle은 Module마다 가진 Waste Bin과 Liquid Waste Bottle을 함께 부르는 이름이므로 "Waste Bin/Bottle이 있는 Module"로 씀. Unit 칸은 Module별 Unit 이름 그대로 | POL-INV-005 규칙 7, `glossary/module-units.csv` | 대기 |
-| 6 | 디스크립션 | 3-3 99% 고정 시 Almost Full, Fill Level 70%·100% 기준은 COMM-4-a에만 있음 | 상태값 표 기준(Available 70% 미만, Almost Full 70% 이상, Full 100%)과 99% 제한·센서 규칙을 정책으로 묶음 | `glossary/status-values.csv` | 대기 (확인 필요) |
-| 7 | 화면 글자 | "PlateSealing (2)" | Plate Sealing (2) | 띄어쓰기 | 대기 |
-| 8 | 디스크립션 | "폐기물함", "폐기함", "폐기물 함", "모듈" 한국어 혼용 | Waste Bin/Bottle, Module | `glossary/terms.csv` | 대기 |
-| 9 | 디스크립션 | 1 "Default : 모든 탭이 미선택 된 상태" (Chip을 말함) | 모든 Chip이 선택되지 않은 상태 | 디스크립션 | 대기 |
-| 10 | 디스크립션 | 0 "사용여부가 '사용'인 모듈" | Enabled인 Module | POL-EQP-009 | 대기 |
+| R01 | 화면 정보 | IA 화면 이름 "Waste bin", 화면 "Waste Bin/Bottle" | IA를 Waste Bin/Bottle로 | `ia/ia-screens.csv`, 화면 정보 | 대기 (확인 필요) |
+| R02 | 표기 | 0 "상태 값(Waste Status)" | Waste Bin/Bottle Status | `glossary/terms.csv` | 대기 |
+| R03 | 디스크립션 | 0 "Moule(index)" | Module (index) | 오타 | 대기 |
+| R04 | 디스크립션 | 3-3 "[3-6] 최대 개수 도달/초과 후…" (3-6 없음) | 번호 지움 | 디스크립션 | 대기 |
+| R05 | 디스크립션 | 2·3 "Waste Bin이 존재하지 않는 모듈은 제외", "Waste Bin이 1개이상 존재하는 Module" | Waste Bin/Bottle은 Module마다 가진 Waste Bin과 Liquid Waste Bottle을 함께 부르는 이름이므로 "Waste Bin/Bottle이 있는 Module"로 씀. Unit 칸은 Module별 Unit 이름 그대로 | POL-INV-005 규칙 7, `glossary/module-units.csv` | 대기 |
+| R06 | 디스크립션 | 3-3 99% 고정 시 Almost Full, Fill Level 70%·100% 기준은 COMM-4-a에만 있음 | 상태값 표 기준(Available 70% 미만, Almost Full 70% 이상, Full 100%)과 99% 제한·센서 규칙을 정책으로 묶음 | `glossary/status-values.csv` | 대기 (확인 필요) |
+| R07 | 화면 글자 | "PlateSealing (2)" | Plate Sealing (2) | 띄어쓰기 | 대기 |
+| R08 | 디스크립션 | "폐기물함", "폐기함", "폐기물 함", "모듈" 한국어 혼용 | Waste Bin/Bottle, Module | `glossary/terms.csv` | 대기 |
+| R09 | 디스크립션 | 1 "Default : 모든 탭이 미선택 된 상태" (Chip을 말함) | 모든 Chip이 선택되지 않은 상태 | 디스크립션 | 대기 |
+| R10 | 디스크립션 | 0 "사용여부가 '사용'인 모듈" | Enabled인 Module | POL-EQP-009 | 대기 |
 
 ## 변경 이력
 

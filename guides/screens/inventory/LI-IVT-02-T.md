@@ -41,12 +41,12 @@ figma_region: 2.1 2차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 표기 | Tab 이름 "Reagent" | Reagents | IA | 대기 |
-| 2 | 디스크립션 | 1-2 "데이트 업데이트", 1-3 "차감되지 않는며" | 데이터 업데이트, 차감되지 않으며 | 오타 | 대기 |
-| 3 | 디스크립션 | 0 "사용여부가 '사용'인 모듈", 1-1 "투입 트롤리", "회수 트롤리", "검체" | Enabled인 Module, Inbound Trolley, Outbound Trolley, Sample | POL-EQP-009, `glossary/terms.csv` | 대기 |
-| 4 | 화면 정보 | IA "짝 화면 동일"이 비어 있으나 TI-IVT-02-T와 같음 | IA 확인 | `ia/ia-screens.csv` | 대기 (확인 필요) |
+| R01 | 표기 | Tab 이름 "Reagent" | Reagents | IA | 대기 |
+| R02 | 디스크립션 | 1-2 "데이트 업데이트", 1-3 "차감되지 않는며" | 데이터 업데이트, 차감되지 않으며 | 오타 | 대기 |
+| R03 | 디스크립션 | 0 "사용여부가 '사용'인 모듈", 1-1 "투입 트롤리", "회수 트롤리", "검체" | Enabled인 Module, Inbound Trolley, Outbound Trolley, Sample | POL-EQP-009, `glossary/terms.csv` | 대기 |
+| R04 | 화면 정보 | IA "짝 화면 동일"이 비어 있으나 TI-IVT-02-T와 같음 | IA 확인 | `ia/ia-screens.csv` | 대기 (확인 필요) |
 
 ## 변경 이력
 

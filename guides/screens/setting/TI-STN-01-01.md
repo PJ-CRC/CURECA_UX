@@ -68,12 +68,12 @@ figma_region: 2.1 2차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 표기 | 300 ㎕ Tip, 1,000 ㎕ Tip | 300 μL Tip, 1000 μL Tip | `glossary/glossary.md` Tip 용량 표기 | 대기 |
-| 2 | 표기 | Quantity "24 ea/rack" 등 | Consumable 수량 표기 규칙 `{수량} ea ({n} {단위})` | Common UX COMM-4-b | 대기 |
-| 3 | 디스크립션 | Reagents 탭 설명이 없음 (버전 메모 v2.1.14 "시약 목록 Assay pack에 따른 정렬") | Reagents 탭 정의 추가 | Figma 버전 메모 | 대기 |
-| 4 | 정책 반영 | Consumable 품목은 씨젠 소모품·시약 새 버전 기준 | 새 버전 반영 후 확인 | `background/worklist.md` | 대기 |
+| R01 | 표기 | 300 ㎕ Tip, 1,000 ㎕ Tip | 300 μL Tip, 1000 μL Tip | `glossary/glossary.md` Tip 용량 표기 | 대기 |
+| R02 | 표기 | Quantity "24 ea/rack" 등 | Consumable 수량 표기 규칙 `{수량} ea ({n} {단위})` | Common UX COMM-4-b | 대기 |
+| R03 | 디스크립션 | Reagents 탭 설명이 없음 (버전 메모 v2.1.14 "시약 목록 Assay pack에 따른 정렬") | Reagents 탭 정의 추가 | Figma 버전 메모 | 대기 |
+| R04 | 정책 반영 | Consumable 품목은 씨젠 소모품·시약 새 버전 기준 | 새 버전 반영 후 확인 | `background/worklist.md` | 대기 |
 
 ## 변경 이력
 

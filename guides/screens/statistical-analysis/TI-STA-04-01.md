@@ -131,17 +131,17 @@ Square (20), Description Number (12), 1 Depth (7), Table (5), Table/Filled Table
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 정책 반영 | 단위가 "(Unit : USD)", 통화 기호 "$" 고정 | 디스크립션에 넣음: 단위와 통화 기호는 Cost Setting에서 고른 통화(KRW, USD, EUR, GBP)를 따름. KRW는 소수점을 보여 주지 않음. 화면 예시도 고른 통화로 | POL-TST-003 규칙 1, POL-STA-004 정의 | 대기 |
-| 2 | 디스크립션 | 3-3 "선택 항목별 검사 건수 기반의 다중 꺾은선" (TI-STA-01-01에서 복사된 것으로 보임) | 평균 비용 기반 | 디스크립션 | 대기 |
-| 3 | 디스크립션 | 6-2 "Default : Product 탭 활성화"인데 화면에 Product / Sample Type 탭이 없음 | 탭 문구 지움 | 화면 글자 | 대기 |
-| 4 | 디스크립션 | 1 "Cost 정보 최종 업데이트 일자"를 노출한다고 하나 화면에 없음 | 화면에 넣거나 디스크립션에서 지움 | 화면 글자 | 대기 (확인 필요) |
-| 5 | 디스크립션 | 0 "차트 표출 대상에서 제외"와 6-2 "비활성화 처리"가 함께 있음. 요약 표·차트 예시에 RP1 등 5개 항목이 빠져 있으나 칩은 모두 선택 상태로 보임 | 디스크립션에 넣음: 단가가 빠진 검사 항목은 차트에서 빼고 Legend 칩도 비활성으로 보여 줌. 화면 예시도 빠진 항목의 칩을 비활성으로 | POL-STA-004 규칙 5 | 대기 |
-| 6 | 디스크립션 | 평균 비용 계산식(검사 1건당 Consumable·Reagent 사용량 × 단가 등)이 없음 | 디스크립션에 넣음: 평균 비용 계산식은 개발에서 관리하므로 디스크립션에 식을 적지 않음 | POL-STA-004 규칙 6 | 대기 |
-| 7 | 디스크립션 | "Policy Setting > Cost Setting 메뉴" | Cost Setting은 Policy Setting 안의 Popup | POL-TST-003 정의 | 대기 |
-| 8 | 화면 정보 | Figma 화면 이름 "Test Analytics _ Test Cost", 화면 타이틀 "Test Cost (Average)", IA 이름 "Avg. Test Cost - Chart" | 하나로 통일 | `ia/ia-screens.csv` | 대기 (확인 필요) |
-| 9 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
+| R01 | 정책 반영 | 단위가 "(Unit : USD)", 통화 기호 "$" 고정 | 디스크립션에 넣음: 단위와 통화 기호는 Cost Setting에서 고른 통화(KRW, USD, EUR, GBP)를 따름. KRW는 소수점을 보여 주지 않음. 화면 예시도 고른 통화로 | POL-TST-003 규칙 1, POL-STA-004 정의 | 대기 |
+| R02 | 디스크립션 | 3-3 "선택 항목별 검사 건수 기반의 다중 꺾은선" (TI-STA-01-01에서 복사된 것으로 보임) | 평균 비용 기반 | 디스크립션 | 대기 |
+| R03 | 디스크립션 | 6-2 "Default : Product 탭 활성화"인데 화면에 Product / Sample Type 탭이 없음 | 탭 문구 지움 | 화면 글자 | 대기 |
+| R04 | 디스크립션 | 1 "Cost 정보 최종 업데이트 일자"를 노출한다고 하나 화면에 없음 | 화면에 넣거나 디스크립션에서 지움 | 화면 글자 | 대기 (확인 필요) |
+| R05 | 디스크립션 | 0 "차트 표출 대상에서 제외"와 6-2 "비활성화 처리"가 함께 있음. 요약 표·차트 예시에 RP1 등 5개 항목이 빠져 있으나 칩은 모두 선택 상태로 보임 | 디스크립션에 넣음: 단가가 빠진 검사 항목은 차트에서 빼고 Legend 칩도 비활성으로 보여 줌. 화면 예시도 빠진 항목의 칩을 비활성으로 | POL-STA-004 규칙 5 | 대기 |
+| R06 | 디스크립션 | 평균 비용 계산식(검사 1건당 Consumable·Reagent 사용량 × 단가 등)이 없음 | 디스크립션에 넣음: 평균 비용 계산식은 개발에서 관리하므로 디스크립션에 식을 적지 않음 | POL-STA-004 규칙 6 | 대기 |
+| R07 | 디스크립션 | "Policy Setting > Cost Setting 메뉴" | Cost Setting은 Policy Setting 안의 Popup | POL-TST-003 정의 | 대기 |
+| R08 | 화면 정보 | Figma 화면 이름 "Test Analytics _ Test Cost", 화면 타이틀 "Test Cost (Average)", IA 이름 "Avg. Test Cost - Chart" | 하나로 통일 | `ia/ia-screens.csv` | 대기 (확인 필요) |
+| R09 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
 
 ## 변경 이력
 

@@ -66,15 +66,15 @@ Description Number (6), Frame (1)
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | 1-5 이동 대상 "[LI-TSS-PSI-LMM]" | IA에 없는 CID. LI-TSS-PSI-LMM-01로 | `ia/ia-screens.csv` | 대기 |
-| 2 | 디스크립션 | 1-2 Load consumables and reagents는 LI-TSS-PSI-LCR로 바로 감. 그런데 LCR-01-01·01-03은 "[LI-TSS-PSI-01] > trolley 선택 시 노출"이고, Select Trolley 프레임이 LCR 흐름에도 있음 | 디스크립션에 넣음: Load Consumables and Reagents에 들어가면 Select Trolley Popup(LI-TSS-PSI-01)이 먼저 뜸. Sample Trolley를 고르면 그 Sample 기준으로 필요한 Consumable·Reagent 개수를 계산해 보여 주고, 사용자는 그 개수를 보고 Tray를 구성함. 고르기는 안내용이며 데이터 연결은 생기지 않음 | 2026-11-03 사용자 답변 (MS2) | 대기 |
-| 3 | 화면 | 이미지 버튼 이름 "Samples", "Consumable and Reagent", "PCR reagents", "MM Tube"와 버튼 이름 "Load …"가 섞임 | IA 이름(Load Samples into Trolley 등)으로 통일 | 화면 글자, `ia/ia-screens.csv` | 대기 |
-| 4 | 디스크립션 | 1-2 "Load consumables and reagents" | Load Consumables and Reagents into Trolley | `ia/ia-screens.csv` | 대기 |
-| 5 | 화면 정보 | 경로 "TSS > Prepare Carrier" | Material Setup > Prepare Carrier ("TSS"는 Service Mode 이름 단독 표기) | `ia/ia-screens.csv`, `glossary/terms.csv` Service Mode | 대기 |
-| 6 | 표기 | "팝업" | Popup | `glossary/terms.csv` | 대기 |
-| 7 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
+| R01 | 화면 정보 | 1-5 이동 대상 "[LI-TSS-PSI-LMM]" | IA에 없는 CID. LI-TSS-PSI-LMM-01로 | `ia/ia-screens.csv` | 대기 |
+| R02 | 디스크립션 | 1-2 Load consumables and reagents는 LI-TSS-PSI-LCR로 바로 감. 그런데 LCR-01-01·01-03은 "[LI-TSS-PSI-01] > trolley 선택 시 노출"이고, Select Trolley 프레임이 LCR 흐름에도 있음 | 디스크립션에 넣음: Load Consumables and Reagents에 들어가면 Select Trolley Popup(LI-TSS-PSI-01)이 먼저 뜸. Sample Trolley를 고르면 그 Sample 기준으로 필요한 Consumable·Reagent 개수를 계산해 보여 주고, 사용자는 그 개수를 보고 Tray를 구성함. 고르기는 안내용이며 데이터 연결은 생기지 않음 | 2026-11-03 사용자 답변 (MS2) | 대기 |
+| R03 | 화면 | 이미지 버튼 이름 "Samples", "Consumable and Reagent", "PCR reagents", "MM Tube"와 버튼 이름 "Load …"가 섞임 | IA 이름(Load Samples into Trolley 등)으로 통일 | 화면 글자, `ia/ia-screens.csv` | 대기 |
+| R04 | 디스크립션 | 1-2 "Load consumables and reagents" | Load Consumables and Reagents into Trolley | `ia/ia-screens.csv` | 대기 |
+| R05 | 화면 정보 | 경로 "TSS > Prepare Carrier" | Material Setup > Prepare Carrier ("TSS"는 Service Mode 이름 단독 표기) | `ia/ia-screens.csv`, `glossary/terms.csv` Service Mode | 대기 |
+| R06 | 표기 | "팝업" | Popup | `glossary/terms.csv` | 대기 |
+| R07 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
 
 ## 변경 이력
 

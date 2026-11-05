@@ -41,11 +41,11 @@ figma_region: 2.1 2차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | 같은 CID 프레임이 두 곳에 있음: Inventory 페이지(Ver 2.1.04, 서보경), Run 페이지(Ver 2.1.11, 정다예) | Inventory 페이지 프레임이 원본. Run 페이지 프레임은 같은 Popup을 Run에서 부른다는 표시이므로 다시 그릴 때 Inventory 원본에 맞춤 | POL-INV-001 규칙 8 | 대기 |
-| 2 | 화면 글자 | 합계 "2,021 (22 rack)" | 2,021 ea (22 racks) | TI-IVT-03-T-P 반영 대기 목록 1 | 대기 |
-| 3 | 디스크립션 | 2-1 "DX 서랍식 입고", "소모품", "바코드" | Dx 시스템 Storage의 Drawer, Consumable, Barcode | `glossary/terms.csv` | 대기 |
+| R01 | 화면 정보 | 같은 CID 프레임이 두 곳에 있음: Inventory 페이지(Ver 2.1.04, 서보경), Run 페이지(Ver 2.1.11, 정다예) | Inventory 페이지 프레임이 원본. Run 페이지 프레임은 같은 Popup을 Run에서 부른다는 표시이므로 다시 그릴 때 Inventory 원본에 맞춤 | POL-INV-001 규칙 8 | 대기 |
+| R02 | 화면 글자 | 합계 "2,021 (22 rack)" | 2,021 ea (22 racks) | TI-IVT-03-T-P 반영 대기 목록 1 | 대기 |
+| R03 | 디스크립션 | 2-1 "DX 서랍식 입고", "소모품", "바코드" | Dx 시스템 Storage의 Drawer, Consumable, Barcode | `glossary/terms.csv` | 대기 |
 
 ## 변경 이력
 

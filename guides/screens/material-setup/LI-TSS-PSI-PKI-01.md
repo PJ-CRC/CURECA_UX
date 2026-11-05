@@ -68,13 +68,13 @@ Table (2), Description Number (2), Frame (1), Button/Secondary_1Button_44 (1)
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | 화면 이름 "Check the PK/IC Tube" | IA "Check the PK/IC tube"와 대소문자 통일 | `ia/ia-screens.csv` | 대기 |
-| 2 | 화면 데이터 | "(48/tube)" | 품목 표 단위로: PK Tube 96 rxns/tube, IC(RP-V IC·PB IC·GI-BP IC) 100 rxns/tube | `glossary/consumables.csv`, `glossary/pcr-reagents.csv` | 대기 (확인 필요) |
-| 3 | 정책 반영 | 필요 수량 계산 기준(선택한 Trolley의 Sample 검사에 필요한 PK/IC)이 디스크립션에 없음 | POL-INV-007과 Required Qty 산출 기준 확인 | POL-INV-007 | 대기 (확인 필요) |
-| 4 | 표기 | "trolley", "tube" | Trolley, Tube | `glossary/terms.csv` | 대기 |
-| 5 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
+| R01 | 화면 정보 | 화면 이름 "Check the PK/IC Tube" | IA "Check the PK/IC tube"와 대소문자 통일 | `ia/ia-screens.csv` | 대기 |
+| R02 | 화면 데이터 | "(48/tube)" | 품목 표 단위로: PK Tube 96 rxns/tube, IC(RP-V IC·PB IC·GI-BP IC) 100 rxns/tube | `glossary/consumables.csv`, `glossary/pcr-reagents.csv` | 대기 (확인 필요) |
+| R03 | 정책 반영 | 필요 수량 계산 기준(선택한 Trolley의 Sample 검사에 필요한 PK/IC)이 디스크립션에 없음 | POL-INV-007과 Required Qty 산출 기준 확인 | POL-INV-007 | 대기 (확인 필요) |
+| R04 | 표기 | "trolley", "tube" | Trolley, Tube | `glossary/terms.csv` | 대기 |
+| R05 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
 
 ## 변경 이력
 

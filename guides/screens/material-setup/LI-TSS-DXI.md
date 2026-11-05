@@ -106,18 +106,18 @@ Description Number (10), Tool Tip/Default (8), Arrow/Chevron_Right (2), Interfac
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | Ver 2.0 (2026-06-15), 경로 "TSS > Load Materials" | 버전 메모(v2.1.14까지) 반영 Ver. 경로 Material Setup > Load Materials (Load Materials는 Console Mode) | 버전 메모, `policy/service-mode-matrix.csv` | 대기 |
-| 2 | 화면 | 제목 "Select a task to initiate Drawer Loading" | Drawer는 Unit 이름. Load Materials 화면 목적에 맞는 문구로 | `glossary/terms.csv` Drawer | 대기 (확인 필요) |
-| 3 | 화면 | "Universal Pcr" | Universal PCR | `glossary/modules.csv` | 대기 |
-| 4 | 디스크립션 | Storage 이름이 "STAT storage", "Plate sealing storage" 등 소문자·임의 이름 | Unit UI 표기: STAT Storage, Cold Storage (Plate Sealing), MB Tube Storage, Buffer Cartridge Storage 등 | `glossary/module-units.csv` | 대기 |
-| 5 | 디스크립션 | 6 "Plate sealing storage" → DXI-06 (Cold Storage). Sealer Film Storage는 7 버튼(Load Sealing Film)으로 감 | 배치도에서 Sealer Film Storage QR 스캔 시 동작 정의 | `glossary/module-units.csv` PlateSealing | 대기 (확인 필요) |
-| 6 | 디스크립션 | Prep Consumable Storage, Sample Storage, Universal PCR 영역 스캔 시 정의 없음 | MS_Alert_001은 넣지 않음. MS 목록에 명시한 경우에만 적용 (2026-11-03 사용자 답변 MS4) | `policy/alert-catalog-ms.csv` MS_Alert_001, 2026-11-03 사용자 답변 (MS4) | 대기 |
-| 7 | 디스크립션 | 2 STAT storage가 "Sample Preparation" 모듈에 있는데 제목에 모듈 이름 없음 | Sample Preparation > STAT Storage | `glossary/module-units.csv` | 대기 |
-| 8 | 디스크립션 | "메뉴얼", "메세지" | 매뉴얼, 메시지 | 맞춤법 | 대기 |
-| 9 | 표기 | "소모품 및 시약", "Toast 팝업", "툴팁" | Consumable 및 Reagent, Toast, Tooltip | `glossary/terms.csv` | 대기 |
-| 10 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
+| R01 | 화면 정보 | Ver 2.0 (2026-06-15), 경로 "TSS > Load Materials" | 버전 메모(v2.1.14까지) 반영 Ver. 경로 Material Setup > Load Materials (Load Materials는 Console Mode) | 버전 메모, `policy/service-mode-matrix.csv` | 대기 |
+| R02 | 화면 | 제목 "Select a task to initiate Drawer Loading" | Drawer는 Unit 이름. Load Materials 화면 목적에 맞는 문구로 | `glossary/terms.csv` Drawer | 대기 (확인 필요) |
+| R03 | 화면 | "Universal Pcr" | Universal PCR | `glossary/modules.csv` | 대기 |
+| R04 | 디스크립션 | Storage 이름이 "STAT storage", "Plate sealing storage" 등 소문자·임의 이름 | Unit UI 표기: STAT Storage, Cold Storage (Plate Sealing), MB Tube Storage, Buffer Cartridge Storage 등 | `glossary/module-units.csv` | 대기 |
+| R05 | 디스크립션 | 6 "Plate sealing storage" → DXI-06 (Cold Storage). Sealer Film Storage는 7 버튼(Load Sealing Film)으로 감 | 배치도에서 Sealer Film Storage QR 스캔 시 동작 정의 | `glossary/module-units.csv` PlateSealing | 대기 (확인 필요) |
+| R06 | 디스크립션 | Prep Consumable Storage, Sample Storage, Universal PCR 영역 스캔 시 정의 없음 | MS_Alert_001은 넣지 않음. MS 목록에 명시한 경우에만 적용 (2026-11-03 사용자 답변 MS4) | `policy/alert-catalog-ms.csv` MS_Alert_001, 2026-11-03 사용자 답변 (MS4) | 대기 |
+| R07 | 디스크립션 | 2 STAT storage가 "Sample Preparation" 모듈에 있는데 제목에 모듈 이름 없음 | Sample Preparation > STAT Storage | `glossary/module-units.csv` | 대기 |
+| R08 | 디스크립션 | "메뉴얼", "메세지" | 매뉴얼, 메시지 | 맞춤법 | 대기 |
+| R09 | 표기 | "소모품 및 시약", "Toast 팝업", "툴팁" | Consumable 및 Reagent, Toast, Tooltip | `glossary/terms.csv` | 대기 |
+| R10 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
 
 ## 변경 이력
 

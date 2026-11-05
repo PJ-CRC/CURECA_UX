@@ -177,17 +177,17 @@ Description Number (12), Table (11), Tag Status (10), Table/Filled Table Cell (1
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | 프레임 1335:135567의 이름은 "TI-SPT-01-01"인데 화면 정보 CID는 TI-SPT-01 (Ver 2.1, 2026-06-25). 디스크립션이 비어 있고 상세 영역 글자가 프랑스어(Processus, Unité 등) | 시안·언어 확인용으로 보고 옮기지 않음. 프레임 이름 정리 또는 삭제 확인 | Figma 프레임 | 대기 (확인 필요) |
-| 2 | 화면 정보 | 화면 정보 Ver 2.0인데 버전 메모에 v2.1.01이 있음 | Ver를 버전 메모와 맞춤 | Figma 버전 메모 | 대기 |
-| 3 | 디스크립션 | 0 "Run Start로 통해" | Run Start를 통해 | 오타 | 대기 |
-| 4 | T/L 차이 | 3 [Export]: T-IOS는 "OS 파일함, 엑셀파일, 저장 항목은 Detail의 모든 내용", L-IOS는 ".CVS 파일, COMM-5-j(4/4) 팝업". IA는 짝 화면 동일 | 파일 형식은 T-IOS·L-IOS 모두 .csv. 저장 방법만 다름: T-IOS는 OS 파일 탐색기, L-IOS는 경로 저장·USB 저장 Popup (COMM-5-j(4/4)) | POL-COM-006 규칙 1·3·4 | 대기 |
-| 5 | 디스크립션 | 2-1 "T-IOS에서 수신되는 검체 ID·검사 항목·검체 타입·응급 여부" (T-IOS 화면) | T-IOS 기준 출처로 고쳐 씀 | 디스크립션 | 대기 (확인 필요) |
-| 6 | 디스크립션 | 2-1 Start Date/Time "Prep 장비에서 바코드 찍은 시간" | 어느 Module인지 표준어로 | `glossary/terms.csv` | 대기 (확인 필요) |
-| 7 | 디스크립션 | 2-1 Progress "상태 값 : COMM-4-a" (Progress는 단계 진행 표시) | 단계 표시 기준을 검사 단계(`glossary/test-stages.csv`)로 | `glossary/test-stages.csv` | 대기 (확인 필요) |
-| 8 | 디스크립션 | 1-2 Product 목록이 11개로 고정 | 검사 항목 목록 기준 확인 | `glossary/test-items.csv` | 대기 (확인 필요) |
-| 9 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
+| R01 | 화면 정보 | 프레임 1335:135567의 이름은 "TI-SPT-01-01"인데 화면 정보 CID는 TI-SPT-01 (Ver 2.1, 2026-06-25). 디스크립션이 비어 있고 상세 영역 글자가 프랑스어(Processus, Unité 등) | 시안·언어 확인용으로 보고 옮기지 않음. 프레임 이름 정리 또는 삭제 확인 | Figma 프레임 | 대기 (확인 필요) |
+| R02 | 화면 정보 | 화면 정보 Ver 2.0인데 버전 메모에 v2.1.01이 있음 | Ver를 버전 메모와 맞춤 | Figma 버전 메모 | 대기 |
+| R03 | 디스크립션 | 0 "Run Start로 통해" | Run Start를 통해 | 오타 | 대기 |
+| R04 | T/L 차이 | 3 [Export]: T-IOS는 "OS 파일함, 엑셀파일, 저장 항목은 Detail의 모든 내용", L-IOS는 ".CVS 파일, COMM-5-j(4/4) 팝업". IA는 짝 화면 동일 | 파일 형식은 T-IOS·L-IOS 모두 .csv. 저장 방법만 다름: T-IOS는 OS 파일 탐색기, L-IOS는 경로 저장·USB 저장 Popup (COMM-5-j(4/4)) | POL-COM-006 규칙 1·3·4 | 대기 |
+| R05 | 디스크립션 | 2-1 "T-IOS에서 수신되는 검체 ID·검사 항목·검체 타입·응급 여부" (T-IOS 화면) | T-IOS 기준 출처로 고쳐 씀 | 디스크립션 | 대기 (확인 필요) |
+| R06 | 디스크립션 | 2-1 Start Date/Time "Prep 장비에서 바코드 찍은 시간" | 어느 Module인지 표준어로 | `glossary/terms.csv` | 대기 (확인 필요) |
+| R07 | 디스크립션 | 2-1 Progress "상태 값 : COMM-4-a" (Progress는 단계 진행 표시) | 단계 표시 기준을 검사 단계(`glossary/test-stages.csv`)로 | `glossary/test-stages.csv` | 대기 (확인 필요) |
+| R08 | 디스크립션 | 1-2 Product 목록이 11개로 고정 | 검사 항목 목록 기준 확인 | `glossary/test-items.csv` | 대기 (확인 필요) |
+| R09 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
 
 ## 변경 이력
 

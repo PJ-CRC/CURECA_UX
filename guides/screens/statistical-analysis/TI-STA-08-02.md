@@ -99,13 +99,13 @@ Table (53), 1 Depth (6), Form/CheckBox (5), 2 Depth (5), Table/Filled Table Cell
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | IA 화면 이름 "Event 통계 - Table" (한국어) | TI-STA-08-01 반영 대기 목록 1과 같음 (Event Trend - Table) | `ia/change-requests.md` 4 | 대기 |
-| 2 | 디스크립션 | 집계 기준(Event Level·Status, Module 없는 Event) | TI-STA-08-01 반영 대기 목록 3, 4와 같음 | POL-STA-006 정의·규칙 5 | 대기 |
-| 3 | 디스크립션 | Legend, Date Range, Export 설명 없음 | TI-STA-08-01 4, 5, 6과 같음을 적음 | 디스크립션 | 대기 |
-| 4 | 표기 | 다른 프레임 "Prep Consumable Storage(1)" | Prep Consumable Storage (1) | `glossary/terms.csv` Module | 대기 |
-| 5 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
+| R01 | 화면 정보 | IA 화면 이름 "Event 통계 - Table" (한국어) | TI-STA-08-01 반영 대기 목록 1과 같음 (Event Trend - Table) | `ia/change-requests.md` 4 | 대기 |
+| R02 | 디스크립션 | 집계 기준(Event Level·Status, Module 없는 Event) | TI-STA-08-01 반영 대기 목록 3, 4와 같음 | POL-STA-006 정의·규칙 5 | 대기 |
+| R03 | 디스크립션 | Legend, Date Range, Export 설명 없음 | TI-STA-08-01 4, 5, 6과 같음을 적음 | 디스크립션 | 대기 |
+| R04 | 표기 | 다른 프레임 "Prep Consumable Storage(1)" | Prep Consumable Storage (1) | `glossary/terms.csv` Module | 대기 |
+| R05 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
 
 ## 변경 이력
 

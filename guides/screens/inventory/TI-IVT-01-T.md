@@ -159,19 +159,19 @@ Description Number (15), Item_Segment Tabs (6), Interface/Info_Circle_Outlined (
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 표기 | 화면 카드 "Comsumable" | Consumable | `glossary/terms.csv` | 대기 |
-| 2 | 상태값 | 1-1·1-5 "Empty 및 Insufficient" (화면 카드는 Insufficient, Low) | Empty는 예전 값이며 Insufficient로 바뀜. 요약 정보와 Stock Status Icon은 Insufficient·Low로 나눔 (1 정렬 기준과 같음). 1-3 "Empty 상태일 경우 '0'"도 Insufficient로 | `glossary/status-values.csv 재고 상태`, POL-INV-003 규칙 7 | 대기 |
-| 3 | 상태값 | 1 "Inbound Trolley Unit이 'Docking' 상태" | Docked | `glossary/status-values.csv` 저장 장치 도킹 상태 | 대기 |
-| 4 | 문구 | 3-5 툴팁 "prioritized by Full and Warning status" | Full and Almost Full (Warning은 Waste Bin/Bottle Status 값이 아님) | `glossary/status-values.csv` | 대기 |
-| 5 | 표기 | 3-4 "Waste Status Icon" | Waste Bin/Bottle Status Icon | `glossary/terms.csv` | 대기 |
-| 6 | 디스크립션 | 1-7 툴팁 문구가 4개 나열됨 (옛 문구와 새 문구가 섞인 것으로 보임) | 현재 문구 하나만 남김 (v2.1.14 "Tooltip 내용 변경"). LI-IVT-01-T에는 앞의 2개에 취소선이 있음 | 버전 메모, LI-IVT-01-T | 대기 (확인 필요) |
-| 7 | 디스크립션 | 번호 2 없음 (1 → 3) | 번호 정리 | 디스크립션 | 대기 |
-| 8 | 디스크립션 | 0 "사용여부가 '사용'인 모듈" | Enabled인 Module | POL-EQP-009 | 대기 |
-| 9 | 표기 | 화면 "FlexibleExtraction(1)", "WasteBin", "PCR Setup(1)" 등 | Flexible Extraction (1), Waste Bin, PCR Setup (1) | 이름 (번호) 띄어쓰기, `glossary/terms.csv` | 대기 |
-| 10 | 디스크립션 | 1 "통합 상태 Run O / X" | 장비 통합 상태 Running 여부로 표기 | `glossary/terms.csv` 장비 통합 상태 | 대기 |
-| 11 | 디스크립션 | 3-3 "Waste bin/bottle tab 내 2-3 참고" (Fill Level은 TI-IVT-05-T 3-3) | TI-IVT-05-T 3-3 참고 | TI-IVT-05-T | 대기 |
+| R01 | 표기 | 화면 카드 "Comsumable" | Consumable | `glossary/terms.csv` | 대기 |
+| R02 | 상태값 | 1-1·1-5 "Empty 및 Insufficient" (화면 카드는 Insufficient, Low) | Empty는 예전 값이며 Insufficient로 바뀜. 요약 정보와 Stock Status Icon은 Insufficient·Low로 나눔 (1 정렬 기준과 같음). 1-3 "Empty 상태일 경우 '0'"도 Insufficient로 | `glossary/status-values.csv 재고 상태`, POL-INV-003 규칙 7 | 대기 |
+| R03 | 상태값 | 1 "Inbound Trolley Unit이 'Docking' 상태" | Docked | `glossary/status-values.csv` 저장 장치 도킹 상태 | 대기 |
+| R04 | 문구 | 3-5 툴팁 "prioritized by Full and Warning status" | Full and Almost Full (Warning은 Waste Bin/Bottle Status 값이 아님) | `glossary/status-values.csv` | 대기 |
+| R05 | 표기 | 3-4 "Waste Status Icon" | Waste Bin/Bottle Status Icon | `glossary/terms.csv` | 대기 |
+| R06 | 디스크립션 | 1-7 툴팁 문구가 4개 나열됨 (옛 문구와 새 문구가 섞인 것으로 보임) | 현재 문구 하나만 남김 (v2.1.14 "Tooltip 내용 변경"). LI-IVT-01-T에는 앞의 2개에 취소선이 있음 | 버전 메모, LI-IVT-01-T | 대기 (확인 필요) |
+| R07 | 디스크립션 | 번호 2 없음 (1 → 3) | 번호 정리 | 디스크립션 | 대기 |
+| R08 | 디스크립션 | 0 "사용여부가 '사용'인 모듈" | Enabled인 Module | POL-EQP-009 | 대기 |
+| R09 | 표기 | 화면 "FlexibleExtraction(1)", "WasteBin", "PCR Setup(1)" 등 | Flexible Extraction (1), Waste Bin, PCR Setup (1) | 이름 (번호) 띄어쓰기, `glossary/terms.csv` | 대기 |
+| R10 | 디스크립션 | 1 "통합 상태 Run O / X" | 장비 통합 상태 Running 여부로 표기 | `glossary/terms.csv` 장비 통합 상태 | 대기 |
+| R11 | 디스크립션 | 3-3 "Waste bin/bottle tab 내 2-3 참고" (Fill Level은 TI-IVT-05-T 3-3) | TI-IVT-05-T 3-3 참고 | TI-IVT-05-T | 대기 |
 
 ## 변경 이력
 

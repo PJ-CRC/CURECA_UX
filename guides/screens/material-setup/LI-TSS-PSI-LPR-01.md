@@ -65,12 +65,12 @@ Table (2), Description Number (2), Frame (1), Button/Secondary_1Button_44 (1)
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 데이터 | "RP1 (17 sets)", "RP2 (17 sets)", "GI-V (14 sets)". LPR-02~04 예시는 RP1 00/02, RP3 00/02, GI-V 00/03 | 예시 값 통일. 이름은 품목 표의 제품명(Allplex™ Respiratory Panel 1 등) 또는 약칭 기준을 정함. 단위는 100 rxns/set | `glossary/pcr-reagents.csv`, LI-TSS-PSI-LPR-02 | 대기 (확인 필요) |
-| 2 | 정책 반영 | PCR Reagent는 Assay Pack이 구조를 정함. 필요 수량을 box(set) 단위로 셀지, 구성품(MOM 등) 단위로 셀지 | POL-INV-007 기준 확인 | POL-INV-007, `rules/screen-spec.md` 1절 | 대기 (확인 필요) |
-| 3 | 표기 | "PCR 시약", "trolley", "reagent" | PCR Reagent, Trolley | `glossary/terms.csv` | 대기 |
-| 4 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
+| R01 | 화면 데이터 | "RP1 (17 sets)", "RP2 (17 sets)", "GI-V (14 sets)". LPR-02~04 예시는 RP1 00/02, RP3 00/02, GI-V 00/03 | 예시 값 통일. 이름은 품목 표의 제품명(Allplex™ Respiratory Panel 1 등) 또는 약칭 기준을 정함. 단위는 100 rxns/set | `glossary/pcr-reagents.csv`, LI-TSS-PSI-LPR-02 | 대기 (확인 필요) |
+| R02 | 정책 반영 | PCR Reagent는 Assay Pack이 구조를 정함. 필요 수량을 box(set) 단위로 셀지, 구성품(MOM 등) 단위로 셀지 | POL-INV-007 기준 확인 | POL-INV-007, `rules/screen-spec.md` 1절 | 대기 (확인 필요) |
+| R03 | 표기 | "PCR 시약", "trolley", "reagent" | PCR Reagent, Trolley | `glossary/terms.csv` | 대기 |
+| R04 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
 
 ## 변경 이력
 

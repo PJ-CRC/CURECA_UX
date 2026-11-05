@@ -117,15 +117,15 @@ Description Number (6), Frame (1), Accordion/Default (1), Button/Secondary_1Butt
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면·디스크립션 | 디스크립션은 [Remove] 삭제인데 화면에 Remove 버튼이 남아 있음 | 화면에서 Remove 버튼을 지움. 디스크립션도 Remove 없이 씀: MB Tube Storage 안에 BCR 장치가 있어 Instrument가 Barcode를 읽어 위치를 스스로 알고 가져가므로 위치값을 지울 필요가 없음. 화면 예시도 Remove 없이 | 2026-11-03 사용자 답변 (MS6-a) | 대기 |
-| 2 | 디스크립션 | Remove가 없으면 잘못 넣은 MB Tube를 지우는 방법이 없음 (Storage 닫음 = [Done]) | Remove를 두지 않음 (반영 대기 목록 1). 위치는 BCR 장치가 읽어 관리함 | 2026-11-03 사용자 답변 (MS6-a) | 대기 |
-| 3 | 화면 정보 | Ver 2.0 (2026-06-15) | 버전 메모(v2.1.12까지) 반영 Ver | 버전 메모 | 대기 (확인 필요) |
-| 4 | 표기 | 타이틀 "FlexibleExtraction (N) > MB Tube storage" (코드명) | Flexible Extraction (2) > MB Tube Storage | `glossary/modules.csv`, `glossary/module-units.csv` | 대기 |
-| 5 | 화면 | 카운터 "02/12"와 "N/M"이 겹쳐 있음 | 하나만 | 디스크립션 2 | 대기 |
-| 6 | 표기 | "시약", "소모품/시약", "유효기간", "MB tube", "Toast 팝업" | Reagent, Consumable/Reagent, Expiration Date, MB Tube, Toast | `glossary/terms.csv`, `glossary/consumables.csv` | 대기 |
-| 7 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
+| R01 | 화면·디스크립션 | 디스크립션은 [Remove] 삭제인데 화면에 Remove 버튼이 남아 있음 | 화면에서 Remove 버튼을 지움. 디스크립션도 Remove 없이 씀: MB Tube Storage 안에 BCR 장치가 있어 Instrument가 Barcode를 읽어 위치를 스스로 알고 가져가므로 위치값을 지울 필요가 없음. 화면 예시도 Remove 없이 | 2026-11-03 사용자 답변 (MS6-a) | 대기 |
+| R02 | 디스크립션 | Remove가 없으면 잘못 넣은 MB Tube를 지우는 방법이 없음 (Storage 닫음 = [Done]) | Remove를 두지 않음 (반영 대기 목록 1). 위치는 BCR 장치가 읽어 관리함 | 2026-11-03 사용자 답변 (MS6-a) | 대기 |
+| R03 | 화면 정보 | Ver 2.0 (2026-06-15) | 버전 메모(v2.1.12까지) 반영 Ver | 버전 메모 | 대기 (확인 필요) |
+| R04 | 표기 | 타이틀 "FlexibleExtraction (N) > MB Tube storage" (코드명) | Flexible Extraction (2) > MB Tube Storage | `glossary/modules.csv`, `glossary/module-units.csv` | 대기 |
+| R05 | 화면 | 카운터 "02/12"와 "N/M"이 겹쳐 있음 | 하나만 | 디스크립션 2 | 대기 |
+| R06 | 표기 | "시약", "소모품/시약", "유효기간", "MB tube", "Toast 팝업" | Reagent, Consumable/Reagent, Expiration Date, MB Tube, Toast | `glossary/terms.csv`, `glossary/consumables.csv` | 대기 |
+| R07 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
 
 ## 변경 이력
 

@@ -105,18 +105,18 @@ Description Number (4), Frame (1), Device&Electronic/Repeat (1), Button/Secondar
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | 화면 이름 "Prepare Carrier(2/3)", 경로 "Load consumables and reagents > Prepare Carrier(2/3)" | IA "Scan loaded tray" | `ia/ia-screens.csv` | 대기 |
-| 2 | 화면 정보 | Ver 2.0 (2026-06-15) | 버전 메모(v2.1.05)를 반영한 Ver로 | 버전 메모 | 대기 (확인 필요) |
-| 3 | 화면 | 카운터 "02/12"와 "00/06"이 겹쳐 있음 | 0/6 하나만 | 디스크립션 2 | 대기 |
-| 4 | 문구 | "Scan the QR code on the tray loaded with the socket" | Consumable Tray는 Socket만 담지 않음 (Rack·DWP·Frame). "loaded with consumables/reagents" | LI-TSS-PSI-LCR-01-03 세부 정의 | 대기 |
-| 5 | 정책 반영 | 1F는 빈 Tray 전용(반환 전용 floor): "Only empty trays can be loaded on trolley 1F", MS_Alert_022·023. 카운터 분모 6은 1F 포함 | 디스크립션에 넣음: Consumable Trolley 1F에는 반드시 빈 Tray를 넣음. Prep 시스템에서 쓰던 품목을 반환할 자리가 필요하기 때문 (2~6F가 차 있으면 돌려놓을 곳이 없음). 카운터 분모 6은 1F 빈 Tray를 포함함. 화면 예시도 0/6 | MAT 정책 (작성 중), 2026-11-03 사용자 답변 (MS1) | 대기 |
-| 6 | 알럿 | 버전 메모 "Alert_035 팝업 추가" (기존 ID) | 지금은 MS_Alert_023. 변경 이력에만 남김 | `policy/alert-catalog-ms.csv` | 대기 |
-| 7 | 디스크립션 | 3 제목 "[Done] 버튼 선택 시 → 아래 항목 반영" (본문과 겹침) | [Done] 버튼 | 디스크립션 | 대기 |
-| 8 | 표기 | "선반", "shelf", "floor" 섞임 | Trolley floor로 통일 | LI-TSS-PSI-SAM-03-02 반영 대기 목록 5 | 대기 (확인 필요) |
-| 9 | 표기 | "소모품 Trolley", "트롤리", "tray", "Toast 팝업" | Consumable Trolley, Trolley, Tray, Toast | `glossary/terms.csv` | 대기 |
-| 10 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
+| R01 | 화면 정보 | 화면 이름 "Prepare Carrier(2/3)", 경로 "Load consumables and reagents > Prepare Carrier(2/3)" | IA "Scan loaded tray" | `ia/ia-screens.csv` | 대기 |
+| R02 | 화면 정보 | Ver 2.0 (2026-06-15) | 버전 메모(v2.1.05)를 반영한 Ver로 | 버전 메모 | 대기 (확인 필요) |
+| R03 | 화면 | 카운터 "02/12"와 "00/06"이 겹쳐 있음 | 0/6 하나만 | 디스크립션 2 | 대기 |
+| R04 | 문구 | "Scan the QR code on the tray loaded with the socket" | Consumable Tray는 Socket만 담지 않음 (Rack·DWP·Frame). "loaded with consumables/reagents" | LI-TSS-PSI-LCR-01-03 세부 정의 | 대기 |
+| R05 | 정책 반영 | 1F는 빈 Tray 전용(반환 전용 floor): "Only empty trays can be loaded on trolley 1F", MS_Alert_022·023. 카운터 분모 6은 1F 포함 | 디스크립션에 넣음: Consumable Trolley 1F에는 반드시 빈 Tray를 넣음. Prep 시스템에서 쓰던 품목을 반환할 자리가 필요하기 때문 (2~6F가 차 있으면 돌려놓을 곳이 없음). 카운터 분모 6은 1F 빈 Tray를 포함함. 화면 예시도 0/6 | MAT 정책 (작성 중), 2026-11-03 사용자 답변 (MS1) | 대기 |
+| R06 | 알럿 | 버전 메모 "Alert_035 팝업 추가" (기존 ID) | 지금은 MS_Alert_023. 변경 이력에만 남김 | `policy/alert-catalog-ms.csv` | 대기 |
+| R07 | 디스크립션 | 3 제목 "[Done] 버튼 선택 시 → 아래 항목 반영" (본문과 겹침) | [Done] 버튼 | 디스크립션 | 대기 |
+| R08 | 표기 | "선반", "shelf", "floor" 섞임 | Trolley floor로 통일 | LI-TSS-PSI-SAM-03-02 반영 대기 목록 5 | 대기 (확인 필요) |
+| R09 | 표기 | "소모품 Trolley", "트롤리", "tray", "Toast 팝업" | Consumable Trolley, Trolley, Tray, Toast | `glossary/terms.csv` | 대기 |
+| R10 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
 
 ## 변경 이력
 

@@ -75,15 +75,15 @@ Description Number (3), Frame (1), Button/Secondary_1Button_44 (1), layout/spaci
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | Ver 2.0 (2026-06-15) | 버전 메모(v2.1.05)를 반영한 Ver로 | 버전 메모 | 대기 (확인 필요) |
-| 2 | 화면 | Step 표시 "STEP 2 Check the PCR reagent" | STEP 1 | 화면 글자 | 대기 |
-| 3 | 화면 데이터 | Required Quantity "RP1, RP3, GI-V" (LPR-01은 RP1, RP2, GI-V), LCR Reagent 줄이 남아 있음 | 예시 통일, LCR 줄 지움 | LI-TSS-PSI-LPR-01 | 대기 |
-| 4 | 디스크립션 | MS_Confirm_015 OK 뒤 이동 없음. PCR socket이 아닌 Socket·코드 스캔 케이스 없음 | MS_Confirm_015 OK 선택 시 → LPR-03. MS_Alert_001은 넣지 않음. MS 목록에 명시한 경우에만 적용 (2026-11-03 사용자 답변 MS4). 담당자 적재 정책서는 PCR socket이 아니면 Alert_027(= MS_Alert_001)이었으나 MS 목록에는 이 경우가 없음 | `policy/alert-catalog-ms.csv` MS_Alert_001, 2026-11-03 사용자 답변 (MS4), `reference/team/material-setup-20261102/pcr-setup-policy.md` | 대기 |
-| 5 | 디스크립션 | 2 [Next], 2-1 Scan 내용 없음 | LI-TSS-PSI-SAM-01-01 반영 대기 목록 3과 같이 | 디스크립션 | 대기 (확인 필요) |
-| 6 | 표기 | "PCR 시약", "MM tube", "socket", "팝업" | PCR Reagent, MM Tube, Socket, Popup | `glossary/terms.csv`, `glossary/consumables.csv` | 대기 |
-| 7 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
+| R01 | 화면 정보 | Ver 2.0 (2026-06-15) | 버전 메모(v2.1.05)를 반영한 Ver로 | 버전 메모 | 대기 (확인 필요) |
+| R02 | 화면 | Step 표시 "STEP 2 Check the PCR reagent" | STEP 1 | 화면 글자 | 대기 |
+| R03 | 화면 데이터 | Required Quantity "RP1, RP3, GI-V" (LPR-01은 RP1, RP2, GI-V), LCR Reagent 줄이 남아 있음 | 예시 통일, LCR 줄 지움 | LI-TSS-PSI-LPR-01 | 대기 |
+| R04 | 디스크립션 | MS_Confirm_015 OK 뒤 이동 없음. PCR socket이 아닌 Socket·코드 스캔 케이스 없음 | MS_Confirm_015 OK 선택 시 → LPR-03. MS_Alert_001은 넣지 않음. MS 목록에 명시한 경우에만 적용 (2026-11-03 사용자 답변 MS4). 담당자 적재 정책서는 PCR socket이 아니면 Alert_027(= MS_Alert_001)이었으나 MS 목록에는 이 경우가 없음 | `policy/alert-catalog-ms.csv` MS_Alert_001, 2026-11-03 사용자 답변 (MS4), `reference/team/material-setup-20261102/pcr-setup-policy.md` | 대기 |
+| R05 | 디스크립션 | 2 [Next], 2-1 Scan 내용 없음 | LI-TSS-PSI-SAM-01-01 반영 대기 목록 3과 같이 | 디스크립션 | 대기 (확인 필요) |
+| R06 | 표기 | "PCR 시약", "MM tube", "socket", "팝업" | PCR Reagent, MM Tube, Socket, Popup | `glossary/terms.csv`, `glossary/consumables.csv` | 대기 |
+| R07 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
 
 ## 변경 이력
 

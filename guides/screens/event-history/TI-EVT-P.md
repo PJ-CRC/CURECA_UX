@@ -103,15 +103,15 @@ figma_region: 2.1 2차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 알럿 | 5-1 "Confirm_L_003", "Alert_L_003". Alert_003은 알럿 관리 페이지에서 삭제됨 | 취소선으로 이미 제거됨. T-IOS는 Status 변경과 일괄 Closed가 없음 | Figma 취소선, POL-EVT-002 | 반영 불필요 (취소선) |
-| 2 | 정책 반영 | 5 체크박스 + [Mark as Closed]. 화면 글자에는 버튼이 없음. L-IOS는 [Mark all as Closed] | 취소선으로 이미 제거됨. T-IOS는 Status 변경과 일괄 Closed가 없음 | Figma 취소선, POL-EVT-002 | 반영 불필요 (취소선) |
-| 3 | 표기 | Expiration date Status | 대소문자 통일 (PD-0001 결정 후) | `glossary/review-v0.md` | 대기 (최신 영역 화면에서 확인) |
-| 4 | 표기 | Under 30 Day | Under 30 days | `glossary/status-values.csv` 시약 만료 상태 | 대기 (최신 영역 화면에서 확인) |
-| 5 | 디스크립션 | Statue, Cureca, 1 "Event ID, Code" 검색 (화면에 입력 칸 없음) | Status, CURECA, 검색 항목을 화면과 맞춤 | 오타, 화면 글자 | 대기 |
-| 6 | 표기 | 목록 요약 "OPEN", Unit "CFX96-1" | Open, CFX96 (1) | `glossary/status-values.csv`, 이름 (번호) | 대기 |
-| 7 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
+| R01 | 알럿 | 5-1 "Confirm_L_003", "Alert_L_003". Alert_003은 알럿 관리 페이지에서 삭제됨 | 취소선으로 이미 제거됨. T-IOS는 Status 변경과 일괄 Closed가 없음 | Figma 취소선, POL-EVT-002 | 제외 (2026-11-04, 취소선) |
+| R02 | 정책 반영 | 5 체크박스 + [Mark as Closed]. 화면 글자에는 버튼이 없음. L-IOS는 [Mark all as Closed] | 취소선으로 이미 제거됨. T-IOS는 Status 변경과 일괄 Closed가 없음 | Figma 취소선, POL-EVT-002 | 제외 (2026-11-04, 취소선) |
+| R03 | 표기 | Expiration date Status | 대소문자 통일 (PD-0001 결정 후) | `glossary/review-v0.md` | 대기 (최신 영역 화면에서 확인) |
+| R04 | 표기 | Under 30 Day | Under 30 days | `glossary/status-values.csv` 시약 만료 상태 | 대기 (최신 영역 화면에서 확인) |
+| R05 | 디스크립션 | Statue, Cureca, 1 "Event ID, Code" 검색 (화면에 입력 칸 없음) | Status, CURECA, 검색 항목을 화면과 맞춤 | 오타, 화면 글자 | 대기 |
+| R06 | 표기 | 목록 요약 "OPEN", Unit "CFX96-1" | Open, CFX96 (1) | `glossary/status-values.csv`, 이름 (번호) | 대기 |
+| R07 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
 
 ## 변경 이력
 

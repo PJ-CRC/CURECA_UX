@@ -114,7 +114,7 @@ Description Number (5), Frame (1), Button/Secondary_1Button_44 (1), Button/Terti
 
 - LI-TSS-DXI-01~07_ 공통정의 > 모듈 N대인 경우, Storage 스캔 시 → 모듈명 (인덱스) 타이틀 노출 예시
   - (GNB) L-IOS | Running | Instrument | T-IOS | D.A PC | Event 888 888 | 2026-04-10 10:35
-  - (LNB) Dashboard (All) | Dashboard | Material Setup (Group Lots, Prepare Carrier, Load Materials, Empty Waste Bin) | Test Management | Sample Tracking | Instrument | Inventory | Setting | Information | Quick Start | Run | Admin UserA01 | Shut Down
+  - (LNB) Dashboard(All) | Dashboard | Material Setup (Group Lots, Prepare Carrier, Load Materials, Empty Waste Bin) | Test Management | Sample Tracking | Instrument | Inventory | Setting | Information | Quick Start | Run | Admin UserA01 | Shut Down
   - (타이틀) Load Materials / SamplePreparation (N) > STAT storage
   - 1 Scan the barcode on the socket. 2 Scan the QR code on the storage ~~location~~ slot to load. 3 Place the socket on the scanned location with the QR code facing right. 4 Repeat the action until you have loaded the required quantity. 5 Close the door and check the lock. 6 Click [Done] to go to the Load Materials manual.
   - STEP 1. | STEP 2. | STEP 3. | STEP 1~3 Repeat | QR code: Right Side
@@ -132,17 +132,17 @@ Description Number (5), Frame (1), Button/Secondary_1Button_44 (1), Button/Terti
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | Ver 2.0 (2026-06-15) | 버전 메모(v2.1.12까지) 반영 Ver | 버전 메모 | 대기 (확인 필요) |
-| 2 | 표기 | 타이틀 "SamplePreparation (N) > STAT storage" (코드명 사용) | Sample Preparation (1) > STAT Storage. 모듈 1대면 Sample Preparation > STAT Storage | `glossary/modules.csv`, `glossary/module-units.csv`, 이름과 번호 띄어쓰기 규칙 | 대기 |
-| 3 | 화면 | 카운터 "02/12"와 "N/M"이 겹쳐 있음 | 하나만 | 디스크립션 2 | 대기 |
-| 4 | 화면 | 이미지 자리 글자 "투입할 렉단의 소모품 및 시약 바코드 스캔…" (STAT는 Sample Socket 전용) | Sample Socket 적재 이미지로 | 버전 메모 v2.1.05 | 대기 |
-| 5 | 디스크립션 | 2 "적재된 STAT 수 / 적재 가능한 STAT 수", 2-1 "STAT 개수" | 적재된 Socket 수 / STAT Storage slot 수 | 디스크립션 | 대기 |
-| 6 | 디스크립션 | 3 "물리적으로 storage unit을 닫을 경우 [Done]과 동일" — 저장 실패 시와 Remove 예정 상태 처리 없음 | 닫을 때 저장 실패면 어떻게 하는지 확인 | 디스크립션 3, MS_Alert_032 | 대기 (확인 필요) |
-| 7 | 정책 반영 | STAT Storage는 Sample Socket만 적재 (Reagent socket → MS_Alert_001) | 디스크립션에 넣음: STAT Storage에는 Sample Socket만 넣음 (Consumable·Reagent, PK Tube, IC는 넣지 않음) | POL-LOD-003 규칙 1, 2026-11-03 사용자 답변 (MS14) | 대기 |
-| 8 | 표기 | "검체", "시약", "socket", "storage", "모듈명", "스토리지명", "Toast 팝업" | Sample, Reagent, Socket, Storage, Module 이름, Storage 이름, Toast | `glossary/terms.csv` | 대기 |
-| 9 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
+| R01 | 화면 정보 | Ver 2.0 (2026-06-15) | 버전 메모(v2.1.12까지) 반영 Ver | 버전 메모 | 대기 (확인 필요) |
+| R02 | 표기 | 타이틀 "SamplePreparation (N) > STAT storage" (코드명 사용) | Sample Preparation (1) > STAT Storage. 모듈 1대면 Sample Preparation > STAT Storage | `glossary/modules.csv`, `glossary/module-units.csv`, 이름과 번호 띄어쓰기 규칙 | 대기 |
+| R03 | 화면 | 카운터 "02/12"와 "N/M"이 겹쳐 있음 | 하나만 | 디스크립션 2 | 대기 |
+| R04 | 화면 | 이미지 자리 글자 "투입할 렉단의 소모품 및 시약 바코드 스캔…" (STAT는 Sample Socket 전용) | Sample Socket 적재 이미지로 | 버전 메모 v2.1.05 | 대기 |
+| R05 | 디스크립션 | 2 "적재된 STAT 수 / 적재 가능한 STAT 수", 2-1 "STAT 개수" | 적재된 Socket 수 / STAT Storage slot 수 | 디스크립션 | 대기 |
+| R06 | 디스크립션 | 3 "물리적으로 storage unit을 닫을 경우 [Done]과 동일" — 저장 실패 시와 Remove 예정 상태 처리 없음 | 닫을 때 저장 실패면 어떻게 하는지 확인 | 디스크립션 3, MS_Alert_032 | 대기 (확인 필요) |
+| R07 | 정책 반영 | STAT Storage는 Sample Socket만 적재 (Reagent socket → MS_Alert_001) | 디스크립션에 넣음: STAT Storage에는 Sample Socket만 넣음 (Consumable·Reagent, PK Tube, IC는 넣지 않음) | POL-LOD-003 규칙 1, 2026-11-03 사용자 답변 (MS14) | 대기 |
+| R08 | 표기 | "검체", "시약", "socket", "storage", "모듈명", "스토리지명", "Toast 팝업" | Sample, Reagent, Socket, Storage, Module 이름, Storage 이름, Toast | `glossary/terms.csv` | 대기 |
+| R09 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
 
 ## 변경 이력
 

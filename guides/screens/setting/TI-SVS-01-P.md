@@ -65,9 +65,9 @@ figma_region: 2.1 2차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 알럿 | [Delete] → Confirm_009 | Confirm_009는 "Local Storage Detected"(로컬 드라이브 경고)라 삭제 확인에 맞지 않음. 삭제 확인 알럿 ID로 바꿈 | `policy/alert-catalog.csv` | 대기 |
+| R01 | 알럿 | [Delete] → Confirm_009 | Confirm_009는 "Local Storage Detected"(로컬 드라이브 경고)라 삭제 확인에 맞지 않음. 삭제 확인 알럿 ID로 바꿈 | `policy/alert-catalog.csv` | 대기 |
 
 ## 변경 이력
 

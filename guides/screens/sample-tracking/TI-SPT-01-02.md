@@ -86,12 +86,12 @@ figma_region: 2.1 2차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | 화면 이름 "Samples Details", 경로 "Sample Tracking > Samples Details > Protocol Info" | IA 이름 "Protocol Info - Pre-Treatment Protocol" | `ia/ia-screens.csv` | 대기 |
-| 2 | 화면 정보 | 3 참조 "TI-STN-03-01-02-01" (지금 CID는 TI-STN-03-01-02-01-V, -M으로 나뉨) | 맞는 CID로 | `screens/setting/` | 대기 |
-| 3 | 디스크립션 | 2 "Run Preparation 단계에서 선택한 프로토콜", "Applied된 프로토콜" | Run 화면(LI-RUN-02-01 Check Test Protocol)과 Protocol Setting의 Applied 표기 기준으로. Check Test Protocol 단계는 Setting에서 사용할 때만 나옴 | `policy/policy-backlog.md` 5, POL-TST-006 | 대기 (확인 필요) |
-| 4 | 디스크립션 | 3 "Protocol setting" | Protocol Setting | 표기 | 대기 |
+| R01 | 화면 정보 | 화면 이름 "Samples Details", 경로 "Sample Tracking > Samples Details > Protocol Info" | IA 이름 "Protocol Info - Pre-Treatment Protocol" | `ia/ia-screens.csv` | 대기 |
+| R02 | 화면 정보 | 3 참조 "TI-STN-03-01-02-01" (지금 CID는 TI-STN-03-01-02-01-V, -M으로 나뉨) | 맞는 CID로 | `screens/setting/` | 대기 |
+| R03 | 디스크립션 | 2 "Run Preparation 단계에서 선택한 프로토콜", "Applied된 프로토콜" | Run 화면(LI-RUN-02-01 Check Test Protocol)과 Protocol Setting의 Applied 표기 기준으로. Check Test Protocol 단계는 Setting에서 사용할 때만 나옴 | `policy/policy-backlog.md` 5, POL-TST-006 | 대기 (확인 필요) |
+| R04 | 디스크립션 | 3 "Protocol setting" | Protocol Setting | 표기 | 대기 |
 
 ## 변경 이력
 

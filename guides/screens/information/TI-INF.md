@@ -75,13 +75,13 @@ figma_region: 2.1 1차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 표기 | 0 "Cureca 프로그램" | CURECA | `glossary/terms.csv` | 대기 |
-| 2 | 화면 정보 | 화면 이름 "Information", IA 화면 이름 "Program" | 하나로 맞춤 | `ia/ia-screens.csv` | 대기 (확인 필요) |
-| 3 | 디스크립션 | 0 진입 방법 "LNB의 ‘Information’" | Information 아래에 Run Report, Program, Manual이 있으므로 "LNB의 Information > Program" | 화면 글자 (LNB) | 대기 |
-| 4 | 표기 | 버튼 "Release Notes", IA "Release Note" | 하나로 통일 | `ia/ia-screens.csv` | 대기 |
-| 5 | 화면 글자 | LNB Information 아래 "Manual" | IA에 Manual 화면 없음. 메뉴 유지 여부 확인 | `ia/ia-screens.csv` | 대기 (확인 필요) |
+| R01 | 표기 | 0 "Cureca 프로그램" | CURECA | `glossary/terms.csv` | 대기 |
+| R02 | 화면 정보 | 화면 이름 "Information", IA 화면 이름 "Program" | 하나로 맞춤 | `ia/ia-screens.csv` | 대기 (확인 필요) |
+| R03 | 디스크립션 | 0 진입 방법 "LNB의 ‘Information’" | Information 아래에 Run Report, Program, Manual이 있으므로 "LNB의 Information > Program" | 화면 글자 (LNB) | 대기 |
+| R04 | 표기 | 버튼 "Release Notes", IA "Release Note" | 하나로 통일 | `ia/ia-screens.csv` | 대기 |
+| R05 | 화면 글자 | LNB Information 아래 "Manual" | IA에 Manual 화면 없음. 메뉴 유지 여부 확인 | `ia/ia-screens.csv` | 대기 (확인 필요) |
 
 ## 변경 이력
 

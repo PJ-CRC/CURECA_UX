@@ -162,16 +162,16 @@ figma_region: 2.1 2차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | 1 "TI-SPT-02-01/Case → Case 1", 3-1 "TI-SPT-02-01/Case → Case 3" (Case 3은 TI-SPT-03-01/Case에만 있음) | TI-SPT-03-01/Case | 케이스 프레임 | 대기 |
-| 2 | 화면 정보 | 화면 이름 "PCR Plate Details", 경로 "Sample Tracking > PCR Plate" | IA 기준 (PCR Plate > Details) | `ia/ia-screens.csv` | 대기 |
-| 3 | 디스크립션 | 2-2 검사 항목 범례가 10개로 고정 | Plate에서 검사한 항목만 보이는지, 목록 기준 확인 | `glossary/test-items.csv` | 대기 (확인 필요) |
-| 4 | 디스크립션 | 2-4 "비선택Unselected", 3 "Sample가" | Unselected, Sample이 | 오타 | 대기 |
-| 5 | 디스크립션 | 3-1 Kit "시약 명", 화면 예시는 제품 이름(Allplex™ Respiratory Panel 1) | Product Name 표준어로 | `glossary/terms.csv` Product Name | 대기 |
-| 6 | 디스크립션 | 1-2 "검사 수행 장비명", "Module명" | Module 이름 (번호) 표기 기준으로 | `glossary/terms.csv` Module | 대기 |
-| 7 | 화면 글자 | 2-3 [Select All]이 디스크립션에 있는데 화면 글자에는 [Reset]만 보임 | 화면에 버튼이 있는지 확인 | 화면 글자 | 대기 (확인 필요) |
-| 8 | T/L 차이 | Plate Info 라벨 "Total Products / STAT Products" (L-IOS는 "Product Total / Product STAT") | 하나로 | LI-SPT-03-01 화면 글자 | 대기 |
+| R01 | 화면 정보 | 1 "TI-SPT-02-01/Case → Case 1", 3-1 "TI-SPT-02-01/Case → Case 3" (Case 3은 TI-SPT-03-01/Case에만 있음) | TI-SPT-03-01/Case | 케이스 프레임 | 대기 |
+| R02 | 화면 정보 | 화면 이름 "PCR Plate Details", 경로 "Sample Tracking > PCR Plate" | IA 기준 (PCR Plate > Details) | `ia/ia-screens.csv` | 대기 |
+| R03 | 디스크립션 | 2-2 검사 항목 범례가 10개로 고정 | Plate에서 검사한 항목만 보이는지, 목록 기준 확인 | `glossary/test-items.csv` | 대기 (확인 필요) |
+| R04 | 디스크립션 | 2-4 "비선택Unselected", 3 "Sample가" | Unselected, Sample이 | 오타 | 대기 |
+| R05 | 디스크립션 | 3-1 Kit "시약 명", 화면 예시는 제품 이름(Allplex™ Respiratory Panel 1) | Product Name 표준어로 | `glossary/terms.csv` Product Name | 대기 |
+| R06 | 디스크립션 | 1-2 "검사 수행 장비명", "Module명" | Module 이름 (번호) 표기 기준으로 | `glossary/terms.csv` Module | 대기 |
+| R07 | 화면 글자 | 2-3 [Select All]이 디스크립션에 있는데 화면 글자에는 [Reset]만 보임 | 화면에 버튼이 있는지 확인 | 화면 글자 | 대기 (확인 필요) |
+| R08 | T/L 차이 | Plate Info 라벨 "Total Products / STAT Products" (L-IOS는 "Product Total / Product STAT") | 하나로 | LI-SPT-03-01 화면 글자 | 대기 |
 
 ## 변경 이력
 

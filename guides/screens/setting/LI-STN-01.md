@@ -59,10 +59,10 @@ figma_region: 2.1 2차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 디스크립션 | 3 Analyze Breakpoint → "LI-STN-01-03" | LI-STN-01-04 (IA) | `ia/ia-screens.csv` | 대기 |
-| 2 | 정책 반영 | Cost Setting 항목이 L-IOS 화면에도 보임 | Cost Setting은 T-IOS만 (POL-TST-001) | 8월 정책서 Policy 공통 정책 | 대기 |
+| R01 | 디스크립션 | 3 Analyze Breakpoint → "LI-STN-01-03" | LI-STN-01-04 (IA) | `ia/ia-screens.csv` | 대기 |
+| R02 | 정책 반영 | Cost Setting 항목이 L-IOS 화면에도 보임 | Cost Setting은 T-IOS만 (POL-TST-001) | 8월 정책서 Policy 공통 정책 | 대기 |
 
 ## 변경 이력
 

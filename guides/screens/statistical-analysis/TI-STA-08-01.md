@@ -143,16 +143,16 @@ Description Number (10), 1 Depth (6), Form/CheckBox (5), 2 Depth (5), Square (4)
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | IA 화면 이름 "Event 통계 - Chart" (한국어), 화면 타이틀 "Event Trend", Figma 화면 이름 "Statistical Analysis" | IA 화면 이름을 Event Trend - Chart로 (Figma 기준). IA 수정 요청함 | `ia/change-requests.md` 4 | 대기 |
-| 2 | 화면 정보 | Figma 경로 "Statistical Analysis > Event", IA는 Test Analytics 아래 | 메뉴 구조는 Statistical Analysis > Test Analytics / Instrument / Inventory / Event (Figma 기준). IA 수정 요청함 | `ia/change-requests.md` 1, POL-STA-001 규칙 1 | 대기 |
-| 3 | 디스크립션 | 산출식이 Error·Warning 총합만 있음. Event Level(Error / Warning)로 나눠 보는 필터가 없고, Event Status(Open / Closed)와 무관하게 세는지 적혀 있지 않음 | 디스크립션에 넣음: Event Status(Open, Closed)와 관계없이 세고, Error와 Warning은 나누지 않고 합계로 보여 줌 | POL-STA-006 정의·규칙 5 | 대기 |
-| 4 | 디스크립션 | Module 탭에서 Module이 없는 Event(System 등)를 어떻게 세는지 없음 | 디스크립션에 넣음: Module 기준으로 볼 때 Module이 없는 Event(System 등)는 빼고 보여 줌 | POL-STA-006 규칙 5 | 대기 |
-| 5 | 디스크립션 | "이벤트", "모듈" | Event, Module | `glossary/terms.csv` | 대기 |
-| 6 | 표기 | 다른 프레임 "Prep Consumable Storage(1)" | Prep Consumable Storage (1) | `glossary/terms.csv` Module | 대기 |
-| 7 | 화면 정보 | "TI-STA-05_Skeleton" 참조 (TI-STA-05는 Test Forecasting) | Skeleton 프레임 CID 확인 | `ia/ia-screens.csv` | 대기 (확인 필요) |
-| 8 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
+| R01 | 화면 정보 | IA 화면 이름 "Event 통계 - Chart" (한국어), 화면 타이틀 "Event Trend", Figma 화면 이름 "Statistical Analysis" | IA 화면 이름을 Event Trend - Chart로 (Figma 기준). IA 수정 요청함 | `ia/change-requests.md` 4 | 대기 |
+| R02 | 화면 정보 | Figma 경로 "Statistical Analysis > Event", IA는 Test Analytics 아래 | 메뉴 구조는 Statistical Analysis > Test Analytics / Instrument / Inventory / Event (Figma 기준). IA 수정 요청함 | `ia/change-requests.md` 1, POL-STA-001 규칙 1 | 대기 |
+| R03 | 디스크립션 | 산출식이 Error·Warning 총합만 있음. Event Level(Error / Warning)로 나눠 보는 필터가 없고, Event Status(Open / Closed)와 무관하게 세는지 적혀 있지 않음 | 디스크립션에 넣음: Event Status(Open, Closed)와 관계없이 세고, Error와 Warning은 나누지 않고 합계로 보여 줌 | POL-STA-006 정의·규칙 5 | 대기 |
+| R04 | 디스크립션 | Module 탭에서 Module이 없는 Event(System 등)를 어떻게 세는지 없음 | 디스크립션에 넣음: Module 기준으로 볼 때 Module이 없는 Event(System 등)는 빼고 보여 줌 | POL-STA-006 규칙 5 | 대기 |
+| R05 | 디스크립션 | "이벤트", "모듈" | Event, Module | `glossary/terms.csv` | 대기 |
+| R06 | 표기 | 다른 프레임 "Prep Consumable Storage(1)" | Prep Consumable Storage (1) | `glossary/terms.csv` Module | 대기 |
+| R07 | 화면 정보 | "TI-STA-05_Skeleton" 참조 (TI-STA-05는 Test Forecasting) | Skeleton 프레임 CID 확인 | `ia/ia-screens.csv` | 대기 (확인 필요) |
+| R08 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
 
 ## 변경 이력
 

@@ -18,7 +18,7 @@ CURECA_AI/
 ├── sources.md           기준 출처 목록 (Claude가 근거로 쓰는 자료)
 ├── rules/               공통 룰 문서
 ├── glossary/            용어집
-├── language-set/        언어셋 (6개 언어 문구)
+├── language-set/        언어셋 (7개 언어 문구)
 ├── policy/              정책서와 우리가 관리하는 기준 자료 (Service Mode, 권한, 장비 상태, 알럿)
 ├── common-ux/           Common UX
 ├── reference/           외부에서 받은 원본 자료 (고객사 제공 파일 등)

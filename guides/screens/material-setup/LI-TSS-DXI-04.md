@@ -125,16 +125,16 @@ Description Number (6), Frame (1), Accordion/Default (1), Tool Tip/Default (1), 
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | Ver 2.0 (2026-06-15) | 버전 메모(v2.1.12까지) 반영 Ver | 버전 메모 | 대기 (확인 필요) |
-| 2 | 표기 | 타이틀 "Flexible Extraction (N)", 예시 "FlexibleExtraction (2)" (코드명) | Flexible Extraction (2) > Buffer Cartridge Storage | `glossary/modules.csv`, `glossary/module-units.csv` | 대기 |
-| 3 | 화면 데이터 | "Buffer Cartridge Set" (품목 표에는 BB·WB1·WB2·WB3·EB Tub이 따로 있음) | Set 단위로 스캔하는지, Tub 단위로 스캔하는지 확인 | `glossary/consumables.csv`, LI-TSS-DXI-02 세부 정의 Buffer Cartridge Storage | 대기 (확인 필요) |
-| 4 | 디스크립션 | 1 정상 "(1-1) 카운팅 추가" (카운터는 2) | ② | 디스크립션 | 대기 |
-| 5 | 화면 | 카운터 "02/12"와 "N/M"이 겹쳐 있음 | 하나만 | 디스크립션 2 | 대기 |
-| 6 | 정책 반영 | Buffer Cartridge를 다 쓰고 반환하면 Cap refill 필요 (LI-TSS-DXI-08 활성 조건) | 적재와 Cap refill 관계 정리 | LI-TSS-DXI-08 1-1 | 대기 (확인 필요) |
-| 7 | 표기 | "시약", "소모품/시약", "유효기간", "Toast 팝업" | Reagent, Consumable/Reagent, Expiration Date, Toast | `glossary/terms.csv` | 대기 |
-| 8 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
+| R01 | 화면 정보 | Ver 2.0 (2026-06-15) | 버전 메모(v2.1.12까지) 반영 Ver | 버전 메모 | 대기 (확인 필요) |
+| R02 | 표기 | 타이틀 "Flexible Extraction (N)", 예시 "FlexibleExtraction (2)" (코드명) | Flexible Extraction (2) > Buffer Cartridge Storage | `glossary/modules.csv`, `glossary/module-units.csv` | 대기 |
+| R03 | 화면 데이터 | "Buffer Cartridge Set" (품목 표에는 BB·WB1·WB2·WB3·EB Tub이 따로 있음) | Set 단위로 스캔하는지, Tub 단위로 스캔하는지 확인 | `glossary/consumables.csv`, LI-TSS-DXI-02 세부 정의 Buffer Cartridge Storage | 대기 (확인 필요) |
+| R04 | 디스크립션 | 1 정상 "(1-1) 카운팅 추가" (카운터는 2) | ② | 디스크립션 | 대기 |
+| R05 | 화면 | 카운터 "02/12"와 "N/M"이 겹쳐 있음 | 하나만 | 디스크립션 2 | 대기 |
+| R06 | 정책 반영 | Buffer Cartridge를 다 쓰고 반환하면 Cap refill 필요 (LI-TSS-DXI-08 활성 조건) | 적재와 Cap refill 관계 정리 | LI-TSS-DXI-08 1-1 | 대기 (확인 필요) |
+| R07 | 표기 | "시약", "소모품/시약", "유효기간", "Toast 팝업" | Reagent, Consumable/Reagent, Expiration Date, Toast | `glossary/terms.csv` | 대기 |
+| R08 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
 
 ## 변경 이력
 

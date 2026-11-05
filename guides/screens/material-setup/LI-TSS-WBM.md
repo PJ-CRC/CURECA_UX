@@ -76,16 +76,16 @@ Tool Tip/Default (8), Description Number (4), Interface/Setting_fill (3), Interf
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 알럿 | 1 "Alert_034" (기존 카탈로그) | MS_Alert_026 (같은 문구). MS 목록 사용 화면은 "DXI"뿐이라 WBM 추가 | `policy/alert-catalog-ms.csv` MS_Alert_026, `policy/alert-catalog.csv` Alert_034 | 대기 |
-| 2 | 화면·디스크립션 | 화면 버튼 "Confirm Empty", 안내 "press [Waste Bin] to confirm", 디스크립션 3 "Waste Bin 버튼" | 버튼 이름 하나로 | 화면 글자 | 대기 |
-| 3 | 디스크립션 | QR code 스캔으로 여는 Storage가 어떤 Waste Bin Unit인지(Waste Bin Unit 목록) 정의 없음 | 대상 Unit 목록 | `glossary/module-units.csv` WasteBin | 대기 (확인 필요) |
-| 4 | 화면 | "Universal Pcr" | Universal PCR | `glossary/modules.csv` | 대기 |
-| 5 | 화면 정보 | 경로 "TSS > Empty Waste Bin" (Empty Waste Bin은 Console Mode) | Material Setup > Empty Waste Bin | `policy/service-mode-matrix.csv` | 대기 |
-| 6 | 화면 | LI-TSS-DXI와 같은 배치도·범례를 씀 | 공통 컴포넌트로 묶을지 | LI-TSS-DXI | 대기 (확인 필요) |
-| 7 | 표기 | "소모품 및 시약", "토스트 팝업", "툴팁", "메세지" | Consumable 및 Reagent, Toast, Tooltip, 메시지 | `glossary/terms.csv` | 대기 |
-| 8 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
+| R01 | 알럿 | 1 "Alert_034" (기존 카탈로그) | MS_Alert_026 (같은 문구). MS 목록 사용 화면은 "DXI"뿐이라 WBM 추가 | `policy/alert-catalog-ms.csv` MS_Alert_026, `policy/alert-catalog.csv` Alert_034 | 대기 |
+| R02 | 화면·디스크립션 | 화면 버튼 "Confirm Empty", 안내 "press [Waste Bin] to confirm", 디스크립션 3 "Waste Bin 버튼" | 버튼 이름 하나로 | 화면 글자 | 대기 |
+| R03 | 디스크립션 | QR code 스캔으로 여는 Storage가 어떤 Waste Bin Unit인지(Waste Bin Unit 목록) 정의 없음 | 대상 Unit 목록 | `glossary/module-units.csv` WasteBin | 대기 (확인 필요) |
+| R04 | 화면 | "Universal Pcr" | Universal PCR | `glossary/modules.csv` | 대기 |
+| R05 | 화면 정보 | 경로 "TSS > Empty Waste Bin" (Empty Waste Bin은 Console Mode) | Material Setup > Empty Waste Bin | `policy/service-mode-matrix.csv` | 대기 |
+| R06 | 화면 | LI-TSS-DXI와 같은 배치도·범례를 씀 | 공통 컴포넌트로 묶을지 | LI-TSS-DXI | 대기 (확인 필요) |
+| R07 | 표기 | "소모품 및 시약", "토스트 팝업", "툴팁", "메세지" | Consumable 및 Reagent, Toast, Tooltip, 메시지 | `glossary/terms.csv` | 대기 |
+| R08 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
 
 ## 변경 이력
 

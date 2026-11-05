@@ -121,16 +121,16 @@ figma_region: 2.1 2차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | 프레임 이름과 화면 정보 CID "TI-IVT-04-T" | TI-IVT-04-T-P | `ia/ia-screens.csv` | 대기 |
-| 2 | 디스크립션 | "유효기한", "유효기한이 지난" | Expiration Date, Expired | `glossary/terms.csv` Expiration Date, 시약 만료 상태 | 대기 |
-| 3 | 디스크립션 | 2-1 Used Counts "흡입한 회수" | 흡입한 횟수 | 오타 | 대기 |
-| 4 | 디스크립션 | 2-1 Remaining Rxns "남은 반응 수 rxns 표기"와 "표기 방식 : 반응 수T"가 함께 있음 ("T"의 뜻이 없음) | 단위 하나로 (rxns) | 디스크립션, COMM-4-b | 대기 (확인 필요) |
-| 5 | 디스크립션 | 2-1 Location in storage "해당 소모품의 위치 값" (Reagent 화면) | 해당 Reagent의 위치 값 | Consumables Popup에서 복사 | 대기 |
-| 6 | 디스크립션 | 2-1 "DX 서랍식 입고", "시약", "바코드", "튜브" | Dx 시스템 Storage의 Drawer, Reagent, Barcode, Tube | `glossary/terms.csv` | 대기 |
-| 7 | 화면 글자 | "2,010rxns  (22 tubes)" | 2,010 rxns (22 tubes) | 띄어쓰기 | 대기 |
-| 8 | 화면 글자 | 예시 줄에 Inbound Date, Expiration Date 값이 없음 | 날짜 예시를 넣음 | 화면 글자 | 대기 |
+| R01 | 화면 정보 | 프레임 이름과 화면 정보 CID "TI-IVT-04-T" | TI-IVT-04-T-P | `ia/ia-screens.csv` | 대기 |
+| R02 | 디스크립션 | "유효기한", "유효기한이 지난" | Expiration Date, Expired | `glossary/terms.csv` Expiration Date, 시약 만료 상태 | 대기 |
+| R03 | 디스크립션 | 2-1 Used Counts "흡입한 회수" | 흡입한 횟수 | 오타 | 대기 |
+| R04 | 디스크립션 | 2-1 Remaining Rxns "남은 반응 수 rxns 표기"와 "표기 방식 : 반응 수T"가 함께 있음 ("T"의 뜻이 없음) | 단위 하나로 (rxns) | 디스크립션, COMM-4-b | 대기 (확인 필요) |
+| R05 | 디스크립션 | 2-1 Location in storage "해당 소모품의 위치 값" (Reagent 화면) | 해당 Reagent의 위치 값 | Consumables Popup에서 복사 | 대기 |
+| R06 | 디스크립션 | 2-1 "DX 서랍식 입고", "시약", "바코드", "튜브" | Dx 시스템 Storage의 Drawer, Reagent, Barcode, Tube | `glossary/terms.csv` | 대기 |
+| R07 | 화면 글자 | "2,010rxns  (22 tubes)" | 2,010 rxns (22 tubes) | 띄어쓰기 | 대기 |
+| R08 | 화면 글자 | 예시 줄에 Inbound Date, Expiration Date 값이 없음 | 날짜 예시를 넣음 | 화면 글자 | 대기 |
 
 ## 변경 이력
 

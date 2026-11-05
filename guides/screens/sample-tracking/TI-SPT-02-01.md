@@ -148,14 +148,14 @@ figma_region: 2.1 2차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | 화면 이름 "96-DWP Details", 경로 "Sample Tracking > 96-DWP" | IA 기준 (96-DWP > Details) | `ia/ia-screens.csv` | 대기 |
-| 2 | 화면 글자 | 2-1 [Select All]이 디스크립션에 있는데 화면 글자에는 [Reset]만 보임 | 화면에 버튼이 있는지 확인 | 화면 글자 | 대기 (확인 필요) |
-| 3 | 디스크립션 | 2-2 "비선택Unselected", 3 "Sample가" | Unselected, Sample이 | 오타 | 대기 |
-| 4 | 디스크립션 | 1-2 "검사 수행 장비명", "Module명", "해당 단계 장치" | Module 이름 (번호) 표기 기준으로 | `glossary/terms.csv` Module | 대기 |
-| 5 | 디스크립션 | 3 이동 화면을 "[Samples] 메뉴"로만 적음 | TI-SPT-01 (상세 TI-SPT-01-01 펼침) | `ia/ia-screens.csv` | 대기 |
-| 6 | 디스크립션 | 3 안내 문구 "Please select a sample from the Plate." | 언어셋 ID로 관리 | `rules/language-set.md` | 대기 (확인 필요) |
+| R01 | 화면 정보 | 화면 이름 "96-DWP Details", 경로 "Sample Tracking > 96-DWP" | IA 기준 (96-DWP > Details) | `ia/ia-screens.csv` | 대기 |
+| R02 | 화면 글자 | 2-1 [Select All]이 디스크립션에 있는데 화면 글자에는 [Reset]만 보임 | 화면에 버튼이 있는지 확인 | 화면 글자 | 대기 (확인 필요) |
+| R03 | 디스크립션 | 2-2 "비선택Unselected", 3 "Sample가" | Unselected, Sample이 | 오타 | 대기 |
+| R04 | 디스크립션 | 1-2 "검사 수행 장비명", "Module명", "해당 단계 장치" | Module 이름 (번호) 표기 기준으로 | `glossary/terms.csv` Module | 대기 |
+| R05 | 디스크립션 | 3 이동 화면을 "[Samples] 메뉴"로만 적음 | TI-SPT-01 (상세 TI-SPT-01-01 펼침) | `ia/ia-screens.csv` | 대기 |
+| R06 | 디스크립션 | 3 안내 문구 "Please select a sample from the Plate." | 언어셋 ID로 관리 | `rules/language-set.md` | 대기 (확인 필요) |
 
 ## 변경 이력
 

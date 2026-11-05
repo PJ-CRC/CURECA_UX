@@ -55,11 +55,11 @@ Description Number (2), Popup/Popup Middle Text (1), Interface/Close (1), Square
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | 경로 "Information > Installation information Popup" | Information > Program > Release Notes | `ia/ia-screens.csv` | 대기 |
-| 2 | 표기 | "Release Notes"(화면), "Release Note"(IA) | 하나로 통일 | `ia/ia-screens.csv` | 대기 |
-| 3 | 디스크립션 | [OK], [X] 버튼 동작 설명 없음 | 버튼 동작 추가 (팝업 닫힘) | 화면 글자 | 대기 |
+| R01 | 화면 정보 | 경로 "Information > Installation information Popup" | Information > Program > Release Notes | `ia/ia-screens.csv` | 대기 |
+| R02 | 표기 | "Release Notes"(화면), "Release Note"(IA) | 하나로 통일 | `ia/ia-screens.csv` | 대기 |
+| R03 | 디스크립션 | [OK], [X] 버튼 동작 설명 없음 | 버튼 동작 추가 (팝업 닫힘) | 화면 글자 | 대기 |
 
 ## 변경 이력
 

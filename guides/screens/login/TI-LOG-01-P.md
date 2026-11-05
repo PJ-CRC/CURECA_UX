@@ -101,14 +101,14 @@ Description Number (6), Popup/Popup Middle Text (2), Interface/Eye_Slash_Outline
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | 디스크립션의 "TI-LOG-P", "TI-LOG" | TI-LOG-01-P, TI-LOG-01 | `ia/ia-screens.csv` | 대기 |
-| 2 | 문구 | Placeholder가 디스크립션 "8-64 characters: Letters, numbers, and special characters", 화면 "Please enter a valid password" | 하나로 통일 (LI-LOG-01-P 디스크립션은 화면과 같음) | 화면 글자 | 대기 |
-| 3 | 정책 반영 | "각 문자 유형을 최소 1자 이상 포함"이 T-IOS에만 있음 (LI-LOG-01-P에는 없음) | POL-ACC-006으로 통일 (영문 대문자·소문자·숫자 각 1자 이상, 특수문자는 선택) | POL-ACC-006 | 대기 |
-| 4 | 디스크립션 | 1-3 "1-2에 입력한 값과" (1-2는 툴팁) | 1-1에 입력한 값과 | 디스크립션 | 대기 |
-| 5 | 디스크립션 | [Cancle] | [Cancel] | 오타 | 대기 |
-| 6 | 정책 반영 | [Cancel]을 누르면 팝업만 닫힘 | 디스크립션에 넣음: 로그인 화면으로 돌아가고, 다음 로그인 때 이 Popup을 다시 보여 줌 | POL-ACC-003 규칙 5 | 대기 |
+| R01 | 화면 정보 | 디스크립션의 "TI-LOG-P", "TI-LOG" | TI-LOG-01-P, TI-LOG-01 | `ia/ia-screens.csv` | 대기 |
+| R02 | 문구 | Placeholder가 디스크립션 "8-64 characters: Letters, numbers, and special characters", 화면 "Please enter a valid password" | 하나로 통일 (LI-LOG-01-P 디스크립션은 화면과 같음) | 화면 글자 | 대기 |
+| R03 | 정책 반영 | "각 문자 유형을 최소 1자 이상 포함"이 T-IOS에만 있음 (LI-LOG-01-P에는 없음) | POL-ACC-006으로 통일 (영문 대문자·소문자·숫자 각 1자 이상, 특수문자는 선택) | POL-ACC-006 | 대기 |
+| R04 | 디스크립션 | 1-3 "1-2에 입력한 값과" (1-2는 툴팁) | 1-1에 입력한 값과 | 디스크립션 | 대기 |
+| R05 | 디스크립션 | [Cancle] | [Cancel] | 오타 | 대기 |
+| R06 | 정책 반영 | [Cancel]을 누르면 팝업만 닫힘 | 디스크립션에 넣음: 로그인 화면으로 돌아가고, 다음 로그인 때 이 Popup을 다시 보여 줌 | POL-ACC-003 규칙 5 | 대기 |
 
 ## 변경 이력
 

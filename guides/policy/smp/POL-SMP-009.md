@@ -3,7 +3,7 @@ id: POL-SMP-009
 title: Today’s Orders와 검사 진행률
 summary: Today’s Orders는 Test Cut-off Time 기준 하루의 오더를 Pending, In Progress, Completed로 나눠 세고, Test Status 진행률은 완료와 실패를 합쳐 계산함
 domain: SMP
-menus: [Dashboard, Dashboard (All), Test Management]
+menus: [Dashboard, Dashboard(All), Test Management]
 cids: [TI-DAS, LI-DAS, TI-ADS, TI-TMG-02, LI-TMG-02]
 status: 확정
 version:
@@ -28,7 +28,7 @@ replaced_by:
 ## 규칙
 
 1. "오늘"은 Test Cut-off Time 기준이며, Cut-off Time이 되면 Today’s Orders를 새로 셈 (POL-TST-002).
-2. Dashboard (All)의 총 Today’s Orders는 각 CURECA의 Today’s Orders를 더한 값임 (POL-COM-005).
+2. Dashboard(All)의 총 Today’s Orders는 각 CURECA의 Today’s Orders를 더한 값임 (POL-COM-005).
 3. Test Status의 단계별 진행률(%) = (완료 + 실패) ÷ 총 검사 수량 × 100. 앞 단계에서 Failed나 Not Tested가 된 검사는 다음 단계의 분모에서 뺌.
 
 ## 예외

@@ -71,15 +71,15 @@ Description Number (3), Button/Secondary_1Button_44 (2), Frame (1), layout/spaci
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | IA | IA 이름 "Confirm the socket", 화면 "Confirm the tray" (경로는 아직 "Confirm the socket") | IA와 경로를 Confirm the tray로 | `ia/ia-screens.csv` | 대기 (확인 필요) |
-| 2 | 화면 데이터 | Required Quantity 예시에 PK/IC 줄이 없음 (LCR-01-03에는 있음) | 같은 예시로 | LI-TSS-PSI-LCR-01-03 | 대기 |
-| 3 | 화면 데이터 | "Saline Standard Tub" | Saline Standard Tube | 오타 | 대기 |
-| 4 | 문구 | "go to the consumables and reagents manual screen" | [Finish]는 LI-TSS-PSI-LCR로 감. 화면 이름과 맞게 | 디스크립션 3 | 대기 |
-| 5 | 화면 | 버튼 "Add new" | [Add New] | 디스크립션 2 | 대기 |
-| 6 | 표기 | "검체", "tray", "팝업" | Sample, Tray, Popup | `glossary/terms.csv` | 대기 |
-| 7 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
+| R01 | IA | IA 이름 "Confirm the socket", 화면 "Confirm the tray" (경로는 아직 "Confirm the socket") | IA와 경로를 Confirm the tray로 | `ia/ia-screens.csv` | 대기 (확인 필요) |
+| R02 | 화면 데이터 | Required Quantity 예시에 PK/IC 줄이 없음 (LCR-01-03에는 있음) | 같은 예시로 | LI-TSS-PSI-LCR-01-03 | 대기 |
+| R03 | 화면 데이터 | "Saline Standard Tub" | Saline Standard Tube | 오타 | 대기 |
+| R04 | 문구 | "go to the consumables and reagents manual screen" | [Finish]는 LI-TSS-PSI-LCR로 감. 화면 이름과 맞게 | 디스크립션 3 | 대기 |
+| R05 | 화면 | 버튼 "Add new" | [Add New] | 디스크립션 2 | 대기 |
+| R06 | 표기 | "검체", "tray", "팝업" | Sample, Tray, Popup | `glossary/terms.csv` | 대기 |
+| R07 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
 
 ## 변경 이력
 

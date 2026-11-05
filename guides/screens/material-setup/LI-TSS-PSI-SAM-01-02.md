@@ -78,14 +78,14 @@ Description Number (2), Frame (1), Button/Secondary_1Button_44 (1)
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | Ver 2.0 (2026-06-15) | 버전 메모(v2.1.05)를 반영한 Ver로 | 버전 메모 | 대기 (확인 필요) |
-| 2 | 화면 | 전용 Socket(socket type)을 보여 주는 영역이 화면 글자에 없음 (이미지만) | socket type 이름(G10 등) 표시 여부 | 디스크립션 1 | 대기 (확인 필요) |
-| 3 | 디스크립션 | 2 [Next], 2-1 Scan 내용 없음 | LI-TSS-PSI-SAM-01-01 반영 대기 목록 3과 같이 | 디스크립션 | 대기 (확인 필요) |
-| 4 | 디스크립션 | "sample의전용" | sample의 전용 | 오타 | 대기 |
-| 5 | 표기 | "sample", "socket", "slot", "검사군", "팝업" | Sample, Socket, Slot, Popup. "검사군"은 용어집에 없음 | `glossary/terms.csv` | 대기 (확인 필요) |
-| 6 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
+| R01 | 화면 정보 | Ver 2.0 (2026-06-15) | 버전 메모(v2.1.05)를 반영한 Ver로 | 버전 메모 | 대기 (확인 필요) |
+| R02 | 화면 | 전용 Socket(socket type)을 보여 주는 영역이 화면 글자에 없음 (이미지만) | socket type 이름(G10 등) 표시 여부 | 디스크립션 1 | 대기 (확인 필요) |
+| R03 | 디스크립션 | 2 [Next], 2-1 Scan 내용 없음 | LI-TSS-PSI-SAM-01-01 반영 대기 목록 3과 같이 | 디스크립션 | 대기 (확인 필요) |
+| R04 | 디스크립션 | "sample의전용" | sample의 전용 | 오타 | 대기 |
+| R05 | 표기 | "sample", "socket", "slot", "검사군", "팝업" | Sample, Socket, Slot, Popup. "검사군"은 용어집에 없음 | `glossary/terms.csv` | 대기 (확인 필요) |
+| R06 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
 
 ## 변경 이력
 

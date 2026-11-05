@@ -37,12 +37,12 @@ figma_region: 2.1 2차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | Figma 프레임 이름 "LI-SPT-01-02" | LI-SPT-01-03 | `ia/ia-screens.csv` | 대기 |
-| 2 | 화면 정보 | 3 참조 "TI-STN-03-02-02-M" (L-IOS 화면에서 T-IOS CID) | L-IOS Protocol Setting CID(LI-STN-03-02-02) | `screens/setting/` | 대기 |
-| 3 | 화면 정보 | 화면 이름 "Samples Details" | IA 이름 | `ia/ia-screens.csv` | 대기 |
-| 4 | 화면 글자 | Temp.(˚C) 범위 "(0~2,000)" | TI-SPT-01-03 반영 대기 목록 3과 같이 | POL-TST-007 | 대기 (확인 필요) |
+| R01 | 화면 정보 | Figma 프레임 이름 "LI-SPT-01-02" | LI-SPT-01-03 | `ia/ia-screens.csv` | 대기 |
+| R02 | 화면 정보 | 3 참조 "TI-STN-03-02-02-M" (L-IOS 화면에서 T-IOS CID) | L-IOS Protocol Setting CID(LI-STN-03-02-02) | `screens/setting/` | 대기 |
+| R03 | 화면 정보 | 화면 이름 "Samples Details" | IA 이름 | `ia/ia-screens.csv` | 대기 |
+| R04 | 화면 글자 | Temp.(˚C) 범위 "(0~2,000)" | TI-SPT-01-03 반영 대기 목록 3과 같이 | POL-TST-007 | 대기 (확인 필요) |
 
 ## 변경 이력
 

@@ -117,16 +117,16 @@ Description Number (4), Frame (1), Button/Secondary_1Button_44 (1), Button/Terti
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 데이터 | Required Quantity 아래에 LCR 화면의 Reagent 줄이 남아 있음 | 지움 | 화면 글자 | 대기 |
-| 2 | 알럿 | 하이라이트 단계에서 PK/IC tube 외 코드 스캔 케이스 없음 | 디스크립션에 넣음: 이 화면에서 하위 항목이 아닌 코드를 스캔하면 MS_Alert_001 (MS 목록에 명시된 "하이라이팅 화면의 하위 항목 외 스캔") | `policy/alert-catalog-ms.csv` MS_Alert_001, 2026-11-03 사용자 답변 (MS4) | 대기 |
-| 3 | 디스크립션 | MS_Confirm_014 OK 뒤 동작 없음 | OK 선택 시 → 동의 기록 후 다음 스캔 ([Done] 시 반영) | MS_Confirm_014 | 대기 |
-| 4 | 디스크립션 | 디폴트 "0/M"과 세부 정의 "0/48"(Socket hole 수). PK·IC가 한 Socket(G10)에 섞이는데 칸을 어떻게 나누는지(화면 PK/IC 영역) 정의 없음 | PK·IC 칸 배정 규칙 확인 | 화면 글자 "PK", "IC", POL-INV-007 | 대기 (확인 필요) |
-| 5 | 문구 | 세부 정의 안내 "while a tray remains empty" | "while a socket remains empty" (주 프레임과 같게) | 세부 정의 | 대기 |
-| 6 | 문구 | "registered in 'Lot grouping’" (따옴표 짝이 다름) | 'Group Lots' (메뉴 이름) | 화면 글자, `ia/ia-screens.csv` | 대기 |
-| 7 | 표기 | "유효기간", "socket", "slot", "라뜨", "팝업" | Expiration Date, Socket, Slot, Lot, Popup | `glossary/terms.csv` | 대기 |
-| 8 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
+| R01 | 화면 데이터 | Required Quantity 아래에 LCR 화면의 Reagent 줄이 남아 있음 | 지움 | 화면 글자 | 대기 |
+| R02 | 알럿 | 하이라이트 단계에서 PK/IC tube 외 코드 스캔 케이스 없음 | 디스크립션에 넣음: 이 화면에서 하위 항목이 아닌 코드를 스캔하면 MS_Alert_001 (MS 목록에 명시된 "하이라이팅 화면의 하위 항목 외 스캔") | `policy/alert-catalog-ms.csv` MS_Alert_001, 2026-11-03 사용자 답변 (MS4) | 대기 |
+| R03 | 디스크립션 | MS_Confirm_014 OK 뒤 동작 없음 | OK 선택 시 → 동의 기록 후 다음 스캔 ([Done] 시 반영) | MS_Confirm_014 | 대기 |
+| R04 | 디스크립션 | 디폴트 "0/M"과 세부 정의 "0/48"(Socket hole 수). PK·IC가 한 Socket(G10)에 섞이는데 칸을 어떻게 나누는지(화면 PK/IC 영역) 정의 없음 | PK·IC 칸 배정 규칙 확인 | 화면 글자 "PK", "IC", POL-INV-007 | 대기 (확인 필요) |
+| R05 | 문구 | 세부 정의 안내 "while a tray remains empty" | "while a socket remains empty" (주 프레임과 같게) | 세부 정의 | 대기 |
+| R06 | 문구 | "registered in 'Lot grouping’" (따옴표 짝이 다름) | 'Group Lots' (메뉴 이름) | 화면 글자, `ia/ia-screens.csv` | 대기 |
+| R07 | 표기 | "유효기간", "socket", "slot", "라뜨", "팝업" | Expiration Date, Socket, Slot, Lot, Popup | `glossary/terms.csv` | 대기 |
+| R08 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
 
 ## 변경 이력
 

@@ -89,17 +89,17 @@ Description Number (4), Divider (2), layout/spacing (2), Frame (1), Button/Terti
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | Ver 2.0 (2026-06-15) | 버전 메모(v2.1.12까지)를 반영한 Ver로 | 버전 메모 | 대기 (확인 필요) |
-| 2 | 화면 | Step 표시에 Group Universal Cartridge Kit 쪽 Step 이름("Scan the Tub barcode", "Confirm the mapping" 등)이 겹쳐 남아 있음 | STEP 1 Scan the IC tube, STEP 2 Confirm the IC setup만 남김 | 화면 글자, `ia/ia-screens.csv` | 대기 |
-| 3 | 알럿 | 버전 메모 "Alert_036 팝업 추가" (기존 ID) | 지금 디스크립션은 MS_Alert_005. 변경 이력에만 남김 | `policy/alert-catalog-ms.csv` MS_Alert_005 | 대기 |
-| 4 | 알럿 | 스캔할 수 없는 코드(PCR box·IC tube 외) 스캔 케이스 없음 | MS_Alert_001은 넣지 않음. MS 목록에 명시한 경우에만 적용 (2026-11-03 사용자 답변 MS4) | `policy/alert-catalog-ms.csv` MS_Alert_001, 2026-11-03 사용자 답변 (MS4) | 대기 |
-| 5 | 디스크립션 | 3 활성 조건 "①"로 가리킴. 1의 하위 번호는 (1-1) | (1-1)로 통일 | 디스크립션 | 대기 |
-| 6 | 화면 정보 | 경로 "IC reagent Setup > Group PCR Reagent Kit" | Group Lots > Group PCR Reagent Kit > Scan the IC tube | `ia/ia-screens.csv` | 대기 |
-| 7 | 표기 | "reagent을", "유효기간", "Lot(라뜨)", "팝업" | Reagent를, Expiration Date, Lot, Popup | `glossary/terms.csv` | 대기 |
-| 8 | 정책 반영 | IC tube가 없는 PCR box는 Lot 없이 Load PCR Reagents에서 바로 적재 (MS_Alert_006 부제) | POL-INV-007과 맞는지 확인 | POL-INV-007, MS_Alert_006 | 대기 (확인 필요) |
-| 9 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
+| R01 | 화면 정보 | Ver 2.0 (2026-06-15) | 버전 메모(v2.1.12까지)를 반영한 Ver로 | 버전 메모 | 대기 (확인 필요) |
+| R02 | 화면 | Step 표시에 Group Universal Cartridge Kit 쪽 Step 이름("Scan the Tub barcode", "Confirm the mapping" 등)이 겹쳐 남아 있음 | STEP 1 Scan the IC tube, STEP 2 Confirm the IC setup만 남김 | 화면 글자, `ia/ia-screens.csv` | 대기 |
+| R03 | 알럿 | 버전 메모 "Alert_036 팝업 추가" (기존 ID) | 지금 디스크립션은 MS_Alert_005. 변경 이력에만 남김 | `policy/alert-catalog-ms.csv` MS_Alert_005 | 대기 |
+| R04 | 알럿 | 스캔할 수 없는 코드(PCR box·IC tube 외) 스캔 케이스 없음 | MS_Alert_001은 넣지 않음. MS 목록에 명시한 경우에만 적용 (2026-11-03 사용자 답변 MS4) | `policy/alert-catalog-ms.csv` MS_Alert_001, 2026-11-03 사용자 답변 (MS4) | 대기 |
+| R05 | 디스크립션 | 3 활성 조건 "①"로 가리킴. 1의 하위 번호는 (1-1) | (1-1)로 통일 | 디스크립션 | 대기 |
+| R06 | 화면 정보 | 경로 "IC reagent Setup > Group PCR Reagent Kit" | Group Lots > Group PCR Reagent Kit > Scan the IC tube | `ia/ia-screens.csv` | 대기 |
+| R07 | 표기 | "reagent을", "유효기간", "Lot(라뜨)", "팝업" | Reagent를, Expiration Date, Lot, Popup | `glossary/terms.csv` | 대기 |
+| R08 | 정책 반영 | IC tube가 없는 PCR box는 Lot 없이 Load PCR Reagents에서 바로 적재 (MS_Alert_006 부제) | POL-INV-007과 맞는지 확인 | POL-INV-007, MS_Alert_006 | 대기 (확인 필요) |
+| R09 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
 
 ## 변경 이력
 

@@ -41,12 +41,12 @@ figma_region: 2.1 1차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | 화면 정보 CID "LI-STN-02", 경로 "Information", Ver 1.0 (TI-INF는 2.0) | LI-INF, Information > Program, 버전 확인 | `ia/ia-screens.csv`, Figma 프레임 이름 | 대기 |
-| 2 | 표기 | 0 "Cureca 프로그램" | CURECA | `glossary/terms.csv` | 대기 |
-| 3 | 디스크립션 | 0 진입 방법 "LNB의 ‘Information’" | LNB의 Information > Program | 화면 글자 (LNB) | 대기 |
-| 4 | 화면 글자 | LNB Information 아래 "Manual" | IA에 Manual 화면 없음. 메뉴 유지 여부 확인 | `ia/ia-screens.csv` | 대기 (확인 필요) |
+| R01 | 화면 정보 | 화면 정보 CID "LI-STN-02", 경로 "Information", Ver 1.0 (TI-INF는 2.0) | LI-INF, Information > Program, 버전 확인 | `ia/ia-screens.csv`, Figma 프레임 이름 | 대기 |
+| R02 | 표기 | 0 "Cureca 프로그램" | CURECA | `glossary/terms.csv` | 대기 |
+| R03 | 디스크립션 | 0 진입 방법 "LNB의 ‘Information’" | LNB의 Information > Program | 화면 글자 (LNB) | 대기 |
+| R04 | 화면 글자 | LNB Information 아래 "Manual" | IA에 Manual 화면 없음. 메뉴 유지 여부 확인 | `ia/ia-screens.csv` | 대기 (확인 필요) |
 
 ## 변경 이력
 

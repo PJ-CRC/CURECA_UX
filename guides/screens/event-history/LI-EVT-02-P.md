@@ -44,11 +44,11 @@ figma_region: 2.1 1차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 정책 반영 | 0 "Main PC, 콘솔용 PC" | Service Mode로 표기: Main Mode, Console Mode (TSS Mode 제외) | POL-EVT-003, `policy/service-mode.md` | 대기 |
-| 2 | 디스크립션 | 3 Type "Instrument, Consumable, Reagent" | Instrument, Inventory, Sample, System | `glossary/status-values.csv` | 대기 |
-| 3 | 표기 | Eorrer, warning | Error, Warning | 오타 | 대기 |
+| R01 | 정책 반영 | 0 "Main PC, 콘솔용 PC" | Service Mode로 표기: Main Mode, Console Mode (TSS Mode 제외) | POL-EVT-003, `policy/service-mode.md` | 대기 |
+| R02 | 디스크립션 | 3 Type "Instrument, Consumable, Reagent" | Instrument, Inventory, Sample, System | `glossary/status-values.csv` | 대기 |
+| R03 | 표기 | Eorrer, warning | Error, Warning | 오타 | 대기 |
 
 ## 변경 이력
 

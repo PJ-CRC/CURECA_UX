@@ -48,15 +48,15 @@ figma_region: 2.1 2차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | 최신 영역 프레임이 Ver 0.6 (2026-05-14). TI-IVT-06-T는 Ver 2.1.11 | L-IOS 화면을 T-IOS(Ver 2.1.11) 기준으로 다시 그림 | POL-INV-006 규칙 7 | 대기 |
-| 2 | 디스크립션 | 2 Usage 기준 "Storage에서 내부 장치로 이동되는 시점" / T-IOS "폐기 시점의 사용 개수" | T-IOS와 같이: Usage는 폐기 때의 사용 개수, 폐기할 때만 기록 | POL-INV-006 규칙 1·2 | 대기 |
-| 3 | 디스크립션 | 0 Row 기준에 Unit이 없음 | TI-IVT-06-T와 맞춤 | TI-IVT-06-T | 대기 |
-| 4 | 화면 글자 | Item Type 기본값 "All Item Types" (T-IOS "All") | 하나로 통일 | TI-IVT-06-T | 대기 |
-| 5 | 디스크립션 | 3 형식 ".CVS" | .CSV | 오타 | 대기 |
-| 6 | 화면 글자 | 목록 "Reagents", 빈 Usage·Barcode 값, Module과 Unit이 맞지 않는 예시 줄 | TI-IVT-06-T 반영 대기 목록 1~3과 같음 | TI-IVT-06-T | 대기 |
-| 7 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
+| R01 | 화면 정보 | 최신 영역 프레임이 Ver 0.6 (2026-05-14). TI-IVT-06-T는 Ver 2.1.11 | L-IOS 화면을 T-IOS(Ver 2.1.11) 기준으로 다시 그림 | POL-INV-006 규칙 7 | 대기 |
+| R02 | 디스크립션 | 2 Usage 기준 "Storage에서 내부 장치로 이동되는 시점" / T-IOS "폐기 시점의 사용 개수" | T-IOS와 같이: Usage는 폐기 때의 사용 개수, 폐기할 때만 기록 | POL-INV-006 규칙 1·2 | 대기 |
+| R03 | 디스크립션 | 0 Row 기준에 Unit이 없음 | TI-IVT-06-T와 맞춤 | TI-IVT-06-T | 대기 |
+| R04 | 화면 글자 | Item Type 기본값 "All Item Types" (T-IOS "All") | 하나로 통일 | TI-IVT-06-T | 대기 |
+| R05 | 디스크립션 | 3 형식 ".CVS" | .CSV | 오타 | 대기 |
+| R06 | 화면 글자 | 목록 "Reagents", 빈 Usage·Barcode 값, Module과 Unit이 맞지 않는 예시 줄 | TI-IVT-06-T 반영 대기 목록 1~3과 같음 | TI-IVT-06-T | 대기 |
+| R07 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
 
 ## 변경 이력
 

@@ -12,7 +12,7 @@
 | --- | --- | --- |
 | Instruments | `instruments/` | 기획 화면 7개 옮김 (2026-11-02) |
 | Dashboard | `dashboard/` | 기획 화면 2개 옮김 (2026-11-02, 2.1 2차) |
-| Dashboard (All) | `dashboard-all/` | 기획 화면 2개 옮김 (2026-11-02, 2.1 2차) |
+| Dashboard(All) | `dashboard-all/` | 기획 화면 2개 옮김 (2026-11-02, 2.1 2차) |
 | Login | `login/` | 기획 화면 6개 옮김 (2026-11-02, 2.1 2차) |
 | Profile | `profile/` | 기획 화면 4개 옮김 (2026-11-02, 2.1 2차) |
 | Setting | `setting/` | IA의 Setting 화면 전부 (39개) 옮김 (2026-11-02). System Setting만 2.1 1차, 나머지 2.1 2차 |

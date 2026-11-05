@@ -3,7 +3,7 @@ cid: TI-ADS-P
 pair_cid:
 tl_relation: 단독
 title: Edit Display Name Popup
-path: Dashboard (All) > Edit Display Name
+path: Dashboard(All) > Edit Display Name
 type: Popup
 version: 2.1.14
 date: 2026-10-30
@@ -60,12 +60,12 @@ Description (10), Description Number (3), Popup/Popup Middle Text (2), Square (2
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | 화면 이름 "Edit Display Nam Popup" | Edit Display Name Popup | 오타 | 대기 |
-| 2 | 문구 | "Change how this instruments appears on your dashboard." | this instrument | 영어 문법 | 대기 |
-| 3 | 화면 글자 | 값이 입력돼 있는데 글자 수가 "0 / 30" | 입력 글자 수와 맞춤 | 화면 | 대기 |
-| 4 | 정책 반영 | Display Name 규칙(최대 30자, 빈 값 허용 여부, 누가 바꿀 수 있는지)이 정책에 없음 | 정책 필요 여부 확인 | 헌법 8조 | 대기 (확인 필요) |
+| R01 | 화면 정보 | 화면 이름 "Edit Display Nam Popup" | Edit Display Name Popup | 오타 | 대기 |
+| R02 | 문구 | "Change how this instruments appears on your dashboard." | this instrument | 영어 문법 | 대기 |
+| R03 | 화면 글자 | 값이 입력돼 있는데 글자 수가 "0 / 30" | 입력 글자 수와 맞춤 | 화면 | 대기 |
+| R04 | 정책 반영 | Display Name 규칙(최대 30자, 빈 값 허용 여부, 누가 바꿀 수 있는지)이 정책에 없음 | 정책 필요 여부 확인 | 헌법 8조 | 대기 (확인 필요) |
 
 ## 변경 이력
 

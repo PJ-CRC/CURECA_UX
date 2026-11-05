@@ -178,20 +178,20 @@ Description Number (8), Frame (1), Accordion/Default (1), Tool Tip/Default (1), 
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | Ver 2.0 (2026-06-15) | 버전 메모(v2.1.12까지) 반영 Ver | 버전 메모 | 대기 (확인 필요) |
-| 2 | 표기 | 타이틀 "High-throughput Extraction (N) > WB1 storage", 예시 "HtExtraction (2) > WB1 storage" (코드명) | High-throughput Extraction (2) > WB1 Storage | `glossary/modules.csv`, `glossary/module-units.csv` | 대기 |
-| 3 | 알럿 | Spare Storage 스캔(MS_Alert_031)이 세부 정의 표에만 있고 디스크립션 2에 없음 | 디스크립션 오류 Case에 추가 | `policy/alert-catalog-ms.csv` MS_Alert_031 | 대기 |
-| 4 | 디스크립션 | 2 Case 2 "DWP or Spin tip 외, 스캔 시" 아래에 MS_Alert_027(다른 Storage 코드)만 있음. 다른 품목(예: WB1 Storage에 EB DWP) 스캔 케이스 없음 | Storage와 맞지 않는 품목 스캔 알럿(MS_Alert_001 등) 정의 | 세부 정의 출력명 표 | 대기 (확인 필요) |
-| 5 | 화면 | 버튼 이름: 화면 "Required Quantity", 세부 정의 "Inventory" | 하나로 통일 | 세부 정의 8313:138847 | 대기 (확인 필요) |
-| 6 | 화면 | 카운터 "02/12"와 "N/M"이 겹쳐 있음 | 하나만 | 디스크립션 3 | 대기 |
-| 7 | 표기 | 세부 정의 표기 "96T (1 DWP)", "100T (1 set)", "200T (2 sets)" | rxns 단위 (T → rxns, LCR-01-03 세부 정의는 이미 rxns). 품목 표: DWP 96 rxns/DWP, PCR 100 rxns/set | `glossary/consumables.csv`, `glossary/pcr-reagents.csv`, `background/worklist.md` "T → rxns" | 대기 |
-| 8 | 표기 | 세부 정의 "BB TUB, WB1 TUB…", "Stoage Unit 명", "펼힘", "스케쥴링", "300 μL Tip Storage(1)" | BB Tub, WB1 Tub…, Storage Unit 이름, 펼침, 스케줄링, 300 μL Tip Storage (1) | `glossary/consumables.csv`, 오타 | 대기 |
-| 9 | 화면 데이터 | PCR Reagent 약칭 "RP1, PB, GI-B1…" | 품목 표 구성품·제품 이름 기준 표기 방식 정함 | `glossary/pcr-reagents.csv` | 대기 (확인 필요) |
-| 10 | 디스크립션 | 2 "Scan the reagent before scanning…" (Spin Tip 포함) | 대상 이름 확인 | 디스크립션 2 | 대기 |
-| 11 | 표기 | "시약", "소모품/시약", "유효기간", "모듈명", "스토리지명", "메뉴얼", "Toast 팝업" | Reagent, Consumable/Reagent, Expiration Date, Module 이름, Storage 이름, 매뉴얼, Toast | `glossary/terms.csv` | 대기 |
-| 12 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
+| R01 | 화면 정보 | Ver 2.0 (2026-06-15) | 버전 메모(v2.1.12까지) 반영 Ver | 버전 메모 | 대기 (확인 필요) |
+| R02 | 표기 | 타이틀 "High-throughput Extraction (N) > WB1 storage", 예시 "HtExtraction (2) > WB1 storage" (코드명) | High-throughput Extraction (2) > WB1 Storage | `glossary/modules.csv`, `glossary/module-units.csv` | 대기 |
+| R03 | 알럿 | Spare Storage 스캔(MS_Alert_031)이 세부 정의 표에만 있고 디스크립션 2에 없음 | 디스크립션 오류 Case에 추가 | `policy/alert-catalog-ms.csv` MS_Alert_031 | 대기 |
+| R04 | 디스크립션 | 2 Case 2 "DWP or Spin tip 외, 스캔 시" 아래에 MS_Alert_027(다른 Storage 코드)만 있음. 다른 품목(예: WB1 Storage에 EB DWP) 스캔 케이스 없음 | Storage와 맞지 않는 품목 스캔 알럿(MS_Alert_001 등) 정의 | 세부 정의 출력명 표 | 대기 (확인 필요) |
+| R05 | 화면 | 버튼 이름: 화면 "Required Quantity", 세부 정의 "Inventory" | 하나로 통일 | 세부 정의 8313:138847 | 대기 (확인 필요) |
+| R06 | 화면 | 카운터 "02/12"와 "N/M"이 겹쳐 있음 | 하나만 | 디스크립션 3 | 대기 |
+| R07 | 표기 | 세부 정의 표기 "96T (1 DWP)", "100T (1 set)", "200T (2 sets)" | rxns 단위 (T → rxns, LCR-01-03 세부 정의는 이미 rxns). 품목 표: DWP 96 rxns/DWP, PCR 100 rxns/set | `glossary/consumables.csv`, `glossary/pcr-reagents.csv`, `background/worklist.md` "T → rxns" | 대기 |
+| R08 | 표기 | 세부 정의 "BB TUB, WB1 TUB…", "Stoage Unit 명", "펼힘", "스케쥴링", "300 μL Tip Storage(1)" | BB Tub, WB1 Tub…, Storage Unit 이름, 펼침, 스케줄링, 300 μL Tip Storage (1) | `glossary/consumables.csv`, 오타 | 대기 |
+| R09 | 화면 데이터 | PCR Reagent 약칭 "RP1, PB, GI-B1…" | 품목 표 구성품·제품 이름 기준 표기 방식 정함 | `glossary/pcr-reagents.csv` | 대기 (확인 필요) |
+| R10 | 디스크립션 | 2 "Scan the reagent before scanning…" (Spin Tip 포함) | 대상 이름 확인 | 디스크립션 2 | 대기 |
+| R11 | 표기 | "시약", "소모품/시약", "유효기간", "모듈명", "스토리지명", "메뉴얼", "Toast 팝업" | Reagent, Consumable/Reagent, Expiration Date, Module 이름, Storage 이름, 매뉴얼, Toast | `glossary/terms.csv` | 대기 |
+| R12 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
 
 ## 변경 이력
 

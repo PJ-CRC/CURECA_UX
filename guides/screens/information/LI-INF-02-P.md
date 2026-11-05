@@ -36,10 +36,10 @@ figma_region: 2.1 1차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | 화면 정보 CID "LI-INF-01-P" | LI-INF-02-P | Figma 프레임 이름, `ia/ia-screens.csv` | 대기 |
-| 2 | 디스크립션 | [OK], [X] 버튼 동작 설명 없음, Language·Data reset 기준 시점 | TI-INF-02-P 반영 대기 목록 1~3과 같이 | TI-INF-02-P | 대기 |
+| R01 | 화면 정보 | 화면 정보 CID "LI-INF-01-P" | LI-INF-02-P | Figma 프레임 이름, `ia/ia-screens.csv` | 대기 |
+| R02 | 디스크립션 | [OK], [X] 버튼 동작 설명 없음, Language·Data reset 기준 시점 | TI-INF-02-P 반영 대기 목록 1~3과 같이 | TI-INF-02-P | 대기 |
 
 ## 변경 이력
 

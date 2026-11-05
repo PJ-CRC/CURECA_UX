@@ -190,16 +190,16 @@ Interface/triangle-exclamation_Solid (14), Description Number (12), Description 
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 디스크립션 | 0 "[Step 4/4] Run 실행을 위한 시약 정보 확인 화면" (LI-RUN-03에서 복사) | Waste Bin/Bottle 상태 확인 화면 | 화면 글자 | 대기 |
-| 2 | 디스크립션 | 3-3 예외 케이스 "[3-6]" (3-6 없음) | 지움 또는 맞는 번호 | 디스크립션 | 대기 |
-| 3 | 표기 | "PlateSealing (1)" | Plate Sealing (1) | `glossary/modules.csv` | 대기 |
-| 4 | 표기 | 단계 이름 "Check waste bin/bottle", 디스크립션 "폐기함", "폐기물함", "폐기물 함", "Waste Bin" (Liquid Waste Bottle 포함 여부 불분명) | Waste Bin/Bottle로 통일 | `glossary/terms.csv` Waste Bin (폐기물함은 쓰지 않는 표현), 폐기함/폐액통 상태 | 대기 |
-| 5 | 상태값 | 3-3 "Almost Full 상태 (Warning)", "Full 상태 (Error)" | 상태값과 Event 등급을 구분해 적음 (Waste Bin/Bottle Status는 Available / Almost Full / Full) | `glossary/status-values.csv` | 대기 (확인 필요) |
-| 6 | 디스크립션 | 2-2 "최대 수량 대비 현재 폐기 수량", 3-4 "Available·Almost Full은 카운팅, Full은 센서" | 상태값 표의 기준(적재율 70% 미만 / 70% 이상 / 100%)과 같이 적음 | `glossary/status-values.csv` 폐기함/폐액통 상태 | 대기 |
-| 7 | 디스크립션 | 1 Chip "Default : 모든 탭이 미선택", "구동 준비" | 모든 Chip이 미선택, Run Preparation | 디스크립션, `glossary/terms.csv` | 대기 |
-| 8 | 디스크립션 | Full 또는 Almost Full이 있을 때 [Run Start]를 막는지 설명 없음 | 디스크립션에 넣음: Waste Bin/Bottle 상태와 관계없이 [Run Start]를 할 수 있음. Full이면 그 Waste Bin/Bottle을 쓰는 단계에 이르렀을 때 Error가 됨 | POL-SMP-007 규칙 4 | 대기 |
+| R01 | 디스크립션 | 0 "[Step 4/4] Run 실행을 위한 시약 정보 확인 화면" (LI-RUN-03에서 복사) | Waste Bin/Bottle 상태 확인 화면 | 화면 글자 | 대기 |
+| R02 | 디스크립션 | 3-3 예외 케이스 "[3-6]" (3-6 없음) | 지움 또는 맞는 번호 | 디스크립션 | 대기 |
+| R03 | 표기 | "PlateSealing (1)" | Plate Sealing (1) | `glossary/modules.csv` | 대기 |
+| R04 | 표기 | 단계 이름 "Check waste bin/bottle", 디스크립션 "폐기함", "폐기물함", "폐기물 함", "Waste Bin" (Liquid Waste Bottle 포함 여부 불분명) | Waste Bin/Bottle로 통일 | `glossary/terms.csv` Waste Bin (폐기물함은 쓰지 않는 표현), 폐기함/폐액통 상태 | 대기 |
+| R05 | 상태값 | 3-3 "Almost Full 상태 (Warning)", "Full 상태 (Error)" | 상태값과 Event 등급을 구분해 적음 (Waste Bin/Bottle Status는 Available / Almost Full / Full) | `glossary/status-values.csv` | 대기 (확인 필요) |
+| R06 | 디스크립션 | 2-2 "최대 수량 대비 현재 폐기 수량", 3-4 "Available·Almost Full은 카운팅, Full은 센서" | 상태값 표의 기준(적재율 70% 미만 / 70% 이상 / 100%)과 같이 적음 | `glossary/status-values.csv` 폐기함/폐액통 상태 | 대기 |
+| R07 | 디스크립션 | 1 Chip "Default : 모든 탭이 미선택", "구동 준비" | 모든 Chip이 미선택, Run Preparation | 디스크립션, `glossary/terms.csv` | 대기 |
+| R08 | 디스크립션 | Full 또는 Almost Full이 있을 때 [Run Start]를 막는지 설명 없음 | 디스크립션에 넣음: Waste Bin/Bottle 상태와 관계없이 [Run Start]를 할 수 있음. Full이면 그 Waste Bin/Bottle을 쓰는 단계에 이르렀을 때 Error가 됨 | POL-SMP-007 규칙 4 | 대기 |
 
 ## 변경 이력
 

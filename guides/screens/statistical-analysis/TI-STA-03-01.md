@@ -128,15 +128,15 @@ Description Number (12), Square (9), 1 Depth (7), Table (2), Table/Filled Table 
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 디스크립션 | 0 "평균 소요 시간(TAT)", 2 "누적 총 검사 소요 시간 합계", 3-2 "총 소요 시간 합계"가 서로 다름. 화면 예시 5.8 hour / 345,200건은 평균으로 보임 | 디스크립션에 넣음: Test TAT는 합계 지표임. "평균" 문구를 지우고 합계로 씀. 화면 예시 값도 합계로 보여 줌 | POL-STA-004 정의 | 대기 |
-| 2 | 디스크립션 | 6-2 "Chart 선택 시 누적 막대 그래프로 표출" (TI-STA-02-01에서 복사된 것으로 보임). 3-4는 꺾은선 + 세로 막대 | 3-4와 맞춤 | 디스크립션 | 대기 |
-| 3 | 표기 | 화면 "Total Test Counts", 디스크립션 "Total Test Count" | Total Test Count | 화면 글자 | 대기 |
-| 4 | 디스크립션 | TAT의 시작·끝 시점(어느 상태에서 어느 상태까지)이 정의되지 않음 | 디스크립션에 넣음: TAT는 실제 검사에 걸린 시간으로, Sample의 Start Date/Time부터 End Date/Time까지(POL-SMP-002)의 합계임 | POL-STA-004 정의 | 대기 |
-| 5 | 화면 정보 | Figma 화면 이름 "Test Analytics _ Test TAT", IA 이름 "Test TAT - Chart" | 하나로 통일 | `ia/ia-screens.csv` | 대기 (확인 필요) |
-| 6 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
-| 7 | 정책 반영 | 검사 건수 집계 기준이 없음 | 디스크립션에 넣음: 검사 건수는 오더 기준으로 세며 Completed, Failed와 관계없이 모두 셈 | POL-STA-004 정의 | 대기 |
+| R01 | 디스크립션 | 0 "평균 소요 시간(TAT)", 2 "누적 총 검사 소요 시간 합계", 3-2 "총 소요 시간 합계"가 서로 다름. 화면 예시 5.8 hour / 345,200건은 평균으로 보임 | 디스크립션에 넣음: Test TAT는 합계 지표임. "평균" 문구를 지우고 합계로 씀. 화면 예시 값도 합계로 보여 줌 | POL-STA-004 정의 | 대기 |
+| R02 | 디스크립션 | 6-2 "Chart 선택 시 누적 막대 그래프로 표출" (TI-STA-02-01에서 복사된 것으로 보임). 3-4는 꺾은선 + 세로 막대 | 3-4와 맞춤 | 디스크립션 | 대기 |
+| R03 | 표기 | 화면 "Total Test Counts", 디스크립션 "Total Test Count" | Total Test Count | 화면 글자 | 대기 |
+| R04 | 디스크립션 | TAT의 시작·끝 시점(어느 상태에서 어느 상태까지)이 정의되지 않음 | 디스크립션에 넣음: TAT는 실제 검사에 걸린 시간으로, Sample의 Start Date/Time부터 End Date/Time까지(POL-SMP-002)의 합계임 | POL-STA-004 정의 | 대기 |
+| R05 | 화면 정보 | Figma 화면 이름 "Test Analytics _ Test TAT", IA 이름 "Test TAT - Chart" | 하나로 통일 | `ia/ia-screens.csv` | 대기 (확인 필요) |
+| R06 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
+| R07 | 정책 반영 | 검사 건수 집계 기준이 없음 | 디스크립션에 넣음: 검사 건수는 오더 기준으로 세며 Completed, Failed와 관계없이 모두 셈 | POL-STA-004 정의 | 대기 |
 
 ## 변경 이력
 

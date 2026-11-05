@@ -76,15 +76,15 @@ Description Number (2), Frame (1), Button/Secondary_1Button_44 (1)
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | Ver 2.0 (2026-06-15) | 버전 메모(v2.1.05)를 반영한 Ver로 | 버전 메모 | 대기 (확인 필요) |
-| 2 | 알럿 | 버전 메모 "Alert_033 팝업 추가" (기존 ID) | 지금 디스크립션은 MS_Alert_009. 변경 이력에만 남김 | `policy/alert-catalog-ms.csv` MS_Alert_009 (이전 ID 없음, 기존 Alert_033과 문구 같음) | 대기 |
-| 3 | 디스크립션 | 2 [Next] "스캔 시 → (2-1)과 동일하게 변경", 2-1 "Scan" 내용 없음 | 스캔하면 자동으로 다음 화면으로 가므로 [Next]의 역할(누를 수 있는지) 정의 | 화면 글자 "Once the scan is complete, you will be taken to the next screen." | 대기 (확인 필요) |
-| 4 | 알럿 | 이미 Socket에 적재된 Sample, 스캔할 수 없는 코드 케이스 없음 | MS_Alert_001은 넣지 않음. MS 목록에 명시한 경우에만 적용 (2026-11-03 사용자 답변 MS4). 이미 다른 Socket에 적재된 Sample은 MS_Confirm_001 | `policy/alert-catalog-ms.csv` MS_Alert_001, 2026-11-03 사용자 답변 (MS4) | 대기 |
-| 5 | IA | Step 4 이름 "Confirm the socket" | IA "Confirm the socket scan"과 통일 | `ia/ia-screens.csv` | 대기 |
-| 6 | 표기 | "socket", "팝업", "검사 오더" | Socket, Popup. "검사 오더"는 용어집에 없음 | `glossary/terms.csv` | 대기 (확인 필요) |
-| 7 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
+| R01 | 화면 정보 | Ver 2.0 (2026-06-15) | 버전 메모(v2.1.05)를 반영한 Ver로 | 버전 메모 | 대기 (확인 필요) |
+| R02 | 알럿 | 버전 메모 "Alert_033 팝업 추가" (기존 ID) | 지금 디스크립션은 MS_Alert_009. 변경 이력에만 남김 | `policy/alert-catalog-ms.csv` MS_Alert_009 (이전 ID 없음, 기존 Alert_033과 문구 같음) | 대기 |
+| R03 | 디스크립션 | 2 [Next] "스캔 시 → (2-1)과 동일하게 변경", 2-1 "Scan" 내용 없음 | 스캔하면 자동으로 다음 화면으로 가므로 [Next]의 역할(누를 수 있는지) 정의 | 화면 글자 "Once the scan is complete, you will be taken to the next screen." | 대기 (확인 필요) |
+| R04 | 알럿 | 이미 Socket에 적재된 Sample, 스캔할 수 없는 코드 케이스 없음 | MS_Alert_001은 넣지 않음. MS 목록에 명시한 경우에만 적용 (2026-11-03 사용자 답변 MS4). 이미 다른 Socket에 적재된 Sample은 MS_Confirm_001 | `policy/alert-catalog-ms.csv` MS_Alert_001, 2026-11-03 사용자 답변 (MS4) | 대기 |
+| R05 | IA | Step 4 이름 "Confirm the socket" | IA "Confirm the socket scan"과 통일 | `ia/ia-screens.csv` | 대기 |
+| R06 | 표기 | "socket", "팝업", "검사 오더" | Socket, Popup. "검사 오더"는 용어집에 없음 | `glossary/terms.csv` | 대기 (확인 필요) |
+| R07 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
 
 ## 변경 이력
 

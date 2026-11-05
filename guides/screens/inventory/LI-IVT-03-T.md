@@ -40,11 +40,11 @@ figma_region: 2.1 2차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | 3-7 "클릭 시, [TI-IVT-03-T-P] 팝업 호출" (L-IOS 화면) | LI-IVT-03-T-P | `ia/ia-screens.csv` | 대기 |
-| 2 | 상태값 | 2-6 Insufficient·Low 정의, 1 "sufficient" | TI-IVT-03-T 반영 대기 목록 1·2와 같음 | `glossary/status-values.csv 재고 상태`, POL-INV-003 | 대기 |
-| 3 | 디스크립션 | 2-5 첫 문장 Remaining Qty, 노출 조건, 툴팁 Capacity 문구, "차감되지 않는며", 한국어 혼용 | TI-IVT-03-T 반영 대기 목록 3~7과 같음 | TI-IVT-03-T | 대기 |
+| R01 | 화면 정보 | 3-7 "클릭 시, [TI-IVT-03-T-P] 팝업 호출" (L-IOS 화면) | LI-IVT-03-T-P | `ia/ia-screens.csv` | 대기 |
+| R02 | 상태값 | 2-6 Insufficient·Low 정의, 1 "sufficient" | TI-IVT-03-T 반영 대기 목록 1·2와 같음 | `glossary/status-values.csv 재고 상태`, POL-INV-003 | 대기 |
+| R03 | 디스크립션 | 2-5 첫 문장 Remaining Qty, 노출 조건, 툴팁 Capacity 문구, "차감되지 않는며", 한국어 혼용 | TI-IVT-03-T 반영 대기 목록 3~7과 같음 | TI-IVT-03-T | 대기 |
 
 ## 변경 이력
 

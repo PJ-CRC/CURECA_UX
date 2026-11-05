@@ -70,13 +70,13 @@ Description Number (3), Button/Secondary_1Button_44 (2), Frame (1)
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | 화면 이름 "Confirm the tray", Ver 2.0 | IA "Confirm the tray scan"과 통일. 버전 메모(v2.1.05)를 반영한 Ver로 | `ia/ia-screens.csv`, 버전 메모 | 대기 |
-| 2 | 화면 | 버튼 "Add new" | [Add New]와 대소문자 통일 | 디스크립션 2 | 대기 |
-| 3 | 문구 | "go to the Carrier manual screen" | [Finish]는 LI-TSS-PSI-SAM으로 감. 화면 이름과 맞게 | 디스크립션 3 | 대기 |
-| 4 | 표기 | "검체", "소모품/시약", "tray", "팝업" | Sample, Consumable/Reagent, Tray, Popup | `glossary/terms.csv` | 대기 |
-| 5 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
+| R01 | 화면 정보 | 화면 이름 "Confirm the tray", Ver 2.0 | IA "Confirm the tray scan"과 통일. 버전 메모(v2.1.05)를 반영한 Ver로 | `ia/ia-screens.csv`, 버전 메모 | 대기 |
+| R02 | 화면 | 버튼 "Add new" | [Add New]와 대소문자 통일 | 디스크립션 2 | 대기 |
+| R03 | 문구 | "go to the Carrier manual screen" | [Finish]는 LI-TSS-PSI-SAM으로 감. 화면 이름과 맞게 | 디스크립션 3 | 대기 |
+| R04 | 표기 | "검체", "소모품/시약", "tray", "팝업" | Sample, Consumable/Reagent, Tray, Popup | `glossary/terms.csv` | 대기 |
+| R05 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
 
 ## 변경 이력
 

@@ -83,14 +83,14 @@ Table (26), Square (6), 1 Depth (6), 2 Depth (5), Description Number (4), Dropdo
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | IA 화면 이름 "소모품 및 시약 사용량 - Table" (한국어) | TI-STA-07-01 반영 대기 목록 1과 같음 (Usage & Cost Trend - Table) | `ia/change-requests.md` 3 | 대기 |
-| 2 | 정책 반영 | Ver 2.1.03으로 TI-STA-07-01 v2.1.14의 Cost Setting 노출 조건이 반영되지 않음 | Table 화면에도 같은 조건을 적음 | TI-STA-07-01 5 | 대기 |
-| 3 | 정책 반영 | "(Unit : count, USD)", "$" 고정 | Cost Setting에서 고른 통화를 따름 | POL-TST-003 규칙 1 | 대기 |
-| 4 | 디스크립션 | Legend, Date Range, Export 설명 없음 | TI-STA-07-01 4, 5, 6과 같음을 적음 | 디스크립션 | 대기 |
-| 5 | 표기 | "(Unit : count)"인데 값은 "sets(ea)" | TI-STA-07-01 반영 대기 목록 6과 같음 | POL-STA-006 규칙 8 | 대기 |
-| 6 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
+| R01 | 화면 정보 | IA 화면 이름 "소모품 및 시약 사용량 - Table" (한국어) | TI-STA-07-01 반영 대기 목록 1과 같음 (Usage & Cost Trend - Table) | `ia/change-requests.md` 3 | 대기 |
+| R02 | 정책 반영 | Ver 2.1.03으로 TI-STA-07-01 v2.1.14의 Cost Setting 노출 조건이 반영되지 않음 | Table 화면에도 같은 조건을 적음 | TI-STA-07-01 5 | 대기 |
+| R03 | 정책 반영 | "(Unit : count, USD)", "$" 고정 | Cost Setting에서 고른 통화를 따름 | POL-TST-003 규칙 1 | 대기 |
+| R04 | 디스크립션 | Legend, Date Range, Export 설명 없음 | TI-STA-07-01 4, 5, 6과 같음을 적음 | 디스크립션 | 대기 |
+| R05 | 표기 | "(Unit : count)"인데 값은 "sets(ea)" | TI-STA-07-01 반영 대기 목록 6과 같음 | POL-STA-006 규칙 8 | 대기 |
+| R06 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
 
 ## 변경 이력
 

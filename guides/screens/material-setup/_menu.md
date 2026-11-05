@@ -29,7 +29,7 @@ delivered_date:
 
 ## 프레임 정리
 
-- GNB·LNB: 프레임의 LNB는 예전 메뉴 이름(LIOS, Equipment, RUN, Sample)이고 Material Setup 아래가 Group Lots | Prepare Carrier | Load Materials (WBM·RGE 프레임은 Empty Waste Bin·View Trolley Info 추가). 공통 정의 프레임 8313:138747의 LNB만 지금 메뉴(Dashboard (All), Test Management, Sample Tracking, Instrument, Inventory 등). 화면 MD의 사용 컴포넌트에서 GNB·LNB 공통 컴포넌트(Icon/Sample, Arrow/Chevron_Down·Up, profile, Layout/Align_Right_05_Solid)는 뺌
+- GNB·LNB: 프레임의 LNB는 예전 메뉴 이름(LIOS, Equipment, RUN, Sample)이고 Material Setup 아래가 Group Lots | Prepare Carrier | Load Materials (WBM·RGE 프레임은 Empty Waste Bin·View Trolley Info 추가). 공통 정의 프레임 8313:138747의 LNB만 지금 메뉴(Dashboard(All), Test Management, Sample Tracking, Instrument, Inventory 등). 화면 MD의 사용 컴포넌트에서 GNB·LNB 공통 컴포넌트(Icon/Sample, Arrow/Chevron_Down·Up, profile, Layout/Align_Right_05_Solid)는 뺌
 - 여러 흐름에 같은 CID 프레임이 있음. 파일은 CID마다 하나, 흐름별 차이는 각 파일 "다른 프레임"에 적음
   - LI-TSS-CMP-01: 9개 (LTG, SAM-01·02·03, LCR-01·02, PKI, LPR, DXI) + 세부 정의 9개. 주 프레임 8011:133612 (LCR-02)
   - LI-TSS-PSI-01: 3개 (LCR 8011:129297, PKI 8073:397754, LPR 8073:398051). 주 프레임 PKI. 흐름별로 [Skip]·[Select] 이동 대상이 다름

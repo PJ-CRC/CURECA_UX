@@ -36,11 +36,11 @@ figma_region: 2.1 2차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | 3 참조 "TI-STN-03-01-02-01" (L-IOS 화면에서 T-IOS CID) | L-IOS Protocol Setting CID(LI-STN-03-01-02-01) | `screens/setting/` | 대기 |
-| 2 | 화면 정보 | 화면 이름 "Samples Details" | IA 이름 | `ia/ia-screens.csv` | 대기 |
-| 3 | 디스크립션 | 2 "Run Preparation 단계에서 선택한 프로토콜", "Applied된 프로토콜", 3 "Protocol setting" | TI-SPT-01-02 반영 대기 목록 3·4와 같이 | POL-TST-006 | 대기 (확인 필요) |
+| R01 | 화면 정보 | 3 참조 "TI-STN-03-01-02-01" (L-IOS 화면에서 T-IOS CID) | L-IOS Protocol Setting CID(LI-STN-03-01-02-01) | `screens/setting/` | 대기 |
+| R02 | 화면 정보 | 화면 이름 "Samples Details" | IA 이름 | `ia/ia-screens.csv` | 대기 |
+| R03 | 디스크립션 | 2 "Run Preparation 단계에서 선택한 프로토콜", "Applied된 프로토콜", 3 "Protocol setting" | TI-SPT-01-02 반영 대기 목록 3·4와 같이 | POL-TST-006 | 대기 (확인 필요) |
 
 ## 변경 이력
 

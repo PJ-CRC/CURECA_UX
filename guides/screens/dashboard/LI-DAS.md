@@ -87,15 +87,15 @@ Frame/Instrument_Status (32), Tag Status (16), Description (15), Description Num
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 정책 반영 | 4-1 "Dashboard Info 내 [CURECA 구동 컨트롤러] 참고", "공통 UX 참고 : COMM-3-a" | 버튼 활성 조건과 동작은 POL-EQP-003 참조 | POL-EQP-003 | 대기 |
-| 2 | 정책 반영 | 5-2 [Unlock] "공통 UX 참고 : COMM-3-a" | 잠금 해제 조건은 POL-EQP-008 참조. 화면 라벨 "Door control"과 디스크립션 "[Unlock] 버튼" 하나로 통일 | POL-EQP-008 | 대기 |
-| 3 | 디스크립션 | 4 "CURECA 전체 구동 상태", "Cureca", "Lis" | 장비 통합 상태, CURECA, LIS | `glossary/terms.csv` | 대기 |
-| 4 | 디스크립션 | 번호 2가 없음 (1 다음 3) | 번호 정리 | 디스크립션 | 대기 |
-| 5 | 표기 | "270 rxns (3 sets)" (TI-DAS는 "3 sockets") | Reagent 수량 표기 규칙으로 하나로 통일 | Common UX COMM-4-b | 대기 (확인 필요) |
-| 6 | 표기 | Module 이름과 번호 붙여 씀, "Door control" 소문자 | High-throughput Extraction (1), 버튼 대소문자는 PD-0001 결정 후 | 이름 (번호) 띄어쓰기, PD-0001 | 대기 |
-| 7 | 참조 프레임 | Dashboard Info의 "Patial Running", 화면 정보 칸 비어 있음 | Partial Running. 정책으로 옮긴 뒤 프레임은 정책 ID 참조로 바꿈 | POL-EQP-003 | 대기 |
+| R01 | 정책 반영 | 4-1 "Dashboard Info 내 [CURECA 구동 컨트롤러] 참고", "공통 UX 참고 : COMM-3-a" | 버튼 활성 조건과 동작은 POL-EQP-003 참조 | POL-EQP-003 | 대기 |
+| R02 | 정책 반영 | 5-2 [Unlock] "공통 UX 참고 : COMM-3-a" | 잠금 해제 조건은 POL-EQP-008 참조. 화면 라벨 "Door control"과 디스크립션 "[Unlock] 버튼" 하나로 통일 | POL-EQP-008 | 대기 |
+| R03 | 디스크립션 | 4 "CURECA 전체 구동 상태", "Cureca", "Lis" | 장비 통합 상태, CURECA, LIS | `glossary/terms.csv` | 대기 |
+| R04 | 디스크립션 | 번호 2가 없음 (1 다음 3) | 번호 정리 | 디스크립션 | 대기 |
+| R05 | 표기 | "270 rxns (3 sets)" (TI-DAS는 "3 sockets") | Reagent 수량 표기 규칙으로 하나로 통일 | Common UX COMM-4-b | 대기 (확인 필요) |
+| R06 | 표기 | Module 이름과 번호 붙여 씀, "Door control" 소문자 | High-throughput Extraction (1), 버튼 대소문자는 PD-0001 결정 후 | 이름 (번호) 띄어쓰기, PD-0001 | 대기 |
+| R07 | 참조 프레임 | Dashboard Info의 "Patial Running", 화면 정보 칸 비어 있음 | Partial Running. 정책으로 옮긴 뒤 프레임은 정책 ID 참조로 바꿈 | POL-EQP-003 | 대기 |
 
 ## 변경 이력
 

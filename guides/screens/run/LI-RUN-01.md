@@ -144,14 +144,14 @@ Description (17), Description Number (13), Tag Status (13), Table (9), Title (5)
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 디스크립션 | 0 진입 방법 "[RUN] 버튼", "Run Status > [RUN]" | [Run], 화면 이름 확인 (Test Status 메뉴인지) | `glossary/terms.csv` Run, `ia/ia-screens.csv` | 대기 (확인 필요) |
-| 2 | 디스크립션 | 1 "Step 2와 Step 3는 비활성화" (단계는 4개, Check Test Protocol을 쓰면 5개) | 현재 단계 외 모든 단계 비활성 | 화면 글자 | 대기 |
-| 3 | 디스크립션 | 7 [Next] → LI-RUN-02 | Check Test Protocol 단계가 보일 때는 LI-RUN-02-01로 이동 (LI-RUN-02-01 0 노출 조건) | LI-RUN-02-01 | 대기 |
-| 4 | 화면 정보 | 화면 이름 "Run Preparation"(5개 단계 화면 모두 같음), 단계 이름 "Check samples", IA "Check Run Samples" | 단계별 화면 이름을 IA와 맞춤 | `ia/ia-screens.csv` | 대기 (확인 필요) |
-| 5 | 디스크립션 | "구동 준비", "검체", "샘플" | Run Preparation, Sample | `glossary/terms.csv` (구동·검체·샘플은 쓰지 않는 표현) | 대기 |
-| 6 | 디스크립션 | 0 "Sample 정보 로드 불가 시 Alert_001". 카탈로그의 Alert_001 조건은 "Run 구동 준비 중 Trolley 도킹 해제 및 응급 서랍 장착 해제 시" | 카탈로그 조건 문장으로 통일 | `policy/alert-catalog.csv` | 대기 |
+| R01 | 디스크립션 | 0 진입 방법 "[RUN] 버튼", "Run Status > [RUN]" | [Run], 화면 이름 확인 (Test Status 메뉴인지) | `glossary/terms.csv` Run, `ia/ia-screens.csv` | 대기 (확인 필요) |
+| R02 | 디스크립션 | 1 "Step 2와 Step 3는 비활성화" (단계는 4개, Check Test Protocol을 쓰면 5개) | 현재 단계 외 모든 단계 비활성 | 화면 글자 | 대기 |
+| R03 | 디스크립션 | 7 [Next] → LI-RUN-02 | Check Test Protocol 단계가 보일 때는 LI-RUN-02-01로 이동 (LI-RUN-02-01 0 노출 조건) | LI-RUN-02-01 | 대기 |
+| R04 | 화면 정보 | 화면 이름 "Run Preparation"(5개 단계 화면 모두 같음), 단계 이름 "Check samples", IA "Check Run Samples" | 단계별 화면 이름을 IA와 맞춤 | `ia/ia-screens.csv` | 대기 (확인 필요) |
+| R05 | 디스크립션 | "구동 준비", "검체", "샘플" | Run Preparation, Sample | `glossary/terms.csv` (구동·검체·샘플은 쓰지 않는 표현) | 대기 |
+| R06 | 디스크립션 | 0 "Sample 정보 로드 불가 시 Alert_001". 카탈로그의 Alert_001 조건은 "Run 구동 준비 중 Trolley 도킹 해제 및 응급 서랍 장착 해제 시" | 카탈로그 조건 문장으로 통일 | `policy/alert-catalog.csv` | 대기 |
 
 ## 변경 이력
 

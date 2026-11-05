@@ -98,11 +98,11 @@ figma_region: 2.1 2차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 표기 | Sample Type 이름 예시 (Aspirate, Cary-blair, Cellpreserv 등) | `glossary/sample-types.csv`의 UI 표기와 맞춤 | `glossary/sample-types.csv` | 대기 |
-| 2 | 디스크립션 | 4 Done·Enter로 "입력값 저장 처리"와 5 [Save]로 최종 저장이 섞임 | 행 단위 확정과 [Save] 저장을 구분해 씀 | 디스크립션 | 대기 |
-| 3 | 디스크립션 | Assay Pack 데이터 키 이름(fileType, sampleTypeInfo 등)을 디스크립션에 직접 적음 | 데이터 정의는 Assay Pack 기준 자료로 옮기고 ID로 참조 | 헌법 3조 | 대기 |
+| R01 | 표기 | Sample Type 이름 예시 (Aspirate, Cary-blair, Cellpreserv 등) | `glossary/sample-types.csv`의 UI 표기와 맞춤 | `glossary/sample-types.csv` | 대기 |
+| R02 | 디스크립션 | 4 Done·Enter로 "입력값 저장 처리"와 5 [Save]로 최종 저장이 섞임 | 행 단위 확정과 [Save] 저장을 구분해 씀 | 디스크립션 | 대기 |
+| R03 | 디스크립션 | Assay Pack 데이터 키 이름(fileType, sampleTypeInfo 등)을 디스크립션에 직접 적음 | 데이터 정의는 Assay Pack 기준 자료로 옮기고 ID로 참조 | 헌법 3조 | 대기 |
 
 ## 변경 이력
 

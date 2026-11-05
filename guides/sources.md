@@ -6,12 +6,13 @@ Claude가 근거로 읽는 자료의 목록입니다. 이 목록 밖의 자료�
 
 | 자료 | 기준 출처 | 비고 |
 | --- | --- | --- |
-| Common UX | [UX-AI-TEST > DY common UX](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=355-53300) (COMM-0 ~ COMM-5) | 최종본 V2.2.00 (2026-10-30). 고칠 곳은 `common-ux/feedback.md` |
+| Common UX | [UX-AI-TEST > DY common UX (지금 페이지 이름 "Common UX - PC")](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=355-53300) (COMM-0 ~ COMM-5) | 최종본 V2.2.00 (2026-10-30). 컴포넌트(5장) 번호 · 내용도 이 페이지 기준(2026-11-04). SH.L TEST › Connon UX와 팀 프로그램 "CURECA UX 가이드"는 기준이 아님. 고칠 곳은 `common-ux/feedback.md` |
 | 화면 | [1-2. CURECA 기획 디자인 작업방 Part.2](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/1-2.-CURECA_%EA%B8%B0%ED%9A%8D-%EB%94%94%EC%9E%90%EC%9D%B8-%EC%9E%91%EC%97%85%EB%B0%A9-Part.2-?node-id=1-11) 메뉴별 페이지 12개: Login, Dashboard, Event History, Run/Quick Start, Test Management, Sample Tracking, Instrument, Inventory, Statistical Analysis, Profile / Information, Setting, Material Setup(2차) | Material Setup(1차) 페이지는 근거로 쓰지 않음. 같은 CID가 2.1 1차·2차 영역에 함께 있으면 2차(민트색) 영역 화면이 최신 (`rules/figma-sync.md` 1절) |
+| 화면 (신규 작업방) | Figma `eCzV8BJIXt1MGdKr3S4fgI` (2026-11-03 만듦) | 새로 그린 메뉴(`_menu.md`의 `redrawn`이 있는 메뉴)는 이 파일과 화면 MD가 기준. 위 기존 작업방은 이행 기간에 아직 새로 그리지 않은 메뉴만 읽음 (`rules/screen-spec.md` 0절) |
 | 정책서 | 같은 작업방의 정책서_2026.08.28 페이지 | 정책서 현행화 전까지 기준. 화면 디스크립션에 흩어진 정책도 함께 정제 예정 |
 | Service Mode | [COMM-3-a(2/2) Base Frame Area](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=877-2623) | `policy/service-mode.md`로 옮김 |
-| IA | `ia/CURECA_Part2_IA_v1.15.xlsx` (v1.15, 2026-10-29) | Claude가 읽는 표는 `ia/ia-screens.csv`. IA-T-IOS, IA-L-IOS 시트만 옮김 (참고) Part1 시트 제외) |
-| 언어셋 | `language-set/` (원본 받을 예정) | 6개 언어 문구 |
+| IA | Google 스프레드시트 [CURECA_Part2_IA](https://docs.google.com/spreadsheets/d/1HsK_OPhyVFUDSCNPL1J3pTOFIKs3a-GmsY1buLjzR88/edit) (IA-T-IOS, IA-L-IOS, IA-문서이력 탭). 받은 사본 `ia/CURECA_Part2_IA_v1.15.xlsx` (v1.15, 2026-10-29) | Claude가 읽는 표는 `ia/ia-screens.csv`. IA-T-IOS, IA-L-IOS 시트만 옮김 (참고) Part1 시트 제외) |
+| 언어셋 | `language-set/source/CURECA_Language Set_v0.03.xlsx` (2026-11-04 받음, 분석 `language-set/analysis-v0.03.md`) | 7개 언어 문구 (한국어는 11월 말 추가 예정). 지금 번역은 AI 초벌 |
 | 고객사 제공 자료 | `reference/customer/` | 씨젠 "CURECA 시스템 구성 요소 및 상태 정보" (260921 엑셀, 261021 캡처). 소모품·시약, 검사 항목 문서는 검토 중. Assay Pack 명세 R06 캡처(`reference/customer/assay-pack/`, DRM 원본 대신 사용자 캡처) |
 | Consumable·Reagent 데이터 표기 | Common UX COMM-4-b(1/5)~(5/5) | 최종본에 포함됨. 작업방 APP,Web_Common UX 페이지의 COMM-4-b 프레임(Ver 2.1.13)과 내용이 같아 Common UX를 기준으로 씀 |
 | 상태값과 상태 전환 | Common UX [COMM-4-a(1/4)~(4/4)](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=355-53300) | 씨젠 문서 "CURECA 시스템 구성 요소 및 상태 정보"를 바탕으로 함. 원본은 `reference/customer/system-status/` |

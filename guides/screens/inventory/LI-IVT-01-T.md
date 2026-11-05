@@ -42,16 +42,16 @@ figma_region: 2.1 2차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 표기 | 화면 카드 "Comsumable" | Consumable | `glossary/terms.csv` | 대기 |
-| 2 | 상태값 | 1-1·1-5 "Empty 및 Insufficient" (화면 카드는 Insufficient, Low) | TI-IVT-01-T 반영 대기 목록 2와 같음 (Empty → Insufficient) | `glossary/status-values.csv 재고 상태`, POL-INV-003 규칙 7 | 대기 |
-| 3 | 상태값 | 1 "'Docking' 상태" | Docked | `glossary/status-values.csv` | 대기 |
-| 4 | 문구 | 3-5 툴팁 "Full and Warning status" | Full and Almost Full | `glossary/status-values.csv` | 대기 |
-| 5 | 표기 | 3-4 "Waste Status Icon" | Waste Bin/Bottle Status Icon | `glossary/terms.csv` | 대기 |
-| 6 | 디스크립션 | 1-7 툴팁 취소선이 L-IOS에만 있음 | TI-IVT-01-T와 같은 현재 문구로 맞춤 | TI-IVT-01-T 반영 대기 목록 6 | 대기 (확인 필요) |
-| 7 | 디스크립션 | 번호 2 없음, 0 "사용여부가 '사용'인 모듈" | 번호 정리, Enabled인 Module | POL-EQP-009 | 대기 |
-| 8 | 화면 정보 | IA "짝 화면 동일"이 비어 있으나 화면은 같음 | IA 확인 | `ia/ia-screens.csv` | 대기 (확인 필요) |
+| R01 | 표기 | 화면 카드 "Comsumable" | Consumable | `glossary/terms.csv` | 대기 |
+| R02 | 상태값 | 1-1·1-5 "Empty 및 Insufficient" (화면 카드는 Insufficient, Low) | TI-IVT-01-T 반영 대기 목록 2와 같음 (Empty → Insufficient) | `glossary/status-values.csv 재고 상태`, POL-INV-003 규칙 7 | 대기 |
+| R03 | 상태값 | 1 "'Docking' 상태" | Docked | `glossary/status-values.csv` | 대기 |
+| R04 | 문구 | 3-5 툴팁 "Full and Warning status" | Full and Almost Full | `glossary/status-values.csv` | 대기 |
+| R05 | 표기 | 3-4 "Waste Status Icon" | Waste Bin/Bottle Status Icon | `glossary/terms.csv` | 대기 |
+| R06 | 디스크립션 | 1-7 툴팁 취소선이 L-IOS에만 있음 | TI-IVT-01-T와 같은 현재 문구로 맞춤 | TI-IVT-01-T 반영 대기 목록 6 | 대기 (확인 필요) |
+| R07 | 디스크립션 | 번호 2 없음, 0 "사용여부가 '사용'인 모듈" | 번호 정리, Enabled인 Module | POL-EQP-009 | 대기 |
+| R08 | 화면 정보 | IA "짝 화면 동일"이 비어 있으나 화면은 같음 | IA 확인 | `ia/ia-screens.csv` | 대기 (확인 필요) |
 
 ## 변경 이력
 

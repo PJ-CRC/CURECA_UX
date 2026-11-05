@@ -1,6 +1,6 @@
 # Common UX 수정 요청
 
-> Common UX 최종본(V2.2.00, 2026-10-30)을 저장소 기준 자료와 맞춰 보며 찾은 고칠 곳입니다. Common UX를 정리하는 팀원에게 전달하고, 반영되면 날짜를 적어 닫습니다.
+> Common UX 최종본(V2.2.00, 2026-10-30, Figma "Common UX - PC")에서 고칠 곳의 목록입니다. 임시 정책과 같은 방식으로 씁니다(헌법 4조 v1.6, 2026-11-04): 누구든 여기에 고칠 곳을 올리고, 모두가 함께 확인한 뒤 반영합니다. 나중에 팀 프로그램에 이 목록을 보여 주고 [반영]을 누르면 Common UX에 고쳐지는 기능을 넣을 예정입니다(제안서 R24). 그 전까지는 Common UX를 정리하는 팀원이 Figma에서 고치고, 반영되면 "반영" 칸에 날짜를 적어 닫습니다.
 
 | # | 프레임 | 지금 내용 | 고칠 내용 | 근거 | 반영 |
 | --- | --- | --- | --- | --- | --- |
@@ -13,3 +13,9 @@
 | 7 | COMM-3-a(2/2) | LNB에 Information > Manual | 메뉴가 준비될 때까지 제외 | 2026-10-30 결정 | |
 | 8 | COMM-2-b, COMM-3-a(1/2) | "사용자 권한별", "사용자 유형", "Service 계정" | User Type, Service User Type | 용어집 | |
 | 9 | 모든 프레임 | 화면 정보 Ver 2.0.01, Date YYYY.MM.DD | Revision History의 V2.2.00, 2026-10-30과 맞춤 | Revision History | |
+| 10 | COMM-2-a | T-IOS LNB "All Dashboard" | Dashboard(All) | 2026-11-04 사용자 결정, 용어집 | |
+| 11 | COMM-4-a(1/4) | Module명 `ModuleType(index)`, 예 `Sample Storage(1)` | 이름과 번호 사이 띄어 씀 `Sample Storage (1)` | 용어집(2026-10-30 결정), `pending/PD-0007.md` | |
+| 12 | COMM-3-a(1/2) | GNB 일시 "접속 환경 기준 일시" | 장비 기준 일시 (L-IOS · T-IOS 모두 CURECA 장비 시간대) | 2026-11-04 사용자 결정, `common-ux/common-policy-candidates.md` 3절 6번 | |
+| 13 | COMM-0, COMM-5-v 외 참조 | "Tool Tip" | Tooltip | 용어집 Tooltip, 2026-11-04 사용자 결정 (용어집 기준) | |
+| 14 | COMM-5-q 외 참조 | "Check Box" | Checkbox | 용어집 Checkbox, 2026-11-04 사용자 결정 (용어집 기준) | |
+| 15 | COMM-0, COMM-5-t 외 참조 (COMM-5-p Search Bar · 5-w Validation Check 문구 포함) | "Text Field" | Text Input | 용어집 Text Input, 2026-11-04 사용자 결정 (용어집 기준) | |

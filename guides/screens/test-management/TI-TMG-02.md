@@ -150,16 +150,16 @@ Arrow/Chevron_Right (19), Description Number (9), 1 Depth (7), Label/Status/Roun
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | 1·3 케이스 참조가 "LI-TMG-02/Case" | TI-TMG-02/Case | 케이스 프레임 이름 | 대기 |
-| 2 | 표기 | 1 "Patial Running" | Partial Running | `glossary/terms.csv` | 대기 |
-| 3 | 표기 | 화면 글자 "Not tested" (디스크립션은 Not Tested) | Not Tested | `glossary/terms.csv` | 대기 |
-| 4 | 디스크립션 | 1 "CURECA 구동 상태", "장비 구동 상태" | 장비 통합 상태 | `glossary/terms.csv` 장비 통합 상태 | 대기 |
-| 5 | 디스크립션 | 1 상태별 동작에 Not Initialized / Ready, Running, Partial Running / Error만 있음 (Initializing, Stopping, Paused 없음) | 장비 통합 상태값 전체 기준으로 정함 | `glossary/status-values.csv` 장비 통합 상태 | 대기 (확인 필요) |
-| 6 | 디스크립션 | 3 "Ready 상태 도달 전까지 카드 누적"과 "다음 Running 시작 시 초기화"가 함께 있어 Ready 뒤 카드가 남는지 모호함 (Case 4 "모든 Batch 완료 후 초기화 전") | 카드 유지·초기화 시점을 한 문장으로 | 디스크립션 3, Case 4 | 대기 (확인 필요) |
-| 7 | 정책 반영 | 2-2·3-2에 Completed, Failed, Not Tested (Product 수량) 표시. 검사 배치 완료 상태값은 화면에 없음 | 반영 대기 14대로 배치 완료 상태는 넣지 않음 (지금 화면과 같음) | `policy/policy-backlog.md` 14 | 대기 |
-| 8 | 디스크립션 | 2-2 "Progress>Total", 3-2 "Progress/Total" 표기 다름 | 하나로 | 디스크립션 | 대기 |
+| R01 | 화면 정보 | 1·3 케이스 참조가 "LI-TMG-02/Case" | TI-TMG-02/Case | 케이스 프레임 이름 | 대기 |
+| R02 | 표기 | 1 "Patial Running" | Partial Running | `glossary/terms.csv` | 대기 |
+| R03 | 표기 | 화면 글자 "Not tested" (디스크립션은 Not Tested) | Not Tested | `glossary/terms.csv` | 대기 |
+| R04 | 디스크립션 | 1 "CURECA 구동 상태", "장비 구동 상태" | 장비 통합 상태 | `glossary/terms.csv` 장비 통합 상태 | 대기 |
+| R05 | 디스크립션 | 1 상태별 동작에 Not Initialized / Ready, Running, Partial Running / Error만 있음 (Initializing, Stopping, Paused 없음) | 장비 통합 상태값 전체 기준으로 정함 | `glossary/status-values.csv` 장비 통합 상태 | 대기 (확인 필요) |
+| R06 | 디스크립션 | 3 "Ready 상태 도달 전까지 카드 누적"과 "다음 Running 시작 시 초기화"가 함께 있어 Ready 뒤 카드가 남는지 모호함 (Case 4 "모든 Batch 완료 후 초기화 전") | 카드 유지·초기화 시점을 한 문장으로 | 디스크립션 3, Case 4 | 대기 (확인 필요) |
+| R07 | 정책 반영 | 2-2·3-2에 Completed, Failed, Not Tested (Product 수량) 표시. 검사 배치 완료 상태값은 화면에 없음 | 반영 대기 14대로 배치 완료 상태는 넣지 않음 (지금 화면과 같음) | `policy/policy-backlog.md` 14 | 대기 |
+| R08 | 디스크립션 | 2-2 "Progress>Total", 3-2 "Progress/Total" 표기 다름 | 하나로 | 디스크립션 | 대기 |
 
 ## 변경 이력
 

@@ -96,19 +96,19 @@ layout/spacing (7), Square (6), Description Number (4), Chip/Fill (3), Popup/Dat
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 표기 | "Prep consumable storage (1)" | Prep Consumable Storage (1) | `glossary/modules.csv` | 대기 |
-| 2 | 디스크립션 | Module 대상이 "Prep consumable storage"인데 Tub은 Trolley(Unit)에 있음. 화면 문구 "refill the Tub Spare Caps in the trolley" | Prep Consumable Storage의 Trolley 기준임을 명시 | `glossary/module-units.csv` PrepConsumableStorage > Trolley | 대기 |
-| 3 | 디스크립션 | 2 [Confirm all refills] OK 뒤 "해당 모듈(or 모듈 인덱스) Cap refill 완료" | 목록의 모든 항목 refill 완료 & 모든 버튼 비활성화 | 디스크립션 2 | 대기 |
-| 4 | 디스크립션 | 3 "‘재사용 가능 조건 = Y’" 정의가 없음 | 재사용 가능 조건(Tub 최대 사용 횟수 등) 정의 위치 | `glossary/consumables.csv` 최대 사용 횟수, RGE-02 "Cap needed" | 대기 (확인 필요) |
-| 5 | 화면 데이터 | 1F에 LB Tub, Tub Frame (1F는 빈 Tray 반환 전용 floor) | 디스크립션에 넣음: Tub는 어느 floor에 있든(1F 반환용 Tray에 돌아온 Tub 포함) 모두 Cap 보충 목록에 나옴. 화면 예시의 1F 줄은 그대로 둠 | 2026-11-03 사용자 답변 (MS1-a) | 대기 |
-| 6 | 화면 | 위치 구분자 "6F l E1" (소문자 l) | "6F / E1" 또는 "6F > E1" 등 구분자 정함 | 화면 글자 | 대기 |
-| 7 | 화면 | "Spare caps" (DXI-08은 v2.1.14에 "Spare Caps"로 바꿈), 버튼 "Confirm refill" / 문구 "[Confirm Refill]" | 대소문자 통일 | LI-TSS-DXI-08 버전 메모 | 대기 |
-| 8 | 세부 정의 | 4대 이상 Case Chip "(3)"이 두 번 | (4) | 오타 | 대기 |
-| 9 | 화면 | 닫기 버튼 없음. 1 디폴트 Chip 외 다른 Chip 선택 동작 정의 없음 | Popup 닫기, Chip 선택 시 목록 갱신 정의 | 화면 글자 | 대기 (확인 필요) |
-| 10 | 표기 | "모듈", "Tub명" | Module, Tub 이름 | `glossary/terms.csv` | 대기 |
-| 11 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
+| R01 | 표기 | "Prep consumable storage (1)" | Prep Consumable Storage (1) | `glossary/modules.csv` | 대기 |
+| R02 | 디스크립션 | Module 대상이 "Prep consumable storage"인데 Tub은 Trolley(Unit)에 있음. 화면 문구 "refill the Tub Spare Caps in the trolley" | Prep Consumable Storage의 Trolley 기준임을 명시 | `glossary/module-units.csv` PrepConsumableStorage > Trolley | 대기 |
+| R03 | 디스크립션 | 2 [Confirm all refills] OK 뒤 "해당 모듈(or 모듈 인덱스) Cap refill 완료" | 목록의 모든 항목 refill 완료 & 모든 버튼 비활성화 | 디스크립션 2 | 대기 |
+| R04 | 디스크립션 | 3 "‘재사용 가능 조건 = Y’" 정의가 없음 | 재사용 가능 조건(Tub 최대 사용 횟수 등) 정의 위치 | `glossary/consumables.csv` 최대 사용 횟수, RGE-02 "Cap needed" | 대기 (확인 필요) |
+| R05 | 화면 데이터 | 1F에 LB Tub, Tub Frame (1F는 빈 Tray 반환 전용 floor) | 디스크립션에 넣음: Tub는 어느 floor에 있든(1F 반환용 Tray에 돌아온 Tub 포함) 모두 Cap 보충 목록에 나옴. 화면 예시의 1F 줄은 그대로 둠 | 2026-11-03 사용자 답변 (MS1-a) | 대기 |
+| R06 | 화면 | 위치 구분자 "6F l E1" (소문자 l) | "6F / E1" 또는 "6F > E1" 등 구분자 정함 | 화면 글자 | 대기 |
+| R07 | 화면 | "Spare caps" (DXI-08은 v2.1.14에 "Spare Caps"로 바꿈), 버튼 "Confirm refill" / 문구 "[Confirm Refill]" | 대소문자 통일 | LI-TSS-DXI-08 버전 메모 | 대기 |
+| R08 | 세부 정의 | 4대 이상 Case Chip "(3)"이 두 번 | (4) | 오타 | 대기 |
+| R09 | 화면 | 닫기 버튼 없음. 1 디폴트 Chip 외 다른 Chip 선택 동작 정의 없음 | Popup 닫기, Chip 선택 시 목록 갱신 정의 | 화면 글자 | 대기 (확인 필요) |
+| R10 | 표기 | "모듈", "Tub명" | Module, Tub 이름 | `glossary/terms.csv` | 대기 |
+| R11 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
 
 ## 변경 이력
 

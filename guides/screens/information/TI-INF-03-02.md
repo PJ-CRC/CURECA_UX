@@ -252,20 +252,20 @@ Table (13), Description Number (8), Tag Status (1)
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | IA 화면 이름 "Datail", Figma 화면 이름 "Run Report" | Detail (IA 오타 수정), 화면 이름을 Run Report Detail 등으로 구분 | `ia/ia-screens.csv`, 디스크립션 0 | 대기 |
-| 2 | 권한 | User Type별 접근 정의 없음 | TI-INF-03-01과 같이: T-IOS에서만, Service·Admin·User 모두 볼 수 있음 | `policy/permission-matrix.csv` Information > Report, POL-SMP-004 규칙 6 | 대기 |
-| 3 | 디스크립션 | 2-3 제목이 2-2와 같은 "Tests by Product Group" | Tests by Process (화면 글자와 같게) | 화면 글자 | 대기 |
-| 4 | 디스크립션 | 2-3에 "도넛 차트 ... 검사군별 비율" 문장이 있으나 화면은 단계별 표 | 2-2에서 복사된 문장으로 보임. 지움 | 화면 글자 | 대기 (확인 필요) |
-| 5 | 디스크립션 | 2-3 "딴," | 단, | 오타 | 대기 |
-| 6 | 표기 | "Not tested" (화면, 2-1) | Not Tested | `glossary/terms.csv` 쓰지 않는 표현 Not tested | 대기 |
-| 7 | 디스크립션 | 번호 4 아래에 4-3만 있음 (4-1, 4-2 없음) | 번호 정리 | 디스크립션 | 대기 |
-| 8 | 디스크립션 | 1-1 Generated Date/Time "배치 종료(정상 완료 또는 실패) 후" | 배치 종료 후 (End Status 5개 값 모두) | `glossary/status-values.csv` 검사 배치 완료 상태 | 대기 |
-| 9 | 디스크립션 | 3-1 "Error 상태 이벤트", "Warning 상태 이벤트" | Error 등급, Warning 등급 (Event Level) | `glossary/status-values.csv` 이벤트 등급 | 대기 |
-| 10 | 디스크립션 | 1-2 SW 버전 4종이 어떤 시스템인지 디스크립션에 없음 (화면은 T-IOS, L-IOS, CFX96, SG Viewer) | 4종을 디스크립션에 적음 | 화면 글자 | 대기 |
-| 11 | 디스크립션 | 2-1 Samples Total "Trolley에 적재되어 검사된 전체 검체 수" | STAT Storage Sample 포함 여부를 팀 논의 후 정함 | PD-0003 | 대기 (확인 필요) |
-| 12 | 디스크립션 | 4-3 Run-time Current Run "h · m", Cumulative "h" 표기. Instruments Run-time은 h만 | Run-time 표기를 POL-EQP-005와 맞춤 | POL-EQP-005 | 대기 (확인 필요) |
+| R01 | 화면 정보 | IA 화면 이름 "Datail", Figma 화면 이름 "Run Report" | Detail (IA 오타 수정), 화면 이름을 Run Report Detail 등으로 구분 | `ia/ia-screens.csv`, 디스크립션 0 | 대기 |
+| R02 | 권한 | User Type별 접근 정의 없음 | TI-INF-03-01과 같이: T-IOS에서만, Service·Admin·User 모두 볼 수 있음 | `policy/permission-matrix.csv` Information > Report, POL-SMP-004 규칙 6 | 대기 |
+| R03 | 디스크립션 | 2-3 제목이 2-2와 같은 "Tests by Product Group" | Tests by Process (화면 글자와 같게) | 화면 글자 | 대기 |
+| R04 | 디스크립션 | 2-3에 "도넛 차트 ... 검사군별 비율" 문장이 있으나 화면은 단계별 표 | 2-2에서 복사된 문장으로 보임. 지움 | 화면 글자 | 대기 (확인 필요) |
+| R05 | 디스크립션 | 2-3 "딴," | 단, | 오타 | 대기 |
+| R06 | 표기 | "Not tested" (화면, 2-1) | Not Tested | `glossary/terms.csv` 쓰지 않는 표현 Not tested | 대기 |
+| R07 | 디스크립션 | 번호 4 아래에 4-3만 있음 (4-1, 4-2 없음) | 번호 정리 | 디스크립션 | 대기 |
+| R08 | 디스크립션 | 1-1 Generated Date/Time "배치 종료(정상 완료 또는 실패) 후" | 배치 종료 후 (End Status 5개 값 모두) | `glossary/status-values.csv` 검사 배치 완료 상태 | 대기 |
+| R09 | 디스크립션 | 3-1 "Error 상태 이벤트", "Warning 상태 이벤트" | Error 등급, Warning 등급 (Event Level) | `glossary/status-values.csv` 이벤트 등급 | 대기 |
+| R10 | 디스크립션 | 1-2 SW 버전 4종이 어떤 시스템인지 디스크립션에 없음 (화면은 T-IOS, L-IOS, CFX96, SG Viewer) | 4종을 디스크립션에 적음 | 화면 글자 | 대기 |
+| R11 | 디스크립션 | 2-1 Samples Total "Trolley에 적재되어 검사된 전체 검체 수" | STAT Storage Sample 포함 여부를 팀 논의 후 정함 | PD-0003 | 대기 (확인 필요) |
+| R12 | 디스크립션 | 4-3 Run-time Current Run "h · m", Cumulative "h" 표기. Instruments Run-time은 h만 | Run-time 표기를 POL-EQP-005와 맞춤 | POL-EQP-005 | 대기 (확인 필요) |
 
 ## 변경 이력
 

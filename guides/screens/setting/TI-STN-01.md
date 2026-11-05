@@ -92,14 +92,14 @@ figma_region: 2.1 2차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 디스크립션 | 1 "장비 상태 ≠ Not Initialized or Ready" | 장비 통합 상태로 명시 (POL-TST-001) | `glossary/glossary.md` 상태 단계 | 대기 |
-| 2 | 디스크립션 | 6-1 Test Cut-off Time "세부정의 참고" (세부 정의가 화면에 없음) | POL-TST-002 참조 | POL-TST-002 | 대기 |
-| 3 | 정책 반영 | 5 PCR Protocol Setting 선택지가 디스크립션에 없음 (기본값만) | 선택지 Cyclic-CMTA, End Point-CMTA를 디스크립션에 넣음 | POL-TST-001 규칙 7 | 대기 |
-| 4 | 정책 반영 | 6-2 Allow Protocol Changes Before Test의 뜻이 디스크립션에 없음 | Run 준비의 Check Test Protocol 단계 표시 여부임을 디스크립션에 넣음 | POL-TST-001 규칙 8 | 대기 |
-| 5 | 정책 반영 | 7·8 "Service 계정" | User Type이 Service일 때만 (POL-ACC-001) | `glossary/terms.csv` | 대기 |
-| 6 | 화면 정보 | 작성자 "BREX", Ver 2.0이나 버전 메모 v2.1.14 있음 | 화면 정보 Ver를 최신으로 | Figma | 대기 |
+| R01 | 디스크립션 | 1 "장비 상태 ≠ Not Initialized or Ready" | 장비 통합 상태로 명시 (POL-TST-001) | `glossary/glossary.md` 상태 단계 | 대기 |
+| R02 | 디스크립션 | 6-1 Test Cut-off Time "세부정의 참고" (세부 정의가 화면에 없음) | POL-TST-002 참조 | POL-TST-002 | 대기 |
+| R03 | 정책 반영 | 5 PCR Protocol Setting 선택지가 디스크립션에 없음 (기본값만) | 선택지 Cyclic-CMTA, End Point-CMTA를 디스크립션에 넣음 | POL-TST-001 규칙 7 | 대기 |
+| R04 | 정책 반영 | 6-2 Allow Protocol Changes Before Test의 뜻이 디스크립션에 없음 | Run 준비의 Check Test Protocol 단계 표시 여부임을 디스크립션에 넣음 | POL-TST-001 규칙 8 | 대기 |
+| R05 | 정책 반영 | 7·8 "Service 계정" | User Type이 Service일 때만 (POL-ACC-001) | `glossary/terms.csv` | 대기 |
+| R06 | 화면 정보 | 작성자 "BREX", Ver 2.0이나 버전 메모 v2.1.14 있음 | 화면 정보 Ver를 최신으로 | Figma | 대기 |
 
 ## 변경 이력
 

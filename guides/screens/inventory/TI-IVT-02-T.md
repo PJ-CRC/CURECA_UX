@@ -122,16 +122,16 @@ Item_Segment Tabs (6), Form/Dropdown Box (6), Description Number (6), Interface/
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 표기 | Tab 이름 "Reagent" (다른 Tab 화면은 Reagents) | Reagents | IA, TI-IVT-01-T 화면 글자 | 대기 |
-| 2 | 디스크립션 | 1-2 "데이트 업데이트", 1-3 "차감되지 않는며" | 데이터 업데이트, 차감되지 않으며 | 오타 | 대기 |
-| 3 | 디스크립션 | 0 "사용여부가 '사용'인 모듈" | Enabled인 Module | POL-EQP-009 | 대기 |
-| 4 | 디스크립션 | 1 "아래 Inventory Overview Detail Info 예시 참고하여 작업요청" (CID 없는 프레임을 가리킴) | 케이스 규칙을 디스크립션이나 정책으로 옮김 | `screens/inventory/_menu.md` | 대기 (확인 필요) |
-| 5 | 표기 | 화면 "Samples (Test In Progress) 48 ea (1 racks)" | 1 rack | 단수·복수 | 대기 |
-| 6 | 디스크립션 | 1-1 "투입 트롤리", "회수 트롤리", "검체" | Inbound Trolley, Outbound Trolley, Sample | `glossary/terms.csv` | 대기 |
-| 7 | 문구 | 2 툴팁 "all modules . Select" | all modules. Select | 띄어쓰기 | 대기 |
-| 8 | 화면 정보 | IA "짝 화면 동일"이 비어 있으나 LI-IVT-02-T와 화면·디스크립션이 같음 | IA 확인 | `ia/ia-screens.csv` | 대기 (확인 필요) |
+| R01 | 표기 | Tab 이름 "Reagent" (다른 Tab 화면은 Reagents) | Reagents | IA, TI-IVT-01-T 화면 글자 | 대기 |
+| R02 | 디스크립션 | 1-2 "데이트 업데이트", 1-3 "차감되지 않는며" | 데이터 업데이트, 차감되지 않으며 | 오타 | 대기 |
+| R03 | 디스크립션 | 0 "사용여부가 '사용'인 모듈" | Enabled인 Module | POL-EQP-009 | 대기 |
+| R04 | 디스크립션 | 1 "아래 Inventory Overview Detail Info 예시 참고하여 작업요청" (CID 없는 프레임을 가리킴) | 케이스 규칙을 디스크립션이나 정책으로 옮김 | `screens/inventory/_menu.md` | 대기 (확인 필요) |
+| R05 | 표기 | 화면 "Samples (Test In Progress) 48 ea (1 racks)" | 1 rack | 단수·복수 | 대기 |
+| R06 | 디스크립션 | 1-1 "투입 트롤리", "회수 트롤리", "검체" | Inbound Trolley, Outbound Trolley, Sample | `glossary/terms.csv` | 대기 |
+| R07 | 문구 | 2 툴팁 "all modules . Select" | all modules. Select | 띄어쓰기 | 대기 |
+| R08 | 화면 정보 | IA "짝 화면 동일"이 비어 있으나 LI-IVT-02-T와 화면·디스크립션이 같음 | IA 확인 | `ia/ia-screens.csv` | 대기 (확인 필요) |
 
 ## 변경 이력
 

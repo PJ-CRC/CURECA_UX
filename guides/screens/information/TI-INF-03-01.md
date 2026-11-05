@@ -136,16 +136,16 @@ Square (13), Table (11), Form/CheckBox (10), Table/Filled Table Cell (10), Descr
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | 화면 이름 "Run Report", 경로 "Information > Run Report" | IA는 "Report" (Information > Report). 어느 쪽으로 맞출지 정함 | `ia/ia-screens.csv` | 대기 (확인 필요) |
-| 2 | 권한 | User Type별 접근 정의 없음 | 디스크립션에 넣음: T-IOS에서만 보이는 메뉴이며, Service·Admin·User 모두 볼 수 있음 | `policy/permission-matrix.csv` Information > Report, POL-SMP-004 규칙 6 | 대기 |
-| 3 | 디스크립션 | 1-2 "검사 상태를 단일 선택" | 검사 배치 완료 상태 (값은 상태값 표와 같음) | `glossary/status-values.csv` 검사 배치 완료 상태 | 대기 |
-| 4 | 디스크립션 | 2-1 Generated Date/Time "배치 종료(정상 완료 또는 실패) 후" | End Status 값이 5개(Not Tested, Partially Completed, Stopped 포함)라 "배치 종료 후"로 정리 | `glossary/status-values.csv` | 대기 |
-| 5 | 디스크립션 | 1-1 "구동 ID(Run By)" | 실행한 User ID (2-1과 같은 말로) | `glossary/terms.csv` Run (구동은 쓰지 않는 표현) | 대기 |
-| 6 | 디스크립션 | 2-2 "새 탭 PDF 뷰어 호출"과 "TI-INF-03-02 노출"이 함께 있음 | TI-INF-03-02가 PDF 뷰어로 보여 주는 리포트 화면인지 정리 | 디스크립션 | 대기 (확인 필요) |
-| 7 | 화면 글자 | LNB Information 아래 "Manual" | IA에 Manual 화면 없음. 메뉴 유지 여부 확인 | `ia/ia-screens.csv` | 대기 (확인 필요) |
-| 8 | 표기 | 레포트 / 리포트 섞어 씀 | 하나로 통일 | 디스크립션 | 대기 |
+| R01 | 화면 정보 | 화면 이름 "Run Report", 경로 "Information > Run Report" | IA는 "Report" (Information > Report). 어느 쪽으로 맞출지 정함 | `ia/ia-screens.csv` | 대기 (확인 필요) |
+| R02 | 권한 | User Type별 접근 정의 없음 | 디스크립션에 넣음: T-IOS에서만 보이는 메뉴이며, Service·Admin·User 모두 볼 수 있음 | `policy/permission-matrix.csv` Information > Report, POL-SMP-004 규칙 6 | 대기 |
+| R03 | 디스크립션 | 1-2 "검사 상태를 단일 선택" | 검사 배치 완료 상태 (값은 상태값 표와 같음) | `glossary/status-values.csv` 검사 배치 완료 상태 | 대기 |
+| R04 | 디스크립션 | 2-1 Generated Date/Time "배치 종료(정상 완료 또는 실패) 후" | End Status 값이 5개(Not Tested, Partially Completed, Stopped 포함)라 "배치 종료 후"로 정리 | `glossary/status-values.csv` | 대기 |
+| R05 | 디스크립션 | 1-1 "구동 ID(Run By)" | 실행한 User ID (2-1과 같은 말로) | `glossary/terms.csv` Run (구동은 쓰지 않는 표현) | 대기 |
+| R06 | 디스크립션 | 2-2 "새 탭 PDF 뷰어 호출"과 "TI-INF-03-02 노출"이 함께 있음 | TI-INF-03-02가 PDF 뷰어로 보여 주는 리포트 화면인지 정리 | 디스크립션 | 대기 (확인 필요) |
+| R07 | 화면 글자 | LNB Information 아래 "Manual" | IA에 Manual 화면 없음. 메뉴 유지 여부 확인 | `ia/ia-screens.csv` | 대기 (확인 필요) |
+| R08 | 표기 | 레포트 / 리포트 섞어 씀 | 하나로 통일 | 디스크립션 | 대기 |
 
 ## 변경 이력
 

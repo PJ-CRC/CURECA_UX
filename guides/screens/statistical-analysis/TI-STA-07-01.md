@@ -163,20 +163,20 @@ Description Number (11), Square (6), 1 Depth (6), Dropdown Outlined (3), 2 Depth
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | IA 화면 이름 "소모품 및 시약 사용량 - Chart" (한국어), 화면 타이틀 "Usage & Cost Trend", Figma 화면 이름 "Statistical Analysis" | IA 중메뉴 이름을 Inventory로, 화면 이름은 Usage & Cost Trend - Chart로 (Figma 기준). IA 수정 요청함 | `ia/change-requests.md` 3 | 대기 |
-| 2 | 화면 정보 | Figma 경로 "Statistical Analysis > Inventory", IA는 Test Analytics 아래 | 메뉴 구조는 Statistical Analysis > Test Analytics / Instrument / Inventory / Event (Figma 기준). IA 수정 요청함 | `ia/change-requests.md` 1, POL-STA-001 규칙 1 | 대기 |
-| 3 | 정책 반영 | "(Unit : USD)" 고정 | Cost Setting에서 고른 통화를 따름 | POL-TST-003 규칙 1 | 대기 |
-| 4 | 디스크립션 | 5 "검사 항목에 매핑된 … 해당 검사 항목은 비활성화" (TI-STA-04-01에서 복사된 것으로 보임). 이 화면의 Legend는 Consumable·Reagent 품목 | 디스크립션에 넣음: Cost Setting에 단가가 없는 Consumable·Reagent는 Legend에서 고를 수 없도록 비활성. 화면 예시도 해당 품목을 비활성으로 | POL-STA-006 규칙 7 | 대기 |
-| 5 | 디스크립션 | 5 Default "Consumable 탭 활성화, 첫번째 소모품 선택"인데 화면 예시는 드롭다운 "PCR"과 Reagent 제품명 목록 | 기본 상태 화면을 Default와 맞춤 | 화면 글자 | 대기 |
-| 6 | 표기 | 사용량 단위 "(Unit : count)", 값은 "231 sets(23,100 ea)" | 디스크립션에 넣음: 사용량 단위는 (Unit : count). 품목별 세부 단위(sets, ea)는 Tooltip이나 Table에서 보여 줌. 화면 예시도 그렇게 | POL-STA-006 규칙 8 | 대기 |
-| 7 | 표기 | "Anyplex™II STI-12 Detection" | Anyplex™ II STI-12 Detection | `glossary/test-items.csv` | 대기 |
-| 8 | 디스크립션 | 0 "Inventory > Usage history", 참고 "LI-IVT-06-T" (T-IOS 화면) | Usage History, TI-IVT-06-T | `ia/ia-screens.csv` | 대기 |
-| 9 | 디스크립션 | 2 "Chart 선택 시 꺾은선 그래프", 3-5는 세로 막대 + 꺾은선 | 3-5와 맞춤 | 디스크립션 | 대기 |
-| 10 | 화면 정보 | "TI-STA-05_Skeleton" 참조 (TI-STA-05는 Test Forecasting) | Skeleton 프레임 CID 확인 | `ia/ia-screens.csv` | 대기 (확인 필요) |
-| 11 | 디스크립션 | "소모품/시약", "첫번째 소모품" | Consumable / Reagent | `glossary/terms.csv` | 대기 |
-| 12 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
+| R01 | 화면 정보 | IA 화면 이름 "소모품 및 시약 사용량 - Chart" (한국어), 화면 타이틀 "Usage & Cost Trend", Figma 화면 이름 "Statistical Analysis" | IA 중메뉴 이름을 Inventory로, 화면 이름은 Usage & Cost Trend - Chart로 (Figma 기준). IA 수정 요청함 | `ia/change-requests.md` 3 | 대기 |
+| R02 | 화면 정보 | Figma 경로 "Statistical Analysis > Inventory", IA는 Test Analytics 아래 | 메뉴 구조는 Statistical Analysis > Test Analytics / Instrument / Inventory / Event (Figma 기준). IA 수정 요청함 | `ia/change-requests.md` 1, POL-STA-001 규칙 1 | 대기 |
+| R03 | 정책 반영 | "(Unit : USD)" 고정 | Cost Setting에서 고른 통화를 따름 | POL-TST-003 규칙 1 | 대기 |
+| R04 | 디스크립션 | 5 "검사 항목에 매핑된 … 해당 검사 항목은 비활성화" (TI-STA-04-01에서 복사된 것으로 보임). 이 화면의 Legend는 Consumable·Reagent 품목 | 디스크립션에 넣음: Cost Setting에 단가가 없는 Consumable·Reagent는 Legend에서 고를 수 없도록 비활성. 화면 예시도 해당 품목을 비활성으로 | POL-STA-006 규칙 7 | 대기 |
+| R05 | 디스크립션 | 5 Default "Consumable 탭 활성화, 첫번째 소모품 선택"인데 화면 예시는 드롭다운 "PCR"과 Reagent 제품명 목록 | 기본 상태 화면을 Default와 맞춤 | 화면 글자 | 대기 |
+| R06 | 표기 | 사용량 단위 "(Unit : count)", 값은 "231 sets(23,100 ea)" | 디스크립션에 넣음: 사용량 단위는 (Unit : count). 품목별 세부 단위(sets, ea)는 Tooltip이나 Table에서 보여 줌. 화면 예시도 그렇게 | POL-STA-006 규칙 8 | 대기 |
+| R07 | 표기 | "Anyplex™II STI-12 Detection" | Anyplex™ II STI-12 Detection | `glossary/test-items.csv` | 대기 |
+| R08 | 디스크립션 | 0 "Inventory > Usage history", 참고 "LI-IVT-06-T" (T-IOS 화면) | Usage History, TI-IVT-06-T | `ia/ia-screens.csv` | 대기 |
+| R09 | 디스크립션 | 2 "Chart 선택 시 꺾은선 그래프", 3-5는 세로 막대 + 꺾은선 | 3-5와 맞춤 | 디스크립션 | 대기 |
+| R10 | 화면 정보 | "TI-STA-05_Skeleton" 참조 (TI-STA-05는 Test Forecasting) | Skeleton 프레임 CID 확인 | `ia/ia-screens.csv` | 대기 (확인 필요) |
+| R11 | 디스크립션 | "소모품/시약", "첫번째 소모품" | Consumable / Reagent | `glossary/terms.csv` | 대기 |
+| R12 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
 
 ## 변경 이력
 

@@ -8,7 +8,7 @@ cids: [TI-EVT-P, LI-EVT-P, TI-TMG-01, LI-TMG-01, TI-SPT-01, LI-SPT-01, TI-SPT-02
 status: 확정
 version:
 date: 2026-11-03
-sources: [2026-11-03 사용자 결정 (IV10), 화면 디스크립션의 [Export]·[Download], Common UX COMM-5-j(4/4)]
+sources: [2026-11-03 사용자 결정 (IV10), 화면 디스크립션의 [Export]·[Download], Common UX COMM-5-m(2/4) Import / Export Popup]
 provisional: []
 alerts: []
 data: []
@@ -27,7 +27,7 @@ replaced_by:
    - Run Report(Information > Report)의 [Download]: 리포트 문서 파일로 받음
    - System Setting의 Log [Export]: Service User Type이 장비 상태를 파악하는 자료라 형식과 구성을 정하지 않고 개발에서 묶어 내보냄 (POL-SYS-004 규칙 2)
 3. T-IOS는 [Export]를 누르면 OS 파일 탐색기에서 저장 경로와 파일 이름을 정함.
-4. L-IOS는 [Export]를 누르면 경로 저장 또는 USB 저장을 고르는 Popup을 보여 줌 (Common UX COMM-5-j(4/4)). 기본 경로는 System Setting의 Export / Import Location임 (POL-SYS-004 규칙 3).
+4. L-IOS는 [Export]를 누르면 경로 저장 또는 USB 저장을 고르는 Popup을 보여 줌 (Common UX COMM-5-m(2/4) Import / Export Popup). 기본 경로는 System Setting의 Export / Import Location임 (POL-SYS-004 규칙 3).
 
 | 메뉴 | 화면 | 내보내는 것 |
 | --- | --- | --- |
@@ -55,3 +55,4 @@ replaced_by:
 | --- | --- | --- | --- |
 | | 2026-11-03 | 최초 작성 | 사용자 결정 |
 | | 2026-11-03 | Log Export 제외, Import .csv·엑셀 (IV10-a) | 사용자 확인, CA-0008 |
+| | 2026-11-04 | Common UX 참조 번호를 Common UX - PC 기준으로 고침 (COMM-5-j(4/4) → COMM-5-m(2/4)) | `common-ux/common-policy-candidates.md` |

@@ -86,13 +86,13 @@ Table (53), Square (20), 1 Depth (7), Table/Filled Table Cell (5), Description N
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 정책 반영 | "(Unit : USD)", "통화 기호 $ 필수", "$0.00" | 디스크립션에 넣음: Cost Setting에서 고른 통화를 따름. KRW는 소수점 없이, 그 밖의 통화는 소수점 둘째 자리까지. 화면 예시도 고른 통화로 | POL-TST-003 규칙 1, POL-STA-004 정의 | 대기 |
-| 2 | 정책 반영 | Ver 2.0으로 TI-STA-04-01 v2.1.14의 "단가 미설정 검사 항목 제외" 조건이 반영되지 않음 | 디스크립션에 넣음: Table에도 단가가 빠진 검사 항목을 빼고 Legend 칩을 비활성으로 보여 줌 | POL-STA-004 규칙 5 | 대기 |
-| 3 | 디스크립션 | Total 행 설명 없음 (Count·Ratio Table에는 있음) | 평균 비용 표에 Total 행이 없는 것이 맞는지 확인 | TI-STA-01-02 2-3 | 대기 (확인 필요) |
-| 4 | 화면 정보 | Figma 화면 이름 "Test Analytics _ Test Cost", IA 이름 "Avg. Test Cost - Table" | 하나로 통일 | `ia/ia-screens.csv` | 대기 (확인 필요) |
-| 5 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
+| R01 | 정책 반영 | "(Unit : USD)", "통화 기호 $ 필수", "$0.00" | 디스크립션에 넣음: Cost Setting에서 고른 통화를 따름. KRW는 소수점 없이, 그 밖의 통화는 소수점 둘째 자리까지. 화면 예시도 고른 통화로 | POL-TST-003 규칙 1, POL-STA-004 정의 | 대기 |
+| R02 | 정책 반영 | Ver 2.0으로 TI-STA-04-01 v2.1.14의 "단가 미설정 검사 항목 제외" 조건이 반영되지 않음 | 디스크립션에 넣음: Table에도 단가가 빠진 검사 항목을 빼고 Legend 칩을 비활성으로 보여 줌 | POL-STA-004 규칙 5 | 대기 |
+| R03 | 디스크립션 | Total 행 설명 없음 (Count·Ratio Table에는 있음) | 평균 비용 표에 Total 행이 없는 것이 맞는지 확인 | TI-STA-01-02 2-3 | 대기 (확인 필요) |
+| R04 | 화면 정보 | Figma 화면 이름 "Test Analytics _ Test Cost", IA 이름 "Avg. Test Cost - Table" | 하나로 통일 | `ia/ia-screens.csv` | 대기 (확인 필요) |
+| R05 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
 
 ## 변경 이력
 

@@ -217,21 +217,21 @@ Description Number (17), Status (12), Item_Segment Tabs (6), Chip (6), Square (5
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 상태값 | Reagent에 재고 상태(Sufficient / Low / Insufficient)를 씀. 상태값 표의 재고 상태 대상은 Consumable뿐이었음 | 디스크립션에 넣음: Reagent도 Consumable과 같은 재고 상태(Sufficient, Low, Insufficient)를 씀. 상태값 표 대상을 Consumable / Reagent로 고침 | `glossary/status-values.csv 재고 상태`, POL-INV-003 | 대기 |
-| 2 | 상태값 | 2-6 Insufficient "재고가 0인 경우", Low "1개 이상 부족한 경우", 1 "sufficient" | TI-IVT-03-T 반영 대기 목록 1과 같이, Sufficient | `glossary/status-values.csv 재고 상태`, POL-INV-003 | 대기 |
-| 3 | 디스크립션 | 번호 2-3이 두 번, 2-2 없음. Capacity가 3-3 안에 번호 없이 들어 있고 3-4 없음 | 번호 정리 (Capacity를 3-4로) | 디스크립션 | 대기 |
-| 4 | 디스크립션 | 2-5 Required Qty 절 첫 문장 "좌측 영역의 Remaining Qty는…", 예외 처리 "검사 진행 중이 아닐 경우" (2-6·3-6은 "위의 상황이 아닐 경우") | Required Qty, 예외 처리 문장 통일 | 디스크립션 | 대기 |
-| 5 | 디스크립션 | 단위 혼용: 2-5 "10rxns", 3-6 "10T", 화면 "200T (2 racks)" | rxns로 통일 (COMM-4-b) | 디스크립션 | 대기 (확인 필요) |
-| 6 | 디스크립션 | 2-4·3-5 "표기 방식: 0번 디스크립션 참고" (0의 표기 방식은 취소선) | Common UX COMM-4-b 참고 | Figma 취소선 | 대기 |
-| 7 | 표기 | 3-3 "유효기간", "유효기가 만료" | Expiration Date, Expired | `glossary/terms.csv` Expiration Date, 오타 | 대기 |
-| 8 | 표기 | Chip "# Sample Preparation"과 "#Nucleic Acid Extraction" 띄어쓰기 다름 | 하나로 통일 | 화면 글자 | 대기 |
-| 9 | 디스크립션 | "검체 트롤리", "시약", "소모품", "저장 장치", "장비 내 거치 공간(장비가 가져간 소모품 포함)" (Reagent 화면에 소모품) | Inbound Trolley, Reagent, Storage | `glossary/terms.csv` | 대기 |
-| 10 | 디스크립션 | 2-5·2-6·3-6 노출 조건이 TI-IVT-01-T 1과 다름 (Partial Running 포함 여부) | TI-IVT-03-T 반영 대기 목록 4와 같이 | POL-INV-003 규칙 2·3 | 대기 |
-| 11 | 화면 글자 | 예시 값 "#Trolley" | 실제 Location 예시 | 화면 글자 | 대기 |
-| 12 | 디스크립션 | 0 "사용여부가 '사용'인 모듈" | Enabled인 Module | POL-EQP-009 | 대기 |
-| 13 | 정책 반영 | 2-4 정책 안내 2) 반환 시 이력 기록 | TI-IVT-03-T 반영 대기 목록 (사용량은 폐기할 때만 기록)와 같음 | POL-INV-002 규칙 6, POL-INV-006 규칙 1 | 대기 |
+| R01 | 상태값 | Reagent에 재고 상태(Sufficient / Low / Insufficient)를 씀. 상태값 표의 재고 상태 대상은 Consumable뿐이었음 | 디스크립션에 넣음: Reagent도 Consumable과 같은 재고 상태(Sufficient, Low, Insufficient)를 씀. 상태값 표 대상을 Consumable / Reagent로 고침 | `glossary/status-values.csv 재고 상태`, POL-INV-003 | 대기 |
+| R02 | 상태값 | 2-6 Insufficient "재고가 0인 경우", Low "1개 이상 부족한 경우", 1 "sufficient" | TI-IVT-03-T 반영 대기 목록 1과 같이, Sufficient | `glossary/status-values.csv 재고 상태`, POL-INV-003 | 대기 |
+| R03 | 디스크립션 | 번호 2-3이 두 번, 2-2 없음. Capacity가 3-3 안에 번호 없이 들어 있고 3-4 없음 | 번호 정리 (Capacity를 3-4로) | 디스크립션 | 대기 |
+| R04 | 디스크립션 | 2-5 Required Qty 절 첫 문장 "좌측 영역의 Remaining Qty는…", 예외 처리 "검사 진행 중이 아닐 경우" (2-6·3-6은 "위의 상황이 아닐 경우") | Required Qty, 예외 처리 문장 통일 | 디스크립션 | 대기 |
+| R05 | 디스크립션 | 단위 혼용: 2-5 "10rxns", 3-6 "10T", 화면 "200T (2 racks)" | rxns로 통일 (COMM-4-b) | 디스크립션 | 대기 (확인 필요) |
+| R06 | 디스크립션 | 2-4·3-5 "표기 방식: 0번 디스크립션 참고" (0의 표기 방식은 취소선) | Common UX COMM-4-b 참고 | Figma 취소선 | 대기 |
+| R07 | 표기 | 3-3 "유효기간", "유효기가 만료" | Expiration Date, Expired | `glossary/terms.csv` Expiration Date, 오타 | 대기 |
+| R08 | 표기 | Chip "# Sample Preparation"과 "#Nucleic Acid Extraction" 띄어쓰기 다름 | 하나로 통일 | 화면 글자 | 대기 |
+| R09 | 디스크립션 | "검체 트롤리", "시약", "소모품", "저장 장치", "장비 내 거치 공간(장비가 가져간 소모품 포함)" (Reagent 화면에 소모품) | Inbound Trolley, Reagent, Storage | `glossary/terms.csv` | 대기 |
+| R10 | 디스크립션 | 2-5·2-6·3-6 노출 조건이 TI-IVT-01-T 1과 다름 (Partial Running 포함 여부) | TI-IVT-03-T 반영 대기 목록 4와 같이 | POL-INV-003 규칙 2·3 | 대기 |
+| R11 | 화면 글자 | 예시 값 "#Trolley" | 실제 Location 예시 | 화면 글자 | 대기 |
+| R12 | 디스크립션 | 0 "사용여부가 '사용'인 모듈" | Enabled인 Module | POL-EQP-009 | 대기 |
+| R13 | 정책 반영 | 2-4 정책 안내 2) 반환 시 이력 기록 | TI-IVT-03-T 반영 대기 목록 (사용량은 폐기할 때만 기록)와 같음 | POL-INV-002 규칙 6, POL-INV-006 규칙 1 | 대기 |
 
 ## 변경 이력
 

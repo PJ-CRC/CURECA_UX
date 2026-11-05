@@ -57,15 +57,15 @@ figma_region: 2.1 2차
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 디스크립션 | 4 ".CVS" | .CSV | 오타 | 대기 |
-| 2 | T/L 차이 | 4 [Import]·[Export]: L-IOS는 ".CVS 파일, COMM-5-j(4/4) 팝업", T-IOS는 "OS 파일함, 엑셀파일". IA는 짝 화면 동일 | Export 파일 형식은 .csv, 저장 방법은 T-IOS OS 파일 탐색기 / L-IOS 경로·USB Popup (POL-COM-006). Import는 .csv와 엑셀을 모두 받음 (고객 논의 CA-0008) | POL-COM-006 규칙 5 | 대기 |
-| 3 | 디스크립션 | 2-1 Start Date/Time "Prep 장비에서 바코드 찍은 시간" | 어느 Module인지 표준어로 | `glossary/terms.csv` Prep 시스템, Module | 대기 (확인 필요) |
-| 4 | 디스크립션 | 2 "Test order 리스트", "응급 서랍" | Test Order 리스트, 표준어(STAT Storage, Drawer) | 화면 글자, `glossary/terms.csv` | 대기 |
-| 5 | 디스크립션 | 1-2 Product 목록이 11개로 고정 | 검사 항목 목록 기준 확인 | `glossary/test-items.csv` | 대기 (확인 필요) |
-| 6 | 디스크립션 | 2 정의는 "도킹된 상태의 검체 리스트"인데 Status에 Ordered가 있음 | 목록 대상 확인 | `glossary/status-values.csv` | 대기 (확인 필요) |
-| 7 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
+| R01 | 디스크립션 | 4 ".CVS" | .CSV | 오타 | 대기 |
+| R02 | T/L 차이 | 4 [Import]·[Export]: L-IOS는 ".CVS 파일, COMM-5-j(4/4) 팝업", T-IOS는 "OS 파일함, 엑셀파일". IA는 짝 화면 동일 | Export 파일 형식은 .csv, 저장 방법은 T-IOS OS 파일 탐색기 / L-IOS 경로·USB Popup (POL-COM-006). Import는 .csv와 엑셀을 모두 받음 (고객 논의 CA-0008) | POL-COM-006 규칙 5 | 대기 |
+| R03 | 디스크립션 | 2-1 Start Date/Time "Prep 장비에서 바코드 찍은 시간" | 어느 Module인지 표준어로 | `glossary/terms.csv` Prep 시스템, Module | 대기 (확인 필요) |
+| R04 | 디스크립션 | 2 "Test order 리스트", "응급 서랍" | Test Order 리스트, 표준어(STAT Storage, Drawer) | 화면 글자, `glossary/terms.csv` | 대기 |
+| R05 | 디스크립션 | 1-2 Product 목록이 11개로 고정 | 검사 항목 목록 기준 확인 | `glossary/test-items.csv` | 대기 (확인 필요) |
+| R06 | 디스크립션 | 2 정의는 "도킹된 상태의 검체 리스트"인데 Status에 Ordered가 있음 | 목록 대상 확인 | `glossary/status-values.csv` | 대기 (확인 필요) |
+| R07 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
 
 ## 변경 이력
 

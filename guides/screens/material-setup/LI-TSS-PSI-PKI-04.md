@@ -72,16 +72,16 @@ Description Number (3), Button/Secondary_1Button_44 (2), Frame (1), layout/spaci
 
 ## 반영 대기 목록
 
-| # | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 화면 정보 | CID 칸에 취소선 "LI-TSS-PSI-PKI-03"이 남아 있음, Ver 2.0 | LI-TSS-PSI-PKI-04만. 버전 메모 반영 Ver | 화면 정보, 버전 메모 | 대기 |
-| 2 | 화면 데이터 | 완료 화면의 Required Quantity가 "00/48" (적재 뒤인데 0) | 적재한 수 반영 예시로. LCR Reagent 줄 지움 | 화면 글자 | 대기 |
-| 3 | 문구 | "scan the QR code on on the new socket" | on 한 번 | 오타 | 대기 |
-| 4 | 문구 | "If you need to set up another PK/IC tube" / "go to the Carrier manual screen" | another socket / [Finish]는 LI-TSS-PSI(Prepare Carrier)로 감 | 디스크립션 3 | 대기 |
-| 5 | 디스크립션 | MS_Confirm_013 OK 뒤 이동 없음 | OK 선택 시 → LI-TSS-PSI-PKI-03 | MS_Confirm_013 | 대기 |
-| 6 | 화면 | 버튼 "Add new" | [Add New] | 디스크립션 2 | 대기 |
-| 7 | 표기 | "검체", "socket", "팝업" | Sample, Socket, Popup | `glossary/terms.csv` | 대기 |
-| 8 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
+| R01 | 화면 정보 | CID 칸에 취소선 "LI-TSS-PSI-PKI-03"이 남아 있음, Ver 2.0 | LI-TSS-PSI-PKI-04만. 버전 메모 반영 Ver | 화면 정보, 버전 메모 | 대기 |
+| R02 | 화면 데이터 | 완료 화면의 Required Quantity가 "00/48" (적재 뒤인데 0) | 적재한 수 반영 예시로. LCR Reagent 줄 지움 | 화면 글자 | 대기 |
+| R03 | 문구 | "scan the QR code on on the new socket" | on 한 번 | 오타 | 대기 |
+| R04 | 문구 | "If you need to set up another PK/IC tube" / "go to the Carrier manual screen" | another socket / [Finish]는 LI-TSS-PSI(Prepare Carrier)로 감 | 디스크립션 3 | 대기 |
+| R05 | 디스크립션 | MS_Confirm_013 OK 뒤 이동 없음 | OK 선택 시 → LI-TSS-PSI-PKI-03 | MS_Confirm_013 | 대기 |
+| R06 | 화면 | 버튼 "Add new" | [Add New] | 디스크립션 2 | 대기 |
+| R07 | 표기 | "검체", "socket", "팝업" | Sample, Socket, Popup | `glossary/terms.csv` | 대기 |
+| R08 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `policy/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
 
 ## 변경 이력
 
