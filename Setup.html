@@ -412,6 +412,7 @@ a{color:var(--accent)}
       if (!cur) $('s7').open = true;
       select(cur || 's7');
     }
+    if (window.WB_SETUP_WARN && S.env) window.WB_SETUP_WARN({ state: S.state, env: S.env });   // 상단 메뉴 「시작 안내」 경고도 바로
     $('barFill').style.width = (n / steps.length * 100) + '%';
     $('progTxt').textContent = n + ' / ' + steps.length + ' 완료';
 
