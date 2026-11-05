@@ -1,0 +1,13 @@
+{
+    "jobId":  "J018",
+    "pc":  "BREX_01",
+    "by":  "서보경",
+    "at":  "2026-11-05T13:34:31+09:00",
+    "status":  "완료",
+    "note":  "화면 0 · 문서 0 · 프로토타입 0 (고칠 곳 없음)\n- 문서: 「6개 언어(번역)」 · 「7개 언어(제공)」와 어긋나는 곳 없음 — 정책서 POL-COM-004(7개), 화면 정의서 TI/LI-STN-02 R10(7개), language-set/README(7개) 모두 맞음\n- 화면: 기준 Figma 파일(fileKey)이 없어 찾지 않음\n- 프로토타입: assay-pack은 언어 수와 관계없음\n참고: UX 문서가 아닌 background/worklist.md 98줄 「5개 언어 번역」은 원본 CURECA_AI에서 함께 고치면 좋음",
+    "scope":  "spec",
+    "fileKey":  "",
+    "items":  [
+
+              ]
+}
