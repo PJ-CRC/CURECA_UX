@@ -1,0 +1,26 @@
+{
+    "id":  "brex-01_20261105-133628",
+    "kind":  "work",
+    "reqId":  "",
+    "at":  "2026-11-05T13:36:28+09:00",
+    "from":  "2026-11-05T13:36:17+09:00",
+    "by":  "서보경",
+    "doneBy":  "Claude",
+    "pc":  "BREX_01",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "작업규칙: CURECA 작업규칙 2. 상태값",
+    "models":  {
+                   "claude-opus-5-5":  4
+               },
+    "calls":  4,
+    "input":  7,
+    "cacheWrite":  5647,
+    "cacheRead":  521886,
+    "output":  3369,
+    "total":  530909,
+    "usd":  0.2170
+}
