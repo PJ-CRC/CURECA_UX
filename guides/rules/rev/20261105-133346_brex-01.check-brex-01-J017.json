@@ -2,9 +2,9 @@
     "jobId":  "J017",
     "pc":  "BREX_01",
     "by":  "서보경",
-    "at":  "2026-11-05T13:34:47+09:00",
-    "status":  "완료",
-    "note":  "화면 0 · 문서 0 · 프로토타입 0\n- 바뀐 규칙: change-flow.md 6절에 개발사 전달 흐름 보류 안내 추가\n- 화면: 기준 Figma 파일(fileKey)이 없어 찾지 않음\n- 문서: 작업규칙 figma-sync 2절 · claude-work 작업 유형 12 · screen-spec 0절 · 그리는 순서 7단계 · 「이전 버전 · 전달본」에 이미 같은 보류 안내가 있어 맞음. 헌법 6조(반영 방향)는 보류와 충돌하지 않음. repository-and-id 「개발사 전달 후」 버전 규칙은 전달이 재개된 뒤의 규칙이라 그대로 둠\n- 프로토타입(assay-pack): 관계없음\n참고: 원본 CURECA_AI 저장소의 rules/change-flow.md에도 같은 줄을 넣어야 함(UX 문서 밖)",
+    "at":  "2026-11-05T13:34:59+09:00",
+    "status":  "반영 안 함",
+    "note":  "서보경가 반영하지 않기로 함",
     "scope":  "spec",
     "fileKey":  "",
     "items":  [
