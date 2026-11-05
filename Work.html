@@ -158,6 +158,10 @@ table.sh td textarea{width:100%;min-width:140px;min-height:30px;padding:4px 6px;
 .mlist{padding:12px;max-height:calc(100vh - 260px);overflow:auto;position:sticky;top:12px}
 .mhead{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:4px 6px 10px}
 .mimport{width:100%;margin-bottom:8px}
+.mrange{display:flex;align-items:center;gap:6px;padding:0 6px 6px}
+.mrange input{flex:1;min-width:0;height:34px;padding:0 8px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font-size:13px}
+.mrange span{color:var(--ink-3)}
+.mquick{display:flex;flex-wrap:wrap;gap:4px;padding:0 6px 10px;margin-bottom:4px;border-bottom:1px solid var(--line)}
 .mgrp summary{display:flex;justify-content:space-between;padding:8px 8px;font-weight:800;cursor:pointer;list-style:none}
 .mgrp summary::-webkit-details-marker{display:none}
 .mgrp summary span:first-child::before{content:"";display:inline-block;width:0;height:0;margin:0 8px 2px 2px;border:5px solid transparent;border-top-color:var(--ink-3);border-bottom:0;vertical-align:middle}
@@ -171,11 +175,15 @@ table.sh td textarea{width:100%;min-width:140px;min-height:30px;padding:4px 6px;
 .mright{padding:24px 28px;min-height:360px}
 .mtop{display:flex;align-items:flex-start;gap:8px}
 .mtop h3{flex:1;margin:0;font-size:20px;font-weight:800;line-height:1.4}
+.mtop h3 .h3pill{display:inline-block;margin-left:6px;vertical-align:3px}
+.mtop h3 .h3pill .pill{font-size:12.5px;font-weight:600}
 .matt{margin:6px 0 0;color:var(--ink-2);font-size:14px;padding-bottom:16px;border-bottom:1px solid var(--line)}
 .mcontent h4{margin:20px 0 8px;font-size:15px;font-weight:800}
 .mtext{white-space:pre-wrap;word-break:break-word;font-size:14.5px;line-height:1.75}
 .mmeta{margin:24px 0 0;font-size:12px;color:var(--ink-3)}
 /* 작업대기 · 임시 정책 · 논의·결정 */
+.dstat{display:flex;align-items:center;gap:8px;width:100%}
+.dstat span{flex:none;font-size:13px;font-weight:700;color:var(--ink-2)}
 .minp{width:100%;height:34px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font:inherit;font-size:13.5px}
 .mitem .chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;white-space:normal;overflow:visible}
 button.pill{cursor:pointer;font:inherit;font-size:12.5px;font-weight:600}
@@ -1053,7 +1061,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   document.addEventListener('click', function(e){
     var a = e.target.closest('[data-goid],[data-gopv]'); if (!a) return; e.preventDefault();
     if (a.dataset.gopv) { pvSel = a.dataset.gopv; pvForm = null; select('provisional'); return; }
-    var id = a.dataset.goid; dTab = /^CA-/.test(id) ? 'ca' : 'pd'; dSel = id; dForm = null; select('decisions');
+    var id = a.dataset.goid; dTab = /^CA-/.test(id) ? 'ca' : 'pd'; dSel = id; dForm = null; dStat = 'all'; select('decisions');
   });
   function pvAbHtml(p){
     var ks = Object.keys(p.S).filter(function(k){ return k !== '_'; }), opts = ks.filter(function(k){ return /^[A-Z]안/.test(k); });
@@ -1077,7 +1085,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   function pvFormRead(){ return { title: $('pvT').value, policy: $('pvP').value, change: $('pvC').value, reason: $('pvR').value, screens: $('pvS').value, cust: $('pvK').value }; }
 
   /* ══ 논의·결정: 내부 논의 pending/PD-*.md · 고객 논의 customer-agenda/agenda.md (rules/discussion-answer.md) ══ */
-  var DISC = null, dTab = 'pd', dSel = '', dForm = null;
+  var DISC = null, dTab = 'pd', dSel = '', dForm = null, dStat = 'all';   // dStat: 목록 상태 거르기(all 전체 · 상태값)
   function loadDisc(){
     return Promise.all([api('/api/plan/files?dir=pending').catch(function(){ return { files: [] }; }), getText('.history/guides/customer-agenda/agenda.md')]).then(function(r){
       var fl = (r[0].files || []).filter(function(f){ return /\/PD-[^\/]+\.md$/i.test(f.path); });
@@ -1098,19 +1106,30 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     var el = $('body-decisions'); if (!el) return;
     if (!DISC) { el.innerHTML = '<p class="muted">논의 항목을 읽는 중…</p>'; return; }
     if (dForm && $('dF')) dForm = { text: $('dA').value, date: $('dD').value, basis: $('dB').value };
-    var W = canWrite(), L = DISC[dTab];
+    var W = canWrite(), ALL = DISC[dTab];
+    var isOpen = function(k, x){ return k === 'pd' ? !x.closed : x.status !== '결정'; };
+    // 상태 거르기(목록 위 드롭다운): 전체 · 상태값 하나씩
+    var STATS = dTab === 'pd' ? ['대기', '보류', '합의', '반영 완료', '기각', '병합'] : ['논의 전', '논의 중', '결정'];
+    ALL.forEach(function(x){ var s = String(x.status || '').trim(); if (s && STATS.indexOf(s) < 0) STATS.push(s); });   // 규칙에 없는 값도 고를 수 있게
+    var match = function(x){ return dStat === 'all' ? true : String(x.status || '').trim() === dStat; };
+    var L = ALL.filter(match);
     if (!dForm && (!dSel || !L.some(function(x){ return x.id === dSel; }))) dSel = L[0] ? L[0].id : '';
-    var openN = function(k){ return DISC[k].filter(function(x){ return k === 'pd' ? !x.closed : x.status !== '결정'; }).length; };
+    var openN = function(k){ return DISC[k].filter(function(x){ return isOpen(k, x); }).length; };
     var top = '<div class="segs"><button type="button" class="seg2' + (dTab === 'pd' ? ' on' : '') + '" data-dt="pd">내부 논의 <span>' + openN('pd') + '</span></button><button type="button" class="seg2' + (dTab === 'ca' ? ' on' : '') + '" data-dt="ca">고객 논의 <span>' + openN('ca') + '</span></button></div>';
-    var left = L.length ? L.map(function(x){
+    var cnt = function(f){ return ALL.filter(f).length; };
+    var opt = function(v, label, n){ return '<option value="' + esc(v) + '"' + (dStat === v ? ' selected' : '') + '>' + esc(label) + ' (' + n + ')</option>'; };
+    var filt = '<div class="mhead"><label class="dstat"><span>상태</span><select id="dStat" class="minp" aria-label="상태로 거르기">' +
+      opt('all', '전체', ALL.length) + STATS.map(function(s){ return opt(s, s, cnt(function(x){ return String(x.status || '').trim() === s; })); }).join('') + '</select></label></div>';
+    var left = filt + (L.length ? L.map(function(x){
       return '<button type="button" class="mitem" data-d="' + esc(x.id) + '"' + (x.id === dSel ? ' aria-current="true"' : '') + '><b>' + esc(x.title || x.id) + '</b><span>' + esc(x.id) + (x.by ? ' · ' + esc(x.by) : '') + (x.date || (x.o && x.o['등록일']) ? ' · ' + esc(x.date || x.o['등록일']) : '') + '</span><span class="chips">' + stPill(x.status) + (x.closed ? '<span class="pill">닫힘</span>' : '') + jobState(x.id) + '</span></button>';
-    }).join('') : '<p class="muted" style="margin:8px">항목이 없습니다.</p>';
-    var x = L.filter(function(i){ return i.id === dSel; })[0], right;
+    }).join('') : '<p class="muted" style="margin:8px">이 상태의 항목이 없습니다.</p>');
+    var x = ALL.filter(function(i){ return i.id === dSel; })[0], right;
     if (!x) right = '<div class="wempty"><b>항목이 없습니다</b></div>';
     else {
       var j = pjobs[x.id], busy = j && /^(대기|진행 중)$/.test(j.status), confirmWait = j && j.status === '확인 대기';
       var canAns = W && !x.closed && x.status !== '결정' && !busy && !confirmWait;
-      right = '<div class="mtop"><div style="flex:1"><h3>' + esc(x.title || x.id) + '</h3><p class="matt" style="border:0;padding:0">' + esc(x.id) + ' · <code>' + esc(x.path) + '</code></p></div>' + stPill(x.status) + jobState(x.id) +
+      // 상태 뱃지는 제목 바로 옆(제목이 길면 마지막 줄 끝)
+      right = '<div class="mtop"><div style="flex:1"><h3>' + esc(x.title || x.id) + ' <span class="h3pill">' + stPill(x.status) + '</span></h3><p class="matt" style="border:0;padding:0">' + esc(x.id) + ' · <code>' + esc(x.path) + '</code></p></div>' + jobState(x.id) +
         (canAns && !dForm ? '<button class="btn primary" type="button" data-dans>답변하기</button>' : '') + '</div>';
       if (confirmWait) right += '<section class="propose"><h4>Claude 정리안 · 확인해 주세요</h4><p class="muted" style="margin:0 0 8px;font-size:13px">확인하면 항목 파일 · 공통 자료(또는 임시 정책) · 반영 대기 목록을 이대로 고칩니다(rules/discussion-answer.md 3단계).</p>' + md(j.note || '') +
         (W ? '<div class="macts"><button class="btn" type="button" data-dre>다시 답하기</button><button class="btn primary" type="button" data-dok>확인 · 반영</button></div>' : '') + '</section>';
@@ -1129,6 +1148,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   document.addEventListener('input', function(e){ if (e.target.id === 'blq') { blQ = e.target.value; renderBacklog(); } });
   document.addEventListener('change', function(e){
     if (e.target.id === 'blAll') { blAll = e.target.checked; renderBacklog(); }
+    if (e.target.id === 'dStat') { dStat = e.target.value; dSel = ''; renderDisc(); var s = $('dStat'); if (s) s.focus(); }
     if (e.target.id === 'blPickAll') { document.querySelectorAll('.blpick').forEach(function(c){ c.checked = e.target.checked; }); blPickCount(); }
     if (e.target.classList && e.target.classList.contains('blpick')) blPickCount();
   });
@@ -1168,7 +1188,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
         .catch(function(err){ b.disabled = false; alert(err.message); });
       return;
     }
-    if (d.dt != null) { dTab = d.dt; dSel = ''; dForm = null; return renderDisc(); }
+    if (d.dt != null) { dTab = d.dt; dSel = ''; dForm = null; dStat = 'all'; return renderDisc(); }
     if (d.d != null) { if (dForm && !confirm('쓰던 답을 버리고 이동할까요?')) return; dSel = d.d; dForm = null; return renderDisc(); }
     if (b.hasAttribute('data-dans') || b.hasAttribute('data-dre')) { dForm = { text: '', date: today(), basis: '' }; return renderDisc(); }
     if (b.hasAttribute('data-dcancel')) { dForm = null; return renderDisc(); }
@@ -1216,6 +1236,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
 
   /* ── 회의록(md, .history/minutes, 깃 공유) ── */
   var msel = new URLSearchParams(location.search).get('m') || '', medit = null, mbusy = false;
+  var mFrom = '', mTo = '', mQuick = '';   // 회의록 기간 거르기(YYYY-MM-DD), 빠른 선택(week · month · 3m)
   var minMe = '', myName = '', nedit = '', ntext = null, ntext0 = '';   // 나(작성자 ID · 이름), 고치는 중인 내 작성분(회의록 ID)과 글
   function loadMd(){ return api('/api/minutes').then(function(j){ mlist = j.items || []; minMe = j.me || ''; snapSave('min', { items: mlist, me: minMe }); }).catch(function(){ mlist = mlist || []; }); }
   api('/api/me').then(function(j){ myName = (j.user && (j.user.name || j.user.id)) || ''; }).catch(function(){});
@@ -1245,16 +1266,23 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     var el = $('body-minutes'); if (!el) return;
     if (medit && $('mform')) { medit.date = $('mDate').value.replace('T', ' '); medit.title = $('mTitle').value; medit.attendees = $('mAtt').value.split('\n').join(' / '); medit.body = $('mBody').value; }   // 다시 그려도 쓰던 글 유지
     if (nedit && $('nText')) ntext = $('nText').value;   // 다시 그려도 쓰던 내 작성분 유지
-    var L = mlist || [], W = canWrite();
-    setCnt('minutes', mlist ? L.length : null);
+    var ALLM = mlist || [], W = canWrite();
+    setCnt('minutes', mlist ? ALLM.length : null);
     if (!mlist) { el.innerHTML = '<p class="muted">회의록을 읽는 중…</p>'; return; }
+    // 기간 거르기(목록 위): 회의 일시(date의 YYYY-MM-DD)가 시작일 ~ 종료일 안인 것만
+    var L = ALLM.filter(function(m){ var d = String(m.date || '').slice(0, 10); return (!mFrom || d >= mFrom) && (!mTo || d <= mTo); });
     if (!medit && (!msel || !L.some(function(m){ return m.id === msel; }))) msel = L[0] ? L[0].id : '';
     var S = meetings(), rest = S && S.sheetRest ? S.sheetRest : [];
     // 왼쪽: 월별 묶음(최신이 위)
     var groups = [], gm = {};
     L.forEach(function(m){ var k = String(m.date || '').slice(0, 7); if (!gm[k]) { gm[k] = []; groups.push(k); } gm[k].push(m); });
     var thisY = String(new Date().getFullYear());
-    var left = '<div class="mhead"><b>회의록 ' + L.length + '건</b>' + (W ? '<button class="btn sm primary" type="button" data-mnew>＋ 새 회의록</button>' : '') + '</div>' +
+    var ranged = !!(mFrom || mTo);
+    var left = '<div class="mhead"><b>회의록 ' + (ranged ? L.length + ' / ' + ALLM.length : ALLM.length) + '건</b>' + (W ? '<button class="btn sm primary" type="button" data-mnew>＋ 새 회의록</button>' : '') + '</div>' +
+      // 기간 선택: 시작일 ~ 종료일, 빠른 선택(이번 주 · 이번 달 · 최근 3개월), 초기화
+      '<div class="mrange" role="group" aria-label="기간으로 찾기"><input type="date" id="mFrom" value="' + esc(mFrom) + '" aria-label="시작일"' + (mTo ? ' max="' + esc(mTo) + '"' : '') + '><span>~</span><input type="date" id="mTo" value="' + esc(mTo) + '" aria-label="종료일"' + (mFrom ? ' min="' + esc(mFrom) + '"' : '') + '></div>' +
+      '<div class="mquick">' + [['week', '이번 주'], ['month', '이번 달'], ['3m', '최근 3개월']].map(function(q){ return '<button type="button" class="pill' + (mQuick === q[0] ? ' on' : '') + '" data-mq="' + q[0] + '">' + q[1] + '</button>'; }).join('') +
+        (ranged ? '<button type="button" class="pill" data-mq="">기간 지우기</button>' : '') + '</div>' +
       (W && rest.length ? '<button class="btn sm mimport" type="button" data-mimport>시트 회의록 가져오기 (' + rest.length + '건)</button>' : '') +
       (L.length ? groups.map(function(k){
         var y = k.slice(0, 4), mo = +k.slice(5, 7);
@@ -1262,7 +1290,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
           gm[k].map(function(m){
             return '<button type="button" class="mitem" data-mid="' + esc(m.id) + '"' + (m.id === msel && !(medit && !medit.id) ? ' aria-current="true"' : '') + '><b>' + fmtWhen(m.date) + ' · ' + esc(m.title) + '</b><span>' + esc(msub(m)) + '</span></button>';
           }).join('') + '</details>';
-      }).join('') : '<p class="muted" style="margin:8px 4px">아직 작성한 회의록이 없습니다.</p>');
+      }).join('') : '<p class="muted" style="margin:8px 4px">' + (ranged ? '이 기간에 회의록이 없습니다.' : '아직 작성한 회의록이 없습니다.') + '</p>');
     // 오른쪽: 보기 · 작성 · 수정
     var right;
     if (medit) {
@@ -1325,6 +1353,22 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       if (wasBusy && !busy) return loadMd().then(function(){ toast('요약 정리가 끝났습니다.'); });
     }).catch(function(){});
   }
+  // 회의록 기간: 날짜를 고르거나 빠른 선택(이번 주 · 이번 달 · 최근 3개월)
+  document.addEventListener('change', function(e){
+    if (e.target.id !== 'mFrom' && e.target.id !== 'mTo') return;
+    var id = e.target.id; if (id === 'mFrom') mFrom = e.target.value; else mTo = e.target.value;
+    if (mFrom && mTo && mFrom > mTo) { if (id === 'mFrom') mTo = mFrom; else mFrom = mTo; }
+    mQuick = ''; renderMinutes(); var f = $(id); if (f) f.focus();
+  });
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-mq]'); if (!b) return;
+    var q = b.dataset.mq, t = day0(new Date());
+    if (!q) { mFrom = mTo = ''; }
+    else if (q === 'week') { var mo = monday(t); mFrom = ymd(mo); mTo = ymd(addD(mo, 6)); }
+    else if (q === 'month') { mFrom = ymd(new Date(t.getFullYear(), t.getMonth(), 1)); mTo = ymd(new Date(t.getFullYear(), t.getMonth() + 1, 0)); }
+    else if (q === '3m') { var s = new Date(t); s.setMonth(s.getMonth() - 3); mFrom = ymd(s); mTo = ymd(t); }
+    mQuick = q; renderMinutes();
+  });
   function mPick(id){ msel = id; medit = null; nedit = ''; ntext = null; try { var u = new URL(location.href); u.searchParams.set('m', id); history.replaceState(null, '', u); } catch(x){} renderMinutes(); }
   function nowLocal(){ var d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 16).replace('T', ' ').replace(/:\d\d$/, ':00'); }
   document.addEventListener('click', function(e){
