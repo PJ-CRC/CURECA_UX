@@ -1,0 +1,26 @@
+{
+    "id":  "brex-01_20261105-133420",
+    "kind":  "work",
+    "reqId":  "",
+    "at":  "2026-11-05T13:34:20+09:00",
+    "from":  "2026-11-05T13:33:28+09:00",
+    "by":  "서보경",
+    "doneBy":  "Claude",
+    "pc":  "BREX_01",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "작업규칙: screen-spec.md 이전 버전 · 전달본 보류 안내 (J015)",
+    "models":  {
+                   "claude-opus-5-5":  25
+               },
+    "calls":  25,
+    "input":  53,
+    "cacheWrite":  27796,
+    "cacheRead":  2772302,
+    "output":  12626,
+    "total":  2812777,
+    "usd":  1.0296
+}
