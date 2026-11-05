@@ -39,7 +39,7 @@ if ($Publish) {
 # ── 프로그램 파일 목록 ──
 $files = 'VERSION','Figma AI Run.bat','Figma AI Run (Terminal).command','appnav.js','appnav.css','guide_server.ps1','guide_server_mac.pl',
   'Common_UX_Guide.html','Common_UX_Changelog.md','Change_History.html','Usage_Stats.html','UX_Guide.html','Figma_Workbench.html','Prototypes.html','Prototype.html','Login.html','Account.html','Accounts.html','Setup.html','Work.html','CLAUDE.md','README.md','tools\google-sheet-bridge.gs'
-$wb = 'edit_requests.json','watch_requests.ps1','watch_requests.pl','agent.ps1','agent.pl','launch_win.ps1','history_sync.ps1','history_sync.sh','github_login.ps1','github_login.sh','update.ps1','update.sh','git_remote.txt','usage.ps1','usage.pl','pricing.json'
+$wb = 'edit_requests.json','watch_requests.ps1','watch_requests.pl','agent.ps1','agent.pl','launch_win.ps1','history_sync.ps1','history_sync.sh','github_login.ps1','github_login.sh','update.ps1','update.sh','git_remote.txt','usage.ps1','usage.pl','pricing.json','removed_files.txt'
 $list = New-Object System.Collections.Generic.List[string]
 foreach ($f in $files) { $list.Add($f) }
 foreach ($f in $wb) { $list.Add("workbench\$f") }

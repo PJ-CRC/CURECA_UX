@@ -1,0 +1,6 @@
+# 배포에서 뺀 파일 목록: 자동 업데이트(update.ps1 · update.sh)가 실행할 때마다 작업자 PC에서 이 파일들을 지운다.
+#  - 설치 폴더 기준 경로 한 줄에 하나. # 뒤는 설명
+#  - 개인 데이터(workbench/edit_requests.json · jobs.json, .claude/, projects/, prototypes/, .history/)는 여기에 있어도 지우지 않는다
+#  - 버전끼리 비교해 빠진 파일은 업데이트가 따로 지운다. 이 목록은 그 전에 업데이트한 PC에 남은 것을 지우기 위한 것
+docs/Plan_Update_and_Accounts.md   # v0.11.1에서 뺌(구현이 끝난 계획 문서)
+Assay_Pack_Prototype.html          # v0.11.1에서 뺌(프로토타입 메뉴로 옮긴 옛 넘겨 주기 페이지)
