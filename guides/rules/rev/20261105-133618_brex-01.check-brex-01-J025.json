@@ -2,9 +2,9 @@
     "jobId":  "J025",
     "pc":  "BREX_01",
     "by":  "서보경",
-    "at":  "2026-11-05T13:37:08+09:00",
-    "status":  "완료",
-    "note":  "화면 0 · 문서 0 · 프로토타입 0 (고칠 곳 없음)\n- 문서: 전달 상태를 쓰는 곳이 보류와 어긋나지 않음 — repository-and-id.md 6절(「전달 완료가 기록되면」 조건부), screen-spec.md 5절 이전 버전 · 전달본(보류 안내 있음, J015), 메뉴 _menu.md의 delivery_status는 모두 빈 값, templates/menu.md 기본값 「전달 대기」도 맞음\n- weekly-status.md 4절 · schedule.md H열 「개발사 공유일」은 일정 시트의 날짜를 세는 것이라 Figma 흐름 보류와 따로 둠\n- 화면: 기준 Figma 파일(fileKey)이 없어 찾지 않음\n- 프로토타입(assay-pack): 관계없음",
+    "at":  "2026-11-05T13:37:48+09:00",
+    "status":  "반영 안 함",
+    "note":  "서보경가 반영하지 않기로 함",
     "scope":  "spec",
     "fileKey":  "",
     "items":  [
