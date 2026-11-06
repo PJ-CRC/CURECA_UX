@@ -1,8 +1,8 @@
 {
     "id":  "brex-06_R026",
     "kind":  "request",
-    "status":  "보류",
-    "at":  "2026-11-06T09:34:16+09:00",
+    "status":  "진행 중",
+    "at":  "2026-11-06T09:34:25+09:00",
     "createdAt":  "2026-11-06T09:27:05+09:00",
     "by":  "최고관리자",
     "doneBy":  "Claude",
@@ -16,7 +16,7 @@
     "type":  "일반",
     "layout":  "",
     "text":  "섹션2에 있는 Assay Pack Setting 내용을 현재 규칙에 맞게\n섹션2에 다시 그려줘",
-    "note":  "Figma가 아직 연결되지 않아 다시 그리지 못했습니다(09:34 다시 확인, Figma MCP 다시 로그인 필요).\n- 받은 답: Assay Pack Setting 전체(목록 · 상세 · Import, T/L), 기존 프레임은 두고 Section 2 아래에 새로 그림\n- 이어서 할 일: TI-STN-08 · TI-STN-08-01 · TI-STN-08-P · LI-STN-08 · LI-STN-08-P 화면 정의서(source: tobe)를 먼저 쓰고 그대로 Figma에 그림. 반영 대기 LI-STN-08-R01 · TI-STN-08-R01 · TI-STN-08-P-R01 반영. 버전(Ver)은 답에 없어 「질문 대기」로 둠\n- 먼저 시작 안내 7단계 「Claude 로그인 · Figma 연결」 창에서 /mcp → figma 인증을 마친 뒤 「다시 진행」을 눌러 주세요(연결 전에 누르면 같은 이유로 다시 보류됩니다)\n작업 기준: 작업규칙 CURECA 작업규칙 · 정책서 정책서 · UX가이드 CURECA UX 가이드 · 기준데이터 기준데이터 · 화면 정의서 화면 정의서",
+    "note":  "처리 시작",
     "shot":  "",
     "images":  [
 
