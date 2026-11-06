@@ -81,7 +81,7 @@ while (time < $until) {
     local $/; my $d = <$h>; close $h; $d =~ s/^\xEF\xBB\xBF//;
     my $q = eval { decode_json($d) };
     if ($q) {
-      my @todo = grep { ref $_ eq 'HASH' && ($_->{status} // '') eq '대기' && ($_->{kind} // '') ne 'text' && (($_->{kind} // '') ne 'capture' || time - (iso_epoch($_->{createdAt}) // time) >= 20) } @{ $q->{items} || [] };
+      my @todo = grep { ref $_ eq 'HASH' && ($_->{status} // '') eq '대기' && ($_->{kind} // '') ne 'text' && (($_->{kind} // '') ne 'capture' || (!$_->{auto} && time - (iso_epoch($_->{createdAt}) // time) >= 20)) } @{ $q->{items} || [] };
       push @out, 'JOBS ' . join(',', map { $_->{id} } @todo) if @todo;
     }
   }

@@ -1331,7 +1331,9 @@ while ($l.IsListening) {
         # QueryString은 한글(예: status=대기)을 UTF-8로 풀지 않아 늘 어긋난다 → 주소를 직접 UTF-8로 푼다
         $qs = @{}; foreach ($kv in ([string]$req.Url.Query).TrimStart('?').Split('&')) { if ($kv -match '^([^=]+)=(.*)$') { $qs[$Matches[1]] = [Uri]::UnescapeDataString($Matches[2].Replace('+', ' ')) } }
         foreach ($f in 'key', 'kind', 'status') { $v = [string]$qs[$f]; if ($v) { $prop = $f; if ($f -eq 'key') { $prop = 'fileKey' }; $items = @($items | Where-Object { $_.$prop -eq $v }) } }
-        SendJson $c 200 @{ version = $j.version; items = @($items) }; continue
+        # 플러그인이 마지막으로 서버에 닿은 지 몇 초(Workbench 자동 캡처: 플러그인이 켜져 있을 때만 쌓는다)
+        $ps = $(if ($script:PluginSeen) { [int]((Get-Date) - $script:PluginSeen).TotalSeconds } else { $null })
+        SendJson $c 200 @{ version = $j.version; items = @($items); pluginSec = $ps }; continue
       }
       if ($req.HttpMethod -eq 'POST') {
         $body = (New-Object IO.StreamReader($req.InputStream, $Utf8)).ReadToEnd() | ConvertFrom-Json
@@ -1404,6 +1406,8 @@ while ($l.IsListening) {
               if ($kind -eq 'guide-check') { $hit | Add-Member -NotePropertyName scope -NotePropertyValue $(if ([string]$body.scope -eq 'spec') { 'spec' } else { '' }) }
               # 파일형 문서의 수정 요청: 고칠 파일(meta.files의 이름, 보기 화면이 고른 항목의 파일)
               if ($kind -eq 'guide-edit' -and [string]$body.file) { $hit | Add-Member -NotePropertyName file -NotePropertyValue ([string]$body.file) }
+              # Workbench 자동 캡처(페이지를 열면 캡처 없는 프레임을 10개씩): 플러그인만 받는다(Claude 감시는 건너뜀)
+              if ($kind -eq 'capture' -and $body.auto) { $hit | Add-Member -NotePropertyName auto -NotePropertyValue $true }
               if ($kind -eq 'minutes') { $hit | Add-Member -NotePropertyName minute -NotePropertyValue ([string]$body.minute) }
               if ($kind -eq 'plan') { $hit | Add-Member -NotePropertyName sub -NotePropertyValue ([string]$body.sub); $hit | Add-Member -NotePropertyName target -NotePropertyValue ([string]$body.target); $hit | Add-Member -NotePropertyName plan -NotePropertyValue $body.plan }
               # 새 가이드 · 정의서: 문서 종류(docKind '' = UX가이드, 'rule' 작업규칙 · 'policy' 정책서 · 'data' 기준데이터 · 'spec' 화면 정의서)와 올린 참고 파일(workbench/job_files/{작업 ID}/, 이 PC에만)
@@ -1443,6 +1447,8 @@ while ($l.IsListening) {
           }
           default { throw "알 수 없는 action: $($body.action)" }
         }
+        # 끝난 캡처 작업은 최근 30개만 남긴다(자동 캡처가 많이 쌓여 다른 작업 기록을 밀어내지 않게)
+        $cn = 0; $items = @($items | Where-Object { if ($_.kind -eq 'capture' -and $_.status -notin '대기', '진행 중') { $cn++; $cn -le 30 } else { $true } })
         if ($items.Count -gt 300) { $items = $items[0..299] }
         $j = [pscustomobject]@{ version = [int]$j.version + 1; items = @($items) }
         [IO.File]::WriteAllText($JobFile, ($j | ConvertTo-Json -Depth 8), $Utf8)
