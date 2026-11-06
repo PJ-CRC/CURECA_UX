@@ -503,7 +503,7 @@ function Sheet-Tick {
       try {
         if ($p.task.IsFaulted -or $p.task.IsCanceled) { $ex = $p.task.Exception; $msg = if ($ex) { $ex.GetBaseException().Message } else { '시간 초과' }; throw ('구글 시트에 닿지 못했습니다: ' + $msg) }
         $txt = Sheet-Check $Utf8.GetString($p.task.Result.Content.ReadAsByteArrayAsync().Result)
-        if (-not (Test-Path $SheetCache)) { New-Item -ItemType Directory -Force $SheetCache | Out-Null }
+        $ckd = Split-Path $ck -Parent; if (-not (Test-Path $ckd)) { New-Item -ItemType Directory -Force $ckd | Out-Null }   # 보낼 때 팀의 사본 폴더(그 사이 다른 팀 요청이 와도)
         [IO.File]::WriteAllText($ck, $txt, (New-Object Text.UTF8Encoding $false))
       } catch {
         # 시트에 닿지 못하면 마지막으로 받은 값을 함께 보낸다(화면은 「마지막으로 받은 값」 표시)
@@ -1121,6 +1121,12 @@ while ($l.IsListening) {
       $body = (New-Object IO.StreamReader($req.InputStream, $Utf8)).ReadToEnd() | ConvertFrom-Json
       $id = [string]$body.id
       if ($id -and $id -notmatch '^m[0-9a-z-]{6,40}$') { throw '잘못된 회의록 ID입니다.' }
+      # 팀: Claude가 ?team= 없이 이미 있는 회의록을 고치면 그 회의록이 있는 팀으로(다른 팀 폴더에 새로 만들지 않게)
+      if (-not $isBrowser -and -not $qTeam -and $id -and -not (Test-Path (P $MinDir ($id + '.md')))) {
+        $t0 = $Team; $hitT = $null
+        foreach ($t in @(Team-Ids)) { Set-TeamCtx $t; if (Test-Path (P $MinDir ($id + '.md'))) { $hitT = $t; break } }
+        Set-TeamCtx $(if ($hitT) { $hitT } else { $t0 })
+      }
       if ($body.action -eq 'delete') {
         $mf = P $MinDir ($id + '.md'); if (-not $id -or -not (Test-Path $mf)) { throw '회의록을 찾지 못했습니다.' }
         Remove-Item $mf -Force; $nd = P $MinDir ($id + '.notes'); if (Test-Path $nd) { Remove-Item $nd -Recurse -Force }
@@ -1523,6 +1529,11 @@ while ($l.IsListening) {
         # 가이드 고치기: guide.md는 그대로 두고 수정본을 새 파일로 남긴다(여러 PC가 고쳐도 깃 충돌이 없다)
         if ($body.action -eq 'save') {
           if (-not (Can-Write 'guide')) { throw (Ro-Msg 'guide') }
+          # 팀: Claude가 ?team= 없이 작업(jobId)의 수정을 저장하면 그 작업의 팀 문서로(가져온 문서처럼 두 팀에 같은 id가 있어도 엉뚱한 팀을 고치지 않게)
+          if (-not $isBrowser -and -not $qTeam -and [string]$body.jobId) {
+            $jt = @((Read-Jobs).items) | Where-Object { $_ -and [string]$_.id -eq [string]$body.jobId } | Select-Object -First 1
+            if ($jt -and [string]$jt.team) { Set-TeamCtx ([string]$jt.team) }
+          }
           $gid = [string]$body.id; $md = [string]$body.md
           if ($gid -notmatch '^[A-Za-z0-9_-]{1,64}$' -or -not (Test-Path (P $GuideRoot $gid 'meta.json'))) { throw "가이드를 찾지 못했습니다: $gid" }
           if (-not $md.Trim()) { throw '가이드 내용이 비어 있습니다.' }

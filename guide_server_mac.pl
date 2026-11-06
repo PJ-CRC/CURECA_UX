@@ -1276,7 +1276,16 @@ sub handle {
   }
   # 회의록(공유 md) · 일정/작업 ↔ 구글 시트 (윈도우 서버와 같다)
   if ($path eq '/api/minutes' && $method eq 'GET') { return respond_json($sock, 200, minutes_get()); }
-  if ($path eq '/api/minutes' && $method eq 'POST') { return respond_json($sock, 200, minutes_post($body->())); }
+  if ($path eq '/api/minutes' && $method eq 'POST') {
+    my $mb = $body->();
+    # 팀: Claude가 ?team= 없이 이미 있는 회의록을 고치면 그 회의록이 있는 팀으로(윈도우 서버와 같다)
+    if (!$is_browser && sheet_query($target, 'team') eq '' && ref $mb eq 'HASH' && str($mb->{id}) =~ /^m[0-9a-z-]{6,40}$/ && !-f "$MIN_DIR/" . str($mb->{id}) . '.md') {
+      my ($t0, $hit) = ($TEAM, undef);
+      for my $t (team_ids()) { set_team_ctx($t); if (-f "$MIN_DIR/" . str($mb->{id}) . '.md') { $hit = $t; last; } }
+      set_team_ctx(defined $hit ? $hit : $t0);
+    }
+    return respond_json($sock, 200, minutes_post($mb));
+  }
   if ($path eq '/api/sheet' && $method eq 'GET') {
     my $cf = sheet_conf();
     return respond_json($sock, 200, { configured => (str($cf->{webapp}) ne '' && str($cf->{token}) ne '') ? JSON::PP::true : JSON::PP::false,
@@ -1396,6 +1405,11 @@ sub handle {
       # 가이드 고치기: guide.md는 그대로 두고 수정본을 새 파일로 남긴다(여러 PC가 고쳐도 깃 충돌이 없다)
       if (str($g->{action}) eq 'save') {
         die ro_msg('guide') unless can_write('guide');
+        # 팀: Claude가 ?team= 없이 작업(jobId)의 수정을 저장하면 그 작업의 팀 문서로(윈도우 서버와 같다)
+        if (!$is_browser && sheet_query($target, 'team') eq '' && str($g->{jobId}) ne '') {
+          my ($jt) = grep { ref $_ eq 'HASH' && str($_->{id}) eq str($g->{jobId}) } @{ read_jobs()->{items} || [] };
+          set_team_ctx(str($jt->{team})) if $jt && str($jt->{team}) ne '';
+        }
         my ($gid, $md) = (str($g->{id}), str($g->{md}));
         die "가이드를 찾지 못했습니다: $gid\n" unless $gid =~ /^[A-Za-z0-9_-]{1,64}$/ && -f "$GUIDE_ROOT/$gid/meta.json";
         die "가이드 내용이 비어 있습니다.\n" unless $md =~ /\S/;

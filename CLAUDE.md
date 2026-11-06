@@ -134,6 +134,7 @@
 - 서버는 요청마다 팀을 정한다: 화면 = 이 PC에서 고른 팀, Claude · curl = `?team={id}`(없으면 이 PC에서 고른 팀). 그 팀으로 `/api/guides` · `/api/minutes` · `/api/sheet*` · `/api/plan/files` · `/api/guides/gitlog|gitfile` · `/api/history`(GET, `?all=1`이면 모든 팀 — Workbench 겹침 표시) · `/api/usage`가 바뀐다. 화면이 `.history/guides/…` · `.history/minutes/…`를 읽으면 서버가 그 팀 위치로 바꿔 준다. 남의 팀 폴더(`/.history/teams/{남의 팀}/`) · 팀 시트 비밀값은 내보내지 않는다.
 - 새 요청(`/api/requests` add) · 작업(`/api/jobs` add) · 이력(`/api/history` add)에는 그때 팀이 `team`으로 붙는다(본문에 `team`을 주면 그것). 요청이 끝나면 `usage.ps1 -ReqId`가 요청의 팀으로 사용량을 남긴다.
 - **Claude가 요청 · 작업을 처리할 때**: 그 항목의 `team`(없으면 `cureca`)으로 일한다. 이 문서의 `.history/guides/…` · `.history/minutes/…` · `.history/config/sheet.json` 경로는 CURECA 기준이니, 다른 팀이면 위 표대로 `.history/teams/{team}/…`로 바꿔 읽고 쓴다(새 문서 폴더 `.history/teams/{team}/guides/{id}/`도). 서버 API에는 `?team={team}`을 붙이고, 작업을 새로 쌓을 때(prototype-sync · text 등)는 본문에 `team`을 넣는다. 사용량은 `usage.ps1 … -Team {team}`(맥 `--team`). Workbench 요청의 작업 기준은 `GET /api/guides?team={요청 team}`의 `applied[fileKey]`다.
+  - 안전장치(빠뜨렸을 때): `?team=` 없이 `jobId`를 담은 문서 저장(`/api/guides save`)은 그 작업의 팀 문서로, 이미 있는 회의록 id의 저장 · 지우기는 그 회의록이 있는 팀으로 서버가 맞춘다. 파일을 직접 고치는 일(임시 정책 · 반영 대기 줄 등)에는 안전장치가 없으니 경로를 꼭 확인한다.
 - 계정 `teams:[팀 id]`(여러 개 가능). `teams`가 없는 예전 계정 = CURECA. 최고관리자는 모든 팀. **팀이 없는 계정은 팀 메뉴를 못 쓴다**(읽기 · 쓰기 권한이 있어도 메뉴가 숨고 서버가 막는다).
 - 지금 보는 팀은 PC마다(`setup.json`의 `team`, `/api/me`의 `team` · `teams`). 여러 팀 소속이면 상단 메뉴의 팀 고르기로 바꾼다(`POST /api/me/team`). 화면에서는 `window.WB_TEAM` · `WB_TEAMS`.
 - 새 팀은 문서 · 시트 연결 · 회의록이 비어 있다. 그 팀 사람이 UX 문서 「새 {카테고리} 만들기」 · 일정/작업 「시트 연결」로 채운다.
