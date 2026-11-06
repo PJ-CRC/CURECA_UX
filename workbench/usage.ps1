@@ -2,11 +2,13 @@
 #  .history/usage/{PC}_{요청 ID}.json 으로 남긴다(작업 이력처럼 깃 history 브랜치로 공유된다).
 #  - 서버가 요청을 「완료」로 바꿀 때 자동으로 부른다: -ReqId R012 (구간: 그 요청이 「진행 중」이 된 시각 startedAt ~ 지금)
 #  - 요청 없이 채팅으로 한 작업은 Claude가 직접: -From 시작시각 -By 작업자 -Title 작업 내용 [-Frame · -NodeId · -FileKey · -FileName · -Page]
+#  - -Team 팀 id(v0.13.0): 요청이면 요청의 팀, 비우면 CURECA. 사용량 통계가 팀별로 나눠 보인다
 #  - 종류별 토큰(입력 · 캐시 쓰기 · 캐시 읽기 · 출력)과 금액 환산(workbench/pricing.json 단가, 모델별)을 함께 적는다
 #  - 같은 작업 폴더에서 Claude 세션을 여러 개 동시에 돌리면 그 구간의 사용량이 모두 더해진다(서브에이전트 포함)
 #  - 맥은 workbench/usage.pl (같은 형식)
 param([string]$ReqId = '', [string]$From = '', [string]$To = '', [string]$By = '', [string]$Title = '',
   [string]$Frame = '', [string]$NodeId = '', [string]$FileKey = '', [string]$FileName = '', [string]$Page = '',
+  [string]$Team = '',   # 팀(v0.13.0): 사용량 통계가 팀별로 나눠 보인다. 요청이면 요청의 팀, 비우면 CURECA
   [string]$Root = (Split-Path $PSScriptRoot -Parent))
 $Utf8 = New-Object Text.UTF8Encoding $false
 function Now { (Get-Date).ToString('yyyy-MM-ddTHH:mm:sszzz') }
@@ -14,14 +16,14 @@ $PcName = [Environment]::MachineName
 $PcSlug = ($PcName.ToLower() -replace '[^a-z0-9-]', '-')
 
 # 요청이면 구간 · 정보를 요청 목록에서
-$meta = [ordered]@{ kind = 'work'; reqId = ''; by = $By; fileKey = $FileKey; fileName = $FileName; page = $Page; frame = $Frame; nodeId = $NodeId; text = $Title }
+$meta = [ordered]@{ kind = 'work'; reqId = ''; team = $Team; by = $By; fileKey = $FileKey; fileName = $FileName; page = $Page; frame = $Frame; nodeId = $NodeId; text = $Title }
 if ($ReqId) {
   $rf = Join-Path $Root 'workbench\edit_requests.json'
   $r = $null; try { $r = @(([IO.File]::ReadAllText($rf, $Utf8) | ConvertFrom-Json).items) | Where-Object { $_.id -eq $ReqId } | Select-Object -First 1 } catch {}
   if (-not $r) { Write-Output "NOREQ $ReqId"; exit 1 }
   if (-not $From) { $From = [string]$r.startedAt }
   $meta.kind = 'request'; $meta.reqId = $ReqId
-  foreach ($k in 'fileKey', 'fileName', 'page', 'frame', 'nodeId', 'text') { if (-not $meta[$k]) { $meta[$k] = [string]$r.$k } }
+  foreach ($k in 'team', 'fileKey', 'fileName', 'page', 'frame', 'nodeId', 'text') { if (-not $meta[$k]) { $meta[$k] = [string]$r.$k } }
   if (-not $meta.by) { $meta.by = [string]$r.author }
 }
 if (-not $From) { Write-Output 'NOSTART (요청이 「진행 중」이 된 시각이 없습니다. -From으로 시작 시각을 주세요)'; exit 1 }
@@ -65,7 +67,7 @@ if (-not $s.calls) { Write-Output "NOUSAGE $($t0.ToString('o')) ~ $($t1.ToString
 
 $name = $PcSlug + '_' + $(if ($ReqId) { $ReqId } else { $t1.LocalDateTime.ToString('yyyyMMdd-HHmmss') })
 $e = [ordered]@{
-  id = $name; kind = $meta.kind; reqId = $meta.reqId; at = $t1.ToLocalTime().ToString('yyyy-MM-ddTHH:mm:sszzz'); from = $t0.ToLocalTime().ToString('yyyy-MM-ddTHH:mm:sszzz')
+  id = $name; kind = $meta.kind; reqId = $meta.reqId; team = $(if ($meta.team) { $meta.team } else { 'cureca' }); at = $t1.ToLocalTime().ToString('yyyy-MM-ddTHH:mm:sszzz'); from = $t0.ToLocalTime().ToString('yyyy-MM-ddTHH:mm:sszzz')
   by = $meta.by; doneBy = 'Claude'; pc = $PcName; fileKey = $meta.fileKey; fileName = $meta.fileName; page = $meta.page; frame = $meta.frame; nodeId = $meta.nodeId; text = $meta.text
   models = $models; calls = $s.calls; input = $s.input; cacheWrite = $s.cacheWrite; cacheRead = $s.cacheRead; output = $s.output
   total = $s.input + $s.cacheWrite + $s.cacheRead + $s.output; usd = [math]::Round($s.usd, 4)

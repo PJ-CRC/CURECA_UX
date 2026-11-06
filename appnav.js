@@ -130,6 +130,28 @@
       rb.title = '「' + curMenu.label + '」 메뉴는 읽기 권한만 있습니다. 쓰기(' + curMenu.write + ')는 최고관리자에게 「' + curMenu.label + ' · 쓰기」 권한을 요청하세요.';
       right.insertBefore(rb, right.firstChild);
     }
+    /* 지금 보는 팀(이 PC): 한 팀이면 이름만, 여러 팀이면 고르기(바꾸면 새로 불러온다). 팀이 없으면 안내 */
+    var teams = [].concat(m.teams || []); window.WB_TEAM = m.team || ''; window.WB_TEAMS = teams;
+    if (right && m.teams) {   // 팀을 모르는 예전 서버(다시 켜기 전)면 표시하지 않는다
+      var tb = document.createElement('span'); tb.className = 'appnav-team';
+      if (!teams.length) {
+        tb.className += ' none'; tb.textContent = '소속 팀 없음';
+        tb.title = '소속 팀이 없어 ' + (m.teamMenus || []).map(function(k){ var x = (m.menus || []).filter(function(y){ return y.key === k; })[0]; return x ? x.label : k; }).join(' · ') + ' 메뉴를 쓸 수 없습니다. 최고관리자에게 팀을 요청하세요.';
+      } else if (teams.length === 1) {
+        tb.innerHTML = '<span class="lb">팀</span><b></b>'; tb.lastChild.textContent = teams[0].name; tb.title = '지금 보는 팀';
+      } else {
+        tb.innerHTML = '<label class="lb" for="appnavTeam">팀</label><select id="appnavTeam" title="보는 팀 바꾸기(이 PC)" aria-label="보는 팀"></select>';
+        var selT = tb.lastChild;
+        teams.forEach(function(t){ var o = document.createElement('option'); o.value = t.id; o.textContent = t.name; if (t.id === m.team) o.selected = true; selT.appendChild(o); });
+        selT.onchange = function(){
+          selT.disabled = true;
+          fetch('/api/me/team', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ team: selT.value }) })
+            .then(function(r){ return r.json(); }).then(function(d){ if (d.error) throw new Error(d.error); location.reload(); })
+            .catch(function(e){ alert(e.message); selT.disabled = false; selT.value = m.team; });
+        };
+      }
+      right.appendChild(tb);
+    }
     if (right) {
       var box = document.createElement('span'); box.className = 'appnav-acct';
       box.innerHTML = '<a href="Account.html" title="내 정보 · 비밀번호 변경"></a><button type="button">로그아웃</button>';

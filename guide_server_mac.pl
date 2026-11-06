@@ -68,7 +68,7 @@ my ($UP_MAX, $UP_MAX_N) = (20 * 1024 * 1024, 10);
 my %UP_EXT = map { $_ => 1 } qw(md markdown txt csv tsv json html htm pdf docx xlsx pptx png jpg jpeg gif webp);
 # UX 가이드(공유): .history/guides/{id}/ (meta.json · guide.md · rev/ · images/)
 # 작업 기준 문서는 PC(작업자)마다 따로 고른다: workbench/guide_apply.json {fileKey: {guideId, by, at, docs: {종류: {id, by, at}}}} (공유하지 않음, 종류마다 하나)
-my $GUIDE_ROOT = "$HIST_DIR/guides";
+my $GUIDE_ROOT = "$HIST_DIR/guides"; our $TEAM = 'cureca'; our $GUIDE_REL = '.history/guides';   # 팀(v0.13.0): 요청마다 set_team_ctx가 그 팀 위치로 바꾼다
 my $PROTO_ROOT = "$ROOT/prototypes";   # 프로토타입(이 PC에만): prototypes/{id}/meta.json · index.html · screens/
 my $GUIDE_APPLY = "$ROOT/workbench/guide_apply.json";
 my $SYNC_STAT = "$ROOT/workbench/.history_sync.json";
@@ -186,7 +186,7 @@ sub requests_post {
     my $txt = trim($b->{text}); die "수정 내용을 입력해 주세요.\n" unless length $txt;
     my $n = 1; for my $i (@items) { (my $v = str($i->{id})) =~ s/\D//g; $v = $v eq '' ? 0 : $v + 0; $n = $v + 1 if $v >= $n; }
     my $rid = sprintf('R%03d', $n); my $imgs = save_attach($rid, $b->{images});
-    unshift @items, { id => $rid, nodeId => str($b->{nodeId}), frame => str($b->{frame}), page => str($b->{page}),
+    unshift @items, { id => $rid, team => (str($b->{team}) ne '' ? str($b->{team}) : $TEAM), nodeId => str($b->{nodeId}), frame => str($b->{frame}), page => str($b->{page}),
       fileKey => str($b->{fileKey}), fileName => str($b->{fileName}), editable => ($b->{editable} ? JSON::PP::true : JSON::PP::false), type => str($b->{type}),
       priority => str($b->{priority}), layout => str($b->{layout}), text => $txt, status => '대기', note => '', author => str($b->{by}), updatedBy => str($b->{by}), createdAt => $now, updatedAt => $now };
     $items[0]{images} = $imgs if @$imgs;
@@ -480,7 +480,7 @@ sub hist_from_request {
     unless (-f $dst) { make_path($HIST_ATTACH); write_bytes($dst, read_bytes($src)); }
     push @att, "attach/${name}_$n.jpg";
   }
-  save_hist_entry($name, { id => $name, kind => 'request', status => str($r->{status}), at => str($r->{updatedAt}), createdAt => str($r->{createdAt}), by => str($r->{author}), doneBy => str($r->{updatedBy}), pc => $PC_NAME,
+  save_hist_entry($name, { id => $name, kind => 'request', team => item_team($r), status => str($r->{status}), at => str($r->{updatedAt}), createdAt => str($r->{createdAt}), by => str($r->{author}), doneBy => str($r->{updatedBy}), pc => $PC_NAME,
     reqId => str($r->{id}), fileKey => str($r->{fileKey}), fileName => str($r->{fileName}), page => str($r->{page}), frame => str($r->{frame}), nodeId => str($r->{nodeId}),
     type => str($r->{type}), layout => str($r->{layout}), text => str($r->{text}), note => str($r->{note}), shot => $shot, images => \@att,
     ask => (ref $r->{ask} eq 'HASH' ? $r->{ask} : undef), replies => [ grep { ref $_ eq 'HASH' } @{ ref $r->{replies} eq 'ARRAY' ? $r->{replies} : [] } ] });
@@ -609,10 +609,10 @@ sub pick_menus { my ($a) = @_; my %ok = map { $_ => 1 } @MENU_KEYS; return grep 
 # 쓰기 메뉴: 최고관리자는 전부. writes가 있으면 그것(읽기 메뉴 안에서만), 없으면(예전 계정) 고른 메뉴 모두 · UX 문서는 guideEdit이 있을 때
 sub user_writes {
   my ($a) = @_; return () unless $a; return @WRITE_KEYS if $a->{admin};
-  my %p = map { $_ => 1 } pick_menus($a); my %w = map { $_ => 1 } @WRITE_KEYS;
+  my %p = map { $_ => 1 } no_team_filter($a, pick_menus($a)); my %w = map { $_ => 1 } @WRITE_KEYS;
   return grep { $w{$_} && $p{$_} } @{ $a->{writes} } if ref $a->{writes} eq 'ARRAY';
   my $ge = grep { $_ eq 'guideEdit' } @{ ref $a->{menus} eq 'ARRAY' ? $a->{menus} : [] };
-  return grep { $w{$_} && ($_ ne 'guide' || $ge) } pick_menus($a);
+  return grep { $w{$_} && ($_ ne 'guide' || $ge) } no_team_filter($a, pick_menus($a));
 }
 # 쓰기 권한 확인: 브라우저 화면에서 온 요청만(Claude · 플러그인은 그대로). 계정을 쓰지 않으면 모두 쓰기. 키 중 하나라도 쓰기면 된다
 # 승인 권한(메뉴 권한과 따로): 계정 approves에 고른 항목만. 최고관리자는 전부. 승인할 것이 생기면 여기 한 줄 더한다(윈도우 서버와 같다)
@@ -630,7 +630,47 @@ sub can_write {
 sub ro_msg { my ($k) = @_; my ($m) = grep { $_->{key} eq $k } @MENUS; my $l = $m ? $m->{label} : $k; return "「$l」 메뉴는 읽기 권한만 있습니다(보기만 가능). 최고관리자에게 「$l · 쓰기」 권한을 요청하세요.\n"; }
 # 작업 대기열 종류 → 메뉴(쓰기 권한 확인용)
 sub job_menu { my ($k) = @_; return 'guide' if $k =~ /^guide(-edit|-check)?$/; return 'plan' if $k eq 'minutes' || $k eq 'plan'; return 'proto' if $k =~ /^prototype/; return 'workbench'; }
-sub user_menus { my ($a) = @_; return () unless $a; return map { $_->{key} } @MENUS if $a->{admin}; my %p = map { $_ => 1 } pick_menus($a); return map { $_->{key} } grep { $_->{always} || $p{ $_->{key} } } @MENUS; }
+# ── 팀 (v0.13.0부터, 윈도우 서버와 같다): 같은 회사 안의 업무 구분. 일정/작업 · UX 문서 · 변경 이력 · 사용량 통계를 팀 단위로
+#  팀 목록 = .history/config/teams.json {items:[{id, name, legacy, createdAt, by}]}. 파일이 없으면 CURECA 하나로 본다(최고관리자가 처음 바꿀 때 만든다)
+#  CURECA(cureca, legacy) = 지금까지의 공유 데이터(지금 자리 그대로). 다른 팀 데이터는 .history/teams/{id}/
+#  계정 teams:[팀 id](여러 개). teams가 없는 예전 계정 = CURECA. 최고관리자는 모든 팀. 팀이 없으면 팀 메뉴를 못 쓴다. 지금 보는 팀은 PC마다(setup.json team)
+my $TEAMS_FILE = "$HIST_DIR/config/teams.json"; my $TEAM_DIR = "$HIST_DIR/teams";
+my @TEAM_MENUS = ('plan', 'guide', 'history', 'usage');
+sub read_teams {
+  if (-f $TEAMS_FILE) { my $d = eval { read_json($TEAMS_FILE) }; return grep { ref $_ eq 'HASH' && str($_->{id}) ne '' } @{ $d->{items} || [] } if ref $d eq 'HASH'; }
+  return ({ id => 'cureca', name => 'CURECA', legacy => JSON::PP::true, createdAt => '2026-11-06T00:00:00+09:00', by => 'system' });
+}
+sub save_teams { my @items = @_; make_path("$HIST_DIR/config"); write_json($TEAMS_FILE, { items => \@items }); $sync_want = 1; }
+sub team_ids { return map { str($_->{id}) } read_teams(); }
+sub user_teams {
+  my ($a) = @_; return () unless $a; my @all = team_ids(); return @all if $a->{admin};
+  return grep { $_ eq 'cureca' } @all unless exists $a->{teams};   # 예전 계정 = CURECA
+  my %ok = map { $_ => 1 } @all; return grep { $ok{$_} } @{ ref $a->{teams} eq 'ARRAY' ? $a->{teams} : [] };
+}
+sub team_members { my ($tid) = @_; return grep { my $a = $_; !$a->{admin} && grep { $_ eq $tid } user_teams($a) } read_accounts(); }
+sub my_teams { return auth_required() ? user_teams(current_user()) : team_ids(); }
+sub current_team { my @ids = my_teams(); my $t = str(read_setup()->{team}); return $t if grep { $_ eq $t } @ids; return @ids ? $ids[0] : ''; }
+sub team_list { my %w = map { $_ => 1 } @_; return [ map { { id => str($_->{id}), name => str($_->{name}) } } grep { $w{ str($_->{id}) } } read_teams() ]; }
+sub set_my_team {
+  my ($tid) = @_; die "소속된 팀이 아닙니다.\n" unless grep { $_ eq $tid } my_teams();
+  my $s = read_setup(); $s->{team} = $tid; make_path($SETUP_DIR); write_json($SETUP_FILE, $s);
+}
+# 팀 데이터 위치: CURECA는 지금까지의 자리(.history 바로 아래), 다른 팀은 .history/teams/{id}/ 아래(guides · minutes · config/sheet.json)
+#  요청마다 set_team_ctx로 정한다 → UX 문서 · 일정/작업 함수가 쓰는 $GUIDE_ROOT · $MIN_DIR · $SHEET_CONF … 가 그 팀 것으로 바뀐다(윈도우 Set-TeamCtx와 같다)
+# ($TEAM · $GUIDE_REL은 위 $GUIDE_ROOT 옆에 선언)
+sub team_rel { my ($t) = @_; return (!defined $t || $t eq '' || $t eq 'cureca') ? '' : "teams/$t/"; }
+sub set_team_ctx {
+  my ($t) = @_; $t = 'cureca' if !defined $t || $t eq '';
+  $TEAM = $t; my $rel = team_rel($t); my $th = $rel ne '' ? "$HIST_DIR/teams/$t" : $HIST_DIR;
+  $GUIDE_ROOT = "$th/guides"; $GUIDE_REL = ".history/${rel}guides"; $MIN_DIR = "$th/minutes"; $SHEET_CONF = "$th/config/sheet.json";
+  $SHEET_CACHE = $rel ne '' ? "$ROOT/workbench/.sheet_cache/_team_$t" : "$ROOT/workbench/.sheet_cache";
+  $GUIDE_APPLY = $rel ne '' ? "$ROOT/workbench/guide_apply.$t.json" : "$ROOT/workbench/guide_apply.json";   # 작업 기준도 팀마다(이 PC만)
+}
+# 이력 · 사용량 한 건의 팀(예전 기록은 팀이 없어 CURECA)
+sub item_team { my ($e) = @_; my $t = ref $e eq 'HASH' ? str($e->{team}) : ''; return $t ne '' ? $t : 'cureca'; }
+# 팀이 없는 계정은 팀 메뉴를 뺀다
+sub no_team_filter { my ($a, @p) = @_; return @p if user_teams($a); my %tm = map { $_ => 1 } @TEAM_MENUS; return grep { !$tm{$_} } @p; }
+sub user_menus { my ($a) = @_; return () unless $a; return map { $_->{key} } @MENUS if $a->{admin}; my %p = map { $_ => 1 } no_team_filter($a, pick_menus($a)); return map { $_->{key} } grep { $_->{always} || $p{ $_->{key} } } @MENUS; }
 sub me_info {
   my $req = auth_required(); my $u = $req ? current_user() : undef;
   my @allowed = $req ? user_menus($u) : (@MENU_KEYS, @ALWAYS_KEYS); my %al = map { $_ => 1 } @allowed;
@@ -643,17 +683,46 @@ sub me_info {
     user => $u ? { id => $u->{id}, name => $u->{name}, admin => $u->{admin} ? JSON::PP::true : JSON::PP::false, menus => [@allowed], writes => [ user_writes($u) ], approves => [ user_approves($u) ] } : undef,
     approves => [ $req ? user_approves($u) : @APPROVE_KEYS ],
     menus => [ map { { key => $_->{key}, label => $_->{label}, page => $_->{pages}[0], pages => $_->{pages}, admin => $_->{admin} ? JSON::PP::true : JSON::PP::false, write => str($_->{write}) } } @MENUS ],
-    allowed => [@allowed], writes => [ $req ? user_writes($u) : @WRITE_KEYS ], first => $first || 'Account.html' };
+    allowed => [@allowed], writes => [ $req ? user_writes($u) : @WRITE_KEYS ], first => $first || 'Account.html',
+    teams => team_list(my_teams()), team => current_team(), teamMenus => [@TEAM_MENUS] };
 }
 sub write_login {
   my ($a) = @_; my $s = read_setup();
   if ($a) { $s->{login} = { id => $a->{id}, pwAt => $a->{pwAt}, at => now_iso() }; $s->{user} = str($a->{name}); } else { delete $s->{login}; }
   make_path($SETUP_DIR); write_json($SETUP_FILE, $s);
 }
-sub public_account { my ($a) = @_; return { id => $a->{id}, name => $a->{name}, admin => $a->{admin} ? JSON::PP::true : JSON::PP::false, menus => [ $a->{admin} ? user_menus($a) : pick_menus($a) ], writes => [ user_writes($a) ], approves => [ user_approves($a) ],
+sub public_account { my ($a) = @_; return { id => $a->{id}, name => $a->{name}, admin => $a->{admin} ? JSON::PP::true : JSON::PP::false, teams => [ user_teams($a) ], menus => [ $a->{admin} ? user_menus($a) : pick_menus($a) ], writes => [ user_writes($a) ], approves => [ user_approves($a) ],
   active => (defined $a->{active} && !$a->{active}) ? JSON::PP::false : JSON::PP::true, createdAt => $a->{createdAt}, updatedAt => $a->{updatedAt}, pwAt => $a->{pwAt} }; }
 sub accounts_post {
-  my ($b) = @_; my $id = lc(trim($b->{id})); my %ok = map { $_ => 1 } @MENU_KEYS;
+  my ($b) = @_;
+  # 팀 추가 · 이름 바꾸기 · 지우기 {action:'team-add'|'team-update'|'team-delete', team:{id, name}}
+  if (str($b->{action}) =~ /^team-/) {
+    my $tb = ref $b->{team} eq 'HASH' ? $b->{team} : {}; my $tid = lc(trim($tb->{id})); my $tname = trim($tb->{name});
+    my @teams = read_teams(); my ($t) = grep { str($_->{id}) eq $tid } @teams; my $ta = str($b->{action});
+    if ($ta eq 'team-add') {
+      die "팀 아이디는 영문 소문자로 시작하고 영문 소문자 · 숫자 · - 로 2~32자입니다.\n" unless $tid =~ /^[a-z][a-z0-9-]{1,31}$/;
+      die "이미 있는 팀 아이디입니다: $tid\n" if $t;
+      die "팀 이름을 입력해 주세요.\n" if $tname eq '';
+      die "같은 이름의 팀이 있습니다: $tname\n" if grep { str($_->{name}) eq $tname } @teams;
+      my $cu = current_user(); push @teams, { id => $tid, name => $tname, createdAt => now_iso(), by => $cu ? $cu->{id} : '' };
+    } elsif ($ta eq 'team-update') {
+      die "팀을 찾지 못했습니다: $tid\n" unless $t;
+      die "팀 이름을 입력해 주세요.\n" if $tname eq '';
+      die "같은 이름의 팀이 있습니다: $tname\n" if grep { str($_->{name}) eq $tname && str($_->{id}) ne $tid } @teams;
+      $t->{name} = $tname;
+    } elsif ($ta eq 'team-delete') {
+      die "팀을 찾지 못했습니다: $tid\n" unless $t;
+      die "「" . str($t->{name}) . "」 팀은 지금까지의 데이터가 있는 팀이라 지울 수 없습니다.\n" if $t->{legacy};
+      my $n = () = team_members($tid);
+      die "「" . str($t->{name}) . "」 팀에 계정이 $n 개 있습니다. 계정에서 이 팀을 먼저 빼 주세요.\n" if $n;
+      my $has = 0; if (-d "$TEAM_DIR/$tid") { require File::Find; File::Find::find(sub { $has = 1 if -f $_ }, "$TEAM_DIR/$tid"); }
+      die "「" . str($t->{name}) . "」 팀의 데이터(.history/teams/$tid)가 있어 지울 수 없습니다.\n" if $has;
+      @teams = grep { str($_->{id}) ne $tid } @teams;
+    } else { die "알 수 없는 작업: $ta\n"; }
+    save_teams(@teams); return { ok => JSON::PP::true };
+  }
+  my $id = lc(trim($b->{id})); my %ok = map { $_ => 1 } @MENU_KEYS;
+  my %tk = map { $_ => 1 } team_ids(); my %seen; my @pteams = grep { $tk{$_} && !$seen{$_}++ } @{ ref $b->{teams} eq 'ARRAY' ? $b->{teams} : [] };   # 소속 팀(여러 개)
   my @menus = grep { $ok{$_} } @{ ref $b->{menus} eq 'ARRAY' ? $b->{menus} : [] }; my $act = str($b->{action}); my $pw = str($b->{pw});
   my %pm = map { $_ => 1 } @menus; my %wk = map { $_ => 1 } @WRITE_KEYS;
   my @writes = grep { $wk{$_} && $pm{$_} } @{ ref $b->{writes} eq 'ARRAY' ? $b->{writes} : [] };   # 쓰기는 읽기 메뉴 안에서만
@@ -664,12 +733,12 @@ sub accounts_post {
     die "이름을 입력해 주세요.\n" if trim($b->{name}) eq '';
     die "비밀번호는 8자 이상이어야 합니다.\n" if length($pw) < 8;
     my $cu = current_user();
-    my $a = { id => $id, name => trim($b->{name}), admin => JSON::PP::false, menus => \@menus, writes => \@writes, approves => \@approves, active => JSON::PP::true, createdAt => now_iso(), createdBy => $cu ? $cu->{id} : '' };
+    my $a = { id => $id, name => trim($b->{name}), admin => JSON::PP::false, teams => \@pteams, menus => \@menus, writes => \@writes, approves => \@approves, active => JSON::PP::true, createdAt => now_iso(), createdBy => $cu ? $cu->{id} : '' };
     set_pw($a, $pw); save_account($a);
   } elsif ($act eq 'update') {
     my $a = read_account($id) or die "계정을 찾지 못했습니다: $id\n";
     $a->{name} = trim($b->{name}) if trim($b->{name}) ne '';
-    unless ($a->{admin}) { if (exists $b->{menus}) { $a->{menus} = \@menus; $a->{writes} = \@writes; } $a->{approves} = \@approves if exists $b->{approves}; $a->{active} = $b->{active} ? JSON::PP::true : JSON::PP::false if exists $b->{active}; }
+    unless ($a->{admin}) { if (exists $b->{menus}) { $a->{menus} = \@menus; $a->{writes} = \@writes; } $a->{approves} = \@approves if exists $b->{approves}; $a->{teams} = \@pteams if exists $b->{teams}; $a->{active} = $b->{active} ? JSON::PP::true : JSON::PP::false if exists $b->{active}; }
     if (length $pw) { die "비밀번호는 8자 이상이어야 합니다.\n" if length($pw) < 8; set_pw($a, $pw); }
     save_account($a);
     my $s = read_setup(); write_login($a) if ref $s->{login} eq 'HASH' && str($s->{login}{id}) eq $id;   # 내 계정이면 이 PC 로그인도 새 값으로
@@ -690,10 +759,10 @@ sub hist_backfill {
   }
 }
 sub hist_get {
-  my @items;
-  if (opendir(my $dh, $HIST_ENTRIES)) { for my $f (sort grep { /\.json$/ } readdir $dh) { my $e = eval { read_json("$HIST_ENTRIES/$f") }; push @items, $e if ref $e eq 'HASH'; } closedir $dh; }
+  my ($all) = @_; my @items;   # $all: 모든 팀(Workbench 겹침 표시 — Workbench는 팀과 상관없다). 아니면 지금 팀만(예전 기록 = CURECA)
+  if (opendir(my $dh, $HIST_ENTRIES)) { for my $f (sort grep { /\.json$/ } readdir $dh) { my $e = eval { read_json("$HIST_ENTRIES/$f") }; push @items, $e if ref $e eq 'HASH' && ($all || item_team($e) eq $TEAM); } closedir $dh; }
   my $st = -f $SYNC_STAT ? eval { read_json($SYNC_STAT) } : undef;
-  return { pc => $PC_NAME, pcSlug => $PC_SLUG, syncing => (ref $st eq 'HASH' && $st->{busy} ? JSON::PP::true : JSON::PP::false), sync => $st, items => \@items };
+  return { pc => $PC_NAME, pcSlug => $PC_SLUG, team => ($all ? '' : $TEAM), syncing => (ref $st eq 'HASH' && $st->{busy} ? JSON::PP::true : JSON::PP::false), sync => $st, items => \@items };
 }
 sub hist_post {
   my ($b) = @_; my $act = str($b->{action});
@@ -701,7 +770,7 @@ sub hist_post {
     my ($title, $text) = (trim($b->{title}), trim($b->{text}));
     die "작업 내용을 입력해 주세요.\n" unless length($title) || length($text);
     my $name = $PC_SLUG . '_' . strftime('%Y%m%d-%H%M%S', localtime);
-    save_hist_entry($name, { id => $name, kind => 'work', at => now_iso(), by => str($b->{by}), doneBy => str($b->{doneBy}), pc => $PC_NAME,
+    save_hist_entry($name, { id => $name, kind => 'work', team => (str($b->{team}) ne '' ? str($b->{team}) : $TEAM), at => now_iso(), by => str($b->{by}), doneBy => str($b->{doneBy}), pc => $PC_NAME,
       reqId => '', fileKey => str($b->{fileKey}), fileName => str($b->{fileName}), page => str($b->{page}), frame => str($b->{frame}), nodeId => str($b->{nodeId}),
       type => str($b->{type}), text => (length $title ? $title : $text), note => (length $title ? $text : ''), shot => copy_hist_shot($b->{fileKey}, $b->{nodeId}, $name) });
   } elsif ($act eq 'sync') { $sync_want = 1; sync_tick(); select(undef, undef, undef, 0.7); }
@@ -711,7 +780,7 @@ sub hist_post {
 # 토큰 사용량(공유): 한 건 한 파일 .history/usage/{PC}_{요청 ID}.json
 sub usage_get {
   my @items;
-  if (opendir(my $dh, $HIST_USAGE)) { for my $f (sort grep { /\.json$/ } readdir $dh) { my $e = eval { read_json("$HIST_USAGE/$f") }; push @items, $e if ref $e eq 'HASH'; } closedir $dh; }
+  if (opendir(my $dh, $HIST_USAGE)) { for my $f (sort grep { /\.json$/ } readdir $dh) { my $e = eval { read_json("$HIST_USAGE/$f") }; push @items, $e if ref $e eq 'HASH' && item_team($e) eq $TEAM; } closedir $dh; }   # 지금 팀의 사용량만
   my $pr = eval { read_json("$ROOT/workbench/pricing.json") };
   return { pc => $PC_NAME, pcSlug => $PC_SLUG, pricing => $pr, items => \@items };
 }
@@ -743,10 +812,10 @@ sub guides_get {
         my $fdir = exists $m->{filesDir} ? str($m->{filesDir}) : 'files';
         $m->{fileList} = [ map { my $p = str($_); my ($cur, $cr) = ($fdir ne '' ? "$fdir/$p" : $p, '');
           for my $r (@revs) { ($cur, $cr) = ("rev/$r->{rev}/" . ($p =~ s{\.\./}{_up/}gr), $r->{rev}) if $r->{file} eq $p; }
-          { path => $p, mdPath => ".history/guides/$d/$cur", rev => $cr } } @{ ref $m->{files} eq 'ARRAY' ? $m->{files} : [] } ];
+          { path => $p, mdPath => "$GUIDE_REL/$d/$cur", rev => $cr } } @{ ref $m->{files} eq 'ARRAY' ? $m->{files} : [] } ];
         $m->{mdPath} = '';
       }
-      else { $m->{mdPath} = $last ? ".history/guides/$d/rev/$last->{rev}.md" : ".history/guides/$d/guide.md"; }
+      else { $m->{mdPath} = $last ? "$GUIDE_REL/$d/rev/$last->{rev}.md" : "$GUIDE_REL/$d/guide.md"; }
       $m->{rev} = $last ? $last->{rev} : ''; $m->{revs} = \@revs;
       $m->{updatedAt} = $last->{at} if $last && $last->{at} ne '';
       push @list, $m;
@@ -872,7 +941,7 @@ sub jobs_post {
     ($hit) = grep { $_->{kind} eq $kind && str($_->{proto}) eq str($b->{proto}) && $_->{status} eq '대기' } @items if $kind eq 'prototype-sync';
     unless ($hit) {
       my $n = 1; for my $i (@items) { (my $v = str($i->{id})) =~ s/\D//g; $v = $v eq '' ? 0 : $v + 0; $n = $v + 1 if $v >= $n; }
-      $hit = { id => sprintf('J%03d', $n), kind => $kind, fileKey => $key, nodeId => $nid, name => trim($b->{name}), link => str($b->{link}), text => trim($b->{text}),
+      $hit = { id => sprintf('J%03d', $n), kind => $kind, team => (str($b->{team}) ne '' ? str($b->{team}) : $TEAM), fileKey => $key, nodeId => $nid, name => trim($b->{name}), link => str($b->{link}), text => trim($b->{text}),
         guide => ($kind eq 'guide-check' || $kind eq 'guide-edit' ? str($b->{guide}) : ''), revFrom => str($b->{revFrom}), revTo => str($b->{revTo}), items => ($kind eq 'text' ? $b->{items} : []),
         status => '대기', note => '', by => str($b->{by}), takenBy => '', createdAt => $now, updatedAt => $now };
       # guide-check 범위: '' = 가이드(작업 기준 파일의 화면만), 'spec' = 정의서(화면 · 다른 문서 · 프로토타입)
@@ -909,7 +978,7 @@ sub jobs_post {
   splice(@items, 300) if @items > 300;
   write_json($JOB_FILE, { version => ($j->{version} || 0) + 1, items => \@items });
   # UX 문서 변경이력: 문서 수정 뒤 찾은 고칠 화면 · 연관 항목(guide-check)은 그 수정본 옆에 남겨 깃으로 공유한다(작업 대기열은 이 PC에만 있으므로)
-  save_check_log($hit) if $act eq 'update' && $hit && str($hit->{kind}) eq 'guide-check';
+  if ($act eq 'update' && $hit && str($hit->{kind}) eq 'guide-check') { set_team_ctx(item_team($hit)); save_check_log($hit); }   # 그 작업의 팀 문서 옆에
   return { ok => JSON::PP::true, job => $hit };
 }
 # guide-check 결과 → .history/guides/{문서}/rev/{revTo}.check-{PC}-{작업 ID}.json {jobId, pc, by, at, status, note, scope, fileKey, items}
@@ -1099,9 +1168,25 @@ sub handle {
     write_login($a); return respond_json($sock, 200, me_info());
   }
   if ($path eq '/api/logout' && $method eq 'POST') { write_login(undef); return respond_json($sock, 200, { ok => JSON::PP::true }); }
+  # 지금 보는 팀 바꾸기 {team} (이 PC만). 로그인한 계정의 소속 팀만
+  if ($path eq '/api/me/team' && $method eq 'POST') {
+    return respond_json($sock, 401, { error => '로그인이 필요합니다.', login => JSON::PP::true }) if auth_required() && !current_user();
+    my $b = $body->(); set_my_team(str($b->{team})); return respond_json($sock, 200, me_info());
+  }
   #  브라우저 페이지(Sec-Fetch-Site 머리글이 있고 Figma 플러그인이 아닌 것)만 막는다. Claude(curl) · 플러그인은 그대로
   my $is_browser = defined $hdr->{'sec-fetch-site'} && !(defined $origin && $origin eq 'null');
   $IS_BROWSER = $is_browser ? 1 : 0;
+  # ── 팀(v0.13.0): 이 요청의 팀을 정한다(윈도우 서버와 같다) ──
+  #  화면 = 이 PC에서 고른 팀(소속 팀만). Claude · curl은 ?team= 으로 고를 수 있다(없으면 이 PC에서 고른 팀)
+  #  화면이 .history/guides/… · .history/minutes/… 를 읽으면 그 팀 위치로 바꿔 준다(CURECA는 그대로). 남의 팀 폴더 · 팀 비밀값은 막는다
+  {
+    my $qt = sheet_query($target, 'team'); my $tctx = current_team();
+    $tctx = $qt if $qt ne '' && (grep { $_ eq $qt } team_ids()) && (!$is_browser || !auth_required() || grep { $_ eq $qt } my_teams());
+    set_team_ctx($tctx);
+  }
+  return respond($sock, 404, 'text/plain', 'not found') if $path =~ m{^/\.history/teams/[^/]+/config(/|$)};
+  if ($is_browser && auth_required() && $path =~ m{^/\.history/teams/([^/]+)/}) { my $t = $1; return respond($sock, 404, 'text/plain', 'not found') unless grep { $_ eq $t } my_teams(); }
+  $path = "/.history/teams/$TEAM/$1" . ($2 // '') if $is_browser && $TEAM ne 'cureca' && $path =~ m{^/\.history/(guides|minutes)(/.*)?$};
   if ($path eq '/start' && auth_required()) {
     my $mi = me_info(); my $to = '/Login.html';
     if ($mi->{user}) { $to = '/' . $mi->{first}; $to = '/Setup.html' if !read_setup()->{done} && grep { $_ eq 'setup' } @{ $mi->{allowed} }; }
@@ -1147,7 +1232,9 @@ sub handle {
   # 계정 관리(최고관리자만, 위에서 권한 확인)
   if ($path eq '/api/accounts' && $method eq 'GET') {
     my @l = map { public_account($_) } sort { ($b->{admin} ? 1 : 0) <=> ($a->{admin} ? 1 : 0) || str($a->{id}) cmp str($b->{id}) } read_accounts();
-    return respond_json($sock, 200, { items => \@l, menus => [ map { { key => $_->{key}, label => $_->{label}, write => str($_->{write}) } } grep { !$_->{admin} && !$_->{always} } @MENUS ], approvals => \@APPROVALS });
+    my %tm = map { $_ => 1 } @TEAM_MENUS;
+    my @tl = map { my $tid = str($_->{id}); my $n = () = team_members($tid); { id => $tid, name => str($_->{name}), legacy => $_->{legacy} ? JSON::PP::true : JSON::PP::false, members => $n, createdAt => str($_->{createdAt}) } } read_teams();
+    return respond_json($sock, 200, { items => \@l, teams => \@tl, teamMenus => [@TEAM_MENUS], menus => [ map { { key => $_->{key}, label => $_->{label}, write => str($_->{write}), team => $tm{ $_->{key} } ? JSON::PP::true : JSON::PP::false } } grep { !$_->{admin} && !$_->{always} } @MENUS ], approvals => \@APPROVALS });
   }
   if ($path eq '/api/accounts' && $method eq 'POST') { return respond_json($sock, 200, accounts_post($body->())); }
 
@@ -1249,7 +1336,8 @@ sub handle {
   # UX 문서 변경이력용 깃 기록(윈도우 서버와 같다): 파일을 직접 바꿔 넣은 것도 변경이력에 보이게
   if ($path eq '/api/guides/gitlog' && $method eq 'GET') {
     my $since = sheet_query($target, 'since'); $since = '' unless $since =~ /^[0-9T:+.\-]{10,40}$/;
-    my @a = ('git', '-C', $HIST_DIR, '-c', 'core.quotepath=false', 'log', '--name-status', '--date=iso-strict', '--pretty=format:@@%H|%ad|%an|%s', '-n', '300', ($since ? ("--since=$since") : ()), '--', 'guides');
+    my @a = ('git', '-C', $HIST_DIR, '-c', 'core.quotepath=false', 'log', '--name-status', '--date=iso-strict', '--pretty=format:@@%H|%ad|%an|%s', '-n', '300', ($since ? ("--since=$since") : ()), '--', team_rel($TEAM) . 'guides');   # 그 팀의 문서 폴더
+    my $gp = team_rel($TEAM) . 'guides'; my $gl = length($gp) + 1;
     my $txt = ''; if (open(my $p, '-|', @a)) { local $/; binmode $p; $txt = <$p> // ''; close $p; }
     $txt = decode('UTF-8', $txt);
     my (@items, $cur);
@@ -1258,8 +1346,8 @@ sub handle {
       if ($ln =~ /^@@(.*)$/) { my @p = split /\|/, $1, 4; $cur = { hash => $p[0], at => $p[1], by => $p[2], msg => $p[3] // '', files => [] }; push @items, $cur; next; }
       next unless $cur && $ln =~ /\S/;
       my @c = split /\t/, $ln; my $st = substr($c[0], 0, 1); my $fp = $c[-1]; my $from = @c > 2 ? $c[1] : '';
-      next unless $fp =~ m{^guides/} && $fp !~ m{/rev/|\.check-[^/]*\.json$|/meta\.json$|^guides/_log\.json$};
-      push @{ $cur->{files} }, { st => $st, path => substr($fp, 7), from => ($from ne '' ? substr($from, 7) : '') };
+      next unless index($fp, "$gp/") == 0 && $fp !~ m{/rev/|\.check-[^/]*\.json$|/meta\.json$} && $fp ne "$gp/_log.json";
+      push @{ $cur->{files} }, { st => $st, path => substr($fp, $gl), from => ($from ne '' && length($from) >= $gl ? substr($from, $gl) : '') };
     }
     return respond_json($sock, 200, { items => [ grep { @{ $_->{files} } } @items ] });
   }
@@ -1267,7 +1355,7 @@ sub handle {
     my $h = sheet_query($target, 'hash'); my $fp = sheet_query($target, 'path');
     die "잘못된 요청입니다.\n" unless $h =~ /^[0-9a-f]{7,40}$/ && $fp ne '' && $fp !~ /\.\./ && $fp !~ m{^(accounts|config)/};
     my $ref = sheet_query($target, 'prev') ne '' ? "$h^" : $h;
-    my $t = ''; if (open(my $p, '-|', 'git', '-C', $HIST_DIR, 'show', "$ref:guides/" . encode('UTF-8', $fp))) { local $/; binmode $p; $t = <$p> // ''; close $p; }
+    my $t = ''; if (open(my $p, '-|', 'git', '-C', $HIST_DIR, 'show', "$ref:" . team_rel($TEAM) . "guides/" . encode('UTF-8', $fp))) { local $/; binmode $p; $t = <$p> // ''; close $p; }
     return respond($sock, 200, 'text/plain; charset=utf-8', $t);
   }
   if ($path eq '/api/guides') {
@@ -1345,7 +1433,7 @@ sub handle {
     }
   }
   # 작업 이력(공유): 목록 · 직접 남기기(요청 없이 한 작업) · 지금 동기화
-  if ($path eq '/api/history') { return respond_json($sock, 200, $method eq 'POST' ? hist_post($body->()) : hist_get()); }
+  if ($path eq '/api/history') { return respond_json($sock, 200, $method eq 'POST' ? hist_post($body->()) : hist_get(sheet_query($target, 'all') eq '1')); }
   if ($path eq '/api/usage') { return respond_json($sock, 200, usage_get()); }
   # 첨부 이미지 올리기: 본문 = 이미지 바이트, ?ext=png|jpg|gif|webp → {tmp}. 요청 등록(add)의 images:[{tmp, small, name}]로 넘긴다
   if ($path eq '/api/attach' && $method eq 'POST') { return respond_json($sock, 200, attach_post($target, $raw)); }
