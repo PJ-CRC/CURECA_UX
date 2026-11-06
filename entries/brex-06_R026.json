@@ -1,8 +1,8 @@
 {
     "id":  "brex-06_R026",
     "kind":  "request",
-    "status":  "진행 중",
-    "at":  "2026-11-06T09:27:20+09:00",
+    "status":  "보류",
+    "at":  "2026-11-06T09:28:29+09:00",
     "createdAt":  "2026-11-06T09:27:05+09:00",
     "by":  "최고관리자",
     "doneBy":  "Claude",
@@ -16,12 +16,29 @@
     "type":  "일반",
     "layout":  "",
     "text":  "섹션2에 있는 Assay Pack Setting 내용을 현재 규칙에 맞게\n섹션2에 다시 그려줘",
-    "note":  "",
+    "note":  "다시 그릴 범위 · 위치 · 버전을 정해야 해서 멈췄습니다. Figma는 고치지 않았습니다.\n- Section 2의 Assay Pack Setting: TI-STN-08 · TI-STN-08-01 · TI-STN-08-P · 세부정의 · Import 정의 · 유형별 정의(T-IOS), LI-STN-08 · LI-STN-08-P · File Data · 유형별 정의(L-IOS)\n- 작업규칙(screen-spec.md 2 · 8절, claude-work.md 2절 5단계)에 따라 기존 화면 재설계(유형 21)는 화면 정의서(screens/setting/{CID}.md, source: tobe)를 먼저 쓰고 그대로 그립니다: 0. 화면 정의, 문장 패턴 · 표준어로 다시 쓴 디스크립션, 번호 다시 매김(LI-STN-08-R01 반영), 상태별 화면(빈 상태 등)\n- 확인 필요: ① 범위(LI-STN-08만이면 T/L 짝 TI-STN-08은 반영 대기 줄만 둠) ② 위치(기존 프레임은 그대로 두고 Section 2 안 아래쪽에 새 프레임 vs 기존 프레임을 바꿈) ③ 들어갈 버전 Ver(2.1.ZZ, 예 2.1.01)\n- 답에 버전도 함께 적어 주세요(예: 「짝 둘 다, 아래에 새로, 2.1.01」).\n작업 기준: 작업규칙 CURECA 작업규칙 · 정책서 CURECA 정책서 · UX가이드 CURECA UX 가이드 · 기준데이터 CURECA 기준데이터 · 화면 정의서 CURECA 화면 정의서",
     "shot":  "",
     "images":  [
 
                ],
-    "ask":  null,
+    "ask":  {
+                "q":  "어느 범위를 어디에 다시 그릴까요? (버전 Ver도 함께 적어 주세요)",
+                "options":  [
+                                {
+                                    "label":  "LI-STN-08 기획 프레임만, 기존은 두고 Section 2 아래에 새로"
+                                },
+                                {
+                                    "label":  "TI-STN-08 · LI-STN-08 짝 둘 다, 기존은 두고 아래에 새로"
+                                },
+                                {
+                                    "label":  "Assay Pack Setting 전체(목록 · 상세 · Import, T/L), 아래에 새로"
+                                },
+                                {
+                                    "label":  "기존 LI-STN-08 프레임을 그 자리에서 바꾸기"
+                                }
+                            ],
+                "free":  true
+            },
     "replies":  [
 
                 ]
