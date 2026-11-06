@@ -226,6 +226,14 @@ function Read-Usage {
     foreach ($f in Get-ChildItem $HistUsage -Filter *.json) { try { $items += ([IO.File]::ReadAllText($f.FullName, $Utf8) | ConvertFrom-Json) } catch {} }
   }
   $items = @($items | Where-Object { (Item-Team $_) -eq $script:Team })   # 지금 팀의 사용량만(예전 기록 = CURECA)
+  # 요청 유형(Workbench 「일반 · 텍스트 수정 · 레이아웃·배치 …」): 기록에 없으면(예전 기록) 같은 이름의 작업 이력(.history/entries/{PC}_{R0xx}.json)에서 가져온다
+  foreach ($u in $items) {
+    if ([string]$u.reqId -and -not [string]$u.reqType) {
+      $ef = P $HistEntries ([string]$u.id + '.json'); $t = ''
+      if (Test-Path $ef) { try { $t = [string]([IO.File]::ReadAllText($ef, $Utf8) | ConvertFrom-Json).type } catch {} }
+      $u | Add-Member -NotePropertyName reqType -NotePropertyValue $t -Force
+    }
+  }
   $pr = $null; try { $pr = [IO.File]::ReadAllText((P $Root 'workbench' 'pricing.json'), $Utf8) | ConvertFrom-Json } catch {}
   return [ordered]@{ pc = $PcName; pcSlug = $PcSlug; pricing = $pr; items = $items }
 }

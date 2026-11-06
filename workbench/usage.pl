@@ -38,13 +38,13 @@ sub parse_iso {
 my $PC_NAME = decode('UTF-8', hostname()); $PC_NAME =~ s/\.local$//;
 (my $PC_SLUG = lc $PC_NAME) =~ s/[^a-z0-9-]/-/g;
 
-my %meta = (kind => 'work', reqId => '', team => str($o{team}), by => $o{by}, fileKey => $o{'file-key'}, fileName => $o{'file-name'}, page => $o{page}, frame => $o{frame}, nodeId => $o{node}, text => $o{title});
+my %meta = (kind => 'work', reqId => '', reqType => '', team => str($o{team}), by => $o{by}, fileKey => $o{'file-key'}, fileName => $o{'file-name'}, page => $o{page}, frame => $o{frame}, nodeId => $o{node}, text => $o{title});
 if ($o{req} ne '') {
   my $r = eval { $J->decode(rd("$ROOT/workbench/edit_requests.json")) } || {};
   my ($it) = grep { ref $_ eq 'HASH' && str($_->{id}) eq $o{req} } @{ $r->{items} || [] };
   unless ($it) { print "NOREQ $o{req}\n"; exit 1; }
   $o{from} = str($it->{startedAt}) if $o{from} eq '';
-  $meta{kind} = 'request'; $meta{reqId} = $o{req};
+  $meta{kind} = 'request'; $meta{reqId} = $o{req}; $meta{reqType} = str($it->{type});   # 요청 유형(일반 · 텍스트 수정 …)
   for my $k (qw(team fileKey fileName page frame nodeId text)) { $meta{$k} = str($it->{$k}) if $meta{$k} eq ''; }
   $meta{by} = str($it->{author}) if $meta{by} eq '';
 }
@@ -92,7 +92,7 @@ for my $m (values %msgs) {
 unless ($s{calls}) { print 'NOUSAGE ' . iso($t0) . ' ~ ' . iso($t1) . "\n"; exit 0; }
 
 my $name = $PC_SLUG . '_' . ($o{req} ne '' ? $o{req} : strftime('%Y%m%d-%H%M%S', localtime $t1));
-my $e = { id => $name, kind => $meta{kind}, reqId => $meta{reqId}, team => ($meta{team} ne '' ? $meta{team} : 'cureca'), at => iso($t1), from => iso($t0), by => $meta{by}, doneBy => 'Claude', pc => $PC_NAME,
+my $e = { id => $name, kind => $meta{kind}, reqId => $meta{reqId}, reqType => $meta{reqType}, team => ($meta{team} ne '' ? $meta{team} : 'cureca'), at => iso($t1), from => iso($t0), by => $meta{by}, doneBy => 'Claude', pc => $PC_NAME,
   fileKey => $meta{fileKey}, fileName => $meta{fileName}, page => $meta{page}, frame => $meta{frame}, nodeId => $meta{nodeId}, text => $meta{text},
   models => \%models, calls => $s{calls}, input => $s{input}, cacheWrite => $s{cacheWrite}, cacheRead => $s{cacheRead}, output => $s{output},
   total => $s{input} + $s{cacheWrite} + $s{cacheRead} + $s{output}, usd => sprintf('%.4f', $s{usd}) + 0 };

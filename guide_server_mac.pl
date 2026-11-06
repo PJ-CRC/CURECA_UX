@@ -781,6 +781,12 @@ sub hist_post {
 sub usage_get {
   my @items;
   if (opendir(my $dh, $HIST_USAGE)) { for my $f (sort grep { /\.json$/ } readdir $dh) { my $e = eval { read_json("$HIST_USAGE/$f") }; push @items, $e if ref $e eq 'HASH' && item_team($e) eq $TEAM; } closedir $dh; }   # 지금 팀의 사용량만
+  # 요청 유형(Workbench 「일반 · 텍스트 수정 …」): 기록에 없으면(예전 기록) 같은 이름의 작업 이력(entries/{PC}_{R0xx}.json)에서
+  for my $u (@items) {
+    next unless str($u->{reqId}) ne '' && str($u->{reqType}) eq '';
+    my $en = eval { read_json("$HIST_ENTRIES/" . str($u->{id}) . '.json') };
+    $u->{reqType} = ref $en eq 'HASH' ? str($en->{type}) : '';
+  }
   my $pr = eval { read_json("$ROOT/workbench/pricing.json") };
   return { pc => $PC_NAME, pcSlug => $PC_SLUG, pricing => $pr, items => \@items };
 }
