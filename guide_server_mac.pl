@@ -1258,8 +1258,9 @@ sub handle {
   # 브라우저 탭 열림 · 닫힘 (sendBeacon은 text/plain으로 온다)
   if (($path eq '/api/alive' || $path eq '/api/bye') && $method eq 'POST') { return respond_json($sock, 200, page_post($path, $raw)); }
   if ($path eq '/start') { my $to = read_setup()->{done} ? '/Common_UX_Guide.html' : '/Setup.html'; return respond($sock, 302, 'text/plain', '', "Location: $to\r\n"); }
-  if ($path eq '/api/setup' && $method eq 'GET') { return respond_json($sock, 200, { state => read_setup(), env => setup_env() }); }
-  if ($path =~ m{^/api/setup} && $method eq 'POST') { my $o = setup_post($path, $body->(), $origin); return respond_json($sock, 200, $o) if $o; }
+# 시작 안내 상태: 모든 페이지 상단 메뉴가 1분마다 부른다(시작 안내 경고) → 15초 동안은 지난 값(바꾸기 POST 뒤에는 새로)
+  if ($path eq '/api/setup' && $method eq 'GET') { ($main::ENV_VAL, $main::ENV_AT) = (setup_env(), time) if !$main::ENV_AT || time - $main::ENV_AT >= 15; return respond_json($sock, 200, { state => read_setup(), env => $main::ENV_VAL }); }
+  if ($path =~ m{^/api/setup} && $method eq 'POST') { $main::ENV_AT = 0; my $o = setup_post($path, $body->(), $origin); return respond_json($sock, 200, $o) if $o; }
   if ($path eq '/api/shots' && $method eq 'POST') { return respond_json($sock, 200, shots_post($body->())); }
   if ($path eq '/api/projects' && $method eq 'GET') { return respond_json($sock, 200, projects_get()); }
   # 파일 여러 개를 한 번에: POST /api/files {paths:['.history/guides/…']} → {files:{경로: 글}} (.history/guides · minutes 아래만)
@@ -1492,6 +1493,15 @@ sub handle {
   # 작업 이력(공유): 목록 · 직접 남기기(요청 없이 한 작업) · 지금 동기화
   if ($path eq '/api/history') { return respond_json($sock, 200, $method eq 'POST' ? hist_post($body->()) : hist_get(sheet_query($target, 'all') eq '1')); }
   if ($path eq '/api/usage') { return respond_json($sock, 200, usage_get()); }
+  # 작업 이력에 붙는 캡처 사본(.history/shots · attach, 깃 공유) 크기: 1GB를 넘으면 상단 메뉴에 알림(appnav.js, 최고관리자). 5분 동안은 지난 값
+  if ($path eq '/api/storage') {
+    if (!$main::STORE_AT || time - $main::STORE_AT >= 300) {
+      my ($sum, $cnt) = (0, 0);
+      for my $d ($HIST_SHOTS, $HIST_ATTACH) { next unless opendir(my $dh, $d); for my $f (readdir $dh) { next if $f =~ /^\./; my $s = -s "$d/$f"; next unless -f "$d/$f"; $sum += $s || 0; $cnt++; } closedir $dh; }
+      $main::STORE_VAL = { shotsBytes => $sum, shotsCount => $cnt, limitBytes => 1024 * 1024 * 1024 }; $main::STORE_AT = time;
+    }
+    return respond_json($sock, 200, $main::STORE_VAL);
+  }
   # 첨부 이미지 올리기: 본문 = 이미지 바이트, ?ext=png|jpg|gif|webp → {tmp}. 요청 등록(add)의 images:[{tmp, small, name}]로 넘긴다
   if ($path eq '/api/attach' && $method eq 'POST') { return respond_json($sock, 200, attach_post($target, $raw)); }
   # 가이드 · 정의서 참고 파일 올리기: 만들기 작업의 files:[{tmp, name}]로 넘긴다

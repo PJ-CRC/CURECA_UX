@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="appnav.css">
+<script src="common.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
 <style>
 :root{
@@ -138,7 +139,8 @@ ul.list li{margin:2px 0}
 table.sh{border-collapse:separate;border-spacing:0;font-size:12.5px;width:max-content;min-width:100%}
 table.sh th,table.sh td{padding:4px 8px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);max-width:300px;vertical-align:middle;white-space:pre-wrap;word-break:break-word;line-height:1.45}
 table.sh td{min-width:56px}
-table.sh .g{min-width:24px;width:24px;max-width:24px;padding:2px 0;text-align:center;font-size:10.5px;white-space:nowrap;overflow:hidden}
+/* 간트 날짜 열: 「11/13」 같은 두 자리 날짜가 잘리지 않는 폭 */
+table.sh .g{min-width:40px;width:40px;max-width:40px;padding:2px 0;text-align:center;font-size:10.5px;white-space:nowrap;overflow:hidden}
 table.sh thead th.g{font-weight:600}
 table.sh .today{box-shadow:inset 2px 0 0 #e53935}
 table.sh .fz{position:sticky;z-index:1;background:var(--surface)}
@@ -335,7 +337,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
 <script>
 (function(){
   var $ = function(id){ return document.getElementById(id); };
-  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  var esc = window.WB.esc;   // 공통(common.js)
   function toast(t){ var d = document.createElement('div'); d.className = 'toast'; d.setAttribute('role', 'status'); d.textContent = t; document.body.appendChild(d); setTimeout(function(){ d.remove(); }, 2600); }
   function api(url, body){
     var o = body ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {};

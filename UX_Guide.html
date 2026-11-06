@@ -6,6 +6,7 @@
 <title>UX 문서</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="appnav.css">
+<script src="common.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
 <style>
 /* 만든 UX 가이드 보기: .history/guides/{id}/guide.md (깃으로 공유)
@@ -320,7 +321,7 @@ html.embed,html.embed body{overflow:hidden}
   var KL = { guide: 'UX가이드', rule: '작업규칙', policy: '정책서', data: '기준데이터', spec: '화면 정의서' };
   function kindName(k){ return KL[k || 'guide'] || '문서'; }
   function isDocKind(k){ return !!k && k !== 'guide'; }
-  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  var esc = window.WB.esc;   // 공통(common.js)
   function fail(t){ $('title').textContent = 'UX 가이드'; $('main').innerHTML = '<p class="empty">' + esc(t) + '</p>'; $('tree').innerHTML = ''; $('editBtn').hidden = true; }
   function toast(t){ var e = document.createElement('div'); e.className = 'toast'; e.setAttribute('role', 'status'); e.textContent = t; document.body.appendChild(e); setTimeout(function(){ e.remove(); }, 5000); }
   function user(){ try { return localStorage.getItem('cux.user') || ''; } catch(x){ return ''; } }

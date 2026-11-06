@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="appnav.css">
+<script src="common.js"></script>
 <style>
 :root{
   --bg:#f6f7f9; --surface:#ffffff; --surface-2:#f3f6fb; --ink:#14171c; --ink-2:#4a5260; --ink-3:#7a8392;
@@ -321,8 +322,8 @@ html.doc-ro #docNew,html.doc-ro #docImport{display:none!important}
     if (location.protocol === 'file:') { document.getElementById('docNew').disabled = true; return; }
     var $g = function(id){ return document.getElementById(id); };
     var dlg = $g('gdDlg'), ST = {'대기':'wait', '진행 중':'prog', '실패':'bad', '보류':'bad'};
-    function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
-    function parseFig(u){ var m = String(u || '').match(/figma\.com\/(?:design|file|proto)\/([A-Za-z0-9]+)/); return m ? m[1] : ''; }
+    var esc = window.WB.esc;   // 공통(common.js)
+    function parseFig(u){ var f = window.WB.parseFig(u); return f ? f.key : ''; }   // 공통(common.js)의 파일 키만
     function day(t){ return t ? String(t).slice(0, 10) : ''; }
     /* 작업 기준 가이드: 시작 안내 작업 링크의 파일마다 하나(링크가 없으면 고를 수 없다). 이 PC(나)에만 적용되고, 이 PC의 Claude가 요청을 처리할 때 따른다 */
     var workKey = '', workName = '', guideMap = {}, curGuide = '', viewId = null;
