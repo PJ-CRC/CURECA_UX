@@ -882,7 +882,8 @@ sub jobs_get {
     $v =~ s/%([0-9A-Fa-f]{2})/chr(hex($1))/eg; $v = decode('UTF-8', $v);
     my $prop = $f eq 'key' ? 'fileKey' : $f; @items = grep { str($_->{$prop}) eq $v } @items;
   }
-  return { version => $j->{version}, items => \@items };
+  # 플러그인이 마지막으로 서버에 닿은 지 몇 초(Workbench 자동 캡처: 플러그인이 켜져 있을 때만 쌓는다)
+  return { version => $j->{version}, items => \@items, pluginSec => (defined $plugin_seen ? time - $plugin_seen : undef) };
 }
 sub jobs_post {
   my ($b) = @_; my $j = read_jobs(); my @items = grep { ref $_ eq 'HASH' } @{ $j->{items} || [] }; my $now = now_iso(); my $hit;
@@ -953,6 +954,8 @@ sub jobs_post {
       # guide-check 범위: '' = 가이드(작업 기준 파일의 화면만), 'spec' = 정의서(화면 · 다른 문서 · 프로토타입)
       $hit->{scope} = str($b->{scope}) eq 'spec' ? 'spec' : '' if $kind eq 'guide-check';
       $hit->{file} = str($b->{file}) if $kind eq 'guide-edit' && str($b->{file}) ne '';   # 파일형 문서의 수정 요청: 고칠 파일
+      # Workbench 자동 캡처(페이지를 열면 캡처 없는 프레임을 10개씩): 플러그인만 받는다(Claude 감시는 건너뜀)
+      $hit->{auto} = JSON::PP::true if $kind eq 'capture' && $b->{auto};
       $hit->{minute} = str($b->{minute}) if $kind eq 'minutes';
       if ($kind eq 'plan') { $hit->{sub} = str($b->{sub}); $hit->{target} = str($b->{target}); $hit->{plan} = $b->{plan}; }
       # 새 가이드 · 정의서: 문서 종류(docKind '' = UX가이드, 'rule' 작업규칙 · 'policy' 정책서 · 'data' 기준데이터 · 'spec' 화면 정의서)와 올린 참고 파일(workbench/job_files/{작업 ID}/, 이 PC에만)
@@ -981,6 +984,8 @@ sub jobs_post {
     for my $f (qw(revFrom revTo proto)) { $hit->{$f} = str($b->{$f}) if str($b->{$f}) ne ""; }   # 가이드 수정 요청 결과: 바뀌기 전 · 뒤 수정본
     $hit->{updatedAt} = $now;
   } else { die "알 수 없는 action: $act\n"; }
+  # 끝난 캡처 작업은 최근 30개만 남긴다(자동 캡처가 많이 쌓여 다른 작업 기록을 밀어내지 않게)
+  { my $cn = 0; @items = grep { !(str($_->{kind}) eq 'capture' && str($_->{status}) ne '대기' && str($_->{status}) ne '진행 중') || ++$cn <= 30 } @items; }
   splice(@items, 300) if @items > 300;
   write_json($JOB_FILE, { version => ($j->{version} || 0) + 1, items => \@items });
   # UX 문서 변경이력: 문서 수정 뒤 찾은 고칠 화면 · 연관 항목(guide-check)은 그 수정본 옆에 남겨 깃으로 공유한다(작업 대기열은 이 PC에만 있으므로)

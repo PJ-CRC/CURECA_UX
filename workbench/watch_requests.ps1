@@ -66,11 +66,11 @@ while ((Get-Date) -lt $until) {
     $free = @($held | Where-Object { -not @(Overlap $_ $others).Count })
     if ($free.Count -gt 0) { $out += 'RESUME ' + (($free | ForEach-Object { $_.id }) -join ',') }
   } catch { }
-  # 작업 대기열(jobs.json): 프레임 목록 만들기 · 새 UX 가이드 만들기는 바로, 캡처 받기는 20초 뒤(그동안 Figma 플러그인이 받을 기회)
+  # 작업 대기열(jobs.json): 프레임 목록 만들기 · 새 UX 가이드 만들기는 바로, 캡처 받기는 20초 뒤(그동안 Figma 플러그인이 받을 기회). 자동 캡처(auto, 페이지를 열 때 일괄)는 플러그인만 받는다
   try {
     if (Test-Path $jobs) {
       $q = [IO.File]::ReadAllText($jobs, $utf8) | ConvertFrom-Json
-      $todo = @($q.items | Where-Object { $_ -and $_.status -eq '대기' -and $_.kind -ne 'text' -and ($_.kind -ne 'capture' -or ((Get-Date) - [DateTimeOffset]::Parse($_.createdAt).LocalDateTime).TotalSeconds -ge 20) })
+      $todo = @($q.items | Where-Object { $_ -and $_.status -eq '대기' -and $_.kind -ne 'text' -and ($_.kind -ne 'capture' -or (-not $_.auto -and ((Get-Date) - [DateTimeOffset]::Parse($_.createdAt).LocalDateTime).TotalSeconds -ge 20)) })
       if ($todo.Count -gt 0) { $out += 'JOBS ' + (($todo | ForEach-Object { $_.id }) -join ',') }
     }
   } catch { }

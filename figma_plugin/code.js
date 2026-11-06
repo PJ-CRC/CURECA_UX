@@ -77,6 +77,7 @@ function watchShl() {
 const JUNK = /^(ver|Description|Case-label|section title|SB_Section Divider|진행상태-.*|Frame \d+|Group \d+|Rectangle.*)$/;
 const DIVIDER = /^[\s\-–—_=·.]*$/;
 let link = null;
+const loadedPages = new Set();   // 자동 캡처 때 불러온 페이지(다시 불러오지 않는다)
 function topFrames(pg) {
   const out = [];
   const take = n => {
@@ -126,12 +127,15 @@ function isTop(n) {
   return !!p && p.type === 'PAGE';
 }
 let listPage = null, listHandler = null, listTimer = null;
+// 마지막으로 사용자가 Figma에서 무언가 고친 시각: 자동 캡처(Workbench 페이지 일괄)는 편집 중이면 잠시 쉰다
+let lastEdit = 0;
 function watchList() {
   const pg = figma.currentPage;
   if (listPage === pg) return;
   if (listPage) listPage.off('nodechange', listHandler);
   listPage = pg;
   pg.on('nodechange', listHandler = e => {
+    lastEdit = Date.now();
     const hit = e.nodeChanges.some(ch => {
       if (ch.type === 'DELETE') return true;   // 지운 노드는 위치를 알 수 없어 그냥 다시 보낸다
       if (!ch.node || ch.node.removed || !isTop(ch.node)) return false;
@@ -183,6 +187,18 @@ figma.ui.onmessage = async msg => {
       figma.currentPage.children.forEach(look);
       if (found) await exportFrame(found, msg.jobId);
       figma.ui.postMessage({ type: 'capture-one-done', reqId: msg.reqId, done: !!found });
+      return;
+    }
+    // Workbench 자동 캡처(페이지를 열면 캡처 없는 프레임을 10개씩): 다른 페이지 프레임도 받는다.
+    //  편집 중(최근 3초 안에 고침)이면 받지 않고 busy로 돌려준다 → UI가 나중에 다시. 페이지는 처음 한 번만 불러온다(이미 불러온 페이지는 그대로)
+    if (msg.type === 'capture-any') {
+      if (Date.now() - lastEdit < 3000) { figma.ui.postMessage({ type: 'capture-any-done', reqId: msg.reqId, busy: true }); return; }
+      const n = await figma.getNodeByIdAsync(msg.nodeId);
+      if (!n || n.removed || !/^(FRAME|COMPONENT|COMPONENT_SET|INSTANCE)$/.test(n.type)) { figma.ui.postMessage({ type: 'capture-any-done', reqId: msg.reqId, done: false, gone: true }); return; }
+      let pg = n; while (pg && pg.type !== 'PAGE') pg = pg.parent;
+      if (pg && pg !== figma.currentPage && !loadedPages.has(pg.id)) { await pg.loadAsync(); loadedPages.add(pg.id); }
+      await exportFrame(n, msg.jobId);
+      figma.ui.postMessage({ type: 'capture-any-done', reqId: msg.reqId, done: true });
       return;
     }
     // Workbench 글 수정(text) 작업: Claude가 정한 바꾸기 [{nodeId, find, replace}]를 이 PC의 폰트(Pretendard 등)로 반영한다.
