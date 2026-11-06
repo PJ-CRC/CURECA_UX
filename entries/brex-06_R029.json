@@ -1,8 +1,8 @@
 {
     "id":  "brex-06_R029",
     "kind":  "request",
-    "status":  "진행 중",
-    "at":  "2026-11-06T10:22:43+09:00",
+    "status":  "완료",
+    "at":  "2026-11-06T10:27:29+09:00",
     "createdAt":  "2026-11-06T10:22:25+09:00",
     "by":  "최고관리자",
     "doneBy":  "Claude",
@@ -16,8 +16,8 @@
     "type":  "일반",
     "layout":  "",
     "text":  "디자인도 어디 수정되었는지 표기해줘봐",
-    "note":  "R028 디자인 변경 위치 표시 중",
-    "shot":  "",
+    "note":  "R028에서 UX가이드 기준으로 고친 화면 디자인 위치를 새 프레임 9개에 빨간 점선 사각형으로 표시했습니다(R027의 실선 사각형은 디스크립션 변경 표시).\n- 목록(TI-STN-08 · LI-STN-08 · TI-STN-08-01): Registered · Created Date/Time 열(hh:mm), Pagination 1~3, 프로필 Service, Information 메뉴\n- 상세(TI/LI-STN-08-P · 케이스 2개): 패널의 File Created · Registered Date/Time, 케이스 프레임의 일시 칸, Pagination, 프로필, Information\n- L-IOS만: Exit 버튼, Setting 하위 메뉴(Policy · System · Protocol · Tube · Assay Pack), 숨긴 「10 items」 자리\n- 유형별 정의(T/L): 일시 칸 8곳씩\n- 디스크립션: hh:mm · 새 CID(COMM-5-m · 5-p · 5-n) · L-IOS Items 문구가 바뀐 줄\n- 섹션 R027 안내글 아래에 「R029 label」 안내글. 지우려면 이름이 「R029 디자인 변경 표시」인 사각형과 R029 label을 지우면 됩니다\n작업 기준: 작업규칙 CURECA 작업규칙 · 정책서 정책서 · UX가이드 CURECA UX 가이드 · 기준데이터 기준데이터 · 화면 정의서 화면 정의서",
+    "shot":  "shots/brex-06_R029.jpg",
     "images":  [
 
                ],
