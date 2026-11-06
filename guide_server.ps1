@@ -1488,6 +1488,38 @@ while ($l.IsListening) {
     if ($path -eq '/api/guides') {
       if ($req.HttpMethod -eq 'POST') {
         $body = (New-Object IO.StreamReader($req.InputStream, $Utf8)).ReadToEnd() | ConvertFrom-Json
+        # 다른 팀 문서 가져오기 {action:'import', from:팀 id, ids:[문서 id]} → 지금 팀의 문서로 복사(지금 내용 · 수정본 그대로, 그 팀의 연관 항목 기록은 빼고)
+        #  같은 id가 이미 있으면 건너뛴다. 문서 폴더 밖 파일(meta.files의 ../x, 예: 작업규칙의 constitution.md)도 없으면 함께. meta.importedFrom에 출처
+        if ($body.action -eq 'import') {
+          if (-not (Can-Write 'guide')) { throw (Ro-Msg 'guide') }
+          $from = [string]$body.from
+          if (@(Team-Ids) -notcontains $from) { throw "팀을 찾지 못했습니다: $from" }
+          if ($from -eq $Team) { throw '지금 보는 팀의 문서입니다. 다른 팀을 고르세요.' }
+          if ($isBrowser -and (Auth-Required) -and @(My-Teams) -notcontains $from) { throw '소속된 팀의 문서만 가져올 수 있습니다.' }
+          $srcRoot = $(if (Team-Rel $from) { P $HistDir 'teams' $from 'guides' } else { P $HistDir 'guides' })
+          $ids = @(@($body.ids) | ForEach-Object { [string]$_ } | Where-Object { $_ -match '^[A-Za-z0-9_-]{1,64}$' } | Select-Object -Unique)
+          if (-not $ids.Count) { throw '가져올 문서를 고르세요.' }
+          $done = @(); $skip = @(); $who = Me-Name
+          foreach ($gid in $ids) {
+            $s = P $srcRoot $gid; $d = P $GuideRoot $gid
+            if (-not (Test-Path (P $s 'meta.json'))) { $skip += "$gid(원본 없음)"; continue }
+            if (Test-Path $d) { $skip += "$gid(이미 있음)"; continue }
+            if (-not (Test-Path $GuideRoot)) { New-Item -ItemType Directory -Force $GuideRoot | Out-Null }
+            Copy-Item -LiteralPath $s -Destination $d -Recurse
+            Get-ChildItem (P $d 'rev') -Filter '*.check-*.json' -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue
+            $m = [IO.File]::ReadAllText((P $d 'meta.json'), $Utf8) | ConvertFrom-Json
+            foreach ($p in @($m.files)) {
+              if ([string]$p -notlike '../*' -or [string]$p -match '\.\./.*\.\.') { continue }
+              $rel = ([string]$p).Substring(3); $sf = P $srcRoot $rel; $df = P $GuideRoot $rel
+              if ((Test-Path $sf -PathType Leaf) -and -not (Test-Path $df)) { New-Item -ItemType Directory -Force (Split-Path $df -Parent) | Out-Null; Copy-Item -LiteralPath $sf -Destination $df }
+            }
+            $m | Add-Member -NotePropertyName importedFrom -NotePropertyValue ([ordered]@{ team = $from; id = $gid; at = (Now); by = $who }) -Force
+            [IO.File]::WriteAllText((P $d 'meta.json'), ($m | ConvertTo-Json -Depth 8), $Utf8)
+            $done += $gid
+          }
+          if ($done.Count) { $script:SyncWant = $true }
+          SendJson $c 200 @{ ok = $true; imported = @($done); skipped = @($skip) }; continue
+        }
         # 가이드 고치기: guide.md는 그대로 두고 수정본을 새 파일로 남긴다(여러 PC가 고쳐도 깃 충돌이 없다)
         if ($body.action -eq 'save') {
           if (-not (Can-Write 'guide')) { throw (Ro-Msg 'guide') }

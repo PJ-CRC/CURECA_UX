@@ -1361,6 +1361,38 @@ sub handle {
   if ($path eq '/api/guides') {
     if ($method eq 'POST') {
       my $g = $body->();
+      # 다른 팀 문서 가져오기 {action:'import', from, ids} (윈도우 서버와 같다): 지금 팀의 문서로 복사, 같은 id가 있으면 건너뜀
+      if (str($g->{action}) eq 'import') {
+        die ro_msg('guide') unless can_write('guide');
+        my $from = str($g->{from});
+        die "팀을 찾지 못했습니다: $from\n" unless grep { $_ eq $from } team_ids();
+        die "지금 보는 팀의 문서입니다. 다른 팀을 고르세요.\n" if $from eq $TEAM;
+        die "소속된 팀의 문서만 가져올 수 있습니다.\n" if $is_browser && auth_required() && !grep { $_ eq $from } my_teams();
+        my $src = team_rel($from) ne '' ? "$HIST_DIR/teams/$from/guides" : "$HIST_DIR/guides";
+        my %seen; my @ids = grep { /^[A-Za-z0-9_-]{1,64}$/ && !$seen{$_}++ } map { str($_) } @{ ref $g->{ids} eq 'ARRAY' ? $g->{ids} : [] };
+        die "가져올 문서를 고르세요.\n" unless @ids;
+        require File::Find; require File::Copy;
+        my (@done, @skip);
+        for my $gid (@ids) {
+          my ($s, $d) = ("$src/$gid", "$GUIDE_ROOT/$gid");
+          unless (-f "$s/meta.json") { push @skip, "$gid(원본 없음)"; next; }
+          if (-e $d) { push @skip, "$gid(이미 있음)"; next; }
+          File::Find::find({ no_chdir => 1, wanted => sub {
+            my $rel = substr($File::Find::name, length $s); my $to = $d . $rel;
+            if (-d $File::Find::name) { make_path($to); }
+            elsif ($rel !~ m{/rev/[^/]*\.check-[^/]*\.json$}) { File::Copy::copy($File::Find::name, $to); }
+          } }, $s);
+          my $m = eval { read_json("$d/meta.json") } || {};
+          for my $p (@{ ref $m->{files} eq 'ARRAY' ? $m->{files} : [] }) {
+            next unless str($p) =~ m{^\.\./(.+)$} && $1 !~ /\.\./; my $rel = $1;
+            if (-f "$src/$rel" && !-e "$GUIDE_ROOT/$rel") { (my $dir = "$GUIDE_ROOT/$rel") =~ s{/[^/]+$}{}; make_path($dir); File::Copy::copy("$src/$rel", "$GUIDE_ROOT/$rel"); }
+          }
+          $m->{importedFrom} = { team => $from, id => $gid, at => now_iso(), by => me_name() };
+          write_json("$d/meta.json", $m); push @done, $gid;
+        }
+        $sync_want = 1 if @done;
+        return respond_json($sock, 200, { ok => JSON::PP::true, imported => \@done, skipped => \@skip });
+      }
       # 가이드 고치기: guide.md는 그대로 두고 수정본을 새 파일로 남긴다(여러 PC가 고쳐도 깃 충돌이 없다)
       if (str($g->{action}) eq 'save') {
         die ro_msg('guide') unless can_write('guide');
