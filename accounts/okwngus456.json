@@ -10,6 +10,12 @@
                   "usage",
                   "proto"
               ],
+    "createdAt":  "2026-11-06T11:05:47+09:00",
+    "createdBy":  "brex",
+    "salt":  "PNPzkTjHSQj6ZtIAVtEjJQ==",
+    "iter":  100000,
+    "hash":  "gz0+/br40r5FoD82N4pJAuXcDvQ2UIi5pTfedeEJwDM=",
+    "pwAt":  "2026-11-06T11:05:48+09:00",
     "writes":  [
                    "plan",
                    "guide",
@@ -20,12 +26,9 @@
     "approves":  [
 
                  ],
+    "teams":  [
+                  "stagora"
+              ],
     "active":  true,
-    "createdAt":  "2026-11-06T11:05:47+09:00",
-    "createdBy":  "brex",
-    "salt":  "PNPzkTjHSQj6ZtIAVtEjJQ==",
-    "iter":  100000,
-    "hash":  "gz0+/br40r5FoD82N4pJAuXcDvQ2UIi5pTfedeEJwDM=",
-    "pwAt":  "2026-11-06T11:05:48+09:00",
-    "updatedAt":  "2026-11-06T11:05:48+09:00"
+    "updatedAt":  "2026-11-06T17:02:02+09:00"
 }
