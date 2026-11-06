@@ -16,13 +16,13 @@ $PcName = [Environment]::MachineName
 $PcSlug = ($PcName.ToLower() -replace '[^a-z0-9-]', '-')
 
 # 요청이면 구간 · 정보를 요청 목록에서
-$meta = [ordered]@{ kind = 'work'; reqId = ''; team = $Team; by = $By; fileKey = $FileKey; fileName = $FileName; page = $Page; frame = $Frame; nodeId = $NodeId; text = $Title }
+$meta = [ordered]@{ kind = 'work'; reqId = ''; reqType = ''; team = $Team; by = $By; fileKey = $FileKey; fileName = $FileName; page = $Page; frame = $Frame; nodeId = $NodeId; text = $Title }
 if ($ReqId) {
   $rf = Join-Path $Root 'workbench\edit_requests.json'
   $r = $null; try { $r = @(([IO.File]::ReadAllText($rf, $Utf8) | ConvertFrom-Json).items) | Where-Object { $_.id -eq $ReqId } | Select-Object -First 1 } catch {}
   if (-not $r) { Write-Output "NOREQ $ReqId"; exit 1 }
   if (-not $From) { $From = [string]$r.startedAt }
-  $meta.kind = 'request'; $meta.reqId = $ReqId
+  $meta.kind = 'request'; $meta.reqId = $ReqId; $meta.reqType = [string]$r.type   # 요청 유형(일반 · 텍스트 수정 …): 사용량 통계에서 거르기
   foreach ($k in 'team', 'fileKey', 'fileName', 'page', 'frame', 'nodeId', 'text') { if (-not $meta[$k]) { $meta[$k] = [string]$r.$k } }
   if (-not $meta.by) { $meta.by = [string]$r.author }
 }
@@ -67,7 +67,7 @@ if (-not $s.calls) { Write-Output "NOUSAGE $($t0.ToString('o')) ~ $($t1.ToString
 
 $name = $PcSlug + '_' + $(if ($ReqId) { $ReqId } else { $t1.LocalDateTime.ToString('yyyyMMdd-HHmmss') })
 $e = [ordered]@{
-  id = $name; kind = $meta.kind; reqId = $meta.reqId; team = $(if ($meta.team) { $meta.team } else { 'cureca' }); at = $t1.ToLocalTime().ToString('yyyy-MM-ddTHH:mm:sszzz'); from = $t0.ToLocalTime().ToString('yyyy-MM-ddTHH:mm:sszzz')
+  id = $name; kind = $meta.kind; reqId = $meta.reqId; reqType = $meta.reqType; team = $(if ($meta.team) { $meta.team } else { 'cureca' }); at = $t1.ToLocalTime().ToString('yyyy-MM-ddTHH:mm:sszzz'); from = $t0.ToLocalTime().ToString('yyyy-MM-ddTHH:mm:sszzz')
   by = $meta.by; doneBy = 'Claude'; pc = $PcName; fileKey = $meta.fileKey; fileName = $meta.fileName; page = $meta.page; frame = $meta.frame; nodeId = $meta.nodeId; text = $meta.text
   models = $models; calls = $s.calls; input = $s.input; cacheWrite = $s.cacheWrite; cacheRead = $s.cacheRead; output = $s.output
   total = $s.input + $s.cacheWrite + $s.cacheRead + $s.output; usd = [math]::Round($s.usd, 4)

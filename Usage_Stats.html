@@ -128,6 +128,8 @@ td .clamp{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;o
 td .sub{display:block;color:var(--ink-3);font-size:12px;margin-top:2px}
 td.usd{font-weight:700}
 .kind{display:inline-block;font-size:11px;font-weight:700;padding:1px 6px;border-radius:4px;background:var(--ok-soft);color:var(--ok);margin-right:6px;vertical-align:1px}
+/* 요청 유형(일반 · 텍스트 수정 …): 종류 표시 옆에 테두리만 */
+.rtype{display:inline-block;font-size:11px;font-weight:600;padding:0 6px;border:1px solid var(--line);border-radius:4px;color:var(--ink-2);margin-right:6px;vertical-align:1px}
 /* 종류별 색: 요청 = 초록(기본), UX 문서 · 연관 항목 = 파랑, 회의록 · 임시 정책 = 주황, 그 밖 = 회색 */
 .kind[data-k="UX 문서"],.kind[data-k="연관 항목"]{background:var(--accent-soft,#eaf2ff);color:var(--accent,#1570ef)}
 .kind[data-k="회의록"],.kind[data-k="임시 정책 · 논의"]{background:#fff1e0;color:#b35900}
@@ -186,6 +188,7 @@ td.usd{font-weight:700}
     <div class="app-head-act">
       <select id="who" aria-label="작업자"><option value="">작업자 전체</option></select>
       <select id="kindSel" aria-label="작업 종류"><option value="">종류 전체</option></select>
+      <select id="typeSel" aria-label="요청 유형"><option value="">요청 유형 전체</option></select>
       <div class="seg" id="period" role="tablist" aria-label="기간">
         <button data-p="week">이번 주</button><button data-p="month">이번 달</button><button data-p="all" class="on">전체</button>
       </div>
@@ -217,7 +220,7 @@ td.usd{font-weight:700}
     </div>
     <div class="card" id="jobs">
       <div class="ch"><h2>작업별</h2><span id="dayChip"></span><span class="sp"></span><span class="meta" id="range"></span>
-        <div class="seg sm" id="sortMode" aria-label="정렬 기준"><button data-s="new" class="on">최신순</button><button data-s="usd">금액순</button></div>
+        <div class="seg sm" id="sortMode" aria-label="정렬 기준"><button data-s="new" class="on">최신순</button><button data-s="usd">금액순</button><button data-s="type">유형순</button></div>
         <button class="lnk" id="detTgl" aria-pressed="false">토큰 자세히 ▸</button>
       </div>
       <div class="tbl">
@@ -235,7 +238,7 @@ td.usd{font-weight:700}
 <div class="tip" id="tip" hidden></div>
 <script>
 (function(){
-  var PER = 10, BLOCK = 10, page = 1, period = 'all', who = '', kind = '', day = '', det = false, mixMode = 'tok', sortMode = 'new', items = [], pricing = null, sig = '';
+  var PER = 10, BLOCK = 10, page = 1, period = 'all', who = '', kind = '', rtype = '', day = '', det = false, mixMode = 'tok', sortMode = 'new', items = [], pricing = null, sig = '';
   var $ = function(id){ return document.getElementById(id); };
   function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
   function fmt(t){ return t ? t.replace('T', ' ').slice(0, 16) : ''; }
@@ -247,6 +250,10 @@ td.usd{font-weight:700}
 
   /* 작업 종류: 요청(R0xx)은 reqId, 그 밖은 Claude가 남긴 제목 앞말(CLAUDE.md 「작업 대기열 › 사용량」)로 나눈다 */
   var KINDS = ['요청', 'Figma 직접 수정', 'UX 문서', '연관 항목', '회의록', '임시 정책 · 논의', '프로토타입', '목록 · 캡처', '기타'];
+  /* Workbench 수정 요청 유형(요청 칸의 선택 상자와 같은 순서). 그 밖 값(화면설계서 반영 · UX가이드 반영 등)은 기록에서 찾아 뒤에 붙인다 */
+  var RTYPES = ['일반', '텍스트 수정', '레이아웃·배치', '컬러·스타일', '컴포넌트 교체', '요소 추가', '요소 삭제', '신규 프레임', '기타'];
+  function rtypeOf(u){ return u.reqId ? (String(u.reqType || '').trim() || '(유형 없음)') : ''; }
+  function rtypeRank(u){ var t = rtypeOf(u), i = RTYPES.indexOf(t); return !t ? 999 : i >= 0 ? i : t === '(유형 없음)' ? 998 : 500; }
   function kindOf(u){
     if (u.reqId) return '요청';
     var t = String(u.text || '').trim();
@@ -356,7 +363,7 @@ td.usd{font-weight:700}
 
   function render(){
     $('tip').hidden = true;
-    var base = items.filter(inPeriod).filter(function(u){ return !kind || kindOf(u) === kind; }), list = who ? base.filter(function(u){ return name(u) === who; }) : base, s = sum(list);
+    var base = items.filter(inPeriod).filter(function(u){ return !kind || kindOf(u) === kind; }).filter(function(u){ return !rtype || rtypeOf(u) === rtype; }), list = who ? base.filter(function(u){ return name(u) === who; }) : base, s = sum(list);
     /* 금액 환산 중 종류별 비중(단가는 모델마다 달라 토큰 비율로 보여 준다) */
     $('cards').innerHTML =
       '<div class="card"><div class="k">작업 수</div><div class="v">' + num(s.n) + '건</div><div class="s">API 호출 ' + num(s.calls) + '회</div></div>' +
@@ -387,6 +394,8 @@ td.usd{font-weight:700}
     /* D 작업별: 기본 최신순(금액순 선택 가능), 날짜를 고르면 그날만 */
     var rows = (day ? list.filter(function(u){ return dayOf(u) === day; }) : list.slice()).sort(sortMode === 'usd'
       ? function(a, b){ return (+b.usd || 0) - (+a.usd || 0); }
+      : sortMode === 'type'   /* 유형순: 요청 유형 순서(요청 칸과 같은 순) → 같은 유형 안에서는 최신순, 요청이 아닌 작업은 맨 뒤 */
+      ? function(a, b){ return rtypeRank(a) - rtypeRank(b) || String(rtypeOf(a)).localeCompare(String(rtypeOf(b))) || (Date.parse(b.at) || 0) - (Date.parse(a.at) || 0); }
       : function(a, b){ return (Date.parse(b.at) || 0) - (Date.parse(a.at) || 0); });
     $('dayChip').innerHTML = day ? '<span class="chip">' + esc(day) + '<button id="dayX" aria-label="날짜 필터 해제" title="날짜 필터 해제">×</button></span>' : '';
     var pages = Math.max(1, Math.ceil(rows.length / PER)); if (page > pages) page = pages;
@@ -395,7 +404,7 @@ td.usd{font-weight:700}
     $('rows').innerHTML = rows.length ? rows.slice((page - 1) * PER, page * PER).map(function(u){
       var proj = u.fileName ? '[' + esc(u.fileName) + '] ' : '';
       return '<tr><td class="date">' + esc(fmt(u.at)) + '</td>' +
-        '<td><span class="kind" data-k="' + esc(kindOf(u)) + '">' + (u.reqId ? '요청 ' + esc(u.reqId) : esc(kindOf(u))) + '</span>' + proj + (u.frame ? '<b>' + esc(u.frame) + '</b>' : '') +
+        '<td><span class="kind" data-k="' + esc(kindOf(u)) + '">' + (u.reqId ? '요청 ' + esc(u.reqId) : esc(kindOf(u))) + '</span>' + (u.reqId ? '<span class="rtype">' + esc(rtypeOf(u)) + '</span>' : '') + proj + (u.frame ? '<b>' + esc(u.frame) + '</b>' : '') +
           '<span class="clamp" title="' + esc(u.text) + '">' + esc(u.text) + '</span><span class="sub one-line">API 호출 ' + num(u.calls) + '회 · ' + esc(Object.keys(u.models || {}).join(', ')) + '</span></td>' +
         '<td class="who"><span class="one-line" style="display:block">' + esc(name(u)) + '</span><small class="one-line">' + esc(u.pc) + '</small></td>' +
         '<td class="n d" data-k="입력">' + num(u.input) + '</td><td class="n d" data-k="캐시 쓰기">' + num(u.cacheWrite) + '</td><td class="n d" data-k="캐시 읽기">' + num(u.cacheRead) + '</td><td class="n d" data-k="출력">' + num(u.output) + '</td>' +
@@ -422,6 +431,12 @@ td.usd{font-weight:700}
   /* 작업 종류(요청 · UX 문서 · 연관 항목 · 회의록 …): 고르면 카드 · 그래프 · 목록 모두 그 종류만 */
   $('kindSel').innerHTML = '<option value="">종류 전체</option>' + KINDS.map(function(k){ return '<option>' + esc(k) + '</option>'; }).join('');
   $('kindSel').addEventListener('change', function(){ kind = this.value; page = 1; render(); });
+  /* 요청 유형(Workbench 「일반 · 텍스트 수정 …」): 고르면 그 유형의 요청만. 목록은 기록을 읽은 뒤 채운다(fillTypes) */
+  function fillTypes(){
+    var extra = []; items.forEach(function(u){ var t = rtypeOf(u); if (t && RTYPES.indexOf(t) < 0 && extra.indexOf(t) < 0) extra.push(t); });
+    $('typeSel').innerHTML = '<option value="">요청 유형 전체</option>' + RTYPES.concat(extra.sort()).map(function(t){ return '<option' + (t === rtype ? ' selected' : '') + '>' + esc(t) + '</option>'; }).join('');
+  }
+  $('typeSel').addEventListener('change', function(){ rtype = this.value; page = 1; render(); });
   function pickWho(r){ who = who === r.dataset.who ? '' : r.dataset.who; page = 1; render(); }
   $('users').addEventListener('click', function(e){ var r = e.target.closest('[data-who]'); if (r) pickWho(r); });
   $('users').addEventListener('keydown', function(e){ var r = e.target.closest('[data-who]'); if (r && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); pickWho(r); } });
@@ -462,6 +477,7 @@ td.usd{font-weight:700}
       items = (d.items || []).sort(function(a, b){ return (Date.parse(b.at) || 0) - (Date.parse(a.at) || 0); }); pricing = d.pricing;
       /* 작업자 색: 처음 기록된 순서대로 고정 */
       items.slice().reverse().forEach(function(u){ var n = name(u); if (!(n in wcolor)) wcolor[n] = Object.keys(wcolor).length; });
+      fillTypes();
       if (pricing && pricing.updatedAt && !$('note').dataset.p) { $('note').dataset.p = 1; $('note').textContent += ' 단가 기준일 ' + pricing.updatedAt + ' (workbench/pricing.json).'; }
       render();
     }).catch(function(){ setSrv(false); if (first) { $('rows').innerHTML = '<tr><td colspan="9" class="empty">서버에 연결할 수 없습니다. 서버를 다시 실행했는지 확인하세요.</td></tr>'; $('users').innerHTML = ''; } });
