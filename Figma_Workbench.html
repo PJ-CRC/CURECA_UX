@@ -615,12 +615,12 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       .then(function(d){ jobs = d.items || []; pluginSec = d.pluginSec; if (cur && !hasShot(cur)) renderNoShot(cur); autoCapture(); }).catch(function(){});
   }
 
-  /* ── 자동 캡처: 구분(페이지)을 열면 그 페이지에서 캡처 없는 프레임을 Figma 플러그인에게 10개씩 맡긴다 ──
-     - 지금 보는 화면(화면 ID)의 프레임을 먼저, 그다음 목록 순서. 한 묶음을 다 받으면 5초 쉬고 다음 묶음
+  /* ── 자동 캡처: 구분(페이지)을 열면 그 페이지에서 캡처 없는 프레임을 Figma 플러그인에게 맡긴다(늘 10개 안팎을 쌓아 두어 쉬지 않고 이어 받음) ──
+     - 지금 보는 화면(화면 ID)의 프레임을 먼저, 그다음 목록 순서. 남은 것이 5개 아래로 줄면 다음 것을 채운다(묶음 사이에 쉬지 않음)
      - 플러그인이 켜져 있을 때만(작업 auto: Claude 감시는 받지 않는다 — 수십 장을 Claude가 찍으면 느리고 토큰을 쓴다)
      - 플러그인이 Figma에서 편집 중이면 멈췄다가 이어서 받는다. 받은 캡처는 3초마다 확인해 하나씩 화면에 채워진다
      - 받지 못한(실패) 프레임은 다시 쌓지 않는다(「캡처」 버튼으로 따로). 끄기는 왼쪽 「자동 캡처」 체크(이 브라우저에 기억) */
-  var AUTO_N = 10, AUTO_REST = 5000, pluginSec = null, autoNext = 0, autoWas = false, autoBusy = false;
+  var AUTO_N = 10, pluginSec = null, autoBusy = false;
   var autoOn = store('wb.autoCap') !== '0';
   function canCap(){ return typeof window.WB_CAN_WRITE !== 'function' || window.WB_CAN_WRITE('workbench'); }
   function autoCapture(){
@@ -632,25 +632,31 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     var tried = function(p){ return jobs.some(function(j){ return j.kind === 'capture' && j.nodeId === p.id && j.status !== '완료'; }); };   // 대기 · 진행 중 · 실패
     var need = list.filter(function(p){ return !hasShot(p) && !tried(p); });
     var pend = jobs.filter(function(j){ return j.kind === 'capture' && j.auto && (j.status === '대기' || j.status === '진행 중'); });
+    var alive = pluginSec != null && pluginSec <= 60;
     var have = list.filter(hasShot).length, txt;
+    var loading = pend.filter(function(j){ return j.status === '진행 중' && /불러오는 중/.test(j.note || ''); })[0];
     if (!autoOn) txt = '자동 캡처 꺼짐 · 캡처 ' + have + ' / ' + list.length;
-    else if (pluginSec == null || pluginSec > 60) txt = need.length + pend.length ? 'Figma 플러그인이 꺼져 있어 자동 캡처를 기다립니다 · 캡처 ' + have + ' / ' + list.length : '이 페이지 캡처 ' + have + ' / ' + list.length;
-    else if (pend.length || need.length) txt = '<b>자동 캡처 중</b> · ' + have + ' / ' + list.length + (pend.length ? '' : ' · 잠시 쉬는 중');
+    else if (!alive) txt = need.length + pend.length ? 'Figma 플러그인이 꺼져 있어 자동 캡처를 기다립니다 · 캡처 ' + have + ' / ' + list.length : '이 페이지 캡처 ' + have + ' / ' + list.length;
+    else if (loading) txt = '<b>' + esc(loading.note) + '</b>';
+    else if (pend.length || need.length) txt = '<b>자동 캡처 중</b> · ' + have + ' / ' + list.length;
     else txt = '이 페이지 캡처 ' + have + ' / ' + list.length;
     $('autoCapTxt').innerHTML = txt;
-    if (!autoOn || !online || autoBusy || pluginSec == null || pluginSec > 60) return;
-    if (pend.length) { autoWas = true; return; }
-    if (autoWas) { autoWas = false; autoNext = Date.now() + AUTO_REST; }   // 한 묶음을 다 받았으면 잠깐 쉰다
-    if (Date.now() < autoNext || !need.length) return;
-    var batch = need.filter(function(p){ return p.screen === cur.screen; }).concat(need.filter(function(p){ return p.screen !== cur.screen; })).slice(0, AUTO_N);
-    // 플러그인은 최근에 쌓인 것부터 받는다 → 먼저 받을 것을 나중에 쌓는다
+    if (!autoOn || !online || autoBusy || !alive) return;
+    /* 멈춘 작업 되살리기: 플러그인은 살아 있는데 「진행 중」으로 3분 넘게 그대로면(플러그인을 껐다 켰거나 Figma가 멈췄던 것) 다시 「대기」로 */
+    pend.forEach(function(j){
+      if (j.status === '진행 중' && Date.now() - (Date.parse(j.updatedAt) || Date.now()) > 180000)
+        fetch('/api/jobs', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'update', id: j.id, status: '대기', note: '' }) }).catch(function(){});
+    });
+    /* 쉬지 않고 이어서: 남은 것이 5개 아래로 줄면 다음 것을 채워 둔다(플러그인이 바로 이어 받는다). 쌓인 순서 = 받을 순서 */
+    if (pend.length >= AUTO_N / 2 || !need.length) return;
+    var batch = need.filter(function(p){ return p.screen === cur.screen; }).concat(need.filter(function(p){ return p.screen !== cur.screen; })).slice(0, AUTO_N - pend.length);
     autoBusy = true;
-    batch.slice().reverse().reduce(function(ch, p){
+    batch.reduce(function(ch, p){
       return ch.then(function(){ return fetch('/api/jobs', { method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'add', kind: 'capture', auto: true, fileKey: FILE.key, nodeId: p.id, name: p.name, by: who() }) }); });
-    }, Promise.resolve()).catch(function(){}).then(function(){ autoBusy = false; autoWas = true; return loadJobs(); });
+    }, Promise.resolve()).catch(function(){}).then(function(){ autoBusy = false; return loadJobs(); });
   }
-  $('autoCapOn').onchange = function(){ autoOn = this.checked; store('wb.autoCap', autoOn ? '1' : '0'); autoNext = 0; autoCapture(); };
+  $('autoCapOn').onchange = function(){ autoOn = this.checked; store('wb.autoCap', autoOn ? '1' : '0'); autoCapture(); };
   function figUrl(p){ return 'https://www.figma.com/design/' + FILE.key + '/file?node-id=' + p.id.replace(':', '-'); }
   function applyZoom(){
     if (!cur) return;
