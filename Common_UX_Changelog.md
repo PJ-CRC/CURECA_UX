@@ -2,6 +2,13 @@
 
 ---
 
+## [UX AI TEST] R026 · Assay Pack Setting(T/L) 현재 규칙으로 다시 그림 · 2026-11-06 (요청: 최고관리자)
+
+- SH.L TEST › Section 2의 Assay Pack Setting 전체(목록 · 상세 · Import, T/L 11개 프레임)를 기존 아래(섹션 안 y +14400)에 새로 둠. 기존 프레임은 그대로 둠. 위에 빨간 「R026 …」 라벨.
+- 새 기획 프레임 7개(TI-STN-08 2111:41334 · TI-STN-08-P 2111:41630 · TI-STN-08-01 2111:43282 · LI-STN-08 2111:44512 · LI-STN-08-P 2111:44808 · 케이스 2개)의 오른쪽 패널을 `rules/screen-spec.md` 5 · 8절대로 다시 씀: 화면 정보(Ver 확인 필요 · Date 2026.11.06 · 공통 규칙 버전 · 표시), 「0 화면 정의」, 고정 문장 패턴 · 표준어(표시 · 누르면/고르면 · 기본값), 정책은 POL-TST-008 · POL-ACC-001 ID로, T/L 같은 번호(L-IOS는 3 · P의 1 · 4 비움), (T-IOS만)/(L-IOS만), 「질문 대기」 줄.
+- 반영: TI-STN-08-P-R01 화면 이름 → Assay Pack File Details · 경로 Details. 긴 상세 프레임 이름 → `… / 케이스 / 01 File Data 전체`.
+- 화면(왼쪽 1920) · 유형별 정의 · 세부정의 · Import 정의 프레임은 기존 그대로 복제.
+
 ## [UX AI TEST] R025 · R024 삼각형을 mobile 섹션에 다시 놓음 · 2026-11-03 (요청: 최고관리자)
 
 - R024의 「mobile 섹션」도 Connon UX (Mobile)이 아니라 SH.L TEST의 `mobile` 섹션(1714:159068)이었음.
