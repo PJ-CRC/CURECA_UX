@@ -1,8 +1,8 @@
 {
     "id":  "brex-06_R028",
     "kind":  "request",
-    "status":  "진행 중",
-    "at":  "2026-11-06T10:14:16+09:00",
+    "status":  "완료",
+    "at":  "2026-11-06T10:21:05+09:00",
     "createdAt":  "2026-11-06T10:11:36+09:00",
     "by":  "최고관리자",
     "doneBy":  "Claude",
@@ -16,8 +16,8 @@
     "type":  "일반",
     "layout":  "",
     "text":  "화면 디자인을 수정한건 없어?",
-    "note":  "UX가이드 기준 화면 디자인 점검 중",
-    "shot":  "",
+    "note":  "R026으로 새로 그린 Assay Pack Setting 화면(T/L)의 디자인을 CURECA UX 가이드 기준으로 맞췄습니다(기존 프레임은 그대로).\n- 목록 · 상세 · Import · 케이스 · 유형별 정의: 일시 YYYY-MM-DD hh:mm:ss → YYYY-MM-DD hh:mm (COMM-4-a, 182곳). 디스크립션의 hh:mm:ss 표기도 hh:mm으로\n- LI-STN-08 · LI-STN-08-P · 케이스: 「10 items」 표시 개수 드롭다운 숨김 (COMM-5-p: L-IOS는 노출 개수 고정). LI-STN-08 디스크립션 2도 그에 맞춰 고침\n- 목록 7개: Pagination 1~10 → 1~3 (24건 · 10줄, COMM-5-i)\n- 목록 7개: 프로필 Keira Knightley → Service (쓰는 사람 Service, COMM-2-b). L-IOS 3개는 종료 버튼 Shut Down → Exit (COMM-3-a Case 2, 플러그인 J016)\n- LNB 7개: 펼친 Setting에 가려져 있던 Information 1Depth를 아래에 보임. L-IOS 3개는 Setting 2Depth를 Policy · System · Protocol · Tube · Assay Pack Setting으로 (LIS · Account 숨김, COMM-3-a)\n- 디스크립션 컴포넌트 CID를 새 번호로: 검색 영역 COMM-5-s → 5-m, 목록 COMM-5-m → 5-p, 체크박스 COMM-5-l → 5-n\n- 고치지 않음 · 확인 필요: 입력칸 · 드롭다운 높이 40(가이드 L 48 · M 38), 표시 개수 드롭다운 32. T-IOS Setting 2Depth에 SMTP Setting 없음 · Tube/Assay Pack 순서(가이드 예시와 다름). TI-STN-08-01 팝업이 X + Cancel/Import(Basic Popup Case 2는 하단 버튼만). 가이드의 COMM-5 컴포넌트 노드가 이 파일에 없어 컴포넌트 교체는 하지 않음. R027 빨간 사각형은 그대로 둠(LI-STN-08 패널이 짧아져 위치가 조금 어긋남)\n작업 기준: 작업규칙 CURECA 작업규칙 · 정책서 정책서 · UX가이드 CURECA UX 가이드 · 기준데이터 기준데이터 · 화면 정의서 화면 정의서",
+    "shot":  "shots/brex-06_R028.jpg",
     "images":  [
 
                ],
