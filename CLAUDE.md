@@ -137,6 +137,7 @@
 - 계정 `teams:[팀 id]`(여러 개 가능). `teams`가 없는 예전 계정 = CURECA. 최고관리자는 모든 팀. **팀이 없는 계정은 팀 메뉴를 못 쓴다**(읽기 · 쓰기 권한이 있어도 메뉴가 숨고 서버가 막는다).
 - 지금 보는 팀은 PC마다(`setup.json`의 `team`, `/api/me`의 `team` · `teams`). 여러 팀 소속이면 상단 메뉴의 팀 고르기로 바꾼다(`POST /api/me/team`). 화면에서는 `window.WB_TEAM` · `WB_TEAMS`.
 - 새 팀은 문서 · 시트 연결 · 회의록이 비어 있다. 그 팀 사람이 UX 문서 「새 {카테고리} 만들기」 · 일정/작업 「시트 연결」로 채운다.
+- **다른 팀 문서 가져오기**(UX 문서, 두 팀 이상 소속 · UX 문서 쓰기): 고른 팀의 지금 탭 카테고리 문서를 지금 팀으로 복사한다 — `POST /api/guides {action:'import', from:팀 id, ids:[문서 id]}`. 문서 폴더 통째(지금 내용 · 수정본, 그 팀의 연관 항목 기록 `rev/*.check-*.json`은 뺌) + 문서 폴더 밖 파일(meta.files의 `../x`, 예: `constitution.md`)이 없으면 함께, meta에 `importedFrom {team, id, at, by}`. 같은 id가 이미 있으면 건너뛴다. 가져온 뒤에는 두 팀 문서가 따로 고쳐진다. `provisional/` 등 일정/작업 폴더는 가져오지 않는다.
 
 ## 일정/작업 · 구글 시트
 
