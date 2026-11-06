@@ -265,6 +265,14 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
 .dlg .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px 12px}
 .dlg .cols select{width:100%;height:32px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);font:inherit;font-size:13px}
 .dlg details{margin-top:14px;font-size:13.5px}
+/* 연결 종류 고르기(구글 시트 · Azure DevOps) */
+.seg2wrap{display:inline-flex;gap:0;margin:10px 0 12px;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.seg2wrap .seg2{display:inline-flex;align-items:center;gap:0;margin:0;padding:7px 16px;border-radius:0;font-size:13.5px;font-weight:600;color:var(--ink-2);cursor:pointer}
+.seg2wrap .seg2 input{position:absolute;opacity:0;width:0;height:0}
+.seg2wrap .seg2:has(input:checked){background:var(--accent-soft);color:var(--accent)}
+.seg2wrap .seg2:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:-2px}
+.seg2wrap .seg2 + .seg2{border-left:1px solid var(--line)}
+.dlg .dsub{margin:16px 0 0;font-size:14px;font-weight:800}
 .dlg summary{cursor:pointer;font-weight:700}
 .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);padding:10px 18px;border-radius:10px;background:var(--ink);color:var(--bg);font-size:13.5px;z-index:50;box-shadow:0 6px 20px rgba(0,0,0,.2)}
 @media (max-width:900px){ .stats{grid-template-columns:repeat(2,minmax(0,1fr))} .two{grid-template-columns:minmax(0,1fr)} .kv{grid-template-columns:90px 1fr} .dlg .row2,.dlg .cols{grid-template-columns:1fr} }
@@ -304,7 +312,13 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
 
 <dialog id="dlg" aria-labelledby="dlgT">
   <form class="dlg" method="dialog" id="dlgForm">
-    <h3 id="dlgT">구글 시트 연결</h3>
+    <h3 id="dlgT">일정 연결</h3>
+    <!-- 일정을 어디서 가져올지: 팀마다 하나(구글 시트 · Azure DevOps Boards) -->
+    <div class="seg2wrap" role="radiogroup" aria-label="연결 종류">
+      <label class="seg2"><input type="radio" name="prov" value="google" checked>구글 시트</label>
+      <label class="seg2"><input type="radio" name="prov" value="azure">Azure DevOps</label>
+    </div>
+    <div id="gBox">
     <p class="muted" style="margin:0;font-size:13.5px">시트는 공개하지 않습니다. 시트 편집 권한이 있는 사람이 한 번만 아래처럼 연결하면 모든 작업자 PC에 공유됩니다.</p>
     <ol>
       <li>구글 시트 › 확장 프로그램 › Apps Script를 열고(따로 만든 스크립트도 됨), <a href="tools/google-sheet-bridge.gs" target="_blank" rel="noopener">연결 스크립트</a> 내용을 붙여 넣고 저장 <button class="btn sm" type="button" id="copyGs">스크립트 복사</button></li>
@@ -326,6 +340,33 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       <summary>열 맞추기 (자동으로 찾은 열이 틀리면 고르기)</summary>
       <div class="cols" id="cols"></div>
     </details>
+    </div>
+    <!-- Azure DevOps Boards: 팀 설정(모든 팀원 공유, 비밀값 없음) + 토큰(이 PC에만) -->
+    <div id="aBox" hidden>
+      <p class="muted" style="margin:0;font-size:13.5px">팀 설정은 한 번 넣으면 이 팀 모든 작업자에게 공유됩니다. 토큰은 각자 이 PC에만 저장되고, 화면에서 고친 내용은 DevOps에 본인 이름으로 남습니다.</p>
+      <h4 class="dsub">팀 설정 (공유)</h4>
+      <div class="row2">
+        <div><label for="fOrg">조직 주소</label><input id="fOrg" type="url" placeholder="https://dev.azure.com/{조직}"></div>
+        <div><label for="fProj">프로젝트</label><input id="fProj" type="text" placeholder="DevOps 프로젝트 이름"></div>
+      </div>
+      <label for="fScope">가져올 범위</label>
+      <input id="fScope" type="text" placeholder="저장 쿼리 링크, 또는 영역(Area) · 반복(Iteration) 경로">
+      <div class="row2">
+        <div><label for="fStartF">시작일 필드</label><input id="fStartF" type="text" placeholder="Microsoft.VSTS.Scheduling.StartDate"></div>
+        <div><label for="fEndF">목표일 필드</label><input id="fEndF" type="text" placeholder="Microsoft.VSTS.Scheduling.TargetDate"></div>
+      </div>
+      <label for="fDone">완료로 볼 상태</label>
+      <input id="fDone" type="text" placeholder="Done, Closed, Resolved (쉼표로 구분)">
+      <h4 class="dsub">내 토큰 (이 PC에만)</h4>
+      <ol>
+        <li>DevOps 오른쪽 위 사용자 설정 › Personal access tokens › New Token</li>
+        <li>Organization은 위 조직, Scopes는 <b>Work Items · Read &amp; write</b>, 만료일은 최대 1년</li>
+        <li>만든 토큰을 아래에 붙여 넣기 (다시 보여 주지 않습니다. 바꿀 때만 다시 넣기)</li>
+      </ol>
+      <label for="fPat">개인 액세스 토큰(PAT)</label>
+      <input id="fPat" type="password" autocomplete="off" spellcheck="false">
+      <p class="muted" style="margin:6px 0 0;font-size:12.5px">연결 확인 · 일정 표시는 다음 단계에서 붙입니다. 지금은 입력값만 저장합니다.</p>
+    </div>
     <div class="acts">
       <span class="msg" id="dlgMsg" role="status"></span>
       <button class="btn" value="cancel" type="submit" formnovalidate>닫기</button>
@@ -496,14 +537,17 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   /* ── 상태 ── */
   var conf = null, wbs = null, mins = null, mlist = null, pols = null, pvs = null, week = monday(new Date()), mtIdx = 0;
   var loading = { wbs: false, mins: false };
+  function azUrl(){ var a = (conf && conf.azure) || {}; return a.org ? a.org + '/' + encodeURIComponent(a.project || '') + '/_workitems' : '#'; }
   function sheetUrl(){ return (conf && conf.sheetUrl) || DEF_SHEET; }
   function gidOf(){ var g = conf && conf.wbsGid; if (!g) { var m = /[#&?]gid=(\d+)/.exec(sheetUrl()); g = m ? m[1] : ''; } return g; }
   function minName(){ return (conf && conf.minutes) || DEF_MIN; }
+  /* 일정 연결 종류가 Azure DevOps면 구글 시트를 읽지 않는다(일정 표시는 다음 단계) */
+  function isAzure(){ return !!(conf && conf.provider === 'azure'); }
   function canWrite(){ return !!(conf && conf.canWrite) && !document.documentElement.classList.contains('perm-ro'); }
 
   function loadConf(){
     return api('/api/sheet').then(function(j){ conf = j; }).catch(function(e){ conf = { configured: false, error: e.message }; })
-      .then(function(){ $('openSheet').href = sheetUrl(); });
+      .then(function(){ $('openSheet').href = isAzure() ? azUrl() : sheetUrl(); $('openSheet').textContent = isAzure() ? 'Azure DevOps 열기' : '스프레드시트 열기'; });
   }
   function loadSheet(q){ return api('/api/sheet/data?' + q).then(function(j){ if (j.cached) { var d = j.data || {}; d.cached = true; d.error = j.error; return d; } return j; }); }
   // 시트는 읽는 데 수십 초 걸린다: 서버가 마지막으로 받은 사본(cache=1)을 먼저 그리고, 뒤에서 새로 받아 바꾼다
@@ -517,13 +561,13 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     });
   }
   function loadWbs(){
-    if (!conf || !conf.configured) { wbs = null; return Promise.resolve(); }
+    if (!conf || !conf.configured || isAzure()) { wbs = null; return Promise.resolve(); }
     loading.wbs = true; sheetFresh.wbs = false; renderSchedule();
     return cacheFirst('style=1&gid=' + encodeURIComponent(gidOf()), function(d){ wbs = d; }, 'wbs', function(){ renderSchedule(); if (cur === 'weekly') renderWeekly(); })
       .then(function(){ loading.wbs = false; });
   }
   function loadMins(){
-    if (!conf || !conf.configured) { mins = null; return Promise.resolve(); }
+    if (!conf || !conf.configured || isAzure()) { mins = null; return Promise.resolve(); }
     loading.mins = true; sheetFresh.mins = false;
     return cacheFirst('name=' + encodeURIComponent(minName()), function(d){ mins = d; }, 'mins', function(){ renderMinutes(); if (cur === 'weekly') renderWeekly(); })
       .then(function(){ loading.mins = false; });
@@ -563,6 +607,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     var el = $('body-schedule'); if (!el) return;
     var head = '<h2>일정</h2><p class="intro">' + esc(TABS[0].about) + '</p>';
     if (!conf) { el.innerHTML = head + '<p class="muted">불러오는 중…</p>'; return; }
+    if (isAzure()) { var az = conf.azure || {}; el.innerHTML = head + '<div class="wempty"><b>Azure DevOps로 연결되어 있습니다</b><p>' + esc(az.org || '') + ' › ' + esc(az.project || '') + (az.scope ? ' · 범위 ' + esc(az.scope) : '') + '</p><p>' + (conf.azurePat ? '이 PC에 토큰이 저장되어 있습니다.' : '이 PC에는 아직 토큰이 없습니다. [시트 연결]에서 각자 토큰을 넣어 주세요.') + '</p><p class="muted">작업 항목을 가져와 일정 · 주간 진행 현황에 보여 주는 기능은 다음 단계에서 붙입니다.</p></div>'; return; }
     if (!conf.configured) { el.innerHTML = head + notConnected(); return; }
     if (loading.wbs && !wbs) { el.innerHTML = head + '<p class="muted">시트를 읽는 중…</p>'; return; }
     if (!wbs || !wbs.values) { el.innerHTML = head + srcNote(wbs || { error: '값이 없습니다.' }); return; }
@@ -1242,8 +1287,21 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       var cur = W.cols[f[0]];
       return '<label>' + esc(f[1]) + '<select data-f="' + f[0] + '"><option value="">(없음)</option>' + W.labels.map(function(l, i){ return l ? '<option value="' + esc(l) + '"' + (i === cur ? ' selected' : '') + '>' + esc(l) + '</option>' : ''; }).join('') + '</select></label>';
     }).join('');
+    // Azure DevOps(팀 설정 + 이 PC 토큰). 지금 연결 종류를 먼저 고른 채로 연다
+    var az = (conf && conf.azure) || {};
+    $('fOrg').value = az.org || ''; $('fProj').value = az.project || ''; $('fScope').value = az.scope || '';
+    $('fStartF').value = az.startField || ''; $('fEndF').value = az.endField || ''; $('fDone').value = az.doneStates || '';
+    $('fPat').value = ''; $('fPat').placeholder = conf && conf.azurePat ? '이 PC에 저장되어 있음 · 바꿀 때만 입력' : '이 PC에만 저장됩니다';
+    setProv(conf && conf.provider === 'azure' ? 'azure' : 'google');
     $('dlg').showModal(); gsText = ''; gsLoad().catch(function(){});
   }
+  function provNow(){ var r = document.querySelector('input[name="prov"]:checked'); return r ? r.value : 'google'; }
+  function setProv(p){
+    document.querySelectorAll('input[name="prov"]').forEach(function(r){ r.checked = r.value === p; });
+    $('gBox').hidden = p !== 'google'; $('aBox').hidden = p !== 'azure'; $('dlgMsg').textContent = '';
+    $('dlgSave').textContent = p === 'azure' ? '저장' : '저장 · 연결 확인';
+  }
+  document.querySelectorAll('input[name="prov"]').forEach(function(r){ r.addEventListener('change', function(){ setProv(provNow()); }); });
   $('connBtn').addEventListener('click', openDlg);
 
   /* ── 회의록(md, .history/minutes, 깃 공유) ── */
@@ -1470,6 +1528,21 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   });
   $('fSheet').addEventListener('change', function(){ var m = /[#&?]gid=(\d+)/.exec($('fSheet').value); if (m) $('fGid').value = m[1]; });
   $('dlgSave').addEventListener('click', function(){
+    // Azure DevOps: 팀 설정(공유)과 토큰(이 PC)만 저장한다. 연결 확인 · 일정 표시는 다음 단계
+    if (provNow() === 'azure') {
+      var org = $('fOrg').value.trim().replace(/\/+$/, ''), prj = $('fProj').value.trim(), pat = $('fPat').value.trim();
+      if (!/^https:\/\/(dev\.azure\.com\/[^\/\s]+|[A-Za-z0-9-]+\.visualstudio\.com)$/.test(org)) { $('dlgMsg').textContent = '조직 주소는 https://dev.azure.com/{조직} 형식입니다.'; $('fOrg').focus(); return; }
+      if (!prj) { $('dlgMsg').textContent = '프로젝트 이름을 넣어 주세요.'; $('fProj').focus(); return; }
+      var abody = { action: 'config', provider: 'azure', azure: { org: org, project: prj, scope: $('fScope').value.trim(), startField: $('fStartF').value.trim(), endField: $('fEndF').value.trim(), doneStates: $('fDone').value.trim() } };
+      $('dlgSave').disabled = true; $('dlgMsg').textContent = '저장하는 중…';
+      api('/api/sheet', abody).then(function(){ return pat ? api('/api/sheet', { action: 'pat', pat: pat }) : null; }).then(function(){
+        $('fPat').value = '';
+        $('dlgMsg').textContent = '저장했습니다 · 팀 설정은 이 팀 작업자 모두에게 공유됩니다' + (pat ? ', 토큰은 이 PC에만 저장했습니다' : (conf && conf.azurePat ? '' : ' · 이 PC 토큰은 아직 없습니다')) + '. 연결 확인 · 일정 표시는 다음 단계에서 붙입니다.';
+        return loadConf().then(reloadAll);
+      }).catch(function(e){ $('dlgMsg').textContent = '저장하지 못했습니다: ' + e.message; })
+        .then(function(){ $('dlgSave').disabled = false; });
+      return;
+    }
     var web = $('fWeb').value.trim();
     if (!web && !(conf && conf.configured)) { $('dlgMsg').textContent = '웹 앱 주소를 넣어 주세요.'; $('fWeb').focus(); return; }
     if (!$('fTok').value.trim() && !(conf && conf.configured)) { $('dlgMsg').textContent = '비밀값을 넣어 주세요.'; $('fTok').focus(); return; }

@@ -40,6 +40,9 @@ $Utf8 = New-Object System.Text.UTF8Encoding($false)
 # PC별 진행 상태: 윈도우 %LOCALAPPDATA%, 맥 ~/Library/Application Support
 if ($IsMac) { $SetupDir = P $HOME 'Library' 'Application Support' 'UX_AI_TEST_Workbench' } else { $SetupDir = P $env:LOCALAPPDATA 'UX_AI_TEST_Workbench' }
 $SetupFile = P $SetupDir 'setup.json'
+# Azure DevOps 개인 액세스 토큰(PAT): PC마다 각자(설치 폴더 밖, 깃으로 공유하지 않음) {팀 id: 토큰}. 화면에는 있는지만 알려 준다
+$AzPatFile = P $SetupDir 'azure_pat.json'
+function AzPat-Read { if (Test-Path $AzPatFile) { try { return [IO.File]::ReadAllText($AzPatFile, $Utf8) | ConvertFrom-Json } catch {} }; return [pscustomobject]@{} }
 $HeartFile = P $Root 'workbench' '.watcher.json'
 $AgentFile = P $Root 'workbench' '.agent.json'
 $AgentStop = P $Root 'workbench' '.agent_stop'
@@ -1180,7 +1183,9 @@ while ($l.IsListening) {
     }
     if ($path -eq '/api/sheet' -and $req.HttpMethod -eq 'GET') {
       $cf = Sheet-Conf
-      SendJson $c 200 @{ configured = [bool]($cf.webapp -and $cf.token); sheetUrl = [string]$cf.sheetUrl; wbsGid = [string]$cf.wbsGid; minutes = [string]$cf.minutes; cols = $cf.cols; by = [string]$cf.by; at = [string]$cf.at; canWrite = (Can-Write @('plan')) }; continue
+      # 일정 연결 종류: google(기본) · azure. Azure는 팀 설정만(비밀값 없음) + 이 PC에 토큰이 있는지(azurePat)
+      $prov = $(if ([string]$cf.provider -eq 'azure') { 'azure' } else { 'google' })
+      SendJson $c 200 @{ provider = $prov; azure = $cf.azure; azurePat = [bool]([string](AzPat-Read).($script:Team)); configured = $(if ($prov -eq 'azure') { [bool]($cf.azure.org -and $cf.azure.project) } else { [bool]($cf.webapp -and $cf.token) }); sheetUrl = [string]$cf.sheetUrl; wbsGid = [string]$cf.wbsGid; minutes = [string]$cf.minutes; cols = $cf.cols; by = [string]$cf.by; at = [string]$cf.at; canWrite = (Can-Write @('plan')) }; continue
     }
     if ($path -eq '/api/sheet/data' -and $req.HttpMethod -eq 'GET') {
       $q = @{ action = 'read' }; $wantCache = $false
@@ -1200,14 +1205,37 @@ while ($l.IsListening) {
       switch ([string]$body.action) {
         'config' {
           $old = Sheet-Conf
+          # 일정 연결 종류: 구글 시트(기본) · Azure DevOps(팀마다 하나). Azure는 팀 설정(조직 · 프로젝트 · 범위 · 필드, 비밀값 없음)만 저장하고
+          #  구글 시트 설정은 그대로 둔다(다시 구글로 바꾸면 이어서 쓴다). 토큰(PAT)은 {action:'pat'}로 이 PC에만
+          if ([string]$body.provider -eq 'azure') {
+            $az = $body.azure; $org = ([string]$az.org).Trim().TrimEnd('/')
+            if ($org -notmatch '^https://(dev\.azure\.com/[^/\s]+|[A-Za-z0-9-]+\.visualstudio\.com)$') { throw '조직 주소는 https://dev.azure.com/{조직} 또는 https://{조직}.visualstudio.com 형식입니다.' }
+            if (-not ([string]$az.project).Trim()) { throw '프로젝트 이름을 넣어 주세요.' }
+            $cf = [ordered]@{}; foreach ($p in $old.PSObject.Properties) { $cf[$p.Name] = $p.Value }
+            $cf.provider = 'azure'
+            $cf.azure = [ordered]@{ org = $org; project = ([string]$az.project).Trim(); scope = ([string]$az.scope).Trim(); startField = ([string]$az.startField).Trim(); endField = ([string]$az.endField).Trim(); doneStates = ([string]$az.doneStates).Trim() }
+            $cf.by = (Me-Name); $cf.at = (Now)
+            $d = Split-Path $SheetConf; if (-not (Test-Path $d)) { New-Item -ItemType Directory -Force $d | Out-Null }
+            [IO.File]::WriteAllText($SheetConf, ($cf | ConvertTo-Json -Depth 5), (New-Object Text.UTF8Encoding $false))
+            $script:SyncWant = $true
+            SendJson $c 200 @{ ok = $true }; continue
+          }
           $wa = ([string]$body.webapp).Trim(); if ($wa -and $wa -notmatch '^https://script\.google\.com/macros/s/[A-Za-z0-9_-]+/exec$') { throw '웹 앱 주소는 https://script.google.com/macros/s/…/exec 형식입니다.' }
           if (-not $wa) { $wa = [string]$old.webapp }   # 웹 앱 주소 · 비밀값은 비워 보내면 지금 값 그대로
           $tk = ([string]$body.token).Trim(); if (-not $tk) { $tk = [string]$old.token }
-          $cf = [ordered]@{ sheetUrl = ([string]$body.sheetUrl).Trim(); webapp = $wa; token = $tk; wbsGid = ([string]$body.wbsGid).Trim(); minutes = ([string]$body.minutes).Trim(); cols = $body.cols; by = (Me-Name); at = (Now) }
+          $cf = [ordered]@{ provider = 'google'; sheetUrl = ([string]$body.sheetUrl).Trim(); webapp = $wa; token = $tk; wbsGid = ([string]$body.wbsGid).Trim(); minutes = ([string]$body.minutes).Trim(); cols = $body.cols; azure = $old.azure; by = (Me-Name); at = (Now) }   # Azure 설정은 남겨 둔다
           $d = Split-Path $SheetConf; if (-not (Test-Path $d)) { New-Item -ItemType Directory -Force $d | Out-Null }
           [IO.File]::WriteAllText($SheetConf, ($cf | ConvertTo-Json), (New-Object Text.UTF8Encoding $false))
           $script:SyncWant = $true
           SendJson $c 200 @{ ok = $true }; continue
+        }
+        # Azure DevOps 토큰(PAT): 이 PC · 지금 팀에만 저장(azure_pat.json, 깃 공유 안 함). 빈 값이면 지운다
+        'pat' {
+          $pt = AzPat-Read; $h = [ordered]@{}; foreach ($p in $pt.PSObject.Properties) { $h[$p.Name] = $p.Value }
+          $v = ([string]$body.pat).Trim(); if ($v) { $h[$script:Team] = $v } elseif ($h.Contains($script:Team)) { $h.Remove($script:Team) }
+          if (-not (Test-Path $SetupDir)) { New-Item -ItemType Directory -Force $SetupDir | Out-Null }
+          [IO.File]::WriteAllText($AzPatFile, ($h | ConvertTo-Json), (New-Object Text.UTF8Encoding $false))
+          SendJson $c 200 @{ ok = $true; azurePat = [bool]$v }; continue
         }
         'test' { $txt = Sheet-Call @{ action = 'sheets' }; Send $c 200 'application/json; charset=utf-8' $Utf8.GetBytes($txt); continue }
         'write' {
