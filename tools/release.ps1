@@ -22,7 +22,7 @@ if ($Publish) {
   # develop 먼저: 커밋 · 푸시하지 않은 코드는 배포하지 않는다
   $ErrorActionPreference = 'Continue'
   $dirty = G -C $Src status --porcelain
-  if ($dirty) { throw "커밋하지 않은 변경이 있어 배포하지 않습니다. 변경 이력 · VERSION까지 develop에 커밋 · 푸시한 뒤 다시 배포하세요.`n$dirty" }
+  if ($dirty) { throw "커밋하지 않은 변경이 있어 배포하지 않습니다. 릴리즈 노트(RELEASE_NOTES.md) · VERSION까지 develop에 커밋 · 푸시한 뒤 다시 배포하세요.`n$dirty" }
   $cur = ([IO.File]::ReadAllText((Join-Path $Src 'VERSION'))).Trim()
   if ($cur -ne $Version) { throw "VERSION($cur)이 배포 버전($Version)과 다릅니다. VERSION을 $Version 으로 고쳐 커밋 · 푸시한 뒤 배포하세요." }
   $br = G -C $Src rev-parse --abbrev-ref HEAD
@@ -38,7 +38,7 @@ if ($Publish) {
 
 # ── 프로그램 파일 목록 ──
 $files = 'VERSION','Figma AI Run.bat','Figma AI Run (Terminal).command','appnav.js','appnav.css','guide_server.ps1','guide_server_mac.pl',
-  'Common_UX_Guide.html','Common_UX_Changelog.md','Change_History.html','Usage_Stats.html','UX_Guide.html','Figma_Workbench.html','Prototypes.html','Prototype.html','Login.html','Account.html','Accounts.html','Setup.html','Work.html','CLAUDE.md','README.md','tools\google-sheet-bridge.gs'
+  'Common_UX_Guide.html','Common_UX_Changelog.md','RELEASE_NOTES.md','Change_History.html','Usage_Stats.html','UX_Guide.html','Figma_Workbench.html','Prototypes.html','Prototype.html','Login.html','Account.html','Accounts.html','Setup.html','Work.html','CLAUDE.md','README.md','tools\google-sheet-bridge.gs'
 $wb = 'edit_requests.json','watch_requests.ps1','watch_requests.pl','agent.ps1','agent.pl','launch_win.ps1','history_sync.ps1','history_sync.sh','github_login.ps1','github_login.sh','update.ps1','update.sh','git_remote.txt','usage.ps1','usage.pl','pricing.json','removed_files.txt'
 $list = New-Object System.Collections.Generic.List[string]
 foreach ($f in $files) { $list.Add($f) }

@@ -94,7 +94,7 @@
   - 개인 데이터(`workbench/edit_requests.json` · `jobs.json`, `projects/`, `.claude/`)는 이미 있으면 그대로 둔다.
   - 깃 작업 폴더(개발용 clone, 이 폴더)는 자동 업데이트하지 않는다.
 - **배포는 사용자가 「배포해줘」(버전 포함)라고 할 때만** 한다. 「배포해줘」는 **develop 커밋 · 푸시까지 포함한 요청**이다(develop이 먼저, 배포본은 그 커밋으로 만든다).
-  1. `Common_UX_Changelog.md` 맨 위에 `## [Workbench] v{버전} · 날짜 · 요약` 항목을 쓰고(미배포 항목은 「v{버전}에 포함」으로), `VERSION`을 `{버전}`으로 고친다.
+  1. **`RELEASE_NOTES.md`**(Workbench 릴리즈 노트) 맨 위에 `## v{버전} · 날짜 · 요약` 항목을 쓰고(미배포 항목은 「v{버전}에 포함」으로), `VERSION`을 `{버전}`으로 고친다. 프로그램 변경은 `Common_UX_Changelog.md`(Figma 화면 수정 이력)에 쓰지 않는다.
   2. 작업 폴더의 변경을 모두 **develop에 커밋하고 푸시**한다(`origin` = PJ-CRC/CURECA_UX, Deploy key).
   3. `powershell -ExecutionPolicy Bypass -File tools\release.ps1 -Version {버전} -Publish` — 커밋 안 한 변경이 있거나, VERSION이 다르거나, 푸시 안 한 커밋이 있으면 스크립트가 멈춘다(그때는 2번부터 다시).
      - release 브랜치에 올리고 태그 `v{버전}`을 단다. 설치용 압축 `dist\UX_AI_TEST_Workbench_v{버전}_Windows.zip` · `_Mac.zip`을 만든다.
