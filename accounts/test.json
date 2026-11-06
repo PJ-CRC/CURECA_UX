@@ -2,9 +2,6 @@
     "id":  "test",
     "name":  "테스터",
     "admin":  false,
-    "teams":  [
-                  "test"
-              ],
     "menus":  [
                   "plan",
                   "guide",
@@ -13,6 +10,12 @@
                   "usage",
                   "proto"
               ],
+    "createdAt":  "2026-11-06T14:49:30+09:00",
+    "createdBy":  "brex",
+    "salt":  "Vm5q+pG7NmjX4TK1Gmpw4g==",
+    "iter":  100000,
+    "hash":  "LATDisq83bOp3pLMWKPYpcPs9XGX1Bo+OYMNS9EqVCo=",
+    "pwAt":  "2026-11-06T14:49:30+09:00",
     "writes":  [
                    "plan",
                    "guide",
@@ -23,12 +26,10 @@
     "approves":  [
 
                  ],
+    "teams":  [
+                  "cureca",
+                  "test"
+              ],
     "active":  true,
-    "createdAt":  "2026-11-06T14:49:30+09:00",
-    "createdBy":  "brex",
-    "salt":  "Vm5q+pG7NmjX4TK1Gmpw4g==",
-    "iter":  100000,
-    "hash":  "LATDisq83bOp3pLMWKPYpcPs9XGX1Bo+OYMNS9EqVCo=",
-    "pwAt":  "2026-11-06T14:49:30+09:00",
-    "updatedAt":  "2026-11-06T14:49:30+09:00"
+    "updatedAt":  "2026-11-06T14:50:47+09:00"
 }
