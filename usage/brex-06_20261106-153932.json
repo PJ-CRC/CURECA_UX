@@ -1,0 +1,28 @@
+{
+    "id":  "brex-06_20261106-153932",
+    "kind":  "work",
+    "reqId":  "",
+    "reqType":  "",
+    "team":  "cureca",
+    "at":  "2026-11-06T15:39:32+09:00",
+    "from":  "2026-11-06T15:39:19+09:00",
+    "by":  "최고관리자",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "캡처: TI-SPT-03-01 (J020)",
+    "models":  {
+                   "claude-opus-5-5":  2
+               },
+    "calls":  2,
+    "input":  4,
+    "cacheWrite":  829,
+    "cacheRead":  145574,
+    "output":  819,
+    "total":  147226,
+    "usd":  0.0521
+}
