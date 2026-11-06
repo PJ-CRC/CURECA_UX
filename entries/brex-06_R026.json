@@ -1,11 +1,11 @@
 {
     "id":  "brex-06_R026",
     "kind":  "request",
-    "status":  "대기",
-    "at":  "2026-11-06T09:33:59+09:00",
+    "status":  "진행 중",
+    "at":  "2026-11-06T09:34:08+09:00",
     "createdAt":  "2026-11-06T09:27:05+09:00",
     "by":  "최고관리자",
-    "doneBy":  "최고관리자",
+    "doneBy":  "Claude",
     "pc":  "BREX_06",
     "reqId":  "R026",
     "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
@@ -16,7 +16,7 @@
     "type":  "일반",
     "layout":  "",
     "text":  "섹션2에 있는 Assay Pack Setting 내용을 현재 규칙에 맞게\n섹션2에 다시 그려줘",
-    "note":  "",
+    "note":  "답변(전체 · 아래에 새로)대로 다시 그리는 중",
     "shot":  "",
     "images":  [
 
