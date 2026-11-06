@@ -2,8 +2,8 @@
 # 백그라운드 Claude 에이전트 (macOS, agent.ps1과 같은 동작): 창 없이 Workbench 요청을 감시하고, 떠 있는 Claude Code CLI 세션에 보내 처리한다
 #   nohup perl workbench/agent.pl <claude 경로> >/dev/null 2>&1 &
 #  - 서버(guide_server_mac.pl)가 Figma AI Run 실행 때 띄운다(시작 안내 7단계의 자동 시작). 시작 안내에서 시작 · 중지할 수 있다
-#  - Claude는 한 번 띄워 계속 유지한다: `claude -p --input-format stream-json --output-format stream-json`. 요청이 생기면 메시지만 보내고 result를 받는다
-#  - 컨텍스트가 80%를 넘으면 압축한다(CLAUDE_AUTOCOMPACT_PCT_OVERRIDE=80, 응답 사용량이 80% 이상이면 `/compact`). 30분 넘게 쉬면 새로 띄운다
+#  - Claude는 처리할 때마다 새로 띄우고, 한 차례를 마치면 닫는다(토큰 절약): `claude -p --input-format stream-json --output-format stream-json`. 요청이 생기면 메시지만 보내고 result를 받는다
+#  - 한 차례 안에서 컨텍스트가 커지면 CLI가 스스로 압축한다(CLAUDE_AUTOCOMPACT_PCT_OVERRIDE=80)
 #  - 감시는 watch_requests.pl을 짧게(1분) 반복해 돌린다. 상태 workbench/.agent.json, 중지 workbench/.agent_stop, 기록 workbench/.agent.log
 #  - 같은 감시 결과가 3번 연달아 처리되지 않으면 10분 쉬고 status=error로 알린다
 use strict;
@@ -67,10 +67,10 @@ sub start_session {
   logm("세션 시작 (claude pid $pid)"); return 1;
 }
 sub stop_session {
-  my ($why) = @_; return unless $S;
+  my ($why, $keep) = @_; return unless $S;
   close $S->{in}; my $t = time; while (waitpid($S->{pid}, WNOHANG) == 0) { if (time - $t > 10) { kill 'TERM', $S->{pid}; waitpid($S->{pid}, 0); last; } sleep 1; }
   close $S->{out}; logm("세션 종료 ($why)"); undef $S;
-  ($READY, $NEXT_CHECK) = (undef, 0);   # 다음 세션 전에 로그인 · Figma 연결을 다시 확인
+  ($READY, $NEXT_CHECK) = (undef, 0) unless $keep;   # 다음 세션 전에 로그인 · Figma 연결을 다시 확인(처리를 마쳐 닫은 것이면 그대로)
 }
 # 사용 한도 표시: CLI가 차례마다 보내는 rate_limit_event(5시간 · 주간 사용률)를 workbench/.plan_usage.json에 쓴다(상단 메뉴 「Claude 24% · …」, appnav.js)
 #  대화형 창은 get_usage로 쓰지만 백그라운드에는 그 도구가 없어, 다른 PC에서는 한도 표시가 아예 안 떴다
@@ -223,11 +223,9 @@ while (1) {
     next;
   }
   if ($r->{dead}) { stop_session('응답 없음 · 세션 끊김'); save_state('error', '처리 중 세션이 끊겨 새로 띄웁니다. 기록: workbench/.agent.log'); next; }
+  # 토큰 절약: 처리를 마치면 세션을 닫는다 → 다음 요청은 새 세션으로(세션을 계속 두면 매 API 호출마다 앞 요청 대화를 다시 읽어
+  #  토큰의 98%가 그것이었다, 2026-11-06). 요청끼리는 이어 쓸 내용이 없다
   my $pct = $S->{win} ? int(100 * $S->{ctx} / $S->{win} + 0.5) : 0;
-  if ($pct >= $COMPACT_PCT) {
-    save_state('working', "컨텍스트 $pct% — 압축 중"); logm("컨텍스트 $pct% ($S->{ctx}/$S->{win}) — /compact");
-    my $c = send_turn('/compact');
-    if ($c->{dead}) { stop_session('압축 중 세션 끊김'); } else { logm('압축 끝'); }
-  }
+  stop_session("처리 끝 — 다음 요청은 새 세션 (컨텍스트 $pct%, $S->{ctx} 토큰)", 1);
   save_state('idle', '마지막 처리: ' . (split /\n/, $out)[0] . ($r->{ok} ? '' : ' (오류 응답)') . " · 컨텍스트 $pct%");
 }

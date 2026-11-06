@@ -6,6 +6,7 @@
 <title>시작 안내</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="appnav.css">
+<script src="common.js"></script>
 <style>
 :root{
   --bg:#f6f7f9; --surface:#ffffff; --surface-2:#f3f6fb; --ink:#14171c; --ink-2:#4a5260; --ink-3:#7a8392;
@@ -326,14 +327,9 @@ a{color:var(--accent)}
   }
 
   function toast(t){ var e = $('toast'); e.textContent = t; e.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(function(){ e.classList.remove('show'); }, 1800); }
-  function store(k, v){ try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch(e){ return null; } }
-  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
-  function parseFig(u){
-    var m = String(u || '').trim().match(/^https:\/\/(?:www\.)?figma\.com\/(?:design|file|proto)\/([A-Za-z0-9]+)(?:\/[^?#]*)?(?:\?([^#]*))?/);
-    if (!m) return null;
-    var node = ((m[2] || '').match(/(?:^|&)node-id=([0-9]+[-:][0-9]+)/) || [])[1] || '';
-    return { key: m[1], node: node.replace('-', ':') };
-  }
+  var store = window.WB.store;   // 공통(common.js)
+  var esc = window.WB.esc;   // 공통(common.js)
+  var parseFig = window.WB.parseFig;   // 공통(common.js): Figma 링크 → {key, node}
   function sec(s){ return s == null ? null : s; }
 
   function save(patch){
@@ -372,16 +368,17 @@ a{color:var(--accent)}
     var plugin = e.pluginSeenSec != null && e.pluginSeenSec < 600;
     var ag = e.agent || {};
     var watch = !!ag.alive || (e.watcherSec != null && e.watcherSec < 90);
+    /* 완료(done)는 상단 메뉴 경고와 같은 공통 기준(common.js WB.setupDone). 여기서는 단계마다 보이는 칩 글자만 정한다 */
+    var ok = window.WB.setupDone({ state: S.state, env: S.env });
     return {
-      s1: { done: !!(S.state.user || '').trim(), chip: (S.state.user || '').trim() ? ['ok', S.state.user] : ['wait', '입력 필요'] },
-      s2: { done: !!c.figma, chip: c.figma ? ['ok', '완료'] : (e.figmaInstalled === false ? ['bad', '설치 필요'] : ['wait', '확인 필요']) },
-      s3: { done: !!fig, chip: fig ? (edName() ? ['ok', '연결됨 · ' + edName()] : S.cat ? ['ok', '연결됨 · 목록 받음'] : ['ok', '연결됨 · 목록 대기']) : ['wait', '링크 필요'] },
-      s4: { done: plugin || !!c.plugin, chip: plugin ? ['ok', '플러그인 연결됨'] : (c.plugin ? ['ok', '완료'] : ['wait', '연결 대기']) },
-      s5: { done: !!c.claude, chip: c.claude ? ['ok', '완료'] : (e.claudeInstalled === false && !e.claudeCli ? ['bad', '설치 필요'] : ['wait', '확인 필요']) },
-      s6: { done: !!c.connector, chip: c.connector ? ['ok', '완료'] : ['wait', '확인 필요'] },
-      /* 백그라운드는 기다림(idle) · 처리 중(working)일 때만 완료. 오류 · 로그인 필요는 감시가 돌아도 요청을 처리하지 못한다 */
-      s7: { done: ag.alive ? (ag.status === 'idle' || ag.status === 'working') : watch, chip: ag.alive ? (ag.status === 'login' ? ['bad', '로그인 필요'] : ag.status === 'figma' ? ['bad', 'Figma 연결 필요'] : ag.status === 'error' ? ['bad', '확인 필요'] : ag.status === 'working' ? ['ok', '처리 중'] : ['ok', '백그라운드 감시 중']) : watch ? ['ok', '감시 중 (Claude 창)'] : ['bad', ag.status === 'stopped' ? '중지됨' : '감시 꺼짐'] },
-      s8: { done: !!(e.historySync && e.historySync.ok),
+      s1: { done: ok[0], chip: (S.state.user || '').trim() ? ['ok', S.state.user] : ['wait', '입력 필요'] },
+      s2: { done: ok[1], chip: c.figma ? ['ok', '완료'] : (e.figmaInstalled === false ? ['bad', '설치 필요'] : ['wait', '확인 필요']) },
+      s3: { done: ok[2], chip: fig ? (edName() ? ['ok', '연결됨 · ' + edName()] : S.cat ? ['ok', '연결됨 · 목록 받음'] : ['ok', '연결됨 · 목록 대기']) : ['wait', '링크 필요'] },
+      s4: { done: ok[3], chip: plugin ? ['ok', '플러그인 연결됨'] : (c.plugin ? ['ok', '완료'] : ['wait', '연결 대기']) },
+      s5: { done: ok[4], chip: c.claude ? ['ok', '완료'] : (e.claudeInstalled === false && !e.claudeCli ? ['bad', '설치 필요'] : ['wait', '확인 필요']) },
+      s6: { done: ok[5], chip: c.connector ? ['ok', '완료'] : ['wait', '확인 필요'] },
+      s7: { done: ok[6], chip: ag.alive ? (ag.status === 'login' ? ['bad', '로그인 필요'] : ag.status === 'figma' ? ['bad', 'Figma 연결 필요'] : ag.status === 'error' ? ['bad', '확인 필요'] : ag.status === 'working' ? ['ok', '처리 중'] : ['ok', '백그라운드 감시 중']) : watch ? ['ok', '감시 중 (Claude 창)'] : ['bad', ag.status === 'stopped' ? '중지됨' : '감시 꺼짐'] },
+      s8: { done: ok[7],
             chip: e.historySync && e.historySync.ok ? ['ok', '연결됨'] : e.historySyncing ? ['wait', '연결 중…'] : e.gitInstalled === false ? ['bad', 'git 설치 필요'] :
               e.historySync ? ['bad', /로그인/.test(e.historySync.message) ? '로그인 필요' : '확인 필요'] : ['wait', '연결 대기'] }
     };

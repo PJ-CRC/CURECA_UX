@@ -74,18 +74,8 @@
   loadUsage(); setInterval(loadUsage, 60000); setInterval(drawUsage, 30000);
 
   /* ── 시작 안내 경고: 8단계 중 안 된 것이 있으면 「시작 안내」 메뉴 옆에 붉은 「!」(마우스를 올리면 단계 목록) ──
-     완료 기준은 Setup.html status()와 같다(바꿀 때 둘 다 고친다). 1분마다 다시 확인 */
-  var SETUP_STEPS = ['작업자 이름', 'Figma 데스크톱 앱', '작업할 Figma 링크', 'Figma 플러그인', 'Claude 앱', 'Claude에 Figma 연결', '요청 감시', '작업 이력 공유(깃허브)'];
-  function setupMissing(d){
-    var s = d.state || {}, e = d.env || {}, c = s.checks || {}, ag = e.agent || {};
-    var fig = /^https:\/\/(?:www\.)?figma\.com\/(?:design|file|proto)\/[A-Za-z0-9]+/.test(String(s.figmaUrl || '').trim());
-    var watch = !!ag.alive || (e.watcherSec != null && e.watcherSec < 90);
-    var ok = [
-      !!String(s.user || '').trim(), !!c.figma, fig, (e.pluginSeenSec != null && e.pluginSeenSec < 600) || !!c.plugin,
-      !!c.claude, !!c.connector, ag.alive ? (ag.status === 'idle' || ag.status === 'working') : watch, !!(e.historySync && e.historySync.ok)
-    ];
-    return SETUP_STEPS.map(function(t, i){ return ok[i] ? null : (i + 1) + '. ' + t; }).filter(Boolean);
-  }
+     완료 기준은 시작 안내 화면과 같은 공통 함수(common.js WB.setupMissing). 1분마다 다시 확인 */
+  function setupMissing(d){ return window.WB && window.WB.setupMissing ? window.WB.setupMissing(d) : []; }
   /* 시작 안내 페이지는 상태가 바뀔 때마다 받은 값으로 바로 고친다: window.WB_SETUP_WARN({state, env}) */
   function setupWarn(data){
     var a = nav.querySelector('a[href="Setup.html"]'); if (!a) return;
@@ -105,7 +95,25 @@
   /* ── 로그인 · 메뉴 권한 ──
      계정이 있으면(.history/accounts) 로그인한 계정의 메뉴만 보이고, 오른쪽에 이름(내 정보) · 로그아웃.
      작업자 이름 칸은 계정 이름으로 고정한다(요청 · 이력의 작성자). 서버도 페이지 · API를 막는다(이 표시는 화면 정리) */
+  /* ── 이력 캡처 용량 알림: 작업 이력에 붙는 캡처 사본(.history/shots · attach, 깃으로 모든 PC에 공유)이 1GB를 넘으면
+     상단 메뉴 오른쪽에 붉은 「이력 캡처 1.2GB」(최고관리자 · 계정 없이 쓸 때만). 10분마다 다시 본다(서버는 5분 동안 지난 값) */
+  function storageWarn(){
+    function check(){
+      fetch('/api/storage', { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : null; }).then(function(s){
+        var right = nav.querySelector('.appnav-right'); if (!right || !s) return;
+        var b = right.querySelector('.appnav-store'), over = +s.shotsBytes >= +s.limitBytes;
+        if (!over) { if (b) b.remove(); return; }
+        if (!b) { b = document.createElement('span'); b.className = 'badge off appnav-store'; right.insertBefore(b, right.firstChild); }
+        var gb = (+s.shotsBytes / 1073741824).toFixed(1);
+        b.textContent = '이력 캡처 ' + gb + 'GB';
+        b.title = '작업 이력에 붙는 캡처 사본(.history/shots · attach, ' + (+s.shotsCount || 0) + '장)이 ' + gb + 'GB로 1GB를 넘었습니다.\n깃으로 모든 PC에 공유되어, 커질수록 새 PC의 첫 동기화 · 평소 동기화가 느려집니다. 오래된 캡처 정리가 필요합니다.';
+      }).catch(function(){});
+    }
+    check(); setInterval(check, 600000);
+  }
+
   fetch('/api/me', { cache: 'no-store' }).then(function(r){ return r.json(); }).then(function(m){
+    if (m && (!m.required || (m.user && m.user.admin))) storageWarn();
     if (!m || !m.required) return;
     if (!m.user) { location.replace('/Login.html?next=' + encodeURIComponent(location.pathname + location.search + location.hash)); return; }
     window.WB_ME = m;

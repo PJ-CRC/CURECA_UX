@@ -1,9 +1,9 @@
 ﻿# 백그라운드 Claude 에이전트 (윈도우): 창 없이 Workbench 요청을 감시하고, 처리할 것이 생기면 떠 있는 Claude Code CLI 세션에 보내 처리한다
 #   powershell -NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File workbench\agent.ps1 -Claude <claude.exe>
 #  - 서버(guide_server.ps1)가 Figma AI Run 실행 때 숨김으로 띄운다(시작 안내 7단계의 자동 시작). 시작 안내에서 시작 · 중지할 수 있다
-#  - Claude는 **한 번 띄워 계속 유지**한다: `claude -p --input-format stream-json --output-format stream-json`(창 없음).
-#    커넥터(Figma) 연결 · CLAUDE.md 읽기를 처음 한 번만 하고, 요청이 생기면 그 세션에 메시지만 보낸다. 응답(result)을 받으면 다음 요청
-#  - 컨텍스트가 80%를 넘으면 압축한다: CLI 자동 압축 기준을 80%로(CLAUDE_AUTOCOMPACT_PCT_OVERRIDE), 응답마다 사용량을 보고 80% 이상이면 `/compact`를 보낸다
+#  - Claude는 **처리할 때마다 새로 띄운다**: `claude -p --input-format stream-json --output-format stream-json`(창 없음).
+#    한 차례(감시 결과 하나)를 처리하면 세션을 닫는다 — 세션을 계속 두면 매 API 호출마다 앞 요청 대화를 다시 읽어 토큰의 98%가 그것이었다(2026-11-06).
+#  - 한 차례 안에서 컨텍스트가 커지면 CLI가 스스로 압축한다(CLAUDE_AUTOCOMPACT_PCT_OVERRIDE)
 #  - 30분 넘게 요청이 없으면 세션을 새로 띄운다(캐시도 식으므로). 세션이 죽으면 다시 띄운다. 한 요청이 20분 넘으면 끊고 새로
 #  - 감시는 watch_requests.ps1을 짧게(1분) 반복해 돌린다(상태 갱신 · 중지 확인). PENDING · RESUME · JOBS가 나오면 세션에 보낸다
 #  - Claude는 이 PC에 로그인된 Claude Code CLI 계정 · claude.ai Figma 커넥터를 쓴다. 처음 한 번 시작 안내 7단계의 「Claude 로그인 · Figma 연결」 필요
@@ -69,14 +69,14 @@ function Start-Session {
   $script:S = @{ p = $p; turns = 0; last = Get-Date; err = $p.StandardError.ReadToEndAsync(); ctx = 0; win = 200000 }
   Log "세션 시작 (claude pid $($p.Id))"; return $true
 }
-function Stop-Session([string]$why) {
+function Stop-Session([string]$why, [switch]$KeepReady) {
   if (-not $script:S) { return }
   $p = $script:S.p
   try { $p.StandardInput.Close() } catch { }
   # 안 끝나면 Claude가 띄운 명령까지 함께 끝낸다(프로세스 트리)
   try { if (-not $p.WaitForExit(10000)) { & taskkill.exe /PID $p.Id /T /F 2>&1 | Out-Null } } catch { }
   Log "세션 종료 ($why)"; $script:S = $null
-  $script:Ready = $null; $script:NextCheck = Get-Date   # 다음 세션 전에 로그인 · Figma 연결을 다시 확인
+  if (-not $KeepReady) { $script:Ready = $null; $script:NextCheck = Get-Date }   # 다음 세션 전에 로그인 · Figma 연결을 다시 확인(처리를 마쳐 닫은 것이면 그대로)
 }
 # 사용 한도 표시: CLI가 차례마다 보내는 rate_limit_event(5시간 · 주간 사용률)를 workbench/.plan_usage.json에 쓴다(상단 메뉴 「Claude 24% · …」, appnav.js)
 #  대화형 창은 get_usage로 쓰지만 백그라운드에는 그 도구가 없어, 다른 PC에서는 한도 표시가 아예 안 떴다
@@ -235,12 +235,10 @@ while ($true) {
     continue
   }
   if ($r.dead) { Stop-Session '응답 없음 · 세션 끊김'; Save-State 'error' '처리 중 세션이 끊겨 새로 띄웁니다. 기록: workbench/.agent.log'; continue }
-  # 컨텍스트 80% 이상이면 압축
+  # 토큰 절약: 처리를 마치면 세션을 닫는다 → 다음 요청은 새 세션으로 시작
+  #  세션을 계속 두면 API를 부를 때마다 앞 요청들의 대화까지 통째로 다시 읽어(캐시 읽기) 사용량의 98%가 그것이었다
+  #  (2026-11-06 기록: 호출 한 번에 13만~77만 토큰). 요청끼리는 이어 쓸 내용이 없다(규칙: 앞서 처리한 요청과 섞지 않고 상태를 다시 읽는다)
   $pct = if ($script:S.win) { [math]::Round(100 * $script:S.ctx / $script:S.win) } else { 0 }
-  if ($pct -ge $CompactPct) {
-    Save-State 'working' "컨텍스트 $pct% — 압축 중"; Log "컨텍스트 $pct% ($($script:S.ctx)/$($script:S.win)) — /compact"
-    $c = Send-Turn '/compact'
-    if ($c.dead) { Stop-Session '압축 중 세션 끊김' } else { Log ("압축 끝: " + $c.text) }
-  }
+  Stop-Session "처리 끝 — 다음 요청은 새 세션 (컨텍스트 $pct%, $($script:S.ctx) 토큰)" -KeepReady
   Save-State 'idle' ('마지막 처리: ' + (($out -split "`n")[0]) + $(if (-not $r.ok) { ' (오류 응답)' } else { '' }) + " · 컨텍스트 $pct%")
 }

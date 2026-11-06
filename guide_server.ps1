@@ -689,6 +689,13 @@ function Auto-Watch([bool]$first = $true) {
   try { Start-Agent; Write-Host '  요청 감시를 백그라운드로 시작했습니다(창 없음). 상태는 시작 안내 7단계에서 봅니다.' -ForegroundColor Green }
   catch { Write-Host "  백그라운드 감시 시작 못 함: $($_.Exception.Message)" -ForegroundColor Yellow }
 }
+# 시작 안내 상태(GET /api/setup): 모든 페이지의 상단 메뉴가 1분마다 부른다(시작 안내 경고, appnav.js) — 프로그램 찾기 등으로 0.3초 넘게 걸려
+#  15초 동안은 지난 값을 쓴다. 바꾸기(POST /api/setup*)는 늘 새로 계산하고 그 값을 기억한다
+$script:EnvAt = $null; $script:EnvVal = $null
+function Setup-EnvCached {
+  if (-not $script:EnvAt -or ((Get-Date) - $script:EnvAt).TotalSeconds -ge 15) { $script:EnvVal = Get-SetupEnv; $script:EnvAt = Get-Date }
+  return $script:EnvVal
+}
 function Get-SetupEnv {
   $hb = $null
   $hs = $null; if (Test-Path $SyncStat) { try { $hs = [IO.File]::ReadAllText($SyncStat, $Utf8) | ConvertFrom-Json } catch {} }
@@ -975,9 +982,10 @@ while ($l.IsListening) {
       $c.Response.Redirect($to); $c.Response.Close(); continue
     }
     if ($path -eq '/api/setup' -and $req.HttpMethod -eq 'GET') {
-      SendJson $c 200 ([ordered]@{ state = (Read-Setup); env = (Get-SetupEnv) }); continue
+      SendJson $c 200 ([ordered]@{ state = (Read-Setup); env = (Setup-EnvCached) }); continue
     }
     if ($path -like '/api/setup*' -and $req.HttpMethod -eq 'POST') {
+      $script:EnvAt = $null   # 시작 안내에서 무언가 바꾸면(감시 시작 · 연결 등) 다음 GET은 새로 계산
       # 다른 웹사이트가 로컬 앱을 띄우지 못하게 이 서버에서 연 페이지만 허용
       $origin = $req.Headers['Origin']
       if ($origin -and $origin -ne "http://localhost:$Port") { throw '허용되지 않은 요청입니다.' }
@@ -1002,7 +1010,7 @@ while ($l.IsListening) {
           $p = Read-Proj $k; if ($p -and $p.link -ne $s.figmaUrl) { $p.link = [string]$s.figmaUrl; Save-Proj $p }
           Set-EditablePage $k $s.figmaUrl | Out-Null
         }
-        SendJson $c 200 ([ordered]@{ state = $s; env = (Get-SetupEnv) }); continue
+        SendJson $c 200 ([ordered]@{ state = $s; env = ($script:EnvVal = Get-SetupEnv) }); $script:EnvAt = Get-Date; continue
       }
       if ($path -eq '/api/setup/launch') {
         switch ([string]$body.app) {
@@ -1477,6 +1485,16 @@ while ($l.IsListening) {
       SendJson $c 200 (Read-Hist ([string]$req.QueryString['all'] -eq '1')); continue   # all=1: 모든 팀(Workbench 겹침 표시 — Workbench는 팀과 상관없다)
     }
     if ($path -eq '/api/usage' -and $req.HttpMethod -eq 'GET') { SendJson $c 200 (Read-Usage); continue }
+    # 작업 이력에 붙는 캡처 사본(.history/shots · attach, 깃으로 모든 PC에 공유) 크기: 1GB를 넘으면 상단 메뉴에 알림(appnav.js, 최고관리자)
+    #  폴더를 훑는 것이라 5분 동안은 지난 값을 쓴다
+    if ($path -eq '/api/storage' -and $req.HttpMethod -eq 'GET') {
+      if (-not $script:StoreAt -or ((Get-Date) - $script:StoreAt).TotalMinutes -ge 5) {
+        $sum = 0; $cnt = 0
+        foreach ($d in $HistShots, $HistAttach) { if (Test-Path $d) { $m = Get-ChildItem $d -File | Measure-Object Length -Sum; $sum += [double]$m.Sum; $cnt += $m.Count } }
+        $script:StoreVal = [ordered]@{ shotsBytes = $sum; shotsCount = $cnt; limitBytes = 1GB }; $script:StoreAt = Get-Date
+      }
+      SendJson $c 200 $script:StoreVal; continue
+    }
     # UX 가이드(공유): 목록 · 이 PC의 파일별 작업 기준 가이드 · 바꾸기 {action:'apply', fileKey, guideId('' = 작업 기준 없음), by}
     # UX 문서 변경이력용 깃 기록: 파일을 직접 바꿔 넣은 것(수정 요청이 아닌 것)도 변경이력에 보이게
     #  GET /api/guides/gitlog?since=ISO → {items:[{hash, at, by, msg, files:[{st, path, from}]}]} (guides/ 아래, rev/ · 연관 항목 결과 · meta.json 제외)

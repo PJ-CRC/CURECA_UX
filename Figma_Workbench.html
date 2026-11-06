@@ -6,6 +6,7 @@
 <title>Figma Workbench</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="appnav.css">
+<script src="common.js"></script>
 <style>
 :root{
   --bg:#eef0f3; --surface:#ffffff; --surface-2:#f5f7fa; --ink:#14171c; --ink-2:#4a5260; --ink-3:#7a8392;
@@ -463,8 +464,8 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
   var API = '/api/requests', online = false, reqData = {version:0, items:[]}, filter = 'here';
   /* 공유 작업 이력(모든 작업자): 같은 프레임에 다른 작업자의 요청이 진행 중인지 본다 */
   var HIST = { items: [], pcSlug: '' }, OL_MAX = 60 * 60 * 1000;   // 1시간 넘게 그대로인 요청은 겹침으로 보지 않는다(멈춘 PC)
-  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
-  function store(k, v){ try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch(e){ return null; } }
+  var esc = window.WB.esc;   // 공통(common.js)
+  var store = window.WB.store;   // 공통(common.js)
   /* 작업자 이름 — 가이드와 같은 키(cux.user) */
   var userInput = $('cuxUser');
   userInput.value = store('cux.user') || '';
@@ -1162,11 +1163,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
   }
 
   /* 시작: 시작 안내에 넣은 Figma 링크의 파일을 연다 */
-  function parseFig(u){
-    var m = String(u || '').match(/figma\.com\/(?:design|file|proto)\/([A-Za-z0-9]+)(?:\/[^?#]*)?(?:\?([^#]*))?/); if (!m) return null;
-    var node = ((m[2] || '').match(/(?:^|&)node-id=([0-9]+[-:][0-9]+)/) || [])[1] || '';
-    return { key: m[1], node: node.replace('-', ':') };
-  }
+  var parseFig = window.WB.parseFig;   // 공통(common.js): Figma 링크 → {key, node}
   function start(){
     var h = location.hash.slice(1).replace('-', ':');
     var ed = pages.filter(function(x){ return x.editable; });

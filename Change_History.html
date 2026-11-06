@@ -6,6 +6,7 @@
 <title>변경 이력</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="appnav.css">
+<script src="common.js"></script>
 <style>
 :root{
   --bg:#f6f7f9; --surface:#ffffff; --surface-2:#f3f6fb; --ink:#14171c; --ink-2:#4a5260; --ink-3:#7a8392;
@@ -190,7 +191,7 @@ button{cursor:pointer}
   var PER = 10, BLOCK = 10, page = 1, filter = 'all', stF = '', q = '', whoF = '', frameF = '', rows = [], sig = '', sel = null, open = false;
   var $ = function(id){ return document.getElementById(id); };
   var wide = window.matchMedia('(min-width:900px)');
-  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  var esc = window.WB.esc;   // 공통(common.js)
   function fmt(t){ return t ? t.replace('T', ' ').slice(0, 16) : ''; }
   var ST = {'대기':'s-wait','진행 중':'s-prog','완료':'s-done','보류':'s-hold','Figma 반영':'s-done','가이드 저장':'s-prog','작업':'s-done'};
   /* 상태 거르기: 요청이 아닌 작업 기록은 끝난 일이라 「완료」로 본다 */

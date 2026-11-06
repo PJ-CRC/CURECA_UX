@@ -6,6 +6,7 @@
 <title>프로토타입</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="appnav.css">
+<script src="common.js"></script>
 <style>
 :root{
   --bg:#f6f7f9; --surface:#ffffff; --surface-2:#f3f6fb; --ink:#14171c; --ink-2:#4a5260; --ink-3:#7a8392;
@@ -161,8 +162,8 @@ a.pcard:hover{border-color:var(--accent)}
 <script>
 (function(){
   var $ = function(id){ return document.getElementById(id); };
-  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
-  function store(k, v){ try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch(e){ return null; } }
+  var esc = window.WB.esc;   // 공통(common.js)
+  var store = window.WB.store;   // 공통(common.js)
   function toast(t){ var el = $('toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(function(){ el.classList.remove('on'); }, 2000); }
   function who(){ return store('cux.user') || ''; }
   function fmt(t){ var d = new Date(t); if (isNaN(d)) return ''; var p = function(n){ return (n < 10 ? '0' : '') + n; }; return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes()); }
