@@ -1,0 +1,34 @@
+{
+    "id":  "test",
+    "name":  "테스터",
+    "admin":  false,
+    "teams":  [
+                  "test"
+              ],
+    "menus":  [
+                  "plan",
+                  "guide",
+                  "workbench",
+                  "history",
+                  "usage",
+                  "proto"
+              ],
+    "writes":  [
+                   "plan",
+                   "guide",
+                   "workbench",
+                   "history",
+                   "proto"
+               ],
+    "approves":  [
+
+                 ],
+    "active":  true,
+    "createdAt":  "2026-11-06T14:49:30+09:00",
+    "createdBy":  "brex",
+    "salt":  "Vm5q+pG7NmjX4TK1Gmpw4g==",
+    "iter":  100000,
+    "hash":  "LATDisq83bOp3pLMWKPYpcPs9XGX1Bo+OYMNS9EqVCo=",
+    "pwAt":  "2026-11-06T14:49:30+09:00",
+    "updatedAt":  "2026-11-06T14:49:30+09:00"
+}
