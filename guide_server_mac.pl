@@ -267,6 +267,9 @@ sub set_editable_page {
 my $SHEET_CONF = "$HIST_DIR/config/sheet.json";
 my $SHEET_CACHE = "$ROOT/workbench/.sheet_cache";
 sub sheet_conf { my $c = eval { read_json($SHEET_CONF) }; return ref $c eq 'HASH' ? $c : {}; }
+# Azure DevOps 개인 액세스 토큰(PAT): PC마다 각자(설치 폴더 밖, 깃으로 공유하지 않음) {팀 id: 토큰}. 화면에는 있는지만 알려 준다
+my $AZ_PAT_FILE = "$SETUP_DIR/azure_pat.json";
+sub azpat_read { my $h = eval { read_json($AZ_PAT_FILE) }; return ref $h eq 'HASH' ? $h : {}; }
 sub me_name { my $u = current_user(); return $u ? str($u->{name}) : str(read_setup()->{user}); }
 sub sheet_call {
   my ($q) = @_; my $cf = sheet_conf();
@@ -1300,7 +1303,11 @@ sub handle {
   }
   if ($path eq '/api/sheet' && $method eq 'GET') {
     my $cf = sheet_conf();
-    return respond_json($sock, 200, { configured => (str($cf->{webapp}) ne '' && str($cf->{token}) ne '') ? JSON::PP::true : JSON::PP::false,
+    # 일정 연결 종류: google(기본) · azure. Azure는 팀 설정만(비밀값 없음) + 이 PC에 토큰이 있는지(azurePat)
+    my $prov = str($cf->{provider}) eq 'azure' ? 'azure' : 'google'; my $az = ref $cf->{azure} eq 'HASH' ? $cf->{azure} : undef;
+    my $conf_ok = $prov eq 'azure' ? ($az && str($az->{org}) ne '' && str($az->{project}) ne '') : (str($cf->{webapp}) ne '' && str($cf->{token}) ne '');
+    return respond_json($sock, 200, { provider => $prov, azure => $az, azurePat => (str(azpat_read()->{$TEAM}) ne '' ? JSON::PP::true : JSON::PP::false),
+      configured => $conf_ok ? JSON::PP::true : JSON::PP::false,
       (map { $_ => str($cf->{$_}) } qw(sheetUrl wbsGid minutes by at)), cols => (ref $cf->{cols} eq 'HASH' ? $cf->{cols} : undef), canWrite => can_write('plan') ? JSON::PP::true : JSON::PP::false });
   }
   if ($path eq '/api/sheet/data' && $method eq 'GET') {
@@ -1331,15 +1338,35 @@ sub handle {
     my $b = $body->(); my $act = str($b->{action});
     if ($act eq 'config') {
       my $old = sheet_conf();
+      # 일정 연결 종류: Azure DevOps면 팀 설정(조직 · 프로젝트 · 범위 · 필드, 비밀값 없음)만 저장하고 구글 시트 설정은 그대로 둔다
+      if (str($b->{provider}) eq 'azure') {
+        my $az = ref $b->{azure} eq 'HASH' ? $b->{azure} : {};
+        (my $org = str($az->{org})) =~ s/^\s+|\s+$//g; $org =~ s{/+$}{};
+        die "조직 주소는 https://dev.azure.com/{조직} 또는 https://{조직}.visualstudio.com 형식입니다.\n" unless $org =~ m{^https://(dev\.azure\.com/[^/\s]+|[A-Za-z0-9-]+\.visualstudio\.com)$};
+        (my $prj = str($az->{project})) =~ s/^\s+|\s+$//g; die "프로젝트 이름을 넣어 주세요.\n" if $prj eq '';
+        my %cf = %$old; $cf{provider} = 'azure';
+        $cf{azure} = { org => $org, project => $prj, map { my $k = $_; (my $v = str($az->{$k})) =~ s/^\s+|\s+$//g; ($k => $v) } qw(scope startField endField doneStates) };
+        $cf{by} = me_name(); $cf{at} = now_iso();
+        make_path(($SHEET_CONF =~ m{^(.*)/[^/]+$})[0]); write_json($SHEET_CONF, \%cf); $sync_want = 1;
+        return respond_json($sock, 200, { ok => JSON::PP::true });
+      }
       (my $wa = str($b->{webapp})) =~ s/^\s+|\s+$//g;
       die "웹 앱 주소는 https://script.google.com/macros/s/…/exec 형식입니다.\n" if $wa ne '' && $wa !~ m{^https://script\.google\.com/macros/s/[A-Za-z0-9_-]+/exec$};
       $wa = str($old->{webapp}) if $wa eq '';   # 웹 앱 주소 · 비밀값은 비워 보내면 지금 값 그대로
       (my $tk = str($b->{token})) =~ s/^\s+|\s+$//g; $tk = str($old->{token}) if $tk eq '';
-      my %cf = (webapp => $wa, token => $tk, by => me_name(), at => now_iso());
+      my %cf = (provider => 'google', webapp => $wa, token => $tk, by => me_name(), at => now_iso());
+      $cf{azure} = $old->{azure} if ref $old->{azure} eq 'HASH';   # Azure 설정은 남겨 둔다
       for (qw(sheetUrl wbsGid minutes)) { ($cf{$_} = str($b->{$_})) =~ s/^\s+|\s+$//g; }
       $cf{cols} = ref $b->{cols} eq 'HASH' ? $b->{cols} : undef;   # 열 맞추기(화면이 정한 열 → 항목)
       make_path("$HIST_DIR/config"); write_json($SHEET_CONF, \%cf); $sync_want = 1;
       return respond_json($sock, 200, { ok => JSON::PP::true });
+    }
+    # Azure DevOps 토큰(PAT): 이 PC · 지금 팀에만 저장(azure_pat.json, 깃 공유 안 함). 빈 값이면 지운다
+    if ($act eq 'pat') {
+      my $h = azpat_read(); (my $v = str($b->{pat})) =~ s/^\s+|\s+$//g;
+      if ($v ne '') { $h->{$TEAM} = $v } else { delete $h->{$TEAM} }
+      make_path($SETUP_DIR); write_json($AZ_PAT_FILE, $h);
+      return respond_json($sock, 200, { ok => JSON::PP::true, azurePat => ($v ne '' ? JSON::PP::true : JSON::PP::false) });
     }
     if ($act eq 'test') { return respond($sock, 200, 'application/json; charset=utf-8', sheet_call({ action => 'sheets' })); }
     if ($act eq 'write') {
