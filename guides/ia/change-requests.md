@@ -12,3 +12,4 @@
 | 4 | Event 통계 이름 | "Event 통계 - Chart / Table" (TI-STA-08-01·08-02) | 중메뉴 Event 아래 Event Trend - Chart / Table (Figma 기준) | ST1 답변에 따른 정리 (메뉴 구조를 Figma에 맞춤) | 2026-11-03 | 요청 전 (확인 필요) |
 | 5 | Material Setup 새 화면 | 없음 | LI-TSS-RGE-01, LI-TSS-RGE-02 추가 | 작업방 Material Setup 2차 페이지 (2026-11-02 확인) | 2026-11-03 | 요청 전 |
 | 6 | Dashboard(All) 메뉴 이름 | "Dashboard (All)" (괄호 앞 띄어 씀) | "Dashboard(All)" | 2026-11-04 사용자 결정 | 2026-11-04 | 요청 전 |
+| 7 | 새 CID: UV Sterilization 팝업 | 없음 | L-IOS Instruments 아래 Popup `LI-INS-01-01-P` (UV Sterilization Popup) 추가 제안. 짝 CID 없음(T-IOS 필요 여부 확인 필요) | Workbench R030(최고관리자): Sample Preparation만 UV 살균 버튼 → 팝업으로 On/Off · 작동 시간 1~60분 설정. [LI-INS-01-T] Overview와 [LI-INS-02-T] Sample Preparation 상세에서 열림 | 2026-11-06 | 요청 전 |
