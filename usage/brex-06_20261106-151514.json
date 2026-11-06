@@ -1,0 +1,27 @@
+{
+    "id":  "brex-06_20261106-151514",
+    "kind":  "work",
+    "reqId":  "",
+    "team":  "cureca",
+    "at":  "2026-11-06T15:15:14+09:00",
+    "from":  "2026-11-06T15:14:56+09:00",
+    "by":  "최고관리자",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "캡처: LI-STN-08-P 유형별 정의 (J018)",
+    "models":  {
+                   "claude-opus-5-5":  4
+               },
+    "calls":  4,
+    "input":  10,
+    "cacheWrite":  3547,
+    "cacheRead":  275113,
+    "output":  1038,
+    "total":  279708,
+    "usd":  0.1042
+}
