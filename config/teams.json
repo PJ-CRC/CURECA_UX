@@ -1,0 +1,17 @@
+{
+    "items":  [
+                  {
+                      "id":  "cureca",
+                      "name":  "CURECA",
+                      "legacy":  true,
+                      "createdAt":  "2026-11-06T00:00:00+09:00",
+                      "by":  "system"
+                  },
+                  {
+                      "id":  "test",
+                      "name":  "test",
+                      "createdAt":  "2026-11-06T14:49:00+09:00",
+                      "by":  "brex"
+                  }
+              ]
+}
