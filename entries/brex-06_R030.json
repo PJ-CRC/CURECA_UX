@@ -1,8 +1,8 @@
 {
     "id":  "brex-06_R030",
     "kind":  "request",
-    "status":  "진행 중",
-    "at":  "2026-11-06T10:29:35+09:00",
+    "status":  "완료",
+    "at":  "2026-11-06T10:42:04+09:00",
     "createdAt":  "2026-11-06T10:29:26+09:00",
     "by":  "최고관리자",
     "doneBy":  "Claude",
@@ -16,8 +16,8 @@
     "type":  "일반",
     "layout":  "",
     "text":  "Section 3 에서 \nSample Preparation 장비만 UV 살균 버튼을 추가해야해\nOverview에서 장비 이미지 위에 버튼 추가\n버튼 클릭 시 팝업으로 on/off 설정 작동시간은 1분에서 60분까지 설정이 가능하게\nLI-INS-02-T 화면에서 Sample Preparation로 하나 따로 만들어서\nDoor 밑에 UV 살균 버튼 내용 추가\n\n현재 작업된 내용 참고해서 UV 살균 버튼 내용 추가해줘 디스크립션 포함",
-    "note":  "Section 3 LI-INS-02 화면 확인 중",
-    "shot":  "",
+    "note":  "Section 3에 Sample Preparation 전용 UV 살균(UV Sterilization) 버튼 · 팝업 · 상세 영역을 디스크립션과 함께 추가했습니다(기존 작업물 형식 그대로).\n- LI-INS-01-T(Overview): Sample Preparation 카드 장비 이미지 위에 [UV Sterilization] 버튼(3-7). 디스크립션 3-7 줄 추가\n- 새 팝업 LI-INS-01-01-P(제안 CID, 확정 대기): Module마다 UV On/Off(Segment) · Operating Time 입력(1 ~ 60 min, 범위 밖 Error 예시) · [Cancel] [Save]. 디스크립션 0 ~ 3 · 질문 대기\n- 새 케이스 「LI-INS-02-T / 케이스 / Sample Preparation」: Sample Preparation(1) 선택, Door(Upper · Lower · Rear) 아래 UV Sterilization 영역(UV Lamp · On · 30 min · [Setting] → 팝업). Device는 Sample Aliquot (Upper) · (Lower). 디스크립션 3-2 · 3-3 추가\n- 상세 제목은 Pretendard라 플러그인 작업(J017)을 만들었으나 2분 안에 가져가지 않아 Noto Sans KR Bold로 바꿈\n- 확인 필요: 새 CID LI-INS-01-01-P 확정(ia/change-requests.md #7) · T-IOS 짝 화면 필요 여부 · Module 상태별 UV 설정 가능 여부 · 저장 즉시 작동 · 남은 시간 표시 · 기본 작동 시간 · Off일 때 Operating Time 표시 · 문구 언어셋 ID\n작업 기준: 작업규칙 CURECA 작업규칙 · 정책서 정책서 · UX가이드 CURECA UX 가이드 · 기준데이터 기준데이터 · 화면 정의서 화면 정의서",
+    "shot":  "shots/brex-06_R030.jpg",
     "images":  [
 
                ],

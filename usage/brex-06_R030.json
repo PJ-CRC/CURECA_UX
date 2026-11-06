@@ -1,0 +1,26 @@
+{
+    "id":  "brex-06_R030",
+    "kind":  "request",
+    "reqId":  "R030",
+    "at":  "2026-11-06T10:42:05+09:00",
+    "from":  "2026-11-06T10:29:35+09:00",
+    "by":  "최고관리자",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "LI-STN-08",
+    "nodeId":  "2049:100579",
+    "text":  "Section 3 에서 \nSample Preparation 장비만 UV 살균 버튼을 추가해야해\nOverview에서 장비 이미지 위에 버튼 추가\n버튼 클릭 시 팝업으로 on/off 설정 작동시간은 1분에서 60분까지 설정이 가능하게\nLI-INS-02-T 화면에서 Sample Preparation로 하나 따로 만들어서\nDoor 밑에 UV 살균 버튼 내용 추가\n\n현재 작업된 내용 참고해서 UV 살균 버튼 내용 추가해줘 디스크립션 포함",
+    "models":  {
+                   "claude-opus-5-5":  65
+               },
+    "calls":  65,
+    "input":  132,
+    "cacheWrite":  130570,
+    "cacheRead":  20847205,
+    "output":  50932,
+    "total":  21028839,
+    "usd":  6.2332
+}
