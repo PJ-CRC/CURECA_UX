@@ -196,9 +196,18 @@ figma.ui.onmessage = async msg => {
       const n = await figma.getNodeByIdAsync(msg.nodeId);
       if (!n || n.removed || !/^(FRAME|COMPONENT|COMPONENT_SET|INSTANCE)$/.test(n.type)) { figma.ui.postMessage({ type: 'capture-any-done', reqId: msg.reqId, done: false, gone: true }); return; }
       let pg = n; while (pg && pg.type !== 'PAGE') pg = pg.parent;
-      if (pg && pg !== figma.currentPage && !loadedPages.has(pg.id)) { await pg.loadAsync(); loadedPages.add(pg.id); }
+      // 아직 불러오지 않은 다른 페이지: 바로 불러오지 않고 알린다 → UI가 Workbench에 「불러오는 중」을 남긴 뒤 load-page
+      if (pg && pg !== figma.currentPage && !loadedPages.has(pg.id)) { figma.ui.postMessage({ type: 'capture-any-done', reqId: msg.reqId, needLoad: true, page: pg.name }); return; }
       await exportFrame(n, msg.jobId);
       figma.ui.postMessage({ type: 'capture-any-done', reqId: msg.reqId, done: true });
+      return;
+    }
+    // 자동 캡처: 다른 페이지를 한 번 불러온다(그 페이지의 다음 캡처부터는 바로)
+    if (msg.type === 'load-page') {
+      const n = await figma.getNodeByIdAsync(msg.nodeId);
+      let pg = n; while (pg && pg.type !== 'PAGE') pg = pg.parent;
+      if (pg) { await pg.loadAsync(); loadedPages.add(pg.id); }
+      figma.ui.postMessage({ type: 'load-page-done', reqId: msg.reqId, ok: !!pg });
       return;
     }
     // Workbench 글 수정(text) 작업: Claude가 정한 바꾸기 [{nodeId, find, replace}]를 이 PC의 폰트(Pretendard 등)로 반영한다.
