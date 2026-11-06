@@ -32,7 +32,16 @@ function Log([string]$s) {
     [IO.File]::AppendAllText($LogFile, "[$(Now)] $s`r`n", $Utf8)
   } catch { }
 }
-# 다른 에이전트가 이미 돌고 있으면(상태 150초 이내 · 다른 프로세스 살아 있음) 끝낸다
+# 이 설치 폴더의 에이전트는 하나만: 이름 붙은 뮤텍스를 잡지 못하면(다른 에이전트가 살아 있음) 끝낸다
+#  상태 파일만 보던 때는 처리가 길어 150초 넘게 못 쓰거나 중지 신호를 한 에이전트만 가져가면 여러 개가 함께 돌았다(2026-11-06 R026을 3개가 동시에 받음)
+#  뮤텍스는 프로세스가 끝나면(강제 종료 포함) 풀린다
+$sha = [Security.Cryptography.SHA1]::Create()
+$mxName = 'Local\UXAI_Workbench_Agent_' + (($sha.ComputeHash($Utf8.GetBytes($Root.ToLowerInvariant())) | Select-Object -First 8 | ForEach-Object { $_.ToString('x2') }) -join '')
+$script:AgentMutex = New-Object Threading.Mutex($false, $mxName)
+$got = $false
+try { $got = $script:AgentMutex.WaitOne(0) } catch [Threading.AbandonedMutexException] { $got = $true }
+if (-not $got) { exit 0 }
+# (예전 방식도 함께) 다른 에이전트가 이미 돌고 있으면(상태 150초 이내 · 다른 프로세스 살아 있음) 끝낸다
 try {
   $o = [IO.File]::ReadAllText($StateFile, $Utf8) | ConvertFrom-Json
   if ($o.pid -and $o.pid -ne $PID -and $o.status -ne 'stopped' -and ((Get-Date) - [datetime]$o.at).TotalSeconds -lt 150 -and (Get-Process -Id $o.pid -ErrorAction SilentlyContinue)) { exit 0 }

@@ -39,6 +39,11 @@ sub logm {
   if (-s $LOG && -s $LOG > 500 * 1024) { my $t = slurp($LOG); if (open(my $h, '>:raw', $LOG)) { print $h substr($t, -200 * 1024); close $h; } }
   if (open(my $h, '>>:raw', $LOG)) { print $h encode('UTF-8', '[' . now() . "] $s\n"); close $h; }
 }
+# 이 설치 폴더의 에이전트는 하나만: 잠금 파일을 잡지 못하면(다른 에이전트가 살아 있음) 끝낸다. 프로세스가 끝나면(강제 종료 포함) 풀린다
+#  상태 파일만 보던 때는 처리가 길어 150초 넘게 못 쓰거나 중지 신호를 한 에이전트만 가져가면 여러 개가 함께 돌았다
+use Fcntl qw(:flock);
+our $LOCKFH;
+if (open($LOCKFH, '>>', "$WB/.agent.lock")) { exit 0 unless flock($LOCKFH, LOCK_EX | LOCK_NB); }
 if (-f $STATE) {
   my $o = eval { $J->decode(slurp($STATE)) };
   # 상태를 150초 안에 썼을 때만 다른 에이전트로 본다(재부팅 뒤 같은 pid를 다른 프로그램이 쓰면 kill 0만으로는 살아 있는 것처럼 보여 새 에이전트가 말없이 끝났다)
