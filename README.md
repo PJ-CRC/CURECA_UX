@@ -23,7 +23,8 @@ Figma 파일을 프로젝트 단위로 다루는 Workbench(수정 요청 · Clau
 | 파일 | 내용 |
 |---|---|
 | `Common_UX_Guide.html` | 「UX 문서」 메뉴: 공통 규칙(만든 UX 가이드) · 정의서 탭. 가이드 내용은 `.history/guides/`(history 브랜치) |
-| `Common_UX_Changelog.md` | Figma 수정 이력과 가이드 변경 이력 |
+| `Common_UX_Changelog.md` | Figma 화면 수정 이력 |
+| `RELEASE_NOTES.md` | Workbench(Figma AI Run) 버전별 릴리즈 노트 (release 브랜치 · 설치 압축에도 들어감) |
 | `docs/Architecture_and_Resources.md` | 동작 구조, 수정 방식별 흐름, 캡처 방식, 사용 리소스와 비용, 수정자 확인 방법 |
 | `Setup.html` | 첫 실행 시작 안내. 처음 열면 Claude · Figma 실행, 기본 작업 링크, git 설치 또는 깃허브 연결을 자동으로 시작. 작업 링크 · 플러그인 · Figma 연결 · 요청 감시 · 작업 이력 공유까지 8단계로 안내하고 상태를 자동 확인 |
 | `docs/Workbench_Setup_Other_PC.md` | 다른 PC · 본인 Figma · Claude 계정으로 Workbench를 실행하고 요청을 처리하는 준비 절차 |
