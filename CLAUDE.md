@@ -41,7 +41,7 @@
    0. 대상 파일 = 요청의 `fileKey`(없으면 시작 안내 작업 링크의 파일, 둘 다 없으면 「보류」). **수정 가능 페이지가 아니면 반영하지 않는다.** 요청의 `page`가 그 파일의 지금 수정 가능 페이지(project.json editablePageName)일 때만 반영한다. 아니면 상태를 「보류」로 바꾸고 note에 「○○ 페이지는 보기 전용입니다. 담당자 확인 필요」를 남긴다.
    1. 상태를 「진행 중」으로: `POST http://localhost:8765/api/requests` `{action:'update', id, status:'진행 중', note, by:'Claude'}` — 서버가 「이미 진행 중」으로 거절하면 다른 Claude 세션이 처리 중이니 그 요청은 건너뛴다
    2. Figma(대상 파일 · 수정 가능 페이지)에 반영한다. **작업 기준 문서를 먼저 확인한다 — UX 문서의 카테고리(작업규칙 · 정책서 · UX가이드 · 기준데이터 · 화면 정의서)마다 「적용」한 문서 하나씩만 읽는다**:
-      - `GET /api/guides`의 `applied[fileKey]`(**이 PC 작업자가 고른 작업 기준**, `workbench/guide_apply.json`, 공유하지 않음). `docs: {종류: {id}}`가 카테고리별 적용 문서다(`rule` 작업규칙 · `policy` 정책서 · `guide` UX가이드 · `data` 기준데이터 · `spec` 화면 정의서, 앞으로 늘어도 같다). `docs`가 없는 예전 형식이면 `guideId`가 UX가이드다. id가 빈 값이면 그 카테고리는 작업 기준 없음.
+      - `GET /api/guides?team={요청의 team}`의 `applied[fileKey]`(**이 PC 작업자가 고른 그 팀의 작업 기준**, `workbench/guide_apply.json` · 다른 팀은 `guide_apply.{team}.json`, 공유하지 않음 — 아래 「팀」). `docs: {종류: {id}}`가 카테고리별 적용 문서다(`rule` 작업규칙 · `policy` 정책서 · `guide` UX가이드 · `data` 기준데이터 · `spec` 화면 정의서, 앞으로 늘어도 같다). `docs`가 없는 예전 형식이면 `guideId`가 UX가이드다. id가 빈 값이면 그 카테고리는 작업 기준 없음.
       - 적용한 문서마다 **지금 내용**(`items[].mdPath`, 고친 적이 있으면 가장 최근 수정본 `rev/…md`)을 읽는다. **파일형 문서**(`format:'files'`, 예: CURECA 작업규칙)는 `mdPath`가 비어 있고 `items[].fileList[].mdPath`(파일마다 지금 내용)를 읽는다 — 작업규칙(`rules`)은 모두, 정책서(`policy`)는 `README.md`와 요청 화면 CID를 머리말 `cids`에 둔 정책 파일 · 그 정책이 `data`로 가리키는 기준 자료만, 기준데이터(`glossary`)는 `glossary.md`와 요청에 걸린 표만, 화면 정의서(`screens`)는 요청 화면의 CID 파일(`{메뉴}/{CID}.md`)과 짝 CID 파일만 읽는다(파일이 많아 다 읽지 않는다). **적용하지 않은 문서는 같은 카테고리에 여러 개 있어도 읽지 않고 따르지 않는다.**
       - 역할: 작업규칙 = 작업 방식(순서 · 확인 항목 · 산출물 형식, 이 처리 절차에도 따른다) · 정책서 = 업무 규칙(권한 · 상태 전이 · 예외 처리) · UX가이드 = 구성 · 크기 · 컴포넌트 · 표기 · 기준데이터 = 코드 · 상태값 · 단위 · 표기 값 · 화면 정의서 = 그 화면의 용어 · 값 · 상태 · 동작 · 화면 이동. 어긋나면 화면 내용은 화면 정의서 → 정책서 → 기준데이터 순, 공통 구성 · 컴포넌트 · 표기는 UX가이드를 따르고 note에 어긋난 점을 적는다. 문서와 요청이 어긋나면 요청을 따르되 note에 그렇게 적는다.
       - note 마지막 줄에 `작업 기준: 작업규칙 {제목|없음} · 정책서 {제목|없음} · UX가이드 {제목|없음} · 기준데이터 {제목|없음} · 화면 정의서 {제목|없음}`을 적는다(기본 문서는 없다. 하나도 없으면 요청 내용과 그 파일의 기존 화면을 따른다).
@@ -104,7 +104,7 @@
 ## 계정 · 메뉴 권한
 
 - 계정이 하나라도 있으면(`.history/accounts/*.json`) Workbench 페이지는 **로그인**해야 쓴다(`Login.html`). 로그인은 PC마다 유지된다(PC별 `setup.json`의 `login {id, pwAt}`, 비밀번호가 바뀌면 다시 로그인). **새 PC**(계정 파일도 없고 공유 이력을 한 번도 받지 못함)도 처음 실행하면 로그인 화면부터 뜨고, 그 화면에서 [깃허브 연결]로 이력 · 계정을 받은 뒤 로그인한다(`/api/me`의 `needSync`, 그동안 `/api/setup/launch`만 로그인 없이 된다). 이력을 받았는데도 계정 파일이 하나도 없으면 예전처럼 로그인 없이 쓴다.
-- 계정 = `.history/accounts/{id}.json` `{id, name, admin, menus, writes, salt, hash, iter, active, createdAt, updatedAt, pwAt}` — 비밀번호는 **PBKDF2-SHA256(100000회) 해시만**, 원문은 어디에도 남기지 않는다. 작업 이력과 함께 깃으로 모든 PC에 공유된다(한 계정 한 파일). 서버는 이 폴더를 웹으로 내보내지 않는다.
+- 계정 = `.history/accounts/{id}.json` `{id, name, admin, teams, menus, writes, salt, hash, iter, active, createdAt, updatedAt, pwAt}` — 비밀번호는 **PBKDF2-SHA256(100000회) 해시만**, 원문은 어디에도 남기지 않는다. 작업 이력과 함께 깃으로 모든 PC에 공유된다(한 계정 한 파일). 서버는 이 폴더를 웹으로 내보내지 않는다.
 - **최고관리자는 1명**(`brex`, `admin: true`): 메뉴 전부 + 「계정 관리」(`Accounts.html`: 계정 추가 · 이름 · 메뉴 · 사용 중지 · 비밀번호 초기화 · 지우기). 최고관리자는 지우거나 중지할 수 없다. 누구나 「내 정보」(`Account.html`)에서 자기 비밀번호를 바꾼다.
 - **시작 안내(`Setup.html`) · 내 정보는 권한 설정 대상이 아니다**: 로그인한 모든 계정이 쓴다(서버 메뉴 `always`). 계정 관리 화면의 메뉴 선택에도 나오지 않는다.
 - 고르는 메뉴 키: `plan` 일정/작업(`Work.html`, 상단 메뉴에서 시작 안내 다음. 하위 탭: 일정 · 주간 진행 현황 · 화면설계서 작업대기 · 회의록 · 임시 정책 · 논의·결정 — 일정 · 주간 진행 현황은 구글 시트 연결(아래 「일정/작업 · 구글 시트」), 나머지는 세부가 정해지는 대로) · `guide` UX 문서(작업규칙 · 정책서 · UX가이드 · 기준데이터 · 화면 정의서 · 변경이력, + 문서 보기 `UX_Guide.html`) · `workbench` · `history` 변경 이력 · `usage` 사용량 통계 · `proto` 프로토타입(+ `prototypes/`). 허용되지 않은 페이지는 첫 허용 메뉴로, API(`/api/usage` · `/api/prototypes` · `/api/accounts` · `/api/sheet`)는 403.
@@ -115,7 +115,28 @@
 - **승인 권한**(메뉴 권한과 따로, v0.12.0): 계정의 `approves`(예: `["pv"]`). 계정 관리 「승인 권한」에서 항목마다 체크하고, 담당자 수는 제한하지 않는다. 최고관리자는 전부. 항목 목록은 서버의 `$Approvals`(맥 `@APPROVALS`) — 지금은 `pv` 임시 정책 승인 · 반려(일정/작업 › 임시 정책 [승인] · [A/B안 승인] · [반려]). 승인할 것이 생기면 이 목록에 한 줄 더하고 그 버튼 · 서버에서 `Can-Approve`(`can_approve`)로 확인한다. 승인 · 반려(job plan `pv-decide`)는 메뉴 쓰기 대신 승인 권한으로만 막는다. `/api/me`의 `approves`, `/api/accounts`의 `approvals`.
 - 권한 검사는 **브라우저 페이지에서 온 요청만**(`Sec-Fetch-Site` 머리글, Origin이 `null`이 아님). **Claude(curl) · Figma 플러그인은 로그인 없이 그대로** 쓴다. Claude는 계정 파일을 직접 고치지 않는다(사용자가 요청하면 화면 · API로).
 - 작업자 이름(요청 · 이력의 작성자, Workbench 「작업자」 칸 · 시작 안내 1단계)은 로그인한 계정 이름으로 고정된다.
-- 서버 API: `GET /api/me`, `POST /api/login` · `/api/logout` · `/api/me/password {current, next}`, `GET/POST /api/accounts {action: add|update|delete}`(최고관리자).
+- 서버 API: `GET /api/me`, `POST /api/login` · `/api/logout` · `/api/me/password {current, next}` · `/api/me/team {team}`, `GET/POST /api/accounts {action: add|update|delete|team-add|team-update|team-delete}`(최고관리자).
+
+## 팀 (v0.13.0부터)
+
+- 같은 회사 안의 업무 구분이다. **일정/작업 · UX 문서 · 변경 이력 · 사용량 통계**를 팀 단위로 쓴다(`$TeamMenus` · 맥 `@TEAM_MENUS`). Workbench · 프로토타입은 PC마다라 팀과 상관없다. 팀끼리 서로 못 보게 막는 것은 화면 · 서버 권한 수준이다(모든 팀 데이터가 같은 `history` 브랜치로 모든 PC에 내려온다).
+- 팀 목록 = `.history/config/teams.json` `{items:[{id, name, legacy, createdAt, by}]}`(깃 공유, 웹으로 내보내지 않음). 파일이 없으면 **CURECA**(`cureca`) 하나로 본다. 「기본 팀」은 없다. 최고관리자만 계정 관리 「팀」에서 추가 · 이름 바꾸기 · 지우기(지금까지의 데이터가 있는 팀 · 계정이 있는 팀 · `.history/teams/{id}`에 데이터가 있는 팀은 못 지움).
+- **CURECA = 지금까지 모두가 함께 쓰던 데이터의 팀**(`legacy:true`). 그 데이터는 지금 자리 그대로 둔다(`.history/guides` 아래는 원본 CURECA_AI 저장소와 경로가 같아야 한다). 다른 팀의 데이터는 `.history/teams/{id}/` 아래에 같은 구조로 둔다.
+
+| 데이터 | CURECA | 다른 팀 |
+|---|---|---|
+| UX 문서(작업규칙 · 정책서 · UX가이드 · 기준데이터 · 화면 정의서, `provisional/` · `pending/` · `customer-agenda/` · `screen-fixes/` · `decisions/`, `_log.json`) | `.history/guides/` | `.history/teams/{id}/guides/` |
+| 회의록 | `.history/minutes/` | `.history/teams/{id}/minutes/` |
+| 시트 연결 | `.history/config/sheet.json` | `.history/teams/{id}/config/sheet.json` |
+| 작업 기준(이 PC만) | `workbench/guide_apply.json` | `workbench/guide_apply.{id}.json` |
+| 변경 이력 · 사용량 | `.history/entries` · `.history/usage` 한곳, 기록마다 `team`(없으면 CURECA) |
+
+- 서버는 요청마다 팀을 정한다: 화면 = 이 PC에서 고른 팀, Claude · curl = `?team={id}`(없으면 이 PC에서 고른 팀). 그 팀으로 `/api/guides` · `/api/minutes` · `/api/sheet*` · `/api/plan/files` · `/api/guides/gitlog|gitfile` · `/api/history`(GET, `?all=1`이면 모든 팀 — Workbench 겹침 표시) · `/api/usage`가 바뀐다. 화면이 `.history/guides/…` · `.history/minutes/…`를 읽으면 서버가 그 팀 위치로 바꿔 준다. 남의 팀 폴더(`/.history/teams/{남의 팀}/`) · 팀 시트 비밀값은 내보내지 않는다.
+- 새 요청(`/api/requests` add) · 작업(`/api/jobs` add) · 이력(`/api/history` add)에는 그때 팀이 `team`으로 붙는다(본문에 `team`을 주면 그것). 요청이 끝나면 `usage.ps1 -ReqId`가 요청의 팀으로 사용량을 남긴다.
+- **Claude가 요청 · 작업을 처리할 때**: 그 항목의 `team`(없으면 `cureca`)으로 일한다. 이 문서의 `.history/guides/…` · `.history/minutes/…` · `.history/config/sheet.json` 경로는 CURECA 기준이니, 다른 팀이면 위 표대로 `.history/teams/{team}/…`로 바꿔 읽고 쓴다(새 문서 폴더 `.history/teams/{team}/guides/{id}/`도). 서버 API에는 `?team={team}`을 붙이고, 작업을 새로 쌓을 때(prototype-sync · text 등)는 본문에 `team`을 넣는다. 사용량은 `usage.ps1 … -Team {team}`(맥 `--team`). Workbench 요청의 작업 기준은 `GET /api/guides?team={요청 team}`의 `applied[fileKey]`다.
+- 계정 `teams:[팀 id]`(여러 개 가능). `teams`가 없는 예전 계정 = CURECA. 최고관리자는 모든 팀. **팀이 없는 계정은 팀 메뉴를 못 쓴다**(읽기 · 쓰기 권한이 있어도 메뉴가 숨고 서버가 막는다).
+- 지금 보는 팀은 PC마다(`setup.json`의 `team`, `/api/me`의 `team` · `teams`). 여러 팀 소속이면 상단 메뉴의 팀 고르기로 바꾼다(`POST /api/me/team`). 화면에서는 `window.WB_TEAM` · `WB_TEAMS`.
+- 새 팀은 문서 · 시트 연결 · 회의록이 비어 있다. 그 팀 사람이 UX 문서 「새 {카테고리} 만들기」 · 일정/작업 「시트 연결」로 채운다.
 
 ## 일정/작업 · 구글 시트
 

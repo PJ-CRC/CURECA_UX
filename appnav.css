@@ -90,6 +90,13 @@ html.perm-ro .w-only{display:none!important}
 .ro-only{display:none}
 html.perm-ro .ro-only{display:block}
 .appnav-ro{background:var(--nav-chip);color:var(--nav-warn);font-weight:700;margin-right:10px;cursor:help}
+/* 지금 보는 팀(v0.13.0): 한 팀이면 이름만, 여러 팀이면 고르기 */
+.appnav-team{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 6px 0 12px;border:1px solid var(--nav-btn-line);border-radius:9px;background:var(--nav-bg);font-size:13px;color:var(--nav-ink3);white-space:nowrap}
+.appnav-team b{font-weight:700;color:var(--nav-ink);padding-right:6px}
+.appnav-team select{height:30px;border:0;border-radius:6px;background:var(--nav-chip);color:var(--nav-ink);font:inherit;font-size:13.5px;font-weight:700;padding:0 6px;cursor:pointer}
+.appnav-team select:focus-visible{outline:2px solid var(--nav-accent);outline-offset:1px}
+.appnav-team.none{color:var(--nav-warn);padding-right:12px}
+@media (max-width:1600px){ .appnav-team{padding-left:6px} .appnav-team .lb{display:none} .appnav-team b{padding:0 6px} }
 .appnav-acct{display:flex;align-items:center;gap:10px;white-space:nowrap}
 .appnav .appnav-acct a{height:40px;padding:0 16px;border:1px solid var(--nav-btn-line);border-radius:9px;background:var(--nav-bg);font-size:14px;font-weight:500}
 .appnav .appnav-acct a:hover{border-color:var(--nav-accent);background:var(--nav-bg)}

@@ -416,6 +416,8 @@ button{cursor:pointer}
       fetch('/api/history', {cache:'no-store'}).then(function(r){ return r.json(); }).catch(function(){ return {items:[]}; })
     ]).then(function(d){
       setSrv(true); setSync(d[1]);
+      /* 팀(v0.13.0): 「내 작업 요청」도 지금 보는 팀 것만(예전 요청 = CURECA). 이력은 서버가 이미 그 팀 것만 준다 */
+      if (d[1].team) d[0].items = (d[0].items || []).filter(function(r){ return (r.team || 'cureca') === d[1].team; });
       var s = d[0].version + '/' + (d[1].items || []).map(function(h){ return h.id + h.at + h.note + h.shot; }).join('|');
       if (s !== sig) { sig = s; rows = build(d[0], d[1]); fillSelects(); render(); }
     }).catch(function(){ setSrv(false); if (first) $('rows').innerHTML = '<li class="empty">서버에 연결할 수 없습니다.</li>'; });

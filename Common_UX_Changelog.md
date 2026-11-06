@@ -2,6 +2,40 @@
 
 ---
 
+## [UX AI TEST] R030 · Sample Preparation UV 살균(UV Sterilization) 버튼 · 팝업 추가 · 2026-11-06 (요청: 최고관리자)
+
+- SH.L TEST › Section 3 (L-IOS Instruments).
+- LI-INS-01-T(Overview, 2125:66186): Sample Preparation 카드의 장비 이미지 위에 [UV Sterilization] 버튼(Button/Tertiary XSmall 복제) · 번호 3-7을 넣고, 디스크립션 「3-7 UV Sterilization 버튼」 줄을 3-6 아래에 더함. 프레임 높이 1254 → 1280.
+- 새 팝업 LI-INS-01-01-P(2135:47970, 제안 CID · 확정 대기): Door Control 팝업 틀을 복제해 UV Sterilization 팝업으로 새로 그림. Module별 카드(이름 · 상태, UV On/Off Segment Control, Operating Time 입력 1 ~ 60 min · Error 예시), 하단 [Cancel] · [Save](Basic Popup Case 2). 디스크립션 0 ~ 3 · 질문 대기.
+- 새 케이스 LI-INS-02-T / 케이스 / Sample Preparation(2136:49026): All Tab에서 Sample Preparation(1)을 고른 상태. Door를 Upper · Lower · Rear 3줄로, Door 아래에 UV Sterilization 영역(UV Lamp · On · 30 min · [Setting])을 넣고 아래 영역을 내림. Device는 Sample Aliquot (Upper) · (Lower). 디스크립션 3-2 · 3-3 줄 추가.
+- 케이스 상세 제목(Pretendard)은 플러그인 text 작업 J017이 2분 안에 처리되지 않아 Noto Sans KR Bold 글로 바꿈(2138:48509).
+- `ia/change-requests.md`에 새 CID 요청 줄(#7) 추가. 캡처 3장 갱신.
+
+## [UX AI TEST] R029 · R028 화면 디자인 변경 위치를 빨간 점선 사각형으로 표시 · 2026-11-06 (요청: 최고관리자)
+
+- R026 새 프레임 9개에 R028에서 고친 곳을 빨간 점선 사각형(4px, 점선 14/8, 채움 없음, 이름 `R029 디자인 변경 표시 · 프레임 · 항목`)으로 표시함. R027(실선, 디스크립션)과 구분.
+- 표시 항목: 일시 hh:mm 칸(목록 열 · 상세 패널 · 유형별 정의, 패널 · 팝업에 가려진 칸 제외) · Pagination 1~3 · 프로필 Service · Exit 버튼(L-IOS) · Information 1Depth · Setting 2Depth(L-IOS) · 숨긴 표시 개수 자리(L-IOS) · 바뀐 디스크립션 줄.
+- 섹션의 R027 안내글 아래에 빨간 안내글 `R029 label`을 둠. 유형별 정의 프레임(자동 레이아웃)은 사각형을 절대 위치로 둬 프레임 크기 그대로.
+- 캡처 9장 갱신.
+
+## [UX AI TEST] R028 · R026 새 Assay Pack Setting 화면 디자인을 CURECA UX 가이드 기준으로 맞춤 · 2026-11-06 (요청: 최고관리자)
+
+- 대상: Section 2의 R026 새 프레임(TI-STN-08 · TI-STN-08-P · TI-STN-08-01 · LI-STN-08 · LI-STN-08-P · 케이스 2개 · 유형별 정의 T/L). 기존 프레임은 손대지 않음.
+- 날짜 · 시간(COMM-4-a): `YYYY-MM-DD hh:mm:ss` → `YYYY-MM-DD hh:mm`(182곳), 디스크립션의 `hh:mm:ss` 표기도 `hh:mm`으로.
+- L-IOS 목록(COMM-5-p, 표시 개수 고정): LI 목록 3개에서 「10 items」 표시 개수 드롭다운 숨김, LI-STN-08 디스크립션 2를 「Items (COMM-5-p)」 · 「L-IOS는 표시 개수를 고를 수 없고 한 페이지에 10줄」로 고침.
+- Pagination(COMM-5-i): 24건 · 10줄이라 페이지 번호를 1~3만 보이게 함(목록 7개).
+- 사용자 Service(COMM-2-b · COMM-3-a Case 2): 프로필 이름 Keira Knightley → Service(7개), L-IOS 종료 버튼 Shut Down → Exit(3개, 플러그인 text 작업 J016으로 Pretendard 그대로).
+- LNB(COMM-2-a · 3-a): 펼친 Setting 아래 가려져 있던 Information 1Depth를 보이게 함(7개). L-IOS Setting 2Depth를 Policy · System · Protocol · Tube · Assay Pack Setting으로(LIS · Account 숨김, 3개).
+- 디스크립션 컴포넌트 CID를 새 번호로: 검색 영역 COMM-5-s → 5-m, 목록 COMM-5-m → 5-p, 체크박스 COMM-5-l → 5-n.
+- 캡처 9장 갱신.
+
+## [UX AI TEST] R027 · Section 2 기존 vs R026 새 작업물 비교 · 바뀐 곳 빨간 사각형 표시 · 2026-11-06 (요청: 최고관리자)
+
+- SH.L TEST › Section 2의 기존 Assay Pack Setting 프레임 11개와 R026으로 새로 그린 프레임 11개를 글 단위로 비교함.
+- 바뀐 곳은 7개 기획 프레임의 오른쪽 디스크립션 패널(Frame 1)뿐이고, 왼쪽 화면(1920) · 유형별 정의 · 세부정의 · Import 정의(T/L)는 글자까지 같음.
+- 새 프레임 7개(TI-STN-08 · TI-STN-08-P · TI-STN-08-01 · LI-STN-08 · LI-STN-08-P · 케이스 2개) 안에 바뀐 디스크립션 줄을 감싸는 빨간 사각형(4px, 채움 없음, 이름 `R027 변경 표시 · …`) 13개를 넣고, 섹션의 R026 라벨 오른쪽에 빨간 안내글 `R027 label`을 둠.
+- 새 프레임 7개 캡처 갱신.
+
 ## [UX AI TEST] R026 · Assay Pack Setting(T/L) 현재 규칙으로 다시 그림 · 2026-11-06 (요청: 최고관리자)
 
 - SH.L TEST › Section 2의 Assay Pack Setting 전체(목록 · 상세 · Import, T/L 11개 프레임)를 기존 아래(섹션 안 y +14400)에 새로 둠. 기존 프레임은 그대로 둠. 위에 빨간 「R026 …」 라벨.

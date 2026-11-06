@@ -88,6 +88,24 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
 .msg{font-size:13px;margin-top:10px;min-height:20px}
 .msg.bad{color:var(--red)} .msg.ok{color:var(--ok)}
 .note{font-size:12.5px;color:var(--ink-3);background:var(--surface-2);border-radius:8px;padding:8px 12px;margin:0 0 var(--gap)}
+.left{display:flex;flex-direction:column;gap:var(--gap);min-width:0}
+.teams{padding:16px 18px}
+.teams-h{display:flex;align-items:baseline;gap:10px;margin:0 0 10px}
+.teams-h h2{margin:0;font-size:15px}
+.teams-h small{font-size:12.5px;color:var(--ink-3)}
+.tlist{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.trow{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--line);border-radius:8px}
+.trow b{font-size:14px}
+.trow .tid{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;color:var(--ink-3);margin-left:6px}
+.trow .tmeta{font-size:12px;color:var(--ink-3);margin-left:8px}
+.trow input{height:30px;border:1px solid var(--line);border-radius:7px;background:var(--surface);padding:0 8px;font-size:13.5px;width:100%;max-width:240px}
+.tadd{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.tadd input{height:32px;border:1px solid var(--line);border-radius:7px;background:var(--surface);padding:0 9px;font-size:13.5px;min-width:0;flex:1 1 140px}
+.tadd input:focus,.trow input:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:transparent}
+.chip.tm{background:var(--ok-soft);color:var(--ok)}
+.tag{font-size:11px;font-weight:700;padding:0 6px;border-radius:999px;background:var(--ok-soft);color:var(--ok);margin-left:6px;vertical-align:1px}
+#tmsg{font-size:12.5px;margin-top:6px;min-height:18px}
+#tmsg.bad{color:var(--red)} #tmsg.ok{color:var(--ok)}
 </style>
 </head>
 <body>
@@ -108,20 +126,31 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
     <div class="app-head-t"><h1>계정 관리</h1><p>계정을 만들고 사용할 메뉴를 정합니다. 바꾼 내용은 깃으로 모든 PC에 몇 초 안에 퍼집니다.</p></div>
     <div class="app-head-act"><button class="btn primary" id="newBtn">＋ 계정 추가</button></div>
   </header>
-  <p class="note">비밀번호는 해시로만 저장됩니다(원문은 어디에도 남지 않음). 최고관리자 계정은 지우거나 중지할 수 없고, 메뉴는 늘 전부입니다.</p>
+  <p class="note">비밀번호는 해시로만 저장됩니다(원문은 어디에도 남지 않음). 최고관리자 계정은 지우거나 중지할 수 없고, 메뉴 · 팀은 늘 전부입니다.</p>
   <div class="split">
+    <div class="left">
+    <section class="card teams" aria-labelledby="teamsTitle">
+      <div class="teams-h"><h2 id="teamsTitle">팀</h2><small>일정/작업 · UX 문서 · 변경 이력 · 사용량 통계를 팀 단위로 씁니다. 한 계정이 여러 팀에 속할 수 있습니다.</small></div>
+      <div class="tlist" id="tlist"></div>
+      <div class="tadd"><input id="tId" placeholder="팀 아이디 (영문 소문자, 예: lims)" maxlength="32" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="새 팀 아이디"><input id="tName" placeholder="팀 이름" maxlength="30" aria-label="새 팀 이름"><button class="btn sm" type="button" id="tAdd">＋ 팀 추가</button></div>
+      <div id="tmsg" role="status"></div>
+    </section>
     <section class="card">
       <table>
-        <thead><tr><th>아이디</th><th>이름</th><th>메뉴 권한</th><th>상태</th><th>변경</th></tr></thead>
-        <tbody id="rows"><tr><td colspan="5">불러오는 중…</td></tr></tbody>
+        <thead><tr><th>아이디</th><th>이름</th><th>팀</th><th>메뉴 권한</th><th>상태</th><th>변경</th></tr></thead>
+        <tbody id="rows"><tr><td colspan="6">불러오는 중…</td></tr></tbody>
       </table>
     </section>
+    </div>
     <form class="card form" id="form" autocomplete="off">
       <h2 id="fTitle">계정 추가</h2>
       <p class="sub" id="fSub">아이디는 만든 뒤 바꿀 수 없습니다.</p>
       <label class="f">아이디 <small>영문 소문자 · 숫자 · . _ - (3~32자)</small><input id="fId" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="32"></label>
       <label class="f">이름<input id="fName" maxlength="30"></label>
       <label class="f"><span id="pwLabel">비밀번호 <small>8자 이상</small></span><input id="fPw" type="password" autocomplete="new-password"></label>
+      <div class="mh">소속 팀</div>
+      <div class="menus" id="fTeams"></div>
+      <p class="sub" style="margin:-4px 0 12px">여러 팀을 고를 수 있습니다. 팀이 없으면 <span class="tag" style="margin:0">팀별</span> 메뉴(일정/작업 · UX 문서 · 변경 이력 · 사용량 통계)를 쓸 수 없습니다.</p>
       <div class="mh">메뉴 권한 <button type="button" id="allOn">전부 쓰기</button><button type="button" id="allRead">전부 읽기</button><button type="button" id="allOff">없음</button></div>
       <div class="menus" id="fMenus"></div>
       <p class="sub" style="margin:-4px 0 12px">읽기는 보기만, 쓰기는 수정 요청 등 바꾸기까지 됩니다. 시작 안내 · 내 정보는 권한과 상관없이 모든 계정이 씁니다.</p>
@@ -139,7 +168,19 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
   var $ = function(id){ return document.getElementById(id); };
   function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
   function fmt(t){ var d = new Date(t); if (isNaN(d)) return ''; var p = function(n){ return (n < 10 ? '0' : '') + n; }; return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes()); }
-  var ITEMS = [], MENUS = [], LAB = {}, APPR = [], ALAB = {}, sel = null;
+  var ITEMS = [], MENUS = [], LAB = {}, APPR = [], ALAB = {}, TEAMS = [], TLAB = {}, sel = null, tEdit = null;
+  function setTeams(list, all, lock){ [].forEach.call($('fTeams').querySelectorAll('input[name="tm"]'), function(c){ c.checked = !!all || list.indexOf(c.value) >= 0; c.disabled = !!lock; }); }
+  function teamsOf(){ return [].map.call($('fTeams').querySelectorAll('input[name="tm"]:checked'), function(c){ return c.value; }); }
+  function tsay(t, ok){ $('tmsg').textContent = t; $('tmsg').className = ok ? 'ok' : 'bad'; }
+  /* 팀 목록(최고관리자만 바꾼다). 지금까지의 데이터가 있는 팀(legacy)과 계정이 있는 팀은 지울 수 없다 */
+  function renderTeams(){
+    $('tlist').innerHTML = TEAMS.map(function(t){
+      if (tEdit === t.id) return '<div class="trow" data-t="' + esc(t.id) + '"><input id="tEditName" value="' + esc(t.name) + '" maxlength="30" aria-label="팀 이름"><span class="row"><button class="btn sm primary" type="button" data-act="tsave">저장</button><button class="btn sm" type="button" data-act="tcancel">취소</button></span></div>';
+      return '<div class="trow" data-t="' + esc(t.id) + '"><span><b>' + esc(t.name) + '</b><span class="tid">' + esc(t.id) + '</span><span class="tmeta">계정 ' + t.members + '개' + (t.legacy ? ' · 지금까지의 데이터' : '') + '</span></span>' +
+        '<span class="row"><button class="btn sm" type="button" data-act="tren">이름 바꾸기</button>' + (t.legacy ? '' : '<button class="btn sm danger" type="button" data-act="tdel"' + (t.members ? ' disabled title="계정에서 이 팀을 먼저 빼 주세요"' : '') + '>지우기</button>') + '</span></div>';
+    }).join('') || '<p class="sub">팀이 없습니다.</p>';
+    var e = $('tEditName'); if (e) { e.focus(); e.select(); }
+  }
   function setApproves(list, all, lock){ [].forEach.call($('fApproves').querySelectorAll('input[name="ap"]'), function(c){ c.checked = !!all || list.indexOf(c.value) >= 0; c.disabled = !!lock; }); }
   function approvesOf(){ return [].map.call($('fApproves').querySelectorAll('input[name="ap"]:checked'), function(c){ return c.value; }); }
   function say(t, ok){ $('msg').textContent = t; $('msg').className = 'msg ' + (ok ? 'ok' : 'bad'); }
@@ -148,7 +189,11 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
       if (d.error) throw new Error(d.error);
       $('srv').textContent = '로컬 서버 연결됨'; $('srv').className = 'badge on';
       /* 메뉴가 1개면 예전 서버가 배열 대신 글자로 보냈다 → 늘 배열로 */
-      ITEMS = (d.items || []).map(function(a){ a.menus = [].concat(a.menus || []); a.writes = [].concat(a.writes || []); a.approves = [].concat(a.approves || []); return a; }); MENUS = [].concat(d.menus || []); MENUS.forEach(function(m){ LAB[m.key] = m.label; });
+      TEAMS = [].concat(d.teams || []); TLAB = {}; TEAMS.forEach(function(t){ TLAB[t.id] = t.name; }); renderTeams();
+      $('fTeams').innerHTML = TEAMS.length ? TEAMS.map(function(t){
+        return '<label class="mrow ap"><input type="checkbox" name="tm" value="' + esc(t.id) + '"><b>' + esc(t.name) + '</b><small>' + esc(t.id) + ' · 계정 ' + t.members + '개</small></label>';
+      }).join('') : '<p class="sub">팀이 없습니다. 왼쪽에서 먼저 팀을 만드세요.</p>';
+      ITEMS = (d.items || []).map(function(a){ a.teams = [].concat(a.teams || []); a.menus = [].concat(a.menus || []); a.writes = [].concat(a.writes || []); a.approves = [].concat(a.approves || []); return a; }); MENUS = [].concat(d.menus || []); MENUS.forEach(function(m){ LAB[m.key] = m.label; });
       /* 승인 권한(메뉴 권한과 따로): 항목마다 체크 */
       APPR = [].concat(d.approvals || []); APPR.forEach(function(p){ ALAB[p.key] = p.label; });
       $('fApproves').innerHTML = APPR.length ? APPR.map(function(p){
@@ -157,21 +202,22 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
       /* 메뉴마다 없음 · 읽기 · 쓰기(쓰기가 없는 메뉴는 없음 · 읽기) */
       $('fMenus').innerHTML = MENUS.map(function(m){
         var opts = [['none', '없음'], ['read', '읽기']].concat(m.write ? [['write', '쓰기']] : []);
-        return '<div class="mrow" data-k="' + esc(m.key) + '"><b>' + esc(m.label) + '</b><span class="seg" role="radiogroup" aria-label="' + esc(m.label) + ' 권한">' +
+        return '<div class="mrow" data-k="' + esc(m.key) + '"><b>' + esc(m.label) + (m.team ? '<span class="tag" title="팀마다 따로 보고 씁니다">팀별</span>' : '') + '</b><span class="seg" role="radiogroup" aria-label="' + esc(m.label) + ' 권한">' +
           opts.map(function(o){ return '<label><input type="radio" name="m_' + esc(m.key) + '" value="' + o[0] + '"><span>' + o[1] + '</span></label>'; }).join('') + '</span>' +
           '<small>' + (m.write ? '쓰기: ' + esc(m.write) : '보기만 있는 메뉴입니다.') + '</small></div>';
       }).join('');
       renderRows();
       if (keep && sel) pick(sel); else fresh();
-    }).catch(function(e){ $('rows').innerHTML = '<tr><td colspan="5">' + esc(e.message) + '</td></tr>'; });
+    }).catch(function(e){ $('rows').innerHTML = '<tr><td colspan="6">' + esc(e.message) + '</td></tr>'; });
   }
   function renderRows(){
     $('rows').innerHTML = ITEMS.map(function(a){
       return '<tr data-id="' + esc(a.id) + '" class="' + (sel === a.id ? 'on' : '') + '"><td class="id">' + esc(a.id) + '</td><td>' + esc(a.name) + (a.admin ? ' <span class="chip adm">최고관리자</span>' : '') + '</td>' +
+        '<td><div class="chips">' + (a.admin ? '<span class="chip adm">모든 팀</span>' : a.teams.length ? a.teams.map(function(k){ return '<span class="chip tm">' + esc(TLAB[k] || k) + '</span>'; }).join('') : '<span class="chip off">없음</span>') + '</div></td>' +
         '<td><div class="chips">' + (a.admin ? '<span class="chip adm">전부 쓰기</span>' : a.menus.length ? a.menus.map(function(k){ var w = a.writes.indexOf(k) >= 0; return '<span class="chip' + (w ? ' w' : '') + '">' + esc(LAB[k] || k) + ' · ' + (w ? '쓰기' : '읽기') + '</span>'; }).join('') : '<span class="chip off">없음</span>') +
           (!a.admin && a.approves.length ? a.approves.map(function(k){ return '<span class="chip ap">승인 · ' + esc(ALAB[k] || k) + '</span>'; }).join('') : '') + '</div></td>' +
         '<td>' + (a.active ? '<span class="chip ok">사용</span>' : '<span class="chip off">중지</span>') + '</td><td style="color:var(--ink-3);font-size:12.5px">' + esc(fmt(a.updatedAt)) + '</td></tr>';
-    }).join('') || '<tr><td colspan="5">계정이 없습니다.</td></tr>';
+    }).join('') || '<tr><td colspan="6">계정이 없습니다.</td></tr>';
   }
   /* 권한 칸 채우기: all이면 전부 쓰기(쓰기가 없는 메뉴는 읽기). level(k)로 정하면 그 값 */
   function setLevels(level, lock){
@@ -189,7 +235,7 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
     $('fTitle').textContent = '계정 추가'; $('fSub').textContent = '아이디는 만든 뒤 바꿀 수 없습니다.';
     $('fId').value = ''; $('fId').readOnly = false; $('fName').value = ''; $('fPw').value = ''; $('fPw').placeholder = '';
     $('pwLabel').innerHTML = '비밀번호 <small>8자 이상</small>';
-    setMenus(['workbench'], ['workbench'], false, false); setApproves([], false, false); $('fActive').checked = true; $('activeRow').hidden = true; $('delBtn').hidden = true; say('');
+    setMenus(['workbench'], ['workbench'], false, false); setApproves([], false, false); setTeams(TEAMS.length === 1 ? [TEAMS[0].id] : [], false, false); $('fActive').checked = true; $('activeRow').hidden = true; $('delBtn').hidden = true; say('');
   }
   function pick(id){
     var a = ITEMS.filter(function(x){ return x.id === id; })[0]; if (!a) { fresh(); return; }
@@ -197,7 +243,7 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
     $('fTitle').textContent = a.name + ' 수정'; $('fSub').textContent = a.admin ? '최고관리자: 이름 · 비밀번호만 바꿀 수 있습니다.' : '만든 날 ' + fmt(a.createdAt) + ' · 비밀번호 바꾼 날 ' + fmt(a.pwAt);
     $('fId').value = a.id; $('fId').readOnly = true; $('fName').value = a.name; $('fPw').value = ''; $('fPw').placeholder = '바꿀 때만 입력';
     $('pwLabel').innerHTML = '비밀번호 초기화 <small>비우면 그대로 · 바꾸면 그 사람은 다시 로그인</small>';
-    setMenus(a.menus, a.writes, a.admin, a.admin); setApproves(a.approves, a.admin, a.admin); $('fActive').checked = a.active; $('fActive').disabled = a.admin; $('activeRow').hidden = false; $('delBtn').hidden = a.admin; say('');
+    setMenus(a.menus, a.writes, a.admin, a.admin); setApproves(a.approves, a.admin, a.admin); setTeams(a.teams, a.admin, a.admin); $('fActive').checked = a.active; $('fActive').disabled = a.admin; $('activeRow').hidden = false; $('delBtn').hidden = a.admin; say('');
   }
   $('rows').addEventListener('click', function(e){ var r = e.target.closest('tr[data-id]'); if (r) pick(r.dataset.id); });
   $('newBtn').addEventListener('click', function(){ fresh(); $('fId').focus(); });
@@ -211,9 +257,12 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
     e.preventDefault();
     var menus = MENUS.filter(function(m){ return levelOf(m.key) !== 'none'; }).map(function(m){ return m.key; });
     var writes = MENUS.filter(function(m){ return levelOf(m.key) === 'write'; }).map(function(m){ return m.key; });
-    var b = { action: sel ? 'update' : 'add', id: $('fId').value.trim().toLowerCase(), name: $('fName').value.trim(), pw: $('fPw').value, menus: menus, writes: writes, approves: approvesOf() };
+    var b = { action: sel ? 'update' : 'add', id: $('fId').value.trim().toLowerCase(), name: $('fName').value.trim(), pw: $('fPw').value, menus: menus, writes: writes, approves: approvesOf(), teams: teamsOf() };
     if (sel) b.active = $('fActive').checked;
     if (!sel && !menus.length && !confirm('사용할 메뉴가 하나도 없습니다. 이대로 만들까요? (로그인하면 「시작 안내」 · 「내 정보」만 보입니다)')) return;
+    var cur = sel && ITEMS.filter(function(x){ return x.id === sel; })[0];
+    var teamMenu = MENUS.filter(function(m){ return m.team && menus.indexOf(m.key) >= 0; }).map(function(m){ return m.label; });
+    if (!(cur && cur.admin) && !b.teams.length && teamMenu.length && !confirm('소속 팀이 없어 ' + teamMenu.join(' · ') + ' 메뉴는 쓸 수 없습니다. 이대로 저장할까요?')) return;
     $('saveBtn').disabled = true;
     post(b).then(function(){ var id = b.id; return load(false).then(function(){ pick(id); say(sel === id && b.action === 'add' ? '계정을 만들었습니다. 아이디 · 비밀번호를 본인에게 알려 주세요.' : '저장했습니다.', true); }); })
       .catch(function(err){ say(err.message); }).then(function(){ $('saveBtn').disabled = false; });
@@ -221,6 +270,26 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
   $('delBtn').addEventListener('click', function(){
     if (!sel || !confirm('「' + sel + '」 계정을 지울까요? 지우면 그 사람은 로그인할 수 없습니다.')) return;
     post({ action: 'delete', id: sel }).then(function(){ return load(false); }).then(function(){ say('지웠습니다.', true); }).catch(function(err){ say(err.message); });
+  });
+  /* 팀 추가 · 이름 바꾸기 · 지우기 */
+  function teamPost(b, done){ return post(b).then(function(){ tEdit = null; return load(true); }).then(function(){ tsay(done, true); }).catch(function(err){ tsay(err.message); }); }
+  $('tAdd').addEventListener('click', function(){
+    var id = $('tId').value.trim().toLowerCase(), name = $('tName').value.trim();
+    if (!id || !name) { tsay('팀 아이디와 이름을 넣어 주세요.'); return; }
+    teamPost({ action: 'team-add', team: { id: id, name: name } }, '「' + name + '」 팀을 만들었습니다. 계정에서 소속 팀으로 고르세요.').then(function(){ if ($('tmsg').className === 'ok') { $('tId').value = ''; $('tName').value = ''; } });
+  });
+  $('tName').addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.preventDefault(); $('tAdd').click(); } });
+  $('tlist').addEventListener('click', function(e){
+    var btn = e.target.closest('button[data-act]'); if (!btn) return; var row = btn.closest('[data-t]'), id = row.dataset.t, t = TEAMS.filter(function(x){ return x.id === id; })[0];
+    if (btn.dataset.act === 'tren') { tEdit = id; renderTeams(); tsay(''); }
+    else if (btn.dataset.act === 'tcancel') { tEdit = null; renderTeams(); }
+    else if (btn.dataset.act === 'tsave') teamPost({ action: 'team-update', team: { id: id, name: $('tEditName').value.trim() } }, '팀 이름을 바꿨습니다.');
+    else if (btn.dataset.act === 'tdel' && t && confirm('「' + t.name + '」 팀을 지울까요?')) teamPost({ action: 'team-delete', team: { id: id } }, '팀을 지웠습니다.');
+  });
+  $('tlist').addEventListener('keydown', function(e){
+    if (e.target.id !== 'tEditName') return;
+    if (e.key === 'Enter') { e.preventDefault(); var s = $('tlist').querySelector('[data-act="tsave"]'); if (s) s.click(); }
+    if (e.key === 'Escape') { tEdit = null; renderTeams(); }
   });
   load(false);
 })();

@@ -64,7 +64,7 @@ $UpMax = 20MB; $UpMaxN = 10
 $UpExt = 'md', 'markdown', 'txt', 'csv', 'tsv', 'json', 'html', 'htm', 'pdf', 'docx', 'xlsx', 'pptx', 'png', 'jpg', 'jpeg', 'gif', 'webp'
 # UX 가이드(공유): .history/guides/{id}/ (meta.json · guide.md · rev/ · images/)
 # 작업 기준 가이드는 PC(작업자)마다 따로 고른다: workbench/guide_apply.json {fileKey: {guideId, by, at}} (공유하지 않음)
-$GuideRoot = P $HistDir 'guides'
+$GuideRoot = P $HistDir 'guides'; $GuideRel = '.history/guides'; $Team = 'cureca'   # 팀(v0.13.0): 요청마다 Set-TeamCtx가 그 팀 위치로 바꾼다
 $GuideApply = P $Root 'workbench' 'guide_apply.json'
 $SyncStat = P $Root 'workbench' '.history_sync.json'
 $PcName = [Environment]::MachineName
@@ -159,7 +159,7 @@ function Hist-FromRequest($r) {
     $att += 'attach/' + [IO.Path]::GetFileName($dst)
   }
   Save-HistEntry $name ([ordered]@{
-    id = $name; kind = 'request'; status = [string]$r.status; at = [string]$r.updatedAt; createdAt = [string]$r.createdAt; by = [string]$r.author; doneBy = [string]$r.updatedBy; pc = $PcName
+    id = $name; kind = 'request'; team = (Item-Team $r); status = [string]$r.status; at = [string]$r.updatedAt; createdAt = [string]$r.createdAt; by = [string]$r.author; doneBy = [string]$r.updatedBy; pc = $PcName
     reqId = [string]$r.id; fileKey = [string]$r.fileKey; fileName = [string]$r.fileName; page = [string]$r.page; frame = [string]$r.frame; nodeId = [string]$r.nodeId
     type = [string]$r.type; layout = [string]$r.layout; text = [string]$r.text; note = [string]$r.note; shot = $shot; images = $att
     ask = $r.ask; replies = @($r.replies | Where-Object { $_ })
@@ -210,13 +210,14 @@ function Hist-Backfill {
     if (-not $e -or $e.status -ne $i.status -or $e.at -ne $i.updatedAt -or ($i.createdAt -and -not $e.createdAt -and $i.status -ne '완료')) { Hist-FromRequest $i }
   }
 }
-function Read-Hist {
+function Read-Hist([bool]$all = $false) {
   $items = @()
   if (Test-Path $HistEntries) {
     foreach ($f in Get-ChildItem $HistEntries -Filter *.json) { try { $items += ([IO.File]::ReadAllText($f.FullName, $Utf8) | ConvertFrom-Json) } catch {} }
   }
+  if (-not $all) { $items = @($items | Where-Object { (Item-Team $_) -eq $script:Team }) }   # 지금 팀의 이력만(예전 기록 = CURECA)
   $st = $null; if (Test-Path $SyncStat) { try { $st = [IO.File]::ReadAllText($SyncStat, $Utf8) | ConvertFrom-Json } catch {} }
-  return [ordered]@{ pc = $PcName; pcSlug = $PcSlug; syncing = (Test-Syncing $st); sync = $st; items = $items }
+  return [ordered]@{ pc = $PcName; pcSlug = $PcSlug; team = $(if ($all) { '' } else { $script:Team }); syncing = (Test-Syncing $st); sync = $st; items = $items }
 }
 # 토큰 사용량(공유): 한 건 한 파일 .history/usage/{PC}_{요청 ID}.json
 function Read-Usage {
@@ -224,6 +225,7 @@ function Read-Usage {
   if (Test-Path $HistUsage) {
     foreach ($f in Get-ChildItem $HistUsage -Filter *.json) { try { $items += ([IO.File]::ReadAllText($f.FullName, $Utf8) | ConvertFrom-Json) } catch {} }
   }
+  $items = @($items | Where-Object { (Item-Team $_) -eq $script:Team })   # 지금 팀의 사용량만(예전 기록 = CURECA)
   $pr = $null; try { $pr = [IO.File]::ReadAllText((P $Root 'workbench' 'pricing.json'), $Utf8) | ConvertFrom-Json } catch {}
   return [ordered]@{ pc = $PcName; pcSlug = $PcSlug; pricing = $pr; items = $items }
 }
@@ -260,12 +262,12 @@ function Read-Guides {
         $fl = @(foreach ($p in @($m.files)) {
           $cur = $(if ($fdir) { "$fdir/$p" } else { [string]$p }); $cr = ''
           foreach ($r in $revs) { if ($r.file -eq $p) { $cur = "rev/$($r.rev)/" + ([string]$p -replace '\.\./', '_up/'); $cr = $r.rev } }
-          [ordered]@{ path = [string]$p; mdPath = ".history/guides/$($d.Name)/$cur"; rev = $cr }
+          [ordered]@{ path = [string]$p; mdPath = "$GuideRel/$($d.Name)/$cur"; rev = $cr }
         })
         $m | Add-Member -NotePropertyName fileList -NotePropertyValue @($fl) -Force
         $m | Add-Member -NotePropertyName mdPath -NotePropertyValue '' -Force
       }
-      else { $m | Add-Member -NotePropertyName mdPath -NotePropertyValue $(if ($last) { ".history/guides/$($d.Name)/rev/$($last.rev).md" } else { ".history/guides/$($d.Name)/guide.md" }) -Force }
+      else { $m | Add-Member -NotePropertyName mdPath -NotePropertyValue $(if ($last) { "$GuideRel/$($d.Name)/rev/$($last.rev).md" } else { "$GuideRel/$($d.Name)/guide.md" }) -Force }
       $m | Add-Member -NotePropertyName rev -NotePropertyValue $(if ($last) { $last.rev } else { '' }) -Force
       $m | Add-Member -NotePropertyName revs -NotePropertyValue @($revs) -Force
       if ($last -and $last.at) { $m | Add-Member -NotePropertyName updatedAt -NotePropertyValue $last.at -Force }
@@ -391,7 +393,7 @@ function Pick-Menus($a) { return @(@($a.menus) | Where-Object { $MenuKeys -conta
 function User-Writes($a) {
   if (-not $a) { return @() }
   if ($a.admin) { return @($WriteKeys) }
-  $p = Pick-Menus $a
+  $p = @(Pick-Menus $a); if (-not @(User-Teams $a).Count) { $p = @($p | Where-Object { $TeamMenus -notcontains $_ }) }   # 팀이 없으면 팀 메뉴 없음
   if ($a.PSObject.Properties['writes']) { return @(@($a.writes) | Where-Object { $WriteKeys -contains $_ -and $p -contains $_ }) }
   return @($p | Where-Object { $WriteKeys -contains $_ -and ($_ -ne 'guide' -or @($a.menus) -contains 'guideEdit') })
 }
@@ -414,6 +416,56 @@ function Can-Write([string[]]$keys) {
   $u = Current-User; if (-not $u) { return $false }
   $w = @(User-Writes $u); foreach ($k in $keys) { if ($w -contains $k) { return $true } }; return $false
 }
+# ── 팀 (v0.13.0~): 같은 회사 안의 업무 구분. 일정/작업 · UX 문서 · 변경 이력 · 사용량 통계를 팀 단위로 쓴다(메뉴마다 단계별로 옮김)
+#  팀 목록 = .history/config/teams.json {items:[{id, name, legacy, createdAt, by}]} (깃으로 모든 PC 공유, 웹으로 내보내지 않음). 최고관리자만 바꾼다
+#   파일이 없으면 CURECA 하나로 본다(최고관리자가 처음 바꿀 때 만든다. PC마다 따로 만들어 깃에서 부딪히지 않게)
+#  CURECA(id cureca, legacy:true) = 지금까지 모두가 함께 쓰던 데이터의 팀. 그 데이터는 지금 자리 그대로 둔다
+#   (.history/guides 아래 경로는 원본 CURECA_AI 저장소와 같아야 한다). 다른 팀의 데이터는 .history/teams/{id}/ 아래(다음 단계에서)
+#  계정 teams:[팀 id](여러 개). teams가 없는 예전 계정 = CURECA. 최고관리자는 모든 팀. 팀이 없는 계정은 팀 메뉴($TeamMenus)를 못 쓴다
+#  지금 보는 팀은 PC마다(setup.json team). 여러 팀 소속이면 상단 메뉴에서 고른다(POST /api/me/team)
+$TeamsFile = P $HistDir 'config' 'teams.json'
+$TeamDir = P $HistDir 'teams'
+$TeamMenus = @('plan', 'guide', 'history', 'usage')
+function Read-Teams {
+  if (Test-Path $TeamsFile) { try { return @(([IO.File]::ReadAllText($TeamsFile, $Utf8) | ConvertFrom-Json).items | Where-Object { $_.id }) } catch {} }
+  return @([pscustomobject]@{ id = 'cureca'; name = 'CURECA'; legacy = $true; createdAt = '2026-11-06T00:00:00+09:00'; by = 'system' })
+}
+function Save-Teams($items) {
+  $d = Split-Path $TeamsFile -Parent; if (-not (Test-Path $d)) { New-Item -ItemType Directory -Force $d | Out-Null }
+  [IO.File]::WriteAllText($TeamsFile, ([ordered]@{ items = @($items) } | ConvertTo-Json -Depth 4), $Utf8)
+  $script:SyncWant = $true
+}
+function Team-Ids { return @(Read-Teams | ForEach-Object { [string]$_.id }) }
+function User-Teams($a) {
+  if (-not $a) { return @() }
+  $all = @(Team-Ids)
+  if ($a.admin) { return $all }
+  if (-not $a.PSObject.Properties['teams']) { return @($all | Where-Object { $_ -eq 'cureca' }) }   # 예전 계정 = CURECA
+  return @(@($a.teams) | Where-Object { $all -contains $_ })
+}
+function Team-Members([string]$tid) { return @(Read-Accounts | Where-Object { -not $_.admin -and (@(User-Teams $_) -contains $tid) }) }
+# 지금 보는 팀: 이 PC에서 고른 팀(setup.json team)이 소속이면 그것, 아니면 소속 첫 팀. 계정을 쓰지 않으면 모든 팀 중에서
+function My-Teams { if (Auth-Required) { return @(User-Teams (Current-User)) }; return @(Team-Ids) }
+function Current-Team {
+  $ids = @(My-Teams); $t = [string](Read-Setup).team
+  if ($ids -contains $t) { return $t }; if ($ids.Count) { return $ids[0] }; return ''
+}
+# 팀 데이터 위치: CURECA는 지금까지의 자리(.history 바로 아래), 다른 팀은 .history/teams/{id}/ 아래(guides · minutes · config/sheet.json)
+#  요청마다 Set-TeamCtx로 정한다 → UX 문서 · 일정/작업 함수가 쓰는 $GuideRoot · $MinDir · $SheetConf … 가 그 팀 것으로 바뀐다
+function Team-Rel([string]$tid) { if (-not $tid -or $tid -eq 'cureca') { return '' }; return "teams/$tid/" }   # .history 기준 앞부분
+function Set-TeamCtx([string]$tid) {
+  if (-not $tid) { $tid = 'cureca' }
+  $script:Team = $tid; $rel = Team-Rel $tid
+  $th = $(if ($rel) { P $HistDir 'teams' $tid } else { $HistDir })
+  $script:TeamHist = $th
+  $script:GuideRoot = P $th 'guides'; $script:GuideRel = ".history/${rel}guides"
+  $script:MinDir = P $th 'minutes'
+  $script:SheetConf = P $th 'config' 'sheet.json'
+  $script:SheetCache = $(if ($rel) { P $Root 'workbench' '.sheet_cache' ('_team_' + $tid) } else { P $Root 'workbench' '.sheet_cache' })
+  $script:GuideApply = $(if ($rel) { P $Root 'workbench' ('guide_apply.' + $tid + '.json') } else { P $Root 'workbench' 'guide_apply.json' })   # 작업 기준도 팀마다(이 PC만)
+}
+# 이력 · 사용량 한 건의 팀(예전 기록은 팀이 없어 CURECA)
+function Item-Team($e) { $t = [string]$e.team; if ($t) { return $t }; return 'cureca' }
 # 일정/작업 구글 시트 연결: .history/config/sheet.json(깃으로 모든 PC 공유, 웹으로 내보내지 않음) · 받은 값 사본 workbench/.sheet_cache/
 $SheetConf = P $HistDir 'config' 'sheet.json'
 $SheetCache = P $Root 'workbench' '.sheet_cache'
@@ -507,7 +559,7 @@ function Read-Notes([string]$id) {
 function Ro-Msg([string]$key) { $l = ($Menus | Where-Object { $_.key -eq $key } | Select-Object -First 1).label; return "「$l」 메뉴는 읽기 권한만 있습니다(보기만 가능). 최고관리자에게 「$l · 쓰기」 권한을 요청하세요." }
 # 작업 대기열 종류 → 메뉴(쓰기 권한 확인용)
 function Job-Menu([string]$kind) { if ($kind -in 'guide', 'guide-edit', 'guide-check') { return 'guide' }; if ($kind -in 'minutes', 'plan') { return 'plan' }; if ($kind -like 'prototype*') { return 'proto' }; return 'workbench' }
-function User-Menus($a) { if (-not $a) { return @() }; if ($a.admin) { return @($Menus | ForEach-Object { $_.key }) }; $p = Pick-Menus $a; return @($Menus | Where-Object { $_.always -or $p -contains $_.key } | ForEach-Object { $_.key }) }
+function User-Menus($a) { if (-not $a) { return @() }; if ($a.admin) { return @($Menus | ForEach-Object { $_.key }) }; $p = @(Pick-Menus $a); if (-not @(User-Teams $a).Count) { $p = @($p | Where-Object { $TeamMenus -notcontains $_ }) }; return @($Menus | Where-Object { $_.always -or $p -contains $_.key } | ForEach-Object { $_.key }) }
 function Me-Info {
   $req = Auth-Required; $u = $null; if ($req) { $u = Current-User }
   $allowed = if ($req) { User-Menus $u } else { @($MenuKeys) + $AlwaysKeys }
@@ -520,7 +572,16 @@ function Me-Info {
     user =$(if ($u) { [ordered]@{ id = $u.id; name = $u.name; admin = [bool]$u.admin; menus = @($allowed); writes = @(User-Writes $u); approves = @(User-Approves $u) } } else { $null })
     approves = @(if ($req) { User-Approves $u } else { $ApproveKeys })
     menus = @($Menus | ForEach-Object { [ordered]@{ key = $_.key; label = $_.label; page = $_.pages[0]; pages = $_.pages; admin = [bool]$_.admin; write = [string]$_.write } })
-    allowed = @($allowed); writes = @(if ($req) { User-Writes $u } else { $WriteKeys }); first = $(if ($first) { $first } else { 'Account.html' }) }
+    allowed = @($allowed); writes = @(if ($req) { User-Writes $u } else { $WriteKeys }); first = $(if ($first) { $first } else { 'Account.html' })
+    teams = @(Team-List @(My-Teams)); team = (Current-Team); teamMenus = @($TeamMenus) }
+}
+# 팀 id 목록 → [{id, name}] (팀 목록 순서대로)
+function Team-List([string[]]$ids) { return @(Read-Teams | Where-Object { $ids -contains [string]$_.id } | ForEach-Object { [ordered]@{ id = [string]$_.id; name = [string]$_.name } }) }
+function Set-MyTeam([string]$tid) {
+  if (@(My-Teams) -notcontains $tid) { throw '소속된 팀이 아닙니다.' }
+  $s = Read-Setup; $s | Add-Member -NotePropertyName team -NotePropertyValue $tid -Force
+  if (-not (Test-Path $SetupDir)) { New-Item -ItemType Directory -Path $SetupDir | Out-Null }
+  [IO.File]::WriteAllText($SetupFile, ($s | ConvertTo-Json -Depth 5), $Utf8)
 }
 function Write-Login($a) {
   $s = Read-Setup
@@ -530,7 +591,7 @@ function Write-Login($a) {
   [IO.File]::WriteAllText($SetupFile, ($s | ConvertTo-Json -Depth 5), $Utf8)
 }
 # menus는 늘 배열로: $( )로 감싸면 메뉴가 1개일 때 배열이 풀려 글자로 나간다(화면 a.menus.map 오류)
-function Public-Account($a) { [ordered]@{ id = $a.id; name = $a.name; admin = [bool]$a.admin; menus = @(if ($a.admin) { User-Menus $a } else { Pick-Menus $a }); writes = @(User-Writes $a); approves = @(User-Approves $a); active = ($a.active -ne $false); createdAt = $a.createdAt; updatedAt = $a.updatedAt; pwAt = $a.pwAt } }
+function Public-Account($a) { [ordered]@{ id = $a.id; name = $a.name; admin = [bool]$a.admin; teams = @(User-Teams $a); menus = @(if ($a.admin) { User-Menus $a } else { Pick-Menus $a }); writes = @(User-Writes $a); approves = @(User-Approves $a); active = ($a.active -ne $false); createdAt = $a.createdAt; updatedAt = $a.updatedAt; pwAt = $a.pwAt } }
 function Find-Claude {
   # Claude 데스크톱 앱: 맥 /Applications/Claude.app, 윈도우 Microsoft Store(MSIX) 또는 일반 설치
   if ($script:ClaudeApp) { return $script:ClaudeApp }
@@ -751,8 +812,23 @@ while ($l.IsListening) {
       Write-Login $a; SendJson $c 200 (Me-Info); continue
     }
     if ($path -eq '/api/logout' -and $req.HttpMethod -eq 'POST') { Write-Login $null; SendJson $c 200 @{ ok = $true }; continue }
+    # 지금 보는 팀 바꾸기 {team} (이 PC만). 로그인한 계정의 소속 팀만
+    if ($path -eq '/api/me/team' -and $req.HttpMethod -eq 'POST') {
+      if ((Auth-Required) -and -not (Current-User)) { SendJson $c 401 @{ error = '로그인이 필요합니다.'; login = $true }; continue }
+      $body = (New-Object IO.StreamReader($req.InputStream, $Utf8)).ReadToEnd() | ConvertFrom-Json
+      Set-MyTeam ([string]$body.team); SendJson $c 200 (Me-Info); continue
+    }
     #  브라우저 페이지(Sec-Fetch-Site 머리글이 있고 Figma 플러그인이 아닌 것)만 막는다. Claude(curl) · 플러그인은 그대로
     $isBrowser = [bool]$req.Headers['Sec-Fetch-Site'] -and [string]$req.Headers['Origin'] -ne 'null'
+    # ── 팀(v0.13.0): 이 요청의 팀을 정한다 ──
+    #  화면 = 이 PC에서 고른 팀(소속 팀만). Claude · curl은 ?team= 으로 고를 수 있다(없으면 이 PC에서 고른 팀)
+    #  화면이 .history/guides/… · .history/minutes/… 를 읽으면 그 팀 위치로 바꿔 준다(CURECA는 그대로). 남의 팀 폴더 · 팀 비밀값은 막는다
+    $qTeam = [string]$req.QueryString['team']; $tctx = Current-Team
+    if ($qTeam -and (@(Team-Ids) -contains $qTeam) -and (-not $isBrowser -or -not (Auth-Required) -or (@(My-Teams) -contains $qTeam))) { $tctx = $qTeam }
+    Set-TeamCtx $tctx
+    if ($path -match '^/\.history/teams/([^/]+)/config(/|$)') { Send $c 404 'text/plain' $Utf8.GetBytes('not found'); continue }
+    if ($isBrowser -and (Auth-Required) -and $path -match '^/\.history/teams/([^/]+)/' -and (@(My-Teams) -notcontains $Matches[1])) { Send $c 404 'text/plain' $Utf8.GetBytes('not found'); continue }
+    if ($isBrowser -and $Team -ne 'cureca' -and $path -match '^/\.history/(guides|minutes)(/.*)?$') { $path = "/.history/teams/$Team/" + $Matches[1] + $Matches[2] }
     if ($path -eq '/start' -and (Auth-Required)) {
       $mi = Me-Info; $to = '/Login.html'
       if ($mi.user) { $to = '/' + $mi.first; if (-not (Read-Setup).done -and $mi.allowed -contains 'setup') { $to = '/Setup.html' } }
@@ -800,10 +876,40 @@ while ($l.IsListening) {
       if ($req.HttpMethod -eq 'GET') {
         # ($l은 서버 HttpListener라 쓰면 안 된다)
         $acctList = @(Read-Accounts | Sort-Object @{ e = { -not $_.admin } }, @{ e = { [string]$_.id } } | ForEach-Object { Public-Account $_ })
-        SendJson $c 200 @{ items = $acctList; menus = @($Menus | Where-Object { $MenuKeys -contains $_.key } | ForEach-Object { [ordered]@{ key = $_.key; label = $_.label; write = [string]$_.write } }); approvals = @($Approvals) }; continue
+        $teamList = @(Read-Teams | ForEach-Object { [ordered]@{ id = [string]$_.id; name = [string]$_.name; legacy = [bool]$_.legacy; members = @(Team-Members ([string]$_.id)).Count; createdAt = [string]$_.createdAt } })
+        SendJson $c 200 @{ items = $acctList; teams = $teamList; teamMenus = @($TeamMenus); menus = @($Menus | Where-Object { $MenuKeys -contains $_.key } | ForEach-Object { [ordered]@{ key = $_.key; label = $_.label; write = [string]$_.write; team = ($TeamMenus -contains $_.key) } }); approvals = @($Approvals) }; continue
       }
       $body = (New-Object IO.StreamReader($req.InputStream, $Utf8)).ReadToEnd() | ConvertFrom-Json
+      # 팀 추가 · 이름 바꾸기 · 지우기 {action:'team-add'|'team-update'|'team-delete', team:{id, name}}
+      if ([string]$body.action -like 'team-*') {
+        $tid = ([string]$body.team.id).Trim().ToLower(); $tname = ([string]$body.team.name).Trim()
+        $teams = @(Read-Teams); $t = $teams | Where-Object { $_.id -eq $tid } | Select-Object -First 1
+        switch ([string]$body.action) {
+          'team-add' {
+            if ($tid -notmatch '^[a-z][a-z0-9-]{1,31}$') { throw '팀 아이디는 영문 소문자로 시작하고 영문 소문자 · 숫자 · - 로 2~32자입니다.' }
+            if ($t) { throw "이미 있는 팀 아이디입니다: $tid" }
+            if (-not $tname) { throw '팀 이름을 입력해 주세요.' }
+            if ($teams | Where-Object { [string]$_.name -eq $tname }) { throw "같은 이름의 팀이 있습니다: $tname" }
+            $teams += [pscustomobject]@{ id = $tid; name = $tname; createdAt = (Now); by = (Current-User).id }
+          }
+          'team-update' {
+            if (-not $t) { throw "팀을 찾지 못했습니다: $tid" }
+            if (-not $tname) { throw '팀 이름을 입력해 주세요.' }
+            if ($teams | Where-Object { [string]$_.name -eq $tname -and $_.id -ne $tid }) { throw "같은 이름의 팀이 있습니다: $tname" }
+            $t.name = $tname
+          }
+          'team-delete' {
+            if (-not $t) { throw "팀을 찾지 못했습니다: $tid" }
+            if ($t.legacy) { throw "「$($t.name)」 팀은 지금까지의 데이터가 있는 팀이라 지울 수 없습니다." }
+            $n = @(Team-Members $tid).Count; if ($n) { throw "「$($t.name)」 팀에 계정이 $n 개 있습니다. 계정에서 이 팀을 먼저 빼 주세요." }
+            if ((Test-Path (P $TeamDir $tid)) -and @(Get-ChildItem (P $TeamDir $tid) -Recurse -File -ErrorAction SilentlyContinue).Count) { throw "「$($t.name)」 팀의 데이터(.history/teams/$tid)가 있어 지울 수 없습니다." }
+            $teams = @($teams | Where-Object { $_.id -ne $tid })
+          }
+        }
+        Save-Teams $teams; SendJson $c 200 @{ ok = $true }; continue
+      }
       $id = ([string]$body.id).Trim().ToLower()
+      $allTeams = @(Team-Ids); $pickTeams = @(@($body.teams) | Where-Object { $allTeams -contains $_ } | Select-Object -Unique)   # 소속 팀(여러 개)
       $pickMenus = @(@($body.menus) | Where-Object { $MenuKeys -contains $_ })   # ($Menus와 이름이 같으면 PowerShell은 대소문자를 가리지 않아 전역 메뉴 목록을 덮어쓴다)
       $pickWrites = @(@($body.writes) | Where-Object { $WriteKeys -contains $_ -and $pickMenus -contains $_ })   # 쓰기는 읽기 메뉴 안에서만
       $pickApproves = @(@($body.approves) | Where-Object { $ApproveKeys -contains $_ })   # 승인 권한(메뉴 권한과 따로, 담당자 수 제한 없음)
@@ -813,7 +919,7 @@ while ($l.IsListening) {
           if (Read-Account $id) { throw "이미 있는 아이디입니다: $id" }
           if (-not ([string]$body.name).Trim()) { throw '이름을 입력해 주세요.' }
           if (([string]$body.pw).Length -lt 8) { throw '비밀번호는 8자 이상이어야 합니다.' }
-          $a = [pscustomobject]@{ id = $id; name = ([string]$body.name).Trim(); admin = $false; menus = $pickMenus; writes = $pickWrites; approves = $pickApproves; active = $true; createdAt = (Now); createdBy = (Current-User).id }
+          $a = [pscustomobject]@{ id = $id; name = ([string]$body.name).Trim(); admin = $false; teams = $pickTeams; menus = $pickMenus; writes = $pickWrites; approves = $pickApproves; active = $true; createdAt = (Now); createdBy = (Current-User).id }
           Set-Pw $a ([string]$body.pw); Save-Account $a
         }
         'update' {
@@ -822,6 +928,7 @@ while ($l.IsListening) {
           if (-not $a.admin) {
             if ($null -ne $body.menus) { $a.menus = $pickMenus; $a | Add-Member -NotePropertyName writes -NotePropertyValue $pickWrites -Force }
             if ($null -ne $body.approves) { $a | Add-Member -NotePropertyName approves -NotePropertyValue $pickApproves -Force }
+            if ($null -ne $body.teams) { $a | Add-Member -NotePropertyName teams -NotePropertyValue $pickTeams -Force }
             if ($null -ne $body.active) { $a | Add-Member -NotePropertyName active -NotePropertyValue ([bool]$body.active) -Force }
           }
           if (([string]$body.pw).Length) { if (([string]$body.pw).Length -lt 8) { throw '비밀번호는 8자 이상이어야 합니다.' }; Set-Pw $a ([string]$body.pw) }
@@ -1278,7 +1385,7 @@ while ($l.IsListening) {
             if ($kind -eq 'prototype-sync') { $hit = $items | Where-Object { $_.kind -eq $kind -and $_.proto -eq [string]$body.proto -and $_.status -eq '대기' } | Select-Object -First 1 }
             if (-not $hit) {
               $n = 1; foreach ($i in $items) { $v = [int]([string]$i.id -replace '\D', ''); if ($v -ge $n) { $n = $v + 1 } }
-              $hit = [pscustomobject]@{ id = ('J{0:000}' -f $n); kind = $kind; fileKey = $key; nodeId = $nid; name = ([string]$body.name).Trim(); link = [string]$body.link; text = ([string]$body.text).Trim(); guide = $(if ($kind -in 'guide-check', 'guide-edit') { [string]$body.guide } else { '' }); revFrom = [string]$body.revFrom; revTo = [string]$body.revTo; items = $(if ($kind -eq 'text') { , @($body.items) } else { , @() }); status = '대기'; note = ''; by = [string]$body.by; takenBy = ''; createdAt = $now; updatedAt = $now }
+              $hit = [pscustomobject]@{ id = ('J{0:000}' -f $n); kind = $kind; team = $(if ([string]$body.team) { [string]$body.team } else { $script:Team }); fileKey = $key; nodeId = $nid; name = ([string]$body.name).Trim(); link = [string]$body.link; text = ([string]$body.text).Trim(); guide = $(if ($kind -in 'guide-check', 'guide-edit') { [string]$body.guide } else { '' }); revFrom = [string]$body.revFrom; revTo = [string]$body.revTo; items = $(if ($kind -eq 'text') { , @($body.items) } else { , @() }); status = '대기'; note = ''; by = [string]$body.by; takenBy = ''; createdAt = $now; updatedAt = $now }
               # guide-check 범위: '' = 가이드(작업 기준 파일의 화면만), 'spec' = 정의서(화면 · 다른 문서 · 프로토타입)
               if ($kind -eq 'guide-check') { $hit | Add-Member -NotePropertyName scope -NotePropertyValue $(if ([string]$body.scope -eq 'spec') { 'spec' } else { '' }) }
               # 파일형 문서의 수정 요청: 고칠 파일(meta.files의 이름, 보기 화면이 고른 항목의 파일)
@@ -1326,7 +1433,7 @@ while ($l.IsListening) {
         $j = [pscustomobject]@{ version = [int]$j.version + 1; items = @($items) }
         [IO.File]::WriteAllText($JobFile, ($j | ConvertTo-Json -Depth 8), $Utf8)
         # UX 문서 변경이력: 문서 수정 뒤 찾은 고칠 화면 · 연관 항목(guide-check)은 그 수정본 옆에 남겨 깃으로 공유한다(작업 대기열은 이 PC에만 있으므로)
-        if ($body.action -eq 'update' -and $hit -and $hit.kind -eq 'guide-check') { Save-CheckLog $hit }
+        if ($body.action -eq 'update' -and $hit -and $hit.kind -eq 'guide-check') { Set-TeamCtx (Item-Team $hit); Save-CheckLog $hit }   # 그 작업의 팀 문서 옆에
         SendJson $c 200 @{ ok = $true; job = $hit }; continue
       }
     }
@@ -1340,14 +1447,14 @@ while ($l.IsListening) {
           if (-not $title -and -not $text) { throw '작업 내용을 입력해 주세요.' }
           $name = $PcSlug + '_' + (Get-Date).ToString('yyyyMMdd-HHmmss')
           Save-HistEntry $name ([ordered]@{
-            id = $name; kind = 'work'; at = (Now); by = [string]$body.by; doneBy = [string]$body.doneBy; pc = $PcName
+            id = $name; kind = 'work'; team = $(if ([string]$body.team) { [string]$body.team } else { $script:Team }); at = (Now); by = [string]$body.by; doneBy = [string]$body.doneBy; pc = $PcName
             reqId = ''; fileKey = [string]$body.fileKey; fileName = [string]$body.fileName; page = [string]$body.page; frame = [string]$body.frame; nodeId = [string]$body.nodeId
             type = [string]$body.type; text = $(if ($title) { $title } else { $text }); note = $(if ($title) { $text } else { '' }); shot = (Copy-HistShot $body.fileKey $body.nodeId $name)
           })
         } elseif ($body.action -eq 'sync') { $SyncWant = $true; Sync-Tick; Start-Sleep -Milliseconds 700 }
         else { throw "알 수 없는 action: $($body.action)" }
       }
-      SendJson $c 200 (Read-Hist); continue
+      SendJson $c 200 (Read-Hist ([string]$req.QueryString['all'] -eq '1')); continue   # all=1: 모든 팀(Workbench 겹침 표시 — Workbench는 팀과 상관없다)
     }
     if ($path -eq '/api/usage' -and $req.HttpMethod -eq 'GET') { SendJson $c 200 (Read-Usage); continue }
     # UX 가이드(공유): 목록 · 이 PC의 파일별 작업 기준 가이드 · 바꾸기 {action:'apply', fileKey, guideId('' = 작업 기준 없음), by}
@@ -1358,15 +1465,15 @@ while ($l.IsListening) {
       $since = [string]$req.QueryString['since']; if ($since -notmatch '^[0-9T:+.\-]{10,40}$') { $since = '' }
       $args0 = @('-C', $HistDir, '-c', 'core.quotepath=false', 'log', '--name-status', '--date=iso-strict', '--pretty=format:@@%H|%ad|%an|%s', '-n', '300')
       if ($since) { $args0 += "--since=$since" }
-      $args0 += @('--', 'guides')
+      $gp = (Team-Rel $Team) + 'guides'; $args0 += @('--', $gp)   # 그 팀의 문서 폴더(CURECA = guides, 다른 팀 = teams/{id}/guides)
       $txt = Git-Utf8 $args0; $items = @(); $curC = $null
       foreach ($ln in ($txt -split "`n")) {
         $ln = $ln.TrimEnd("`r")
         if ($ln.StartsWith('@@')) { $p = $ln.Substring(2).Split('|', 4); $curC = [ordered]@{ hash = $p[0]; at = $p[1]; by = $p[2]; msg = $(if ($p.Count -gt 3) { $p[3] } else { '' }); files = @() }; $items += $curC; continue }
         if (-not $curC -or -not $ln.Trim()) { continue }
         $c2 = $ln.Split("`t"); $st = $c2[0].Substring(0, 1); $fp = $c2[$c2.Count - 1]; $from = $(if ($c2.Count -gt 2) { $c2[1] } else { '' })
-        if ($fp -notlike 'guides/*' -or $fp -match '/rev/|\.check-[^/]*\.json$|/meta\.json$|^guides/_log\.json$') { continue }
-        $curC.files += [ordered]@{ st = $st; path = $fp.Substring(7); from = $(if ($from) { $from.Substring([Math]::Min(7, $from.Length)) } else { '' }) }
+        if (-not $fp.StartsWith("$gp/") -or $fp -match '/rev/|\.check-[^/]*\.json$|/meta\.json$' -or $fp -eq "$gp/_log.json") { continue }
+        $gl = $gp.Length + 1; $curC.files += [ordered]@{ st = $st; path = $fp.Substring($gl); from = $(if ($from) { $from.Substring([Math]::Min($gl, $from.Length)) } else { '' }) }
       }
       SendJson $c 200 @{ items = @($items | Where-Object { $_.files.Count }) }; continue
     }
@@ -1375,7 +1482,7 @@ while ($l.IsListening) {
       foreach ($kv in ([string]$req.Url.Query).TrimStart('?').Split('&')) { $p2 = $kv.Split('=', 2); if ($p2.Count -eq 2 -and $p2[0] -eq 'path') { $fp = [Uri]::UnescapeDataString($p2[1].Replace('+', ' ')) } }
       if ($h -notmatch '^[0-9a-f]{7,40}$' -or -not $fp -or $fp -match '\.\.' -or $fp -match '^(accounts|config)/') { throw '잘못된 요청입니다.' }
       $ref = $(if ([string]$req.QueryString['prev']) { "$h^" } else { $h })
-      $t = Git-Utf8 @('-C', $HistDir, 'show', "${ref}:guides/$fp")
+      $t = Git-Utf8 @('-C', $HistDir, 'show', "${ref}:$(Team-Rel $Team)guides/$fp")
       Send $c 200 'text/plain; charset=utf-8' $Utf8.GetBytes([string]$t); continue
     }
     if ($path -eq '/api/guides') {
@@ -1473,7 +1580,7 @@ while ($l.IsListening) {
           $n = 1; foreach ($i in $items) { $v = [int]([string]$i.id -replace '\D', ''); if ($v -ge $n) { $n = $v + 1 } }
           $rid = 'R{0:000}' -f $n
           $imgs = Save-Attach $rid $body.images
-          $items = @([pscustomobject]@{ id = $rid; nodeId = [string]$body.nodeId; frame = [string]$body.frame; page = [string]$body.page; fileKey = [string]$body.fileKey; fileName = [string]$body.fileName; editable = [bool]$body.editable; type = [string]$body.type; priority = [string]$body.priority; layout = [string]$body.layout; text = $txt; status = '대기'; note = ''; author = [string]$body.by; updatedBy = [string]$body.by; createdAt = $now; updatedAt = $now }) + $items
+          $items = @([pscustomobject]@{ id = $rid; team = $(if ([string]$body.team) { [string]$body.team } else { $script:Team }); nodeId = [string]$body.nodeId; frame = [string]$body.frame; page = [string]$body.page; fileKey = [string]$body.fileKey; fileName = [string]$body.fileName; editable = [bool]$body.editable; type = [string]$body.type; priority = [string]$body.priority; layout = [string]$body.layout; text = $txt; status = '대기'; note = ''; author = [string]$body.by; updatedBy = [string]$body.by; createdAt = $now; updatedAt = $now }) + $items
           if ($imgs.Count) { $items[0] | Add-Member -NotePropertyName images -NotePropertyValue $imgs }
           # 화면설계서 작업대기에서 만든 요청: 반영할 반영 대기 줄 [{doc:'screens'|'screen-fixes', file, n}] — 완료되면 Claude가 그 줄을 「반영 완료 (날짜)」로
           if ($body.fixRows) { $items[0] | Add-Member -NotePropertyName fixRows -NotePropertyValue @($body.fixRows | Select-Object -First 200 | ForEach-Object { [ordered]@{ doc = [string]$_.doc; file = [string]$_.file; n = [string]$_.n; cid = [string]$_.cid } }) }

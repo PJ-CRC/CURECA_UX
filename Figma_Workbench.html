@@ -1091,7 +1091,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
   function poll(first){
     if (location.protocol === 'file:') { if (first) setSrv(false); return; }
     pollShots();
-    fetch('/api/history', {cache:'no-store'}).then(function(r){ return r.ok ? r.json() : null; }).then(function(h){
+    fetch('/api/history?all=1', {cache:'no-store'}).then(function(r){ return r.ok ? r.json() : null; }).then(function(h){
       if (!h) return; var sig = JSON.stringify((h.items || []).map(function(x){ return x.id + x.status + x.at; }));
       if (sig !== HIST.sig) { HIST = { items: h.items || [], pcSlug: h.pcSlug || '', sig: sig }; if (cur) renderTarget(); }
     }).catch(function(){});
