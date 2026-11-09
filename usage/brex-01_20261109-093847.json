@@ -1,0 +1,28 @@
+{
+    "id":  "brex-01_20261109-093847",
+    "kind":  "work",
+    "reqId":  "",
+    "reqType":  "",
+    "team":  "cureca",
+    "at":  "2026-11-09T09:38:47+09:00",
+    "from":  "2026-11-09T09:38:12+09:00",
+    "by":  "서보경",
+    "doneBy":  "Claude",
+    "pc":  "BREX_01",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "작업규칙: 반영과 롤백 (J039)",
+    "models":  {
+                   "claude-opus-5-5":  7
+               },
+    "calls":  7,
+    "input":  14,
+    "cacheWrite":  7381,
+    "cacheRead":  497639,
+    "output":  2735,
+    "total":  507769,
+    "usd":  0.2133
+}
