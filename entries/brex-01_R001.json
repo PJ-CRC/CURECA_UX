@@ -1,0 +1,35 @@
+{
+    "id":  "brex-01_R001",
+    "kind":  "request",
+    "team":  "cureca",
+    "status":  "대기",
+    "at":  "2026-11-09T09:59:51+09:00",
+    "createdAt":  "2026-11-09T09:59:51+09:00",
+    "by":  "서보경",
+    "doneBy":  "서보경",
+    "pc":  "BREX_01",
+    "reqId":  "R001",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L",
+    "frame":  "SB-List",
+    "nodeId":  "143:64057",
+    "type":  "일반",
+    "layout":  "",
+    "text":  "UX AI Test 작업페이지 다시 불러와줘",
+    "note":  "",
+    "shot":  "",
+    "shots":  [
+
+              ],
+    "images":  [
+
+               ],
+    "frames":  [
+
+               ],
+    "ask":  null,
+    "replies":  [
+
+                ]
+}
