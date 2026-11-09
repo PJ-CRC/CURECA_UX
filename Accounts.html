@@ -104,6 +104,8 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
 .tadd input{height:32px;border:1px solid var(--line);border-radius:7px;background:var(--surface);padding:0 9px;font-size:13.5px;min-width:0;flex:1 1 140px}
 .tadd input:focus,.trow input:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:transparent}
 .chip.tm{background:var(--ok-soft);color:var(--ok)}
+/* 팀 색: 팀을 만들 때 서버가 정한 번호(teams.json color 0~7). 색표는 appnav.css(.tc0~.tc7, 상단 팀 표시와 같음) */
+.chip.tm[class*="tc"]{background:var(--tc-bg);color:var(--tc-fg)}
 .tag{font-size:11px;font-weight:700;padding:0 6px;border-radius:999px;background:var(--ok-soft);color:var(--ok);margin-left:6px;vertical-align:1px}
 #tmsg{font-size:12.5px;margin-top:6px;min-height:18px}
 #tmsg.bad{color:var(--red)} #tmsg.ok{color:var(--ok)}
@@ -169,7 +171,7 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
   var $ = function(id){ return document.getElementById(id); };
   var esc = window.WB.esc;   // 공통(common.js)
   function fmt(t){ var d = new Date(t); if (isNaN(d)) return ''; var p = function(n){ return (n < 10 ? '0' : '') + n; }; return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes()); }
-  var ITEMS = [], MENUS = [], LAB = {}, APPR = [], ALAB = {}, TEAMS = [], TLAB = {}, sel = null, tEdit = null;
+  var ITEMS = [], MENUS = [], LAB = {}, APPR = [], ALAB = {}, TEAMS = [], TLAB = {}, TCOL = {}, sel = null, tEdit = null;
   function setTeams(list, all, lock){ [].forEach.call($('fTeams').querySelectorAll('input[name="tm"]'), function(c){ c.checked = !!all || list.indexOf(c.value) >= 0; c.disabled = !!lock; }); }
   function teamsOf(){ return [].map.call($('fTeams').querySelectorAll('input[name="tm"]:checked'), function(c){ return c.value; }); }
   function tsay(t, ok){ $('tmsg').textContent = t; $('tmsg').className = ok ? 'ok' : 'bad'; }
@@ -177,7 +179,7 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
   function renderTeams(){
     $('tlist').innerHTML = TEAMS.map(function(t){
       if (tEdit === t.id) return '<div class="trow" data-t="' + esc(t.id) + '"><input id="tEditName" value="' + esc(t.name) + '" maxlength="30" aria-label="팀 이름"><span class="row"><button class="btn sm primary" type="button" data-act="tsave">저장</button><button class="btn sm" type="button" data-act="tcancel">취소</button></span></div>';
-      return '<div class="trow" data-t="' + esc(t.id) + '"><span><b>' + esc(t.name) + '</b><span class="tid">' + esc(t.id) + '</span><span class="tmeta">계정 ' + t.members + '개' + (t.legacy ? ' · 지금까지의 데이터' : '') + '</span></span>' +
+      return '<div class="trow" data-t="' + esc(t.id) + '"><span><span class="chip tm tc' + (TCOL[t.id] || 0) + '"><b>' + esc(t.name) + '</b></span><span class="tid">' + esc(t.id) + '</span><span class="tmeta">계정 ' + t.members + '개' + (t.legacy ? ' · 지금까지의 데이터' : '') + '</span></span>' +
         '<span class="row"><button class="btn sm" type="button" data-act="tren">이름 바꾸기</button>' + (t.legacy ? '' : '<button class="btn sm danger" type="button" data-act="tdel"' + (t.members ? ' disabled title="계정에서 이 팀을 먼저 빼 주세요"' : '') + '>지우기</button>') + '</span></div>';
     }).join('') || '<p class="sub">팀이 없습니다.</p>';
     var e = $('tEditName'); if (e) { e.focus(); e.select(); }
@@ -190,7 +192,7 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
       if (d.error) throw new Error(d.error);
       $('srv').textContent = '로컬 서버 연결됨'; $('srv').className = 'badge on';
       /* 메뉴가 1개면 예전 서버가 배열 대신 글자로 보냈다 → 늘 배열로 */
-      TEAMS = [].concat(d.teams || []); TLAB = {}; TEAMS.forEach(function(t){ TLAB[t.id] = t.name; }); renderTeams();
+      TEAMS = [].concat(d.teams || []); TLAB = {}; TEAMS.forEach(function(t, i){ TLAB[t.id] = t.name; TCOL[t.id] = t.color != null ? t.color % 8 : i % 8; }); renderTeams();
       $('fTeams').innerHTML = TEAMS.length ? TEAMS.map(function(t){
         return '<label class="mrow ap"><input type="checkbox" name="tm" value="' + esc(t.id) + '"><b>' + esc(t.name) + '</b><small>' + esc(t.id) + ' · 계정 ' + t.members + '개</small></label>';
       }).join('') : '<p class="sub">팀이 없습니다. 왼쪽에서 먼저 팀을 만드세요.</p>';
@@ -214,7 +216,7 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
   function renderRows(){
     $('rows').innerHTML = ITEMS.map(function(a){
       return '<tr data-id="' + esc(a.id) + '" class="' + (sel === a.id ? 'on' : '') + '"><td class="id">' + esc(a.id) + '</td><td>' + esc(a.name) + (a.admin ? ' <span class="chip adm">최고관리자</span>' : '') + '</td>' +
-        '<td><div class="chips">' + (a.admin ? '<span class="chip adm">모든 팀</span>' : a.teams.length ? a.teams.map(function(k){ return '<span class="chip tm">' + esc(TLAB[k] || k) + '</span>'; }).join('') : '<span class="chip off">없음</span>') + '</div></td>' +
+        '<td><div class="chips">' + (a.admin ? '<span class="chip adm">모든 팀</span>' : a.teams.length ? a.teams.map(function(k){ return '<span class="chip tm tc' + (TCOL[k] || 0) + '">' + esc(TLAB[k] || k) + '</span>'; }).join('') : '<span class="chip off">없음</span>') + '</div></td>' +
         '<td><div class="chips">' + (a.admin ? '<span class="chip adm">전부 쓰기</span>' : a.menus.length ? a.menus.map(function(k){ var w = a.writes.indexOf(k) >= 0; return '<span class="chip' + (w ? ' w' : '') + '">' + esc(LAB[k] || k) + ' · ' + (w ? '쓰기' : '읽기') + '</span>'; }).join('') : '<span class="chip off">없음</span>') +
           (!a.admin && a.approves.length ? a.approves.map(function(k){ return '<span class="chip ap">승인 · ' + esc(ALAB[k] || k) + '</span>'; }).join('') : '') + '</div></td>' +
         '<td>' + (a.active ? '<span class="chip ok">사용</span>' : '<span class="chip off">중지</span>') + '</td><td style="color:var(--ink-3);font-size:12.5px">' + esc(fmt(a.updatedAt)) + '</td></tr>';

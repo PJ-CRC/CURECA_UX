@@ -121,7 +121,7 @@
 ## 팀 (v0.13.0부터)
 
 - 같은 회사 안의 업무 구분이다. **일정/작업 · UX 문서 · 변경 이력 · 사용량 통계**를 팀 단위로 쓴다(`$TeamMenus` · 맥 `@TEAM_MENUS`). Workbench · 프로토타입은 PC마다라 팀과 상관없다. 팀끼리 서로 못 보게 막는 것은 화면 · 서버 권한 수준이다(모든 팀 데이터가 같은 `history` 브랜치로 모든 PC에 내려온다).
-- 팀 목록 = `.history/config/teams.json` `{items:[{id, name, legacy, createdAt, by}]}`(깃 공유, 웹으로 내보내지 않음). 파일이 없으면 **CURECA**(`cureca`) 하나로 본다. 「기본 팀」은 없다. 최고관리자만 계정 관리 「팀」에서 추가 · 이름 바꾸기 · 지우기(지금까지의 데이터가 있는 팀 · 계정이 있는 팀 · `.history/teams/{id}`에 데이터가 있는 팀은 못 지움).
+- 팀 목록 = `.history/config/teams.json` `{items:[{id, name, legacy, createdAt, by, color}]}`(깃 공유, 웹으로 내보내지 않음. `color` 0~7 = 계정 관리 팀 칩 색, 팀을 만들 때 서버가 다른 팀이 쓰지 않는 첫 색을 정한다). 파일이 없으면 **CURECA**(`cureca`) 하나로 본다. 「기본 팀」은 없다. 최고관리자만 계정 관리 「팀」에서 추가 · 이름 바꾸기 · 지우기(지금까지의 데이터가 있는 팀 · 계정이 있는 팀 · `.history/teams/{id}`에 데이터가 있는 팀은 못 지움).
 - **CURECA = 지금까지 모두가 함께 쓰던 데이터의 팀**(`legacy:true`). 그 데이터는 지금 자리 그대로 둔다(`.history/guides` 아래는 원본 CURECA_AI 저장소와 경로가 같아야 한다). 다른 팀의 데이터는 `.history/teams/{id}/` 아래에 같은 구조로 둔다.
 
 | 데이터 | CURECA | 다른 팀 |

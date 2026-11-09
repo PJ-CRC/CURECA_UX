@@ -662,6 +662,18 @@ sub read_teams {
   return ({ id => 'cureca', name => 'CURECA', legacy => JSON::PP::true, createdAt => '2026-11-06T00:00:00+09:00', by => 'system' });
 }
 sub save_teams { my @items = @_; make_path("$HIST_DIR/config"); write_json($TEAMS_FILE, { items => \@items }); $sync_want = 1; }
+# 팀 색(0~7, 계정 관리 칩 색): 팀을 만들 때 다른 팀이 쓰지 않는 첫 색을 정해 teams.json에 둔다(윈도우 Fill-TeamColors와 같다)
+#  색이 없는 예전 팀은 목록 순서대로 남은 색을 받는다(팀을 만들 때 그 색도 함께 저장해 굳힌다)
+my $TEAM_COLORS = 8;
+sub fill_team_colors {
+  my @t = @_; my %used = map { ($_->{color} // '') =~ /^d+$/ ? ($_->{color} => 1) : () } @t;
+  for my $x (@t) {
+    next if ($x->{color} // '') =~ /^d+$/;
+    my $c = 0; $c++ while $used{$c} && $c < $TEAM_COLORS; $c = (scalar keys %used) % $TEAM_COLORS if $c >= $TEAM_COLORS;
+    $used{$c} = 1; $x->{color} = $c;
+  }
+  return @t;
+}
 sub team_ids { return map { str($_->{id}) } read_teams(); }
 sub user_teams {
   my ($a) = @_; return () unless $a; my @all = team_ids(); return @all if $a->{admin};
@@ -671,7 +683,7 @@ sub user_teams {
 sub team_members { my ($tid) = @_; return grep { my $a = $_; !$a->{admin} && grep { $_ eq $tid } user_teams($a) } read_accounts(); }
 sub my_teams { return auth_required() ? user_teams(current_user()) : team_ids(); }
 sub current_team { my @ids = my_teams(); my $t = str(read_setup()->{team}); return $t if grep { $_ eq $t } @ids; return @ids ? $ids[0] : ''; }
-sub team_list { my %w = map { $_ => 1 } @_; return [ map { { id => str($_->{id}), name => str($_->{name}) } } grep { $w{ str($_->{id}) } } read_teams() ]; }
+sub team_list { my %w = map { $_ => 1 } @_; return [ map { { id => str($_->{id}), name => str($_->{name}), color => $_->{color} + 0 } } grep { $w{ str($_->{id}) } } fill_team_colors(read_teams()) ]; }
 sub set_my_team {
   my ($tid) = @_; die "소속된 팀이 아닙니다.\n" unless grep { $_ eq $tid } my_teams();
   my $s = read_setup(); $s->{team} = $tid; make_path($SETUP_DIR); write_json($SETUP_FILE, $s);
@@ -725,7 +737,9 @@ sub accounts_post {
       die "이미 있는 팀 아이디입니다: $tid\n" if $t;
       die "팀 이름을 입력해 주세요.\n" if $tname eq '';
       die "같은 이름의 팀이 있습니다: $tname\n" if grep { str($_->{name}) eq $tname } @teams;
-      my $cu = current_user(); push @teams, { id => $tid, name => $tname, createdAt => now_iso(), by => $cu ? $cu->{id} : '' };
+      my $cu = current_user(); @teams = fill_team_colors(@teams);   # 색: 기존 팀 색을 굳힌 뒤, 새 팀은 아무도 쓰지 않는 첫 색
+      push @teams, { id => $tid, name => $tname, createdAt => now_iso(), by => $cu ? $cu->{id} : '' };
+      @teams = fill_team_colors(@teams);
     } elsif ($ta eq 'team-update') {
       die "팀을 찾지 못했습니다: $tid\n" unless $t;
       die "팀 이름을 입력해 주세요.\n" if $tname eq '';
@@ -1265,7 +1279,7 @@ sub handle {
   if ($path eq '/api/accounts' && $method eq 'GET') {
     my @l = map { public_account($_) } sort { ($b->{admin} ? 1 : 0) <=> ($a->{admin} ? 1 : 0) || str($a->{id}) cmp str($b->{id}) } read_accounts();
     my %tm = map { $_ => 1 } @TEAM_MENUS;
-    my @tl = map { my $tid = str($_->{id}); my $n = () = team_members($tid); { id => $tid, name => str($_->{name}), legacy => $_->{legacy} ? JSON::PP::true : JSON::PP::false, members => $n, createdAt => str($_->{createdAt}) } } read_teams();
+    my @tl = map { my $tid = str($_->{id}); my $n = () = team_members($tid); { id => $tid, name => str($_->{name}), legacy => $_->{legacy} ? JSON::PP::true : JSON::PP::false, members => $n, createdAt => str($_->{createdAt}), color => $_->{color} + 0 } } fill_team_colors(read_teams());
     return respond_json($sock, 200, { items => \@l, teams => \@tl, teamMenus => [@TEAM_MENUS], menus => [ map { { key => $_->{key}, label => $_->{label}, write => str($_->{write}), team => $tm{ $_->{key} } ? JSON::PP::true : JSON::PP::false } } grep { !$_->{admin} && !$_->{always} } @MENUS ], approvals => \@APPROVALS });
   }
   if ($path eq '/api/accounts' && $method eq 'POST') { return respond_json($sock, 200, accounts_post($body->())); }
