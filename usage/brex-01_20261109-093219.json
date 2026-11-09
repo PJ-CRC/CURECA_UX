@@ -1,0 +1,28 @@
+{
+    "id":  "brex-01_20261109-093219",
+    "kind":  "work",
+    "reqId":  "",
+    "reqType":  "",
+    "team":  "cureca",
+    "at":  "2026-11-09T09:32:19+09:00",
+    "from":  "2026-11-09T09:32:05+09:00",
+    "by":  "서보경",
+    "doneBy":  "Claude",
+    "pc":  "BREX_01",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "작업규칙: 1. 작업 유형 (J033)",
+    "models":  {
+                   "claude-opus-5-5":  2
+               },
+    "calls":  2,
+    "input":  4,
+    "cacheWrite":  2371,
+    "cacheRead":  218014,
+    "output":  1247,
+    "total":  221636,
+    "usd":  0.0875
+}
