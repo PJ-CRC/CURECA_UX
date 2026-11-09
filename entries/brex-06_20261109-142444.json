@@ -1,0 +1,19 @@
+{
+    "id":  "brex-06_20261109-142444",
+    "kind":  "work",
+    "team":  "cureca",
+    "at":  "2026-11-09T14:24:44+09:00",
+    "by":  "최고관리자",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "reqId":  "",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "Figma AI Run 사용 매뉴얼 · FAQ (A4 가로)",
+    "nodeId":  "2204:48416",
+    "type":  "",
+    "text":  "Figma AI Run 사용 매뉴얼 · FAQ (A4 가로 20쪽) 만들기",
+    "note":  "SH.L TEST에 사용 매뉴얼 · FAQ 섹션을 새로 만듦 (A4 가로 1123×794, 20쪽)\n- 표지 · 목차 · 시작하기 전에 · 로그인 · 상단 메뉴\n- 시작 안내 1~8단계: 실제 화면 캡처 + 누를 곳 빨간 표시 · 번호 설명\n- Workbench 화면 구성 · 수정 요청 · UX 문서 적용 · 변경 이력 · 사용량 통계\n- 이용 시 유의사항(깃허브 연결 · Claude 계정 변경 · UX 문서 적용 등) · 문제 해결 FAQ 14개",
+    "shot":  ""
+}
