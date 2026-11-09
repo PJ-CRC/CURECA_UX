@@ -1,0 +1,19 @@
+{
+    "id":  "brex-06_20261109-173410",
+    "kind":  "work",
+    "team":  "cureca",
+    "at":  "2026-11-09T17:34:10+09:00",
+    "by":  "최고관리자",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "reqId":  "",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "LI-INS-01-P",
+    "nodeId":  "2225:69611",
+    "type":  "",
+    "text":  "Door Control 문 열린 채 Lock 클릭 시 문 닫기 안내 팝업 추가",
+    "note":  "LI-INS-01-P 케이스 화면에 「Door가 Open인 상태에서 [Lock] 클릭 시」 케이스 추가: 안내 팝업(Please close the door. / The door is open. Close the door, then press Lock again. / [OK]). [OK] 클릭 시 닫힘, Door는 Unlocked 유지. 디스크립션 01-P 2-5 · 02-T 3-1, 업데이트 박스에 반영.",
+    "shot":  "shots/brex-06_20261109-173410.jpg"
+}
