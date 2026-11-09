@@ -1,0 +1,28 @@
+{
+    "id":  "brex-01_20261109-092804",
+    "kind":  "work",
+    "reqId":  "",
+    "reqType":  "",
+    "team":  "cureca",
+    "at":  "2026-11-09T09:28:04+09:00",
+    "from":  "2026-11-09T09:25:07+09:00",
+    "by":  "서보경",
+    "doneBy":  "Claude",
+    "pc":  "BREX_01",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "작업규칙: 헌법 (J030)",
+    "models":  {
+                   "claude-opus-5-5":  13
+               },
+    "calls":  13,
+    "input":  25,
+    "cacheWrite":  24952,
+    "cacheRead":  1071305,
+    "output":  9107,
+    "total":  1105389,
+    "usd":  0.5961
+}
