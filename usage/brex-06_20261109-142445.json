@@ -1,0 +1,28 @@
+{
+    "id":  "brex-06_20261109-142445",
+    "kind":  "work",
+    "reqId":  "",
+    "reqType":  "",
+    "team":  "cureca",
+    "at":  "2026-11-09T14:24:45+09:00",
+    "from":  "2026-11-09T14:04:34+09:00",
+    "by":  "최고관리자",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "Figma AI Run 사용 매뉴얼 · FAQ (A4 가로)",
+    "nodeId":  "2204:48416",
+    "text":  "Figma AI Run 사용 매뉴얼 · FAQ 만들기",
+    "models":  {
+                   "claude-opus-5-5":  58
+               },
+    "calls":  58,
+    "input":  120,
+    "cacheWrite":  180332,
+    "cacheRead":  16486510,
+    "output":  93024,
+    "total":  16759986,
+    "usd":  6.6009
+}
