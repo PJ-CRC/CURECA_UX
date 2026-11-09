@@ -151,7 +151,20 @@ function Save-HistEntry($name, $e) {
 #  캡처는 완료일 때만(완료 직전에 캡처를 갱신하므로) 남긴다
 function Hist-FromRequest($r) {
   $name = $PcSlug + '_' + [string]$r.id
-  $shot = ''; if ($r.status -eq '완료') { $shot = Copy-HistShot $r.fileKey $r.nodeId $name } else { Remove-Item (P $HistShots ($name + '.*')) -Force -ErrorAction SilentlyContinue }
+  # 캡처: 실제로 고친 프레임(frames)이 있으면 그것들 모두({이름}.jpg, {이름}-2.jpg …), 없으면 요청 프레임 한 장
+  $shot = ''; $shots = @()
+  Remove-Item (P $HistShots ($name + '.*')), (P $HistShots ($name + '-*')) -Force -ErrorAction SilentlyContinue
+  if ($r.status -eq '완료') {
+    $fr = @($r.frames | Where-Object { $_ -and $_.nodeId })
+    if (-not $fr.Count) { $fr = @([pscustomobject]@{ nodeId = [string]$r.nodeId; name = [string]$r.frame }) }
+    $k = 0
+    foreach ($f in $fr) {
+      $nm = if ($k) { $name + '-' + ($k + 1) } else { $name }
+      $s = Copy-HistShot $r.fileKey ([string]$f.nodeId) $nm
+      if ($s) { $shots += [ordered]@{ file = $s; nodeId = [string]$f.nodeId; frame = [string]$f.name }; $k++ }
+    }
+    if ($shots.Count) { $shot = $shots[0].file }
+  }
   # 첨부 이미지는 줄인 사본만 이력에 둔다(처음 한 번 복사)
   $att = @(); $n = 0
   foreach ($a in @($r.images | Where-Object { $_ })) {
@@ -164,13 +177,13 @@ function Hist-FromRequest($r) {
   Save-HistEntry $name ([ordered]@{
     id = $name; kind = 'request'; team = (Item-Team $r); status = [string]$r.status; at = [string]$r.updatedAt; createdAt = [string]$r.createdAt; by = [string]$r.author; doneBy = [string]$r.updatedBy; pc = $PcName
     reqId = [string]$r.id; fileKey = [string]$r.fileKey; fileName = [string]$r.fileName; page = [string]$r.page; frame = [string]$r.frame; nodeId = [string]$r.nodeId
-    type = [string]$r.type; layout = [string]$r.layout; text = [string]$r.text; note = [string]$r.note; shot = $shot; images = $att
-    ask = $r.ask; replies = @($r.replies | Where-Object { $_ })
+    type = [string]$r.type; layout = [string]$r.layout; text = [string]$r.text; note = [string]$r.note; shot = $shot; shots = @($shots); images = $att
+    frames = @($r.frames | Where-Object { $_ }); ask = $r.ask; replies = @($r.replies | Where-Object { $_ })
   })
 }
 function Hist-Remove($id) {
   $name = $PcSlug + '_' + [string]$id
-  Remove-Item (P $HistEntries ($name + '.json')), (P $HistShots ($name + '.*')), (P $HistAttach ($name + '_*')) -Force -ErrorAction SilentlyContinue
+  Remove-Item (P $HistEntries ($name + '.json')), (P $HistShots ($name + '.*')), (P $HistShots ($name + '-*')), (P $HistAttach ($name + '_*')) -Force -ErrorAction SilentlyContinue
   $script:SyncWant = $true
 }
 # 참고 파일: 임시 파일(/api/upload)을 workbench/job_files/{작업 ID}/{원래 이름}으로 옮긴다(이름이 겹치면 앞에 번호)
@@ -1695,7 +1708,12 @@ while ($l.IsListening) {
           # 같은 요청을 두 Claude 세션이 함께 처리하지 않게: 이미 「진행 중」이면 다시 「진행 중」으로 바꿀 수 없다(force로만)
           if ([string]$body.status -eq '진행 중' -and [string]$hit.status -eq '진행 중' -and -not $body.force) { throw "이미 진행 중인 요청입니다(다른 Claude 세션이 처리 중): $($hit.id). 이 요청은 건너뛰세요." }
           # 「진행 중」이 될 때마다 사용량 구간의 시작 시각을 새로 잡는다
-          if ($body.status -eq '진행 중' -and $hit.status -ne '진행 중') { $hit | Add-Member -NotePropertyName startedAt -NotePropertyValue $now -Force }
+          if ($body.status -eq '진행 중' -and $hit.status -ne '진행 중') { $hit | Add-Member -NotePropertyName startedAt -NotePropertyValue $now -Force; $hit | Add-Member -NotePropertyName frames -NotePropertyValue @() -Force }
+          # 실제로 고친 프레임(frames:[{nodeId, name}]): 요청 프레임과 다를 수 있다. 완료 때 이 프레임들의 캡처를 이력에 붙인다
+          if ($body.PSObject.Properties['frames']) {
+            $fr = @(); foreach ($f in @($body.frames | Where-Object { $_ })) { $nid = [string]$f.nodeId; if ($nid -match '^\d+:\d+$' -and -not ($fr | Where-Object { $_.nodeId -eq $nid })) { $fr += [pscustomobject]@{ nodeId = $nid; name = [string]$f.name } } }
+            $hit | Add-Member -NotePropertyName frames -NotePropertyValue @($fr | Select-Object -First 12) -Force
+          }
           # Claude의 질문 · 선택지(ask {q, options:[{label, action?, ids?}], free}): 함께 보내면 그것으로, 상태만 바뀌면 지난 질문은 지운다
           if ($body.PSObject.Properties['ask']) { $hit | Add-Member -NotePropertyName ask -NotePropertyValue $body.ask -Force }
           elseif ($body.status -and [string]$body.status -ne [string]$hit.status) { $hit | Add-Member -NotePropertyName ask -NotePropertyValue $null -Force }
