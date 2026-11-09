@@ -1,0 +1,28 @@
+{
+    "id":  "brex-04_20261109-155344",
+    "kind":  "work",
+    "reqId":  "",
+    "reqType":  "",
+    "team":  "stagora",
+    "at":  "2026-11-09T15:53:44+09:00",
+    "from":  "2026-11-09T15:52:34+09:00",
+    "by":  "김주현",
+    "doneBy":  "Claude",
+    "pc":  "BREX_04",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "UX가이드: STAgoras Admin Common UX (J018)",
+    "models":  {
+                   "claude-sonnet-5-5":  6
+               },
+    "calls":  6,
+    "input":  13,
+    "cacheWrite":  33765,
+    "cacheRead":  567795,
+    "output":  8098,
+    "total":  609671,
+    "usd":  0.3296
+}
