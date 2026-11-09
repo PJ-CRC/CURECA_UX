@@ -1,0 +1,19 @@
+{
+    "id":  "brex-06_20261109-172356",
+    "kind":  "work",
+    "team":  "cureca",
+    "at":  "2026-11-09T17:23:56+09:00",
+    "by":  "최고관리자",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "reqId":  "",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "LI-INS-01-P",
+    "nodeId":  "2225:69506",
+    "type":  "",
+    "text":  "Instrument Door Control · Lock 버튼 추가, 자동 잠금 폐지",
+    "note":  "Door Control에 [Lock] 버튼 추가(Unlocked Door: 닫힘 Enabled · 열림 Disabled), 문을 닫아도 자동 잠금 없이 [Lock]을 눌러야 잠기도록 디스크립션 · 안내 문구 수정(LI-INS-01-T · 02-T · 01-P · 케이스). 프레임 옆 v2.1.07 업데이트 박스 추가.",
+    "shot":  "shots/brex-06_20261109-172356.jpg"
+}
