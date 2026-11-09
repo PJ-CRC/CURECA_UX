@@ -210,6 +210,10 @@ li[aria-expanded="false"]>ul{display:none}
 .target b{font-size:13.5px}
 .ro{margin:0;font-size:12.5px;line-height:1.5;color:var(--warn);background:var(--warn-soft);border-radius:7px;padding:6px 10px}
 .ro[hidden]{display:none}
+.ro.ga{margin-top:6px}
+.ro .ga-act{display:inline-flex;gap:6px;margin-left:6px;vertical-align:middle;flex-wrap:wrap}
+.ro .ga-act button,.ro .ga-act a{border:1px solid currentColor;background:transparent;color:inherit;border-radius:6px;padding:1px 8px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;text-decoration:none}
+.ro .ga-act button:disabled{opacity:.5;cursor:default}
 .ro.ol{color:var(--red);background:var(--red-soft);margin-top:6px}
 .row{display:flex;gap:8px;flex-wrap:wrap}
 .row select{padding:6px 8px;border:1px solid var(--line);border-radius:7px;background:var(--surface);font-size:13px}
@@ -439,6 +443,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
         </div>
         <p class="ro" id="roNote" hidden></p>
         <p class="ro ol" id="olNote" hidden></p>
+        <p class="ro ga" id="gaNote" hidden></p>
         <div class="atts" id="atts" hidden><span id="attList" style="display:contents"></span></div>
         <div class="cmp-box">
           <button type="button" class="cmp-ico" id="attAdd" title="이미지 첨부 (붙여넣기 · 끌어다 놓기도 됩니다. 최대 5장, 한 장 10MB 미만)" aria-label="이미지 첨부"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M10 4v12M4 10h12"/></svg></button>
@@ -741,6 +746,47 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     $('olNote').textContent = ol.length ? '다른 작업자가 이 프레임을 수정 요청 중입니다: ' + olText(ol) + '. 등록하면 Claude가 그 요청이 끝난 뒤 이어서 처리합니다.' : '';
   }
 
+  /* 작업 기준(UX 문서 「적용」, 이 PC · 지금 팀, 이 PC의 모든 프로젝트에 같이): 비어 있으면 Claude가 문서 없이 처리하므로 요청 칸 위에 알린다.
+     [추천 문서로 적용] = 카테고리마다 이 PC의 다른 파일에 적용한 문서, 없으면 그 카테고리에 문서가 하나뿐일 때 그것 */
+  var GA = null, GA_KINDS =[['rule', '작업규칙'], ['policy', '정책서'], ['guide', 'UX가이드'], ['data', '기준데이터'], ['spec', '화면 정의서']];
+  function gaDocs(ap){ var d = {}; if (!ap) return d; if (ap.docs) Object.keys(ap.docs).forEach(function(k){ if (ap.docs[k] && ap.docs[k].id) d[k] = ap.docs[k].id; }); else if (ap.guideId) d.guide = ap.guideId; return d; }
+  function loadGA(){
+    if (location.protocol === 'file:') return Promise.resolve();
+    return fetch('/api/guides', { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; }).then(function(d){ if (d) { GA = d; renderGA(); } });
+  }
+  function renderGA(){
+    var el = $('gaNote'); if (!el || !GA || !FILE.key) return;
+    var byKind = {}; (GA.items || []).forEach(function(it){ var k = it.kind || 'guide'; (byKind[k] = byKind[k] || []).push(it); });
+    var applied = GA.applied || {}, mine = gaDocs(applied[FILE.key]);
+    var missing = GA_KINDS.filter(function(k){ return (byKind[k[0]] || []).length && !mine[k[0]]; });
+    if (!missing.length) { el.hidden = true; el.innerHTML = ''; return; }
+    /* 추천: 이 PC의 다른 파일에 적용한 문서 → 그 카테고리 문서가 하나뿐이면 그것 */
+    var sug = {}, from = {};
+    missing.forEach(function(k){
+      var kind = k[0], ids = (byKind[kind] || []).map(function(x){ return x.id; });
+      Object.keys(applied).some(function(fk){ var id = gaDocs(applied[fk])[kind]; if (fk !== FILE.key && id && ids.indexOf(id) >= 0) { sug[kind] = id; from[kind] = fk; return true; } });
+      if (!sug[kind] && ids.length === 1) sug[kind] = ids[0];
+    });
+    var title = function(kind, id){ var it = (byKind[kind] || []).filter(function(x){ return x.id === id; })[0]; return it ? (it.title || id) : id; };
+    var sk = Object.keys(sug), all = missing.length === GA_KINDS.filter(function(k){ return (byKind[k[0]] || []).length; }).length;
+    var names = missing.map(function(k){ return k[1]; }).join(' · ');
+    var canW = !window.WB_CAN_WRITE || window.WB_CAN_WRITE('guide');
+    /* 작업 기준은 이 PC의 모든 프로젝트에 같이 적용되므로(서버), 여기 남는 것은 이 PC에서 아직 한 번도 적용하지 않은 카테고리다 */
+    el.innerHTML = (all ? '이 PC에 적용한 작업 기준 문서가 없어 Claude가 문서 없이 처리합니다.' : '작업 기준 없음: ' + esc(names) + ' — Claude가 이 문서 없이 처리합니다.') +
+      '<span class="ga-act">' + (sk.length && canW ? '<button type="button" id="gaApply" title="' + esc(sk.map(function(kind){ var n = GA_KINDS.filter(function(k){ return k[0] === kind; })[0][1]; return n + ': ' + title(kind, sug[kind]); }).join('\n')) + '">추천 문서로 적용</button>' : '') +
+      '<a href="Common_UX_Guide.html" title="UX 문서 탭마다 「내 작업 기준」을 고르고 [적용] (이 PC의 모든 프로젝트에 적용됩니다)">UX 문서에서 고르기 ›</a></span>';
+    el.hidden = false;
+    var b = $('gaApply');
+    if (b) b.onclick = function(){
+      b.disabled = true;
+      sk.reduce(function(p, kind){ return p.then(function(){
+        return fetch('/api/guides', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'apply', kind: kind, fileKey: FILE.key, guideId: sug[kind], by: who() }) })
+          .then(function(r){ return r.json(); }).then(function(d){ if (d.error) throw new Error(d.error); });
+      }); }, Promise.resolve())
+        .then(function(){ say(FILE.name + '에 작업 기준을 적용했습니다: ' + sk.map(function(kind){ return title(kind, sug[kind]); }).join(' · ')); return loadGA(); })
+        .catch(function(x){ b.disabled = false; say('작업 기준 적용 실패: ' + x.message, true); });
+    };
+  }
   function go(id, push){
     var p = byId[id]; if (!p) return;
     if (!cur || cur.id !== p.id) liveOnce = false;
@@ -1323,6 +1369,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       renderTabs(); document.title = FILE.name + ' · Figma Workbench';
       $('rtext').value = store('wb.draft.' + FILE.key) || '';
       growText();
+      loadGA();
       return Promise.all([loadLabels(), loadJobs()]);
     })
     .then(function(){ poll(true); return new Promise(function(res){ setTimeout(res, 300); }); })
@@ -1331,6 +1378,8 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       setInterval(function(){ if (!document.hidden) poll(false); }, 3000);
       /* 플러그인 · Claude가 목록이나 캡처를 새로 보내면(다른 PC · 파일 수정 후) 반영 */
       setInterval(function(){ if (!document.hidden) { loadCatalog(false); loadJobs(); } }, 5000);
+      setInterval(function(){ if (!document.hidden) loadGA(); }, 60000);   // 작업 기준(UX 문서에서 적용하면 1분 안에 경고가 사라짐)
+      window.addEventListener('focus', function(){ loadGA(); });   // UX 문서 탭에서 적용하고 돌아오면 바로
     })
     .catch(function(x){
       if (x !== NO_LINK) throw x;

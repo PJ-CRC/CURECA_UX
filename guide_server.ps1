@@ -301,7 +301,37 @@ function Read-Guides {
   if (Test-Path $GuideApply) {
     try { $a = [IO.File]::ReadAllText($GuideApply, $Utf8) | ConvertFrom-Json; foreach ($p in $a.PSObject.Properties) { $applied[$p.Name] = $p.Value } } catch {}
   }
+  $applied = Fill-Applied $applied
   return [ordered]@{ items = @($list | Sort-Object { [string]$_.updatedAt } -Descending); applied = $applied }
+}
+# 작업 기준은 이 PC(· 팀)의 모든 프로젝트(Figma 파일)에 같이 쓴다(2026-11-09): [적용]하면 등록된 모든 파일에 들어가고,
+#  아직 그 카테고리 문서가 없는 파일(새로 등록한 프로젝트 등)은 시작 안내 3단계 링크 파일(없으면 가장 최근 적용)의 문서를 쓴다
+function Apply-Keys([string]$extra) {
+  $ks = New-Object System.Collections.ArrayList
+  $wk = Work-Key; if (Test-Key $wk) { [void]$ks.Add($wk) }
+  if (Test-Path $ProjRoot) { foreach ($d in Get-ChildItem $ProjRoot -Directory) { if ((Test-Key $d.Name) -and (Test-Path (P $d.FullName 'project.json')) -and -not $ks.Contains($d.Name)) { [void]$ks.Add($d.Name) } } }
+  if ((Test-Key $extra) -and -not $ks.Contains($extra)) { [void]$ks.Add($extra) }
+  return @($ks)
+}
+function Applied-Docs($e) {
+  $d = [ordered]@{}; if (-not $e) { return $d }
+  if ($e.docs) { foreach ($p in $e.docs.PSObject.Properties) { if ($p.Value -and [string]$p.Value.id) { $d[$p.Name] = $p.Value } } }
+  elseif ([string]$e.guideId) { $d['guide'] = [pscustomobject]@{ id = [string]$e.guideId; by = [string]$e.by; at = [string]$e.at } }
+  return $d
+}
+function Fill-Applied($applied) {
+  $src = $applied[(Work-Key)]
+  if (-not (Applied-Docs $src).Count) { $src = $null; foreach ($k in @($applied.Keys)) { $e = $applied[$k]; if ((Applied-Docs $e).Count -and (-not $src -or [string]$e.at -gt [string]$src.at)) { $src = $e } } }
+  if (-not $src) { return $applied }
+  $sd = Applied-Docs $src
+  foreach ($k in (Apply-Keys '')) {
+    $docs = Applied-Docs $applied[$k]; $n = 0
+    foreach ($t in @($sd.Keys)) { if (-not $docs.Contains($t)) { $docs[$t] = $sd[$t]; $n++ } }
+    if (-not $n -and $applied.Contains($k)) { continue }
+    $g = $docs['guide']
+    $applied[$k] = [pscustomobject]@{ fileKey = $k; guideId = $(if ($g) { [string]$g.id } else { '' }); by = [string]$src.by; pc = [string]$src.pc; at = [string]$src.at; docs = [pscustomobject]$docs; filled = $true }
+  }
+  return $applied
 }
 # guide-check 결과 → .history/guides/{문서}/rev/{revTo}.check-{PC}-{작업 ID}.json {jobId, pc, by, at, status, note, scope, fileKey, items}
 #  상태가 바뀔 때마다(완료 → 반영 · 반영 안 함) 덮어쓴다. 바뀐 수정본(revTo)이 없으면 남기지 않는다
@@ -1650,15 +1680,17 @@ while ($l.IsListening) {
         if ($kind -notmatch '^[a-z]{1,20}$') { throw "알 수 없는 문서 종류: $kind" }
         if ($gid -and ($gid -notmatch '^[A-Za-z0-9_-]{1,64}$' -or -not (Test-Path (P $GuideRoot $gid 'meta.json')))) { throw "문서를 찾지 못했습니다: $gid" }
         if ($gid) { $mk = 'guide'; try { $mk2 = [string]([IO.File]::ReadAllText((P $GuideRoot $gid 'meta.json'), $Utf8) | ConvertFrom-Json).kind; if ($mk2) { $mk = $mk2 } } catch {}; if ($mk -ne $kind) { throw "종류가 다른 문서입니다($mk): $gid" } }
-        # 이 PC에만 적용한다(다른 작업자는 각자 고른다)
+        # 이 PC에만 적용한다(다른 작업자는 각자 고른다). 이 PC의 모든 프로젝트(Figma 파일)에 같이 적용한다(Apply-Keys)
         $a = [ordered]@{}
         if (Test-Path $GuideApply) { try { foreach ($p in ([IO.File]::ReadAllText($GuideApply, $Utf8) | ConvertFrom-Json).PSObject.Properties) { $a[$p.Name] = $p.Value } } catch {} }
-        $old = $a[$key]; $docs = [ordered]@{}
-        if ($old -and $old.docs) { foreach ($p in $old.docs.PSObject.Properties) { $docs[$p.Name] = $p.Value } }
-        elseif ($old -and $old.guideId) { $docs['guide'] = [ordered]@{ id = [string]$old.guideId; by = [string]$old.by; at = [string]$old.at } }   # 예전 형식
-        $docs[$kind] = [ordered]@{ id = $gid; by = [string]$body.by; at = (Now) }
-        $gd = $docs['guide']
-        $a[$key] = [ordered]@{ fileKey = $key; guideId = $(if ($gd) { [string]$gd.id } else { '' }); by = [string]$body.by; pc = $PcName; at = (Now); docs = $docs }
+        foreach ($fk in (Apply-Keys $key)) {
+          $old = $a[$fk]; $docs = [ordered]@{}
+          if ($old -and $old.docs) { foreach ($p in $old.docs.PSObject.Properties) { $docs[$p.Name] = $p.Value } }
+          elseif ($old -and $old.guideId) { $docs['guide'] = [ordered]@{ id = [string]$old.guideId; by = [string]$old.by; at = [string]$old.at } }   # 예전 형식
+          $docs[$kind] = [ordered]@{ id = $gid; by = [string]$body.by; at = (Now) }
+          $gd = $docs['guide']
+          $a[$fk] = [ordered]@{ fileKey = $fk; guideId = $(if ($gd) { [string]$gd.id } else { '' }); by = [string]$body.by; pc = $PcName; at = (Now); docs = $docs }
+        }
         [IO.File]::WriteAllText($GuideApply, ($a | ConvertTo-Json -Depth 4), $Utf8)
       }
       SendJson $c 200 (Read-Guides); continue
