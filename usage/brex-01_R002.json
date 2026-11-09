@@ -1,0 +1,28 @@
+{
+    "id":  "brex-01_R002",
+    "kind":  "request",
+    "reqId":  "R002",
+    "reqType":  "일반",
+    "team":  "cureca",
+    "at":  "2026-11-09T10:51:35+09:00",
+    "from":  "2026-11-09T10:46:10+09:00",
+    "by":  "서보경",
+    "doneBy":  "Claude",
+    "pc":  "BREX_01",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "재설계 화면 테스트",
+    "frame":  "TI-SPT-01",
+    "nodeId":  "2063:6",
+    "text":  "Event History 메뉴를 기존 화면 참고해서 재설계하는 테스트를 진행해줘. 대기반영항목 같은 것은 그대로 두고 단순히 테스트용도로 그리기해줘.",
+    "models":  {
+                   "claude-opus-5-5":  27
+               },
+    "calls":  27,
+    "input":  55,
+    "cacheWrite":  81166,
+    "cacheRead":  3240544,
+    "output":  23764,
+    "total":  3345529,
+    "usd":  1.7729
+}

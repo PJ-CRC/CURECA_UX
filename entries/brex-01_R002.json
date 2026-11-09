@@ -2,8 +2,8 @@
     "id":  "brex-01_R002",
     "kind":  "request",
     "team":  "cureca",
-    "status":  "진행 중",
-    "at":  "2026-11-09T10:46:10+09:00",
+    "status":  "완료",
+    "at":  "2026-11-09T10:51:34+09:00",
     "createdAt":  "2026-11-09T10:45:46+09:00",
     "by":  "서보경",
     "doneBy":  "Claude",
@@ -17,16 +17,68 @@
     "type":  "일반",
     "layout":  "",
     "text":  "Event History 메뉴를 기존 화면 참고해서 재설계하는 테스트를 진행해줘. 대기반영항목 같은 것은 그대로 두고 단순히 테스트용도로 그리기해줘.",
-    "note":  "Event History 재설계 테스트 시작",
-    "shot":  "",
+    "note":  "Event History(T/L) 재설계 테스트 2를 기존 EVT 테스트 화면 오른쪽에 새로 그렸습니다(기존 화면 · 반영 대기 항목은 그대로).\n- TI-EVT-P (테스트 2) · LI-EVT-P (테스트 2): 기존 목록 팝업 복제 → 글을 가리던 번호(2-1, L은 3 · 5)를 옮김\n- 상태 / 빈 상태(T · L): 검색 결과 없음 → 헤더만, 가운데 「안내 문구 (질문 대기)」, Total Event 0 · Open 0, Pagination 숨김\n- 케이스 / 01 텍스트 줄임 Tooltip(T · L): Description 「…」 줄임 + 마우스 오버 시 전체 내용 Tooltip\n- 디스크립션 · 반영 대기 목록(R03~R07) · 상세(EVT-01-P) · 메시지 팝업(EVT-02-P)과 화면 정의서 파일은 고치지 않았습니다. 요청 프레임 TI-SPT-01도 그대로입니다.\n참고: 빈 상태 안내 문구는 정해진 문구가 없어 「질문 대기」로 두었습니다. 상세 · 메시지 팝업도 테스트 2로 그려야 하면 다시 요청해 주세요.\n작업 기준: 작업규칙 없음 · 정책서 없음 · UX가이드 없음 · 기준데이터 없음 · 화면 정의서 없음",
+    "shot":  "shots/brex-01_R002.jpg",
     "shots":  [
-
+                  {
+                      "file":  "shots/brex-01_R002.jpg",
+                      "nodeId":  "2176:15789",
+                      "frame":  "TI-EVT-P"
+                  },
+                  {
+                      "file":  "shots/brex-01_R002-2.jpg",
+                      "nodeId":  "2177:16350",
+                      "frame":  "TI-EVT-P / 상태 / 빈 상태"
+                  },
+                  {
+                      "file":  "shots/brex-01_R002-3.jpg",
+                      "nodeId":  "2177:16649",
+                      "frame":  "TI-EVT-P / 케이스 / 01 텍스트 줄임 Tooltip"
+                  },
+                  {
+                      "file":  "shots/brex-01_R002-4.jpg",
+                      "nodeId":  "2176:15980",
+                      "frame":  "LI-EVT-P"
+                  },
+                  {
+                      "file":  "shots/brex-01_R002-5.jpg",
+                      "nodeId":  "2177:16919",
+                      "frame":  "LI-EVT-P / 상태 / 빈 상태"
+                  },
+                  {
+                      "file":  "shots/brex-01_R002-6.jpg",
+                      "nodeId":  "2177:17224",
+                      "frame":  "LI-EVT-P / 케이스 / 01 텍스트 줄임 Tooltip"
+                  }
               ],
     "images":  [
 
                ],
     "frames":  [
-
+                   {
+                       "nodeId":  "2176:15789",
+                       "name":  "TI-EVT-P"
+                   },
+                   {
+                       "nodeId":  "2177:16350",
+                       "name":  "TI-EVT-P / 상태 / 빈 상태"
+                   },
+                   {
+                       "nodeId":  "2177:16649",
+                       "name":  "TI-EVT-P / 케이스 / 01 텍스트 줄임 Tooltip"
+                   },
+                   {
+                       "nodeId":  "2176:15980",
+                       "name":  "LI-EVT-P"
+                   },
+                   {
+                       "nodeId":  "2177:16919",
+                       "name":  "LI-EVT-P / 상태 / 빈 상태"
+                   },
+                   {
+                       "nodeId":  "2177:17224",
+                       "name":  "LI-EVT-P / 케이스 / 01 텍스트 줄임 Tooltip"
+                   }
                ],
     "ask":  null,
     "replies":  [
