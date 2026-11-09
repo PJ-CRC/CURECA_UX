@@ -2,11 +2,11 @@
     "id":  "brex-01_R002",
     "kind":  "request",
     "team":  "cureca",
-    "status":  "대기",
-    "at":  "2026-11-09T10:45:46+09:00",
+    "status":  "진행 중",
+    "at":  "2026-11-09T10:46:10+09:00",
     "createdAt":  "2026-11-09T10:45:46+09:00",
     "by":  "서보경",
-    "doneBy":  "서보경",
+    "doneBy":  "Claude",
     "pc":  "BREX_01",
     "reqId":  "R002",
     "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
@@ -17,7 +17,7 @@
     "type":  "일반",
     "layout":  "",
     "text":  "Event History 메뉴를 기존 화면 참고해서 재설계하는 테스트를 진행해줘. 대기반영항목 같은 것은 그대로 두고 단순히 테스트용도로 그리기해줘.",
-    "note":  "",
+    "note":  "Event History 재설계 테스트 시작",
     "shot":  "",
     "shots":  [
 
