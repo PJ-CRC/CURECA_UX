@@ -1,0 +1,35 @@
+{
+    "id":  "brex-01_R003",
+    "kind":  "request",
+    "team":  "cureca",
+    "status":  "대기",
+    "at":  "2026-11-09T10:55:32+09:00",
+    "createdAt":  "2026-11-09T10:55:32+09:00",
+    "by":  "서보경",
+    "doneBy":  "서보경",
+    "pc":  "BREX_01",
+    "reqId":  "R003",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "재설계 화면 테스트",
+    "frame":  "TI-EVT-P / 상태 / 빈 상태",
+    "nodeId":  "2177:16350",
+    "type":  "일반",
+    "layout":  "",
+    "text":  "이벤트 상세페이지는 왜 누락하고 그렸는 지 확인해줄래?",
+    "note":  "",
+    "shot":  "",
+    "shots":  [
+
+              ],
+    "images":  [
+
+               ],
+    "frames":  [
+
+               ],
+    "ask":  null,
+    "replies":  [
+
+                ]
+}
