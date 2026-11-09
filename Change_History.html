@@ -90,6 +90,10 @@ button{cursor:pointer}
 .dt .meta .st{font-size:12px}
 .dt .shot{display:block;margin:0 0 16px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2);overflow:hidden}
 .dt .shot img{display:block;width:100%;max-height:520px;object-fit:contain;object-position:top center}
+.dt .stabs{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 8px}
+.dt .stabs .sl{font-size:12px;color:var(--ink-3);margin-right:2px}
+.dt .stabs button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:3px 10px;font-size:12.5px;color:var(--ink-2);cursor:pointer;max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dt .stabs button.on{border-color:var(--accent);color:var(--accent);font-weight:700}
 .dt .ims{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
 .dt .ims a{display:block;width:120px;height:90px;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface-2)}
 .dt .ims img{display:block;width:100%;height:100%;object-fit:cover}
@@ -228,7 +232,9 @@ button{cursor:pointer}
         status:h.kind === 'request' ? (h.status || '완료') : '작업', who:who, people:[h.by, h.doneBy], pc:h.pc,
         badge:h.reqId ? '작업 ' + h.reqId : '작업', title:h.reqId ? (h.frame || first) : (first || h.frame || '작업'),
         frame:h.frame || '', page:h.page, file:h.fileName || '', type:h.type, layout:h.layout,
-        text:h.text, note:h.note, ask:h.ask, replies:h.replies, shot:h.shot ? '.history/' + h.shot : '', nodeId:h.nodeId,
+        text:h.text, note:h.note, ask:h.ask, replies:h.replies, nodeId:h.nodeId,
+        /* 캡처: 실제로 고친 화면들(shots), 예전 기록은 요청 화면 한 장(shot) */
+        shots:(h.shots && h.shots.length ? h.shots : h.shot ? [{file:h.shot, frame:h.frame}] : []).map(function(s){ return {src:'.history/' + s.file, frame:s.frame || h.frame || ''}; }),
         images:(h.images || []).map(function(x){ return {src:'.history/' + x, full:'.history/' + x}; })});
     });
     (reqs.items || []).forEach(function(r){
@@ -276,7 +282,14 @@ button{cursor:pointer}
     if (r.type) meta.push('<span>' + esc(r.type) + '</span>');
     if (r.layout) meta.push('<span>레이아웃 ' + esc(r.layout) + '</span>');
     var h = '<h2><span class="kind ' + r.kind + '">' + esc(r.badge) + '</span> ' + esc(r.title) + '</h2><div class="meta">' + meta.join('') + '</div>';
-    if (r.shot) h += '<a class="shot" href="' + esc(r.shot) + '" target="_blank" rel="noopener" title="원본 크기로 보기"><img loading="lazy" alt="' + esc(r.frame) + ' 캡처" src="' + esc(r.shot) + '"></a>';
+    var sh = r.shots || [];
+    if (sh.length) {
+      /* 여러 화면을 고쳤으면 화면 이름 탭으로 넘겨 본다. 요청 화면과 다른 곳을 고쳤으면 「고친 화면」으로 알린다 */
+      var other = sh.some(function(s){ return s.frame && s.frame !== r.frame; });
+      if (sh.length > 1 || other) h += '<div class="stabs" role="tablist" aria-label="고친 화면"><span class="sl">고친 화면 ' + sh.length + '</span>' + sh.map(function(s, i){
+        return '<button type="button" role="tab" data-shot="' + esc(s.src) + '" data-alt="' + esc(s.frame) + '" aria-selected="' + (i ? 'false' : 'true') + '"' + (i ? '' : ' class="on"') + '>' + esc(s.frame || ('화면 ' + (i + 1))) + '</button>'; }).join('') + '</div>';
+      h += '<a class="shot" href="' + esc(sh[0].src) + '" target="_blank" rel="noopener" title="원본 크기로 보기"><img loading="lazy" alt="' + esc(sh[0].frame) + ' 캡처" src="' + esc(sh[0].src) + '"></a>';
+    }
     if (r.text) h += '<h3>요청</h3><p class="req">' + esc(r.text) + '</p>';
     if ((r.images || []).length) h += '<div class="ims">' + r.images.map(function(m, i){ return '<a href="' + esc(m.full) + '" target="_blank" rel="noopener" title="첨부 이미지 ' + (i + 1) + ' 크게 보기"><img loading="lazy" alt="첨부 이미지 ' + (i + 1) + '" src="' + esc(m.src) + '"></a>'; }).join('') + '</div>';
     h += '<h3>Claude 답변</h3>' + (r.note ? '<div class="ans">' + noteHtml(r.note) + '</div>' : '<p class="none">아직 답변이 없습니다.</p>');
@@ -365,6 +378,14 @@ button{cursor:pointer}
     answer(id, t, false, b);
   }
   document.addEventListener('click', function(e){
+    /* 고친 화면 탭: 그 화면 캡처로 바꾼다 */
+    var t = e.target.closest('[data-shot]');
+    if (t) {
+      var bar = t.parentNode, a = bar.nextElementSibling, im = a && a.querySelector('img');
+      Array.prototype.forEach.call(bar.querySelectorAll('[data-shot]'), function(x){ x.classList.toggle('on', x === t); x.setAttribute('aria-selected', x === t); });
+      if (im) { a.href = t.dataset.shot; im.src = t.dataset.shot; im.alt = t.dataset.alt + ' 캡처'; }
+      return;
+    }
     var b = e.target.closest('[data-retry]');
     if (b) {
       var id = b.dataset.retry; b.disabled = true;
@@ -419,7 +440,7 @@ button{cursor:pointer}
       setSrv(true); setSync(d[1]);
       /* 팀(v0.13.0): 「내 작업 요청」도 지금 보는 팀 것만(예전 요청 = CURECA). 이력은 서버가 이미 그 팀 것만 준다 */
       if (d[1].team) d[0].items = (d[0].items || []).filter(function(r){ return (r.team || 'cureca') === d[1].team; });
-      var s = d[0].version + '/' + (d[1].items || []).map(function(h){ return h.id + h.at + h.note + h.shot; }).join('|');
+      var s = d[0].version + '/' + (d[1].items || []).map(function(h){ return h.id + h.at + h.note + h.shot + (h.shots || []).length; }).join('|');
       if (s !== sig) { sig = s; rows = build(d[0], d[1]); fillSelects(); render(); }
     }).catch(function(){ setSrv(false); if (first) $('rows').innerHTML = '<li class="empty">서버에 연결할 수 없습니다.</li>'; });
   }

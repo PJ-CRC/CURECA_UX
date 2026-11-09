@@ -198,7 +198,16 @@ sub requests_post {
     # 같은 요청을 두 Claude 세션이 함께 처리하지 않게: 이미 「진행 중」이면 다시 「진행 중」으로 바꿀 수 없다(force로만)
     die "이미 진행 중인 요청입니다(다른 Claude 세션이 처리 중): " . str($hit->{id}) . ". 이 요청은 건너뛰세요.\n" if str($b->{status}) eq '진행 중' && str($hit->{status}) eq '진행 중' && !$b->{force};
     # 「진행 중」이 될 때마다 사용량 구간의 시작 시각을 새로 잡는다
-    $hit->{startedAt} = $now if str($b->{status}) eq '진행 중' && str($hit->{status}) ne '진행 중';
+    if (str($b->{status}) eq '진행 중' && str($hit->{status}) ne '진행 중') { $hit->{startedAt} = $now; $hit->{frames} = []; }
+    # 실제로 고친 프레임(frames:[{nodeId, name}]): 요청 프레임과 다를 수 있다. 완료 때 이 프레임들의 캡처를 이력에 붙인다
+    if (exists $b->{frames}) {
+      my (@fr, %seen);
+      for my $f (grep { ref $_ eq 'HASH' } @{ ref $b->{frames} eq 'ARRAY' ? $b->{frames} : [] }) {
+        my $nid = str($f->{nodeId}); next unless $nid =~ /^\d+:\d+$/ && !$seen{$nid}++;
+        push @fr, { nodeId => $nid, name => str($f->{name}) }; last if @fr >= 12;
+      }
+      $hit->{frames} = \@fr;
+    }
     # Claude의 질문 · 선택지(ask {q, options:[{label, action?, ids?}], free}): 함께 보내면 그것으로, 상태만 바뀌면 지난 질문은 지운다
     if (exists $b->{ask}) { $hit->{ask} = $b->{ask}; }
     elsif (str($b->{status}) ne '' && str($b->{status}) ne str($hit->{status})) { $hit->{ask} = undef; }
@@ -470,11 +479,20 @@ sub copy_hist_shot {
 sub save_hist_entry { my ($name, $e) = @_; make_path($HIST_ENTRIES); write_json("$HIST_ENTRIES/$name.json", $e); $sync_want = 1; }
 # 요청 → 이력 한 건 ({PC}_{요청 ID}). 등록 · 상태 변경(대기 · 진행 중 · 보류 · 완료)마다 덮어쓰고, 삭제하면 지운다
 #  캡처는 완료일 때만(완료 직전에 캡처를 갱신하므로) 남긴다
-sub hist_shots_rm { my ($name) = @_; unlink glob(quotemeta("$HIST_SHOTS/$name") . '.*'); }
+sub hist_shots_rm { my ($name) = @_; unlink glob(quotemeta("$HIST_SHOTS/$name") . '.*'), glob(quotemeta("$HIST_SHOTS/$name") . '-*'); }
 sub hist_from_request {
   my ($r) = @_; my $name = $PC_SLUG . '_' . str($r->{id});
-  my $shot = '';
-  if (str($r->{status}) eq '완료') { $shot = copy_hist_shot($r->{fileKey}, $r->{nodeId}, $name); } else { hist_shots_rm($name); }
+  # 캡처: 실제로 고친 프레임(frames)이 있으면 그것들 모두({이름}.jpg, {이름}-2.jpg …), 없으면 요청 프레임 한 장
+  my $shot = ''; my @shots; hist_shots_rm($name);
+  my @frm = grep { ref $_ eq 'HASH' && str($_->{nodeId}) ne '' } @{ ref $r->{frames} eq 'ARRAY' ? $r->{frames} : [] };
+  if (str($r->{status}) eq '완료') {
+    my @fr = @frm ? @frm : ({ nodeId => str($r->{nodeId}), name => str($r->{frame}) });
+    for my $f (@fr) {
+      my $s = copy_hist_shot($r->{fileKey}, $f->{nodeId}, @shots ? $name . '-' . (@shots + 1) : $name);
+      push @shots, { file => $s, nodeId => str($f->{nodeId}), frame => str($f->{name}) } if $s;
+    }
+    $shot = $shots[0]{file} if @shots;
+  }
   # 첨부 이미지는 줄인 사본만 이력에 둔다(처음 한 번 복사)
   my @att; my $n = 0;
   for my $a (grep { ref $_ eq 'HASH' } @{ ref $r->{images} eq 'ARRAY' ? $r->{images} : [] }) {
@@ -485,7 +503,7 @@ sub hist_from_request {
   }
   save_hist_entry($name, { id => $name, kind => 'request', team => item_team($r), status => str($r->{status}), at => str($r->{updatedAt}), createdAt => str($r->{createdAt}), by => str($r->{author}), doneBy => str($r->{updatedBy}), pc => $PC_NAME,
     reqId => str($r->{id}), fileKey => str($r->{fileKey}), fileName => str($r->{fileName}), page => str($r->{page}), frame => str($r->{frame}), nodeId => str($r->{nodeId}),
-    type => str($r->{type}), layout => str($r->{layout}), text => str($r->{text}), note => str($r->{note}), shot => $shot, images => \@att,
+    type => str($r->{type}), layout => str($r->{layout}), text => str($r->{text}), note => str($r->{note}), shot => $shot, shots => \@shots, images => \@att, frames => \@frm,
     ask => (ref $r->{ask} eq 'HASH' ? $r->{ask} : undef), replies => [ grep { ref $_ eq 'HASH' } @{ ref $r->{replies} eq 'ARRAY' ? $r->{replies} : [] } ] });
 }
 # 첨부 이미지: 먼저 올린 임시 파일(/api/attach)을 요청 ID 이름으로 옮긴다(최대 5장)

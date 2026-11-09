@@ -279,6 +279,11 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
 .req .x{border:0;background:none;color:var(--ink-3);font-size:12px;padding:2px 4px}
 .req .x:hover{color:var(--red)}
 .req .go{border:0;background:none;color:var(--accent);font-size:12px;padding:0}
+.req .fixed{display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px;margin-top:6px;font-size:12px}
+.req .fixed .fl{color:var(--ink-3)}
+.req .fixed .fx{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:1px 8px;font-size:12px;color:var(--ink-2);max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.req .fixed button.fx{color:var(--accent);cursor:pointer}
+.req .fixed .fx.on{border-color:var(--accent);color:var(--accent);font-weight:700}
 .st{font-size:11.5px;font-weight:700;padding:1px 7px;border-radius:999px}
 .st-대기{background:var(--warn-soft);color:var(--warn)}
 .st-진행{background:var(--accent-soft);color:var(--accent)}
@@ -971,10 +976,20 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       .then(function(){ say(id + ' 요청을 다시 「대기」로 돌렸습니다. 백그라운드 Claude가 곧 처리합니다.'); })
       .catch(function(e){ btn.disabled = false; say('다시 진행 실패: ' + e.message, true); });
   }
+  /* Claude가 실제로 고친 화면(frames): 누르면 그 화면으로(목록에 아직 없는 새 화면은 이름만) */
+  function fixedHtml(r){
+    var fr = (r.frames || []).filter(function(f){ return f && f.nodeId; });
+    if (!fr.length || (fr.length === 1 && fr[0].nodeId === r.nodeId)) return '';
+    return '<div class="fixed"><span class="fl">고친 화면</span>' + fr.map(function(f){
+      var nm = esc(f.name || f.nodeId);
+      return f.nodeId === cur.id ? '<span class="fx on">' + nm + '</span>' : byId[f.nodeId] ? '<button type="button" class="fx" data-go="' + esc(f.nodeId) + '">' + nm + ' ›</button>' : '<span class="fx" title="프레임 목록을 새로 받으면 이동할 수 있습니다">' + nm + '</span>';
+    }).join('') + '</div>';
+  }
   function renderReqs(){
     var items = (reqData.items || []).filter(sameFile);
     if (!cur) { $('rcount').textContent = ''; $('reqs').innerHTML = '<li class="empty">프레임 목록이 들어오면 요청을 등록할 수 있습니다.</li>'; return; }
-    var list = filter === 'here' ? items.filter(function(r){ return r.nodeId === cur.id; })
+    /* 이 페이지 = 요청한 화면이거나, Claude가 실제로 고친 화면(frames)에 이 화면이 있는 요청 */
+    var list = filter === 'here' ? items.filter(function(r){ return r.nodeId === cur.id || (r.frames || []).some(function(f){ return f.nodeId === cur.id; }); })
              : items.slice().sort(function(a, b){ return String(b.updatedAt || '').localeCompare(String(a.updatedAt || '')); }).slice(0, 10);
     $('rcount').textContent = filter === 'here' ? '이 페이지 ' + list.length + '건' : '최근 ' + list.length + '건';
     var ae = document.activeElement, typing = ae && ae.dataset && $('reqs').contains(ae) ? ae.dataset.draft : '';
@@ -986,6 +1001,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
         '</div><div class="q" title="' + esc(r.text) + '">요청 · ' + esc(String(r.text || '').split('\n')[0]) + '</div>' +
         ((r.images || []).length ? '<div class="ims">' + r.images.map(function(m){ return '<a href="' + esc(m.file) + '" target="_blank" rel="noopener" title="' + esc(m.name || '첨부 이미지') + ' · 원본 보기"><img loading="lazy" alt="첨부 이미지" src="' + esc(m.small || m.file) + '"></a>'; }).join('') + '</div>' : '') +
         '<div class="a' + (r.note ? '' : ' wait') + '">' + (r.note ? noteHtml(r.note) : esc(WAIT[r.status] || '')) + '</div>' +
+        fixedHtml(r) +
         askHtml(r) +
         (canRetry(r) ? '<div class="retry w-only"><button type="button" data-retry="' + esc(r.id) + '">다시 진행</button>원인(Claude 연결 · Figma 인증 등)을 해결했으면 다시 「대기」로 돌려 처리합니다.</div>' : '') + '</li>';
     }).join('') : '<li class="empty">' + (filter === 'here' ? '이 페이지에 Claude 답변이 없습니다. 요청을 등록하면 처리 후 여기에 답변이 나옵니다.' : '요청이 없습니다.') + '</li>';
