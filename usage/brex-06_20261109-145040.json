@@ -1,0 +1,28 @@
+{
+    "id":  "brex-06_20261109-145040",
+    "kind":  "work",
+    "reqId":  "",
+    "reqType":  "",
+    "team":  "cureca",
+    "at":  "2026-11-09T14:50:40+09:00",
+    "from":  "2026-11-09T14:43:04+09:00",
+    "by":  "최고관리자",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "",
+    "nodeId":  "2214:48416",
+    "text":  "사용 매뉴얼 · FAQ 정렬 정리",
+    "models":  {
+                   "claude-opus-5-5":  10
+               },
+    "calls":  10,
+    "input":  22,
+    "cacheWrite":  52064,
+    "cacheRead":  4112218,
+    "output":  43393,
+    "total":  4207697,
+    "usd":  2.1069
+}
