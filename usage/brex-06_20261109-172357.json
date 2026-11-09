@@ -1,0 +1,28 @@
+{
+    "id":  "brex-06_20261109-172357",
+    "kind":  "work",
+    "reqId":  "",
+    "reqType":  "",
+    "team":  "cureca",
+    "at":  "2026-11-09T17:23:57+09:00",
+    "from":  "2026-11-09T17:08:00+09:00",
+    "by":  "최고관리자",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "LI-INS-01-P",
+    "nodeId":  "2225:69506",
+    "text":  "Instrument Door Control Lock 버튼 추가",
+    "models":  {
+                   "claude-opus-5-5":  50
+               },
+    "calls":  50,
+    "input":  112,
+    "cacheWrite":  196580,
+    "cacheRead":  10392704,
+    "output":  40035,
+    "total":  10629431,
+    "usd":  4.4523
+}
