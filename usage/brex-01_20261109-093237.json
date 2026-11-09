@@ -1,0 +1,28 @@
+{
+    "id":  "brex-01_20261109-093237",
+    "kind":  "work",
+    "reqId":  "",
+    "reqType":  "",
+    "team":  "cureca",
+    "at":  "2026-11-09T09:32:37+09:00",
+    "from":  "2026-11-09T09:32:24+09:00",
+    "by":  "서보경",
+    "doneBy":  "Claude",
+    "pc":  "BREX_01",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "작업규칙: 새 CID 만들기 (2026-11-04) (J032)",
+    "models":  {
+                   "claude-opus-5-5":  2
+               },
+    "calls":  2,
+    "input":  3,
+    "cacheWrite":  2296,
+    "cacheRead":  224323,
+    "output":  1172,
+    "total":  227794,
+    "usd":  0.0867
+}
