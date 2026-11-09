@@ -46,6 +46,11 @@ table{width:100%;border-collapse:collapse;font-size:13.5px}
 th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:middle}
 th{font-size:12.5px;color:var(--ink-3);font-weight:700;background:var(--surface-2)}
 tr:last-child td{border-bottom:0}
+.find{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:12px 14px;border-bottom:1px solid var(--line)}
+.find select,.find input{height:32px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:13px}
+.find input{flex:1;min-width:160px;max-width:300px}
+.find select:focus,.find input:focus{outline:none;border-color:var(--accent)}
+.find span{margin-left:auto;font-size:12.5px;color:var(--ink-3)}
 tbody tr{cursor:pointer}
 tbody tr:hover{background:var(--surface-2)}
 tbody tr.on{background:var(--accent-soft)}
@@ -139,6 +144,11 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
       <div id="tmsg" role="status"></div>
     </section>
     <section class="card">
+      <div class="find" role="search">
+        <select id="qTeam" aria-label="팀으로 거르기"><option value="">팀 전체</option></select>
+        <input id="q" type="search" placeholder="이름 · 아이디 검색" aria-label="이름 · 아이디 검색">
+        <span id="qCount"></span>
+      </div>
       <table>
         <thead><tr><th>아이디</th><th>이름</th><th>팀</th><th>메뉴 권한</th><th>상태</th><th>변경</th></tr></thead>
         <tbody id="rows"><tr><td colspan="6">불러오는 중…</td></tr></tbody>
@@ -192,7 +202,7 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
       if (d.error) throw new Error(d.error);
       $('srv').textContent = '로컬 서버 연결됨'; $('srv').className = 'badge on';
       /* 메뉴가 1개면 예전 서버가 배열 대신 글자로 보냈다 → 늘 배열로 */
-      TEAMS = [].concat(d.teams || []); TLAB = {}; TEAMS.forEach(function(t, i){ TLAB[t.id] = t.name; TCOL[t.id] = t.color != null ? t.color % 8 : i % 8; }); renderTeams();
+      TEAMS = [].concat(d.teams || []); TLAB = {}; TEAMS.forEach(function(t, i){ TLAB[t.id] = t.name; TCOL[t.id] = t.color != null ? t.color % 8 : i % 8; }); renderTeams(); fillTeamFilter();
       $('fTeams').innerHTML = TEAMS.length ? TEAMS.map(function(t){
         return '<label class="mrow ap"><input type="checkbox" name="tm" value="' + esc(t.id) + '"><b>' + esc(t.name) + '</b><small>' + esc(t.id) + ' · 계정 ' + t.members + '개</small></label>';
       }).join('') : '<p class="sub">팀이 없습니다. 왼쪽에서 먼저 팀을 만드세요.</p>';
@@ -213,14 +223,31 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
       if (keep && sel) pick(sel); else fresh();
     }).catch(function(e){ $('rows').innerHTML = '<tr><td colspan="6">' + esc(e.message) + '</td></tr>'; });
   }
+  /* 검색: 팀(최고관리자는 모든 팀) · 이름 · 아이디(대소문자 무시, 팀 이름도 글로 찾음) */
+  function shown(){
+    var t = $('qTeam').value, q = $('q').value.trim().toLowerCase();
+    return ITEMS.filter(function(a){
+      if (t === '_none' ? (a.admin || a.teams.length) : t && !a.admin && a.teams.indexOf(t) < 0) return false;
+      if (!q) return true;
+      var tn = a.admin ? '모든 팀' : a.teams.map(function(k){ return TLAB[k] || k; }).join(' ');
+      return (a.id + ' ' + a.name + ' ' + tn).toLowerCase().indexOf(q) >= 0;
+    });
+  }
+  function fillTeamFilter(){
+    var s = $('qTeam'), v = s.value;
+    s.innerHTML = '<option value="">팀 전체</option>' + TEAMS.map(function(t){ return '<option value="' + esc(t.id) + '">' + esc(t.name) + '</option>'; }).join('') + '<option value="_none">팀 없음</option>';
+    s.value = [].some.call(s.options, function(o){ return o.value === v; }) ? v : '';
+  }
   function renderRows(){
-    $('rows').innerHTML = ITEMS.map(function(a){
+    var list = shown(), filt = $('qTeam').value || $('q').value.trim();
+    $('qCount').textContent = filt ? list.length + ' / ' + ITEMS.length + '명' : ITEMS.length + '명';
+    $('rows').innerHTML = list.map(function(a){
       return '<tr data-id="' + esc(a.id) + '" class="' + (sel === a.id ? 'on' : '') + '"><td class="id">' + esc(a.id) + '</td><td>' + esc(a.name) + (a.admin ? ' <span class="chip adm">최고관리자</span>' : '') + '</td>' +
         '<td><div class="chips">' + (a.admin ? '<span class="chip adm">모든 팀</span>' : a.teams.length ? a.teams.map(function(k){ return '<span class="chip tm tc' + (TCOL[k] || 0) + '">' + esc(TLAB[k] || k) + '</span>'; }).join('') : '<span class="chip off">없음</span>') + '</div></td>' +
         '<td><div class="chips">' + (a.admin ? '<span class="chip adm">전부 쓰기</span>' : a.menus.length ? a.menus.map(function(k){ var w = a.writes.indexOf(k) >= 0; return '<span class="chip' + (w ? ' w' : '') + '">' + esc(LAB[k] || k) + ' · ' + (w ? '쓰기' : '읽기') + '</span>'; }).join('') : '<span class="chip off">없음</span>') +
           (!a.admin && a.approves.length ? a.approves.map(function(k){ return '<span class="chip ap">승인 · ' + esc(ALAB[k] || k) + '</span>'; }).join('') : '') + '</div></td>' +
         '<td>' + (a.active ? '<span class="chip ok">사용</span>' : '<span class="chip off">중지</span>') + '</td><td style="color:var(--ink-3);font-size:12.5px">' + esc(fmt(a.updatedAt)) + '</td></tr>';
-    }).join('') || '<tr><td colspan="6">계정이 없습니다.</td></tr>';
+    }).join('') || '<tr><td colspan="6">' + (filt && ITEMS.length ? '찾는 계정이 없습니다.' : '계정이 없습니다.') + '</td></tr>';
   }
   /* 권한 칸 채우기: all이면 전부 쓰기(쓰기가 없는 메뉴는 읽기). level(k)로 정하면 그 값 */
   function setLevels(level, lock){
@@ -248,6 +275,8 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
     $('pwLabel').innerHTML = '비밀번호 초기화 <small>비우면 그대로 · 바꾸면 그 사람은 다시 로그인</small>';
     setMenus(a.menus, a.writes, a.admin, a.admin); setApproves(a.approves, a.admin, a.admin); setTeams(a.teams, a.admin, a.admin); $('fActive').checked = a.active; $('fActive').disabled = a.admin; $('activeRow').hidden = false; $('delBtn').hidden = a.admin; say('');
   }
+  $('q').addEventListener('input', renderRows);
+  $('qTeam').addEventListener('change', renderRows);
   $('rows').addEventListener('click', function(e){ var r = e.target.closest('tr[data-id]'); if (r) pick(r.dataset.id); });
   $('newBtn').addEventListener('click', function(){ fresh(); $('fId').focus(); });
   $('cancelBtn').addEventListener('click', fresh);

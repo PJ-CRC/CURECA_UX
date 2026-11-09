@@ -593,7 +593,8 @@ html.embed,html.embed body{overflow:hidden}
     function dot(t){ return String(t || '').replace(/-/g, '.'); }
     Array.prototype.forEach.call(document.querySelectorAll('.kid[data-go]'), function(el){
       var k = byId[el.dataset.go], dd = k && DATES[dkey(k)], ft = el.querySelector('.ft span');
-      if (ft) ft.textContent = dd && dd.c ? '작성 ' + dot(dd.c) + (dd.u && dd.u !== dd.c ? ' · 수정 ' + dot(dd.u) : '') : '';
+      /* 날짜는 하나만: 고친 적이 있으면 수정일, 없으면 작성일 */
+      if (ft) ft.textContent = dd && dd.c ? (dd.u && dd.u !== dd.c ? '수정 ' + dot(dd.u) : '작성 ' + dot(dd.c)) : '';
     });
   }
 
@@ -859,10 +860,12 @@ html.embed,html.embed body{overflow:hidden}
         var eyebrow = mm ? mm[1] : '', title = mm ? mm[2] : t;
         /* 「알럿 카탈로그 · alert-catalog.csv」처럼 뒤가 파일 이름이면 이름을 크게, 파일 이름을 작게(자리는 그대로: 이름 위 · 파일 이름 아래) */
         if (mm && /\.(csv|md|json|txt|tsv|xlsx?)$/i.test(title.trim()) && !/\.(csv|md|json|txt|tsv|xlsx?)$/i.test(eyebrow.trim())) { title = mm[1]; eyebrow = mm[2]; var isFile = true; }
+        /* 폴더 카드에는 설명 줄을 쓰지 않는다(제목 · 날짜만). 마우스를 올리면 첫 문장을 보여 준다 */
         var desc = p ? p.textContent.trim().split(/(?<=[.。])\s+/)[0] : '';
+        if (FILES) desc = '';   // 파일형 문서는 첫 문단이 「없음」 등이라 뜻이 없다
         /* 폴더 아래 줄: 왼쪽 = 작성일 · 수정일(paintDates가 채운다), 오른쪽 = → */
         return '<button type="button" class="kid" data-go="' + k.id + '" style="--f:' + FOLDER[ki % FOLDER.length] + '" title="' + esc(t + (desc ? ' — ' + desc : '')) + '"><span class="fd">' +
-          (isFile ? '<b>' + esc(title) + '</b><i class="fn">' + esc(eyebrow) + '</i>' : (eyebrow ? '<i>' + esc(eyebrow) + '</i>' : '') + '<b>' + esc(title) + '</b>') + (desc ? '<small>' + esc(desc) + '</small>' : '') +
+          (isFile ? '<b>' + esc(title) + '</b><i class="fn">' + esc(eyebrow) + '</i>' : (eyebrow ? '<i>' + esc(eyebrow) + '</i>' : '') + '<b>' + esc(title) + '</b>') +
           '<span class="ft"><span></span><span aria-hidden="true">→</span></span></span></button>';
       }).join('') + '</div>');
       paintDates();
