@@ -450,8 +450,10 @@ button{cursor:pointer}
     $('syncBtn').disabled = !!h.syncing;
     if (h.syncing) { b.textContent = '깃 동기화 중…'; b.className = 'badge'; }
     else if (!st) { b.textContent = '깃 동기화 전'; b.className = 'badge'; }
+    /* 잠깐 실패(retrying): 5초 뒤 다시 하고, 3번 연달아 실패해야 「실패」가 된다 */
+    else if (st.ok && st.retrying) { b.textContent = '깃 다시 시도 중'; b.className = 'badge'; }
     else { b.textContent = st.ok ? '깃 확인 ' + (st.checkedAt || st.at || '').slice(11, 19) : '깃 동기화 실패 ' + fmt(st.checkedAt || st.at).slice(5); b.className = 'badge ' + (st.ok ? 'on' : 'off'); }
-    var m = st && !h.syncing ? (st.ok && st.at ? '마지막으로 받은 · 올린 시각 ' + fmt(st.at).slice(5) : st.message) : '';
+    var m = st && !h.syncing ? (st.retrying ? st.message : st.ok && st.at ? '마지막으로 받은 · 올린 시각 ' + fmt(st.at).slice(5) : st.message) : '';
     $('syncMsg').textContent = m; $('syncMsg').title = m || '';
   }
   $('syncBtn').addEventListener('click', function(){
