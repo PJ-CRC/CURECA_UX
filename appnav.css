@@ -119,11 +119,16 @@ html.perm-ro .ro-only{display:block}
   .appnav .appnav-acct a,.appnav-acct button{height:34px;padding:0 10px;font-size:13px}
 }
 /* 낮은 창(세로 760px 이하: 윈도우 150~200% · 노트북) — 위쪽 메뉴 · 제목을 줄여 본문이 보이게. 제목 아래 설명 한 줄은 숨김 */
+/*  끼워 넣은 페이지(html.embed, UX 문서 안 iframe)는 iframe 높이로 판단하면 흔들리므로 빼고, 그 페이지가 바깥 창 높이로 html.low를 단다 */
 @media (max-height:760px){
-  :root{ --nav-h:52px; --page-top:12px; }
+  :root:not(.embed){ --nav-h:52px; --page-top:12px; }
   .appnav a{height:36px}
   .appnav .appnav-acct a,.appnav-acct button{height:34px}
-  .app-head{margin-bottom:10px}
-  .app-head h1{font-size:21px;margin-bottom:0}
-  .app-head .app-head-t > p{display:none}
+  html:not(.embed) .app-head{margin-bottom:10px}
+  html:not(.embed) .app-head h1{font-size:21px;margin-bottom:0}
+  html:not(.embed) .app-head .app-head-t > p{display:none}
 }
+html.embed.low{ --nav-h:52px; --page-top:12px; }
+html.embed.low .app-head{margin-bottom:10px}
+html.embed.low .app-head h1{font-size:21px;margin-bottom:0}
+html.embed.low .app-head .app-head-t > p{display:none}
