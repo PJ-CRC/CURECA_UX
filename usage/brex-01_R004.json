@@ -1,0 +1,28 @@
+{
+    "id":  "brex-01_R004",
+    "kind":  "request",
+    "reqId":  "R004",
+    "reqType":  "신규 프레임",
+    "team":  "cureca",
+    "at":  "2026-11-09T11:21:16+09:00",
+    "from":  "2026-11-09T11:12:24+09:00",
+    "by":  "서보경",
+    "doneBy":  "Claude",
+    "pc":  "BREX_01",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "재설계 화면 테스트",
+    "frame":  "TI-EVT-P / 상태 / 빈 상태",
+    "nodeId":  "2177:16350",
+    "text":  "LIS setting 재설계 테스트 진행해줘. 이것도 테스트라서 반영 대기 목록이나 다른 것들을 건들이지 말고 그리기 테스트만 진행해줘",
+    "models":  {
+                   "claude-opus-5-5":  36
+               },
+    "calls":  36,
+    "input":  68,
+    "cacheWrite":  120443,
+    "cacheRead":  4896797,
+    "output":  40247,
+    "total":  5057555,
+    "usd":  2.7481
+}
