@@ -250,7 +250,7 @@ button.pill{cursor:pointer;font:inherit;font-size:12.5px;font-weight:600}
 .mt h4 a{color:inherit;text-decoration:none}
 .mt h4 a:hover{text-decoration:underline}
 @media (max-width:900px){ .mgrid{grid-template-columns:minmax(0,1fr)} .mlist{position:static;max-height:none} }
-/* 시트 연결 창 */
+/* 일정 연결 창 */
 dialog{width:min(720px,calc(100vw - 32px));border:1px solid var(--line);border-radius:14px;padding:0;background:var(--surface);color:var(--ink)}
 dialog::backdrop{background:rgba(10,14,20,.45)}
 .dlg{padding:22px 24px}
@@ -295,13 +295,13 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
 <header class="app-head">
   <div class="app-head-t">
     <h1>일정/작업</h1>
-    <p class="one-line">업무 현황과 우리가 작업할 내역을 봅니다. 일정은 구글 시트와 연결되어 있어 여기서 고치면 시트에 바로 들어갑니다</p>
+    <p class="one-line">업무 현황과 우리가 작업할 내역을 봅니다. 일정은 연결한 원본(구글 시트 · Azure DevOps)에서 가져오고, 여기서 고치면 원본에 바로 들어갑니다</p>
   </div>
   <div class="app-head-act">
     <!-- 권한에 따라 숨는 버튼(w-only)은 맨 왼쪽에: 숨어도 나머지 버튼 자리가 움직이지 않는다 -->
-    <button class="btn w-only" id="connBtn" type="button">시트 연결</button>
+    <button class="btn w-only" id="connBtn" type="button" title="일정을 가져올 곳(구글 시트 · Azure DevOps)을 연결합니다">일정 연결</button>
     <button class="btn" id="reload" type="button">새로고침</button>
-    <a class="btn" id="openSheet" href="#" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;text-decoration:none;color:inherit">스프레드시트 열기</a>
+    <a class="btn" id="openSheet" href="#" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;text-decoration:none;color:inherit">원본 열기</a>
   </div>
 </header>
 
@@ -390,7 +390,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
 
   /* ── 탭 ── */
   var TABS = [
-    { k: 'schedule', label: '일정', about: '구글 시트의 일정(WBS) 탭을 그대로 봅니다. 쓰기 권한이 있으면 칸을 눌러 바로 고칠 수 있고, 시트에 바로 들어갑니다.' },
+    { k: 'schedule', label: '일정', about: '' },
     { k: 'weekly', label: '주간 진행 현황', about: '' },
     { k: 'backlog', label: '화면설계서 작업대기', about: '화면설계서의 반영 대기 목록 중 아직 화면에 반영하지 않은 것을 메뉴 · 화면별로 봅니다.' },
     { k: 'minutes', label: '회의록', about: '회의록을 봅니다.' },
@@ -547,7 +547,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
 
   function loadConf(){
     return api('/api/sheet').then(function(j){ conf = j; }).catch(function(e){ conf = { configured: false, error: e.message }; })
-      .then(function(){ $('openSheet').href = isAzure() ? azUrl() : sheetUrl(); $('openSheet').textContent = isAzure() ? 'Azure DevOps 열기' : '스프레드시트 열기'; });
+      .then(function(){ $('openSheet').href = isAzure() ? azUrl() : sheetUrl(); $('openSheet').textContent = '원본 열기'; $('openSheet').title = isAzure() ? 'Azure DevOps에서 열기' : '구글 시트에서 열기'; });
   }
   function loadSheet(q){ return api('/api/sheet/data?' + q).then(function(j){ if (j.cached) { var d = j.data || {}; d.cached = true; d.error = j.error; return d; } return j; }); }
   // 시트는 읽는 데 수십 초 걸린다: 서버가 마지막으로 받은 사본(cache=1)을 먼저 그리고, 뒤에서 새로 받아 바꾼다
@@ -593,23 +593,23 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   /* ── 일정 탭(시트 그대로 · 고치기) ── */
   var fq = '', fcat = '', showG = false;
   function notConnected(){
-    return '<div class="wempty"><b>구글 시트가 아직 연결되지 않았습니다</b><p>일정은 구글 시트 「2-2.WBS(간소)」 탭을 그대로 보여 주고, 여기서 고치면 시트에 바로 들어갑니다.</p>' +
-      '<p>시트 편집 권한이 있는 사람이 한 번만 [시트 연결]을 하면 모든 작업자 PC에 공유됩니다.</p>' +
-      (canWrite() ? '<button class="btn primary" type="button" data-act="conn">시트 연결</button>' : '<p class="muted">「일정/작업 · 쓰기」 권한이 있는 사람에게 연결을 요청하세요.</p>') + '</div>';
+    return '<div class="wempty"><b>일정이 아직 연결되지 않았습니다</b><p>일정은 연결한 원본(구글 시트 또는 Azure DevOps)을 그대로 보여 주고, 여기서 고치면 원본에 바로 들어갑니다.</p>' +
+      '<p>원본 편집 권한이 있는 사람이 한 번만 [일정 연결]을 하면 이 팀 모든 작업자 PC에 공유됩니다.</p>' +
+      (canWrite() ? '<button class="btn primary" type="button" data-act="conn">일정 연결</button>' : '<p class="muted">「일정/작업 · 쓰기」 권한이 있는 사람에게 연결을 요청하세요.</p>') + '</div>';
   }
   function srcNote(d){
     if (!d) return '';
-    if (d.cached) return '<p class="notice bad"><b>시트에 닿지 못해 마지막으로 받은 값을 보여 줍니다</b> · ' + esc(d.error || '') + (d.at ? ' · 받은 시각 ' + esc(new Date(d.at).toLocaleString()) : '') + '</p>';
-    if (d.error) return '<p class="notice bad"><b>시트를 읽지 못했습니다</b> · ' + esc(d.error) + '</p>';
+    if (d.cached) return '<p class="notice bad"><b>원본에 닿지 못해 마지막으로 받은 값을 보여 줍니다</b> · ' + esc(d.error || '') + (d.at ? ' · 받은 시각 ' + esc(new Date(d.at).toLocaleString()) : '') + '</p>';
+    if (d.error) return '<p class="notice bad"><b>일정을 읽지 못했습니다</b> · ' + esc(d.error) + '</p>';
     return '';
   }
   function renderSchedule(){
     var el = $('body-schedule'); if (!el) return;
-    var head = '<h2>일정</h2><p class="intro">' + esc(TABS[0].about) + '</p>';
+    var head = '<h2>일정</h2>' + (TABS[0].about ? '<p class="intro">' + esc(TABS[0].about) + '</p>' : '');
     if (!conf) { el.innerHTML = head + '<p class="muted">불러오는 중…</p>'; return; }
-    if (isAzure()) { var az = conf.azure || {}; el.innerHTML = head + '<div class="wempty"><b>Azure DevOps로 연결되어 있습니다</b><p>' + esc(az.org || '') + ' › ' + esc(az.project || '') + (az.scope ? ' · 범위 ' + esc(az.scope) : '') + '</p><p>' + (conf.azurePat ? '이 PC에 토큰이 저장되어 있습니다.' : '이 PC에는 아직 토큰이 없습니다. [시트 연결]에서 각자 토큰을 넣어 주세요.') + '</p><p class="muted">작업 항목을 가져와 일정 · 주간 진행 현황에 보여 주는 기능은 다음 단계에서 붙입니다.</p></div>'; return; }
+    if (isAzure()) { var az = conf.azure || {}; el.innerHTML = head + '<div class="wempty"><b>Azure DevOps로 연결되어 있습니다</b><p>' + esc(az.org || '') + ' › ' + esc(az.project || '') + (az.scope ? ' · 범위 ' + esc(az.scope) : '') + '</p><p>' + (conf.azurePat ? '이 PC에 토큰이 저장되어 있습니다.' : '이 PC에는 아직 토큰이 없습니다. [일정 연결]에서 각자 토큰을 넣어 주세요.') + '</p><p class="muted">작업 항목을 가져와 일정 · 주간 진행 현황에 보여 주는 기능은 다음 단계에서 붙입니다.</p></div>'; return; }
     if (!conf.configured) { el.innerHTML = head + notConnected(); return; }
-    if (loading.wbs && !wbs) { el.innerHTML = head + '<p class="muted">시트를 읽는 중…</p>'; return; }
+    if (loading.wbs && !wbs) { el.innerHTML = head + '<p class="muted">일정을 읽는 중…</p>'; return; }
     if (!wbs || !wbs.values) { el.innerHTML = head + srcNote(wbs || { error: '값이 없습니다.' }); return; }
     var W = wbsItems(wbs), T = W.T, V = wbs.values, set = function(l){ var o = {}; (l || []).forEach(function(p){ o[Array.isArray(p) ? p[0] + ',' + p[1] : p] = 1; }); return o; };
     var fx = set(wbs.fx), dv = set(wbs.dv), hidR = set(wbs.hr), hidC = set(wbs.hc), BG = wbs.bg || [], FC = wbs.fc || [], FW = wbs.fw || [];
@@ -735,9 +735,9 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
         if (!wbs.values[r]) wbs.values[r] = []; wbs.values[r][c] = v;
         renderSchedule();
         var n = document.querySelector('#sheetBox td[data-r="' + r + '"][data-c="' + c + '"]'); if (n) { n.classList.add('just'); setTimeout(function(){ n.classList.remove('just'); }, 1500); }
-        toast((r + 1) + '행 ' + (c + 1) + '열을 시트에 저장했습니다.');
+        toast((r + 1) + '행 ' + (c + 1) + '열을 원본에 저장했습니다.');
         if (cur === 'weekly') renderWeekly();
-      }).catch(function(err){ renderSchedule(); alert('시트에 저장하지 못했습니다.\n' + err.message); });
+      }).catch(function(err){ renderSchedule(); alert('원본에 저장하지 못했습니다.\n' + err.message); });
     }
     ta.addEventListener('keydown', function(k){
       if (k.key === 'Escape') { k.preventDefault(); close(false); }
@@ -807,12 +807,12 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     var h = '<div class="wkbar"><button class="icon" type="button" data-wk="-1" aria-label="지난주">‹</button>' +
       '<span class="wk-range">' + ymd(mon) + ' – ' + ymd(sun) + '</span><button class="icon" type="button" data-wk="1" aria-label="다음주">›</button>' +
       (thisWeek ? '<span class="wk-now">이번 주</span>' : '<button class="btn sm" type="button" data-wk="0">이번 주로</button>') +
-      '<span class="wk-sp"></span>' + (wbs && wbs.at ? '<span class="wk-at">시트 ' + esc(new Date(wbs.at).toLocaleString()) + ' 기준</span>' : '') + '</div>';
+      '<span class="wk-sp"></span>' + (wbs && wbs.at ? '<span class="wk-at">일정 ' + esc(new Date(wbs.at).toLocaleString()) + ' 기준</span>' : '') + '</div>';
     // 안내
-    var src = conf && conf.configured ? ('일정은 스프레드시트 「' + esc((wbs && wbs.name) || '일정') + '」 탭, 회의는 「' + esc(minName()) + '」 탭, 정책은 UX 문서(정책서 · 임시 정책)를 보고 채웠습니다. 시트를 고치고 [새로고침]하면 숫자도 바뀝니다.')
-      : '구글 시트가 아직 연결되지 않아 일정 · 회의 숫자는 비어 있습니다. 정책은 UX 문서(정책서 · 임시 정책)를 보고 채웠습니다.';
+    var src = conf && conf.configured ? ('일정은 ' + (isAzure() ? 'Azure DevOps' : '구글 시트 「' + esc((wbs && wbs.name) || '일정') + '」 탭') + ', 회의는 「' + esc(minName()) + '」 탭, 정책은 UX 문서(정책서 · 임시 정책)를 보고 채웠습니다. 원본을 고치고 [새로고침]하면 숫자도 바뀝니다.')
+      : '일정이 아직 연결되지 않아 일정 · 회의 숫자는 비어 있습니다. 정책은 UX 문서(정책서 · 임시 정책)를 보고 채웠습니다.';
     h += '<p class="notice"><b>안내</b> · ' + src + '</p>' + (wbs && (wbs.cached || wbs.error) ? srcNote(wbs) : '');
-    if (loading.wbs && !wbs) h += '<p class="muted">시트를 읽는 중…</p>'; else if (loading.wbs && !sheetFresh.wbs) h += '<p class="muted" style="margin:-8px 0 12px;font-size:12.5px"><b class="refreshing">저장된 사본으로 보여 주는 중 · 시트에서 새로 받는 중…</b></p>';
+    if (loading.wbs && !wbs) h += '<p class="muted">일정을 읽는 중…</p>'; else if (loading.wbs && !sheetFresh.wbs) h += '<p class="muted" style="margin:-8px 0 12px;font-size:12.5px"><b class="refreshing">저장된 사본으로 보여 주는 중 · 시트에서 새로 받는 중…</b></p>';
     // 숫자 카드
     h += '<div class="stats">' +
       '<div class="stat"><div class="l">이번 주 마감 업무 · 총</div><div class="v">' + due.length + '</div><div class="s">작업 완료일 기준</div></div>' +
@@ -824,7 +824,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     h += '<section class="card"><h3>이번 주 마감 업무 내역</h3>' + (due.length ?
       '<div class="tbl-wrap"><table class="t"><thead><tr><th>업무명</th><th>상태</th><th>담당자</th><th>기간</th></tr></thead><tbody>' +
       due.map(function(it){ return '<tr><td>' + name(it) + '</td><td class="nw">' + pill(it) + '</td><td>' + esc(it.owner || '-') + '</td><td class="nw">' + period(it) + '</td></tr>'; }).join('') +
-      '</tbody></table></div>' : '<p class="muted" style="margin:0">' + (W ? '이번 주에 마감하는 업무가 없습니다.' : '시트 연결 전입니다.') + '</p>') + '</section>';
+      '</tbody></table></div>' : '<p class="muted" style="margin:0">' + (W ? '이번 주에 마감하는 업무가 없습니다.' : '일정 연결 전입니다.') + '</p>') + '</section>';
     // 개발사 공유 대상(시트에 공유일 열이 있을 때)
     if (W && W.cols.share >= 0) {
       var sh = items.filter(function(it){ return inWeek(it.share, mon); }), g = {}, nd = 0;
@@ -871,7 +871,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     var nextHtml = '<section class="card"><h3>차주 일정<small>' + ymd(nmon) + ' – ' + ymd(addD(nmon, 6)) + '</small></h3>' + (nx.length ?
       '<div class="tbl-wrap"><table class="t"><thead><tr><th>업무명</th><th>상태</th><th>담당자</th><th>기간</th></tr></thead><tbody>' +
       nx.map(function(it){ return '<tr><td>' + name(it) + '</td><td class="nw">' + pill(it) + '</td><td>' + esc(it.owner || '-') + '</td><td class="nw">' + period(it) + '</td></tr>'; }).join('') + '</tbody></table></div>'
-      : '<p class="muted" style="margin:0">' + (W ? '다음 주에 잡힌 업무가 없습니다.' : '시트 연결 전입니다.') + '</p>') + '</section>';
+      : '<p class="muted" style="margin:0">' + (W ? '다음 주에 잡힌 업무가 없습니다.' : '일정 연결 전입니다.') + '</p>') + '</section>';
     h += '<div class="two">' + meetHtml + nextHtml + '</div>';
     el.innerHTML = h;
 
@@ -1275,7 +1275,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     }
   });
 
-  /* ── 시트 연결 창 ── */
+  /* ── 일정 연결 창 ── */
   function openDlg(){
     $('fSheet').value = sheetUrl(); $('fWeb').value = ''; $('fTok').value = '';
     $('fWeb').placeholder = conf && conf.configured ? '바꿀 때만 입력 (지금 연결되어 있음)' : 'https://script.google.com/macros/s/…/exec';
