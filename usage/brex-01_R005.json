@@ -1,0 +1,28 @@
+{
+    "id":  "brex-01_R005",
+    "kind":  "request",
+    "reqId":  "R005",
+    "reqType":  "일반",
+    "team":  "cureca",
+    "at":  "2026-11-09T11:27:41+09:00",
+    "from":  "2026-11-09T11:25:02+09:00",
+    "by":  "서보경",
+    "doneBy":  "Claude",
+    "pc":  "BREX_01",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "재설계 화면 테스트",
+    "frame":  "TI-STN-04-02-T / 케이스 / 01 Target Code (depth 구조)",
+    "nodeId":  "2194:19385",
+    "text":  "Tab 크기 조정 동일하게 해줘",
+    "models":  {
+                   "claude-opus-5-5":  20
+               },
+    "calls":  20,
+    "input":  40,
+    "cacheWrite":  41883,
+    "cacheRead":  1982289,
+    "output":  11647,
+    "total":  2035859,
+    "usd":  0.9646
+}

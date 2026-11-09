@@ -2,8 +2,8 @@
     "id":  "brex-01_R005",
     "kind":  "request",
     "team":  "cureca",
-    "status":  "진행 중",
-    "at":  "2026-11-09T11:25:02+09:00",
+    "status":  "완료",
+    "at":  "2026-11-09T11:27:40+09:00",
     "createdAt":  "2026-11-09T11:24:43+09:00",
     "by":  "서보경",
     "doneBy":  "Claude",
@@ -17,16 +17,50 @@
     "type":  "일반",
     "layout":  "",
     "text":  "Tab 크기 조정 동일하게 해줘",
-    "note":  "",
-    "shot":  "",
+    "note":  "LIS Setting(테스트 2) 상단 Tab 두 칸(Interface Configuration | Code Mapping)의 너비를 같게 맞췄습니다.\n- TI-STN-04-02-T / 케이스 / 01 Target Code: Tab 156 + 99 → 고정 360(두 탭 「채우기」, 글 가운데 정렬, 약 180씩)\n- 같은 화면의 TI-STN-04-01-T · 01-T 케이스 Push Mode · TI-STN-04-02-T 상단 Tab도 똑같이 맞춤(탭 모양이 화면마다 달라지지 않게)\n참고: 활성 탭(Code Mapping)이 컴포넌트 구조상 1 ~ 2px 더 넓게 잡힙니다. 정확히 같은 픽셀이 필요하면 Tab 컴포넌트(Size=M, Count=2) 원본을 고쳐야 합니다. 원하는 탭 너비가 따로 있으면 알려 주세요.\n작업 기준: 작업규칙 CURECA 작업규칙 · 정책서 정책서 · UX가이드 Common UX 가이드 _1105 · 기준데이터 기준데이터 · 화면 정의서 화면 정의서",
+    "shot":  "shots/brex-01_R005.jpg",
     "shots":  [
-
+                  {
+                      "file":  "shots/brex-01_R005.jpg",
+                      "nodeId":  "2194:19385",
+                      "frame":  "TI-STN-04-02-T / 케이스 / 01 Target Code (depth 구조)"
+                  },
+                  {
+                      "file":  "shots/brex-01_R005-2.jpg",
+                      "nodeId":  "2192:19169",
+                      "frame":  "TI-STN-04-02-T"
+                  },
+                  {
+                      "file":  "shots/brex-01_R005-3.jpg",
+                      "nodeId":  "2189:18759",
+                      "frame":  "TI-STN-04-01-T"
+                  },
+                  {
+                      "file":  "shots/brex-01_R005-4.jpg",
+                      "nodeId":  "2190:19008",
+                      "frame":  "TI-STN-04-01-T / 케이스 / 01 Push Mode 선택"
+                  }
               ],
     "images":  [
 
                ],
     "frames":  [
-
+                   {
+                       "nodeId":  "2194:19385",
+                       "name":  "TI-STN-04-02-T / 케이스 / 01 Target Code (depth 구조)"
+                   },
+                   {
+                       "nodeId":  "2192:19169",
+                       "name":  "TI-STN-04-02-T"
+                   },
+                   {
+                       "nodeId":  "2189:18759",
+                       "name":  "TI-STN-04-01-T"
+                   },
+                   {
+                       "nodeId":  "2190:19008",
+                       "name":  "TI-STN-04-01-T / 케이스 / 01 Push Mode 선택"
+                   }
                ],
     "ask":  null,
     "replies":  [
