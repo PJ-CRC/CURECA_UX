@@ -36,6 +36,7 @@
 - [ ] **장비 상태 정의서와 씨젠 상태 정보 문서의 관계:** 씨젠 문서를 원본으로 `reference/customer/`에 두고, 우리 정의서(`policy/equipment-states.md`)는 그 문서를 출처로 인용하는 방식 제안 (원본을 받은 뒤 확정)
 - [x] **Common UX 이전 방식:** (2026-11-04 정함) 저장소로 옮기지 않음. Figma "Common UX - PC" 페이지 링크가 항상 최신본 (`sources.md`, `rules/screen-spec.md` 8절)
 - [x] **회의록 정리 방식 (2026-11-04 정함, `rules/meeting-notes.md`):** 진행 방식, 저장 위치, 기존 스프레드시트 회의록을 옮길지 (작업 유형 18번)
+- [ ] **가이드에 이미지만 있고 컴포넌트가 없는 요소 그리는 법 (2026-11-06 추가):** Event History 테스트에서 Event Message Popup(TI-EVT-02-P · LI-EVT-02-P)을 Common UX COMM-5-m(3/4) Event Stacked Popup 이미지대로 직접 그려, 기존 기획 화면과 기능이 달라짐([< >] 대신 썸네일 목록). 이런 요소를 가이드 이미지대로 그릴지, 기존 기획 화면대로 그릴지 정함. 정할 때까지는 그린 화면에 빨간 글씨 질문 대기로 표시(`rules/screen-spec.md` 케이스 1 지킬 것 10)
 - [ ] **다국어 세부:** `rules/language-set.md` 6절 목록 (언어셋 담당자 협의)
 - [ ] **보류: 작업방 → 공유방 → 개발사 흐름 (2026-11-05):** 기존 화면을 모두 신규 작업방으로 옮긴 뒤(이행 기간이 끝난 뒤) 정의함. 그때까지 작업방 작업만. 대상: `rules/figma-sync.md` 2절, `rules/claude-work.md` 작업 유형 12, 고객 컨펌 · 개발사 공유 페이지, 전달 상태
 - [ ] **Common UX 정리 (2026-11-04 추가, 2026-11-05 B안으로 바꿈):** (1) 적용된 Common UX 가이드의 5장을 Figma Common UX - PC에 맞추고 용어집 결정(수정 요청 목록)을 넣음. (2) 가이드에 없거나 다르게 정한 3가지(날짜 · 시간 장비 기준과 초 단위, L-IOS 표 줄 수, 숫자 표기 PD-0008)만 공통 정책(POL-COM-007부터)으로 임시 정책 등록. 나머지는 디스크립션이 가이드 번호로 바로 잇음 (`common-ux/common-policy-candidates.md`)
