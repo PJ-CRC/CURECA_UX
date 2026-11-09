@@ -1,0 +1,28 @@
+{
+    "id":  "brex-06_R031",
+    "kind":  "request",
+    "reqId":  "R031",
+    "reqType":  "일반",
+    "team":  "cureca",
+    "at":  "2026-11-09T11:01:51+09:00",
+    "from":  "2026-11-09T11:00:58+09:00",
+    "by":  "최고관리자",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "재설계 화면 테스트",
+    "frame":  "TI-SPT-03",
+    "nodeId":  "2068:3889",
+    "text":  "지금 화면과 똑같이 하나 더 만들어줘",
+    "models":  {
+                   "claude-opus-5-5":  18
+               },
+    "calls":  18,
+    "input":  35,
+    "cacheWrite":  17573,
+    "cacheRead":  4321443,
+    "output":  8654,
+    "total":  4347705,
+    "usd":  1.1781
+}
