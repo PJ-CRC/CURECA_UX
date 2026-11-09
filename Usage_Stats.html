@@ -193,7 +193,7 @@ td.usd{font-weight:700}
   <header class="app-head">
     <div class="app-head-t">
       <h1>사용량 통계</h1>
-      <p>Claude가 작업(수정 요청)마다 쓴 토큰과 금액 환산을 모든 작업자 것까지 모았습니다(깃으로 공유).</p>
+      <p>Claude가 작업마다 쓴 토큰과 금액 환산을 보여줍니다.</p>
     </div>
     <div class="app-head-act">
       <select id="who" aria-label="작업자"><option value="">작업자 전체</option></select>
@@ -245,7 +245,7 @@ td.usd{font-weight:700}
       <nav class="pager" id="pager" aria-label="페이지"></nav>
     </div>
   </section>
-  <p class="note" id="note">사용량은 요청이 「진행 중」이 된 때부터 「완료」될 때까지 Claude가 API를 부른 만큼을 Claude Code 대화 기록에서 더한 값입니다(서브에이전트 포함, 요청을 읽고 감시를 다시 켜는 사이 사용량은 빠짐). 금액은 API 단가로 환산한 값으로, 요금제(Team 등)에서는 실제 청구가 아니라 사용 한도에서 차감됩니다. 캐시 읽기는 호출마다 그때까지의 대화를 다시 읽은 양이라 수치가 크지만 단가는 입력의 1/20입니다.</p>
+  <p class="note" id="note">사용량은 요청이 「진행 중」이 된 때부터 「완료」될 때까지 Claude가 API를 부른 만큼을 Claude Code 대화 기록에서 더한 값입니다(서브에이전트 포함, 요청을 읽고 감시를 다시 켜는 사이 사용량은 빠짐).<br>금액은 API 단가로 환산한 값으로, 요금제(Team 등)에서는 실제 청구가 아니라 사용 한도에서 차감됩니다. 캐시 읽기는 호출마다 그때까지의 대화를 다시 읽은 양이라 수치가 크지만 단가는 입력의 1/20입니다.</p>
 </main>
 <div class="tip" id="tip" hidden></div>
 <script>
@@ -504,7 +504,6 @@ td.usd{font-weight:700}
       /* 작업자 색: 처음 기록된 순서대로 고정 */
       items.slice().reverse().forEach(function(u){ var n = name(u); if (!(n in wcolor)) wcolor[n] = Object.keys(wcolor).length; });
       fillTypes();
-      if (pricing && pricing.updatedAt && !$('note').dataset.p) { $('note').dataset.p = 1; $('note').textContent += ' 단가 기준일 ' + pricing.updatedAt + ' (workbench/pricing.json).'; }
       render();
     }).catch(function(){ setSrv(false); if (first) { $('rows').innerHTML = '<tr><td colspan="9" class="empty">서버에 연결할 수 없습니다. 서버를 다시 실행했는지 확인하세요.</td></tr>'; $('users').innerHTML = ''; } });
   }
