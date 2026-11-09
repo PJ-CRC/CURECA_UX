@@ -1,0 +1,28 @@
+{
+    "id":  "brex-06_20261109-173417",
+    "kind":  "work",
+    "reqId":  "",
+    "reqType":  "",
+    "team":  "cureca",
+    "at":  "2026-11-09T17:34:17+09:00",
+    "from":  "2026-11-09T17:32:00+09:00",
+    "by":  "최고관리자",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "LI-INS-01-P",
+    "nodeId":  "2225:69611",
+    "text":  "Door Control 문 닫기 안내 팝업 추가",
+    "models":  {
+                   "claude-opus-5-5":  13
+               },
+    "calls":  13,
+    "input":  26,
+    "cacheWrite":  15519,
+    "cacheRead":  3614783,
+    "output":  9179,
+    "total":  3639507,
+    "usd":  1.0308
+}
