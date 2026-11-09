@@ -2,8 +2,8 @@
     "id":  "brex-01_R003",
     "kind":  "request",
     "team":  "cureca",
-    "status":  "진행 중",
-    "at":  "2026-11-09T10:57:28+09:00",
+    "status":  "완료",
+    "at":  "2026-11-09T11:01:00+09:00",
     "createdAt":  "2026-11-09T10:55:32+09:00",
     "by":  "서보경",
     "doneBy":  "Claude",
@@ -17,16 +17,95 @@
     "type":  "일반",
     "layout":  "",
     "text":  "이벤트 상세페이지는 왜 누락하고 그렸는 지 확인해줄래?",
-    "note":  "상세(EVT-01-P) · 메시지 팝업(EVT-02-P)을 테스트 2로 그리는 중",
-    "shot":  "",
+    "note":  "R002에서 빠뜨린 Event History 상세(EVT-01-P) · 메시지 팝업(EVT-02-P)을 테스트 2로 T · L 모두 그렸습니다(기존 테스트 화면 · 반영 대기 항목은 그대로).\n- TI/LI-EVT-01-P (테스트 2): 기본 상세 복제 + 「상태 / Instrument 무관 Event」(Module · Unit · Process 「-」, Type System), T는 「상태 / Notes 없음」(L-IOS 조치 기록이 없을 때 3 Notes 영역 미노출)도 추가\n- TI/LI-EVT-02-P (테스트 2): [Close] 글을 가리던 5 · 6 번호를 버튼 아래로 옮김 + 「상태 / 메시지 1개」(2 메시지 개수 · 3 Close All · 4 메시지 목록 미노출, 팝업 가운데)\n- 위치: EVT-P (테스트 2) 섹션 아래(y 5100 ~). 디스크립션 · 화면 정의서는 고치지 않았습니다.\n참고: Instrument 무관 Event 상태는 Event 내용(코드 · Description 등)을 예시 그대로 두고 Instrument 정보만 바꿨습니다. L-IOS Notes는 작성 영역이라 「Notes 없음」 상태는 T만 그렸습니다.\n작업 기준: 작업규칙 없음 · 정책서 없음 · UX가이드 없음 · 기준데이터 없음 · 화면 정의서 없음",
+    "shot":  "shots/brex-01_R003.jpg",
     "shots":  [
-
+                  {
+                      "file":  "shots/brex-01_R003.jpg",
+                      "nodeId":  "2181:17338",
+                      "frame":  "TI-EVT-01-P"
+                  },
+                  {
+                      "file":  "shots/brex-01_R003-2.jpg",
+                      "nodeId":  "2181:17469",
+                      "frame":  "TI-EVT-01-P / 상태 / Notes 없음"
+                  },
+                  {
+                      "file":  "shots/brex-01_R003-3.jpg",
+                      "nodeId":  "2181:17623",
+                      "frame":  "TI-EVT-01-P / 상태 / Instrument 무관 Event"
+                  },
+                  {
+                      "file":  "shots/brex-01_R003-4.jpg",
+                      "nodeId":  "2181:17782",
+                      "frame":  "LI-EVT-01-P"
+                  },
+                  {
+                      "file":  "shots/brex-01_R003-5.jpg",
+                      "nodeId":  "2181:17918",
+                      "frame":  "LI-EVT-01-P / 상태 / Instrument 무관 Event"
+                  },
+                  {
+                      "file":  "shots/brex-01_R003-6.jpg",
+                      "nodeId":  "2181:18587",
+                      "frame":  "TI-EVT-02-P"
+                  },
+                  {
+                      "file":  "shots/brex-01_R003-7.jpg",
+                      "nodeId":  "2181:18810",
+                      "frame":  "TI-EVT-02-P / 상태 / 메시지 1개"
+                  },
+                  {
+                      "file":  "shots/brex-01_R003-8.jpg",
+                      "nodeId":  "2181:18971",
+                      "frame":  "LI-EVT-02-P"
+                  },
+                  {
+                      "file":  "shots/brex-01_R003-9.jpg",
+                      "nodeId":  "2181:19202",
+                      "frame":  "LI-EVT-02-P / 상태 / 메시지 1개"
+                  }
               ],
     "images":  [
 
                ],
     "frames":  [
-
+                   {
+                       "nodeId":  "2181:17338",
+                       "name":  "TI-EVT-01-P"
+                   },
+                   {
+                       "nodeId":  "2181:17469",
+                       "name":  "TI-EVT-01-P / 상태 / Notes 없음"
+                   },
+                   {
+                       "nodeId":  "2181:17623",
+                       "name":  "TI-EVT-01-P / 상태 / Instrument 무관 Event"
+                   },
+                   {
+                       "nodeId":  "2181:17782",
+                       "name":  "LI-EVT-01-P"
+                   },
+                   {
+                       "nodeId":  "2181:17918",
+                       "name":  "LI-EVT-01-P / 상태 / Instrument 무관 Event"
+                   },
+                   {
+                       "nodeId":  "2181:18587",
+                       "name":  "TI-EVT-02-P"
+                   },
+                   {
+                       "nodeId":  "2181:18810",
+                       "name":  "TI-EVT-02-P / 상태 / 메시지 1개"
+                   },
+                   {
+                       "nodeId":  "2181:18971",
+                       "name":  "LI-EVT-02-P"
+                   },
+                   {
+                       "nodeId":  "2181:19202",
+                       "name":  "LI-EVT-02-P / 상태 / 메시지 1개"
+                   }
                ],
     "ask":  null,
     "replies":  [

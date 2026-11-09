@@ -4,8 +4,8 @@
     "reqId":  "R003",
     "reqType":  "일반",
     "team":  "cureca",
-    "at":  "2026-11-09T10:56:13+09:00",
-    "from":  "2026-11-09T10:55:55+09:00",
+    "at":  "2026-11-09T11:01:03+09:00",
+    "from":  "2026-11-09T10:57:28+09:00",
     "by":  "서보경",
     "doneBy":  "Claude",
     "pc":  "BREX_01",
@@ -16,13 +16,13 @@
     "nodeId":  "2177:16350",
     "text":  "이벤트 상세페이지는 왜 누락하고 그렸는 지 확인해줄래?",
     "models":  {
-                   "claude-opus-5-5":  2
+                   "claude-opus-5-5":  17
                },
-    "calls":  2,
-    "input":  4,
-    "cacheWrite":  6998,
-    "cacheRead":  139514,
-    "output":  1907,
-    "total":  148423,
-    "usd":  0.1220
+    "calls":  17,
+    "input":  34,
+    "cacheWrite":  73008,
+    "cacheRead":  1806344,
+    "output":  16790,
+    "total":  1896176,
+    "usd":  1.2813
 }
