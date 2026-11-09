@@ -80,6 +80,15 @@ select{border:1px solid var(--line);background:var(--surface);border-radius:8px;
 .bars.picked .col:not(.on) .stk{opacity:.35}
 .xl{display:flex;gap:4px;margin-left:44px;margin-top:4px}
 .xl span{flex:1 1 0;min-width:0;display:flex;justify-content:center;font-size:11px;color:var(--ink-3);white-space:nowrap;overflow:visible;font-variant-numeric:tabular-nums}
+.xl span.sun{color:#d23c3c}.xl span.sat{color:#2f6fd6}.xl span.today{font-weight:800;color:var(--ink)}
+/* 주 이동(일 ~ 토) */
+.wnav{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.wnav button{border:1px solid var(--line);background:var(--surface);border-radius:6px;width:26px;height:24px;padding:0;font-size:14px;line-height:1;color:var(--ink-2)}
+.wnav button:disabled{opacity:.35;cursor:default}
+.wnav .lbl{min-width:118px;text-align:center}
+.wnav .lbl b{color:var(--ink);font-weight:700}
+.wnav .now{width:auto;padding:0 8px;font-size:12px}
+.bars .wempty{position:absolute;left:0;right:0;top:40%;text-align:center;color:var(--ink-3);font-size:12.5px}
 .tip{position:fixed;z-index:50;pointer-events:none;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:12.5px;box-shadow:0 4px 16px rgba(0,0,0,.12);min-width:150px;font-variant-numeric:tabular-nums}
 .tip b{display:block;margin-bottom:2px}
 .tip .r{display:flex;justify-content:space-between;gap:12px;color:var(--ink-2)}
@@ -202,7 +211,9 @@ td.usd{font-weight:700}
   <!-- 2행: A 날짜별 · B 토큰 종류 -->
   <section class="grid g21">
     <div class="card">
-      <div class="ch"><h2>날짜별 금액 환산</h2><span class="sp"></span><div class="legend" id="dayLegend"></div></div>
+      <div class="ch"><h2>날짜별 금액 환산</h2>
+        <div class="wnav" id="wnav"><button id="wkPrev" aria-label="이전 주" title="이전 주">‹</button><span class="lbl" id="wkLbl"></span><button id="wkNext" aria-label="다음 주" title="다음 주">›</button><button class="now" id="wkNow" title="이번 주로">이번 주</button></div>
+        <span class="sp"></span><div class="legend" id="dayLegend"></div></div>
       <div id="dayChart"></div>
     </div>
     <div class="card">
@@ -274,7 +285,10 @@ td.usd{font-weight:700}
   var wcolor = {};   /* 작업자 → 색 번호(전체 기록 기준 고정, 기간을 바꿔도 같은 색) */
   function wc(n){ return 'var(--w' + ((wcolor[n] || 0) % 6) + ')'; }
 
-  function weekStart(){ var d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - ((d.getDay() + 6) % 7)); return d; }   /* 월요일 */
+  /* 한 주 = 일요일 ~ 토요일 */
+  function sundayOf(x){ var d = new Date(x); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - d.getDay()); return d; }
+  function weekStart(){ return sundayOf(new Date()); }
+  var wk = 0;   /* 날짜별 그래프가 보는 주의 일요일(시각), 0 = 이번 주 */
   function inPeriod(u){
     if (period === 'all') return true;
     var t = Date.parse(u.at), d = new Date(); if (!t) return false;
@@ -305,41 +319,47 @@ td.usd{font-weight:700}
   }
 
   function niceMax(v){ if (v <= 0) return 1; var e = Math.pow(10, Math.floor(Math.log10(v))), f = v / e; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * e; }
+  /* 날짜별 그래프는 한 주(일 ~ 토)씩. ‹ › 로 주를 옮긴다(기록이 있는 첫 주 ~ 이번 주, 「이번 달」이면 이번 달에 걸친 주) */
+  function weekRange(list){
+    var now = weekStart().getTime(), ts = list.map(function(u){ return Date.parse(u.at) || 0; }).filter(Boolean);
+    var lo = ts.length ? sundayOf(Math.min.apply(null, ts)).getTime() : now;
+    if (period === 'week') lo = now;
+    if (period === 'month') { var t = new Date(); lo = sundayOf(new Date(t.getFullYear(), t.getMonth(), 1)).getTime(); }
+    return {lo: Math.min(lo, now), hi: now};
+  }
   function daysFor(list){
-    var today = new Date(); today.setHours(0, 0, 0, 0);
-    var start, end = today;
-    if (period === 'week') start = weekStart();
-    else if (period === 'month') start = new Date(today.getFullYear(), today.getMonth(), 1);
-    else {
-      var ts = list.map(function(u){ return Date.parse(u.at) || 0; }).filter(Boolean);
-      if (!ts.length) return [];
-      start = new Date(Math.min.apply(null, ts)); start.setHours(0, 0, 0, 0);
-      var last = new Date(Math.max.apply(null, ts)); last.setHours(0, 0, 0, 0); if (last > end) end = last;
-      var min = new Date(end); min.setDate(min.getDate() - 6); if (start > min) start = min;   /* 최소 7일은 보여 준다 */
-      var max = new Date(end); max.setDate(max.getDate() - 89); if (start < max) start = max;  /* 최대 90일 */
-    }
-    if (period === 'week') { end = new Date(start); end.setDate(end.getDate() + 6); }
-    var out = [], d = new Date(start);
-    while (d <= end) { out.push(dkey(d)); d.setDate(d.getDate() + 1); }
+    var r = weekRange(list), s = wk || r.hi;
+    if (s < r.lo) s = r.lo; if (s > r.hi) s = r.hi;
+    wk = s === r.hi ? 0 : s;
+    var out = [], d = new Date(s);
+    for (var i = 0; i < 7; i++) { out.push(dkey(d)); d.setDate(d.getDate() + 1); }
+    $('wkPrev').disabled = s <= r.lo; $('wkNext').disabled = s >= r.hi; $('wkNow').hidden = s >= r.hi;
     return out;
   }
+  function moveWeek(n){
+    var r = weekRange(itemsNow()), d = new Date(wk || r.hi); d.setDate(d.getDate() + 7 * n);
+    wk = d.getTime() >= r.hi ? 0 : Math.max(r.lo, d.getTime()); day = ''; page = 1; render();
+  }
 
+  var DOW = ['일', '월', '화', '수', '목', '금', '토'];
   function renderDays(list){
-    var days = daysFor(list), map = {}, workers = [];
+    var days = daysFor(list), map = {}, workers = [], tday = dkey(new Date());
     days.forEach(function(k){ map[k] = {n:0, total:0, usd:0, w:{}}; });
     list.forEach(function(u){ var m = map[dayOf(u)]; if (!m) return; var n = name(u); m.n++; m.total += +u.total || 0; m.usd += +u.usd || 0; m.w[n] = (m.w[n] || 0) + (+u.usd || 0); if (workers.indexOf(n) < 0) workers.push(n); });
     workers.sort(function(a, b){ return (wcolor[a] || 0) - (wcolor[b] || 0); });
     $('dayLegend').innerHTML = workers.map(function(n){ return '<span><b style="background:' + wc(n) + '"></b>' + esc(n) + '</span>'; }).join('');
-    if (!days.length || !list.length) { $('dayChart').innerHTML = '<div class="empty">이 기간에 기록된 사용량이 없습니다.</div>'; return; }
+    var wsum = days.reduce(function(a, k){ return a + map[k].usd; }, 0), wn = days.reduce(function(a, k){ return a + map[k].n; }, 0);
+    $('wkLbl').innerHTML = days[0].slice(5) + ' ~ ' + days[6].slice(5) + ' · <b>' + (wsum ? usd(wsum) : '$0') + '</b>';
+    $('wkLbl').title = days[0] + '(일) ~ ' + days[6] + '(토) · 작업 ' + wn + '건';
     var top = niceMax(Math.max.apply(null, days.map(function(k){ return map[k].usd; }))), h = '<div class="bars' + (day ? ' picked' : '') + '">';
+    if (!wn) h += '<div class="wempty">이 주에는 기록된 사용량이 없습니다.</div>';
     for (var g = 0; g <= 4; g++) h += '<div class="gl" style="bottom:' + (g * 25) + '%"><span>' + (g ? usd(top * g / 4) : '$0') + '</span></div>';
     h += '<div class="cols">' + days.map(function(k){
       var m = map[k], seg = workers.filter(function(n){ return m.w[n]; }).map(function(n){ return '<i style="height:' + (m.w[n] / top * 100) + '%;background:' + wc(n) + '"></i>'; }).join('');
       return '<div class="col' + (k === day ? ' on' : '') + '" data-d="' + k + '" role="button" tabindex="0" aria-label="' + k + ' ' + usd(m.usd) + '"><div class="stk" style="height:100%;justify-content:flex-start">' + seg + '</div></div>';
     }).join('') + '</div></div>';
-    /* 날짜 글자: 많으면 몇 개 건너뛴다 */
-    var step = Math.ceil(days.length / 10);
-    h += '<div class="xl">' + days.map(function(k, i){ return '<span>' + (i % step === 0 ? k.slice(5) : '') + '</span>'; }).join('') + '</div>';
+    /* 날짜 글자: 일 ~ 토 모두(일요일 빨강 · 토요일 파랑 · 오늘 굵게) */
+    h += '<div class="xl">' + days.map(function(k, i){ return '<span class="' + (i === 0 ? 'sun' : i === 6 ? 'sat' : '') + (k === tday ? ' today' : '') + '">' + k.slice(5) + ' (' + DOW[i] + ')</span>'; }).join('') + '</div>';
     $('dayChart').innerHTML = h;
     $('dayChart').dataset.map = JSON.stringify(map);
   }
@@ -362,9 +382,11 @@ td.usd{font-weight:700}
       (mixMode === 'usd' ? '<div class="hint">모델별 단가를 호출 수 비중으로 섞어 나눈 추정값입니다. 캐시 쓰기는 금액 환산에서 나머지 몫입니다.</div>' : '');
   }
 
+  function baseNow(){ return items.filter(inPeriod).filter(function(u){ return !kind || kindOf(u) === kind; }).filter(function(u){ return !rtype || rtypeOf(u) === rtype; }); }
+  function itemsNow(){ var b = baseNow(); return who ? b.filter(function(u){ return name(u) === who; }) : b; }
   function render(){
     $('tip').hidden = true;
-    var base = items.filter(inPeriod).filter(function(u){ return !kind || kindOf(u) === kind; }).filter(function(u){ return !rtype || rtypeOf(u) === rtype; }), list = who ? base.filter(function(u){ return name(u) === who; }) : base, s = sum(list);
+    var base = baseNow(), list = who ? base.filter(function(u){ return name(u) === who; }) : base, s = sum(list);
     /* 금액 환산 중 종류별 비중(단가는 모델마다 달라 토큰 비율로 보여 준다) */
     $('cards').innerHTML =
       '<div class="card"><div class="k">작업 수</div><div class="v">' + num(s.n) + '건</div><div class="s">API 호출 ' + num(s.calls) + '회</div></div>' +
@@ -424,7 +446,7 @@ td.usd{font-weight:700}
 
   $('period').addEventListener('click', function(e){
     var b = e.target.closest('button'); if (!b) return;
-    period = b.dataset.p; page = 1; day = '';
+    period = b.dataset.p; page = 1; day = ''; wk = 0;
     Array.prototype.forEach.call(this.children, function(x){ x.classList.toggle('on', x === b); });
     render();
   });
@@ -452,6 +474,9 @@ td.usd{font-weight:700}
   $('dayChip').addEventListener('click', function(e){ if (e.target.closest('#dayX')) { day = ''; page = 1; render(); } });
   $('pager').addEventListener('click', function(e){ var b = e.target.closest('button'); if (!b || b.disabled) return; page = +b.dataset.p; render(); $('jobs').scrollIntoView({behavior:'smooth'}); });
 
+  $('wkPrev').addEventListener('click', function(){ moveWeek(-1); });
+  $('wkNext').addEventListener('click', function(){ moveWeek(1); });
+  $('wkNow').addEventListener('click', function(){ wk = 0; day = ''; page = 1; render(); });
   /* A 막대: 누르면 그날 작업만(다시 누르면 해제), 마우스를 올리면 그날 합계 */
   function pickDay(c){ day = day === c.dataset.d ? '' : c.dataset.d; page = 1; render(); }
   $('dayChart').addEventListener('click', function(e){ var c = e.target.closest('.col'); if (c) pickDay(c); });
