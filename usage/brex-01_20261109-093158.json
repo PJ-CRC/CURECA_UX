@@ -1,0 +1,28 @@
+{
+    "id":  "brex-01_20261109-093158",
+    "kind":  "work",
+    "reqId":  "",
+    "reqType":  "",
+    "team":  "cureca",
+    "at":  "2026-11-09T09:31:58+09:00",
+    "from":  "2026-11-09T09:31:04+09:00",
+    "by":  "서보경",
+    "doneBy":  "Claude",
+    "pc":  "BREX_01",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "작업규칙: 5. 화면 정의서 반영 대기 목록 (J034)",
+    "models":  {
+                   "claude-opus-5-5":  10
+               },
+    "calls":  10,
+    "input":  18,
+    "cacheWrite":  7474,
+    "cacheRead":  1046575,
+    "output":  4342,
+    "total":  1058409,
+    "usd":  0.3560
+}
