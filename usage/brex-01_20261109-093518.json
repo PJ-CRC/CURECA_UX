@@ -1,0 +1,28 @@
+{
+    "id":  "brex-01_20261109-093518",
+    "kind":  "work",
+    "reqId":  "",
+    "reqType":  "",
+    "team":  "cureca",
+    "at":  "2026-11-09T09:35:18+09:00",
+    "from":  "2026-11-09T09:34:22+09:00",
+    "by":  "서보경",
+    "doneBy":  "Claude",
+    "pc":  "BREX_01",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "기준데이터: terms.csv (J035)",
+    "models":  {
+                   "claude-opus-5-5":  7
+               },
+    "calls":  7,
+    "input":  13,
+    "cacheWrite":  7172,
+    "cacheRead":  706086,
+    "output":  4895,
+    "total":  718166,
+    "usd":  0.2965
+}
