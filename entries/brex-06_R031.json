@@ -2,8 +2,8 @@
     "id":  "brex-06_R031",
     "kind":  "request",
     "team":  "cureca",
-    "status":  "진행 중",
-    "at":  "2026-11-09T11:00:58+09:00",
+    "status":  "완료",
+    "at":  "2026-11-09T11:01:51+09:00",
     "createdAt":  "2026-11-09T11:00:41+09:00",
     "by":  "최고관리자",
     "doneBy":  "Claude",
@@ -17,16 +17,23 @@
     "type":  "일반",
     "layout":  "",
     "text":  "지금 화면과 똑같이 하나 더 만들어줘",
-    "note":  "",
-    "shot":  "",
+    "note":  "TI-SPT-03 화면을 똑같이 하나 더 만들었습니다.\n- TI-SPT-03 (복사)(2183:3): 원본 섹션을 통째로 복제해 원본 오른쪽에 새 섹션으로 둠, 내용 · 크기(2252×1086) 그대로\n- 이름만 화면 ID가 겹치지 않게 「(복사)」를 붙임. 다른 이름이 필요하면 알려 주세요\n작업 기준: 작업규칙 CURECA 작업규칙 · 정책서 CURECA 정책서 · UX가이드 CURECA UX 가이드 · 기준데이터 CURECA 기준데이터 · 화면 정의서 CURECA 화면 정의서",
+    "shot":  "shots/brex-06_R031.jpg",
     "shots":  [
-
+                  {
+                      "file":  "shots/brex-06_R031.jpg",
+                      "nodeId":  "2183:3",
+                      "frame":  "TI-SPT-03 (복사)"
+                  }
               ],
     "images":  [
 
                ],
     "frames":  [
-
+                   {
+                       "nodeId":  "2183:3",
+                       "name":  "TI-SPT-03 (복사)"
+                   }
                ],
     "ask":  null,
     "replies":  [
