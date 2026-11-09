@@ -442,7 +442,7 @@ a{color:var(--accent)}
       ? '터미널 창에 8자리 코드가 나오면 Enter → 열린 브라우저에 코드를 넣고 본인 깃허브 계정으로 로그인 · 승인합니다. 토큰은 필요 없습니다.'
       : '깃허브 로그인 창이 뜨면 [Sign in with your browser] → 브라우저에서 본인 계정으로 로그인 · 승인합니다. 토큰은 필요 없습니다.';
     var hs = e.historySync;
-    setMsg('gitEnv', e.historySyncing ? ['wait', '깃허브에 연결하는 중…'] : hs && hs.ok ? ['ok', '✓ ' + hs.message] :
+    setMsg('gitEnv', e.historySyncing ? ['wait', '깃허브에 연결하는 중…'] : hs && hs.ok && hs.retrying ? ['wait', '연결됨 · 잠깐 실패해 ' + hs.message] : hs && hs.ok ? ['ok', '✓ ' + hs.message] :
       e.gitInstalled === false ? ['wait', 'git이 아직 없습니다. 깃허브 연결을 누르면 설치부터 진행합니다.'] : hs ? ['bad', hs.message] : ['wait', '깃허브 연결을 누르세요.']);
     var ws = e.watcherSec, ag = e.agent || {};
     var off = ws != null && ws < 90 ? 'wait' : 'bad';   // 백그라운드가 꺼져도 Claude 창이 감시 중이면 주황(요청은 처리됨)

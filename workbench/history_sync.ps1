@@ -4,7 +4,7 @@
 #  - .history는 작업 폴더 저장소와 같은 원격(origin)의 history 브랜치만 받는 별도 저장소다. 작업 중인 코드 · 브랜치와 섞이지 않는다
 #  - 이력은 한 건 한 파일(entries/{PC}_{요청 ID}.json, shots/)이라 여러 PC가 올려도 충돌하지 않는다
 #  - 원격 주소: 모든 PC가 같은 저장소를 쓰도록 workbench/git_remote.txt (이 파일이 없을 때만 작업 폴더의 origin)
-#  - 결과는 workbench/.history_sync.json {at(마지막으로 맞춘 시각), checkedAt(마지막 확인), ok, message, busy}
+#  - 결과는 workbench/.history_sync.json {at(마지막으로 맞춘 시각), checkedAt(마지막 확인), ok, message, busy, retrying, fails}
 #  - -Interactive: 시작 안내 「깃허브 로그인」에서 한 번만. 깃허브 로그인 창을 허용한다(뒤에서 도는 동기화는 창을 띄우지 않는다)
 param([string]$Root = (Split-Path $PSScriptRoot -Parent), [switch]$Interactive, [switch]$Loop, [int]$ServerPid = 0, [int]$Every = 5)
 $H = Join-Path $Root '.history'
@@ -20,13 +20,30 @@ if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
   foreach ($d in "$env:ProgramFiles\Git\cmd", "$env:LOCALAPPDATA\Programs\Git\cmd") { if (Test-Path (Join-Path $d 'git.exe')) { $env:PATH = "$d;$env:PATH"; break } }
 }
 
-$St = [ordered]@{ at = ''; checkedAt = ''; ok = $false; message = ''; busy = $false }
-if (Test-Path $StatFile) { try { $o = [IO.File]::ReadAllText($StatFile, $Utf8) | ConvertFrom-Json; foreach ($k in 'at', 'checkedAt', 'ok', 'message') { if ($null -ne $o.$k) { $St[$k] = $o.$k } } } catch {} }
+#  - 잠깐 실패(연결 끊김 · 다른 PC와 올리기가 겹침)는 5초 뒤 다시 하고, 3번 연달아 실패해야 「실패」(ok:false)로 둔다.
+#    그동안은 ok를 그대로 두고 retrying:true · fails(연속 실패 수)만 쓴다. 로그인 · 권한 · 주소 문제는 바로 「실패」
+$MaxFails = 3
+$St = [ordered]@{ at = ''; checkedAt = ''; ok = $false; message = ''; busy = $false; retrying = $false; fails = 0 }
+if (Test-Path $StatFile) { try { $o = [IO.File]::ReadAllText($StatFile, $Utf8) | ConvertFrom-Json; foreach ($k in 'at', 'checkedAt', 'ok', 'message', 'retrying', 'fails') { if ($null -ne $o.$k) { $St[$k] = $o.$k } } } catch {} }
 function Now { (Get-Date).ToString('yyyy-MM-ddTHH:mm:sszzz') }
-function Save-St { try { [IO.File]::WriteAllText($StatFile, ($St | ConvertTo-Json), $Utf8) } catch {} }
+# 상태 파일은 임시 파일에 다 쓴 뒤 바꿔 넣는다(서버가 반쯤 쓴 파일을 읽지 않게)
+function Save-St {
+  $tmp = $StatFile + '.tmp'
+  try {
+    [IO.File]::WriteAllText($tmp, ($St | ConvertTo-Json), $Utf8)
+    if (Test-Path $StatFile) { [IO.File]::Replace($tmp, $StatFile, $null) } else { [IO.File]::Move($tmp, $StatFile) }
+  } catch { try { [IO.File]::WriteAllText($StatFile, ($St | ConvertTo-Json), $Utf8) } catch {}; Remove-Item $tmp -Force -ErrorAction SilentlyContinue }
+}
 # 한 번 맞추기를 끝낸다(결과 기록). 반복 실행 중에도 쓰려고 exit 대신 예외로 빠져나간다
-function Done($ok, $msg) {
-  $St.ok = $ok; $St.message = $msg; $St.busy = $false; $St.checkedAt = (Now); if ($ok) { $St.at = $St.checkedAt }
+#  $hard: 다시 해도 안 될 실패(로그인 · 권한 · 설정) → 바로 「실패」
+function Done($ok, $msg, [switch]$hard) {
+  $St.busy = $false; $St.checkedAt = (Now)
+  if ($ok) { $St.ok = $true; $St.message = $msg; $St.at = $St.checkedAt; $St.retrying = $false; $St.fails = 0 }
+  else {
+    $St.fails = [int]$St.fails + 1
+    if ($hard -or $St.fails -ge $MaxFails -or -not $St.ok) { $St.ok = $false; $St.retrying = $false; $St.message = $msg }
+    else { $St.retrying = $true; $St.message = ('다시 시도 중({0}/{1}): ' -f $St.fails, $MaxFails) + $msg }
+  }
   Save-St
   throw (New-Object System.OperationCanceledException 'done')
 }
@@ -39,13 +56,13 @@ function G {
 function Last($s) { $l = @($s -split "`n" | Where-Object { $_.Trim() }); if ($l.Count) { return $l[-1].Trim() }; return '' }
 
 function Sync-Once {
-  if (-not (Get-Command git -ErrorAction SilentlyContinue)) { Done $false 'git이 설치돼 있지 않아 이 PC에만 저장합니다.' }
+  if (-not (Get-Command git -ErrorAction SilentlyContinue)) { Done $false 'git이 설치돼 있지 않아 이 PC에만 저장합니다.' -hard }
   foreach ($d in $H, (Join-Path $H 'entries'), (Join-Path $H 'shots')) { if (-not (Test-Path $d)) { New-Item -ItemType Directory -Force $d | Out-Null } }
 
   # 모든 PC가 한 저장소를 쓴다: workbench/git_remote.txt (없을 때만 작업 폴더의 origin)
   $url = ''; $rf = Join-Path $WB 'git_remote.txt'; if (Test-Path $rf) { $url = ([IO.File]::ReadAllText($rf)).Trim() }
   if (-not $url) { $url = G -C $Root remote get-url origin; if ($code) { $url = '' } }
-  if (-not $url) { Done $false '공유할 깃 저장소 주소가 없어 이 PC에만 저장합니다. (workbench/git_remote.txt)' }
+  if (-not $url) { Done $false '공유할 깃 저장소 주소가 없어 이 PC에만 저장합니다. (workbench/git_remote.txt)' -hard }
   if (-not (Test-Path (Join-Path $H '.git'))) {
     G -C $H init -q | Out-Null
     G -C $H remote add origin $url | Out-Null
@@ -56,8 +73,8 @@ function Sync-Once {
   $ls = G -C $H ls-remote --exit-code --heads origin history
   $remote = $code
   if ($remote -ne 0 -and $remote -ne 2) {
-    if ($ls -match 'not found|403|denied') { Done $false '저장소에 접근할 수 없습니다. 저장소 관리자에게 깃허브 아이디를 알려 초대를 받고, 메일 · 깃허브 알림에서 수락한 뒤 [깃허브 연결]을 다시 누르세요.' }
-    if ($ls -match 'Authentication|could not read Username|terminal prompts disabled') { Done $false '깃허브 로그인이 필요합니다. 시작 안내 8단계의 [깃허브 연결]을 누르세요.' }
+    if ($ls -match 'not found|403|denied') { Done $false '저장소에 접근할 수 없습니다. 저장소 관리자에게 깃허브 아이디를 알려 초대를 받고, 메일 · 깃허브 알림에서 수락한 뒤 [깃허브 연결]을 다시 누르세요.' -hard }
+    if ($ls -match 'Authentication|could not read Username|terminal prompts disabled') { Done $false '깃허브 로그인이 필요합니다. 시작 안내 8단계의 [깃허브 연결]을 누르세요.' -hard }
     Done $false ('깃 서버에 연결하지 못했습니다. ' + (Last $ls))
   }
 
@@ -87,22 +104,27 @@ function Sync-Once {
   }
   if (-not $hasHead) { Done $true '깃허브에 연결했습니다. 아직 공유된 이력이 없습니다.' }
 
-  if ($remote -eq 0) {
-    $args2 = $id + @('-C', $H, 'pull', '-q', '--rebase', 'origin', 'history')
-    $o = G @args2
-    if ($code) { G -C $H rebase --abort | Out-Null; Done $false ('받기(pull) 실패: ' + (Last $o)) }
+  # 받고(pull) 올린다(push). 그 사이 다른 PC가 먼저 올려 거절되면(rejected · fetch first) 바로 다시 받고 올린다(최대 3번)
+  for ($try = 1; $true; $try++) {
+    if ($remote -eq 0) {
+      $args2 = $id + @('-C', $H, 'pull', '-q', '--rebase', 'origin', 'history')
+      $o = G @args2
+      if ($code) { G -C $H rebase --abort | Out-Null; Done $false ('받기(pull) 실패: ' + (Last $o)) }
+    }
+    $o = G -C $H push -q -u origin history
+    if (-not $code) { break }
+    if ($try -lt 3 -and $o -match 'rejected|fetch first|non-fast-forward|failed to push some refs') { $remote = 0; Start-Sleep -Milliseconds (300 * $try); continue }
+    Done $false ('올리기(push) 실패: ' + (Last $o))
   }
-  $o = G -C $H push -q -u origin history
-  if ($code) { Done $false ('올리기(push) 실패: ' + (Last $o)) }
   Done $true '깃과 맞췄습니다.'
 }
 function Run-Sync {
   $St.busy = $true; Save-St
-  try { Sync-Once } catch [System.OperationCanceledException] {} catch { $St.busy = $false; $St.ok = $false; $St.message = '오류: ' + $_.Exception.Message; $St.checkedAt = (Now); Save-St }
+  try { Sync-Once } catch [System.OperationCanceledException] {} catch { try { Done $false ('오류: ' + $_.Exception.Message) } catch [System.OperationCanceledException] {} }
 }
 # 가벼운 확인: 이 PC에 올릴 이력이 있거나 원격 history가 내 것과 다르면 맞춰야 한다
 function Need-Sync {
-  if (-not $St.ok -or -not (Test-Path (Join-Path $H '.git'))) { return $true }
+  if (-not $St.ok -or $St.retrying -or -not (Test-Path (Join-Path $H '.git'))) { return $true }
   # 공유 저장소 주소(git_remote.txt)가 바뀌었으면(저장소 이전) 새 주소로 맞춘다
   $rf = Join-Path $WB 'git_remote.txt'
   if ((Test-Path $rf) -and ([IO.File]::ReadAllText($rf)).Trim() -and (G -C $H remote get-url origin) -ne ([IO.File]::ReadAllText($rf)).Trim()) { return $true }
@@ -124,8 +146,8 @@ Remove-Item $LockFile -Force -ErrorAction SilentlyContinue
 Run-Sync
 while ($true) {
   if ($ServerPid -and -not (Get-Process -Id $ServerPid -ErrorAction SilentlyContinue)) { exit 0 }
-  # 실패한 뒤에는(로그인 필요 등) 1분에 한 번만 다시 묻는다
-  $wait = $Every; if (-not $St.ok) { $wait = 60 }
+  # 잠깐 실패(다시 시도 중)는 5초 뒤 바로, 「실패」가 된 뒤에는(로그인 필요 등) 1분에 한 번만 다시 묻는다
+  $wait = $Every; if (-not $St.ok -and -not $St.retrying) { $wait = 60 }
   $until = (Get-Date).AddSeconds($wait)
   while ((Get-Date) -lt $until -and -not (Test-Path $NowFile)) { Start-Sleep -Milliseconds 500 }
   $now = Test-Path $NowFile
