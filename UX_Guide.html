@@ -46,7 +46,7 @@ a.pill:hover{border-color:var(--accent)}
 /* 두 칸: 목차 트리 340 | 내용 */
 .layout{display:grid;grid-template-columns:340px minmax(0,1fr);gap:var(--gap);align-items:start}
 @media (max-width:1000px){ .layout{grid-template-columns:260px minmax(0,1fr)} }   /* 화면 배율이 크면(200%) 목차를 좁혀 상세를 넓게 */
-.side{position:sticky;top:calc(var(--nav-h) + 12px);max-height:calc(100vh - var(--nav-h) - 24px);display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
+.side{position:sticky;top:calc(var(--nav-h) + 12px);max-height:calc(var(--ovh,100vh) - var(--nav-h) - 24px);display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
 .side-head{padding:12px;border-bottom:1px solid var(--line)}
 .side-head input{width:100%;padding:8px 11px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:14px}
 .tree{list-style:none;margin:0;padding:8px;overflow:auto;flex:1;min-height:0}
@@ -64,17 +64,16 @@ a.pill:hover{border-color:var(--accent)}
 html.doc-ro .ask{display:none}
 @media (max-width:720px){ .ask{flex-direction:column} .ask-t,.ask-act{width:auto} }
 /* 수정 진행 · 결과 패널: 목차 · 내용과 입력창 사이. 길면 그 안에서 스크롤(창 높이의 40%까지) */
-#fixes:not(:empty){margin-top:12px;max-height:40vh;overflow:auto;border-radius:12px}
+#fixes:not(:empty){margin-top:12px;max-height:calc(var(--ovh,100vh) * .4);overflow:auto;border-radius:12px}
 #fixes .fix{margin:0 0 8px}
 #fixes .fix:last-child{margin-bottom:0}
 #fixes .fix + .fix{margin-top:0}
-/* 낮은 창: 입력창을 한 줄 높이로 */
-@media (max-height:760px){
-  .ask{padding:8px 12px;margin-top:8px}
-  .ask textarea{height:40px;min-height:40px}
-  .ask-t span,.ask-act span{display:none}
-  #fixes:not(:empty){max-height:30vh}
-}
+/* 낮은 창(바깥 창 세로 760px 이하): 입력창을 한 줄 높이로. html.low는 fit()이 바깥 창 높이로 정한다
+   (@media max-height는 UX 문서 안 iframe에서 iframe 높이를 봐서, 높이가 760 근처면 켜졌다 꺼졌다 하며 흔들렸다) */
+html.low .ask{padding:8px 12px;margin-top:8px}
+html.low .ask textarea{height:40px;min-height:40px}
+html.low .ask-t span,html.low .ask-act span{display:none}
+html.low #fixes:not(:empty){max-height:calc(var(--ovh,100vh) * .3)}
 .tree ul{list-style:none;margin:2px 0 4px;padding:0 0 0 14px;border-left:1px solid var(--line);margin-left:15px}
 .tree li{margin:1px 0}
 .node{display:flex;align-items:center;gap:6px;width:100%;text-align:left;border:0;background:none;border-radius:7px;padding:7px 8px;font-size:14px;color:var(--ink-2);line-height:1.35}
@@ -614,8 +613,13 @@ html.embed,html.embed body{overflow:hidden}
     var want = navH + 12 - (window.frameElement.getBoundingClientRect().top + lay.getBoundingClientRect().top);
     side.style.transform = 'translateY(' + Math.round(Math.max(0, Math.min(want, lay.offsetHeight - side.offsetHeight))) + 'px)';
   }
+  /* 높이 기준은 늘 바깥 창(--ovh). UX 문서 안(iframe)에서 vh는 iframe 자기 높이라, 내용 높이로 iframe 높이를 정하는 이 페이지에서
+     「40vh」 같은 값을 쓰면 결과 패널이 커짐 → iframe이 커짐 → 40vh가 커짐 … 되먹임으로 목차 · 상세가 흔들렸다(2026-11-09) */
+  var lastFit = '', lastPost = 0;
   function fit(){
     var lay = $('layout'), P = outer(), W = P || window, wide = window.innerWidth > 720;
+    var ovh = W.innerHeight + 'px'; if (document.documentElement.style.getPropertyValue('--ovh') !== ovh) document.documentElement.style.setProperty('--ovh', ovh);
+    var low = W.innerHeight <= 760; if (document.documentElement.classList.contains('low') !== low) document.documentElement.classList.toggle('low', low);
     lay.classList.toggle('fit', wide); document.documentElement.classList.toggle('fitted', wide);
     if (wide) {
       /* 목차 · 상세 위쪽이 (스크롤하지 않았을 때) 바깥 창에서 어디인지 */
@@ -630,9 +634,11 @@ html.embed,html.embed body{overflow:hidden}
       var h = W.innerHeight - top - below - tail;
       /* 낮은 창: 위 제목 · 탭이 높이를 다 먹으면 목차 · 상세를 창 높이(상단 메뉴 아래)로 두고 페이지를 스크롤해 본다 */
       if (h < 200) h = W.innerHeight - navOf(W) - 24;
-      lay.style.setProperty('--fit', Math.max(200, Math.round(h)) + 'px');
-    }
-    if (EMBED && P) { var w = document.querySelector('.app-wrap'); P.postMessage({ type: 'ux-guide-h', h: w.offsetTop + w.offsetHeight }, location.origin); }
+      /* 바뀔 때만 쓴다(같은 값을 다시 써도 ResizeObserver · 바깥 높이 맞춤이 또 돌지 않게, 1px 반올림 차이는 무시) */
+      var fv = Math.max(200, Math.round(h));
+      if (!lastFit || Math.abs(fv - parseInt(lastFit, 10)) > 1) { lastFit = fv + 'px'; lay.style.setProperty('--fit', lastFit); }
+    } else lastFit = '';
+    if (EMBED && P) { var w = document.querySelector('.app-wrap'), ph = Math.ceil(w.offsetTop + w.offsetHeight); if (Math.abs(ph - lastPost) > 1) { lastPost = ph; P.postMessage({ type: 'ux-guide-h', h: ph }, location.origin); } }
     stickSide();
   }
   /* 다른 항목으로 가면 상세 맨 위로(맞춤일 때는 상세 안을, 아니면 지나 내려가 있을 때만 페이지를) */
@@ -922,7 +928,8 @@ html.embed,html.embed body{overflow:hidden}
       edits = all.filter(function(j){ return j.kind === 'guide-edit' && open.indexOf(j.status) >= 0; });
       /* Claude가 가이드를 고쳤으면(새 수정본) 본문을 다시 읽는다 */
       var g = (d[1].items || []).filter(function(x){ return x.id === id; })[0];
-      if (g) { applied = d[1].applied || applied; if (lastRev !== null && g.rev !== lastRev && !editing) load(Math.max(0, secs.indexOf(cur))); lastRev = g.rev; }
+      /* 다시 읽어도 목차 · 상세 스크롤은 그대로(같은 항목을 보고 있으므로) */
+      if (g) { applied = d[1].applied || applied; if (lastRev !== null && g.rev !== lastRev && !editing) { var tr = $('tree'), mn = $('main'), ts = tr.scrollTop, ms = mn.scrollTop, py = window.scrollY; load(Math.max(0, secs.indexOf(cur))).then(function(){ tr.scrollTop = ts; mn.scrollTop = ms; if (!outer()) window.scrollTo(0, py); }); } lastRev = g.rev; }
       /* 다른 문서(가이드 · 정의서) 정보: 연관 항목 반영 때 그 문서의 수정 요청을 만든다 */
       docs = {}; (d[1].items || []).forEach(function(x){ docs[x.id] = x; });
       /* UX가이드는 내 작업 기준일 때만, 다른 카테고리(작업규칙 · 정책서 · 기준데이터 · 화면 정의서)는 늘 「연관 항목 찾기」로 이어진다 */
@@ -971,8 +978,15 @@ html.embed,html.embed body{overflow:hidden}
           h += '<section class="fix"><h3>' + esc(head) + ' 찾기 ' + esc(j.status) + '</h3><p>' + esc(j.note || '') + '</p><div class="act"><button type="button" class="btn" data-skip="' + j.id + '">닫기</button></div></section>';
         }
       });
-      $('fixes').innerHTML = h;
-      if (location.hash === '#fix' && h) { var f = $('fixes').firstElementChild; if (f) f.scrollIntoView(); }
+      /* 10초마다 다시 읽어도 내용이 같으면 그대로 둔다(다시 그리면 결과 패널 스크롤 · 고른 체크가 처음으로 돌아가 흔들려 보였다) */
+      var fx = $('fixes');
+      if (fx.dataset.h !== h) {
+        var keep = fx.scrollTop, checks = {};
+        Array.prototype.forEach.call(fx.querySelectorAll('input[type=checkbox]'), function(c){ checks[c.id] = c.checked; });
+        fx.innerHTML = h; fx.dataset.h = h; fx.scrollTop = keep;
+        Array.prototype.forEach.call(fx.querySelectorAll('input[type=checkbox]'), function(c){ if (c.id in checks && !c.disabled) c.checked = checks[c.id]; });
+      }
+      if (location.hash === '#fix' && h && !fx.dataset.jumped) { fx.dataset.jumped = 1; var f = fx.firstElementChild; if (f) f.scrollIntoView(); }
     });
   }
   setInterval(function(){ if (!document.hidden && !editing) fixes(); }, 10000);
