@@ -9,6 +9,7 @@
 1. [constitution.md](constitution.md) — 헌법. 모든 룰과 작업에 우선합니다.
 2. [rules/claude-work.md](rules/claude-work.md) — 작업 유형, 공통 순서, 보고 형식.
 3. 요청을 작업 유형으로 분류하고, `rules/claude-work.md`의 공통 순서대로 진행합니다.
+   - 기존 화면을 신규 작업방에 다시 그리는 요청(화면설계 케이스 1)은 `rules/screen-spec.md` "케이스 1"의 꼭 지킬 것 10가지와 순서를 그대로 따릅니다.
 
 ## 초안 단계 동안
 
