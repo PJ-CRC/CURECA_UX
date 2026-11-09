@@ -1,0 +1,28 @@
+{
+    "id":  "brex-06_20261109-175415",
+    "kind":  "work",
+    "reqId":  "",
+    "reqType":  "",
+    "team":  "cureca",
+    "at":  "2026-11-09T17:54:15+09:00",
+    "from":  "2026-11-09T17:36:00+09:00",
+    "by":  "최고관리자",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "LI-INS-01-P",
+    "nodeId":  "2225:69611",
+    "text":  "문 닫기 안내 팝업 Confirm_031",
+    "models":  {
+                   "claude-opus-5-5":  6
+               },
+    "calls":  6,
+    "input":  14,
+    "cacheWrite":  9978,
+    "cacheRead":  1740115,
+    "output":  4705,
+    "total":  1754812,
+    "usd":  0.5220
+}

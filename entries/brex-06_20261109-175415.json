@@ -1,0 +1,19 @@
+{
+    "id":  "brex-06_20261109-175415",
+    "kind":  "work",
+    "team":  "cureca",
+    "at":  "2026-11-09T17:54:15+09:00",
+    "by":  "최고관리자",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "reqId":  "",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "LI-INS-01-P",
+    "nodeId":  "2225:69611",
+    "type":  "",
+    "text":  "문 닫기 안내 팝업 ID Confirm_031 반영",
+    "note":  "문이 열린 채 [Lock] 클릭 시 뜨는 문 닫기 안내 팝업의 ID를 Confirm_031로 지정: LI-INS-01-P 2-5 · LI-INS-02-T 3-1 디스크립션, 케이스 설명 · 레이어 이름, 업데이트 박스에 반영.",
+    "shot":  "shots/brex-06_20261109-175415.jpg"
+}
