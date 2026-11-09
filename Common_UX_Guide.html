@@ -289,7 +289,7 @@ html.doc-ro #docNew,html.doc-ro #docImport{display:none!important}
 <div class="dpanel" role="tabpanel" id="doc-guide" aria-labelledby="tab-guide" hidden>
 <h2 class="gd-name" id="gdName2">UX가이드</h2>
 <section class="gd" aria-labelledby="gdTitle">
-  <label class="gd-lab" id="gdTitle" for="gdSel" title="이 PC(나)에만 적용됩니다. 이 PC의 Claude가 수정 요청을 처리할 때 이 가이드를 따르고, 다른 작업자는 각자 고릅니다.">내 작업 기준 <span class="gd-by">(<b id="gdFile">—</b>)</span></label>
+  <label class="gd-lab" id="gdTitle" for="gdSel" title="이 PC(나)의 모든 프로젝트(Figma 파일)에 적용됩니다. 이 PC의 Claude가 수정 요청을 처리할 때 이 가이드를 따르고, 다른 작업자는 각자 고릅니다.">내 작업 기준 <span class="gd-by">(<b id="gdFile">—</b>)</span></label>
   <select id="gdSel"></select>
   <button type="button" id="gdApply" disabled>적용</button>
   <span class="gd-by" id="gdBy2"></span>
@@ -361,7 +361,12 @@ html.doc-ro #docNew,html.doc-ro #docImport{display:none!important}
         var fix = {}; all.forEach(function(j){ if (j.kind === 'guide-check' && j.status === '완료' && (j.items || []).length) fix[j.guide] = (fix[j.guide] || 0) + j.items.length; });
         workKey = parseFig(d[2] && d[2].state && d[2].state.figmaUrl) || '';
         var pj = d[3] && (d[3].projects || []).filter(function(p){ return p.key === workKey; })[0];
-        workName = pj && pj.name ? pj.name : workKey ? workKey.slice(0, 6) : '작업 링크 없음';
+        /* 작업 기준은 이 PC의 모든 프로젝트(Figma 파일)에 같이 적용된다(서버가 등록된 모든 파일에 넣고, 새 프로젝트도 같은 문서를 쓴다).
+           3단계 링크가 없어도 등록된 프로젝트가 있으면 적용할 수 있다 */
+        var projs = (d[3] && d[3].projects) || [];
+        if (!workKey && projs.length) workKey = projs[0].key;
+        var nProj = projs.length + (workKey && !projs.some(function(p){ return p.key === workKey; }) ? 1 : 0);
+        workName = workKey ? '이 PC의 모든 프로젝트' + (nProj > 1 ? ' ' + nProj + '개' : '') : '프로젝트 없음';
         var ap = (d[0].applied || {})[workKey], cur = ap && ap.guideId || '';
         GEN.forEach(function(k){ renderKind(k, byKind[k] || [], ap && ap.docs && ap.docs[k]); });
         renderLog(docs);
@@ -418,7 +423,7 @@ html.doc-ro #docNew,html.doc-ro #docImport{display:none!important}
       var K = KINDS[k];
       return '<div class="dpanel" role="tabpanel" id="doc-' + k + '" aria-labelledby="tab-' + k + '" hidden>' +
         '<h2 class="gd-name" id="name-' + k + '">' + esc(K.label) + '</h2>' +
-        '<section class="gd" id="bar-' + k + '" hidden><label class="gd-lab" for="sel-' + k + '" title="이 PC(나)에만 적용됩니다. 이 PC의 Claude가 수정 요청을 처리할 때 적용한 ' + esc(K.label) + '만 따르고, 다른 작업자는 각자 고릅니다.">내 작업 기준 <span class="gd-by">(<b class="wfile">—</b>)</span></label>' +
+        '<section class="gd" id="bar-' + k + '" hidden><label class="gd-lab" for="sel-' + k + '" title="이 PC(나)의 모든 프로젝트(Figma 파일)에 적용됩니다. 이 PC의 Claude가 수정 요청을 처리할 때 적용한 ' + esc(K.label) + '만 따르고, 다른 작업자는 각자 고릅니다.">내 작업 기준 <span class="gd-by">(<b class="wfile">—</b>)</span></label>' +
         '<select id="sel-' + k + '" data-k="' + k + '"></select><button type="button" class="gd-apply" id="apply-' + k + '" data-k="' + k + '" disabled>적용</button><span class="gd-by" id="by-' + k + '"></span><span class="gd-jobs" id="jobs-' + k + '"></span></section>' +
         '<div class="gd-viewing" id="viewing-' + k + '"></div>' +
         '<div class="gd-view" id="view-' + k + '" hidden><iframe id="frame-' + k + '" title="' + esc(K.label) + '"></iframe></div>' +
@@ -433,7 +438,7 @@ html.doc-ro #docNew,html.doc-ro #docImport{display:none!important}
       var view = kView[k];
       $g('empty-' + k).hidden = !!list.length;
       $g('bar-' + k).hidden = !list.length;
-      $g('bar-' + k).querySelector('.wfile').textContent = workName || '작업 링크 없음';
+      $g('bar-' + k).querySelector('.wfile').textContent = workName || '프로젝트 없음';
       var sel = $g('sel-' + k);
       var opts = '<option value="">작업 기준 없음 (' + esc(KINDS[k].obj) + ' 쓰지 않음)</option>' +
         list.map(function(s){ return '<option value="' + esc(s.id) + '">' + esc(s.title) + (s.id === cur ? ' (내 작업 기준)' : '') + '</option>'; }).join('');
@@ -458,7 +463,7 @@ html.doc-ro #docNew,html.doc-ro #docImport{display:none!important}
       var b = e.target.closest('button.gd-apply[data-k]'); if (!b) return;
       var k = b.dataset.k, L = KINDS[k].label, id = kView[k] || '', m = kMap[k] || {}; if (id && !m[id]) return;
       var what = id ? '「' + m[id].title + '」(으)로 바꿀까요?' : '「작업 기준 없음」으로 바꿀까요? (Claude가 ' + KINDS[k].obj + ' 보지 않습니다)';
-      if (!confirm('「' + L + '」 작업 기준(' + workName + ' 파일)을 ' + what + '\n이 PC(나)에만 적용됩니다. 다른 작업자에게는 영향이 없습니다.')) return;
+      if (!confirm('「' + L + '」 작업 기준(' + workName + ')을 ' + what + '\n이 PC(나)에만 적용됩니다. 다른 작업자에게는 영향이 없습니다.')) return;
       b.disabled = true;
       fetch('/api/guides', { method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'apply', kind: k, fileKey: workKey, guideId: id, by: userInput.value.trim() }) })
@@ -727,7 +732,7 @@ html.doc-ro #docNew,html.doc-ro #docImport{display:none!important}
     $g('gdSel').addEventListener('change', function(){ viewId = this.value; load(); });
     $g('gdApply').addEventListener('click', function(){
       var b = this, id = $g('gdSel').value; if (!guideMap[id]) return; var title = guideMap[id].title;
-      if (!confirm('내 작업 기준 가이드(' + workName + ' 파일)를 「' + title + '」(으)로 바꿀까요?\n이 PC(나)에만 적용됩니다. 다른 작업자에게는 영향이 없습니다.')) return;
+      if (!confirm('내 작업 기준 가이드(' + workName + ')를 「' + title + '」(으)로 바꿀까요?\n이 PC(나)에만 적용됩니다. 다른 작업자에게는 영향이 없습니다.')) return;
       b.disabled = true;
       fetch('/api/guides', { method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'apply', kind: 'guide', fileKey: workKey, guideId: id, by: userInput.value.trim() }) })

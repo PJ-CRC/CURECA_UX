@@ -864,7 +864,35 @@ sub guides_get {
     closedir $dh;
   }
   if (-f $GUIDE_APPLY) { my $ga = eval { read_json($GUIDE_APPLY) }; %applied = %$ga if ref $ga eq 'HASH'; }
+  fill_applied(\%applied);
   return { items => [sort { str($b->{updatedAt}) cmp str($a->{updatedAt}) } @list], applied => \%applied };
+}
+# 작업 기준은 이 PC(· 팀)의 모든 프로젝트(Figma 파일)에 같이 쓴다(윈도우 Apply-Keys · Fill-Applied와 같다): [적용]하면 등록된 모든 파일에 들어가고,
+#  아직 그 카테고리 문서가 없는 파일(새로 등록한 프로젝트 등)은 시작 안내 3단계 링크 파일(없으면 가장 최근 적용)의 문서를 쓴다
+sub apply_keys {
+  my ($extra) = @_; my @ks; my %s;
+  my $wk = work_key(); push @ks, $wk if key_ok($wk) && !$s{$wk}++;
+  if (opendir my $dh, $PROJ_ROOT) { for my $d (sort readdir $dh) { push @ks, $d if key_ok($d) && -f "$PROJ_ROOT/$d/project.json" && !$s{$d}++; } closedir $dh; }
+  push @ks, $extra if defined $extra && key_ok($extra) && !$s{$extra}++;
+  return @ks;
+}
+sub applied_docs {
+  my ($e) = @_; my %d; return \%d unless ref $e eq 'HASH';
+  if (ref $e->{docs} eq 'HASH') { for my $k (keys %{ $e->{docs} }) { my $v = $e->{docs}{$k}; $d{$k} = $v if ref $v eq 'HASH' && str($v->{id}) ne ''; } }
+  elsif (str($e->{guideId}) ne '') { $d{guide} = { id => str($e->{guideId}), by => str($e->{by}), at => str($e->{at}) }; }
+  return \%d;
+}
+sub fill_applied {
+  my ($ap) = @_; my $src = $ap->{ work_key() };
+  unless (%{ applied_docs($src) }) { $src = undef; for my $k (keys %$ap) { my $e = $ap->{$k}; $src = $e if %{ applied_docs($e) } && (!$src || str($e->{at}) gt str($src->{at})); } }
+  return unless $src;
+  my $sd = applied_docs($src);
+  for my $k (apply_keys('')) {
+    my $docs = applied_docs($ap->{$k}); my $n = 0;
+    for my $t (keys %$sd) { next if $docs->{$t}; $docs->{$t} = $sd->{$t}; $n++; }
+    next if !$n && exists $ap->{$k};
+    $ap->{$k} = { fileKey => $k, guideId => ($docs->{guide} ? str($docs->{guide}{id}) : ''), by => str($src->{by}), pc => str($src->{pc}), at => str($src->{at}), docs => $docs, filled => JSON::PP::true };
+  }
 }
 # 요청이 끝나면 그 구간의 사용량을 따로 띄운 프로세스가 남긴다(대화 기록을 읽느라 몇 초 걸릴 수 있어 서버를 막지 않는다)
 sub start_usage {
@@ -1508,12 +1536,14 @@ sub handle {
       die "알 수 없는 문서 종류: $kind\n" unless $kind =~ /^[a-z]{1,20}$/;
       die "문서를 찾지 못했습니다: $gid\n" if $gid ne '' && ($gid !~ /^[A-Za-z0-9_-]{1,64}$/ || !-f "$GUIDE_ROOT/$gid/meta.json");
       if ($gid ne '') { my $m = eval { read_json("$GUIDE_ROOT/$gid/meta.json") } || {}; my $mk = str($m->{kind}) || 'guide'; die "종류가 다른 문서입니다($mk): $gid\n" if $mk ne $kind; }
-      # 이 PC에만 적용한다(다른 작업자는 각자 고른다)
+      # 이 PC에만 적용한다(다른 작업자는 각자 고른다). 이 PC의 모든 프로젝트(Figma 파일)에 같이 적용한다(apply_keys)
       my $ga = (-f $GUIDE_APPLY ? eval { read_json($GUIDE_APPLY) } : undef) || {};
-      my $old = ref $ga->{$key} eq 'HASH' ? $ga->{$key} : {};
-      my %docs = ref $old->{docs} eq 'HASH' ? %{ $old->{docs} } : (str($old->{guideId}) ne '' ? (guide => { id => str($old->{guideId}), by => str($old->{by}), at => str($old->{at}) }) : ());   # 예전 형식
-      $docs{$kind} = { id => $gid, by => str($g->{by}), at => now_iso() };
-      $ga->{$key} = { fileKey => $key, guideId => (ref $docs{guide} eq 'HASH' ? str($docs{guide}{id}) : ''), by => str($g->{by}), pc => $PC_NAME, at => now_iso(), docs => \%docs };
+      for my $fk (apply_keys($key)) {
+        my $old = ref $ga->{$fk} eq 'HASH' ? $ga->{$fk} : {};
+        my %docs = ref $old->{docs} eq 'HASH' ? %{ $old->{docs} } : (str($old->{guideId}) ne '' ? (guide => { id => str($old->{guideId}), by => str($old->{by}), at => str($old->{at}) }) : ());   # 예전 형식
+        $docs{$kind} = { id => $gid, by => str($g->{by}), at => now_iso() };
+        $ga->{$fk} = { fileKey => $fk, guideId => (ref $docs{guide} eq 'HASH' ? str($docs{guide}{id}) : ''), by => str($g->{by}), pc => $PC_NAME, at => now_iso(), docs => \%docs };
+      }
       write_json($GUIDE_APPLY, $ga);
     }
     return respond_json($sock, 200, guides_get());
