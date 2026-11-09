@@ -1,0 +1,19 @@
+{
+    "id":  "brex-06_20261109-172951",
+    "kind":  "work",
+    "team":  "cureca",
+    "at":  "2026-11-09T17:29:51+09:00",
+    "by":  "최고관리자",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "reqId":  "",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "LI-INS-01-P",
+    "nodeId":  "2225:69506",
+    "type":  "",
+    "text":  "Door Control Lock 버튼 활성 색 적용",
+    "note":  "Lock 버튼을 모두 활성(Enabled, Filled 검정) 상태로 바꿈(열린 문 포함). 디스크립션 LI-INS-01-P 2-5 · LI-INS-02-T 3-1의 「Open이면 [Lock] Disabled」를 「[Lock] 버튼은 늘 활성」으로 수정.",
+    "shot":  "shots/brex-06_20261109-172951.jpg"
+}
