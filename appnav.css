@@ -95,6 +95,18 @@ html.perm-ro .ro-only{display:block}
 .appnav-team b{font-weight:700;color:var(--nav-ink);padding-right:6px}
 .appnav-team select{height:30px;border:0;border-radius:6px;background:var(--nav-chip);color:var(--nav-ink);font:inherit;font-size:13.5px;font-weight:700;padding:0 6px;cursor:pointer}
 .appnav-team select:focus-visible{outline:2px solid var(--nav-accent);outline-offset:1px}
+/* 팀 색(서버가 팀을 만들 때 정한 번호 0~7, teams.json color): 상단 팀 표시 · 계정 관리 팀 칩이 같이 쓴다 */
+.tc0{--tc-bg:#e3f4e8;--tc-fg:#1a7f37} .tc1{--tc-bg:#f3e8fd;--tc-fg:#7b3fbf} .tc2{--tc-bg:#fff1e0;--tc-fg:#b35900} .tc3{--tc-bg:#e6ebff;--tc-fg:#2747d8}
+.tc4{--tc-bg:#e0f4f7;--tc-fg:#0b7285} .tc5{--tc-bg:#fde8ef;--tc-fg:#b4235a} .tc6{--tc-bg:#f6f3dc;--tc-fg:#7a6400} .tc7{--tc-bg:#eceff3;--tc-fg:#4a5260}
+:root[data-theme="dark"] .tc0{--tc-bg:#16301d;--tc-fg:#56d364} :root[data-theme="dark"] .tc1{--tc-bg:#2e2340;--tc-fg:#c7a3f5} :root[data-theme="dark"] .tc2{--tc-bg:#38270f;--tc-fg:#f0a24f} :root[data-theme="dark"] .tc3{--tc-bg:#232c52;--tc-fg:#8ea2ff}
+:root[data-theme="dark"] .tc4{--tc-bg:#12303a;--tc-fg:#66d0e0} :root[data-theme="dark"] .tc5{--tc-bg:#3a1d29;--tc-fg:#f58bb0} :root[data-theme="dark"] .tc6{--tc-bg:#33300f;--tc-fg:#e3cc5c} :root[data-theme="dark"] .tc7{--tc-bg:#252a32;--tc-fg:#b4bcc8}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .tc0{--tc-bg:#16301d;--tc-fg:#56d364} :root:not([data-theme="light"]) .tc1{--tc-bg:#2e2340;--tc-fg:#c7a3f5} :root:not([data-theme="light"]) .tc2{--tc-bg:#38270f;--tc-fg:#f0a24f} :root:not([data-theme="light"]) .tc3{--tc-bg:#232c52;--tc-fg:#8ea2ff}
+  :root:not([data-theme="light"]) .tc4{--tc-bg:#12303a;--tc-fg:#66d0e0} :root:not([data-theme="light"]) .tc5{--tc-bg:#3a1d29;--tc-fg:#f58bb0} :root:not([data-theme="light"]) .tc6{--tc-bg:#33300f;--tc-fg:#e3cc5c} :root:not([data-theme="light"]) .tc7{--tc-bg:#252a32;--tc-fg:#b4bcc8}
+}
+.appnav-team select[class*="tc"],.appnav-team b[class*="tc"]{background:var(--tc-bg);color:var(--tc-fg)}
+.appnav-team b[class*="tc"]{height:30px;display:inline-flex;align-items:center;border-radius:6px;padding:0 10px}
+.appnav-team select option{background:var(--nav-bg);color:var(--nav-ink)}
 .appnav-team.none{color:var(--nav-warn);padding-right:12px}
 @media (max-width:1600px){ .appnav-team{padding-left:6px} .appnav-team .lb{display:none} .appnav-team b{padding:0 6px} }
 .appnav-acct{display:flex;align-items:center;gap:10px;white-space:nowrap}

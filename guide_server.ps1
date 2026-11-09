@@ -459,6 +459,18 @@ function Save-Teams($items) {
   [IO.File]::WriteAllText($TeamsFile, ([ordered]@{ items = @($items) } | ConvertTo-Json -Depth 4), $Utf8)
   $script:SyncWant = $true
 }
+# 팀 색(0~7, 계정 관리 칩 색): 팀을 만들 때 다른 팀이 쓰지 않는 첫 색을 정해 teams.json에 둔다.
+#  색이 없는 예전 팀은 목록 순서대로 남은 색을 받는다(팀을 만들 때 그 색도 함께 저장해 굳힌다)
+$TeamColors = 8
+function Fill-TeamColors($teams) {
+  $used = @{}; foreach ($t in $teams) { if ($null -ne $t.color -and "$($t.color)" -match '^\d+$') { $used[[int]$t.color] = 1 } }
+  foreach ($t in $teams) {
+    if ($null -ne $t.color -and "$($t.color)" -match '^\d+$') { continue }
+    $c = 0; while ($used.ContainsKey($c) -and $c -lt $TeamColors) { $c++ }; if ($c -ge $TeamColors) { $c = $used.Count % $TeamColors }
+    $used[$c] = 1; $t | Add-Member -NotePropertyName color -NotePropertyValue $c -Force
+  }
+  return $teams
+}
 function Team-Ids { return @(Read-Teams | ForEach-Object { [string]$_.id }) }
 function User-Teams($a) {
   if (-not $a) { return @() }
@@ -600,7 +612,7 @@ function Me-Info {
     teams = @(Team-List @(My-Teams)); team = (Current-Team); teamMenus = @($TeamMenus) }
 }
 # 팀 id 목록 → [{id, name}] (팀 목록 순서대로)
-function Team-List([string[]]$ids) { return @(Read-Teams | Where-Object { $ids -contains [string]$_.id } | ForEach-Object { [ordered]@{ id = [string]$_.id; name = [string]$_.name } }) }
+function Team-List([string[]]$ids) { return @(Fill-TeamColors @(Read-Teams) | Where-Object { $ids -contains [string]$_.id } | ForEach-Object { [ordered]@{ id = [string]$_.id; name = [string]$_.name; color = [int]$_.color } }) }
 function Set-MyTeam([string]$tid) {
   if (@(My-Teams) -notcontains $tid) { throw '소속된 팀이 아닙니다.' }
   $s = Read-Setup; $s | Add-Member -NotePropertyName team -NotePropertyValue $tid -Force
@@ -907,7 +919,7 @@ while ($l.IsListening) {
       if ($req.HttpMethod -eq 'GET') {
         # ($l은 서버 HttpListener라 쓰면 안 된다)
         $acctList = @(Read-Accounts | Sort-Object @{ e = { -not $_.admin } }, @{ e = { [string]$_.id } } | ForEach-Object { Public-Account $_ })
-        $teamList = @(Read-Teams | ForEach-Object { [ordered]@{ id = [string]$_.id; name = [string]$_.name; legacy = [bool]$_.legacy; members = @(Team-Members ([string]$_.id)).Count; createdAt = [string]$_.createdAt } })
+        $teamList = @(Fill-TeamColors @(Read-Teams) | ForEach-Object { [ordered]@{ id = [string]$_.id; name = [string]$_.name; legacy = [bool]$_.legacy; members = @(Team-Members ([string]$_.id)).Count; createdAt = [string]$_.createdAt; color = [int]$_.color } })
         SendJson $c 200 @{ items = $acctList; teams = $teamList; teamMenus = @($TeamMenus); menus = @($Menus | Where-Object { $MenuKeys -contains $_.key } | ForEach-Object { [ordered]@{ key = $_.key; label = $_.label; write = [string]$_.write; team = ($TeamMenus -contains $_.key) } }); approvals = @($Approvals) }; continue
       }
       $body = (New-Object IO.StreamReader($req.InputStream, $Utf8)).ReadToEnd() | ConvertFrom-Json
@@ -921,7 +933,10 @@ while ($l.IsListening) {
             if ($t) { throw "이미 있는 팀 아이디입니다: $tid" }
             if (-not $tname) { throw '팀 이름을 입력해 주세요.' }
             if ($teams | Where-Object { [string]$_.name -eq $tname }) { throw "같은 이름의 팀이 있습니다: $tname" }
+            # 색: 기존 팀 색을 굳힌 뒤, 새 팀은 아무도 쓰지 않는 첫 색
+            $teams = @(Fill-TeamColors $teams)
             $teams += [pscustomobject]@{ id = $tid; name = $tname; createdAt = (Now); by = (Current-User).id }
+            $teams = @(Fill-TeamColors $teams)
           }
           'team-update' {
             if (-not $t) { throw "팀을 찾지 못했습니다: $tid" }

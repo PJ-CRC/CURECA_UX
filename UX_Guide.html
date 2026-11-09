@@ -121,10 +121,10 @@ table.wide td{word-break:keep-all;overflow-wrap:anywhere}
   filter:drop-shadow(1px 0 0 #6b6f76) drop-shadow(-1px 0 0 #6b6f76) drop-shadow(0 1px 0 #6b6f76) drop-shadow(0 -1px 0 #6b6f76);transition:transform .15s}
 .kid:hover{transform:translateY(-3px)}
 .kid:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:4px}
-.kid .fd{flex:1;display:flex;flex-direction:column;min-height:150px;padding:30px 18px 14px;background:var(--f,#e8eef9);
+.kid .fd{flex:1;display:flex;flex-direction:column;min-height:150px;padding:46px 18px 14px;background:var(--f,#e8eef9);
   clip-path:polygon(0 0,40% 0,calc(40% + 18px) 18px,100% 18px,100% 100%,0 100%)}
-.kid .ico{width:9px;height:9px;border:1.3px solid currentColor;border-radius:1px;margin-bottom:12px}
 .kid i{font-style:normal;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;opacity:.75;line-height:1.4;margin-bottom:2px}
+.kid i.fn{text-transform:none;letter-spacing:0;font-weight:600;margin:3px 0 0}
 .kid b{display:block;font-size:17px;font-weight:700;line-height:1.3;letter-spacing:-.01em}
 .kid small{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;font-size:12.5px;line-height:1.5;opacity:.8;margin-top:6px}
 .kid .ft{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto;padding-top:14px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
@@ -857,10 +857,12 @@ html.embed,html.embed body{overflow:hidden}
         var p = k.box.querySelector('p'), t = String(k.label);
         var mm = t.match(/^(.*?\(\d+\/\d+\))\s·\s(.+)$/) || t.match(/^(.*?)\s·\s(.+)$/);
         var eyebrow = mm ? mm[1] : '', title = mm ? mm[2] : t;
+        /* 「알럿 카탈로그 · alert-catalog.csv」처럼 뒤가 파일 이름이면 이름을 크게, 파일 이름을 작게(자리는 그대로: 이름 위 · 파일 이름 아래) */
+        if (mm && /\.(csv|md|json|txt|tsv|xlsx?)$/i.test(title.trim()) && !/\.(csv|md|json|txt|tsv|xlsx?)$/i.test(eyebrow.trim())) { title = mm[1]; eyebrow = mm[2]; var isFile = true; }
         var desc = p ? p.textContent.trim().split(/(?<=[.。])\s+/)[0] : '';
         /* 폴더 아래 줄: 왼쪽 = 작성일 · 수정일(paintDates가 채운다), 오른쪽 = → */
-        return '<button type="button" class="kid" data-go="' + k.id + '" style="--f:' + FOLDER[ki % FOLDER.length] + '" title="' + esc(t + (desc ? ' — ' + desc : '')) + '"><span class="fd"><span class="ico"></span>' +
-          (eyebrow ? '<i>' + esc(eyebrow) + '</i>' : '') + '<b>' + esc(title) + '</b>' + (desc ? '<small>' + esc(desc) + '</small>' : '') +
+        return '<button type="button" class="kid" data-go="' + k.id + '" style="--f:' + FOLDER[ki % FOLDER.length] + '" title="' + esc(t + (desc ? ' — ' + desc : '')) + '"><span class="fd">' +
+          (isFile ? '<b>' + esc(title) + '</b><i class="fn">' + esc(eyebrow) + '</i>' : (eyebrow ? '<i>' + esc(eyebrow) + '</i>' : '') + '<b>' + esc(title) + '</b>') + (desc ? '<small>' + esc(desc) + '</small>' : '') +
           '<span class="ft"><span></span><span aria-hidden="true">→</span></span></span></button>';
       }).join('') + '</div>');
       paintDates();
