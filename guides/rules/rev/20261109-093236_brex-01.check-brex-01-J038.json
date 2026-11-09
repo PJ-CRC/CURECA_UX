@@ -2,12 +2,19 @@
     "jobId":  "J038",
     "pc":  "BREX_01",
     "by":  "서보경",
-    "at":  "2026-11-09T09:35:40+09:00",
-    "status":  "진행 중",
-    "note":  "",
+    "at":  "2026-11-09T09:36:31+09:00",
+    "status":  "완료",
+    "note":  "화면 0 · 문서 1 · 프로토타입 0\n- 문서: 작업규칙 screen-spec.md 「반영과 롤백」 1번 「그리는 순서 3단계 확인 뒤」 → 케이스 1 › 2단계 묻기 / 부록 A 3단계로 맞춤 필요\n- 화면: 기준 Figma 파일(fileKey) 없음, 작업 방식 규칙이라 화면 영향 없음\n참고: background/worklist.md 50줄 「screen-spec.md 2절 6단계」도 예전 단계를 가리키나 UX 문서가 아니라 항목에서 뺌(templates/screen.md 「그리는 순서 0단계」는 두 순서 모두 0단계 준비라 그대로 둠)",
     "scope":  "spec",
     "fileKey":  "",
     "items":  [
-
+                  {
+                      "change":  "screen-spec.md 4절 「반영과 롤백」 반영할 때 1번의 「(그리는 순서 3단계 확인 뒤)」가 예전 2절 단계를 가리킴. repository-and-id.md와 같게 「케이스 1이면 \"케이스 1 › 2단계 묻기\", 그 밖에는 \"부록 A\" 3단계 확인 뒤」로 고침.",
+                      "section":  "반영과 롤백",
+                      "doc":  "rules",
+                      "type":  "doc",
+                      "docTitle":  "CURECA 작업규칙",
+                      "file":  "screen-spec.md"
+                  }
               ]
 }
