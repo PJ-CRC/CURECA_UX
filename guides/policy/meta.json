@@ -11,6 +11,7 @@
       "com/POL-COM-004.md",
       "com/POL-COM-005.md",
       "com/POL-COM-006.md",
+      "com/POL-COM-007.md",
       "acc/POL-ACC-001.md",
       "acc/POL-ACC-002.md",
       "acc/POL-ACC-003.md",
@@ -85,6 +86,15 @@
       "sys/POL-SYS-002.md",
       "sys/POL-SYS-003.md",
       "sys/POL-SYS-004.md",
+"modules/README.md",
+      "modules/flexible-extraction.md",
+      "modules/ht-extraction.md",
+      "modules/pcr-setup.md",
+      "modules/plate-sealing.md",
+      "modules/prep-consumable-storage.md",
+      "modules/sample-preparation.md",
+      "modules/sample-storage.md",
+      "modules/universal-pcr.md",
       "alert-catalog.md",
       "alert-catalog.csv",
       "alert-catalog-ms.csv",
@@ -96,6 +106,7 @@
       "service-mode-matrix.csv",
       "warning-light.csv",
       "policy-backlog.md",
+      "meeting-trace.md",
       "migration.csv"
    ],
    "filesDir" : "",
@@ -113,6 +124,7 @@
       "evt",
       "sta",
       "sys",
+      "modules",
       "."
    ],
    "groups" : {
@@ -124,6 +136,7 @@
       "inv" : "INV Reagent·Consumable 재고와 폐기",
       "lod" : "LOD 도킹·Drawer Loading",
       "mat" : "MAT Material Setup",
+      "modules" : "Module 특성",
       "smp" : "SMP Sample·검사 진행",
       "sta" : "STA 통계",
       "sys" : "SYS 시스템 연동",
@@ -145,6 +158,7 @@
       "com/POL-COM-004.md",
       "com/POL-COM-005.md",
       "com/POL-COM-006.md",
+      "com/POL-COM-007.md",
       "acc/POL-ACC-001.md",
       "acc/POL-ACC-002.md",
       "acc/POL-ACC-003.md",
@@ -219,6 +233,15 @@
       "sys/POL-SYS-002.md",
       "sys/POL-SYS-003.md",
       "sys/POL-SYS-004.md",
+"modules/README.md",
+      "modules/flexible-extraction.md",
+      "modules/ht-extraction.md",
+      "modules/pcr-setup.md",
+      "modules/plate-sealing.md",
+      "modules/prep-consumable-storage.md",
+      "modules/sample-preparation.md",
+      "modules/sample-storage.md",
+      "modules/universal-pcr.md",
       "alert-catalog.md",
       "alert-catalog.csv",
       "alert-catalog-ms.csv",
@@ -230,6 +253,7 @@
       "service-mode-matrix.csv",
       "warning-light.csv",
       "policy-backlog.md",
+      "meeting-trace.md",
       "migration.csv"
    ],
    "summary" : "CURECA_AI 저장소의 정책서(policy/)를 원본 파일 그대로 관리합니다(.history/guides/policy). 영역마다 대분류, 정책 하나가 항목이며 기준 자료(알럿 · 권한 · Service Mode · 장비 상태 등)는 표로 보입니다.",
@@ -243,5 +267,5 @@
       "service-mode-matrix.csv" : "Service Mode 매트릭스 · service-mode-matrix.csv",
       "warning-light.csv" : "경광등 · warning-light.csv"
    },
-   "updatedAt" : "2026-11-04T11:01:28+09:00"
+   "updatedAt" : "2026-11-09T09:27:41+09:00"
 }
