@@ -1,34 +1,35 @@
 {
-    "id":  "mhkim",
-    "name":  "김목화",
-    "admin":  false,
-    "menus":  [
-                  "plan",
-                  "guide",
-                  "workbench",
-                  "history",
-                  "usage",
-                  "proto"
-              ],
-    "createdAt":  "2026-11-06T17:51:10+09:00",
-    "createdBy":  "brex",
-    "salt":  "JNJ+JbsoEEU1qaETeyvNjw==",
-    "iter":  100000,
-    "hash":  "I5korMMtt/xkMn3cizf35Qg3xSMK/3KFuCLI4HWafKU=",
-    "pwAt":  "2026-11-06T17:51:11+09:00",
-    "writes":  [
-                   "plan",
-                   "guide",
-                   "workbench",
-                   "history",
-                   "proto"
-               ],
-    "approves":  [
-                     "pv"
-                 ],
-    "teams":  [
-                  "stagora"
-              ],
-    "active":  true,
-    "updatedAt":  "2026-11-06T17:51:51+09:00"
+   "active" : true,
+   "admin" : false,
+   "approves" : [
+      "pv"
+   ],
+   "createdAt" : "2026-11-06T17:51:10+09:00",
+   "createdBy" : "brex",
+   "hash" : "I5korMMtt/xkMn3cizf35Qg3xSMK/3KFuCLI4HWafKU=",
+   "id" : "mhkim",
+   "iter" : 100000,
+   "menus" : [
+      "plan",
+      "guide",
+      "workbench",
+      "history",
+      "usage",
+      "proto"
+   ],
+   "name" : "김목화",
+   "pwAt" : "2026-11-06T17:51:11+09:00",
+   "salt" : "JNJ+JbsoEEU1qaETeyvNjw==",
+   "teams" : [
+      "cureca",
+      "stagora"
+   ],
+   "updatedAt" : "2026-11-10T11:26:42+09:00",
+   "writes" : [
+      "plan",
+      "guide",
+      "workbench",
+      "history",
+      "proto"
+   ]
 }
