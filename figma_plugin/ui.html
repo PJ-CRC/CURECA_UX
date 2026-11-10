@@ -88,7 +88,7 @@ window.addEventListener('message', async e => {
   if (m.type === 'shot') {
     try {
       const r = await fetch(SHOTS_API, { method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ fileKey: m.fileKey, nodeId: m.nodeId, name: m.name, w: m.w, h: m.h, by: m.by, png: b64(m.bytes) }) });
+        body: JSON.stringify({ fileKey: m.fileKey, nodeId: m.nodeId, name: m.name, w: m.w, h: m.h, by: m.by, png: b64(m.bytes), edit: !m.jobId }) });   // edit: Figma에서 고쳐서 올린 캡처(요청받은 캡처 · 자동 캡처가 아님) — 프로토타입 「갱신 필요」는 이것만 본다
       const out = await r.json();
       if (out.error) throw new Error(out.error);
       // Workbench 「캡처 받기」 요청이었으면 완료로
