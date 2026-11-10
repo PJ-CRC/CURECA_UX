@@ -1,0 +1,28 @@
+{
+    "id":  "brex-04_20261110-102532",
+    "kind":  "work",
+    "reqId":  "",
+    "reqType":  "",
+    "team":  "stagora",
+    "at":  "2026-11-10T10:25:32+09:00",
+    "from":  "2026-11-10T10:25:20+09:00",
+    "by":  "김주현",
+    "doneBy":  "Claude",
+    "pc":  "BREX_04",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "작업규칙: 2. 산출물 형식 (J021)",
+    "models":  {
+                   "claude-sonnet-5-5":  2
+               },
+    "calls":  2,
+    "input":  4,
+    "cacheWrite":  3887,
+    "cacheRead":  140736,
+    "output":  1472,
+    "total":  146099,
+    "usd":  0.0584
+}
