@@ -1,4 +1,4 @@
-# 배포 · 설치 파일 만들기 (관리자 PC, 윈도우)
+﻿# 배포 · 설치 파일 만들기 (관리자 PC, 윈도우)
 #   powershell -ExecutionPolicy Bypass -File tools\release.ps1 -Version 0.1.0 [-Publish]
 #  - VERSION을 고치고, 프로그램 파일 목록으로 설치용 압축 2개를 만든다: dist\UX_AI_TEST_Workbench_v{버전}_Windows.zip · _Mac.zip
 #  - -Publish: 같은 파일을 workbench/git_remote.txt 저장소의 release 브랜치에 올리고 태그 v{버전}을 단다(.release 작업 폴더 사용).
