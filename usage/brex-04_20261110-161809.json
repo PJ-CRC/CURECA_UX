@@ -1,0 +1,28 @@
+{
+    "id":  "brex-04_20261110-161809",
+    "kind":  "work",
+    "reqId":  "",
+    "reqType":  "",
+    "team":  "stagora",
+    "at":  "2026-11-10T16:18:09+09:00",
+    "from":  "2026-11-10T16:17:50+09:00",
+    "by":  "김주현",
+    "doneBy":  "Claude",
+    "pc":  "BREX_04",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "작업규칙: 0. 문서 구성 (목차) (J252)",
+    "models":  {
+                   "claude-sonnet-5-5":  5
+               },
+    "calls":  5,
+    "input":  10,
+    "cacheWrite":  8759,
+    "cacheRead":  347649,
+    "output":  2306,
+    "total":  358724,
+    "usd":  0.1276
+}
