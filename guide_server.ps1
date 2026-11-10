@@ -1159,7 +1159,10 @@ while ($l.IsListening) {
       $mf = P (Proj-Dir $key) 'shots_meta.json'
       $meta = [pscustomobject]@{}
       if (Test-Path $mf) { $meta = [IO.File]::ReadAllText($mf, $Utf8) | ConvertFrom-Json }
-      $entry = [pscustomobject]@{ at = (Now); w = [int]$body.w; h = [int]$body.h; by = [string]$body.by; name = [string]$body.name; ext = $ext }
+      # editAt: Figma에서 그 프레임을 고쳐 플러그인이 올린 캡처(edit:true)의 시각. 요청받은 캡처 · 자동 캡처 · Claude 캡처는 화면이 바뀐 것이 아니라 그대로 둔다
+      #  (프로토타입 「갱신 필요」가 캡처만 다시 받아도 떠서 맞춰도 계속 다시 떴다, 2026-11-10)
+      $prevEdit = ''; if ($meta.$nid -and $meta.$nid.editAt) { $prevEdit = [string]$meta.$nid.editAt }
+      $entry = [pscustomobject]@{ at = (Now); w = [int]$body.w; h = [int]$body.h; by = [string]$body.by; name = [string]$body.name; ext = $ext; editAt = $(if ($body.edit -eq $true) { Now } else { $prevEdit }) }
       $meta | Add-Member -NotePropertyName $nid -NotePropertyValue $entry -Force
       [IO.File]::WriteAllText($mf, ($meta | ConvertTo-Json -Depth 4), $Utf8)
       SendJson $c 200 @{ ok = $true; fileKey = $key; nodeId = $nid; bytes = $bytes.Length; ext = $ext }
@@ -1331,7 +1334,7 @@ while ($l.IsListening) {
       }
     }
     # 프로토타입 목록(이 PC에만): prototypes/{id}/meta.json + Figma가 바뀐 화면(stale)
-    #  바뀐 화면 = 프로토타입을 맞춘 뒤(syncedAt) 캡처가 새로 들어온 프레임(shots_meta) · 다른 작업자가 완료한 요청(공유 이력)의 프레임
+    #  바뀐 화면 = 프로토타입을 맞춘 뒤(syncedAt) Figma에서 고쳐진 프레임(shots_meta editAt, 플러그인이 고친 뒤 올린 캡처) · 완료한 요청(공유 이력)이 실제로 고친 프레임
     if ($path -eq '/api/prototypes' -and $req.HttpMethod -eq 'GET') {
       $list = @()
       if (Test-Path $ProtoRoot) {
@@ -1347,8 +1350,10 @@ while ($l.IsListening) {
           foreach ($fr in @($m.frames)) {
             $why = ''; $at = ''
             $s = if ($shotMeta[$k]) { $shotMeta[$k].($fr.nodeId) } else { $null }
-            if ($s -and $s.at) { try { if ([datetime]$s.at -gt $since) { $why = 'Figma 캡처가 새로 들어옴'; $at = [string]$s.at } } catch {} }
-            $h = $hist | Where-Object { $_.nodeId -eq $fr.nodeId -and [string]$_.fileKey -eq $k } | Where-Object { try { [datetime]$_.at -gt $since } catch { $false } } | Select-Object -First 1
+            # Figma에서 고쳐진 프레임(플러그인이 고친 뒤 올린 캡처의 editAt)만. 캡처를 다시 받은 것만으로는 바뀐 것이 아니다
+            if ($s -and $s.editAt) { try { if ([datetime]$s.editAt -gt $since) { $why = 'Figma에서 고쳐짐'; $at = [string]$s.editAt } } catch {} }
+            # 완료한 요청: 실제로 고친 프레임(frames)이 있으면 그것으로(요청 프레임이 아니라 복제본을 고친 경우 등), 없으면 요청 프레임
+            $h = $hist | Where-Object { [string]$_.fileKey -eq $k -and $($fs = @(@($_.frames) | Where-Object { $_ -and $_.nodeId } | ForEach-Object { [string]$_.nodeId }); if ($fs.Count) { $fs -contains [string]$fr.nodeId } else { $_.nodeId -eq $fr.nodeId }) } | Where-Object { try { [datetime]$_.at -gt $since } catch { $false } } | Select-Object -First 1
             if ($h) { $why = "$($h.by) $($h.reqId) 수정 완료"; $at = [string]$h.at }
             if ($why) { $stale += [pscustomobject]@{ nodeId = $fr.nodeId; name = $fr.name; why = $why; at = $at } }
           }

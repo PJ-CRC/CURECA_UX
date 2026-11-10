@@ -134,9 +134,12 @@ a{color:var(--accent)}
 .man-toc button:hover{background:var(--surface-2)}
 .man-toc button[aria-current="page"]{background:var(--accent-soft);color:var(--accent);font-weight:600}
 .man-toc button[aria-current="page"] b{color:var(--accent)}
-.man-view{overflow:auto;padding:20px;display:flex;justify-content:center;align-items:flex-start;background:var(--surface-2)}
-.man-view img{display:block;width:100%;max-width:1123px;height:auto;aspect-ratio:1123/794;background:#fff;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.12)}
-.man-view.zoom img{max-width:2246px;width:2246px}
+/* 가운데 맞춤은 그림의 margin:auto로: flex 가운데 맞춤은 크게 볼 때 왼쪽이 화면 밖으로 잘려 스크롤로도 못 봤다 */
+.man-view{overflow:auto;padding:20px;background:var(--surface-2)}
+.man-view img{display:block;margin:0 auto;width:100%;max-width:1123px;height:auto;aspect-ratio:1123/794;background:#fff;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.12);cursor:zoom-in}
+.man-view.zoom img{max-width:none;width:2246px;cursor:grab}
+.man-view.zoom.drag img{cursor:grabbing}
+.man-view.zoom{user-select:none}
 @media (max-width:760px){ .man-box{grid-template-columns:1fr;grid-template-rows:52px auto 1fr} .man-toc{display:flex;gap:4px;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line)} .man-toc li{flex:none} .man-toc button span{display:none} }
 </style>
 </head>
@@ -612,10 +615,35 @@ a{color:var(--accent)}
   }
   function open(){ last = document.activeElement; $m('man').hidden = false; document.body.style.overflow = 'hidden'; show(cur); $m('manX').focus(); }
   function close(){ $m('man').hidden = true; document.body.style.overflow = ''; $m('manView').classList.remove('zoom'); if (last) last.focus(); }
-  function zoom(){ $m('manView').classList.toggle('zoom'); }
+  // 크게 보기: 그림을 누른 자리(버튼이면 가운데)가 화면 가운데 오게 스크롤한다
+  function zoom(e){
+    var v = $m('manView'), img = $m('manImg'), r = img.getBoundingClientRect();
+    var fx = 0.5, fy = 0.5;
+    if (e && e.target === img && r.width) { fx = (e.clientX - r.left) / r.width; fy = (e.clientY - r.top) / r.height; }
+    v.classList.toggle('zoom');
+    var r2 = img.getBoundingClientRect(), vr = v.getBoundingClientRect();
+    v.scrollLeft += (r2.left + r2.width * fx) - (vr.left + v.clientWidth / 2);
+    v.scrollTop += (r2.top + r2.height * fy) - (vr.top + v.clientHeight / 2);
+  }
   $m('manBtn').onclick = open; $m('manX').onclick = close;
   $m('manPrev').onclick = function(){ show(cur - 1); }; $m('manNext').onclick = function(){ show(cur + 1); };
-  $m('manZoom').onclick = zoom; $m('manImg').onclick = zoom;
+  // 크게 볼 때 마우스로 끌어 옮기기. 조금(4px 넘게) 끌었으면 놓을 때의 누르기(작게 보기)는 하지 않는다
+  var dragFrom = null, dragged = false;
+  $m('manView').addEventListener('pointerdown', function(e){
+    if (!this.classList.contains('zoom') || e.button !== 0) return;
+    dragFrom = { x: e.clientX, y: e.clientY, l: this.scrollLeft, t: this.scrollTop }; dragged = false;
+  });
+  $m('manView').addEventListener('pointermove', function(e){
+    if (!dragFrom) return;
+    var dx = e.clientX - dragFrom.x, dy = e.clientY - dragFrom.y;
+    if (!dragged && Math.abs(dx) + Math.abs(dy) > 4) { dragged = true; this.classList.add('drag'); try { this.setPointerCapture(e.pointerId); } catch(x){} }
+    if (dragged) { this.scrollLeft = dragFrom.l - dx; this.scrollTop = dragFrom.t - dy; e.preventDefault(); }
+  });
+  function dragEnd(e){ if (!dragFrom) return; dragFrom = null; $m('manView').classList.remove('drag'); try { $m('manView').releasePointerCapture(e.pointerId); } catch(x){} }
+  $m('manView').addEventListener('pointerup', dragEnd); $m('manView').addEventListener('pointercancel', dragEnd);
+  $m('manImg').addEventListener('dragstart', function(e){ e.preventDefault(); });
+  $m('manZoom').onclick = zoom;
+  $m('manImg').onclick = function(e){ if (dragged) { dragged = false; return; } zoom(e); };
   $m('manToc').onclick = function(e){ var b = e.target.closest('button'); if (b) show(+b.dataset.i); };
   $m('man').onclick = function(e){ if (e.target === this) close(); };
   $m('manImg').oncontextmenu = function(e){ e.preventDefault(); };   // 그림 저장 메뉴 막기(보기 전용)

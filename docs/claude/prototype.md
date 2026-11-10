@@ -4,7 +4,7 @@
 
 - **프로토타입 (이 PC에만, `prototypes/{id}/`, 깃으로 공유하지 않음)**: 「프로토타입」 메뉴(`Prototypes.html`)에서 화면을 골라 요청하면 쌓인다. **Figma는 읽기만 한다**(보기 전용 페이지 화면도 된다). 보기는 `Prototype.html?id={id}`.
   - **만드는 규칙(동작형 HTML)**
-    - `meta.json`: `{id, name, fileKey, fileName, env(T-IOS|L-IOS), start(시작 nodeId), frames:[{nodeId, name, page}], text(흐름 설명), entry:'index.html', format:'screens', width, height, by, jobId, createdAt, updatedAt, syncedAt}`. `syncedAt`은 Figma와 맞춘 시각(이보다 늦은 캡처 · 다른 작업자 완료 요청이 있는 화면을 서버가 「갱신 필요」로 본다).
+    - `meta.json`: `{id, name, fileKey, fileName, env(T-IOS|L-IOS), start(시작 nodeId), frames:[{nodeId, name, page}], text(흐름 설명), entry:'index.html', format:'screens', width, height, by, jobId, createdAt, updatedAt, syncedAt}`. `syncedAt`은 Figma와 맞춘 시각. 서버는 이보다 늦게 **Figma에서 고쳐진** 화면(플러그인이 고친 뒤 올린 캡처의 `editAt`)과 **완료한 요청이 실제로 고친** 화면(이력의 `frames`, 없으면 요청 프레임)을 「갱신 필요」로 본다. 캡처를 다시 받은 것(캡처 받기 · 자동 캡처 · Claude 캡처)만으로는 뜨지 않는다.
     - **화면마다 파일 하나**: `screens/{nodeId의 :를 -로}.html`(그 화면 본문 HTML 조각). `index.html`은 껍데기(공통 틀 GNB · LNB, 화면 불러오기, 이동 함수 `go(nodeId)`, 팝업 · 토스트)만. 고칠 때는 그 화면 파일만 읽고 고친다(토큰 절약).
     - **공통 컴포넌트**: `prototypes/_kit/kit.css` · `kit.js`(작업 기준 가이드의 COMM-5 컴포넌트를 클래스로, 예: `.c-btn[data-style=filled][data-size=m]`, 색 · 글꼴은 가이드 · Figma 컴포넌트와 같게). 없으면 처음 만들 때 만들고, 필요한 컴포넌트만 더한다. 화면 파일은 이 클래스를 쓴다.
     - **보기 화면과의 약속**: `index.html#s={nodeId의 :를 -로}`면 그 화면으로 연다(없으면 start). 화면이 바뀔 때마다 `parent.postMessage({type:'proto-screen', nodeId, width, height}, '*')`.

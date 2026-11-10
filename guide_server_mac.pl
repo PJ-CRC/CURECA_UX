@@ -370,7 +370,7 @@ sub minutes_post {
 }
 sub sheet_query { my ($target, $k) = @_; my ($v) = $target =~ /[?&]$k=([^&]*)/; $v = str($v); $v =~ tr/+/ /; $v =~ s/%([0-9A-Fa-f]{2})/chr(hex($1))/eg; return decode('UTF-8', $v); }
 # 프로토타입 목록(이 PC에만): prototypes/{id}/meta.json + Figma가 바뀐 화면(stale)
-#  바뀐 화면 = 프로토타입을 맞춘 뒤(syncedAt) 캡처가 새로 들어온 프레임(shots_meta) · 다른 작업자가 완료한 요청(공유 이력)의 프레임
+#  바뀐 화면 = 프로토타입을 맞춘 뒤(syncedAt) Figma에서 고쳐진 프레임(shots_meta editAt, 플러그인이 고친 뒤 올린 캡처) · 완료한 요청(공유 이력)이 실제로 고친 프레임
 sub prototypes_get {
   my @list; opendir(my $dh, $PROTO_ROOT) or return { items => [] };
   my @hist;
@@ -384,8 +384,12 @@ sub prototypes_get {
     for my $fr (@{ ref $m->{frames} eq 'ARRAY' ? $m->{frames} : [] }) {
       my ($why, $at) = ('', '');
       my $s = $shot{$k} && ref $shot{$k} eq 'HASH' ? $shot{$k}{ str($fr->{nodeId}) } : undef;
-      if (ref $s eq 'HASH' && (parse_iso($s->{at}) // 0) > $since) { $why = 'Figma 캡처가 새로 들어옴'; $at = str($s->{at}); }
-      my ($h) = grep { str($_->{nodeId}) eq str($fr->{nodeId}) && str($_->{fileKey}) eq $k && (parse_iso($_->{at}) // 0) > $since } @hist;
+      # Figma에서 고쳐진 프레임(플러그인이 고친 뒤 올린 캡처의 editAt)만. 캡처를 다시 받은 것만으로는 바뀐 것이 아니다
+      if (ref $s eq 'HASH' && str($s->{editAt}) ne '' && (parse_iso($s->{editAt}) // 0) > $since) { $why = 'Figma에서 고쳐짐'; $at = str($s->{editAt}); }
+      # 완료한 요청: 실제로 고친 프레임(frames)이 있으면 그것으로, 없으면 요청 프레임
+      my $fid = str($fr->{nodeId});
+      my ($h) = grep { my $e = $_; my @fs = ref $e->{frames} eq 'ARRAY' ? grep { ref $_ eq 'HASH' && str($_->{nodeId}) ne '' } @{ $e->{frames} } : ();
+        (@fs ? (grep { str($_->{nodeId}) eq $fid } @fs) : str($e->{nodeId}) eq $fid) && str($e->{fileKey}) eq $k && (parse_iso($e->{at}) // 0) > $since } @hist;
       if ($h) { $why = str($h->{by}) . ' ' . str($h->{reqId}) . ' 수정 완료'; $at = str($h->{at}); }
       push @stale, { nodeId => str($fr->{nodeId}), name => str($fr->{name}), why => $why, at => $at } if $why ne '';
     }
@@ -459,7 +463,9 @@ sub shots_post {
   write_bytes("$dir/$fn.$ext", $img);
   my $mf = proj_dir($key) . '/shots_meta.json';
   my $meta = (-f $mf) ? read_json($mf) : {};
-  $meta->{$nid} = { at => now_iso(), w => int($b->{w} || 0), h => int($b->{h} || 0), by => str($b->{by}), name => str($b->{name}), ext => $ext };
+  # editAt: Figma에서 고쳐 플러그인이 올린 캡처(edit:true)의 시각. 요청받은 캡처 · 자동 캡처 · Claude 캡처는 그대로 둔다(프로토타입 「갱신 필요」가 이것만 본다)
+  my $prev = ref $meta->{$nid} eq 'HASH' ? str($meta->{$nid}{editAt}) : '';
+  $meta->{$nid} = { at => now_iso(), w => int($b->{w} || 0), h => int($b->{h} || 0), by => str($b->{by}), name => str($b->{name}), ext => $ext, editAt => ($b->{edit} && "$b->{edit}" ne '0' && "$b->{edit}" ne 'false' ? now_iso() : $prev) };
   write_json($mf, $meta);
   return { ok => JSON::PP::true, fileKey => $key, nodeId => $nid, bytes => length($img), ext => $ext };
 }
