@@ -1,0 +1,28 @@
+{
+    "id":  "brex-06_20261110-103255",
+    "kind":  "work",
+    "reqId":  "",
+    "reqType":  "",
+    "team":  "cureca",
+    "at":  "2026-11-10T10:32:55+09:00",
+    "from":  "2026-11-10T10:28:06+09:00",
+    "by":  "최고관리자",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "프로토타입: Instrument (J083)",
+    "models":  {
+                   "claude-opus-5-5":  23
+               },
+    "calls":  23,
+    "input":  43,
+    "cacheWrite":  70602,
+    "cacheRead":  2409559,
+    "output":  30045,
+    "total":  2510249,
+    "usd":  1.6478
+}
