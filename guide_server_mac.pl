@@ -37,6 +37,10 @@ use Sys::Hostname;
 
 binmode STDOUT, ':encoding(UTF-8)';
 $| = 1;
+# 브라우저가 응답을 받는 도중 연결을 끊으면(탭 닫기 · 새로고침) syswrite가 SIGPIPE를 받아 서버가 말없이 꺼졌다.
+#  무시하면 syswrite가 오류(EPIPE)를 돌려주고 그 연결만 닫힌다(2026-11-10, 윈도우 서버 끊김과 같은 원인)
+$SIG{PIPE} = 'IGNORE';
+sub log_err { my ($where, $e) = @_; $e = str($e); $e =~ s/\s+$//; print '  [' . strftime('%Y-%m-%d %H:%M:%S', localtime) . "] 오류($where): $e\n"; }
 my $PORT = $ARGV[0] || 8765;
 my $ROOT = $FindBin::Bin;
 my $REQ_FILE = "$ROOT/workbench/edit_requests.json";
@@ -1682,7 +1686,8 @@ while (1) {
     $sel->remove($s); delete $buf{$s}; delete $seen{$s}; close $s;
   }
   for my $s ($sel->handles) { next if $is_listener{$s}; if (time - ($seen{$s} || 0) > 30) { $sel->remove($s); delete $buf{$s}; delete $seen{$s}; close $s; } }
-  sync_tick();
-  if (time >= $auto_watch_at) { auto_watch($auto_watch_first); $auto_watch_first = 0; $auto_watch_at = time + 120; }
-  idle_check();
+  # 1초마다 확인: 여기서 난 오류(die)가 서버 전체를 끄지 않게 기록만 하고 계속한다
+  eval { sync_tick(); 1 } or log_err('이력 동기화', $@);
+  if (time >= $auto_watch_at) { $auto_watch_at = time + 120; my $f = $auto_watch_first; $auto_watch_first = 0; eval { auto_watch($f); 1 } or log_err('감시 자동 시작', $@); }
+  eval { idle_check(); 1 } or log_err('탭 확인', $@);
 }
