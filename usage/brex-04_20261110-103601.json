@@ -1,0 +1,28 @@
+{
+    "id":  "brex-04_20261110-103601",
+    "kind":  "work",
+    "reqId":  "",
+    "reqType":  "",
+    "team":  "stagora",
+    "at":  "2026-11-10T10:36:01+09:00",
+    "from":  "2026-11-10T10:34:23+09:00",
+    "by":  "김주현",
+    "doneBy":  "Claude",
+    "pc":  "BREX_04",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "정책서: 통합운영툴 - 로컬 서버 정책 (J023)",
+    "models":  {
+                   "claude-sonnet-5-5":  5
+               },
+    "calls":  5,
+    "input":  10,
+    "cacheWrite":  49402,
+    "cacheRead":  392463,
+    "output":  19319,
+    "total":  461194,
+    "usd":  0.4693
+}
