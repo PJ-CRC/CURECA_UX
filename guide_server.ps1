@@ -749,6 +749,8 @@ function Auto-Watch([bool]$first = $true) {
   $a = Agent-Info
   if ($a.alive) { return }
   if (-not $first -and ($a.status -eq 'stopped' -or $a.stopping)) { return }
+  # 중지 신호가 있으면(처리 중 상태가 늦어 죽은 것처럼 보여도) 다시 띄우지 않는다 — 띄우면 Start-Agent가 신호를 지워 중지가 사라졌다(2026-11-10)
+  if (-not $first -and (Test-Path $AgentStop)) { return }
   if (-not (Find-ClaudeCode)) { return }
   $age = Watch-Age
   if ($null -ne $age -and $age -lt 60) { return }

@@ -25,7 +25,9 @@ function Save-State($status, $msg) {
   if ($status) { $script:St.status = $status }; if ($null -ne $msg) { $script:St.msg = $msg }
   $o = [ordered]@{ at = (Now); host = [Environment]::MachineName; pid = $PID; status = $script:St.status; msg = $script:St.msg }
   try { [IO.File]::WriteAllText($StateFile, ($o | ConvertTo-Json -Compress), $Utf8) } catch { }
+  $script:SavedAt = Get-Date
 }
+$script:SavedAt = Get-Date
 function Log([string]$s) {
   try {
     if ((Test-Path $LogFile) -and (Get-Item $LogFile).Length -gt 500KB) { $t = [IO.File]::ReadAllText($LogFile, $Utf8); [IO.File]::WriteAllText($LogFile, $t.Substring($t.Length - 200KB), $Utf8) }
@@ -170,6 +172,8 @@ function Send-Turn([string]$text) {
       if ((Get-Date) -gt $until) { return @{ ok = $false; dead = $true; text = "응답이 $TurnMin 분 넘게 없음" } }
     }
     $l = $task.Result
+    # 출력이 쉬지 않고 오면 위 15초 기다림에 걸리지 않아 상태를 안 썼다 → 처리 중인데 「백그라운드 연결 끊김」으로 보였다(2026-11-10 R032)
+    if (((Get-Date) - $script:SavedAt).TotalSeconds -ge 15) { Save-State $null $null }
     if ($null -eq $l) { $e = ''; try { if ($script:S.err.Wait(2000)) { $e = $script:S.err.Result } } catch { }; return @{ ok = $false; dead = $true; text = ($out.ToString() + $e).Trim() } }
     $m = $null; try { $m = $l | ConvertFrom-Json } catch { [void]$out.AppendLine($l); continue }
     # 모델 응답의 사용량 = 지금 컨텍스트 크기(입력 + 캐시 읽기 + 캐시 쓰기). 컨텍스트 창은 result의 modelUsage에서(없으면 200k)
