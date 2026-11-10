@@ -1,0 +1,35 @@
+{
+    "id":  "brex-06_R032",
+    "kind":  "request",
+    "team":  "cureca",
+    "status":  "대기",
+    "at":  "2026-11-10T13:10:28+09:00",
+    "createdAt":  "2026-11-10T13:10:28+09:00",
+    "by":  "최고관리자",
+    "doneBy":  "최고관리자",
+    "pc":  "BREX_06",
+    "reqId":  "R032",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "LI-INS-01-T",
+    "nodeId":  "2225:68179",
+    "type":  "일반",
+    "layout":  "",
+    "text":  "Section 2에 있는 프레임들 UX문서 내용 반영해서 다시 그려주고\n수정된 부분 표시해줘봐",
+    "note":  "",
+    "shot":  "",
+    "shots":  [
+
+              ],
+    "images":  [
+
+               ],
+    "frames":  [
+
+               ],
+    "ask":  null,
+    "replies":  [
+
+                ]
+}
