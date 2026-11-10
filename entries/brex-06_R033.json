@@ -2,8 +2,8 @@
     "id":  "brex-06_R033",
     "kind":  "request",
     "team":  "cureca",
-    "status":  "진행 중",
-    "at":  "2026-11-10T16:35:15+09:00",
+    "status":  "완료",
+    "at":  "2026-11-10T16:35:41+09:00",
     "createdAt":  "2026-11-10T16:34:57+09:00",
     "by":  "최고관리자",
     "doneBy":  "Claude",
@@ -17,7 +17,7 @@
     "type":  "일반",
     "layout":  "",
     "text":  "(확인용 일반 질문) 이 페이지의 Instrument 화면들에서 Door Control의 Lock 버튼 규칙이 어떻게 정해져 있는지 짧게 알려줘. Figma는 고치지 마.",
-    "note":  "질문 확인 중",
+    "note":  "질문 답변: Door Control에는 다시 잠그는 [Lock] 버튼이 없고, 잠금 해제([Unlock]) 규칙만 있습니다.\n- 잠금: Door는 기본 Locked. 닫으면 5초 뒤 자동 Locked, Run Start 때 Unlocked인 Door도 자동 Locked (POL-EQP-008 규칙 1·3·9). 팝업 문구 \"Locks automatically 5 seconds after the door is closed.\"\n- 해제 위치: L-IOS Door Control Popup(LI-INS-01-P)의 [Unlock]으로만. Overview(LI-INS-01-T)의 Door Control 버튼 · 상세(LI-INS-02-T) Door 영역 [Unlock]이 이 팝업을 엶. T-IOS(TI-INS-*)에는 없음\n- [Unlock] 즉시 해제: Module 상태가 Ready · Error · Paused일 때\n- [Unlock] 지연 해제: Module이 Running이면 확인 팝업 → Pausing(\"Pausing for door unlocking. Please wait.\") → Paused 뒤 해제\n- [Unlock] 불가(Disabled): 통합 상태 Initializing · Stopping, 또는 Running · Partial Running일 때 Flexible Extraction · PCR Setup · Universal PCR(\"Cannot unlock while the system is running.\"). Sample Storage 등 5개 Module은 조건부 가능(equipment-states.md 5절)\n- [Unlock all doors]: 통합 상태 Ready · Error · Paused · Not Initialized일 때만 활성. 누르면 그 Type의 모든 Module Door가 Unlocked\n- 해제 결과: 버튼 라벨 \"Unlocked\", Module은 Paused(Door 하나라도 해제되면). 다시 잠기면 Paused 전 상태로 돌아감 (POL-EQP-004)\n참고: 화면 정의서 대기 항목 - Overview 버튼 라벨 \"Door Control\"/\"Unlock\" 통일(LI-INS-01-T R05), 자동 잠금 문구 두 가지 통일(LI-INS-01-P R02), Error일 때 해제 시 Paused 여부 고객 확인 중(CA-0010). Figma는 고치지 않음\n작업 기준: 작업규칙 rules · 정책서 policy · UX가이드 g20261028-brex-06-J003 · 기준데이터 glossary · 화면 정의서 screens",
     "shot":  "",
     "shots":  [
 
