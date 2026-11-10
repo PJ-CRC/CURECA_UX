@@ -2,8 +2,8 @@
     "id":  "brex-06_R032",
     "kind":  "request",
     "team":  "cureca",
-    "status":  "진행 중",
-    "at":  "2026-11-10T13:10:42+09:00",
+    "status":  "완료",
+    "at":  "2026-11-10T13:21:47+09:00",
     "createdAt":  "2026-11-10T13:10:28+09:00",
     "by":  "최고관리자",
     "doneBy":  "Claude",
@@ -17,18 +17,76 @@
     "type":  "일반",
     "layout":  "",
     "text":  "Section 2에 있는 프레임들 UX문서 내용 반영해서 다시 그려주고\n수정된 부분 표시해줘봐",
-    "note":  "Section 2 프레임과 UX 문서를 확인하고 있습니다",
-    "shot":  "",
+    "note":  "Section 2의 Instruments(L-IOS) 프레임 5개를 원본 아래에 복제해 UX 문서 기준으로 다시 그리고, 바뀐 곳을 빨간 사각형으로 표시했습니다(원본은 그대로).\n- LI-INS-01-T: 디스크립션 0 ~ 7 다시 씀(CURECA, Enabled 표기, Tooltip COMM-5-s, [Door Control] 활성 조건 · POL-EQP-008) · 화면 오타 Enablde/Dignosctics, 툴팁 Module 이름 (번호), 프로필 Service · Exit\n- LI-INS-01-P: 디스크립션 0 ~ 4 다시 씀([Unlock] / [Lock] 케이스, [Unlock all doors] 활성 조건에 Not Initialized, 임시 정책 PV-0001), [X]에 번호 4 추가\n- LI-INS-01-P / 케이스: 프레임 이름을 규칙대로 바꿈\n- LI-INS-02-T: 0 화면 정의 추가, Error Rate · Run-time Info 삭제로 [Management] 2-2 → 2-1, 목록 Module 이름 (번호) 띄어쓰기, Waste Status → Waste Bin/Bottle Status, 프로필 Service · Exit\n- LI-INS-02-01-P: 조회 전용 명시, 1-3 Run-time(h) · 4 [X] 추가, Account Type → User Type(케이스 제목 포함)\n- 표시: 바뀐 디스크립션 줄 = 빨간 실선, 바뀐 화면 요소 = 빨간 점선, 정해지지 않은 곳 = 빨간 글씨 ※ 질문 대기\n- 확인 필요: 11-09에 넣은 [Lock](다시 잠그기)이 POL-EQP-008 규칙 3 · POL-EQP-004 규칙 7(닫고 5초 뒤 자동 잠금, 다시 잠그는 버튼 없음)과 다릅니다. 그 밖의 질문 대기: Confirm_008 문구, Confirm_031 알럿 등록, Lock 안내 문구 3가지 통일, Search 찾는 방식, Tab 가이드 없음, Error Rate 위치(CA-0001). 저장소 화면 정의서 · 반영 대기 상태는 고치지 않았습니다(테스트 파일 작업). 02-T 「Waste Bin/Bottle Status」 머리글이 칸 밖으로 조금 넘칩니다.\n작업 기준: 작업규칙 CURECA 작업규칙 · 정책서 정책서 · UX가이드 CURECA UX 가이드 · 기준데이터 기준데이터 · 화면 정의서 화면 정의서",
+    "shot":  "shots/brex-06_R032.jpg",
     "shots":  [
-
+                  {
+                      "file":  "shots/brex-06_R032.jpg",
+                      "nodeId":  "2274:42497",
+                      "frame":  "LI-INS-01-T"
+                  },
+                  {
+                      "file":  "shots/brex-06_R032-2.jpg",
+                      "nodeId":  "2274:43016",
+                      "frame":  "LI-INS-01-P"
+                  },
+                  {
+                      "file":  "shots/brex-06_R032-3.jpg",
+                      "nodeId":  "2274:43118",
+                      "frame":  "LI-INS-01-P / 케이스 / 01 장비 통합 상태 · Door 상태별"
+                  },
+                  {
+                      "file":  "shots/brex-06_R032-4.jpg",
+                      "nodeId":  "2274:43910",
+                      "frame":  "LI-INS-02-T"
+                  },
+                  {
+                      "file":  "shots/brex-06_R032-5.jpg",
+                      "nodeId":  "2274:44389",
+                      "frame":  "LI-INS-02-01-P"
+                  }
               ],
     "images":  [
 
                ],
     "frames":  [
-
+                   {
+                       "nodeId":  "2274:42497",
+                       "name":  "LI-INS-01-T"
+                   },
+                   {
+                       "nodeId":  "2274:43016",
+                       "name":  "LI-INS-01-P"
+                   },
+                   {
+                       "nodeId":  "2274:43118",
+                       "name":  "LI-INS-01-P / 케이스 / 01 장비 통합 상태 · Door 상태별"
+                   },
+                   {
+                       "nodeId":  "2274:43910",
+                       "name":  "LI-INS-02-T"
+                   },
+                   {
+                       "nodeId":  "2274:44389",
+                       "name":  "LI-INS-02-01-P"
+                   }
                ],
-    "ask":  null,
+    "ask":  {
+                "q":  "[Lock] 버튼(문을 닫아도 자동으로 잠기지 않음)을 어떻게 할까요?",
+                "free":  true,
+                "options":  [
+                                {
+                                    "label":  "[Lock] 유지 — 임시 정책(PV)으로 등록해줘"
+                                },
+                                {
+                                    "label":  "정책대로 되돌려줘 — 닫고 5초 뒤 자동 잠금, [Lock] 버튼 없음"
+                                },
+                                {
+                                    "action":  "done",
+                                    "label":  "그대로 두기"
+                                }
+                            ]
+            },
     "replies":  [
 
                 ]
