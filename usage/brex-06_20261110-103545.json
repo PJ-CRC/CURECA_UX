@@ -1,0 +1,28 @@
+{
+    "id":  "brex-06_20261110-103545",
+    "kind":  "work",
+    "reqId":  "",
+    "reqType":  "",
+    "team":  "cureca",
+    "at":  "2026-11-10T10:35:45+09:00",
+    "from":  "2026-11-10T10:34:15+09:00",
+    "by":  "최고관리자",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "프로토타입: Instrument · LI-INS-01-P (J084)",
+    "models":  {
+                   "claude-opus-5-5":  9
+               },
+    "calls":  9,
+    "input":  17,
+    "cacheWrite":  25759,
+    "cacheRead":  1390847,
+    "output":  9063,
+    "total":  1425686,
+    "usd":  0.6656
+}
