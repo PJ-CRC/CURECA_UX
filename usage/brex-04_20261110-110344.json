@@ -1,0 +1,28 @@
+{
+    "id":  "brex-04_20261110-110344",
+    "kind":  "work",
+    "reqId":  "",
+    "reqType":  "",
+    "team":  "stagora",
+    "at":  "2026-11-10T11:03:44+09:00",
+    "from":  "2026-11-10T11:01:40+09:00",
+    "by":  "김주현",
+    "doneBy":  "Claude",
+    "pc":  "BREX_04",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "화면 정의서: UX Kit(Component) (J251)",
+    "models":  {
+                   "claude-sonnet-5-5":  12
+               },
+    "calls":  12,
+    "input":  29,
+    "cacheWrite":  42035,
+    "cacheRead":  953772,
+    "output":  9714,
+    "total":  1005550,
+    "usd":  0.4561
+}
