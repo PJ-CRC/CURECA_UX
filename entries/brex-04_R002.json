@@ -1,0 +1,35 @@
+{
+    "id":  "brex-04_R002",
+    "kind":  "request",
+    "team":  "stagora",
+    "status":  "대기",
+    "at":  "2026-11-10T11:08:16+09:00",
+    "createdAt":  "2026-11-10T11:08:16+09:00",
+    "by":  "김주현",
+    "doneBy":  "김주현",
+    "pc":  "BREX_04",
+    "reqId":  "R002",
+    "fileKey":  "cDjaemHjetS7RcAHRUIMY5",
+    "fileName":  "STAgora AI Workspace",
+    "page":  "Admin",
+    "frame":  "AD-CMP-01-01-01-P",
+    "nodeId":  "48:83422",
+    "type":  "컴포넌트 교체",
+    "layout":  "",
+    "text":  "적용 프레임 리스트\nAD-CMP-01-T\nAD-CMP-01-01-T\nAD-CMP-01-01-01-P\nAD-CMP-01-01-02-T\n\n1. UX 문서 \u003e 화면 정의서의 컴포넌트를 활용하여 컴포넌트 전면 교체 필요\n2. Admin 페이지 내의 다른 기획서를 참고하여 공통 UX/UI로 적용 및 디스크립션도 비슷하게 작성 필요\n3. Cover 및 Revision History 생성 요청, 버전은 v0.1 날짜는 오늘 날짜로",
+    "note":  "",
+    "shot":  "",
+    "shots":  [
+
+              ],
+    "images":  [
+
+               ],
+    "frames":  [
+
+               ],
+    "ask":  null,
+    "replies":  [
+
+                ]
+}
