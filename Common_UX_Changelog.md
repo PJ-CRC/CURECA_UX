@@ -2,6 +2,17 @@
 
 ---
 
+## [UX AI TEST] Instrument Door Control · Lock 버튼 추가, 자동 잠금 폐지 · 2026-11-09 (요청: 최고관리자, 채팅)
+
+- 정책 변경: 문을 닫아도 자동으로 잠기지 않음(기존: 닫고 5초 후 자동 Lock). Lock Status가 Unlocked인 Door는 [Lock] 버튼을 눌러야 잠김.
+- LI-INS-01-P Door Control 팝업(2225:69506) · 케이스(2225:69611): Unlocked Door 버튼 「Unlocked」(Disabled) → [Lock]. 닫힌 문 Enabled, 열린 문 Disabled. 하단 안내 문구 「Close the door and press Lock to lock it.」 등으로 바꿈. 디스크립션 0 · 2-1 · 2-5 · 2-6에 Lock 정의 추가. 케이스 표(이미지)의 Flow 칸에 변경 메모를 덧붙임.
+- LI-INS-02-T(2225:68698): 디스크립션 3 · 3-1에 Lock Status 값(Locked / Unlocked)과 [Lock] 클릭 정의 추가.
+- LI-INS-01-T(2225:68179): Door Status 툴팁 · Unlock 버튼(6) 디스크립션에 Lock 기능 추가.
+- 프레임마다 오른쪽에 v2.1.07 업데이트 박스 추가(노란색 = 화면 변경, 하늘색 = 디스크립션 변경). 바꾼 글은 빨간색.
+- 버튼 · 안내 문구(Pretendard)는 Common UX Sync 플러그인 작업(J080 · J081)으로 바꿈. 캡처 4장 받음.
+- 이어서: [Lock] 버튼을 모두 활성(Enabled, Filled 검정)으로(열린 문 포함). 디스크립션 01-P 2-5 · 02-T 3-1의 「Open이면 [Lock] Disabled」를 「늘 활성」으로 고침.
+- 이어서: 케이스 화면(2225:69611)에 「Door가 Open인 상태에서 [Lock] 클릭 시」 케이스 추가 — 문 닫기 안내 팝업 **Confirm_031**(Please close the door. / [OK], 기존 Confirm 팝업 Warning 형식). [OK] 클릭 시 닫힘, Door는 Unlocked 유지. 디스크립션 01-P 2-5 · 02-T 3-1과 업데이트 박스에 반영.
+
 ## [UX AI TEST] R031 · TI-SPT-03 화면 복제 · 2026-11-09 (요청: 최고관리자)
 
 - 재설계 화면 테스트 › TI-SPT-03 섹션(2068:3888)을 통째로 복제해 오른쪽(x 2652, y 12961)에 새 섹션 `TI-SPT-03 (복사)`(2183:2)를 둠.

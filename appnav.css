@@ -144,3 +144,16 @@ html.embed.low{ --nav-h:52px; --page-top:12px; }
 html.embed.low .app-head{margin-bottom:10px}
 html.embed.low .app-head h1{font-size:21px;margin-bottom:0}
 html.embed.low .app-head .app-head-t > p{display:none}
+/* 넘치면 단계별로 줄이기(appnav.js fitNav — 실제로 넘칠 때만, 앞 단계는 그대로 둔 채 다음 단계를 더한다) */
+.appnav.nav-c1 .appnav-usage .wk,.appnav.nav-c1 .appnav-usage .rs,.appnav.nav-c1 .appnav-ver{display:none}
+.appnav.nav-c2{gap:2px;padding:0 12px}
+.appnav.nav-c2 .appnav-brand{font-size:0;gap:0;margin-right:10px}
+.appnav.nav-c2 a{padding:0 10px}
+.appnav.nav-c2 .appnav-right{gap:6px}
+.appnav.nav-c2 .appnav-team{padding-left:6px}
+.appnav.nav-c2 .appnav-team .lb{display:none}
+.appnav.nav-c3 .appnav-usage{display:none}
+.appnav.nav-c3 .appnav-acct{gap:6px}
+.appnav.nav-c3 .appnav-acct a,.appnav.nav-c3 .appnav-acct button{height:34px;padding:0 10px;font-size:13px}
+.appnav.nav-c4 a{padding:0 8px;font-size:13px}
+.appnav.nav-c4 .appnav-acct a{display:block;max-width:96px;overflow:hidden;text-overflow:ellipsis;line-height:32px}
