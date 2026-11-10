@@ -1,0 +1,35 @@
+{
+    "id":  "brex-06_R033",
+    "kind":  "request",
+    "team":  "cureca",
+    "status":  "대기",
+    "at":  "2026-11-10T16:34:57+09:00",
+    "createdAt":  "2026-11-10T16:34:57+09:00",
+    "by":  "최고관리자",
+    "doneBy":  "최고관리자",
+    "pc":  "BREX_06",
+    "reqId":  "R033",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "",
+    "nodeId":  "",
+    "type":  "일반",
+    "layout":  "",
+    "text":  "(확인용 일반 질문) 이 페이지의 Instrument 화면들에서 Door Control의 Lock 버튼 규칙이 어떻게 정해져 있는지 짧게 알려줘. Figma는 고치지 마.",
+    "note":  "",
+    "shot":  "",
+    "shots":  [
+
+              ],
+    "images":  [
+
+               ],
+    "frames":  [
+
+               ],
+    "ask":  null,
+    "replies":  [
+
+                ]
+}
