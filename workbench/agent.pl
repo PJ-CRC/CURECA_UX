@@ -26,6 +26,7 @@ my ($COMPACT_PCT, $IDLE_MIN, $TURN_MIN) = (80, 30, 20);
 my $J = JSON::PP->new->utf8->canonical;
 my %st = (status => 'idle', msg => '');
 my $S;   # { pid, in, out, buf, turns, last, ctx, win }
+my $SAVED = time;   # 마지막으로 상태를 쓴 시각(15초마다 쓰는지 보려고)
 my ($READY, $NEXT_CHECK) = (undef, 0);   # 준비 확인 결과(로그인 · Figma 연결), 다시 확인할 시각
 sub now { my $z = strftime('%z', localtime); $z =~ s/(\d\d)$/:$1/; return strftime('%Y-%m-%dT%H:%M:%S', localtime) . $z; }
 sub slurp { my ($f) = @_; open(my $h, '<:raw', $f) or return ''; local $/; my $d = <$h>; close $h; return $d // ''; }
@@ -33,6 +34,7 @@ sub save_state {
   my ($s, $m) = @_; $st{status} = $s if defined $s; $st{msg} = $m if defined $m;
   my $o = { at => now(), host => decode('UTF-8', hostname()), pid => $$, status => $st{status}, msg => $st{msg} };
   if (open(my $h, '>:raw', $STATE)) { print $h $J->encode($o); close $h; }
+  $SAVED = time;
 }
 sub logm {
   my ($s) = @_;
@@ -115,8 +117,15 @@ sub run_cli {
   my ($sec, @a) = @_; my $out = '';
   my $pid = open(my $h, '-|'); return '' unless defined $pid;
   if (!$pid) { open(STDERR, '>&', \*STDOUT); chdir $ROOT; exec($claude, @a) or exit 127; }
-  my $ok = eval { local $SIG{ALRM} = sub { die "timeout\n" }; alarm $sec; local $/; $out = <$h>; alarm 0; 1 };
-  if (!$ok) { kill 'TERM', $pid; } close $h;
+  # 기다리는 동안 15초마다 상태를 쓴다: 확인(최대 30 + 90 + 60초)이 겹쳐 150초를 넘으면 서버가 에이전트를 죽은 것으로 보고
+  #  (탭을 모두 닫았으면) 서버를 끄거나 에이전트를 다시 띄우려다 중지 신호를 지웠다(2026-11-10, 윈도우와 같게)
+  my $sel = IO::Select->new($h); my $until = time + $sec; my $ok = 0;
+  while (1) {
+    if (time >= $until) { kill 'TERM', $pid; last; }
+    if ($sel->can_read(15)) { my $n = sysread($h, my $c, 65536); if (!$n) { $ok = 1; last; } $out .= $c; }
+    save_state() if time - $SAVED >= 15;
+  }
+  close $h;
   return $ok ? decode('UTF-8', $out // '') : '';
 }
 # 처리 전 준비 확인(토큰 안 씀): CLI 로그인(`claude auth status`) · Figma MCP 연결(`claude mcp list`의 figma 줄이 Connected)
@@ -143,6 +152,8 @@ sub read_line {
     return '' if time > $until;
     if ($sel->can_read(15)) { my $n = sysread($S->{out}, my $chunk, 65536); return undef unless $n; $S->{buf} .= $chunk; }
     else { save_state(); }
+    # 출력이 쉬지 않고 오면 위 15초 기다림에 걸리지 않아 상태를 안 썼다 → 처리 중인데 「백그라운드 연결 끊김」으로 보였다
+    save_state() if time - $SAVED >= 15;
   }
 }
 sub send_turn {
