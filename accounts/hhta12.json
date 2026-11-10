@@ -7,7 +7,8 @@
                   "guide",
                   "workbench",
                   "history",
-                  "usage"
+                  "usage",
+                  "proto"
               ],
     "createdAt":  "2026-11-02T17:33:26+09:00",
     "createdBy":  "brex",
@@ -19,8 +20,15 @@
                    "plan",
                    "guide",
                    "workbench",
-                   "history"
+                   "history",
+                   "proto"
                ],
+    "approves":  [
+
+                 ],
+    "teams":  [
+                  "cureca"
+              ],
     "active":  true,
-    "updatedAt":  "2026-11-04T16:29:15+09:00"
+    "updatedAt":  "2026-11-10T14:26:44+09:00"
 }
