@@ -2,11 +2,11 @@
     "id":  "brex-04_R004",
     "kind":  "request",
     "team":  "stagora",
-    "status":  "보류",
-    "at":  "2026-11-10T13:43:54+09:00",
+    "status":  "대기",
+    "at":  "2026-11-10T13:45:32+09:00",
     "createdAt":  "2026-11-10T13:42:57+09:00",
     "by":  "김주현",
-    "doneBy":  "Claude",
+    "doneBy":  "김주현",
     "pc":  "BREX_04",
     "reqId":  "R004",
     "fileKey":  "cDjaemHjetS7RcAHRUIMY5",
@@ -17,7 +17,7 @@
     "type":  "일반",
     "layout":  "",
     "text":  "해당 메뉴는\nStatistical Report Viewer에 들어갈 종합검사를 관리하는 메뉴야. 이를 고려하여 메뉴명 변경 필요\n\n내가 보는 피그마 화면에 R003에서 작업한 화면이 왜 업데이트가 안된 것 같지? 확인해주겠어?",
-    "note":  "메뉴명은 아직 바꾸지 않았습니다. 이름을 정해 주세요. R003 반영 여부는 확인했습니다.\n- R003 확인: 지금 Figma 파일(STAgora AI Workspace, Admin 페이지)의 4개 화면(AD-CMP-01-T, 01-01-T, 01-01-01-P, 01-01-02-T)에는 R003 내용이 반영돼 있습니다. 영어 문구, Lab 필터 삭제, Results 줄의 Add Comprehensive Test 버튼, Pagination 모두 확인했고 마지막 캡처도 11/10 11:30입니다.\n- 안 보인다면: 열어 둔 Figma 화면이 오래된 상태일 수 있으니 새로고침(Ctrl+R)해 주세요. 다른 복사본이나 브랜치, 다른 페이지의 같은 이름 프레임을 보고 있는지도 확인해 주세요. 그래도 다르면 보고 있는 링크를 알려 주세요.\n- 메뉴명 후보: 지금 화면 제목 · 경로는 \"Comprehensive Test Setup\" · \"Local \u003e 종합검사 구성\"입니다. Statistical Report Viewer용 종합검사를 관리하는 메뉴라는 점이 드러나게 바꿔야 해서 후보를 드립니다.\n작업 기준: 작업규칙 없음 · 정책서 없음 · UX가이드 없음 · 기준데이터 없음 · 화면 정의서 없음 (Figma 인증 가능 범위에서 가이드 미조회)",
+    "note":  "",
     "shot":  "",
     "shots":  [
 
@@ -28,22 +28,13 @@
     "frames":  [
 
                ],
-    "ask":  {
-                "q":  "메뉴명을 무엇으로 바꿀까요?",
-                "free":  true,
-                "options":  [
-                                {
-                                    "label":  "Report Test Setup"
-                                },
-                                {
-                                    "label":  "Comprehensive Test (Report)"
-                                },
-                                {
-                                    "label":  "Report Comprehensive Test Setup"
-                                }
-                            ]
-            },
+    "ask":  null,
     "replies":  [
-
+                    {
+                        "at":  "2026-11-10T13:45:32+09:00",
+                        "by":  "김주현",
+                        "q":  "메뉴명을 무엇으로 바꿀까요?",
+                        "text":  "Report Comprehensive Test Setup"
+                    }
                 ]
 }
