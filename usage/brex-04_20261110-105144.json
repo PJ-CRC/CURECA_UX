@@ -1,0 +1,28 @@
+{
+    "id":  "brex-04_20261110-105144",
+    "kind":  "work",
+    "reqId":  "",
+    "reqType":  "",
+    "team":  "stagora",
+    "at":  "2026-11-10T10:51:44+09:00",
+    "from":  "2026-11-10T10:46:15+09:00",
+    "by":  "김주현",
+    "doneBy":  "Claude",
+    "pc":  "BREX_04",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "Workbench R001",
+    "models":  {
+                   "claude-sonnet-5-5":  24
+               },
+    "calls":  24,
+    "input":  46,
+    "cacheWrite":  78934,
+    "cacheRead":  2420246,
+    "output":  34807,
+    "total":  2534033,
+    "usd":  1.1479
+}

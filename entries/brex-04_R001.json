@@ -2,8 +2,8 @@
     "id":  "brex-04_R001",
     "kind":  "request",
     "team":  "stagora",
-    "status":  "진행 중",
-    "at":  "2026-11-10T10:46:15+09:00",
+    "status":  "완료",
+    "at":  "2026-11-10T10:51:43+09:00",
     "createdAt":  "2026-11-10T10:46:02+09:00",
     "by":  "김주현",
     "doneBy":  "Claude",
@@ -17,16 +17,50 @@
     "type":  "신규 프레임",
     "layout":  "",
     "text":  "연결된 정책서의 [5. 종합검사 구성] 항목을 참고하여 신규 메뉴 작업 요청\n필요한 화면만큼 만들기\n\n로컬 서버에서 리포트 출력을 관리하는 종합검사 마스터 메뉴 구성\n해당 메뉴는 로컬이기 때문에 당연히 검사실 별로 구성할 수 있음.",
-    "note":  "처리 시작",
-    "shot":  "",
+    "note":  "종합검사 구성 신규 화면 4개를 Admin 페이지에 만들었습니다.\n- AD-CMP-01-T: 종합검사 목록 (검사실 선택 · ABI/GTI/RTI별 검사 세트 #1·#2 · 구성 완료/미완료 · 구성 수정 · 추가)\n- AD-CMP-01-01-T: 구성 화면 (검사 세트 #1·#2 Analyte Type · Assay 선택 · 순서 변경 · Save)\n- AD-CMP-01-01-01-P: Assay 선택 팝업\n- AD-CMP-01-01-02-T: 구성 미완료 Case (GTI)\n확인 필요: LNB에 새 메뉴 항목은 넣지 않았고(메뉴 위치 미정), 컴포넌트는 기존 Disease 화면 틀 기준으로 단순 구성했습니다. 메뉴 위치 · ID 체계 확인 필요.\n작업 기준: 작업규칙 r20261110-brex-04-J019 (제목 미확인) · 정책서 통합운영툴 - 로컬 서버 정책 · UX가이드 통합운영툴_Common UX · 기준데이터 없음 · 화면 정의서 없음",
+    "shot":  "shots/brex-04_R001.jpg",
     "shots":  [
-
+                  {
+                      "file":  "shots/brex-04_R001.jpg",
+                      "nodeId":  "48:82013",
+                      "frame":  "AD-CMP-01-T"
+                  },
+                  {
+                      "file":  "shots/brex-04_R001-2.jpg",
+                      "nodeId":  "48:82720",
+                      "frame":  "AD-CMP-01-01-T"
+                  },
+                  {
+                      "file":  "shots/brex-04_R001-3.jpg",
+                      "nodeId":  "48:83422",
+                      "frame":  "AD-CMP-01-01-01-P"
+                  },
+                  {
+                      "file":  "shots/brex-04_R001-4.jpg",
+                      "nodeId":  "48:84145",
+                      "frame":  "AD-CMP-01-01-02-T"
+                  }
               ],
     "images":  [
 
                ],
     "frames":  [
-
+                   {
+                       "nodeId":  "48:82013",
+                       "name":  "AD-CMP-01-T"
+                   },
+                   {
+                       "nodeId":  "48:82720",
+                       "name":  "AD-CMP-01-01-T"
+                   },
+                   {
+                       "nodeId":  "48:83422",
+                       "name":  "AD-CMP-01-01-01-P"
+                   },
+                   {
+                       "nodeId":  "48:84145",
+                       "name":  "AD-CMP-01-01-02-T"
+                   }
                ],
     "ask":  null,
     "replies":  [
