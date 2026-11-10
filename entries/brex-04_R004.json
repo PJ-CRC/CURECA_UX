@@ -2,8 +2,8 @@
     "id":  "brex-04_R004",
     "kind":  "request",
     "team":  "stagora",
-    "status":  "진행 중",
-    "at":  "2026-11-10T13:45:45+09:00",
+    "status":  "완료",
+    "at":  "2026-11-10T13:46:56+09:00",
     "createdAt":  "2026-11-10T13:42:57+09:00",
     "by":  "김주현",
     "doneBy":  "Claude",
@@ -17,16 +17,50 @@
     "type":  "일반",
     "layout":  "",
     "text":  "해당 메뉴는\nStatistical Report Viewer에 들어갈 종합검사를 관리하는 메뉴야. 이를 고려하여 메뉴명 변경 필요\n\n내가 보는 피그마 화면에 R003에서 작업한 화면이 왜 업데이트가 안된 것 같지? 확인해주겠어?",
-    "note":  "",
-    "shot":  "",
+    "note":  "메뉴명을 Report Comprehensive Test Setup으로 바꿨습니다. R003 반영 여부도 확인했습니다.\n- 화면 제목: 4개 화면 제목 Comprehensive Test Setup → Report Comprehensive Test Setup (ABI/GTI 표기는 유지)\n- 디스크립션 제목 · 경로 표기: 종합검사 구성 → Report Comprehensive Test Setup (Local \u003e Report Comprehensive Test Setup)\n- R003 확인: 지금 Figma 파일(Admin 페이지)에는 R003 내용(영어 UI, Lab 필터 삭제, 카드 배치)이 이미 들어 있습니다. 보고 계신 화면이 예전 상태라면 Figma 탭을 새로고침하거나 해당 프레임을 다시 열어 주세요. 프레임 위치는 Admin 페이지 같은 줄(y 78188)입니다.\n확인 필요: 프레임 이름(AD-CMP-01-T 등)과 Cover · Revision History 이름(간지_종합검사 구성)은 그대로 두었습니다. 디스크립션 본문 한글 문구에 있는 종합검사 구성 표기도 그대로입니다. 필요하면 알려주세요.\n작업 기준: 작업규칙 r20261110-brex-04-J019 · 정책서 통합운영툴 - 로컬 서버 정책 · UX가이드 통합운영툴_Common UX · 기준데이터 없음 · 화면 정의서 UX Kit(Component) 화면 정의서",
+    "shot":  "shots/brex-04_R004.jpg",
     "shots":  [
-
+                  {
+                      "file":  "shots/brex-04_R004.jpg",
+                      "nodeId":  "48:82013",
+                      "frame":  "AD-CMP-01-T"
+                  },
+                  {
+                      "file":  "shots/brex-04_R004-2.jpg",
+                      "nodeId":  "48:82720",
+                      "frame":  "AD-CMP-01-01-T"
+                  },
+                  {
+                      "file":  "shots/brex-04_R004-3.jpg",
+                      "nodeId":  "48:83422",
+                      "frame":  "AD-CMP-01-01-01-P"
+                  },
+                  {
+                      "file":  "shots/brex-04_R004-4.jpg",
+                      "nodeId":  "48:84145",
+                      "frame":  "AD-CMP-01-01-02-T"
+                  }
               ],
     "images":  [
 
                ],
     "frames":  [
-
+                   {
+                       "nodeId":  "48:82013",
+                       "name":  "AD-CMP-01-T"
+                   },
+                   {
+                       "nodeId":  "48:82720",
+                       "name":  "AD-CMP-01-01-T"
+                   },
+                   {
+                       "nodeId":  "48:83422",
+                       "name":  "AD-CMP-01-01-01-P"
+                   },
+                   {
+                       "nodeId":  "48:84145",
+                       "name":  "AD-CMP-01-01-02-T"
+                   }
                ],
     "ask":  null,
     "replies":  [

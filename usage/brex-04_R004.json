@@ -1,0 +1,28 @@
+{
+    "id":  "brex-04_R004",
+    "kind":  "request",
+    "reqId":  "R004",
+    "reqType":  "일반",
+    "team":  "stagora",
+    "at":  "2026-11-10T13:46:58+09:00",
+    "from":  "2026-11-10T13:45:45+09:00",
+    "by":  "김주현",
+    "doneBy":  "Claude",
+    "pc":  "BREX_04",
+    "fileKey":  "cDjaemHjetS7RcAHRUIMY5",
+    "fileName":  "STAgora AI Workspace",
+    "page":  "Admin",
+    "frame":  "AD-CMP-01-T",
+    "nodeId":  "48:82013",
+    "text":  "Workbench 요청: 메뉴명 변경 (R004)",
+    "models":  {
+                   "claude-sonnet-5-5":  9
+               },
+    "calls":  9,
+    "input":  19,
+    "cacheWrite":  29188,
+    "cacheRead":  751745,
+    "output":  5675,
+    "total":  786627,
+    "usd":  0.3239
+}
