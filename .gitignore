@@ -42,3 +42,5 @@ workbench/.run/
 workbench/.sheet_cache/
 # 프로젝트(Figma 파일)는 PC마다 따로(기본 프로젝트 없음, 시작 안내 3단계 링크로 정한다)
 projects/
+# 이력 동기화 · 서버가 쓰는 동안 잠깐 생기는 임시 파일
+workbench/*.tmp
