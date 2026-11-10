@@ -1,0 +1,28 @@
+{
+    "id":  "brex-06_20261110-155247",
+    "kind":  "work",
+    "reqId":  "",
+    "reqType":  "",
+    "team":  "cureca",
+    "at":  "2026-11-10T15:52:47+09:00",
+    "from":  "2026-11-10T15:51:59+09:00",
+    "by":  "최고관리자",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "프로토타입 맞추기: Instrument (J088)",
+    "models":  {
+                   "claude-opus-5-5":  11
+               },
+    "calls":  11,
+    "input":  21,
+    "cacheWrite":  24736,
+    "cacheRead":  1345491,
+    "output":  5758,
+    "total":  1376006,
+    "usd":  0.5822
+}
