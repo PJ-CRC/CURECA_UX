@@ -20,6 +20,8 @@ Figma 파일을 프로젝트 단위로 다루는 Workbench(수정 요청 · Clau
 - 일반 작업자는 프로그램이 `history`만 올린다. Workbench에서 변경 이력 · 공통 가이드를 보고, 업데이트는 `release`에서 자동으로 받는다.
 - PC마다 따로인 데이터(수정 요청 목록 · 작업 대기열 · Workbench 캡처 · 다른 프로젝트 · 프로토타입)는 저장소에 올리지 않는다(`.gitignore`).
 
+화면 파일(`*.html`)과 화면이 함께 쓰는 `appnav.js` · `appnav.css` · `common.js`는 **`pages/`** 폴더에 있다. 주소는 폴더 이름 없이 그대로다(`http://localhost:8765/Work.html`).
+
 | 파일 | 내용 |
 |---|---|
 | `Common_UX_Guide.html` | 「UX 문서」 메뉴: 공통 규칙(만든 UX 가이드) · 정의서 탭. 가이드 내용은 `.history/guides/`(history 브랜치) |
@@ -65,7 +67,7 @@ Figma 파일을 프로젝트 단위로 다루는 Workbench(수정 요청 · Clau
   - 상태(대기 / 진행 중 / 완료 / 보류)를 바꾸거나 삭제할 수 있다.
   - Claude Code 세션이 `workbench/watch_requests.ps1`로 요청 파일을 감시하고 있으면, 「대기」 요청이 등록되는 즉시 Figma에 반영한다. 상태는 「진행 중 → 완료」로 바뀌고, 캡처 갱신과 변경 이력까지 이어서 한다(커밋·푸시는 요청할 때만). 다른 PC에서 쓰는 방법은 `docs/Workbench_Setup_Other_PC.md`. 해석이 모호한 요청은 「보류」로 바꾸고 메모에 질문을 남긴다.
   - 감시가 꺼져 있을 때는 **Claude 작업 요청문 복사**를 눌러 Claude에게 붙여 넣으면 된다.
-- 캡처 받기 · 목록 만들기 요청은 작업 대기열 `workbench/jobs.json`에 쌓이고, 요청 감시 중인 Claude가 처리한다(CLAUDE.md 「작업 대기열」).
+- 캡처 받기 · 목록 만들기 요청은 작업 대기열 `workbench/jobs.json`에 쌓이고, 요청 감시 중인 Claude가 처리한다(`docs/claude/jobs.md`).
 
 ---
 
@@ -100,7 +102,7 @@ Figma 데스크톱 앱에서 켜 두면 **Claude · Workbench와 연동**한다.
 - **설치 · 업데이트**: 처음에는 `dist\UX_AI_TEST_Workbench_v{버전}_Windows.zip`(맥은 `_Mac.zip`)을 풀어 `Figma AI Run`을 실행한다.
   - 그다음부터는 실행할 때마다 관리자가 배포한 새 버전(`release` 브랜치)을 확인해 자동으로 바꾼다.
   - 내 요청 · 캡처 · 설정은 그대로 남는다. 바뀌면 화면에 「새 버전으로 업데이트했습니다」가 한 번 뜨고, 상단 메뉴에 버전(`v0.1.0`)이 보인다.
-  - 배포는 관리자가 `tools\release.ps1 -Version x.y.z -Publish`로 한다(CLAUDE.md 「버전 · 배포」).
+  - 배포는 관리자가 `tools\release.ps1 -Version x.y.z -Publish`로 한다(`docs/claude/dev.md` 「버전 · 배포」).
 
 - **작업 이력은 깃으로 공유된다.** 각자 자기 PC에서 작업해도 누가 · 언제 · 어떤 프레임을 고쳤는지 「변경 이력 › 작업 이력 (공유)」에서 모두 본다.
   - 요청을 등록하거나 상태(대기 · 진행 중 · 보류 · 완료)가 바뀌면 서버가 이력 한 건(요청자 · 처리자 · PC · 상태 · 프레임 · 내용 · 메모)을 `.history/`에 남기고, 지우면 뺀다. 완료된 것에는 그때 캡처(원본 크기 JPG)를 붙인다.

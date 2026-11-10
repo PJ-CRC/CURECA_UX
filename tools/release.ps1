@@ -1,4 +1,4 @@
-﻿# 배포 · 설치 파일 만들기 (관리자 PC, 윈도우)
+# 배포 · 설치 파일 만들기 (관리자 PC, 윈도우)
 #   powershell -ExecutionPolicy Bypass -File tools\release.ps1 -Version 0.1.0 [-Publish]
 #  - VERSION을 고치고, 프로그램 파일 목록으로 설치용 압축 2개를 만든다: dist\UX_AI_TEST_Workbench_v{버전}_Windows.zip · _Mac.zip
 #  - -Publish: 같은 파일을 workbench/git_remote.txt 저장소의 release 브랜치에 올리고 태그 v{버전}을 단다(.release 작업 폴더 사용).
@@ -37,8 +37,9 @@ if ($Publish) {
 }
 
 # ── 프로그램 파일 목록 ──
-$files = 'VERSION','Figma AI Run.bat','Figma AI Run (Terminal).command','appnav.js','appnav.css','common.js','guide_server.ps1','guide_server_mac.pl',
-  'Common_UX_Guide.html','Common_UX_Changelog.md','RELEASE_NOTES.md','Change_History.html','Usage_Stats.html','UX_Guide.html','Figma_Workbench.html','Prototypes.html','Prototype.html','Login.html','Account.html','Accounts.html','Setup.html','Work.html','CLAUDE.md','README.md','tools\google-sheet-bridge.gs'
+# 화면 파일(html · appnav · common.js)은 pages/ 폴더째 넣는다(아래 폴더 목록). 주소는 그대로이고 서버가 pages/에서 찾는다
+$files = 'VERSION','Figma AI Run.bat','Figma AI Run (Terminal).command','guide_server.ps1','guide_server_mac.pl',
+  'Common_UX_Changelog.md','RELEASE_NOTES.md','CLAUDE.md','README.md','tools\google-sheet-bridge.gs'
 $wb = 'edit_requests.json','watch_requests.ps1','watch_requests.pl','agent.ps1','agent.pl','launch_win.ps1','history_sync.ps1','history_sync.sh','github_login.ps1','github_login.sh','update.ps1','update.sh','git_remote.txt','usage.ps1','usage.pl','pricing.json','removed_files.txt'
 $list = New-Object System.Collections.Generic.List[string]
 foreach ($f in $files) { $list.Add($f) }
@@ -46,7 +47,7 @@ foreach ($f in $wb) { $list.Add("workbench\$f") }
 # 프로토타입 · 프로젝트(Figma 파일)는 PC마다 따로라 넣지 않는다(기본 프로젝트 · 예시 프로토타입 없음)
 # 배포에서 뺄 docs 파일이 생기면 여기 정규식에 더한다
 $skip = '^$'   # 배포에서 뺄 docs 파일(지금은 없음)
-foreach ($d in 'docs','figma_plugin','.claude','Figma AI Run.app') {
+foreach ($d in 'pages','docs','figma_plugin','.claude','Figma AI Run.app') {
   Get-ChildItem -LiteralPath (Join-Path $Src $d) -Recurse -File -Force | Where-Object { $_.Name -ne 'settings.local.json' } | ForEach-Object { $rel = $_.FullName.Substring($Src.Length + 1); if ($rel -notmatch $skip) { $list.Add($rel) } }
 }
 # 내용을 바꿔 넣는 파일: 수정 요청은 PC마다 따로 쌓이므로 빈 목록(저장소에 없어도 된다), README는 브랜치 안내 줄을 release용으로

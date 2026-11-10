@@ -1003,7 +1003,10 @@ sub jobs_post {
     if ($kind eq 'minutes') {
       ($nid, $key) = ('', ''); my $mi = str($b->{minute});
       die "회의록을 찾지 못했습니다: $mi\n" unless $mi =~ /^m[0-9a-z-]{6,40}$/ && -f "$MIN_DIR/$mi.md";
-      die "각자 작성한 내용이 아직 없습니다.\n" unless @{ read_notes($mi) };
+      # mode 'extract'(정책 · 논의 뽑기): 정리본(본문)에서 PV · PD · CA만 올린다 — 각자 작성분이 없어도 된다
+      my $mmode = str($b->{mode}) eq 'extract' ? 'extract' : '';
+      die "각자 작성한 내용이 아직 없습니다.\n" unless $mmode || @{ read_notes($mi) };
+      if ($mmode) { my $mt = eval { decode('UTF-8', read_bytes("$MIN_DIR/$mi.md")) } // ''; $mt =~ s/^---.*?---//s; $mt =~ s/^\s+|\s+$//g; die "회의록 내용(정리본)이 아직 없습니다.\n" if length($mt) < 10; }
       ($hit) = grep { $_->{kind} eq 'minutes' && str($_->{minute}) eq $mi && ($_->{status} eq '대기' || $_->{status} eq '진행 중') } @items;
     }
     # 정의서 연관 항목 찾기(guide-check, scope:'spec')는 정의서에 기준 파일이 없으면 파일 없이(문서 · 프로토타입만) 받는다
@@ -1024,6 +1027,7 @@ sub jobs_post {
       # Workbench 자동 캡처(페이지를 열면 캡처 없는 프레임을 10개씩): 플러그인만 받는다(Claude 감시는 건너뜀)
       $hit->{auto} = JSON::PP::true if $kind eq 'capture' && $b->{auto};
       $hit->{minute} = str($b->{minute}) if $kind eq 'minutes';
+      $hit->{mode} = 'extract' if $kind eq 'minutes' && str($b->{mode}) eq 'extract';
       if ($kind eq 'plan') { $hit->{sub} = str($b->{sub}); $hit->{target} = str($b->{target}); $hit->{plan} = $b->{plan}; }
       # 새 가이드 · 정의서: 문서 종류(docKind '' = UX가이드, 'rule' 작업규칙 · 'policy' 정책서 · 'data' 기준데이터 · 'spec' 화면 정의서)와 올린 참고 파일(workbench/job_files/{작업 ID}/, 이 PC에만)
       if ($kind eq 'guide') { $hit->{docKind} = str($b->{docKind}) =~ /^(spec|rule|policy|data)$/ ? str($b->{docKind}) : ''; $hit->{files} = save_uploads($hit->{id}, @srcs); }
@@ -1608,6 +1612,8 @@ sub handle {
   my $rel = $path; $rel =~ s{^/+}{}; $rel = 'Common_UX_Guide.html' if $rel eq '';
   if ($rel =~ m{(^|/)\.\.(/|$)} || $rel =~ /\0/) { return respond($sock, 404, 'text/plain', 'not found'); }
   my $f = "$ROOT/$rel";
+  # 화면 파일(html · appnav · common.js)은 pages/ 폴더에 모아 둔다(v0.18.0). 주소는 그대로(/Work.html)라 폴더 이름 없는 요청은 pages/를 먼저 본다
+  $f = "$ROOT/pages/$rel" if $rel !~ m{/} && -f "$ROOT/pages/$rel";
   if (-f $f) { my ($ext) = $f =~ /\.([A-Za-z0-9]+)$/; return respond($sock, 200, $TYPES{ lc($ext || '') } || 'application/octet-stream', read_bytes($f)); }
   return respond($sock, 404, 'text/plain', 'not found');
 }
