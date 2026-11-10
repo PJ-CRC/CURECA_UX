@@ -2,8 +2,8 @@
     "id":  "brex-04_R002",
     "kind":  "request",
     "team":  "stagora",
-    "status":  "진행 중",
-    "at":  "2026-11-10T11:08:31+09:00",
+    "status":  "완료",
+    "at":  "2026-11-10T11:17:03+09:00",
     "createdAt":  "2026-11-10T11:08:16+09:00",
     "by":  "김주현",
     "doneBy":  "Claude",
@@ -17,16 +17,68 @@
     "type":  "컴포넌트 교체",
     "layout":  "",
     "text":  "적용 프레임 리스트\nAD-CMP-01-T\nAD-CMP-01-01-T\nAD-CMP-01-01-01-P\nAD-CMP-01-01-02-T\n\n1. UX 문서 \u003e 화면 정의서의 컴포넌트를 활용하여 컴포넌트 전면 교체 필요\n2. Admin 페이지 내의 다른 기획서를 참고하여 공통 UX/UI로 적용 및 디스크립션도 비슷하게 작성 필요\n3. Cover 및 Revision History 생성 요청, 버전은 v0.1 날짜는 오늘 날짜로",
-    "note":  "",
-    "shot":  "",
+    "note":  "4개 화면의 컴포넌트를 UX Kit 컴포넌트로 교체하고 Cover · Revision History를 만들었습니다.\n- AD-CMP-01-T: 검사실 Dropdown · 종합검사 추가 Button · Info Box · Data Table_Item 표(Results · Header · Data) · 상태 Badge · 구성 수정/삭제 Button → UX Kit 컴포넌트로 교체\n- AD-CMP-01-01-T / AD-CMP-01-01-02-T: Dropdown · Circle Radio Button · Checkbox · Chip · Button · Badge · Info Box로 교체\n- AD-CMP-01-01-01-P: 팝업의 Search Field · Checkbox 목록 · Button으로 교체\n- 화면 위에 Description Number를 추가했고 오른쪽 디스크립션은 Admin 다른 기획서와 같은 형식(Ver 0.1 · 2026-11-10)을 유지했습니다.\n- 신규: 간지_종합검사 구성(Cover), Revision history_종합검사 구성(v0.1 · 2026-11-10) — 4개 화면 왼쪽에 배치\n확인 필요: 구성 상태 색 Badge는 UX Kit에 색 변형이 없어 Black(완료) / Lined(미완료)로 표현했고, 오류 Info Box 색은 직접 지정했습니다. LNB 메뉴 항목은 그대로입니다. 디스크립션 문구는 이전 내용을 유지했습니다.\n작업 기준: 작업규칙 화면 수정 작업 규칙_v0.2 · 정책서 통합운영툴 - 로컬 서버 정책 · UX가이드 통합운영툴_Common UX · 기준데이터 없음 · 화면 정의서 UX Kit(Component) 화면 정의서",
+    "shot":  "shots/brex-04_R002.jpg",
     "shots":  [
-
+                  {
+                      "file":  "shots/brex-04_R002.jpg",
+                      "nodeId":  "48:82013",
+                      "frame":  "AD-CMP-01-T"
+                  },
+                  {
+                      "file":  "shots/brex-04_R002-2.jpg",
+                      "nodeId":  "48:82720",
+                      "frame":  "AD-CMP-01-01-T"
+                  },
+                  {
+                      "file":  "shots/brex-04_R002-3.jpg",
+                      "nodeId":  "48:83422",
+                      "frame":  "AD-CMP-01-01-01-P"
+                  },
+                  {
+                      "file":  "shots/brex-04_R002-4.jpg",
+                      "nodeId":  "48:84145",
+                      "frame":  "AD-CMP-01-01-02-T"
+                  },
+                  {
+                      "file":  "shots/brex-04_R002-5.jpg",
+                      "nodeId":  "57:84206",
+                      "frame":  "간지_종합검사 구성"
+                  },
+                  {
+                      "file":  "shots/brex-04_R002-6.jpg",
+                      "nodeId":  "57:84213",
+                      "frame":  "Revision history_종합검사 구성"
+                  }
               ],
     "images":  [
 
                ],
     "frames":  [
-
+                   {
+                       "nodeId":  "48:82013",
+                       "name":  "AD-CMP-01-T"
+                   },
+                   {
+                       "nodeId":  "48:82720",
+                       "name":  "AD-CMP-01-01-T"
+                   },
+                   {
+                       "nodeId":  "48:83422",
+                       "name":  "AD-CMP-01-01-01-P"
+                   },
+                   {
+                       "nodeId":  "48:84145",
+                       "name":  "AD-CMP-01-01-02-T"
+                   },
+                   {
+                       "nodeId":  "57:84206",
+                       "name":  "간지_종합검사 구성"
+                   },
+                   {
+                       "nodeId":  "57:84213",
+                       "name":  "Revision history_종합검사 구성"
+                   }
                ],
     "ask":  null,
     "replies":  [
