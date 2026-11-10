@@ -1,0 +1,28 @@
+{
+    "id":  "brex-06_20261110-151506",
+    "kind":  "work",
+    "reqId":  "",
+    "reqType":  "",
+    "team":  "cureca",
+    "at":  "2026-11-10T15:15:06+09:00",
+    "from":  "2026-11-10T15:14:41+09:00",
+    "by":  "Claude",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "캡처: LI-INS-01-T (J087)",
+    "models":  {
+                   "claude-opus-5-5":  7
+               },
+    "calls":  7,
+    "input":  15,
+    "cacheWrite":  7052,
+    "cacheRead":  309785,
+    "output":  1734,
+    "total":  318586,
+    "usd":  0.1531
+}
