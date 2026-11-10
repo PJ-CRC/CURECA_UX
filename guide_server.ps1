@@ -25,7 +25,15 @@
 #  (윈도우 PowerShell 5.1과 맥 PowerShell 7 모두에서 돈다. 경로는 \ 대신 P 함수로 잇는다)
 #  Figma AI Run.bat은 창 없이 띄우고(workbench/launch_win.ps1) 출력은 -LogFile에 남긴다
 param([int]$Port = 8765, [string]$LogFile = '')
-if ($LogFile) { try { Start-Transcript -Path $LogFile -Force | Out-Null } catch {} }
+# 기록: 다시 켤 때마다 새로 쓰므로 지난 실행 기록은 server.prev.log로 남긴다(왜 꺼졌는지 볼 수 있게)
+if ($LogFile) {
+  try { if (Test-Path $LogFile) { Move-Item $LogFile ([IO.Path]::ChangeExtension($LogFile, '.prev.log')) -Force } } catch {}
+  try { Start-Transcript -Path $LogFile -Force | Out-Null } catch {}
+}
+function Log-Err([string]$where, $err) {
+  $m = if ($err -and $err.Exception) { $err.Exception.Message } else { [string]$err }
+  Write-Host ("  [{0}] 오류({1}): {2}" -f (Get-Date).ToString('yyyy-MM-dd HH:mm:ss'), $where, $m) -ForegroundColor Red
+}
 
 function P { [IO.Path]::Combine([string[]]$args) }
 $IsMac = ($PSVersionTable.PSVersion.Major -ge 6) -and $IsMacOS
@@ -816,7 +824,7 @@ Write-Host ''
 
 # ── 브라우저 탭: 열린 탭이 모두 닫히면(마지막 닫힘 후 3초) 묻지 않고 서버를 끈다. 새로고침 · 메뉴 이동은 그 사이 다시 연결된다 ──
 $Pages = @{}; $AnyPage = $false; $EmptySince = $null
-function Stop-Server($why) { Write-Host "`n  $why" -ForegroundColor Yellow; try { $l.Stop() } catch {}; if ($LogFile) { try { Stop-Transcript | Out-Null } catch {} }; exit 0 }
+function Stop-Server($why) { Write-Host ("`n  [{0}] {1}" -f (Get-Date).ToString('yyyy-MM-dd HH:mm:ss'), $why) -ForegroundColor Yellow; try { $l.Stop() } catch {}; if ($LogFile) { try { Stop-Transcript | Out-Null } catch {} }; exit 0 }
 function Idle-Check {
   # 20초마다 알리던 탭이 150초 동안 소식이 없으면(브라우저 강제 종료 등) 닫힌 것으로 본다
   foreach ($k in @($Pages.Keys)) { if (((Get-Date) - $Pages[$k]).TotalSeconds -gt 150) { $Pages.Remove($k) } }
@@ -852,14 +860,28 @@ Fix-EditablePages
 $AutoWatchAt = (Get-Date).AddSeconds(5)   # 켠 지 5초 뒤: 백그라운드 감시가 꺼져 있으면 시작. 그 뒤 2분마다 확인해 죽었으면 다시 시작(사용자가 중지한 것은 제외)
 $AutoWatchFirst = $true
 $ar = $null
+$LoopErr = 0
 while ($l.IsListening) {
   # 1초마다 깨어나 탭 상태 · 이력 동기화를 본다
-  Sync-Tick
-  if ((Get-Date) -ge $AutoWatchAt) { Auto-Watch $AutoWatchFirst; $AutoWatchFirst = $false; $AutoWatchAt = (Get-Date).AddSeconds(120) }
-  if ($SheetPending.Count) { Sheet-Tick }
-  if (-not $ar) { $ar = $l.BeginGetContext($null, $null) }
-  if (-not $ar.AsyncWaitHandle.WaitOne($(if ($SheetPending.Count) { 200 } else { 1000 }))) { Idle-Check; continue }
-  $c = $l.EndGetContext($ar); $ar = $null
+  #  이 부분의 오류(브라우저가 요청 도중 끊음 → EndGetContext 「지정된 네트워크 이름을 더 이상 사용할 수 없습니다」 등)가
+  #  try 밖에서 나면 스크립트가 끝나 서버가 꺼졌다(2026-11-10). 오류는 기록만 하고 다음 요청을 받는다
+  try {
+    Sync-Tick
+    if ((Get-Date) -ge $AutoWatchAt) { $AutoWatchAt = (Get-Date).AddSeconds(120); $af = $AutoWatchFirst; $AutoWatchFirst = $false; Auto-Watch $af }
+    if ($SheetPending.Count) { Sheet-Tick }
+    if (-not $ar) { $ar = $l.BeginGetContext($null, $null) }
+    if (-not $ar.AsyncWaitHandle.WaitOne($(if ($SheetPending.Count) { 200 } else { 1000 }))) { Idle-Check; continue }
+    $c = $null; $a0 = $ar; $ar = $null
+    $c = $l.EndGetContext($a0)
+    $LoopErr = 0
+  } catch {
+    $ar = $null
+    if (-not $l.IsListening) { break }
+    $LoopErr++; if ($LoopErr -le 20 -or $LoopErr % 100 -eq 0) { Log-Err '요청 받기' $_ }
+    if ($LoopErr -gt 5) { Start-Sleep -Milliseconds 500 }   # 같은 오류가 이어지면 잠깐 쉬고 다시
+    continue
+  }
+  if (-not $c) { continue }
   try {
     $req = $c.Request
     $path = [Uri]::UnescapeDataString($req.Url.AbsolutePath)
@@ -1811,3 +1833,5 @@ while ($l.IsListening) {
     try { SendJson $c 400 @{ error = $_.Exception.Message } } catch {}
   }
 }
+Write-Host ("  [{0}] 서버가 멈췄습니다(요청 받기 끝)." -f (Get-Date).ToString('yyyy-MM-dd HH:mm:ss')) -ForegroundColor Yellow
+if ($LogFile) { try { Stop-Transcript | Out-Null } catch {} }

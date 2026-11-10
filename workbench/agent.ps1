@@ -130,7 +130,13 @@ function Run-Cli([string]$cliArgs, [int]$sec) {
     $psi.UseShellExecute = $false; $psi.CreateNoWindow = $true; $psi.RedirectStandardOutput = $true; $psi.RedirectStandardError = $true
     $psi.StandardOutputEncoding = $Utf8; $psi.StandardErrorEncoding = $Utf8
     $p = [Diagnostics.Process]::Start($psi); $o = $p.StandardOutput.ReadToEndAsync(); $e = $p.StandardError.ReadToEndAsync()
-    if (-not $p.WaitForExit($sec * 1000)) { & taskkill.exe /PID $p.Id /T /F 2>&1 | Out-Null; return '' }
+    # 기다리는 동안 15초마다 상태를 쓴다: 확인(최대 30 + 90 + 60초)이 겹쳐 150초를 넘으면 서버가 에이전트를 죽은 것으로 보고
+    #  (탭을 모두 닫았으면) 서버를 끄거나 에이전트를 하나 더 띄웠다(2026-11-10)
+    $until = (Get-Date).AddSeconds($sec)
+    while (-not $p.WaitForExit(15000)) {
+      Save-State $null $null
+      if ((Get-Date) -ge $until) { & taskkill.exe /PID $p.Id /T /F 2>&1 | Out-Null; return '' }
+    }
     return $o.Result + "`n" + $e.Result
   } catch { return '' }
 }
