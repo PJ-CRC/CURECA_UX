@@ -1,0 +1,28 @@
+{
+    "id":  "brex-06_20261110-105743",
+    "kind":  "work",
+    "reqId":  "",
+    "reqType":  "",
+    "team":  "cureca",
+    "at":  "2026-11-10T10:57:43+09:00",
+    "from":  "2026-11-10T10:38:00+09:00",
+    "by":  "최고관리자",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "프로토타입: Instrument (다시 만들기)",
+    "models":  {
+                   "claude-opus-5-5":  79
+               },
+    "calls":  79,
+    "input":  162,
+    "cacheWrite":  250909,
+    "cacheRead":  32150744,
+    "output":  94864,
+    "total":  32496679,
+    "usd":  10.0640
+}
