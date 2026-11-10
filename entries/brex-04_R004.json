@@ -1,0 +1,35 @@
+{
+    "id":  "brex-04_R004",
+    "kind":  "request",
+    "team":  "stagora",
+    "status":  "대기",
+    "at":  "2026-11-10T13:42:57+09:00",
+    "createdAt":  "2026-11-10T13:42:57+09:00",
+    "by":  "김주현",
+    "doneBy":  "김주현",
+    "pc":  "BREX_04",
+    "reqId":  "R004",
+    "fileKey":  "cDjaemHjetS7RcAHRUIMY5",
+    "fileName":  "STAgora AI Workspace",
+    "page":  "Admin",
+    "frame":  "AD-CMP-01-T",
+    "nodeId":  "48:82013",
+    "type":  "일반",
+    "layout":  "",
+    "text":  "해당 메뉴는\nStatistical Report Viewer에 들어갈 종합검사를 관리하는 메뉴야. 이를 고려하여 메뉴명 변경 필요\n\n내가 보는 피그마 화면에 R003에서 작업한 화면이 왜 업데이트가 안된 것 같지? 확인해주겠어?",
+    "note":  "",
+    "shot":  "",
+    "shots":  [
+
+              ],
+    "images":  [
+
+               ],
+    "frames":  [
+
+               ],
+    "ask":  null,
+    "replies":  [
+
+                ]
+}
