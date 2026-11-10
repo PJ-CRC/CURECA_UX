@@ -1,0 +1,28 @@
+{
+    "id":  "brex-04_20261110-162637",
+    "kind":  "work",
+    "reqId":  "",
+    "reqType":  "",
+    "team":  "stagora",
+    "at":  "2026-11-10T16:26:37+09:00",
+    "from":  "2026-11-10T16:25:51+09:00",
+    "by":  "김주현",
+    "doneBy":  "Claude",
+    "pc":  "BREX_04",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "작업규칙: STAgora 작업 규칙 (J255)",
+    "models":  {
+                   "claude-sonnet-5-5":  4
+               },
+    "calls":  4,
+    "input":  8,
+    "cacheWrite":  16135,
+    "cacheRead":  296273,
+    "output":  8261,
+    "total":  320677,
+    "usd":  0.2064
+}
