@@ -41,6 +41,7 @@ sub others {
 #  등록 시각은 이력의 createdAt(예전 이력에는 없어 마지막 변경 시각 at으로 대신)
 sub overlap {
   my ($r, @others) = @_; my $k = $r->{fileKey} // ''; my $rc = iso_epoch($r->{createdAt}) // time;
+  return () if ($r->{nodeId} // '') eq '';   # 프레임 지정 없는 요청(일반)은 겹침으로 막지 않는다(Claude가 고칠 화면을 정하고 지금 상태를 다시 읽는다)
   return grep { my $oc = iso_epoch($_->{createdAt} || $_->{at});
     ($_->{fileKey} // '') eq $k && ($_->{nodeId} // '') eq ($r->{nodeId} // '') && ($_->{status} eq '진행 중' || (defined $oc && $oc < $rc)) } @others;
 }

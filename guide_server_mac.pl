@@ -220,6 +220,8 @@ sub requests_post {
     $hit->{text} = trim($b->{text}) if defined $b->{text} && trim($b->{text}) ne '';
     $hit->{updatedAt} = $now;
     $hit->{updatedBy} = str($b->{by}) if str($b->{by}) ne '';
+    # 완료: Claude가 새로 만든 프레임을 프레임 목록에 더한다(Workbench 메뉴에 바로). 실패해도 요청 처리는 그대로
+    eval { add_catalog_frames(str($hit->{fileKey}), str($hit->{page}), $hit->{frames}) } if str($hit->{status}) eq '완료' && ref $hit->{frames} eq 'ARRAY' && @{ $hit->{frames} };
     hist_from_request($hit);
   } elsif ($act eq 'answer') {
     # 사람의 답: Claude 질문(ask)에 고르거나 적은 답을 replies에 쌓고 다시 「대기」로(Claude가 요청 · 답을 함께 읽고 이어서 처리).
@@ -259,6 +261,23 @@ sub work_key { return key_of(read_setup()->{figmaUrl}); }
 # 작업 링크가 바뀌면 수정 가능 페이지도 바꾼다: 링크의 node-id가 페이지면 그 페이지, 프레임이면 그 프레임이 있는 페이지(프레임 목록 기준)
 #  catalog.json은 배열 모양이 바뀌지 않게 글자만 고친다(editable · editablePageId)
 #  정했으면 1, 링크에 노드가 없거나 목록에서 그 노드를 찾지 못하면 0
+# 요청이 완료되며 알린 고친 프레임(frames) 중 목록에 없는 것(Claude가 새로 만든 프레임)을 그 페이지 프레임 목록 끝에 더한다(Workbench 메뉴에 바로)
+#  크기는 캡처 정보(shots_meta)에서, 없으면 0. 페이지는 요청의 page(없으면 수정 가능 페이지)
+sub add_catalog_frames {
+  my ($k, $page, $frames) = @_;
+  my $cf = proj_dir($k) . '/catalog.json'; return 0 unless -f $cf && ref $frames eq 'ARRAY';
+  my $cat = eval { read_json($cf) }; return 0 unless ref $cat eq 'HASH' && ref $cat->{pages} eq 'ARRAY';
+  my %known; for my $p (@{ $cat->{pages} }) { for my $f (@{ ref $p->{frames} eq 'ARRAY' ? $p->{frames} : [] }) { $known{ str($f->[0]) } = 1 if ref $f eq 'ARRAY'; } }
+  my @new = grep { ref $_ eq 'HASH' && str($_->{nodeId}) =~ /^\d+:\d+$/ && !$known{ str($_->{nodeId}) } } @$frames;
+  return 0 unless @new;
+  my ($pg) = grep { str($page) ne '' && str($_->{name}) eq str($page) && ref $_->{frames} eq 'ARRAY' } @{ $cat->{pages} };
+  ($pg) = grep { $_->{editable} && ref $_->{frames} eq 'ARRAY' } @{ $cat->{pages} } unless $pg;
+  return 0 unless $pg;
+  my $sm = eval { read_json(proj_dir($k) . '/shots_meta.json') } || {};
+  for my $f (@new) { my $s = ref $sm->{ str($f->{nodeId}) } eq 'HASH' ? $sm->{ str($f->{nodeId}) } : {}; push @{ $pg->{frames} }, [ str($f->{nodeId}), str($f->{name}) ne '' ? str($f->{name}) : str($f->{nodeId}), int($s->{w} || 0), int($s->{h} || 0), 0, 0 ]; }
+  write_json($cf, $cat);
+  return scalar @new;
+}
 sub set_editable_page {
   my ($k, $url) = @_;
   return 0 unless str($url) =~ /[?&]node-id=(\d+)[-:](\d+)/; my $nid = "$1:$2";
