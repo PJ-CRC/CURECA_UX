@@ -2,6 +2,17 @@
 
 ---
 
+## [UX AI TEST] R032 · Section 2 Instruments(L-IOS) 프레임을 UX 문서 기준으로 다시 그림 · 바뀐 곳 표시 · 2026-11-10 (요청: 최고관리자)
+
+- SH.L TEST › Section 2의 프레임 5개를 원본 아래(섹션 안 y +6300)에 복제해 고침. 원본은 그대로 둠. 위에 빨간 `R032 label`.
+- 새 프레임: LI-INS-01-T(2274:42497) · LI-INS-01-P(2274:43016) · LI-INS-01-P / 케이스 / 01 장비 통합 상태 · Door 상태별(2274:43118) · LI-INS-02-T(2274:43910) · LI-INS-02-01-P(2274:44389).
+- 디스크립션 패널을 `rules/screen-spec.md` 8절 모양으로 다시 씀: 화면 정보(Ver 2.1.07 · Date 2026.11.10 · 공통 규칙 버전 · 표시), 0번(화면 정의 · 진입점 · User Type · Service Mode · 정책 참고), 라벨(정의 · Common UX 참고 · 노출 항목 · 기본값 …), 정책은 POL-EQP ID로. 가이드 번호를 지금 판으로(Tooltip COMM-5-o → 5-s, Table 5-p, Dropdown 5-g, Search 5-m, Popup 5-j).
+- 화면 정의서 반영 대기 줄(오타 · 표기 · 디스크립션)을 반영: Enablde · Dignosctics 오타, CURECA, Connected/Disconnected, Module 이름 (번호) 띄어쓰기, Waste Status → Waste Bin/Bottle Status, Account Type → User Type, Datail, [Unlock all doors] 활성 조건(Not Initialized 포함), 02-T Error Rate · Run-time Info 삭제(2-2 [Management] → 2-1), 02-01-P 조회 전용 · 1-3 Run-time(h) · 4 [X] 추가, 01-P 4 [X] 추가.
+- 화면: 프로필 Keira Knightley → Service, Shut Down → Exit(01-T · 02-T), 툴팁 [High-throughput Extraction (3)].
+- 표시: 바뀐 디스크립션 줄은 빨간 실선, 바뀐 화면 요소는 빨간 점선 사각형(`R032 변경 표시 · …`). 정해지지 않은 곳은 빨간 글씨 `※ 질문 대기`.
+- 질문 대기: [Lock](11-09 추가)이 POL-EQP-008 규칙 3 · POL-EQP-004 규칙 7(닫고 5초 뒤 자동 잠금)과 다름, Confirm_008 문구 · Confirm_031 알럿 등록, Lock 안내 문구 3가지 통일, Cannot unlock module/system 문구 구분, Search 찾는 방식, Tab 가이드 없음 · Ht Extraction 이름, Error Rate 위치(CA-0001).
+- 저장소 화면 정의서 · 반영 대기 상태는 고치지 않음(테스트 파일 작업). 캡처 5장 받음.
+
 ## [UX AI TEST] Instrument Door Control · Lock 버튼 추가, 자동 잠금 폐지 · 2026-11-09 (요청: 최고관리자, 채팅)
 
 - 정책 변경: 문을 닫아도 자동으로 잠기지 않음(기존: 닫고 5초 후 자동 Lock). Lock Status가 Unlocked인 Door는 [Lock] 버튼을 눌러야 잠김.
