@@ -95,6 +95,37 @@ function Ensure-Proj($k, $link) {
   elseif ($link -and -not $p.link) { $p.link = [string]$link; Save-Proj $p }
   return $p
 }
+# 요청이 완료되며 알린 고친 프레임(frames) 중 목록에 없는 것(Claude가 새로 만든 프레임)을 그 페이지 프레임 목록 끝에 더한다
+#  → 프레임 목록을 다시 받지 않아도 Workbench 메뉴에 바로 나온다. catalog.json은 배열 모양이 바뀌지 않게 글자로 끼워 넣는다
+#  크기는 캡처 정보(shots_meta)에서, 없으면 0. 페이지는 요청의 page(없으면 수정 가능 페이지)
+function Add-CatalogFrames($k, [string]$pageName, $frames) {
+  $cf = P (Proj-Dir $k) 'catalog.json'; if (-not (Test-Path $cf)) { return 0 }
+  $txt = [IO.File]::ReadAllText($cf, $Utf8)
+  try { $cat = $txt | ConvertFrom-Json } catch { return 0 }
+  $known = @{}; foreach ($pg0 in @($cat.pages)) { foreach ($f0 in @($pg0.frames)) { if ($f0) { $known[[string]$f0[0]] = 1 } } }
+  $new = @(@($frames) | Where-Object { $_ -and [string]$_.nodeId -match '^\d+:\d+$' -and -not $known.ContainsKey([string]$_.nodeId) })
+  if (-not $new.Count) { return 0 }
+  $pg = @($cat.pages) | Where-Object { $pageName -and $_.name -eq $pageName -and $null -ne $_.frames } | Select-Object -First 1
+  if (-not $pg) { $pg = @($cat.pages) | Where-Object { $_.editable -and $null -ne $_.frames } | Select-Object -First 1 }
+  if (-not $pg) { return 0 }
+  $sm = $null; $sf = P (Proj-Dir $k) 'shots_meta.json'; if (Test-Path $sf) { try { $sm = [IO.File]::ReadAllText($sf, $Utf8) | ConvertFrom-Json } catch {} }
+  # 그 페이지의 "frames":[ … ] 배열 끝(짝 맞는 ])을 찾아 그 앞에 넣는다
+  $m = [regex]::Match($txt, '"id"\s*:\s*"' + [regex]::Escape([string]$pg.id) + '"'); if (-not $m.Success) { return 0 }
+  $fi = $txt.IndexOf('"frames"', $m.Index); if ($fi -lt 0) { return 0 }
+  $st = $txt.IndexOf('[', $fi); if ($st -lt 0) { return 0 }
+  $depth = 0; $inStr = $false; $end = -1
+  for ($i = $st; $i -lt $txt.Length; $i++) {
+    $ch = $txt[$i]
+    if ($inStr) { if ($ch -eq '\') { $i++ } elseif ($ch -eq '"') { $inStr = $false }; continue }
+    if ($ch -eq '"') { $inStr = $true } elseif ($ch -eq '[') { $depth++ } elseif ($ch -eq ']') { $depth--; if ($depth -eq 0) { $end = $i; break } }
+  }
+  if ($end -lt 0) { return 0 }
+  $add = @($new | ForEach-Object { $s = if ($sm) { $sm.([string]$_.nodeId) } else { $null }; '[' + (ConvertTo-Json ([string]$_.nodeId) -Compress) + ',' + (ConvertTo-Json ([string]$(if ($_.name) { $_.name } else { $_.nodeId })) -Compress) + ',' + [int]$(if ($s) { $s.w } else { 0 }) + ',' + [int]$(if ($s) { $s.h } else { 0 }) + ',0,0]' }) -join ','
+  $empty = $txt.Substring($st + 1, $end - $st - 1).Trim() -eq ''
+  $txt = $txt.Substring(0, $end) + $(if ($empty) { '' } else { ',' }) + $add + $txt.Substring($end)
+  [IO.File]::WriteAllText($cf, $txt, $Utf8)
+  return $new.Count
+}
 # 작업 링크가 바뀌면 수정 가능 페이지도 바꾼다: 링크의 node-id가 페이지면 그 페이지, 프레임이면 그 프레임이 있는 페이지(프레임 목록 기준)
 #  catalog.json은 배열 모양이 바뀌지 않게 글자만 고친다(editable · editablePageId)
 #  정했으면 $true, 링크에 노드가 없거나 목록에서 그 노드를 찾지 못하면 $false
@@ -1801,6 +1832,8 @@ while ($l.IsListening) {
           if ($null -ne $body.text -and ([string]$body.text).Trim()) { $hit.text = ([string]$body.text).Trim() }
           $hit.updatedAt = $now
           if ($body.by) { $hit | Add-Member -NotePropertyName updatedBy -NotePropertyValue ([string]$body.by) -Force }
+          # 완료: Claude가 새로 만든 프레임을 프레임 목록에 더한다(Workbench 메뉴에 바로). 실패해도 요청 처리는 그대로
+          if ([string]$hit.status -eq '완료' -and @($hit.frames).Count) { try { [void](Add-CatalogFrames ([string]$hit.fileKey) ([string]$hit.page) $hit.frames) } catch {} }
           Hist-FromRequest $hit
         }
         # 사람의 답: Claude 질문(ask)에 고르거나 적은 답을 replies에 쌓고 다시 「대기」로(Claude가 요청 · 답을 함께 읽고 이어서 처리).

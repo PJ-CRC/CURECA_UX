@@ -178,6 +178,12 @@ button{cursor:pointer}
 .trow:hover{background:var(--surface-2)}
 .trow:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
 .trow.on{background:var(--accent-soft);color:var(--accent);font-weight:700}
+/* 일반 질문(프레임 선택 해제): 보고 있는 프레임은 테두리만 */
+.trow.view{box-shadow:inset 0 0 0 1px var(--line);color:var(--ink)}
+.gen-btn{height:24px;padding:0 9px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);font:600 12px/1 inherit;cursor:pointer;white-space:nowrap}
+.gen-btn:hover{border-color:var(--accent);color:var(--accent)}
+.gen-btn[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.target .gen{font-weight:700;color:var(--accent)}
 .trow .car{flex:none;width:14px;height:14px;color:var(--ink-3);transition:transform .12s}
 .trow .car.leaf{visibility:hidden}
 li[aria-expanded="true"]>.trow .car{transform:rotate(90deg)}
@@ -431,7 +437,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       <div class="form composer" id="composer">
         <!-- 위 줄: 왼쪽 대상 프레임, 그 옆에 선택 옵션(유형 · 우선순위 · 레이아웃) -->
         <div class="cmp-top">
-          <div class="target">대상 <span id="tgtPage" class="badge"></span> <b id="tgt"></b> <code id="tgtId" class="badge"></code></div>
+          <div class="target">대상 <span id="tgtPage" class="badge"></span> <b id="tgt"></b> <code id="tgtId" class="badge"></code> <button type="button" class="gen-btn" id="genBtn" aria-pressed="false" title="프레임 선택을 풀고 프레임 지정 없이 요청합니다(새 프레임 만들기 · 여러 화면 수정 · 질문). 선택된 프레임을 한 번 더 눌러도 됩니다">일반 질문</button></div>
           <div class="cmp-opts">
             <select id="rtype" class="opt-type" aria-label="수정 유형" title="수정 유형">
               <option selected>일반</option><option>텍스트 수정</option><option>레이아웃·배치</option><option>컬러·스타일</option><option>컴포넌트 교체</option>
@@ -562,13 +568,13 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     if (isLeaf(n)) {
       var f = n.frames[0];
       if (!hit(n.label) && !hit(f.d3l)) return '';
-      return '<li role="treeitem" aria-selected="' + (f.id === cur.id) + '"><div class="trow' + (f.id === cur.id ? ' on' : '') + '" data-id="' + esc(f.id) + '" tabindex="-1" title="' + esc(f.d3l) + '">' + car + '<span class="lb">' + mark(n.label) + '</span>' + badge + '</div></li>';
+      return '<li role="treeitem" aria-selected="' + (f.id === cur.id && !general) + '"><div class="trow' + (f.id === cur.id ? (general ? ' view' : ' on') : '') + '" data-id="' + esc(f.id) + '" tabindex="-1" title="' + esc(f.d3l) + '">' + car + '<span class="lb">' + mark(n.label) + '</span>' + badge + '</div></li>';
     }
     /* 묶음: 자기 프레임(2개 이상이거나 하위 화면이 있을 때) → 하위 화면 순서 */
     var inner = (n.frames.length > 1 || n.kids.length ? n.frames : []).map(function(f){
       if (!hit(n.label) && !hit(f.d3l)) return '';
       var o = openCount(f.id);
-      return '<li role="treeitem" aria-selected="' + (f.id === cur.id) + '"><div class="trow' + (f.id === cur.id ? ' on' : '') + '" data-id="' + esc(f.id) + '" tabindex="-1">' +
+      return '<li role="treeitem" aria-selected="' + (f.id === cur.id && !general) + '"><div class="trow' + (f.id === cur.id ? (general ? ' view' : ' on') : '') + '" data-id="' + esc(f.id) + '" tabindex="-1">' +
         '<svg class="car leaf" viewBox="0 0 16 16" aria-hidden="true"></svg><span class="lb">' + mark(f.d3l) + '</span>' + (o ? '<i class="op">' + o + '</i>' : '') + '</div></li>';
     }).join('') + n.kids.map(treeHtml).join('');
     if (query && !inner && !hit(n.label)) return '';
@@ -596,9 +602,9 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     $('menu').innerHTML = mg +
       (body ? '<ul class="tree" role="tree" aria-label="화면 목록">' + body + '</ul>' : '<p class="empty">「' + esc($('tsearch').value) + '」에 맞는 화면이 없습니다.</p>');
     /* 키보드 진입점: 지금 프레임 줄(없으면 첫 줄) */
-    var on = $('menu').querySelector('.trow.on') || $('menu').querySelector('.trow'); if (on) on.tabIndex = 0;
+    var on = $('menu').querySelector('.trow.on,.trow.view') || $('menu').querySelector('.trow'); if (on) on.tabIndex = 0;
   }
-  function revealCur(){ var on = $('menu').querySelector('.trow.on'); if (on) on.scrollIntoView({ block: 'nearest' }); }
+  function revealCur(){ var on = $('menu').querySelector('.trow.on,.trow.view'); if (on) on.scrollIntoView({ block: 'nearest' }); }
 
   /* ── 뷰어 ── */
   var zoom = 1, fit = 'w', live = false;   // 실시간 보기는 무거워서 매번 꺼진 상태로 시작한다
@@ -733,7 +739,23 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
   function olText(list){
     return list.map(function(h){ return (h.by || '이름 없음') + (h.pc ? '(' + h.pc + ')' : '') + ' ' + h.reqId + ' · ' + h.status + ' — 「' + String(h.text || '').split('\n')[0].slice(0, 40) + '」'; }).join(' / ');
   }
+  /* 일반 질문: 프레임 선택을 풀고 프레임 지정 없이 요청(선택된 프레임을 한 번 더 누르거나 [일반 질문]). 다른 프레임을 누르면 다시 선택 */
+  var general = false, RT_PH = $('rtext').placeholder;
+  function setGeneral(on){ general = !!on; if (!cur) return; renderMenu(); renderTarget(); renderReqs(); if (general) $('rtext').focus(); }
+  $('genBtn').onclick = function(){ setGeneral(!general); };
+  $('reqs').addEventListener('click', function(e){ if (e.target.closest('[data-gen]')) setGeneral(true); });
   function renderTarget(){
+    $('genBtn').setAttribute('aria-pressed', general ? 'true' : 'false');
+    if (general) {
+      // 일반 질문: 프레임 지정 없이 작업 페이지 기준. 새 프레임 만들기 · 여러 화면 수정 · 질문(Figma를 고치지 않음)을 Claude가 글을 읽고 정한다
+      var gp = edPage() || cur.page;
+      $('tgt').innerHTML = '<span class="gen">일반 질문</span> · 프레임 지정 없음'; $('tgtId').hidden = true; $('tgtPage').textContent = gp;
+      $('reqTgt').textContent = '일반 질문'; $('reqTgt').title = gp + ' › 프레임 지정 없음';
+      $('rtext').placeholder = '프레임을 고르지 않고 요청합니다. 예) 이 페이지에 사용자 목록 화면 새로 만들어줘 / Door 상태 표기를 모든 화면에서 Lock으로 통일 / 이 페이지 버튼 규칙이 뭐야?';
+      $('roNote').hidden = true; $('olNote').hidden = true;
+      return;
+    }
+    $('tgtId').hidden = false; $('rtext').placeholder = RT_PH;
     $('tgt').textContent = cur.name; $('tgtId').textContent = cur.id; $('tgtPage').textContent = cur.page; $('reqTgt').textContent = cur.name; $('reqTgt').title = cur.page + ' › ' + cur.name;
     /* 수정 가능 페이지 밖: 요청은 등록되지만 Claude가 반영하지 않고 「보류」로 둔다 (CLAUDE.md 범위) */
     var ed = edPage();
@@ -789,7 +811,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
   }
   function go(id, push){
     var p = byId[id]; if (!p) return;
-    if (!cur || cur.id !== p.id) liveOnce = false;
+    if (!cur || cur.id !== p.id) { liveOnce = false; general = false; }
     cur = p; openFor(p);
     renderMenu(); revealCur(); renderViewer(); renderTarget(); renderReqs();
     autoCapture();   // 새 구분(페이지)이면 캡처 없는 프레임을 받기 시작(보고 있는 화면 먼저)
@@ -824,7 +846,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
   function toggle(key, open){ openKeys[key] = open === undefined ? !openKeys[key] : open; try { store('wb.open.' + FILE.key, JSON.stringify(openKeys)); } catch(x){} renderMenu(); }
   $('menu').addEventListener('click', function(e){
     var r = e.target.closest('.trow'); if (!r) return;
-    if (r.dataset.id) { go(r.dataset.id); return; }
+    if (r.dataset.id) { if (cur && r.dataset.id === cur.id) { setGeneral(!general); return; } go(r.dataset.id); return; }
     if (!query) toggle(r.dataset.key);
     var again = $('menu').querySelector('.trow[data-key="' + r.dataset.key + '"]'); if (again) again.focus();
   });
@@ -1035,14 +1057,15 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     var items = (reqData.items || []).filter(sameFile);
     if (!cur) { $('rcount').textContent = ''; $('reqs').innerHTML = '<li class="empty">프레임 목록이 들어오면 요청을 등록할 수 있습니다.</li>'; return; }
     /* 이 페이지 = 요청한 화면이거나, Claude가 실제로 고친 화면(frames)에 이 화면이 있는 요청 */
-    var list = filter === 'here' ? items.filter(function(r){ return r.nodeId === cur.id || (r.frames || []).some(function(f){ return f.nodeId === cur.id; }); })
+    /* 일반 질문이면 「이 페이지」 = 프레임 지정 없는 요청 */
+    var list = filter === 'here' ? items.filter(function(r){ return general ? !r.nodeId : (r.nodeId === cur.id || (r.frames || []).some(function(f){ return f.nodeId === cur.id; })); })
              : items.slice().sort(function(a, b){ return String(b.updatedAt || '').localeCompare(String(a.updatedAt || '')); }).slice(0, 10);
-    $('rcount').textContent = filter === 'here' ? '이 페이지 ' + list.length + '건' : '최근 ' + list.length + '건';
+    $('rcount').textContent = filter === 'here' ? (general ? '일반 질문 ' : '이 페이지 ') + list.length + '건' : '최근 ' + list.length + '건';
     var ae = document.activeElement, typing = ae && ae.dataset && $('reqs').contains(ae) ? ae.dataset.draft : '';
     $('reqs').innerHTML = list.length ? list.map(function(r){
       var stc = 'st-' + String(r.status).split(' ')[0];
       return '<li class="req" data-id="' + esc(r.id) + '"><div class="h"><b>' + esc(r.id) + '</b><span class="st ' + stc + '">' + esc(r.status) + '</span>' +
-        (r.nodeId !== cur.id ? '<button class="go" data-go="' + esc(r.nodeId) + '">' + esc(r.frame) + ' ›</button>' : '') +
+        (!r.nodeId ? (general ? '' : '<button class="go" data-gen="1" title="일반 질문 보기">일반 질문 ›</button>') : r.nodeId !== cur.id || general ? '<button class="go" data-go="' + esc(r.nodeId) + '">' + esc(r.frame) + ' ›</button>' : '') +
         '<span class="sp"></span><span class="who">' + esc(r.author || '이름 없음') + '</span><span title="등록 ' + esc(r.createdAt) + ' / 변경 ' + esc(r.updatedAt) + '">' + fmt(r.updatedAt || r.createdAt) + '</span>' +
         '</div><div class="q" title="' + esc(r.text) + '">요청 · ' + esc(String(r.text || '').split('\n')[0]) + '</div>' +
         ((r.images || []).length ? '<div class="ims">' + r.images.map(function(m){ return '<a href="' + esc(m.file) + '" target="_blank" rel="noopener" title="' + esc(m.name || '첨부 이미지') + ' · 원본 보기"><img loading="lazy" alt="첨부 이미지" src="' + esc(m.small || m.file) + '"></a>'; }).join('') + '</div>' : '') +
@@ -1050,7 +1073,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
         fixedHtml(r) +
         askHtml(r) +
         (canRetry(r) ? '<div class="retry w-only"><button type="button" data-retry="' + esc(r.id) + '">다시 진행</button>원인(Claude 연결 · Figma 인증 등)을 해결했으면 다시 「대기」로 돌려 처리합니다.</div>' : '') + '</li>';
-    }).join('') : '<li class="empty">' + (filter === 'here' ? '이 페이지에 Claude 답변이 없습니다. 요청을 등록하면 처리 후 여기에 답변이 나옵니다.' : '요청이 없습니다.') + '</li>';
+    }).join('') : '<li class="empty">' + (filter === 'here' ? (general ? '일반 질문이 없습니다. 프레임을 고르지 않고 보낸 요청 · 질문의 답변이 여기에 나옵니다.' : '이 페이지에 Claude 답변이 없습니다. 요청을 등록하면 처리 후 여기에 답변이 나옵니다.') : '요청이 없습니다.') + '</li>';
     /* 답을 입력하던 칸은 다시 그린 뒤에도 커서를 그대로 */
     if (typing) { var el = $('reqs').querySelector('[data-draft="' + typing + '"]'); if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length); } }
   }
@@ -1066,12 +1089,13 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     if (!cur) { say('이 파일의 프레임 목록이 들어온 뒤 요청할 수 있습니다.', true); return; }
     if (!t) { say('수정 내용을 입력해 주세요.', true); $('rtext').focus(); return; }
     if (!who()) { say('상단의 「작업자」에 이름을 입력해 주세요. 누가 요청했는지 기록됩니다.', true); userInput.focus(); return; }
-    var ol = overlaps(cur.id);
+    var ol = general ? [] : overlaps(cur.id);
     if (ol.length && !confirm('다른 작업자가 이 프레임을 수정 요청 중입니다.\n\n' + olText(ol).replace(/ \/ /g, '\n') + '\n\n등록하면 Claude가 그 요청이 끝난 뒤 이어서 처리합니다. 등록할까요?')) return;
     $('add').disabled = true;
     var n = atts.length;
     uploadAtts().then(function(images){
-      return post({action:'add', nodeId:cur.id, frame:cur.name, page:cur.page, fileKey:FILE.key, fileName:FILE.name, editable:cur.editable, type:$('rtype').value, priority:$('rpri').value, layout: layout ? lname(LAYOUTS[layout - 1]) : '', text:t, images:images});
+      // 일반 질문: 프레임 지정 없이(nodeId · frame 빈 값) 작업 페이지 기준으로 등록한다
+      return post({action:'add', nodeId:general ? '' : cur.id, frame:general ? '' : cur.name, page:general ? (edPage() || cur.page) : cur.page, fileKey:FILE.key, fileName:FILE.name, editable:general ? true : cur.editable, type:$('rtype').value, priority:$('rpri').value, layout: layout ? lname(LAYOUTS[layout - 1]) : '', text:t, images:images});
     })
       .then(function(d){ $('rtext').value = ''; growText(); store('wb.draft.' + FILE.key, ''); clearAtts(); setLayout(0); lpop(false); say(d.items[0].id + ' 요청을 등록했습니다.' + (n ? ' (이미지 ' + n + '장)' : '')); filter = 'here'; syncFilter(); renderReqs(); })
       .catch(function(e){ say('등록 실패: ' + e.message, true); })

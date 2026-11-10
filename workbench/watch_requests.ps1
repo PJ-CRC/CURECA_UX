@@ -33,7 +33,8 @@ function Overlap($r, $others) {
   return @($others | Where-Object {
     $ek = [string]$_.fileKey
     $oc = T $(if ($_.createdAt) { $_.createdAt } else { $_.at })
-    $ek -eq $k -and $_.nodeId -eq $r.nodeId -and ($_.status -eq '진행 중' -or ($oc -and $oc -lt $rc))
+    # 프레임 지정 없는 요청(일반)은 겹침으로 막지 않는다: Claude가 고칠 화면을 직접 정하고, 고치기 전에 지금 상태를 다시 읽는다
+    [string]$r.nodeId -and $ek -eq $k -and $_.nodeId -eq $r.nodeId -and ($_.status -eq '진행 중' -or ($oc -and $oc -lt $rc))
   })
 }
 # 처리 순서: 우선순위 「높음」 먼저, 같은 우선순위는 먼저 등록한 것부터(등록 시각, 같으면 요청 번호). Claude는 출력된 순서대로 한 건씩 처리한다
