@@ -1,0 +1,28 @@
+{
+    "id":  "brex-04_20261110-103803",
+    "kind":  "work",
+    "reqId":  "",
+    "reqType":  "",
+    "team":  "stagora",
+    "at":  "2026-11-10T10:38:03+09:00",
+    "from":  "2026-11-10T10:36:33+09:00",
+    "by":  "김주현",
+    "doneBy":  "Claude",
+    "pc":  "BREX_04",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "UX가이드: 2. 버튼 (J024)",
+    "models":  {
+                   "claude-sonnet-5-5":  6
+               },
+    "calls":  6,
+    "input":  12,
+    "cacheWrite":  60024,
+    "cacheRead":  367435,
+    "output":  2344,
+    "total":  429815,
+    "usd":  0.3370
+}
