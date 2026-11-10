@@ -1499,7 +1499,10 @@ while ($l.IsListening) {
             if ($kind -eq 'minutes') {
               $nid = ''; $key = ''
               if ([string]$body.minute -notmatch '^m[0-9a-z-]{6,40}$' -or -not (Test-Path (P $MinDir ([string]$body.minute + '.md')))) { throw "회의록을 찾지 못했습니다: $($body.minute)" }
-              if (-not @(Read-Notes ([string]$body.minute)).Count) { throw '각자 작성한 내용이 아직 없습니다.' }
+              # mode 'extract'(정책 · 논의 뽑기): 정리본(본문)에서 PV · PD · CA만 올린다 — 각자 작성분이 없어도(직접 쓴 · 시트에서 가져온 회의록) 된다
+              $mmode = $(if ([string]$body.mode -eq 'extract') { 'extract' } else { '' })
+              if (-not $mmode -and -not @(Read-Notes ([string]$body.minute)).Count) { throw '각자 작성한 내용이 아직 없습니다.' }
+              if ($mmode) { $mtxt = [IO.File]::ReadAllText((P $MinDir ([string]$body.minute + '.md')), $Utf8); if (($mtxt -replace '(?s)^---.*?---', '').Trim().Length -lt 10) { throw '회의록 내용(정리본)이 아직 없습니다.' } }
               $hit = $items | Where-Object { $_.kind -eq 'minutes' -and $_.minute -eq [string]$body.minute -and $_.status -in '대기', '진행 중' } | Select-Object -First 1
             }
             # 일정/작업의 임시 정책 · 논의 처리(plan): Claude가 규칙(provisional-policy · discussion-answer)대로 파일을 고친다
@@ -1526,7 +1529,7 @@ while ($l.IsListening) {
               if ($kind -eq 'guide-edit' -and [string]$body.file) { $hit | Add-Member -NotePropertyName file -NotePropertyValue ([string]$body.file) }
               # Workbench 자동 캡처(페이지를 열면 캡처 없는 프레임을 10개씩): 플러그인만 받는다(Claude 감시는 건너뜀)
               if ($kind -eq 'capture' -and $body.auto) { $hit | Add-Member -NotePropertyName auto -NotePropertyValue $true }
-              if ($kind -eq 'minutes') { $hit | Add-Member -NotePropertyName minute -NotePropertyValue ([string]$body.minute) }
+              if ($kind -eq 'minutes') { $hit | Add-Member -NotePropertyName minute -NotePropertyValue ([string]$body.minute); if ($mmode) { $hit | Add-Member -NotePropertyName mode -NotePropertyValue $mmode } }
               if ($kind -eq 'plan') { $hit | Add-Member -NotePropertyName sub -NotePropertyValue ([string]$body.sub); $hit | Add-Member -NotePropertyName target -NotePropertyValue ([string]$body.target); $hit | Add-Member -NotePropertyName plan -NotePropertyValue $body.plan }
               # 새 가이드 · 정의서: 문서 종류(docKind '' = UX가이드, 'rule' 작업규칙 · 'policy' 정책서 · 'data' 기준데이터 · 'spec' 화면 정의서)와 올린 참고 파일(workbench/job_files/{작업 ID}/, 이 PC에만)
               if ($kind -eq 'guide') {
@@ -1826,6 +1829,9 @@ while ($l.IsListening) {
     $rel = $path.TrimStart('/')
     if ($rel -eq '') { $rel = 'Common_UX_Guide.html' }
     $f = Join-Path $Root $rel
+    # 화면 파일(html · appnav · common.js)은 pages/ 폴더에 모아 둔다(v0.18.0). 주소는 그대로(/Work.html)라 폴더 이름 없는 요청은 pages/를 먼저 본다
+    #  (업데이트가 덜 된 PC에 남은 옛 루트 파일보다 pages/가 먼저)
+    if ($rel -notmatch '[\\/]') { $pf = Join-Path (Join-Path $Root 'pages') $rel; if (Test-Path -LiteralPath $pf -PathType Leaf) { $f = $pf } }
     if ((Test-Path $f -PathType Leaf) -and ([IO.Path]::GetFullPath($f).StartsWith([IO.Path]::GetFullPath($Root)))) {
       $ext = [IO.Path]::GetExtension($f).ToLower()
       $ct = 'application/octet-stream'; if ($types.ContainsKey($ext)) { $ct = $types[$ext] }

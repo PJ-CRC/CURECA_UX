@@ -230,6 +230,16 @@ button.pill{cursor:pointer;font:inherit;font-size:12.5px;font-weight:600}
 .msec h4 .muted{font-weight:600;font-size:13px;margin-left:4px}
 .msum{margin:-2px 0 8px;font-size:12px;color:var(--ink-3)}
 .mnotes{margin-top:24px;padding-top:4px;border-top:1px solid var(--line)}
+/* 회의록 ↔ 임시 정책 · 논의: 이 회의에서 나온 항목, 작성 화면의 「진행 중인 항목 넣기」 */
+.mrel{margin-top:24px;padding-top:4px;border-top:1px solid var(--line)}
+.mrel ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.mrel li{display:flex;align-items:baseline;gap:8px;font-size:13.5px}
+.mrel li .idl{flex:none}
+.mrel li span.t{flex:1;min-width:0}
+.mimp{margin:-4px 0 12px;font-size:12.5px;color:var(--ink-3)}
+.mimp .box{display:flex;flex-wrap:wrap;gap:2px;max-height:92px;overflow:auto;margin-top:4px}
+.mimp button.chip{border:0;cursor:pointer;font-family:inherit;max-width:320px;overflow:hidden;text-overflow:ellipsis}
+.mimp button.chip:hover{filter:brightness(.95)}
 .note{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;background:var(--surface)}
 .note.mine{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent-soft)}
 .note header{display:flex;align-items:center;gap:8px;margin-bottom:6px}
@@ -945,7 +955,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   function addPlanJob(sub, target, plan, name){
     return api('/api/jobs', { action: 'add', kind: 'plan', sub: sub, target: target || '', plan: plan, name: name || target || '', text: name || '', by: myName });
   }
-  function renderPlanTabs(){ if (cur === 'backlog') renderBacklog(); if (cur === 'provisional') renderPv(); if (cur === 'decisions') renderDisc(); }
+  function renderPlanTabs(){ if (cur === 'backlog') renderBacklog(); if (cur === 'provisional') renderPv(); if (cur === 'decisions') renderDisc(); if (cur === 'minutes') renderMinutes(); /* 회의록의 「이 회의에서 나온 정책 · 논의」 · 「진행 중인 항목 넣기」 */ }
   var planLoaded = false;
   function loadPlan(again){
     return Promise.all([loadBacklog(), loadFixReqs(), loadPvDocs(), loadDisc(), again ? null : loadPlanJobs()]).then(function(){ planLoaded = true; renderPlanTabs(); });
@@ -1101,8 +1111,12 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   }
   /* 글 안의 ID를 링크로: 화면 CID → 화면 정의서, POL-… → 정책서 그 정책, CA-… · PD-… → 논의·결정, PV-… → 임시 정책
      (버튼 · 입력 칸 · 이미 링크인 곳은 건드리지 않는다) */
-  var ID_RE = /\b(POL-[A-Z]+-\d{3}|CA-\d{4}|PD-\d{4}|PV-\d{4}(?:-[A-Z])?|(?:TI|LI|MI|TL)-[A-Z0-9]+(?:-[A-Z0-9]+)+)\b/g;
+  var ID_RE = /\b(m\d{8}-[0-9a-z]{4,8}|POL-[A-Z]+-\d{3}|CA-\d{4}|PD-\d{4}|PV-\d{4}(?:-[A-Z])?|(?:TI|LI|MI|TL)-[A-Z0-9]+(?:-[A-Z0-9]+)+)\b/g;
   function idLink(id){
+    if (/^m\d{8}-/.test(id)) {   // 회의록 ID → 회의록 탭의 그 회의(제목으로 보인다)
+      var mm = (mlist || []).filter(function(x){ return x.id === id; })[0];
+      return mm ? '<a class="idl" href="?tab=minutes&amp;m=' + id + '" data-mopen="' + id + '" title="회의록에서 보기 (' + id + ')">' + esc(String(mm.date || '').slice(0, 10) + ' ' + mm.title) + '</a>' : id;
+    }
     if (/^POL-/.test(id)) return '<a class="idl" href="UX_Guide.html?g=policy#' + id + '" title="정책서에서 보기">' + id + '</a>';
     if (/^(CA|PD)-/.test(id)) return '<a class="idl" href="#" data-goid="' + id + '" title="논의·결정에서 보기">' + id + '</a>';
     if (/^PV-/.test(id)) return '<a class="idl" href="#" data-gopv="' + id.replace(/-[A-Z]$/, '') + '" title="임시 정책에서 보기">' + id + '</a>';
@@ -1111,7 +1125,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   }
   function linkIds(root){
     if (!root) return;
-    var w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: function(n){ return n.parentNode.closest('a,button,input,textarea,select,form,.mitem,code,h3') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT; } }), list = [];
+    var w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: function(n){ return n.parentNode.closest('a,button,input,textarea,select,form,.mitem,code,h3,.mmeta') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT; } }), list = [];
     while (w.nextNode()) { ID_RE.lastIndex = 0; if (ID_RE.test(w.currentNode.nodeValue)) list.push(w.currentNode); }
     list.forEach(function(n){ var s = document.createElement('span'); s.innerHTML = esc(n.nodeValue).replace(ID_RE, function(m){ return idLink(m); }); n.parentNode.replaceChild(s, n); });
   }
@@ -1193,7 +1207,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       if (dForm) right += '<form class="mform" id="dF" style="margin-top:16px"><h3>답변하기</h3>' +
         '<label>답<textarea id="dA" rows="6" required placeholder="정한 내용을 적어 주세요. Claude가 결정 · 바뀌는 것 · 확인 필요로 정리해 보여 주고, 확인하면 반영합니다.">' + esc(dForm.text) + '</textarea></label>' +
         '<div class="mrow"><label>답한 날짜<input type="date" id="dD" value="' + esc(dForm.date) + '"></label><label class="grow">근거' + (dTab === 'ca' ? '(고객 답: 회의록 · 메일)' : '') + '<input id="dB" value="' + esc(dForm.basis) + '" placeholder="예: 2026-11-04 회의록, 메일"></label></div>' +
-        (mlist && mlist.length ? '<p class="muted" style="font-size:12.5px;margin:-4px 0 8px">최근 회의록: ' + mlist.slice(0, 4).map(function(m){ return '<button type="button" class="chip" data-dmin="' + esc(m.date.slice(0, 10) + ' ' + m.title) + '">' + esc(m.date.slice(5, 10) + ' ' + m.title) + '</button>'; }).join(' ') + '</p>' : '') +
+        (mlist && mlist.length ? '<p class="muted" style="font-size:12.5px;margin:-4px 0 8px">최근 회의록: ' + mlist.slice(0, 4).map(function(m){ return '<button type="button" class="chip" data-dmin="' + esc(m.date.slice(0, 10) + ' 회의록 ' + m.id) + '" title="근거에 이 회의록을 넣습니다">' + esc(m.date.slice(5, 10) + ' ' + m.title) + '</button>'; }).join(' ') + '</p>' : '') +
         '<div class="macts"><span class="muted" id="dMsg" role="status"></span><button class="btn" type="button" data-dcancel>취소</button><button class="btn primary" type="submit">Claude에게 보내기</button></div></form>';
       right += '<div class="dbody">' + (dTab === 'pd' ? md(x.t.replace(/^#\s+.*\n/, '')) : '<dl class="kv">' + Object.keys(x.o).filter(function(k){ return k !== 'ID'; }).map(function(k){ return '<dt>' + esc(k) + '</dt><dd>' + esc(x.o[k] || '-') + '</dd>'; }).join('') + '</dl>') + '</div>';
     }
@@ -1371,7 +1385,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
         '<div class="mrow"><label>일시<input type="datetime-local" id="mDate" required value="' + esc(String(e.date || '').replace(' ', 'T')) + '"></label>' +
         '<label class="grow">제목<input type="text" id="mTitle" required maxlength="120" value="' + esc(e.title || '') + '" placeholder="예: 화면 논의 및 질의사항"></label></div>' +
         '<label>참석자<textarea id="mAtt" rows="2" placeholder="줄마다 한 회사(예: 씨젠 - 김의식 차장, 노경민 차장)">' + esc(String(e.attendees || '').split(' / ').join('\n')) + '</textarea></label>' +
-        '<label>내용<textarea id="mBody" rows="18" placeholder="[주제] 로 묶어 쓰면 목록에 주제가 보입니다. 「## 기타」처럼 쓰면 소제목이 됩니다.">' + esc(e.body || '') + '</textarea></label>' +
+        '<label>내용<textarea id="mBody" rows="18" placeholder="[주제] 로 묶어 쓰면 목록에 주제가 보입니다. 「## 기타」처럼 쓰면 소제목이 됩니다.">' + esc(e.body || '') + '</textarea></label>' + impHtml() +
         '<div class="macts"><span class="muted" id="mMsg" role="status"></span><button class="btn" type="button" data-mcancel>취소</button><button class="btn primary" type="submit"' + (mbusy ? ' disabled' : '') + '>저장</button></div></form>';
     } else {
       var m = L.filter(function(x){ return x.id === msel; })[0];
@@ -1383,10 +1397,11 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
           '<div class="mcontent"><div class="msec"><h4>정리본</h4>' + sumBar(m, W) + '</div>' +
             (m.summary ? '<p class="msum">요약 정리 · ' + esc(String(m.summary).replace('T', ' ').replace(/:\d\d\+\d\d:\d\d/, '')) + '</p>' : '') +
             (mbody(m.body) || '<p class="muted">아직 정리본이 없습니다. 참석자가 각자 작성한 뒤 [요약 정리]를 누르면 Claude가 합쳐 씁니다.</p>') + '</div>' +
-          notesHtml(m, W) +
+          notesHtml(m, W) + relHtml(m, W) +
           '<p class="mmeta">' + esc(m.by || '') + ' 등록' + (m.updatedBy && m.updatedAt !== m.createdAt ? ' · ' + esc(m.updatedBy) + ' ' + esc(String(m.updatedAt).slice(0, 16).replace('T', ' ')) + ' 수정' : '') + ' · .history/minutes/' + esc(m.id) + '.md</p></div>';
     }
     el.innerHTML = '<div class="mgrid"><aside class="card mlist" aria-label="회의록 목록">' + left + '</aside><section class="card mright">' + right + '</section></div>';
+    linkIds(el.querySelector('.mview'));   // 정리본 · 작성분 안의 PV · PD · CA · 정책 · 화면 ID를 링크로
     if (medit) { var f = $('mTitle'); if (f && !medit.focused) { (medit.id ? f : $('mDate')).focus(); medit.focused = true; } }
   }
   /* 각자 작성: 참석자마다 자기 내용을 쓴다(.history/minutes/{id}.notes/{작성자}.md). 내 것만 고친다 */
@@ -1407,6 +1422,54 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     });
     return h + '</div>';
   }
+  /* 회의록 ↔ 임시 정책 · 논의
+     - 이 회의에서 나온 항목: 임시 정책(PV) · 내부 논의(PD) · 고객 논의(CA) 글에 이 회의록 ID가 적힌 것(규칙: 근거 · 미팅 결과에 회의록 ID를 적는다)
+     - [정책 · 논의 뽑기]: 작업 kind 'minutes' + mode 'extract' — 각자 작성분이 없어도 정리본에서 PV · PD · CA를 올린다
+     - 작성 화면 「진행 중인 항목 넣기」: 승인 대기 PV · 열린 PD · 결정 전 CA를 [ID 제목] 주제 줄로 넣는다 */
+  function mRelated(m){
+    var out = [];
+    (PVS || []).forEach(function(p){ if (p.t.indexOf(m.id) >= 0) out.push({ id: p.id, title: p.title, status: p.status }); });
+    if (DISC) {
+      DISC.pd.forEach(function(x){ if (x.t.indexOf(m.id) >= 0) out.push({ id: x.id, title: x.title, status: x.status }); });
+      DISC.ca.forEach(function(c){ if (Object.keys(c.o).some(function(k){ return String(c.o[k]).indexOf(m.id) >= 0; })) out.push({ id: c.id, title: c.title, status: c.status }); });
+    }
+    return out;
+  }
+  function relHtml(m, W){
+    var R = mRelated(m), j = mxjobs[m.id], busy = j && (j.status === '대기' || j.status === '진행 중'), has = String(m.body || '').trim().length >= 10;
+    var st = busy ? '<span class="pill prog">Claude가 뽑는 중' + (j.status === '대기' ? '(대기)' : '') + '</span>' :
+      j && (j.status === '실패' || j.status === '보류') ? '<span class="pill warn" title="' + esc(j.note || '') + '">뽑기 ' + esc(j.status) + '</span>' : '';
+    var h = '<div class="mrel"><div class="msec"><h4>이 회의에서 나온 정책 · 논의 <span class="muted">' + R.length + '</span></h4>' + st +
+      (W ? '<button class="btn sm" type="button" data-mext' + (busy || !has ? ' disabled' : '') + ' title="' + (has ? '정리본에서 바꾸기로 한 정책 · 더 논의할 것 · 고객 답을 기다리는 것을 찾아 임시 정책 · 논의·결정에 올립니다' : '회의록 내용이 없습니다') + '">정책 · 논의 뽑기</button>' : '') + '</div>';
+    if (j && j.status === '완료' && j.note) h += '<p class="msum">뽑기 결과 · ' + esc(String(j.updatedAt || '').slice(0, 16).replace('T', ' ')) + ' · ' + esc(j.note) + '</p>';
+    h += R.length ? '<ul>' + R.map(function(r){ return '<li>' + idLink(r.id) + '<span class="t">' + esc(r.title) + '</span>' + stPill(r.status) + '</li>'; }).join('') + '</ul>' :
+      '<p class="muted" style="margin:6px 0 0">' + (PVS && DISC ? '아직 없습니다.' + (W && has ? ' [정책 · 논의 뽑기]를 누르면 Claude가 정리본에서 찾아 올립니다.' : '') : '임시 정책 · 논의를 읽는 중…') + '</p>';
+    return h + '</div>';
+  }
+  function impHtml(){
+    var L = [];
+    (PVS || []).forEach(function(p){ if (!p.closed && /승인 대기/.test(p.status)) L.push({ id: p.id, title: p.title, kind: '임시 정책' }); });
+    if (DISC) { DISC.pd.forEach(function(x){ if (!x.closed) L.push({ id: x.id, title: x.title, kind: '내부 논의' }); }); DISC.ca.forEach(function(c){ if (c.status !== '결정') L.push({ id: c.id, title: c.title, kind: '고객 논의' }); }); }
+    if (!L.length) return '';
+    return '<div class="mimp">진행 중인 임시 정책 · 논의를 안건으로 넣기 (누르면 내용에 주제 줄이 들어갑니다)<div class="box">' +
+      L.map(function(x){ return '<button type="button" class="chip" data-mins="' + esc(x.id + ' ' + x.title) + '" title="' + esc(x.kind + ' · ' + x.title) + '">' + esc(x.id + ' ' + x.title) + '</button>'; }).join('') + '</div></div>';
+  }
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-mins],[data-mext]'); if (!b) return;
+    if (b.dataset.mins) {   // 커서 자리(없으면 끝)에 [ID 제목] 주제 줄을 넣는다
+      var ta = $('mBody'); if (!ta) return;
+      var v = ta.value, at = ta.selectionStart != null ? ta.selectionStart : v.length, pre = v.slice(0, at), post = v.slice(at);
+      var ins = (pre && !/\n\n$/.test(pre) ? (/\n$/.test(pre) ? '\n' : '\n\n') : '') + '[' + b.dataset.mins + ']\n- ';
+      ta.value = pre + ins + (post && !/^\n/.test(post) ? '\n' : '') + post; ta.focus(); ta.selectionStart = ta.selectionEnd = (pre + ins).length;
+      return;
+    }
+    var mm = (mlist || []).filter(function(x){ return x.id === msel; })[0]; if (!mm) return;
+    if (!confirm('「' + mm.title + '」 정리본에서 바꾸기로 한 정책 · 더 논의할 것 · 고객 답을 기다리는 것을 Claude가 찾아\n임시 정책(PV) · 내부 논의(PD) · 고객 논의(CA)에 올립니다. 이미 있는 항목이면 그 항목에 회의 결과를 적습니다.\n요청할까요?')) return;
+    b.disabled = true;
+    api('/api/jobs', { action: 'add', kind: 'minutes', mode: 'extract', minute: mm.id, name: mm.title, text: '정책 · 논의 뽑기', by: myName })
+      .then(function(){ return loadMjobs(); }).then(function(){ renderMinutes(); toast('정책 · 논의 뽑기를 요청했습니다. 요청 감시 중인 Claude가 올리면 여기 나옵니다.'); })
+      .catch(function(err){ b.disabled = false; alert(err.message); });
+  });
   // 요약 정리 버튼 · 진행 상태(작업 대기열 kind 'minutes')
   function sumBar(m, W){
     var j = mjobs[m.id], busy = j && (j.status === '대기' || j.status === '진행 중'), n = (m.notes || []).length;
@@ -1414,15 +1477,17 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       j && j.status === '실패' ? '<span class="pill warn" title="' + esc(j.note || '') + '">요약 실패</span>' : '';
     return st + (W ? '<button class="btn sm primary" type="button" data-msum' + (busy || !n ? ' disabled' : '') + ' title="' + (n ? '각자 작성한 ' + n + '건을 합쳐 정리본을 씁니다' : '각자 작성한 내용이 없습니다') + '">' + (m.body ? '다시 요약 정리' : '요약 정리') + '</button>' : '');
   }
-  var mjobs = {}, mjTimer = null;
+  var mjobs = {}, mxjobs = {}, mjTimer = null;   // 회의록 ID → 가장 최근 요약 작업 / 뽑기 작업(mode extract)
   function loadMjobs(){
     return api('/api/jobs').then(function(j){
-      var o = {}; (j.items || []).forEach(function(x){ if (x.kind === 'minutes' && x.minute && (!o[x.minute] || String(x.createdAt) > String(o[x.minute].createdAt))) o[x.minute] = x; });
-      var wasBusy = Object.keys(mjobs).some(function(k){ return mjobs[k].status === '대기' || mjobs[k].status === '진행 중'; });
-      mjobs = o;
-      var busy = Object.keys(o).some(function(k){ return o[k].status === '대기' || o[k].status === '진행 중'; });
+      var o = {}, ox = {}; (j.items || []).forEach(function(x){ if (x.kind !== 'minutes' || !x.minute) return; var t = x.mode === 'extract' ? ox : o; if (!t[x.minute] || String(x.createdAt) > String(t[x.minute].createdAt)) t[x.minute] = x; });
+      var isBusy = function(M){ return Object.keys(M).some(function(k){ return M[k].status === '대기' || M[k].status === '진행 중'; }); };
+      var wasBusy = isBusy(mjobs), wasX = isBusy(mxjobs);
+      mjobs = o; mxjobs = ox;
+      var busy = isBusy(o) || isBusy(ox);
       clearTimeout(mjTimer); if (busy) mjTimer = setTimeout(function(){ loadMjobs().then(function(){ if (cur === 'minutes') renderMinutes(); }); }, 8000);
-      if (wasBusy && !busy) return loadMd().then(function(){ toast('요약 정리가 끝났습니다.'); });
+      // 끝나면 회의록과(요약 · 뽑기 모두 PV · PD · CA를 올릴 수 있으니) 임시 정책 · 논의도 다시 읽는다
+      if ((wasBusy && !isBusy(o)) || (wasX && !isBusy(ox))) return Promise.all([loadMd(), loadPvDocs(), loadDisc()]).then(function(){ toast(wasX && !isBusy(ox) ? '정책 · 논의 뽑기가 끝났습니다.' : '요약 정리가 끝났습니다.'); });
     }).catch(function(){});
   }
   // 회의록 기간: 날짜를 고르거나 빠른 선택(이번 주 · 이번 달 · 최근 3개월)
