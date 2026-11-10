@@ -183,6 +183,23 @@
     var us = document.getElementById('userSave'); if (us) us.hidden = true;
   }).catch(function(){});
 
+  /* ── 넘치면 단계별로 줄이기 ──
+     창 폭 기준(@media)만으로는 메뉴 수 · 사용 한도 · 팀 · 계정 이름 길이에 따라 오른쪽(로그아웃)이 잘렸다(2026-11-10).
+     실제로 넘칠 때만 nav-c1 → c4 순서로 줄인다(appnav.css): 1 사용 한도 짧게 · 버전 숨김, 2 로고 글자 · 팀 라벨 숨김 · 메뉴 여백 줄임,
+     3 사용 한도 숨김 · 계정 버튼 작게, 4 메뉴 글자 작게 · 계정 이름 줄임 */
+  var NAVC = ['nav-c1', 'nav-c2', 'nav-c3', 'nav-c4'], navBusy = false;
+  function fitNav(){
+    if (navBusy) return; navBusy = true;
+    NAVC.forEach(function(c){ nav.classList.remove(c); });
+    for (var i = 0; i < NAVC.length && nav.scrollWidth > nav.clientWidth + 1; i++) nav.classList.add(NAVC[i]);
+    navBusy = false;
+  }
+  window.addEventListener('resize', fitNav);
+  /* 메뉴 · 오른쪽 내용(사용 한도 · 버전 · 팀 · 계정)이 나중에 들어오면 다시 잰다 */
+  if (window.MutationObserver) new MutationObserver(function(){ setTimeout(fitNav, 0); }).observe(nav, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['hidden'] });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitNav);
+  fitNav();
+
   /* ── 탭 열림 · 닫힘 ── */
   var pageId = Math.random().toString(36).slice(2) + Date.now().toString(36);
   function alive(){ fetch('/api/alive', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: pageId }) }).catch(function(){}); }
