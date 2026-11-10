@@ -2,8 +2,8 @@
     "id":  "brex-04_R003",
     "kind":  "request",
     "team":  "stagora",
-    "status":  "진행 중",
-    "at":  "2026-11-10T11:26:02+09:00",
+    "status":  "완료",
+    "at":  "2026-11-10T11:30:39+09:00",
     "createdAt":  "2026-11-10T11:25:44+09:00",
     "by":  "김주현",
     "doneBy":  "Claude",
@@ -17,16 +17,50 @@
     "type":  "레이아웃·배치",
     "layout":  "",
     "text":  "프레임 리스트\nAD-CMP-01-T\nAD-CMP-01-01-T\nAD-CMP-01-01-01-P\nAD-CMP-01-01-02-T\n\n작업 요청\n1. 와이어프레임의 요소 배치기준을 기존 Admin 페이지들을 참고하여 수정 \n2. 와이어프레임의 기준언어를 영어로 변경\n3. 검사실(Lab) 필터는 삭제 : 검사실 별로 적용되기는 하지만, 해당 화면은 검사실만 볼 수 있는 화면이기 때문에 별도 필터 필요없음 (자기 검사실 것만 볼거임)",
-    "note":  "",
-    "shot":  "",
+    "note":  "4개 화면을 Admin 기존 페이지 배치(회색 배경 · 흰색 카드 · Results 줄 버튼 · Pagination)로 맞추고 영어로 바꾸고 검사실 필터를 지웠습니다.\n- AD-CMP-01-T: 카드 배치, Local 표기 · Lab 필터 삭제, Add Comprehensive Test 버튼을 Results 줄 오른쪽으로 이동, Pagination 추가, 표 · 안내 문구 영어화\n- AD-CMP-01-01-T / 01-01-01-P / 01-01-02-T: 카드 배치, Lab 필터 삭제, UI 문구 영어화(Up/Down, Select Assay 등)\n- 디스크립션 번호 위치 재정렬, AD-CMP-01-T 디스크립션 4번에 \"검사실 필터 없음\" 반영\n확인 필요: 오른쪽 디스크립션 패널은 Admin 다른 기획서처럼 한글로 유지했습니다(영문화 필요하면 알려주세요). 팝업(01-01-01-P)은 기존대로 뒤 화면 위 Dim 구조입니다.\n작업 기준: 작업규칙 화면 수정 작업 규칙_v0.2 · 정책서 통합운영툴 - 로컬 서버 정책 · UX가이드 통합운영툴_Common UX · 기준데이터 없음 · 화면 정의서 UX Kit(Component) 화면 정의서",
+    "shot":  "shots/brex-04_R003.jpg",
     "shots":  [
-
+                  {
+                      "file":  "shots/brex-04_R003.jpg",
+                      "nodeId":  "48:82013",
+                      "frame":  "AD-CMP-01-T"
+                  },
+                  {
+                      "file":  "shots/brex-04_R003-2.jpg",
+                      "nodeId":  "48:82720",
+                      "frame":  "AD-CMP-01-01-T"
+                  },
+                  {
+                      "file":  "shots/brex-04_R003-3.jpg",
+                      "nodeId":  "48:83422",
+                      "frame":  "AD-CMP-01-01-01-P"
+                  },
+                  {
+                      "file":  "shots/brex-04_R003-4.jpg",
+                      "nodeId":  "48:84145",
+                      "frame":  "AD-CMP-01-01-02-T"
+                  }
               ],
     "images":  [
 
                ],
     "frames":  [
-
+                   {
+                       "nodeId":  "48:82013",
+                       "name":  "AD-CMP-01-T"
+                   },
+                   {
+                       "nodeId":  "48:82720",
+                       "name":  "AD-CMP-01-01-T"
+                   },
+                   {
+                       "nodeId":  "48:83422",
+                       "name":  "AD-CMP-01-01-01-P"
+                   },
+                   {
+                       "nodeId":  "48:84145",
+                       "name":  "AD-CMP-01-01-02-T"
+                   }
                ],
     "ask":  null,
     "replies":  [

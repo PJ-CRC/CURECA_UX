@@ -1,0 +1,28 @@
+{
+    "id":  "brex-04_R003",
+    "kind":  "request",
+    "reqId":  "R003",
+    "reqType":  "레이아웃·배치",
+    "team":  "stagora",
+    "at":  "2026-11-10T11:30:40+09:00",
+    "from":  "2026-11-10T11:26:02+09:00",
+    "by":  "김주현",
+    "doneBy":  "Claude",
+    "pc":  "BREX_04",
+    "fileKey":  "cDjaemHjetS7RcAHRUIMY5",
+    "fileName":  "STAgora AI Workspace",
+    "page":  "Admin",
+    "frame":  "AD-CMP-01-01-01-P",
+    "nodeId":  "48:83422",
+    "text":  "R003",
+    "models":  {
+                   "claude-sonnet-5-5":  30
+               },
+    "calls":  30,
+    "input":  59,
+    "cacheWrite":  123035,
+    "cacheRead":  4428711,
+    "output":  25450,
+    "total":  4577255,
+    "usd":  1.6325
+}
