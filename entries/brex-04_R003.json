@@ -1,0 +1,35 @@
+{
+    "id":  "brex-04_R003",
+    "kind":  "request",
+    "team":  "stagora",
+    "status":  "대기",
+    "at":  "2026-11-10T11:25:44+09:00",
+    "createdAt":  "2026-11-10T11:25:44+09:00",
+    "by":  "김주현",
+    "doneBy":  "김주현",
+    "pc":  "BREX_04",
+    "reqId":  "R003",
+    "fileKey":  "cDjaemHjetS7RcAHRUIMY5",
+    "fileName":  "STAgora AI Workspace",
+    "page":  "Admin",
+    "frame":  "AD-CMP-01-01-01-P",
+    "nodeId":  "48:83422",
+    "type":  "레이아웃·배치",
+    "layout":  "",
+    "text":  "프레임 리스트\nAD-CMP-01-T\nAD-CMP-01-01-T\nAD-CMP-01-01-01-P\nAD-CMP-01-01-02-T\n\n작업 요청\n1. 와이어프레임의 요소 배치기준을 기존 Admin 페이지들을 참고하여 수정 \n2. 와이어프레임의 기준언어를 영어로 변경\n3. 검사실(Lab) 필터는 삭제 : 검사실 별로 적용되기는 하지만, 해당 화면은 검사실만 볼 수 있는 화면이기 때문에 별도 필터 필요없음 (자기 검사실 것만 볼거임)",
+    "note":  "",
+    "shot":  "",
+    "shots":  [
+
+              ],
+    "images":  [
+
+               ],
+    "frames":  [
+
+               ],
+    "ask":  null,
+    "replies":  [
+
+                ]
+}
