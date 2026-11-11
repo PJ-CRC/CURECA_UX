@@ -249,10 +249,13 @@ li[aria-expanded="false"]>ul{display:none}
 .req .lay{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;color:var(--accent);background:var(--accent-soft);border-radius:5px;padding:1px 6px}
 textarea{width:100%;min-height:72px;resize:vertical;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:13.5px;line-height:1.55}
 textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-offset:-1px}
-/* 첨부 이미지: 붙여넣기(Ctrl+V) · 끌어다 놓기 · 파일 선택, 최대 5장 · 한 장 10MB 미만 */
+/* 첨부: 붙여넣기(Ctrl+V) · 끌어다 놓기 · 파일 선택. 조건은 스크립트의 ATT_* (Claude가 읽을 수 있는 것) */
 .atts{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:6px 0 8px}
 .att{position:relative;width:64px;height:64px;border:1px solid var(--line);border-radius:7px;overflow:hidden;background:var(--surface-2)}
 .att img{display:block;width:100%;height:100%;object-fit:cover}
+.att.doc{width:auto;max-width:180px;display:flex;flex-direction:column;justify-content:center;gap:2px;padding:6px 26px 6px 10px}
+.att.doc b{font-size:11px;font-weight:800;color:var(--accent)}
+.att.doc small{font-size:12px;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .att button{position:absolute;top:2px;right:2px;width:18px;height:18px;padding:0;border:0;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;font-size:12px;line-height:18px;cursor:pointer}
 .attadd{height:30px;padding:0 10px;border:1px dashed var(--line);border-radius:7px;background:var(--surface);color:var(--ink-2);font-size:12.5px;cursor:pointer}
 .attadd:hover{border-color:var(--accent);color:var(--accent)}
@@ -261,6 +264,8 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
 .req .ims{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
 .req .ims a{display:block;width:48px;height:48px;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--surface-2)}
 .req .ims img{display:block;width:100%;height:100%;object-fit:cover}
+.req .ims a.doc{display:flex;align-items:center;justify-content:center;text-decoration:none}
+.req .ims a.doc b{font-size:11px;font-weight:800;color:var(--accent)}
 .actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .btn{padding:7px 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface);font-size:13px}
 .btn:hover{border-color:var(--accent)}
@@ -452,15 +457,15 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
         <p class="ro ga" id="gaNote" hidden></p>
         <div class="atts" id="atts" hidden><span id="attList" style="display:contents"></span></div>
         <div class="cmp-box">
-          <button type="button" class="cmp-ico" id="attAdd" title="이미지 첨부 (붙여넣기 · 끌어다 놓기도 됩니다. 최대 5장, 한 장 10MB 미만)" aria-label="이미지 첨부"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M10 4v12M4 10h12"/></svg></button>
-          <input type="file" id="attFile" accept="image/png,image/jpeg,image/gif,image/webp" multiple hidden>
-          <textarea id="rtext" rows="1" placeholder="수정할 내용을 입력하세요. 예) 표 헤더 높이를 58로 통일"></textarea>
+          <button type="button" class="cmp-ico" id="attAdd" title="파일 첨부" aria-label="파일 첨부"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M10 4v12M4 10h12"/></svg></button>
+          <input type="file" id="attFile" accept="image/png,image/jpeg,image/gif,image/webp,application/pdf,.pdf,.txt,.md,.markdown,.csv,text/plain,text/markdown,text/csv" multiple hidden>
+          <textarea id="rtext" rows="1" aria-label="수정 요청 내용"></textarea>
           <button type="button" class="cmp-send" id="add" title="요청 등록 (Ctrl + Enter)" aria-label="요청 등록"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10 15V5M5.5 9.5 10 5l4.5 4.5"/></svg></button>
         </div>
         <!-- 아래 줄: 등록 안내 · 결과(왼쪽), 이미지 첨부 안내(오른쪽) -->
         <div class="cmp-meta">
-          <span class="msg" id="msg">Ctrl + Enter로 등록</span>
-          <span class="hint" id="attHint">이미지는 [+] · 붙여넣기 · 끌어다 놓기 (최대 5장)</span>
+          <span class="msg" id="msg"></span>
+          <span class="hint" id="attHint"></span>
         </div>
       </div>
       <dialog class="lpop" id="lpop" aria-label="레이아웃 선택">
@@ -740,7 +745,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     return list.map(function(h){ return (h.by || '이름 없음') + (h.pc ? '(' + h.pc + ')' : '') + ' ' + h.reqId + ' · ' + h.status + ' — 「' + String(h.text || '').split('\n')[0].slice(0, 40) + '」'; }).join(' / ');
   }
   /* 일반 질문: 프레임 선택을 풀고 프레임 지정 없이 요청(선택된 프레임을 한 번 더 누르거나 [일반 질문]). 다른 프레임을 누르면 다시 선택 */
-  var general = false, RT_PH = $('rtext').placeholder;
+  var general = false;
   function setGeneral(on){ general = !!on; if (!cur) return; renderMenu(); renderTarget(); renderReqs(); if (general) $('rtext').focus(); }
   $('genBtn').onclick = function(){ setGeneral(!general); };
   $('reqs').addEventListener('click', function(e){ if (e.target.closest('[data-gen]')) setGeneral(true); });
@@ -751,11 +756,10 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       var gp = edPage() || cur.page;
       $('tgt').innerHTML = '<span class="gen">일반 질문</span> · 프레임 지정 없음'; $('tgtId').hidden = true; $('tgtPage').textContent = gp;
       $('reqTgt').textContent = '일반 질문'; $('reqTgt').title = gp + ' › 프레임 지정 없음';
-      $('rtext').placeholder = '프레임을 고르지 않고 요청합니다. 예) 이 페이지에 사용자 목록 화면 새로 만들어줘 / Door 상태 표기를 모든 화면에서 Lock으로 통일 / 이 페이지 버튼 규칙이 뭐야?';
       $('roNote').hidden = true; $('olNote').hidden = true;
       return;
     }
-    $('tgtId').hidden = false; $('rtext').placeholder = RT_PH;
+    $('tgtId').hidden = false;
     $('tgt').textContent = cur.name; $('tgtId').textContent = cur.id; $('tgtPage').textContent = cur.page; $('reqTgt').textContent = cur.name; $('reqTgt').title = cur.page + ' › ' + cur.name;
     /* 수정 가능 페이지 밖: 요청은 등록되지만 Claude가 반영하지 않고 「보류」로 둔다 (CLAUDE.md 범위) */
     var ed = edPage();
@@ -1028,7 +1032,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     var o = (r.ask.options || [])[i]; if (!o) return;
     if (o.action === 'delete') {
       var ids = (o.ids || []).filter(function(x){ return x !== id; });
-      if (!ids.length || !confirm(ids.join(', ') + ' 요청을 지웁니다. 첨부 이미지와 작업 이력도 함께 지워지고 되돌릴 수 없습니다. 지울까요?')) return;
+      if (!ids.length || !confirm(ids.join(', ') + ' 요청을 지웁니다. 첨부 파일과 작업 이력도 함께 지워지고 되돌릴 수 없습니다. 지울까요?')) return;
       btn.disabled = true;
       ids.reduce(function(p, x){ return p.then(function(){ return post({action:'delete', id:x}); }); }, Promise.resolve())
         .then(function(){ return answer(id, o.label + ' (' + ids.join(', ') + ' 지움)', true, null); })
@@ -1068,7 +1072,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
         (!r.nodeId ? (general ? '' : '<button class="go" data-gen="1" title="일반 질문 보기">일반 질문 ›</button>') : r.nodeId !== cur.id || general ? '<button class="go" data-go="' + esc(r.nodeId) + '">' + esc(r.frame) + ' ›</button>' : '') +
         '<span class="sp"></span><span class="who">' + esc(r.author || '이름 없음') + '</span><span title="등록 ' + esc(r.createdAt) + ' / 변경 ' + esc(r.updatedAt) + '">' + fmt(r.updatedAt || r.createdAt) + '</span>' +
         '</div><div class="q" title="' + esc(r.text) + '">요청 · ' + esc(String(r.text || '').split('\n')[0]) + '</div>' +
-        ((r.images || []).length ? '<div class="ims">' + r.images.map(function(m){ return '<a href="' + esc(m.file) + '" target="_blank" rel="noopener" title="' + esc(m.name || '첨부 이미지') + ' · 원본 보기"><img loading="lazy" alt="첨부 이미지" src="' + esc(m.small || m.file) + '"></a>'; }).join('') + '</div>' : '') +
+        ((r.images || []).length ? '<div class="ims">' + r.images.map(function(m){ var ex = ((/\.([a-z0-9]+)$/i.exec(m.file || '') || [])[1] || '').toLowerCase(); if (!attImg(ex)) return '<a class="doc" href="' + esc(m.file) + '" target="_blank" rel="noopener" title="' + esc(m.name || '첨부') + ' · 원본 보기"><b>' + esc(ex.toUpperCase()) + '</b></a>'; return '<a href="' + esc(m.file) + '" target="_blank" rel="noopener" title="' + esc(m.name || '첨부 이미지') + ' · 원본 보기"><img loading="lazy" alt="첨부 이미지" src="' + esc(m.small || m.file) + '"></a>'; }).join('') + '</div>' : '') +
         '<div class="a' + (r.note ? '' : ' wait') + '">' + (r.note ? noteHtml(r.note) : esc(WAIT[r.status] || '')) + '</div>' +
         fixedHtml(r) +
         askHtml(r) +
@@ -1097,36 +1101,59 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       // 일반 질문: 프레임 지정 없이(nodeId · frame 빈 값) 작업 페이지 기준으로 등록한다
       return post({action:'add', nodeId:general ? '' : cur.id, frame:general ? '' : cur.name, page:general ? (edPage() || cur.page) : cur.page, fileKey:FILE.key, fileName:FILE.name, editable:general ? true : cur.editable, type:$('rtype').value, priority:$('rpri').value, layout: layout ? lname(LAYOUTS[layout - 1]) : '', text:t, images:images});
     })
-      .then(function(d){ $('rtext').value = ''; growText(); store('wb.draft.' + FILE.key, ''); clearAtts(); setLayout(0); lpop(false); say(d.items[0].id + ' 요청을 등록했습니다.' + (n ? ' (이미지 ' + n + '장)' : '')); filter = 'here'; syncFilter(); renderReqs(); })
+      .then(function(d){ $('rtext').value = ''; growText(); store('wb.draft.' + FILE.key, ''); clearAtts(); setLayout(0); lpop(false); say(d.items[0].id + ' 요청을 등록했습니다.' + (n ? ' (첨부 ' + n + '개)' : '')); filter = 'here'; syncFilter(); renderReqs(); })
       .catch(function(e){ say('등록 실패: ' + e.message, true); })
       .then(function(){ $('add').disabled = false; });
   }
   $('add').onclick = add;
 
-  /* 첨부 이미지: 원본은 그대로 올리고(이 PC에만 둔다), 작업 이력(깃 공유)용으로 긴 변 1600 JPG 사본을 브라우저에서 만들어 함께 올린다 */
-  var ATT_MAX = 5, ATT_SIZE = 10 * 1024 * 1024, ATT_TYPES = {'image/png':'png', 'image/jpeg':'jpg', 'image/gif':'gif', 'image/webp':'webp'};
-  var ATT_HINT = $('attHint').textContent, atts = [];
+  /* 첨부: 원본은 그대로 올리고(이 PC에만 둔다), 이미지는 작업 이력(깃 공유)용으로 긴 변 1600 JPG 사본을 브라우저에서 만들어 함께 올린다
+     조건 = Claude가 읽을 수 있는 것(Claude 문서 기준): 이미지 PNG · JPG · GIF · WEBP 7.5MB(base64 10MB) · 8000px 이하, PDF · 글(TXT · MD · CSV) 30MB 이하, 한 요청에 20개.
+     서버(node/server/writes.js ATT_*)와 같게 고친다 */
+  var ATT_MAX = 20, ATT_IMG_MAX = 7.5 * 1024 * 1024, ATT_DOC_MAX = 30 * 1024 * 1024, ATT_PX = 8000;
+  var ATT_TYPES = {'image/png':'png', 'image/jpeg':'jpg', 'image/gif':'gif', 'image/webp':'webp'}, ATT_DOCS = {pdf:'pdf', txt:'txt', md:'md', markdown:'md', csv:'csv'};
+  var atts = [];
+  function attExt(f){
+    if (ATT_TYPES[f.type]) return ATT_TYPES[f.type];
+    var m = /\.([A-Za-z0-9]+)$/.exec(f.name || ''), e = m ? m[1].toLowerCase() : '';
+    if (e === 'jpeg') e = 'jpg';
+    return ['png', 'jpg', 'gif', 'webp'].indexOf(e) >= 0 ? e : (ATT_DOCS[e] || '');
+  }
+  function attImg(ext){ return ['png', 'jpg', 'gif', 'webp'].indexOf(ext) >= 0; }
   function renderAtts(){
     $('attList').innerHTML = atts.map(function(a, i){
+      if (!a.img) return '<span class="att doc" title="' + esc(a.file.name) + ' · ' + (a.file.size / 1048576).toFixed(1) + 'MB"><b>' + esc(a.ext.toUpperCase()) + '</b><small>' + esc(a.file.name) + '</small><button type="button" data-i="' + i + '" aria-label="첨부 ' + (i + 1) + ' 빼기">×</button></span>';
       return '<span class="att" title="' + esc(a.file.name) + ' · ' + (a.file.size / 1048576).toFixed(1) + 'MB"><img src="' + a.url + '" alt="첨부 이미지 ' + (i + 1) + '"><button type="button" data-i="' + i + '" aria-label="첨부 이미지 ' + (i + 1) + ' 빼기">×</button></span>';
     }).join('');
     $('attAdd').hidden = atts.length >= ATT_MAX;
     $('atts').hidden = !atts.length;
-    $('attHint').textContent = atts.length ? atts.length + ' / ' + ATT_MAX + '장' : ATT_HINT;
+    $('attHint').textContent = atts.length ? atts.length + ' / ' + ATT_MAX : '';
   }
+  /* 이미지는 크기(px)를 읽어 본 뒤 넣는다(8000px 넘으면 빼고 알림) */
   function addFiles(list){
-    var skip = [];
+    var skip = [], wait = [];
     Array.prototype.forEach.call(list || [], function(f){
-      var nm = f.name || '붙여넣은 이미지';
-      if (!ATT_TYPES[f.type]) skip.push(nm + ': 이미지(PNG · JPG · GIF · WEBP)가 아님');
-      else if (f.size >= ATT_SIZE) skip.push(nm + ': 10MB 이상');
-      else if (atts.length >= ATT_MAX) skip.push(nm + ': 최대 5장');
-      else atts.push({file:f, url:URL.createObjectURL(f)});
+      var nm = f.name || '붙여넣은 파일', ext = attExt(f), img = attImg(ext);
+      if (!ext) skip.push(nm + ': 첨부할 수 없는 형식(이미지 PNG · JPG · GIF · WEBP, PDF, TXT · MD · CSV만)');
+      else if (f.size > (img ? ATT_IMG_MAX : ATT_DOC_MAX)) skip.push(nm + ': ' + (img ? '이미지는 7.5MB 이하' : 'PDF · 글은 30MB 이하'));
+      else if (atts.length + wait.length >= ATT_MAX) skip.push(nm + ': 최대 ' + ATT_MAX + '개');
+      else if (!img) atts.push({file:f, ext:ext, img:false});
+      else {
+        var a = {file:f, ext:ext, img:true, url:URL.createObjectURL(f)}; wait.push(a);
+        a.ready = new Promise(function(res){
+          var im = new Image();
+          im.onload = function(){ if (im.naturalWidth > ATT_PX || im.naturalHeight > ATT_PX) { skip.push(nm + ': ' + ATT_PX + 'px 넘음(' + im.naturalWidth + '×' + im.naturalHeight + ')'); URL.revokeObjectURL(a.url); } else atts.push(a); res(); };
+          im.onerror = function(){ skip.push(nm + ': 이미지를 읽지 못함'); URL.revokeObjectURL(a.url); res(); };
+          im.src = a.url;
+        });
+      }
     });
-    renderAtts();
-    if (skip.length) say('첨부하지 못함 · ' + skip.join(' / '), true);
+    Promise.all(wait.map(function(a){ return a.ready; })).then(function(){
+      renderAtts();
+      if (skip.length) say('첨부하지 못함 · ' + skip.join(' / '), true);
+    });
   }
-  function clearAtts(){ atts.forEach(function(a){ URL.revokeObjectURL(a.url); }); atts = []; renderAtts(); }
+  function clearAtts(){ atts.forEach(function(a){ if (a.url) URL.revokeObjectURL(a.url); }); atts = []; renderAtts(); }
   function smallCopy(a){
     return new Promise(function(res){
       var im = new Image();
@@ -1149,9 +1176,9 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     var out = [];
     return atts.reduce(function(p, a, i){
       return p.then(function(){
-        say('이미지 올리는 중 ' + (i + 1) + ' / ' + atts.length + '…');
+        say('첨부 올리는 중 ' + (i + 1) + ' / ' + atts.length + '…');
         var x = {name:a.file.name || ''};
-        return upload(a.file, ATT_TYPES[a.file.type]).then(function(t){ x.tmp = t; return smallCopy(a); })
+        return upload(a.file, a.ext).then(function(t){ x.tmp = t; return a.img ? smallCopy(a) : null; })
           .then(function(b){ return b ? upload(b, 'jpg') : ''; }).then(function(s){ x.small = s; out.push(x); });
       });
     }, Promise.resolve()).then(function(){ return out; });
@@ -1160,10 +1187,10 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
   $('attFile').onchange = function(){ addFiles(this.files); this.value = ''; };
   $('attList').addEventListener('click', function(e){
     var b = e.target.closest('button[data-i]'); if (!b) return;
-    var a = atts.splice(+b.dataset.i, 1)[0]; if (a) URL.revokeObjectURL(a.url); renderAtts();
+    var a = atts.splice(+b.dataset.i, 1)[0]; if (a && a.url) URL.revokeObjectURL(a.url); renderAtts();
   });
   $('rtext').addEventListener('paste', function(e){
-    var fs = Array.prototype.filter.call((e.clipboardData && e.clipboardData.files) || [], function(f){ return /^image\//.test(f.type); });
+    var fs = Array.prototype.slice.call((e.clipboardData && e.clipboardData.files) || []);
     if (fs.length) { e.preventDefault(); addFiles(fs); }
   });
   (function(){
@@ -1205,7 +1232,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     var edPages = CAT.pages.filter(function(pg){ return pg.editable; }).map(function(pg){ return pg.name; }).join(', ') || '없음';
     var txt = '[Figma 수정 요청] ' + FILE.name + ' (fileKey ' + FILE.key + ') · 수정은 ' + edPages + ' 페이지만, 다른 페이지 요청은 「보류」\n' +
       '아래 요청을 Figma에 반영하고, 처리 후 workbench/edit_requests.json의 상태를 「완료」로 바꾸고 처리 메모를 남겨줘. 반영한 프레임은 projects/' + FILE.key + '/shots 캡처도 갱신해줘.\n\n' +
-      open.slice().reverse().map(function(r){ var pg = r.page || (byId[r.nodeId] ? byId[r.nodeId].page : edPage()); return '- ' + r.id + ' [' + pg + ' › ' + r.frame + ' · ' + r.nodeId + '] ' + r.type + (r.priority === '높음' ? ' · 우선순위 높음' : '') + (r.layout ? ' · 레이아웃 ' + r.layout : '') + (r.author ? ' · 요청자 ' + r.author : '') + '\n  ' + r.text.replace(/\n/g, '\n  ') + ((r.images || []).length ? '\n  첨부 이미지: ' + r.images.map(function(m){ return m.file; }).join(', ') : ''); }).join('\n');
+      open.slice().reverse().map(function(r){ var pg = r.page || (byId[r.nodeId] ? byId[r.nodeId].page : edPage()); return '- ' + r.id + ' [' + pg + ' › ' + r.frame + ' · ' + r.nodeId + '] ' + r.type + (r.priority === '높음' ? ' · 우선순위 높음' : '') + (r.layout ? ' · 레이아웃 ' + r.layout : '') + (r.author ? ' · 요청자 ' + r.author : '') + '\n  ' + r.text.replace(/\n/g, '\n  ') + ((r.images || []).length ? '\n  첨부: ' + r.images.map(function(m){ return m.file; }).join(', ') : ''); }).join('\n');
     (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject())
       .then(function(){ toast(open.length + '건 요청문을 복사했습니다'); })
       .catch(function(){ window.prompt('아래 내용을 복사해 주세요', txt); });
@@ -1244,7 +1271,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     $('srv').className = 'badge ' + (on ? 'on' : 'off');
     $('add').disabled = !on;
     if (!on) say('요청을 저장하려면 Figma AI Run 실행 후 http://localhost:8765/Figma_Workbench.html 에서 열어 주세요.', true);
-    else say('Ctrl + Enter로 등록');
+    else say('');
     renderReqs();
   }
 

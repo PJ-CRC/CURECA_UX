@@ -10,7 +10,11 @@ const { C } = core;
 module.exports = function register(on, h) {
   const histShots = path.join(C.histDir, 'shots'), histAttach = path.join(C.histDir, 'attach');
   const attachDir = path.join(C.root, 'workbench', 'req_images'), attachTmp = path.join(attachDir, '_tmp');
-  const ATTACH_MAX = 10 * 1024 * 1024;
+  // 첨부 조건 = Claude가 읽을 수 있는 것(Claude 문서 기준, 2026-11-11): 이미지 PNG · JPG · GIF · WEBP는 base64 10MB(파일 7.5MB) · 8000px 이하,
+  //  PDF · 글(txt · md · csv)은 30MB 이하(claude.ai 파일 한도), 한 요청에 20개(claude.ai 한 메시지 한도). Word · Excel은 Claude가 바로 읽지 못해 받지 않는다
+  const ATT_IMG = ['png', 'jpg', 'gif', 'webp'], ATT_DOC = ['pdf', 'txt', 'md', 'csv'], ATT_N = 20;
+  const ATT_IMG_MAX = 7.5 * 1024 * 1024, ATT_DOC_MAX = 30 * 1024 * 1024;
+  const ATT_RE = /^[0-9a-f]{32}\.(png|jpg|gif|webp|pdf|txt|md|csv)$/;
 
   // 그림을 JPG(품질 85, 흰 바탕)로: 윈도우 System.Drawing(기존 서버와 같은 결과), 맥 sips. 안 되면 원본 그대로 복사(기존과 같음)
   function toJpeg(src, dst) {
@@ -70,13 +74,13 @@ module.exports = function register(on, h) {
     core.rmGlob(histAttach, (x) => x.startsWith(name + '_'));
     core.syncWant();
   }
-  // 첨부 이미지(Save-Attach): _tmp에 올린 원본 · 줄인 사본을 요청 ID 이름으로 옮긴다(최대 5장)
+  // 첨부(Save-Attach): _tmp에 올린 원본 · 이미지의 줄인 사본을 요청 ID 이름으로 옮긴다(최대 ATT_N개). PDF · 글은 사본이 없어 이 PC에만 남는다
   function saveAttach(id, list) {
     core.rmGlob(attachDir, (x) => x.startsWith(id + '_'));
     const out = []; let n = 0;
-    for (const a of core.arr(list).filter(Boolean).slice(0, 5)) {
+    for (const a of core.arr(list).filter(Boolean).slice(0, ATT_N)) {
       const t = nn(a.tmp), s = nn(a.small);
-      if (!/^[0-9a-f]{32}\.(png|jpg|gif|webp)$/.test(t) || !core.exists(path.join(attachTmp, t))) continue;
+      if (!ATT_RE.test(t) || !core.exists(path.join(attachTmp, t))) continue;
       n++; const f = `${id}_${n}${path.extname(t)}`;
       fs.renameSync(path.join(attachTmp, t), path.join(attachDir, f));
       let sf = '';
@@ -688,12 +692,14 @@ module.exports = function register(on, h) {
     }
   });
 
-  // ── POST /api/attach?ext=: 첨부 이미지 원본을 임시로(등록할 때 요청 ID 이름으로 옮김) ──
+  // ── POST /api/attach?ext=: 첨부 원본(이미지 · PDF · 글)을 임시로(등록할 때 요청 ID 이름으로 옮김) ──
   on('POST', '/api/attach', async ({ q, raw }) => {
-    let ext = String(q.get('ext') || '').toLowerCase(); if (ext === 'jpeg') ext = 'jpg';
-    if (!['png', 'jpg', 'gif', 'webp'].includes(ext)) throw new Error('이미지(PNG · JPG · GIF · WEBP)만 첨부할 수 있습니다.');
-    let buf; try { buf = await raw(ATTACH_MAX); } catch (e) { throw new Error('이미지는 한 장에 10MB 미만만 첨부할 수 있습니다.'); }
-    if (!buf.length || buf.length >= ATTACH_MAX) throw new Error('이미지는 한 장에 10MB 미만만 첨부할 수 있습니다.');
+    let ext = String(q.get('ext') || '').toLowerCase(); if (ext === 'jpeg') ext = 'jpg'; if (ext === 'markdown') ext = 'md';
+    const img = ATT_IMG.includes(ext);
+    if (!img && !ATT_DOC.includes(ext)) throw new Error('첨부할 수 없는 형식입니다(가능: 이미지 PNG · JPG · GIF · WEBP, PDF, 글 TXT · MD · CSV).');
+    const max = img ? ATT_IMG_MAX : ATT_DOC_MAX, over = img ? '이미지는 7.5MB 이하만 첨부할 수 있습니다.' : 'PDF · 글 파일은 30MB 이하만 첨부할 수 있습니다.';
+    let buf; try { buf = await raw(max + 1); } catch (e) { throw new Error(over); }
+    if (!buf.length || buf.length > max) throw new Error(over);
     fs.mkdirSync(attachTmp, { recursive: true });
     const old = Date.now() - 6 * 3600 * 1000;   // 등록하지 않고 남은 임시 파일은 6시간 뒤 지운다
     core.rmGlob(attachTmp, (x) => { try { return fs.statSync(path.join(attachTmp, x)).mtimeMs < old; } catch (e) { return false; } });

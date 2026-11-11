@@ -47,9 +47,9 @@
 - 요청 없이 채팅으로 Figma를 고쳤으면 작업 이력을 직접 남긴다: `POST /api/history {action:'add', by:작업자 이름, doneBy:'Claude', title, text, fileKey, fileName, page, frame, nodeId}` (캡처를 먼저 갱신하면 함께 남는다).
   - 사용량도 직접 남긴다: 윈도우 `powershell -NoProfile -ExecutionPolicy Bypass -File workbench/usage.ps1 -From {작업 시작 시각 ISO} -By {작업자} -Title {작업 내용} [-Frame · -NodeId · -FileKey · -FileName · -Page]`, 맥 `perl workbench/usage.pl --from … --by … --title …`. 시작 시각은 그 작업을 부탁받은 사용자 메시지 시각이다.
 - 요청 데이터: `workbench/edit_requests.json` (`items[]`: id, nodeId, frame, page, fileKey, fileName, editable, type, priority, layout, text, status, note, author, images, ask, replies)
-- **첨부 이미지**: 요청에 `images: [{file, small, name, size}]`가 있으면 처리 전에 **원본 `file`**(`workbench/req_images/{요청 ID}_{n}.{ext}`, 이 PC에만)을 Read로 열어 보고, 요청 글과 함께 해석한다(「이 화면처럼」, 빨간 표시 부분 등). 이미지와 글이 어긋나거나 이미지로 알 수 없으면 「보류」와 질문을 note에.
-  - Workbench 수정 요청 칸에서 붙여넣기 · 끌어다 놓기 · 파일 선택으로 넣는다. 최대 5장, 한 장 10MB 미만(PNG · JPG · GIF · WEBP). 원본을 `POST /api/attach?ext=` → `{tmp}`로 먼저 올리고, `add`의 `images:[{tmp, small, name}]`로 등록하면 서버가 요청 ID 이름으로 옮긴다.
-  - 작업 이력(깃 공유)에는 원본이 아니라 브라우저가 만든 줄인 사본(긴 변 1600 JPG, `small`)만 `.history/attach/{PC}_{요청 ID}_{n}.jpg`로 올린다. 요청을 지우면 원본 · 사본 모두 지운다.
+- **첨부 파일**: 요청에 `images: [{file, small, name, size}]`가 있으면(이름은 예전 그대로 `images`지만 이미지 · PDF · 글 파일이 섞여 있다) 처리 전에 **원본 `file`**(`workbench/req_images/{요청 ID}_{n}.{ext}`, 이 PC에만)을 모두 Read로 열어 보고, 요청 글과 함께 해석한다(「이 화면처럼」, 빨간 표시 부분, 「첨부한 정의서대로」 등). PDF는 10쪽이 넘으면 Read의 `pages`로 나눠 읽는다(한 번에 20쪽까지). 첨부와 글이 어긋나거나 첨부로 알 수 없으면 「보류」와 질문을 note에.
+  - Workbench 수정 요청 칸에서 붙여넣기 · 끌어다 놓기 · 파일 선택으로 넣는다. 조건은 **Claude가 읽을 수 있는 것**(Claude 문서 기준, 2026-11-11): 이미지 PNG · JPG · GIF · WEBP는 파일 7.5MB(base64 10MB) · 8000×8000px 이하, PDF · 글(TXT · MD · CSV)은 30MB 이하, 한 요청에 20개까지. Word · Excel 등은 받지 않는다(Claude가 바로 읽지 못함 — PDF로 바꿔 올린다). 화면(`Figma_Workbench.html`의 `ATT_*`)과 서버(`node/server/writes.js`의 `ATT_*`)가 같은 조건을 쓴다. 원본을 `POST /api/attach?ext=` → `{tmp}`로 먼저 올리고, `add`의 `images:[{tmp, small, name}]`로 등록하면 서버가 요청 ID 이름으로 옮긴다.
+  - 작업 이력(깃 공유)에는 원본이 아니라 이미지만 브라우저가 만든 줄인 사본(긴 변 1600 JPG, `small`)을 `.history/attach/{PC}_{요청 ID}_{n}.jpg`로 올린다. PDF · 글은 사본이 없어 이 PC에만 있다. 요청을 지우면 원본 · 사본 모두 지운다.
 - **레이아웃**: 요청에 `layout`(예: `2. 목록 (테이블)`)이 있으면 `docs/layout_structures/Layout_Structure.html`의 그 레이아웃(공통 틀 · 영역 크기 · 규칙, 테이블이면 텍스트 정렬)을 따라 만들거나 고친다. 와이어프레임은 같은 폴더의 PNG(`01_dashboard.png` … `09_chart_filter.png`)다.
 - `Common_UX_Changelog.md` 항목 제목 앞에 파일명을 붙인다(예: `[CURECA 기획] …`).
 
