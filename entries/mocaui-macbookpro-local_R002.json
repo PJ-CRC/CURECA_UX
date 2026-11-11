@@ -1,0 +1,41 @@
+{
+  "id": "mocaui-macbookpro-local_R002",
+  "kind": "request",
+  "team": "stagora",
+  "status": "완료",
+  "at": "2026-11-11T14:08:05+09:00",
+  "createdAt": "2026-11-11T14:03:10+09:00",
+  "by": "김목화",
+  "doneBy": "Claude",
+  "pc": "Mocaui-MacBookPro.local",
+  "reqId": "R002",
+  "fileKey": "cDjaemHjetS7RcAHRUIMY5",
+  "fileName": "STAgora AI Workspace",
+  "page": "Common UX_정리중",
+  "frame": "COMM-5 LIST",
+  "nodeId": "124:58092",
+  "type": "일반",
+  "layout": "",
+  "text": "헤더 참고해서 목차 순서 맞춰줘",
+  "note": "COMM-5 LIST 목차를 번호형 헤더(5-1 ~ 5-26) 순서 · 「5-1.」 글머리로 바꿈\n- 목차 3단: a. Accordion … z. Error → 5-1. Accordion … 5-26. Error 페이지 (헤더 이름 그대로)\n- 빠져 있던 5-2 Breadcrumb · 5-16 Profile · 5-20 Card · 5-22 Tag · 5-23 Top Button 추가\n- 같은 번호 헤더는 한 줄씩: 5-8 Loading-Skeleton / Map, 5-16 Combo / Profile, 5-20 Toast / Card, 5-25 Validation Check / Global Filter\n- 목차가 프레임 밖으로 넘쳐 단 간격 60 → 40, 오른쪽 여백 86에 맞춤(글은 플러그인 J253 · J254로 Pretendard 그대로)\n- 확인 필요: 지금 헤더 번호가 R001 때와 다름(예: 5-20 Toast, 5-21 Sorting, 5-24 Scale Bar, 5-25 Global Filter). 지금 페이지 헤더를 기준으로 했고, 같은 번호 중복(5-8 · 5-16 · 5-20 · 5-25)은 그대로 둠\n작업 기준: 작업규칙 없음 · 정책서 통합운영툴 - 로컬 서버 정책 · UX가이드 통합운영툴_Common UX · 기준데이터 없음 · 화면 정의서 UX Kit(Component) 화면 정의서",
+  "shot": "shots/mocaui-macbookpro-local_R002.jpg",
+  "shots": [
+    {
+      "file": "shots/mocaui-macbookpro-local_R002.jpg",
+      "nodeId": "124:58092",
+      "frame": "COMM-5 LIST"
+    }
+  ],
+  "images": [],
+  "frames": [],
+  "marks": [],
+  "ask": null,
+  "replies": [
+    {
+      "at": "2026-11-11T14:05:43+09:00",
+      "by": "김목화",
+      "q": "목차를 어떤 헤더 기준으로 맞출까요?",
+      "text": "번호형 헤더(5-1 ~ 5-26) 순서로, 글머리도 5-1. 형식으로"
+    }
+  ]
+}
