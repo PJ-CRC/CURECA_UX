@@ -220,8 +220,54 @@ function findClaude() {
   const exe = path.join(LAD, 'AnthropicClaude', 'claude.exe'); if (core.exists(exe)) claudeApp = exe;
   return claudeApp || null;
 }
+// 맥: 앱(Figma AI Run.app)으로 띄운 서버는 PATH가 짧아(/usr/bin 정도) 홈브루 · npm · 데스크톱 앱의 claude를 못 본다
+//  → 예전 서버(find_claude_code)처럼 흔한 설치 위치 · 로그인 셸의 PATH · Claude 데스크톱 앱이 넣어 둔 것을 차례로 찾는다
+//  찾은 폴더는 이 서버의 PATH에 붙인다(띄우는 에이전트 · 터미널 창이 물려받는다. npm으로 깐 claude는 같은 폴더의 node로 돈다)
+function addPath(d) { const ds = String(process.env.PATH || '').split(':'); if (d && !ds.includes(d)) process.env.PATH = (process.env.PATH ? process.env.PATH + ':' : '') + d; }
+let shellAt = 0, shellClaude = '';
+function loadShellPath() {
+  if (Date.now() - shellAt < 60000) return; shellAt = Date.now();   // 못 찾았으면 1분 뒤 다시 묻는다(그사이 설치했을 수 있다)
+  const sh = process.env.SHELL && core.exists(process.env.SHELL) ? process.env.SHELL : '/bin/zsh';
+  let out = '';
+  try { out = String(spawnSync(sh, ['-lic', 'echo __PATH__=$PATH; command -v claude'], { encoding: 'utf8', timeout: 6000, stdio: ['ignore', 'pipe', 'ignore'] }).stdout || ''); } catch (e) {}
+  for (const l of out.split('\n')) {
+    const m = /__PATH__=(\S*)/.exec(l); if (m) { m[1].split(':').forEach(addPath); continue; }
+    const c = /(\/[^'"\s]*\/claude)\b/.exec(l); if (c && isExe(c[1])) shellClaude = c[1];   // 경로 또는 별칭(alias claude='…/claude')
+  }
+}
+function isExe(f) { try { const st = fs.statSync(f); return st.isFile() && (st.mode & 0o111) !== 0; } catch (e) { return false; } }
+// 'a/*/b' 같은 경로 패턴(* = 폴더 하나)에 맞는 파일
+function globDirs(pat) {
+  let cur = ['']; for (const part of pat.split('/').filter((x, i) => x !== '' || i === 0)) {
+    const next = []; for (const base of cur) {
+      if (part === '') { next.push('/'); continue; }
+      if (!part.includes('*')) { next.push(path.join(base, part)); continue; }
+      const re = new RegExp('^' + part.replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*') + '$');
+      let es = []; try { es = fs.readdirSync(base); } catch (e) {} for (const n of es) if (re.test(n)) next.push(path.join(base, n));
+    } cur = next;
+  } return cur;
+}
+function findClaudeCodeMac() {
+  const home = process.env.HOME || '';
+  const dirs = ['/usr/local/bin', '/opt/homebrew/bin', `${home}/.local/bin`, `${home}/.claude/local`, `${home}/.claude/bin`, `${home}/.npm-global/bin`,
+    `${home}/.volta/bin`, `${home}/.bun/bin`, `${home}/Library/pnpm`, `${home}/.yarn/bin`];
+  const look = () => { for (const d of String(process.env.PATH || '').split(':').concat(dirs)) { if (d && isExe(path.join(d, 'claude'))) { addPath(d); return path.join(d, 'claude'); } } return ''; };
+  let hit = look(); if (hit) return hit;
+  loadShellPath(); if (shellClaude) return shellClaude;
+  hit = look(); if (hit) return hit;
+  const newest = (l) => l.filter(isExe).sort((a, b) => fs.statSync(b).mtimeMs - fs.statSync(a).mtimeMs)[0] || '';
+  // nvm · asdf · fnm로 깐 node의 전역 npm(가장 최근 것)
+  hit = newest([].concat(...[`${home}/.nvm/versions/node/*/bin/claude`, `${home}/.asdf/installs/nodejs/*/bin/claude`, `${home}/.local/share/fnm/node-versions/*/installation/bin/claude`].map(globDirs)));
+  if (hit) { addPath(path.dirname(hit)); return hit; }
+  // Claude 데스크톱 앱이 넣어 둔 것: 예전 claude-code/{버전}/{해시}/claude, 새 버전(2.1.3xx~) …/{해시}/claude.app/Contents/MacOS/claude
+  const as = `${home}/Library/Application Support`;
+  return newest([].concat(...[`${as}/Claude*/claude-code/*/claude`, `${as}/Claude*/claude-code/*/*/claude`, `${as}/Claude*/*/claude-code/*/*/claude`,
+    `${as}/Claude*/claude-code/*/claude.app/Contents/MacOS/claude`, `${as}/Claude*/claude-code/*/*/claude.app/Contents/MacOS/claude`,
+    `${as}/Claude*/*/claude-code/*/*/claude.app/Contents/MacOS/claude`].map(globDirs))) || null;
+}
 function findClaudeCode() {
-  const set = String(core.readSetup().claudePath || ''); try { if (set && fs.statSync(set).isFile()) return set; } catch (e) {}
+  const set = String(core.readSetup().claudePath || ''); try { if (set && fs.statSync(set).isFile()) { if (C.isMac) addPath(path.dirname(set)); return set; } } catch (e) {}
+  if (C.isMac) return findClaudeCodeMac();
   const g = onPath('claude'); if (g) return g;
   if (W) {   // Claude 데스크톱 앱에 들어 있는 것(가장 최근)
     let best = null, bt = 0; const walk = (d, depth) => { if (depth > 8) return; let es = []; try { es = fs.readdirSync(d, { withFileTypes: true }); } catch (e) { return; }

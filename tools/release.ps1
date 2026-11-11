@@ -39,7 +39,7 @@ if ($Publish) {
 # ── 프로그램 파일 목록 ──
 # 화면 파일(html · appnav · common.js)은 pages/ 폴더째 넣는다(아래 폴더 목록). 주소는 그대로이고 서버가 pages/에서 찾는다
 $files = 'VERSION','Figma AI Run.bat','Figma AI Run (Terminal).command','guide_server.ps1','guide_server_mac.pl',
-  'Common_UX_Changelog.md','RELEASE_NOTES.md','CLAUDE.md','README.md','tools\google-sheet-bridge.gs','tools\app_icon\FigmaAIRun.ico'
+  'Common_UX_Changelog.md','RELEASE_NOTES.md','CLAUDE.md','README.md','tools\google-sheet-bridge.gs','tools\app_icon\FigmaAIRun.ico','tools\app_icon\icon_1024.png'
 $wb = 'edit_requests.json','watch_requests.ps1','watch_requests.pl','agent.ps1','agent.pl','launch_win.ps1','history_sync.ps1','history_sync.sh','github_login.ps1','github_login.sh','update.ps1','update.sh','git_remote.txt','usage.ps1','usage.pl','pricing.json','removed_files.txt'
 $list = New-Object System.Collections.Generic.List[string]
 foreach ($f in $files) { $list.Add($f) }
