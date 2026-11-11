@@ -1,9 +1,9 @@
 {
    "ask" : null,
-   "at" : "2026-11-11T13:25:06+09:00",
+   "at" : "2026-11-11T13:25:27+09:00",
    "by" : "김목화",
    "createdAt" : "2026-11-11T13:25:06+09:00",
-   "doneBy" : "김목화",
+   "doneBy" : "Claude",
    "fileKey" : "cDjaemHjetS7RcAHRUIMY5",
    "fileName" : "STAgora AI Workspace",
    "frame" : "[단일] 검사실 · Breadcrumb (LNB) · COMM-5-b",
@@ -20,7 +20,7 @@
    "reqId" : "R001",
    "shot" : "",
    "shots" : [],
-   "status" : "대기",
+   "status" : "진행 중",
    "team" : "stagora",
    "text" : "COMM-5  component부분 헤더 변경 :  5-1. Accordion 참고 , 헤더 우측에는 상위 넘버 기재",
    "type" : "일반"
