@@ -22,6 +22,7 @@ up() { /usr/bin/curl -s --max-time 1 "$URL/api/projects" | /usr/bin/grep -q '"de
 holders() { /usr/sbin/lsof -nP -ti "tcp:$PORT" -sTCP:LISTEN 2>/dev/null; }
 free_port() {
   /usr/bin/pkill -f 'guide_server' 2>/dev/null
+  /usr/bin/pkill -f "node/server/main.js --port $PORT" 2>/dev/null
   pids="$(holders)"; [ -n "$pids" ] && kill $pids 2>/dev/null
   for _ in 1 2 3 4 5 6 7 8 9 10; do [ -z "$(holders)" ] && return; sleep 0.3; done
   pids="$(holders)"; [ -n "$pids" ] && kill -9 $pids 2>/dev/null
@@ -51,6 +52,13 @@ if [ ! -f "$ROOT/guide_server_mac.pl" ]; then
 fi
 mkdir -p "$SUPPORT" "$(dirname "$LOG")"
 
+# 실행 중 화면: 서버가 뜨기 전에 바로 pages/Loading.html(file://)을 연다. 지금 단계를 workbench/.launch_progress.js에 쓰면 그 화면이 보여 주고,
+#  서버가 응답하면 그 화면이 /start로 넘어간다(여기서 브라우저를 다시 열지 않는다)
+prog() { printf 'window.WB_LAUNCH = {"step":"%s","text":"%s","error":"%s"};\n' "$1" "$2" "$3" > "$ROOT/workbench/.launch_progress.js" 2>/dev/null; }
+prog stop
+[ -f "$ROOT/pages/Loading.html" ] && /usr/bin/open "$ROOT/pages/Loading.html"
+prog update
+
 PERL=/usr/bin/perl
 [ -x "$PERL" ] || PERL="$(command -v perl)"
 if [ -z "$PERL" ]; then
@@ -62,14 +70,37 @@ cd "$ROOT" || exit 1
 # 자동 업데이트: 관리자가 배포한 새 버전이 있으면 받아서 프로그램 파일을 바꾼다(workbench/update.sh)
 #  인터넷 · 로그인 문제로 안 되면 지금 버전으로 실행한다. 이 스크립트도 바뀔 수 있어 아래는 새 서버 파일로 띄운다
 [ -f "$ROOT/workbench/update.sh" ] && /bin/bash "$ROOT/workbench/update.sh" > /dev/null 2>&1
-# 앱이 끝나도 서버가 계속 돌도록 완전히 떼어 낸다
-( nohup "$PERL" ./guide_server_mac.pl "$PORT" > "$LOG" 2>&1 < /dev/null & )
-
-# 최대 15초 기다린다
-for _ in $(seq 1 60); do
-  sleep 0.25
-  if up; then /usr/bin/open "$URL/start"; exit 0; fi
-done
+# 서버(v0.21.0~): Node 서버(node/server/main.js). Node.js는 설치하지 않고 처음 한 번 공식 사이트에서 받아 둔다(node/run_mac.sh --no-start)
+#  Node를 못 받거나 Node 서버가 뜨지 않으면 예전 서버(guide_server_mac.pl)로. 예전 서버로 고정하려면 "$SUPPORT/server_mode.txt"에 ps
+wait_up() { for _ in $(seq 1 $(( $1 * 4 ))); do sleep 0.25; up && return 0; done; return 1; }
+MODE=node; [ "$(tr -d '[:space:]' < "$SUPPORT/server_mode.txt" 2>/dev/null | tr 'A-Z' 'a-z')" = "ps" ] && MODE=ps
+[ -f "$ROOT/node/run_mac.sh" ] || MODE=ps
+OK=0
+if [ "$MODE" = node ]; then
+  VER="$(tr -d '[:space:]' < "$ROOT/node/NODE_VERSION")"
+  NODE="$SUPPORT/node/$VER/bin/node"
+  if [ ! -x "$NODE" ]; then
+    # 처음 한 번 받기(약 55MB): 받는 동안 알림
+    prog node '처음 한 번 받는 중(약 55MB, 1~2분)'
+    /bin/bash "$ROOT/node/run_mac.sh" --no-start >> "$LOG.node-setup" 2>&1
+  fi
+  prog node
+  # 받은 Node가 이 Mac에서 돌지 않으면(오래된 macOS 등) 기다리지 않고 바로 예전 서버로
+  if [ -x "$NODE" ] && ! "$NODE" -v > /dev/null 2>&1; then echo "$(date '+%F %T') Node가 이 Mac에서 실행되지 않아 예전 서버로 띄움($("$NODE" -v 2>&1 | head -1))" >> "$SUPPORT/launch.log"; NODE=""; fi
+  if [ -n "$NODE" ] && [ -x "$NODE" ]; then
+    prog start
+    # 앱이 끝나도 서버가 계속 돌도록 완전히 떼어 낸다
+    ( nohup "$NODE" "$ROOT/node/server/main.js" --port "$PORT" --root "$ROOT" --log "$LOG" > /dev/null 2>&1 < /dev/null & )
+    if wait_up 20; then OK=1; else /usr/bin/pkill -f "node/server/main.js --port $PORT" 2>/dev/null; echo "$(date '+%F %T') Node 서버가 20초 안에 뜨지 않아 예전 서버로 띄움" >> "$SUPPORT/launch.log"; fi
+  else echo "$(date '+%F %T') Node를 받지 못해 예전 서버로 띄움" >> "$SUPPORT/launch.log"; fi
+fi
+if [ $OK = 0 ]; then
+  prog start '예전 서버로 시작'
+  ( nohup "$PERL" ./guide_server_mac.pl "$PORT" > "$LOG" 2>&1 < /dev/null & )
+  wait_up 15 && OK=1
+fi
+if [ $OK = 1 ]; then prog open; [ -f "$ROOT/pages/Loading.html" ] || /usr/bin/open "$URL/start"; exit 0; fi   # 실행 중 화면이 /start로 넘어간다
+prog start '' "Workbench 서버를 시작하지 못했습니다. 다시 실행해 보고, 그래도 안 되면 기록 파일을 담당자에게 보내 주세요: $LOG"
 alert "서버를 시작하지 못했습니다. 앱을 닫았다가 다시 열어 보세요. 기록 파일을 엽니다."
 /usr/bin/open -e "$LOG"
 exit 1

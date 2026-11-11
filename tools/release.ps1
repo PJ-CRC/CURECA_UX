@@ -46,8 +46,8 @@ foreach ($f in $files) { $list.Add($f) }
 foreach ($f in $wb) { $list.Add("workbench\$f") }
 # 프로토타입 · 프로젝트(Figma 파일)는 PC마다 따로라 넣지 않는다(기본 프로젝트 · 예시 프로토타입 없음)
 # 배포에서 뺄 docs 파일이 생기면 여기 정규식에 더한다
-$skip = '^$'   # 배포에서 뺄 docs 파일(지금은 없음)
-foreach ($d in 'pages','docs','figma_plugin','.claude','Figma AI Run.app') {
+$skip = '^node[\\/]tools[\\/]'   # 배포에서 뺄 파일: Node 서버 비교 시험 도구(개발 PC 전용)
+foreach ($d in 'pages','node','docs','figma_plugin','.claude','Figma AI Run.app') {
   Get-ChildItem -LiteralPath (Join-Path $Src $d) -Recurse -File -Force | Where-Object { $_.Name -ne 'settings.local.json' } | ForEach-Object { $rel = $_.FullName.Substring($Src.Length + 1); if ($rel -notmatch $skip) { $list.Add($rel) } }
 }
 # 내용을 바꿔 넣는 파일: 수정 요청은 PC마다 따로 쌓이므로 빈 목록(저장소에 없어도 된다), README는 브랜치 안내 줄을 release용으로

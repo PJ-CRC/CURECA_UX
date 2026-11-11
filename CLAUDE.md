@@ -52,7 +52,8 @@
 ## 프로그램 폴더
 
 - 화면 파일(html)과 화면이 함께 쓰는 `appnav.js` · `appnav.css` · `common.js`는 **`pages/`**에 있다. 주소는 폴더 이름 없이 그대로다(`http://localhost:8765/Work.html`) — 서버가 `pages/`에서 찾는다. 문서에서 `Work.html`처럼 적은 것은 `pages/Work.html`이다.
-- 서버 `guide_server.ps1`(맥 `guide_server_mac.pl`) · 실행 파일(`Figma AI Run`)은 맨 위, 감시 · 동기화 · 업데이트 스크립트는 `workbench/`, 규칙 문서는 `docs/claude/`, 매뉴얼 그림은 `docs/manual/`, Figma 플러그인은 `figma_plugin/`, 배포 도구는 `tools/`.
+- **서버는 Node.js 한 벌(`node/server/`)**이다(v0.21.0~). Figma AI Run이 처음 한 번 공식 Node를 받아 PC별 폴더에 두고 띄운다(`node/run_win.ps1` · `run_mac.sh`, 설치 없음). Node를 못 쓰면 예전 서버(`guide_server.ps1` · 맥 `guide_server_mac.pl`)로 띄우고, PC별 폴더의 `server_mode.txt` = `ps`면 예전 서버로 고정한다. 서버 기능을 고칠 때는 `node/server/`를 고친다(예전 서버는 대비용으로만 둔다). 옮긴 경위 · 비교 검사는 `node/README.md`.
+- 실행 파일(`Figma AI Run`)은 맨 위, 감시 · 동기화 · 업데이트 스크립트는 `workbench/`, 규칙 문서는 `docs/claude/`, 매뉴얼 그림은 `docs/manual/`, Figma 플러그인은 `figma_plugin/`, 배포 도구는 `tools/`.
 
 ## 프로젝트 폴더
 

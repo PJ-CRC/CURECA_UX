@@ -46,3 +46,5 @@ projects/
 workbench/*.tmp
 # 바로가기(서버가 PC마다 만듦, 폴더 위치가 들어감)
 /Figma AI Run.lnk
+# 실행 중 화면의 진행 표시(실행할 때마다 다시 씀)
+workbench/.launch_progress.js
