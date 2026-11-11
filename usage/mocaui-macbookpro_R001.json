@@ -1,0 +1,28 @@
+{
+   "at" : "2026-11-11T13:49:46+09:00",
+   "by" : "김목화",
+   "cacheRead" : 2851583,
+   "cacheWrite" : 117967,
+   "calls" : 26,
+   "doneBy" : "Claude",
+   "fileKey" : "cDjaemHjetS7RcAHRUIMY5",
+   "fileName" : "STAgora AI Workspace",
+   "frame" : "[단일] 검사실 · Breadcrumb (LNB) · COMM-5-b",
+   "from" : "2026-11-11T13:43:29+09:00",
+   "id" : "mocaui-macbookpro_R001",
+   "input" : 53,
+   "kind" : "request",
+   "models" : {
+      "claude-opus-5-5" : 26
+   },
+   "nodeId" : "80:57559",
+   "output" : 28139,
+   "page" : "Common UX_정리중",
+   "pc" : "Mocaui-MacBookPro",
+   "reqId" : "R001",
+   "reqType" : "일반",
+   "team" : "stagora",
+   "text" : "COMM-5  component부분 헤더 변경 :  5-1. Accordion 참고 , 헤더 우측에는 상위 넘버 기재",
+   "total" : 2997742,
+   "usd" : 2.077
+}
