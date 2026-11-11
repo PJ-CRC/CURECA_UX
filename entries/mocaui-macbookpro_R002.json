@@ -1,9 +1,9 @@
 {
    "ask" : null,
-   "at" : "2026-11-11T14:03:10+09:00",
+   "at" : "2026-11-11T14:03:22+09:00",
    "by" : "김목화",
    "createdAt" : "2026-11-11T14:03:10+09:00",
-   "doneBy" : "김목화",
+   "doneBy" : "Claude",
    "fileKey" : "cDjaemHjetS7RcAHRUIMY5",
    "fileName" : "STAgora AI Workspace",
    "frame" : "COMM-5 LIST",
@@ -20,7 +20,7 @@
    "reqId" : "R002",
    "shot" : "",
    "shots" : [],
-   "status" : "대기",
+   "status" : "진행 중",
    "team" : "stagora",
    "text" : "헤더 참고해서 목차 순서 맞춰줘",
    "type" : "일반"
