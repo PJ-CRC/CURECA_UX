@@ -44,3 +44,5 @@ workbench/.sheet_cache/
 projects/
 # 이력 동기화 · 서버가 쓰는 동안 잠깐 생기는 임시 파일
 workbench/*.tmp
+# 바로가기(서버가 PC마다 만듦, 폴더 위치가 들어감)
+/Figma AI Run.lnk
