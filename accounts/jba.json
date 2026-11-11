@@ -2,9 +2,6 @@
     "id":  "jba",
     "name":  "안종범",
     "admin":  false,
-    "teams":  [
-                  "stagora"
-              ],
     "menus":  [
                   "plan",
                   "guide",
@@ -13,6 +10,12 @@
                   "usage",
                   "proto"
               ],
+    "createdAt":  "2026-11-10T14:13:06+09:00",
+    "createdBy":  "brex",
+    "salt":  "Jr+mpByj2C9GuuOjUZMOQg==",
+    "iter":  100000,
+    "hash":  "906BWLxLv+9AXGE1d9tNEMxs9UIFKSLUlwiUKs15C4k=",
+    "pwAt":  "2026-11-10T14:13:06+09:00",
     "writes":  [
                    "plan",
                    "guide",
@@ -23,12 +26,10 @@
     "approves":  [
 
                  ],
+    "teams":  [
+                  "cureca",
+                  "stagora"
+              ],
     "active":  true,
-    "createdAt":  "2026-11-10T14:13:06+09:00",
-    "createdBy":  "brex",
-    "salt":  "Jr+mpByj2C9GuuOjUZMOQg==",
-    "iter":  100000,
-    "hash":  "906BWLxLv+9AXGE1d9tNEMxs9UIFKSLUlwiUKs15C4k=",
-    "pwAt":  "2026-11-10T14:13:06+09:00",
-    "updatedAt":  "2026-11-10T14:13:06+09:00"
+    "updatedAt":  "2026-11-11T16:50:42+09:00"
 }
