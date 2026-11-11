@@ -1,0 +1,40 @@
+Menu (1),Menu (2),Menu (3),Menu (4),Function,Main Mode,Console Mode,TSS Mode
+Login,,,,All,O,O,O
+Logout,,,,All,O,O,O
+Profile,,,,All,O,X,X
+Run,,,,All,O,O,X
+Quick Start,,,,All,O,O,X
+Event History,,,,View,O,O,O
+Event History,,,,Status Control,O,X,X
+Event History,,,,Note Writing,O,X,X
+Information,Program,,,All,O,O,O
+Dashboard,,,,View,O,O,O
+Dashboard,,,,Initialize,O,O,X
+Dashboard,,,,Stop,O,O,X
+Dashboard,,,,Door Control,O,O,X
+Material Setup,Group Lots,Group Universal Cartridge Kit,,All,X,X,O
+Material Setup,Group Lots,Group PCR Reagent Kit,,All,X,X,O
+Material Setup,Prepare Carrier,Load Samples into Trolley,Load Samples into Socket,All,X,X,O
+Material Setup,Prepare Carrier,Load Samples into Trolley,Load Socket into Tray,All,X,X,O
+Material Setup,Prepare Carrier,Load Samples into Trolley,Load Tray into Trolley,All,X,X,O
+Material Setup,Prepare Carrier,Load Consumables and Reagents into Trolley,Load Consumables and Reagents into Tray,All,X,X,O
+Material Setup,Prepare Carrier,Load Consumables and Reagents into Trolley,Load Tray into Trolley,All,X,X,O
+Material Setup,Prepare Carrier,Load PK/IC Tubes,,All,X,X,O
+Material Setup,Prepare Carrier,Load PCR Reagents,,All,X,X,O
+Material Setup,Prepare Carrier,Load MM Tubes,,All,X,X,O
+Material Setup,Load Materials,,,All,X,O,X
+Material Setup,Empty Waste Bin,,,All,X,O,X
+Test Management,Test Order,,,All,O,O,O
+Test Management,Test Status,,,All,O,O,O
+Sample Tracking,Samples,,,All,O,O,O
+Sample Tracking,96-DWP,,,All,O,O,O
+Sample Tracking,PCR Plate,,,All,O,O,O
+Instrument,,,,View,O,O,O
+Instrument,,,,Door Control,O,O,X
+Inventory,,,,All,O,O,O
+Setting,Policy Setting,,,All,O,O,O
+Setting,Protocol Setting,,,All,O,O,O
+Setting,System Setting,,,View,O,O,O
+Setting,System Setting,,,Change Settings,O,X,X
+Setting,Tube Setting,,,All,O,O,O
+Setting,Assay Pack Setting,,,All,O,X,X

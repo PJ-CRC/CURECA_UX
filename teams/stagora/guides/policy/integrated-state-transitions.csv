@@ -1,0 +1,22 @@
+통합 상태 (전환 후),이전 통합 상태,전환 트리거·시점,모듈 상태 조건,상태 전환 및 유지 조건
+NotInitialized,해당 없음,부팅 후 장비 초기화 수행 전,모든 모듈이 NotInitialized,NotInitialized가 아닌 모듈 1개 이상 존재하는 경우 Error로 전환
+Initializing,NotInitialized,Initialize 버튼 클릭,해당 없음,Initializing으로 전환하고 장비 제어 시스템에 Initialize 명령 전송. Initialize 완료 신호 수신 전까지 상태 유지
+Ready,Initializing,Initialize 완료 신호 수신,모든 모듈이 Ready,조건 충족 시 Ready로 전환
+Ready,Running,Run 완료,모든 모듈이 Ready,Run 완료 전에는 모든 모듈이 Ready여도 Running 유지
+Ready,Stopping,Run Stop 완료 신호 수신,모든 모듈이 Ready,조건 충족 시 Ready로 전환
+Ready,Error,모듈 상태 변화,모든 모듈이 Ready,조건 충족 시 Ready로 전환
+Running,Ready,Run Start 버튼 클릭,해당 없음,Running으로 전환하고 장비 제어 시스템에 Run Start 명령 전송
+Running,PartialRunning / Paused / Error,모듈 상태 변화,모든 모듈이 Ready 또는 Running,조건 충족 시 Running으로 전환
+PartialRunning,Running,모듈 상태 변화,(Running 모듈 ≥ 1) AND (Pausing ≥ 1 OR Paused ≥ 1 OR Error ≥ 1),조건 충족 시 PartialRunning으로 전환
+Stopping,Running / PartialRunning / Paused,Run Stop 버튼 클릭,해당 없음,Stopping으로 전환하고 장비 제어 시스템에 Run Stop 명령 전송. Run Stop 완료 신호 수신 전까지 상태 유지
+Paused,Running,모듈 상태 변화,모든 모듈이 Paused,조건 충족 시 Paused로 전환
+Paused,PartialRunning,모듈 상태 변화,Paused ≥ 1 AND Running = 0 AND Pausing = 0 AND Error = 0,조건 충족 시 Paused로 전환
+Error,NotInitialized,모듈 상태 불일치,NotInitialized가 아닌 모듈 1개 이상 존재,조건 충족 시 Error로 전환
+Error,Initializing,Initialize 완료 신호 수신,Error 모듈 ≥ 1,조건 충족 시 Error로 전환
+Error,Ready,모듈 상태 변화,Error 모듈 ≥ 1,조건 충족 시 Error로 전환
+Error,Running,모듈 상태 변화,모든 모듈이 Error,조건 충족 시 Error로 전환
+Error,Running,Run 완료,Error 모듈 ≥ 1,조건 충족 시 Error로 전환
+Error,PartialRunning,모듈 상태 변화,Error 모듈 ≥ 1 AND Running = 0 AND Pausing = 0,조건 충족 시 Error로 전환
+Error,Stopping,Run Stop 완료 신호 수신,Error 모듈 ≥ 1,조건 충족 시 Error로 전환
+Error,Paused,모듈 상태 변화,Error 모듈 ≥ 1,조건 충족 시 Error로 전환
+Error,전체 상태,통신 단절 또는 프로그램 자체 오류 발생,해당 없음,즉시 Error로 전환

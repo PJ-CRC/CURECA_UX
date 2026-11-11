@@ -1,0 +1,90 @@
+8월 정책서 영역,8월 정책명,이전 ID,새 정책 ID,처리,날짜,비고
+장비 관리 및 정의,CURECA 전체 구동 상태값 정의,POL-INS-05,"POL-EQP-001, POL-EQP-002",씨젠 상태 정보 261021 기준으로 고쳐 옮김,2026-11-02,Ready 조건 Idle → Ready / Partial Running·Paused 조건 씨젠 기준
+장비 관리 및 정의,모듈 상태값 정의,POL-INS-06,POL-EQP-001,옮김,2026-11-02,Error 모듈 복구는 고객 논의 CA-0002
+장비 관리 및 정의,디바이스 상태값 정의,POL-INS-07,POL-EQP-001,옮김,2026-11-02,코드명 Idle / UI 표기 Ready
+장비 관리 및 정의,Spare storage 정의,POL-INS-04,POL-EQP-006,옮김,2026-11-02,
+장비 관리 및 정의,Door 개폐 및 잠금 전환 규칙,POL-INS-01,POL-EQP-008,옮김 (씨젠 기준과 사용자 확인 반영),2026-11-02,Running 중 Unlock 불가는 씨젠 기준(조건부 허용)으로 바뀜
+장비 관리 및 정의,Enable Setting (모듈 및 유닛 사용 설정),POL-INS-02,POL-EQP-009,옮김 (Management로 이름 바뀜),2026-11-02,설정 대상을 같은 Device Unit 2대 이상으로 넓힘
+장비 관리 및 정의,Error Rate,POL-INS-03,POL-EQP-010,옮김,2026-11-02,표시 위치는 CA-0001
+장비 관리 및 정의,페기물함 상태값 정의,POL-INS-08,,INV 정책 때 정함,2026-11-02,값은 glossary/status-values.csv 폐기함/폐액통 상태
+,,,POL-EQP-003,새로 씀 (Common UX COMM-4-a),2026-11-02,
+,,,POL-EQP-004,새로 씀 (반영 대기 추가할 것 3),2026-11-02,
+,,,POL-EQP-005,새로 씀 (화면 디스크립션),2026-11-02,
+,,,POL-EQP-007,새로 씀 (씨젠 경광등 시나리오),2026-11-02,
+"Event, System, 사용자 및 권한",계정 유형 및 권한,POL-SYS-01,POL-ACC-001,옮김 (Admin Setting 접근 정정),2026-11-02,Preset Mode(가칭)는 Service Mode로 policy/service-mode.md
+로그인/로그아웃,계정 생성,POL-LOG-01,POL-ACC-002,옮김,2026-11-02,
+로그인/로그아웃,초기 비밀번호 변경,POL-LOG-02,POL-ACC-003,옮김,2026-11-02,
+로그인/로그아웃,아이디 생성 조건,POL-LOG-03,(아래 줄로 옮김),2026-11-02,
+로그인/로그아웃,비밀번호 생성 조건,POL-LOG-04,,판정 대기,2026-11-02,A1·A2
+로그인/로그아웃,Session Timeout,POL-LOG-05,(아래 줄로 옮김),2026-11-02,
+로그인/로그아웃,(정책명 없음) 종료 유형,POL-LOG-06,POL-ACC-004,Common UX 기준으로 고쳐 옮김,2026-11-02,Service [Exit] / Admin·User [Shut Down]
+"Event, System, 사용자 및 권한",Event (등급·상태),POL-SYS-03,POL-EVT-001,옮김 (씨젠 이벤트 정보 기준),2026-11-02,Type은 화면 v2.1.01 기준
+"Event, System, 사용자 및 권한",Event (팝업 노출),POL-SYS-04,POL-EVT-003,옮김,2026-11-02,T-IOS 개별 설정 = Profile Event notifications
+,,,POL-EVT-002,새로 씀 (화면 디스크립션·권한 매트릭스),2026-11-02,
+공통,플랫폼 설명 > 개요,POL-CMN-01,POL-COM-001,옮김,2026-11-02,
+공통,지원 해상도,POL-CMN-02,POL-COM-002,옮김,2026-11-02,
+공통,운영 언어,POL-CMN-03,(아래 줄로 옮김),2026-11-02,
+공통,모듈 구성 운영,POL-CMN-04,POL-COM-003,옮김,2026-11-02,8대 → Module 8종
+"Event, System, 사용자 및 권한",LIS,POL-SYS-02,POL-SYS-001,옮김,2026-11-02,큐레카(QREKA) → CURECA
+,,,POL-SYS-002,새로 씀 (화면 디스크립션),2026-11-02,
+,,,POL-SYS-003,새로 씀 (화면 디스크립션),2026-11-02,
+,,,POL-SYS-004,새로 씀 (화면 디스크립션),2026-11-02,
+Test Policy,Policy 공통 정책,POL-TST-04,POL-TST-001,옮김,2026-11-02,
+Test Policy,검사 리셋 시점 설정,POL-TST-02,POL-TST-002,옮김,2026-11-02,이름 Test Cut-off Time / 기본 06:00
+Test Policy,Cost Setting,POL-TST-03,POL-TST-003,옮김,2026-11-02,
+Test Policy,PCR Regents 조합 검사 정책,POL-TST-01,POL-TST-010,옮김 (검사군 기준, 30종),2026-11-02,HPV·RTI 조합은 T1-a
+,,,POL-TST-004,새로 씀 (화면 디스크립션),2026-11-02,
+,,,POL-TST-005,새로 씀 (씨젠 검사 항목 원본),2026-11-02,
+Test Policy,Protocol 공통 정책,POL-TST-05,POL-TST-006,옮김,2026-11-02,
+Test Policy,M9600 하드웨어 사양 기반 설정 제약,POL-TST-06,POL-TST-007,옮김 (Heating Plate 1·2·3·6 확정),2026-11-02,8번 Plate Spin Tip은 T4
+,,,POL-TST-008,새로 씀 (화면 디스크립션),2026-11-02,
+,,,POL-TST-009,새로 씀 (화면 디스크립션),2026-11-02,
+로그인/로그아웃,아이디 생성 조건,POL-LOG-03,POL-ACC-005,옮김 (각 문자 유형 조건은 비밀번호로),2026-11-02,A1
+로그인/로그아웃,비밀번호 생성 조건,POL-LOG-04,POL-ACC-006,옮김,2026-11-02,A2
+로그인/로그아웃,Session Timeout,POL-LOG-05,POL-ACC-008,옮김,2026-11-02,A4
+,,,POL-ACC-007,새로 씀 (화면 디스크립션·사용자 확인),2026-11-02,
+,,,POL-ACC-009,새로 씀 (화면 디스크립션·사용자 확인),2026-11-02,
+공통,운영 언어,POL-CMN-03,POL-COM-004,고쳐 옮김 (영문 단일 → 6개 언어),2026-11-02,C1
+,,,POL-COM-005,새로 씀 (사용자 확인),2026-11-02,S1
+검체/검사 정의,검사 상태값 정의·로딩 정의,"POL-SMP-01, POL-SMP-02",POL-SMP-001,씨젠 상태 정보 261021 기준으로 고쳐 옮김,2026-11-02,Not Tested 정의 사용자 결정
+검체/검사 정의,검사 시작/종료 시간 정의,POL-SMP-04,POL-SMP-002,옮김,2026-11-02,SM6 (PCR Plate Start 기준)
+검체/검사 정의,재검사,POL-SMP-05,POL-SMP-003,옮김,2026-11-02,
+검체/검사 정의,Batch Card 생성 및 초기화,"POL-SMP-06, POL-SMP-11",POL-SMP-004,옮김 (검사 배치 완료 상태 용도 합침),2026-11-02,
+검체/검사 정의,검체/검사 단위 표기,POL-SMP-07,POL-SMP-005,옮김,2026-11-02,
+검체/검사 정의,검사 시작 후 오더 취소,POL-SMP-08,POL-SMP-006,옮김,2026-11-02,
+검체/검사 정의,만료 시약 검사 불가,POL-SMP-09,POL-SMP-007,고쳐 옮김 (Run 준비 조건 합침),2026-11-02,"SM2, SM2-a (만료 Reagent Run Start 제약 없앰, 사용 직전 자동 폐기)"
+검체/검사 정의,STAT을 통한 검사,POL-SMP-10,POL-SMP-008,옮김,2026-11-02,
+검체/검사 정의,Plate 상태값,POL-SMP-03,POL-SMP-010,고쳐 옮김 (Status 필터에서 Not Tested 제외),2026-11-02,SM1
+,,,POL-SMP-009,새로 씀 (화면 디스크립션),2026-11-02,
+통계,데이터 표출,POL-STA-01,"POL-STA-002, POL-STA-003, POL-STA-005",나눠 옮김 (기본 기간, 필터 초기화, 예측 60일),2026-11-02,
+통계,데이터 설정 범위,POL-STA-02,POL-STA-002,옮김,2026-11-02,
+통계,날짜 연동 규칙,POL-STA-03,POL-STA-002,옮김,2026-11-02,ST2 (팀원 Q10)
+,,,POL-STA-001,새로 씀 (화면 디스크립션·권한표),2026-11-02,ST1
+,,,POL-STA-004,새로 씀 (화면 디스크립션·Cost Setting),2026-11-02,"ST5, ST6"
+,,,POL-STA-006,새로 씀 (화면 디스크립션·EQP·EVT·TST 정책),2026-11-02,"ST8, ST9, ST10"
+시약/소모품 사용 및 폐기,시약 폐기,POL-RGT-01,POL-INV-004,고쳐 옮김 (만료 Reagent 처리는 2026-11-02 결정 따름),2026-11-03,IV4
+시약/소모품 사용 및 폐기,시약 유효기간 관리,POL-RGT-02,POL-INV-004,고쳐 옮김 (Run Start 제약 없앰),2026-11-03,
+시약/소모품 사용 및 폐기,시약 보관 및 재사용,POL-RGT-03,POL-INV-004,옮김,2026-11-03,
+시약/소모품 사용 및 폐기,소모품 및 시약 변동(인/아웃) 시점 정의,POL-RGT-06,POL-INV-006,옮김,2026-11-03,IV5
+시약/소모품 사용 및 폐기,시약 만료 상태값 정의,POL-RGT-08,POL-INV-004,옮김 (값은 status-values.csv),2026-11-03,
+시약/소모품 사용 및 폐기,소모품/시약 재고 상태값 정의,POL-RGT-09,POL-INV-003,옮김 (값은 status-values.csv),2026-11-03,"IV1, IV2"
+시약/소모품 사용 및 폐기,동일 Lot 사용,POL-RGT-04,"POL-INV-007, POL-MAT-009","나눠 옮김 (PCR Reagent 부분 POL-INV-007, Lot 구성과 추출 Reagent 부분 POL-MAT-009)",2026-11-03,
+시약/소모품 사용 및 폐기,전처리 용기별 시약 사용 정책,POL-RGT-05,POL-INV-004,옮김 (규칙 10),2026-11-03,
+시약/소모품 사용 및 폐기,PCR 시약 IC 사용 정책,POL-RGT-07,POL-MAT-009,옮김 (규칙 8),2026-11-03,
+,,,POL-INV-001,새로 씀 (화면 디스크립션·권한표),2026-11-03,
+,,,POL-INV-002,새로 씀 (화면 디스크립션 정책 안내),2026-11-03,IV5
+,,,POL-INV-005,새로 씀 (화면 디스크립션·상태값),2026-11-03,IV9
+,,,POL-COM-006,새로 씀 (사용자 결정 IV10),2026-11-03,IV10-a (Import 형식)
+Material Setup,Carrier(기물) 장착 정책,POL-MAT-01,POL-MAT-001,옮김,2026-11-03,
+Material Setup,소켓(Socket) 내 검체 장착 정책,POL-MAT-02,POL-MAT-006,옮김 (담당자 적재 정책서와 합침),2026-11-03,
+Material Setup,PCR Regents 소켓(Socket) 구성 정책,POL-MAT-03,POL-MAT-008,고쳐 옮김 (IC는 Trolley로),2026-11-03,
+Material Setup,MM tube 소켓(Socket) 구성 정책,POL-MAT-04,POL-MAT-008,옮김,2026-11-03,
+Material Setup,데이터 저장,POL-MAT-05,POL-MAT-002,옮김 (메뉴 이탈 컨펌 추가),2026-11-03,
+Material Setup,기물 데이터 리셋(Reset) 및 갱신 정책,POL-MAT-06,POL-MAT-010,옮김,2026-11-03,MS13
+트롤리 도킹 & Drawer Loading,검체 및 소모품 트롤리 도킹/제어 정책,"POL-DCK-01, POL-DCK-06",POL-LOD-001,옮김,2026-11-03,
+트롤리 도킹 & Drawer Loading,DX Storage 투입부 제어 정책,POL-DCK-02,POL-LOD-002,옮김 (담당자 적재 정책서와 합침),2026-11-03,
+트롤리 도킹 & Drawer Loading,Cold Storage_PCR Rack 정책,POL-DCK-03,POL-LOD-004,옮김,2026-11-03,
+트롤리 도킹 & Drawer Loading,STAT Storage 입고 및 회수 정책,POL-DCK-04,POL-LOD-003,고쳐 옮김 (Sample Socket만),2026-11-03,MS14
+트롤리 도킹 & Drawer Loading,저장 장치 도킹 상태값 정의,POL-DCK-05,POL-LOD-001,옮김 (값은 status-values.csv),2026-11-03,
+,,,"POL-MAT-003, POL-MAT-004, POL-MAT-005, POL-MAT-007, POL-MAT-009",새로 씀 (담당자 적재 정책서·화면 디스크립션),2026-11-03,
+,,,"POL-LOD-005",새로 씀 (화면 디스크립션·사용자 답변),2026-11-03,MS9
