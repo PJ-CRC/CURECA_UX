@@ -8,6 +8,7 @@
 - 맥: `bash node/run_mac.sh [--port 8766] [--readonly]`
 - Node.js는 설치하지 않는다(B 방식). `NODE_VERSION`의 공식 Node를 처음 한 번 nodejs.org에서 받아 PC별 폴더에 두고(공식 SHASUMS256.txt로 확인), 다음부터는 그것을 쓴다. `NODE_VERSION`을 올리면 다음 실행 때 그 버전을 받는다.
   - 윈도우 `%LOCALAPPDATA%\UX_AI_TEST_Workbench\node\{버전}\`, 맥 `~/Library/Application Support/UX_AI_TEST_Workbench/node/{버전}/`
+- 시험용으로 데이터 사본에 띄울 때는 환경 변수 `WB_NO_SHORTCUT=1`을 준다. 안 주면 켤 때 바탕 화면 「Figma AI Run」 바로가기를 그 사본 폴더로 바꿔 버린다(윈도우).
 - `--readonly`: 쓰기 API · 깃 동기화 · 감시를 끈다. 기존 서버와 **같은 데이터를 읽기만 하며** 응답을 비교할 때 쓴다. 두 서버가 같은 파일에 쓰지 않게, 쓰기 시험은 데이터 사본으로만 한다.
 
 ## 단계

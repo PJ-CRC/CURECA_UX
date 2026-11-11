@@ -65,7 +65,7 @@ module.exports = function register(on, h) {
     saveHistEntry(name, { id: name, kind: 'request', team: core.itemTeam(r), status: nn(r.status), at: nn(r.updatedAt), createdAt: nn(r.createdAt), by: nn(r.author), doneBy: nn(r.updatedBy), pc: C.pcName,
       reqId: nn(r.id), fileKey: nn(r.fileKey), fileName: nn(r.fileName), page: nn(r.page), frame: nn(r.frame), nodeId: nn(r.nodeId),
       type: nn(r.type), layout: nn(r.layout), text: nn(r.text), note: nn(r.note), shot, shots, images: att,
-      frames: core.arr(r.frames).filter(Boolean), ask: r.ask === undefined ? null : r.ask, replies: core.arr(r.replies).filter(Boolean) });
+      frames: core.arr(r.frames).filter(Boolean), marks: core.arr(r.marks).filter(Boolean), ask: r.ask === undefined ? null : r.ask, replies: core.arr(r.replies).filter(Boolean) });
   }
   function histRemove(id) {
     const name = C.pcSlug + '_' + nn(id);
@@ -724,6 +724,10 @@ module.exports = function register(on, h) {
         const it = { id: rid, team: b.team ? nn(b.team) : T.team, nodeId: nn(b.nodeId), frame: nn(b.frame), page: nn(b.page), fileKey: nn(b.fileKey), fileName: nn(b.fileName),
           editable: !!b.editable, type: nn(b.type), priority: nn(b.priority), layout: nn(b.layout), text: txt, status: '대기', note: '', author: nn(b.by), updatedBy: nn(b.by), createdAt: now, updatedAt: now };
         if (imgs.length) it.images = imgs;
+        // 수정할 부분 표시(Workbench에서 캡처 위에 그린 사각형): Figma 프레임 좌표 {n, x, y, w, h}, att = 그 부분을 잘라 낸 첨부의 순번(images, 1부터), shotAt = 그때 캡처 시각
+        const mk = core.arr(b.marks).filter((m) => m && +m.w > 0 && +m.h > 0).slice(0, 20)
+          .map((m, i) => ({ n: i + 1, x: Math.round(+m.x || 0), y: Math.round(+m.y || 0), w: Math.round(+m.w), h: Math.round(+m.h), att: parseInt(m.att, 10) || 0 }));
+        if (mk.length) { it.marks = mk; if (b.shotAt) it.shotAt = nn(b.shotAt); }
         if (b.fixRows) it.fixRows = core.arr(b.fixRows).slice(0, 200).map((x) => ({ doc: nn(x.doc), file: nn(x.file), n: nn(x.n), cid: nn(x.cid) }));
         items = [it].concat(items); histFromRequest(it); break;
       }
