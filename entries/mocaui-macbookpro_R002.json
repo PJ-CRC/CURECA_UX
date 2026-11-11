@@ -1,23 +1,9 @@
 {
-   "ask" : {
-      "free" : true,
-      "options" : [
-         {
-            "label" : "번호형 헤더(5-1 ~ 5-26) 순서로, 글머리도 5-1. 형식으로"
-         },
-         {
-            "label" : "번호형 헤더 순서로, 글머리 문자(a, c…)는 그대로"
-         },
-         {
-            "label" : "문자형 헤더(5-a ~ 5-X) 순서로, Tag · Top Button 추가"
-         }
-      ],
-      "q" : "목차를 어떤 헤더 기준으로 맞출까요?"
-   },
-   "at" : "2026-11-11T14:04:59+09:00",
+   "ask" : null,
+   "at" : "2026-11-11T14:05:43+09:00",
    "by" : "김목화",
    "createdAt" : "2026-11-11T14:03:10+09:00",
-   "doneBy" : "Claude",
+   "doneBy" : "김목화",
    "fileKey" : "cDjaemHjetS7RcAHRUIMY5",
    "fileName" : "STAgora AI Workspace",
    "frame" : "COMM-5 LIST",
@@ -27,14 +13,21 @@
    "kind" : "request",
    "layout" : "",
    "nodeId" : "124:58092",
-   "note" : "목차 순서를 정할 기준이 헤더마다 달라서 고치지 않고 확인을 요청합니다.\n- 목차(COMM-5 LIST): 지금은 글머리 문자 순서(a. Accordion → … → z. Error, 24개)이고 b · x가 없습니다.\n- 상세 화면 헤더 ① 번호형(5-1. Accordion … 5-26. Error): 5-18 Badge → 5-19 Search Bar → 5-20 Toast → 5-21 Sorting → 5-22 Tag → 5-23 Top Button → 5-24 Scale Bar → 5-25 Global Filter → 5-26 Error 순서라 목차의 t~w(Global Filter · Scale Bar · Sorting · Toast)와 순서가 반대입니다.\n- 상세 화면 헤더 ② 문자형(5-a. Accordion … 5-X. Top Button): 지금 목차와 순서가 거의 같고, 목차에 없는 u. Tag · X. Top Button이 있습니다.\n- 헤더끼리도 겹칩니다: 5-8은 검사실 Loading-Skeleton / GMCS Map, 5-25는 Validation Check / Global Filter, u는 Tag(검사실) / Scale Bar(GMCS), 5-16은 Combo / Combo Box.\n- 참고: 목차 글은 Pretendard라 고칠 때는 Figma 플러그인(text 작업)으로 바꿉니다.\n작업 기준: 작업규칙 없음 · 정책서 통합운영툴 - 로컬 서버 정책 · UX가이드 통합운영툴_Common UX · 기준데이터 없음 · 화면 정의서 UX Kit(Component) 화면 정의서",
+   "note" : "",
    "page" : "Common UX_정리중",
    "pc" : "Mocaui-MacBookPro",
-   "replies" : [],
+   "replies" : [
+      {
+         "at" : "2026-11-11T14:05:43+09:00",
+         "by" : "김목화",
+         "q" : "목차를 어떤 헤더 기준으로 맞출까요?",
+         "text" : "번호형 헤더(5-1 ~ 5-26) 순서로, 글머리도 5-1. 형식으로"
+      }
+   ],
    "reqId" : "R002",
    "shot" : "",
    "shots" : [],
-   "status" : "보류",
+   "status" : "대기",
    "team" : "stagora",
    "text" : "헤더 참고해서 목차 순서 맞춰줘",
    "type" : "일반"
