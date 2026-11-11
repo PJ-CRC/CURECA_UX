@@ -2,11 +2,11 @@
   "id": "brex-06_R034",
   "kind": "request",
   "team": "cureca",
-  "status": "대기",
-  "at": "2026-11-11T17:23:00+09:00",
+  "status": "보류",
+  "at": "2026-11-11T17:23:30+09:00",
   "createdAt": "2026-11-11T17:23:00+09:00",
   "by": "최고관리자",
-  "doneBy": "최고관리자",
+  "doneBy": "Claude",
   "pc": "BREX_06",
   "reqId": "R034",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,12 +17,24 @@
   "type": "일반",
   "layout": "",
   "text": "지금 워크벤치의 작업페이지 부분의 리스트를 프레임단위로 했는데 이제 페이지 단위로 변경해줘",
-  "note": "",
+  "note": "Figma 화면 수정이 아니라 Workbench 프로그램을 고쳐 달라는 요청으로 보여 보류합니다.\n- 요청 프레임 DASHBOARD(제품 대시보드)에는 「작업페이지 리스트」가 없습니다.\n- Workbench 프로그램 수정은 백그라운드 요청 처리로 하지 않습니다(사용자가 보는 Claude 창에서 개발 문서 dev.md 절차로 진행).\n확인 필요: 어떤 목록을 말씀하시는지(예: 왼쪽 메뉴 3단계 「상세 = 프레임」을 페이지 단위로 묶기 등) 알려 주세요.",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "어느 쪽으로 처리할까요?",
+    "options": [
+      {
+        "label": "Workbench 프로그램 수정 요청이 맞음 — Claude 창에서 직접 진행하겠음",
+        "action": "done"
+      },
+      {
+        "label": "Figma 화면(SH.L TEST 페이지)의 목록을 고쳐 달라는 뜻"
+      }
+    ],
+    "free": true
+  },
   "replies": []
 }
