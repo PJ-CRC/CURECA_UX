@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Figma AI Run 준비 중</title>
+<!-- 실행 중 화면: Figma AI Run을 누르면 서버가 뜨기 전에 바로 이 파일(file://)을 브라우저로 연다.
+     - 실행 스크립트(launch_win.ps1 · 맥 run)가 지금 단계를 ../workbench/.launch_progress.js에 쓴다 → 1초마다 다시 읽어 보여 준다
+     - 서버(localhost:8765)가 응답하면 /start로 넘어간다. 서버가 없을 때 보이는 페이지라 서버 파일(appnav 등)을 쓰지 않는다 -->
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#14171c;--ink2:#4a5260;--ink3:#7a8392;--line:#e3e7ee;--accent:#2747d8;--accent-soft:#e6ebff;--ok:#1a7f37;--bad:#c62828;--bad-soft:#fdecea}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1115;--card:#171a20;--ink:#e8ebf0;--ink2:#b4bcc8;--ink3:#8590a0;--line:#2a3039;--accent:#8ea2ff;--accent-soft:#232c52;--ok:#56d364;--bad:#ff7b72;--bad-soft:#3a1f1e}}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--bg);color:var(--ink);font:15px/1.6 Pretendard,-apple-system,"Segoe UI","Malgun Gothic",sans-serif;padding:16px}
+.card{width:min(460px,100%);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px 28px 22px;box-shadow:0 8px 28px rgba(0,0,0,.06)}
+.top{display:flex;align-items:center;gap:14px}
+.top img{width:52px;height:52px;border-radius:12px;flex:none}
+h1{margin:0;font-size:18px;font-weight:800}
+.sub{margin:2px 0 0;color:var(--ink3);font-size:13px}
+.steps{list-style:none;margin:22px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
+.steps li{display:flex;align-items:center;gap:10px;color:var(--ink3);font-size:14px}
+.steps li i{width:18px;height:18px;flex:none;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center}
+.steps li.now{color:var(--ink);font-weight:700}
+.steps li.now i{border-color:var(--accent);border-right-color:transparent;animation:spin .9s linear infinite}
+.steps li.done{color:var(--ink2)}
+.steps li.done i{border-color:var(--ok);background:var(--ok)}
+.steps li.done i::after{content:"";width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:translateY(-1px) rotate(45deg)}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.steps li.now i{animation:none;border-right-color:var(--accent)}}
+.foot{margin-top:20px;padding-top:12px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;color:var(--ink3);font-size:12.5px}
+.msg{margin:16px 0 0;padding:10px 12px;border-radius:8px;font-size:13px;background:var(--accent-soft);color:var(--ink2)}
+.msg.bad{background:var(--bad-soft);color:var(--bad)}
+.msg[hidden]{display:none}
+</style>
+</head>
+<body>
+<main class="card" role="status" aria-live="polite">
+  <div class="top">
+    <img src="../tools/app_icon/icon_1024.png" alt="">
+    <div><h1>Figma AI Run 준비 중</h1><p class="sub" id="sub">Workbench를 여는 중입니다. 이 창은 준비가 끝나면 저절로 넘어갑니다.</p></div>
+  </div>
+  <ol class="steps" id="steps">
+    <li data-k="stop"><i></i>지난 실행 정리</li>
+    <li data-k="update"><i></i>새 버전 확인</li>
+    <li data-k="node"><i></i>실행 도구 준비 <span id="nodeHint"></span></li>
+    <li data-k="start"><i></i>서버 시작</li>
+    <li data-k="open"><i></i>화면 여는 중</li>
+  </ol>
+  <p class="msg" id="msg" hidden></p>
+  <div class="foot"><span id="elapsed">0초</span><span id="ver"></span></div>
+</main>
+<script>
+(function(){
+  var ORDER = ['stop', 'update', 'node', 'start', 'open'], PORT = 8765, t0 = Date.now(), lastStep = '', done = false;
+  var $ = function(id){ return document.getElementById(id); };
+  function show(step, text){
+    var i = ORDER.indexOf(step);
+    [].forEach.call($('steps').children, function(li){ var j = ORDER.indexOf(li.dataset.k); li.className = j < i ? 'done' : j === i ? 'now' : ''; });
+    if (text) $('nodeHint').textContent = step === 'node' ? '· ' + text : $('nodeHint').textContent;
+  }
+  // 실행 스크립트가 쓰는 진행 파일: window.WB_LAUNCH = {step, text, error, at}
+  function readProgress(){
+    var s = document.createElement('script');
+    s.src = '../workbench/.launch_progress.js?' + Date.now();
+    s.onload = s.onerror = function(){ s.remove(); var p = window.WB_LAUNCH; if (!p || done) return;
+      if (p.error) { $('msg').hidden = false; $('msg').className = 'msg bad'; $('msg').textContent = p.error; $('sub').textContent = '시작하지 못했습니다.'; return; }
+      if (p.step && p.step !== lastStep) { lastStep = p.step; show(p.step, p.text); }
+      else if (p.text && p.step === 'node') $('nodeHint').textContent = '· ' + p.text;
+    };
+    document.head.appendChild(s);
+  }
+  // 서버가 응답하면 넘어간다(no-cors: 응답 내용은 못 보지만 닿으면 성공)
+  function ping(){
+    fetch('http://localhost:' + PORT + '/VERSION?' + Date.now(), { mode: 'no-cors', cache: 'no-store' }).then(function(){
+      if (done) return; done = true; show('open'); location.replace('http://localhost:' + PORT + '/start');
+    }).catch(function(){});
+  }
+  function tick(){
+    var s = Math.round((Date.now() - t0) / 1000);
+    $('elapsed').textContent = s < 60 ? s + '초' : Math.floor(s / 60) + '분 ' + (s % 60) + '초';
+    if (s === 20 && !done && lastStep === 'node') { $('msg').hidden = false; $('msg').textContent = '처음 실행이면 실행 도구(약 40MB)를 받느라 1~2분 걸릴 수 있습니다.'; }
+    if (s === 240 && !done && !(window.WB_LAUNCH && window.WB_LAUNCH.error)) { $('msg').hidden = false; $('msg').className = 'msg bad'; $('msg').textContent = '준비가 오래 걸리고 있습니다. 이 창을 닫고 Figma AI Run을 다시 실행해 보세요. 그래도 안 되면 기록 파일(server.log)을 담당자에게 보내 주세요.'; }
+    readProgress(); ping();
+  }
+  show('stop'); tick(); setInterval(tick, 1000);
+})();
+</script>
+</body>
+</html>

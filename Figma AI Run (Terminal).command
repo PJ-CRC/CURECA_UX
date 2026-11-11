@@ -9,7 +9,7 @@ PORT=8765
 # 실행할 때마다 서버를 새로 띄운다: 8765를 잡고 있는 것(예전 Workbench 서버 등)을 묻지 않고 모두 끄고 시작한다.
 # → 창을 닫고 다시 실행하면 항상 새 서버로 열린다
 holders() { lsof -nP -ti "tcp:$PORT" -sTCP:LISTEN 2>/dev/null; }
-pkill -f 'guide_server_mac.pl' 2>/dev/null; pkill -f 'guide_server.ps1' 2>/dev/null
+pkill -f 'guide_server_mac.pl' 2>/dev/null; pkill -f 'guide_server.ps1' 2>/dev/null; pkill -f "node/server/main.js --port $PORT" 2>/dev/null
 pids="$(holders)"; [ -n "$pids" ] && { echo "  8765를 쓰던 프로그램(PID $pids)을 끄고 새로 시작합니다."; kill $pids 2>/dev/null; }
 for _ in 1 2 3 4 5 6 7 8 9 10; do [ -z "$(holders)" ] && break; sleep 0.3; done
 pids="$(holders)"; [ -n "$pids" ] && kill -9 $pids 2>/dev/null
@@ -42,7 +42,17 @@ fi
   done
   echo ""; echo "  서버가 15초 안에 응답하지 않았습니다. 이 창의 내용을 담당자에게 보내 주세요."
 ) &
-"$PERL" "./guide_server_mac.pl" "$PORT"
+# 서버(v0.21.0~): Node 서버. Node.js는 처음 한 번 공식 사이트에서 받아 둔다(node/run_mac.sh). 못 받으면 예전 서버(Perl)로
+SUPPORT="$HOME/Library/Application Support/UX_AI_TEST_Workbench"
+MODE=node; [ "$(tr -d '[:space:]' < "$SUPPORT/server_mode.txt" 2>/dev/null | tr 'A-Z' 'a-z')" = "ps" ] && MODE=ps
+[ -f node/run_mac.sh ] || MODE=ps
+if [ "$MODE" = node ] && /bin/bash node/run_mac.sh --no-start; then
+  VER="$(tr -d '[:space:]' < node/NODE_VERSION)"
+  "$SUPPORT/node/$VER/bin/node" node/server/main.js --port "$PORT" --root "$(pwd)"
+else
+  echo "  Node 서버를 쓸 수 없어 예전 서버로 실행합니다."
+  "$PERL" "./guide_server_mac.pl" "$PORT"
+fi
 STATUS=$?
 if [ $STATUS -ne 0 ]; then
   read -r -p "  Enter 키를 누르면 창을 닫습니다." _
