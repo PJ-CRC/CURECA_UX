@@ -1,0 +1,61 @@
+{
+    "by":  "최고관리자",
+    "createdAt":  "2026-11-04T11:01:28+09:00",
+    "fileKey":  "",
+    "fileName":  "",
+    "files":  [
+                  "glossary.md",
+                  "terms.csv",
+                  "status-values.csv",
+                  "test-items.csv",
+                  "sample-types.csv",
+                  "modules.csv",
+                  "module-units.csv",
+                  "test-stages.csv",
+                  "consumables.csv",
+                  "pcr-reagents.csv",
+                  "review-v0.md"
+              ],
+    "filesDir":  "",
+    "format":  "files",
+    "frames":  0,
+    "id":  "glossary",
+    "jobId":  "",
+    "kind":  "data",
+    "link":  "",
+    "request":  ".history/guides/glossary의 내용을 기반으로 기준 데이터 작성. 상세 내용은 테이블 형태(csv)로",
+    "scope":  "참고 파일",
+    "sources":  [
+                    "glossary.md",
+                    "terms.csv",
+                    "status-values.csv",
+                    "test-items.csv",
+                    "sample-types.csv",
+                    "modules.csv",
+                    "module-units.csv",
+                    "test-stages.csv",
+                    "consumables.csv",
+                    "pcr-reagents.csv",
+                    "review-v0.md"
+                ],
+    "summary":  "CURECA_AI 저장소의 용어집과 기준 표(glossary/)를 원본 파일 그대로 관리합니다(.history/guides/glossary). 표(CSV)는 표 그대로 보입니다.",
+    "title":  "기준데이터",
+    "titles":  {
+                   "consumables.csv":  "Consumable · Reagent · consumables.csv",
+                   "module-units.csv":  "Module Unit · module-units.csv",
+                   "modules.csv":  "Module · modules.csv",
+                   "pcr-reagents.csv":  "PCR Reagent · pcr-reagents.csv",
+                   "sample-types.csv":  "검체 타입 · sample-types.csv",
+                   "status-values.csv":  "상태값 · status-values.csv",
+                   "terms.csv":  "용어 · terms.csv",
+                   "test-items.csv":  "검사 항목 · test-items.csv",
+                   "test-stages.csv":  "검사 단계 · test-stages.csv"
+               },
+    "updatedAt":  "2026-11-04T11:01:28+09:00",
+    "importedFrom":  {
+                         "team":  "cureca",
+                         "id":  "glossary",
+                         "at":  "2026-11-11T17:04:00+09:00",
+                         "by":  "최고관리자"
+                     }
+}

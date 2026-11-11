@@ -1,0 +1,54 @@
+Module 코드명,Unit 코드명,UI 표기 (영문),UI 표기 (한글),Unit Type,Qty,저장 장치 슬롯,비고,근거
+SampleStorage,InboundTrolley,Inbound Trolley,투입 트롤리,Storage,1,-,,씨젠 상태 정보 261021 > Unit
+SampleStorage,OutboundTrolley,Outbound Trolley,회수 트롤리,Storage,1,-,,씨젠 상태 정보 261021 > Unit
+SampleStorage,LeftDoor,Door (Left),도어 (좌측),Door,1,-,투입 트롤리 도어,씨젠 상태 정보 261021 > Unit
+SampleStorage,RightDoor,Door (Right),도어 (우측),Door,1,-,회수 트롤리 도어,씨젠 상태 정보 261021 > Unit
+PrepConsumableStorage,Trolley,Trolley,트롤리,Storage,1,-,,씨젠 상태 정보 261021 > Unit
+PrepConsumableStorage,Door,Door,도어,Door,1,-,,씨젠 상태 정보 261021 > Unit
+SamplePreparation,UpperSamplePretreatment,Sample Pretreatment (Upper),검체 전처리 (상부),Device,0..1,-,,씨젠 상태 정보 261021 > Unit
+SamplePreparation,LowerSamplePretreatment,Sample Pretreatment (Lower),검체 전처리 (하부),Device,0..1,-,,씨젠 상태 정보 261021 > Unit
+SamplePreparation,UpperSampleAliquot,Sample Aliquot (Upper),검체 분주 (상부),Device,0..1,-,,씨젠 상태 정보 261021 > Unit
+SamplePreparation,LowerSampleAliquot,Sample Aliquot (Lower),검체 분주 (하부),Device,0..1,-,,씨젠 상태 정보 261021 > Unit
+SamplePreparation,StatStorage,STAT Storage,응급 저장소,Storage,0..1,1..N,,씨젠 상태 정보 261021 > Unit
+SamplePreparation,UpperWasteBin,Waste Bin (Upper),폐기함 (상부),Waste Bin/Bottle,0..1,-,,씨젠 상태 정보 261021 > Unit
+SamplePreparation,LowerWasteBin,Waste Bin (Lower),폐기함 (하부),Waste Bin/Bottle,0..1,-,,씨젠 상태 정보 261021 > Unit
+SamplePreparation,UpperLiquidWasteBottle,Liquid Waste Bottle (Upper),액체 폐기통 (상부),Waste Bin/Bottle,0..1,-,,씨젠 상태 정보 261021 > Unit
+SamplePreparation,LowerLiquidWasteBottle,Liquid Waste Bottle (Lower),액체 폐기통 (하부),Waste Bin/Bottle,0..1,-,,씨젠 상태 정보 261021 > Unit
+SamplePreparation,Door,Door,도어,Door,0..1,-,상하부 도어가 통합된 형태 (로체시스템즈),씨젠 상태 정보 261021 > Unit
+SamplePreparation,UpperDoor,Door (Upper),도어 (상부),Door,0..1,-,상하부 도어가 분리된 형태 (단디메카),씨젠 상태 정보 261021 > Unit
+SamplePreparation,LowerDoor,Door (Lower),도어 (하부),Door,0..1,-,상하부 도어가 분리된 형태 (단디메카). 씨젠 원본은 "통합된 형태 (단디메카)"로 적혀 있음 - 확인 필요,씨젠 상태 정보 261021 > Unit
+SamplePreparation,RearDoor,Door (Rear),도어 (후면),Door,0..1,-,단디메카 장비에만 존재,씨젠 상태 정보 261021 > Unit
+HtExtraction,M9600,M9600,M9600,Device,1,-,,씨젠 상태 정보 261021 > Unit
+HtExtraction,Wb1Storage,WB1 Storage,WB1 저장소,Storage,1,1..N,,씨젠 상태 정보 261021 > Unit
+HtExtraction,Wb2Storage,WB2 Storage,WB2 저장소,Storage,1,1..N,,씨젠 상태 정보 261021 > Unit
+HtExtraction,EbStorage,EB Storage,EB 저장소,Storage,1,1..N,,씨젠 상태 정보 261021 > Unit
+HtExtraction,MbStorage,MB Storage,MB 저장소,Storage,1,1..N,,씨젠 상태 정보 261021 > Unit
+HtExtraction,SpinTipStorage,Spin Tip Storage,스핀 팁 저장소,Storage,1,1..N,,씨젠 상태 정보 261021 > Unit
+HtExtraction,SpareStorage,Spare Storage,예비 저장소,Storage,1,1..N,,씨젠 상태 정보 261021 > Unit
+HtExtraction,DwpWasteBin,DWP Waste Bin,DWP 폐기함,Waste Bin/Bottle,1,-,,씨젠 상태 정보 261021 > Unit
+HtExtraction,DwpFilmWasteBin,DWP Film Waste Bin,DWP 필름 폐기함,Waste Bin/Bottle,1,-,만재 센서 없음 (Counting으로만 관리); High-Throughput 장비(재단): 서랍형; 표준형: 장비 내부 (Door 열기 필요),씨젠 상태 정보 261021 > Unit
+HtExtraction,Door,Door,도어,Door,1,-,,씨젠 상태 정보 261021 > Unit
+FlexibleExtraction,Starlet,STARlet,STARlet,Device,1,-,,씨젠 상태 정보 261021 > Unit
+FlexibleExtraction,MbTubeStorage,MB Tube Storage,MB 튜브 저장소,Storage,1,1..N,,씨젠 상태 정보 261021 > Unit
+FlexibleExtraction,BufferCartridgeStorage,Buffer Cartridge Storage,버퍼 카트리지 저장소,Storage,1,1..N,,씨젠 상태 정보 261021 > Unit
+FlexibleExtraction,WasteBin,Waste Bin,폐기함,Waste Bin/Bottle,1,-,,씨젠 상태 정보 261021 > Unit
+FlexibleExtraction,LiquidWasteBottle,Liquid Waste Bottle,액체 폐기통,Waste Bin/Bottle,1,-,,씨젠 상태 정보 261021 > Unit
+FlexibleExtraction,Door,Door,도어,Door,1,-,,씨젠 상태 정보 261021 > Unit
+PcrSetup,Starlet,STARlet,STARlet,Device,1,-,,씨젠 상태 정보 261021 > Unit
+PcrSetup,Tip1000Storage,1000 μL Tip Storage,1000 μL 팁 저장소,Storage,1,1..N,,씨젠 상태 정보 261021 > Unit; 띄어쓰기는 Teams 글 2026-11-06 T05
+PcrSetup,Tip300Storage1,300 μL Tip Storage (1),300 μL 팁 저장소 (1),Storage,1,1..N,,씨젠 상태 정보 261021 > Unit; 띄어쓰기는 Teams 글 2026-11-06 T05
+PcrSetup,Tip300Storage2,300 μL Tip Storage (2),300 μL 팁 저장소 (2),Storage,1,1..N,,씨젠 상태 정보 261021 > Unit; 띄어쓰기는 Teams 글 2026-11-06 T05
+PcrSetup,PcrPlateStorage,PCR Plate Storage,PCR 플레이트 저장소,Storage,1,1..N,,씨젠 상태 정보 261021 > Unit
+PcrSetup,WasteBin,Waste Bin,폐기함,Waste Bin/Bottle,1,-,,씨젠 상태 정보 261021 > Unit
+PcrSetup,Door,Door,도어,Door,1,-,,씨젠 상태 정보 261021 > Unit
+PlateSealing,Sealer1,Sealer (1),실러 (1),Device,1,-,,씨젠 상태 정보 261021 > Unit
+PlateSealing,Sealer2,Sealer (2),실러 (2),Device,1,-,,씨젠 상태 정보 261021 > Unit
+PlateSealing,SealerFilmStorage1,Sealer Film Storage (1),실러 필름 저장소 (1),Storage,1,-,,씨젠 상태 정보 261021 > Unit
+PlateSealing,SealerFilmStorage2,Sealer Film Storage (2),실러 필름 저장소 (2),Storage,1,-,,씨젠 상태 정보 261021 > Unit
+PlateSealing,SealerWasteBin1,Sealer Waste Bin (1),실러 폐기함 (1),Waste Bin/Bottle,1,-,,씨젠 상태 정보 261021 > Unit
+PlateSealing,SealerWasteBin2,Sealer Waste Bin (2),실러 폐기함 (2),Waste Bin/Bottle,1,-,,씨젠 상태 정보 261021 > Unit
+PlateSealing,ColdStorage,Cold Storage,냉장 저장소,Storage,1,28,행 7개; 열 4개,씨젠 상태 정보 261021 > Unit
+PlateSealing,Door,Door,도어,Door,1,-,,씨젠 상태 정보 261021 > Unit
+UniversalPcr,Cfx#,CFX96 (#),CFX96 (#),Device,0..N,-,CFX96은 하나의 Module 내 설치 대수가 가변적임; #에 호기 번호 표기 (예: CFX96 (1); CFX96 (2)),씨젠 상태 정보 261021 > Unit
+UniversalPcr,WasteBin,Waste Bin,폐기함,Waste Bin/Bottle,1,-,,씨젠 상태 정보 261021 > Unit
+UniversalPcr,Door,Door,도어,Door,1,-,,씨젠 상태 정보 261021 > Unit

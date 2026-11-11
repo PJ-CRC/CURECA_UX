@@ -1,0 +1,30 @@
+구분,원본 시트,제품명 (UI 표기),품목명 (원본),코드명,UI 표기,저장 위치 (Module > Unit),수량 단위,장착 형태,최대 사용 횟수,품목 그룹,바코드 고유 코드,바코드 체계,비고,근거
+Consumable,소모품,,Wide Bore Tip (Hamilton),Wide_Bore_Tip,Wide Bore Tip,Prep Consumable Storage > Trolley,96 ea/rack,Rack,,Tip,235541 (Part Number 6자리),Part Number(6자리) + Lot Number(7자리) + Production Identifier(5자리),,씨젠 소모품·시약 261102 > 소모품
+Consumable,소모품,,"1,000 ㎕ Tip (Hamilton)",Tip_1000,1000 μL Tip,Prep Consumable Storage > Trolley; PCR Setup > 1000 μL Tip Storage,96 ea/rack,Rack,,Tip,235905 (Part Number 6자리),Part Number(6자리) + Lot Number(7자리) + Production Identifier(5자리),,씨젠 소모품·시약 261102 > 소모품
+Consumable,소모품,,300 ㎕ Tip (Hamilton),Tip_300,300 μL Tip,Prep Consumable Storage > Trolley; PCR Setup > 300 μL Tip Storage,96 ea/rack,Rack,,Tip,235903 (Part Number 6자리),Part Number(6자리) + Lot Number(7자리) + Production Identifier(5자리),,씨젠 소모품·시약 261102 > 소모품
+Consumable,소모품,,Empty 표준튜브 (Sarstedt),Empty_Standard_Tube,Empty Standard Tube,Prep Consumable Storage > Trolley,48 ea/rack,Rack,,Tube,PR01ST01 (제품고유번호 4자리+ 구성품종류 4자리),전처리 튜브 체계 따름 (오른쪽 참고),,씨젠 소모품·시약 261102 > 소모품
+Consumable,소모품,,MM용 2 mL 튜브 (EZEN),MM_Tube,MM Tube,Plate Sealing > Cold Storage,14 ea/socket,Socket,,Tube,없음,바코드 없음,"원본 261102 값은 28 ea/rack이나 씨젠 문서 오류. Socket 하나에 14개를 꽉 채워 넣음 (2026-11-03 사용자 확인)",씨젠 소모품·시약 261102 > 소모품
+Consumable,소모품,,96 well PCR plate,PCR_Plate,PCR Plate,PCR Setup > PCR Plate Storage,1 ea,-,,Plate,없음,알파벳 (1자리) + 숫자 (6자리),,씨젠 소모품·시약 261102 > 소모품
+Consumable,소모품,,Sealing Film,Sealing_Film,Sealing Film,Plate Sealing > Sealer,입력항목 (기본값:100 ea),-,,-,없음,바코드 없음,,씨젠 소모품·시약 261102 > 소모품
+Consumable,소모품,,"Deep Well Plate, 96 wells with Barcode Lab (프로타젠)",DWP,96-DWP,Prep Consumable Storage > Trolley,1 ea,-,,Plate,SDP0096B (카달로그 번호 8자리),카탈로그 번호(8자리)+LOT 번호(6자리)+일련번호(5자리),,씨젠 소모품·시약 261102 > 소모품
+Consumable,소모품,,Stool Swab,Stool_Swab,Stool Swab,Prep Consumable Storage > Trolley,24 ea/rack,Rack,,-,CR01TSWABF (제품고유번호 4자리+제품규격 1자리+구성품종류 5자리),사출품 체계 따름 (오른쪽 참고),,씨젠 소모품·시약 261102 > 소모품
+Reagent,전처리 시약,,PBS 표준튜브 (Sarstedt),PBS_Standard_Tube,PBS Standard Tube,Prep Consumable Storage > Trolley,48 rxns/rack,rack,1,Tube,PR02 (제품 고유번호 4자리),,,씨젠 소모품·시약 261102 > 전처리 시약
+Reagent,전처리 시약,,Saline 표준튜브 (Sarstedt),Saline_Standard_Tube,Saline Standard Tube,Prep Consumable Storage > Trolley,48 rxns/rack,rack,1,Tube,PR03 (제품 고유번호 4자리),,,씨젠 소모품·시약 261102 > 전처리 시약
+Reagent,전처리 시약,,Prelyser 표준튜브 (Sarstedt),Prelyser_Standard_Tube,Prelyser Standard Tube,Prep Consumable Storage > Trolley,48 rxns/rack,rack,1,Tube,PR04 (제품 고유번호 4자리),,,씨젠 소모품·시약 261102 > 전처리 시약
+Reagent,전처리 시약,,PBS Tub,PBS_Tub,PBS Tub,Prep Consumable Storage > Trolley,100 rxns/set,rack,10,Tub,"PR51, PP (제품 고유번호 4자리, 버퍼정보 2자리)",,,씨젠 소모품·시약 261102 > 전처리 시약
+Reagent,전처리 시약,,Saline Tub,Saline_Tub,Saline Tub,Prep Consumable Storage > Trolley,100 rxns/set,rack,10,Tub,"PR52, SA (제품 고유번호 4자리, 버퍼정보 2자리)",,,씨젠 소모품·시약 261102 > 전처리 시약
+Reagent,전처리 시약,,LB Tub (Prep),LB_Tub_Prep,LB Tub (Prep),Prep Consumable Storage > Trolley,100 rxns/set,rack,10,Tub,"PR53, LB (제품 고유번호 4자리, 버퍼정보 2자리)",,,씨젠 소모품·시약 261102 > 전처리 시약
+Reagent,추출 시약,STARMag M96 Kit,LB DWP,STARMag_M96_Kit_LB_DWP,LB DWP,Prep Consumable Storage > Trolley,96 rxns/DWP,DWP,1,DWP,"EX29, LB (제품 고유번호 4자리, 버퍼명)",,동일 lot 기준: 바코드 체계의 제조번호 동일,씨젠 소모품·시약 261102 > 추출 시약
+Reagent,추출 시약,STARMag M96 Kit,MB DWP,STARMag_M96_Kit_MB_DWP,MB DWP,High-throughput Extraction > MB Storage,96 rxns/DWP,DWP,1,DWP,"EX29, MB (제품 고유번호 4자리, 버퍼명)",,,씨젠 소모품·시약 261102 > 추출 시약
+Reagent,추출 시약,STARMag M96 Kit,WB1 DWP,STARMag_M96_Kit_WB1_DWP,WB1 DWP,High-throughput Extraction > WB1 Storage,96 rxns/DWP,DWP,1,DWP,"EX29, W1 (제품 고유번호 4자리, 버퍼명)",,,씨젠 소모품·시약 261102 > 추출 시약
+Reagent,추출 시약,STARMag M96 Kit,WB2 DWP,STARMag_M96_Kit_WB2_DWP,WB2 DWP,High-throughput Extraction > WB2 Storage,96 rxns/DWP,DWP,1,DWP,"EX29, W2 (제품 고유번호 4자리, 버퍼명)",,,씨젠 소모품·시약 261102 > 추출 시약
+Reagent,추출 시약,STARMag M96 Kit,EB DWP,STARMag_M96_Kit_EB_DWP,EB DWP,High-throughput Extraction > EB Storage,96 rxns/DWP,DWP,1,DWP,"EX29, EB (제품 고유번호 4자리, 버퍼명)",,,씨젠 소모품·시약 261102 > 추출 시약
+Reagent,추출 시약,STARMag M96 Kit,Spin Tip,STARMag_M96_Kit_Spin_Tip,Spin Tip,High-throughput Extraction > Spin Tip Storage,96 rxns/DWP,DWP,-,Tip,"EX29, TIP (제품 고유번호 4자리, 구성품 정보)",,현재 Spin tip은 OEM 제조사에서 부착한 바코드만 있으므로 씨젠에서 관리하는 바코드 부착 필요,씨젠 소모품·시약 261102 > 추출 시약
+Reagent,추출 시약,STARMag Universal Cartridge Kit,LB Tub,STARMag_UC_Kit_LB_TUB,LB Tub,Prep Consumable Storage > Trolley,96 rxns/tub,tub,10,Tub,"UC96, LB (제품 고유번호 4자리, 버퍼명)",,동일 lot 기준: 바코드 체계의 제조번호 동일,씨젠 소모품·시약 261102 > 추출 시약
+Reagent,추출 시약,STARMag Universal Cartridge Kit,BB Tub,STARMag_UC_Kit_BB_TUB,BB Tub,Flexible Extraction > Buffer Cartridge Storage,96 rxns/tub,tub,10,Tub,"UC96, BB (제품 고유번호 4자리, 버퍼명)",,,씨젠 소모품·시약 261102 > 추출 시약
+Reagent,추출 시약,STARMag Universal Cartridge Kit,WB1 Tub,STARMag_UC_Kit_WB1_TUB,WB1 Tub,Flexible Extraction > Buffer Cartridge Storage,96 rxns/tub,tub,10,Tub,"UC96, W1 (제품 고유번호 4자리, 버퍼명)",,,씨젠 소모품·시약 261102 > 추출 시약
+Reagent,추출 시약,STARMag Universal Cartridge Kit,WB2 Tub,STARMag_UC_Kit_WB2_TUB,WB2 Tub,Flexible Extraction > Buffer Cartridge Storage,96 rxns/tub,tub,10,Tub,"UC96, W2 (제품 고유번호 4자리, 버퍼명)",,,씨젠 소모품·시약 261102 > 추출 시약
+Reagent,추출 시약,STARMag Universal Cartridge Kit,WB3 Tub,STARMag_UC_Kit_WB3_TUB,WB3 Tub,Flexible Extraction > Buffer Cartridge Storage,96 rxns/tub,tub,10,Tub,"UC96, W3 (제품 고유번호 4자리, 버퍼명)",,,씨젠 소모품·시약 261102 > 추출 시약
+Reagent,추출 시약,STARMag Universal Cartridge Kit,EB Tub,STARMag_UC_Kit_EB_TUB,EB Tub,Flexible Extraction > Buffer Cartridge Storage,96 rxns/tub,tub,10,Tub,"UC96, EB (제품 고유번호 4자리, 버퍼명)",,,씨젠 소모품·시약 261102 > 추출 시약
+Reagent,추출 시약,STARMag Universal Cartridge Kit,MB Tube,STARMag_UC_Kit_MB_Tube,MB Tube,Flexible Extraction > MB Tube Storage,96 rxns/tube,tube,10,Tube,"UC96, MB01 (제품 고유번호 4자리+ 구성품 정보 4자리)",,"현재 MB, PK는 OEM 제조사에서 부착하는 바코드 없으며 씨젠에서 관리하는 바코드 부착 필요",씨젠 소모품·시약 261102 > 추출 시약
+Reagent,추출 시약,STARMag Universal Cartridge Kit,PK Tube,STARMag_UC_Kit_PK_Tube,PK Tube,Prep Consumable Storage > Trolley,96 rxns/tube,tube,10,Tube,"UC96, PK01 (제품 고유번호 4자리+ 구성품 정보 4자리)",,,씨젠 소모품·시약 261102 > 추출 시약
