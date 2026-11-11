@@ -2,9 +2,6 @@
     "id":  "bkyu",
     "name":  "유병규",
     "admin":  false,
-    "teams":  [
-                  "stagora"
-              ],
     "menus":  [
                   "plan",
                   "guide",
@@ -13,6 +10,12 @@
                   "usage",
                   "proto"
               ],
+    "createdAt":  "2026-11-10T14:11:54+09:00",
+    "createdBy":  "brex",
+    "salt":  "x/B+JxIkvpzaSaFi5NrkVA==",
+    "iter":  100000,
+    "hash":  "W18auu9Yc9RY06LO2od/ex7XbvP8U43FwETXerGvHPg=",
+    "pwAt":  "2026-11-10T14:11:54+09:00",
     "writes":  [
                    "plan",
                    "guide",
@@ -23,12 +26,10 @@
     "approves":  [
 
                  ],
+    "teams":  [
+                  "cureca",
+                  "stagora"
+              ],
     "active":  true,
-    "createdAt":  "2026-11-10T14:11:54+09:00",
-    "createdBy":  "brex",
-    "salt":  "x/B+JxIkvpzaSaFi5NrkVA==",
-    "iter":  100000,
-    "hash":  "W18auu9Yc9RY06LO2od/ex7XbvP8U43FwETXerGvHPg=",
-    "pwAt":  "2026-11-10T14:11:54+09:00",
-    "updatedAt":  "2026-11-10T14:11:54+09:00"
+    "updatedAt":  "2026-11-11T16:50:52+09:00"
 }
