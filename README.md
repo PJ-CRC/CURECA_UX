@@ -20,6 +20,8 @@ Figma 파일을 프로젝트 단위로 다루는 Workbench(수정 요청 · Clau
 - 일반 작업자는 프로그램이 `history`만 올린다. Workbench에서 변경 이력 · 공통 가이드를 보고, 업데이트는 `release`에서 자동으로 받는다.
 - PC마다 따로인 데이터(수정 요청 목록 · 작업 대기열 · Workbench 캡처 · 다른 프로젝트 · 프로토타입)는 저장소에 올리지 않는다(`.gitignore`).
 
+실행: 윈도우는 `Figma AI Run.bat`(처음 한 번 실행하면 설치 폴더 · 바탕 화면에 아이콘 붙은 「Figma AI Run」 바로가기가 생긴다), 맥은 `Figma AI Run.app`. 아이콘 원본은 `tools/app_icon/`.
+
 화면 파일(`*.html`)과 화면이 함께 쓰는 `appnav.js` · `appnav.css` · `common.js`는 **`pages/`** 폴더에 있다. 주소는 폴더 이름 없이 그대로다(`http://localhost:8765/Work.html`).
 
 | 파일 | 내용 |

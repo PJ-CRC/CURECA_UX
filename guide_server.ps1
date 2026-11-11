@@ -869,6 +869,30 @@ function Idle-Check {
   Stop-Server 'Workbench 탭을 모두 닫아 서버를 껐습니다.'
 }
 
+# 윈도우 바로가기(v0.20.0): 설치 폴더 · 바탕 화면에 아이콘 붙은 「Figma AI Run」 바로가기를 만든다(누르면 Figma AI Run.bat)
+#  - exe는 서명이 없으면 윈도우 11 스마트 앱 컨트롤이 막아(2026-11-11 확인) 바로가기로 아이콘을 붙인다
+#  - 바로가기에는 그 PC의 폴더 위치가 들어가 배포본에 넣지 못하므로 켤 때마다 확인해 없거나 다른 곳을 가리키면 새로 만든다(폴더를 옮겨도 맞춰짐)
+#  - 업데이트(launch_win.ps1 → update.ps1)가 끝난 뒤 뜨는 서버가 만들므로 업데이트를 받은 그 실행에서 바로 생긴다
+function Ensure-Shortcuts {
+  if ($IsMac) { return }
+  $bat = P $Root 'Figma AI Run.bat'; $ico = P $Root 'tools' 'app_icon' 'FigmaAIRun.ico'
+  if (-not (Test-Path $bat) -or -not (Test-Path $ico)) { return }
+  $sh = New-Object -ComObject WScript.Shell
+  $places = @($Root); try { $d = [Environment]::GetFolderPath('Desktop'); if ($d) { $places += $d } } catch {}
+  foreach ($dir in $places) {
+    $lnk = P $dir 'Figma AI Run.lnk'
+    try {
+      if (Test-Path $lnk) { $o = $sh.CreateShortcut($lnk); if ($o.TargetPath -eq $bat -and $o.IconLocation -like ($ico + '*')) { continue } }
+      $s = $sh.CreateShortcut($lnk)
+      $s.TargetPath = $bat; $s.WorkingDirectory = $Root; $s.IconLocation = $ico + ',0'; $s.WindowStyle = 7   # 7 = 최소화(배치 창이 번쩍이지 않게)
+      $s.Description = 'UX AI TEST Workbench 실행'
+      $s.Save()
+      Write-Host "  바로가기를 만들었습니다: $lnk" -ForegroundColor DarkGray
+    } catch { Write-Host "  바로가기를 만들지 못했습니다($lnk): $($_.Exception.Message)" -ForegroundColor DarkGray }
+  }
+}
+try { Ensure-Shortcuts } catch {}
+
 # 새로 설치한 폴더(처음 켬 · projects 없음): PC에 남은 시작 안내(setup.json, 설치 폴더 밖)의 작업 링크 · 완료 표시를 비운다.
 #  예전 설치의 링크(예: UX AI TEST › SH.L TEST)가 새 설치의 Workbench 기본 프로젝트로 잡히지 않게. 이름 · 로그인 · 체크는 그대로
 $InstallFlag = P $Root 'workbench' '.installed'
