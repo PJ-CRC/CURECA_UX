@@ -84,6 +84,23 @@ button{cursor:pointer}
 .zoomv{font:12px "JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--ink-3);min-width:42px;text-align:center}
 #stage{flex:1;overflow:auto;background:var(--canvas);position:relative}
 #stage.grab{cursor:grab}#stage.grabbing{cursor:grabbing}
+/* 수정할 부분 표시(사각형): [표시]를 켜면 캡처 위를 드래그해 그린다. 상자 좌표는 Figma 프레임 좌표로 저장하고 확대 · 축소에 맞춰 다시 그린다 */
+#stage.marking{cursor:crosshair}
+#markLayer{position:absolute;pointer-events:none}
+#markLayer[hidden]{display:none}
+.mk-box{position:absolute;border:2px solid #e5484d;background:rgba(229,72,77,.08);border-radius:3px;box-sizing:border-box;pointer-events:auto;cursor:move;touch-action:none}
+.mk-box.tmp{pointer-events:none}
+.mk-rs{position:absolute;right:-7px;bottom:-7px;width:14px;height:14px;background:#e5484d;border:2px solid #fff;border-radius:4px;box-sizing:border-box;cursor:nwse-resize}
+.mk-box.tmp{border-style:dashed}
+.mk-no{position:absolute;left:-2px;top:-24px;min-width:22px;height:22px;padding:0 5px;border-radius:6px;background:#e5484d;color:#fff;font-size:13px;font-weight:800;line-height:22px;text-align:center;box-sizing:border-box}
+.mk-x{position:absolute;right:-11px;top:-11px;width:22px;height:22px;padding:0;border:0;border-radius:50%;background:#14171c;color:#fff;font-size:13px;line-height:22px;cursor:pointer;pointer-events:auto}
+.mks{display:flex;flex-wrap:wrap;gap:5px;align-items:center;margin:0 0 6px}
+.mks[hidden]{display:none}
+.mks .lb{font-size:12px;font-weight:700;color:#e5484d;margin-right:2px}
+.mk-chip{height:26px;min-width:28px;padding:0 6px;border:1px solid #e5484d;border-radius:7px;background:var(--surface);color:#e5484d;font-size:13.5px;font-weight:800;cursor:pointer}
+.mk-chip:hover{background:#e5484d;color:#fff}
+.mk-clear{height:26px;padding:0 8px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--ink-3);font-size:12px;cursor:pointer}
+.mk-old{font-size:12px;color:var(--warn)}
 #shot{display:block;margin:8px auto;box-shadow:0 2px 12px rgba(0,0,0,.18);background:#fff;max-width:none;user-select:none;-webkit-user-drag:none}
 #live{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--canvas);display:none}
 #stage.is-live #live{display:block}
@@ -123,6 +140,13 @@ button{cursor:pointer}
 .cmp-ico{background:none;color:var(--ink-2)}
 .cmp-ico:hover{background:var(--surface-2);color:var(--ink)}
 .cmp-ico[hidden]{display:none}
+/* 영역 표시 버튼(입력창 안): 눈에 띄게 빨간 테두리, 켜지면 채움 */
+.cmp-mark{flex:none;height:36px;padding:0 12px 0 9px;border:1.5px solid #e5484d;border-radius:10px;background:var(--surface);color:#e5484d;display:inline-flex;align-items:center;gap:5px;font-size:13.5px;font-weight:700;white-space:nowrap;cursor:pointer}
+.cmp-mark svg{width:19px;height:19px}
+.cmp-mark:hover{background:#fdecec}
+.cmp-mark.on{background:#e5484d;color:#fff}
+.cmp-mark:disabled{opacity:.4;cursor:default;background:var(--surface)}
+html.perm-ro .cmp-mark{display:none}
 .cmp-ico svg,.cmp-send svg{width:20px;height:20px}
 .cmp-send{background:var(--accent);color:#fff}
 .cmp-send:hover{filter:brightness(1.1)}
@@ -432,6 +456,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     </div>
     <div id="stage" class="grab">
       <img id="shot" alt="" draggable="false">
+      <div id="markLayer" hidden></div>
       <iframe id="live" title="Figma 실시간 보기" allowfullscreen></iframe>
       <div id="noshot" class="noshot" hidden></div>
     </div>
@@ -455,9 +480,11 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
         <p class="ro" id="roNote" hidden></p>
         <p class="ro ol" id="olNote" hidden></p>
         <p class="ro ga" id="gaNote" hidden></p>
+        <div class="mks" id="mks" hidden></div>
         <div class="atts" id="atts" hidden><span id="attList" style="display:contents"></span></div>
         <div class="cmp-box">
           <button type="button" class="cmp-ico" id="attAdd" title="파일 첨부" aria-label="파일 첨부"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M10 4v12M4 10h12"/></svg></button>
+          <button type="button" class="cmp-mark" id="markBtn" aria-pressed="false" title="수정할 부분 표시: 켜고 캡처 위를 드래그해 사각형을 그립니다(여러 개 · 상자는 끌어서 옮기고 모서리로 크기 조절 · Esc로 끄기)"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="1.5" stroke-dasharray="3 2"/></svg><span>영역 표시</span></button>
           <input type="file" id="attFile" accept="image/png,image/jpeg,image/gif,image/webp,application/pdf,.pdf,.txt,.md,.markdown,.csv,text/plain,text/markdown,text/csv" multiple hidden>
           <textarea id="rtext" rows="1" aria-label="수정 요청 내용"></textarea>
           <button type="button" class="cmp-send" id="add" title="요청 등록 (Ctrl + Enter)" aria-label="요청 등록"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10 15V5M5.5 9.5 10 5l4.5 4.5"/></svg></button>
@@ -688,6 +715,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     img.style.width = Math.round(cur.w * zoom) + 'px';
     $('zoomv').textContent = Math.round(zoom * 100) + '%';
     $('fitW').classList.toggle('on', fit === 'w'); $('fitA').classList.toggle('on', fit === 'a');
+    renderMarks();
   }
   function setZoom(z){ fit = null; zoom = Math.min(2, Math.max(0.05, z)); applyZoom(); }
   /* 캡처가 없으면 실시간 보기를 자동으로 열지 않는다(Figma 뷰어를 통째로 받아 무겁다). [캡처 받기] · [실시간 보기]를 고르게 한다 */
@@ -746,7 +774,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
   }
   /* 일반 질문: 프레임 선택을 풀고 프레임 지정 없이 요청(선택된 프레임을 한 번 더 누르거나 [일반 질문]). 다른 프레임을 누르면 다시 선택 */
   var general = false;
-  function setGeneral(on){ general = !!on; if (!cur) return; renderMenu(); renderTarget(); renderReqs(); if (general) $('rtext').focus(); }
+  function setGeneral(on){ general = !!on; if (!cur) return; renderMenu(); renderTarget(); renderReqs(); renderMarks(); if (general) $('rtext').focus(); }
   $('genBtn').onclick = function(){ setGeneral(!general); };
   $('reqs').addEventListener('click', function(e){ if (e.target.closest('[data-gen]')) setGeneral(true); });
   function renderTarget(){
@@ -900,10 +928,122 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     setZoom(zoom < 0.95 ? 1 : (stage.clientWidth - 32) / cur.w);
     stage.scrollLeft = fx * img.offsetWidth - stage.clientWidth / 2 + 16; stage.scrollTop = fy * img.offsetHeight - stage.clientHeight / 2 + 16;
   });
+  /* ── 수정할 부분 표시(사각형) ──
+     marks[프레임 id] = [{x, y, w, h}] — Figma 프레임 좌표(px). 캡처는 프레임 크기(cur.w × cur.h)에 맞춰 보이므로 화면 배율로 바꿔 그린다.
+     등록하면 요청의 marks [{n, x, y, w, h, att}]와 상자마다 잘라 낸 그림(첨부, att = 그 첨부의 순번)이 함께 간다(docs/claude/requests.md) */
+  var marks = {}, markMode = false, MARK_MAX = 10, CIRC = '①②③④⑤⑥⑦⑧⑨⑩';
+  function mkNo(i){ return CIRC.charAt(i) || '(' + (i + 1) + ')'; }
+  function curMarks(){ if (!cur) return []; return marks[cur.id] || (marks[cur.id] = []); }
+  function markOk(){ return !!(cur && !general && !live && !liveOnce && hasShot(cur) && img.naturalWidth); }
+  function setMarkMode(on){
+    markMode = !!on && markOk();
+    $('markBtn').classList.toggle('on', markMode); $('markBtn').setAttribute('aria-pressed', markMode ? 'true' : 'false');
+    stage.classList.toggle('marking', markMode); stage.classList.toggle('grab', !markMode);
+  }
+  function renderMarks(){
+    if (!marks) return;   // 첫 화면 그리기가 이 코드보다 먼저 올 수 있다
+    var L = $('markLayer'), ok = markOk(), ms = cur && !general ? (marks[cur.id] || []) : [];
+    $('markBtn').disabled = !ok; if (!ok && markMode) setMarkMode(false);
+    L.hidden = !ok;
+    if (ok) {
+      L.style.left = img.offsetLeft + 'px'; L.style.top = img.offsetTop + 'px'; L.style.width = img.offsetWidth + 'px'; L.style.height = img.offsetHeight + 'px';
+      var k = img.offsetWidth / cur.w;
+      L.innerHTML = ms.map(function(m, i){
+        return '<div class="mk-box" data-box="' + i + '" title="끌어서 옮기기" style="left:' + (m.x * k) + 'px;top:' + (m.y * k) + 'px;width:' + (m.w * k) + 'px;height:' + (m.h * k) + 'px"><span class="mk-no">' + mkNo(i) + '</span>' +
+          '<button type="button" class="mk-x" data-mi="' + i + '" aria-label="표시 ' + mkNo(i) + ' 지우기">×</button><span class="mk-rs" data-rs="' + i + '" title="끌어서 크기 조절"></span></div>';
+      }).join('');
+    }
+    var old = ms.length && metaOf(cur) && Date.now() - Date.parse(metaOf(cur).at) > 3 * 864e5;
+    $('mks').hidden = !ms.length;
+    $('mks').innerHTML = ms.length ? '<span class="lb">표시</span>' + ms.map(function(m, i){ return '<button type="button" class="mk-chip" data-ins="' + i + '" title="입력창에 ' + mkNo(i) + ' 넣기">' + mkNo(i) + '</button>'; }).join('') +
+      '<button type="button" class="mk-clear" data-clear="1">모두 지우기</button>' + (old ? '<span class="mk-old">캡처가 오래됐습니다 · 표시 위치가 지금 Figma와 다를 수 있어요</span>' : '') : '';
+  }
+  img.addEventListener('load', renderMarks);
+  $('markBtn').onclick = function(){ setMarkMode(!markMode); if (markMode) toast('캡처 위를 드래그해 수정할 부분을 표시하세요 · 상자는 끌어서 옮기고 모서리로 크기 조절 (Esc로 끄기)'); };
+  $('markLayer').addEventListener('click', function(e){ var b = e.target.closest('[data-mi]'); if (!b) return; curMarks().splice(+b.dataset.mi, 1); renderMarks(); });
+  $('mks').addEventListener('click', function(e){
+    if (e.target.closest('[data-clear]')) { if (cur) marks[cur.id] = []; renderMarks(); return; }
+    var c = e.target.closest('[data-ins]'); if (!c) return;
+    var ta = $('rtext'), s = ta.selectionStart, v = ta.value, ins = mkNo(+c.dataset.ins) + ' ';
+    if (s == null) s = v.length;
+    ta.value = v.slice(0, s) + ins + v.slice(ta.selectionEnd == null ? s : ta.selectionEnd); ta.focus(); ta.selectionStart = ta.selectionEnd = s + ins.length; growText();
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && markMode) setMarkMode(false); });
+  (function(){
+    var d = null;
+    var mv = null;   // 상자 옮기기 · 크기 조절 {i, mode:'move'|'size', sx, sy, m0, k}
+    stage.addEventListener('pointerdown', function(e){
+      if (e.button !== 0 || e.target.closest('.mk-x') || !cur) return;
+      var hitBox = e.target.closest('.mk-box[data-box]');
+      if (hitBox) {
+        e.preventDefault(); e.stopPropagation();
+        var i = +hitBox.dataset.box, m = curMarks()[i]; if (!m) return;
+        mv = { i: i, mode: e.target.closest('.mk-rs') ? 'size' : 'move', sx: e.clientX, sy: e.clientY, m0: { x: m.x, y: m.y, w: m.w, h: m.h }, k: img.getBoundingClientRect().width / cur.w, el: hitBox };
+        return;
+      }
+      if (!markMode) return;
+      var r = img.getBoundingClientRect(); if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) return;
+      if (curMarks().length >= MARK_MAX) { toast('표시는 ' + MARK_MAX + '개까지 할 수 있습니다'); return; }
+      e.preventDefault();
+      var el = document.createElement('div'); el.className = 'mk-box tmp'; $('markLayer').appendChild(el);
+      d = { r: r, x0: e.clientX - r.left, y0: e.clientY - r.top, el: el, x1: e.clientX - r.left, y1: e.clientY - r.top };
+      el.style.left = d.x0 + 'px'; el.style.top = d.y0 + 'px';
+    });
+    window.addEventListener('pointermove', function(e){
+      if (mv) {
+        var m = curMarks()[mv.i]; if (!m) { mv = null; return; }
+        var dx = (e.clientX - mv.sx) / mv.k, dy = (e.clientY - mv.sy) / mv.k;
+        if (mv.mode === 'move') { m.x = Math.round(Math.max(0, Math.min(cur.w - m.w, mv.m0.x + dx))); m.y = Math.round(Math.max(0, Math.min(cur.h - m.h, mv.m0.y + dy))); }
+        else { m.w = Math.round(Math.max(4, Math.min(cur.w - m.x, mv.m0.w + dx))); m.h = Math.round(Math.max(4, Math.min(cur.h - m.y, mv.m0.h + dy))); }
+        var k2 = img.offsetWidth / cur.w;   // 다시 그리지 않고 그 상자만 움직인다(끌기가 끊기지 않게)
+        mv.el.style.left = (m.x * k2) + 'px'; mv.el.style.top = (m.y * k2) + 'px'; mv.el.style.width = (m.w * k2) + 'px'; mv.el.style.height = (m.h * k2) + 'px';
+        return;
+      }
+      if (!d) return;
+      d.x1 = Math.max(0, Math.min(d.r.width, e.clientX - d.r.left)); d.y1 = Math.max(0, Math.min(d.r.height, e.clientY - d.r.top));
+      d.el.style.left = Math.min(d.x0, d.x1) + 'px'; d.el.style.top = Math.min(d.y0, d.y1) + 'px';
+      d.el.style.width = Math.abs(d.x1 - d.x0) + 'px'; d.el.style.height = Math.abs(d.y1 - d.y0) + 'px';
+    });
+    window.addEventListener('pointerup', function(){
+      if (mv) { mv = null; renderMarks(); return; }
+      if (!d) return; var x = d; d = null;
+      var k = x.r.width / cur.w, w = Math.abs(x.x1 - x.x0), h = Math.abs(x.y1 - x.y0);
+      if (w >= 6 && h >= 6) curMarks().push({ x: Math.round(Math.min(x.x0, x.x1) / k), y: Math.round(Math.min(x.y0, x.y1) / k), w: Math.max(1, Math.round(w / k)), h: Math.max(1, Math.round(h / k)) });
+      renderMarks(); $('rtext').focus();
+    });
+  })();
+  /* 등록할 때: 상자마다 둘레를 조금 넣어 잘라 낸 그림(상자 · 번호를 그려 넣음)을 첨부로 올린다 */
+  function cropMark(m, i){
+    return new Promise(function(res){
+      var s = img.naturalWidth / cur.w, pad = 24, x0 = Math.max(0, m.x - pad), y0 = Math.max(0, m.y - pad);
+      var x1 = Math.min(cur.w, m.x + m.w + pad), y1 = Math.min(cur.h, m.y + m.h + pad);
+      var cw = Math.max(1, Math.round((x1 - x0) * s)), ch = Math.max(1, Math.round((y1 - y0) * s)), cv = document.createElement('canvas');
+      cv.width = cw; cv.height = ch; var g = cv.getContext('2d');
+      g.fillStyle = '#fff'; g.fillRect(0, 0, cw, ch);
+      g.drawImage(img, x0 * s, y0 * s, cw, ch, 0, 0, cw, ch);
+      g.strokeStyle = '#e5484d'; g.lineWidth = Math.max(2, Math.round(2 * s)); g.strokeRect((m.x - x0) * s, (m.y - y0) * s, m.w * s, m.h * s);
+      g.fillStyle = '#e5484d'; g.font = 'bold ' + Math.round(14 * s) + 'px sans-serif'; g.fillText(String(i + 1), (m.x - x0) * s + 3, Math.max(Math.round(14 * s), (m.y - y0) * s - 4));
+      cv.toBlob(function(b){ res(b); }, 'image/png');
+    });
+  }
+  function uploadMarks(ms, base){
+    var out = [];
+    return ms.reduce(function(p, m, i){
+      return p.then(function(){
+        say('표시한 부분 올리는 중 ' + (i + 1) + ' / ' + ms.length + '…');
+        return cropMark(m, i).then(function(b){
+          if (!b) throw new Error('표시한 부분을 잘라 내지 못했습니다.');
+          var x = { name: '표시' + (i + 1) + '.png' }, u = URL.createObjectURL(b);
+          return upload(b, 'png').then(function(t){ x.tmp = t; return smallCopy({ url: u }); })
+            .then(function(sb){ URL.revokeObjectURL(u); return sb ? upload(sb, 'jpg') : ''; }).then(function(sm){ x.small = sm; out.push(x); });
+        });
+      });
+    }, Promise.resolve()).then(function(){ return out; });
+  }
   /* 드래그로 이동 */
   (function(){
     var sx, sy, sl, st, on = false;
-    stage.addEventListener('pointerdown', function(e){ if (live || e.button !== 0) return; on = true; sx = e.clientX; sy = e.clientY; sl = stage.scrollLeft; st = stage.scrollTop; stage.classList.add('grabbing'); });
+    stage.addEventListener('pointerdown', function(e){ if (live || e.button !== 0 || markMode || e.target.closest('.mk-box')) return; on = true; sx = e.clientX; sy = e.clientY; sl = stage.scrollLeft; st = stage.scrollTop; stage.classList.add('grabbing'); });
     window.addEventListener('pointermove', function(e){ if (!on) return; stage.scrollLeft = sl - (e.clientX - sx); stage.scrollTop = st - (e.clientY - sy); });
     window.addEventListener('pointerup', function(){ on = false; stage.classList.remove('grabbing'); });
   })();
@@ -1095,13 +1235,20 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     if (!who()) { say('상단의 「작업자」에 이름을 입력해 주세요. 누가 요청했는지 기록됩니다.', true); userInput.focus(); return; }
     var ol = general ? [] : overlaps(cur.id);
     if (ol.length && !confirm('다른 작업자가 이 프레임을 수정 요청 중입니다.\n\n' + olText(ol).replace(/ \/ /g, '\n') + '\n\n등록하면 Claude가 그 요청이 끝난 뒤 이어서 처리합니다. 등록할까요?')) return;
+    var ms = general ? [] : curMarks().slice();
+    if (atts.length + ms.length > ATT_MAX) { say('첨부와 표시를 합쳐 ' + ATT_MAX + '개까지 보낼 수 있습니다(첨부 ' + atts.length + ' · 표시 ' + ms.length + ').', true); return; }
     $('add').disabled = true;
-    var n = atts.length;
+    var n = atts.length, sentFrame = cur.id, mk = [];
     uploadAtts().then(function(images){
+      return uploadMarks(ms).then(function(crops){
+        mk = ms.map(function(m, i){ return { n: i + 1, x: m.x, y: m.y, w: m.w, h: m.h, att: images.length + i + 1 }; });
+        return images.concat(crops);
+      });
+    }).then(function(images){
       // 일반 질문: 프레임 지정 없이(nodeId · frame 빈 값) 작업 페이지 기준으로 등록한다
-      return post({action:'add', nodeId:general ? '' : cur.id, frame:general ? '' : cur.name, page:general ? (edPage() || cur.page) : cur.page, fileKey:FILE.key, fileName:FILE.name, editable:general ? true : cur.editable, type:$('rtype').value, priority:$('rpri').value, layout: layout ? lname(LAYOUTS[layout - 1]) : '', text:t, images:images});
+      return post({action:'add', nodeId:general ? '' : cur.id, frame:general ? '' : cur.name, page:general ? (edPage() || cur.page) : cur.page, fileKey:FILE.key, fileName:FILE.name, editable:general ? true : cur.editable, type:$('rtype').value, priority:$('rpri').value, layout: layout ? lname(LAYOUTS[layout - 1]) : '', text:t, images:images, marks:mk, shotAt: mk.length && metaOf(cur) ? metaOf(cur).at : ''});
     })
-      .then(function(d){ $('rtext').value = ''; growText(); store('wb.draft.' + FILE.key, ''); clearAtts(); setLayout(0); lpop(false); say(d.items[0].id + ' 요청을 등록했습니다.' + (n ? ' (첨부 ' + n + '개)' : '')); filter = 'here'; syncFilter(); renderReqs(); })
+      .then(function(d){ $('rtext').value = ''; growText(); store('wb.draft.' + FILE.key, ''); clearAtts(); setLayout(0); lpop(false); if (mk.length) { marks[sentFrame] = []; setMarkMode(false); renderMarks(); } say(d.items[0].id + ' 요청을 등록했습니다.' + (mk.length ? ' (표시 ' + mk.length + '개)' : '') + (n ? ' (첨부 ' + n + '개)' : '')); filter = 'here'; syncFilter(); renderReqs(); })
       .catch(function(e){ say('등록 실패: ' + e.message, true); })
       .then(function(){ $('add').disabled = false; });
   }

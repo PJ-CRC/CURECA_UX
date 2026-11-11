@@ -47,6 +47,11 @@
 - 요청 없이 채팅으로 Figma를 고쳤으면 작업 이력을 직접 남긴다: `POST /api/history {action:'add', by:작업자 이름, doneBy:'Claude', title, text, fileKey, fileName, page, frame, nodeId}` (캡처를 먼저 갱신하면 함께 남는다).
   - 사용량도 직접 남긴다: 윈도우 `powershell -NoProfile -ExecutionPolicy Bypass -File workbench/usage.ps1 -From {작업 시작 시각 ISO} -By {작업자} -Title {작업 내용} [-Frame · -NodeId · -FileKey · -FileName · -Page]`, 맥 `perl workbench/usage.pl --from … --by … --title …`. 시작 시각은 그 작업을 부탁받은 사용자 메시지 시각이다.
 - 요청 데이터: `workbench/edit_requests.json` (`items[]`: id, nodeId, frame, page, fileKey, fileName, editable, type, priority, layout, text, status, note, author, images, ask, replies)
+- **수정할 부분 표시(`marks`)**: 작업자가 Workbench 캡처 위에 사각형을 그려 요청하면 요청에 `marks: [{n, x, y, w, h, att}]` · `shotAt`이 있다. 요청 글의 ① ② …가 `n`이다(하나뿐이면 번호 없이 쓸 수 있다).
+  - `x, y, w, h`는 **그 프레임(요청의 `nodeId`) 왼쪽 위 기준 Figma 좌표(px)**다. `use_figma`로 프레임의 `absoluteBoundingBox`를 읽고, 그 아래 레이어 중 `(프레임.x + x, 프레임.y + y, w, h)` 사각형과 겹치는 것을 찾는다 — 사각형 안에 **거의 다 들어오는 가장 작은 레이어**(글자 · 버튼 · 셀 등)가 대상이다. 인스턴스 안쪽이면 그 인스턴스의 속성 · 덮어쓰기로 고친다.
+  - `att`는 그 부분을 잘라 낸 첨부의 순번(`images`의 몇 번째, 1부터, 이름 `표시{n}.png`)이다. 상자와 번호가 그려져 있으니 글과 함께 보고 무엇을 가리키는지 확인한다.
+  - `shotAt`(그때 캡처 시각) 뒤에 프레임이 바뀌었을 수 있다. 처리 전에 지금 Figma를 읽어, 그 자리에 잘라 낸 그림과 같은 것이 없으면 고치지 말고 「보류」와 질문(「① 자리가 바뀌었습니다. 어느 요소인가요?」)을 남긴다. 겹친 레이어가 여러 개라 어느 것인지 정할 수 없을 때도 「보류」.
+  - note에는 표시마다 무엇을 고쳤는지 `- ① 화면: 무엇 → 어떻게`로 적는다.
 - **첨부 파일**: 요청에 `images: [{file, small, name, size}]`가 있으면(이름은 예전 그대로 `images`지만 이미지 · PDF · 글 파일이 섞여 있다) 처리 전에 **원본 `file`**(`workbench/req_images/{요청 ID}_{n}.{ext}`, 이 PC에만)을 모두 Read로 열어 보고, 요청 글과 함께 해석한다(「이 화면처럼」, 빨간 표시 부분, 「첨부한 정의서대로」 등). PDF는 10쪽이 넘으면 Read의 `pages`로 나눠 읽는다(한 번에 20쪽까지). 첨부와 글이 어긋나거나 첨부로 알 수 없으면 「보류」와 질문을 note에.
   - Workbench 수정 요청 칸에서 붙여넣기 · 끌어다 놓기 · 파일 선택으로 넣는다. 조건은 **Claude가 읽을 수 있는 것**(Claude 문서 기준, 2026-11-11): 이미지 PNG · JPG · GIF · WEBP는 파일 7.5MB(base64 10MB) · 8000×8000px 이하, PDF · 글(TXT · MD · CSV)은 30MB 이하, 한 요청에 20개까지. Word · Excel 등은 받지 않는다(Claude가 바로 읽지 못함 — PDF로 바꿔 올린다). 화면(`Figma_Workbench.html`의 `ATT_*`)과 서버(`node/server/writes.js`의 `ATT_*`)가 같은 조건을 쓴다. 원본을 `POST /api/attach?ext=` → `{tmp}`로 먼저 올리고, `add`의 `images:[{tmp, small, name}]`로 등록하면 서버가 요청 ID 이름으로 옮긴다.
   - 작업 이력(깃 공유)에는 원본이 아니라 이미지만 브라우저가 만든 줄인 사본(긴 변 1600 JPG, `small`)을 `.history/attach/{PC}_{요청 ID}_{n}.jpg`로 올린다. PDF · 글은 사본이 없어 이 PC에만 있다. 요청을 지우면 원본 · 사본 모두 지운다.

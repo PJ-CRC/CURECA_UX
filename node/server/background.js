@@ -38,7 +38,8 @@ module.exports = function start(h) {
   try { for (const d of fs.readdirSync(C.projRoot, { withFileTypes: true })) { if (!d.isDirectory()) continue; const p = h.readProj(d.name); if (p && p.link) h.setEditablePage(d.name, p.link); } } catch (e) {}
 
   // ── 윈도우 바로가기(Ensure-Shortcuts): 설치 폴더 · 바탕 화면에 아이콘 붙은 「Figma AI Run」(누르면 Figma AI Run.bat) ──
-  if (process.platform === 'win32') {
+  //  시험용으로 띄운 서버(환경 변수 WB_NO_SHORTCUT=1)는 건드리지 않는다 — 바탕 화면 바로가기가 시험 폴더를 가리키게 바뀌던 일(2026-11-11)
+  if (process.platform === 'win32' && process.env.WB_NO_SHORTCUT !== '1') {
     const bat = path.join(C.root, 'Figma AI Run.bat'), ico = path.join(C.root, 'tools', 'app_icon', 'FigmaAIRun.ico');
     if (core.exists(bat) && core.exists(ico)) {
       const ps = `$sh = New-Object -ComObject WScript.Shell; $places = @($env:WB_ROOT); try { $d = [Environment]::GetFolderPath('Desktop'); if ($d) { $places += $d } } catch {}
