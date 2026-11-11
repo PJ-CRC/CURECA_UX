@@ -1,23 +1,9 @@
 {
-   "ask" : {
-      "free" : true,
-      "options" : [
-         {
-            "label" : "COMM-5-b만 바꾸기(5-2. Breadcrumb)"
-         },
-         {
-            "label" : "COMM-5 18개 모두, 알파벳 순서대로 숫자(a=1, b=2…)"
-         },
-         {
-            "label" : "COMM-5 18개 모두, 번호는 알파벳 그대로(5-b 등)"
-         }
-      ],
-      "q" : "헤더를 어디까지, 어떤 번호로 바꿀까요?"
-   },
-   "at" : "2026-11-11T13:27:40+09:00",
+   "ask" : null,
+   "at" : "2026-11-11T13:43:13+09:00",
    "by" : "김목화",
    "createdAt" : "2026-11-11T13:25:06+09:00",
-   "doneBy" : "Claude",
+   "doneBy" : "김목화",
    "fileKey" : "cDjaemHjetS7RcAHRUIMY5",
    "fileName" : "STAgora AI Workspace",
    "frame" : "[단일] 검사실 · Breadcrumb (LNB) · COMM-5-b",
@@ -27,14 +13,21 @@
    "kind" : "request",
    "layout" : "",
    "nodeId" : "80:57559",
-   "note" : "고칠 범위와 번호 매기는 방식을 확인받아야 해서 보류했습니다.\n- 기준: 5-1. Accordion([통합] Accordion · COMM-5-a) 헤더는 왼쪽에 「5-1. Accordion」(Inter Bold 50), 오른쪽에 「.//」·「5.Components」(Inter Bold 40)가 있습니다.\n- 요청 프레임 [단일] 검사실 · Breadcrumb (LNB) · COMM-5-b는 「삭제필요」 섹션 안에 있습니다(같은 섹션에 COMM-5-p Profile · COMM-5-t Card).\n- 같은 형식으로 바꿀 COMM-5 화면은 「통합」 섹션 15개와 「삭제필요」 섹션 3개, 모두 18개입니다(10개를 넘어 대상 확인 필요).\n- 번호: 기준이 5-a → 5-1로 바뀌었는데, 나머지를 알파벳 순서대로 숫자로 바꿀지(b→5-2 …, X·Y·Z와 5-p Combo/Profile 중복 포함) 알파벳을 그대로 둘지 정해지지 않았습니다.\n작업 기준: 작업규칙 없음 · 정책서 통합운영툴 - 로컬 서버 정책 · UX가이드 통합운영툴_Common UX · 기준데이터 없음 · 화면 정의서 UX Kit(Component) 화면 정의서",
+   "note" : "",
    "page" : "Common UX_정리중",
    "pc" : "Mocaui-MacBookPro",
-   "replies" : [],
+   "replies" : [
+      {
+         "at" : "2026-11-11T13:43:13+09:00",
+         "by" : "김목화",
+         "q" : "헤더를 어디까지, 어떤 번호로 바꿀까요?",
+         "text" : "COMM-5 18개 모두, 알파벳 순서대로 숫자(a=1, b=2…)"
+      }
+   ],
    "reqId" : "R001",
    "shot" : "",
    "shots" : [],
-   "status" : "보류",
+   "status" : "대기",
    "team" : "stagora",
    "text" : "COMM-5  component부분 헤더 변경 :  5-1. Accordion 참고 , 헤더 우측에는 상위 넘버 기재",
    "type" : "일반"
