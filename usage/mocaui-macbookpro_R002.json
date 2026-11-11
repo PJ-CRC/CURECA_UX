@@ -1,0 +1,28 @@
+{
+   "at" : "2026-11-11T14:08:05+09:00",
+   "by" : "김목화",
+   "cacheRead" : 1334566,
+   "cacheWrite" : 40554,
+   "calls" : 18,
+   "doneBy" : "Claude",
+   "fileKey" : "cDjaemHjetS7RcAHRUIMY5",
+   "fileName" : "STAgora AI Workspace",
+   "frame" : "COMM-5 LIST",
+   "from" : "2026-11-11T14:05:54+09:00",
+   "id" : "mocaui-macbookpro_R002",
+   "input" : 40,
+   "kind" : "request",
+   "models" : {
+      "claude-opus-5-5" : 18
+   },
+   "nodeId" : "124:58092",
+   "output" : 10415,
+   "page" : "Common UX_정리중",
+   "pc" : "Mocaui-MacBookPro",
+   "reqId" : "R002",
+   "reqType" : "일반",
+   "team" : "stagora",
+   "text" : "헤더 참고해서 목차 순서 맞춰줘",
+   "total" : 1385575,
+   "usd" : 0.7998
+}
