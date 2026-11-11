@@ -1,0 +1,11 @@
+{
+    "rev":  "20261105-132857_brex-01",
+    "by":  "Claude",
+    "at":  "2026-11-05T13:28:57+09:00",
+    "note":  "language-set.md: 번역 언어 5개 → 6개(독일어 추가)",
+    "base":  "",
+    "pc":  "BREX_01",
+    "req":  "헌법: CURECA_AI 원본 저장소(C:\\Users\\exroc\\Documents\\CURECA_AI) 내용으로 업데이트",
+    "jobId":  "J010",
+    "file":  "language-set.md"
+}
