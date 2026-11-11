@@ -2,9 +2,6 @@
     "id":  "ahnahn",
     "name":  "안희수",
     "admin":  false,
-    "teams":  [
-                  "stagora"
-              ],
     "menus":  [
                   "plan",
                   "guide",
@@ -13,6 +10,12 @@
                   "usage",
                   "proto"
               ],
+    "createdAt":  "2026-11-10T14:12:34+09:00",
+    "createdBy":  "brex",
+    "salt":  "9fpypovDkfRBuzaLQ1uSRg==",
+    "iter":  100000,
+    "hash":  "xjr9Lyk53DFWhHjcbt94isySicpPLHPYD1rQbKhYBvM=",
+    "pwAt":  "2026-11-10T14:12:34+09:00",
     "writes":  [
                    "plan",
                    "guide",
@@ -23,12 +26,10 @@
     "approves":  [
 
                  ],
+    "teams":  [
+                  "cureca",
+                  "stagora"
+              ],
     "active":  true,
-    "createdAt":  "2026-11-10T14:12:34+09:00",
-    "createdBy":  "brex",
-    "salt":  "9fpypovDkfRBuzaLQ1uSRg==",
-    "iter":  100000,
-    "hash":  "xjr9Lyk53DFWhHjcbt94isySicpPLHPYD1rQbKhYBvM=",
-    "pwAt":  "2026-11-10T14:12:34+09:00",
-    "updatedAt":  "2026-11-10T14:12:34+09:00"
+    "updatedAt":  "2026-11-11T16:50:57+09:00"
 }
