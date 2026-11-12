@@ -13,8 +13,8 @@
   - **프로젝트 탭**: Workbench 위쪽 탭이 프로젝트(Figma 파일)다. 주소 `Figma_Workbench.html?p={fileKey}`로 정해지고(Ctrl+클릭하면 새 창), 「+」로 등록된 프로젝트를 열거나 Figma 링크로 새 프로젝트를 등록한다(`POST /api/projects {action:'add', link}`). 요청에는 늘 `fileKey`가 있으니 그 파일 · 그 파일의 수정 가능 페이지 기준으로 처리한다.
   - Figma 플러그인은 열린 파일의 프로젝트 작업 링크(`GET /api/projects`)로 수정 가능 페이지를 정한다(아직 모르는 파일이면 시작 안내 링크).
 - 응답은 한국어로 한다.
-- 새 텍스트 폰트는 **Inter** 또는 **Noto Sans KR**. Pretendard는 Claude의 Figma 환경(`use_figma`, 클라우드)에 없어 불러올 수 없다(2026-10-29 확인: 폰트 목록에 없음).
-  - **기존 Pretendard 글을 고칠 때는 Figma 플러그인에 맡긴다**: `docs/claude/jobs.md`의 **text** 작업을 만들면, 작업자 PC의 Figma에서 켜져 있는 Common UX Sync 플러그인이 그 PC의 Pretendard로 글을 바꾼다(스타일 · 폰트 그대로).
+- **Pretendard 글은 먼저 `use_figma`에서 직접 고친다**: `await figma.loadFontAsync({family:'Pretendard', style})`가 되면(Figma 계정에 Pretendard를 추가해 두면 된다, 2026-11-12 확인: 9개 굵기 모두 됨) 기존 글 수정 · 새 글 모두 Pretendard로 바로 한다(굵기 이름은 `SemiBold` · `ExtraBold`처럼 붙여 쓴다). Claude의 Figma 연결(MCP)이 쓰는 계정 기준이라 작업자 계정마다 다를 수 있으니, 할 때마다 불러오기부터 해 본다.
+  - **불러오기가 안 되면 Figma 플러그인에 맡긴다**: `docs/claude/jobs.md`의 **text** 작업을 만들면, 작업자 PC의 Figma에서 켜져 있는 Common UX Sync 플러그인이 그 PC의 Pretendard로 글을 바꾼다(스타일 · 폰트 그대로). 이때 새 글은 **Inter** 또는 **Noto Sans KR**로 만든다.
   - 플러그인이 2분 안에 가져가지 않으면(작업이 계속 「대기」) 작업을 「실패」로 바꾸고, 같은 자리 · 크기 · 색의 **Noto Sans KR**(한글 없으면 Inter) 글로 바꿔 넣은 뒤 note에 「플러그인이 꺼져 있어 Noto Sans KR로 바꿈」이라고 적는다.
 - 커밋 · 푸시는 사용자가 요청할 때만 한다.
 

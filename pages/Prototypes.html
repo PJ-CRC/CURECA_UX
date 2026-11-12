@@ -131,24 +131,24 @@ a.pcard:hover{border-color:var(--accent)}
 
   <section class="new" id="newPane" hidden aria-label="새 프로토타입">
     <h2>새 프로토타입</h2>
-    <p class="sub">화면을 고르고 흐름을 적으면 요청 감시 중인 Claude가 만듭니다. 화면은 보기 전용 페이지에서도 고를 수 있습니다(Figma를 읽기만 함).</p>
+    <p class="sub">페이지(메뉴 하나)를 고르면 그 페이지의 화면을 골라 둡니다. 목록을 확인하고 빼거나 더한 뒤 요청하면, 요청 감시 중인 Claude가 화면 디스크립션 · 작업 기준 문서로 흐름을 짜서 만듭니다. 만든 뒤에는 「수정 요청」으로 일부를 고치세요. 어느 페이지든 됩니다(Figma를 읽기만 함).</p>
     <div class="frow">
-      <label class="f">이름<input id="pName" maxlength="60" placeholder="예) Assay Pack 등록 흐름"></label>
       <label class="f">프로젝트 (Figma 파일)<select id="pProj"></select></label>
-      <div class="f">환경<div class="seg" id="pEnv"><button type="button" data-v="T-IOS" class="on">T-IOS (웹 1920)</button><button type="button" data-v="L-IOS">L-IOS (앱)</button></div></div>
+      <label class="f">페이지<select id="pPage" aria-label="페이지"></select></label>
+      <label class="f">이름<input id="pName" maxlength="60" placeholder="페이지를 고르면 페이지 이름이 들어갑니다"></label>
     </div>
     <div class="pick">
       <div class="box">
-        <div class="hd">화면 고르기 <span class="sp"></span><select id="pPage" aria-label="페이지"></select><input id="pSearch" type="search" placeholder="화면 ID · 프레임 이름" aria-label="화면 검색"></div>
+        <div class="hd">이 페이지의 프레임 <span class="sp"></span><input id="pSearch" type="search" placeholder="화면 ID · 프레임 이름" aria-label="화면 검색"></div>
         <ul class="ls" id="pList"><li class="grp">프로젝트를 고르세요</li></ul>
       </div>
       <div class="box">
-        <div class="hd">고른 화면 <span id="pCount" class="chip">0</span><span class="sp"></span><span style="font-weight:400;color:var(--ink-3);font-size:12px">순서대로 흐름에 놓입니다 · ◉ 시작 화면</span></div>
+        <div class="hd">만들 화면 <span id="pCount" class="chip">0</span><span class="sp"></span><span id="pEnvTag" class="chip"></span><span style="font-weight:400;color:var(--ink-3);font-size:12px">◉ 시작 화면</span></div>
         <ul class="ls" id="pSel"></ul>
       </div>
     </div>
-    <label class="f" style="margin-bottom:12px">흐름 설명 (화면 사이 동작)<textarea id="pFlow" placeholder="예)&#10;- 목록에서 행 클릭 → 상세 패널 열림&#10;- [Import] → 업로드 팝업 → 완료 시 토스트 후 목록 갱신&#10;- 검색 조건 바꾸면 목록 거르기"></textarea></label>
-    <p class="hint">Claude가 화면별 HTML 파일과 공통 컴포넌트(Common UX 가이드 · COMM-5 기준)로 만듭니다. 화면 수에 따라 몇 분 걸리고, 사용량은 사용량 통계에 「프로토타입」으로 남습니다.</p>
+    <label class="f" style="margin-bottom:12px">흐름 설명 (선택 — 비우면 Claude가 화면 디스크립션 · 작업 기준 문서로 짭니다)<textarea id="pFlow" placeholder="꼭 넣고 싶은 동작만 적어도 됩니다. 예)&#10;- 목록에서 행 클릭 → 상세 패널 열림&#10;- [Import] → 업로드 팝업 → 완료 시 토스트 후 목록 갱신"></textarea></label>
+    <p class="hint">「화면」은 화면마다 HTML로, 「상태 · 케이스 · 흐름」은 그 화면의 상태 · 팝업과 흐름을 짤 때 참고로 씁니다. TI(T-IOS) · LI(L-IOS) 화면이 함께 있으면 둘 다 만들고 화면 밖 패널에서 바꿔 봅니다(한쪽만 원하면 다른 쪽을 빼세요). 화면이 많을수록 오래 걸리고, 사용량은 사용량 통계에 「프로토타입」으로 남습니다.</p>
     <div class="acts">
       <button class="btn primary" id="pSubmit">만들기 요청</button>
       <button class="btn" id="pCancel" type="button">닫기</button>
@@ -213,11 +213,25 @@ a.pcard:hover{border-color:var(--accent)}
   }
   function setSrv(on){ online = on; $('srv').textContent = on ? '로컬 서버 연결됨' : '서버 없음'; $('srv').className = 'badge ' + (on ? 'on' : 'off'); }
 
-  /* ── 새 프로토타입: 화면 고르기 ── */
-  var CAT = null, picked = [], startId = '', env = 'T-IOS', catKey = '';
+  /* ── 새 프로토타입: 페이지를 고르면 화면 목록을 골라 둔다(2026-11-12) ──
+     페이지 하나 = 메뉴 하나. 프레임 이름으로 나눠 미리 체크하고, 사람이 확인해 빼거나 더한 뒤 요청한다
+     - 화면(screen): TI · LI 화면 ID 프레임 → 화면마다 HTML
+     - 상태 · 케이스 · 흐름(ref): 화면 ID 뒤에 / 케이스 · Case · 상태 · Flow → 상태 · 팝업 · 흐름을 짤 때 참고
+     - 제외(out): 화면 ID 없음(COMM · 매뉴얼 · 표지 등), 세부정의 · 백업 · Wireframe · Skeleton → 처음엔 체크 안 함 */
+  var CAT = null, picked = [], startId = '', catKey = '', autoName = '';
+  var ROLE_T = { screen: '화면', ref: '상태 · 케이스 · 흐름', out: '제외(체크하면 화면으로 만듦)' };
+  function envOf(name){ var m = /^(?:M-)?(TI|LI)-/.exec(name); return m ? (m[1] === 'TI' ? 'T-IOS' : 'L-IOS') : ''; }
+  function roleOf(name){
+    if (!envOf(name) || !screenOf(name)) return 'out';
+    if (/세부정의|백업|Wireframe|Draft|Skeleton|스켈레톤/i.test(name)) return 'out';
+    if (/\/|케이스|Case|상태|Flow/i.test(name)) return 'ref';
+    return 'screen';
+  }
+  function byName(a, b){ return a[1].localeCompare(b[1], 'ko', { numeric: true }) || (a[5] - b[5]) || (a[4] - b[4]); }
+  function curPage(){ var pid = $('pPage').value; return CAT && (CAT.pages || []).filter(function(p){ return p.id === pid; })[0]; }
   function openNew(on){
     $('newPane').hidden = !on; $('newBtn').disabled = on;
-    if (on) { if (!PROJ.length) loadProjects(); $('pName').focus(); }
+    if (on) { if (!PROJ.length) loadProjects(); $('pProj').focus(); }
   }
   function loadProjects(){
     getJ('/api/projects').then(function(d){
@@ -229,83 +243,89 @@ a.pcard:hover{border-color:var(--accent)}
   }
   function loadCatalog(){
     var key = $('pProj').value; if (!key) return;
-    if (key !== catKey) { picked = []; startId = ''; }
-    catKey = key; CAT = null; $('pList').innerHTML = '<li class="grp">불러오는 중…</li>';
+    catKey = key; CAT = null; picked = []; startId = ''; $('pList').innerHTML = '<li class="grp">불러오는 중…</li>'; $('pPage').innerHTML = '';
     Promise.all([getJ('/api/catalog?key=' + encodeURIComponent(key)), getJ('projects/' + key + '/shots_meta.json').catch(function(){ return {}; })]).then(function(r){
       CAT = r[0]; SHOTS[key] = r[1] || {};
       var pages = (CAT.pages || []).filter(function(p){ return p.frames && p.frames.length; });
-      var ed = pages.filter(function(p){ return p.editable; })[0];
-      $('pPage').innerHTML = '<option value="">전체 페이지</option>' + pages.map(function(p){ return '<option value="' + esc(p.id) + '"' + (ed && p.id === ed.id ? ' selected' : '') + '>' + esc(p.name) + (p.editable ? ' ★' : '') + '</option>'; }).join('');
-      renderPick(); renderSel();
-    }).catch(function(){ $('pList').innerHTML = '<li class="grp">이 파일의 프레임 목록이 없습니다. Workbench에서 「Claude에게 목록 만들기 요청」을 먼저 해 주세요.</li>'; });
+      var ed = pages.filter(function(p){ return p.editable; })[0] || pages[0];
+      $('pPage').innerHTML = pages.map(function(p){ return '<option value="' + esc(p.id) + '"' + (ed && p.id === ed.id ? ' selected' : '') + '>' + esc(p.name) + (p.editable ? ' ★ 작업 페이지' : '') + ' (' + p.frames.length + ')</option>'; }).join('');
+      pickPage();
+    }).catch(function(){ $('pList').innerHTML = '<li class="grp">이 파일의 프레임 목록이 없습니다. Workbench에서 「Claude에게 목록 만들기 요청」을 먼저 해 주세요.</li>'; renderSel(); });
+  }
+  /* 페이지를 고르면: 화면 + 상태 · 케이스 · 흐름을 체크해 두고, 이름이 비었거나 자동으로 넣은 것이면 페이지 이름으로 */
+  function pickPage(){
+    var pg = curPage(); picked = []; startId = '';
+    if (pg) {
+      var fr = pg.frames.slice().sort(byName);
+      ['screen', 'ref'].forEach(function(role){ fr.forEach(function(f){ if (roleOf(f[1]) === role) picked.push({ nodeId: f[0], name: f[1], page: pg.name, role: role }); }); });
+      var nm = $('pName').value.trim(); if (!nm || nm === autoName) { autoName = pg.name; $('pName').value = pg.name; }
+    }
+    renderPick(); renderSel();
   }
   function renderPick(){
-    if (!CAT) return;
-    var pid = $('pPage').value, q = $('pSearch').value.trim().toLowerCase(), h = '';
-    (CAT.pages || []).forEach(function(pg){
-      if (!pg.frames || !pg.frames.length || (pid && pg.id !== pid)) return;
-      var rows = pg.frames.filter(function(f){ return !q || f[1].toLowerCase().indexOf(q) >= 0; });
-      if (!rows.length) return;
-      var groups = [], by = {};
-      rows.forEach(function(f){ var s = screenOf(f[1]) || '기타'; if (!by[s]) { by[s] = []; groups.push(s); } by[s].push(f); });
-      h += '<li class="grp">' + esc(pg.name) + '</li>';
-      groups.forEach(function(s){
-        if (groups.length > 1 || s !== '기타') h += '<li class="grp" style="padding-left:16px;font-weight:600">' + esc(s) + '</li>';
-        by[s].forEach(function(f){
-          var on = picked.some(function(p){ return p.nodeId === f[0]; });
-          h += '<li><label class="fr"><input type="checkbox" data-id="' + esc(f[0]) + '" data-name="' + esc(f[1]) + '" data-page="' + esc(pg.name) + '"' + (on ? ' checked' : '') + '><span class="nm" title="' + esc(f[1]) + '">' + esc(f[1]) + '</span><small>' + f[2] + '×' + f[3] + '</small></label></li>';
-        });
+    var pg = curPage(); if (!pg) { $('pList').innerHTML = '<li class="grp">페이지를 고르세요</li>'; return; }
+    var q = $('pSearch').value.trim().toLowerCase(), h = '';
+    var rows = pg.frames.filter(function(f){ return !q || f[1].toLowerCase().indexOf(q) >= 0; }).sort(byName);
+    ['screen', 'ref', 'out'].forEach(function(role){
+      var rs = rows.filter(function(f){ return roleOf(f[1]) === role; }); if (!rs.length) return;
+      h += '<li class="grp">' + ROLE_T[role] + ' · ' + rs.length + '</li>';
+      rs.forEach(function(f){
+        var on = picked.some(function(p){ return p.nodeId === f[0]; });
+        h += '<li><label class="fr"><input type="checkbox" data-id="' + esc(f[0]) + '" data-name="' + esc(f[1]) + '" data-role="' + role + '"' + (on ? ' checked' : '') + '><span class="nm" title="' + esc(f[1]) + '">' + esc(f[1]) + '</span><small>' + f[2] + '×' + f[3] + '</small></label></li>';
       });
     });
-    $('pList').innerHTML = h || '<li class="grp">맞는 화면이 없습니다.</li>';
+    $('pList').innerHTML = h || '<li class="grp">맞는 프레임이 없습니다.</li>';
+  }
+  function envNow(){
+    var s = {}; picked.forEach(function(p){ if (p.role === 'screen') { var e = envOf(p.name); if (e) s[e] = 1; } });
+    return Object.keys(s).sort().reverse().join('+');   // T-IOS · L-IOS · T-IOS+L-IOS · ''(모름 → Claude가 크기로)
   }
   function renderSel(){
-    if (startId && !picked.some(function(p){ return p.nodeId === startId; })) startId = '';
-    if (!startId && picked.length) startId = picked[0].nodeId;
-    $('pCount').textContent = picked.length;
+    var scr = picked.filter(function(p){ return p.role === 'screen'; });
+    if (startId && !scr.some(function(p){ return p.nodeId === startId; })) startId = '';
+    if (!startId && scr.length) startId = scr[0].nodeId;
+    $('pCount').textContent = scr.length + (picked.length > scr.length ? ' + 참고 ' + (picked.length - scr.length) : '');
+    var e = envNow(); $('pEnvTag').textContent = e ? e.replace('+', ' + ') : ''; $('pEnvTag').hidden = !e;
     $('pSel').innerHTML = picked.length ? picked.map(function(p, i){
-      var th = shotUrl(catKey, p.nodeId, SHOTS[catKey]);
-      return '<li class="sel"><span class="th"' + (th ? ' style="background-image:url(&quot;' + esc(th) + '&quot;)"' : '') + '></span><span class="nm"><b title="' + esc(p.name) + '">' + (i + 1) + '. ' + esc(p.name) + '</b><small>' + esc(p.page) + ' · ' + esc(p.nodeId) + '</small></span>' +
-        '<label><input type="radio" name="start" data-start="' + esc(p.nodeId) + '"' + (p.nodeId === startId ? ' checked' : '') + '>시작</label>' +
-        '<button class="ib" data-up="' + i + '"' + (i ? '' : ' disabled') + ' aria-label="위로">↑</button><button class="ib" data-down="' + i + '"' + (i < picked.length - 1 ? '' : ' disabled') + ' aria-label="아래로">↓</button><button class="ib" data-rm="' + i + '" aria-label="빼기">×</button></li>';
-    }).join('') : '<li class="grp">왼쪽에서 화면을 체크하세요.</li>';
+      var th = shotUrl(catKey, p.nodeId, SHOTS[catKey]), isS = p.role === 'screen';
+      return (i && picked[i - 1].role !== p.role ? '<li class="grp">상태 · 케이스 · 흐름 (참고)</li>' : '') +
+        '<li class="sel"><span class="th"' + (th ? ' style="background-image:url(&quot;' + esc(th) + '&quot;)"' : '') + '></span><span class="nm"><b title="' + esc(p.name) + '">' + esc(p.name) + '</b><small>' + esc(p.nodeId) + (isS ? '' : ' · 참고') + '</small></span>' +
+        (isS ? '<label><input type="radio" name="start" data-start="' + esc(p.nodeId) + '"' + (p.nodeId === startId ? ' checked' : '') + '>시작</label>' : '') +
+        '<button class="ib" data-rm="' + i + '" aria-label="빼기">×</button></li>';
+    }).join('') : '<li class="grp">만들 화면이 없습니다. 왼쪽에서 체크하세요.</li>';
   }
   $('pList').addEventListener('change', function(e){
     var c = e.target.closest('input[data-id]'); if (!c) return;
-    if (c.checked) picked.push({ nodeId: c.dataset.id, name: c.dataset.name, page: c.dataset.page });
-    else picked = picked.filter(function(p){ return p.nodeId !== c.dataset.id; });
+    if (c.checked) {
+      var role = c.dataset.role === 'ref' ? 'ref' : 'screen', it = { nodeId: c.dataset.id, name: c.dataset.name, page: (curPage() || {}).name || '', role: role };
+      if (role === 'screen') { var at = 0; while (at < picked.length && picked[at].role === 'screen') at++; picked.splice(at, 0, it); } else picked.push(it);
+    } else picked = picked.filter(function(p){ return p.nodeId !== c.dataset.id; });
     renderSel();
   });
   $('pSel').addEventListener('click', function(e){
-    var b = e.target.closest('button'); if (b) {
-      var i;
-      if (b.dataset.up) { i = +b.dataset.up; picked.splice(i - 1, 0, picked.splice(i, 1)[0]); }
-      else if (b.dataset.down) { i = +b.dataset.down; picked.splice(i + 1, 0, picked.splice(i, 1)[0]); }
-      else if (b.dataset.rm) { picked.splice(+b.dataset.rm, 1); }
-      renderSel(); renderPick(); return;
-    }
+    var b = e.target.closest('button[data-rm]'); if (b) { picked.splice(+b.dataset.rm, 1); renderSel(); renderPick(); return; }
     var r = e.target.closest('input[data-start]'); if (r) startId = r.dataset.start;
   });
   $('pProj').addEventListener('change', loadCatalog);
-  $('pPage').addEventListener('change', renderPick);
+  $('pPage').addEventListener('change', function(){ $('pSearch').value = ''; pickPage(); });
   $('pSearch').addEventListener('input', renderPick);
-  $('pEnv').addEventListener('click', function(e){ var b = e.target.closest('button'); if (!b) return; env = b.dataset.v; [].forEach.call(this.children, function(x){ x.classList.toggle('on', x === b); }); });
   $('newBtn').addEventListener('click', function(){ openNew(true); });
   $('pCancel').addEventListener('click', function(){ openNew(false); });
   $('pSubmit').addEventListener('click', function(){
-    var name = $('pName').value.trim(), msg = $('pMsg'); msg.className = 'msg bad';
+    var name = $('pName').value.trim(), msg = $('pMsg'), pg = curPage(); msg.className = 'msg bad';
     if (!online) { msg.textContent = '서버가 꺼져 있어 요청할 수 없습니다.'; return; }
+    if (!pg) { msg.textContent = '페이지를 골라 주세요.'; return; }
     if (!name) { msg.textContent = '이름을 입력해 주세요.'; $('pName').focus(); return; }
-    if (!picked.length) { msg.textContent = '화면을 하나 이상 골라 주세요.'; return; }
+    if (!picked.some(function(p){ return p.role === 'screen'; })) { msg.textContent = '만들 화면을 하나 이상 골라 주세요.'; return; }
     var p = PROJ.filter(function(x){ return x.key === catKey; })[0] || {};
     $('pSubmit').disabled = true;
     fetch('/api/jobs', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
-      action: 'add', kind: 'prototype', fileKey: catKey, name: name, text: $('pFlow').value.trim(), env: env, start: startId,
-      frames: picked, link: p.link || '', by: who() }) })
+      action: 'add', kind: 'prototype', fileKey: catKey, name: name, text: $('pFlow').value.trim(), env: envNow(), start: startId,
+      page: { id: pg.id, name: pg.name }, frames: picked, link: p.link || '', by: who() }) })
       .then(function(r){ return r.json(); }).then(function(d){
         if (d.error) throw new Error(d.error);
         toast(d.job.id + ' 만들기를 요청했습니다');
-        picked = []; startId = ''; $('pName').value = ''; $('pFlow').value = ''; msg.textContent = '';
+        picked = []; startId = ''; autoName = ''; $('pName').value = ''; $('pFlow').value = ''; msg.textContent = '';
         openNew(false); load();
       }).catch(function(e){ msg.textContent = '요청 실패: ' + e.message; })
       .then(function(){ $('pSubmit').disabled = false; });

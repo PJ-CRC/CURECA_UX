@@ -201,7 +201,7 @@ module.exports = function register(on, h) {
         if (!KINDS.includes(kind)) throw new Error('알 수 없는 작업: ' + kind);
         if (kind === 'prototype') {
           nid = ''; if (!nn(b.name).trim()) throw new Error('프로토타입 이름을 입력해 주세요.');
-          if (!core.arr(b.frames).some((f) => f && /^\d+:\d+$/.test(nn(f.nodeId)))) throw new Error('화면을 하나 이상 골라 주세요.');
+          if (!core.arr(b.frames).some((f) => f && /^\d+:\d+$/.test(nn(f.nodeId)) && nn(f.role) !== 'ref')) throw new Error('화면을 하나 이상 골라 주세요.');
         }
         if (kind === 'prototype-edit' || kind === 'prototype-sync') {
           nid = ''; if (!/^[A-Za-z0-9_-]{1,64}$/.test(nn(b.proto)) || !core.exists(path.join(C.protoRoot, nn(b.proto), 'meta.json'))) throw new Error('프로토타입을 찾지 못했습니다: ' + nn(b.proto));
@@ -250,8 +250,10 @@ module.exports = function register(on, h) {
           if (kind === 'guide') { hit.docKind = ['spec', 'rule', 'policy', 'data'].includes(nn(b.docKind)) ? nn(b.docKind) : ''; hit.files = saveUploads(hit.id, srcs); }
           if (/^prototype/.test(kind)) {
             hit.proto = nn(b.proto);
-            hit.frames = kind === 'prototype' ? core.arr(b.frames).filter((f) => f && /^\d+:\d+$/.test(nn(f.nodeId))).map((f) => ({ nodeId: nn(f.nodeId), name: nn(f.name), page: nn(f.page) })) : core.arr(b.frames).filter(Boolean);
+            // role: screen(화면마다 HTML) · ref(상태 · 케이스 · 흐름 참고) — 페이지를 고르면 화면 목록을 골라 두는 요청(2026-11-12). 예전 요청은 role 없음 = 모두 화면
+            hit.frames = kind === 'prototype' ? core.arr(b.frames).filter((f) => f && /^\d+:\d+$/.test(nn(f.nodeId))).map((f) => Object.assign({ nodeId: nn(f.nodeId), name: nn(f.name), page: nn(f.page) }, nn(f.role) === 'ref' ? { role: 'ref' } : {})) : core.arr(b.frames).filter(Boolean);
             hit.start = nn(b.start); hit.env = nn(b.env);
+            if (kind === 'prototype' && b.page && /^\d+:\d+$/.test(nn(b.page.id))) hit.page = { id: nn(b.page.id), name: nn(b.page.name) };
           }
           items = [hit].concat(items);
         }
@@ -333,6 +335,17 @@ module.exports = function register(on, h) {
       const s = core.readSetup();
       if (h.keyOf(s.figmaUrl) === k) { s.figmaUrl = neu; s.updatedAt = core.now(); core.writeJson(C.setupFile, s); }
       return { ok: true, project: h.readProj(k) };
+    }
+    // 프로젝트 지우기(2026-11-12): 이 PC의 등록만 지운다(Figma 파일은 그대로). projects/_trash/{시각}_{key}로 옮겨 되살릴 수 있게.
+    // 시작 안내 작업 링크의 파일은 지울 수 없다(시작 안내 3단계에서 링크를 바꾼 뒤 지운다)
+    if (b.action === 'delete') {
+      const k = nn(b.key); if (!h.testKey(k)) throw new Error('잘못된 파일 키입니다.');
+      const src = path.join(C.projRoot, k); if (!core.exists(src)) throw new Error('등록된 프로젝트가 아닙니다.');
+      if (h.keyOf(core.readSetup().figmaUrl) === k) throw new Error('시작 안내의 작업 링크 파일이라 지울 수 없습니다. 시작 안내 3단계에서 링크를 바꾼 뒤 지우세요.');
+      const d = new Date(), p2 = (x) => String(x).padStart(2, '0');
+      const tr = path.join(C.projRoot, '_trash'); fs.mkdirSync(tr, { recursive: true });
+      fs.renameSync(src, path.join(tr, `${d.getFullYear()}${p2(d.getMonth() + 1)}${p2(d.getDate())}-${p2(d.getHours())}${p2(d.getMinutes())}${p2(d.getSeconds())}_${k}`));
+      return { ok: true };
     }
     throw new Error('알 수 없는 작업입니다.');
   });

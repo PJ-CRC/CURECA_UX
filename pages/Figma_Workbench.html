@@ -60,6 +60,13 @@ button{cursor:pointer}
 .ppop .pnote[hidden]{display:none}
 .ppop .phint{margin:6px 6px 2px;font-size:11.5px;color:var(--ink-3)}
 .ppop .it .dot{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:7px;vertical-align:0}
+.ppop .row{display:flex;align-items:center;gap:2px;border-radius:7px}
+.ppop .row:hover{background:var(--surface-2)}
+.ppop .row .it{flex:1;min-width:0}
+.ppop .row .it:hover{background:none}
+.ppop .row .del{flex:none;width:28px;height:28px;margin-right:4px;border:0;border-radius:6px;background:none;color:var(--ink-3);font-size:15px;line-height:1;cursor:pointer;opacity:.55}
+.ppop .row:hover .del,.ppop .row .del:focus-visible{opacity:1}
+.ppop .row .del:hover{background:var(--red-soft,#fde8e8);color:var(--red,#d12)}
 .ppop .none{font-size:12.5px;color:var(--ink-3);padding:4px 8px 8px}
 .ppop form{display:flex;gap:6px;padding:6px 6px 4px;border-top:1px solid var(--line);margin-top:6px}
 .ppop input{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);border-radius:7px;background:var(--surface);font-size:12.5px}
@@ -116,6 +123,8 @@ button{cursor:pointer}
 #stage.cm-adding,#stage.cm-adding img{cursor:crosshair}
 .cm-pin.tmp{outline:2px dashed var(--accent);outline-offset:1px}
 .cm-pin.tmp i{background:var(--accent)}
+#stage .cm-pin.tmp{cursor:grab;touch-action:none}
+#stage .cm-pin.tmp.drag{cursor:grabbing;transform:translateY(-100%) scale(1.12);box-shadow:0 6px 16px rgba(0,0,0,.32)}
 .cm-w{margin-top:8px;border-top:1px solid var(--line);padding-top:8px}
 .cm-w textarea{width:100%;min-height:56px;max-height:160px;resize:vertical;box-sizing:border-box;padding:7px 9px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font:inherit;font-size:13.5px;line-height:1.5}
 .cm-w textarea:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
@@ -1203,7 +1212,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       var k = img.offsetWidth / cur.w;
       L.hidden = false; L.style.left = img.offsetLeft + 'px'; L.style.top = img.offsetTop + 'px'; L.style.width = img.offsetWidth + 'px'; L.style.height = img.offsetHeight + 'px';
       L.innerHTML = here.map(function(t){ return cmPinHtml(t, t.fx * k, t.fy * k); }).join('') +
-        (CM.draft ? '<button type="button" class="cm-pin tmp on" data-cmdraft="1" style="left:' + Math.round(CM.draft.x * k) + 'px;top:' + Math.round(CM.draft.y * k) + 'px" title="새 댓글 자리"><i>＋</i></button>' : '');
+        (CM.draft ? '<button type="button" class="cm-pin tmp on" data-cmdraft="1" style="left:' + Math.round(CM.draft.x * k) + 'px;top:' + Math.round(CM.draft.y * k) + 'px" title="새 댓글 자리 — 끌어서 옮기기"><i>＋</i></button>' : '');
     }
     var ab = $('cmAdd'); if (ab) { ab.disabled = !cmAddOk(); if (CM.add && !cmAddOk()) { CM.add = false; CM.draft = null; ab.setAttribute('aria-pressed', 'false'); stage.classList.remove('cm-adding'); } }
     if (CM.draft && !general) { var dp = stage.querySelector('.cm-pin.tmp'); if (dp) { cmDraftShow(dp); return; } }
@@ -1221,10 +1230,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       '<div class="cm-f">' + (t.resolved ? '<span class="rs">해결됨</span>' : '') + (t.node && t.node.name ? '<span>' + esc(t.node.name) + '</span>' : '') + '<a href="https://www.figma.com/design/' + FILE.key + '/file?node-id=' + String(t.frame).replace(':', '-') + '#' + esc(t.id) + '" target="_blank" rel="noopener">Figma에서 보기 ↗</a></div>' +
       (cmCanW() ? '<div class="cm-w"><textarea data-cmreply="' + esc(t.id) + '" placeholder="답글 쓰기 (Ctrl+Enter로 올리기)" aria-label="답글"></textarea><div class="r"><span class="e"></span><button type="button" class="go" data-cmsend="reply">답글</button></div></div>' : '');
     stage.appendChild(pop);
-    var sr = stage.getBoundingClientRect(), pr = pin.getBoundingClientRect();
-    var x = pr.right - sr.left + stage.scrollLeft + 8, y = pr.top - sr.top + stage.scrollTop;
-    if (x + 330 > stage.scrollLeft + stage.clientWidth) x = pr.left - sr.left + stage.scrollLeft - 328;
-    pop.style.left = Math.max(stage.scrollLeft + 4, x) + 'px'; pop.style.top = Math.max(stage.scrollTop + 4, Math.min(y, stage.scrollTop + stage.clientHeight - pop.offsetHeight - 8)) + 'px';
+    cmPlace(pop, pin);
     stage.querySelectorAll('.cm-pin.on').forEach(function(p){ p.classList.remove('on'); }); pin.classList.add('on');
   }
   /* 새 댓글 쓰기 창(임시 핀 옆) */
@@ -1234,14 +1240,47 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     var pop = document.createElement('div'); pop.className = 'cm-pop'; pop.dataset.draft = '1'; pop.setAttribute('role', 'dialog'); pop.setAttribute('aria-label', '새 Figma 댓글');
     pop.innerHTML = '<button type="button" class="cm-x" data-cmcancel="1" aria-label="취소">✕</button><div class="cm-it"><div><div class="w"><b>새 댓글</b>' + esc(cur.name) + '</div></div></div>' +
       '<div class="cm-w" style="border:0;margin:0;padding:0"><textarea data-cmnew="1" placeholder="Figma에 남길 댓글 (Ctrl+Enter로 올리기)" aria-label="댓글"></textarea><div class="r"><span class="e"></span><button type="button" data-cmcancel="1">취소</button><button type="button" class="go" data-cmsend="new">올리기</button></div>' +
-      '<p class="w" style="margin:6px 0 0;font-size:11.5px;color:var(--ink-3)">토큰 주인의 Figma 계정으로 이 프레임의 이 자리에 올라갑니다.</p></div>';
+      '<p class="w" style="margin:6px 0 0;font-size:11.5px;color:var(--ink-3)">토큰 주인의 Figma 계정으로 이 프레임의 이 자리에 올라갑니다. 핀을 끌어 자리를 옮길 수 있습니다.</p></div>';
     stage.appendChild(pop);
-    var sr = stage.getBoundingClientRect(), pr = pin.getBoundingClientRect();
-    var x = pr.right - sr.left + stage.scrollLeft + 8, y = pr.top - sr.top + stage.scrollTop;
-    if (x + 330 > stage.scrollLeft + stage.clientWidth) x = pr.left - sr.left + stage.scrollLeft - 328;
-    pop.style.left = Math.max(stage.scrollLeft + 4, x) + 'px'; pop.style.top = Math.max(stage.scrollTop + 4, Math.min(y, stage.scrollTop + stage.clientHeight - pop.offsetHeight - 8)) + 'px';
+    cmPlace(pop, pin);
     var ta = pop.querySelector('textarea'); if (ta) ta.focus();
   }
+  /* 댓글 창을 핀 옆에(오른쪽 → 왼쪽, 둘 다 좁으면 핀 아래 → 위). 핀을 가리지 않게 해서 임시 핀을 끌 수 있게 */
+  function cmPlace(pop, pin){
+    var sr = stage.getBoundingClientRect(), pr = pin.getBoundingClientRect();
+    var sl = stage.scrollLeft, st = stage.scrollTop, W = stage.clientWidth, H = stage.clientHeight, pw = pop.offsetWidth, ph = pop.offsetHeight;
+    var L = pr.left - sr.left + sl, R = pr.right - sr.left + sl, T = pr.top - sr.top + st, B = pr.bottom - sr.top + st;
+    var x, y;
+    if (R + 8 + pw <= sl + W - 4) x = R + 8;
+    else if (L - 8 - pw >= sl + 4) x = L - 8 - pw;
+    if (x !== undefined) { y = Math.max(st + 4, Math.min(T, st + H - ph - 8)); }
+    else {
+      x = Math.max(sl + 4, Math.min(L, sl + W - pw - 4));
+      y = (B + 8 + ph <= st + H - 4 || T - st < H / 2) ? B + 8 : T - 8 - ph;
+    }
+    pop.style.left = x + 'px'; pop.style.top = y + 'px';
+  }
+  /* 임시 핀 끌어 옮기기(올리기 전): 핀 끝(왼쪽 아래)이 댓글 자리. 쓰던 글은 그대로, 창이 따라온다 */
+  stage.addEventListener('pointerdown', function(e){
+    var pin = e.button === 0 && e.target.closest('[data-cmdraft]'); if (!pin || !CM.draft || !cur) return;
+    e.preventDefault(); e.stopPropagation();
+    var r = img.getBoundingClientRect(), k = r.width / cur.w;
+    var ox = e.clientX - (r.left + CM.draft.x * k), oy = e.clientY - (r.top + CM.draft.y * k);   // 잡은 곳과 핀 끝의 차이
+    pin.setPointerCapture(e.pointerId); pin.classList.add('drag');
+    function mv(ev){
+      var r2 = img.getBoundingClientRect(), k2 = r2.width / cur.w;
+      CM.draft.x = Math.round(Math.max(0, Math.min(cur.w, (ev.clientX - ox - r2.left) / k2)));
+      CM.draft.y = Math.round(Math.max(0, Math.min(cur.h, (ev.clientY - oy - r2.top) / k2)));
+      pin.style.left = Math.round(CM.draft.x * k2) + 'px'; pin.style.top = Math.round(CM.draft.y * k2) + 'px';
+      var pop = stage.querySelector('.cm-pop[data-draft="1"]'); if (pop) cmPlace(pop, pin);
+    }
+    function up(){
+      pin.removeEventListener('pointermove', mv); pin.removeEventListener('pointerup', up); pin.removeEventListener('pointercancel', up);
+      pin.classList.remove('drag');
+      var ta = stage.querySelector('.cm-pop[data-draft="1"] textarea'); if (ta) ta.focus();
+    }
+    pin.addEventListener('pointermove', mv); pin.addEventListener('pointerup', up); pin.addEventListener('pointercancel', up);
+  }, true);
   function cmSend(btn){
     var pop = btn.closest('.cm-pop'), ta = pop && pop.querySelector('textarea'), er = pop && pop.querySelector('.e'); if (!ta) return;
     var msg = ta.value.trim(); if (!msg) { ta.focus(); return; }
@@ -1263,7 +1302,8 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     var sd = e.target.closest('[data-cmsend]'); if (sd) { e.stopPropagation(); cmSend(sd); return; }
     var cc = e.target.closest('[data-cmcancel]'); if (cc) { e.stopPropagation(); CM.draft = null; cmClose(); renderPins(); return; }
     if (e.target.closest('.cm-pop')) return;
-    if (e.target.closest('[data-cmdraft]')) { e.stopPropagation(); return; }
+    // 임시 핀 누름 · 끌기를 마친 클릭: 쓰기 창을 그대로 두고 글 칸으로(아래 댓글 핀 처리가 창을 닫지 않게 stopImmediatePropagation)
+    if (e.target.closest('[data-cmdraft]')) { e.stopImmediatePropagation(); var dta = stage.querySelector('.cm-pop[data-draft="1"] textarea'); if (dta) dta.focus(); return; }
     // 댓글 쓰기 중: 캡처를 누른 자리(프레임 좌표)에 새 댓글
     if (CM.add && cur && e.target === img) {
       e.stopPropagation();
@@ -1274,7 +1314,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
   }, true);
   stage.addEventListener('click', function(e){
     var x = e.target.closest('.cm-x'); if (x) { cmClose(); renderPins(); return; }
-    var p = e.target.closest('.cm-pin'); if (p) { e.stopPropagation(); if (CM.open === p.dataset.cm) { cmClose(); p.classList.remove('on'); } else cmShow(p.dataset.cm, p); return; }
+    var p = e.target.closest('.cm-pin[data-cm]'); if (p) { e.stopPropagation(); if (CM.open === p.dataset.cm) { cmClose(); p.classList.remove('on'); } else cmShow(p.dataset.cm, p); return; }
     if (!e.target.closest('.cm-pop') && CM.open) { cmClose(); renderPins(); }
   }, true);
   $('cmBtn').onclick = function(){ CM.on = !CM.on; store('wb.cm', CM.on ? '1' : '0'); if (CM.on) loadComments(true); renderPins(); };
@@ -1886,8 +1926,10 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     }).join('');
     var rest = PROJ.filter(function(p){ return TABS.indexOf(p.key) < 0; });
     $('pList').innerHTML = rest.length ? rest.map(function(p){
-      return '<button type="button" class="it" data-k="' + esc(p.key) + '"><span><i class="dot" style="background:' + tcolor(p.key) + '"></i>' + esc(p.name || 'Figma 파일 ' + p.key.slice(0, 6)) + '</span><small>' +
-        esc((p.editablePageName ? '작업 페이지 ' + p.editablePageName : '작업 페이지 없음') + (p.hasCatalog ? '' : ' · 프레임 목록 없음')) + '</small></button>';
+      var nm = p.name || 'Figma 파일 ' + p.key.slice(0, 6);
+      return '<div class="row"><button type="button" class="it" data-k="' + esc(p.key) + '"><span><i class="dot" style="background:' + tcolor(p.key) + '"></i>' + esc(nm) + '</span><small>' +
+        esc((p.editablePageName ? '작업 페이지 ' + p.editablePageName : '작업 페이지 없음') + (p.hasCatalog ? '' : ' · 프레임 목록 없음')) + '</small></button>' +
+        (p.isDefault ? '' : '<button type="button" class="del" data-del="' + esc(p.key) + '" data-nm="' + esc(nm) + '" title="이 PC에서 프로젝트 지우기" aria-label="' + esc(nm) + ' 지우기">×</button>') + '</div>';
     }).join('') : '<div class="none">다른 프로젝트가 없습니다. 아래에 Figma 파일 링크를 넣으면 추가됩니다.</div>';
   }
   function openTab(k, newWin){
@@ -1907,7 +1949,21 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
   $('ptAdd').addEventListener('click', function(){ ppop($('ppop').hidden); });
   document.addEventListener('click', function(e){ if (!$('ppop').hidden && !e.target.closest('#ppop,#ptAdd')) ppop(false); });
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !$('ppop').hidden) ppop(false); });
-  $('pList').addEventListener('click', function(e){ var b = e.target.closest('[data-k]'); if (b) openTab(b.dataset.k, e.ctrlKey || e.metaKey); });
+  $('pList').addEventListener('click', function(e){
+    /* 프로젝트 지우기: 이 PC의 등록(projects/{key})만 지운다. Figma 파일 · 변경 이력은 그대로, projects/_trash로 옮겨 되살릴 수 있다 */
+    var d = e.target.closest('[data-del]');
+    if (d) {
+      if (!confirm('「' + d.dataset.nm + '」 프로젝트를 이 PC에서 지울까요?\n\nFigma 파일과 변경 이력은 그대로이고, 캡처 · 프레임 목록은 projects/_trash 폴더로 옮겨집니다.')) return;
+      fetch('/api/projects', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'delete', key: d.dataset.del }) })
+        .then(function(r){ return r.json(); }).then(function(x){
+          if (x.error) throw new Error(x.error);
+          var k = d.dataset.del; PROJ = PROJ.filter(function(p){ return p.key !== k; }); TABS = TABS.filter(function(t){ return t !== k; }); saveTabs();
+          renderTabs(); toast('프로젝트를 지웠습니다');
+        }).catch(function(x){ toast('지우지 못했습니다: ' + x.message); });
+      return;
+    }
+    var b = e.target.closest('[data-k]'); if (b) openTab(b.dataset.k, e.ctrlKey || e.metaKey);
+  });
   $('pForm').addEventListener('submit', function(e){
     e.preventDefault();
     var f = parseFig($('pLink').value); if (!f) { toast('Figma 파일 링크가 아닙니다'); return; }

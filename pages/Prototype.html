@@ -188,8 +188,9 @@ textarea:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:
     var key = cur + '|' + JSON.stringify(P.stale || []) + '|' + (P.frames || []).length;
     if (renderScr.key === key) return; renderScr.key = key;
     var stale = {}; (P.stale || []).forEach(function(s){ stale[s.nodeId] = s; });
-    $('scrCount').textContent = (P.frames || []).length + '개';
-    $('scr').innerHTML = (P.frames || []).map(function(f, i){
+    var scr = (P.frames || []).filter(function(f){ return f.role !== 'ref'; });   // ref(상태 · 케이스 · 흐름 참고)는 화면 파일이 없다
+    $('scrCount').textContent = scr.length + '개';
+    $('scr').innerHTML = scr.map(function(f, i){
       return '<li><button data-id="' + esc(f.nodeId) + '" class="' + (f.nodeId === cur ? 'on' : '') + '" title="' + esc(f.page + ' · ' + f.nodeId) + '"><span class="no">' + (i + 1) + '</span><span class="nm">' + esc(f.name) + '</span>' +
         (f.nodeId === P.start ? '<span class="st">시작</span>' : '') + (stale[f.nodeId] ? '<span class="wn" title="Figma가 바뀜"></span>' : '') + '</button></li>';
     }).join('');

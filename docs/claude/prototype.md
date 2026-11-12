@@ -4,7 +4,7 @@
 
 - **프로토타입 (이 PC에만, `prototypes/{id}/`, 깃으로 공유하지 않음)**: 「프로토타입」 메뉴(`Prototypes.html`)에서 화면을 골라 요청하면 쌓인다. **Figma는 읽기만 한다**(보기 전용 페이지 화면도 된다). 보기는 `Prototype.html?id={id}`.
   - **만드는 규칙(동작형 HTML)**
-    - `meta.json`: `{id, name, fileKey, fileName, env(T-IOS|L-IOS), start(시작 nodeId), frames:[{nodeId, name, page}], text(흐름 설명), entry:'index.html', format:'screens', width, height, by, jobId, createdAt, updatedAt, syncedAt}`. `syncedAt`은 Figma와 맞춘 시각. 서버는 이보다 늦게 **Figma에서 고쳐진** 화면(플러그인이 고친 뒤 올린 캡처의 `editAt`)과 **완료한 요청이 실제로 고친** 화면(이력의 `frames`, 없으면 요청 프레임)을 「갱신 필요」로 본다. 캡처를 다시 받은 것(캡처 받기 · 자동 캡처 · Claude 캡처)만으로는 뜨지 않는다.
+    - `meta.json`: `{id, name, fileKey, fileName, page:{id, name}(페이지 단위 요청이면), env(T-IOS|L-IOS|T-IOS+L-IOS), start(시작 nodeId), frames:[{nodeId, name, page, role(ref면)}], text(흐름 설명), entry:'index.html', format:'screens', width, height, by, jobId, createdAt, updatedAt, syncedAt}`. `syncedAt`은 Figma와 맞춘 시각. 서버는 이보다 늦게 **Figma에서 고쳐진** 화면(플러그인이 고친 뒤 올린 캡처의 `editAt`)과 **완료한 요청이 실제로 고친** 화면(이력의 `frames`, 없으면 요청 프레임)을 「갱신 필요」로 본다. 캡처를 다시 받은 것(캡처 받기 · 자동 캡처 · Claude 캡처)만으로는 뜨지 않는다.
     - **화면마다 파일 하나**: `screens/{nodeId의 :를 -로}.html`(그 화면 본문 HTML 조각). `index.html`은 껍데기(공통 틀 GNB · LNB, 화면 불러오기, 이동 함수 `go(nodeId)`, 팝업 · 토스트)만. 고칠 때는 그 화면 파일만 읽고 고친다(토큰 절약).
     - **공통 컴포넌트**: `prototypes/_kit/kit.css` · `kit.js`(작업 기준 가이드의 COMM-5 컴포넌트를 클래스로, 예: `.c-btn[data-style=filled][data-size=m]`, 색 · 글꼴은 가이드 · Figma 컴포넌트와 같게). 없으면 처음 만들 때 만들고, 필요한 컴포넌트만 더한다. 화면 파일은 이 클래스를 쓴다.
     - **보기 화면과의 약속**: `index.html#s={nodeId의 :를 -로}`면 그 화면으로 연다(없으면 start). 화면이 바뀔 때마다 `parent.postMessage({type:'proto-screen', nodeId, width, height}, '*')`.
@@ -17,7 +17,13 @@
       - **아이콘 · 이미지는 Figma에서 내보낸다**: 아이콘은 `exportAsync({format:'SVG_STRING'})`로 받아 그대로 넣고, 장비 사진 · 일러스트 등 그림은 PNG로 내보내 `prototypes/{id}/img/`에 둔다. 그라데이션 · 회색 상자 · 이모지 같은 대체물은 쓰지 않는다.
       - **겹쳐 보고 고친다**: 다 만들면 브라우저(미리보기)에서 프레임 크기로 화면 · 상태마다 캡처해 같은 크기의 `get_screenshot` 캡처와 나란히(또는 겹쳐) 비교하고, 위치 · 크기 · 색 · 글 · 아이콘 · 이미지가 다른 곳(±2px 넘게)을 고친다. 다른 곳이 없을 때까지 반복한다. 끝내 못 맞춘 곳은 note에 「Figma와 다른 곳」으로 적는다.
       - **시뮬레이션 조작(통합 상태 바꾸기 · 문 열기 등)은 화면 밖에**: 화면 위에 막대를 얹어 화면 배치가 밀리지 않게, 접을 수 있는 떠 있는 패널로 둔다(화면 영역에 Figma에 없는 요소를 넣지 않는다).
-  - **prototype (만들기)**: 작업의 `name` · `fileKey` · `frames` · `start` · `env` · `text`.
+  - **prototype (만들기)**: 작업의 `name` · `fileKey` · `page` · `frames` · `start` · `env` · `text`.
+    - **페이지 단위 요청(2026-11-12~, `page`가 있음)**: 사용자는 페이지(메뉴 하나)만 고르고, 「프로토타입」 메뉴가 프레임 이름으로 골라 둔 목록을 확인해 보낸다. 환경은 사람이 고르지 않는다.
+      - `frames[].role`: 없음 = **화면**(화면마다 HTML), `ref` = **상태 · 케이스 · 흐름**(화면 ID 뒤 `/ 케이스` · `/Case` · `/ 상태` · `/Flow`). ref는 따로 화면 파일을 만들지 않고, 그 화면 ID 화면의 상태 · 팝업 · 흐름을 짤 때 읽는다(필요하면 상태로 넣는다).
+      - `env`: 화면 ID 앞자리로 정해 온다 — TI = `T-IOS`, LI = `L-IOS`, 둘 다 = `T-IOS+L-IOS`, 빈 값 = 모름(프레임 크기로 정한다). **둘 다면 한 프로토타입에 둘 다 만들고**, 화면 밖 떠 있는 패널(위 「시뮬레이션 조작」)에 T-IOS / L-IOS 바꾸기를 둔다(같은 화면 ID끼리 짝지어 바꾸면 그 화면으로). meta.json `env`도 받은 값 그대로.
+      - `text`가 비어 있으면 **흐름을 Claude가 짠다**: 화면 디스크립션의 화면 이동(`[화면 ID] 화면명`) · 버튼, ref 프레임(케이스 · Flow 그림), 작업 기준 문서(화면 정의서 → 정책서 → 기준데이터)에서 찾는다. 근거 없는 동작은 만들지 않는다. `text`가 있으면 그것을 먼저 따르고 나머지를 같은 방법으로 채운다.
+      - `start`는 사용자가 고른 시작 화면(기본: 화면 ID 순 첫 화면). 메뉴의 첫 화면(목록 · 대시보드 등)이 따로 있으면 note에 적고 start는 바꾸지 않는다.
+      - note에 **짠 흐름을 줄마다** 적는다(`화면 A [버튼] → 화면 B`, 근거 문서/디스크립션). 사용자가 이걸 보고 「수정 요청」(prototype-edit)으로 고친다.
     1. 「진행 중」으로. id는 `p{YYYYMMDD}-{작업 ID 소문자}`(예: `p20261030-j013`). **작업 기준 문서를 먼저 읽는다**(위).
     2. 화면마다 `get_screenshot`(원본 크기)과 `use_figma`(위 「값은 Figma에서 읽은 그대로」)로 읽고, 아이콘 · 이미지를 내보낸 뒤 위 규칙대로 `prototypes/{id}/`에 만든다. 화면이 많으면 공통 틀 · kit를 먼저, 화면은 하나씩.
     3. 브라우저(미리보기)로 `Prototype.html?id={id}`를 열어 시작 화면 · 흐름 이동이 되는지 확인하고, 화면 · 상태마다 Figma 캡처와 겹쳐 보고 맞춘다(위 「겹쳐 보고 고친다」).
