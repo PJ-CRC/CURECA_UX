@@ -69,6 +69,8 @@ while IFS= read -r rel; do
   cp -p "$U/$rel" "$dst.upd.$$" && mv -f "$dst.upd.$$" "$dst" && n=$((n + 1))
 done < <(git -C "$U" -c core.quotepath=false ls-files)
 xattr -dr com.apple.quarantine "$ROOT" 2>/dev/null
+# Finder가 앱 아이콘을 예전 것으로 기억하므로, 앱을 건드려 아이콘을 다시 읽게 한다(아이콘이 바뀐 버전 대비)
+touch "$ROOT/Figma AI Run.app" 2>/dev/null
 # 4. 배포에서 빠진 파일 지우기: 받기 전 버전에 있고 새 버전에 없는 파일 + removed_files.txt 목록
 git -C "$U" -c core.quotepath=false ls-files > "$NEW_LIST" 2>/dev/null
 if [ -s "$OLD_LIST" ] && [ -s "$NEW_LIST" ]; then
