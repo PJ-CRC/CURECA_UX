@@ -205,6 +205,15 @@ details.how pre{white-space:pre-wrap}
 .editor textarea{width:100%;min-height:180px;padding:12px 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);font:14px/1.6 Pretendard,-apple-system,"Segoe UI","Malgun Gothic",sans-serif;resize:vertical}
 .editor input{width:100%;padding:8px 11px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:14px;margin-top:8px}
 .editor .tip{font-size:12.5px;color:var(--ink-3);margin:6px 0 0}
+/* 직접 수정(2026-11-12): 문서 경로 줄의 [직접 수정] → 원문 편집 칸 */
+.dedit{margin-left:auto;height:28px;padding:0 12px;border:1px solid var(--accent);border-radius:7px;background:var(--surface);color:var(--accent);font-size:12.5px;font-weight:700;cursor:pointer}
+.dedit:hover{background:var(--accent-soft)}
+html.doc-ro .dedit{display:none!important}
+.dm-text{width:100%;min-height:420px;box-sizing:border-box;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font:13px/1.6 "JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;tab-size:2;resize:vertical;white-space:pre;overflow:auto}
+.dm-text:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
+.dm-act{display:flex;align-items:center;gap:8px;margin-top:10px}
+.dm-act .m{flex:1;font-size:12.5px;color:var(--ink-3)}
+.dm-act .m.err{color:var(--red,#c62828)}
 .edit-pane{margin:28px 0 8px;padding:18px 20px;border:2px solid var(--accent);border-radius:12px;background:var(--surface)}
 .edit-pane h3{margin:0 0 10px;font-size:16px;font-weight:800}
 .editor .act{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
@@ -485,9 +494,11 @@ html.embed,html.embed body{overflow:hidden}
     });
     return md;
   }
+  var GINFO = null;   // 지금 문서의 /api/guides 정보(직접 수정이 지금 글 경로를 찾을 때)
   function load(keepSec){
     return info().then(function(g){
       if (!g) throw 0;
+      GINFO = g;
       var metaP = fetch(base + 'meta.json', { cache: 'no-store' }).then(function(r){ if (!r.ok) throw 0; return r.json(); });
       if (g.fileList && g.fileList.length) {
         FILES = g.fileList;
@@ -816,7 +827,7 @@ html.embed,html.embed body{overflow:hidden}
     /* 설계 내용: 본문에서 맨 위 # 제목과 반영 대기 목록 절을 뺀 나머지(원문 그대로) */
     var rest = s.body.replace(/^#\s+[^\n]*\n/, '').replace(/^##\s+반영 대기 목록\s*\n[\s\S]*?(?=^##\s|(?![\s\S]))/m, '');
     h += '<h3 class="sc-h">화면 설계 내용</h3><div class="sc-body"></div>';
-    h += '<p class="docpath" title="' + esc(base + s.file) + '">문서 경로 <code>' + esc(npath(id + '/' + fdirOf(meta) + s.file)) + '</code>' + (s.rev ? '<span>수정본 ' + esc(s.rev) + '</span>' : '') + '</p>';
+    h += '<p class="docpath" title="' + esc(base + s.file) + '">문서 경로 <code>' + esc(npath(id + '/' + fdirOf(meta) + s.file)) + '</code>' + (s.rev ? '<span>수정본 ' + esc(s.rev) + '</span>' : '') + '<button type="button" class="dedit" data-dedit="' + esc(s.file) + '" data-dname="' + esc(cid + ' ' + (o.title || '')) + '" title="이 화면 정의서의 원문을 직접 고쳐 바로 저장합니다">직접 수정</button></p>';
     var m = $('main'); m.innerHTML = h;
     var bx = render(demote(rest, 1)); Array.prototype.forEach.call(bx.childNodes, function(x){ m.querySelector('.sc-body').appendChild(x.cloneNode(true)); });
     scFix();
@@ -923,7 +934,9 @@ html.embed,html.embed body{overflow:hidden}
     /* 파일형 문서: 이 항목이 들어 있는 깃 문서 경로(예: rule/schedule.md). 마우스를 올리면 지금 내용 파일의 전체 경로 */
     if (s.file) {
       var fl = (FILES || []).filter(function(f){ return f.path === s.file; })[0];
-      m.insertAdjacentHTML('beforeend', '<p class="docpath" title="' + esc(fl ? fl.mdPath : '') + '">문서 경로 <code>' + esc(npath(id + '/' + fdirOf(meta) + s.file)) + '</code>' + (fl && fl.rev ? '<span>수정본 ' + esc(fl.rev) + '</span>' : '') + '</p>');
+      m.insertAdjacentHTML('beforeend', '<p class="docpath" title="' + esc(fl ? fl.mdPath : '') + '">문서 경로 <code>' + esc(npath(id + '/' + fdirOf(meta) + s.file)) + '</code>' + (fl && fl.rev ? '<span>수정본 ' + esc(fl.rev) + '</span>' : '') + '<button type="button" class="dedit" data-dedit="' + esc(s.file) + '" data-dname="' + esc(s.label) + '" title="이 파일의 원문을 직접 고쳐 바로 저장합니다">직접 수정</button></p>');
+    } else if (!FILES && GINFO) {
+      m.insertAdjacentHTML('beforeend', '<p class="docpath">이 문서 전체' + (GINFO.rev ? '<span>수정본 ' + esc(GINFO.rev) + '</span>' : '') + '<button type="button" class="dedit" data-dedit="" data-dname="' + esc(s.label) + '" title="이 문서의 원문(마크다운)을 직접 고쳐 수정본으로 저장합니다">직접 수정</button></p>');
     }
     $('tocCur').textContent = '목차 · ' + s.label; askSet();
     tree($('q').value.trim().toLowerCase());
@@ -935,6 +948,42 @@ html.embed,html.embed body{overflow:hidden}
     var d = $(pid), b = $('revBtn');
     d.hidden = !on; d.open = on; b.setAttribute('aria-expanded', String(on));
   }
+
+  /* ── 직접 수정: [직접 수정] → 지금 글(파일형은 그 파일, 아니면 문서 전체)을 편집 칸으로 열고 저장(POST /api/guides {action:'direct'}) ──
+     연 뒤 그사이 다른 사람 · Claude가 고쳤으면 서버가 저장하지 않는다(base 비교). 저장하면 「연관 항목 찾기 요청」 안내가 이어진다 */
+  function directEdit(file, name){
+    if (editing) return;
+    var url = file ? ((FILES || []).filter(function(f){ return f.path === file; })[0] || {}).mdPath : GINFO && (GINFO.mdPath || '');
+    if (!url) { toast('고칠 파일을 찾지 못했습니다.'); return; }
+    editing = true;
+    fetch(url, { cache: 'no-store' }).then(function(r){ if (!r.ok) throw new Error('파일을 읽지 못했습니다(HTTP ' + r.status + ')'); return r.text(); }).then(function(raw){
+      var baseText = raw.replace(/^\uFEFF/, '').replace(/\r\n/g, '\n');
+      var m = $('main'), ed = document.createElement('section');
+      ed.className = 'edit-pane'; ed.id = 'dmPane'; ed.setAttribute('aria-label', '직접 수정');
+      ed.innerHTML = '<h3>「' + esc(name || file || '문서') + '」 직접 수정</h3>' +
+        '<p class="tip" style="margin:-4px 0 10px">' + esc(file ? npath(id + '/' + fdirOf(meta) + file) : '문서 전체(마크다운)') + ' · 원문을 그대로 고칩니다. 저장하면 바로 반영되고, 바뀐 내용 때문에 고쳐야 할 화면 · 문서는 이어서 「연관 항목 찾기 요청」으로 Claude에게 맡길 수 있습니다.</p>' +
+        '<textarea class="dm-text" id="dmText" spellcheck="false" aria-label="원문"></textarea>' +
+        '<div class="dm-act"><span class="m" id="dmMsg" role="status"></span><button type="button" class="btn" id="dmCancel">취소</button><button type="button" class="btn pri" id="dmSave">저장</button></div>';
+      m.insertBefore(ed, m.querySelector('.pager') || null);
+      var ta = $('dmText'); ta.value = baseText; ed.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); ta.focus({ preventScroll: true });
+      $('dmCancel').onclick = function(){ if (ta.value !== baseText && !confirm('고친 내용을 버릴까요?')) return; editing = false; ed.remove(); };
+      ta.addEventListener('keydown', function(e){ if (e.key === 's' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); $('dmSave').click(); } if (e.key === 'Tab' && !e.shiftKey) { e.preventDefault(); var s = ta.selectionStart; ta.setRangeText('  ', s, ta.selectionEnd, 'end'); } });
+      $('dmSave').onclick = function(){
+        var md = ta.value.replace(/\r\n/g, '\n'), b = this;
+        if (md === baseText) { $('dmMsg').textContent = '바뀐 내용이 없습니다.'; return; }
+        b.disabled = true; $('dmMsg').className = 'm'; $('dmMsg').textContent = '저장하는 중…';
+        post('/api/guides', { action: 'direct', id: id, file: file || '', md: md, base: baseText, name: name || file || '', by: user() })
+          .then(function(d){
+            editing = false; ed.remove();
+            toast(d && d.direct ? '원본 파일에 저장했습니다.' : '수정본으로 저장했습니다' + (d && d.saved ? '(' + d.saved + ')' : '') + '.');
+            var keep = cur ? Math.max(0, secs.indexOf(cur)) : 0;
+            return (SC ? load() : load(keep)).then(function(){ fixes(); });
+          })
+          .catch(function(x){ b.disabled = false; $('dmMsg').className = 'm err'; $('dmMsg').textContent = x.message || '저장하지 못했습니다.'; });
+      };
+    }).catch(function(x){ editing = false; toast(x.message || '파일을 읽지 못했습니다.'); });
+  }
+  document.addEventListener('click', function(e){ var b = e.target.closest('[data-dedit]'); if (!b) return; e.preventDefault(); directEdit(b.dataset.dedit, b.dataset.dname); });
 
   /* ── 항목 수정 요청: 무엇을 어떻게 고칠지 글로 적으면 Claude가 가이드를 고친다(guide-edit 작업) ── */
   function edit(){
@@ -958,7 +1007,7 @@ html.embed,html.embed body{overflow:hidden}
 
   /* ── 가이드 수정 패널 ── ① 가이드 수정(Claude, guide-edit) ② 고칠 화면 찾기(guide-check) ③ 반영 여부 선택 ④ 수정 요청
      ① 수정이 끝나면 이 가이드가 내 작업 기준일 때만 「이미 작업한 화면 확인」으로 이어진다 */
-  var jobs = [], edits = [], lastRev = null, docs = {};
+  var jobs = [], edits = [], lastRev = null, lastDone = null, docs = {};
   /* 연관 항목 한 줄: 종류(화면 · 문서 · 프로토타입) · 이름 · 위치. type이 없으면 화면(가이드의 고칠 화면 찾기 결과) */
   var KIND = { screen: '화면', doc: '문서', proto: '프로토타입' };
   function itemType(it){ return it.type === 'doc' || it.type === 'proto' ? it.type : 'screen'; }
@@ -981,7 +1030,10 @@ html.embed,html.embed body{overflow:hidden}
       /* Claude가 가이드를 고쳤으면(새 수정본) 본문을 다시 읽는다 */
       var g = (d[1].items || []).filter(function(x){ return x.id === id; })[0];
       /* 다시 읽어도 목차 · 상세 스크롤은 그대로(같은 항목을 보고 있으므로) */
-      if (g) { applied = d[1].applied || applied; if (lastRev !== null && g.rev !== lastRev && !editing) { var tr = $('tree'), mn = $('main'), ts = tr.scrollTop, ms = mn.scrollTop, py = window.scrollY; load(Math.max(0, secs.indexOf(cur))).then(function(){ tr.scrollTop = ts; mn.scrollTop = ms; if (!outer()) window.scrollTo(0, py); }); } lastRev = g.rev; }
+      /* 원본 파일을 직접 고치는 문서(작업규칙 등 새 흐름)는 수정본이 생기지 않으므로, 수정 요청(guide-edit)이 끝난 것도 다시 읽는 신호로 본다(2026-11-12) */
+      var doneSig = all.filter(function(j){ return j.kind === 'guide-edit' && (j.status === '완료' || j.status === '확인'); }).map(function(j){ return j.id + '@' + (j.updatedAt || ''); }).sort().join(',');
+      var editDoneNew = lastDone !== null && doneSig !== lastDone; lastDone = doneSig;
+      if (g) { applied = d[1].applied || applied; if (((lastRev !== null && g.rev !== lastRev) || editDoneNew) && !editing) { var tr = $('tree'), mn = $('main'), ts = tr.scrollTop, ms = mn.scrollTop, py = window.scrollY; load(Math.max(0, secs.indexOf(cur))).then(function(){ tr.scrollTop = ts; mn.scrollTop = ms; if (!outer()) window.scrollTo(0, py); }); } lastRev = g.rev; }
       /* 다른 문서(가이드 · 정의서) 정보: 연관 항목 반영 때 그 문서의 수정 요청을 만든다 */
       docs = {}; (d[1].items || []).forEach(function(x){ docs[x.id] = x; });
       /* UX가이드는 내 작업 기준일 때만, 다른 카테고리(작업규칙 · 정책서 · 기준데이터 · 화면 정의서)는 늘 「연관 항목 찾기」로 이어진다 */
@@ -993,7 +1045,7 @@ html.embed,html.embed body{overflow:hidden}
           h += '<section class="fix"><h3>' + DOC + ' 수정 요청 · ' + (j.status === '대기' ? '대기' : 'Claude가 고치는 중') + '</h3>' + steps(1) + '<p>' + esc(what) + '</p></section>';
         } else if (j.status === '완료') {
           var next = spec || mine;
-          h += '<section class="fix" id="fix"><h3>Claude가 ' + DOC + ' 수정을 마쳤습니다' + (spec ? ' — 연관된 화면 · 문서도 고쳐야 할 수 있습니다' : mine ? ' — 이미 작업한 화면도 고쳐야 할 수 있습니다' : '') + '</h3>' + steps(next ? 2 : 1) +
+          h += '<section class="fix" id="fix"><h3>' + (j.direct ? DOC + ' 직접 수정을 저장했습니다' : 'Claude가 ' + DOC + ' 수정을 마쳤습니다') + (spec ? ' — 연관된 화면 · 문서도 고쳐야 할 수 있습니다' : mine ? ' — 이미 작업한 화면도 고쳐야 할 수 있습니다' : '') + '</h3>' + steps(next ? 2 : 1) +
             '<p>요청: ' + esc(what) + '</p>' + (j.note ? '<p>고친 내용: ' + esc(j.note) + '</p>' : '') +
             (spec
               ? '<p>Claude가 바뀐 내용과 연관된 곳을 찾아 목록을 만듭니다: ' + (meta.fileKey ? '<b>' + esc(names[meta.fileKey] || meta.fileName || meta.fileKey.slice(0, 6)) + '</b> 수정 가능 페이지의 화면 · ' : '') + '같은 내용을 쓰는 다른 UX 문서 항목 · 프로토타입. 무엇을 어떻게 고칠지 보고 반영할 것만 고르면 됩니다(아직 아무것도 고치지 않습니다).</p>' +

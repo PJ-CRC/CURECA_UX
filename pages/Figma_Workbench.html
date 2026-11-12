@@ -90,7 +90,7 @@ button{cursor:pointer}
 /* 수정할 부분 표시(사각형): [표시]를 켜면 캡처 위를 드래그해 그린다. 상자 좌표는 Figma 프레임 좌표로 저장하고 확대 · 축소에 맞춰 다시 그린다 */
 #stage.marking{cursor:crosshair}
 #markLayer{position:absolute;pointer-events:none}
-/* Figma 댓글(읽기만): 캡처 위 핀(Figma처럼 왼쪽 아래가 뾰족한 말풍선 + 글쓴이 머리글자), 누르면 대화 */
+/* Figma 댓글(보기 · 쓰기 · 답글): 캡처 위 핀(Figma처럼 왼쪽 아래가 뾰족한 말풍선 + 글쓴이 머리글자), 누르면 대화 */
 .cm-btn b{margin-left:4px;font-weight:700;color:var(--accent)}
 .cm-btn[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
 .cm-res{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--ink-3);white-space:nowrap;cursor:pointer}
@@ -111,6 +111,19 @@ button{cursor:pointer}
 .cm-it .t{margin-top:2px;font-size:13.5px;line-height:1.5;white-space:pre-wrap;word-break:break-word;color:var(--ink)}
 .cm-pop .cm-f{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:12px;color:var(--ink-3)}
 .cm-pop .cm-f a{margin-left:auto;color:var(--accent)}
+/* 댓글 쓰기: 「＋ 댓글」을 켜고 캡처를 누르면 그 자리에 임시 핀 + 쓰기 창. 댓글 창 아래 답글 칸 */
+.cm-add[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+#stage.cm-adding,#stage.cm-adding img{cursor:crosshair}
+.cm-pin.tmp{outline:2px dashed var(--accent);outline-offset:1px}
+.cm-pin.tmp i{background:var(--accent)}
+.cm-w{margin-top:8px;border-top:1px solid var(--line);padding-top:8px}
+.cm-w textarea{width:100%;min-height:56px;max-height:160px;resize:vertical;box-sizing:border-box;padding:7px 9px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font:inherit;font-size:13.5px;line-height:1.5}
+.cm-w textarea:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
+.cm-w .r{display:flex;align-items:center;gap:6px;margin-top:6px}
+.cm-w .r .e{flex:1;font-size:12px;color:var(--red)}
+.cm-w button{height:28px;padding:0 12px;border-radius:7px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);font-size:12.5px;font-weight:700;cursor:pointer}
+.cm-w button.go{background:var(--accent);border-color:var(--accent);color:#fff}
+.cm-w button:disabled{opacity:.5;cursor:default}
 .cm-pop .rs{padding:1px 7px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
 #markLayer[hidden]{display:none}
 .mk-box{position:absolute;border:2px solid #e5484d;background:rgba(229,72,77,.08);border-radius:3px;box-sizing:border-box;pointer-events:auto;cursor:move;touch-action:none}
@@ -549,8 +562,9 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
         <button class="tbtn" id="zoomIn" title="확대" aria-label="확대">+</button>
         <button class="tbtn on" id="fitW" title="너비 맞춤">너비</button>
         <button class="tbtn" id="fitA" title="전체 맞춤">전체</button>
-        <button class="tbtn cm-btn" id="cmBtn" aria-pressed="false" title="Figma 댓글 보기(읽기만) — 캡처 위에 핀으로" hidden><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 2.5h10a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7l-3 2.5v-2.5H3a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1z"/></svg>댓글<b id="cmN"></b></button>
+        <button class="tbtn cm-btn" id="cmBtn" aria-pressed="false" title="Figma 댓글 보기 — 캡처 위에 핀으로" hidden><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 2.5h10a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7l-3 2.5v-2.5H3a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1z"/></svg>댓글<b id="cmN"></b></button>
         <label class="cm-res" id="cmResL" hidden title="해결된 댓글도 보기"><input type="checkbox" id="cmRes">해결됨</label>
+        <button class="tbtn cm-add w-only" id="cmAdd" aria-pressed="false" title="Figma 댓글 쓰기 — 켜고 캡처에서 댓글을 달 자리를 누르세요(토큰 주인의 Figma 계정으로 올라갑니다, Esc로 끄기)" hidden>＋ 댓글</button>
         <button class="tbtn" id="liveBtn" title="Figma 실시간 보기 (Figma 로그인 필요 · 무거움)">실시간</button>
         <a class="tbtn" id="openFig" target="_blank" rel="noopener" title="Figma에서 이 프레임 열기">Figma ↗</a>
       </div>
@@ -1132,10 +1146,21 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     setZoom(zoom < 0.95 ? 1 : (stage.clientWidth - 32) / cur.w);
     stage.scrollLeft = fx * img.offsetWidth - stage.clientWidth / 2 + 16; stage.scrollTop = fy * img.offsetHeight - stage.clientHeight / 2 + 16;
   });
-  /* ── Figma 댓글(읽기만, 2026-11-12) ── 서버(/api/figma/comments)가 토큰으로 읽어 프레임 · 프레임 안 위치로 바꿔 준다(30초 보관)
+  /* ── Figma 댓글(보기 · 쓰기 · 답글, 2026-11-12) ── 서버(/api/figma/comments)가 토큰으로 읽어 프레임 · 프레임 안 위치로 바꿔 준다(30초 보관)
      - 화면 하나: 캡처 위에, 페이지 전체: 각 프레임 자리 위에 핀. 누르면 대화(첫 글 + 답글). 해결된 댓글은 「해결됨」을 켜야 보인다
      - 토큰이 없으면 버튼이 숨는다. 켜고 끈 상태는 이 브라우저에 기억 */
-  var CM = { on: store('wb.cm') !== '0', res: store('wb.cmRes') === '1', items: [], ok: false, key: '', open: '' };
+  var CM = { on: store('wb.cm') !== '0', res: store('wb.cmRes') === '1', items: [], ok: false, key: '', open: '', add: false, draft: null };   // add: 댓글 쓰기 켬, draft: 새 댓글 자리 {x, y}(프레임 좌표)
+  function cmCanW(){ return CM.ok && (typeof window.WB_CAN_WRITE !== 'function' || window.WB_CAN_WRITE('workbench')); }
+  function cmAddOk(){ return cmCanW() && cur && !general && !live && !liveOnce && hasShot(cur) && img.naturalWidth; }
+  function setCmAdd(on){
+    CM.add = !!on && cmAddOk(); if (!CM.add) CM.draft = null;
+    if (CM.add && typeof setMarkMode === 'function' && markMode) setMarkMode(false);
+    var b = $('cmAdd'); if (b) b.setAttribute('aria-pressed', CM.add ? 'true' : 'false');
+    stage.classList.toggle('cm-adding', CM.add);
+    if (CM.add && !CM.on) { CM.on = true; store('wb.cm', '1'); }
+    if (CM.add) toast('캡처에서 댓글을 달 자리를 누르세요 (Esc로 끄기)');
+    renderPins();
+  }
   var CM_COL = ['#2747d8', '#0e9f6e', '#d9480f', '#7048e8', '#c2255c', '#0b7285', '#5c940d', '#e8590c'];
   function cmCol(n){ var h = 0; for (var i = 0; i < n.length; i++) h = (h * 31 + n.charCodeAt(i)) >>> 0; return CM_COL[h % CM_COL.length]; }
   function cmIni(n){ n = String(n || '?').replace(/\(.*$/, '').trim(); return n.slice(0, 1).toUpperCase() || '?'; }
@@ -1150,7 +1175,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     fetch('/api/figma/comments?key=' + encodeURIComponent(FILE.key), { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
       CM.t = Date.now(); CM.key = FILE.key;
       CM.ok = !!(d && d.token); CM.items = (d && d.items) || []; CM.err = d && d.error;
-      $('cmBtn').hidden = !CM.ok; renderPins(); if (cur) renderMenu();
+      $('cmBtn').hidden = !CM.ok; $('cmAdd').hidden = !cmCanW(); renderPins(); if (cur) renderMenu();
     }).catch(function(){});
   }
   function cmPinHtml(t, left, top){
@@ -1164,7 +1189,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     var th = CM.ok && cur ? cmThreads() : [];
     var here = general ? th.filter(function(t){ return byId[t.frame] && byId[t.frame].d1 === cur.d1; }) : th.filter(function(t){ return t.frame === cur.id; });
     var openN = here.filter(function(t){ return !t.resolved; }).length;
-    $('cmN').textContent = openN || ''; btn.title = 'Figma 댓글 보기(읽기만) — ' + (general ? '이 페이지' : '이 프레임') + ' 댓글 ' + openN + '개' + (here.length > openN ? ' · 해결됨 ' + (here.length - openN) + '개' : '');
+    $('cmN').textContent = openN || ''; btn.title = 'Figma 댓글 보기 — ' + (general ? '이 페이지' : '이 프레임') + ' 댓글 ' + openN + '개' + (here.length > openN ? ' · 해결됨 ' + (here.length - openN) + '개' : '');
     var pg = $('pgCanvas'), pl = pg ? pg.querySelector('.cm-pgl') : null;
     if (!CM.ok || !CM.on || !cur || live || liveOnce) { L.hidden = true; if (pl) pl.innerHTML = ''; cmClose(); return; }
     if (general) {
@@ -1177,8 +1202,11 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       if (!hasShot(cur) || !img.naturalWidth) { L.hidden = true; return; }
       var k = img.offsetWidth / cur.w;
       L.hidden = false; L.style.left = img.offsetLeft + 'px'; L.style.top = img.offsetTop + 'px'; L.style.width = img.offsetWidth + 'px'; L.style.height = img.offsetHeight + 'px';
-      L.innerHTML = here.map(function(t){ return cmPinHtml(t, t.fx * k, t.fy * k); }).join('');
+      L.innerHTML = here.map(function(t){ return cmPinHtml(t, t.fx * k, t.fy * k); }).join('') +
+        (CM.draft ? '<button type="button" class="cm-pin tmp on" data-cmdraft="1" style="left:' + Math.round(CM.draft.x * k) + 'px;top:' + Math.round(CM.draft.y * k) + 'px" title="새 댓글 자리"><i>＋</i></button>' : '');
     }
+    var ab = $('cmAdd'); if (ab) { ab.disabled = !cmAddOk(); if (CM.add && !cmAddOk()) { CM.add = false; CM.draft = null; ab.setAttribute('aria-pressed', 'false'); stage.classList.remove('cm-adding'); } }
+    if (CM.draft && !general) { var dp = stage.querySelector('.cm-pin.tmp'); if (dp) { cmDraftShow(dp); return; } }
     if (CM.open) { var pin = stage.querySelector('.cm-pin[data-cm="' + CM.open + '"]'); if (pin) cmShow(CM.open, pin); else cmClose(); }
   }
   function cmClose(){ var p = stage.querySelector('.cm-pop'); if (p) p.remove(); CM.open = ''; }
@@ -1190,7 +1218,8 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     var it = function(x){ return '<div class="cm-it"><i style="background:' + cmCol(x.by) + '">' + esc(cmIni(x.by)) + '</i><div><div class="w"><b>' + esc(x.by) + '</b>' + esc(cmWhen(x.at)) + '</div><div class="t">' + esc(x.text) + '</div></div></div>'; };
     var pop = document.createElement('div'); pop.className = 'cm-pop'; pop.setAttribute('role', 'dialog'); pop.setAttribute('aria-label', 'Figma 댓글');
     pop.innerHTML = '<button type="button" class="cm-x" aria-label="닫기">✕</button>' + it(t) + t.replies.map(it).join('') +
-      '<div class="cm-f">' + (t.resolved ? '<span class="rs">해결됨</span>' : '') + (t.node && t.node.name ? '<span>' + esc(t.node.name) + '</span>' : '') + '<a href="https://www.figma.com/design/' + FILE.key + '/file?node-id=' + String(t.frame).replace(':', '-') + '#' + esc(t.id) + '" target="_blank" rel="noopener">Figma에서 보기 ↗</a></div>';
+      '<div class="cm-f">' + (t.resolved ? '<span class="rs">해결됨</span>' : '') + (t.node && t.node.name ? '<span>' + esc(t.node.name) + '</span>' : '') + '<a href="https://www.figma.com/design/' + FILE.key + '/file?node-id=' + String(t.frame).replace(':', '-') + '#' + esc(t.id) + '" target="_blank" rel="noopener">Figma에서 보기 ↗</a></div>' +
+      (cmCanW() ? '<div class="cm-w"><textarea data-cmreply="' + esc(t.id) + '" placeholder="답글 쓰기 (Ctrl+Enter로 올리기)" aria-label="답글"></textarea><div class="r"><span class="e"></span><button type="button" class="go" data-cmsend="reply">답글</button></div></div>' : '');
     stage.appendChild(pop);
     var sr = stage.getBoundingClientRect(), pr = pin.getBoundingClientRect();
     var x = pr.right - sr.left + stage.scrollLeft + 8, y = pr.top - sr.top + stage.scrollTop;
@@ -1198,6 +1227,51 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     pop.style.left = Math.max(stage.scrollLeft + 4, x) + 'px'; pop.style.top = Math.max(stage.scrollTop + 4, Math.min(y, stage.scrollTop + stage.clientHeight - pop.offsetHeight - 8)) + 'px';
     stage.querySelectorAll('.cm-pin.on').forEach(function(p){ p.classList.remove('on'); }); pin.classList.add('on');
   }
+  /* 새 댓글 쓰기 창(임시 핀 옆) */
+  function cmDraftShow(pin){
+    var old = stage.querySelector('.cm-pop'); if (old && old.dataset.draft === '1') return;   // 쓰던 글 지키기
+    if (old) old.remove();
+    var pop = document.createElement('div'); pop.className = 'cm-pop'; pop.dataset.draft = '1'; pop.setAttribute('role', 'dialog'); pop.setAttribute('aria-label', '새 Figma 댓글');
+    pop.innerHTML = '<button type="button" class="cm-x" data-cmcancel="1" aria-label="취소">✕</button><div class="cm-it"><div><div class="w"><b>새 댓글</b>' + esc(cur.name) + '</div></div></div>' +
+      '<div class="cm-w" style="border:0;margin:0;padding:0"><textarea data-cmnew="1" placeholder="Figma에 남길 댓글 (Ctrl+Enter로 올리기)" aria-label="댓글"></textarea><div class="r"><span class="e"></span><button type="button" data-cmcancel="1">취소</button><button type="button" class="go" data-cmsend="new">올리기</button></div>' +
+      '<p class="w" style="margin:6px 0 0;font-size:11.5px;color:var(--ink-3)">토큰 주인의 Figma 계정으로 이 프레임의 이 자리에 올라갑니다.</p></div>';
+    stage.appendChild(pop);
+    var sr = stage.getBoundingClientRect(), pr = pin.getBoundingClientRect();
+    var x = pr.right - sr.left + stage.scrollLeft + 8, y = pr.top - sr.top + stage.scrollTop;
+    if (x + 330 > stage.scrollLeft + stage.clientWidth) x = pr.left - sr.left + stage.scrollLeft - 328;
+    pop.style.left = Math.max(stage.scrollLeft + 4, x) + 'px'; pop.style.top = Math.max(stage.scrollTop + 4, Math.min(y, stage.scrollTop + stage.clientHeight - pop.offsetHeight - 8)) + 'px';
+    var ta = pop.querySelector('textarea'); if (ta) ta.focus();
+  }
+  function cmSend(btn){
+    var pop = btn.closest('.cm-pop'), ta = pop && pop.querySelector('textarea'), er = pop && pop.querySelector('.e'); if (!ta) return;
+    var msg = ta.value.trim(); if (!msg) { ta.focus(); return; }
+    var isNew = btn.dataset.cmsend === 'new', body = { action: 'comment', fileKey: FILE.key, message: msg };
+    if (isNew) { if (!CM.draft || !cur) return; body.nodeId = cur.id; body.x = CM.draft.x; body.y = CM.draft.y; } else body.parentId = ta.dataset.cmreply;
+    btn.disabled = true; if (er) er.textContent = '';
+    fetch('/api/figma', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+      .then(function(r){ return r.json(); }).then(function(d){
+        if (d.error) throw new Error(d.error);
+        toast(isNew ? 'Figma에 댓글을 올렸습니다' : '답글을 올렸습니다');
+        if (isNew) { CM.draft = null; setCmAdd(false); cmClose(); CM.open = d.id || ''; } else ta.value = '';
+        loadComments(true);
+      }).catch(function(x){ btn.disabled = false; if (er) er.textContent = '올리지 못했습니다: ' + x.message; });
+  }
+  stage.addEventListener('keydown', function(e){
+    if (e.key === 'Enter' && (e.ctrlKey || e.metaKey) && e.target.matches('.cm-w textarea')) { e.preventDefault(); var b = e.target.closest('.cm-pop').querySelector('[data-cmsend]'); if (b && !b.disabled) cmSend(b); }
+  });
+  stage.addEventListener('click', function(e){
+    var sd = e.target.closest('[data-cmsend]'); if (sd) { e.stopPropagation(); cmSend(sd); return; }
+    var cc = e.target.closest('[data-cmcancel]'); if (cc) { e.stopPropagation(); CM.draft = null; cmClose(); renderPins(); return; }
+    if (e.target.closest('.cm-pop')) return;
+    if (e.target.closest('[data-cmdraft]')) { e.stopPropagation(); return; }
+    // 댓글 쓰기 중: 캡처를 누른 자리(프레임 좌표)에 새 댓글
+    if (CM.add && cur && e.target === img) {
+      e.stopPropagation();
+      var r = img.getBoundingClientRect(), k = r.width / cur.w;
+      CM.draft = { x: Math.round((e.clientX - r.left) / k), y: Math.round((e.clientY - r.top) / k) };
+      cmClose(); renderPins(); return;
+    }
+  }, true);
   stage.addEventListener('click', function(e){
     var x = e.target.closest('.cm-x'); if (x) { cmClose(); renderPins(); return; }
     var p = e.target.closest('.cm-pin'); if (p) { e.stopPropagation(); if (CM.open === p.dataset.cm) { cmClose(); p.classList.remove('on'); } else cmShow(p.dataset.cm, p); return; }
@@ -1205,7 +1279,8 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
   }, true);
   $('cmBtn').onclick = function(){ CM.on = !CM.on; store('wb.cm', CM.on ? '1' : '0'); if (CM.on) loadComments(true); renderPins(); };
   $('cmRes').onchange = function(){ CM.res = this.checked; store('wb.cmRes', CM.res ? '1' : '0'); renderPins(); };
-  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && CM.open) { cmClose(); renderPins(); } });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && (CM.open || CM.add || CM.draft)) { cmClose(); if (CM.add || CM.draft) setCmAdd(false); else renderPins(); } });
+  $('cmAdd').onclick = function(){ setCmAdd(!CM.add); };
   setInterval(function(){ if (!document.hidden) loadComments(false); }, 30000);
 
   /* ── 수정할 부분 표시(사각형) ──
@@ -1326,7 +1401,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
   /* 드래그로 이동 */
   (function(){
     var sx, sy, sl, st, on = false;
-    stage.addEventListener('pointerdown', function(e){ if (live || e.button !== 0 || markMode || e.target.closest('.mk-box') || e.target.closest('.cm-pin,.cm-pop')) return; on = true; panMoved = false; sx = e.clientX; sy = e.clientY; sl = stage.scrollLeft; st = stage.scrollTop; stage.classList.add('grabbing'); });
+    stage.addEventListener('pointerdown', function(e){ if (live || e.button !== 0 || markMode || e.target.closest('.mk-box') || e.target.closest('.cm-pin,.cm-pop') || (typeof CM !== 'undefined' && CM.add)) return; on = true; panMoved = false; sx = e.clientX; sy = e.clientY; sl = stage.scrollLeft; st = stage.scrollTop; stage.classList.add('grabbing'); });
     window.addEventListener('pointermove', function(e){ if (!on) return; if (Math.abs(e.clientX - sx) + Math.abs(e.clientY - sy) > 4) panMoved = true; stage.scrollLeft = sl - (e.clientX - sx); stage.scrollTop = st - (e.clientY - sy); });
     window.addEventListener('pointerup', function(){ on = false; stage.classList.remove('grabbing'); });
   })();
