@@ -12,6 +12,10 @@ module.exports = function register(on, h) {
   const nn = (v) => (v == null ? '' : String(v));
   const tokFile = () => path.join(C.setupDir, 'figma_token.json');
   const readTok = () => core.readJson(tokFile()) || {};
+  // 토큰 만료 기간(일): Figma에서 고를 수 있는 1 · 7 · 30 · 90일, 모르면 90일(기본 · 최대)
+  const tokDays = (v) => { const n = parseInt(v, 10); return [1, 7, 30, 90].includes(n) ? n : 90; };
+  // 만료일(YYYY-MM-DD, 이 PC 날짜) = 저장한 날 + 기간
+  const expOf = (at, days) => { const d = new Date(at || Date.now()); if (isNaN(d)) return ''; d.setDate(d.getDate() + days); const p = (x) => String(x).padStart(2, '0'); return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`; };
   const API = 'https://api.figma.com/v1';
   const log = (t) => { try { console.log(new Date().toISOString() + ' [figma] ' + t); } catch (e) {} };
 
@@ -148,7 +152,10 @@ module.exports = function register(on, h) {
   // ── GET /api/figma: 토큰이 있는지 · 누구 계정인지 · 끝 4자리(토큰 자체는 내보내지 않는다) ──
   on('GET', '/api/figma', () => {
     const t = readTok(), tk = nn(t.token);
-    return { token: !!tk, last4: tk ? tk.slice(-4) : '', user: t.user || null, at: nn(t.at), deadAt: nn(t.deadAt) };   // deadAt: Figma가 이 토큰을 거부한 시각(만료 · 지운 토큰) — 날짜와 상관없이 바로 「만료됨」
+    // deadAt: Figma가 이 토큰을 거부한 시각(만료 · 지운 토큰) — 날짜와 상관없이 바로 「만료됨」
+    // days · expires: 만들 때 고른 만료 기간(Figma API는 만료일을 알려 주지 않는다). 기간을 모르는 예전 토큰은 90일(Figma 기본 · 최대)로 본다
+    const days = tokDays(t.days);
+    return { token: !!tk, last4: tk ? tk.slice(-4) : '', user: t.user || null, at: nn(t.at), deadAt: nn(t.deadAt), days, daysSet: !!t.days, expires: tk ? expOf(t.at, days) : '' };
   });
 
   // ── POST /api/figma {action: token | clear | check | capture} ──
@@ -179,10 +186,16 @@ module.exports = function register(on, h) {
         if (!/^[A-Za-z0-9_-]{20,200}$/.test(tk)) throw new Error('토큰 모양이 아닙니다. Figma 설정에서 만든 개인 액세스 토큰(figd_로 시작)을 붙여 넣어 주세요.');
         const me = await figma('/me', tk);
         const user = { id: nn(me.id), handle: nn(me.handle), email: nn(me.email) };
-        // 만료일은 받지 않는다: Figma API가 개인 토큰의 만료일을 알려 주지 않고(/v1/me = id · 이메일 · 이름 · 사진),
-        //  사용자가 따로 넣는 것은 원하지 않음(2026-11-12). 만료되면 Figma가 401로 거부 → deadAt → 시작 안내 「만료됨」
-        core.writeJson(tokFile(), { token: tk, user, at: core.now() });
-        return { ok: true, token: true, last4: tk.slice(-4), user };
+        // 만료 기간: Figma API가 개인 토큰의 만료일을 알려 주지 않아(/v1/me = id · 이메일 · 이름 · 사진), 만들 때 고른 기간(일)을 받아
+        //  저장한 날 + 기간 = 만료일로 시작 안내에 D-day를 보인다(2026-11-12). 날짜가 남아도 Figma가 401로 거부하면 deadAt → 「만료됨」
+        const days = tokDays(b.days);
+        core.writeJson(tokFile(), { token: tk, user, at: core.now(), days });
+        return { ok: true, token: true, last4: tk.slice(-4), user, days };
+      }
+      case 'days': {   // 이미 넣은 토큰의 만료 기간만 바꾸기(만료일 = 저장한 날 + 기간)
+        const t = readTok(); if (!nn(t.token)) throw new Error('저장한 토큰이 없습니다.');
+        t.days = tokDays(b.days); core.writeJson(tokFile(), t);
+        return { ok: true, days: t.days, expires: expOf(t.at, t.days) };
       }
       case 'clear': { try { fs.unlinkSync(tokFile()); } catch (e) {} return { ok: true, token: false }; }
       case 'check': { const me = await figma('/me'); return { ok: true, user: { id: nn(me.id), handle: nn(me.handle), email: nn(me.email) } }; }
