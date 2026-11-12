@@ -20,7 +20,7 @@ figma_region: 2.1 1차
 ---
 # LI-INS-01-P Door Control Popup
 
-> 기존 화면(작업방 Instruments 페이지, 2.1 1차 영역, Ver 2.1.06)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 Instruments 페이지, 2.1 1차 영역, Ver 2.1.06)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - 호출 위치: Instruments Overview(LI-INS-01-T), Instruments All(LI-INS-02-T), Material Setup > Load Materials, Empty Waste Bin (`ia/ia-screens.csv`)
 - 관련 정책: POL-EQP-004, POL-EQP-008 / 임시 정책 PV-0001, POL-LOD-001
@@ -138,7 +138,7 @@ Description Number (10), Square (3), Frame/Instrument_Status (1), Interface/Lock
 | ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
 | R01 | 디스크립션 | Section 17 메모 "통합 상태가 Ready, Paused, Error 상태일 경우, Unlock all doors 버튼 사용 가능" | 장비 통합 상태가 Ready, Error, Paused, Not Initialized일 때 활성화 (디스크립션 3은 이미 맞음) | POL-EQP-008, 2026-11-02 확인 | 대기 |
-| R02 | 문구 | "Locks automatically 5 seconds after the door is closed." / "The door will be automatically locked 5 seconds after it is closed." 두 가지 | 하나로 통일 | `glossary/review-v0.md` 화면 정정 대상 추가 | 대기 |
+| R02 | 문구 | "Locks automatically 5 seconds after the door is closed." / "The door will be automatically locked 5 seconds after it is closed." 두 가지 | 하나로 통일 | `archive/glossary/review-v0.md` 화면 정정 대상 추가 | 대기 |
 | R03 | 문구 | "Cannot unlock while the module is running." / "Cannot unlock while the system is running." 두 가지 | 쓰임을 구분하거나 하나로 통일 | 같음 | 대기 |
 | R04 | 알럿 | 확인 문구 "Do you want to continue? Finishing current task, then pausing…" | 알럿 관리 페이지 Confirm_008 ("Unlock the door?")과 다름. 어느 쪽이 맞는지 확인 후 통일 | `policy/alert-catalog.md` 3절 | 대기 (확인 필요) |
 | R05 | 디스크립션 | Ruuning, Lcok | Running, Lock | 오타 | 대기 |

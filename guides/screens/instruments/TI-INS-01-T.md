@@ -20,7 +20,7 @@ figma_region: 2.1 1차
 ---
 # TI-INS-01-T Overview Tab
 
-> 기존 화면(작업방 Instruments 페이지, 2.1 1차 영역, Ver 2.1.06)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 Instruments 페이지, 2.1 1차 영역, Ver 2.1.06)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - T/L 차이: L-IOS(LI-INS-01-T)에는 Door Status Tooltip과 [Unlock](Door Control) 버튼이 더 있음
 - 관련 정책: POL-EQP-001, POL-EQP-002, POL-EQP-009

@@ -20,9 +20,9 @@ figma_region: 2.1 2차
 ---
 # LI-TSS-RGE-01 View Trolley Info (Scan the trolley)
 
-> 기존 화면(작업방 Material Setup 2.1(2차) 페이지, 2.1 2차 영역, Ver 2.1)을 2026-11-03에 옮긴 것입니다. SH2-MS-얼럿 수정 테스트 페이지에는 이 CID가 없어 2차 페이지에서 옮겼습니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 Material Setup 2.1(2차) 페이지, 2.1 2차 영역, Ver 2.1)을 2026-11-03에 옮긴 것입니다. SH2-MS-얼럿 수정 테스트 페이지에는 이 CID가 없어 2차 페이지에서 옮겼습니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
-- **IA 미등록**: IA v1.15 이후 새로 추가된 화면 (`background/worklist.md`). 다음 IA 버전에서 CID·이름·Type 확인
+- **IA 미등록**: IA v1.15 이후 새로 추가된 화면 (`background/todo.md`). 다음 IA 버전에서 CID·이름·Type 확인
 - L-IOS 전용. Service Mode: 미정 (`policy/service-mode-matrix.csv`에 View Trolley Info 없음). 프레임 LNB는 Material Setup 아래 Empty Waste bin 다음에 View Trolley Info
 - Consumable Trolley를 스캔하거나 목록에서 골라 남은 Consumable·Reagent와 재사용 안내를 보는 화면 (기획 프레임 2359px)
 - 관련 정책: (정책 작성 전)
@@ -72,7 +72,7 @@ Arrow/Chevron_Right (6), layout/spacing (4), Table (3), Description Number (2), 
 
 | ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| R01 | 화면 정보 | IA 미등록 (CID LI-TSS-RGE-01, 이름 View Trolley Info) | 다음 IA 버전에 CID·이름·Type·Service Mode 등록 | `background/worklist.md`, `ia/ia-screens.csv` | 대기 (확인 필요) |
+| R01 | 화면 정보 | IA 미등록 (CID LI-TSS-RGE-01, 이름 View Trolley Info) | 다음 IA 버전에 CID·이름·Type·Service Mode 등록 | `background/todo.md`, `ia/ia-screens.csv` | 대기 (확인 필요) |
 | R02 | 알럿 | "Alert_027" (기존 카탈로그, MS_Alert_001과 같은 문구 "Invalid code for the current workflow.") | MS_Alert_001로. MS 목록 사용 화면에 RGE 추가 | `policy/alert-catalog-ms.csv` MS_Alert_001 (이전 ID Alert_027) | 대기 |
 | R03 | 화면 | 목록 열 "Remaining slots", 값 "10 case" | 열 이름과 단위 통일 (RGE-02는 "N Cases" = Selectable 수) | LI-TSS-RGE-02 2-1 | 대기 (확인 필요) |
 | R04 | 화면 | 상단 "Prep consumable trolley", "Consumable and reagent reuse guide"가 Tab인지 제목인지 디스크립션에 없음 | 정의 | 화면 글자 | 대기 (확인 필요) |

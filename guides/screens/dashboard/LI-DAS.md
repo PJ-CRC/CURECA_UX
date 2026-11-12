@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # LI-DAS Dashboard
 
-> 기존 화면(작업방 Dashboard 페이지, 2.1 2차 영역, Ver 2.1.14)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 Dashboard 페이지, 2.1 2차 영역, Ver 2.1.14)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - T/L 차이: TI-DAS에 더해 CURECA 구동 컨트롤러([Initialize], [Stop], 4-1)와 Instrument Status의 Door Control(5-2)이 있음
 - Service Mode: Initialize, Stop, Door Control은 Main Mode, Console Mode만 (`policy/service-mode-matrix.csv`)

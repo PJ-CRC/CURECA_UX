@@ -1,10 +1,10 @@
 분류,표준어,영문·화면 라벨,정의,값,쓰지 않는 표현,구분해야 하는 말,근거,상태
-계정·권한,User Type,User Type,계정에 부여된 사용자 구분,Service / Admin / User,유저타입; 유저 타입; 사용자 타입; 계정 유형; 사용자 유형; Account Type; 등급; 사용자 권한(유형을 뜻할 때); 유형을 뜻하는 "권한"; Service 계정 → Service User Type; 소문자 user / admin / service,권한: User Type이 할 수 있는 일(메뉴 접근·버튼 사용),채팅 검토 결정; glossary/review-v0.md 1-1,확정
+계정·권한,User Type,User Type,계정에 부여된 사용자 구분,Service / Admin / User,유저타입; 유저 타입; 사용자 타입; 계정 유형; 사용자 유형; Account Type; 등급; 사용자 권한(유형을 뜻할 때); 유형을 뜻하는 "권한"; Service 계정 → Service User Type; 소문자 user / admin / service,권한: User Type이 할 수 있는 일(메뉴 접근·버튼 사용),채팅 검토 결정; archive/glossary/review-v0.md 1-1,확정
 팀 내부,언어셋,language-set,7개 언어 문구를 관리하는 문서 (2026-11-04부터 저장소에서 관리),,랭기지 셋; 랭귀지셋; 다국어 문서; i18n,,2026-10-29 결정,확정
-팀 내부,임시 정책,provisional policy (ID: PV),"공통 자료에 아직 없지만 작업에 먼저 쓰는 정책. 기존 정책을 바꿔야 하거나 고객 답 전에 진행할 때 누구든 등록하고, 함께 확인해 [승인]하면 공통 자료에 반영함",,미확정 정책; 미결 정책,협의 대기: 아직 효력이 없는 내부 변경 제안,2026-10-29 결정; 2026-11-03 헌법 4조 v1.4 (rules/provisional-policy.md),확정
+팀 내부,임시 정책,provisional policy (ID: PV),"공통 자료에 아직 없지만 작업에 먼저 쓰는 정책. 기존 정책을 바꿔야 하거나 고객 답 전에 진행할 때 누구든 등록하고, 함께 확인해 [승인]하면 공통 자료에 반영함",,미확정 정책; 미결 정책,협의 대기: 아직 효력이 없는 내부 변경 제안,2026-10-29 결정; 2026-11-03 헌법 4조 v1.4 (old-rules/provisional-policy.md),확정
 팀 내부,승인 담당자,approver,"쓰지 않음 (2026-11-04 헌법 4조 v1.6). 공통 자료를 혼자 고치는 한 사람을 따로 두지 않고, 모두가 임시 정책을 함께 확인해 [승인]함. 승인한 사람은 임시 정책 결정 칸의 결정자로 남음",,규칙 담당자; 검토자,작성자: 화면설계서를 책임지는 사람,2026-11-03 헌법 4조 v1.4; 2026-11-04 헌법 4조 v1.6,폐기
-팀 내부,주간 진행 현황,weekly status,"한 주(월~금)의 마감 필요 업무, 정책 변동 사항, 회의 내역, 다음 주 마감 예정을 모은 화면",,이번 주 진행 현황; 주간 보고,,2026-11-04 결정 (rules/weekly-status.md),확정
-팀 내부,반영 대기 목록,pending fix list,"화면에 아직 반영하지 않은 변경을 화면 정의서(화면 MD)마다 모은 표. 다른 화면 수정, 회의 · 논의 결과, 정책 · 기준 자료 변경에서 생긴 변경이 영향 화면마다 줄로 생기고, 다음에 그 화면을 그릴 때 반영함. 줄마다 ID(R01 …, 밖에서는 CID-R01). 상태는 대기 · 반영 중 · 반영 완료 · 제외 · 반영 롤백",,정정 메모; 정정메모,,2026-11-04 결정 (rules/screen-spec.md 4절),확정
+팀 내부,주간 진행 현황,weekly status,"한 주(월~금)의 마감 필요 업무, 정책 변동 사항, 회의 내역, 다음 주 마감 예정을 모은 화면",,이번 주 진행 현황; 주간 보고,,2026-11-04 결정 (old-rules/weekly-status.md),확정
+팀 내부,반영 대기 목록,pending fix list,"화면에 아직 반영하지 않은 변경을 화면 정의서(화면 MD)마다 모은 표. 다른 화면 수정, 회의 · 논의 결과, 정책 · 기준 자료 변경에서 생긴 변경이 영향 화면마다 줄로 생기고, 다음에 그 화면을 그릴 때 반영함. 줄마다 ID(R01 …, 밖에서는 CID-R01). 상태는 대기 · 반영 중 · 반영 완료 · 제외 · 반영 롤백",,정정 메모; 정정메모,,2026-11-04 결정 (old-rules/screen-spec.md 4절),확정
 장비,Service Mode,Service Mode,L-IOS 설치 시 정해지는 모드. 모드에 따라 보이는 메뉴와 쓸 수 있는 기능이 달라짐,Main Mode / Console Mode / TSS Mode,서비스 모드; Preset Mode; 설치 모드; L-IOS 모드; Main / Console / TSS 단독 표기(모드를 뜻할 때),CID의 TSS(LI-TSS-...)는 화면 ID의 일부라 바꾸지 않음,2026-10-30 결정 (review-v0 Q2),확정
 장비,장비 통합 상태,(화면 라벨 확인 필요),CURECA 전체의 상태. 상태값은 3단계(장비 통합 상태 / 장비 모듈 상태 / 검사 장치 상태) 중 가장 위,Not Initialized / Initializing / Ready / Running / Partial Running / Stopping / Paused / Error (status-values.csv),CURECA 전체 구동 상태; 전체 Cureca 구동 상태; 전체 구동 상태,장비 모듈 상태; 검사 장치 상태; Sample 상태(같은 라벨 Ready·Running),2026-10-30 결정 (review-v0 Q3; reference/status-values-2026-10-30.png),확정
 장비,장비 모듈 상태,(화면 라벨 확인 필요),Module 하나의 상태,Not Initialized / Initializing / Ready / Running / Stopping / Pausing / Paused / Error (status-values.csv),Idle (고객 결정으로 Ready로 바뀜 2026-10-30),장비 통합 상태; 검사 장치 상태,reference/status-values-2026-10-30.png,확정
@@ -59,9 +59,9 @@ UI 요소,Tab,Tab,Common UX 탭 컴포넌트 (Underline Tab / Outline Tab / Cont
 시스템,Prep 시스템,PrepMcs,Sample Preparation Master Control System. 검체 전처리 쪽 장비를 제어하는 시스템,,Prep 장비(시스템을 뜻할 때),Dx 시스템,씨젠 상태 정보 261021 > Actor,후보
 시스템,Dx 시스템,DxMcs,Diagnostic Master Control System. 핵산 추출부터 PCR까지 진단 쪽 장비를 제어하는 시스템,,DX 장비(시스템을 뜻할 때),Prep 시스템,씨젠 상태 정보 261021 > Actor,후보
 장비,검사 단계,(화면 라벨 확인 필요),검사가 진행되는 단계. 단계마다 담당 Module이 있음 (test-stages.csv),Sample Preparation / Nucleic Acid Extraction / PCR Setup / Plate Sealing / PCR,,Sample Preparation은 Module 이름이자 검사 단계 이름이자 Reagent 태그. 문서에서는 무엇을 뜻하는지 함께 씀 (예: Sample Preparation Module / Sample Preparation 단계),씨젠 상태 정보 261021 > 검사 단계,확정
-디스크립션 표현,표시,,화면에 요소를 보여 줌. 디스크립션 문장 패턴 1 (rules/screen-spec.md 8절),,노출; 표출; 보여 준다는 뜻의 제공; 미노출(→ 표시하지 않음),기능 · 메뉴를 갖춘다는 뜻의 제공,2026-11-04 결정 (rules/screen-spec.md 8절),확정
-디스크립션 표현,누르면,,버튼 · 아이콘 · 링크 · 탭을 눌렀을 때. 디스크립션 문장 패턴 2,,클릭 시; 버튼에 쓴 선택 시,고르면(목록 · 옵션),2026-11-04 결정 (rules/screen-spec.md 8절),확정
-디스크립션 표현,고르면,,목록 · 옵션 · 라디오 · 체크박스 · 드롭다운 값을 골랐을 때. 디스크립션 문장 패턴 2,,선택 시,누르면(버튼),2026-11-04 결정 (rules/screen-spec.md 8절),확정
-디스크립션 표현,기본값,,처음 화면을 열었을 때 정해져 있는 값. 디스크립션 문장 패턴 3,,Default,,2026-11-04 결정 (rules/screen-spec.md 8절),확정
+디스크립션 표현,노출,,화면에 요소를 보여 줌. 안 보이면 미노출. 디스크립션 문장 패턴 1 (old-rules/screen-spec.md 8절),,표출; 표시(보여 준다는 뜻일 때); 보여 준다는 뜻의 제공,,2026-11-04 결정(표시) → 2026-11-06 사용자 결정(기존 디스크립션과 같이 노출),확정
+디스크립션 표현,클릭 시,,버튼 · 아이콘 · 링크 · 탭 · 줄을 눌렀을 때. 디스크립션 문장 패턴 2 (old-rules/screen-spec.md 8절),,누르면; 버튼에 쓴 선택 시,선택 시(목록 · 옵션),2026-11-04 결정(누르면) → 2026-11-06 사용자 결정(기존 디스크립션과 같이 클릭 시),확정
+디스크립션 표현,선택 시,,목록 · 옵션 · 라디오 · 체크박스 · 드롭다운 값을 골랐을 때. 디스크립션 문장 패턴 2 (old-rules/screen-spec.md 8절),,고르면,클릭 시(버튼),2026-11-04 결정(고르면) → 2026-11-06 사용자 결정(기존 디스크립션과 같이 선택 시),확정
+디스크립션 표현,기본값,,처음 화면을 열었을 때 정해져 있는 값 · 고른 것 · 버튼의 활성 상태. 디스크립션 라벨 `기본값:` (old-rules/screen-spec.md 8절 항목 쓰는 틀),,Default; 디폴트; 최초 진입(기본값을 뜻할 때),,2026-11-04 결정; 2026-11-06 사용자 확인(드롭다운 기본값: · 리스트 항목:),확정
 UI 요소,Checkbox,Checkbox,0개 이상 항목을 고르는 선택 컨트롤 (Common UX COMM-5-q Selection Controls),,체크박스; Check Box,Radio Button,2026-11-04 사용자 결정 (용어집 기준). Common UX 수정 요청 common-ux/feedback.md 14번,확정
 UI 요소,Text Input,Text Input,글자를 입력하는 칸 (Box Input / Password Input / Inline Input. Common UX COMM-5-t),,Text Field; 텍스트 필드; 입력창,,2026-11-04 사용자 결정 (용어집 기준). Common UX 수정 요청 common-ux/feedback.md 15번,확정

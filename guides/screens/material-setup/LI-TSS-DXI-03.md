@@ -20,7 +20,7 @@ figma_region: SH2-MS 얼럿 수정 테스트 (2026-11-03 기준)
 ---
 # LI-TSS-DXI-03 MB Tube storage
 
-> 기존 화면(작업방 SH2-MS-얼럿 수정 테스트 페이지, Ver 2.0)을 2026-11-03에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 SH2-MS-얼럿 수정 테스트 페이지, Ver 2.0)을 2026-11-03에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - L-IOS 전용. Service Mode: Console Mode. Flexible Extraction의 MB Tube Storage에 MB Tube 적재 (위치 스캔 없음)
 - 관련 정책: POL-MAT-002, POL-MAT-004, POL-LOD-002

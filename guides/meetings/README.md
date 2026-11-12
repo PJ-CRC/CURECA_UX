@@ -1,6 +1,6 @@
 # 회의록
 
-고객 회의의 회의록입니다. 회의 하나에 파일 하나이고, 작성 규칙은 [rules/meeting-notes.md](../rules/meeting-notes.md), 템플릿은 [templates/meeting.md](../templates/meeting.md)입니다.
+고객 회의의 회의록입니다. 회의 하나에 파일 하나이고, 작성 규칙은 [old-rules/meeting-notes.md](../old-rules/meeting-notes.md), 템플릿은 [templates/meeting.md](../templates/meeting.md)입니다.
 
 - 다음 고객 회의에 올린 안건: [next-agenda.md](next-agenda.md)
 - 각자 작성본(임시): `drafts/{회의 ID}/{아이디}.md`

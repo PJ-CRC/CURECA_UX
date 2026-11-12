@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # TI-DAS Dashboard
 
-> 기존 화면(작업방 Dashboard 페이지, 2.1 2차 영역, Ver 2.1.14)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 Dashboard 페이지, 2.1 2차 영역, Ver 2.1.14)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - T/L 차이: L-IOS(LI-DAS)에는 CURECA 구동 컨트롤러([Initialize], [Stop])와 Instrument Status의 Door Control이 더 있음
 - 관련 정책: POL-EQP-001, POL-EQP-002, POL-EQP-004, POL-SMP-001, POL-SMP-004, POL-SMP-009
@@ -137,7 +137,7 @@ Frame/Instrument_Status (32), Tag Status (16), Description (15), Description Num
 | R05 | 디스크립션 | 번호 2가 없음 (1 다음 3) | 번호 정리 | 디스크립션 | 대기 |
 | R06 | 디스크립션 | "Dashboard Info 페이지"를 참고하라고만 적음 | 정의는 정책 ID로 참조 (Today’s Orders 집계 기준은 SMP·TST 정책, 노출 조건은 INV 정책을 쓸 때 옮김) | 헌법 3조 | 대기 |
 | R07 | 표기 | Module 이름과 번호 붙여 씀: High-throughput Extraction(1), PCR Setup(1) | High-throughput Extraction (1) | 이름 (번호) 띄어쓰기 | 대기 |
-| R08 | 문구 | Event 툴팁 예시 "ER-0112, 유닛의 상태를 확인해주세요." (한국어) | 영어 화면 문구로 | `rules/language-set.md` | 대기 |
+| R08 | 문구 | Event 툴팁 예시 "ER-0112, 유닛의 상태를 확인해주세요." (한국어) | 영어 화면 문구로 | `old-rules/language-set.md` | 대기 |
 
 ## 변경 이력
 

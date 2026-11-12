@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # LI-TSS-WBM-P Confirm Empty
 
-> 기존 화면(작업방 Material Setup 2.1(2차) 페이지, 2.1 2차 영역, Ver 2.0)을 2026-11-03에 옮긴 것입니다. SH2-MS-얼럿 수정 테스트 페이지에는 이 CID가 없어 2차 페이지에서 옮겼습니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 Material Setup 2.1(2차) 페이지, 2.1 2차 영역, Ver 2.0)을 2026-11-03에 옮긴 것입니다. SH2-MS-얼럿 수정 테스트 페이지에는 이 CID가 없어 2차 페이지에서 옮겼습니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - L-IOS 전용. Service Mode: Console Mode. LI-TSS-WBM의 [Confirm Empty]로 여는 Popup. Module별 Waste Bin·Liquid Waste Bottle을 비웠음을 확인해 적재율을 리셋
 - 관련 정책: POL-LOD-005

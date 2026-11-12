@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # TI-STN-01-01 Cost Setting
 
-> 기존 화면(작업방 Setting 페이지, 2.1 2차 영역, Ver 2.0)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 Setting 페이지, 2.1 2차 영역, Ver 2.0)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - T-IOS 전용
 - 관련 정책: POL-TST-003
@@ -73,7 +73,7 @@ figma_region: 2.1 2차
 | R01 | 표기 | 300 ㎕ Tip, 1,000 ㎕ Tip | 300 μL Tip, 1000 μL Tip | `glossary/glossary.md` Tip 용량 표기 | 대기 |
 | R02 | 표기 | Quantity "24 ea/rack" 등 | Consumable 수량 표기 규칙 `{수량} ea ({n} {단위})` | Common UX COMM-4-b | 대기 |
 | R03 | 디스크립션 | Reagents 탭 설명이 없음 (버전 메모 v2.1.14 "시약 목록 Assay pack에 따른 정렬") | Reagents 탭 정의 추가 | Figma 버전 메모 | 대기 |
-| R04 | 정책 반영 | Consumable 품목은 씨젠 소모품·시약 새 버전 기준 | 새 버전 반영 후 확인 | `background/worklist.md` | 대기 |
+| R04 | 정책 반영 | Consumable 품목은 씨젠 소모품·시약 새 버전 기준 | 새 버전 반영 후 확인 | `archive/background/worklist.md` | 대기 |
 
 ## 변경 이력
 

@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # TI-STN-05 Account Setting
 
-> 기존 화면(작업방 Setting 페이지, 2.1 2차 영역, Ver 2.1.03)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 Setting 페이지, 2.1 2차 영역, Ver 2.1.03)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - T-IOS 전용 메뉴. 여기서 만든 계정을 T-IOS와 L-IOS에서 함께 씀
 - 관련 정책: POL-ACC-001, POL-ACC-002, POL-ACC-005, POL-ACC-006 / 임시 정책 PV-0002
@@ -107,8 +107,11 @@ figma_region: 2.1 2차
 | ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
 | R01 | 디스크립션 | 2 "행 클릭 시 계정 상세 팝업 : TI-STN-05-02-P" | TI-STN-05-03-P (User Details). 05-02-P는 Account Created | `ia/ia-screens.csv` | 대기 |
-| R02 | 정책 반영 | 목록 범위 "Admin이 생성한 모든 계정", User Type 필터 All/Admin/User. Service 계정이 목록에 나오는지, Service가 만든 계정은 어떻게 되는지 없음 | 임시 정책 PV-0002 반영 (Admin에게 Service 계정 숨김, Service 계정 최소 1개, 자기 계정 삭제 불가 Alert_047) | PV-0002, CA-0003 | 대기 |
-| R03 | 정책 반영 | 삭제 제한 없음 (자기 계정, 로그인 중인 계정, 마지막 Admin 삭제) | 임시 정책 PV-0002 반영 (Admin에게 Service 계정 숨김, Service 계정 최소 1개, 자기 계정 삭제 불가 Alert_047) | PV-0002, CA-0003 | 대기 |
+| R02 | 정책 반영 | 목록 범위 "Admin이 생성한 모든 계정", User Type 필터 All/Admin/User. Service 계정이 목록에 나오는지, Service가 만든 계정은 어떻게 되는지 없음 | 임시 정책 PV-0002 반영 (Admin에게 Service 계정 숨김, Service 계정 최소 1개, 자기 계정 삭제 불가 Alert_047) | PV-0002, CA-0003 | 제외 (2026-11-05, PV-0002 승인으로 R04 · R05 · R06로 대체) |
+| R03 | 정책 반영 | 삭제 제한 없음 (자기 계정, 로그인 중인 계정, 마지막 Admin 삭제) | 임시 정책 PV-0002 반영 (Admin에게 Service 계정 숨김, Service 계정 최소 1개, 자기 계정 삭제 불가 Alert_047) | PV-0002, CA-0003 | 제외 (2026-11-05, PV-0002 승인으로 R04 · R05 · R06로 대체) |
+| R04 | 정책 반영 | 2 User 리스트 정의 "Admin이 생성한 모든 계정 (Admin, User 포함) 리스트", 2-1 User Type 표출 항목 "Admin, User" | 디스크립션에 넣음: 2 정의 → 로그인한 사용자의 User Type이 Admin이면 Service 계정은 목록에서 빼고 Admin · User 계정만 보여 줌. Service이면 모든 계정(Service · Admin · User)을 보여 줌. 2-1 User Type 표출 항목 → Service, Admin, User (Service는 Service로 로그인했을 때만 보임). 화면 예시도 Service로 로그인한 경우 목록에 Service 계정 행을 넣음 | PV-0002 바꾸는 내용 1 · 2 (2026-11-05 승인), CA-0003, POL-ACC-001 | 대기 |
+| R05 | 정책 반영 | 1-2 User Type 드롭다운 항목 "All, Admin, User" | 확인 필요: Service로 로그인했을 때 드롭다운에 Service 항목을 더하는지 (PV-0002는 목록 범위만 정함. 더하면 디스크립션에 넣음: 드롭다운 항목 All, Service, Admin, User — Service는 Service로 로그인했을 때만) | PV-0002 바꾸는 내용 1 · 2 (2026-11-05 승인), TI-STN-05-R04 | 대기 (확인 필요) |
+| R06 | 정책 반영 | 3 [Delete] 동작에 삭제 제한 없음 (Confirm_015에서 Delete 선택 시 바로 삭제) | 디스크립션에 넣음: 3 [Delete] 동작 → 선택한 계정에 자기 계정이 있거나, 지우면 Service 계정이 하나도 남지 않으면 Alert_047(Account cannot be deleted / You cannot delete your own account or the last Service account.)을 보여 주고 지우지 않음. 확인 필요: Alert_047을 Confirm_015 전에 보일지 뒤에 보일지, 여러 개를 골랐을 때 걸리지 않는 계정도 함께 지우지 않는지 | PV-0002 바꾸는 내용 3 · 5 · 6 (2026-11-05 승인), CA-0003, `policy/alert-catalog.csv` Alert_047 | 대기 (확인 필요) |
 
 ## 변경 이력
 

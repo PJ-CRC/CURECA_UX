@@ -1,6 +1,6 @@
 # 그리는 재료 결정 안 (Common UX 담당자와 정할 것)
 
-> 상태: 결정 대기 (2026-11-05). `rules/screen-spec.md` 7절 5번 "그리는 재료"의 안입니다. 사용자가 Common UX 담당자와 이야기한 뒤 정하기로 했습니다. "Common UX 정하자"고 하면 이 문서 내용을 그대로 다시 보여 주고, 함께 Common UX 수정 요청 목록(`feedback.md`)도 이어서 봅니다.
+> 상태: 결정 대기 (2026-11-05). `old-rules/screen-spec.md` 7절 5번 "그리는 재료"의 안입니다. 사용자가 Common UX 담당자와 이야기한 뒤 정하기로 했습니다. "Common UX 정하자"고 하면 이 문서 내용을 그대로 다시 보여 주고, 함께 Common UX 수정 요청 목록(`feedback.md`)도 이어서 봅니다.
 
 ## 조사한 것 (2026-11-05, Figma UX-AI-TEST "Common UX - PC" 페이지)
 
@@ -25,10 +25,10 @@
 
 1. **라이브러리 공개:** 누가 언제 Publish할지, Common UX를 고칠 때(가이드 → Figma 반영) 라이브러리 업데이트를 누가 할지
 2. **폰트:** Pretendard는 Claude 클라우드 환경(`use_figma`)에서 불러올 수 없음. 새 글은 Inter로 만든 뒤 팀 프로그램 플러그인(Common UX Sync의 글 수정 작업)으로 Pretendard로 바꿈. 플러그인이 꺼져 있으면 Noto Sans KR로 넣고 표시
-3. **디스크립션 패널:** 기획 프레임 오른쪽 패널은 기존처럼 `Description` 컴포넌트로 만듦 (`rules/screen-spec.md` 5절 기획 프레임)
+3. **디스크립션 패널:** 기획 프레임 오른쪽 패널은 기존처럼 `Description` 컴포넌트로 만듦 (`old-rules/screen-spec.md` 5절 기획 프레임)
 4. ⛔️ 표시 컴포넌트와 Common UX 가이드에서 빠진 컴포넌트(가이드 5장을 PC에 맞추는 수정 요청 16번)의 관계 확인
 
 ## 함께 볼 것
 
 - Common UX 수정 요청 목록 `common-ux/feedback.md` (16건, 철회 1건 제외 15건 전달 전)
-- Common UX 정리 목록 `common-ux/common-policy-candidates.md` (가이드 번호표, 공통 정책 3가지)
+- (보관) Common UX 정리 목록 `archive/common-ux/common-policy-candidates.md` — 2026-11-10 보관. "화면에서 정할 것"은 `reference-rules/description.md` 3절로 옮김

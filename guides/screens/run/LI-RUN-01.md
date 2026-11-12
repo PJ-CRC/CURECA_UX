@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # LI-RUN-01 Run Preparation (Check Run Samples)
 
-> 기존 화면(작업방 Run/Quick Start 페이지, 2.1 2차 영역, Ver 2.0)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 Run/Quick Start 페이지, 2.1 2차 영역, Ver 2.0)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - L-IOS 전용. Run Preparation Step 1. IA 화면 이름은 "Check Run Samples"
 - 관련 정책: POL-EQP-003 (Run 버튼), POL-SMP-005, POL-SMP-007, POL-SMP-008, POL-LOD-001, POL-LOD-003

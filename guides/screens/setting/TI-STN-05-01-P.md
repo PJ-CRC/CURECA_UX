@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # TI-STN-05-01-P Create New User
 
-> 기존 화면(작업방 Setting 페이지, 2.1 2차 영역, Ver 2.1.03)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 Setting 페이지, 2.1 2차 영역, Ver 2.1.03)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - 관련 정책: POL-ACC-001, POL-ACC-002, POL-ACC-005, POL-ACC-006 / 임시 정책 PV-0002
 - 다른 프레임: [TI-STN-05-01-P/Case](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=568-58021) (유효성 메시지, SMTP 분기)
@@ -162,6 +162,7 @@ figma_region: 2.1 2차
 | R02 | 디스크립션 | 3 ID 입력 조건에 최대 길이(32자)가 없음. 오류 문구에는 "4-32 characters" | 정책 ID로 참조 (4~32자) | 8월 정책서 아이디 조건 | 대기 |
 | R03 | 디스크립션 | 3 Placeholder "Please enter your ID", 화면 "Please enter a valid ID" | 하나로 통일 | 화면 글자 | 대기 |
 | R04 | 문구 | "symbols (_ , -)" | symbols (_, -) | 표기 | 대기 |
+| R05 | 정책 반영 | 2 User Type 라디오가 User · Admin뿐 | 확인 필요: User Type이 Service인 사용자가 Service 계정을 만들 수 있는지(라디오에 Service를 더하는지), PV-0002 바꾸는 내용 3(Service 계정 최소 1개)과 맞는지. 정해지면 디스크립션에 넣음: 2 User Type 라디오 항목과 Service 항목이 보이는 조건 | PV-0002 영향 화면 (2026-11-05 승인), CA-0003 | 대기 (확인 필요) |
 
 ## 변경 이력
 

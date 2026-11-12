@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # TI-STN-08 Assay Pack Setting
 
-> 기존 화면(작업방 Setting 페이지, 2.1 2차 영역, Ver 0.3.0)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 Setting 페이지, 2.1 2차 영역, Ver 0.3.0)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - T/L 차이: T-IOS는 Import·Delete·Active 변경. L-IOS(LI-STN-08)는 조회만
 - 관련 정책: POL-TST-008
@@ -70,7 +70,7 @@ figma_region: 2.1 2차
 
 | ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| R01 | 화면 정보 | Ver 0.3.0 (화면 Ver 체계 X.Y.ZZ가 아님) | 2.1.ZZ 체계로 | `rules/repository-and-id.md` 6절 | 대기 |
+| R01 | 화면 정보 | Ver 0.3.0 (화면 Ver 체계 X.Y.ZZ가 아님) | 2.1.ZZ 체계로 | `old-rules/repository-and-id.md` 6절 | 대기 |
 | R02 | 화면 정보 | Import file 팝업 TI-STN-08-01이 IA에 없음 | IA에 추가할지 확인 | `ia/ia-screens.csv` | 대기 (확인 필요) |
 
 ## 변경 이력

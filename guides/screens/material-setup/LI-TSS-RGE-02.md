@@ -20,13 +20,13 @@ figma_region: 2.1 2차
 ---
 # LI-TSS-RGE-02 View Trolley Info (Confirm the section)
 
-> 기존 화면(작업방 Material Setup 2.1(2차) 페이지, 2.1 2차 영역, Ver 2.1)을 2026-11-03에 옮긴 것입니다. SH2-MS-얼럿 수정 테스트 페이지에는 이 CID가 없어 2차 페이지에서 옮겼습니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 Material Setup 2.1(2차) 페이지, 2.1 2차 영역, Ver 2.1)을 2026-11-03에 옮긴 것입니다. SH2-MS-얼럿 수정 테스트 페이지에는 이 CID가 없어 2차 페이지에서 옮겼습니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
-- **IA 미등록**: IA v1.15 이후 새로 추가된 화면 (`background/worklist.md`). 다음 IA 버전에서 CID·이름·Type 확인
+- **IA 미등록**: IA v1.15 이후 새로 추가된 화면 (`background/todo.md`). 다음 IA 버전에서 CID·이름·Type 확인
 - L-IOS 전용. Service Mode: 미정. Consumable Trolley의 floor·Tray slot별 남은 Consumable·Reagent와 재사용(Reuse) 상태, 처리 안내를 보는 화면 (기획 프레임 2359px)
 - 관련 정책: (정책 작성 전)
 - 호출하는 화면: LI-TSS-RGE-01 (Finish)
-- 관련: `screen-fixes/LI-TSS-RGE-02-01.md` (Confirm_023 문구 반영 대기 목록). LI-TSS-RGE-02-01 기획 프레임은 두 페이지에서 찾지 못해 이 파일로 옮기지 않음
+- 관련: `old-screen-fixes/LI-TSS-RGE-02-01.md` (Confirm_023 문구 반영 대기 목록). LI-TSS-RGE-02-01 기획 프레임은 두 페이지에서 찾지 못해 이 파일로 옮기지 않음
 - 다른 프레임: 없음 (1920 디자인 프레임 8217:518587, 1280 프레임 8299:129129는 옮기지 않음)
 - 영역: 2차 페이지 전체가 민트색 바 하나(1206:60909) 안에 있음 → 2.1 2차
 
@@ -96,12 +96,12 @@ layout/spacing (8), Description Number (7), Check Box/Square (3), Arrow/Chevron_
 
 | ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| R01 | 화면 정보 | IA 미등록 (CID LI-TSS-RGE-02, 이름 View Trolley Info, 경로 "Confirm the section") | 다음 IA 버전에 등록. 화면 이름을 RGE-01과 구분 | `background/worklist.md` | 대기 (확인 필요) |
+| R01 | 화면 정보 | IA 미등록 (CID LI-TSS-RGE-02, 이름 View Trolley Info, 경로 "Confirm the section") | 다음 IA 버전에 등록. 화면 이름을 RGE-01과 구분 | `background/todo.md` | 대기 (확인 필요) |
 | R02 | 표기 | "Tray section", 경로 "Confirm the section", 제목 "tray section" | Tray slot (다른 화면은 section → slot으로 바꿈) | LI-TSS-CMP-01 세부 정의, LI-TSS-DXI-09 3 | 대기 |
 | R03 | 디스크립션 | "Selecetable" (2번) | Selectable | 오타 | 대기 |
 | R04 | 디스크립션 | 1 Reuse Status(Empty / Selectable / Selected)와 3-2 Slot Status(Empty / Used / Usable(PK) / Usable(IC))가 다르고, 화면 범례의 "Used" 정의 없음 | 상태값 정리 후 `glossary/status-values.csv`에 넣을지 | 화면 글자, 디스크립션 | 대기 (확인 필요) |
 | R05 | 화면 데이터 | "PK/IC Tube Remaining: 48 rxns/72 rxns", Tub "90 rxns", ASL Standard Tube | 품목 표 단위로 (PK Tube 96 rxns/tube, Tub 100 rxns/set 등). ASL Standard Tube는 품목 표에 없음 | `glossary/consumables.csv`, `glossary/pcr-reagents.csv` | 대기 (확인 필요) |
-| R06 | 화면 | "PK/IC Tube handling guide" 2곳과 안내 문구 4줄의 동작(Popup인지) 디스크립션 없음 | 정의. LI-TSS-RGE-02-01이 이 Guide인지 확인 | 화면 글자, `screen-fixes/LI-TSS-RGE-02-01.md` | 대기 (확인 필요) |
+| R06 | 화면 | "PK/IC Tube handling guide" 2곳과 안내 문구 4줄의 동작(Popup인지) 디스크립션 없음 | 정의. LI-TSS-RGE-02-01이 이 Guide인지 확인 | 화면 글자, `old-screen-fixes/LI-TSS-RGE-02-01.md` | 대기 (확인 필요) |
 | R07 | 문구 | "The available PK/IC Tubes is displayed", "Remaining PK/IC Tubes is available" | are | 문법 | 대기 |
 | R08 | 화면 | LNB에 Empty Waste Bin이 없음 (RGE-01에는 있음) | LNB 통일 | LI-TSS-RGE-01 | 대기 |
 | R09 | 화면 | "Cap needed" 표시(Tub) 조건 정의 없음 | LI-TSS-DXI-09 재사용 조건과 연결 | LI-TSS-DXI-09 3 | 대기 (확인 필요) |

@@ -4,7 +4,7 @@
 
 사용자가 실수할 수 있는 지점에 정책에 정의된 안내와 알럿이 있는지 점검하는 기준 자료입니다(헌법 8조). 문구의 원본은 알럿 관리 페이지이며, 이 카탈로그는 그 내용을 옮기고 작업방 화면과 맞춰 본 결과입니다.
 
-> 알럿 체계 재정리 예정 (`background/worklist.md` 작업 9, 2026-11-02): 전체 알럿 케이스를 모아 공통 케이스로 묶고 빠진 알럿을 추가함. 그 전까지 화면 MD의 알럿 정보는 지우지 않고 남기며, 이 카탈로그의 "삭제 (관리 페이지 반영 필요)", "추가 (관리 페이지 반영 필요)" 표시도 그 작업에서 함께 다시 봄.
+> 알럿 체계 재정리 예정 (`background/todo.md` 작업 9, 2026-11-02): 전체 알럿 케이스를 모아 공통 케이스로 묶고 빠진 알럿을 추가함. 그 전까지 화면 MD의 알럿 정보는 지우지 않고 남기며, 이 카탈로그의 "삭제 (관리 페이지 반영 필요)", "추가 (관리 페이지 반영 필요)" 표시도 그 작업에서 함께 다시 봄.
 
 > 알럿 체계 분리 (2026-11-03 결정): Material Setup은 나중에 별도 프로그램으로 쓰일 수 있어 알럿을 일반 메뉴와 나눔. Material Setup 알럿은 MS_Alert_###, MS_Confirm_### 체계로 [alert-catalog-ms.csv](alert-catalog-ms.csv)에 두고, 이 카탈로그는 일반 메뉴만 다룸. 담당자 정책서 MD의 예전 ID(Alert_027·035~047, Confirm_006·026~028)는 이 카탈로그의 같은 번호와 겹치지만, Material Setup이 새 체계를 쓰므로 충돌하지 않음. 이 카탈로그에서 Material Setup 화면(LI-TSS-*)을 쓰는 항목은 작업 9에서 MS 체계로 옮김.
 
@@ -56,6 +56,6 @@
 
 ## 5. 아직 카탈로그에 없는 것
 
-- **ID 없는 화면 안내 문구:** 예) Door Control의 "Cannot unlock while the system is running.", "Locks automatically 5 seconds after the door is closed." 같은 뜻 문구가 두 가지로 쓰인 경우도 있습니다(`glossary/review-v0.md` 화면 정정 대상).
+- **ID 없는 화면 안내 문구:** 예) Door Control의 "Cannot unlock while the system is running.", "Locks automatically 5 seconds after the door is closed." 같은 뜻 문구가 두 가지로 쓰인 경우도 있습니다(`archive/glossary/review-v0.md` 화면 정정 대상).
 - **Toast:** Confirm_026, 029, 030의 동작에 나오는 Toast 문구 ("The selected files have been deleted." 등)
 - **발생 조건의 장비 상태 연결:** 예) Alert_013은 Module이 Running일 때. 장비 상태 정의서와 연결은 다음 단계입니다.

@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # LI-RUN-03 Run Preparation (Check Reagents)
 
-> 기존 화면(작업방 Run/Quick Start 페이지, 2.1 2차 영역, Ver 2.1.13)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 Run/Quick Start 페이지, 2.1 2차 영역, Ver 2.1.13)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - L-IOS 전용. Run Preparation Step 3 (Check Test Protocol을 쓰면 Step 4). IA 화면 이름은 "Check Reagents"
 - 관련 정책: POL-SMP-007, POL-INV-002, POL-INV-003, POL-INV-004, POL-INV-007

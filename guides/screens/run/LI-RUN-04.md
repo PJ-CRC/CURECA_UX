@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # LI-RUN-04 Run Preparation (Check Waste Bin/Bottle)
 
-> 기존 화면(작업방 Run/Quick Start 페이지, 2.1 2차 영역, Ver 2.1.11)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 Run/Quick Start 페이지, 2.1 2차 영역, Ver 2.1.11)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - L-IOS 전용. Run Preparation 마지막 단계 Step 4 (Check Test Protocol을 쓰면 Step 5). v2.1.11에 새로 추가됨
 - 관련 정책: POL-EQP-003 (Run Start 버튼), POL-SMP-007, POL-INV-005

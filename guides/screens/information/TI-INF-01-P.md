@@ -20,7 +20,7 @@ figma_region: 2.1 1차
 ---
 # TI-INF-01-P Release Notes Popup
 
-> 기존 화면(작업방 Profile/Information 페이지, 2.1 1차 영역, Ver 2.0)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 Profile/Information 페이지, 2.1 1차 영역, Ver 2.0)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - IA 화면 이름은 "Release Note"
 - 관련 정책: (정책 작성 전)

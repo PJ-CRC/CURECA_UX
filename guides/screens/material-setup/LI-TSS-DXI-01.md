@@ -20,7 +20,7 @@ figma_region: SH2-MS 얼럿 수정 테스트 (2026-11-03 기준)
 ---
 # LI-TSS-DXI-01 STAT storage
 
-> 기존 화면(작업방 SH2-MS-얼럿 수정 테스트 페이지, Ver 2.0)을 2026-11-03에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 SH2-MS-얼럿 수정 테스트 페이지, Ver 2.0)을 2026-11-03에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - L-IOS 전용. Service Mode: Console Mode. Sample Preparation의 STAT Storage에 Sample Socket 적재 (v2.1.05 "STAT Storage 검체 Only 적재")
 - 관련 정책: POL-SMP-008 (`cids`에 있음), POL-MAT-002, POL-MAT-004, POL-LOD-002, POL-LOD-003

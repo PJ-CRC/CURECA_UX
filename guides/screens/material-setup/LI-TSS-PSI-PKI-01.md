@@ -20,7 +20,7 @@ figma_region: SH2-MS 얼럿 수정 테스트 (2026-11-03 기준)
 ---
 # LI-TSS-PSI-PKI-01 Check the PK/IC tube
 
-> 기존 화면(작업방 SH2-MS-얼럿 수정 테스트 페이지, Ver 2.0)을 2026-11-03에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 SH2-MS-얼럿 수정 테스트 페이지, Ver 2.0)을 2026-11-03에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - L-IOS 전용. Service Mode: TSS Mode. Load PK/IC Tubes Step 1. LI-TSS-PSI-01에서 Trolley를 고르면 보이는 필요 수량 확인 화면 ([Skip]이면 이 화면 없이 PKI-02)
 - 관련 정책: POL-INV-007 (`cids`에 있음), POL-MAT-008

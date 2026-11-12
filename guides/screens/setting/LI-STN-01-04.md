@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # LI-STN-01-04 Analyze Breakpoint
 
-> 기존 화면(작업방 Setting 페이지, 2.1 2차 영역, Ver 2.0)을 2026-11-02에 옮긴 것입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 Setting 페이지, 2.1 2차 영역, Ver 2.0)을 2026-11-02에 옮긴 것입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - 관련 정책: POL-TST-004
 

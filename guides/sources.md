@@ -7,8 +7,8 @@ Claude가 근거로 읽는 자료의 목록입니다. 이 목록 밖의 자료�
 | 자료 | 기준 출처 | 비고 |
 | --- | --- | --- |
 | Common UX | **팀 프로그램 UX 문서 › UX가이드에서 "적용"한 가이드 문서(MD)** (원본). 한 벌만 둠(모바일 등 다른 대상은 다른 가이드를 적용). 반영 대상 Figma: [UX-AI-TEST > Common UX - PC](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=355-53300) (예전 이름 DY common UX, COMM-0 ~ COMM-5) | 2026-11-05 사용자 결정: 적용된 가이드 문서가 원본이자 최신본이고, 가이드를 고친 뒤 Figma Common UX 페이지에 반영함. Figma 페이지는 원본이 아님. 지금 적용된 가이드는 "CURECA UX 가이드"(`g20261028-brex-06-J003`, SH.L TEST › Connon UX에서 옮김)로, 5장 번호 · 일부 내용이 Figma Common UX - PC(V2.2.00)와 다름 → 가이드를 맞출 것(`common-ux/common-policy-candidates.md`). 고칠 곳은 `common-ux/feedback.md` |
-| 화면 | [1-2. CURECA 기획 디자인 작업방 Part.2](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/1-2.-CURECA_%EA%B8%B0%ED%9A%8D-%EB%94%94%EC%9E%90%EC%9D%B8-%EC%9E%91%EC%97%85%EB%B0%A9-Part.2-?node-id=1-11) 메뉴별 페이지 12개: Login, Dashboard, Event History, Run/Quick Start, Test Management, Sample Tracking, Instrument, Inventory, Statistical Analysis, Profile / Information, Setting, Material Setup(2차) | Material Setup(1차) 페이지는 근거로 쓰지 않음. 같은 CID가 2.1 1차·2차 영역에 함께 있으면 2차(민트색) 영역 화면이 최신 (`rules/figma-sync.md` 1절) |
-| 화면 (신규 작업방) | Figma `eCzV8BJIXt1MGdKr3S4fgI` (2026-11-03 만듦) | 새로 그린 메뉴(`_menu.md`의 `redrawn`이 있는 메뉴)는 이 파일과 화면 MD가 기준. 위 기존 작업방은 이행 기간에 아직 새로 그리지 않은 메뉴만 읽음 (`rules/screen-spec.md` 0절) |
+| 화면 | [1-2. CURECA 기획 디자인 작업방 Part.2](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/1-2.-CURECA_%EA%B8%B0%ED%9A%8D-%EB%94%94%EC%9E%90%EC%9D%B8-%EC%9E%91%EC%97%85%EB%B0%A9-Part.2-?node-id=1-11) 메뉴별 페이지 12개: Login, Dashboard, Event History, Run/Quick Start, Test Management, Sample Tracking, Instrument, Inventory, Statistical Analysis, Profile / Information, Setting, Material Setup(2차) | Material Setup(1차) 페이지는 근거로 쓰지 않음. 같은 CID가 2.1 1차·2차 영역에 함께 있으면 2차(민트색) 영역 화면이 최신 (`old-rules/figma-sync.md` 1절) |
+| 화면 (신규 작업방) | Figma `eCzV8BJIXt1MGdKr3S4fgI` (2026-11-03 만듦) | 새로 그린 메뉴(`_menu.md`의 `redrawn`이 있는 메뉴)는 이 파일과 화면 MD가 기준. 위 기존 작업방은 이행 기간에 아직 새로 그리지 않은 메뉴만 읽음 (`old-rules/screen-spec.md` 0절) |
 | 정책서 | 같은 작업방의 정책서_2026.08.28 페이지 | 정책서 현행화 전까지 기준. 화면 디스크립션에 흩어진 정책도 함께 정제 예정 |
 | Service Mode | [COMM-3-a(2/2) Base Frame Area](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=877-2623) | `policy/service-mode.md`로 옮김 |
 | IA | Google 스프레드시트 [CURECA_Part2_IA](https://docs.google.com/spreadsheets/d/1HsK_OPhyVFUDSCNPL1J3pTOFIKs3a-GmsY1buLjzR88/edit) (IA-T-IOS, IA-L-IOS, IA-문서이력 탭). 받은 사본 `ia/CURECA_Part2_IA_v1.15.xlsx` (v1.15, 2026-10-29) | Claude가 읽는 표는 `ia/ia-screens.csv`. IA-T-IOS, IA-L-IOS 시트만 옮김 (참고) Part1 시트 제외) |
@@ -26,4 +26,4 @@ Claude가 근거로 읽는 자료의 목록입니다. 이 목록 밖의 자료�
 
 - 이 저장소가 정리한 기준 자료(용어집, 상태값 표, 정책, 기준 자료 파일)가 항상 최신 기준입니다.
 - 위 목록의 외부 원본은 기준 자료의 출처입니다. 기준 자료의 근거 칸에는 인용한 원본 위치(문서, 버전, 시트·프레임)를 적습니다.
-- 외부 원본의 새 버전이 오면 바로 덮어쓰지 않고, 이 저장소 기준에서 바뀐 점을 확인한 뒤 합의한 것만 반영합니다. 애매하면 근거 칸의 인용을 따라가 확인합니다(`rules/claude-work.md` 10절).
+- 외부 원본의 새 버전이 오면 바로 덮어쓰지 않고, 이 저장소 기준에서 바뀐 점을 확인한 뒤 합의한 것만 반영합니다. 애매하면 근거 칸의 인용을 따라가 확인합니다(`old-rules/claude-work.md` 10절).

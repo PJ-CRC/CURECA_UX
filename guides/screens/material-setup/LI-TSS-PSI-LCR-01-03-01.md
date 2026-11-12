@@ -20,7 +20,7 @@ figma_region: SH2-MS 얼럿 수정 테스트 (2026-11-03 기준)
 ---
 # LI-TSS-PSI-LCR-01-03-01 STEP 1. Guide
 
-> 기존 화면(작업방 SH2-MS-얼럿 수정 테스트 페이지, Ver 2.0)을 2026-11-03에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 SH2-MS-얼럿 수정 테스트 페이지, Ver 2.0)을 2026-11-03에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - L-IOS 전용. Service Mode: TSS Mode. LI-TSS-PSI-LCR-01-03의 [Step 1. Guide] 또는 데이터 없는 Socket/Frame 스캔 시 자동으로 여는 안내 Popup (Standard tube Guide, Tub Guide 2장)
 - 관련 정책: POL-MAT-007

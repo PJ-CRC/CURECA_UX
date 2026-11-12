@@ -1,11 +1,11 @@
 # 다국어 화면 그리는 방식 안 (보류 중)
 
-> 상태: 안 정리, 보류 (2026-11-05). `rules/screen-spec.md` 7절 6번 "다국어"의 안입니다. 사용자가 잠시 보류함. 다시 시작하면 이 안부터 봅니다.
+> 상태: 안 정리, 보류 (2026-11-05). `old-rules/screen-spec.md` 7절 6번 "다국어"의 안입니다. 사용자가 잠시 보류함. 다시 시작하면 이 안부터 봅니다.
 
 ## 지금 정해진 것
 
-- 화면마다 영어 화면(고객용)과 최장 언어 화면(디자이너용)을 둠 (`rules/language-set.md` 3절)
-- 프레임 이름 `CID / 최장 언어`, CID 섹션 안 기획 프레임 아래 (`rules/screen-spec.md` 5절)
+- 화면마다 영어 화면(고객용)과 최장 언어 화면(디자이너용)을 둠 (`old-rules/language-set.md` 3절)
+- 프레임 이름 `CID / 최장 언어`, CID 섹션 안 기획 프레임 아래 (`old-rules/screen-spec.md` 5절)
 - 언어셋에 없는 문구는 번역 요청 목록에 올리고, 최장 언어 화면에서는 영어 그대로 "번역 대기"
 
 ## 현실 조건
@@ -25,4 +25,4 @@
 
 ## 정하면 바꿀 곳
 
-`rules/language-set.md` 3 · 4 · 6절, `rules/screen-spec.md` 2 · 5 · 6절, `templates/screen.md`
+`old-rules/language-set.md` 3 · 4 · 6절, `old-rules/screen-spec.md` 2 · 5 · 6절, `templates/screen.md`

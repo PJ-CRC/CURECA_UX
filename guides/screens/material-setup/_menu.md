@@ -43,12 +43,12 @@ delivered_date:
 ## 빠진 CID와 IA 차이
 
 - **LI-TSS-PSI-01-01 (IA "Loading", Popup):** 두 페이지에서 기획 프레임을 찾지 못함 (이름·"Loading" 글자 검색). 2차 페이지에는 1280 프레임만 있음. 내용은 LI-TSS-PSI-01 디스크립션 (3-1) "Please wait / This may take a few minutes. / OK"에 있음. 파일을 만들지 않음
-- **LI-TSS-RGE-01, LI-TSS-RGE-02 (View Trolley Info):** IA v1.15에 없음 (`flags: [IA 미등록]`). `screen-fixes/LI-TSS-RGE-02-01.md`의 LI-TSS-RGE-02-01은 기획 프레임을 찾지 못해 그대로 둠
+- **LI-TSS-RGE-01, LI-TSS-RGE-02 (View Trolley Info):** IA v1.15에 없음 (`flags: [IA 미등록]`). `old-screen-fixes/LI-TSS-RGE-02-01.md`의 LI-TSS-RGE-02-01은 기획 프레임을 찾지 못해 그대로 둠
 - **IA에 없는 이동 대상:** LI-TSS-PSI 1-5 "[LI-TSS-PSI-LMM]" (IA 첫 화면은 LI-TSS-PSI-LMM-01)
 - **화면 이름이 IA와 다른 곳:** CMP-01 (remove/delete), SAM-01-04·02-03·03-03 ("scan" 빠짐), LCR-01-01 (consumables/reagents), LCR-01-03 (socket → consumables/reagents), LCR-01-04 (socket → tray), LCR-02-02·02-03 ("Prepare Carrier(2/3)", "(3/3)"), PSI-SAM ("Load samples")
 - **IA Type:** LI-TSS-DXI-07은 IA Popup이지만 기획 화면은 LNB가 있는 페이지 형태
 - LI-TSS-WBM-P 이름의 프레임 2개(5050:422892, 5127:123497)는 Door Control Popup 내용 (LI-TSS-WBM-P 반영 대기 목록 2)
-- 이 메뉴의 정책 후보와 질문은 `background/screen-md-notes-ms.md`
+- 이 메뉴의 정책 후보와 질문은 `archive/background/screen-md-notes-ms.md`
 
 ## 상태 이력
 

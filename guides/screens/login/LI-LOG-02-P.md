@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # LI-LOG-02-P Account Locked
 
-> 기존 화면(작업방 Login 페이지, 2.1 2차 영역, Ver 2.1.01)을 2026-11-02에 옮긴 것입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 Login 페이지, 2.1 2차 영역, Ver 2.1.01)을 2026-11-02에 옮긴 것입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - 관련 정책: POL-ACC-007
 

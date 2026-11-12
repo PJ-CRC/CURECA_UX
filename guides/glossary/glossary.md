@@ -28,7 +28,7 @@
   - 예: "Module의 Unit이 Error 상태일 때 [Initialize] 버튼은 비활성화된다."
   - 예: "Sample이 Not Tested 상태이면 해당 Trolley에서 다시 Run을 시작할 수 없다."
 - 예외: 용어집에서 한국어를 표준어로 정한 말(예: 장비 통합 상태, 언어셋, 임시 정책)은 한국어로 씁니다.
-- 화면 설계(UX 화면)는 영어로 합니다(`rules/language-set.md`).
+- 화면 설계(UX 화면)는 영어로 합니다(`old-rules/language-set.md`).
 
 ## 표준어를 정하는 기준
 
@@ -50,10 +50,10 @@
 | 버튼·라벨 대소문자 | (주간 미팅에서 결정) | 협의 대기 PD-0001 |
 | Consumable 수량: `{수량} ea ({n} {단위})`. 낱개 입고는 `{수량} ea` | 96 ea (1 rack), 480 ea (5 racks), 3 ea | Common UX COMM-4-b |
 | Reagent 수량: `{quantity} {baseUnit} ({n} {packagingUnit})` | 100 rxns (1 tube), 192 rxns (2 DWPs), 384 rxns (4 sets) | Common UX COMM-4-b |
-| Reagent 수량의 T 표기는 쓰지 않고 rxns로 씁니다 | 100T (1 rack) → 100 rxns (1 rack) | 2026-10-30 결정 |
+| Reagent 수량의 T 표기는 쓰지 않고 rxns로 씁니다 | 96T → 96 rxns, 100T (1 rack) → 100 rxns (1 rack) | 2026-10-30 결정, Teams 글 2026-11-06 T05 |
 | 화면 표기 Idle은 Ready로 씁니다 (고객 결정으로 변경). 검사 장치 상태의 코드명은 Idle 그대로 | Idle → Ready (UI 표기) | 2026-10-30 결정, 2026-11-02 확인 |
 | 단위는 1개면 단수, 2개 이상이면 뒤에 s | 1 rack / 2 racks, 1 DWP / 2 DWPs | Common UX COMM-4-b |
-| Tip 용량은 숫자와 μL 사이를 띄어 씁니다 | 1000 μL Tip, 300 μL Tip | Common UX COMM-4-b |
+| μL이 들어간 모든 이름은 숫자와 μL 사이를 띄어 씁니다 | 1000 μL Tip, 300 μL Tip Storage (1) | Common UX COMM-4-b, Teams 글 2026-11-06 T05 |
 | 위치는 `Module (Index) > Storage Unit` | {Module 이름} ({번호}) > {Storage Unit 이름} | Run·Inventory 디스크립션, 이름 (번호) 규칙 |
 | 상태값을 쓸 때는 어느 단계의 상태인지 함께 씁니다 | "장비 모듈 상태가 Paused일 때" | [status-values.csv](status-values.csv) |
 

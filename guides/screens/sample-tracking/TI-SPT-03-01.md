@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # TI-SPT-03-01 PCR Plate Details
 
-> 기존 화면(작업방 Sample Tracking 페이지, 2.1 2차 영역, Ver 2.0)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 Sample Tracking 페이지, 2.1 2차 영역, Ver 2.0)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - IA 화면 이름은 "Details", Type은 Popup. 화면은 PCR Plate 목록 오른쪽에서 밀려 나오는 상세 영역
 - 96-DWP Details(TI-SPT-02-01)와 같은 구조에 대조군·검사 항목 범례와 Kit 열이 더 있음

@@ -20,7 +20,7 @@ figma_region: SH2-MS 얼럿 수정 테스트 (2026-11-03 기준)
 ---
 # LI-TSS-CMP-01 Select positions to remove (Remove 공통 Popup)
 
-> 기존 화면(작업방 SH2-MS-얼럿 수정 테스트 페이지, Ver 2.1.03)을 2026-11-03에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 SH2-MS-얼럿 수정 테스트 페이지, Ver 2.1.03)을 2026-11-03에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - L-IOS 전용. Material Setup 각 적재 화면의 [Remove]에서 여는 공통 Popup (IA 비고 "Material Setup > Reset 화면 공통 사용 팝업"). IA 위치는 Group Lots > Group Universal Cartridge Kit > Scan for Lot grouping 아래
 - Service Mode: TSS Mode(Group Lots·Prepare Carrier)와 Console Mode(Load Materials) 양쪽에서 씀

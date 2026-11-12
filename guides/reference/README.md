@@ -10,4 +10,4 @@
 | --- | --- |
 | `customer/` | 고객사가 넘겨주는 상태 정보, 시약 정보 파일 |
 
-> 상태: 파일 형식과 갱신 주기 확인 필요 (`background/worklist.md`).
+> 상태: 파일 형식과 갱신 주기 확인 필요 (`background/todo.md`).

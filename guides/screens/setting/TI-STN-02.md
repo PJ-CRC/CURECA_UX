@@ -20,7 +20,7 @@ figma_region: 2.1 1차
 ---
 # TI-STN-02 System Setting
 
-> 기존 화면(작업방 Setting 페이지, 2.1 1차 영역, Ver 2.1.03)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 Setting 페이지, 2.1 1차 영역, Ver 2.1.03)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - T/L 차이: L-IOS(LI-STN-02)에는 Export / Import Location이 남아 있음
 - 관련 정책: POL-ACC-008, Log Management는 SYS 정책
@@ -114,7 +114,7 @@ figma_region: 2.1 1차
 | R03 | 정책 반영 | Session Timeout 기본 On/Off가 없음, Ready·Not Initialized일 때만 적용한다는 조건이 없음 | 기본 Off, 장비 통합 상태가 Ready·Not Initialized일 때만 적용 | POL-ACC-008 | 대기 |
 | R04 | 문구 | "Automatically locks the system after a period of inactivity." (디스크립션은 자동 로그아웃) | 로그아웃 뜻으로 문구 정리 | 디스크립션 2 | 대기 |
 | R05 | 정책 반영 | 계정 잠금 해제 시간 설정 항목이 화면에 없음 (Account Locked 화면은 "관리자가 설정한 제한 시간") | 설정 항목 두지 않음 (잠금 시간 5분 고정) | POL-ACC-007 | 제외 (2026-11-04, 바꿀 것 칸 참고) |
-| R06 | 화면 글자 | 단위 "분" (한국어) | min 등 영어 표기 | `rules/language-set.md` | 대기 |
+| R06 | 화면 글자 | 단위 "분" (한국어) | min 등 영어 표기 | `old-rules/language-set.md` | 대기 |
 | R07 | 디스크립션 | 6-2 "L only ... USB 저장 팝업" (T-IOS 화면에 L-IOS 동작) | T-IOS 동작만 남김 | 디스크립션 | 대기 |
 | R08 | 정책 반영 | 1 Language "현재 기준, English만 제공" | 6개 언어(영어, 한국어, 포르투갈어, 스페인어, 이탈리아어, 프랑스어) 중 선택, 기본 English | POL-COM-004 | 제외 (2026-11-04, R10으로 대체) |
 | R09 | 정책 반영 | 6-2 [Export] "전체 로그를 하나의 파일로 Packaging 하여 지정된 폴더 경로에 저장" | 디스크립션에는 고른 기간의 Log를 내려받는다고만 적음. 파일 형식·구성은 정하지 않음 (Service User Type이 장비 파악에 쓰는 자료, 개발에서 묶어 내보냄) | POL-SYS-004 규칙 2 | 대기 |

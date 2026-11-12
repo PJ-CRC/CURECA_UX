@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # TI-STA-06-01 Instrument Error Rate - Chart
 
-> 기존 화면(작업방 Statistical Analysis 페이지, 2.1 2차 영역, Ver 2.1.03)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 Statistical Analysis 페이지, 2.1 2차 영역, Ver 2.1.03)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - T-IOS 전용 메뉴. Error Rate Trend Tab은 Service에게만 보임 (디스크립션 1, `policy/permission-matrix.csv` Instrument Error Rate 표시). Figma 경로는 "Statistical Analysis > Instrument"
 - 관련 정책: POL-STA-001, POL-STA-002, POL-STA-003, POL-STA-006, POL-EQP-010, POL-COM-006
@@ -134,7 +134,7 @@ Description Number (10), Square (6), 1 Depth (6), 2 Depth (5), Form/CheckBox (5)
 | R06 | 화면 정보 | 케이스 프레임 이름은 TI-STA-06-01/Case, 패널 CID는 "TI-STA-05-01/Case" | TI-STA-06-01/Case | Figma 화면 정보 | 대기 |
 | R07 | 화면 정보 | TI-STA-05(Test Forecasting)와 CID 계층이 겹침 ("TI-STA-05_Skeleton" 참조 포함), Figma 경로와 IA 경로가 다름 | TI-STA-05-01 반영 대기 목록 1, 2와 같음 | `ia/change-requests.md` 1·2 | 대기 |
 | R08 | 표기 | 차트 범례 "Prep Consumable / Storage(1)" (줄바꿈), "Prep Consumable Storage(1)" | Prep Consumable Storage (1) | `glossary/terms.csv` Module | 대기 |
-| R09 | 디스크립션 | "장비 별", "에러율" | Module / Unit, Error Rate | `glossary/terms.csv`, `screen-fixes/README.md` | 대기 |
+| R09 | 디스크립션 | "장비 별", "에러율" | Module / Unit, Error Rate | `glossary/terms.csv`, `old-screen-fixes/README.md` | 대기 |
 | R10 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
 
 ## 변경 이력

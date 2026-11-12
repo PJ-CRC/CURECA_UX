@@ -39,7 +39,7 @@ replaced_by:
 
 ## 예외
 
-- [Next] 버튼을 스캔 화면에서 뺄지는 팀 논의 중 (`pending/PD-0004.md`)
+- [Next] 버튼을 스캔 화면에서 뺄지는 팀 논의 중 (`old-pending/PD-0004.md`)
 
 ## 근거
 

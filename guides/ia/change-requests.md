@@ -1,6 +1,6 @@
 # IA 수정 요청
 
-> IA 수정 요청을 모읍니다. 요청한 사람이 확정하고, IA 스프레드시트와 IA-문서이력에 그 사람 이름으로 남깁니다(따로 정한 IA 담당자는 없음, 2026-11-04). 화면 설계 중 새로 필요한 CID도 여기에 "새 CID"로 올립니다(`rules/repository-and-id.md` 2절 "새 CID 만들기"). 다음 IA 버전에 반영되면 `ia-screens.csv`를 다시 만들고, 이 표의 상태를 "반영"으로 바꾼 뒤 관련 정책·화면 MD의 CID를 고칩니다.
+> IA 수정 요청을 모읍니다. 요청한 사람이 확정하고, IA 스프레드시트와 IA-문서이력에 그 사람 이름으로 남깁니다(따로 정한 IA 담당자는 없음, 2026-11-04). 화면 설계 중 새로 필요한 CID도 여기에 "새 CID"로 올립니다(`old-rules/repository-and-id.md` 2절 "새 CID 만들기"). 다음 IA 버전에 반영되면 `ia-screens.csv`를 다시 만들고, 이 표의 상태를 "반영"으로 바꾼 뒤 관련 정책·화면 MD의 CID를 고칩니다.
 >
 > 상태: `요청 전` → `요청함` → `확정 (확정 CID, 확정한 사람, 날짜)` → `반영 (IA 버전)`. 받아들이지 않으면 `반려 (이유)`.
 
@@ -10,6 +10,6 @@
 | 2 | Test Forecasting CID | TI-STA-05 (Instrument Run-time TI-STA-05-01·05-02와 계층이 겹침) | TI-STA-09 | 2026-11-03 사용자 답변 (ST1) | 2026-11-03 | 요청 전 |
 | 3 | 소모품·시약 사용량 통계 이름 | "소모품 및 시약 사용량 - Chart / Table" (TI-STA-07-01·07-02) | 중메뉴 이름 Inventory (Figma 기준). 화면 이름은 Usage & Cost Trend - Chart / Table | 2026-11-03 사용자 답변 (ST1) | 2026-11-03 | 요청 전 |
 | 4 | Event 통계 이름 | "Event 통계 - Chart / Table" (TI-STA-08-01·08-02) | 중메뉴 Event 아래 Event Trend - Chart / Table (Figma 기준) | ST1 답변에 따른 정리 (메뉴 구조를 Figma에 맞춤) | 2026-11-03 | 요청 전 (확인 필요) |
-| 5 | Material Setup 새 화면 | 없음 | LI-TSS-RGE-01, LI-TSS-RGE-02 추가 | 작업방 Material Setup 2차 페이지 (2026-11-02 확인) | 2026-11-03 | 요청 전 |
-| 6 | Dashboard(All) 메뉴 이름 | "Dashboard (All)" (괄호 앞 띄어 씀) | "Dashboard(All)" | 2026-11-04 사용자 결정 | 2026-11-04 | 요청 전 |
-| 7 | 새 CID: UV Sterilization 팝업 | 없음 | L-IOS Instruments 아래 Popup `LI-INS-01-01-P` (UV Sterilization Popup) 추가 제안. 짝 CID 없음(T-IOS 필요 여부 확인 필요) | Workbench R030(최고관리자): Sample Preparation만 UV 살균 버튼 → 팝업으로 On/Off · 작동 시간 1~60분 설정. [LI-INS-01-T] Overview와 [LI-INS-02-T] Sample Preparation 상세에서 열림 | 2026-11-06 | 요청 전 |
+| 5 | Material Setup 새 화면 | 없음 | LI-TSS-RGE-01, LI-TSS-RGE-02 추가 | 작업방 Material Setup 2차 페이지 (2026-11-02 확인) | 2026-11-03 | 반영 (v1.15, 하승현). 문서이력에 화면 ID 기재 (v1.16, 서보경) |
+| 6 | Dashboard(All) 메뉴 이름 | "Dashboard (All)" (괄호 앞 띄어 씀) | "Dashboard(All)" | 2026-11-04 사용자 결정 | 2026-11-04 | 반영 (시트 확인 2026-11-10: "Dashboard(All)") |
+| 7 | Test Order 새 팝업 (새 CID) | 없음 | TI-TMG-01-P Resend Results to LIS (Popup, T-IOS 전용, 짝 CID 없음) | 2026-11-10 사용자 요청 (작성자 정다예) | 2026-11-10 | 반영 (v1.16, 정다예) |

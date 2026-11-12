@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # LI-SPT-01-03 Protocol Info - Extraction Protocol
 
-> 기존 화면(작업방 Sample Tracking 페이지, 2.1 2차 영역, Ver 2.1.02)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 Sample Tracking 페이지, 2.1 2차 영역, Ver 2.1.02)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - Figma 프레임 이름이 "LI-SPT-01-02" (화면 정보 CID는 LI-SPT-01-03)
 - 관련 정책: (정책 작성 전)

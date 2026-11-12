@@ -20,7 +20,7 @@ figma_region: SH2-MS 얼럿 수정 테스트 (2026-11-03 기준)
 ---
 # LI-TSS-DXI-02 DWP/Spin Tip storage
 
-> 기존 화면(작업방 SH2-MS-얼럿 수정 테스트 페이지, Ver 2.0)을 2026-11-03에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 SH2-MS-얼럿 수정 테스트 페이지, Ver 2.0)을 2026-11-03에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - L-IOS 전용. Service Mode: Console Mode. High-throughput Extraction의 WB1·WB2·EB·MB·Spin Tip Storage에 DWP/Spin Tip 적재
 - 관련 정책: POL-EQP-006 (`cids`에 있음), POL-MAT-002, POL-MAT-004, POL-LOD-002
@@ -186,7 +186,7 @@ Description Number (8), Frame (1), Accordion/Default (1), Tool Tip/Default (1), 
 | R04 | 디스크립션 | 2 Case 2 "DWP or Spin tip 외, 스캔 시" 아래에 MS_Alert_027(다른 Storage 코드)만 있음. 다른 품목(예: WB1 Storage에 EB DWP) 스캔 케이스 없음 | Storage와 맞지 않는 품목 스캔 알럿(MS_Alert_001 등) 정의 | 세부 정의 출력명 표 | 대기 (확인 필요) |
 | R05 | 화면 | 버튼 이름: 화면 "Required Quantity", 세부 정의 "Inventory" | 하나로 통일 | 세부 정의 8313:138847 | 대기 (확인 필요) |
 | R06 | 화면 | 카운터 "02/12"와 "N/M"이 겹쳐 있음 | 하나만 | 디스크립션 3 | 대기 |
-| R07 | 표기 | 세부 정의 표기 "96T (1 DWP)", "100T (1 set)", "200T (2 sets)" | rxns 단위 (T → rxns, LCR-01-03 세부 정의는 이미 rxns). 품목 표: DWP 96 rxns/DWP, PCR 100 rxns/set | `glossary/consumables.csv`, `glossary/pcr-reagents.csv`, `background/worklist.md` "T → rxns" | 대기 |
+| R07 | 표기 | 세부 정의 표기 "96T (1 DWP)", "100T (1 set)", "200T (2 sets)" | rxns 단위 (T → rxns, LCR-01-03 세부 정의는 이미 rxns). 품목 표: DWP 96 rxns/DWP, PCR 100 rxns/set | `glossary/consumables.csv`, `glossary/pcr-reagents.csv`, `archive/background/worklist.md` "T → rxns" | 대기 |
 | R08 | 표기 | 세부 정의 "BB TUB, WB1 TUB…", "Stoage Unit 명", "펼힘", "스케쥴링", "300 μL Tip Storage(1)" | BB Tub, WB1 Tub…, Storage Unit 이름, 펼침, 스케줄링, 300 μL Tip Storage (1) | `glossary/consumables.csv`, 오타 | 대기 |
 | R09 | 화면 데이터 | PCR Reagent 약칭 "RP1, PB, GI-B1…" | 품목 표 구성품·제품 이름 기준 표기 방식 정함 | `glossary/pcr-reagents.csv` | 대기 (확인 필요) |
 | R10 | 디스크립션 | 2 "Scan the reagent before scanning…" (Spin Tip 포함) | 대상 이름 확인 | 디스크립션 2 | 대기 |

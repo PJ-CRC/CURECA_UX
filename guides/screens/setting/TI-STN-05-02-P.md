@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # TI-STN-05-02-P Account Created
 
-> 기존 화면(작업방 Setting 페이지, 2.1 2차 영역, Ver 2.1.03)을 2026-11-02에 옮긴 것입니다. 같은 CID에 Ver 1.1 프레임(568:57953)도 있어 Ver 2.1.03 프레임을 옮겼습니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 Setting 페이지, 2.1 2차 영역, Ver 2.1.03)을 2026-11-02에 옮긴 것입니다. 같은 CID에 Ver 1.1 프레임(568:57953)도 있어 Ver 2.1.03 프레임을 옮겼습니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - 관련 정책: POL-ACC-001, POL-ACC-002, POL-ACC-005, POL-ACC-006 / 임시 정책 PV-0002
 - 다른 프레임: [TI-STN-05-02-P/Case](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=568-58762) (SMTP 미연동, 이메일 미입력, 메일 전송 실패)

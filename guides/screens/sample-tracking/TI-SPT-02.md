@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # TI-SPT-02 96-DWP
 
-> 기존 화면(작업방 Sample Tracking 페이지, 2.1 2차 영역, Ver 2.1.11)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 Sample Tracking 페이지, 2.1 2차 영역, Ver 2.1.11)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - T/L 차이: IA는 짝 화면 동일(Y). 디스크립션 3 [Export] 설명이 L-IOS(LI-SPT-02)와 다름
 - 관련 정책: POL-SMP-002, POL-SMP-005, POL-SMP-010, POL-COM-006

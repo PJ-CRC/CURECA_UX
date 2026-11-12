@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # TI-SPT-02-01 96-DWP Details
 
-> 기존 화면(작업방 Sample Tracking 페이지, 2.1 2차 영역, Ver 2.0)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 Sample Tracking 페이지, 2.1 2차 영역, Ver 2.0)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - IA 화면 이름은 "Details", Type은 Popup. 화면은 96-DWP 목록 오른쪽에서 밀려 나오는 상세 영역
 - 관련 정책: (정책 작성 전)
@@ -155,7 +155,7 @@ figma_region: 2.1 2차
 | R03 | 디스크립션 | 2-2 "비선택Unselected", 3 "Sample가" | Unselected, Sample이 | 오타 | 대기 |
 | R04 | 디스크립션 | 1-2 "검사 수행 장비명", "Module명", "해당 단계 장치" | Module 이름 (번호) 표기 기준으로 | `glossary/terms.csv` Module | 대기 |
 | R05 | 디스크립션 | 3 이동 화면을 "[Samples] 메뉴"로만 적음 | TI-SPT-01 (상세 TI-SPT-01-01 펼침) | `ia/ia-screens.csv` | 대기 |
-| R06 | 디스크립션 | 3 안내 문구 "Please select a sample from the Plate." | 언어셋 ID로 관리 | `rules/language-set.md` | 대기 (확인 필요) |
+| R06 | 디스크립션 | 3 안내 문구 "Please select a sample from the Plate." | 언어셋 ID로 관리 | `old-rules/language-set.md` | 대기 (확인 필요) |
 
 ## 변경 이력
 

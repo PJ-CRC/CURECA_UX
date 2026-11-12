@@ -1,6 +1,6 @@
 # User Type 권한
 
-> 상태: v1.0 초안 완료 (2026-10-30). 30행 모두 확정. 데이터: [permission-matrix.csv](permission-matrix.csv). 출처: 정책서_2026.08.28, 작업방 화면 디스크립션, Common UX COMM-3-a(1/2), `background/rules-review-draft.md` 권한 매트릭스 초안
+> 상태: v1.0 초안 완료 (2026-10-30). 30행 모두 확정. 데이터: [permission-matrix.csv](permission-matrix.csv). 출처: 정책서_2026.08.28, 작업방 화면 디스크립션, Common UX COMM-3-a(1/2), `archive/background/rules-review-draft.md` 권한 매트릭스 초안
 
 ## 1. User Type
 

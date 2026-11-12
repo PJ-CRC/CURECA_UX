@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # TI-ADS Dashboard(All)
 
-> 기존 화면(작업방 Dashboard 페이지, 2.1 2차 영역, Ver 2.1.14)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 Dashboard 페이지, 2.1 2차 영역, Ver 2.1.14)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - 관련 정책: POL-COM-005 (여러 대 CURECA, 2대 이상 고객만), POL-EQP-001 (Instrument Status), POL-EQP-009 (Instrument Info의 Enabled Module 수), POL-SMP-009
 - 호출하는 화면: Edit Display Name Popup (TI-ADS-P), 각 CURECA의 Dashboard (TI-DAS)

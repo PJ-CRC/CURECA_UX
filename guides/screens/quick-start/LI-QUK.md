@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # LI-QUK Quick Start
 
-> 기존 화면(작업방 Run/Quick Start 페이지, 2.1 2차 영역, Ver 2.1.11)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 Run/Quick Start 페이지, 2.1 2차 영역, Ver 2.1.11)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - L-IOS 전용. Run Preparation 단계(LI-RUN-01 ~ LI-RUN-04) 대신 요약 Popup 하나로 확인하고 검사 실행. 진입 경로는 LNB > Quick Start, Test Status > Quick Start
 - 관련 정책: POL-EQP-003 (Quick Start 버튼 활성 조건), POL-SMP-005, POL-SMP-007, POL-INV-002, POL-INV-003, POL-INV-005

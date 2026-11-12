@@ -20,7 +20,7 @@
 | 8 | COMM-2-b, COMM-3-a(1/2) | "사용자 권한별", "사용자 유형", "Service 계정" | User Type, Service User Type | 가이드 · Figma | 용어집 | 전달 전 |
 | 9 | 모든 프레임 머리 | 화면 정보 Ver 2.0.01, Date YYYY.MM.DD | Revision History의 V2.2.00, 2026-10-30과 맞춤 | Figma | Revision History | 전달 전 |
 | 10 | COMM-2-a GNB / LNB | T-IOS LNB "All Dashboard" | Dashboard(All) | 가이드 · Figma | 2026-11-04 사용자 결정, 용어집 | 전달 전 |
-| 11 | COMM-4-a(1/4) Module명 | `ModuleType(index)`, 예 `Sample Storage(1)` | 이름과 번호 사이 띄어 씀 `Sample Storage (1)` | 가이드 · Figma | 용어집(2026-10-30 결정), 내부 논의 `pending/PD-0007.md` | 전달 전 |
+| 11 | COMM-4-a(1/4) Module명 | `ModuleType(index)`, 예 `Sample Storage(1)` | 이름과 번호 사이 띄어 씀 `Sample Storage (1)` | 가이드 · Figma | 용어집(2026-10-30 결정), 내부 논의 `old-pending/PD-0007.md` | 전달 전 |
 | 12 | COMM-3-a(1/2) GNB | GNB 일시 "접속 환경 기준 일시" | 장비 기준 일시 (L-IOS · T-IOS 모두 CURECA 장비 시간대) | 가이드 · Figma | 2026-11-04 사용자 결정 | 전달 전 |
 | 13 | COMM-0, COMM-5-v 외 | "Tool Tip" | Tooltip | Figma (가이드는 이미 Tooltip) | 용어집 Tooltip, 2026-11-04 사용자 결정 | 전달 전 |
 | 14 | COMM-5-q 외 | "Check Box" | Checkbox | Figma (가이드는 이미 Checkbox) | 용어집 Checkbox, 2026-11-04 사용자 결정 | 전달 전 |

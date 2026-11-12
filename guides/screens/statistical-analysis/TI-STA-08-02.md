@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # TI-STA-08-02 Event 통계 - Table
 
-> 기존 화면(작업방 Statistical Analysis 페이지, 2.1 2차 영역, Ver 2.1.14)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 Statistical Analysis 페이지, 2.1 2차 영역, Ver 2.1.14)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - T-IOS 전용 메뉴. TI-STA-08-01의 Segmented Control을 Table로 바꾼 화면. 화면 타이틀은 "Event Trend"
 - 관련 정책: POL-STA-001, POL-STA-002, POL-STA-003, POL-STA-006, POL-EVT-001, POL-COM-006

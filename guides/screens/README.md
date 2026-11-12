@@ -1,12 +1,12 @@
 # 화면설계서
 
-메뉴 단위 폴더 아래에 CID 화면설계서를 둡니다. CID마다 파일을 따로 두고, 짝 화면은 `pair_cid`로 연결합니다(`rules/repository-and-id.md` 3절). 상태는 메뉴 파일 `_menu.md`에 적습니다(`rules/status-lifecycle.md` 5절).
+메뉴 단위 폴더 아래에 CID 화면설계서를 둡니다. CID마다 파일을 따로 두고, 짝 화면은 `pair_cid`로 연결합니다(`old-rules/repository-and-id.md` 3절). 상태는 메뉴 파일 `_menu.md`에 적습니다(`old-rules/status-lifecycle.md` 5절).
 
 > 상태: 폴더는 IA Lv.1 메뉴 하나에 폴더 하나 (`screens/<메뉴 이름 소문자-하이픈>/`, 예: `screens/instruments/`)로 정함 (2026-11-02 확정). 1·2차 구분은 파일의 `figma_region`으로 적습니다.
 
 ## 기존 화면 MD (source: asis)
 
-작업방 Figma의 기존 화면을 옮긴 파일입니다. 다시 그리기 전의 기준이며, 디스크립션은 원문 그대로 둡니다. 옮기는 방법은 `rules/screen-spec.md` 3절입니다.
+작업방 Figma의 기존 화면을 옮긴 파일입니다. 다시 그리기 전의 기준이며, 디스크립션은 원문 그대로 둡니다. 옮기는 방법은 `old-rules/screen-spec.md` 3절입니다.
 
 | 메뉴 | 폴더 | 상태 |
 | --- | --- | --- |

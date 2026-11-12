@@ -6,7 +6,7 @@
 | --- | --- | --- | --- | --- | --- |
 | `system-status/` | CURECA 시스템 구성 요소 및 상태 정보 | 260921 | 2026-11-02 (팀원 저장소 경유) | 엑셀 | 시트 12개 |
 | `system-status/261021-capture/` | 같은 문서 | 261021 (최신) | 2026-11-02 (팀원 저장소 경유) | 시트 캡처 12장 | 원본 엑셀은 DRM(Fasoo)이 걸려 열 수 없음. DRM 해제본을 받으면 추가 |
-| `consumables-reagents/` | CURECA 소모품 및 시약 정보 | 261022 | 2026-11-02 (팀원 저장소 경유) | 엑셀 | 비교 기준선으로만 보관. 새 버전을 받으면 비교해 반영 (검토 기록: `background/teammate-review.md` 1-2) |
+| `consumables-reagents/` | CURECA 소모품 및 시약 정보 | 261022 | 2026-11-02 (팀원 저장소 경유) | 엑셀 | 비교 기준선으로만 보관. 새 버전을 받으면 비교해 반영 (검토 기록: `archive/background/teammate-review.md` 1-2) |
 | `consumables-reagents/` | CURECA 소모품 및 시약 정보 | 261102 (최신) | 2026-11-03 (사용자 전달, DRM 해제본) | 엑셀 | 261022와 비교: `reference/updates/2026-11-03_소모품·시약_검사항목.md` |
 | `test-items/` | CURECA 검사 항목 및 검체 타입 정보 | 261022 | 2026-11-02 (팀원 저장소 경유) | 엑셀 | 시트 4개 |
 | `test-items/` | CURECA 검사 항목 및 검체 타입 정보 | 261102 (최신) | 2026-11-03 (사용자 전달, DRM 해제본) | 엑셀 | 시트 4개. 261022와 비교: `reference/updates/2026-11-03_소모품·시약_검사항목.md` |

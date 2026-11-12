@@ -18,7 +18,7 @@ replaced_by:
 
 ## 정의
 
-- Required Qty: Run에 필요한 수량에서 지금 재고(Remaining Qty)를 뺀 부족 수량. 예: 재고 10, 필요 수량 14 → Required Qty 4
+- Required Qty: 필요 수량에서 지금 재고(Remaining Qty)를 뺀 부족 수량. 필요 수량은 지금 진행 중인 Run을 포함해 필요한 개수임 (2026-11-06 사용자 확인). 예: 재고 10, 필요 수량 14 → Required Qty 4. Run 준비의 Check Consumables · Check Reagents도 같은 기준과 UI를 씀 (POL-SMP-007 규칙 10)
 - 재고 상태 값과 정의는 `glossary/status-values.csv`의 재고 상태가 기준이며, Consumable과 Reagent에 같은 값을 씀
 
 | 재고 상태 | 조건 | 결과 |
@@ -34,6 +34,8 @@ replaced_by:
    - Sample Storage에 Inbound Trolley가 도킹되어 있음
    - [Run Start]로 Run이 시작된 뒤 진행 중인 Batch가 끝나지 않음. 장비 통합 상태가 Partial Running이나 Error가 되어도 Batch가 끝나지 않았으면 계속 보여 줌
 3. 예: Run 중에 Sample이 모두 Trolley에서 빠져 Inbound Trolley를 분리해도, Batch가 끝나지 않았으면 Required Qty와 Status를 계속 보여 줌.
+3-1. Trolley를 도킹하면 [Run Start] 전에도 Required Qty와 Status를 보여 줌. 재고 부족 Event는 [Run Start] 뒤에 생김 (MT-20260923-01).
+3-2. STAT Storage에 Sample을 넣으면 STAT Storage를 닫는 때 필요 수량을 다시 계산함 (MT-20260929-01).
 4. 한 품목의 Location 중 Insufficient와 Low가 함께 있으면 카드에는 Insufficient를 보여 줌 (Insufficient > Low > Sufficient).
 5. Remaining Qty와 Required Qty가 모두 0인 품목과 Location은 숨김. 카드 안 품목이 모두 숨김이면 카드도 숨김.
 6. Status Chip(Insufficient, Low, Sufficient)은 여러 개를 함께 고를 수 있고, 고른 상태의 품목만 왼쪽 카드와 오른쪽 상세에 보여 줌. 다시 누르면 해제함.
@@ -57,3 +59,5 @@ replaced_by:
 | | 2026-11-03 | 최초 작성 (이전 ID: 팀원 POL-RGT-09) | |
 | | 2026-11-03 | 재고 상태 정의, Reagent 적용, Required Qty 노출 조건, Empty → Insufficient 정함 (IV1, IV2, IV3, IV7) | 사용자 확인 |
 | | 2026-11-03 | Status도 Required Qty와 같은 조건에서 보여 줌 (IV3-a) | 사용자 확인 |
+| | 2026-11-06 | 필요 수량은 진행 중인 Run 포함, Run 준비와 같은 기준 | 사용자 확인 |
+| | 2026-11-06 | 도킹하면 Run Start 전에도 표시 · Event는 Run Start 뒤(규칙 3-1), STAT은 닫을 때 다시 계산(규칙 3-2) | MT-20260923-01, MT-20260929-01 |

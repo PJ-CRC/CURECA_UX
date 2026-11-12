@@ -1,5 +1,5 @@
 ---
-id: MT-YYYYMMDD-NN      # 회의 날짜 + 그날 순번 (rules/meeting-notes.md 2절)
+id: MT-YYYYMMDD-NN      # 회의 날짜 + 그날 순번 (old-rules/meeting-notes.md 2절)
 date: YYYY-MM-DD
 time:                   # 예: 10:00 ~ 11:30
 title:                  # 주제
@@ -34,7 +34,7 @@ source: 팀 프로그램      # 팀 프로그램 | 스프레드시트 0.회의�
 
 ## 정책 후보
 
-신규 · 변경 후보만 적습니다. 이미 정책이나 임시 정책에 있는 것은 "점검 결과"에 적습니다 (`rules/meeting-notes.md` 6절).
+신규 · 변경 후보만 적습니다. 이미 정책이나 임시 정책에 있는 것은 "점검 결과"에 적습니다 (`old-rules/meeting-notes.md` 6절).
 
 | # | 후보 문장 | 구분 (신규 / 변경) | 관련 정책 (ID · 규칙) | 지금 정책 문장 | 겹치는 임시 정책 | 처리 (PV ID / 제외) |
 | --- | --- | --- | --- | --- | --- | --- |
