@@ -38,7 +38,19 @@
     "language-set/sheet11.csv",
     "language-set/sheet11.formulas.json",
     "language-set/sheet12.csv",
-    "language-set/sheet12.formulas.json"
+    "language-set/sheet12.formulas.json",
+    "language-set/sheet01.styles.json",
+    "language-set/sheet02.styles.json",
+    "language-set/sheet03.styles.json",
+    "language-set/sheet04.styles.json",
+    "language-set/sheet05.styles.json",
+    "language-set/sheet06.styles.json",
+    "language-set/sheet07.styles.json",
+    "language-set/sheet08.styles.json",
+    "language-set/sheet09.styles.json",
+    "language-set/sheet10.styles.json",
+    "language-set/sheet11.styles.json",
+    "language-set/sheet12.styles.json"
   ],
   "books": {
     "language-set": {
@@ -286,6 +298,20 @@
           129,
           129
         ]
+      },
+      "styles": {
+        "language-set/sheet01.csv": "language-set/sheet01.styles.json",
+        "language-set/sheet02.csv": "language-set/sheet02.styles.json",
+        "language-set/sheet03.csv": "language-set/sheet03.styles.json",
+        "language-set/sheet04.csv": "language-set/sheet04.styles.json",
+        "language-set/sheet05.csv": "language-set/sheet05.styles.json",
+        "language-set/sheet06.csv": "language-set/sheet06.styles.json",
+        "language-set/sheet07.csv": "language-set/sheet07.styles.json",
+        "language-set/sheet08.csv": "language-set/sheet08.styles.json",
+        "language-set/sheet09.csv": "language-set/sheet09.styles.json",
+        "language-set/sheet10.csv": "language-set/sheet10.styles.json",
+        "language-set/sheet11.csv": "language-set/sheet11.styles.json",
+        "language-set/sheet12.csv": "language-set/sheet12.styles.json"
       }
     }
   },
