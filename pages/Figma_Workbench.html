@@ -503,8 +503,8 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
           <div class="target">대상 <span id="tgtPage" class="badge"></span> <b id="tgt"></b> <code id="tgtId" class="badge"></code> <button type="button" class="gen-btn" id="genBtn" aria-pressed="false" title="프레임 선택을 풀고 이 페이지 전체에 요청합니다(새 프레임 만들기 · 여러 화면 수정 · 질문). 선택된 프레임을 한 번 더 눌러도 됩니다">페이지 전체로</button></div>
           <div class="cmp-opts">
             <!-- 화면설계 케이스(규칙 저장소 flow/README.md): 케이스마다 0 ~ 7단계를 단계 하나 = 요청 하나로 진행. 「질문 · 그 밖」은 흐름을 타지 않는 요청 -->
-            <select id="rtype" class="opt-type" aria-label="케이스" title="케이스: 1 화면 부분 수정(고도화) · 2 신규 화면 · 3 기존 화면 다시 그리기">
-              <option value="1" selected>케이스 1 · 부분 수정</option><option value="2">케이스 2 · 신규 화면</option><option value="3">케이스 3 · 다시 그리기</option>
+            <select id="rtype" class="opt-type" aria-label="Case" title="Case: 1 화면 부분 수정(고도화) · 2 신규 화면 · 3 기존 화면 다시 그리기">
+              <option value="1" selected>Case 1 · 부분 수정</option><option value="2">Case 2 · 신규 화면</option><option value="3">Case 3 · 다시 그리기</option>
               <option value="">질문 · 그 밖</option>
             </select>
             <select id="rwork" class="opt-work" aria-label="작업 기록" title="이어 갈 작업 기록(규칙 저장소 work-logs/). 새 작업이면 0단계부터 작업 기록을 만듭니다"><option value="">새 작업 · 0단계부터</option></select>
@@ -1560,7 +1560,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       return '<li class="req" data-id="' + esc(r.id) + '"><div class="h"><b>' + esc(r.id) + '</b><span class="st ' + stc + '">' + esc(r.status) + '</span>' +
         (!r.nodeId ? (general && (r.page || edPage()) === cur.page ? '' : '<button class="go" data-pgo="' + esc(r.page || edPage()) + '" title="이 요청의 페이지 전체 보기">' + esc(r.page || edPage()) + ' 전체 ›</button>') : r.nodeId !== cur.id || general ? '<button class="go" data-go="' + esc(r.nodeId) + '">' + esc(r.frame) + ' ›</button>' : '') +
         '<span class="sp"></span><span class="who">' + esc(r.author || '이름 없음') + '</span><span title="등록 ' + esc(r.createdAt) + ' / 변경 ' + esc(r.updatedAt) + '">' + fmt(r.updatedAt || r.createdAt) + '</span>' +
-        '</div>' + (r.case ? '<div class="h"><span class="cs" title="' + esc(r.work ? '작업 기록 ' + r.work : '새 작업') + '">' + esc(r.type) + '</span>' + (r.work ? '<span class="who">' + esc(r.work) + '</span>' : '') + '</div>' : '') + '<div class="q" title="' + esc(r.text) + '">요청 · ' + esc(String(r.text || '').split('\n')[0]) + '</div>' +
+        '</div>' + (r.case ? '<div class="h"><span class="cs" title="' + esc(r.work ? '작업 기록 ' + r.work : '새 작업') + '">' + esc(String(r.type || '').replace(/^케이스 /, 'Case ')) + '</span>' + (r.work ? '<span class="who">' + esc(r.work) + '</span>' : '') + '</div>' : '') + '<div class="q" title="' + esc(r.text) + '">요청 · ' + esc(String(r.text || '').split('\n')[0]) + '</div>' +
         ((r.images || []).length ? '<div class="ims">' + r.images.map(function(m){ var ex = ((/\.([a-z0-9]+)$/i.exec(m.file || '') || [])[1] || '').toLowerCase(); if (!attImg(ex)) return '<a class="doc" href="' + esc(m.file) + '" target="_blank" rel="noopener" title="' + esc(m.name || '첨부') + ' · 원본 보기"><b>' + esc(ex.toUpperCase()) + '</b></a>'; return '<a href="' + esc(m.file) + '" target="_blank" rel="noopener" title="' + esc(m.name || '첨부 이미지') + ' · 원본 보기"><img loading="lazy" alt="첨부 이미지" src="' + esc(m.small || m.file) + '"></a>'; }).join('') + '</div>' : '') +
         '<div class="a' + (r.note ? '' : ' wait') + '">' + (r.note ? noteHtml(r.note) : esc(WAIT[r.status] || '')) + '</div>' +
         fixedHtml(r) +
@@ -1607,13 +1607,13 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
   /* ── 케이스 · 작업 기록: 화면설계는 케이스(1 부분 수정 · 2 신규 · 3 다시 그리기)마다 0 ~ 7단계, 단계 하나 = 요청 하나(규칙 저장소 flow/).
      「새 작업」이면 Claude가 0단계에서 work-logs/에 작업 기록을 만들고, 고르면 그 작업 기록에서 관문이 빈 첫 단계를 이어서 한다 */
   var worklogs = [], STG = ['0단계 시작', '1단계 요건 정의', '2단계 근거 · 분석', '3단계 화면 설계', '4단계 검토', '5단계 고객 UX 리뷰', '6단계 다국어', '7단계 완료'];
-  var CASES = { '1': '케이스 1 · 부분 수정', '2': '케이스 2 · 신규 화면', '3': '케이스 3 · 다시 그리기' };
+  var CASES = { '1': 'Case 1 · 부분 수정', '2': 'Case 2 · 신규 화면', '3': 'Case 3 · 다시 그리기' };
   function caseLabel(cs, wl){ if (!cs) return '질문 · 그 밖'; var st = wl ? wl.stage : 0; return CASES[cs] + ' · ' + (st >= 0 && st < STG.length ? STG[st] : '끝'); }
   function renderWork(){
     var cs = $('rtype').value, sel = $('rwork'), keep = sel.value;
     sel.hidden = !cs;
-    /* 레이아웃 선택은 케이스 1(부분 수정)에서만. 다른 케이스로 바꾸면 고른 레이아웃을 풀어 요청에 실리지 않게 한다 */
-    var lp = $('lpick'); if (lp) { lp.hidden = cs !== '1'; if (cs !== '1') { if (layout) setLayout(0); lpop(false); } }
+    /* 레이아웃 선택은 Case 2(신규 화면)에서만 — 새 화면의 구조를 고른다. 다른 Case로 바꾸면 고른 레이아웃을 풀어 요청에 실리지 않게 한다 */
+    var lp = $('lpick'); if (lp) { lp.hidden = cs !== '2'; if (cs !== '2') { if (layout) setLayout(0); lpop(false); } }
     var open = worklogs.filter(function(w){ return w.status !== '끝남' && w.status !== '멈춤' && (!w.case || w.case === cs); });
     sel.innerHTML = '<option value="">새 작업 · 0단계부터</option>' + open.map(function(w){
       return '<option value="' + esc(w.name) + '">' + esc((w.title || w.name) + ' · ' + (w.stage >= 0 && w.stage < STG.length ? STG[w.stage] : '끝') + (w.requester ? ' · ' + w.requester : '') + (w.test ? ' · 테스트' : '')) + '</option>';

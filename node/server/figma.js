@@ -148,7 +148,7 @@ module.exports = function register(on, h) {
   // ── GET /api/figma: 토큰이 있는지 · 누구 계정인지 · 끝 4자리(토큰 자체는 내보내지 않는다) ──
   on('GET', '/api/figma', () => {
     const t = readTok(), tk = nn(t.token);
-    return { token: !!tk, last4: tk ? tk.slice(-4) : '', user: t.user || null, at: nn(t.at), expires: nn(t.expires), deadAt: nn(t.deadAt) };   // deadAt: Figma가 이 토큰을 거부한 시각(만료 · 지운 토큰) — 날짜와 상관없이 바로 「만료됨」
+    return { token: !!tk, last4: tk ? tk.slice(-4) : '', user: t.user || null, at: nn(t.at), deadAt: nn(t.deadAt) };   // deadAt: Figma가 이 토큰을 거부한 시각(만료 · 지운 토큰) — 날짜와 상관없이 바로 「만료됨」
   });
 
   // ── POST /api/figma {action: token | clear | check | capture} ──
@@ -179,15 +179,10 @@ module.exports = function register(on, h) {
         if (!/^[A-Za-z0-9_-]{20,200}$/.test(tk)) throw new Error('토큰 모양이 아닙니다. Figma 설정에서 만든 개인 액세스 토큰(figd_로 시작)을 붙여 넣어 주세요.');
         const me = await figma('/me', tk);
         const user = { id: nn(me.id), handle: nn(me.handle), email: nn(me.email) };
-        // 만료일: Figma API가 개인 토큰의 만료일을 알려 주지 않아, 만들 때 고른 날짜를 함께 받아 둔다(시작 안내에 「n일 남음」, 2026-11-12)
-        const exp = /^\d{4}-\d{2}-\d{2}$/.test(nn(b.expires)) ? nn(b.expires) : '';
-        core.writeJson(tokFile(), { token: tk, user, at: core.now(), expires: exp });
-        return { ok: true, token: true, last4: tk.slice(-4), user, expires: exp };
-      }
-      case 'expires': {   // 이미 넣은 토큰의 만료일만 고치기(빈 값이면 지움)
-        const t = readTok(); if (!nn(t.token)) throw new Error('Figma 토큰이 없습니다.');
-        const exp = nn(b.expires); if (exp && !/^\d{4}-\d{2}-\d{2}$/.test(exp)) throw new Error('날짜 모양이 아닙니다(YYYY-MM-DD).');
-        t.expires = exp; core.writeJson(tokFile(), t); return { ok: true, expires: exp };
+        // 만료일은 받지 않는다: Figma API가 개인 토큰의 만료일을 알려 주지 않고(/v1/me = id · 이메일 · 이름 · 사진),
+        //  사용자가 따로 넣는 것은 원하지 않음(2026-11-12). 만료되면 Figma가 401로 거부 → deadAt → 시작 안내 「만료됨」
+        core.writeJson(tokFile(), { token: tk, user, at: core.now() });
+        return { ok: true, token: true, last4: tk.slice(-4), user };
       }
       case 'clear': { try { fs.unlinkSync(tokFile()); } catch (e) {} return { ok: true, token: false }; }
       case 'check': { const me = await figma('/me'); return { ok: true, user: { id: nn(me.id), handle: nn(me.handle), email: nn(me.email) } }; }

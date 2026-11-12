@@ -945,6 +945,9 @@ html.embed,html.embed body{overflow:hidden}
     if (s.file) {
       var fl = (FILES || []).filter(function(f){ return f.path === s.file; })[0];
       m.insertAdjacentHTML('beforeend', '<p class="docpath" title="' + esc(fl ? fl.mdPath : '') + '">문서 경로 <code>' + esc(npath(id + '/' + fdirOf(meta) + s.file)) + '</code>' + (fl && fl.rev ? '<span>수정본 ' + esc(fl.rev) + '</span>' : '') + '</p>');
+    } else if (!FILES) {
+      /* 한 파일 문서(guide.md 하나, 고치면 rev/ 수정본): 항목이 모두 그 파일 안에 있으니 그 파일을 보인다 */
+      m.insertAdjacentHTML('beforeend', '<p class="docpath" title="' + esc(GINFO && GINFO.mdPath || '') + '">문서 경로 <code>' + esc(npath(id + '/guide.md')) + '</code>' + (GINFO && GINFO.rev ? '<span>수정본 ' + esc(GINFO.rev) + '</span>' : '') + '</p>');
     }
     $('tocCur').textContent = '목차 · ' + s.label; askSet();
     tree($('q').value.trim().toLowerCase());
