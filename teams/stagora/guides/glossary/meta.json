@@ -312,6 +312,234 @@
         "language-set/sheet10.csv": "language-set/sheet10.styles.json",
         "language-set/sheet11.csv": "language-set/sheet11.styles.json",
         "language-set/sheet12.csv": "language-set/sheet12.styles.json"
+      },
+      "filters": {
+        "language-set/sheet02.csv": "A3:AA278",
+        "language-set/sheet03.csv": "B5:O479",
+        "language-set/sheet04.csv": "A5:O818",
+        "language-set/sheet05.csv": "A5:P383",
+        "language-set/sheet06.csv": "A5:P294",
+        "language-set/sheet07.csv": "A5:O697",
+        "language-set/sheet08.csv": "A5:O862",
+        "language-set/sheet09.csv": "A5:O695",
+        "language-set/sheet10.csv": "A5:P2435",
+        "language-set/sheet11.csv": "A5:P1492",
+        "language-set/sheet12.csv": "A5:O819"
+      },
+      "lists": {
+        "language-set/sheet02.csv": [
+          {
+            "ranges": [
+              "C219:C221"
+            ],
+            "values": [
+              "0.공통",
+              "1.임상의",
+              "2.진검의",
+              "3.공통-고객센터",
+              "4.체험판/초대/이메일",
+              "5. 리포트"
+            ]
+          },
+          {
+            "ranges": [
+              "C4:C93"
+            ],
+            "values": [
+              "0.공통",
+              "1.임상의",
+              "2.검사실",
+              "3.GMCS",
+              "4.공통-고객센터",
+              "5.체험판/초대/이메일",
+              "6. 임상의 리포트",
+              "7. Admin",
+              "8. Secure Uploader"
+            ]
+          },
+          {
+            "ranges": [
+              "C94:C165",
+              "C167:C218"
+            ],
+            "values": [
+              "0.공통",
+              "1.임상의",
+              "2.진검의",
+              "3.GMCS",
+              "4.공통-고객센터",
+              "5.체험판/초대/이메일",
+              "6. 임상의 리포트",
+              "7. Admin"
+            ]
+          },
+          {
+            "ranges": [
+              "C222:C236"
+            ],
+            "values": [
+              "0.공통",
+              "1.임상의",
+              "2.진검의",
+              "3.공통-고객센터",
+              "4.체험판/초대/이메일"
+            ]
+          },
+          {
+            "ranges": [
+              "C237:C278"
+            ],
+            "values": [
+              "0.공통",
+              "1.임상의",
+              "2.진검의",
+              "3. 고객/체험/초대/이메일",
+              "3.공통-고객센터",
+              "4.체험판/초대시스템",
+              "5.이메일"
+            ]
+          }
+        ],
+        "language-set/sheet03.csv": [
+          {
+            "ranges": [
+              "D6:D1627"
+            ],
+            "values": [
+              "txt",
+              "title",
+              "alt-txt",
+              "btn"
+            ]
+          }
+        ],
+        "language-set/sheet04.csv": [
+          {
+            "ranges": [
+              "D6:D199",
+              "D203:D1347"
+            ],
+            "values": [
+              "txt",
+              "title",
+              "alt-txt",
+              "btn"
+            ]
+          }
+        ],
+        "language-set/sheet05.csv": [
+          {
+            "ranges": [
+              "D6:D383",
+              "D385:D1725"
+            ],
+            "values": [
+              "txt",
+              "title",
+              "alt-txt",
+              "btn"
+            ]
+          }
+        ],
+        "language-set/sheet06.csv": [
+          {
+            "ranges": [
+              "D6:D514",
+              "D517:D1897"
+            ],
+            "values": [
+              "txt",
+              "title",
+              "alt-txt",
+              "btn"
+            ]
+          }
+        ],
+        "language-set/sheet07.csv": [
+          {
+            "ranges": [
+              "D6:D77",
+              "D82:D1422"
+            ],
+            "values": [
+              "txt",
+              "title",
+              "alt-txt",
+              "btn"
+            ]
+          }
+        ],
+        "language-set/sheet08.csv": [
+          {
+            "ranges": [
+              "D6:D245",
+              "D247:D1587"
+            ],
+            "values": [
+              "txt",
+              "title",
+              "alt-txt",
+              "btn"
+            ]
+          }
+        ],
+        "language-set/sheet09.csv": [
+          {
+            "ranges": [
+              "D6:D77",
+              "D80:D1420"
+            ],
+            "values": [
+              "txt",
+              "title",
+              "alt-txt",
+              "btn"
+            ]
+          }
+        ],
+        "language-set/sheet10.csv": [
+          {
+            "ranges": [
+              "D6:D1213",
+              "D1216:D1862",
+              "D1868:D2435"
+            ],
+            "values": [
+              "txt",
+              "title",
+              "alt-txt",
+              "btn"
+            ]
+          }
+        ],
+        "language-set/sheet11.csv": [
+          {
+            "ranges": [
+              "D6:D189",
+              "D192:D1492"
+            ],
+            "values": [
+              "txt",
+              "title",
+              "alt-txt",
+              "btn"
+            ]
+          }
+        ],
+        "language-set/sheet12.csv": [
+          {
+            "ranges": [
+              "D6:D201",
+              "D204:D1545"
+            ],
+            "values": [
+              "txt",
+              "title",
+              "alt-txt",
+              "btn"
+            ]
+          }
+        ]
       }
     }
   },
