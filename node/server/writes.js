@@ -477,6 +477,27 @@ module.exports = function register(on, h) {
       core.syncWant();
       const out = h.readGuides(T); out.saved = rev; return out;
     }
+    if (b.action === 'delete') {
+      // 문서 지우기(최고관리자만, 2026-11-12): 폴더를 guides/_trash/{시각}_{id}로 옮긴다(깃으로 모든 PC에서 사라지지만 되살릴 수 있게).
+      //  규칙 저장소의 기본 문서(여러 파일로 된 format 'files')는 지우지 않는다. 이 PC 작업 기준에 걸려 있으면 그 칸을 비운다
+      const u = core.currentUser(); if (!u || !u.admin) throw new Error('문서 지우기는 최고관리자만 할 수 있습니다.');
+      const gid = nn(b.id), dir = path.join(T.guideRoot, gid);
+      if (!okId(gid) || gid.startsWith('_') || !core.exists(path.join(dir, 'meta.json'))) throw new Error('문서를 찾지 못했습니다: ' + gid);
+      const gm = core.readJson(path.join(dir, 'meta.json')) || {};
+      if (gm.format === 'files') throw new Error('규칙 저장소의 기본 문서(여러 파일로 된 문서)는 지울 수 없습니다.');
+      const trash = path.join(T.guideRoot, '_trash'), dst = path.join(trash, stamp() + '_' + gid);
+      fs.mkdirSync(trash, { recursive: true });
+      try { fs.renameSync(dir, dst); } catch (e) { fs.cpSync(dir, dst, { recursive: true }); fs.rmSync(dir, { recursive: true, force: true }); }
+      const a = core.readJson(T.guideApply) || {}; let changed = false;
+      for (const fk of Object.keys(a)) {
+        const ap = a[fk]; if (!ap) continue;
+        for (const k of Object.keys(ap.docs || {})) if (ap.docs[k] && ap.docs[k].id === gid) { ap.docs[k] = { id: '', by: meName(), at: core.now() }; changed = true; }
+        if (ap.guideId === gid) { ap.guideId = ''; changed = true; }
+      }
+      if (changed) core.writeJson(T.guideApply, a);
+      core.syncWant();
+      return Object.assign({ deleted: gid, trash: path.basename(dst) }, h.readGuides(T));
+    }
     if (b.action !== 'apply') throw new Error('알 수 없는 action: ' + nn(b.action));
     // 작업 기준 적용(이 PC만): 작업규칙 · 정책서 · 기준데이터 · 화면 정의서는 이 PC의 모든 프로젝트에 같이, UX가이드는 그 Figma 파일 하나에만(2026-11-12)
     const key = nn(b.fileKey), gid = nn(b.guideId), kind = nn(b.kind) || 'guide';
