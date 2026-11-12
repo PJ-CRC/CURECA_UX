@@ -614,8 +614,12 @@ a{color:var(--accent)}
   function ymdAdd(n){ var d = new Date(); d.setDate(d.getDate() + n); return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
   function tokShow(d){
     var chip = $('tokChip'), on = d && d.token, left = on ? tokLeft(d.expires) : null;
-    chip.className = 'chip ' + (on ? (left != null && left < 0 ? 'bad' : left != null && left <= 7 ? 'wait' : 'ok') : '');
-    chip.textContent = d === null ? '' : !on ? '선택' : left == null ? '연결됨' : left < 0 ? '만료됨' : left === 0 ? '오늘 만료' : left + '일 남음';
+    /* 만료일은 D-day로: 남은 날 D-05 · 오늘 D-00, 지나면 D+03 (만료) */
+    var dd = left == null ? '' : left >= 0 ? 'D-' + ('0' + left).slice(-2) : 'D+' + ('0' + (-left)).slice(-2);
+    var dead = on && (!!d.deadAt || (left != null && left < 0)), today = on && !dead && left === 0;   // Figma가 거부했거나 날짜가 지났으면 바로 만료, 당일은 「오늘 만료」
+    chip.className = 'chip ' + (on ? (dead || today ? 'bad' : left != null && left <= 7 ? 'wait' : 'ok') : '');
+    chip.textContent = d === null ? '' : !on ? '선택' : dead ? '만료됨' + (dd ? ' · ' + dd : '') : today ? 'D-00 오늘 만료' : left == null ? '연결됨' : dd;
+    var tsn = $('nav-sTok'); if (tsn) tsn.querySelector('.st').textContent = 'Figma 토큰 (선택)' + (on && dd ? ' · ' + dd : '');
     $('tokExpBox').style.display = on ? 'inline-flex' : 'none'; if (on && document.activeElement !== $('tokExpIn')) $('tokExpIn').value = d.expires || '';
     $('sTok').classList.toggle('done', !!on);
     var tl = $('nav-sTok'); if (tl) { tl.classList.toggle('on', !!on); tl.querySelector('.sn').textContent = on ? '✓' : '+'; }
@@ -623,7 +627,8 @@ a{color:var(--accent)}
     if (d === null) { $('tokMsg').textContent = '지금 서버(예전 서버)에서는 쓸 수 없습니다. Figma AI Run을 다시 실행하면 새 서버로 켜집니다.'; return; }
     var u = d.user || {};
     $('tokMsg').innerHTML = on ? '연결됨 · <b>' + esc(u.handle || '') + '</b>' + (u.email ? ' (' + esc(u.email) + ')' : '') + ' · 토큰 …' + esc(d.last4) +
-      ' · ' + (left == null ? '만료일 모름(아래에서 넣을 수 있습니다)' : '만료일 <b>' + esc(d.expires) + '</b> ' + (left < 0 ? '<b style="color:var(--red)">만료됨 — 새 토큰을 만들어 다시 넣어 주세요</b>' : left <= 7 ? '<b style="color:var(--warn)">(' + left + '일 남음 — 곧 만료, 새 토큰을 준비하세요)</b>' : '(' + left + '일 남음)')) +
+      ' · ' + (left == null ? '만료일 모름(아래에서 넣을 수 있습니다)' : '만료일 <b>' + esc(d.expires) + '</b> · <b' + (dead || today ? ' style="color:var(--red)"' : left <= 7 ? ' style="color:var(--warn)"' : '') + '>' + dd + '</b>' + (dead ? '' : today ? ' <b style="color:var(--red)">오늘 만료 — 새 토큰을 넣어 주세요</b>' : left <= 7 ? ' <b style="color:var(--warn)">곧 만료 — 새 토큰을 준비하세요</b>' : '')) +
+      (dead ? '<br><b style="color:var(--red)">만료됨' + (d.deadAt ? ' — Figma가 이 토큰을 거부했습니다(' + esc(String(d.deadAt).slice(0, 16).replace('T', ' ')) + ')' : '') + '. 새 토큰을 만들어 다시 넣어 주세요.</b>' : '') +
       '<br>Claude가 Workbench 요청을 끝내면 고친 화면을 서버가 이 토큰으로 다시 캡처합니다.'
       : '토큰이 없습니다. 없어도 지금처럼 Figma 플러그인 · Claude가 캡처합니다.';
   }

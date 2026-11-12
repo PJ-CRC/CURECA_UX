@@ -15,14 +15,18 @@ module.exports = function register(on, h) {
   const API = 'https://api.figma.com/v1';
   const log = (t) => { try { console.log(new Date().toISOString() + ' [figma] ' + t); } catch (e) {} };
 
-  async function figma(pathQ, token) {
+  async function figma(pathQ, token, post) {
     const tk = token || nn(readTok().token);
     if (!tk) throw new Error('Figma 토큰이 없습니다. 시작 안내에서 넣어 주세요.');
-    const r = await fetch(API + pathQ, { headers: { 'X-Figma-Token': tk }, signal: AbortSignal.timeout(60000) });
+    const o = { headers: { 'X-Figma-Token': tk }, signal: AbortSignal.timeout(60000) };
+    if (post) { o.method = 'POST'; o.headers['Content-Type'] = 'application/json'; o.body = JSON.stringify(post); }
+    const r = await fetch(API + pathQ, o);
     const txt = await r.text(); let j = null; try { j = JSON.parse(txt); } catch (e) {}
+    if (r.status === 401 && !token) { try { const t = readTok(); if (nn(t.token) === tk && !t.deadAt) { t.deadAt = core.now(); core.writeJson(tokFile(), t); } } catch (e) {} }
+    else if (r.ok && !token) { try { const t = readTok(); if (nn(t.token) === tk && t.deadAt) { delete t.deadAt; core.writeJson(tokFile(), t); } } catch (e) {} }
     if (!r.ok) {
       const ra = r.headers.get('retry-after');
-      const why = r.status === 403 ? '토큰이 맞지 않거나 이 파일을 볼 권한이 없습니다' : r.status === 404 ? '파일 · 프레임을 찾지 못했습니다' : r.status === 429 ? 'Figma 사용 한도에 걸렸습니다' + (ra ? `(${ra}초 뒤 다시)` : '') : 'Figma 응답 오류';
+      const why = r.status === 401 ? '토큰이 만료됐거나 맞지 않습니다(시작 안내에서 새 토큰을 넣어 주세요)' : r.status === 403 ? '토큰이 맞지 않거나 이 파일을 볼 권한이 없습니다(댓글 쓰기는 토큰 권한 Comments: Read and write)' : r.status === 404 ? '파일 · 프레임을 찾지 못했습니다' : r.status === 429 ? 'Figma 사용 한도에 걸렸습니다' + (ra ? `(${ra}초 뒤 다시)` : '') : 'Figma 응답 오류';
       const e = new Error(`${why} (HTTP ${r.status}${j && (j.err || j.message) ? ' · ' + nn(j.err || j.message).slice(0, 120) : ''})`); e.status = r.status; throw e;
     }
     return j;
@@ -144,14 +148,32 @@ module.exports = function register(on, h) {
   // ── GET /api/figma: 토큰이 있는지 · 누구 계정인지 · 끝 4자리(토큰 자체는 내보내지 않는다) ──
   on('GET', '/api/figma', () => {
     const t = readTok(), tk = nn(t.token);
-    return { token: !!tk, last4: tk ? tk.slice(-4) : '', user: t.user || null, at: nn(t.at), expires: nn(t.expires) };
+    return { token: !!tk, last4: tk ? tk.slice(-4) : '', user: t.user || null, at: nn(t.at), expires: nn(t.expires), deadAt: nn(t.deadAt) };   // deadAt: Figma가 이 토큰을 거부한 시각(만료 · 지운 토큰) — 날짜와 상관없이 바로 「만료됨」
   });
 
   // ── POST /api/figma {action: token | clear | check | capture} ──
-  on('POST', '/api/figma', async ({ body }) => {
+  on('POST', '/api/figma', async ({ req, body }) => {
     const b = await body();
     if (C.readonly) throw new Error('읽기 전용 모드입니다.');
     switch (nn(b.action)) {
+      // 댓글 쓰기(2026-11-12): 새 댓글은 프레임 + 프레임 왼쪽 위 기준 위치(px)에, 답글은 그 댓글(comment_id)에. 토큰 주인의 Figma 계정으로 올라간다(토큰 권한 Comments: Read and write)
+      case 'comment': {
+        if (!core.canWrite(req, ['workbench'])) throw new Error(core.roMsg('workbench'));
+        let key = nn(b.fileKey); if (!key) key = h.workKey();
+        if (!h.testKey(key)) throw new Error('잘못된 파일 키입니다.');
+        const msg = nn(b.message).trim(); if (!msg) throw new Error('댓글 내용을 적어 주세요.');
+        if (msg.length > 5000) throw new Error('댓글이 너무 깁니다(5000자까지).');
+        let post;
+        if (nn(b.parentId)) { if (!/^\d{1,20}$/.test(nn(b.parentId))) throw new Error('잘못된 댓글 ID입니다.'); post = { message: msg, comment_id: nn(b.parentId) }; }
+        else {
+          const nid = nn(b.nodeId); if (!/^\d+:\d+$/.test(nid)) throw new Error('댓글을 달 프레임이 없습니다.');
+          post = { message: msg, client_meta: { node_id: nid, node_offset: { x: Math.max(0, Math.round(+b.x || 0)), y: Math.max(0, Math.round(+b.y || 0)) } } };
+        }
+        const j = await figma(`/files/${encodeURIComponent(key)}/comments`, '', post);
+        delete cmCache[key];   // 다음 읽기에서 바로 보이게
+        log(`댓글 ${key.slice(0, 6)} ${post.comment_id ? '답글' : '새 댓글'} ${nn(j && j.id)}`);
+        return { ok: true, id: nn(j && j.id) };
+      }
       case 'token': {   // 넣기: Figma에 물어 맞는 토큰인지 확인(/v1/me)한 뒤 저장
         const tk = nn(b.token).trim();
         if (!/^[A-Za-z0-9_-]{20,200}$/.test(tk)) throw new Error('토큰 모양이 아닙니다. Figma 설정에서 만든 개인 액세스 토큰(figd_로 시작)을 붙여 넣어 주세요.');

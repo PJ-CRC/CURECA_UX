@@ -413,6 +413,52 @@ module.exports = function register(on, h) {
       if (done.length) core.syncWant();
       return { ok: true, imported: done, skipped: skip };
     }
+    // ── 직접 수정(2026-11-12): UX 문서 보기 화면의 [직접 수정] — 사람이 원문(마크다운 · CSV)을 고쳐 바로 저장한다 ──
+    //  - 새 흐름 팀(그 팀 UX 문서 폴더에 work-rules.md가 있음, 예: CURECA)의 파일형 문서는 원본 파일에 바로 쓴다(수정본이 없는 파일만, 깃 기록으로 남음)
+    //  - 그 밖(UX가이드 · STAgora 문서 · 수정본이 있는 파일)은 지금처럼 수정본(rev/)으로 남긴다
+    //  - base(연 때의 글)가 지금 글과 다르면(그사이 다른 사람 · Claude가 고침) 저장하지 않는다
+    //  - 저장하면 guide-edit 작업 기록을 「완료」(direct:true)로 남겨, 화면의 「연관 항목 찾기 요청」으로 이어진다
+    if (b.action === 'direct') {
+      if (!core.canWrite(req, ['guide'])) throw new Error(core.roMsg('guide'));
+      const gid = nn(b.id), md = nn(b.md).replace(/\r\n/g, '\n');
+      if (!okId(gid) || !core.exists(path.join(T.guideRoot, gid, 'meta.json'))) throw new Error('문서를 찾지 못했습니다: ' + gid);
+      if (!md.trim()) throw new Error('내용이 비어 있습니다.');
+      if (md.length > 2000000) throw new Error('내용이 너무 깁니다.');
+      const gm = core.readJson(path.join(T.guideRoot, gid, 'meta.json')) || {}, isFiles = gm.format === 'files';
+      const g = core.arr(h.readGuides(T).items).find((x) => x.id === gid) || {};
+      let file = '', curRel = '', hasRev = false;
+      if (isFiles) {
+        file = nn(b.file).replace(/\\/g, '/');
+        const fl = core.arr(g.fileList).find((x) => x.path === file);
+        if (!file || !fl) throw new Error('고칠 파일을 찾지 못했습니다: ' + file);
+        curRel = fl.mdPath; hasRev = !!fl.rev;
+      } else { curRel = nn(g.mdPath); hasRev = !!g.rev; }
+      const curAbs = path.join(C.root, ...curRel.split('/'));
+      const now = String(core.readText(curAbs) || '').replace(/^\uFEFF/, '').replace(/\r\n/g, '\n');
+      if (nn(b.base).replace(/\r\n/g, '\n') !== now) { const e = new Error('그사이 다른 사람(또는 Claude)이 이 문서를 고쳤습니다. 새로 연 뒤 다시 고쳐 주세요.'); e.status = 409; throw e; }
+      if (md === now) throw new Error('바뀐 내용이 없습니다.');
+      const direct = isFiles && !hasRev && core.exists(path.join(T.guideRoot, 'work-rules.md'));
+      let saved = '';
+      if (direct) {
+        const bom = /^\uFEFF/.test(String(core.readText(curAbs) || '')) ? '\uFEFF' : '';
+        core.writeText(curAbs, bom + md);
+      } else {
+        const rd = path.join(T.guideRoot, gid, 'rev'); saved = stamp() + '_' + C.pcSlug;
+        if (isFiles) core.writeText(path.join(rd, saved, ...file.replace(/\.\.\//g, '_up/').split('/')), md);
+        else core.writeText(path.join(rd, saved + '.md'), md);
+        core.writeJson(path.join(rd, saved + '.json'), { rev: saved, by: nn(b.by), at: core.now(), note: '직접 수정: ' + nn(b.name), base: nn(g.rev) || 'guide.md', pc: C.pcName, req: '(직접 수정)', jobId: '', file, direct: true });
+      }
+      // 작업 기록(완료) — 화면의 「수정을 마쳤습니다 · 연관 항목 찾기 요청」과 수정 요청 목록에 보이게
+      const jj = core.readJson(C.jobFile) || { version: 0, items: [] }; let items = core.arr(jj.items).filter(Boolean);
+      let n = 1; for (const i of items) { const v = parseInt(nn(i.id).replace(/\D/g, ''), 10) || 0; if (v >= n) n = v + 1; }
+      const at = core.now(), job = { id: 'J' + String(n).padStart(3, '0'), kind: 'guide-edit', team: T.team, fileKey: nn(gm.fileKey), nodeId: '', name: nn(b.name).trim() || file || gid, link: '', text: '(직접 수정)', guide: gid,
+        revFrom: hasRev ? nn(g.rev) : '', revTo: saved, items: [], status: '완료', note: '직접 수정 · ' + (nn(b.by) || C.pcName) + (direct ? ' · 원본 파일에 저장' : ' · 수정본 ' + saved), by: nn(b.by), takenBy: '', createdAt: at, updatedAt: at, direct: true };
+      if (file) job.file = file;
+      items = [job].concat(items); if (items.length > 300) items = items.slice(0, 300);
+      core.writeJson(C.jobFile, { version: (parseInt(jj.version, 10) || 0) + 1, items });
+      core.syncWant();
+      const out = h.readGuides(T); out.saved = saved; out.direct = direct; out.job = job.id; return out;
+    }
     if (b.action === 'save') {   // 고치기: guide.md는 그대로, 수정본을 새 파일로(파일형은 고친 파일 하나만 rev/{rev}/{파일})
       if (!core.canWrite(req, ['guide'])) throw new Error(core.roMsg('guide'));
       if (!browser && !qTeam && b.jobId) { const jt = core.arr((core.readJson(C.jobFile) || {}).items).find((x) => x && nn(x.id) === nn(b.jobId)); if (jt && jt.team) T = core.teamCtx(nn(jt.team)); }
