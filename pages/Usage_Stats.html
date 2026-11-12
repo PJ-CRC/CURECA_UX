@@ -266,8 +266,8 @@ td.usd{font-weight:700}
   var KINDS = ['요청', 'Figma 직접 수정', 'UX 문서', '연관 항목', '회의록', '논의 대상', '프로토타입', '목록 · 캡처', '기타'];
   /* Workbench 요청 유형 = 케이스(요청 칸의 첫 선택 상자와 같은 순서, 2026-11-12 새 흐름). 케이스 요청은 단계를 떼고 케이스로 묶는다.
      그 밖 값(예전 유형 일반 · 텍스트 수정 …, 화면설계서 반영 등)은 기록에서 찾아 뒤에 붙인다 */
-  var RTYPES = ['케이스 1 · 부분 수정', '케이스 2 · 신규 화면', '케이스 3 · 다시 그리기', '질문 · 그 밖'];
-  function rtypeOf(u){ if (!u.reqId) return ''; var t = String(u.reqType || '').trim(); var m = /^(케이스 [123] · [^·]+?)\s*(·|$)/.exec(t); return m ? m[1] : (t || '(유형 없음)'); }
+  var RTYPES = ['Case 1 · 부분 수정', 'Case 2 · 신규 화면', 'Case 3 · 다시 그리기', '질문 · 그 밖'];
+  function rtypeOf(u){ if (!u.reqId) return ''; var t = String(u.reqType || '').trim().replace(/^케이스 /, 'Case '); var m = /^(Case [123] · [^·]+?)\s*(·|$)/.exec(t); return m ? m[1] : (t || '(유형 없음)'); }
   function rtypeRank(u){ var t = rtypeOf(u), i = RTYPES.indexOf(t); return !t ? 999 : i >= 0 ? i : t === '(유형 없음)' ? 998 : 500; }
   function kindOf(u){
     if (u.reqId) return '요청';
