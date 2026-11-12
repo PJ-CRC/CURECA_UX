@@ -14,8 +14,29 @@
                   "test-stages.csv",
                   "consumables.csv",
                   "pcr-reagents.csv",
-                  "review-v0.md"
+                  "review-v0.md",
+                  "language-set/README.md",
+                  "language-set/proper-nouns.csv",
+                  "language-set/menus.csv",
+                  "language-set/status.csv",
+                  "language-set/buttons.csv",
+                  "language-set/messages.csv",
+                  "language-set/requests.csv"
               ],
+    "books":  {
+                  "language-set":  {
+                                       "title":  "언어셋 (샘플)",
+                                       "overview":  "language-set/README.md",
+                                       "sheets":  {
+                                                      "language-set/proper-nouns.csv":  "A.고유명사",
+                                                      "language-set/menus.csv":  "B.메뉴",
+                                                      "language-set/status.csv":  "C.상태값",
+                                                      "language-set/buttons.csv":  "D.버튼",
+                                                      "language-set/messages.csv":  "E.메시지",
+                                                      "language-set/requests.csv":  "F.번역 요청"
+                                                  }
+                                   }
+              },
     "filesDir":  "",
     "format":  "files",
     "frames":  0,
