@@ -1,0 +1,28 @@
+{
+    "id":  "brex-06_R036",
+    "kind":  "request",
+    "reqId":  "R036",
+    "reqType":  "일반",
+    "team":  "cureca",
+    "at":  "2026-11-12T09:08:04+09:00",
+    "from":  "2026-11-12T09:07:32+09:00",
+    "by":  "최고관리자",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "DASHBOARD",
+    "nodeId":  "789:33347",
+    "text":  "방금 만든 사각형 삭제해줘",
+    "models":  {
+                   "claude-opus-5-5":  7
+               },
+    "calls":  7,
+    "input":  15,
+    "cacheWrite":  6683,
+    "cacheRead":  415734,
+    "output":  1945,
+    "total":  424377,
+    "usd":  0.1756
+}
