@@ -1,0 +1,28 @@
+{
+    "id":  "brex-06_20261112-104930",
+    "kind":  "work",
+    "reqId":  "",
+    "reqType":  "",
+    "team":  "cureca",
+    "at":  "2026-11-12T10:49:30+09:00",
+    "from":  "2026-11-12T10:48:52+09:00",
+    "by":  "최고관리자",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "연관 항목 찾기: CURECA 작업규칙 (J373)",
+    "models":  {
+                   "claude-opus-5-5":  13
+               },
+    "calls":  13,
+    "input":  28,
+    "cacheWrite":  20837,
+    "cacheRead":  3338183,
+    "output":  7954,
+    "total":  3367002,
+    "usd":  0.9935
+}
