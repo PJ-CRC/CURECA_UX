@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="appnav.css">
 <script src="common.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<script src="wbcalc.js"></script>
 <style>
 /* 만든 UX 가이드 보기: .history/guides/{id}/guide.md (깃으로 공유)
    왼쪽 = 목차 트리(## 대분류 › ### 상세), 오른쪽 = 고른 항목의 내용. 좁은 화면에서는 트리가 위쪽 「목차」로 접힌다 */
@@ -110,8 +111,9 @@ tr:last-child td{border-bottom:none}
 table.wide{table-layout:fixed;min-width:100%}
 table.wide td{word-break:keep-all;overflow-wrap:anywhere}
 /* 시트 묶음(meta.books — 예: 언어셋): 엑셀처럼 열 머리(A · B · C) · 행 번호 · 고정 머리글, 아래 시트 탭 */
-.wbook{margin:12px 0;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}
-.wb-grid{overflow:auto;max-height:min(62vh,640px)}
+.wbook{position:relative;margin:12px 0;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}
+/* 표 높이 고정: 시트를 바꿔도 같은 높이(줄이 적으면 아래가 빈다) */
+.wb-grid{overflow:auto;height:clamp(360px,calc(100vh - 300px),720px);background:var(--surface)}
 .wb-grid table{border-collapse:separate;border-spacing:0;width:max-content;min-width:100%;font-size:13px}
 .wb-grid th,.wb-grid td{padding:5px 10px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);white-space:nowrap;max-width:360px;overflow:hidden;text-overflow:ellipsis;vertical-align:middle}
 .wb-grid thead th{position:sticky;z-index:2;background:var(--surface-2)}
@@ -147,6 +149,56 @@ table.wide td{word-break:keep-all;overflow-wrap:anywhere}
 .wb-tabs button.tab.dirty{font-style:italic}
 .wb-tabs button.tab.dirty::after{content:"";position:absolute;right:6px;top:8px;width:6px;height:6px;border-radius:50%;background:#e8a100}
 .wb-tabs button.tab.on.dirty::after{left:14px;right:14px;top:auto;bottom:6px;width:auto;height:2px;border-radius:2px;background:var(--xl)}
+/* 수식 입력줄(fx) · 엑셀 열 너비 · 틀 고정 줄 · 수식 칸 · 고른 칸 */
+.wb-fx{display:flex;align-items:center;gap:0;min-height:30px;border-bottom:1px solid var(--line);background:var(--surface);font-size:12.5px}
+.wb-fx .ref{flex:none;min-width:64px;padding:0 10px;border-right:1px solid var(--line);color:var(--ink-2);font-weight:600;text-align:center;line-height:30px}
+.wb-fx .fxi{flex:none;padding:0 10px;border-right:1px solid var(--line);color:#7a8392;font-style:italic;font-family:Georgia,serif;line-height:30px}
+.wb-fx .fxv{flex:1;min-width:0;padding:0 10px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:"JetBrains Mono",ui-monospace,Consolas,monospace}
+.wb-grid table.fixw{table-layout:fixed;min-width:0}
+.wb-grid table.fixw th,.wb-grid table.fixw td{max-width:none}
+.wb-grid thead tr.hd th{height:29px;box-sizing:border-box;line-height:18px}
+.wb-grid thead tr.hd th[data-r]{font-weight:600}
+.wb-grid table.xs thead tr.hd th[data-r]{background:var(--surface);font-weight:400}   /* 엑셀 서식이 있는 시트: 고정 줄도 엑셀 칸처럼(색은 서식이 정한다) */
+.wb-grid td.chg,.wb-grid th.chg,.wb-grid td.nw{box-shadow:inset 0 0 0 2px #e8a100}
+.wb-grid td.nw{box-shadow:inset 0 0 0 2px #3fa66b}
+.wb-grid .fx{color:#0b5d33}
+.wb-grid .xe{color:var(--red);font-weight:600}
+.wb-grid .ac{outline:2px solid #107c41;outline-offset:-2px}
+:root[data-theme="dark"] .wb-grid .fx{color:#7fd6a6}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .wb-grid .fx{color:#7fd6a6}}
+/* 전체화면(구글 시트처럼): 표만 창 가득 — 맨 위 제목 줄 · 도구 · fx · 표(남은 높이 전부) · 시트 탭 */
+html.wb-full-on,html.wb-full-on body{overflow:hidden}
+.wbook.wb-full{position:fixed;inset:0;z-index:5000;margin:0;border:0;border-radius:0;display:flex;flex-direction:column}
+.wbook.wb-full .wb-grid{flex:1;height:auto;min-height:0}
+.wb-ftop{display:flex;align-items:center;gap:8px;padding:8px 14px;border-bottom:1px solid var(--line);background:var(--surface);font-size:14px;color:var(--ink)}
+.wb-ftop .sp{flex:1}
+.wb-ftop .wbb{height:30px;padding:0 12px;border:1px solid #c9ced6;border-radius:7px;background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.wb-ftop .wbb:hover{border-color:var(--accent);color:var(--accent)}
+/* 필터(엑셀 자동 필터): 머리 칸 ▾ · 필터 창 · 거르는 중이면 행 번호 파랑 */
+.wb-grid .fh{padding-right:24px}
+.wb-grid td.fh,.wb-grid td.dl{position:relative}   /* 머리(th)는 이미 sticky라 relative를 주면 고정 위치가 틀어진다 */
+.wb-grid .flt{position:absolute;right:3px;top:50%;transform:translateY(-50%);width:18px;height:18px;padding:0;border:1px solid #c9ced6;border-radius:3px;background:#fff;color:#3b4250;font-size:10px;line-height:16px;cursor:pointer}
+.wb-grid .flt:hover{border-color:#107c41}
+.wb-grid .flt.on{background:#107c41;border-color:#107c41;color:#fff}
+.wb-grid td.rn.fl{color:#2747d8}
+.wb-none{margin:14px;color:var(--ink-3);font-size:13px}
+.wb-tools .fltst{font-size:12px;font-weight:600;color:#107c41;margin-left:6px}
+.flt-pop{position:absolute;z-index:6;width:260px;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--surface);box-shadow:0 10px 28px rgba(15,23,41,.22);font-size:12.5px}
+.flt-pop .fl-h{font-weight:700;color:var(--ink-2);margin:0 2px 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.flt-pop input[type=search]{width:100%;box-sizing:border-box;height:28px;padding:0 8px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);font:inherit}
+.flt-pop label{display:flex;align-items:center;gap:6px;padding:3px 4px;border-radius:5px;cursor:pointer}
+.flt-pop label:hover{background:var(--surface-2)}
+.flt-pop label[hidden]{display:none}
+.flt-pop label span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.flt-pop label small{color:var(--ink-3)}
+.flt-pop .fl-all{margin-top:6px;border-bottom:1px solid var(--line);border-radius:5px 5px 0 0;font-weight:600}
+.flt-pop .fl-list{max-height:240px;overflow:auto;margin:2px 0 8px}
+.flt-pop .fl-act{display:flex;justify-content:flex-end;gap:6px}
+.flt-pop .wbb{--xl:#107c41;height:28px;padding:0 12px;border:1px solid #c9ced6;border-radius:7px;background:var(--surface);color:var(--ink);font:inherit;font-weight:600;cursor:pointer}
+.flt-pop .wbb.pri{background:#107c41;border-color:#107c41;color:#fff}
+/* 드롭다운 칸: 마우스를 올리면 ▾ 표시, 고칠 때는 목록 */
+.wb-grid .dl:hover::after{content:"▾";position:absolute;right:4px;top:50%;transform:translateY(-50%);font-size:10px;color:#7a8392}
+.wb-grid .wb-sel{width:100%;height:24px;border:1px solid #107c41;border-radius:4px;background:var(--surface);color:var(--ink);font:inherit;font-size:12.5px}
 /* 고치기: 바꾼 칸 노랑 · 새 줄 초록 · 고른 줄 파랑 · 입력 중 칸 테두리 */
 .wb-grid td[data-r],.wb-grid th[data-r]{cursor:cell}
 .wb-grid td.chg,.wb-grid th.chg{background:#fff4c2}
@@ -530,14 +582,33 @@ html.embed,html.embed body{overflow:hidden}
      FILEMAP = 대분류 · 항목 제목마다 그 파일(문서 순서대로, 폴더 대분류는 '') */
   /* 시트 묶음(meta.books, 2026-11-12 — 예: 기준데이터 › 언어셋): {폴더: {title, overview(설명 md), sheets: {csv 경로: 시트 이름}}}.
      묶음의 파일들은 대분류 하나로 모으고, 설명 아래 표를 엑셀처럼 하단 시트 탭으로 보인다(render()의 wbook) */
-  function bookOf(m){ var o = {}, B = m.books || {}; Object.keys(B).forEach(function(k){ var b = B[k] || {}; if (b.overview) o[b.overview] = k; Object.keys(b.sheets || {}).forEach(function(p){ o[p] = k; }); }); return o; }
+  /* 묶음에 속한 파일: 설명(overview) · 시트 CSV · 시트의 수식 파일(formulas: {csv: json}) */
+  function bookOf(m){ var o = {}, B = m.books || {}; Object.keys(B).forEach(function(k){ var b = B[k] || {}; if (b.overview) o[b.overview] = k; Object.keys(b.sheets || {}).forEach(function(p){ o[p] = k; }); Object.keys(b.formulas || {}).forEach(function(p){ o[b.formulas[p]] = k; }); Object.keys(b.styles || {}).forEach(function(p){ o[b.styles[p]] = k; }); }); return o; }
+  /* 시트 CSV → 행 배열(빈 줄도 그대로 — 엑셀 행 번호 · 수식 참조가 맞아야 한다. 끝의 빈 줄만 뺀다) */
+  function sheetRows(t){
+    var rows = [], row = [], f = '', q = false;
+    for (var i = 0; i < t.length; i++) {
+      var c = t[i];
+      if (q) { if (c === '"') { if (t[i + 1] === '"') { f += '"'; i++; } else q = false; } else f += c; }
+      else if (c === '"') q = true; else if (c === ',') { row.push(f); f = ''; } else if (c === '\n') { row.push(f); rows.push(row); row = []; f = ''; } else if (c !== '\r') f += c;
+    }
+    if (f !== '' || row.length) { row.push(f); rows.push(row); }
+    while (rows.length && !rows[rows.length - 1].some(function(x){ return String(x).trim(); })) rows.pop();
+    return rows;
+  }
   function bookChunk(m, k, byPath, lv){
     var b = m.books[k], H = new Array(lv + 1).join('#'), ov = '';
     if (b.overview && byPath[b.overview] != null) ov = demote(front(String(byPath[b.overview]).replace(/^﻿/, '').replace(/\r\n/g, '\n')).body.replace(/^\s*#\s[^\n]*\n?/, ''), lv).trim();
     var sheets = Object.keys(b.sheets || {}).filter(function(p){ return byPath[p] != null; }).map(function(p){
-      return { name: b.sheets[p], path: p, rows: csvRows(String(byPath[p]).replace(/^﻿/, '').replace(/\r\n/g, '\n')) };
+      var fp = (b.formulas || {})[p] || '', fo = {};
+      if (fp && byPath[fp] != null) { try { fo = JSON.parse(String(byPath[fp]).replace(/^﻿/, '') || '{}') || {}; } catch (x) { fo = {}; } }
+      var sp = (b.styles || {})[p] || '', so = null;   // 칸 서식 {p: [서식], c: {A1: 번호}}
+      if (sp && byPath[sp] != null) { try { so = JSON.parse(String(byPath[sp]).replace(/^﻿/, '') || 'null'); } catch (x) { so = null; } }
+      return { name: b.sheets[p], path: p, rows: sheetRows(String(byPath[p]).replace(/^﻿/, '').replace(/\r\n/g, '\n')),
+        fpath: fp, f: fo, spath: sp, sty: so, freeze: +((b.freeze || {})[p] || 0), widths: (b.widths || {})[p] || null,
+        filter: (b.filters || {})[p] || '', lists: (b.lists || {})[p] || null };
     });
-    return H + ' ' + (b.title || k) + '\n\n' + (ov ? ov + '\n\n' : '') + '```wbook\n' + JSON.stringify({ sheets: sheets }) + '\n```';
+    return H + ' ' + (b.title || k) + '\n\n' + (ov ? ov + '\n\n' : '') + '```wbook\n' + JSON.stringify({ title: b.title || k, sheets: sheets }) + '\n```';
   }
   function combine(m, texts){
     var lay = m.layout || 'files', pieces = [{ t: '# ' + (m.title || id) + '\n\n' + (m.summary ? m.summary + '\n\n' : ''), f: '' }], byPath = {};
@@ -683,28 +754,93 @@ html.embed,html.embed body{overflow:hidden}
     box.querySelectorAll('a[href^="http"]').forEach(function(a){ a.target = '_blank'; a.rel = 'noopener'; });
     return box;
   }
-  /* ── 시트 묶음 보기 · 고치기(2026-11-12) ──
-     엑셀처럼 열 머리(A · B …) · 행 번호 · 고정 머리글(1행), 아래 시트 탭.
-     고치기: 칸 더블클릭(Enter 적용 · Tab 오른쪽 칸 · Esc 취소), 행 번호를 눌러 줄 고르기 → 「+ 줄」(고른 줄 아래, 없으면 맨 끝) · 「줄 삭제」.
-     바꾼 칸은 노란색, 새 줄은 초록색. 「저장」하면 바뀐 시트마다 CSV를 직접 수정(POST /api/guides {action:'direct'})으로 저장한다.
-     저장 전에 그 파일을 다시 읽어 연 뒤 다른 사람이 고쳤으면 저장하지 않는다. 그린 내용은 HTML 글로 옮겨 붙으므로(이벤트가 따라가지 않음)
-     시트 자료는 WBOOKS에 두고 누르기 · 입력은 문서 전체에서 받는다 */
-  function colName(i){ var s = ''; i++; while (i > 0) { var r = (i - 1) % 26; s = String.fromCharCode(65 + r) + s; i = Math.floor((i - 1) / 26); } return s; }
+  /* ── 시트 묶음 보기 · 고치기 · 수식(2026-11-12) ──
+     엑셀처럼 열 머리(A · B …) · 행 번호 · 틀 고정(엑셀에서 고정한 줄 수, 없으면 1줄) · 엑셀 열 너비(숨긴 열은 숨김), 아래 시트 탭.
+     수식: 시트마다 수식 파일({칸: 수식}, 예 {"B6": "C6&\"-\"&D6"})을 두고 화면에서 계산한다(wbcalc.js). CSV에는 계산한 값이 들어간다(Claude는 CSV를 읽는다).
+       칸을 누르면 위 fx 줄에 수식, 더블클릭하면 「=수식」을 고친다. 줄을 넣고 빼도 수식은 같은 줄을 가리킨다(엑셀처럼 상대 참조).
+     고치기: 칸 더블클릭(Enter 적용 · Tab 오른쪽 · Esc 취소), 행 번호로 줄 고르기 → 「+ 줄 추가」(고른 줄 아래, 그 줄의 수식을 함께 넣음) · 「줄 삭제」.
+     「저장」은 바뀐 시트마다 CSV(값)와 수식 파일을 직접 수정으로 저장한다(연 뒤 다른 사람이 고쳤으면 멈춤).
+     그린 내용은 HTML 글로 옮겨 붙으므로 시트 자료는 WBOOKS에 두고 누르기 · 입력은 문서 전체에서 받는다 */
+  var CALC = window.WBCalc;
+  function colName(i){ return CALC ? CALC.colName(i) : String(i); }
   function cloneRows(r){ return r.map(function(x){ return x.slice(); }); }
+  function cloneFm(fm){ return fm.map(function(row){ return row.map(function(e){ return e ? { f: e.f, r0: e.r0 } : e; }); }); }
+  /* 칸 수식 e({f: 그 수식이 맞는 줄 r0 기준 글, r0})를 r줄 자리에서 쓰는 글로 */
+  function fAt(e, r){ return !e ? '' : (r === e.r0 || !CALC ? e.f : CALC.shift(e.f, r - e.r0, 0)); }
   var WBOOKS = [];
   function wbook(d){
     var w = document.createElement('div'); w.className = 'wbook';
     if (!d || !d.sheets || !d.sheets.length) { w.textContent = '(시트 없음)'; return w; }
-    d.sheets.forEach(function(s){ s.orig = cloneRows(s.rows); s.ids = s.rows.map(function(_, k){ return k; }); });
+    d.sheets.forEach(function(s){
+      s.fm = s.rows.map(function(){ return []; });
+      Object.keys(s.f || {}).forEach(function(a1){
+        var m = /^([A-Z]+)(\d+)$/.exec(a1); if (!m || !CALC) return;
+        var r = +m[2] - 1, c = CALC.colNum(m[1]); while (s.rows.length <= r) { s.rows.push([]); s.fm.push([]); }
+        s.fm[r][c] = { f: String(s.f[a1]).replace(/^=/, ''), r0: r };
+      });
+      /* 칸 서식: s.sp = 서식 목록, s.st[줄][칸] = 서식 번호(줄과 함께 움직인다) */
+      s.sp = (s.sty && s.sty.p) || []; s.st = s.rows.map(function(){ return []; });
+      Object.keys((s.sty && s.sty.c) || {}).forEach(function(a1){ var m = /^([A-Z]+)(\d+)$/.exec(a1); if (!m || !CALC) return; var r = +m[2] - 1; if (r >= s.rows.length) return; s.st[r][CALC.colNum(m[1])] = s.sty.c[a1]; });
+      /* 필터(엑셀 autoFilter): 머리 줄 · 열 범위. 고른 값은 s.fsel[열] = {값: true} */
+      var fm0 = /^([A-Z]+)(\d+):([A-Z]+)(\d+)$/.exec(s.filter || '');
+      s.flt = fm0 && CALC ? { r: +fm0[2] - 1, c1: CALC.colNum(fm0[1]), c2: CALC.colNum(fm0[3]) } : null; s.fsel = {};
+      /* 칸 드롭다운(엑셀 데이터 확인 목록): [{rects: [{r1, c1, r2, c2}], values}] — 엑셀 줄 번호 기준 */
+      s.lv = (s.lists || []).map(function(L){ return { values: L.values || [], rects: (L.ranges || []).map(function(rg){ var a = /^([A-Z]+)(\d+)(?::([A-Z]+)(\d+))?$/.exec(rg); return a && CALC ? { r1: +a[2] - 1, c1: CALC.colNum(a[1]), r2: +(a[4] || a[2]) - 1, c2: CALC.colNum(a[3] || a[1]) } : null; }).filter(Boolean) }; });
+      s.orig = cloneRows(s.rows); s.fmOrig = cloneFm(s.fm); s.stOrig = cloneRows(s.st); s.ids = s.rows.map(function(_, k){ return k; });
+    });
     d.cur = 0; d.sel = -1;
     w.dataset.wbid = WBOOKS.push(d) - 1; w.innerHTML = wbHtml(d);
     return w;
   }
-  function wbOf(el){ var w = el && el.closest('.wbook'); return w && w.dataset.wbid != null ? { w: w, d: WBOOKS[+w.dataset.wbid] } : null; }
-  /* 시트가 바뀌었나: 지운 줄 · 새 줄 · 바뀐 칸 */
-  function shDirty(s){ if (s.ids.length !== s.orig.length) return true; for (var r = 0; r < s.rows.length; r++) { var id = s.ids[r]; if (id !== r) return true; if (rowChanged(s, r)) return true; } return false; }
-  function rowChanged(s, r){ var id = s.ids[r]; if (id < 0) return true; var a = s.rows[r], b = s.orig[id], n = Math.max(a.length, b.length); for (var c = 0; c < n; c++) if ((a[c] || '') !== (b[c] || '')) return true; return false; }
-  function cellCls(s, r, c){ var id = s.ids[r]; if (id < 0) return 'nw'; return (s.rows[r][c] || '') !== (s.orig[id][c] || '') ? 'chg' : ''; }
+  /* 칸 서식 → style 글 */
+  function styAttr(s, r, c){
+    var k = (s.st[r] || [])[c], o = k != null ? s.sp[k] : null; if (!o) return '';
+    var css = (o.bg ? 'background:' + o.bg + ';' + (o.fg ? '' : 'color:#14171c;') : '') + (o.fg ? 'color:' + o.fg + ';' : '') + (o.b ? 'font-weight:700;' : '') + (o.i ? 'font-style:italic;' : '') +
+      (o.u || o.s ? 'text-decoration:' + (o.u ? 'underline ' : '') + (o.s ? 'line-through' : '') + ';' : '') + (o.al ? 'text-align:' + o.al + ';' : '');
+    return css;
+  }
+  /* 이 칸의 드롭다운 목록(엑셀 줄 기준: 새 줄은 위 줄을 따른다) */
+  function cellList(s, r, c){
+    if (!s.lv || !s.lv.length) return null;
+    var rr = r; while (rr > 0 && s.ids[rr] < 0) rr--; var orow = s.ids[rr] < 0 ? rr : s.ids[rr];
+    for (var i = 0; i < s.lv.length; i++) for (var j = 0; j < s.lv[i].rects.length; j++) { var q = s.lv[i].rects[j]; if (orow >= q.r1 && orow <= q.r2 && c >= q.c1 && c <= q.c2) return s.lv[i].values; }
+    return null;
+  }
+  /* 필터: 이 줄이 보이나(필터 머리 줄 아래 줄만 거른다) */
+  function rowShown(s, r, txt){
+    if (!s.flt || r <= s.flt.r) return true;
+    for (var c in s.fsel) { if (!s.fsel[c]) continue; if (!s.fsel[c][txt(r, +c)]) return false; }
+    return true;
+  }
+  function fltN(s){ return Object.keys(s.fsel || {}).filter(function(c){ return s.fsel[c]; }).length; }
+  function wbOf(el){ var w = el && el.closest && el.closest('.wbook'); return w && w.dataset.wbid != null ? { w: w, d: WBOOKS[+w.dataset.wbid] } : null; }
+  /* 계산: 시트 이름으로 찾고, 수식 칸은 그때 계산(같은 그리기 안에서는 한 번만, 서로 참조하면 #CIRC!) */
+  function wbCtx(d){
+    var memo = {}, byName = {};
+    d.sheets.forEach(function(s, i){ byName[s.name] = i; });
+    var ctx = {
+      sheet: function(n){ return n in byName ? byName[n] : -1; },
+      size: function(i){ var s = d.sheets[i]; return [s.rows.length, s.rows.reduce(function(a, r){ return Math.max(a, r.length); }, 0)]; },
+      val: function(i, r, c){
+        var s = d.sheets[i]; if (!s) return { err: '#REF!' };
+        var e = (s.fm[r] || [])[c];
+        if (!e) { var v = (s.rows[r] || [])[c]; return v == null ? '' : v; }
+        var k = i + ':' + r + ':' + c;
+        if (memo[k] === 0) return { err: '#CIRC!' }; if (memo[k] !== undefined) return memo[k];
+        memo[k] = 0; var out = CALC.calc(fAt(e, r), ctx, i); memo[k] = out; return out;
+      }
+    };
+    return ctx;
+  }
+  function shDirty(s){ if (s.ids.length !== s.orig.length) return true; for (var r = 0; r < s.rows.length; r++) { if (s.ids[r] !== r) return true; if (rowChanged(s, r)) return true; } return false; }
+  function cellChanged(s, r, c){
+    var id = s.ids[r]; if (id < 0) return true;
+    var e = (s.fm[r] || [])[c], o = (s.fmOrig[id] || [])[c];
+    if (e || o) return fAt(e, id) !== fAt(o, id);   // 수식 칸: 수식이 바뀌었나(같은 줄 기준으로 비교)
+    return ((s.rows[r] || [])[c] || '') !== ((s.orig[id] || [])[c] || '');
+  }
+  function rowChanged(s, r){ var n = Math.max((s.rows[r] || []).length, (s.orig[s.ids[r]] || []).length, (s.fm[r] || []).length, (s.fmOrig[s.ids[r]] || []).length); for (var c = 0; c < n; c++) if (cellChanged(s, r, c)) return true; return false; }
+  function cellCls(s, r, c){ return s.ids[r] < 0 ? 'nw' : cellChanged(s, r, c) ? 'chg' : ''; }
   function wbDirtyN(d){ return d.sheets.filter(shDirty).length; }
   var WB_EDIT = null;   // 입력 중인 칸: 다시 그리기 전에 그 칸을 먼저 적용한다(포커스가 안 빠져도 잃지 않게)
   function wbRedraw(w, d){
@@ -716,107 +852,277 @@ html.embed,html.embed body{overflow:hidden}
   /* 지금 보는 묶음에 저장 안 한 변경이 있나(다른 항목으로 갈 때 show가 묻는다) · 묶음 변경 버리기 */
   function wbMain(){ return wbOf(document.querySelector('#main .wbook')); }
   function wbAnyDirty(){ var x = wbMain(); return !!(x && x.d && wbDirtyN(x.d)); }
-  function wbForget(d){ (d || { sheets: [] }).sheets.forEach(function(q){ q.orig = cloneRows(q.rows); q.ids = q.rows.map(function(_, k){ return k; }); }); }
-  function wbDiscard(){ var x = wbMain(); if (x && x.d) x.d.sheets.forEach(function(q){ q.rows = cloneRows(q.orig); q.ids = q.rows.map(function(_, k){ return k; }); }); }
+  function wbForget(d){ (d || { sheets: [] }).sheets.forEach(function(q){ q.orig = cloneRows(q.rows); q.fmOrig = cloneFm(q.fm); q.stOrig = cloneRows(q.st); q.ids = q.rows.map(function(_, k){ return k; }); }); }
+  function wbReset(q){ q.rows = cloneRows(q.orig); q.fm = cloneFm(q.fmOrig); q.st = cloneRows(q.stOrig); q.ids = q.rows.map(function(_, k){ return k; }); }
+  function wbDiscard(){ var x = wbMain(); if (x && x.d) x.d.sheets.forEach(wbReset); }
   /* 묶음 항목(@book:폴더)의 「지금 시트」 파일 — 수정 요청이 이 시트로 간다 */
   function bookFile(s){ if (!s || !/^@book:/.test(s.file || '')) return s ? s.file || '' : ''; var x = wbMain(); return x && x.d ? x.d.sheets[x.d.cur].path : ''; }
   function bookSheetName(s){ var x = wbMain(); return x && x.d && /^@book:/.test((s && s.file) || '') ? x.d.sheets[x.d.cur].name : ''; }
+  var ROW_H = 29, COL_H = 27;   // 틀 고정 줄 위치(px): 열 머리 줄 높이 + 줄 높이 × n
   function wbHtml(d){
-    var sh = d.sheets, i = d.cur, s = sh[i], rows = s.rows, can = canDirect(), dn = wbDirtyN(d);
-    var n = rows.reduce(function(a, r){ return Math.max(a, r.length); }, 0), c;
-    var h = '<table><thead><tr class="col"><th class="rn"></th>';
-    for (c = 0; c < n; c++) h += '<th>' + colName(c) + '</th>';
-    h += '</tr><tr class="hd"><th class="rn">1</th>';
-    for (c = 0; c < n; c++) { var x = (rows[0] || [])[c] || ''; h += '<th data-r="0" data-c="' + c + '" class="' + cellCls(s, 0, c) + '" title="' + esc(x) + '">' + esc(x) + '</th>'; }
-    h += '</tr></thead><tbody>';
-    for (var r = 1; r < rows.length; r++) {
-      h += '<tr' + (d.sel === r ? ' class="sel"' : '') + '><td class="rn" data-row="' + r + '" title="' + (can ? '눌러서 이 줄 고르기' : '') + '">' + (r + 1) + '</td>';
-      for (c = 0; c < n; c++) { var v = rows[r][c] == null ? '' : rows[r][c], k = cellCls(s, r, c); h += '<td data-r="' + r + '" data-c="' + c + '" class="' + (k || (v === '' || v === '-' ? 'em' : '')) + '" title="' + esc(v) + '">' + esc(v) + '</td>'; }
-      h += '</tr>';
+    var sh = d.sheets, i = d.cur, s = sh[i], rows = s.rows, can = canDirect(), dn = wbDirtyN(d), ctx = CALC ? wbCtx(d) : null;
+    var n = rows.reduce(function(a, r){ return Math.max(a, r.length); }, 0), c, wd = s.widths || [];
+    for (var fr = 0; fr < s.fm.length; fr++) n = Math.max(n, (s.fm[fr] || []).length);
+    var vis = []; for (c = 0; c < n; c++) if (wd[c] !== 0) vis.push(c);   // 엑셀에서 숨긴 열(너비 0)은 그리지 않는다
+    var fz = Math.min(Math.max(1, s.freeze || 0), rows.length || 1);
+    function cellTxt(r, c){ var e = (s.fm[r] || [])[c]; if (e && ctx) return CALC.text(ctx.val(i, r, c)); var v = (rows[r] || [])[c]; return v == null ? '' : v; }
+    function cell(tag, r, c, extra){
+      var e = (s.fm[r] || [])[c], v = cellTxt(r, c), k = cellCls(s, r, c), er = e && /^#/.test(v) && CALC && CALC.isErr(ctx.val(i, r, c));
+      var cls = [k || (v === '' || v === '-' ? 'em' : ''), e ? 'fx' : '', er ? 'xe' : '', cellList(s, r, c) ? 'dl' : ''].filter(Boolean).join(' ');
+      var css = styAttr(s, r, c), top = extra || '';
+      if (css) top = top ? top.replace(/style="/, 'style="' + css) : ' style="' + css + '"';
+      /* 필터 머리 칸: ▾ 버튼(거르고 있으면 채운 깔때기 표시) */
+      var fb = s.flt && r === s.flt.r && c >= s.flt.c1 && c <= s.flt.c2 ? '<button type="button" class="flt' + (s.fsel[c] ? ' on' : '') + '" data-flt="' + c + '" aria-label="' + esc(colName(c)) + ' 열 필터" title="필터">' + (s.fsel[c] ? '⏷' : '▾') + '</button>' : '';
+      return '<' + tag + ' data-r="' + r + '" data-c="' + c + '"' + (cls ? ' class="' + cls + (fb ? ' fh' : '') + '"' : fb ? ' class="fh"' : '') + top + ' title="' + esc(e ? '=' + fAt(e, r) + '\n→ ' + v : v) + '">' + esc(v) + fb + '</' + tag + '>';
+    }
+    var memoT = {}; function tx(r, c){ var k = r + ':' + c; return k in memoT ? memoT[k] : (memoT[k] = cellTxt(r, c)); }
+    var tw = 40 + vis.reduce(function(a, c){ return a + (wd[c] || 120); }, 0);
+    var h = '<table class="' + (s.widths ? 'fixw' : '') + (s.sty ? ' xs' : '') + '"' + (s.widths ? ' style="width:' + tw + 'px"' : '') + '>' + (s.widths ? '<colgroup><col style="width:40px">' + vis.map(function(c){ return '<col style="width:' + (wd[c] || 120) + 'px">'; }).join('') + '</colgroup>' : '') +
+      '<thead><tr class="col"><th class="rn"></th>' + vis.map(function(c){ return '<th>' + colName(c) + '</th>'; }).join('') + '</tr>';
+    for (var hr = 0; hr < fz; hr++) {
+      var top = ' style="top:' + (COL_H + hr * ROW_H) + 'px"';
+      h += '<tr class="hd' + (d.sel === hr ? ' sel' : '') + '"><th class="rn"' + top + (hr ? ' data-row="' + hr + '"' : '') + '>' + (hr + 1) + '</th>' + vis.map(function(c){ return cell('th', hr, c, top); }).join('') + '</tr>';
+    }
+    h += '</thead><tbody>';
+    var fN = fltN(s), shown = 0, total = 0;
+    for (var r = fz; r < rows.length; r++) {
+      if (s.flt && r > s.flt.r) total++;
+      if (fN && !rowShown(s, r, tx)) continue;   // 필터로 거른 줄은 그리지 않는다(행 번호는 엑셀 그대로 — 거르는 중이면 파란색)
+      if (s.flt && r > s.flt.r) shown++;
+      h += '<tr' + (d.sel === r ? ' class="sel"' : '') + '><td class="rn' + (fN ? ' fl' : '') + '" data-row="' + r + '" title="' + (can ? '눌러서 이 줄 고르기' : '') + '">' + (r + 1) + '</td>' + vis.map(function(c){ return cell('td', r, c); }).join('') + '</tr>';
     }
     h += '</tbody></table>';
+    if (fN && !shown) h += '<p class="wb-none">필터에 맞는 줄이 없습니다.</p>';
     var tabs = '<div class="wb-tabs" role="tablist">' +
       '<button type="button" class="nv" data-wb="' + Math.max(0, i - 1) + '"' + (i ? '' : ' disabled') + ' aria-label="이전 시트">‹</button>' +
       '<button type="button" class="nv" data-wb="' + Math.min(sh.length - 1, i + 1) + '"' + (i < sh.length - 1 ? '' : ' disabled') + ' aria-label="다음 시트">›</button><span class="nvs"></span>' +
       sh.map(function(x, k){
-        return '<button type="button" class="tab' + (k === i ? ' on' : '') + (shDirty(x) ? ' dirty' : '') + '" role="tab" aria-selected="' + (k === i) + '" data-wb="' + k + '" title="' + esc(x.name + ' · ' + Math.max(0, x.rows.length - 1) + '행' + (shDirty(x) ? ' · 저장 안 함' : '')) + '">' + esc(x.name) + '</button>';
+        return '<button type="button" class="tab' + (k === i ? ' on' : '') + (shDirty(x) ? ' dirty' : '') + '" role="tab" aria-selected="' + (k === i) + '" data-wb="' + k + '" title="' + esc(x.name + ' · ' + x.rows.length + '행' + (shDirty(x) ? ' · 저장 안 함' : '')) + '">' + esc(x.name) + '</button>';
       }).join('') + '</div>';
-    /* 위 도구 줄(고치기): 왼쪽 안내 · 줄 추가/삭제, 오른쪽 되돌리기 · 저장 · CSV로 고치기 */
-    var tools = can ? '<div class="wb-tools"><span class="hint">' + (dn ? '<b>저장 안 한 변경이 있습니다</b>' + (dn > 1 ? ' (시트 ' + dn + '개)' : '') : '칸을 더블클릭해 고치고, 행 번호를 눌러 줄을 고릅니다') + '</span>' +
-      '<button type="button" class="wbb" data-wbact="add" title="고른 줄 아래(없으면 맨 끝)에 빈 줄">+ 줄 추가</button>' +
-      '<button type="button" class="wbb" data-wbact="del"' + (d.sel > 0 ? '' : ' disabled') + ' title="행 번호를 눌러 고른 줄을 지웁니다">줄 삭제</button><span class="sp"></span>' +
+    /* 위 도구 줄: 수식 입력줄(fx) · 고치기 버튼 · 전체화면(전체화면 중에는 맨 위 줄의 닫기로) */
+    var fullBtn = d.full ? '' : '<button type="button" class="wbb" data-wbact="full" title="표만 창 가득 보기 (Esc로 닫기)">⛶ 전체화면</button>';
+    var fxbar = '<div class="wb-fx"><b class="ref" data-fxref>' + (d.ac ? colName(d.ac[1]) + (d.ac[0] + 1) : '') + '</b><span class="fxi">fx</span><span class="fxv" data-fxv>' + esc(d.ac ? fxText(s, d.ac[0], d.ac[1]) : '칸을 누르면 내용 · 수식이 여기 보입니다') + '</span></div>';
+    var tools = can ? '<div class="wb-tools"><span class="hint">' + (dn ? '<b>저장 안 한 변경이 있습니다</b>' + (dn > 1 ? ' (시트 ' + dn + '개)' : '') : '더블클릭으로 고치기 · 「=」로 시작하면 수식') + '</span>' +
+      '<button type="button" class="wbb" data-wbact="add" title="고른 줄 아래(없으면 맨 끝)에 줄 — 고른 줄의 수식도 함께">+ 줄 추가</button>' +
+      '<button type="button" class="wbb" data-wbact="del"' + (d.sel >= fz ? '' : ' disabled') + ' title="행 번호를 눌러 고른 줄을 지웁니다">줄 삭제</button>' +
+      (fN ? '<span class="fltst">필터 ' + fN + '개 · ' + shown + ' / ' + total + '줄</span><button type="button" class="wbb" data-wbact="fclear">필터 지우기</button>' : '') + '<span class="sp"></span>' +
       (dn ? '<button type="button" class="wbb" data-wbact="undo" title="저장하지 않은 변경을 모두 되돌립니다">되돌리기</button><button type="button" class="wbb pri" data-wbact="save">저장</button>' : '') +
-      '<button type="button" class="wbb lk" data-dedit="' + esc(s.path) + '" data-dname="' + esc(s.name) + '" title="이 시트(CSV)를 글로 고칩니다"' + (dn ? ' disabled' : '') + '>CSV로 고치기</button></div>' : '';
-    return tools + '<div class="wb-grid">' + h + '</div>' + tabs;
+      '<button type="button" class="wbb lk" data-dedit="' + esc(s.path) + '" data-dname="' + esc(s.name) + '" title="이 시트(CSV, 값)를 글로 고칩니다"' + (dn || d.full ? ' disabled' : '') + '>CSV로 고치기</button>' + fullBtn + '</div>' :
+      '<div class="wb-tools">' + (fN ? '<span class="fltst">필터 ' + fN + '개 · ' + shown + ' / ' + total + '줄</span><button type="button" class="wbb" data-wbact="fclear">필터 지우기</button>' : '') + '<span class="sp"></span>' + fullBtn + '</div>';
+    /* 전체화면: 맨 위 제목 줄(문서 › 묶음 · 닫기) */
+    var ftop = d.full ? '<div class="wb-ftop"><b>' + esc((meta && meta.title) || '') + ' › ' + esc(d.title || '') + '</b><span class="sp"></span><button type="button" class="wbb" data-wbact="full" title="전체화면 닫기 (Esc)">✕ 닫기</button></div>' : '';
+    return ftop + tools + fxbar + '<div class="wb-grid">' + h + '</div>' + tabs;
   }
+  function fxText(s, r, c){ var e = (s.fm[r] || [])[c]; if (e) return '=' + fAt(e, r); var v = (s.rows[r] || [])[c]; return v == null ? '' : v; }
   function csvOut(rows){
     var n = rows.reduce(function(a, r){ return Math.max(a, r.length); }, 0);
     return rows.map(function(r){ var o = []; for (var c = 0; c < n; c++) { var v = r[c] == null ? '' : String(r[c]); o.push(/[",\n\r]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v); } return o.join(','); }).join('\n') + '\n';
   }
+  /* 저장할 글: CSV(수식 칸은 계산한 값) · 수식 파일({칸: 지금 자리의 수식}) */
+  function sheetOut(d, i){
+    var s = d.sheets[i], ctx = CALC ? wbCtx(d) : null, rows = s.rows.map(function(r, ri){ var o = r.slice(); (s.fm[ri] || []).forEach(function(e, c){ if (e && ctx) { while (o.length <= c) o.push(''); o[c] = CALC.text(ctx.val(i, ri, c)); } }); return o; });
+    while (rows.length && !rows[rows.length - 1].some(function(x){ return String(x || '').trim(); })) rows.pop();
+    var fo = {}; s.fm.forEach(function(row, r){ row.forEach(function(e, c){ if (e) fo[colName(c) + (r + 1)] = fAt(e, r); }); });
+    var keys = Object.keys(fo);
+    var sc = {}; s.st.forEach(function(row, r){ (row || []).forEach(function(k, c){ if (k != null) sc[colName(c) + (r + 1)] = k; }); });   // 칸 서식(줄을 넣고 빼면 자리가 바뀐다)
+    return { csv: csvOut(rows), fobj: fo, fjson: keys.length ? '{\n' + keys.map(function(k){ return JSON.stringify(k) + ':' + JSON.stringify(fo[k]); }).join(',\n') + '\n}\n' : '{}\n',
+      sobj: { p: s.sp, c: sc }, sjson: JSON.stringify({ p: s.sp, c: sc }) + '\n' };
+  }
   function same(a, b){ return JSON.stringify(a) === JSON.stringify(b); }
-  /* 저장: 바뀐 시트마다 지금 파일을 다시 읽어(연 뒤 바뀌었으면 멈춤) 직접 수정으로 저장, 다 되면 문서를 다시 불러온다 */
+  /* 비교용: 줄 끝 빈칸 · 끝의 빈 줄을 뺀다 */
+  function trimRows(rows){ var o = rows.map(function(r){ var x = r.map(function(v){ return v == null ? '' : String(v); }); while (x.length && x[x.length - 1] === '') x.pop(); return x; }); while (o.length && !o[o.length - 1].length) o.pop(); return o; }
+  /* 파일 하나 저장: 지금 파일을 다시 읽어(연 뒤 바뀌었으면 멈춤) 다를 때만 직접 수정으로 */
+  function saveFile(path, text, okBase, label){
+    var f = (FILES || []).filter(function(x){ return x.path === path; })[0]; if (!f) return Promise.reject(new Error(label + ': 파일을 찾지 못했습니다(' + path + ').'));
+    return fetch(f.mdPath, { cache: 'no-store' }).then(function(r){ if (!r.ok) throw new Error(label + ': 파일을 읽지 못했습니다.'); return r.text(); }).then(function(raw){
+      var base = raw.replace(/^﻿/, '').replace(/\r\n/g, '\n');
+      if (!okBase(base)) throw new Error(label + ': 연 뒤에 다른 사람이 이 시트를 고쳤습니다. 다시 불러온 뒤 고쳐 주세요.');
+      if (base === text) return false;
+      return post('/api/guides', { action: 'direct', id: id, file: path, md: text, base: base, name: label, by: user() }).then(function(){ return true; });
+    });
+  }
   function wbSave(w, d, btn){
-    var todo = d.sheets.filter(shDirty); if (!todo.length) return;
+    var todo = []; d.sheets.forEach(function(s, i){ if (shDirty(s)) todo.push(i); }); if (!todo.length) return;
     btn.disabled = true; btn.textContent = '저장하는 중…';
-    var chain = Promise.resolve(), done = 0;
-    todo.forEach(function(s){
+    var chain = Promise.resolve(), done = 0, title = (meta.books && Object.keys(meta.books).map(function(k){ return meta.books[k].title; })[0]) || '';
+    todo.forEach(function(i){
       chain = chain.then(function(){
-        var f = (FILES || []).filter(function(x){ return x.path === s.path; })[0]; if (!f) throw new Error(s.name + ': 파일을 찾지 못했습니다.');
-        return fetch(f.mdPath, { cache: 'no-store' }).then(function(r){ if (!r.ok) throw new Error(s.name + ': 파일을 읽지 못했습니다.'); return r.text(); }).then(function(raw){
-          var base = raw.replace(/^﻿/, '').replace(/\r\n/g, '\n');
-          if (!same(csvRows(base), s.orig)) throw new Error(s.name + ': 연 뒤에 다른 사람이 이 시트를 고쳤습니다. 다시 불러온 뒤 고쳐 주세요.');
-          return post('/api/guides', { action: 'direct', id: id, file: s.path, md: csvOut(s.rows.filter(function(r){ return r.some(function(x){ return String(x || '').trim(); }); })), base: base, name: (meta.books && meta.books[s.path.split('/')[0]] ? meta.books[s.path.split('/')[0]].title + ' › ' : '') + s.name, by: user() });
-        }).then(function(){ done++; });
+        var s = d.sheets[i], o = sheetOut(d, i), label = (title ? title + ' › ' : '') + s.name;
+        return saveFile(s.path, o.csv, function(base){ return same(trimRows(sheetRows(base)), trimRows(s.orig)); }, label)
+          .then(function(){ return s.fpath ? saveFile(s.fpath, o.fjson, function(base){ var b = {}; try { b = JSON.parse(base || '{}'); } catch (x) {} return same(b, s.f || {}); }, label + ' (수식)') : null; })
+          .then(function(){ return s.spath && !same(o.sobj.c, (s.sty || {}).c || {}) ? saveFile(s.spath, o.sjson, function(base){ var b = null; try { b = JSON.parse(base || 'null'); } catch (x) {} return same(b, s.sty); }, label + ' (서식)') : null; })
+          .then(function(){ s.f = o.fobj; if (s.spath) s.sty = o.sobj; done++; });
       });
     });
     chain.then(function(){
       wbForget(d); toast('시트 ' + done + '개를 저장했습니다.');
       var keep = cur ? Math.max(0, secs.indexOf(cur)) : 0, at = d.cur;
-      return load(keep).then(function(){ var nw = document.querySelector('#main .wbook'), x = wbOf(nw); if (x && at) { x.d.cur = Math.min(at, x.d.sheets.length - 1); wbRedraw(x.w, x.d); } fixes(); });
+      return load(keep).then(function(){ var x = wbMain(); if (x && at) { x.d.cur = Math.min(at, x.d.sheets.length - 1); wbRedraw(x.w, x.d); } fixes(); });
     }).catch(function(x){ btn.disabled = false; btn.textContent = '저장'; alert((done ? '시트 ' + done + '개는 저장했습니다.\n' : '') + (x.message || '저장하지 못했습니다.')); if (done) { wbForget(d); load(cur ? Math.max(0, secs.indexOf(cur)) : 0); } });
   }
+  /* 전체화면(구글 시트처럼 표만 창 가득): 묶음 자리를 화면에 고정해 덮는다. 보던 시트 · 칸 · 필터 · 고친 내용은 그대로 */
+  /* UX 문서 메뉴 안(iframe)에서 열렸으면 그 iframe도 바깥 창 가득으로 늘린다(같은 서버 페이지라 직접 바꾼다). 닫으면 원래대로 */
+  function frameFull(on){
+    var P = outer(), fe = P && window.frameElement; if (!fe) return;
+    try {
+      if (on) {
+        if (fe.dataset.wbPrev == null) fe.dataset.wbPrev = fe.getAttribute('style') || '';
+        fe.style.cssText = fe.dataset.wbPrev + ';position:fixed!important;left:0!important;top:0!important;width:100vw!important;height:100vh!important;max-width:none!important;margin:0!important;border:0!important;border-radius:0!important;z-index:2147483000!important';
+        P.document.documentElement.style.overflow = 'hidden';
+      } else if (fe.dataset.wbPrev != null) {
+        fe.setAttribute('style', fe.dataset.wbPrev); delete fe.dataset.wbPrev;
+        P.document.documentElement.style.overflow = '';
+      }
+    } catch (z) {}
+  }
+  function wbFull(x, on){
+    fltClose();
+    x.d.full = !!on; x.w.classList.toggle('wb-full', x.d.full);
+    document.documentElement.classList.toggle('wb-full-on', x.d.full);   // 뒤 화면 스크롤 막기
+    frameFull(x.d.full);
+    wbRedraw(x.w, x.d);
+    if (on) { var t = x.w.querySelector('.tab.on'); if (t) t.focus({ preventScroll: true }); }
+  }
+  document.addEventListener('keydown', function(e){
+    if (e.key !== 'Escape') return;
+    if (document.querySelector('.flt-pop')) { fltClose(); return; }   // 필터 창이 먼저 닫힌다
+    var w = document.querySelector('.wbook.wb-full'), x = w && wbOf(w); if (x && !WB_EDIT) { e.preventDefault(); wbFull(x, false); }
+  });
+  /* 지금 시트의 보이는 글(수식은 계산한 값) */
+  function sheetTxt(d, i){ var s = d.sheets[i], ctx = CALC ? wbCtx(d) : null, memo = {}; return function(r, c){ var k = r + ':' + c; if (k in memo) return memo[k]; var e = (s.fm[r] || [])[c], v = e && ctx ? CALC.text(ctx.val(i, r, c)) : (s.rows[r] || [])[c]; return (memo[k] = v == null ? '' : String(v)); }; }
+  /* 필터 창: 그 열의 값(다른 열 필터로 보이는 줄 기준) 목록 · 검색 · 모두 선택 · 확인/취소 */
+  function fltOpen(x, btn){
+    fltClose();
+    var d = x.d, s = d.sheets[d.cur], c = +btn.dataset.flt, tx = sheetTxt(d, d.cur), cnt = {}, order = [];
+    var other = {}; Object.keys(s.fsel).forEach(function(k){ if (+k !== c && s.fsel[k]) other[k] = s.fsel[k]; });
+    for (var r = s.flt.r + 1; r < s.rows.length; r++) {
+      var ok = true; for (var k in other) if (!other[k][tx(r, +k)]) { ok = false; break; } if (!ok) continue;
+      var v = tx(r, c); if (!(v in cnt)) { cnt[v] = 0; order.push(v); } cnt[v]++;
+    }
+    order.sort(function(a, b){ return a === '' ? 1 : b === '' ? -1 : a.localeCompare(b, 'ko', { numeric: true }); });
+    var cur0 = s.fsel[c];
+    var pop = document.createElement('div'); pop.className = 'flt-pop'; pop.dataset.fc = c;
+    pop.innerHTML = '<div class="fl-h">' + esc(colName(c)) + ' 열 · ' + esc(tx(s.flt.r, c) || '') + '</div><input type="search" data-fq placeholder="값 검색" aria-label="값 검색">' +
+      '<label class="fl-all"><input type="checkbox" data-fall' + (!cur0 ? ' checked' : '') + '> (모두 선택)</label><div class="fl-list">' +
+      order.map(function(v){ return '<label data-fv="' + esc(v) + '"><input type="checkbox"' + (!cur0 || cur0[v] ? ' checked' : '') + '> <span>' + (v === '' ? '<i>(빈 셀)</i>' : esc(v.length > 80 ? v.slice(0, 80) + '…' : v)) + '</span><small>' + cnt[v] + '</small></label>'; }).join('') +
+      '</div><div class="fl-act"><button type="button" class="wbb" data-fcancel>취소</button><button type="button" class="wbb pri" data-fok>확인</button></div>';
+    x.w.appendChild(pop);
+    var wr = x.w.getBoundingClientRect(), br = btn.getBoundingClientRect();
+    pop.style.top = (br.bottom - wr.top + 4) + 'px'; pop.style.left = Math.max(4, Math.min(br.right - wr.left - 260, wr.width - 268)) + 'px';
+    var q = pop.querySelector('[data-fq]'); if (q) q.focus();
+  }
+  function fltClose(){ document.querySelectorAll('.flt-pop').forEach(function(p){ p.remove(); }); }
+  document.addEventListener('input', function(e){
+    var q = e.target.closest('.flt-pop [data-fq]'); if (!q) return;
+    var t = q.value.trim().toLowerCase(), pop = q.closest('.flt-pop');
+    pop.querySelectorAll('[data-fv]').forEach(function(l){ var hit = !t || l.dataset.fv.toLowerCase().indexOf(t) >= 0; l.hidden = !hit; l.querySelector('input').checked = hit; });
+    pop.querySelector('[data-fall]').checked = true;
+  });
+  document.addEventListener('change', function(e){
+    var a = e.target.closest('.flt-pop [data-fall]'); if (!a) return;
+    a.closest('.flt-pop').querySelectorAll('[data-fv]').forEach(function(l){ if (!l.hidden) l.querySelector('input').checked = a.checked; });
+  });
+  document.addEventListener('click', function(e){
+    if (e.target.closest('.flt-pop') || e.target.closest('[data-flt]')) return; fltClose();
+  }, true);
   document.addEventListener('click', function(e){
     var x = wbOf(e.target); if (!x) return;
+    var fb = e.target.closest('[data-flt]');
+    if (fb) { e.stopPropagation(); if (document.querySelector('.flt-pop[data-fc="' + fb.dataset.flt + '"]')) fltClose(); else fltOpen(x, fb); return; }
+    var pop = e.target.closest('.flt-pop');
+    if (pop) {
+      if (e.target.closest('[data-fcancel]')) { fltClose(); return; }
+      if (e.target.closest('[data-fok]')) {
+        var s1 = x.d.sheets[x.d.cur], c1 = +pop.dataset.fc, all = true, sel = {}, any = false;
+        pop.querySelectorAll('[data-fv]').forEach(function(l){ var on = !l.hidden && l.querySelector('input').checked; if (on) { sel[l.dataset.fv] = true; any = true; } else all = false; });
+        if (all) delete s1.fsel[c1]; else s1.fsel[c1] = sel;
+        if (!any) s1.fsel[c1] = {};
+        fltClose(); wbRedraw(x.w, x.d);
+      }
+      return;
+    }
     var b = e.target.closest('[data-wb]');
-    if (b) { x.d.cur = +b.dataset.wb; x.d.sel = -1; wbRedraw(x.w, x.d); var t = x.w.querySelector('.tab.on'); if (t) t.focus({ preventScroll: true }); if (typeof askSet === 'function') askSet(); return; }
-    var rn = e.target.closest('td.rn[data-row]');
+    if (b) { x.d.cur = +b.dataset.wb; x.d.sel = -1; x.d.ac = null; wbRedraw(x.w, x.d); var t = x.w.querySelector('.tab.on'); if (t) t.focus({ preventScroll: true }); if (typeof askSet === 'function') askSet(); return; }
+    var rn = e.target.closest('[data-row]');
     if (rn && canDirect()) { var r = +rn.dataset.row; x.d.sel = x.d.sel === r ? -1 : r; wbRedraw(x.w, x.d); return; }
+    var cl = e.target.closest('[data-r][data-c]');
+    if (cl && !cl.isContentEditable) {   // 칸 고르기: 다시 그리지 않고 표시 · fx 줄만 바꾼다
+      var s0 = x.d.sheets[x.d.cur]; x.d.ac = [+cl.dataset.r, +cl.dataset.c];
+      x.w.querySelectorAll('.ac').forEach(function(q){ q.classList.remove('ac'); }); cl.classList.add('ac');
+      var rf = x.w.querySelector('[data-fxref]'), fv = x.w.querySelector('[data-fxv]');
+      if (rf) rf.textContent = colName(x.d.ac[1]) + (x.d.ac[0] + 1); if (fv) fv.textContent = fxText(s0, x.d.ac[0], x.d.ac[1]);
+      return;
+    }
     var a = e.target.closest('[data-wbact]'); if (!a) return;
-    var s = x.d.sheets[x.d.cur], act = a.dataset.wbact;
+    var s = x.d.sheets[x.d.cur], act = a.dataset.wbact, fz = Math.max(1, s.freeze || 0);
     if (act === 'add') {
-      var w = s.rows.reduce(function(m, r){ return Math.max(m, r.length); }, 0), at = x.d.sel > 0 ? x.d.sel + 1 : s.rows.length;
-      s.rows.splice(at, 0, new Array(w + 1).join('.').split('').map(function(){ return ''; })); s.ids.splice(at, 0, -1); x.d.sel = at; wbRedraw(x.w, x.d);
-      var td = x.w.querySelector('td[data-r="' + at + '"][data-c="0"]'); if (td) { td.scrollIntoView({ block: 'nearest' }); cellEdit(td); }
+      var w = s.rows.reduce(function(m, r){ return Math.max(m, r.length); }, 0), at = x.d.sel >= 0 ? x.d.sel + 1 : s.rows.length, src = s.fm[at - 1] || [];
+      s.rows.splice(at, 0, new Array(w + 1).join('.').split('').map(function(){ return ''; })); s.ids.splice(at, 0, -1);
+      s.fm.splice(at, 0, src.map(function(e2){ return e2 ? { f: e2.f, r0: e2.r0 } : e2; }));   // 위 줄의 수식을 같은 모양으로(엑셀에서 수식을 아래로 복사한 것처럼)
+      s.st.splice(at, 0, (s.st[at - 1] || []).slice());   // 서식도 위 줄을 따른다(엑셀에서 줄을 넣을 때처럼)
+      x.d.sel = at; wbRedraw(x.w, x.d);
+      var wd0 = s.widths || [], first = 0; while (first < w && ((s.fm[at] || [])[first] || (wd0[first] != null && wd0[first] <= 40))) first++;   // 수식 칸 · 좁은(여백) 열은 건너뛴다
+      var td = x.w.querySelector('td[data-r="' + at + '"][data-c="' + first + '"]') || x.w.querySelector('td[data-r="' + at + '"][data-c]'); if (td) { td.scrollIntoView({ block: 'nearest' }); cellEdit(td); }
     } else if (act === 'del') {
-      if (x.d.sel > 0 && x.d.sel < s.rows.length) { s.rows.splice(x.d.sel, 1); s.ids.splice(x.d.sel, 1); x.d.sel = -1; wbRedraw(x.w, x.d); }
+      if (x.d.sel >= fz && x.d.sel < s.rows.length) { s.rows.splice(x.d.sel, 1); s.ids.splice(x.d.sel, 1); s.fm.splice(x.d.sel, 1); s.st.splice(x.d.sel, 1); x.d.sel = -1; x.d.ac = null; wbRedraw(x.w, x.d); }
     } else if (act === 'undo') {
       if (!confirm('저장하지 않은 변경을 모두 되돌릴까요?')) return;
-      x.d.sheets.forEach(function(q){ q.rows = cloneRows(q.orig); q.ids = q.rows.map(function(_, k){ return k; }); }); x.d.sel = -1; wbRedraw(x.w, x.d);
+      x.d.sheets.forEach(wbReset); x.d.sel = -1; wbRedraw(x.w, x.d);
+    } else if (act === 'full') {
+      wbFull(x, !x.d.full);
+    } else if (act === 'fclear') {
+      s.fsel = {}; wbRedraw(x.w, x.d);
     } else if (act === 'save') wbSave(x.w, x.d, a);
   });
-  /* 칸 고치기: 더블클릭하면 그 칸이 입력 칸이 된다 */
-  document.addEventListener('dblclick', function(e){ var td = e.target.closest('.wbook [data-r][data-c]'); if (td && canDirect() && !td.isContentEditable) cellEdit(td); });
+  /* 칸 고치기: 더블클릭하면 그 칸이 입력 칸이 된다(수식 칸은 「=수식」) */
+  document.addEventListener('dblclick', function(e){ if (e.target.closest('[data-flt]') || e.target.closest('.flt-pop')) return; var td = e.target.closest('.wbook [data-r][data-c]'); if (td && canDirect() && !td.isContentEditable && !td.querySelector('select')) cellEdit(td); });
   function cellEdit(td){
     var x = wbOf(td); if (!x) return;
-    var s = x.d.sheets[x.d.cur], r = +td.dataset.r, c = +td.dataset.c, old = (s.rows[r] || [])[c] || '', fin = false;
+    var s = x.d.sheets[x.d.cur], r = +td.dataset.r, c = +td.dataset.c, old = fxText(s, r, c), fin = false;
+    var lst = cellList(s, r, c); if (lst && !/^=/.test(old)) return listEdit(x, td, s, r, c, lst, old);
     try { td.contentEditable = 'plaintext-only'; } catch (z) {} if (td.contentEditable !== 'plaintext-only') td.contentEditable = 'true';
     td.classList.add('ed'); td.textContent = old; td.focus();
     var rg = document.createRange(); rg.selectNodeContents(td); var sl = getSelection(); sl.removeAllRanges(); sl.addRange(rg);
+    var fv = x.w.querySelector('[data-fxv]'), rf = x.w.querySelector('[data-fxref]'); if (rf) rf.textContent = colName(c) + (r + 1);
+    function live(){ if (fv) fv.textContent = td.textContent; }
     WB_EDIT = function(k){ end(k); };
     function end(keep, next){
       if (fin) return; fin = true; WB_EDIT = null;
-      td.removeEventListener('keydown', kd); td.removeEventListener('blur', bl);
-      if (keep) { var v = td.textContent.replace(/\r?\n/g, ' '); while (s.rows[r].length <= c) s.rows[r].push(''); s.rows[r][c] = v; }
+      td.removeEventListener('keydown', kd); td.removeEventListener('blur', bl); td.removeEventListener('input', live);
+      if (keep) {
+        var v = td.textContent.replace(/\r?\n/g, ' ');
+        while (s.rows.length <= r) { s.rows.push([]); s.fm.push([]); s.st.push([]); } while (s.rows[r].length <= c) s.rows[r].push('');
+        if (!s.fm[r]) s.fm[r] = [];
+        if (/^=./.test(v)) s.fm[r][c] = { f: v.slice(1), r0: r };   // 수식
+        else { if (s.fm[r][c]) s.fm[r][c] = undefined; s.rows[r][c] = v; }
+      }
+      x.d.ac = [r, c];
       wbRedraw(x.w, x.d);
       if (next) { var nt = x.w.querySelector('[data-r="' + next[0] + '"][data-c="' + next[1] + '"]'); if (nt) cellEdit(nt); }
     }
     function kd(e){
       if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); end(true, r + 1 < s.rows.length ? [r + 1, c] : null); }
-      else if (e.key === 'Tab') { e.preventDefault(); end(true, [r, c + (e.shiftKey ? -1 : 1)]); }
+      else if (e.key === 'Tab') { e.preventDefault(); var nc = c + (e.shiftKey ? -1 : 1), wd = s.widths || []; while (wd[nc] === 0) nc += e.shiftKey ? -1 : 1; end(true, [r, nc]); }
       else if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); end(false); }
     }
     function bl(){ end(true); }
-    td.addEventListener('keydown', kd); td.addEventListener('blur', bl);
+    td.addEventListener('keydown', kd); td.addEventListener('blur', bl); td.addEventListener('input', live);
+  }
+  /* 드롭다운 칸 고치기: 엑셀 목록 값 중에서 고른다(지금 값이 목록에 없으면 맨 위에 그대로 둔다) */
+  function listEdit(x, td, s, r, c, lst, old){
+    var fin = false, opts = [''].concat(lst); if (old && opts.indexOf(old) < 0) opts.splice(1, 0, old);
+    td.classList.add('ed'); td.innerHTML = '<select class="wb-sel" aria-label="' + esc(colName(c) + (r + 1)) + ' 값 고르기">' + opts.map(function(v){ return '<option value="' + esc(v) + '"' + (v === old ? ' selected' : '') + '>' + (v === '' ? '(비움)' : esc(v)) + '</option>'; }).join('') + '</select>';
+    var sel = td.querySelector('select'); sel.focus();
+    try { if (sel.showPicker) sel.showPicker(); } catch (z) {}
+    function end(keep){
+      if (fin) return; fin = true; WB_EDIT = null;
+      if (keep && sel.value !== old) { while (s.rows.length <= r) { s.rows.push([]); s.fm.push([]); s.st.push([]); } while (s.rows[r].length <= c) s.rows[r].push(''); if (s.fm[r] && s.fm[r][c]) s.fm[r][c] = undefined; s.rows[r][c] = sel.value; }
+      x.d.ac = [r, c]; wbRedraw(x.w, x.d);
+    }
+    WB_EDIT = function(k){ end(k); };
+    sel.addEventListener('change', function(){ end(true); });
+    sel.addEventListener('blur', function(){ end(true); });
+    sel.addEventListener('keydown', function(e){ if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); end(false); } else if (e.key === 'Enter') { e.preventDefault(); end(true); } });
   }
   function canDirect(){ return !document.documentElement.classList.contains('doc-ro'); }
   function body(s){ return s.level ? s.raw.replace(/^[^\n]*\n?/, '') : s.raw; }
@@ -1136,7 +1442,8 @@ html.embed,html.embed body{overflow:hidden}
     $('editBtn').disabled = false; $('editBtn').title = '「' + s.label + '」 항목 수정 요청';
     m.querySelector('h2.sec').textContent = s.label;
     Array.prototype.forEach.call(s.box.childNodes, function(x){ m.appendChild(x.cloneNode(true)); });
-    var wx = wbMain(); if (wx && wx.d) { wx.d.sel = -1; wbRedraw(wx.w, wx.d); }   // 시트 묶음: 복사한 그림 대신 지금 자료(보던 시트)로 다시 그린다
+    if (document.documentElement.classList.contains('wb-full-on')) { document.documentElement.classList.remove('wb-full-on'); frameFull(false); }
+    var wx = wbMain(); if (wx && wx.d) { wx.d.sel = -1; wx.d.full = false; wbRedraw(wx.w, wx.d); }   // 시트 묶음: 복사한 그림 대신 지금 자료(보던 시트)로 다시 그린다
     if (s.kids && s.kids.length) {
       /* 밝은 파스텔 12색(순서대로 돌아가며) */
       var FOLDER = ['#fcd9c9', '#d3ecd8', '#eedcea', '#fbf0c4', '#fde2c6', '#dcf0f7', '#cde8ef', '#ebe2f5', '#fcecd4', '#f9dfd9', '#efe5c6', '#e6f2da'];
