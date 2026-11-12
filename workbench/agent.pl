@@ -63,7 +63,7 @@ sub start_session {
   # 오류 출력은 표준 출력과 합친다(따로 닫으면 Claude가 경고를 쓸 때 SIGPIPE로 끝날 수 있다). JSON이 아닌 줄은 읽을 때 건너뛴다
   my ($in, $out) = (undef, undef);
   my $pid = eval { open3($in, $out, undef, $claude, '-p', '--input-format', 'stream-json', '--output-format', 'stream-json', '--verbose',
-    '--permission-mode', 'acceptEdits', '--allowedTools', 'Bash,Read,Write,Edit,Glob,Grep,TodoWrite,WebFetch,mcp__figma,mcp__claude_ai_Figma') };
+    '--permission-mode', 'acceptEdits', '--allowedTools', 'Bash,Read,Write,Edit,Glob,Grep,TodoWrite,WebFetch,Skill,Agent,Task,mcp__figma,mcp__claude_ai_Figma') };
   if (!$pid) { logm("세션 시작 실패: $@"); return 0; }
   $S = { pid => $pid, in => $in, out => $out, buf => '', turns => 0, last => time, ctx => 0, win => 200000 };
   logm("세션 시작 (claude pid $pid)"); return 1;
@@ -166,6 +166,7 @@ sub send_turn {
   while (1) {
     my $l = read_line($until);
     return { ok => 0, dead => 1, text => $raw } unless defined $l;
+    $until = time + $TURN_MIN * 60 if $l ne "";   # 출력이 오면 다시 20분(전체 시간이 아니라 멈춤만 끊는다, 2026-11-12)
     return { ok => 0, dead => 1, text => "응답이 $TURN_MIN 분 넘게 없음" } if $l eq '' && time > $until;
     my $m = eval { JSON::PP->new->decode($l) }; if (!$m) { $raw .= "$l\n"; next; }
     save_usage($m->{rate_limit_info}) if ($m->{type} // '') eq 'rate_limit_event';

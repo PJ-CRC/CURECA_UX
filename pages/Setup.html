@@ -50,6 +50,9 @@ a{color:var(--accent)}
 .step>summary::-webkit-details-marker{display:none}
 .num{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:13px;background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line)}
 .step.done .num{background:var(--ok);color:#fff;border-color:transparent}
+.step.opt .num{background:var(--surface-2);color:var(--ink-2)}
+.snav li.opt{margin-top:6px;padding-top:6px;border-top:1px solid var(--line)}
+.snav li.opt.on .sn{background:var(--ok-soft);color:var(--ok);border-color:transparent}
 .step.cur{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
 .step.cur .num{background:var(--accent);color:#fff;border-color:transparent}
 /* 연결 안 됨 · 오류(칩이 bad): 지금 단계 표시(파랑)보다 앞서 붉게 — 연결된 것처럼 보이지 않게 */
@@ -316,6 +319,30 @@ a{color:var(--accent)}
     </div>
   </details>
 
+  <!-- 선택: Figma 토큰(진행 수에 넣지 않는다). 넣으면 Figma 앱 · 플러그인 없이 서버가 Figma REST API로 캡처를 받는다(node/server/figma.js) -->
+  <details class="step opt" id="sTok">
+    <summary><span class="num">+</span><span class="ttl">Figma 토큰 (선택)<small>넣으면 Figma 앱을 켜지 않아도 수정한 화면의 캡처를 서버가 직접 받습니다</small></span><span class="chip" id="tokChip"></span></summary>
+    <div class="body">
+      <p class="msg" id="tokMsg">확인 중…</p>
+      <ol>
+        <li>Figma(웹 또는 앱) 왼쪽 위 내 계정 › <b>Settings › Security › Personal access tokens</b> › <b>Generate new token</b></li>
+        <li>이름은 아무거나(예: Figma AI Run), <b>만료</b> 기간은 Figma에서 정합니다(최대 90일). 그때 고른 기간을 아래 「만료」에도 똑같이 골라 주세요 — Figma가 만료일을 알려 주지 않아 여기서 날짜를 기억해 두고 남은 날을 보여 줍니다.</li>
+        <li>권한(Scopes)은 <b>File content: Read</b> · <b>File versions: Read</b> · <b>Comments: Read and write</b>만 고르고 나머지는 <b>No access</b>로 둡니다.</li>
+        <li>만든 토큰(<code>figd_</code>로 시작)을 복사해 아래에 붙여 넣고 <b>저장</b>을 누릅니다. 토큰은 만들 때 한 번만 보이니 바로 붙여 넣으세요.</li>
+      </ol>
+      <div class="row">
+        <input class="inp" id="tokIn" type="password" autocomplete="off" spellcheck="false" placeholder="figd_…" aria-label="Figma 개인 액세스 토큰">
+        <select class="inp" id="tokDays" aria-label="토큰 만료 기간" style="flex:none;width:auto"><option value="90" selected>만료 90일</option><option value="30">만료 30일</option><option value="7">만료 7일</option><option value="1">만료 1일</option><option value="date">날짜 직접</option><option value="">만료 모름</option></select>
+        <input class="inp" id="tokDate" type="date" aria-label="토큰 만료일" style="flex:none;width:auto;display:none">
+        <button class="btn pri" id="tokSave">저장</button>
+      </div>
+      <div class="row"><button class="btn" id="tokCheck" style="display:none">연결 확인</button><button class="btn" id="tokDel" style="display:none">토큰 지우기</button>
+        <span id="tokExpBox" style="display:none;align-items:center;gap:6px"><label for="tokExpIn" class="hint" style="margin:0">만료일</label><input class="inp" id="tokExpIn" type="date" style="width:auto"><button class="btn" id="tokExpSave">만료일 저장</button></span></div>
+      <p class="hint">토큰은 <b>이 PC에만</b> 저장되고(작업 이력 · 배포에 들어가지 않음) Figma 말고는 어디에도 보내지 않습니다. 화면에는 끝 4자리만 보입니다.
+        파일을 <b>Full · Dev 좌석</b>으로 볼 수 있는 계정의 토큰이어야 캡처를 충분히 받을 수 있습니다(View · Collab 좌석은 한 달에 몇 번뿐).</p>
+    </div>
+  </details>
+
   <div class="pager"><button class="btn" id="prevStep">이전 단계</button><button class="btn pri" id="nextStep">다음 단계</button></div>
   </div>
   </div>
@@ -344,9 +371,10 @@ a{color:var(--accent)}
       var li = $('nav-' + x); li.classList.toggle('sel', x === id);
       li.querySelector('button').setAttribute('aria-current', x === id ? 'step' : 'false');
     });
+    $('sTok').classList.toggle('sel', id === 'sTok'); var tl = $('nav-sTok'); if (tl) { tl.classList.toggle('sel', id === 'sTok'); tl.querySelector('button').setAttribute('aria-current', id === 'sTok' ? 'step' : 'false'); }
     $(id).open = true;
     var i = steps.indexOf(id);
-    $('prevStep').disabled = i <= 0; $('nextStep').disabled = i >= steps.length - 1;
+    $('prevStep').disabled = i <= 0; $('nextStep').disabled = i < 0 || i >= steps.length - 1;
     if (scroll && wide.matches) { var top = $('steps').getBoundingClientRect().top; if (top < 60) window.scrollBy(0, top - 60); }
   }
 
@@ -577,7 +605,42 @@ a{color:var(--accent)}
   $('snav').innerHTML = steps.map(function(id, i){
     var t = $(id).querySelector('.ttl').firstChild.textContent.trim();
     return '<li id="nav-' + id + '"><button type="button" data-step="' + id + '"><span class="sn">' + (i + 1) + '</span><span class="st">' + (i + 1) + ' ' + esc(t) + '</span></button></li>';
-  }).join('');
+  }).join('') +
+    '<li id="nav-sTok" class="opt"><button type="button" data-step="sTok"><span class="sn">+</span><span class="st">Figma 토큰 (선택)</span></button></li>';
+  /* ── Figma 토큰(선택) ── 서버(/api/figma)는 토큰을 내보내지 않고 있음 · 계정 · 끝 4자리만 */
+  function tokPost(b){ return fetch('/api/figma', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(b) }).then(function(r){ return r.json().catch(function(){ return { error: '서버 응답 오류(HTTP ' + r.status + ')' }; }); }).then(function(d){ if (d.error) throw new Error(d.error); return d; }); }
+  /* 만료일 → 남은 날(오늘 0시 기준). 7일 이하는 주의, 지나면 만료 */
+  function tokLeft(exp){ if (!/^\d{4}-\d{2}-\d{2}$/.test(exp || '')) return null; var p = exp.split('-'), e = new Date(+p[0], +p[1] - 1, +p[2]), t = new Date(); t.setHours(0, 0, 0, 0); return Math.round((e - t) / 86400000); }
+  function ymdAdd(n){ var d = new Date(); d.setDate(d.getDate() + n); return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
+  function tokShow(d){
+    var chip = $('tokChip'), on = d && d.token, left = on ? tokLeft(d.expires) : null;
+    chip.className = 'chip ' + (on ? (left != null && left < 0 ? 'bad' : left != null && left <= 7 ? 'wait' : 'ok') : '');
+    chip.textContent = d === null ? '' : !on ? '선택' : left == null ? '연결됨' : left < 0 ? '만료됨' : left === 0 ? '오늘 만료' : left + '일 남음';
+    $('tokExpBox').style.display = on ? 'inline-flex' : 'none'; if (on && document.activeElement !== $('tokExpIn')) $('tokExpIn').value = d.expires || '';
+    $('sTok').classList.toggle('done', !!on);
+    var tl = $('nav-sTok'); if (tl) { tl.classList.toggle('on', !!on); tl.querySelector('.sn').textContent = on ? '✓' : '+'; }
+    $('tokCheck').style.display = $('tokDel').style.display = on ? '' : 'none';
+    if (d === null) { $('tokMsg').textContent = '지금 서버(예전 서버)에서는 쓸 수 없습니다. Figma AI Run을 다시 실행하면 새 서버로 켜집니다.'; return; }
+    var u = d.user || {};
+    $('tokMsg').innerHTML = on ? '연결됨 · <b>' + esc(u.handle || '') + '</b>' + (u.email ? ' (' + esc(u.email) + ')' : '') + ' · 토큰 …' + esc(d.last4) +
+      ' · ' + (left == null ? '만료일 모름(아래에서 넣을 수 있습니다)' : '만료일 <b>' + esc(d.expires) + '</b> ' + (left < 0 ? '<b style="color:var(--red)">만료됨 — 새 토큰을 만들어 다시 넣어 주세요</b>' : left <= 7 ? '<b style="color:var(--warn)">(' + left + '일 남음 — 곧 만료, 새 토큰을 준비하세요)</b>' : '(' + left + '일 남음)')) +
+      '<br>Claude가 Workbench 요청을 끝내면 고친 화면을 서버가 이 토큰으로 다시 캡처합니다.'
+      : '토큰이 없습니다. 없어도 지금처럼 Figma 플러그인 · Claude가 캡처합니다.';
+  }
+  function tokLoad(){ return fetch('/api/figma', { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; }).then(tokShow); }
+  $('tokSave').onclick = function(){
+    var v = $('tokIn').value.trim(); if (!v) { $('tokIn').focus(); return; }
+    var b = $('tokSave'); b.disabled = true; $('tokMsg').textContent = 'Figma에 확인하는 중…';
+    var dv = $('tokDays').value, exp = dv === 'date' ? $('tokDate').value : dv ? ymdAdd(+dv) : '';
+    tokPost({ action: 'token', token: v, expires: exp }).then(function(d){ $('tokIn').value = ''; toast('Figma 토큰을 저장했습니다(' + ((d.user && d.user.handle) || '') + ')'); return tokLoad(); })
+      .catch(function(e){ $('tokMsg').textContent = '저장하지 못했습니다: ' + e.message; }).then(function(){ b.disabled = false; });
+  };
+  $('tokCheck').onclick = function(){ tokPost({ action: 'check' }).then(function(d){ toast('Figma 연결 정상 · ' + ((d.user && d.user.handle) || '')); }).catch(function(e){ $('tokMsg').textContent = '연결 확인 실패: ' + e.message; }); };
+  $('tokDel').onclick = function(){ if (!confirm('이 PC에 저장한 Figma 토큰을 지울까요?')) return; tokPost({ action: 'clear' }).then(function(){ toast('Figma 토큰을 지웠습니다'); return tokLoad(); }).catch(function(e){ alert(e.message); }); };
+  $('tokDays').onchange = function(){ $('tokDate').style.display = this.value === 'date' ? '' : 'none'; };
+  $('tokExpSave').onclick = function(){ tokPost({ action: 'expires', expires: $('tokExpIn').value }).then(function(){ toast('만료일을 저장했습니다'); return tokLoad(); }).catch(function(e){ alert(e.message); }); };
+  tokLoad();
+
   select('s1');
   load();
   setInterval(load, 4000);

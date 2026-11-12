@@ -25,7 +25,9 @@ on('GET', '/api/requests', ({ res, send }) => {
 });
 
 // GET /api/jobs?key=&kind=&status=: 작업 대기열(거르기). pluginSec = 플러그인이 마지막으로 닿은 지 몇 초(아직 옮기지 않아 null)
-on('GET', '/api/jobs', ({ q }) => {
+on('GET', '/api/jobs', ({ q, req }) => {
+  // 플러그인이 캡처 작업을 물으면 자동 캡처 목록에서 대기열을 먼저 채운다(writes.js autoFill)
+  if (q.get('kind') === 'capture' && String(req.headers.origin) === 'null' && helpers.autoFill) { try { helpers.autoFill(q.get('key')); } catch (e) {} }
   const j = core.readJson(C.jobFile) || { version: 0, items: [] };
   let items = core.arr(j.items);
   for (const f of ['key', 'kind', 'status']) { const v = q.get(f); if (v) { const prop = f === 'key' ? 'fileKey' : f; items = items.filter((x) => x && x[prop] === v); } }
@@ -153,11 +155,14 @@ function appliedDocs(e) {
   else if (e.guideId) d.guide = { id: String(e.guideId), by: String(e.by || ''), at: String(e.at || '') };
   return d;
 }
+// 작업 기준(이 PC만): 작업규칙 · 정책서 · 기준데이터 · 화면 정의서는 카테고리마다 하나를 [적용]하면 이 PC의 모든 Figma 파일에 같이 쓴다(아직 없는 파일은 채워 준다, filled:true).
+//  UX가이드만 Figma 파일마다 고른다(PC 화면 · 모바일 등 대상에 따라, 2026-11-12) — 다른 파일에서 채우지 않는다. 없으면 비어 있다 → Claude는 화면설계 요청을 「보류」 + 질문
 function fillApplied(applied) {
   let src = applied[workKey()];
-  if (!Object.keys(appliedDocs(src)).length) { src = null; for (const k of Object.keys(applied)) { const e = applied[k]; if (Object.keys(appliedDocs(e)).length && (!src || String(e.at || '') > String(src.at || ''))) src = e; } }
+  const common = (e) => { const d = appliedDocs(e); delete d.guide; return d; };
+  if (!Object.keys(common(src)).length) { src = null; for (const k of Object.keys(applied)) { const e = applied[k]; if (Object.keys(common(e)).length && (!src || String(e.at || '') > String(src.at || ''))) src = e; } }
   if (!src) return applied;
-  const sd = appliedDocs(src);
+  const sd = common(src);
   for (const k of applyKeys('')) {
     const docs = appliedDocs(applied[k]); let n = 0;
     for (const t of Object.keys(sd)) if (!(t in docs)) { docs[t] = sd[t]; n++; }
@@ -201,6 +206,25 @@ function readGuides(T) {
   return { items: sortDescPS(list, (x) => String(x.updatedAt || '')), applied };
 }
 on('GET', '/api/guides', ({ T }) => readGuides(T));
+
+// GET /api/worklogs?team=: 화면설계 작업 기록(규칙 저장소 work-logs/*.md, reference-rules/work-log.md 틀) 목록
+//  머리말(status · case · requester · menu · cids · test · started)과 지금 단계(「단계」 표에서 관문 칸이 빈 첫 줄), `다음:` 줄
+const STAGES = ['0. 시작', '1. 요건 정의', '2. 근거 · 분석', '3. 화면 설계', '4. 검토', '5. 고객 UX 리뷰', '6. 다국어', '7. 완료'];
+function readWorkLog(f) {
+  const t = String(core.readText(f) || '').replace(/^﻿/, ''), fm = {}, m = /^---\r?\n([\s\S]*?)\r?\n---/.exec(t);
+  if (m) for (const l of m[1].split(/\r?\n/)) { const k = /^([A-Za-z_]+):\s*(.*?)\s*(#.*)?$/.exec(l); if (!k || /^\s/.test(l)) continue; let v = k[2]; if (/^\[.*\]$/.test(v)) v = v.slice(1, -1).split(',').map((x) => x.trim().replace(/^["']|["']$/g, '')).filter(Boolean); fm[k[1]] = v; }
+  const title = (/^#\s*작업 기록:\s*(.+)$/m.exec(t) || [])[1] || '';
+  let stage = -1; const sec = /##\s*단계\s*\r?\n([\s\S]*?)(\r?\n##\s|$)/.exec(t);
+  if (sec) { const rows = sec[1].split(/\r?\n/).filter((l) => /^\|\s*\d\./.test(l)); for (let i = 0; i < rows.length; i++) { const c = rows[i].split('|').map((x) => x.trim()); if (!c[2] && !c[3]) { stage = i; break; } } if (stage < 0 && rows.length) stage = rows.length; }
+  const next = (/^다음:\s*(.+)$/m.exec(t) || [])[1] || '';
+  return { name: path.basename(f, '.md'), title: title.trim(), status: String(fm.status || ''), case: String(fm.case || ''), requester: String(fm.requester || ''), menu: String(fm.menu || ''),
+    cids: Array.isArray(fm.cids) ? fm.cids : [], test: String(fm.test) === 'true', started: String(fm.started || ''), stage, stageName: stage >= 0 && stage < STAGES.length ? STAGES[stage] : stage >= STAGES.length ? '끝' : '', next: next.trim() };
+}
+on('GET', '/api/worklogs', ({ T }) => {
+  const dir = path.join(T.guideRoot, 'work-logs');
+  const items = fileNames(dir).filter((n) => /\.md$/i.test(n) && !/^readme\.md$/i.test(n)).map((n) => readWorkLog(path.join(dir, n)));
+  return { dir: `${T.guideRel}/work-logs`, stages: STAGES, items: items.sort((a, b) => String(b.started).localeCompare(String(a.started)) || a.name.localeCompare(b.name)) };
+});
 
 // ── 시작 안내(Get-SetupEnv · Agent-Info · Find-Claude · Find-ClaudeCode · Find-Git) ──
 const { spawnSync } = require('child_process');
@@ -352,7 +376,8 @@ const pad2 = (n) => String(n).padStart(2, '0');
 const localIso = (d) => `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}T${pad2(d.getHours())}:${pad2(d.getMinutes())}:${pad2(d.getSeconds())}`;
 on('GET', '/api/plan/files', ({ q, T }) => {
   const dir = String(q.get('dir') || '');
-  if (!['provisional', 'pending', 'customer-agenda', 'decisions', 'screen-fixes'].includes(dir)) throw new Error('알 수 없는 폴더: ' + dir);
+  // discussions = 논의 대상(새 흐름, 2026-11-12). 나머지는 예전 구조(임시 정책 · 논의 · 고객 논의 · 결정 · 화면 수정)를 쓰는 PC를 위해 남긴다
+  if (!['discussions', 'provisional', 'pending', 'customer-agenda', 'decisions', 'screen-fixes'].includes(dir)) throw new Error('알 수 없는 폴더: ' + dir);
   const base = path.join(T.guideRoot, dir), out = [];
   // PowerShell Get-ChildItem -Recurse와 같은 순서: 그 폴더의 파일 → 하위 폴더(이름순)
   const walk = (d, rel) => {
@@ -428,6 +453,7 @@ on('GET', '/api/sheet/data', async ({ q, T, res, send, sendJson }) => {
 
 // 쓰기 API(2단계)
 const helpers = { testKey, projDir, readProj, keyOf, workKey, readMinute, readNotes, noteKey, readGuides, applyKeys, appliedDocs, agentInfo, findClaudeCode, sheetCheck, setupEnv: () => { envCache = null; return setupEnv(); } };
+require('./figma')(on, helpers);   // Figma 토큰(REST API) — 캡처. writes.js가 요청 완료 때 helpers.figmaAfterDone을 부른다
 require('./writes')(on, helpers);
 
 module.exports = { helpers, find, routes, testKey, projDir, readProj, keyOf, workKey };

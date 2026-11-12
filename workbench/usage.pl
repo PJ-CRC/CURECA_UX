@@ -44,7 +44,7 @@ if ($o{req} ne '') {
   my ($it) = grep { ref $_ eq 'HASH' && str($_->{id}) eq $o{req} } @{ $r->{items} || [] };
   unless ($it) { print "NOREQ $o{req}\n"; exit 1; }
   $o{from} = str($it->{startedAt}) if $o{from} eq '';
-  $meta{kind} = 'request'; $meta{reqId} = $o{req}; $meta{reqType} = str($it->{type});   # 요청 유형(일반 · 텍스트 수정 …)
+  $meta{kind} = 'request'; $meta{reqId} = $o{req}; $meta{reqType} = str($it->{type});   # 요청 유형(케이스 1 · 2 · 3 · 질문, 예전 요청은 일반 · 텍스트 수정 …)
   for my $k (qw(team fileKey fileName page frame nodeId text)) { $meta{$k} = str($it->{$k}) if $meta{$k} eq ''; }
   $meta{by} = str($it->{author}) if $meta{by} eq '';
 }

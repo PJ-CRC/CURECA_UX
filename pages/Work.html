@@ -74,6 +74,14 @@ table.t td.nw{white-space:nowrap}
 .pill.done{background:var(--ok-soft);color:var(--ok);border-color:transparent}
 .pill.prog{background:var(--accent-soft);color:var(--accent);border-color:transparent}
 .pill.review{background:var(--rev-soft);color:var(--rev);border-color:transparent}
+/* 작업 기록 단계 막대 */
+.wlbar{display:flex;gap:4px;list-style:none;margin:12px 0 0;padding:0;flex-wrap:wrap}
+.wlbar li{flex:1 1 90px;font-size:12px;font-weight:600;padding:5px 8px;border-radius:6px;background:var(--surface-2,#f1f3f6);color:var(--ink-3,#6b7280);text-align:center;white-space:nowrap}
+.wlbar li.done{background:var(--ok-soft);color:var(--ok)}
+.wlbar li.now{background:var(--accent);color:#fff}
+/* 논의 대상 목록의 종류 표시 */
+.pill.kpv{background:var(--accent-soft);color:var(--accent);border-color:transparent;font-weight:700}
+.pill.kd{background:var(--rev-soft);color:var(--rev);border-color:transparent;font-weight:700}
 .pill.warn{background:var(--warn-bg);color:var(--warn-ink);border-color:transparent}
 .chip{display:inline-block;margin:2px 4px 2px 0;padding:0 7px;border-radius:6px;background:var(--accent-soft);color:var(--accent);font:600 12.5px/1.8 "JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:nowrap}
 /* 주 이동 */
@@ -165,7 +173,7 @@ table.sh td textarea{width:100%;min-width:140px;min-height:30px;padding:4px 6px;
 .mgrid .card{margin:0}
 .mlist{padding:12px;max-height:calc(100vh - 260px);overflow:auto;position:sticky;top:12px}
 .mhead{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:4px 6px 10px;min-height:44px;box-sizing:border-box}   /* 버튼이 숨어도(보기 전용) 높이가 같게 */
-/* 임시 정책 목록 머리: 상태 뱃지는 늘 왼쪽부터(새 임시 정책 버튼이 없어도), 버튼은 오른쪽 끝 */
+/* 목록 머리: 거르기는 늘 왼쪽부터(새 항목 버튼이 없어도), 버튼은 오른쪽 끝 */
 .mhead.pvh{justify-content:flex-start;gap:4px;flex-wrap:wrap}
 .mimport{width:100%;margin-bottom:8px}
 .mrange{display:flex;align-items:center;gap:6px;padding:0 6px 6px}
@@ -191,7 +199,7 @@ table.sh td textarea{width:100%;min-width:140px;min-height:30px;padding:4px 6px;
 .mcontent h4{margin:20px 0 8px;font-size:15px;font-weight:800}
 .mtext{white-space:pre-wrap;word-break:break-word;font-size:14.5px;line-height:1.75}
 .mmeta{margin:24px 0 0;font-size:12px;color:var(--ink-3)}
-/* 작업대기 · 임시 정책 · 논의·결정 */
+/* 작업대기 · 논의 대상 · 작업 기록 */
 .dstat{display:flex;align-items:center;gap:8px;width:100%}
 .dstat span{flex:none;font-size:13px;font-weight:700;color:var(--ink-2)}
 .minp{width:100%;height:34px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font:inherit;font-size:13.5px}
@@ -230,7 +238,7 @@ button.pill{cursor:pointer;font:inherit;font-size:12.5px;font-weight:600}
 .msec h4 .muted{font-weight:600;font-size:13px;margin-left:4px}
 .msum{margin:-2px 0 8px;font-size:12px;color:var(--ink-3)}
 .mnotes{margin-top:24px;padding-top:4px;border-top:1px solid var(--line)}
-/* 회의록 ↔ 임시 정책 · 논의: 이 회의에서 나온 항목, 작성 화면의 「진행 중인 항목 넣기」 */
+/* 회의록 ↔ 논의 대상: 이 회의에서 나온 항목, 작성 화면의 「진행 중인 항목 넣기」 */
 .mrel{margin-top:24px;padding-top:4px;border-top:1px solid var(--line)}
 .mrel ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
 .mrel li{display:flex;align-items:baseline;gap:8px;font-size:13.5px}
@@ -404,8 +412,8 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     { k: 'weekly', label: '주간 진행 현황', about: '' },
     { k: 'backlog', label: '화면설계서 작업대기', about: '화면설계서의 반영 대기 목록 중 아직 화면에 반영하지 않은 것을 메뉴 · 화면별로 봅니다.' },
     { k: 'minutes', label: '회의록', about: '회의록을 봅니다.' },
-    { k: 'provisional', label: '임시 정책', about: '공통 자료에 아직 없지만 작업에 먼저 쓰는 임시 정책과 승인 · 반려 상태를 봅니다.' },
-    { k: 'decisions', label: '논의·결정', about: '협의 대기 · 고객 논의 항목과 그 결정을 봅니다.' }
+    { k: 'decisions', label: '논의 대상', about: '정책 · 화면에서 정해야 할 것을 한 리스트로 봅니다(규칙 저장소 discussions/).' },
+    { k: 'worklogs', label: '작업 기록', about: '화면설계 작업(케이스 1 · 2 · 3)의 단계 진행과 다음 할 일을 봅니다(규칙 저장소 work-logs/).' }
   ];
   $('tabs').innerHTML = TABS.map(function(t, i){
     return '<button type="button" role="tab" id="tab-' + t.k + '" data-tab="' + t.k + '" aria-controls="panel-' + t.k + '" aria-selected="' + (i ? 'false' : 'true') + '"' + (i ? ' tabindex="-1"' : '') + '>' + esc(t.label) + '<span class="cnt" id="cnt-' + t.k + '"></span></button>';
@@ -417,6 +425,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   }).join('');
   var cur = 'schedule';
   function select(k, focus){
+    if (k === 'provisional') k = 'decisions';   // 예전 주소(?tab=provisional) — 임시 정책은 논의 대상으로 합쳤다(새 흐름)
     if (!TABS.some(function(t){ return t.k === k; })) k = TABS[0].k;
     cur = k;
     TABS.forEach(function(t){
@@ -429,8 +438,8 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     if (k === 'weekly') renderWeekly();
     if (k === 'minutes') renderMinutes();
     if (k === 'backlog') renderBacklog();
-    if (k === 'provisional') renderPv();
-    if (k === 'decisions') renderDisc();
+    if (k === 'decisions') renderPlan();
+    if (k === 'worklogs') renderWl();
   }
   $('tabs').addEventListener('click', function(e){ var b = e.target.closest('[data-tab]'); if (b) select(b.dataset.tab); });
   $('tabs').addEventListener('keydown', function(e){
@@ -597,7 +606,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       });
     }).catch(function(){ pols = []; });
   }
-  // 임시 정책(주간 진행 현황용 pvs)은 임시 정책 탭이 읽은 PVS에서 만든다(loadPvDocs)
+  // 주간 진행 현황의 논의 대상(pvs)은 논의 대상 탭이 읽은 DS에서 만든다(loadDisc)
   function loadPvs(){ return Promise.resolve(); }
 
   /* ── 일정 탭(시트 그대로 · 고치기) ── */
@@ -819,8 +828,8 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       (thisWeek ? '<span class="wk-now">이번 주</span>' : '<button class="btn sm" type="button" data-wk="0">이번 주로</button>') +
       '<span class="wk-sp"></span>' + (wbs && wbs.at ? '<span class="wk-at">일정 ' + esc(new Date(wbs.at).toLocaleString()) + ' 기준</span>' : '') + '</div>';
     // 안내
-    var src = conf && conf.configured ? ('일정은 ' + (isAzure() ? 'Azure DevOps' : '구글 시트 「' + esc((wbs && wbs.name) || '일정') + '」 탭') + ', 회의는 「' + esc(minName()) + '」 탭, 정책은 UX 문서(정책서 · 임시 정책)를 보고 채웠습니다. 원본을 고치고 [새로고침]하면 숫자도 바뀝니다.')
-      : '일정이 아직 연결되지 않아 일정 · 회의 숫자는 비어 있습니다. 정책은 UX 문서(정책서 · 임시 정책)를 보고 채웠습니다.';
+    var src = conf && conf.configured ? ('일정은 ' + (isAzure() ? 'Azure DevOps' : '구글 시트 「' + esc((wbs && wbs.name) || '일정') + '」 탭') + ', 회의는 「' + esc(minName()) + '」 탭, 정책은 UX 문서(정책서)와 논의 대상을 보고 채웠습니다. 원본을 고치고 [새로고침]하면 숫자도 바뀝니다.')
+      : '일정이 아직 연결되지 않아 일정 · 회의 숫자는 비어 있습니다. 정책은 UX 문서(정책서)와 논의 대상을 보고 채웠습니다.';
     h += '<p class="notice"><b>안내</b> · ' + src + '</p>' + (wbs && (wbs.cached || wbs.error) ? srcNote(wbs) : '');
     if (loading.wbs && !wbs) h += '<p class="muted">일정을 읽는 중…</p>'; else if (loading.wbs && !sheetFresh.wbs) h += '<p class="muted" style="margin:-8px 0 12px;font-size:12.5px"><b class="refreshing">저장된 사본으로 보여 주는 중 · 시트에서 새로 받는 중…</b></p>';
     // 숫자 카드
@@ -849,19 +858,19 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     // 주요 작업 내용: 정책 변동 사항 · 주요 내용
     var P = pols || [], nw = P.filter(function(p){ return inWeek(p.date, mon); }), ch = P.filter(function(p){ return inWeek(p.rev, mon) && !(p.date && p.date >= mon); });
     var doms = {}; nw.forEach(function(p){ (doms[p.domain] = doms[p.domain] || []).push(p); });
-    var PV = pvs || [], pvWait = PV.filter(function(p){ return /대기/.test(p.status); }), pvNew = PV.filter(function(p){ return inWeek(p.date, mon); });
+    var PV = pvs || [], pvWait = PV.filter(function(p){ return p.status === '논의 중'; }), pvNew = PV.filter(function(p){ return inWeek(p.date, mon); });
     var doneW = items.filter(function(it){ return it.cat === 'done' && inWeek(it.end, mon); });
     h += '<section class="card"><h3>주요 작업 내용</h3>' +
       '<h4 class="sub">정책 변동 사항</h4><dl class="kv">' +
       '<dt>신규</dt><dd>' + (pols ? nw.length + '건 · ' + Object.keys(doms).length + '개 영역' : '불러오는 중…') + '</dd>' +
       '<dt>변경</dt><dd>' + (pols ? ch.length + '건 <small>(지난주까지 있던 정책 중 이번 주에 고친 것)</small>' : '') + (ch.length ? '<br>' + ch.map(function(p){ return '<span class="chip" title="' + esc(p.title) + '">' + esc(p.id) + '</span>'; }).join('') : '') + '</dd>' +
-      '<dt>임시 정책</dt><dd>' + (pvs ? '승인 대기 ' + pvWait.length + '건' + (pvWait.length ? ' · ' + pvWait.map(function(p){ return '<a class="chip" href="Common_UX_Guide.html?doc=policy" title="' + esc(p.title) + '">' + esc(p.id) + '</a>'; }).join('') : '') : '불러오는 중…') + '</dd></dl>' +
+      '<dt>논의 대상</dt><dd>' + (pvs ? '논의 중 ' + pvWait.length + '건' + (pvWait.length ? ' · ' + pvWait.map(function(p){ return '<a class="chip" href="?tab=decisions" data-goid="' + esc(p.id) + '" title="' + esc(p.title) + '">' + esc(p.id) + '</a>'; }).join('') : '') : '불러오는 중…') + '</dd></dl>' +
       '<h4 class="sub">주요 내용</h4>' + (function(){
         var li = [];
         doneW.forEach(function(it){ li.push('<li>' + name(it) + ' <span class="pill done">완료</span></li>'); });
-        pvNew.forEach(function(p){ li.push('<li>임시 정책 <span class="chip">' + esc(p.id) + '</span>' + esc(p.title) + ' <span class="muted">(' + esc(p.status) + (p.by ? ' · ' + esc(p.by) : '') + ')</span></li>'); });
+        pvNew.forEach(function(p){ li.push('<li>논의 대상 <span class="chip">' + esc(p.id) + '</span>' + esc(p.title) + ' <span class="muted">(' + esc(p.status) + (p.by ? ' · ' + esc(p.by) : '') + ')</span></li>'); });
         ch.forEach(function(p){ li.push('<li>정책 수정 <span class="chip">' + esc(p.id) + '</span>' + esc(p.title) + '</li>'); });
-        return li.length ? '<ul class="list">' + li.join('') + '</ul>' : '<p class="muted" style="margin:0">이번 주에 완료한 업무 · 새 임시 정책 · 정책 수정이 없습니다.</p>';
+        return li.length ? '<ul class="list">' + li.join('') + '</ul>' : '<p class="muted" style="margin:0">이번 주에 완료한 업무 · 새 논의 대상 · 정책 수정이 없습니다.</p>';
       })() + '</section>';
     // 회의 내역(이번 주, 여러 개면 넘겨 보기) · 차주 일정
     var M = meetings(), mw = M ? M.items.filter(function(m){ return inWeek(m.date, mon); }).sort(function(a, b){ return a.date - b.date; }) : [];
@@ -895,7 +904,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     renderWeekly(); var g = document.querySelector('[data-mt="' + (b.dataset.mt || 1) + '"]'); if (g && b.dataset.mt) g.focus();
   });
 
-  /* ══ 저장소 문서 읽기(화면설계서 작업대기 · 임시 정책 · 논의·결정 공통) ══ */
+  /* ══ 저장소 문서 읽기(화면설계서 작업대기 · 논의 대상 · 작업 기록 공통) ══ */
   function getText(url){ return fetch(encodeURI(url), { cache: 'no-store' }).then(function(r){ return r.ok ? r.text() : ''; }).catch(function(){ return ''; }); }
   // 여러 파일을 한 번에(/api/files): 서버가 하나씩 처리해 수백 개를 따로 받으면 느리다. 안 되면 하나씩
   function getTexts(urls){
@@ -955,48 +964,46 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   function addPlanJob(sub, target, plan, name){
     return api('/api/jobs', { action: 'add', kind: 'plan', sub: sub, target: target || '', plan: plan, name: name || target || '', text: name || '', by: myName });
   }
-  function renderPlanTabs(){ if (cur === 'backlog') renderBacklog(); if (cur === 'provisional') renderPv(); if (cur === 'decisions') renderDisc(); if (cur === 'minutes') renderMinutes(); /* 회의록의 「이 회의에서 나온 정책 · 논의」 · 「진행 중인 항목 넣기」 */ }
+  function renderPlanTabs(){ if (cur === 'backlog') renderBacklog(); if (cur === 'decisions') renderPlan(); if (cur === 'worklogs') renderWl(); if (cur === 'minutes') renderMinutes(); /* 회의록의 「이 회의에서 나온 정책 · 논의」 · 「진행 중인 항목 넣기」 */ }
   var planLoaded = false;
   function loadPlan(again){
-    return Promise.all([loadBacklog(), loadFixReqs(), loadPvDocs(), loadDisc(), again ? null : loadPlanJobs()]).then(function(){ planLoaded = true; renderPlanTabs(); });
+    return Promise.all([loadBacklog(), loadFixReqs(), loadDisc(), loadWl(), again ? null : loadPlanJobs()]).then(function(){ planLoaded = true; renderPlanTabs(); });
   }
 
-  /* ══ 화면설계서 작업대기: 화면 정의서(screens) 파일마다 「## 반영 대기 목록」 + screen-fixes/{CID}.md ══
-     (rules/screen-spec.md 4절: 상태가 「대기」로 시작하는 줄을 센다. 메뉴 담당자 = _menu.md owner) */
+  /* ══ 화면설계서 작업대기: 화면 정의서(screens) 파일마다 「## 반영 대기 목록」 (규칙 저장소 reference-rules/pending-changes.md) ══
+     칸: ID · 타입 · 변경 전 · 변경 후 · 근거 · 상태(대기 · 작업 중 (작업 기록) · 반영 완료 (날짜) · 제외 (날짜, 이유)).
+     예전 칸(# · 구분 · 지금 · 바꿀 것)으로 적힌 표도 같은 자리에 읽는다(pending-changes.md 6절). 메뉴 담당자 = _menu.md owner */
   var BL = null, blSel = '', blAll = false, blKind = '', blQ = '';
   function loadBacklog(){
     return api('/api/guides').then(function(g){
       var doc = (g.items || []).filter(function(i){ return i.id === 'screens'; })[0];
-      var fl = doc ? (doc.fileList || []).filter(function(f){ return /\.md$/i.test(f.path) && !/(^|\/)readme\.md$/i.test(f.path); }) : [];
-      return api('/api/plan/files?dir=screen-fixes').catch(function(){ return { files: [] }; }).then(function(sf){
-        var list = fl.map(function(f){ return { url: f.mdPath, path: f.path, rev: f.rev, fix: false }; })
-          .concat((sf.files || []).filter(function(f){ return !/readme\.md$/i.test(f.path); }).map(function(f){ return { url: f.url, path: f.path, fix: true }; }));
-        return getTexts(list.map(function(f){ return f.url; })).then(function(ts){ return list.map(function(f, i){ return { f: f, t: ts[i] }; }); });
-      });
+      var list = (doc ? (doc.fileList || []) : []).filter(function(f){ return /\.md$/i.test(f.path) && !/(^|\/)readme\.md$/i.test(f.path); })
+        .map(function(f){ return { url: f.mdPath, path: f.path, rev: f.rev }; });
+      return getTexts(list.map(function(f){ return f.url; })).then(function(ts){ return list.map(function(f, i){ return { f: f, t: ts[i] }; }); });
     }).then(function(all){
       var menus = {}, screens = [];
       all.forEach(function(x){
-        var p = fm(x.t), dir = x.f.fix ? '' : x.f.path.split('/')[0];
+        var p = fm(x.t), dir = x.f.path.split('/')[0];
         if (/_menu\.md$/i.test(x.f.path)) { menus[dir] = { name: p.meta.menu || dir, owner: p.meta.owner || '' }; return; }
         var S = secsOf(p.body), key = Object.keys(S).filter(function(k){ return /^반영 대기 목록/.test(k); })[0]; if (!key) return;
         var T = mdTable(S[key]), H = T.head.map(function(h){ return h.replace(/\s/g, ''); });
-        function col(n){ var i = H.indexOf(n); return i; }
-        var ci = { n: col('#'), kind: col('구분'), now: col('지금'), to: col('바꿀것'), why: col('근거'), st: col('상태') };
-        var rows = T.rows.map(function(r){ return { n: r[ci.n] || '', kind: r[ci.kind] || '', now: r[ci.now] || '', to: r[ci.to] || '', why: r[ci.why] || '', st: r[ci.st] || '' }; });
+        function col(){ for (var i = 0; i < arguments.length; i++) { var c = H.indexOf(arguments[i]); if (c >= 0) return c; } return -1; }
+        var ci = { n: col('ID', '#'), kind: col('타입', '구분'), now: col('변경전', '지금'), to: col('변경후', '바꿀것'), why: col('근거'), st: col('상태') };
+        var rows = T.rows.map(function(r){ var g = function(i){ return i >= 0 ? (r[i] || '') : ''; }; return { n: g(ci.n), kind: g(ci.kind), now: g(ci.now), to: g(ci.to), why: g(ci.why), st: g(ci.st) }; }).filter(function(r){ return r.n || r.to; });
         var h1 = /^#\s+(.+)$/m.exec(p.body);
-        screens.push({ cid: p.meta.cid || x.f.path.replace(/^.*\/|\.md$/g, ''), figma: p.meta.figma || '', title: (p.meta.title || (h1 ? h1[1] : '')).replace(/^\S+\s+/, function(m){ return /^[A-Z]{2}-/.test(m) ? '' : m; }), author: p.meta.author || '', dir: x.f.fix ? '(screen-fixes)' : dir, menu: p.meta.menu || '', path: x.f.path, fix: x.f.fix, rev: x.f.rev, rows: rows,
-          wait: rows.filter(function(r){ return /^대기/.test(r.st); }) });
+        screens.push({ cid: p.meta.cid || x.f.path.replace(/^.*\/|\.md$/g, ''), figma: p.meta.figma || '', title: (p.meta.title || (h1 ? h1[1] : '')).replace(/^\S+\s+/, function(m){ return /^[A-Z]{2}-/.test(m) ? '' : m; }), author: p.meta.author || '', dir: dir, menu: p.meta.menu || '', path: x.f.path, rev: x.f.rev, rows: rows,
+          wait: rows.filter(function(r){ return /^대기/.test(r.st); }), doing: rows.filter(function(r){ return /^(작업 중|반영 중)/.test(r.st); }) });
       });
-      screens.forEach(function(s){ var m = menus[s.dir]; s.menuName = m ? m.name : (s.menu || s.dir); s.owner = m ? m.owner : ''; s.check = s.wait.filter(function(r){ return /확인 필요/.test(r.st + ' ' + r.to); }).length; });
+      screens.forEach(function(s){ var m = menus[s.dir]; s.menuName = m ? m.name : (s.menu || s.dir); s.owner = m ? m.owner : ''; });
       BL = { screens: screens }; snapSave('bl', BL);
       var n = 0; screens.forEach(function(s){ n += s.wait.length; }); setCnt('backlog', n);
     }).catch(function(e){ BL = { screens: [], error: e.message }; });
   }
   // 화면 정의서 머리말 figma: 링크 → 파일 키 · 노드 ID
   function figOf(u){ var k = /figma\.com\/(?:design|file)\/([A-Za-z0-9]+)/.exec(u || ''), n = /node-id=(\d+)[-:](\d+)/.exec(u || ''); return k && n ? { key: k[1], node: n[1] + ':' + n[2] } : null; }
-  // 작업대기에서 만든 Workbench 요청(fixRows)을 줄마다: {doc|파일|번호 → 요청}
+  // 작업대기에서 만든 Workbench 요청(fixRows)을 줄마다: {doc|파일|ID → 요청}
   var fixReq = {};
-  function fixKey(s, r){ return (s.fix ? 'screen-fixes' : 'screens') + '|' + (s.fix ? s.path.replace(/^screen-fixes\//, '') : s.path) + '|' + r.n; }
+  function fixKey(s, r){ return 'screens|' + s.path + '|' + r.n; }
   function loadFixReqs(){
     return api('/api/requests').then(function(j){
       var o = {};
@@ -1004,122 +1011,178 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       fixReq = o;
     }).catch(function(){});
   }
-  function blPickCount(){ var n = document.querySelectorAll('.blpick:checked').length, el = $('blPickN'); if (el) el.textContent = '고른 줄 ' + n; }
+  function blPickCount(){ var n = document.querySelectorAll('.blpick:checked').length, el = $('blPickN'); if (el) el.textContent = '고른 항목 ' + n; }
   function renderBacklog(){
     var el = $('body-backlog'); if (!el) return;
     if (!BL) { el.innerHTML = '<p class="muted">화면 정의서를 읽는 중…</p>'; return; }
     var S = BL.screens, q = blQ.trim().toLowerCase();
-    var waitN = 0, chk = 0; S.forEach(function(s){ waitN += s.wait.length; chk += s.check; });
-    var act = S.filter(function(s){ return s.wait.length; }), mg = {};
+    var waitN = 0, doingN = 0; S.forEach(function(s){ waitN += s.wait.length; doingN += s.doing.length; });
+    var act = S.filter(function(s){ return s.wait.length || s.doing.length; }), mg = {};
     act.forEach(function(s){ (mg[s.menuName] = mg[s.menuName] || { name: s.menuName, owner: s.owner, list: [], n: 0 }).list.push(s); mg[s.menuName].n += s.wait.length; });
     var groups = Object.keys(mg).map(function(k){ return mg[k]; }).sort(function(a, b){ return b.n - a.n; });
     groups.forEach(function(g){ g.list.sort(function(a, b){ return b.wait.length - a.wait.length; }); });
     if (!blSel || !S.some(function(s){ return s.cid === blSel; })) blSel = act.length ? groups[0].list[0].cid : '';
     var h = '<div class="stats">' +
-      '<div class="stat"><div class="l">반영 대기</div><div class="v">' + waitN.toLocaleString() + '</div><div class="s">상태가 「대기」인 줄</div></div>' +
+      '<div class="stat"><div class="l">반영 대기</div><div class="v">' + waitN.toLocaleString() + '</div><div class="s">상태가 「대기」인 항목</div></div>' +
+      '<div class="stat"><div class="l">작업 중</div><div class="v">' + doingN + '</div><div class="s">진행 중인 화면설계 작업이 고른 항목</div></div>' +
       '<div class="stat"><div class="l">작업 대기 화면</div><div class="v">' + act.length + '</div><div class="s">전체 화면 ' + S.length + '개</div></div>' +
-      '<div class="stat"><div class="l">확인 필요</div><div class="v">' + chk + '</div></div>' +
       '<div class="stat"><div class="l">메뉴</div><div class="v">' + groups.length + '</div></div></div>' +
-      '<p class="rule">작업규칙 · 정책서 · UX가이드 · 기준데이터가 바뀌면 Claude가 고쳐야 할 화면의 「반영 대기 목록」에 줄을 더합니다. 화면을 다시 그린 뒤 상태를 「반영 완료 (날짜)」로 바꾸면 빠집니다.</p>';
+      '<p class="rule">반영 대기 목록 = 내 작업 밖의 다른 화면에 반영해야 하는 변경을 그 화면의 화면 MD에 남겨 둔 것입니다. 화면설계 작업(케이스 1)의 1단계에서 「이번에 반영」으로 고르면 「작업 중」, 7단계 완료(화면 컨펌) 때 「반영 완료」가 됩니다.</p>';
     var left = '<div class="mhead"><input type="search" id="blq" class="minp" placeholder="CID · 화면 이름 찾기" value="' + esc(blQ) + '" aria-label="화면 찾기"></div>' +
       groups.map(function(g){
         var list = g.list.filter(function(s){ return !q || (s.cid + ' ' + s.title).toLowerCase().indexOf(q) >= 0; }); if (!list.length) return '';
         return '<details class="mgrp" open><summary><span>' + esc(g.name) + '</span><span class="muted">' + g.n + '</span></summary>' +
-          list.map(function(s){ return '<button type="button" class="mitem" data-bl="' + esc(s.cid) + '"' + (s.cid === blSel ? ' aria-current="true"' : '') + '><b>' + esc(s.cid) + '</b><span>' + esc(s.title || '') + '</span><span class="chips"><span class="pill warn">대기 ' + s.wait.length + '</span>' + (s.check ? '<span class="pill">확인 필요 ' + s.check + '</span>' : '') + (s.author ? '<span class="pill">' + esc(s.author) + '</span>' : '') + '</span></button>'; }).join('') + '</details>';
-      }).join('') + (act.length ? '' : '<p class="muted" style="margin:8px">반영 대기 줄이 없습니다.</p>');
+          list.map(function(s){ return '<button type="button" class="mitem" data-bl="' + esc(s.cid) + '"' + (s.cid === blSel ? ' aria-current="true"' : '') + '><b>' + esc(s.cid) + '</b><span>' + esc(s.title || '') + '</span><span class="chips">' + (s.wait.length ? '<span class="pill warn">대기 ' + s.wait.length + '</span>' : '') + (s.doing.length ? '<span class="pill prog">작업 중 ' + s.doing.length + '</span>' : '') + (s.author ? '<span class="pill">' + esc(s.author) + '</span>' : '') + '</span></button>'; }).join('') + '</details>';
+      }).join('') + (act.length ? '' : '<p class="muted" style="margin:8px">반영 대기 항목이 없습니다.</p>');
     var s = S.filter(function(x){ return x.cid === blSel; })[0], right;
     if (!s) right = '<div class="wempty"><b>고칠 화면이 없습니다</b></div>';
     else {
       var kinds = {}; s.rows.forEach(function(r){ if (r.kind) kinds[r.kind] = (kinds[r.kind] || 0) + 1; });
       var W = canWrite(), fig = figOf(s.figma);
-      var rows = s.rows.filter(function(r){ return (blAll || /^대기/.test(r.st)) && (!blKind || r.kind === blKind); });
+      var rows = s.rows.filter(function(r){ return (blAll || /^(대기|작업 중|반영 중)/.test(r.st)) && (!blKind || r.kind === blKind); });
       right = '<div class="mtop"><h3>' + esc(s.cid) + ' ' + esc(s.title || '') + '</h3>' +
         '<a class="btn sm" href="UX_Guide.html?g=screens#' + encodeURIComponent(s.cid) + '" target="_blank" rel="noopener">화면 정의서에서 보기</a></div>' +
-        '<p class="matt">' + esc(s.menuName) + (s.author ? ' · 작성자 ' + esc(s.author) : '') + ' · 반영 대기 ' + s.wait.length + '줄 / 전체 ' + s.rows.length + '줄 · <code>' + esc(s.fix ? s.path : 'screens/' + s.path) + '</code>' + (s.rev ? ' · 수정본 ' + esc(s.rev) : '') + '</p>' +
-        '<div class="bar" style="margin-top:12px"><label class="hint" style="display:inline-flex;gap:4px;align-items:center"><input type="checkbox" id="blAll"' + (blAll ? ' checked' : '') + '>반영 완료 · 불필요도 보기</label>' +
+        '<p class="matt">' + esc(s.menuName) + (s.author ? ' · 작성자 ' + esc(s.author) : '') + ' · 대기 ' + s.wait.length + ' · 작업 중 ' + s.doing.length + ' / 전체 ' + s.rows.length + '항목 · <code>screens/' + esc(s.path) + '</code>' + (s.rev ? ' · 수정본 ' + esc(s.rev) : '') + '</p>' +
+        '<div class="bar" style="margin-top:12px"><label class="hint" style="display:inline-flex;gap:4px;align-items:center"><input type="checkbox" id="blAll"' + (blAll ? ' checked' : '') + '>반영 완료 · 제외도 보기</label>' +
         '<span class="sp"></span>' + ['<button type="button" class="pill' + (blKind ? '' : ' on') + '" data-blk="">전체</button>'].concat(Object.keys(kinds).map(function(k){ return '<button type="button" class="pill' + (blKind === k ? ' on' : '') + '" data-blk="' + esc(k) + '">' + esc(k) + ' ' + kinds[k] + '</button>'; })).join('') + '</div>' +
-        // 반영 대기 줄을 골라 Workbench 수정 요청으로(이미 요청한 줄은 요청 번호 · 상태를 보여 주고 고를 수 없다)
-        (W && s.wait.length ? '<div class="blreq"><span class="muted" id="blPickN">고른 줄 0</span>' + (fig ? '' : '<span class="pill warn">이 화면에 Figma 링크(figma:)가 없어 요청을 만들 수 없습니다</span>') +
-          '<button class="btn sm primary" type="button" data-blreq' + (fig ? '' : ' disabled') + '>고른 줄로 Workbench 수정 요청</button></div>' : '') +
-        '<div class="tbl-wrap"><table class="t"><thead><tr>' + (W ? '<th style="width:34px"><input type="checkbox" id="blPickAll" aria-label="요청 안 한 대기 줄 모두 고르기"></th>' : '') + '<th class="num">#</th><th>구분</th><th>지금</th><th>바꿀 것</th><th>근거</th><th>상태</th></tr></thead><tbody>' +
+        // 대기 항목을 골라 화면설계 작업(케이스 1 부분 수정)으로 요청(이미 요청한 항목은 요청 번호 · 상태를 보여 주고 고를 수 없다)
+        (W && s.wait.length ? '<div class="blreq"><span class="muted" id="blPickN">고른 항목 0</span>' + (fig ? '' : '<span class="pill warn">이 화면에 Figma 링크(figma:)가 없어 요청을 만들 수 없습니다</span>') +
+          '<button class="btn sm primary" type="button" data-blreq' + (fig ? '' : ' disabled') + ' title="케이스 1(부분 수정) 새 작업으로 Workbench에 요청합니다. 1단계에서 이 항목들을 「이번에 반영」으로 고릅니다">고른 항목으로 화면설계 작업(케이스 1) 요청</button></div>' : '') +
+        '<div class="tbl-wrap"><table class="t"><thead><tr>' + (W ? '<th style="width:34px"><input type="checkbox" id="blPickAll" aria-label="요청 안 한 대기 항목 모두 고르기"></th>' : '') + '<th class="num">ID</th><th>타입</th><th>변경 전</th><th>변경 후</th><th>근거</th><th>상태</th></tr></thead><tbody>' +
         (rows.length ? rows.map(function(r){
           var rq = fixReq[fixKey(s, r)], can = W && /^대기/.test(r.st) && !(rq && /^(대기|진행 중|보류)$/.test(rq.status));
-          return '<tr>' + (W ? '<td>' + (can ? '<input type="checkbox" class="blpick" value="' + esc(r.n) + '" aria-label="' + esc(r.n) + '번 줄 고르기">' : '') + '</td>' : '') +
+          return '<tr>' + (W ? '<td>' + (can ? '<input type="checkbox" class="blpick" value="' + esc(r.n) + '" aria-label="' + esc(r.n) + ' 고르기">' : '') + '</td>' : '') +
             '<td class="num">' + esc(r.n) + '</td><td class="nw">' + esc(r.kind) + '</td><td>' + esc(r.now) + '</td><td>' + esc(r.to) + '</td><td>' + esc(r.why) + '</td><td class="nw">' + stPill(r.st) +
             (rq ? '<br><a class="pill ' + (rq.status === '완료' ? 'done' : rq.status === '보류' ? 'warn' : 'prog') + '" href="Figma_Workbench.html?p=' + encodeURIComponent(rq.fileKey || '') + '" title="Workbench 수정 요청">' + esc(rq.id) + ' ' + esc(rq.status) + '</a>' : '') + '</td></tr>';
-        }).join('') : '<tr><td colspan="7" class="muted">맞는 줄이 없습니다.</td></tr>') +
+        }).join('') : '<tr><td colspan="7" class="muted">맞는 항목이 없습니다.</td></tr>') +
         '</tbody></table></div>';
     }
     var keep = document.activeElement && document.activeElement.id === 'blq';
     el.innerHTML = h + '<div class="mgrid"><aside class="card mlist" aria-label="작업 대기 화면">' + left + '</aside><section class="card mright">' + right + '</section></div>';
+    linkIds(el.querySelector('.tbl-wrap'));
     if (keep) { var qi = $('blq'); qi.focus(); qi.setSelectionRange(qi.value.length, qi.value.length); }
   }
 
-  /* ══ 임시 정책: provisional/PV-*.md (+ closed/) — rules/provisional-policy.md ══ */
-  var PVS = null, pvSel = '', pvFilter = '승인 대기', pvForm = null, pvMsg = '';
-  function loadPvDocs(){
-    return api('/api/plan/files?dir=provisional').then(function(j){
-      var fl = (j.files || []).filter(function(f){ return /\/PV-[^\/]+\.md$/i.test(f.path); });
+  /* ══ 논의 대상(한 탭): 규칙 저장소 discussions/DS-*.md (reference-rules/discussions.md, 2026-11-12) ══
+     임시 정책 · 내부 논의 · 고객 논의를 따로 두지 않고 리스트 하나. 상태 넷(논의 중 · 결정 · 보류 · 종료), 묶음 여섯.
+     [답변하기]·[반영 정리안] → Claude 정리안(작업 plan · answer) → [확인 · 반영](answer-apply): 결정 줄 · 6절 반영 · 정책서 · 반영 대기 항목 */
+  var DS = null, planSel = '', plStat = 'open', dForm = null, nForm = null;
+  var PVS = [], DISC = null;   // 예전 임시 정책 · 논의(새 흐름에서 없앰). DISC는 DS를 다 읽었는지 표시로만 남긴다
+  var DS_GROUPS = [
+    { k: 'g1', label: '1. 결정 · 반영할 것', about: '결정했는데 아직 반영하지 않은 것 (가장 먼저 처리)', f: function(x){ return x.status === '결정' && !x.work; } },
+    { k: 'g2', label: '2. 논의 중 · 고객', about: '고객이 정할 것 (고객 회의 안건)', f: function(x){ return x.status === '논의 중' && /고객/.test(x.decider); } },
+    { k: 'g3', label: '3. 논의 중 · 내부', about: '우리끼리 정할 것', f: function(x){ return x.status === '논의 중'; } },
+    { k: 'g4', label: '4. 결정 · 작업 중', about: '그 화면 작업이 완료되면 반영할 것', f: function(x){ return x.status === '결정' && !!x.work; } },
+    { k: 'g5', label: '5. 보류', about: '미뤄 둔 것', f: function(x){ return x.status === '보류'; } },
+    { k: 'g6', label: '6. 후속 확인 필요', about: '종료했지만 한 번 확인할 것이 남음 (회의 안건)', f: function(x){ return x.status === '종료' && !!x.follow; } }
+  ];
+  function dsGroup(x){ for (var i = 0; i < DS_GROUPS.length; i++) if (DS_GROUPS[i].f(x)) return DS_GROUPS[i].k; return 'end'; }
+  function fmList(v){ v = String(v || '').trim(); if (!v || v === '[]') return []; return v.replace(/^\[|\]$/g, '').split(',').map(function(s){ return s.trim().replace(/^["']|["']$/g, ''); }).filter(Boolean); }
+  function loadDisc(){
+    return api('/api/plan/files?dir=discussions').catch(function(){ return { files: [] }; }).then(function(j){
+      var fl = (j.files || []).filter(function(f){ return /\/DS-\d+\.md$/i.test(f.path); });
       return getTexts(fl.map(function(f){ return f.url; })).then(function(ts){ return fl.map(function(f, i){ return { f: f, t: ts[i] }; }); });
     }).then(function(all){
-      PVS = all.map(function(x){
-        var t = x.t.replace(/\r\n/g, '\n'), h = /^#\s+(PV-\d+)\s*(.*)$/m.exec(t) || [], S = secsOf(t), head = kvTable(S._);
-        var ab = /\(A\/B 선택\)/.test(h[2] || ''), imp = S['영향 화면'] ? mdTable(S['영향 화면']).rows.length : 0, dec = S['결정'] ? mdTable(S['결정']).rows.filter(function(r){ return r[0]; }) : [];
-        return { id: h[1] || x.f.path.replace(/^.*\/|\.md$/g, ''), title: String(h[2] || '').replace(/\s*\(A\/B 선택\)\s*$/, ''), ab: ab, head: head, S: S, t: t, closed: x.f.closed, path: x.f.path,
-          status: head['상태'] || '', policy: head['바꾸는 정책'] || '', by: head['작성자'] || '', date: head['등록일'] || '', impact: imp, dec: dec };
+      DS = all.map(function(x){
+        var t = String(x.t || '').replace(/\r\n/g, '\n'), p = fm(t), M = p.meta, S = secsOf(p.body);
+        var h = /^#\s+(DS-\d+)\s*(.*)$/m.exec(p.body) || [];
+        var decKey = Object.keys(S).filter(function(k){ return /결정/.test(k) && /^\d+\./.test(k); })[0];
+        var decRows = decKey ? mdTable(S[decKey]).rows.filter(function(r){ return r[0] || r[1]; }) : [];
+        var fol = decKey ? (/후속 확인 필요\s*:\s*(.+)/.exec(S[decKey].join('\n')) || [])[1] : '';
+        var o = { id: M.id || h[1] || x.f.path.replace(/^.*\/|\.md$/g, ''), title: M.title || h[2] || '', status: String(M.status || '').replace(/\s*#.*$/, ''), decider: M.decider || '', from: M.from || '',
+          work: String(M.work || '').replace(/\s*#.*$/, ''), policies: fmList(M.policies), cids: fmList(M.cids), oldIds: fmList(M.old_ids), date: M.date || '', follow: String(fol || '').trim(),
+          decision: decRows.length ? decRows[decRows.length - 1] : null, body: p.body, t: t, path: x.f.path };
+        o.group = dsGroup(o); o.open = o.group !== 'end';
+        return o;
       }).sort(function(a, b){ return b.id.localeCompare(a.id); });
-      // 같은 정책을 바꾸는 승인 대기 PV끼리 표시(바꾸는 정책의 정책 ID)
-      PVS.forEach(function(p){ p.pols = (p.policy.match(/POL-[A-Z]+-\d+/g) || []); });
-      PVS.forEach(function(p){ p.same = PVS.filter(function(o){ return o !== p && /승인 대기/.test(o.status) && /승인 대기/.test(p.status) && o.pols.some(function(x){ return p.pols.indexOf(x) >= 0; }); }).map(function(o){ return o.id; }); });
-      setCnt('provisional', PVS.filter(function(p){ return /승인 대기/.test(p.status); }).length, true);
-      pvs = PVS.filter(function(p){ return !p.closed; }).map(function(p){ return { id: p.id, title: p.title, status: p.status, by: p.by, date: dates(p.date)[0] || null }; });
-      snapSave('pv', PVS);
-    }).catch(function(){ PVS = PVS || []; pvs = pvs || []; });
+      DISC = { ds: DS }; snapSave('ds', DS); planCnt();
+      pvs = DS.filter(function(x){ return x.open; }).map(function(x){ return { id: x.id, title: x.title, status: x.status, by: x.decider, date: dates(x.date)[0] || null }; });
+    }).catch(function(){ DS = DS || []; DISC = { ds: DS }; });
   }
-  function renderPv(){
-    var el = $('body-provisional'); if (!el) return;
-    if (!PVS) { el.innerHTML = '<p class="muted">임시 정책을 읽는 중…</p>'; return; }
-    if (pvForm && $('pvF')) pvForm = pvFormRead();
-    var W = canWrite(), F = ['승인 대기', '승인', '반려'];
-    var list = PVS.filter(function(p){ return pvFilter === '승인' ? /^승인$|^A안 승인|^B안 승인/.test(p.status) : p.status.indexOf(pvFilter) === 0; });
-    if (!pvForm && (!pvSel || !PVS.some(function(p){ return p.id === pvSel; }))) pvSel = list[0] ? list[0].id : '';
-    var left = '<div class="mhead pvh">' + F.map(function(f){ var n = PVS.filter(function(p){ return f === '승인' ? /^승인$|^[AB]안 승인/.test(p.status) : p.status.indexOf(f) === 0; }).length; return '<button type="button" class="pill seg' + (pvFilter === f ? ' on' : '') + '" data-pvf="' + f + '">' + f + ' ' + n + '</button>'; }).join('') +
-      (W ? '<button class="btn sm" type="button" data-pvnew style="margin-left:auto">＋ 새 임시 정책</button>' : '') + '</div>' +
-      (list.length ? list.map(function(p){
-        return '<button type="button" class="mitem" data-pv="' + esc(p.id) + '"' + (p.id === pvSel && !pvForm ? ' aria-current="true"' : '') + '><b>' + esc(p.title) + '</b><span>' + esc(p.id) + ' · ' + esc(p.policy.replace(/\s*\(.*$/, '')) + (p.by ? ' · ' + esc(p.by) : '') + (p.date ? ' · ' + esc(p.date) : '') + '</span>' +
-          '<span class="chips">' + stPill(p.status) + (p.ab ? '<span class="pill review">A/B</span>' : '') + p.same.map(function(s){ return '<span class="pill review" title="같은 정책을 바꾸는 승인 대기 임시 정책">같은 정책 ' + esc(s) + '</span>'; }).join('') + (p.impact ? '<span class="pill">영향 화면 ' + p.impact + '</span>' : '') + jobState(p.id) + '</span></button>';
-      }).join('') : '<p class="muted" style="margin:8px">' + esc(pvFilter) + ' 임시 정책이 없습니다.</p>');
+  function planItems(){ return DS || []; }
+  function plMatch(i){ return plStat === 'all' ? true : plStat === 'end' ? !i.open : i.open; }
+  function planCnt(){ setCnt('decisions', (DS || []).filter(function(i){ return i.group === 'g1' || i.group === 'g2' || i.group === 'g3'; }).length, true); }
+  function dsItemHtml(i, sel){
+    return '<button type="button" class="mitem" data-pl="' + esc(i.id) + '"' + (i.id === sel ? ' aria-current="true"' : '') + '><b>' + esc(i.title || i.id) + '</b><span>' + esc(i.id) + (i.decider ? ' · ' + esc(i.decider) : '') + (i.date ? ' · ' + esc(i.date) : '') + '</span>' +
+      '<span class="chips">' + stPill(i.status) + (i.work ? '<span class="pill review" title="작업 기록 ' + esc(i.work) + '">작업 중</span>' : '') + (i.follow ? '<span class="pill warn" title="' + esc(i.follow) + '">후속 확인</span>' : '') + jobState(i.id) + '</span></button>';
+  }
+  function renderPlan(){
+    var el = $('body-decisions'); if (!el) return;
+    if (!DS) { el.innerHTML = '<p class="muted">논의 대상을 읽는 중…</p>'; return; }
+    if (dForm && $('dF')) dForm = { text: $('dA').value, date: $('dD').value, basis: $('dB').value };
+    if (nForm && $('nF')) nForm = nFormRead();
+    var all = DS, L = all.filter(plMatch), W = canWrite();
+    if (planSel && !L.some(function(i){ return i.id === planSel; }) && all.some(function(i){ return i.id === planSel; })) { plStat = 'all'; L = all; }
+    if (!nForm && (!planSel || !L.some(function(i){ return i.id === planSel; }))) planSel = L[0] ? L[0].id : '';
+    var sel = nForm ? '' : planSel, n = function(f){ return all.filter(f).length; };
+    var opt = function(v, label, c){ return '<option value="' + v + '"' + (plStat === v ? ' selected' : '') + '>' + label + ' (' + c + ')</option>'; };
+    var head = '<div class="mhead pvh"><label class="dstat"><span>보기</span><select id="plStat" class="minp" aria-label="목록 거르기">' +
+      opt('open', '진행 중', n(function(i){ return i.open; })) + opt('all', '전체', all.length) + opt('end', '종료', n(function(i){ return !i.open; })) + '</select></label>' +
+      (W ? '<button class="btn sm" type="button" data-dsnew style="margin-left:auto">＋ 새 논의 대상</button>' : '') + '</div>';
+    var left = head;
+    if (!L.length) left += '<p class="muted" style="margin:8px">' + (plStat === 'open' ? '진행 중인 논의 대상이 없습니다.' : '항목이 없습니다.') + '</p>';
+    else if (plStat === 'open') left += DS_GROUPS.map(function(g){
+      var gl = L.filter(function(i){ return i.group === g.k; }); if (!gl.length) return '';
+      return '<details class="mgrp" open><summary><span title="' + esc(g.about) + '">' + esc(g.label) + '</span><span class="muted">' + gl.length + '</span></summary>' + gl.map(function(i){ return dsItemHtml(i, sel); }).join('') + '</details>';
+    }).join('');
+    else left += L.map(function(i){ return dsItemHtml(i, sel); }).join('');
     var right;
-    if (pvForm) right = pvFormHtml();
+    if (nForm) right = nFormHtml();
     else {
-      var p = PVS.filter(function(x){ return x.id === pvSel; })[0];
-      if (!p) right = '<div class="wempty"><b>임시 정책이 없습니다</b><p>Claude가 작업 중 기존 정책을 바꿔야 할 때, 또는 [＋ 새 임시 정책]으로 등록합니다.</p></div>';
+      var x = all.filter(function(i){ return i.id === planSel; })[0];
+      if (!x) right = '<div class="wempty"><b>논의 대상이 없습니다</b><p>정책 · 화면에서 정해야 할 것을 한 리스트로 받습니다. 화면설계 작업 · 회의록 정리에서 Claude가 올리거나 [＋ 새 논의 대상]으로 올립니다.</p></div>';
       else {
-        var busy = pjobs[p.id] && /^(대기|진행 중)$/.test(pjobs[p.id].status), wait = /승인 대기/.test(p.status);
-        var btn = wait && canApprove('pv') ? (p.ab ? '<button class="btn primary" type="button" data-pvd="A안 승인"' + (busy ? ' disabled' : '') + '>A안 승인</button><button class="btn primary" type="button" data-pvd="B안 승인"' + (busy ? ' disabled' : '') + '>B안 승인</button>'
-          : '<button class="btn primary" type="button" data-pvd="승인"' + (busy ? ' disabled' : '') + '>승인</button>') + '<button class="btn bad" type="button" data-pvd="반려"' + (busy ? ' disabled' : '') + '>반려</button>' : '';
-        right = '<div class="mtop"><div style="flex:1"><h3>' + esc(p.id) + ' ' + esc(p.title) + (p.ab ? ' (A/B 선택)' : '') + '</h3><p class="matt" style="border:0;padding:0">' + (p.ab ? '같은 규칙을 다르게 바꾼 임시 정책들을 합친 문서' : esc([p.by, p.date].filter(Boolean).join(' · '))) + ' · <code>' + esc(p.path) + '</code></p></div>' + jobState(p.id) + btn + '</div>' +
-          (pvMsg ? '<p class="notice">' + pvMsg + '</p>' : '') +
-          (wait && myApproves && !canApprove('pv') ? '<p class="muted" style="margin:10px 0 0;font-size:13px">승인 · 반려는 「임시 정책 승인 · 반려」 권한이 있는 사람만 할 수 있습니다(계정 관리 › 승인 권한).</p>' : '') +
-          '<dl class="kv" style="margin:16px 0">' + ['상태', '바꾸는 정책', '작성자', '등록일', '기준 공통 규칙 버전', '고객 확인'].filter(function(k){ return p.head[k]; }).map(function(k){ return '<dt>' + k + '</dt><dd>' + (k === '상태' ? stPill(p.head[k]) + (p.ab ? ' <span class="pill review">A/B</span>' : '') : esc(p.head[k])) + '</dd>'; }).join('') + '</dl>' +
-          (p.same.length ? '<p class="notice same"><b>같은 정책을 바꾸는 임시 정책</b> · ' + p.same.map(function(s){ return '<button type="button" class="chip" data-pv="' + esc(s) + '">' + esc(s) + '</button>'; }).join(' ') + ' — 승인하기 전에 함께 확인하세요.</p>' : '') +
-          (p.ab ? pvAbHtml(p) : Object.keys(p.S).filter(function(k){ return k !== '_'; }).map(function(k){ return '<h4 class="h4">' + esc(k) + '</h4>' + md(p.S[k].join('\n')); }).join(''));
+        var j = pjobs[x.id], busy = j && /^(대기|진행 중)$/.test(j.status), confirmWait = j && j.status === '확인 대기';
+        var canAns = W && x.status !== '종료' && !busy && !confirmWait, g = DS_GROUPS.filter(function(gg){ return gg.k === x.group; })[0];
+        var chips = function(a){ return a.length ? a.map(function(v){ return '<span class="chip">' + esc(v) + '</span>'; }).join('') : '-'; };
+        right = '<div class="mtop"><div style="flex:1"><h3>' + esc(x.title || x.id) + ' <span class="h3pill">' + stPill(x.status) + '</span></h3><p class="matt" style="border:0;padding:0">' + esc(x.id) + (g ? ' · ' + esc(g.label) : '') + ' · <code>' + esc(x.path) + '</code></p></div>' + jobState(x.id) +
+          (canAns && !dForm ? (x.group === 'g1' ? '<button class="btn" type="button" data-dapply title="5절 맨 아래 결정대로 정책서 · 영향 화면 반영 대기 항목 정리안을 Claude가 만듭니다">반영 정리안</button>' : '') + '<button class="btn primary" type="button" data-dans>답변하기</button>' : '') + '</div>';
+        right += '<dl class="kv" style="margin:14px 0">' +
+          '<dt>누가 정하나</dt><dd>' + esc(x.decider || '-') + '</dd><dt>생긴 곳</dt><dd>' + esc(x.from || '-') + '</dd>' +
+          '<dt>걸린 정책</dt><dd>' + chips(x.policies) + '</dd><dt>걸린 화면</dt><dd>' + chips(x.cids) + '</dd>' +
+          (x.work ? '<dt>작업 기록</dt><dd><a href="?tab=worklogs&amp;w=' + encodeURIComponent(x.work) + '" data-wlgo="' + esc(x.work) + '">' + esc(x.work) + '</a></dd>' : '') +
+          (x.oldIds.length ? '<dt>옛 ID</dt><dd>' + esc(x.oldIds.join(', ')) + '</dd>' : '') +
+          (x.follow ? '<dt>후속 확인</dt><dd>' + esc(x.follow) + '</dd>' : '') + '</dl>';
+        if (confirmWait) right += '<section class="propose"><h4>Claude 정리안 · 확인해 주세요</h4><p class="muted" style="margin:0 0 8px;font-size:13px">확인하면 이 항목의 결정 · 반영 칸과 정책서 · 영향 화면의 반영 대기 목록을 이대로 고칩니다(reference-rules/discussions.md).</p>' + md(j.note || '') +
+          (W ? '<div class="macts"><button class="btn" type="button" data-dre>다시 답하기</button><button class="btn primary" type="button" data-dok>확인 · 반영</button></div>' : '') + '</section>';
+        if (dForm) right += '<form class="mform" id="dF" style="margin-top:16px"><h3>' + (dForm.apply ? '반영 정리안' : '답변하기') + '</h3>' +
+          '<label>' + (dForm.apply ? '덧붙일 말(없으면 비워 두세요)' : '답') + '<textarea id="dA" rows="6"' + (dForm.apply ? '' : ' required') + ' placeholder="' + (dForm.apply ? '5절 맨 아래 결정대로 정리합니다.' : '정한 내용을 적어 주세요. Claude가 결정 문장 · 영향 범위 · 바뀌는 것으로 정리해 보여 주고, 확인하면 반영합니다.') + '">' + esc(dForm.text) + '</textarea></label>' +
+          '<div class="mrow"><label>답한 날짜<input type="date" id="dD" value="' + esc(dForm.date) + '"></label><label class="grow">근거' + (/고객/.test(x.decider) ? '(고객 답: 회의록 · 메일)' : '') + '<input id="dB" value="' + esc(dForm.basis) + '" placeholder="예: 2026-11-04 회의록, 메일"></label></div>' +
+          (mlist && mlist.length ? '<p class="muted" style="font-size:12.5px;margin:-4px 0 8px">최근 회의록: ' + mlist.slice(0, 4).map(function(m){ return '<button type="button" class="chip" data-dmin="' + esc(m.date.slice(0, 10) + ' 회의록 ' + m.id) + '" title="근거에 이 회의록을 넣습니다">' + esc(m.date.slice(5, 10) + ' ' + m.title) + '</button>'; }).join(' ') + '</p>' : '') +
+          '<div class="macts"><span class="muted" id="dMsg" role="status"></span><button class="btn" type="button" data-dcancel>취소</button><button class="btn primary" type="submit">Claude에게 보내기</button></div></form>';
+        right += '<div class="dbody">' + md(x.body.replace(/^#\s+.*\n/, '')) + '</div>';
       }
     }
-    el.innerHTML = '<div class="mgrid"><aside class="card mlist" aria-label="임시 정책 목록">' + left + '</aside><section class="card mright">' + right + '</section></div>';
-    linkIds(el.querySelector('.mright'));
+    el.innerHTML = '<div class="mgrid"><aside class="card mlist" aria-label="논의 대상 목록">' + left + '</aside><section class="card mright">' + right + '</section></div>';
+    linkIds(el.querySelector('.dbody'));
   }
-  /* 글 안의 ID를 링크로: 화면 CID → 화면 정의서, POL-… → 정책서 그 정책, CA-… · PD-… → 논의·결정, PV-… → 임시 정책
-     (버튼 · 입력 칸 · 이미 링크인 곳은 건드리지 않는다) */
-  var ID_RE = /\b(m\d{8}-[0-9a-z]{4,8}|POL-[A-Z]+-\d{3}|CA-\d{4}|PD-\d{4}|PV-\d{4}(?:-[A-Z])?|(?:TI|LI|MI|TL)-[A-Z0-9]+(?:-[A-Z0-9]+)+)\b/g;
+  function nFormHtml(){
+    var f = nForm;
+    return '<form class="mform" id="nF"><h3>새 논의 대상</h3><p class="muted" style="margin:-6px 0 12px;font-size:13px">적으면 Claude가 규칙(reference-rules/discussions.md)대로 올립니다. 같은 정책 · 규칙을 다루는 열린 항목이 있으면 새로 만들지 않고 그 항목에 잇습니다.</p>' +
+      '<label>제목<input id="nT" required value="' + esc(f.title) + '" placeholder="예: Error인 Module의 Door를 열면 상태"></label>' +
+      '<label>정할 것<textarea id="nQ" rows="4" required placeholder="질문 한두 문장. 알려 준 이슈면 이슈 내용">' + esc(f.question) + '</textarea></label>' +
+      '<div class="mrow"><label>누가 정하나<select id="nD" class="minp"><option' + (f.decider === '내부' ? ' selected' : '') + '>내부</option><option' + (f.decider === '고객' ? ' selected' : '') + '>고객</option></select></label>' +
+      '<label>생긴 곳<select id="nFr" class="minp">' + ['회의', '고객 · 개발사', '정책 정리', '화면설계 작업', '주기 점검'].map(function(v){ return '<option' + (f.from === v ? ' selected' : '') + '>' + v + '</option>'; }).join('') + '</select></label></div>' +
+      '<div class="mrow"><label class="grow">걸린 정책<input id="nP" value="' + esc(f.policies) + '" placeholder="예: POL-EQP-004"></label><label class="grow">걸린 화면(CID)<input id="nC" value="' + esc(f.cids) + '" placeholder="예: LI-INS-01-P"></label></div>' +
+      '<label>근거 · 지금 상태<textarea id="nB" rows="3" placeholder="예: 2026-11-04 회의록, 지금 정책 문장 · 화면 모습">' + esc(f.basis) + '</textarea></label>' +
+      '<div class="macts"><span class="muted" id="nMsg" role="status"></span><button class="btn" type="button" data-dscancel>취소</button><button class="btn primary" type="submit">Claude에게 등록 요청</button></div></form>';
+  }
+  function nFormRead(){ return { title: $('nT').value, question: $('nQ').value, decider: $('nD').value, from: $('nFr').value, policies: $('nP').value, cids: $('nC').value, basis: $('nB').value }; }
+
+  /* 글 안의 ID를 링크로: 화면 CID → 화면 정의서, POL-… → 정책서 그 정책, DS-… → 논의 대상, 회의록 ID → 회의록.
+     예전 ID(PV · PD · CA)는 그 ID를 old_ids에 둔 논의 대상이 있으면 그리로 (버튼 · 입력 칸 · 이미 링크인 곳은 건드리지 않는다) */
+  var ID_RE = /\b(m\d{8}-[0-9a-z]{4,8}|POL-[A-Z]+-\d{3}|DS-\d{4}|CA-\d{4}|PD-\d{4}|PV-\d{4}(?:-[A-Z])?|(?:TI|LI|MI|TL)-[A-Z0-9]+(?:-[A-Z0-9]+)+)\b/g;
   function idLink(id){
     if (/^m\d{8}-/.test(id)) {   // 회의록 ID → 회의록 탭의 그 회의(제목으로 보인다)
       var mm = (mlist || []).filter(function(x){ return x.id === id; })[0];
       return mm ? '<a class="idl" href="?tab=minutes&amp;m=' + id + '" data-mopen="' + id + '" title="회의록에서 보기 (' + id + ')">' + esc(String(mm.date || '').slice(0, 10) + ' ' + mm.title) + '</a>' : id;
     }
     if (/^POL-/.test(id)) return '<a class="idl" href="UX_Guide.html?g=policy#' + id + '" title="정책서에서 보기">' + id + '</a>';
-    if (/^(CA|PD)-/.test(id)) return '<a class="idl" href="#" data-goid="' + id + '" title="논의·결정에서 보기">' + id + '</a>';
-    if (/^PV-/.test(id)) return '<a class="idl" href="#" data-gopv="' + id.replace(/-[A-Z]$/, '') + '" title="임시 정책에서 보기">' + id + '</a>';
+    if (/^DS-/.test(id)) return '<a class="idl" href="#" data-goid="' + id + '" title="논의 대상에서 보기">' + id + '</a>';
+    if (/^(CA|PD|PV)-/.test(id)) {
+      var base = id.replace(/-[A-Z]$/, ''), to = (DS || []).filter(function(x){ return x.oldIds.indexOf(base) >= 0 || x.oldIds.indexOf(id) >= 0; })[0];
+      return to ? '<a class="idl" href="#" data-goid="' + to.id + '" title="' + esc(id + ' → ' + to.id + ' (논의 대상)') + '">' + id + '</a>' : id;
+    }
     var known = !BL || BL.screens.some(function(s){ return s.cid === id; });
     return known ? '<a class="idl" href="UX_Guide.html?g=screens#' + id + '" title="화면 정의서에서 보기">' + id + '</a>' : id;
   }
@@ -1130,161 +1193,112 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     list.forEach(function(n){ var s = document.createElement('span'); s.innerHTML = esc(n.nodeValue).replace(ID_RE, function(m){ return idLink(m); }); n.parentNode.replaceChild(s, n); });
   }
   document.addEventListener('click', function(e){
-    var a = e.target.closest('[data-goid],[data-gopv]'); if (!a) return; e.preventDefault();
-    if (a.dataset.gopv) { pvSel = a.dataset.gopv; pvForm = null; select('provisional'); return; }
-    var id = a.dataset.goid; dTab = /^CA-/.test(id) ? 'ca' : 'pd'; dSel = id; dForm = null; dStat = 'all'; select('decisions');
+    var a = e.target.closest('[data-goid]'); if (!a) return; e.preventDefault();
+    planSel = a.dataset.goid; dForm = null; nForm = null; select('decisions');
   });
-  function pvAbHtml(p){
-    var ks = Object.keys(p.S).filter(function(k){ return k !== '_'; }), opts = ks.filter(function(k){ return /^[A-Z]안/.test(k); });
-    var diff = ks.filter(function(k){ return /두 안의 차이|안의 차이/.test(k); })[0];
-    var h = diff ? '<h4 class="h4">' + esc(diff) + '</h4>' + md(p.S[diff].join('\n')) : '';
-    h += '<div class="abgrid">' + opts.map(function(k){ return '<div class="abcard"><h4>' + esc(k) + '</h4>' + md(p.S[k].join('\n')) + '</div>'; }).join('') + '</div>';
-    ks.filter(function(k){ return k !== diff && opts.indexOf(k) < 0; }).forEach(function(k){ h += '<h4 class="h4">' + esc(k) + '</h4>' + md(p.S[k].join('\n')); });
-    return h;
-  }
-  function pvFormHtml(){
-    var f = pvForm;
-    return '<form class="mform" id="pvF"><h3>새 임시 정책</h3><p class="muted" style="margin:-6px 0 12px;font-size:13px">적으면 Claude가 규칙(rules/provisional-policy.md)대로 등록합니다. 같은 정책을 바꾸는 승인 대기 임시 정책이 있으면 그 문서에 합치거나 A/B 선택 문서로 만듭니다.</p>' +
-      '<label>제목<input id="pvT" required value="' + esc(f.title) + '" placeholder="예: PCR Setup Door 잠금 해제 조건"></label>' +
-      '<label>바꾸는 정책<input id="pvP" required value="' + esc(f.policy) + '" placeholder="예: POL-EQP-008 규칙 5 · POL-EQP-008 추가"></label>' +
-      '<label>바꾸는 내용<textarea id="pvC" rows="6" required>' + esc(f.change) + '</textarea></label>' +
-      '<label>이유와 근거<textarea id="pvR" rows="4" placeholder="예: 2026-11-04 회의 결정, 고객 답 기다림">' + esc(f.reason) + '</textarea></label>' +
-      '<div class="mrow"><label class="grow">적용한 화면(CID)<input id="pvS" value="' + esc(f.screens) + '" placeholder="예: LI-INS-01-P, LI-INS-02-T"></label>' +
-      '<label>고객 확인<select id="pvK" class="minp"><option' + (f.cust === '필요 없음' ? ' selected' : '') + '>필요 없음</option><option' + (f.cust === '기다림' ? ' selected' : '') + '>기다림</option></select></label></div>' +
-      '<div class="macts"><span class="muted" id="pvMsgF" role="status"></span><button class="btn" type="button" data-pvcancel>취소</button><button class="btn primary" type="submit">Claude에게 등록 요청</button></div></form>';
-  }
-  function pvFormRead(){ return { title: $('pvT').value, policy: $('pvP').value, change: $('pvC').value, reason: $('pvR').value, screens: $('pvS').value, cust: $('pvK').value }; }
 
-  /* ══ 논의·결정: 내부 논의 pending/PD-*.md · 고객 논의 customer-agenda/agenda.md (rules/discussion-answer.md) ══ */
-  var DISC = null, dTab = 'pd', dSel = '', dForm = null, dStat = 'all';   // dStat: 목록 상태 거르기(all 전체 · 상태값)
-  function loadDisc(){
-    return Promise.all([api('/api/plan/files?dir=pending').catch(function(){ return { files: [] }; }), getText('.history/guides/customer-agenda/agenda.md')]).then(function(r){
-      var fl = (r[0].files || []).filter(function(f){ return /\/PD-[^\/]+\.md$/i.test(f.path); });
-      return getTexts(fl.map(function(f){ return f.url; })).then(function(ts){ return fl.map(function(f, i){ return { f: f, t: ts[i] }; }); }).then(function(all){
-        var pd = all.map(function(x){
-          var t = x.t.replace(/\r\n/g, '\n'), h = /^#\s+(PD-\d+)\s*(.*)$/m.exec(t) || [], S = secsOf(t), head = kvTable(S._);
-          return { id: h[1] || x.f.path.replace(/^.*\/|\.md$/g, ''), title: h[2] || '', status: head['상태'] || '', head: head, S: S, t: t, path: x.f.path, closed: x.f.closed, by: head['제안자'] || '', date: head['제안일'] || '' };
-        }).sort(function(a, b){ return (a.closed - b.closed) || a.id.localeCompare(b.id); });
-        var T = mdTable(String(r[1] || '').split(/\r?\n/)), H = T.head;
-        var ca = T.rows.filter(function(x){ return /^CA-\d+/.test(x[0]); }).map(function(x){ var o = {}; H.forEach(function(k, i){ o[k] = x[i] || ''; }); return { id: x[0], title: String(o['내용'] || '').split(/[.:]\s/)[0].slice(0, 60), o: o, status: o['상태'] || '', path: 'customer-agenda/agenda.md' }; });
-        DISC = { pd: pd, ca: ca }; snapSave('disc', DISC);
-        var open = pd.filter(function(p){ return !p.closed; }).length + ca.filter(function(c){ return c.status !== '결정'; }).length;
-        setCnt('decisions', open);
-      });
-    }).catch(function(){ DISC = { pd: [], ca: [] }; });
+  /* ══ 작업 기록: 규칙 저장소 work-logs/*.md (reference-rules/work-log.md) — 누가 어느 메뉴를 몇 단계까지, 다음 할 일 ══ */
+  var WL = null, wlSel = new URLSearchParams(location.search).get('w') || '', wlStat = 'open', wlText = {};
+  var WL_ST = ['0. 시작', '1. 요건 정의', '2. 근거 · 분석', '3. 화면 설계', '4. 검토', '5. 고객 UX 리뷰', '6. 다국어', '7. 완료'];
+  var CASE_N = { '1': '케이스 1 · 부분 수정', '2': '케이스 2 · 신규 화면', '3': '케이스 3 · 다시 그리기' };
+  function loadWl(){
+    return api('/api/worklogs').then(function(j){ WL = j; setCnt('worklogs', (j.items || []).filter(function(w){ return w.status === '진행 중'; }).length); })
+      .catch(function(){ WL = WL || { items: [] }; });
   }
-  function renderDisc(){
-    var el = $('body-decisions'); if (!el) return;
-    if (!DISC) { el.innerHTML = '<p class="muted">논의 항목을 읽는 중…</p>'; return; }
-    if (dForm && $('dF')) dForm = { text: $('dA').value, date: $('dD').value, basis: $('dB').value };
-    var W = canWrite(), ALL = DISC[dTab];
-    var isOpen = function(k, x){ return k === 'pd' ? !x.closed : x.status !== '결정'; };
-    // 상태 거르기(목록 위 드롭다운): 전체 · 상태값 하나씩
-    var STATS = dTab === 'pd' ? ['대기', '보류', '합의', '반영 완료', '기각', '병합'] : ['논의 전', '논의 중', '결정'];
-    ALL.forEach(function(x){ var s = String(x.status || '').trim(); if (s && STATS.indexOf(s) < 0) STATS.push(s); });   // 규칙에 없는 값도 고를 수 있게
-    var match = function(x){ return dStat === 'all' ? true : String(x.status || '').trim() === dStat; };
-    var L = ALL.filter(match);
-    if (!dForm && (!dSel || !L.some(function(x){ return x.id === dSel; }))) dSel = L[0] ? L[0].id : '';
-    var openN = function(k){ return DISC[k].filter(function(x){ return isOpen(k, x); }).length; };
-    var top = '<div class="segs"><button type="button" class="seg2' + (dTab === 'pd' ? ' on' : '') + '" data-dt="pd">내부 논의 <span>' + openN('pd') + '</span></button><button type="button" class="seg2' + (dTab === 'ca' ? ' on' : '') + '" data-dt="ca">고객 논의 <span>' + openN('ca') + '</span></button></div>';
-    var cnt = function(f){ return ALL.filter(f).length; };
-    var opt = function(v, label, n){ return '<option value="' + esc(v) + '"' + (dStat === v ? ' selected' : '') + '>' + esc(label) + ' (' + n + ')</option>'; };
-    var filt = '<div class="mhead"><label class="dstat"><span>상태</span><select id="dStat" class="minp" aria-label="상태로 거르기">' +
-      opt('all', '전체', ALL.length) + STATS.map(function(s){ return opt(s, s, cnt(function(x){ return String(x.status || '').trim() === s; })); }).join('') + '</select></label></div>';
-    var left = filt + (L.length ? L.map(function(x){
-      return '<button type="button" class="mitem" data-d="' + esc(x.id) + '"' + (x.id === dSel ? ' aria-current="true"' : '') + '><b>' + esc(x.title || x.id) + '</b><span>' + esc(x.id) + (x.by ? ' · ' + esc(x.by) : '') + (x.date || (x.o && x.o['등록일']) ? ' · ' + esc(x.date || x.o['등록일']) : '') + '</span><span class="chips">' + stPill(x.status) + (x.closed ? '<span class="pill">닫힘</span>' : '') + jobState(x.id) + '</span></button>';
-    }).join('') : '<p class="muted" style="margin:8px">이 상태의 항목이 없습니다.</p>');
-    var x = ALL.filter(function(i){ return i.id === dSel; })[0], right;
-    if (!x) right = '<div class="wempty"><b>항목이 없습니다</b></div>';
+  function wlMatch(w){ return wlStat === 'all' ? true : wlStat === 'open' ? w.status !== '끝남' && w.status !== '멈춤' : w.status === wlStat; }
+  function renderWl(){
+    var el = $('body-worklogs'); if (!el) return;
+    if (!WL) { el.innerHTML = '<p class="muted">작업 기록을 읽는 중…</p>'; return; }
+    var all = WL.items || [], L = all.filter(wlMatch);
+    if (wlSel && !L.some(function(w){ return w.name === wlSel; }) && all.some(function(w){ return w.name === wlSel; })) { wlStat = 'all'; L = all; }
+    if (!wlSel || !L.some(function(w){ return w.name === wlSel; })) wlSel = L[0] ? L[0].name : '';
+    var n = function(f){ return all.filter(f).length; }, opt = function(v, label, c){ return '<option value="' + v + '"' + (wlStat === v ? ' selected' : '') + '>' + label + ' (' + c + ')</option>'; };
+    var stg = function(w){ return w.stage >= 0 && w.stage < WL_ST.length ? WL_ST[w.stage] : '끝'; };
+    var left = '<div class="mhead pvh"><label class="dstat"><span>보기</span><select id="wlStat" class="minp" aria-label="작업 기록 거르기">' +
+      opt('open', '진행 중', n(function(w){ return w.status !== '끝남' && w.status !== '멈춤'; })) + opt('끝남', '끝남', n(function(w){ return w.status === '끝남'; })) + opt('멈춤', '멈춤', n(function(w){ return w.status === '멈춤'; })) + opt('all', '전체', all.length) + '</select></label></div>' +
+      (L.length ? L.map(function(w){
+        return '<button type="button" class="mitem" data-wl="' + esc(w.name) + '"' + (w.name === wlSel ? ' aria-current="true"' : '') + '><b>' + esc(w.title || w.name) + '</b><span>' + esc([w.requester, w.menu, w.started].filter(Boolean).join(' · ')) + '</span>' +
+          '<span class="chips"><span class="pill">' + esc(CASE_N[w.case] || ('케이스 ' + (w.case || '?'))) + '</span><span class="pill ' + (w.status === '끝남' ? 'done' : w.status === '멈춤' ? 'warn' : 'prog') + '">' + esc(w.status === '끝남' ? '끝남' : stg(w)) + '</span>' + (w.test ? '<span class="pill review">테스트</span>' : '') + '</span></button>';
+      }).join('') : '<p class="muted" style="margin:8px">' + (wlStat === 'open' ? '진행 중인 화면설계 작업이 없습니다. Figma Workbench에서 케이스를 골라 「새 작업」으로 요청하면 0단계에서 작업 기록이 생깁니다.' : '작업 기록이 없습니다.') + '</p>');
+    var w = all.filter(function(x){ return x.name === wlSel; })[0], right;
+    if (!w) right = '<div class="wempty"><b>작업 기록이 없습니다</b><p>화면설계 작업 하나에 기록 하나를 둡니다(<code>' + esc(WL.dir || 'work-logs') + '</code>).</p></div>';
     else {
-      var j = pjobs[x.id], busy = j && /^(대기|진행 중)$/.test(j.status), confirmWait = j && j.status === '확인 대기';
-      var canAns = W && !x.closed && x.status !== '결정' && !busy && !confirmWait;
-      // 상태 뱃지는 제목 바로 옆(제목이 길면 마지막 줄 끝)
-      right = '<div class="mtop"><div style="flex:1"><h3>' + esc(x.title || x.id) + ' <span class="h3pill">' + stPill(x.status) + '</span></h3><p class="matt" style="border:0;padding:0">' + esc(x.id) + ' · <code>' + esc(x.path) + '</code></p></div>' + jobState(x.id) +
-        (canAns && !dForm ? '<button class="btn primary" type="button" data-dans>답변하기</button>' : '') + '</div>';
-      if (confirmWait) right += '<section class="propose"><h4>Claude 정리안 · 확인해 주세요</h4><p class="muted" style="margin:0 0 8px;font-size:13px">확인하면 항목 파일 · 공통 자료(또는 임시 정책) · 반영 대기 목록을 이대로 고칩니다(rules/discussion-answer.md 3단계).</p>' + md(j.note || '') +
-        (W ? '<div class="macts"><button class="btn" type="button" data-dre>다시 답하기</button><button class="btn primary" type="button" data-dok>확인 · 반영</button></div>' : '') + '</section>';
-      if (dForm) right += '<form class="mform" id="dF" style="margin-top:16px"><h3>답변하기</h3>' +
-        '<label>답<textarea id="dA" rows="6" required placeholder="정한 내용을 적어 주세요. Claude가 결정 · 바뀌는 것 · 확인 필요로 정리해 보여 주고, 확인하면 반영합니다.">' + esc(dForm.text) + '</textarea></label>' +
-        '<div class="mrow"><label>답한 날짜<input type="date" id="dD" value="' + esc(dForm.date) + '"></label><label class="grow">근거' + (dTab === 'ca' ? '(고객 답: 회의록 · 메일)' : '') + '<input id="dB" value="' + esc(dForm.basis) + '" placeholder="예: 2026-11-04 회의록, 메일"></label></div>' +
-        (mlist && mlist.length ? '<p class="muted" style="font-size:12.5px;margin:-4px 0 8px">최근 회의록: ' + mlist.slice(0, 4).map(function(m){ return '<button type="button" class="chip" data-dmin="' + esc(m.date.slice(0, 10) + ' 회의록 ' + m.id) + '" title="근거에 이 회의록을 넣습니다">' + esc(m.date.slice(5, 10) + ' ' + m.title) + '</button>'; }).join(' ') + '</p>' : '') +
-        '<div class="macts"><span class="muted" id="dMsg" role="status"></span><button class="btn" type="button" data-dcancel>취소</button><button class="btn primary" type="submit">Claude에게 보내기</button></div></form>';
-      right += '<div class="dbody">' + (dTab === 'pd' ? md(x.t.replace(/^#\s+.*\n/, '')) : '<dl class="kv">' + Object.keys(x.o).filter(function(k){ return k !== 'ID'; }).map(function(k){ return '<dt>' + esc(k) + '</dt><dd>' + esc(x.o[k] || '-') + '</dd>'; }).join('') + '</dl>') + '</div>';
+      var bar = '<ol class="wlbar" aria-label="단계">' + WL_ST.map(function(s, i){ var c = w.stage < 0 || i < w.stage || w.status === '끝남' ? 'done' : i === w.stage ? 'now' : ''; return '<li class="' + c + '"' + (c === 'now' ? ' aria-current="step"' : '') + '>' + esc(s) + '</li>'; }).join('') + '</ol>';
+      var t = wlText[w.name];
+      right = '<div class="mtop"><div style="flex:1"><h3>' + esc(w.title || w.name) + '</h3><p class="matt" style="border:0;padding:0">' + esc(CASE_N[w.case] || '') + ' · <code>' + esc((WL.dir || 'work-logs') + '/' + w.name + '.md') + '</code></p></div>' +
+        (w.status === '진행 중' ? '<a class="btn sm primary" href="Figma_Workbench.html" title="Workbench 입력창에서 이 작업 기록을 골라 다음 단계를 요청합니다">Workbench에서 이어 하기</a>' : '') + '</div>' + bar +
+        '<dl class="kv" style="margin:14px 0"><dt>지금 단계</dt><dd>' + esc(w.status === '끝남' ? '끝남' : stg(w)) + '</dd>' + (w.next ? '<dt>다음</dt><dd>' + esc(w.next) + '</dd>' : '') +
+        '<dt>요청자</dt><dd>' + esc(w.requester || '-') + '</dd><dt>메뉴</dt><dd>' + esc(w.menu || '-') + '</dd><dt>대상 CID</dt><dd>' + (w.cids.length ? w.cids.map(function(c){ return '<span class="chip">' + esc(c) + '</span>'; }).join('') : '-') + '</dd></dl>' +
+        '<div class="dbody" id="wlBody">' + (t == null ? '<p class="muted">기록을 읽는 중…</p>' : md(fm(t).body)) + '</div>';
+      if (t == null) getText((WL.dir || '.history/guides/work-logs') + '/' + w.name + '.md').then(function(x){ wlText[w.name] = x; if (cur === 'worklogs' && wlSel === w.name) renderWl(); });
     }
-    el.innerHTML = top + '<div class="mgrid"><aside class="card mlist" aria-label="논의 항목">' + left + '</aside><section class="card mright">' + right + '</section></div>';
+    el.innerHTML = '<div class="mgrid"><aside class="card mlist" aria-label="작업 기록 목록">' + left + '</aside><section class="card mright">' + right + '</section></div>';
     linkIds(el.querySelector('.dbody'));
   }
+  document.addEventListener('change', function(e){ if (e.target.id === 'wlStat') { wlStat = e.target.value; wlSel = ''; renderWl(); var s = $('wlStat'); if (s) s.focus(); } });
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-wl],[data-wlgo]'); if (!b) return;
+    if (b.dataset.wlgo) { e.preventDefault(); wlSel = b.dataset.wlgo; select('worklogs'); return; }
+    wlSel = b.dataset.wl; renderWl();
+  });
 
-  // 세 탭의 누르기 · 보내기
+  // 작업대기 · 논의 대상의 누르기 · 보내기
   document.addEventListener('input', function(e){ if (e.target.id === 'blq') { blQ = e.target.value; renderBacklog(); } });
   document.addEventListener('change', function(e){
     if (e.target.id === 'blAll') { blAll = e.target.checked; renderBacklog(); }
-    if (e.target.id === 'dStat') { dStat = e.target.value; dSel = ''; renderDisc(); var s = $('dStat'); if (s) s.focus(); }
+    if (e.target.id === 'plStat') { plStat = e.target.value; planSel = ''; nForm = null; dForm = null; renderPlan(); var s = $('plStat'); if (s) s.focus(); }
     if (e.target.id === 'blPickAll') { document.querySelectorAll('.blpick').forEach(function(c){ c.checked = e.target.checked; }); blPickCount(); }
     if (e.target.classList && e.target.classList.contains('blpick')) blPickCount();
   });
-  // 고른 반영 대기 줄 → Workbench 수정 요청(유형 「화면설계서 반영」). 요청에 fixRows를 담아, 완료되면 Claude가 그 줄을 「반영 완료 (날짜)」로 바꾼다
+  // 고른 반영 대기 항목 → Workbench 화면설계 작업 요청(케이스 1 부분 수정 · 새 작업). fixRows를 담아 1단계에서 「이번에 반영」으로 고르게 한다
   document.addEventListener('click', function(e){
     var b = e.target.closest('[data-blreq]'); if (!b) return;
     var s = BL && BL.screens.filter(function(x){ return x.cid === blSel; })[0], fig = s && figOf(s.figma); if (!s || !fig) return;
     var picks = Array.prototype.map.call(document.querySelectorAll('.blpick:checked'), function(c){ return c.value; });
-    if (!picks.length) { alert('반영할 줄을 골라 주세요.'); return; }
+    if (!picks.length) { alert('반영할 항목을 골라 주세요.'); return; }
     var rows = s.rows.filter(function(r){ return picks.indexOf(r.n) >= 0; });
-    var text = '화면설계서 작업대기 · ' + s.cid + ' ' + (s.title || '') + '의 반영 대기 ' + rows.length + '줄을 Figma 화면에 반영해 주세요.\n' +
-      rows.map(function(r){ return '- ' + r.n + '. [' + r.kind + '] 지금: ' + r.now + ' → 바꿀 것: ' + r.to + (r.why ? ' (근거: ' + r.why + ')' : ''); }).join('\n');
-    if (!confirm(s.cid + ' 화면의 ' + rows.length + '줄로 Workbench 수정 요청을 만듭니다.\n요청이 「완료」되면 Claude가 이 줄들을 「반영 완료」로 바꿉니다.')) return;
+    var text = '화면설계서 작업대기 · ' + s.cid + ' ' + (s.title || '') + '의 반영 대기 ' + rows.length + '항목을 반영하는 화면 부분 수정입니다. 1단계에서 이 항목들을 「이번에 반영」으로 골라 주세요.\n' +
+      rows.map(function(r){ return '- ' + r.n + ' [' + r.kind + '] 변경 전: ' + r.now + ' → 변경 후: ' + r.to + (r.why ? ' (근거: ' + r.why + ')' : ''); }).join('\n');
+    if (!confirm(s.cid + ' 화면의 ' + rows.length + '항목으로 화면설계 작업(케이스 1 · 새 작업)을 요청합니다.')) return;
     b.disabled = true;
-    api('/api/requests', { action: 'add', fileKey: fig.key, fileName: '', nodeId: fig.node, frame: s.cid + (s.title ? ' ' + s.title : ''), page: '', editable: true, type: '화면설계서 반영', priority: '보통', layout: '', text: text, by: myName,
-      fixRows: rows.map(function(r){ return { doc: s.fix ? 'screen-fixes' : 'screens', file: s.fix ? s.path.replace(/^screen-fixes\//, '') : s.path, n: r.n, cid: s.cid }; }) })
-      .then(function(j){ return loadFixReqs().then(function(){ renderBacklog(); var id = j && j.items && j.items[0] && j.items[0].id; toast((id ? id + ' ' : '') + '수정 요청을 만들었습니다. Workbench · 변경 이력에서 진행을 볼 수 있습니다.'); }); })
+    api('/api/requests', { action: 'add', fileKey: fig.key, fileName: '', nodeId: fig.node, frame: s.cid + (s.title ? ' ' + s.title : ''), page: '', editable: true, type: '케이스 1 · 부분 수정 · 0단계 시작', case: '1', work: '', stage: 0, priority: '보통', layout: '', text: text, by: myName,
+      fixRows: rows.map(function(r){ return { doc: 'screens', file: s.path, n: r.n, cid: s.cid }; }) })
+      .then(function(j){ return loadFixReqs().then(function(){ renderBacklog(); var id = j && j.items && j.items[0] && j.items[0].id; toast((id ? id + ' ' : '') + '화면설계 작업을 요청했습니다. Workbench · 변경 이력에서 진행을 볼 수 있습니다.'); }); })
       .catch(function(err){ b.disabled = false; alert('요청을 만들지 못했습니다.\n' + err.message); });
   });
   document.addEventListener('click', function(e){
-    var b = e.target.closest('[data-bl],[data-blk],[data-pvf],[data-pv],[data-pvnew],[data-pvcancel],[data-pvd],[data-dt],[data-d],[data-dans],[data-dcancel],[data-dre],[data-dok],[data-dmin]'); if (!b) return;
+    var b = e.target.closest('[data-bl],[data-blk],[data-pl],[data-dsnew],[data-dscancel],[data-dans],[data-dapply],[data-dcancel],[data-dre],[data-dok],[data-dmin]'); if (!b) return;
     var d = b.dataset;
     if (d.bl != null) { blSel = d.bl; blKind = ''; return renderBacklog(); }
     if (d.blk != null) { blKind = d.blk; return renderBacklog(); }
-    if (d.pvf != null) { pvFilter = d.pvf; pvSel = ''; return renderPv(); }
-    if (d.pv != null) { pvSel = d.pv; pvForm = null; pvMsg = ''; var t = PVS.filter(function(p){ return p.id === d.pv; })[0]; if (t && t.status.indexOf(pvFilter) !== 0 && !(pvFilter === '승인' && /승인$/.test(t.status))) pvFilter = /승인 대기/.test(t.status) ? '승인 대기' : /반려/.test(t.status) ? '반려' : '승인'; return renderPv(); }
-    if (b.hasAttribute('data-pvnew')) { pvForm = { title: '', policy: '', change: '', reason: '', screens: '', cust: '필요 없음' }; return renderPv(); }
-    if (b.hasAttribute('data-pvcancel')) { pvForm = null; return renderPv(); }
-    if (d.pvd != null) {
-      var p = PVS.filter(function(x){ return x.id === pvSel; })[0]; if (!p) return;
-      var dec = d.pvd, rej = dec === '반려';
-      var memo = prompt((rej ? '반려 사유(꼭 적어 주세요)' : dec + ' 메모(없으면 비워 두세요)') + ' — ' + p.id, '');
-      if (memo === null) return; if (rej && !memo.trim()) { alert('반려는 사유를 적어야 합니다.'); return; }
-      if (!confirm(p.id + ' 「' + p.title + '」을(를) ' + dec + '합니다.' + (p.same.length ? '\n같은 정책을 바꾸는 승인 대기 임시 정책: ' + p.same.join(', ') : '') + '\nClaude가 파일의 상태 · 결정 칸을 고치고 ' + (rej ? 'closed/로 옮깁니다.' : '영향 화면의 반영 대기 목록에 줄을 더합니다.'))) return;
-      b.disabled = true;
-      addPlanJob('pv-decide', p.id, { decision: dec, memo: memo.trim(), date: today(), by: myName }, p.id + ' ' + dec).then(loadPlanJobs).then(function(){ pvMsg = '<b>' + esc(dec) + '</b> 요청을 보냈습니다. 요청 감시 중인 Claude가 파일을 고치면 목록이 바뀝니다.'; renderPv(); })
-        .catch(function(err){ b.disabled = false; alert(err.message); });
-      return;
-    }
-    if (d.dt != null) { dTab = d.dt; dSel = ''; dForm = null; dStat = 'all'; return renderDisc(); }
-    if (d.d != null) { if (dForm && !confirm('쓰던 답을 버리고 이동할까요?')) return; dSel = d.d; dForm = null; return renderDisc(); }
-    if (b.hasAttribute('data-dans') || b.hasAttribute('data-dre')) { dForm = { text: '', date: today(), basis: '' }; return renderDisc(); }
-    if (b.hasAttribute('data-dcancel')) { dForm = null; return renderDisc(); }
+    if (d.pl != null) { if ((dForm || nForm) && !confirm('쓰던 내용을 버리고 이동할까요?')) return; planSel = d.pl; nForm = null; dForm = null; return renderPlan(); }
+    if (b.hasAttribute('data-dsnew')) { nForm = { title: '', question: '', decider: '내부', from: '회의', policies: '', cids: '', basis: '' }; dForm = null; return renderPlan(); }
+    if (b.hasAttribute('data-dscancel')) { nForm = null; return renderPlan(); }
+    if (b.hasAttribute('data-dans') || b.hasAttribute('data-dre')) { dForm = { text: '', date: today(), basis: '', apply: false }; return renderPlan(); }
+    if (b.hasAttribute('data-dapply')) { dForm = { text: '', date: today(), basis: '', apply: true }; return renderPlan(); }
+    if (b.hasAttribute('data-dcancel')) { dForm = null; return renderPlan(); }
     if (d.dmin != null) { var bi = $('dB'); if (bi) bi.value = (bi.value ? bi.value + ', ' : '') + d.dmin + ' 회의록'; return; }
     if (b.hasAttribute('data-dok')) {
-      var j = pjobs[dSel]; if (!j) return; b.disabled = true;
-      addPlanJob('answer-apply', dSel, { from: j.id, proposal: j.note || '', answer: (j.plan || {}).answer, date: (j.plan || {}).date, basis: (j.plan || {}).basis, by: myName }, dSel + ' 정리안 반영')
+      var j = pjobs[planSel]; if (!j) return; b.disabled = true;
+      addPlanJob('answer-apply', planSel, { from: j.id, proposal: j.note || '', answer: (j.plan || {}).answer, date: (j.plan || {}).date, basis: (j.plan || {}).basis, apply: !!(j.plan || {}).apply, by: myName }, planSel + ' 정리안 반영')
         .then(function(){ return api('/api/jobs', { action: 'update', id: j.id, status: '완료', note: (j.note || '') + '\n\n(확인: ' + myName + ' · 반영 요청)' }); })
-        .then(loadPlanJobs).then(function(){ renderDisc(); toast('확인했습니다. Claude가 정리안대로 반영합니다.'); }).catch(function(err){ b.disabled = false; alert(err.message); });
+        .then(loadPlanJobs).then(function(){ renderPlan(); toast('확인했습니다. Claude가 정리안대로 반영합니다.'); }).catch(function(err){ b.disabled = false; alert(err.message); });
     }
   });
   document.addEventListener('submit', function(e){
-    if (e.target.id === 'pvF') {
-      e.preventDefault(); var f = pvFormRead();
-      if (!f.title.trim() || !f.policy.trim() || !f.change.trim()) { $('pvMsgF').textContent = '제목 · 바꾸는 정책 · 바꾸는 내용을 적어 주세요.'; return; }
-      addPlanJob('pv-new', '', { title: f.title.trim(), policy: f.policy.trim(), change: f.change.trim(), reason: f.reason.trim(), screens: f.screens.trim(), customer: f.cust, by: myName, date: today() }, '새 임시 정책: ' + f.title.trim())
-        .then(loadPlanJobs).then(function(){ pvForm = null; pvMsg = ''; renderPv(); toast('새 임시 정책 등록을 요청했습니다. Claude가 등록하면 목록에 나옵니다.'); })
-        .catch(function(err){ $('pvMsgF').textContent = err.message; });
+    if (e.target.id === 'nF') {
+      e.preventDefault(); var f = nFormRead();
+      if (!f.title.trim() || !f.question.trim()) { $('nMsg').textContent = '제목 · 정할 것을 적어 주세요.'; return; }
+      addPlanJob('ds-new', '', { title: f.title.trim(), question: f.question.trim(), decider: f.decider, from: f.from, policies: f.policies.trim(), cids: f.cids.trim(), basis: f.basis.trim(), by: myName, date: today() }, '새 논의 대상: ' + f.title.trim())
+        .then(loadPlanJobs).then(function(){ nForm = null; renderPlan(); toast('새 논의 대상 등록을 요청했습니다. Claude가 올리면 목록에 나옵니다.'); })
+        .catch(function(err){ $('nMsg').textContent = err.message; });
     }
     if (e.target.id === 'dF') {
-      e.preventDefault(); var a = $('dA').value.trim(), dd = $('dD').value, bs = $('dB').value.trim();
-      if (!a) { $('dMsg').textContent = '답을 적어 주세요.'; return; }
-      if (dTab === 'ca' && !bs) { $('dMsg').textContent = '고객 답은 근거(회의록 · 메일)를 적어 주세요.'; return; }
-      addPlanJob('answer', dSel, { answer: a, date: dd, basis: bs, by: myName, kind: dTab }, dSel + ' 답변').then(loadPlanJobs)
-        .then(function(){ dForm = null; renderDisc(); toast('답을 보냈습니다. Claude가 정리안을 만들면 여기서 확인합니다.'); })
+      e.preventDefault(); var a = $('dA').value.trim(), dd = $('dD').value, bs = $('dB').value.trim(), x = (DS || []).filter(function(i){ return i.id === planSel; })[0], ap = !!(dForm && dForm.apply);
+      if (!a && !ap) { $('dMsg').textContent = '답을 적어 주세요.'; return; }
+      if (!ap && x && /고객/.test(x.decider) && !bs) { $('dMsg').textContent = '고객 답은 근거(회의록 · 메일)를 적어 주세요.'; return; }
+      addPlanJob('answer', planSel, { answer: a, date: dd, basis: bs, by: myName, kind: 'ds', apply: ap }, planSel + (ap ? ' 반영 정리안' : ' 답변')).then(loadPlanJobs)
+        .then(function(){ dForm = null; renderPlan(); toast(ap ? '반영 정리안을 요청했습니다. Claude가 정리안을 만들면 여기서 확인합니다.' : '답을 보냈습니다. Claude가 정리안을 만들면 여기서 확인합니다.'); })
         .catch(function(err){ $('dMsg').textContent = err.message; });
     }
   });
@@ -1324,7 +1338,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   var minMe = '', myName = '', nedit = '', ntext = null, ntext0 = '';   // 나(작성자 ID · 이름), 고치는 중인 내 작성분(회의록 ID)과 글
   function loadMd(){ return api('/api/minutes').then(function(j){ mlist = j.items || []; minMe = j.me || ''; snapSave('min', { items: mlist, me: minMe }); }).catch(function(){ mlist = mlist || []; }); }
   var myApproves = null;   // 내 승인 권한(/api/me approves). 받기 전(null)에는 버튼을 숨긴다
-  api('/api/me').then(function(j){ myName = (j.user && (j.user.name || j.user.id)) || ''; myApproves = [].concat(j.approves || []); if (cur === 'provisional') renderPv(); }).catch(function(){ myApproves = []; });
+  api('/api/me').then(function(j){ myName = (j.user && (j.user.name || j.user.id)) || ''; myApproves = [].concat(j.approves || []); if (cur === 'decisions') renderPlan(); }).catch(function(){ myApproves = []; });
   function canApprove(k){ return !!myApproves && myApproves.indexOf(k) >= 0; }
   function fmtWhen(s){
     var d = /^(\d{4})-(\d{2})-(\d{2})(?:\s+(\d{2}:\d{2}))?/.exec(s || ''); if (!d) return esc(s);
@@ -1422,36 +1436,29 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     });
     return h + '</div>';
   }
-  /* 회의록 ↔ 임시 정책 · 논의
-     - 이 회의에서 나온 항목: 임시 정책(PV) · 내부 논의(PD) · 고객 논의(CA) 글에 이 회의록 ID가 적힌 것(규칙: 근거 · 미팅 결과에 회의록 ID를 적는다)
-     - [정책 · 논의 뽑기]: 작업 kind 'minutes' + mode 'extract' — 각자 작성분이 없어도 정리본에서 PV · PD · CA를 올린다
-     - 작성 화면 「진행 중인 항목 넣기」: 승인 대기 PV · 열린 PD · 결정 전 CA를 [ID 제목] 주제 줄로 넣는다 */
+  /* 회의록 ↔ 논의 대상
+     - 이 회의에서 나온 항목: 논의 대상(DS) 글에 이 회의록 ID가 적힌 것(규칙: 근거 · 미팅 결과에 회의록 ID를 적는다)
+     - [정책 · 논의 뽑기]: 작업 kind 'minutes' + mode 'extract' — 각자 작성분이 없어도 정리본에서 논의 대상(DS)을 올린다
+     - 작성 화면 「진행 중인 항목 넣기」: 열린 논의 대상(논의 중 · 보류 · 후속 확인)을 [ID 제목] 주제 줄로 넣는다 */
   function mRelated(m){
-    var out = [];
-    (PVS || []).forEach(function(p){ if (p.t.indexOf(m.id) >= 0) out.push({ id: p.id, title: p.title, status: p.status }); });
-    if (DISC) {
-      DISC.pd.forEach(function(x){ if (x.t.indexOf(m.id) >= 0) out.push({ id: x.id, title: x.title, status: x.status }); });
-      DISC.ca.forEach(function(c){ if (Object.keys(c.o).some(function(k){ return String(c.o[k]).indexOf(m.id) >= 0; })) out.push({ id: c.id, title: c.title, status: c.status }); });
-    }
-    return out;
+    return (DS || []).filter(function(x){ return x.t.indexOf(m.id) >= 0; }).map(function(x){ return { id: x.id, title: x.title, status: x.status }; });
   }
   function relHtml(m, W){
     var R = mRelated(m), j = mxjobs[m.id], busy = j && (j.status === '대기' || j.status === '진행 중'), has = String(m.body || '').trim().length >= 10;
     var st = busy ? '<span class="pill prog">Claude가 뽑는 중' + (j.status === '대기' ? '(대기)' : '') + '</span>' :
       j && (j.status === '실패' || j.status === '보류') ? '<span class="pill warn" title="' + esc(j.note || '') + '">뽑기 ' + esc(j.status) + '</span>' : '';
-    var h = '<div class="mrel"><div class="msec"><h4>이 회의에서 나온 정책 · 논의 <span class="muted">' + R.length + '</span></h4>' + st +
-      (W ? '<button class="btn sm" type="button" data-mext' + (busy || !has ? ' disabled' : '') + ' title="' + (has ? '정리본에서 바꾸기로 한 정책 · 더 논의할 것 · 고객 답을 기다리는 것을 찾아 임시 정책 · 논의·결정에 올립니다' : '회의록 내용이 없습니다') + '">정책 · 논의 뽑기</button>' : '') + '</div>';
+    var h = '<div class="mrel"><div class="msec"><h4>이 회의에서 나온 논의 대상 <span class="muted">' + R.length + '</span></h4>' + st +
+      (W ? '<button class="btn sm" type="button" data-mext' + (busy || !has ? ' disabled' : '') + ' title="' + (has ? '정리본에서 정해야 할 것 · 결정된 것을 찾아 논의 대상에 올립니다' : '회의록 내용이 없습니다') + '">정책 · 논의 뽑기</button>' : '') + '</div>';
     if (j && j.status === '완료' && j.note) h += '<p class="msum">뽑기 결과 · ' + esc(String(j.updatedAt || '').slice(0, 16).replace('T', ' ')) + ' · ' + esc(j.note) + '</p>';
     h += R.length ? '<ul>' + R.map(function(r){ return '<li>' + idLink(r.id) + '<span class="t">' + esc(r.title) + '</span>' + stPill(r.status) + '</li>'; }).join('') + '</ul>' :
-      '<p class="muted" style="margin:6px 0 0">' + (PVS && DISC ? '아직 없습니다.' + (W && has ? ' [정책 · 논의 뽑기]를 누르면 Claude가 정리본에서 찾아 올립니다.' : '') : '임시 정책 · 논의를 읽는 중…') + '</p>';
+      '<p class="muted" style="margin:6px 0 0">' + (DS ? '아직 없습니다.' + (W && has ? ' [정책 · 논의 뽑기]를 누르면 Claude가 정리본에서 찾아 논의 대상으로 올립니다.' : '') : '논의 대상을 읽는 중…') + '</p>';
     return h + '</div>';
   }
   function impHtml(){
     var L = [];
-    (PVS || []).forEach(function(p){ if (!p.closed && /승인 대기/.test(p.status)) L.push({ id: p.id, title: p.title, kind: '임시 정책' }); });
-    if (DISC) { DISC.pd.forEach(function(x){ if (!x.closed) L.push({ id: x.id, title: x.title, kind: '내부 논의' }); }); DISC.ca.forEach(function(c){ if (c.status !== '결정') L.push({ id: c.id, title: c.title, kind: '고객 논의' }); }); }
+    (DS || []).forEach(function(x){ if (x.status === '논의 중' || x.status === '보류' || x.group === 'g6') L.push({ id: x.id, title: x.title, kind: (x.decider || '') + ' ' + x.status }); });
     if (!L.length) return '';
-    return '<div class="mimp">진행 중인 임시 정책 · 논의를 안건으로 넣기 (누르면 내용에 주제 줄이 들어갑니다)<div class="box">' +
+    return '<div class="mimp">열린 논의 대상을 안건으로 넣기 (누르면 내용에 주제 줄이 들어갑니다)<div class="box">' +
       L.map(function(x){ return '<button type="button" class="chip" data-mins="' + esc(x.id + ' ' + x.title) + '" title="' + esc(x.kind + ' · ' + x.title) + '">' + esc(x.id + ' ' + x.title) + '</button>'; }).join('') + '</div></div>';
   }
   document.addEventListener('click', function(e){
@@ -1464,7 +1471,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       return;
     }
     var mm = (mlist || []).filter(function(x){ return x.id === msel; })[0]; if (!mm) return;
-    if (!confirm('「' + mm.title + '」 정리본에서 바꾸기로 한 정책 · 더 논의할 것 · 고객 답을 기다리는 것을 Claude가 찾아\n임시 정책(PV) · 내부 논의(PD) · 고객 논의(CA)에 올립니다. 이미 있는 항목이면 그 항목에 회의 결과를 적습니다.\n요청할까요?')) return;
+    if (!confirm('「' + mm.title + '」 정리본에서 바꾸기로 한 정책 · 더 논의할 것 · 고객 답을 기다리는 것을 Claude가 찾아\n논의 대상(DS)에 올립니다. 이미 있는 항목이면 그 항목에 회의 결과를 적습니다.\n요청할까요?')) return;
     b.disabled = true;
     api('/api/jobs', { action: 'add', kind: 'minutes', mode: 'extract', minute: mm.id, name: mm.title, text: '정책 · 논의 뽑기', by: myName })
       .then(function(){ return loadMjobs(); }).then(function(){ renderMinutes(); toast('정책 · 논의 뽑기를 요청했습니다. 요청 감시 중인 Claude가 올리면 여기 나옵니다.'); })
@@ -1486,8 +1493,8 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       mjobs = o; mxjobs = ox;
       var busy = isBusy(o) || isBusy(ox);
       clearTimeout(mjTimer); if (busy) mjTimer = setTimeout(function(){ loadMjobs().then(function(){ if (cur === 'minutes') renderMinutes(); }); }, 8000);
-      // 끝나면 회의록과(요약 · 뽑기 모두 PV · PD · CA를 올릴 수 있으니) 임시 정책 · 논의도 다시 읽는다
-      if ((wasBusy && !isBusy(o)) || (wasX && !isBusy(ox))) return Promise.all([loadMd(), loadPvDocs(), loadDisc()]).then(function(){ toast(wasX && !isBusy(ox) ? '정책 · 논의 뽑기가 끝났습니다.' : '요약 정리가 끝났습니다.'); });
+      // 끝나면 회의록과(요약 · 뽑기 모두 논의 대상을 올릴 수 있으니) 논의 대상도 다시 읽는다
+      if ((wasBusy && !isBusy(o)) || (wasX && !isBusy(ox))) return Promise.all([loadMd(), loadDisc()]).then(function(){ toast(wasX && !isBusy(ox) ? '정책 · 논의 뽑기가 끝났습니다.' : '요약 정리가 끝났습니다.'); });
     }).catch(function(){});
   }
   // 회의록 기간: 날짜를 고르거나 빠른 선택(이번 주 · 이번 달 · 최근 3개월)
@@ -1634,10 +1641,9 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   $('reload').addEventListener('click', function(){ wbs = null; mins = null; loadConf().then(reloadAll).then(function(){ toast('새로 읽었습니다.'); }); });
   // 지난번에 받아 둔 자료로 먼저 그린다(메뉴를 옮겼다 돌아와도 바로 보임). 새 자료가 오면 바뀐다
   (function(){
-    var b = snapLoad('bl'), p = snapLoad('pv'), d = snapLoad('disc'), m = snapLoad('min');
+    var b = snapLoad('bl'), d = snapLoad('ds'), m = snapLoad('min');
     if (b && b.screens) { BL = b; var n = 0; b.screens.forEach(function(s){ n += (s.wait || []).length; }); setCnt('backlog', n); }
-    if (p && p.length) { PVS = p; pvs = p.filter(function(x){ return !x.closed; }).map(function(x){ return { id: x.id, title: x.title, status: x.status, by: x.by, date: dates(x.date)[0] || null }; }); setCnt('provisional', p.filter(function(x){ return /승인 대기/.test(x.status); }).length, true); }
-    if (d && d.pd) { DISC = d; setCnt('decisions', d.pd.filter(function(x){ return !x.closed; }).length + d.ca.filter(function(x){ return x.status !== '결정'; }).length); }
+    if (d && d.length && d[0].group) { DS = d; DISC = { ds: d }; planCnt(); }
     if (m && m.items) { mlist = m.items; minMe = m.me || ''; }
   })();
   select(new URLSearchParams(location.search).get('tab') || TABS[0].k);

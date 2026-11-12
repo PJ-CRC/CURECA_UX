@@ -22,7 +22,7 @@ if ($ReqId) {
   $r = $null; try { $r = @(([IO.File]::ReadAllText($rf, $Utf8) | ConvertFrom-Json).items) | Where-Object { $_.id -eq $ReqId } | Select-Object -First 1 } catch {}
   if (-not $r) { Write-Output "NOREQ $ReqId"; exit 1 }
   if (-not $From) { $From = [string]$r.startedAt }
-  $meta.kind = 'request'; $meta.reqId = $ReqId; $meta.reqType = [string]$r.type   # 요청 유형(일반 · 텍스트 수정 …): 사용량 통계에서 거르기
+  $meta.kind = 'request'; $meta.reqId = $ReqId; $meta.reqType = [string]$r.type   # 요청 유형(케이스 1 · 2 · 3 · 질문, 예전 요청은 일반 · 텍스트 수정 …): 사용량 통계에서 거르기
   foreach ($k in 'team', 'fileKey', 'fileName', 'page', 'frame', 'nodeId', 'text') { if (-not $meta[$k]) { $meta[$k] = [string]$r.$k } }
   if (-not $meta.by) { $meta.by = [string]$r.author }
 }

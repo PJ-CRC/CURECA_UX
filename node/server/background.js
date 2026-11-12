@@ -53,6 +53,8 @@ foreach ($dir in $places) { $lnk = Join-Path $dir 'Figma AI Run.lnk'; try { if (
   // ── 깃 동기화(Sync-Tick): history_sync 반복 프로세스(5초마다 확인)를 띄운다. 죽으면 30초 뒤 다시 ──
   let syncProc = null, syncLast = 0;
   function syncTick() {
+    // 이 PC만 동기화를 잠시 끔(workbench/.history_sync_off): 새 규칙 구조를 이 PC에서만 시험할 때(2026-11-12). 띄우지 않고, 돌던 것은 끈다
+    if (core.exists(path.join(C.root, 'workbench', '.history_sync_off'))) { if (syncProc && syncProc.exitCode == null) { try { syncProc.kill(); } catch (e) {} } return; }
     if ((!syncProc || syncProc.exitCode != null || syncProc.signalCode) && Date.now() - syncLast >= 30000) {
       syncLast = Date.now();
       const env = Object.assign({}, process.env, { WB_USER: String(core.readSetup().user || '') });   // 깃 사용자 설정이 없는 PC는 작업자 이름으로 커밋

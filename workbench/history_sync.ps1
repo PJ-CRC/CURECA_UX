@@ -12,6 +12,9 @@ $WB = Join-Path $Root 'workbench'
 $StatFile = Join-Path $WB '.history_sync.json'
 $NowFile = Join-Path $WB '.history_sync_now'
 $LockFile = Join-Path $WB '.history_sync.lock'
+# 이 PC만 동기화를 잠시 끔(workbench/.history_sync_off): 받지도 올리지도 않는다. 새 규칙 구조를 이 PC에서만 시험할 때(2026-11-12). 지우면 다시 돈다
+$OffFile = Join-Path $WB '.history_sync_off'
+if (Test-Path $OffFile) { exit 0 }
 $Utf8 = New-Object Text.UTF8Encoding $false
 $env:GIT_TERMINAL_PROMPT = '0'
 if (-not $Interactive) { $env:GCM_INTERACTIVE = 'Never' }
@@ -146,6 +149,7 @@ Remove-Item $LockFile -Force -ErrorAction SilentlyContinue
 Run-Sync
 while ($true) {
   if ($ServerPid -and -not (Get-Process -Id $ServerPid -ErrorAction SilentlyContinue)) { exit 0 }
+  if (Test-Path $OffFile) { exit 0 }
   # 잠깐 실패(다시 시도 중)는 5초 뒤 바로, 「실패」가 된 뒤에는(로그인 필요 등) 1분에 한 번만 다시 묻는다
   $wait = $Every; if (-not $St.ok -and -not $St.retrying) { $wait = 60 }
   $until = (Get-Date).AddSeconds($wait)

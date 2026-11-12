@@ -103,7 +103,8 @@ const MENU_KEYS = MENUS.filter((m) => !m.admin && !m.always).map((m) => m.key);
 const ALWAYS_KEYS = MENUS.filter((m) => m.always).map((m) => m.key);
 const WRITE_KEYS = MENUS.filter((m) => m.write).map((m) => m.key);
 const TEAM_MENUS = ['plan', 'guide', 'history', 'usage'];
-const APPROVALS = [{ key: 'pv', label: '임시 정책 승인 · 반려', menu: 'plan', where: '일정/작업 › 임시 정책 [승인] · [A/B안 승인] · [반려]' }];
+// 승인 항목: 새 흐름(2026-11-12)에서 임시 정책(PV) 승인을 없애 비어 있다(논의 대상의 결정은 정한 사람이, 반영은 [확인 · 반영]). 승인할 것이 다시 생기면 { key, label, menu, where }를 더한다
+const APPROVALS = [];
 const APPROVE_KEYS = APPROVALS.map((a) => a.key);
 const arr = (v) => (v == null ? [] : Array.isArray(v) ? v : [v]);
 
