@@ -62,7 +62,7 @@ a.pill:hover{border-color:var(--accent)}
 .ask-act span{font-size:12px;color:var(--ink-3);min-height:16px;line-height:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ask[aria-disabled="true"] textarea,.ask[aria-disabled="true"] .btn{opacity:.5;pointer-events:none}
 html.doc-ro .ask{display:none}
-@media (max-width:720px){ .ask{flex-direction:column} .ask-t,.ask-act{width:auto} }
+@media (max-width:720px){ .ask{flex-direction:column} .ask-t,.ask-act{width:auto} .layout.rqm{grid-template-columns:1fr} }
 /* 수정 진행 · 결과 패널: 목차 · 내용과 입력창 사이. 길면 그 안에서 스크롤(창 높이의 40%까지) */
 #fixes:not(:empty){margin-top:12px;max-height:calc(var(--ovh,100vh) * .4);overflow:auto;border-radius:12px}
 #fixes .fix{margin:0 0 8px}
@@ -70,10 +70,7 @@ html.doc-ro .ask{display:none}
 #fixes .fix + .fix{margin-top:0}
 /* 낮은 창(바깥 창 세로 760px 이하): 입력창을 한 줄 높이로. html.low는 fit()이 바깥 창 높이로 정한다
    (@media max-height는 UX 문서 안 iframe에서 iframe 높이를 봐서, 높이가 760 근처면 켜졌다 꺼졌다 하며 흔들렸다) */
-html.low .ask{padding:8px 12px;margin-top:8px}
-html.low .ask textarea{height:40px;min-height:40px}
-html.low .ask-t span,html.low .ask-act span{display:none}
-html.low #fixes:not(:empty){max-height:calc(var(--ovh,100vh) * .3)}
+html.low .rq .ask textarea{min-height:64px}
 .tree ul{list-style:none;margin:2px 0 4px;padding:0 0 0 14px;border-left:1px solid var(--line);margin-left:15px}
 .tree li{margin:1px 0}
 .node{display:flex;align-items:center;gap:6px;width:100%;text-align:left;border:0;background:none;border-radius:7px;padding:7px 8px;font-size:14px;color:var(--ink-2);line-height:1.35}
@@ -247,8 +244,59 @@ html.embed body{background:transparent}
 html.embed .appnav,html.embed .back,html.embed #title{display:none}
 /* 보기만 가능한 계정(UX 문서 · 수정 요청 권한 없음): 수정 요청 · 수정 반영 안내 숨김 */
 html.doc-ro #fixes{display:none!important}
-/* 위쪽 「수정 요청」 버튼은 쓰지 않는다(목록 · 내용 아래 수정 요청 입력창으로). 스크립트가 참조하므로 요소는 두고 늘 숨김 */
-#editBtn{display:none!important}
+/* 머리의 [문서 수정]: 누르면 목차 · 내용 오른쪽에 수정 칸(Claude 답변 + 입력). 보기 전용 계정은 숨김 */
+html.doc-ro #editBtn{display:none!important}
+#editBtn[aria-expanded="true"]{background:var(--surface);color:var(--accent);border-color:var(--accent)}
+#editBtn .nb{display:inline-block;min-width:18px;height:18px;margin-left:6px;padding:0 5px;border-radius:9px;background:var(--warn,#c2410c);color:#fff;font-size:11px;font-weight:700;line-height:18px;text-align:center}
+#editBtn .nb[hidden]{display:none}
+/* 문서 수정 칸: 목차 260 | 내용 | 수정 칸(내용 : 수정 = 1 : 1) */
+.layout.rqm{grid-template-columns:260px minmax(0,1fr) minmax(0,1fr)}
+@media (max-width:1280px){ .layout.rqm{grid-template-columns:200px minmax(0,1fr) minmax(0,1fr)} }
+.rq{display:flex;flex-direction:column;min-height:420px;background:var(--surface);border:1px solid var(--line);border-radius:var(--card-r,12px);box-shadow:var(--shadow);overflow:hidden}
+.rq[hidden]{display:none}
+.layout.fit .rq{height:100%;min-height:0}
+.rq-head{flex:none;display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap;min-width:0}
+.rq-head b{flex:none;font-size:14.5px;font-weight:800}
+.rq-cnt{min-width:0;overflow:hidden;text-overflow:ellipsis;color:var(--ink-3);font-size:12.5px}
+.rq-seg{flex:none;margin-left:auto;display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.rq-seg button{white-space:nowrap;border:0;background:var(--surface);color:var(--ink-2);font:inherit;font-size:12.5px;font-weight:700;padding:5px 10px;cursor:pointer}
+.rq-seg button.on{background:var(--accent);color:#fff}
+.rq-x{border:0;background:none;color:var(--ink-3);font-size:15px;width:28px;height:28px;border-radius:7px;cursor:pointer}
+.rq-x:hover{background:var(--surface-2);color:var(--ink)}
+.rq-body{flex:1;min-height:0;overflow:auto;padding:12px}
+/* Claude 답변: Claude Code 대화처럼. 요청 = 오른쪽 회색 말풍선(아래 작게 누가 · 언제), 답 = 바탕 없는 본문(마크다운: 목록 · 굵게 · 코드 · 표) */
+.rq-list{list-style:none;margin:0;padding:4px 2px 8px;display:flex;flex-direction:column;gap:22px}
+.rq-list li.turn{display:flex;flex-direction:column;gap:10px}
+.rq-list .you{align-self:flex-end;max-width:85%;padding:10px 14px;border-radius:18px;background:var(--surface-2);color:var(--ink);font-size:14.5px;line-height:1.55;white-space:pre-wrap;word-break:break-word}
+.rq-list .you .tg{display:block;margin-bottom:2px;font-size:12px;font-weight:600;color:var(--ink-3)}
+.rq-list .meta{align-self:flex-end;margin-top:-6px;font-size:11.5px;color:var(--ink-3)}
+.rq-list .ai{font-size:14.5px;line-height:1.65;color:var(--ink);word-break:break-word}
+.rq-list .ai>:first-child{margin-top:0}.rq-list .ai>:last-child{margin-bottom:0}
+.rq-list .ai p{margin:0 0 10px}
+.rq-list .ai ul,.rq-list .ai ol{margin:0 0 10px;padding-left:22px}
+.rq-list .ai li{margin:3px 0}
+.rq-list .ai ul{list-style:disc}.rq-list .ai ul ul{list-style:circle}.rq-list .ai li::marker{color:var(--ink-3)}
+.rq-list .ai h1,.rq-list .ai h2,.rq-list .ai h3,.rq-list .ai h4{font-size:15px;font-weight:700;margin:14px 0 6px}
+.rq-list .ai strong{font-weight:700}
+.rq-list .ai code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.88em;padding:1px 5px;border-radius:5px;background:var(--surface-2);color:#b4532a}
+.rq-list .ai pre{margin:0 0 10px;padding:10px 12px;border-radius:8px;background:var(--surface-2);overflow:auto}
+.rq-list .ai pre code{padding:0;background:none;color:inherit}
+.rq-list .ai table{border-collapse:collapse;margin:0 0 10px;font-size:13.5px}
+.rq-list .ai th,.rq-list .ai td{border:1px solid var(--line);padding:5px 9px;text-align:left;vertical-align:top}
+.rq-list .ai th{background:var(--surface-2);font-weight:700}
+.rq-list .ai blockquote{margin:0 0 10px;padding-left:12px;border-left:3px solid var(--line);color:var(--ink-2)}
+.rq-list .ai.wait{color:var(--ink-3)}
+:root[data-theme="dark"] .rq-list .ai code{color:#f0a37e}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .rq-list .ai code{color:#f0a37e}}
+.rq-empty{color:var(--ink-3);font-size:13px;margin:4px 2px}
+/* 수정 칸 안의 입력창: 대상 한 줄 · 글 칸 · 보내기(오른쪽 아래) */
+.rq .ask{flex:none;flex-direction:column;gap:6px;margin:0;border:0;border-top:1px solid var(--line);border-radius:0;box-shadow:none;background:var(--surface-2)}
+.rq .ask-t{width:auto;flex-direction:row;justify-content:flex-start;align-items:baseline;gap:8px}
+.rq .ask textarea{height:auto;min-height:96px;max-height:240px;background:var(--surface)}
+.rq .ask-act{width:auto;flex-direction:row;align-items:center;gap:10px}
+.rq .ask-act span{flex:1;text-align:right}
+.rq .ask-act .btn{width:auto}
+.rq #fixes:not(:empty){margin:0 0 12px;max-height:none;overflow:visible}
 html.embed .app-wrap{max-width:none;padding:0 0 24px}
 /* UX 문서 안(iframe): iframe이 내용 높이라 sticky가 듣지 않는다 → 목차 위치 · 높이는 stickSide()가 바깥 페이지 스크롤에 맞춰 정한다 */
 html.embed .side{position:relative;top:auto;max-height:none;will-change:transform}
@@ -284,7 +332,7 @@ html.embed,html.embed body{overflow:hidden}
     <div class="meta" id="meta"></div>
   </div>
   <div class="app-head-act">
-    <button type="button" class="btn" id="editBtn" hidden>수정 요청</button>
+    <button type="button" class="btn pri" id="editBtn" aria-controls="rq" aria-expanded="false" hidden>문서 수정<span class="nb" id="editNb" hidden></span></button>
     <button type="button" class="btn" id="revBtn" aria-controls="revBox" aria-expanded="false" hidden>수정 이력</button>
   </div>
 </header>
@@ -297,15 +345,21 @@ html.embed,html.embed body{overflow:hidden}
     </div>
     <ul class="tree" id="tree" role="tree"><li class="side-empty">불러오는 중…</li></ul>
   </aside>
-  <main class="main" id="main" aria-live="polite"><p class="empty">불러오는 중…</p></main></div>
-<!-- Claude 수정 진행 · 결과(수정 요청 → 연관 항목 찾기 → 반영 선택): 입력창 바로 위. 위쪽에 두면 목차 · 내용이 밀려 낮은 화면에서 안 보였다 -->
-<div id="fixes"></div>
-<!-- 수정 요청 입력창: 목록 · 내용 아래에 따로(Workbench처럼). 지금 보고 있는 항목을 Claude에게 고쳐 달라고 요청한다(guide-edit) -->
-<form class="ask" id="ask" aria-label="수정 요청">
-  <div class="ask-t"><span>수정 요청</span><b id="askTarget">—</b></div>
-  <textarea id="askText" rows="2" placeholder="이 항목에서 무엇을 어떻게 고칠지 적어 주세요."></textarea>
-  <div class="ask-act"><button type="submit" class="btn pri" id="askSend">Claude에게 수정 요청</button><span id="askMsg" role="status"></span></div>
-</form>
+  <main class="main" id="main" aria-live="polite"><p class="empty">불러오는 중…</p></main>
+  <!-- 문서 수정(머리의 [문서 수정]으로 열고 닫음, Workbench처럼): 왼쪽(목차 · 내용)에서 지금 문서 내용을 보며, 위는 Claude 답변(진행 중인 수정 · 연관 항목 · 지난 요청), 아래는 수정 요청 입력(guide-edit) -->
+  <section class="rq" id="rq" aria-label="문서 수정" hidden>
+    <div class="rq-head"><b>Claude 답변</b><span class="rq-cnt" id="rqCnt"></span><span class="rq-seg" role="group" aria-label="답변 범위"><button type="button" data-rf="item" class="on">이 항목</button><button type="button" data-rf="all">문서 전체</button></span><button type="button" class="rq-x" id="rqClose" title="문서 수정 닫기" aria-label="문서 수정 닫기">✕</button></div>
+    <div class="rq-body" id="rqBody">
+      <ul class="rq-list" id="rqList"></ul>
+      <div id="fixes"></div>
+    </div>
+    <form class="ask" id="ask" aria-label="수정 요청">
+      <div class="ask-t"><span>대상</span><b id="askTarget">—</b></div>
+      <textarea id="askText" rows="4" placeholder="이 항목에서 무엇을 어떻게 고칠지 적어 주세요."></textarea>
+      <div class="ask-act"><span id="askMsg" role="status"></span><button type="submit" class="btn pri" id="askSend">Claude에게 수정 요청</button></div>
+    </form>
+  </section>
+</div>
 </div>
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="이미지 크게 보기"><button type="button" id="lbClose">닫기 ✕</button><div class="cap" id="lbCap"></div><img id="lbImg" alt=""></div>
 <script>
@@ -463,7 +517,7 @@ html.embed,html.embed body{overflow:hidden}
     var bk = document.querySelector('.back'); if (bk) bk.href = 'Common_UX_Guide.html?doc=' + (m.kind || 'guide');
     $('title').textContent = m.title || id;
     var pills = [], keys = appliedKeys();
-    if (keys.length) pills.push('<span class="pill on">내 작업 기준 <b>' + esc(keys.map(function(k){ return names[k] || k.slice(0, 6); }).join(', ')) + '</b></span>');
+    if (keys.length) pills.push('<span class="pill on" title="이 문서를 작업 기준으로 적용한 프로젝트(Figma 파일) — 이 PC의 Claude가 이 프로젝트를 고칠 때 이 문서를 따릅니다">적용 프로젝트 <b>' + esc(keys.map(function(k){ return names[k] || k.slice(0, 6); }).join(', ')) + '</b></span>');
     if (m.link) pills.push('<a class="pill" href="' + esc(m.link) + '" target="_blank" rel="noopener">기준 Figma <b>열기 ↗</b></a>');
     pills.push('<span class="pill">' + (G && G.rev ? '수정일' : '작성일') + ' <b>' + esc(String((G && G.updatedAt) || m.updatedAt || '').slice(0, 10)) + '</b></span>');
     if (m.by) pills.push('<span class="pill">요청 <b>' + esc(m.by) + '</b></span>');
@@ -626,8 +680,7 @@ html.embed,html.embed body{overflow:hidden}
       /* 목차 · 상세 위쪽이 (스크롤하지 않았을 때) 바깥 창에서 어디인지 */
       var top = P ? P.scrollY + window.frameElement.getBoundingClientRect().top + lay.getBoundingClientRect().top : lay.getBoundingClientRect().top + window.scrollY;
       /* 아래 결과 패널 · 입력창(늘리기 전 높이) */
-      var ta = $('askText'), grow = ta && ta.offsetParent ? Math.max(0, ta.offsetHeight - (parseFloat(getComputedStyle(ta).minHeight) || 0)) : 0;
-      var ask = $('ask'), below = ask.offsetParent ? ask.getBoundingClientRect().bottom - lay.getBoundingClientRect().bottom - grow : 0;
+      var ask = lay, below = 0;   // 수정 칸(입력창)은 목차 · 내용 옆 칸이라 아래에 더할 것이 없다
       /* 입력창 아래 여백(이 페이지 + UX 문서 안이면 바깥 페이지의 iframe 아래)까지 빼서 늘리기 전에는 페이지가 스크롤되지 않게 */
       var wrap = document.querySelector('.app-wrap'), tail = wrap.getBoundingClientRect().bottom - ask.getBoundingClientRect().bottom;
       /* 바깥은 내용 끝(.app-wrap 아래) 기준 — 문서 높이(scrollHeight)는 창보다 작아지지 않아, 쓰면 줄어든 만큼 또 줄어드는 되먹임이 생긴다 */
@@ -665,7 +718,7 @@ html.embed,html.embed body{overflow:hidden}
   setTimeout(fit, 0);
 
   /* ── 화면 정의서(meta.view 'screens'): 메뉴 폴더마다 CID 화면설계서(머리말 + 본문 + 반영 대기 목록), 메뉴 정보는 _menu.md ──
-     왼쪽 = 메뉴별 화면 목록(표시: 임시 정책 포함 · 규칙 버전 기록 전), 오른쪽 = 화면 정보 · 임시 정책 · 반영 대기 목록 · 설계 내용 */
+     왼쪽 = 메뉴별 화면 목록(표시: 반영 대기 수 · 기준 기록 전), 오른쪽 = 화면 정보(기준 basis) · 반영 대기 목록 · 설계 내용 (새 흐름 2026-11-12: 임시 정책 없앰) */
   var SC = null, scCur = '', scOpen = {}, scKind = '', PVST = {};
   function listOf(v){ v = String(v || '').trim().replace(/^\[|\]$/g, ''); return v ? v.split(',').map(function(x){ return x.trim(); }).filter(Boolean) : []; }
   function fmObj(fm){ var o = {}; (fm || []).forEach(function(r){ o[r[0]] = r[1]; }); return o; }
@@ -676,8 +729,9 @@ html.embed,html.embed body{overflow:hidden}
   function fixRows(body){
     var m = body.match(/^##\s+반영 대기 목록\s*\n([\s\S]*?)(?=^##\s|(?![\s\S]))/m); if (!m) return [];
     var ls = m[1].split('\n').filter(function(l){ return /^\s*\|/.test(l); }); if (ls.length < 2) return [];
-    var hd = cells(ls[0]), ix = function(n){ return hd.indexOf(n); };
-    return ls.slice(2).map(function(l){ var c = cells(l); return { no: c[ix('#')] || '', kind: c[ix('구분')] || '', now: c[ix('지금')] || '', to: c[ix('바꿀 것')] || '', why: c[ix('근거')] || '', st: c[ix('상태')] || '' }; });
+    var hd = cells(ls[0]).map(function(h){ return h.replace(/\s/g, ''); }), ix = function(){ for (var i = 0; i < arguments.length; i++) { var p = hd.indexOf(arguments[i]); if (p >= 0) return p; } return -1; };
+    var I = { no: ix('ID', '#'), kind: ix('타입', '구분'), now: ix('변경전', '지금'), to: ix('변경후', '바꿀것'), why: ix('근거'), st: ix('상태') };   // 새 칸(reference-rules/pending-changes.md) · 예전 칸 모두
+    return ls.slice(2).map(function(l){ var c = cells(l), g = function(i){ return i >= 0 ? (c[i] || '') : ''; }; return { no: g(I.no), kind: g(I.kind), now: g(I.now), to: g(I.to), why: g(I.why), st: g(I.st) }; });
   }
   function scBuild(texts){
     SC = { menus: [], byCid: {}, overview: '' }; var menus = {}, order = [];
@@ -700,8 +754,8 @@ html.embed,html.embed body{overflow:hidden}
     all.forEach(function(s){
       var pl = (s.body.match(/^-\s*관련 정책:(.*)$/m) || [])[1] || '';
       s.pols = uniq(listOf(s.o.policies).concat(pl.match(/POL-[A-Z]{3}-\d{3}/g) || []));
-      s.pvs = listOf(s.o.provisional);
-      s.fixes = fixRows(s.body);
+      s.pvs = [];   // 예전 임시 정책(provisional) — 새 흐름에서 없앰
+      s.fixes = fixRows(s.body); s.wait = s.fixes.filter(function(f){ return /^대기/.test(f.st); }).length;
       var cl = (s.body.match(/^-\s*호출 위치:(.*)$/m) || [])[1] || '';
       s.calls = (cl.match(CID_RE) || []).filter(function(c){ return c !== s.cid; });
     });
@@ -716,7 +770,7 @@ html.embed,html.embed body{overflow:hidden}
     scShow(first, true);
   }
   function scChips(s){
-    return (s.pvs.length ? '<em class="sc-chip warn">임시 정책 포함</em>' : '') + (!s.o.rules_version ? '<em class="sc-chip">규칙 버전 기록 전</em>' : '');
+    return (s.wait ? '<em class="sc-chip warn">반영 대기 ' + s.wait + '</em>' : '') + (!s.o.basis && !s.o.rules_version ? '<em class="sc-chip">기준 기록 전</em>' : '');
   }
   function scTree(q){
     var h = '';
@@ -737,10 +791,10 @@ html.embed,html.embed body{overflow:hidden}
     if (SC.byCid[t]) return '<button type="button" class="sc-id" data-sc="' + esc(t) + '">' + esc(t) + '</button>';
     return '<code class="sc-id">' + esc(t) + '</code>';
   }
-  /* 근거 칸: ID(POL- · PV- · Confirm_ · Alert_ · CID)는 칩으로, 나머지는 글로 */
+  /* 근거 칸: ID(POL- · DS- · 예전 PV- · Confirm_ · Alert_ · CID)는 칩으로, 나머지는 글로 */
   function whyHtml(t){
-    var ids = t.match(/\b(?:POL-[A-Z]{3}-\d{3}|PV-\d{4}(?:-[A-Z])?|PD-\d{4}|CR-\d{4}|(?:Confirm|Alert|Info|Warning)_\d{3})\b/g);
-    if (ids && t.replace(/\b(?:POL-[A-Z]{3}-\d{3}|PV-\d{4}(?:-[A-Z])?|PD-\d{4}|CR-\d{4}|(?:Confirm|Alert|Info|Warning)_\d{3})\b|[,\s·/]/g, '').length < 2) return uniq(ids).map(idChip).join(' ');
+    var ids = t.match(/\b(?:POL-[A-Z]{3}-\d{3}|DS-\d{4}|PV-\d{4}(?:-[A-Z])?|PD-\d{4}|CR-\d{4}|(?:Confirm|Alert|Info|Warning)_\d{3})\b/g);
+    if (ids && t.replace(/\b(?:POL-[A-Z]{3}-\d{3}|DS-\d{4}|PV-\d{4}(?:-[A-Z])?|PD-\d{4}|CR-\d{4}|(?:Confirm|Alert|Info|Warning)_\d{3})\b|[,\s·/]/g, '').length < 2) return uniq(ids).map(idChip).join(' ');
     return marked.parseInline(t);
   }
   function scShow(cid, first){
@@ -749,11 +803,10 @@ html.embed,html.embed body{overflow:hidden}
     var o = s.o, mn = SC.menus.filter(function(m){ return m.key === s.menu; })[0] || { name: s.menu };
     var row = function(k, v){ return v ? '<dt>' + esc(k) + '</dt><dd>' + v + '</dd>' : ''; };
     var h = '<div class="sc-head"><div><h2 class="sc-title">' + esc(cid + ' ' + (o.title || '')) + '</h2><p class="sc-sub">' + esc([o.path, o.type, o.version ? 'Ver ' + o.version : ''].filter(Boolean).join(' · ')) + '</p></div>' +
-      (s.pvs.length ? '<span class="sc-chip warn big">임시 정책 포함</span>' : '') + '</div>';
-    if (s.pvs.length) h += '<div class="sc-pv"><b>이 화면은 임시 정책을 따릅니다</b> · ' + s.pvs.map(function(p){ return '<code class="sc-id">' + esc(p) + '</code>' + (PVST[p] ? ' <span class="sc-pvst">' + esc(PVST[p]) + '</span>' : ''); }).join(' ') + ' <span>승인되면 공통 규칙 새 버전에 맞추고 이 표시를 뗍니다.</span></div>';
+      (s.wait ? '<span class="sc-chip warn big">반영 대기 ' + s.wait + '</span>' : '') + '</div>';
     h += '<dl class="sc-info">' + row('작성자', esc(o.author || '')) + row('Service Mode', esc(listOf(o.service_mode).join(', '))) + row('User Type', esc(listOf(o.user_type).join(', '))) +
-      row('공통 규칙 버전', o.rules_version ? '<code class="sc-id">' + esc(o.rules_version) + '</code>' : '<span class="sc-chip">기록 전</span>') +
-      row('임시 정책', s.pvs.map(idChip).join(' ')) + row('관련 정책', s.pols.map(idChip).join(' ')) + row('짝 화면', o.pair_cid ? idChip(o.pair_cid) + (o.tl_relation ? ' <span class="sc-muted">' + esc(o.tl_relation) + '</span>' : '') : '') +
+      row('기준(basis)', o.basis ? esc(o.basis) : o.rules_version ? '<span class="sc-muted">예전 기록 · 공통 규칙 ' + esc(o.rules_version) + '</span>' : '<span class="sc-chip">기록 전</span>') +
+      row('관련 정책', s.pols.map(idChip).join(' ')) + row('짝 화면', o.pair_cid ? idChip(o.pair_cid) + (o.tl_relation ? ' <span class="sc-muted">' + esc(o.tl_relation) + '</span>' : '') : '') +
       row('부르는 화면', s.callers.map(idChip).join(' ')) + row('날짜', esc(o.date || '')) +
       row('Figma', o.figma ? '<a href="' + esc(o.figma) + '" target="_blank" rel="noopener">작업방 ' + esc(mn.name) + (o.figma_region ? ' ' + esc(o.figma_region) : '') + '</a>' : '') + '</dl>';
     var kinds = uniq(s.fixes.map(function(f){ return f.kind; }));
@@ -772,20 +825,12 @@ html.embed,html.embed body{overflow:hidden}
     scTree($('q').value.trim().toLowerCase());
     var it = $('tree').querySelector('.sc-it.cur'); if (it && first) it.scrollIntoView({ block: 'nearest' });
     if (!first) { history.replaceState(null, '', '#' + cid); if (window.innerWidth <= 720) { $('side').classList.add('fold'); $('tocBtn').setAttribute('aria-expanded', 'false'); } toTop(); }
-    s.pvs.forEach(function(p){
-      if (PVST[p] !== undefined) return; PVST[p] = '';
-      /* 임시 정책 상태: .history/guides/provisional/{PV}.md가 있으면 그 상태(없으면 표시하지 않음) */
-      fetch('.history/guides/provisional/' + encodeURIComponent(p) + '.md', { cache: 'no-store' }).then(function(r){ return r.ok ? r.text() : ''; }).then(function(t){
-        var st = (fmObj(front(t.replace(/\r\n/g, '\n')).fm).status) || ((t.match(/상태\s*[:|]\s*([^\n|]+)/) || [])[1] || '').trim();
-        if (st) { PVST[p] = st; if (scCur === cid) scShow(cid, true); }
-      }).catch(function(){});
-    });
   }
   function scFix(){
     var s = SC.byCid[scCur], box = $('scFix'); if (!s || !box) return;
     var list = s.fixes.filter(function(f){ return !scKind || f.kind === scKind; });
-    box.innerHTML = '<table class="sc-fix"><thead><tr><th>#</th><th>구분</th><th>지금</th><th>바꿀 것</th><th>근거</th><th>상태</th></tr></thead><tbody>' + list.map(function(f){
-      var st = String(f.st), cls = /^반영 완료/.test(st) ? 'ok' : /^반영 불필요/.test(st) ? 'off' : /확인 필요/.test(st) ? 'warn' : '';
+    box.innerHTML = '<table class="sc-fix"><thead><tr><th>ID</th><th>타입</th><th>변경 전</th><th>변경 후</th><th>근거</th><th>상태</th></tr></thead><tbody>' + list.map(function(f){
+      var st = String(f.st), cls = /^반영 완료/.test(st) ? 'ok' : /^(반영 불필요|제외)/.test(st) ? 'off' : /^(작업 중|반영 중)|확인 필요/.test(st) ? 'warn' : '';
       return '<tr><td>' + esc(f.no) + '</td><td class="k">' + esc(f.kind) + '</td><td>' + marked.parseInline(f.now) + '</td><td>' + marked.parseInline(f.to) + '</td><td>' + whyHtml(f.why) + '</td><td><span class="sc-st ' + cls + '">' + esc(st) + '</span></td></tr>';
     }).join('') + '</tbody></table>';
     Array.prototype.forEach.call($('main').querySelectorAll('.sc-filter button'), function(b){ b.classList.toggle('on', b.dataset.kind === scKind); });
@@ -930,6 +975,7 @@ html.embed,html.embed body{overflow:hidden}
       fetch('/api/guides', { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : {}; }).catch(function(){ return {}; })
     ]).then(function(d){
       var all = (d[0].items || []).filter(function(j){ return j.guide === id; }), open = ['대기', '진행 중', '완료', '보류', '실패'];
+      rqAll = all;
       jobs = all.filter(function(j){ return j.kind === 'guide-check' && open.indexOf(j.status) >= 0; });
       edits = all.filter(function(j){ return j.kind === 'guide-edit' && open.indexOf(j.status) >= 0; });
       /* Claude가 가이드를 고쳤으면(새 수정본) 본문을 다시 읽는다 */
@@ -992,7 +1038,9 @@ html.embed,html.embed body{overflow:hidden}
         fx.innerHTML = h; fx.dataset.h = h; fx.scrollTop = keep;
         Array.prototype.forEach.call(fx.querySelectorAll('input[type=checkbox]'), function(c){ if (c.id in checks && !c.disabled) c.checked = checks[c.id]; });
       }
-      if (location.hash === '#fix' && h && !fx.dataset.jumped) { fx.dataset.jumped = 1; var f = fx.firstElementChild; if (f) f.scrollIntoView(); }
+      rqBadge(); rqList();
+      /* 「수정 반영 확인」으로 왔으면(#fix) 수정 칸을 열어 결과를 보인다 */
+      if (location.hash === '#fix' && h && !fx.dataset.jumped) { fx.dataset.jumped = 1; if (!rqOn) rqOpen(true); var f = fx.firstElementChild; if (f) f.scrollIntoView({ block: 'nearest' }); }
     });
   }
   setInterval(function(){ if (!document.hidden && !editing) fixes(); }, 10000);
@@ -1069,7 +1117,7 @@ html.embed,html.embed body{overflow:hidden}
     return { name: cur.label, file: cur.file || '', fileKey: meta.fileKey };
   }
   function askSet(){
-    var t = askTarget();
+    var t = askTarget(); if (typeof rqList === 'function' && rqOn) rqList();
     $('askTarget').textContent = t ? t.name : '항목을 고르세요';
     $('ask').setAttribute('aria-disabled', t ? 'false' : 'true');
     $('askText').placeholder = t ? '「' + t.name + '」에서 무엇을 어떻게 고칠지 적어 주세요.\n예) 3조 2항의 표현을 「…」로 바꿔 줘' : '왼쪽 목록에서 고칠 항목을 고르세요.';
@@ -1086,8 +1134,39 @@ html.embed,html.embed body{overflow:hidden}
       .then(function(){ $('askSend').disabled = false; });
   });
   $('askText').addEventListener('keydown', function(e){ if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); $('ask').requestSubmit(); } });
-  // 머리의 [수정 요청]은 입력창으로 이동
-  $('editBtn').onclick = function(){ $('askText').focus(); $('ask').scrollIntoView({ block: 'nearest' }); };
+  /* 머리의 [문서 수정]: 수정 칸(오른쪽)을 열고 닫는다(처음엔 닫힘) */
+  var rqOn = false, rqF = 'item', rqAll = [];
+  function rqOpen(on){
+    rqOn = !!on; $('rq').hidden = !rqOn; $('layout').classList.toggle('rqm', rqOn);
+    $('editBtn').setAttribute('aria-expanded', rqOn ? 'true' : 'false');
+    if (rqOn) { rqList.done = 0; rqList(); fixes(); setTimeout(function(){ $('askText').focus(); }, 0); }
+    fit();
+  }
+  $('editBtn').onclick = function(){ rqOpen(!rqOn); };
+  $('rqClose').onclick = function(){ rqOpen(false); };
+  $('rq').addEventListener('click', function(e){ var b = e.target.closest('[data-rf]'); if (!b) return; rqF = b.dataset.rf; Array.prototype.forEach.call($('rq').querySelectorAll('[data-rf]'), function(x){ x.classList.toggle('on', x === b); }); rqList.done = 0; rqList(); });
+  /* 지난 수정 요청(이 문서의 guide-edit, 진행 칸에 없는 것): 요청 글과 Claude 답(note). 「이 항목」은 지금 보는 항목 이름으로 거른다 */
+  function rqList(){
+    if (!$('rqList')) return;
+    var t = askTarget(), shown = {}; edits.forEach(function(j){ shown[j.id] = 1; });
+    var L = rqAll.filter(function(j){ return j.kind === 'guide-edit' && !shown[j.id]; });
+    if (rqF === 'item') L = L.filter(function(j){ return t && j.name === t.name; });
+    L.sort(function(a, b){ return String(a.createdAt || a.updatedAt || '').localeCompare(String(b.createdAt || b.updatedAt || '')); });   // 대화처럼 오래된 것이 위
+    $('rqCnt').textContent = (rqF === 'item' ? '이 항목 ' : '문서 전체 ') + (L.length + (rqF === 'item' ? edits.filter(function(j){ return t && j.name === t.name; }).length : edits.length)) + '건';
+    var body = $('rqBody'), atEnd = body.scrollHeight - body.scrollTop - body.clientHeight < 40;
+    $('rqList').innerHTML = L.length ? L.slice(-40).map(function(j){
+      var st = j.status === '확인' ? '완료' : j.status;
+      return '<li class="turn"><div class="you">' + (rqF === 'all' && j.name ? '<span class="tg">' + esc(j.name) + '</span>' : '') + esc(j.text || '') + '</div>' +
+        '<div class="meta">' + esc([j.by, when(j.createdAt || j.updatedAt).slice(5), j.id, st].filter(Boolean).join(' · ')) + '</div>' +
+        (j.note ? '<div class="ai">' + aiHtml(j.note) + '</div>' : '<div class="ai wait">' + esc(st === '완료' ? '(답 없음)' : st) + '</div>') + '</li>';
+    }).join('') : ($('fixes').innerHTML ? '' : '<li class="rq-empty" style="border:0;padding:0">' + (rqF === 'item' ? '이 항목에 지난 수정 요청이 없습니다. 아래에 고칠 내용을 적어 보내면 Claude가 고치고 여기에 답이 나옵니다.' : '이 문서에 지난 수정 요청이 없습니다.') + '</li>');
+    /* 처음 열 때 · 이미 맨 아래를 보고 있었으면 맨 아래(최신 · 입력창 쪽)로 */
+    if (atEnd || !rqList.done) { body.scrollTop = body.scrollHeight; rqList.done = 1; }
+  }
+  /* Claude 답(note)을 마크다운으로: 줄바꿈은 그대로, 글 속 HTML은 글자로 */
+  function aiHtml(t){ try { return marked.parse(String(t).replace(/</g, '&lt;').replace(/~/g, '\\~'), { breaks: true }); } catch(x){ return esc(t).replace(/\n/g, '<br>'); } }
+  /* 할 일 수(진행 중 · 결과 확인 대기)를 [문서 수정]에 표시 */
+  function rqBadge(){ var n = edits.length + jobs.length, nb = $('editNb'); if (!nb) return; nb.textContent = n; nb.hidden = !n; nb.title = n ? '진행 중이거나 확인할 수정 ' + n + '건' : ''; }
   ['revBox'].forEach(function(pid){
     $('revBtn').onclick = function(){ var on = $(pid).hidden; panel(pid, on); if (on) $(pid).scrollIntoView({ block: 'nearest', behavior: 'smooth' }); };
     $(pid).addEventListener('toggle', function(){ if (!this.open && !this.hidden) panel(pid, false); });

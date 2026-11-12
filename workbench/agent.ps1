@@ -4,7 +4,7 @@
 #  - Claude는 **처리할 때마다 새로 띄운다**: `claude -p --input-format stream-json --output-format stream-json`(창 없음).
 #    한 차례(감시 결과 하나)를 처리하면 세션을 닫는다 — 세션을 계속 두면 매 API 호출마다 앞 요청 대화를 다시 읽어 토큰의 98%가 그것이었다(2026-11-06).
 #  - 한 차례 안에서 컨텍스트가 커지면 CLI가 스스로 압축한다(CLAUDE_AUTOCOMPACT_PCT_OVERRIDE)
-#  - 30분 넘게 요청이 없으면 세션을 새로 띄운다(캐시도 식으므로). 세션이 죽으면 다시 띄운다. 한 요청이 20분 넘으면 끊고 새로
+#  - 30분 넘게 요청이 없으면 세션을 새로 띄운다(캐시도 식으므로). 세션이 죽으면 다시 띄운다. 한 요청에서 Claude 출력이 20분 넘게 없으면(멈춤) 끊고 새로 — 오래 걸리는 단계 작업(화면설계 3단계 등)은 출력이 이어지는 한 끊지 않는다(2026-11-12, 규칙 저장소 program-hurdles.md H1)
 #  - 감시는 watch_requests.ps1을 짧게(1분) 반복해 돌린다(상태 갱신 · 중지 확인). PENDING · RESUME · JOBS가 나오면 세션에 보낸다
 #  - Claude는 이 PC에 로그인된 Claude Code CLI 계정 · claude.ai Figma 커넥터를 쓴다. 처음 한 번 시작 안내 7단계의 「Claude 로그인 · Figma 연결」 필요
 #  - 상태: workbench/.agent.json {at, host, pid, status(idle|working|login|error|stopped), msg} — 15초~1분마다 씀(시작 안내 · 서버가 본다)
@@ -61,7 +61,7 @@ function Start-Session {
   $psi = New-Object Diagnostics.ProcessStartInfo
   $psi.FileName = $Claude; $psi.WorkingDirectory = $Root
   $psi.Arguments = '-p --input-format stream-json --output-format stream-json --verbose --permission-mode acceptEdits ' +
-    '--allowedTools "Bash,PowerShell,Read,Write,Edit,Glob,Grep,TodoWrite,WebFetch,mcp__figma,mcp__claude_ai_Figma"'
+    '--allowedTools "Bash,PowerShell,Read,Write,Edit,Glob,Grep,TodoWrite,WebFetch,Skill,Agent,Task,mcp__figma,mcp__claude_ai_Figma"'
   $psi.UseShellExecute = $false; $psi.CreateNoWindow = $true
   $psi.RedirectStandardInput = $true; $psi.RedirectStandardOutput = $true; $psi.RedirectStandardError = $true
   $psi.StandardOutputEncoding = $Utf8; $psi.StandardErrorEncoding = $Utf8
@@ -172,6 +172,7 @@ function Send-Turn([string]$text) {
       if ((Get-Date) -gt $until) { return @{ ok = $false; dead = $true; text = "응답이 $TurnMin 분 넘게 없음" } }
     }
     $l = $task.Result
+    if ($null -ne $l) { $until = (Get-Date).AddMinutes($TurnMin) }   # 출력이 오면 다시 20분(전체 시간이 아니라 멈춤만 끊는다)
     # 출력이 쉬지 않고 오면 위 15초 기다림에 걸리지 않아 상태를 안 썼다 → 처리 중인데 「백그라운드 연결 끊김」으로 보였다(2026-11-10 R032)
     if (((Get-Date) - $script:SavedAt).TotalSeconds -ge 15) { Save-State $null $null }
     if ($null -eq $l) { $e = ''; try { if ($script:S.err.Wait(2000)) { $e = $script:S.err.Result } } catch { }; return @{ ok = $false; dead = $true; text = ($out.ToString() + $e).Trim() } }

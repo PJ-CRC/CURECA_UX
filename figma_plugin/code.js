@@ -78,15 +78,18 @@ const JUNK = /^(ver|Description|Case-label|section title|SB_Section Divider|진�
 const DIVIDER = /^[\s\-–—_=·.]*$/;
 let link = null;
 const loadedPages = new Set();   // 자동 캡처 때 불러온 페이지(다시 불러오지 않는다)
+// 프레임: [id, 이름, w, h, x, y, 섹션 이름, 섹션 id] — 섹션 안 프레임만 뒤 둘이 있다(섹션 안 섹션은 「바깥 › 안」, id는 가장 안쪽)
 function topFrames(pg) {
   const out = [];
-  const take = n => {
-    if (n.type === 'SECTION') { n.children.forEach(take); return; }
+  const take = (n, sec) => {
+    if (n.type === 'SECTION') { const nm = n.name.trim() || '섹션'; const s = { name: sec ? sec.name + ' › ' + nm : nm, id: n.id }; n.children.forEach(c => take(c, s)); return; }
     if (!/^(FRAME|COMPONENT|COMPONENT_SET|INSTANCE)$/.test(n.type) || JUNK.test(n.name.trim())) return;
     const b = n.absoluteBoundingBox || { x: n.x, y: n.y };
-    out.push([n.id, n.name.trim(), Math.round(n.width), Math.round(n.height), Math.round(b.x), Math.round(b.y)]);
+    const f = [n.id, n.name.trim(), Math.round(n.width), Math.round(n.height), Math.round(b.x), Math.round(b.y)];
+    if (sec) f.push(sec.name, sec.id);
+    out.push(f);
   };
-  pg.children.forEach(take);
+  pg.children.forEach(c => take(c, null));
   return out.sort((a, b) => a[5] - b[5] || a[4] - b[4]);
 }
 // 링크 노드가 있는 페이지(수정 가능 페이지): 링크가 페이지면 바로, 아니면 노드를 한 번만 찾아 기억한다

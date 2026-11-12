@@ -3,7 +3,7 @@ figma ai test
 
 Figma 파일을 프로젝트 단위로 다루는 Workbench(수정 요청 · Claude 반영 · 캡처 · 작업 이력 · UX 문서 · 프로토타입). 작업할 파일은 PC마다 시작 안내 3단계 링크로 정한다(기본 프로젝트 없음).
 
-- **액션별 동작 흐름**(정책서를 고치면 · 회의록을 정리하면 · 임시 정책을 승인하면 …): [docs/Action_Flows.md](docs/Action_Flows.md)
+- **액션별 동작 흐름**(화면설계 케이스 1 · 2 · 3을 요청하면 · 회의록을 정리하면 · 논의 대상을 결정하면 …): [docs/Action_Flows.md](docs/Action_Flows.md)
 
 ## 브랜치 안내
 

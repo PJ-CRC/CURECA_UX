@@ -124,6 +124,8 @@ need_sync() {
   [ "${r%%[[:space:]]*}" != "$(git -C "$H" rev-parse -q --verify HEAD 2>/dev/null)" ]
 }
 
+# 이 PC만 동기화를 잠시 끔(workbench/.history_sync_off, 2026-11-12)
+[ -e "$ROOT/workbench/.history_sync_off" ] && exit 0
 if [ $LOOP = 0 ]; then
   # 한 번만 (깃허브 로그인 등). 도는 동안 반복 동기화는 쉰다
   [ $INTER = 1 ] && now_iso > "$LOCK"
@@ -136,6 +138,7 @@ rm -f "$LOCK"
 run_sync
 while :; do
   [ "$SPID" != 0 ] && ! kill -0 "$SPID" 2>/dev/null && exit 0
+  [ -e "$ROOT/workbench/.history_sync_off" ] && exit 0
   # 잠깐 실패(다시 시도 중)는 5초 뒤 바로, 「실패」가 된 뒤에는(로그인 필요 등) 1분에 한 번만 다시 묻는다
   wait=10; [ "$ST_OK" = true ] || [ "$ST_RETRY" = true ] || wait=120   # 0.5초 단위 (5초 / 60초)
   i=0; while [ $i -lt $wait ] && [ ! -e "$NOWF" ]; do sleep 0.5; i=$((i + 1)); done

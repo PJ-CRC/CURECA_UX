@@ -60,7 +60,7 @@ function serveStatic(res, rel) {
 const API_MENU = { '/api/usage': 'usage', '/api/prototypes': 'proto', '/api/accounts': 'accounts', '/api/sheet': 'plan', '/api/sheet/data': 'plan', '/api/minutes': 'plan',
   '/api/plan/files': 'plan', '/api/guides/gitlog': 'guide', '/api/guides/gitfile': 'guide' };
 const API_WRITE = { '/api/requests': ['workbench', 'history', 'guide', 'plan'], '/api/attach': ['workbench'], '/api/projects': ['workbench'], '/api/catalog': ['workbench'],
-  '/api/shots': ['workbench'], '/api/upload': ['guide'], '/api/prototypes': ['proto'], '/api/sheet': ['plan'], '/api/minutes': ['plan'] };
+  '/api/shots': ['workbench'], '/api/figma': ['workbench'], '/api/upload': ['guide'], '/api/prototypes': ['proto'], '/api/sheet': ['plan'], '/api/minutes': ['plan'] };
 
 async function handle(req, res) {
   let u; try { u = new URL(req.url, 'http://localhost'); } catch (e) { return send(res, 400, 'text/plain', 'bad url'); }

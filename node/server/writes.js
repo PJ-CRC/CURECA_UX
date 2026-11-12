@@ -148,8 +148,50 @@ module.exports = function register(on, h) {
     if (!/^[A-Za-z0-9_-]{1,64}$/.test(gid) || !/^[A-Za-z0-9_-]{1,80}$/.test(rv) || !core.exists(path.join(T.guideRoot, gid, 'rev', rv + '.json'))) return;
     try { core.writeJson(path.join(T.guideRoot, gid, 'rev', `${rv}.check-${C.pcSlug}-${j.id}.json`), { jobId: nn(j.id), pc: C.pcName, by: nn(j.by), at: core.now(), status: nn(j.status), note: nn(j.note), scope: nn(j.scope), fileKey: nn(j.fileKey), items: core.arr(j.items).filter(Boolean) }); core.syncWant(); } catch (e) {}
   }
+  // ── 자동 캡처 목록(auto-plan): Workbench가 구분(페이지)을 열면 캡처 없는 프레임 전체를 받을 순서대로 맡긴다(파일마다 하나, 나중 것이 앞 것을 바꾼다).
+  //  서버는 플러그인이 캡처 작업을 물어볼 때(GET /api/jobs?kind=capture, Origin null)마다 「대기」 자동 캡처가 AUTO_KEEP개가 되게 이 목록에서 채운다.
+  //  그래서 Workbench가 5초마다 채우기를 기다리지 않고, Workbench 탭이 뒤에 있거나 닫혀도 플러그인이 쉬지 않고 이어 받는다(2026-11-11)
+  const planFile = path.join(C.root, 'workbench', 'auto_capture.json'), AUTO_KEEP = 10;
+  function autoFill(key) {
+    if (C.readonly || !h.testKey(key)) return;
+    const plans = core.readJson(planFile) || {}, pl = plans[key];
+    if (!pl || !core.arr(pl.list).length) return;
+    const jj = core.readJson(C.jobFile) || { version: 0, items: [] };
+    let items = core.arr(jj.items).filter(Boolean);
+    const caps = items.filter((x) => x.kind === 'capture' && x.fileKey === key);
+    let pend = caps.filter((x) => x.auto && x.status === '대기').length;
+    if (pend >= AUTO_KEEP) return;
+    const meta = core.readJson(path.join(h.projDir(key), 'shots_meta.json')) || {};
+    const busy = new Set(caps.filter((x) => x.status !== '완료').map((x) => x.nodeId));   // 대기 · 진행 중 · 실패는 다시 쌓지 않는다
+    let n = 1; for (const i of items) { const v = parseInt(nn(i.id).replace(/\D/g, ''), 10) || 0; if (v >= n) n = v + 1; }
+    const list = core.arr(pl.list).slice(), add = [], now = core.now();
+    while (pend < AUTO_KEEP && list.length) {
+      const [nid, name] = core.arr(list.shift());
+      if (!/^\d+:\d+$/.test(nn(nid)) || meta[nid] || busy.has(nid)) continue;
+      busy.add(nid); pend++;
+      add.push({ id: 'J' + String(n++).padStart(3, '0'), kind: 'capture', team: nn(pl.team) || 'cureca', fileKey: key, nodeId: nid, name: nn(name), link: '', text: '', guide: '', revFrom: '', revTo: '', items: [],
+        status: '대기', note: '', by: nn(pl.by), takenBy: '', createdAt: now, updatedAt: now, auto: true });
+    }
+    pl.list = list; if (!list.length) delete plans[key];
+    core.writeJson(planFile, plans);
+    if (!add.length) return;
+    items = add.reverse().concat(items);   // 앞이 최신(받을 순서는 id 오름차순)
+    if (items.length > 300) items = items.slice(0, 300);
+    core.writeJson(C.jobFile, { version: (parseInt(jj.version, 10) || 0) + 1, items });
+  }
+  h.autoFill = autoFill;
+
   on('POST', '/api/jobs', async ({ req, body, T }) => {
     const b = await body();
+    if (nn(b.action) === 'auto-plan') {
+      const key = nn(b.fileKey); if (!h.testKey(key)) throw new Error('잘못된 파일 키입니다.');
+      if (!core.canWrite(req, ['workbench'])) throw new Error(core.roMsg('workbench'));
+      const list = core.arr(b.list).filter((x) => Array.isArray(x) && /^\d+:\d+$/.test(nn(x[0]))).slice(0, 2000).map((x) => [nn(x[0]), nn(x[1]).slice(0, 200)]);
+      const plans = core.readJson(planFile) || {};
+      if (list.length) plans[key] = { by: nn(b.by), team: b.team ? nn(b.team) : T.team, at: core.now(), list }; else delete plans[key];
+      core.writeJson(planFile, plans);
+      return { ok: true, count: list.length };
+    }
     const jj = core.readJson(C.jobFile) || { version: 0, items: [] };
     let items = core.arr(jj.items).filter(Boolean); const now = core.now(); let hit = null;
     switch (nn(b.action)) {
@@ -184,8 +226,9 @@ module.exports = function register(on, h) {
         }
         if (kind === 'plan') {
           nid = ''; key = '';
-          if (!['pv-new', 'pv-decide', 'answer', 'answer-apply'].includes(nn(b.sub))) throw new Error('알 수 없는 처리: ' + nn(b.sub));
-          if (nn(b.sub) !== 'pv-new' && !/^(PV|PD|CA)-\d{4}(-[A-Z])?$/.test(nn(b.target))) throw new Error('잘못된 항목 ID: ' + nn(b.target));
+          // ds-new · DS-0000 = 논의 대상(새 흐름, 2026-11-12). pv-* · PV · PD · CA는 예전 구조를 쓰는 PC를 위해 남긴다
+          if (!['ds-new', 'pv-new', 'pv-decide', 'answer', 'answer-apply'].includes(nn(b.sub))) throw new Error('알 수 없는 처리: ' + nn(b.sub));
+          if (!['pv-new', 'ds-new'].includes(nn(b.sub)) && !/^(DS|PV|PD|CA)-\d{4}(-[A-Z])?$/.test(nn(b.target))) throw new Error('잘못된 항목 ID: ' + nn(b.target));
           if (nn(b.sub) === 'pv-decide' && !core.canApprove(req, 'pv')) throw new Error('임시 정책 승인 · 반려 권한이 없습니다. 최고관리자에게 「승인 권한 · 임시 정책 승인 · 반려」를 요청하세요.');
           if (nn(b.sub) === 'pv-decide') hit = items.find((x) => x.kind === 'plan' && x.target === nn(b.target) && x.sub === 'pv-decide' && ['대기', '진행 중'].includes(x.status)) || null;
         }
@@ -389,14 +432,14 @@ module.exports = function register(on, h) {
       const out = h.readGuides(T); out.saved = rev; return out;
     }
     if (b.action !== 'apply') throw new Error('알 수 없는 action: ' + nn(b.action));
-    // 작업 기준 적용(이 PC만, 이 PC의 모든 프로젝트에 같이): 문서 종류마다 하나
+    // 작업 기준 적용(이 PC만): 작업규칙 · 정책서 · 기준데이터 · 화면 정의서는 이 PC의 모든 프로젝트에 같이, UX가이드는 그 Figma 파일 하나에만(2026-11-12)
     const key = nn(b.fileKey), gid = nn(b.guideId), kind = nn(b.kind) || 'guide';
     if (!h.testKey(key)) throw new Error('잘못된 파일 키입니다.');
     if (!/^[a-z]{1,20}$/.test(kind)) throw new Error('알 수 없는 문서 종류: ' + kind);
     if (gid && (!okId(gid) || !core.exists(path.join(T.guideRoot, gid, 'meta.json')))) throw new Error('문서를 찾지 못했습니다: ' + gid);
     if (gid) { const mk = nn((core.readJson(path.join(T.guideRoot, gid, 'meta.json')) || {}).kind) || 'guide'; if (mk !== kind) throw new Error(`종류가 다른 문서입니다(${mk}): ${gid}`); }
     const a = core.readJson(T.guideApply) || {};
-    for (const fk of h.applyKeys(key)) {
+    for (const fk of (kind === 'guide' ? [key] : h.applyKeys(key))) {
       const old = a[fk]; const docs = {};
       if (old && old.docs) Object.assign(docs, old.docs); else if (old && old.guideId) docs.guide = { id: nn(old.guideId), by: nn(old.by), at: nn(old.at) };
       docs[kind] = { id: gid, by: nn(b.by), at: core.now() };
@@ -724,6 +767,8 @@ module.exports = function register(on, h) {
         const it = { id: rid, team: b.team ? nn(b.team) : T.team, nodeId: nn(b.nodeId), frame: nn(b.frame), page: nn(b.page), fileKey: nn(b.fileKey), fileName: nn(b.fileName),
           editable: !!b.editable, type: nn(b.type), priority: nn(b.priority), layout: nn(b.layout), text: txt, status: '대기', note: '', author: nn(b.by), updatedBy: nn(b.by), createdAt: now, updatedAt: now };
         if (imgs.length) it.images = imgs;
+        // 화면설계 케이스(1 부분 수정 · 2 신규 · 3 다시 그리기, 규칙 저장소 flow/)와 이어 갈 작업 기록(work-logs/{work}.md, 비면 0단계부터 새 작업)
+        if (['1', '2', '3'].includes(nn(b.case))) { it.case = nn(b.case); it.work = /^[^\\/:*?"<>|]{1,120}$/.test(nn(b.work)) ? nn(b.work) : ''; if (b.stage != null && b.stage !== '') it.stage = parseInt(b.stage, 10); }
         // 수정할 부분 표시(Workbench에서 캡처 위에 그린 사각형): Figma 프레임 좌표 {n, x, y, w, h}, att = 그 부분을 잘라 낸 첨부의 순번(images, 1부터), shotAt = 그때 캡처 시각
         const mk = core.arr(b.marks).filter((m) => m && +m.w > 0 && +m.h > 0).slice(0, 20)
           .map((m, i) => ({ n: i + 1, x: Math.round(+m.x || 0), y: Math.round(+m.y || 0), w: Math.round(+m.w), h: Math.round(+m.h), att: parseInt(m.att, 10) || 0 }));
@@ -739,6 +784,7 @@ module.exports = function register(on, h) {
           const fr = []; for (const f of core.arr(b.frames).filter(Boolean)) { const nid = nn(f.nodeId); if (/^\d+:\d+$/.test(nid) && !fr.some((x) => x.nodeId === nid)) fr.push({ nodeId: nid, name: nn(f.name) }); }
           hit.frames = fr.slice(0, 12);
         }
+        const wasDone = nn(hit.status) === '완료';
         if (Object.prototype.hasOwnProperty.call(b, 'ask')) hit.ask = b.ask;
         else if (b.status && nn(b.status) !== nn(hit.status)) hit.ask = null;
         if (b.status) hit.status = nn(b.status);
@@ -747,6 +793,8 @@ module.exports = function register(on, h) {
         hit.updatedAt = now;
         if (b.by) hit.updatedBy = nn(b.by);
         if (nn(hit.status) === '완료' && core.arr(hit.frames).length) { try { addCatalogFrames(nn(hit.fileKey), nn(hit.page), hit.frames); } catch (e) {} }
+        // 처음 완료될 때: Figma 토큰이 있으면 고친 프레임을 서버가 뒤에서 다시 캡처(figma.js)
+        if (!wasDone && nn(hit.status) === '완료' && core.arr(hit.frames).length && h.figmaAfterDone) { try { h.figmaAfterDone(nn(hit.fileKey) || h.workKey(), hit.frames, nn(hit.id)); } catch (e) {} }
         histFromRequest(hit); break;
       }
       case 'answer': {

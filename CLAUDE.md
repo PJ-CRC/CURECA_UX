@@ -9,7 +9,7 @@
 - 파일마다 **수정 가능 페이지는 하나**다. 다른 페이지는 읽기만 한다.
   - 모든 파일 같음: 시작 안내 링크(작업 링크)가 가리키는 노드의 페이지(`projects/{fileKey}/project.json`의 editablePageId · editablePageName, catalog.json에서 `editable: true`). 링크를 바꾸면 서버가 바로 바꾼다.
   - 기준은 **project.json의 작업 링크 하나**다. 서버는 프레임 목록을 받을 때(플러그인 · Claude)와 켤 때마다 링크로 수정 가능 페이지를 다시 정한다. 보내온 `editablePageId`는 링크로 정하지 못할 때만 쓴다.
-  - **작업 페이지 바꾸기**: Workbench 「구분 (페이지)」 아래 상태 줄의 「이 페이지를 작업 페이지로」(또는 수정 요청 칸 보기 전용 안내의 「이 페이지를 작업 페이지로」)를 누르면 `POST /api/projects {action:'editable', key, pageId}`로 그 프로젝트 작업 링크의 node-id가 그 페이지로 바뀐다(시작 안내 링크가 같은 파일이면 그것도). 수정 가능 페이지는 여전히 하나다. 그래서 요청을 처리할 때마다 **그때의** project.json editablePageName으로 확인한다(등록 뒤 작업 페이지가 바뀌었으면 「보류」).
+  - **작업 페이지 바꾸기**: Workbench 왼쪽 목록(맨 위 단계 = Figma 페이지) 위 상태 줄의 「이 페이지를 작업 페이지로」(또는 수정 요청 칸 보기 전용 안내의 「이 페이지를 작업 페이지로」)를 누르면 `POST /api/projects {action:'editable', key, pageId}`로 그 프로젝트 작업 링크의 node-id가 그 페이지로 바뀐다(시작 안내 링크가 같은 파일이면 그것도). 수정 가능 페이지는 여전히 하나다. 그래서 요청을 처리할 때마다 **그때의** project.json editablePageName으로 확인한다(등록 뒤 작업 페이지가 바뀌었으면 「보류」).
   - **프로젝트 탭**: Workbench 위쪽 탭이 프로젝트(Figma 파일)다. 주소 `Figma_Workbench.html?p={fileKey}`로 정해지고(Ctrl+클릭하면 새 창), 「+」로 등록된 프로젝트를 열거나 Figma 링크로 새 프로젝트를 등록한다(`POST /api/projects {action:'add', link}`). 요청에는 늘 `fileKey`가 있으니 그 파일 · 그 파일의 수정 가능 페이지 기준으로 처리한다.
   - Figma 플러그인은 열린 파일의 프로젝트 작업 링크(`GET /api/projects`)로 수정 가능 페이지를 정한다(아직 모르는 파일이면 시작 안내 링크).
 - 응답은 한국어로 한다.
@@ -30,22 +30,22 @@
 
 | 할 일 | 읽을 문서 |
 |---|---|
-| Workbench 수정 요청(`PENDING` · `RESUME`, R0xx), 요청 감시, 채팅으로 Figma를 고쳤을 때 이력 · 캡처 | `docs/claude/requests.md` |
+| Workbench 수정 요청(`PENDING` · `RESUME`, R0xx — 케이스 1 · 2 · 3은 규칙 저장소 `flow/` 단계대로), 요청 감시, 채팅으로 Figma를 고쳤을 때 이력 · 캡처 | `docs/claude/requests.md` |
 | 작업 대기열(`JOBS`) 공통, `catalog` 프레임 목록 · `capture` 캡처 · `text` 글 수정(플러그인) | `docs/claude/jobs.md` |
 | `guide` 새 UX 문서 · `guide-edit` 문서 수정 · `guide-check` 고칠 화면 · 연관 항목 찾기, 파일형 문서 | `docs/claude/ux-docs.md` |
 | `prototype` 만들기 · `prototype-edit` 수정 · `prototype-sync` Figma 맞추기 | `docs/claude/prototype.md` |
-| `minutes` 회의록 요약, `plan` 임시 정책 · 논의·결정, 화면설계서 반영(`fixRows`), 회의록 쓰기 | `docs/claude/plan.md` |
+| `minutes` 회의록 요약, `plan` 논의 대상(DS) · 화면설계서 작업대기(`fixRows`) · 작업 기록, 회의록 쓰기 | `docs/claude/plan.md` |
 | 프로그램 수정 · **배포**(「배포해줘」), 계정 · 권한, 서버 · 에이전트 구조, 일정 연결(시트) | `docs/claude/dev.md` |
 
 - `JOBS J0xx`는 `GET /api/jobs`에서 그 작업의 `kind`를 보고 문서를 고른다.
-- 한 일이 다른 종류로 이어지면(요청 처리 중 임시 정책 등록, 완료 뒤 프로토타입 맞추기 등) 그 문서도 읽는다.
+- 한 일이 다른 종류로 이어지면(요청 처리 중 논의 대상 등록, 완료 뒤 프로토타입 맞추기 등) 그 문서도 읽는다.
 - 배포는 사용자가 「배포해줘」라고 할 때만 한다(절차는 `dev.md` 「버전 · 배포」).
 - 규칙을 고치거나 더할 때는 그 종류의 문서를 고친다. 이 문서에는 모든 일에 필요한 것만 둔다(2026-11-10에 나눔 — 예전에는 한 파일 4만 8천 자가 모든 세션에 실렸다). `docs/claude/`는 배포에 들어가 모든 PC에 퍼진다(`.claude/`는 PC별 설정이라 업데이트가 덮어쓰지 않으니 규칙을 두지 않는다).
 
 ## 공통 규칙
 
 - **같은 작업 · 요청을 두 번 처리하지 않는다**: 서버는 이미 「진행 중」인 작업(`/api/jobs`) · 요청(`/api/requests`)을 다시 「진행 중」으로 바꾸려 하면 「이미 진행 중」 오류를 돌려준다(백그라운드 감시와 Claude 창이 함께 처리하던 것을 막음, 2026-11-05 J028). 이 오류를 받으면 다른 Claude 세션이 처리 중이니 **그 항목은 건너뛴다**. 내가 처리하다 끊겨 다시 이어야 할 때만 `force:true`를 붙인다.
-- **사용량**: 끝낸(완료 · 보류 · 실패) 작업마다 `workbench/usage.ps1 -From {「진행 중」으로 바꾼 시각} -By {작업의 by} -Title "{종류}: {이름} ({작업 ID})"`(맥 `usage.pl`)로 남긴다. 종류 이름은 「사용량 통계」가 나눠 보이는 말로 쓴다: UX 문서 = 카테고리 이름(작업규칙 · 정책서 · UX가이드 · 기준데이터 · 화면 정의서), 연관 항목 = 「연관 항목 찾기」 · 「고칠 화면 찾기」, 「회의록 요약」, 「임시 정책」 · 「논의·결정」(plan), 「프로토타입」, 「목록 만들기」 · 「캡처」. Workbench 요청(R0xx)은 서버가 완료 때 자동으로 남긴다.
+- **사용량**: 끝낸(완료 · 보류 · 실패) 작업마다 `workbench/usage.ps1 -From {「진행 중」으로 바꾼 시각} -By {작업의 by} -Title "{종류}: {이름} ({작업 ID})"`(맥 `usage.pl`)로 남긴다. 종류 이름은 「사용량 통계」가 나눠 보이는 말로 쓴다: UX 문서 = 카테고리 이름(작업규칙 · 정책서 · UX가이드 · 기준데이터 · 화면 정의서), 연관 항목 = 「연관 항목 찾기」 · 「고칠 화면 찾기」, 「회의록 요약」, 「논의 대상」(plan: ds-new · answer · answer-apply), 「프로토타입」, 「목록 만들기」 · 「캡처」. Workbench 요청(R0xx)은 서버가 완료 때 자동으로 남긴다(케이스 요청은 「케이스 n」으로 나뉜다).
 - **서버로 보내기**: 서버로 JSON을 보낼 때는 **UTF-8 파일로 만들어 `curl --data-binary @파일`**로 보낸다. 명령줄에 한글을 직접 넣으면 윈도우에서 깨진다.
 - `.history`는 작업 폴더 저장소와 별개다. Claude가 `.history`를 직접 커밋 · 푸시하지 않는다. 작업 폴더의 코드 커밋 · 푸시는 지금처럼 사용자가 요청할 때만 한다.
 
@@ -78,14 +78,14 @@
 
 | 데이터 | CURECA | 다른 팀 |
 |---|---|---|
-| UX 문서(작업규칙 · 정책서 · UX가이드 · 기준데이터 · 화면 정의서, `provisional/` · `pending/` · `customer-agenda/` · `screen-fixes/` · `decisions/`, `_log.json`) | `.history/guides/` | `.history/teams/{id}/guides/` |
+| UX 문서 = 규칙 저장소(CURECA_AI 구조: `work-rules.md` · `constitution.md` · `flow/` · `reference-rules/` · `policy/` · `glossary/` · `screens/` · `discussions/` 논의 대상 · `work-logs/` 작업 기록, Figma로 만든 UX가이드 `g…/`, `_log.json`. 예전 폴더는 `old-…`) | `.history/guides/` | `.history/teams/{id}/guides/` |
 | 회의록 | `.history/minutes/` | `.history/teams/{id}/minutes/` |
 | 시트 연결 | `.history/config/sheet.json` | `.history/teams/{id}/config/sheet.json` |
 | 작업 기준(이 PC만) | `workbench/guide_apply.json` | `workbench/guide_apply.{id}.json` |
 | 변경 이력 · 사용량 | `.history/entries` · `.history/usage` 한곳, 기록마다 `team`(없으면 CURECA) |
 
 - **Claude가 요청 · 작업을 처리할 때**: 그 항목의 `team`(없으면 `cureca`)으로 일한다. 이 문서 · `docs/claude/` 문서의 `.history/guides/…` · `.history/minutes/…` · `.history/config/sheet.json` 경로는 CURECA 기준이니, 다른 팀이면 위 표대로 `.history/teams/{team}/…`로 바꿔 읽고 쓴다(새 문서 폴더 `.history/teams/{team}/guides/{id}/`도). 서버 API에는 `?team={team}`을 붙이고, 작업을 새로 쌓을 때(prototype-sync · text 등)는 본문에 `team`을 넣는다. 사용량은 `usage.ps1 … -Team {team}`(맥 `--team`). Workbench 요청의 작업 기준은 `GET /api/guides?team={요청 team}`의 `applied[fileKey]`다.
-  - 안전장치(빠뜨렸을 때): `?team=` 없이 `jobId`를 담은 문서 저장(`/api/guides save`)은 그 작업의 팀 문서로, 이미 있는 회의록 id의 저장 · 지우기는 그 회의록이 있는 팀으로 서버가 맞춘다. 파일을 직접 고치는 일(임시 정책 · 반영 대기 줄 등)에는 안전장치가 없으니 경로를 꼭 확인한다.
+  - 안전장치(빠뜨렸을 때): `?team=` 없이 `jobId`를 담은 문서 저장(`/api/guides save`)은 그 작업의 팀 문서로, 이미 있는 회의록 id의 저장 · 지우기는 그 회의록이 있는 팀으로 서버가 맞춘다. 파일을 직접 고치는 일(논의 대상 · 반영 대기 항목 · 작업 기록 · 규칙 저장소 문서 등)에는 안전장치가 없으니 경로를 꼭 확인한다.
 
 ## 주의
 
