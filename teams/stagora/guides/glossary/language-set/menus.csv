@@ -1,0 +1,11 @@
+Language ID,구분,Type,번역 여부,한국어,English,日本語,简体中文,Deutsch,사용 화면,비고
+LID-MN-001,GNB,menu,번역,대시보드,Dashboard,ダッシュボード,仪表板,Dashboard,COM-01,
+LID-MN-002,GNB,menu,번역,주문 관리,Order Management,注文管理,订单管理,Auftragsverwaltung,COM-01,
+LID-MN-003,GNB,menu,번역,제품 마스터,Product Master,製品マスター,产品主数据,Produktstamm,COM-01,고유명사 LID-PN-006과 같게
+LID-MN-004,GNB,menu,번역,검사 구성,Test Configuration,検査構成,检测配置,Testkonfiguration,COM-01,
+LID-MN-005,GNB,menu,번역,인터페이스,Interface,インターフェース,接口,Schnittstelle,COM-01,
+LID-MN-006,GNB,menu,번역,설정,Settings,設定,设置,Einstellungen,COM-01,
+LID-MN-007,LNB,menu,번역,HL7 격리 데이터,HL7 Quarantine Data,HL7隔離データ,HL7隔离数据,HL7-Quarantänedaten,COM-04,독일어가 가장 김 — 메뉴 폭 확인
+LID-MN-008,LNB,menu,번역,본사 마스터 가져오기,Import HQ Master,本社マスター取込,导入总部主数据,Zentralstamm importieren,COM-03,
+LID-MN-009,LNB,menu,번역,계정 관리,Account Management,アカウント管理,账户管理,Kontoverwaltung,COM-06,
+LID-MN-010,LNB,menu,번역,작업 로그,Activity Log,操作ログ,操作日志,Aktivitätsprotokoll,COM-06,

@@ -1,0 +1,12 @@
+Language ID,구분,Type,번역 여부,한국어,English,日本語,简体中文,Deutsch,사용 화면,비고
+LID-BT-001,공통,btn,번역,저장,Save,保存,保存,Speichern,COM-07,
+LID-BT-002,공통,btn,번역,취소,Cancel,キャンセル,取消,Abbrechen,COM-07,
+LID-BT-003,공통,btn,번역,확인,OK,OK,确定,OK,COM-07,
+LID-BT-004,공통,btn,번역,삭제,Delete,削除,删除,Löschen,COM-07,
+LID-BT-005,공통,btn,번역,닫기,Close,閉じる,关闭,Schließen,COM-07,
+LID-BT-006,목록,btn,번역,검색,Search,検索,搜索,Suchen,COM-08,
+LID-BT-007,목록,btn,번역,초기화,Reset,リセット,重置,Zurücksetzen,COM-08,
+LID-BT-008,목록,btn,번역,추가,Add,追加,添加,Hinzufügen,COM-08,
+LID-BT-009,목록,btn,번역,내보내기,Export,エクスポート,导出,Exportieren,COM-08,
+LID-BT-010,목록,btn,번역,가져오기,Import,インポート,导入,Importieren,COM-03,
+LID-BT-011,인터페이스,btn,번역,다시 보내기,Resend,再送信,重新发送,Erneut senden,COM-04,

@@ -1,0 +1,9 @@
+Language ID,구분,Type,번역 여부,한국어,English,日本語,简体中文,Deutsch,사용 화면,비고
+LID-PN-001,서비스,noun,미번역,STAgora,STAgora,STAgora,STAgora,STAgora,COM-01,서비스 이름. 어느 언어에서도 그대로
+LID-PN-002,규격,noun,미번역,HL7,HL7,HL7,HL7,HL7,COM-04,의료 정보 교환 규격 이름
+LID-PN-003,규격,noun,미번역,LIS,LIS,LIS,LIS,LIS,COM-04,Laboratory Information System
+LID-PN-004,시스템,noun,번역,로컬 서버,Local Server,ローカルサーバー,本地服务器,Lokaler Server,COM-02 · COM-04,
+LID-PN-005,시스템,noun,번역,본사 서버,Headquarters Server,本社サーバー,总部服务器,Zentralserver,COM-02,
+LID-PN-006,데이터,noun,번역,제품 마스터,Product Master,製品マスター,产品主数据,Produktstamm,COM-03,
+LID-PN-007,데이터,noun,번역,종합검사,Panel Test,パネル検査,组合检测,Panel-Test,COM-05,여러 검사 항목을 묶은 검사
+LID-PN-008,데이터,noun,미번역,C-Lab,C-Lab,C-Lab,C-Lab,C-Lab,COM-05,기관 이름

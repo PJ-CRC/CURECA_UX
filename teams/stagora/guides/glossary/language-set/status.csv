@@ -1,0 +1,9 @@
+Language ID,구분,Type,번역 여부,한국어,English,日本語,简体中文,Deutsch,사용 화면,비고
+LID-ST-001,주문,status,번역,대기,Pending,保留中,待处理,Ausstehend,COM-02,코드값 PENDING
+LID-ST-002,주문,status,번역,진행 중,In Progress,進行中,进行中,In Bearbeitung,COM-02,코드값 IN_PROGRESS
+LID-ST-003,주문,status,번역,완료,Completed,完了,已完成,Abgeschlossen,COM-02,코드값 COMPLETED
+LID-ST-004,주문,status,번역,실패,Failed,失敗,失败,Fehlgeschlagen,COM-02,코드값 FAILED
+LID-ST-005,인터페이스,status,번역,격리됨,Quarantined,隔離済み,已隔离,In Quarantäne,COM-04,코드값 QUARANTINED
+LID-ST-006,인터페이스,status,번역,재전송 대기,Awaiting Resend,再送待ち,等待重发,Wartet auf erneutes Senden,COM-04,독일어가 가장 김 — 상태 배지 폭 확인
+LID-ST-007,공통,status,번역,사용,Active,有効,启用,Aktiv,COM-03 · COM-06,코드값 ACTIVE
+LID-ST-008,공통,status,번역,사용 안 함,Inactive,無効,停用,Inaktiv,COM-03 · COM-06,코드값 INACTIVE

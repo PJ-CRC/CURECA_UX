@@ -1,0 +1,4 @@
+한국어,English,日本語,简体中文,Deutsch,종류(시트),사용 화면,추가일,추가한 사람,상태,언어셋 ID,비고
+본사 마스터와 다른 항목만 보기,Show only items that differ from HQ master,,,,B.메뉴,COM-03,2026-11-12,샘플,번역 필요,,필터 체크박스 라벨
+격리 사유,Quarantine Reason,,,,C.상태값,COM-04,2026-11-12,샘플,고객사 요청함,,표 머리글
+다시 보내기,Resend,再送信,重新发送,Erneut senden,D.버튼,COM-04,2026-11-10,샘플,확정,LID-BT-011,
