@@ -1,0 +1,28 @@
+{
+    "id":  "brex-06_20261112-104813",
+    "kind":  "work",
+    "reqId":  "",
+    "reqType":  "",
+    "team":  "cureca",
+    "at":  "2026-11-12T10:48:13+09:00",
+    "from":  "2026-11-12T10:48:02+09:00",
+    "by":  "최고관리자",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "작업규칙: 4. 검토 (J372)",
+    "models":  {
+                   "claude-opus-5-5":  5
+               },
+    "calls":  5,
+    "input":  10,
+    "cacheWrite":  13358,
+    "cacheRead":  259556,
+    "output":  1417,
+    "total":  274341,
+    "usd":  0.1872
+}
