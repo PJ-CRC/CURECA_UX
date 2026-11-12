@@ -1,0 +1,28 @@
+{
+    "id":  "brex-06_R035",
+    "kind":  "request",
+    "reqId":  "R035",
+    "reqType":  "일반",
+    "team":  "cureca",
+    "at":  "2026-11-12T09:04:36+09:00",
+    "from":  "2026-11-12T09:03:51+09:00",
+    "by":  "최고관리자",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "fileKey":  "etCQFF3CTf1EA6C79d4BBf",
+    "fileName":  "UX AI TEST",
+    "page":  "SH.L TEST",
+    "frame":  "DASHBOARD",
+    "nodeId":  "789:33347",
+    "text":  "표시한 영역에 사각형 1개 그려줘 사이즈 150X200",
+    "models":  {
+                   "claude-opus-5-5":  10
+               },
+    "calls":  10,
+    "input":  23,
+    "cacheWrite":  9677,
+    "cacheRead":  565293,
+    "output":  2889,
+    "total":  577882,
+    "usd":  0.2483
+}

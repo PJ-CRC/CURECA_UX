@@ -2,8 +2,8 @@
   "id": "brex-06_R035",
   "kind": "request",
   "team": "cureca",
-  "status": "진행 중",
-  "at": "2026-11-12T09:03:51+09:00",
+  "status": "완료",
+  "at": "2026-11-12T09:04:35+09:00",
   "createdAt": "2026-11-12T09:03:32+09:00",
   "by": "최고관리자",
   "doneBy": "Claude",
@@ -17,13 +17,24 @@
   "type": "일반",
   "layout": "",
   "text": "표시한 영역에 사각형 1개 그려줘 사이즈 150X200",
-  "note": "",
-  "shot": "",
-  "shots": [],
+  "note": "DASHBOARD 표시 영역에 150×200 사각형 1개를 그렸습니다.\n- ① DASHBOARD: 왼쪽 메뉴 아래 빈 자리 → 150×200 사각형(Rectangle (R035), 회색 #D9D9D9) 추가, 표시 영역 가운데(x 31 · y 732)\n- 색 지정이 없어 Figma 기본 회색으로 넣었습니다. 다른 색 · 모서리가 필요하면 알려 주세요.\n작업 기준: 작업규칙 CURECA 작업규칙 · 정책서 정책서 · UX가이드 CURECA UX 가이드 · 기준데이터 기준데이터 · 화면 정의서 화면 정의서",
+  "shot": "shots/brex-06_R035.jpg",
+  "shots": [
+    {
+      "file": "shots/brex-06_R035.jpg",
+      "nodeId": "789:33347",
+      "frame": "DASHBOARD"
+    }
+  ],
   "images": [
     "attach/brex-06_R035_1.jpg"
   ],
-  "frames": [],
+  "frames": [
+    {
+      "nodeId": "789:33347",
+      "name": "DASHBOARD"
+    }
+  ],
   "marks": [
     {
       "n": 1,
