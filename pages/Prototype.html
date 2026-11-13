@@ -41,7 +41,11 @@ button{cursor:pointer}
 .sb{flex:1;min-height:0;overflow:auto;padding:12px 16px 16px;display:flex;flex-direction:column;gap:14px}
 .sec h2{margin:0 0 6px;font-size:12.5px;font-weight:700;color:var(--ink-3)}
 .stale{border-radius:8px;background:var(--warn-soft);color:var(--warn);padding:8px 10px;font-size:12.5px}
-.stale ul{margin:4px 0 8px;padding-left:16px}
+.stale ul{margin:6px 0 8px;padding:0;list-style:none;display:grid;gap:4px}
+.stale label{display:flex;gap:6px;align-items:flex-start;cursor:pointer;line-height:1.45}
+.stale input[type=checkbox]{margin:2px 0 0;accent-color:var(--warn);flex:none}
+.stale .acts{display:flex;gap:6px;flex-wrap:wrap}
+.stale .hint{margin:6px 0 0;font-size:11.5px;opacity:.85}
 .stale[hidden]{display:none}
 .scr{list-style:none;margin:0;padding:0}
 .scr button{display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:0;background:none;border-radius:7px;padding:5px 8px;font-size:13.5px;min-width:0}
@@ -154,7 +158,8 @@ textarea:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:
   function show(nodeId){
     cur = nodeId || '';
     var src = P.dir + '/' + (P.entry || 'index.html') + (cur ? '#s=' + cur.replace(':', '-') : '');
-    $('frame').src = src; $('newWin').href = src;
+    /* 같은 페이지에서 #s= 만 바뀌면 브라우저가 다시 읽지 않아(프로토타입은 열릴 때만 #s=를 읽음) 목록을 눌러도 화면이 그대로였다 → 누를 때마다 새로 읽게 */
+    $('frame').src = P.dir + '/' + (P.entry || 'index.html') + '?r=' + Date.now() + (cur ? '#s=' + cur.replace(':', '-') : ''); $('newWin').href = src;
     renderScr();
   }
   window.addEventListener('message', function(e){
@@ -201,7 +206,9 @@ textarea:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:
       '<span class="chip">' + esc(P.fileName || '') + '</span><span class="chip">' + esc(P.env || '') + '</span>' + (P.syncedAt ? '<span class="chip">맞춤 ' + esc(fmt(P.syncedAt)) + '</span>' : '');
     $('stale').hidden = !st || !!busy;
     /* 5초마다 다시 그려도 내용이 같으면 그대로 둔다(누르는 중인 버튼이 바뀌어 클릭이 사라지지 않게) */
-    var sh = st && !busy ? '<b>Figma에서 바뀐 화면이 있습니다</b><ul>' + P.stale.map(function(s){ return '<li>' + esc(s.name) + ' — ' + esc(s.why) + (s.at ? ' (' + esc(fmt(s.at)) + ')' : '') + '</li>'; }).join('') + '</ul><button class="btn warn w-only" id="syncBtn">지금 반영</button>' : '';
+    /* 항목마다 체크: 고쳐짐 · 없어짐은 기본 체크, 화면 추가됨은 같은 페이지의 관계없는 프레임일 수 있어 기본 체크 안 함 */
+    var sh = st && !busy ? '<b>Figma에서 바뀐 화면이 있습니다</b><ul>' + P.stale.map(function(s, i){ return '<li><label><input type="checkbox" class="w-only" data-i="' + i + '"' + (s.add ? '' : ' checked') + '><span>' + esc(s.name) + ' — ' + esc(s.why) + (s.at ? ' (' + esc(fmt(s.at)) + ')' : '') + '</span></label></li>'; }).join('') +
+      '</ul><div class="acts"><button class="btn warn w-only" id="syncBtn">선택한 것만 반영</button><button class="btn w-only" id="ignoreBtn">선택한 것 무시</button></div><p class="hint">무시한 화면은 목록에서 빠집니다. 그 화면이 Figma에서 다시 바뀌면 다시 보입니다.</p>' : '';
     if (render.sh !== sh) { render.sh = sh; $('stale').innerHTML = sh; }
     $('flowSec').hidden = !P.text; $('flow').textContent = P.text || '';
     $('figBtn').href = 'https://www.figma.com/design/' + P.fileKey + '/file' + (P.start ? '?node-id=' + P.start.replace(':', '-') : '');
@@ -210,10 +217,17 @@ textarea:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:
     $('jobs').innerHTML = js.map(function(j){ return '<li><b>' + esc(j.id) + '</b> ' + esc({ 'prototype': '만들기', 'prototype-edit': '수정', 'prototype-sync': 'Figma 맞추기' }[j.kind] || j.kind) + ' · ' + esc(j.status) + ' · ' + esc(fmt(j.updatedAt)) + (j.note ? '<span class="nt">' + esc(j.note) + '</span>' : '') + '</li>'; }).join('');
     renderScr();
   }
+  function picked(){ return Array.prototype.slice.call($('stale').querySelectorAll('input[data-i]:checked')).map(function(c){ return P.stale[+c.dataset.i]; }).filter(Boolean); }
   document.addEventListener('click', function(e){
-    if (!e.target.closest('#syncBtn')) return;
-    post('/api/jobs', { action: 'add', kind: 'prototype-sync', fileKey: P.fileKey, proto: P.id, name: P.name, text: 'Figma에서 바뀐 화면 맞추기: ' + P.stale.map(function(s){ return s.name + (s.add ? '(추가됨)' : s.gone ? '(없어짐)' : ''); }).join(', '), frames: P.stale, by: store('cux.user') || '' })
-      .then(function(d){ toast(d.job.id + ' Figma 맞추기를 요청했습니다'); load(); }, function(err){ toast('요청 실패: ' + err.message); });
+    if (e.target.closest('#syncBtn')) {
+      var sel = picked(); if (!sel.length) { toast('반영할 화면을 골라 주세요'); return; }
+      post('/api/jobs', { action: 'add', kind: 'prototype-sync', fileKey: P.fileKey, proto: P.id, name: P.name, text: 'Figma에서 바뀐 화면 맞추기: ' + sel.map(function(s){ return s.name + (s.add ? '(추가됨)' : s.gone ? '(없어짐)' : ''); }).join(', '), frames: sel, by: store('cux.user') || '' })
+        .then(function(d){ toast(d.job.id + ' Figma 맞추기를 요청했습니다(' + sel.length + '개)'); load(); }, function(err){ toast('요청 실패: ' + err.message); });
+    } else if (e.target.closest('#ignoreBtn')) {
+      var ig = picked(); if (!ig.length) { toast('무시할 화면을 골라 주세요'); return; }
+      post('/api/prototypes', { action: 'ignore', id: P.id, items: ig.map(function(s){ return { nodeId: s.nodeId, at: s.at || '', add: !!s.add, gone: !!s.gone }; }) })
+        .then(function(){ toast(ig.length + '개를 무시했습니다'); render.sh = null; load(); }, function(err){ toast('무시하지 못했습니다: ' + err.message); });
+    }
   });
   $('editBtn').addEventListener('click', function(){
     var t = $('editText').value.trim(); if (!t) { $('editMsg').textContent = '고칠 내용을 적어 주세요.'; return; }
