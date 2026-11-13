@@ -550,7 +550,7 @@
   "jobId": "",
   "kind": "data",
   "link": "",
-  "request": ".history/guides/glossary의 내용을 기반으로 기준 데이터 작성. 상세 내용은 테이블 형태(csv)로",
+  "request": ".history/teams/stagora/guides/glossary의 내용을 기반으로 기준 데이터 작성. 상세 내용은 테이블 형태(csv)로",
   "scope": "참고 파일",
   "sources": [
     "glossary.md",
@@ -565,7 +565,7 @@
     "pcr-reagents.csv",
     "review-v0.md"
   ],
-  "summary": "CURECA_AI 저장소의 용어집과 기준 표(glossary/)를 원본 파일 그대로 관리합니다(.history/guides/glossary). 표(CSV)는 표 그대로 보입니다.",
+  "summary": "CURECA_AI 저장소의 용어집과 기준 표(glossary/)를 원본 파일 그대로 관리합니다(.history/teams/stagora/guides/glossary). 표(CSV)는 표 그대로 보입니다.",
   "title": "기준데이터",
   "titles": {
     "consumables.csv": "Consumable · Reagent · consumables.csv",

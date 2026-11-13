@@ -256,7 +256,7 @@
                     "meeting-trace.md",
                     "migration.csv"
                 ],
-    "summary":  "CURECA_AI 저장소의 정책서(policy/)를 원본 파일 그대로 관리합니다(.history/guides/policy). 영역마다 대분류, 정책 하나가 항목이며 기준 자료(알럿 · 권한 · Service Mode · 장비 상태 등)는 표로 보입니다.",
+    "summary":  "CURECA_AI 저장소의 정책서(policy/)를 원본 파일 그대로 관리합니다(.history/teams/stagora/guides/policy). 영역마다 대분류, 정책 하나가 항목이며 기준 자료(알럿 · 권한 · Service Mode · 장비 상태 등)는 표로 보입니다.",
     "title":  "정책서",
     "titles":  {
                    "alert-catalog-ms.csv":  "알럿 카탈로그 (Material Setup) · alert-catalog-ms.csv",
