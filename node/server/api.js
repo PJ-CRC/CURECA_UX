@@ -74,6 +74,46 @@ on('GET', '/api/usage', ({ T }) => {
 // PowerShell Sort-Object -Descending과 같은 순서: 큰 값이 먼저, 값이 같으면 원래(폴더) 순서 그대로(안정 정렬)
 const sortDescPS = (list, f) => list.slice().sort((a, b) => { const x = f(a), y = f(b); return x < y ? 1 : x > y ? -1 : 0; });
 const tms = (s) => { const t = Date.parse(String(s || '')); return isNaN(t) ? null : t; };
+// 프로토타입 페이지: meta.page.id(페이지 단위로 만든 것), 없으면 프로토타입 화면이 들어 있는 catalog 페이지들
+function protoPageIds(m, cat) {
+  const pages = core.arr(cat && cat.pages);
+  if (m.page && m.page.id && pages.some((p) => p && p.id === String(m.page.id))) return [String(m.page.id)];
+  const mine = new Set(core.arr(m.frames).filter(Boolean).map((f) => String(f.nodeId)));
+  return pages.filter((p) => p && core.arr(p.frames).some((f) => f && mine.has(String(f[0])))).map((p) => String(p.id));
+}
+// 프로토타입 화면이 모두 섹션 안에 있으면(목록 행 [7] = 섹션 id, 토큰 목록) 그 섹션들로 좁힌다 — 한 페이지에 다른 화면(매뉴얼 등)이 함께 있어도 괜히 「추가됨」이 뜨지 않게
+function protoSecIds(m, cat) {
+  const mine = new Set(core.arr(m.frames).filter(Boolean).map((f) => String(f.nodeId))), secs = new Set(); let all = true, n = 0;
+  for (const p of core.arr(cat && cat.pages)) for (const f of core.arr(p && p.frames)) if (f && mine.has(String(f[0]))) { n++; if (f[7]) secs.add(String(f[7])); else all = false; }
+  return n && all ? [...secs] : [];
+}
+// 그 페이지들(섹션을 주면 그 섹션 안만)의 지금 프레임 { id: 이름 } — 아직 모르는 페이지(frames: null)가 있으면 null
+function protoPageNow(cat, pids, secs) {
+  const out = {}, sec = secs && secs.length ? new Set(secs.map(String)) : null;
+  for (const pid of pids) { const p = core.arr(cat && cat.pages).find((x) => x && String(x.id) === pid); if (!p || !Array.isArray(p.frames)) return null; for (const f of p.frames) if (f && (!sec || sec.has(String(f[7] || '')))) out[String(f[0])] = String(f[1] || ''); }
+  return out;
+}
+// 프로토타입을 만들거나 맞출 때의 그 페이지 프레임 목록을 meta.pageFrames {at, pages, secs, ids}에 남긴다(작업 완료 때 · 처음 볼 때)
+function protoSnapshot(dir) {
+  const mf = path.join(C.protoRoot, dir, 'meta.json'), m = core.readJson(mf); if (!m || !m.fileKey) return null;
+  const cat = core.readJson(path.join(projDir(String(m.fileKey)), 'catalog.json')); if (!cat) return null;
+  const pids = protoPageIds(m, cat), secs = m.page && m.page.id ? [] : protoSecIds(m, cat);   // 페이지 단위로 만든 것은 페이지 전체
+  const now = pids.length ? protoPageNow(cat, pids, secs) : null; if (!now) return null;
+  m.pageFrames = { at: core.now(), pages: pids, secs, ids: Object.keys(now) };
+  core.writeJson(mf, m); return m.pageFrames;
+}
+function protoPageDiff(dir, m, stale) {
+  const cat = core.readJson(path.join(projDir(String(m.fileKey || '')), 'catalog.json')); if (!cat) return;
+  let snap = m.pageFrames;
+  if (!snap || !Array.isArray(snap.ids)) { snap = protoSnapshot(dir); if (snap) m.pageFrames = snap; return; }   // 처음 보는 예전 프로토타입: 지금 목록을 기준으로
+  const now = protoPageNow(cat, core.arr(snap.pages).map(String), core.arr(snap.secs)); if (!now) return;
+  const was = new Set(snap.ids.map(String)), mine = new Set(core.arr(m.frames).filter(Boolean).map((f) => String(f.nodeId)));
+  const at = String(cat.savedAt || '');
+  for (const id of Object.keys(now)) if (!was.has(id) && !mine.has(id)) stale.push({ nodeId: id, name: now[id], why: '화면 추가됨', at, add: true });
+  // 없어짐: 프로토타입 화면이 카탈로그 어디에도 없을 때(다른 페이지로 옮긴 것은 그대로)
+  const all = new Set(); for (const p of core.arr(cat.pages)) for (const f of core.arr(p && p.frames)) if (f) all.add(String(f[0]));
+  for (const f of core.arr(m.frames)) if (f && !all.has(String(f.nodeId)) && !stale.some((s) => s.nodeId === String(f.nodeId))) stale.push({ nodeId: String(f.nodeId), name: String(f.name || ''), why: '화면 없어짐', at, gone: true });
+}
 on('GET', '/api/prototypes', () => {
   const list = []; let dirs = [];
   try { dirs = fs.readdirSync(C.protoRoot, { withFileTypes: true }).filter((d) => d.isDirectory() && !d.name.startsWith('_')).map((d) => d.name); } catch (e) { return { items: [] }; }
@@ -97,6 +137,8 @@ on('GET', '/api/prototypes', () => {
       if (h) { why = `${h.by == null ? '' : h.by} ${h.reqId == null ? '' : h.reqId} 수정 완료`; at = String(h.at); }
       if (why) stale.push({ nodeId: fr.nodeId, name: fr.name, why, at });
     }
+    // 화면 추가됨 · 없어짐(2026-11-13): 규칙이 바뀌면 Figma에 화면이 생기거나 없어진다. 프로토타입 페이지의 프레임 목록(catalog)을 맞춘 때의 목록(pageFrames)과 견준다
+    try { protoPageDiff(d, m, stale); } catch (e) {}
     m.stale = stale; m.dir = 'prototypes/' + d; list.push(m);
   }
   return { items: sortDescPS(list, (x) => String(x.updatedAt || '')) };
@@ -510,7 +552,7 @@ on('GET', '/api/sheet/data', async ({ q, T, res, send, sendJson }) => {
 });
 
 // 쓰기 API(2단계)
-const helpers = { testKey, projDir, readProj, keyOf, workKey, readMinute, readNotes, noteKey, readGuides, origPath, writeOrig, keepFirst, mainName, applyKeys, appliedDocs, agentInfo, findClaudeCode, sheetCheck, setupEnv: () => { envCache = null; return setupEnv(); } };
+const helpers = { protoSnapshot, testKey, projDir, readProj, keyOf, workKey, readMinute, readNotes, noteKey, readGuides, origPath, writeOrig, keepFirst, mainName, applyKeys, appliedDocs, agentInfo, findClaudeCode, sheetCheck, setupEnv: () => { envCache = null; return setupEnv(); } };
 require('./figma')(on, helpers);   // Figma 토큰(REST API) — 캡처. writes.js가 요청 완료 때 helpers.figmaAfterDone을 부른다
 require('./writes')(on, helpers);
 
