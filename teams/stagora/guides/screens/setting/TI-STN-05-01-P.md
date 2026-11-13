@@ -162,6 +162,7 @@ figma_region: 2.1 2차
 | R02 | 디스크립션 | 3 ID 입력 조건에 최대 길이(32자)가 없음. 오류 문구에는 "4-32 characters" | 정책 ID로 참조 (4~32자) | 8월 정책서 아이디 조건 | 대기 |
 | R03 | 디스크립션 | 3 Placeholder "Please enter your ID", 화면 "Please enter a valid ID" | 하나로 통일 | 화면 글자 | 대기 |
 | R04 | 문구 | "symbols (_ , -)" | symbols (_, -) | 표기 | 대기 |
+| R05 | 정책 반영 | 2 User Type 라디오가 User · Admin뿐 | 확인 필요: User Type이 Service인 사용자가 Service 계정을 만들 수 있는지(라디오에 Service를 더하는지), PV-0002 바꾸는 내용 3(Service 계정 최소 1개)과 맞는지. 정해지면 디스크립션에 넣음: 2 User Type 라디오 항목과 Service 항목이 보이는 조건 | PV-0002 영향 화면 (2026-11-05 승인), CA-0003 | 대기 (확인 필요) |
 
 ## 변경 이력
 

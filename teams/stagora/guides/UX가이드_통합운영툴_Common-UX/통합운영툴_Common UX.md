@@ -1,4 +1,4 @@
-# STAgoras Admin Common UX 가이드
+# 통합운영툴_Common UX
 
 STAgora AI Workspace 파일의 「Common UX」 페이지(공통 화면 정의서 COM-01 ~ COM-09)를 기준으로 공통 컴포넌트(버튼 · 입력 · 팝업)와 화면 유형별 레이아웃 영역 크기를 정리했다.
 

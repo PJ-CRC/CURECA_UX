@@ -34,7 +34,7 @@ replaced_by:
 
 ## 예외
 
-없음
+- Module이 Error에서 고쳐져도, 물리적으로 이어진 다른 Module 때문에 Run이 다시 시작되지 않을 수 있음 (MT-20261013-01). 어떤 Module끼리 이어져 있는지는 Module 문서(`policy/modules/`)에 모음. Error에서 Ready로 돌아가는 조건은 고객 확인 중 (CA-0002, CA-0010)
 
 ## 근거
 
@@ -48,3 +48,4 @@ replaced_by:
 | --- | --- | --- | --- |
 | | 2026-11-02 | 최초 작성 | |
 | | 2026-11-02 | Running → Paused 조건을 씨젠 전환표대로 "모든 Module이 Paused"로 고침, Run 중이 아닐 때 규칙 5 추가 | |
+| | 2026-11-06 | 고쳐진 Module이 이어진 Module 때문에 다시 시작되지 않을 수 있음 (예외) | MT-20261013-01 |

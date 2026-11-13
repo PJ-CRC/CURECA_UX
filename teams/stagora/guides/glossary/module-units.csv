@@ -35,9 +35,9 @@ FlexibleExtraction,WasteBin,Waste Bin,폐기함,Waste Bin/Bottle,1,-,,씨젠 상
 FlexibleExtraction,LiquidWasteBottle,Liquid Waste Bottle,액체 폐기통,Waste Bin/Bottle,1,-,,씨젠 상태 정보 261021 > Unit
 FlexibleExtraction,Door,Door,도어,Door,1,-,,씨젠 상태 정보 261021 > Unit
 PcrSetup,Starlet,STARlet,STARlet,Device,1,-,,씨젠 상태 정보 261021 > Unit
-PcrSetup,Tip1000Storage,1000μL Tip Storage,1000μL 팁 저장소,Storage,1,1..N,,씨젠 상태 정보 261021 > Unit
-PcrSetup,Tip300Storage1,300μL Tip Storage (1),300μL 팁 저장소 (1),Storage,1,1..N,,씨젠 상태 정보 261021 > Unit
-PcrSetup,Tip300Storage2,300μL Tip Storage (2),300μL 팁 저장소 (2),Storage,1,1..N,,씨젠 상태 정보 261021 > Unit
+PcrSetup,Tip1000Storage,1000 μL Tip Storage,1000 μL 팁 저장소,Storage,1,1..N,,씨젠 상태 정보 261021 > Unit; 띄어쓰기는 Teams 글 2026-11-06 T05
+PcrSetup,Tip300Storage1,300 μL Tip Storage (1),300 μL 팁 저장소 (1),Storage,1,1..N,,씨젠 상태 정보 261021 > Unit; 띄어쓰기는 Teams 글 2026-11-06 T05
+PcrSetup,Tip300Storage2,300 μL Tip Storage (2),300 μL 팁 저장소 (2),Storage,1,1..N,,씨젠 상태 정보 261021 > Unit; 띄어쓰기는 Teams 글 2026-11-06 T05
 PcrSetup,PcrPlateStorage,PCR Plate Storage,PCR 플레이트 저장소,Storage,1,1..N,,씨젠 상태 정보 261021 > Unit
 PcrSetup,WasteBin,Waste Bin,폐기함,Waste Bin/Bottle,1,-,,씨젠 상태 정보 261021 > Unit
 PcrSetup,Door,Door,도어,Door,1,-,,씨젠 상태 정보 261021 > Unit
