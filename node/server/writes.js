@@ -599,8 +599,23 @@ module.exports = function register(on, h) {
 
   // ── POST /api/prototypes {action:'delete', id} — 프로토타입 지우기(prototypes/_trash로 옮김) ──
   on('POST', '/api/prototypes', async ({ body }) => {
-    const b = await body(); if (b.action !== 'delete') throw new Error('알 수 없는 작업입니다.');
+    const b = await body(); if (b.action !== 'delete' && b.action !== 'ignore') throw new Error('알 수 없는 작업입니다.');
     const id = nn(b.id); if (!okId(id) || !core.exists(path.join(C.protoRoot, id))) throw new Error('프로토타입을 찾지 못했습니다: ' + id);
+    // 갱신 필요 항목 무시(2026-11-13): items [{nodeId, at, add, gone}]
+    //  추가됨 → 기준 목록(pageFrames.ids)에 넣어 다시 뜨지 않게, 없어짐 → 계속 무시, 고쳐짐 · 수정 완료 → 그 시각까지 무시(그 뒤에 또 바뀌면 다시 뜸)
+    if (b.action === 'ignore') {
+      const mf = path.join(C.protoRoot, id, 'meta.json'), m = core.readJson(mf); if (!m) throw new Error('프로토타입 정보를 읽지 못했습니다: ' + id);
+      const its = core.arr(b.items).filter((x) => x && /^\d+:\d+$/.test(nn(x.nodeId))).slice(0, 200); if (!its.length) throw new Error('무시할 항목을 골라 주세요.');
+      m.ignore = m.ignore && typeof m.ignore === 'object' ? m.ignore : {};
+      for (const x of its) {
+        const nid = nn(x.nodeId);
+        if (x.add) { if (m.pageFrames && Array.isArray(m.pageFrames.ids)) { if (!m.pageFrames.ids.includes(nid)) m.pageFrames.ids.push(nid); } else m.ignore[nid] = { at: core.now(), add: true }; }
+        else if (x.gone) m.ignore[nid] = { at: core.now(), gone: true };
+        else m.ignore[nid] = { at: nn(x.at) || core.now() };
+      }
+      core.writeJson(mf, m);
+      return { ok: true, ignored: its.length };
+    }
     const tr = path.join(C.protoRoot, '_trash'); fs.mkdirSync(tr, { recursive: true });
     fs.renameSync(path.join(C.protoRoot, id), path.join(tr, id + '_' + stamp()));
     return { ok: true };

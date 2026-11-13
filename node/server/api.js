@@ -139,7 +139,10 @@ on('GET', '/api/prototypes', () => {
     }
     // 화면 추가됨 · 없어짐(2026-11-13): 규칙이 바뀌면 Figma에 화면이 생기거나 없어진다. 프로토타입 페이지의 프레임 목록(catalog)을 맞춘 때의 목록(pageFrames)과 견준다
     try { protoPageDiff(d, m, stale); } catch (e) {}
-    m.stale = stale; m.dir = 'prototypes/' + d; list.push(m);
+    // 무시한 항목(화면에서 [선택한 것 무시]): 고쳐짐 · 수정 완료는 무시한 뒤 다시 바뀌면 다시 뜬다, 없어짐은 계속 무시. 추가됨은 기준 목록(pageFrames)에 넣어 처리
+    const ig = m.ignore && typeof m.ignore === 'object' ? m.ignore : {};
+    m.stale = stale.filter((s) => { const g = ig[s.nodeId]; if (!g) return true; if (s.gone) return !g.gone; return !g.at || (tms(s.at) ?? Infinity) > (tms(g.at) ?? -Infinity); });
+    m.dir = 'prototypes/' + d; list.push(m);
   }
   return { items: sortDescPS(list, (x) => String(x.updatedAt || '')) };
 });
