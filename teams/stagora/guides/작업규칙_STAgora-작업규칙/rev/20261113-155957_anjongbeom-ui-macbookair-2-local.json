@@ -1,0 +1,12 @@
+{
+  "rev": "20261113-155957_anjongbeom-ui-macbookair-2-local",
+  "by": "Claude",
+  "at": "2026-11-13T15:59:57+09:00",
+  "note": "3. h2 test: 직접 수정(155227)을 취소하고 바로 이전 수정본(141125) 내용으로 되돌림",
+  "base": "20261113-155227_anjongbeom-ui-macbookair-2-local",
+  "pc": "anjongbeom-ui-MacBookAir-2.local",
+  "req": "3. h2 test: 방금 내가 직접 수정으로 덮어씌운 버전을 무시하고, 바로 그 이전 버적으로 원복해줄래?",
+  "jobId": "J017",
+  "file": "",
+  "orig": true
+}
