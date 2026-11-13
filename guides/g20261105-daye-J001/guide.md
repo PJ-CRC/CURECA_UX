@@ -601,7 +601,7 @@ Common UX 페이지의 **P-Components (PC)**(`1801:15821`, 「CURECA Common UX P
 | Case | 버튼 | 규칙 |
 |---|---|---|
 | Case 1 | Top Button | 화면 높이 1개(1 Viewport, PC 500px 기준) 이상 스크롤하면 페이드인, 최상단(Top 0)에 닿으면 페이드아웃. 선택 시 최상단으로 이동 |
-| Case 2 | Expand Button | 선택 시 콘텐츠 영역을 전체 화면으로 확대. 전체 화면에서는 오른쪽 아래 X 버튼으로 복귀(커서를 움직이면 페이드인, 움직임이 없으면 페이드아웃) |
+| Case 2 | FullScreen Button | 선택 시 콘텐츠 영역을 전체 화면으로 확대. 전체 화면에서는 오른쪽 아래 X 버튼으로 복귀(커서를 움직이면 페이드인, 움직임이 없으면 페이드아웃) |
 
 ### 5-d. Calendar
 
