@@ -18,8 +18,20 @@
     "at": "2026-11-11T17:03:50+09:00",
     "by": "최고관리자"
   },
-  "main": "CURECA UX 가이드.md",
   "aliases": [
     "g20261028-brex-06-J003"
-  ]
+  ],
+  "format": "files",
+  "filesDir": "",
+  "folderList": true,
+  "files": [
+    "0. 개요.md",
+    "0. 문서 구성 (목차).md",
+    "1. Overview.md",
+    "2. Navigation.md",
+    "3. Layout.md",
+    "4. Writing.md",
+    "5. Component.md"
+  ],
+  "overview": "0. 개요.md"
 }
