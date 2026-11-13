@@ -9,21 +9,14 @@
 <script src="common.js"></script>
 <style>
 :root{
-  --bg:#eef0f3; --surface:#ffffff; --surface-2:#f5f7fa; --ink:#14171c; --ink-2:#4a5260; --ink-3:#7a8392;
-  --line:#e1e5eb; --accent:#2747d8; --accent-soft:#e6ebff; --red:#d93025; --red-soft:#fdecea;
-  --ok:#1a7f37; --ok-soft:#e3f4e8; --warn:#b35900; --warn-soft:#fff1e0; --canvas:#d9dde3;
+  --bg:#eef0f3; --surface-2:#f5f7fa;
+  --line:#e1e5eb; --canvas:#d9dde3;
 }
 @media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#0f1115; --surface:#171a20; --surface-2:#1e232b; --ink:#e8ebf0; --ink-2:#b4bcc8; --ink-3:#8590a0;
-    --line:#2a3039; --accent:#8ea2ff; --accent-soft:#232c52; --red:#ff7b72; --red-soft:#3a1f1e;
-    --ok:#56d364; --ok-soft:#16301d; --warn:#f0a24f; --warn-soft:#38270f; --canvas:#0b0d10;
+  :root:not([data-theme="light"]){ --canvas:#0b0d10;
   }
 }
-:root[data-theme="dark"]{
-  --bg:#0f1115; --surface:#171a20; --surface-2:#1e232b; --ink:#e8ebf0; --ink-2:#b4bcc8; --ink-3:#8590a0;
-  --line:#2a3039; --accent:#8ea2ff; --accent-soft:#232c52; --red:#ff7b72; --red-soft:#3a1f1e;
-  --ok:#56d364; --ok-soft:#16301d; --warn:#f0a24f; --warn-soft:#38270f; --canvas:#0b0d10;
+:root[data-theme="dark"]{ --canvas:#0b0d10;
 }
 *{box-sizing:border-box}
 html,body{height:100%}
@@ -46,7 +39,7 @@ button{cursor:pointer}
 .ptab.on::before{content:"";position:absolute;left:-1px;right:-1px;top:-1px;height:3px;border-radius:9px 9px 0 0;background:var(--tc)}
 .ptab .nm{overflow:hidden;text-overflow:ellipsis}
 .ptab small{color:var(--ink-3);font-weight:500;font-size:12px;overflow:hidden;text-overflow:ellipsis}
-.ptab .x{width:22px;height:22px;border:0;border-radius:5px;background:none;color:var(--ink-3);font-size:15px;line-height:1;padding:0;flex:0 0 auto}
+.ptab .x{width:24px;height:24px;border:0;border-radius:5px;background:none;color:var(--ink-3);font-size:15px;line-height:1;padding:0;flex:0 0 auto}
 .ptab .x:hover{background:var(--line);color:var(--ink)}
 .ptadd{height:32px;width:32px;margin:0 0 4px 2px;border:0;border-radius:8px;background:none;color:var(--ink-2);font-size:20px;line-height:1;flex:0 0 auto}
 .ptadd:hover,.ptadd[aria-expanded="true"]{background:var(--line);color:var(--ink)}
@@ -489,6 +482,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
 </div>
 
 <main id="wb">
+  <h1 class="sr-only">Figma Workbench</h1>
   <aside id="side">
     <!-- 왼쪽: Claude 답변(위) · 수정 요청 입력(아래) -->
     <div class="pane req-pane" aria-label="Claude 답변">
