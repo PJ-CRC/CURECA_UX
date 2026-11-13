@@ -115,7 +115,20 @@ foreach ($dir in $places) { $lnk = Join-Path $dir 'Figma AI Run.lnk'; try { if (
   }
   let staleAt = Date.now() + 30000;
 
+  // ── 절전에서 깨어남(2026-11-13): 1초마다 도는 확인 사이가 30초 넘게 벌어지면 PC가 멈췄다가(절전 · 최대 절전) 깨어난 것.
+  //  그대로 두면 탭 신호가 「150초 넘게 없음」이라 깨어나자마자 탭이 모두 닫힌 것으로 보고 서버가 꺼졌다 → 탭 시각을 지금으로 돌려 다시 신호를 보낼 시간을 준다.
+  //  에이전트 상태 기록도 멈춰 있었으니 멈춘 「진행 중」 되돌리기는 2분 미룬다(처리 중인 것을 끊긴 것으로 보지 않게)
+  let lastTick = Date.now();
+  function wakeCheck() {
+    const now = Date.now(), gap = now - lastTick; lastTick = now;
+    if (gap < 30000) return;
+    for (const k of Object.keys(C.pages || {})) C.pages[k] = now;
+    C.emptySince = null; staleAt = Math.max(staleAt, now + 120000);
+    log(`절전에서 깨어남(${Math.round(gap / 1000)}초 멈춤) — 탭 · 진행 중 확인을 잠시 미룹니다.`);
+  }
+
   setInterval(() => {
+    try { wakeCheck(); } catch (e) {}
     if (Date.now() >= staleAt) { staleAt = Date.now() + 60000; try { freeStale(); } catch (e) { errLog('멈춘 진행 중 확인', e); } }
     try { syncTick(); } catch (e) { errLog('이력 동기화', e); }
     if (Date.now() >= watchAt) { watchAt = Date.now() + 120000; const f = watchFirst; watchFirst = false; try { autoWatch(f); } catch (e) { errLog('감시 자동 시작', e); } }

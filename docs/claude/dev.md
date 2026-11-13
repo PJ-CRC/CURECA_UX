@@ -9,6 +9,12 @@
   - Claude Code는 PATH의 `claude`, 없으면 Claude 데스크톱 앱에 들어 있는 것(윈도우 `%LOCALAPPDATA%\Claude-Data\claude_*\claude-code\{버전}\…\claude.exe`, 맥 `~/Library/Application Support/Claude/claude-code/{버전}/{해시}/claude.app/Contents/MacOS/claude`. 못 찾으면 시작 안내 5단계(CLI)에 경로를 직접 넣는다). CLI는 데스크톱 앱 로그인과 별개라 처음 한 번 시작 안내 5단계(CLI) 「Claude 로그인 · Figma 연결」(Claude Code 창에서 `/login`, `/mcp` → figma 인증)이 필요하다. 서버가 그때 Figma MCP(`https://mcp.figma.com/mcp`)를 CLI에 등록해 둔다.
   - 상태 `workbench/.agent.json` {at, host, pid, status: idle|working|login|figma|error|stopped, msg}, 중지 신호 `.agent_stop`(처리 중이면 마친 뒤 멈춤), 세션 새로 띄우기 신호 `.agent_renew`(5단계 CLI 「Claude 로그인 · Figma 연결」 창을 열 때 서버가 씀. 로그인 · Figma 연결 전에 뜬 세션을 버린다), 기록 `.agent.log`. 같은 감시 결과가 3번 연달아 처리되지 않으면 10분 쉰다. 백그라운드 감시가 동작 중이면 Workbench 탭을 모두 닫아도 서버가 꺼지지 않는다(에이전트가 API를 써야 한다). 자동 시작은 시작 안내 「완료」와 상관없이 `autoWatch`만 본다. **준비 확인**: 세션을 띄우기 전에 `claude auth status`(로그인) · `claude mcp list`(figma 줄이 Connected)를 확인하고, 안 되어 있으면 요청을 보내지 않고 상태 `login` · `figma`로 이유를 5단계 CLI에 보인다(2분마다 · 연결 창을 열면 바로 다시 확인). **사용 한도**: CLI가 차례마다 보내는 `rate_limit_event`와, 요청이 없어도 **5분마다** 아주 짧은 질문(haiku · 도구 없음 · 짧은 시스템 프롬프트, 임시 폴더에서, 한 번에 약 850토큰)을 보내 돌아오는 `rate_limit_event`로 에이전트가 `.plan_usage.json`을 쓴다(백그라운드만 쓰는 PC도 상단 메뉴 한도가 계속 갱신된다). 예전의 `claude -p /usage` 글 읽기는 Claude Code 2.1.3xx부터 사용률 %가 나오지 않아 11-05부터 멈췄다(2026-11-13 바꿈).
 
+## 탭 닫힘 · 절전
+
+- 서버는 Workbench 탭이 모두 닫히면 스스로 꺼진다: 탭이 20초마다 `/api/alive`, 150초 동안 신호가 없는 탭은 닫힌 것, 마지막 탭이 닫히고 3초 뒤(백그라운드 감시가 돌면 끄지 않음, `background.js` idleCheck).
+- **절전에서 깨어남**(2026-11-13): 1초마다 도는 확인 사이가 30초 넘게 벌어지면 PC가 멈췄다가 깨어난 것으로 보고, 탭 신호 시각을 지금으로 돌린다(깨어나자마자 「탭이 모두 닫힘」으로 꺼지던 것). 멈춘 「진행 중」 되돌리기도 2분 미룬다. 서버 기록에 「절전에서 깨어남(n초 멈춤)」.
+- 화면(appnav.js): 신호가 두 번 연달아 실패하면 화면 아래 「서버에 연결되지 않습니다」 + [다시 연결]을 띄우고 5초마다 다시 해 본다. 되면 저절로 닫힌다. 탭이 다시 보이거나 · 창에 돌아오거나 · 네트워크가 돌아오면 바로 신호를 보낸다. 서버가 이미 꺼졌으면 브라우저가 띄울 수 없으니 Figma AI Run을 다시 실행해야 한다.
+
 ## 버전 · 배포 (자동 업데이트)
 
 - 지금 버전은 `VERSION`(예: `0.1.0`). 상단 메뉴에 `v0.1.0`으로 보인다.
