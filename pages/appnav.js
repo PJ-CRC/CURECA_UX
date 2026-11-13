@@ -202,8 +202,29 @@
 
   /* ── 탭 열림 · 닫힘 ── */
   var pageId = Math.random().toString(36).slice(2) + Date.now().toString(36);
-  function alive(){ fetch('/api/alive', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: pageId }) }).catch(function(){}); }
+  /* 서버 연결(2026-11-13): 신호가 두 번 연달아 실패하면 화면 아래에 「서버에 연결되지 않음」을 띄우고 5초마다 다시 해 본다.
+     다시 되면 안내를 닫는다(절전에서 깨어나 서버가 잠깐 늦거나, Figma AI Run을 다시 실행했을 때). 탭이 다시 보이거나 네트워크가 돌아오면 바로 신호 */
+  var fails = 0, retry = null, offBar = null;
+  function showOff(on){
+    if (on && !offBar) {
+      offBar = document.createElement('div'); offBar.className = 'wb-off'; offBar.setAttribute('role', 'alert');
+      offBar.innerHTML = '<span><b>서버에 연결되지 않습니다.</b> 절전에서 깨어났다면 잠시 뒤 다시 이어집니다. 계속 안 되면 Figma AI Run을 다시 실행하세요.</span><button type="button">다시 연결</button>';
+      offBar.querySelector('button').onclick = function(){ this.textContent = '연결 중…'; alive(); };
+      document.body.appendChild(offBar);
+    }
+    if (!on && offBar) { offBar.remove(); offBar = null; }
+    if (on && !retry) retry = setInterval(alive, 5000);
+    if (!on && retry) { clearInterval(retry); retry = null; }
+  }
+  function alive(){
+    fetch('/api/alive', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: pageId }), cache: 'no-store' })
+      .then(function(r){ if (!r.ok) throw new Error(); fails = 0; showOff(false); })
+      .catch(function(){ fails++; if (offBar) { var b = offBar.querySelector('button'); if (b) b.textContent = '다시 연결'; } if (fails >= 2) showOff(true); });
+  }
   alive(); setInterval(alive, 20000);
+  document.addEventListener('visibilitychange', function(){ if (!document.hidden) alive(); });
+  window.addEventListener('online', alive);
+  window.addEventListener('focus', alive);
   window.addEventListener('pagehide', function(){
     try { navigator.sendBeacon('/api/bye', JSON.stringify({ id: pageId })); } catch(x){}
   });
