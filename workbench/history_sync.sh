@@ -44,6 +44,37 @@ done_() {
 }
 last() { printf '%s' "$1" | grep -v '^[[:space:]]*$' | tail -n 1; }
 
+# 충돌(두 PC가 같은 파일을 고침): history_sync.ps1의 Resolve-Conflict와 같다(2026-11-13 고침).
+#  rebase를 멈추고 merge로 다시 → 충돌한 파일은 파일 통째로 나중에 저장한 쪽 것, 이름 바뀜 짐작 끔,
+#  진 쪽 파일은 conflicts/kept/{시각}_{PC}/{경로}, 파일마다 conflicts/{PC}.log. id(깃 사용자)는 sync_once 것
+resolve_conflict() {
+  git -C "$H" rebase --abort >/dev/null 2>&1
+  out=$(git -C "$H" fetch -q origin history 2>&1) || done_ false "받기(fetch) 실패: $(last "$out")"
+  local lt rt mine win lose who stamp slug f how kept lines="" n=0 t tmp dst
+  lt=$(git -C "$H" log -1 --format=%ct HEAD 2>/dev/null || echo 0)
+  rt=$(git -C "$H" log -1 --format=%ct FETCH_HEAD 2>/dev/null || echo 0)
+  if [ "${lt:-0}" -ge "${rt:-0}" ]; then mine=1; win=2; lose=3; who='이 PC'; else mine=0; win=3; lose=2; who='다른 PC'; fi   # merge에서 2 = 이 PC, 3 = 받은 쪽
+  out=$(git "${id[@]}" -c merge.renames=false -C "$H" merge -q --no-ff -X no-renames -m "history: 충돌 맞춤 $(hostname -s) $(date '+%Y-%m-%d %H:%M')" FETCH_HEAD 2>&1) && return 0
+  stamp=$(date +%Y%m%d-%H%M%S); slug=$(hostname | sed 's/\.local$//' | tr 'A-Z' 'a-z' | sed 's/[^a-z0-9-]/-/g')
+  while IFS= read -r f; do
+    [ -n "$f" ] || continue; n=$((n + 1)); kept=""
+    if t=$(git -C "$H" checkout-index --stage=$lose --temp -- "$f" 2>/dev/null) && [ -n "$t" ]; then
+      tmp="$H/${t%%	*}"; dst="$H/conflicts/kept/${stamp}_${slug}/$f"
+      mkdir -p "$(dirname "$dst")" && mv -f "$tmp" "$dst" && kept=", 진 쪽: conflicts/kept/${stamp}_${slug}/$f" || rm -f "$tmp"
+    fi
+    if git -C "$H" cat-file -e ":$win:$f" 2>/dev/null; then
+      if [ $mine = 1 ]; then git -C "$H" checkout --ours -- "$f"; else git -C "$H" checkout --theirs -- "$f"; fi
+      git -C "$H" add -- "$f"; how='파일 통째로'
+    else git -C "$H" rm -q -f -- "$f" >/dev/null; how='지움'; fi
+    lines="$lines  - $f → $who 것($how)$kept"$'\n'
+  done < <(git -c core.quotePath=false -C "$H" diff --name-only --diff-filter=U)
+  if [ $n = 0 ]; then git -C "$H" merge --abort >/dev/null 2>&1; done_ false "받기(합치기) 실패: $(last "$out")"; fi
+  out=$(git "${id[@]}" -C "$H" commit -q --no-edit 2>&1) || { git -C "$H" merge --abort >/dev/null 2>&1; done_ false "받기(pull) 실패 · 충돌: $(last "$out")"; }
+  mkdir -p "$H/conflicts" && printf '[%s] 충돌 → 나중에 저장한 %s 내용으로 맞춤(파일 %s개)\n%s' "$(now_iso)" "$who" "$n" "$lines" >> "$H/conflicts/$slug.log"
+  now_iso > "$NOWF" 2>/dev/null
+  return 0
+}
+
 sync_once() {
   # 맥의 /usr/bin/git은 개발자 도구가 없으면 설치 창만 띄우고 실패한다
   if ! xcode-select -p >/dev/null 2>&1 && ! command -v brew >/dev/null 2>&1; then done_ false "git(개발자 도구)이 설치돼 있지 않아 이 PC에만 저장합니다." hard; fi
@@ -94,17 +125,9 @@ sync_once() {
   try=1
   while :; do
     if [ $remote -eq 0 ]; then
-      if ! out=$(git "${id[@]}" -C "$H" pull -q --rebase origin history 2>&1); then
-        # 충돌(두 PC가 같은 파일을 고침, 2026-11-13 윈도우와 같게): 나중에 저장한 쪽(커밋 시각이 늦은 쪽)으로 맞추고, 진 쪽은 깃 기록에 남기고 conflicts/{PC}.log에 적는다
-        files=$(git -C "$H" diff --name-only --diff-filter=U 2>/dev/null | tr '\n' ',' | sed 's/,$//; s/,/, /g')
-        git -C "$H" rebase --abort >/dev/null 2>&1
-        lt=$(git -C "$H" log -1 --format=%ct HEAD 2>/dev/null || echo 0); git -C "$H" fetch -q origin history >/dev/null 2>&1
-        rt=$(git -C "$H" log -1 --format=%ct FETCH_HEAD 2>/dev/null || echo 0)
-        if [ "${lt:-0}" -ge "${rt:-0}" ]; then side=theirs; win='이 PC'; else side=ours; win='다른 PC'; fi   # rebase에서 theirs = 이 PC가 올릴 커밋
-        out=$(git "${id[@]}" -C "$H" pull -q --rebase -X "$side" origin history 2>&1) || { git -C "$H" rebase --abort >/dev/null 2>&1; done_ false "받기(pull) 실패 · 충돌: $(last "$out")"; }
-        slug=$(hostname | sed 's/\.local$//' | tr 'A-Z' 'a-z' | sed 's/[^a-z0-9-]/-/g')
-        mkdir -p "$H/conflicts" && printf '[%s] 충돌 → 나중에 저장한 %s 내용으로 맞춤: %s\n' "$(now_iso)" "$win" "$files" >> "$H/conflicts/$slug.log"
-        now_iso > "$NOWF" 2>/dev/null
+      # 이름 바뀜 짐작을 끈다(no-renames, 윈도우와 같게)
+      if ! out=$(git "${id[@]}" -c merge.renames=false -C "$H" pull -q --rebase -X no-renames origin history 2>&1); then
+        resolve_conflict
       fi
     fi
     out=$(git -C "$H" push -q -u origin history 2>&1) && break
