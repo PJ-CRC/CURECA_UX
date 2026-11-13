@@ -16,6 +16,8 @@ $LockFile = Join-Path $WB '.history_sync.lock'
 $OffFile = Join-Path $WB '.history_sync_off'
 if (Test-Path $OffFile) { exit 0 }
 $Utf8 = New-Object Text.UTF8Encoding $false
+# git 출력(한글 파일 이름)을 UTF-8로 읽는다(충돌 파일 목록 · 진 쪽 파일 꺼내기)
+try { [Console]::OutputEncoding = $Utf8 } catch { }
 $env:GIT_TERMINAL_PROMPT = '0'
 if (-not $Interactive) { $env:GCM_INTERACTIVE = 'Never' }
 # 서버가 뜬 뒤 git을 설치했으면 PATH에 아직 없다
@@ -57,6 +59,52 @@ function G {
   return (($out | Where-Object { $_ }) -join "`n").Trim()
 }
 function Last($s) { $l = @($s -split "`n" | Where-Object { $_.Trim() }); if ($l.Count) { return $l[-1].Trim() }; return '' }
+
+# 충돌(두 PC가 같은 파일을 고침): 받기(rebase)를 멈추고 합치기(merge)로 다시 한다(2026-11-13 고침).
+#  - 예전(-X ours/theirs)은 부딪친 줄만 한쪽으로 골라 한 파일 안에 두 PC의 줄이 섞였다 → 충돌한 파일은 **파일 통째로** 나중에 저장한 쪽(커밋 시각이 늦은 쪽) 것을 쓴다
+#  - 이름 바뀜 짐작은 끈다(no-renames). 한쪽이 지운 파일은 지운 쪽이 나중이면 지우고, 아니면 남긴다
+#  - 진 쪽 파일은 버리지 않고 conflicts/kept/{시각}_{PC}/{원래 경로}에 남기고, 파일마다 누구 것으로 맞췄는지 conflicts/{PC}.log에 적는다(다음 동기화 때 올라간다)
+#  $id(깃 사용자)는 부른 쪽(Sync-Once) 것을 그대로 쓴다
+function Resolve-Conflict {
+  G -C $H rebase --abort | Out-Null
+  $o = G -C $H fetch -q origin history
+  if ($code) { Done $false ('받기(fetch) 실패: ' + (Last $o)) }
+  $lt = 0; $rt = 0
+  try { $lt = [long](G -C $H log -1 --format=%ct HEAD); $rt = [long](G -C $H log -1 --format=%ct FETCH_HEAD) } catch { }
+  $mine = ($lt -ge $rt)   # merge에서 ours(2) = 이 PC, theirs(3) = 받은 쪽
+  $args3 = $id + @('-c', 'merge.renames=false', '-C', $H, 'merge', '-q', '--no-ff', '-X', 'no-renames', '-m', ('history: 충돌 맞춤 ' + [Environment]::MachineName + ' ' + (Get-Date).ToString('yyyy-MM-dd HH:mm')), 'FETCH_HEAD')
+  $o = G @args3
+  if (-not $code) { return }   # 줄이 부딪치지 않았으면(rebase만 실패) 그대로 합쳐짐
+  $files = @((G -c core.quotePath=false -C $H diff --name-only --diff-filter=U) -split "`n" | Where-Object { $_.Trim() })
+  if (-not $files.Count) { G -C $H merge --abort | Out-Null; Done $false ('받기(합치기) 실패: ' + (Last $o)) }
+  $stamp = (Get-Date).ToString('yyyyMMdd-HHmmss'); $slug = ([Environment]::MachineName.ToLower() -replace '[^a-z0-9-]', '-')
+  $win = if ($mine) { 2 } else { 3 }; $lose = 5 - $win
+  $winWho = if ($mine) { '이 PC' } else { '다른 PC' }
+  $lines = @(); $kept = @()
+  foreach ($f in $files) {
+    $f = $f.Trim('"')
+    # 진 쪽 내용 남기기(그쪽에 파일이 있을 때만). checkout-index --temp는 바이너리도 그대로 꺼낸다
+    $t = G -C $H checkout-index "--stage=$lose" --temp -- $f
+    if (-not $code -and $t) {
+      $tmp = Join-Path $H (($t -split "`t")[0])
+      $dst = Join-Path $H ('conflicts/kept/' + $stamp + '_' + $slug + '/' + $f)
+      try { New-Item -ItemType Directory -Force (Split-Path $dst -Parent) | Out-Null; Move-Item -Force $tmp $dst; $kept += $f } catch { Remove-Item -Force $tmp -ErrorAction SilentlyContinue }
+    }
+    # 이긴 쪽 파일 통째로(그쪽이 지웠으면 지움)
+    G -C $H cat-file -e (":$win" + ':' + $f) | Out-Null
+    if ($code) { G -C $H rm -q -f -- $f | Out-Null; $how = '지움' }
+    else { $side = if ($mine) { '--ours' } else { '--theirs' }; G -C $H checkout $side -- $f | Out-Null; G -C $H add -- $f | Out-Null; $how = '파일 통째로' }
+    $lines += ("  - $f → $winWho 것($how)" + $(if ($kept -contains $f) { ', 진 쪽: conflicts/kept/' + $stamp + '_' + $slug + '/' + $f } else { '' }))
+  }
+  $args4 = $id + @('-C', $H, 'commit', '-q', '--no-edit')
+  $o = G @args4
+  if ($code) { G -C $H merge --abort | Out-Null; Done $false ('받기(pull) 실패 · 충돌: ' + (Last $o)) }
+  try {
+    $cd = Join-Path $H 'conflicts'; if (-not (Test-Path $cd)) { New-Item -ItemType Directory -Force $cd | Out-Null }
+    [IO.File]::AppendAllText((Join-Path $cd ($slug + '.log')), ("[$(Now)] 충돌 → 나중에 저장한 $winWho 내용으로 맞춤(파일 " + $files.Count + "개)`r`n" + ($lines -join "`r`n") + "`r`n"), $Utf8)
+    [IO.File]::WriteAllText($NowFile, (Now))   # 기록 · 진 쪽 파일을 바로 올리게
+  } catch { }
+}
 
 function Sync-Once {
   if (-not (Get-Command git -ErrorAction SilentlyContinue)) { Done $false 'git이 설치돼 있지 않아 이 PC에만 저장합니다.' -hard }
@@ -110,27 +158,10 @@ function Sync-Once {
   # 받고(pull) 올린다(push). 그 사이 다른 PC가 먼저 올려 거절되면(rejected · fetch first) 바로 다시 받고 올린다(최대 3번)
   for ($try = 1; $true; $try++) {
     if ($remote -eq 0) {
-      $args2 = $id + @('-C', $H, 'pull', '-q', '--rebase', 'origin', 'history')
+      # 이름 바뀜 짐작을 끈다(no-renames): 지운 파일과 새 파일이 비슷해도 「같은 파일 이름만 바뀜」으로 보고 내용을 옮겨 합치지 않게(2026-11-13 STAgora 작업규칙 4절이 섞임)
+      $args2 = $id + @('-c', 'merge.renames=false', '-C', $H, 'pull', '-q', '--rebase', '-X', 'no-renames', 'origin', 'history')
       $o = G @args2
-      if ($code) {
-        # 충돌(두 PC가 같은 파일을 고침, 2026-11-13 점검 F9): 예전에는 받기 실패로 멈춰 그 뒤 이력이 계속 안 올라갔다.
-        #  → 나중에 저장한 쪽(커밋 시각이 늦은 쪽)으로 맞춘다. 진 쪽 내용도 깃 기록에 그대로 남고, 어느 파일이 그랬는지 conflicts/{PC}.log에 적는다
-        $files = @((G -C $H diff --name-only --diff-filter=U) -split "`n" | Where-Object { $_.Trim() })
-        G -C $H rebase --abort | Out-Null
-        $lt = 0; $rt = 0
-        try { $lt = [long](G -C $H log -1 --format=%ct HEAD); [void](G -C $H fetch -q origin history); $rt = [long](G -C $H log -1 --format=%ct FETCH_HEAD) } catch { }
-        $side = if ($lt -ge $rt) { 'theirs' } else { 'ours' }   # rebase에서 theirs = 이 PC가 올릴 커밋, ours = 받은 쪽
-        $args3 = $id + @('-C', $H, 'pull', '-q', '--rebase', '-X', $side, 'origin', 'history')
-        $o = G @args3
-        if ($code) { G -C $H rebase --abort | Out-Null; Done $false ('받기(pull) 실패 · 충돌: ' + (Last $o)) }
-        try {
-          $cd = Join-Path $H 'conflicts'; if (-not (Test-Path $cd)) { New-Item -ItemType Directory -Force $cd | Out-Null }
-          $slug = ([Environment]::MachineName.ToLower() -replace '[^a-z0-9-]', '-')
-          $win = if ($side -eq 'theirs') { '이 PC' } else { '다른 PC' }
-          [IO.File]::AppendAllText((Join-Path $cd ($slug + '.log')), ("[$(Now)] 충돌 → 나중에 저장한 $win 내용으로 맞춤: " + ($files -join ', ') + "`r`n"), (New-Object Text.UTF8Encoding $false))
-          [IO.File]::WriteAllText($NowFile, (Now))   # 기록을 바로 올리게
-        } catch { }
-      }
+      if ($code) { Resolve-Conflict }
     }
     $o = G -C $H push -q -u origin history
     if (-not $code) { break }
