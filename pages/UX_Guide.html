@@ -509,6 +509,8 @@ html.embed,html.embed body{overflow:hidden}
       fetch('/api/projects', { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : {}; }).catch(function(){ return {}; })
     ]).then(function(d){
       G = (d[0].items || []).filter(function(x){ return x.id === id; })[0] || null;
+      /* 이름을 바꾼 문서: 예전 ID(meta.aliases)로 열면 새 ID 주소로 옮긴다(즐겨찾기 · 예전 링크) */
+      if (!G) { var al = (d[0].items || []).filter(function(x){ return (x.aliases || []).indexOf(id) >= 0; })[0]; if (al) { var u = new URL(location.href); u.searchParams.set('g', al.id); location.replace(u.toString()); return new Promise(function(){}); } }
       applied = d[0].applied || {};
       (d[1].projects || []).forEach(function(p){ names[p.key] = p.name; editPage[p.key] = p.editablePageName; });
       return G;
@@ -1202,10 +1204,10 @@ html.embed,html.embed body{overflow:hidden}
     function rat(r){ return String(r.at || '').slice(0, 10) || String(r.rev).replace(/^(\d{4})(\d\d)(\d\d).*/, '$1-$2-$3'); }
     /* 파일형 문서는 파일마다 원본(files/) → 그 파일의 수정본(rev/{rev}/{파일}) 순서로 비교한다 */
     var vers = FILES ? [].concat.apply([], FILES.map(function(f){
-      return [{ url: base + fdirOf(meta) + f.path, at: String(meta.createdAt || '').slice(0, 10), file: f.path }].concat(revs.filter(function(r){ return r.file === f.path; }).map(function(r){
+      return [{ url: f.firstPath || base + fdirOf(meta) + f.path, at: String(meta.createdAt || '').slice(0, 10), file: f.path }].concat(   // 처음 내용(원본이 최종이 된 뒤에는 rev/_처음/)revs.filter(function(r){ return r.file === f.path; }).map(function(r){
         return { url: base + 'rev/' + r.rev + '/' + f.path, at: rat(r), file: f.path };
       }));
-    })) : [{ url: base + 'guide.md', at: String(meta.createdAt || '').slice(0, 10) }].concat(revs.map(function(r){
+    })) : [{ url: (G && G.firstPath) || base + 'guide.md', at: String(meta.createdAt || '').slice(0, 10) }].concat(revs.map(function(r){   // 처음 내용(rev/_처음.md, 없으면 본문)
       return { url: base + 'rev/' + r.rev + '.md', at: rat(r) };
     }));
     Promise.all(vers.map(function(v){ return fetch(v.url, { cache: 'no-store' }).then(function(r){ return r.ok ? r.text() : null; }).catch(function(){ return null; }); }))
@@ -1516,8 +1518,8 @@ html.embed,html.embed body{overflow:hidden}
       var fl = (FILES || []).filter(function(f){ return f.path === s.file; })[0];
       m.insertAdjacentHTML('beforeend', '<p class="docpath" title="' + esc(fl ? fl.mdPath : '') + '">문서 경로 <code>' + esc(npath(id + '/' + fdirOf(meta) + s.file)) + '</code>' + (fl && fl.rev ? '<span>수정본 ' + esc(fl.rev) + '</span>' : '') + '</p>');
     } else if (!FILES) {
-      /* 한 파일 문서(guide.md 하나, 고치면 rev/ 수정본): 항목이 모두 그 파일 안에 있으니 그 파일을 보인다 */
-      m.insertAdjacentHTML('beforeend', '<p class="docpath" title="' + esc(GINFO && GINFO.mdPath || '') + '">문서 경로 <code>' + esc(npath(id + '/guide.md')) + '</code>' + (GINFO && GINFO.rev ? '<span>수정본 ' + esc(GINFO.rev) + '</span>' : '') + '</p>');
+      /* 한 파일 문서(본문 파일 하나 = 늘 최종, 고친 기록은 rev/): 항목이 모두 그 파일 안에 있으니 그 파일을 보인다 */
+      m.insertAdjacentHTML('beforeend', '<p class="docpath" title="' + esc(GINFO && GINFO.mdPath || '') + '">문서 경로 <code>' + esc(npath(id + '/' + ((meta && meta.main) || 'guide.md'))) + '</code>' + (GINFO && GINFO.rev ? '<span>수정본 ' + esc(GINFO.rev) + '</span>' : '') + '</p>');
     }
     $('tocCur').textContent = '목차 · ' + s.label; askSet();
     tree($('q').value.trim().toLowerCase());

@@ -172,14 +172,40 @@ function fillApplied(applied) {
   }
   return applied;
 }
+/* 「지금 내용」 = 원본 파일(2026-11-13~): 한 파일 문서는 guide.md, 여러 파일 문서는 meta.files의 그 파일(filesDir 아래).
+   수정본(rev/)은 고친 기록(이력)으로만 남는다. 고칠 때마다 서버가 원본도 새 내용으로 바꾸고 수정본 정보에 orig:true를 적는다.
+   예전 버전 PC가 수정본만 쓴 경우(orig 없음)는 읽을 때 그 수정본을 원본으로 옮겨 맞춘다(한 번만, 깃으로 공유) */
+/* 한 파일 문서의 본문 파일 이름: meta.main(알아보기 쉬운 이름, 예 「STAgora 작업규칙.md」), 없으면 예전 이름 guide.md */
+const mainName = (m) => (m && typeof m.main === 'string' && /^[^\/\\]+\.md$/i.test(m.main) ? m.main : 'guide.md');
+function origPath(dd, m, file) {
+  if (m.format !== 'files') return path.join(dd, mainName(m));
+  const fdir = Object.prototype.hasOwnProperty.call(m, 'filesDir') ? String(m.filesDir == null ? '' : m.filesDir) : 'files';
+  return path.join(dd, ...(fdir ? fdir.split('/') : []), ...String(file).split('/'));
+}
+/* 처음 내용 보관: 원본을 처음 덮어쓰기 전에 그때 내용을 rev/_처음.md(여러 파일 문서는 rev/_처음/{파일})로 남긴다 —
+   변경이력의 「바뀐 부분」 · 항목별 작성일이 처음 내용과 수정본을 비교하므로 */
+const FIRST = '_처음';
+function firstPath(dd, m, file) { return m.format !== 'files' ? path.join(dd, 'rev', FIRST + '.md') : path.join(dd, 'rev', FIRST, ...String(file).replace(/\.\.\//g, '_up/').split('/')); }
+function keepFirst(dd, m, file) {
+  const fp = firstPath(dd, m, file); if (core.exists(fp)) return;
+  const cur = core.readText(origPath(dd, m, file)); if (cur == null) return;
+  fs.mkdirSync(path.dirname(fp), { recursive: true }); core.writeText(fp, cur);
+}
+function writeOrig(abs, text) {
+  const prev = core.readText(abs) || '', bom = /^﻿/.test(prev) ? '﻿' : '';
+  const body = String(text).replace(/^﻿/, '');
+  if (prev.replace(/^﻿/, '') === body) return false;
+  fs.mkdirSync(path.dirname(abs), { recursive: true }); core.writeText(abs, bom + body); return true;
+}
 function readGuides(T) {
-  const list = [];
+  const list = []; let promoted = 0;
   for (const name of dirNames(T.guideRoot)) {
     if (name === '_apply') continue;
     const dd = path.join(T.guideRoot, name), m = core.readJson(path.join(dd, 'meta.json')); if (!m) continue;
+    m.id = name;   // 문서 ID = 폴더 이름(이름을 바꾼 문서도 폴더 기준)
     const isFiles = m.format === 'files', rd = path.join(dd, 'rev'), revs = [];
     const files = fileNames(rd);
-    const bases = ciSort([...new Set(files.filter((n) => !/\.check-/.test(n) && /\.(md|json)$/i.test(n)).map((n) => n.replace(/\.(md|json)$/i, '')))]);
+    const bases = ciSort([...new Set(files.filter((n) => !/\.check-/.test(n) && !n.startsWith('_') && /\.(md|json)$/i.test(n)).map((n) => n.replace(/\.(md|json)$/i, '')))]);   // _처음은 수정본이 아니다
     for (const rn of bases) {
       const info = core.readJson(path.join(rd, rn + '.json'));
       if (!isFiles && !core.exists(path.join(rd, rn + '.md'))) continue;
@@ -189,20 +215,45 @@ function readGuides(T) {
       revs.push({ rev: rn, at: s('at'), by: s('by'), note: s('note'), base: s('base'), req: s('req'), jobId: s('jobId'), file: s('file'), checks });
     }
     const last = revs.length ? revs[revs.length - 1] : null;
+    /* 마지막 수정본이 아직 원본에 없으면(orig 표시 없음) 원본으로 옮긴다 */
+    const promote = (r, src, file) => {
+      const info = core.readJson(path.join(rd, r.rev + '.json')) || {};
+      if (info.orig) return;
+      const t = core.readText(src); if (t == null) return;
+      keepFirst(dd, m, file);   // 처음 내용부터 남기고
+      if (writeOrig(origPath(dd, m, file), t)) promoted++;
+      info.orig = true; core.writeJson(path.join(rd, r.rev + '.json'), info);
+    };
+    const rel = (abs) => `${T.guideRel}/${name}/` + path.relative(dd, abs).split(path.sep).join('/');
     if (isFiles) {
       const fdir = Object.prototype.hasOwnProperty.call(m, 'filesDir') ? String(m.filesDir == null ? '' : m.filesDir) : 'files';
       m.fileList = core.arr(m.files).map((p) => {
-        let cur = fdir ? `${fdir}/${p}` : String(p), cr = '';
-        for (const r of revs) if (r.file === p) { cur = `rev/${r.rev}/` + String(p).replace(/\.\.\//g, '_up/'); cr = r.rev; }
-        return { path: String(p), mdPath: `${T.guideRel}/${name}/${cur}`, rev: cr };
+        let cr = '', lr = null;
+        for (const r of revs) if (r.file === p) { cr = r.rev; lr = r; }
+        if (lr) promote(lr, path.join(rd, lr.rev, ...String(p).replace(/\.\.\//g, '_up/').split('/')), p);
+        const fp = firstPath(dd, m, p);
+        return { path: String(p), mdPath: `${T.guideRel}/${name}/` + (fdir ? `${fdir}/${p}` : String(p)), rev: cr, firstPath: core.exists(fp) ? rel(fp) : '' };
       });
       m.mdPath = '';
-    } else m.mdPath = last ? `${T.guideRel}/${name}/rev/${last.rev}.md` : `${T.guideRel}/${name}/guide.md`;
+    } else {
+      if (last) promote(last, path.join(rd, last.rev + '.md'));
+      m.mdPath = rel(origPath(dd, m));
+      m.firstPath = core.exists(firstPath(dd, m)) ? rel(firstPath(dd, m)) : m.mdPath;   // 처음 내용(수정 전이면 본문 그대로)
+    }
     m.rev = last ? last.rev : ''; m.revs = revs;
     if (last && last.at) m.updatedAt = last.at;
     list.push(m);
   }
-  const applied = fillApplied(core.readJson(T.guideApply) || {});
+  if (promoted) core.syncWant();   // 원본을 맞췄으면 깃으로 공유
+  /* 이름을 바꾼 문서(meta.aliases = 예전 ID): 이 PC 작업 기준에 예전 ID가 남아 있으면 새 ID로 읽는다 */
+  const alias = {}; list.forEach((m) => core.arr(m.aliases).forEach((a) => { alias[String(a)] = m.id; }));
+  const raw = core.readJson(T.guideApply) || {};
+  if (Object.keys(alias).length) for (const k of Object.keys(raw)) {
+    const e = raw[k]; if (!e) continue;
+    if (e.guideId && alias[e.guideId]) e.guideId = alias[e.guideId];
+    for (const t of Object.keys(e.docs || {})) { const v = e.docs[t]; if (v && v.id && alias[v.id]) v.id = alias[v.id]; }
+  }
+  const applied = fillApplied(raw);
   return { items: sortDescPS(list, (x) => String(x.updatedAt || '')), applied };
 }
 on('GET', '/api/guides', ({ T }) => readGuides(T));
@@ -452,7 +503,7 @@ on('GET', '/api/sheet/data', async ({ q, T, res, send, sendJson }) => {
 });
 
 // 쓰기 API(2단계)
-const helpers = { testKey, projDir, readProj, keyOf, workKey, readMinute, readNotes, noteKey, readGuides, applyKeys, appliedDocs, agentInfo, findClaudeCode, sheetCheck, setupEnv: () => { envCache = null; return setupEnv(); } };
+const helpers = { testKey, projDir, readProj, keyOf, workKey, readMinute, readNotes, noteKey, readGuides, origPath, writeOrig, keepFirst, mainName, applyKeys, appliedDocs, agentInfo, findClaudeCode, sheetCheck, setupEnv: () => { envCache = null; return setupEnv(); } };
 require('./figma')(on, helpers);   // Figma 토큰(REST API) — 캡처. writes.js가 요청 완료 때 helpers.figmaAfterDone을 부른다
 require('./writes')(on, helpers);
 
