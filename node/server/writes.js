@@ -6,6 +6,8 @@ const crypto = require('crypto');
 const { spawn, spawnSync } = require('child_process');
 const core = require('./core');
 const { C } = core;
+// 문서 ID(= 폴더 이름): 영문 · 숫자 · 한글 등 글자와 _ . ( ) - (2026-11-13~ 알아보기 쉬운 이름, 예 「작업규칙_STAgora-작업규칙」). _ 로 시작하거나 .. 이 들어가면 안 된다
+const GID_RE = /^(?!_)(?!.*\.\.)[\p{L}\p{N}_.()\-]{1,100}$/u;
 
 module.exports = function register(on, h) {
   const histShots = path.join(C.histDir, 'shots'), histAttach = path.join(C.histDir, 'attach');
@@ -145,7 +147,7 @@ module.exports = function register(on, h) {
   // 고칠 화면 · 연관 항목 찾기 결과를 그 수정본 옆에(Save-CheckLog, 깃으로 공유)
   function saveCheckLog(j) {
     const T = core.teamCtx(core.itemTeam(j)), gid = nn(j.guide), rv = nn(j.revTo);
-    if (!/^[A-Za-z0-9_-]{1,64}$/.test(gid) || !/^[A-Za-z0-9_-]{1,80}$/.test(rv) || !core.exists(path.join(T.guideRoot, gid, 'rev', rv + '.json'))) return;
+    if (!GID_RE.test(gid) ||!/^[A-Za-z0-9_-]{1,80}$/.test(rv) || !core.exists(path.join(T.guideRoot, gid, 'rev', rv + '.json'))) return;
     try { core.writeJson(path.join(T.guideRoot, gid, 'rev', `${rv}.check-${C.pcSlug}-${j.id}.json`), { jobId: nn(j.id), pc: C.pcName, by: nn(j.by), at: core.now(), status: nn(j.status), note: nn(j.note), scope: nn(j.scope), fileKey: nn(j.fileKey), items: core.arr(j.items).filter(Boolean) }); core.syncWant(); } catch (e) {}
   }
   // ── 자동 캡처 목록(auto-plan): Workbench가 구분(페이지)을 열면 캡처 없는 프레임 전체를 받을 순서대로 맡긴다(파일마다 하나, 나중 것이 앞 것을 바꾼다).
@@ -208,7 +210,7 @@ module.exports = function register(on, h) {
           if (kind === 'prototype-edit' && !nn(b.text).trim()) throw new Error('수정 내용을 입력해 주세요.');
         }
         if (kind === 'text' && !core.arr(b.items).length) throw new Error('바꿀 글(items)이 없습니다.');
-        if (kind === 'guide-check' || kind === 'guide-edit') { nid = ''; if (!/^[A-Za-z0-9_-]{1,64}$/.test(nn(b.guide)) || !core.exists(path.join(T.guideRoot, nn(b.guide), 'meta.json'))) throw new Error('가이드를 찾지 못했습니다: ' + nn(b.guide)); }
+        if (kind === 'guide-check' || kind === 'guide-edit') { nid = ''; if (!GID_RE.test(nn(b.guide)) || !core.exists(path.join(T.guideRoot, nn(b.guide), 'meta.json'))) throw new Error('가이드를 찾지 못했습니다: ' + nn(b.guide)); }
         if (kind === 'guide') {
           key = h.keyOf(b.link); nid = ''; const m = /[?&]node-id=(\d+)[-:](\d+)/.exec(nn(b.link)); if (m) nid = m[1] + ':' + m[2];
           if (!nn(b.name).trim()) throw new Error('이름을 입력해 주세요.');
@@ -392,7 +394,8 @@ module.exports = function register(on, h) {
   // 지금 로그인한 사람 이름(Me-Name)
   const meName = () => { const u = core.currentUser(); return u ? nn(u.name) : nn(core.readSetup().user); };
   const stamp = () => { const d = new Date(), p = (x) => String(x).padStart(2, '0'); return `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}`; };
-  const okId = (x) => /^[A-Za-z0-9_-]{1,64}$/.test(nn(x));
+  // 문서 ID: 영문 · 숫자뿐 아니라 알아보기 쉬운 한글 이름도(2026-11-13, 예 「작업규칙_STAgora-작업규칙」). _ 로 시작 · .. 은 안 됨
+  const okId = (x) => GID_RE.test(nn(x));
 
   // ── POST /api/guides {action: import | save | apply} — UX 문서 ──
   on('POST', '/api/guides', async ({ req, body, browser, qTeam, T: T0 }) => {
@@ -459,7 +462,8 @@ module.exports = function register(on, h) {
         const rd = path.join(T.guideRoot, gid, 'rev'); saved = stamp() + '_' + C.pcSlug;
         if (isFiles) core.writeText(path.join(rd, saved, ...file.replace(/\.\.\//g, '_up/').split('/')), md);
         else core.writeText(path.join(rd, saved + '.md'), md);
-        core.writeJson(path.join(rd, saved + '.json'), { rev: saved, by: nn(b.by), at: core.now(), note: '직접 수정: ' + nn(b.name), base: nn(g.rev) || 'guide.md', pc: C.pcName, req: '(직접 수정)', jobId: '', file, direct: true });
+        h.keepFirst(path.join(T.guideRoot, gid), gm, file); h.writeOrig(h.origPath(path.join(T.guideRoot, gid), gm, file), md);   // 처음 내용을 남기고 원본 = 늘 최종, 수정본은 이력
+        core.writeJson(path.join(rd, saved + '.json'), { rev: saved, by: nn(b.by), at: core.now(), note: '직접 수정: ' + nn(b.name), base: nn(g.rev) || 'guide.md', pc: C.pcName, req: '(직접 수정)', jobId: '', file, direct: true, orig: true });
       }
       // 작업 기록(완료) — 화면의 「수정을 마쳤습니다 · 연관 항목 찾기 요청」과 수정 요청 목록에 보이게
       const jj = core.readJson(C.jobFile) || { version: 0, items: [] }; let items = core.arr(jj.items).filter(Boolean);
@@ -472,7 +476,7 @@ module.exports = function register(on, h) {
       core.syncWant();
       const out = h.readGuides(T); out.saved = saved; out.direct = direct; out.job = job.id; return out;
     }
-    if (b.action === 'save') {   // 고치기: guide.md는 그대로, 수정본을 새 파일로(파일형은 고친 파일 하나만 rev/{rev}/{파일})
+    if (b.action === 'save') {   // 고치기: 원본(guide.md · 파일형은 그 파일)을 새 내용으로 바꾸고, 수정본(rev/)에 이력으로 남긴다(2026-11-13~, 예전에는 수정본만)
       if (!core.canWrite(req, ['guide'])) throw new Error(core.roMsg('guide'));
       if (!browser && !qTeam && b.jobId) { const jt = core.arr((core.readJson(C.jobFile) || {}).items).find((x) => x && nn(x.id) === nn(b.jobId)); if (jt && jt.team) T = core.teamCtx(nn(jt.team)); }
       const gid = nn(b.id), md = nn(b.md);
@@ -486,7 +490,9 @@ module.exports = function register(on, h) {
         if (!file || !core.arr(gm.files).includes(file)) throw new Error(`고칠 파일을 정해 주세요(file: ${core.arr(gm.files).join(', ')}).`);
         core.writeText(path.join(rd, rev, ...file.replace(/\.\.\//g, '_up/').split('/')), md.replace(/\r\n/g, '\n'));
       } else core.writeText(path.join(rd, rev + '.md'), md.replace(/\r\n/g, '\n'));
-      core.writeJson(path.join(rd, rev + '.json'), { rev, by: nn(b.by), at: core.now(), note: nn(b.note), base: nn(b.base), pc: C.pcName, req: nn(b.request), jobId: nn(b.jobId), file });
+      h.keepFirst(path.join(T.guideRoot, gid), gm, file);   // 처음 내용을 남긴 뒤
+      h.writeOrig(h.origPath(path.join(T.guideRoot, gid), gm, file), md.replace(/\r\n/g, '\n'));   // 원본 = 늘 최종
+      core.writeJson(path.join(rd, rev + '.json'), { rev, by: nn(b.by), at: core.now(), note: nn(b.note), base: nn(b.base), pc: C.pcName, req: nn(b.request), jobId: nn(b.jobId), file, orig: true });
       core.syncWant();
       const out = h.readGuides(T); out.saved = rev; return out;
     }

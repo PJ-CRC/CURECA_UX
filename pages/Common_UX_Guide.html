@@ -581,12 +581,16 @@ html.doc-ro #docNew,html.doc-ro #docImport{display:none!important}
     function docPath(g, file){ var d = g.filesDir !== undefined ? String(g.filesDir) : 'files'; return g.id + '/' + (d ? d.replace(/\/+$/, '') + '/' : '') + file; }
     function mdUrl(id, rev, file){
       var b = '.history/guides/' + encodeURIComponent(id) + '/';
+      /* 'guide.md' 자리 = 처음 내용: 원본이 늘 최종이 된 뒤(2026-11-13~)에는 서버가 남긴 rev/_처음(firstPath), 아직 고친 적 없으면 원본 */
+      var g = logDocs.filter(function(x){ return x.id === id; })[0] || {};
       if (file) {
         /* 원본 폴더: 그 문서의 filesDir(없으면 files/, 빈 값이면 문서 폴더 바로 아래) */
-        var g = logDocs.filter(function(x){ return x.id === id; })[0] || {}, d = g.filesDir !== undefined ? String(g.filesDir) : 'files';
+        var d = g.filesDir !== undefined ? String(g.filesDir) : 'files', fl = (g.fileList || []).filter(function(x){ return x.path === file; })[0];
+        if (rev === 'guide.md' && fl && fl.firstPath) return fl.firstPath;
         return b + (rev === 'guide.md' ? (d ? d.replace(/\/+$/, '') + '/' : '') + file : 'rev/' + encodeURIComponent(rev) + '/' + file);
       }
-      return b + (rev === 'guide.md' ? 'guide.md' : 'rev/' + encodeURIComponent(rev) + '.md');
+      if (rev === 'guide.md') return g.firstPath || b + encodeURIComponent(g.main || 'guide.md');
+      return b + 'rev/' + encodeURIComponent(rev) + '.md';
     }
     function getMd(id, rev, file){ var k = id + '/' + rev + '/' + (file || ''); if (!diffCache[k]) diffCache[k] = fetch(mdUrl(id, rev, file), { cache: 'no-store' }).then(function(r){ return r.ok ? r.text() : ''; }); return diffCache[k]; }
     function showDiff(id, prev, rev, file){ diffTexts(getMd(id, prev, file), getMd(id, rev, file)); }
