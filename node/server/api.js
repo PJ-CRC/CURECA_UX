@@ -242,6 +242,15 @@ function writeOrig(abs, text) {
   if (prev.replace(/^﻿/, '') === body) return false;
   fs.mkdirSync(path.dirname(abs), { recursive: true }); core.writeText(abs, bom + body); return true;
 }
+/* 폴더가 곧 목록인 문서(meta.folderList:true, 2026-11-13 — 예: STAgora 작업규칙): 폴더 바로 아래 md 파일을 모두 목록으로.
+   meta.files는 순서만 정한다(없어진 파일은 빼고, 목록에 없는 새 파일은 이름순으로 뒤에). 「_」 · 「.」로 시작하는 파일과 rev/는 뺀다.
+   CURECA 문서 · 가져온 규칙 저장소 문서(rules · policy · screens · glossary)에는 이 표시가 없어 meta.files 그대로다 */
+const natSort = (a) => a.slice().sort((x, y) => x.localeCompare(y, 'ko', { numeric: true, sensitivity: 'base' }));
+function folderFiles(dir, listed) {
+  const here = fileNames(dir).filter((n) => /\.md$/i.test(n) && !/^[_.]/.test(n));
+  const keep = core.arr(listed).map(String).filter((p) => here.includes(p));
+  return keep.concat(natSort(here.filter((n) => !keep.includes(n))));
+}
 function readGuides(T) {
   const list = []; let promoted = 0;
   for (const name of dirNames(T.guideRoot)) {
@@ -272,6 +281,7 @@ function readGuides(T) {
     const rel = (abs) => `${T.guideRel}/${name}/` + path.relative(dd, abs).split(path.sep).join('/');
     if (isFiles) {
       const fdir = Object.prototype.hasOwnProperty.call(m, 'filesDir') ? String(m.filesDir == null ? '' : m.filesDir) : 'files';
+      if (m.folderList) m.files = folderFiles(path.join(dd, ...(fdir ? fdir.split('/') : [])), m.files);
       m.fileList = core.arr(m.files).map((p) => {
         let cr = '', lr = null;
         for (const r of revs) if (r.file === p) { cr = r.rev; lr = r; }
