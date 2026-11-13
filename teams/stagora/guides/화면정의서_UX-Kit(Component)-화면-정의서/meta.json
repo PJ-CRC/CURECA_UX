@@ -14,8 +14,21 @@
   "jobId": "J251",
   "createdAt": "2026-11-10T11:10:00+09:00",
   "updatedAt": "2026-11-10T11:10:00+09:00",
-  "main": "UX Kit(Component) 화면 정의서.md",
   "aliases": [
     "s20261110-brex-04-J251"
-  ]
+  ],
+  "format": "files",
+  "filesDir": "",
+  "folderList": true,
+  "files": [
+    "0. 개요.md",
+    "1. 버튼 · 액션.md",
+    "2. 선택 · 입력.md",
+    "3. 목록 · 표.md",
+    "4. 탐색.md",
+    "5. 안내 · 피드백.md",
+    "6. 표시 · 구분.md",
+    "7. 차트.md"
+  ],
+  "overview": "0. 개요.md"
 }

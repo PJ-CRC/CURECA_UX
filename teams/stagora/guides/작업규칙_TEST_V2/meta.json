@@ -16,8 +16,18 @@
   "jobId": "J019",
   "createdAt": "2026-11-10T10:20:00+09:00",
   "updatedAt": "2026-11-10T10:20:00+09:00",
-  "main": "작업규칙_TEST_V2.md",
   "aliases": [
     "r20261110-brex-04-J019"
-  ]
+  ],
+  "format": "files",
+  "filesDir": "",
+  "folderList": true,
+  "files": [
+    "0. 개요.md",
+    "0. 문서 구성 (목차).md",
+    "1. 처리 순서와 확인 항목.md",
+    "2. 산출물 형식.md",
+    "3. 처리할 때 지킬 점.md"
+  ],
+  "overview": "0. 개요.md"
 }

@@ -14,8 +14,20 @@
   "jobId": "J018",
   "createdAt": "2026-11-09T15:53:43+09:00",
   "updatedAt": "2026-11-09T15:53:43+09:00",
-  "main": "통합운영툴_Common UX.md",
   "aliases": [
     "g20261109-brex-04-J018"
-  ]
+  ],
+  "format": "files",
+  "filesDir": "",
+  "folderList": true,
+  "files": [
+    "0. 개요.md",
+    "0. 문서 구성 (목차).md",
+    "1. 공통 규칙.md",
+    "2. 버튼.md",
+    "3. 입력.md",
+    "4. 팝업 · 알림.md",
+    "5. 레이아웃.md"
+  ],
+  "overview": "0. 개요.md"
 }

@@ -16,8 +16,18 @@
   "jobId": "J017",
   "createdAt": "2026-11-09T15:49:15+09:00",
   "updatedAt": "2026-11-09T15:49:15+09:00",
-  "main": "작업규칙_TEST_V1.md",
   "aliases": [
     "r20261109-brex-04-J017"
-  ]
+  ],
+  "format": "files",
+  "filesDir": "",
+  "folderList": true,
+  "files": [
+    "0. 개요.md",
+    "0. 문서 구성 (목차).md",
+    "1. 반영 화면 리스트 정리.md",
+    "2. 수정 부분 정리.md",
+    "3. 수정 이력 표기.md"
+  ],
+  "overview": "0. 개요.md"
 }
