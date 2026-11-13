@@ -29,6 +29,15 @@ if ($ReqId) {
 if (-not $From) { Write-Output 'NOSTART (요청이 「진행 중」이 된 시각이 없습니다. -From으로 시작 시각을 주세요)'; exit 1 }
 $t0 = [DateTimeOffset]::Parse($From)
 $t1 = if ($To) { [DateTimeOffset]::Parse($To) } else { [DateTimeOffset]::Now }
+# 처리 구간들(2026-11-13): 요청이 「보류」 · 「대기」로 갔다가 다시 「진행 중」이 되면 startedAt이 새로 바뀌어 앞 구간 사용량이 빠졌다.
+#  서버가 「진행 중」이 끝날 때마다 runs [{from, to}]에 구간을 쌓으니, 요청이면 그 구간들을 모두 더한다(마지막 구간 = 완료 직전까지)
+$wins = New-Object Collections.ArrayList
+if ($ReqId -and -not $PSBoundParameters.ContainsKey('From')) {
+  foreach ($w in @($r.runs)) { if ($w -and $w.from) { try { $a = [DateTimeOffset]::Parse([string]$w.from); $b = if ($w.to) { [DateTimeOffset]::Parse([string]$w.to) } else { $t1 }; [void]$wins.Add(@($a, $b)) } catch { } } }
+}
+if (-not $wins.Count) { [void]$wins.Add(@($t0, $t1)) }
+$t0 = ($wins | ForEach-Object { $_[0] } | Sort-Object | Select-Object -First 1)
+function InWin($ts) { foreach ($w in $wins) { if ($ts -ge $w[0] -and $ts -le $w[1]) { return $true } }; return $false }
 
 # 단가
 $price = $null; try { $price = [IO.File]::ReadAllText((Join-Path $Root 'workbench\pricing.json'), $Utf8) | ConvertFrom-Json } catch {}
@@ -46,7 +55,7 @@ if (Test-Path $dir) {
     foreach ($l in [IO.File]::ReadLines($f.FullName, $Utf8)) {
       if (-not $l.Contains('"usage"')) { continue }
       if ($l -notmatch '"timestamp":"([^"]+)"') { continue }
-      $ts = [DateTimeOffset]::Parse($Matches[1]); if ($ts -lt $t0 -or $ts -gt $t1) { continue }
+      $ts = [DateTimeOffset]::Parse($Matches[1]); if (-not (InWin $ts)) { continue }
       try { $o = $l | ConvertFrom-Json } catch { continue }
       if (-not $o.message.usage -or -not $o.message.id) { continue }
       $msgs[[string]$o.message.id] = $o.message   # 같은 응답이 여러 줄이면 마지막 값

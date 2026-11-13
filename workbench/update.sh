@@ -41,7 +41,7 @@ remove_listed() {
 }
 
 [ -e "$ROOT/.git" ] && done_ true "깃 작업 폴더(개발용)는 자동 업데이트하지 않습니다."
-xcode-select -p >/dev/null 2>&1 || command -v brew >/dev/null 2>&1 || done_ false "git(개발자 도구)이 없어 업데이트를 확인하지 못했습니다. (시작 안내 8단계 [깃허브 연결])"
+xcode-select -p >/dev/null 2>&1 || command -v brew >/dev/null 2>&1 || done_ false "git(개발자 도구)이 없어 업데이트를 확인하지 못했습니다. (시작 안내 6단계 [깃허브 연결])"
 url=$(tr -d ' \r\n' < "$ROOT/workbench/git_remote.txt" 2>/dev/null)
 [ -n "$url" ] || done_ false "업데이트 저장소 주소가 없습니다. (workbench/git_remote.txt)"
 

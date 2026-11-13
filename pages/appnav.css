@@ -106,7 +106,7 @@ code,kbd,pre,samp,.mono{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular
 @media (max-width:1280px){ .appnav-usage .rs{display:none} }
 .appnav-user{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--nav-ink3)}
 .appnav-user[hidden],.appnav a[hidden]{display:none}
-/* 시작 안내 8단계 중 안 된 것이 있으면 메뉴 옆 경고(appnav.js) */
+/* 시작 안내 6단계 중 안 된 것이 있으면 메뉴 옆 경고(appnav.js) */
 .appnav-warn{display:inline-grid;place-items:center;width:18px;height:18px;margin-left:6px;padding:0;box-sizing:border-box;border-radius:999px;background:var(--nav-red);color:#fff;font-size:11px;font-weight:800;line-height:1}
 .appnav-warn[hidden]{display:none}
 /* 로그인한 계정: 이름(내 정보) · 로그아웃 */

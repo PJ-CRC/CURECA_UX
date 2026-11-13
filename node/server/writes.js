@@ -125,7 +125,14 @@ module.exports = function register(on, h) {
       p.unref();
     } catch (e) {}
   }
-  Object.assign(h, { histFromRequest, histRemove, saveHistEntry, copyHistShot, addCatalogFrames, startUsage, toJpeg });
+  // 「진행 중」 한 구간을 runs에 쌓는다(최근 20개)
+  function closeRun(it, at) { it.runs = core.arr(it.runs).filter(Boolean).concat([{ from: nn(it.startedAt), to: at }]).slice(-20); }
+  // 토큰으로 다시 캡처한 뒤 이력의 캡처를 새 것으로(2026-11-13 점검 F3): 완료 때 이력에 붙인 캡처는 다시 받기 전 그림이었다
+  function histRefresh(id) {
+    const it = core.arr((core.readJson(C.reqFile) || {}).items).find((x) => x && x.id === id);
+    if (it && it.status === '완료') histFromRequest(it);
+  }
+  Object.assign(h, { histFromRequest, histRemove, saveHistEntry, copyHistShot, addCatalogFrames, startUsage, toJpeg, closeRun, histRefresh });
 
   // ── POST /api/jobs {action: add | take | update} — 작업 대기열(캡처 · 목록 · UX 문서 · 프로토타입 · 회의록 · 일정/작업 · 글 수정) ──
   const upTmp = path.join(C.root, 'workbench', 'job_files', '_tmp'), upDir = path.join(C.root, 'workbench', 'job_files');
@@ -271,6 +278,8 @@ module.exports = function register(on, h) {
         hit = items.find((x) => x.id === b.id); if (!hit) throw new Error('작업을 찾지 못했습니다: ' + nn(b.id));
         if (!core.canWrite(req, [jobMenu(nn(hit.kind))])) throw new Error(core.roMsg(jobMenu(nn(hit.kind))));
         if (nn(b.status) === '진행 중' && nn(hit.status) === '진행 중' && !b.force) throw new Error(`이미 진행 중인 작업입니다(다른 Claude 세션이 처리 중): ${hit.id}. 이 작업은 건너뛰세요.`);
+        // 끝난 작업을 다시 집지 않기(F6): 「완료」 · 「실패」를 「진행 중」으로 바꾸려 하면 거절(다시 하려면 새 작업)
+        if (nn(b.status) === '진행 중' && ['완료', '실패'].includes(nn(hit.status)) && !b.force) throw new Error(`이미 끝난 작업입니다(${nn(hit.status)}): ${hit.id}. 이 작업은 건너뛰세요.`);
         if (b.status) hit.status = nn(b.status);
         if (b.note != null) hit.note = nn(b.note);
         if (b.guide) hit.guide = nn(b.guide);
@@ -729,6 +738,9 @@ module.exports = function register(on, h) {
     if (p === '/api/setup') {
       const s = core.readSetup();
       for (const k of ['done', 'user', 'figmaUrl', 'autoAt', 'autoWatch']) if (b[k] != null) s[k] = b[k];
+      // 시작 안내에서 고른 방법(2026-11-13): Figma 연결 = plugin | token, Claude 연결 = app | cli
+      if (['plugin', 'token'].includes(nn(b.figmaWay))) s.figmaWay = nn(b.figmaWay);
+      if (['app', 'cli'].includes(nn(b.claudeWay))) s.claudeWay = nn(b.claudeWay);
       if (b.checks) s.checks = b.checks;
       if (b.claudePath != null) {
         let cp = (nn(b.claudePath).split(/\r?\n/).find((x) => x.trim()) || '').trim().replace(/^"+|"+$/g, '');
@@ -865,7 +877,11 @@ module.exports = function register(on, h) {
       case 'update': {
         const hit = find();
         if (nn(b.status) === '진행 중' && nn(hit.status) === '진행 중' && !b.force) throw new Error(`이미 진행 중인 요청입니다(다른 Claude 세션이 처리 중): ${hit.id}. 이 요청은 건너뛰세요.`);
+        // 끝난 요청을 다시 집지 않기(2026-11-13 점검 F6): 「완료」를 Claude가 「진행 중」으로 바꾸려 하면 거절. 다시 하려면 사람이 Workbench 「다시 진행」(→ 대기)
+        if (nn(b.status) === '진행 중' && nn(hit.status) === '완료' && !b.force) throw new Error(`이미 끝난 요청입니다: ${hit.id}. 이 요청은 건너뛰세요(다시 하려면 Workbench에서 「다시 진행」).`);
         if (b.status === '진행 중' && hit.status !== '진행 중') { hit.startedAt = now; hit.frames = []; }
+        // 처리 구간(runs): 「진행 중」이 끝날 때마다 쌓아, 보류 · 대기로 갔다가 다시 한 요청도 사용량을 모두 더한다(usage.ps1 · F7)
+        if (b.status && nn(b.status) !== '진행 중' && nn(hit.status) === '진행 중' && hit.startedAt) h.closeRun(hit, now);
         if (Object.prototype.hasOwnProperty.call(b, 'frames')) {
           const fr = []; for (const f of core.arr(b.frames).filter(Boolean)) { const nid = nn(f.nodeId); if (/^\d+:\d+$/.test(nid) && !fr.some((x) => x.nodeId === nid)) fr.push({ nodeId: nid, name: nn(f.name) }); }
           hit.frames = fr.slice(0, 12);

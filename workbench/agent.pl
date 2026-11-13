@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # 백그라운드 Claude 에이전트 (macOS, agent.ps1과 같은 동작): 창 없이 Workbench 요청을 감시하고, 떠 있는 Claude Code CLI 세션에 보내 처리한다
 #   nohup perl workbench/agent.pl <claude 경로> >/dev/null 2>&1 &
-#  - 서버(guide_server_mac.pl)가 Figma AI Run 실행 때 띄운다(시작 안내 7단계의 자동 시작). 시작 안내에서 시작 · 중지할 수 있다
+#  - 서버(guide_server_mac.pl)가 Figma AI Run 실행 때 띄운다(시작 안내 5단계(CLI)의 자동 시작). 시작 안내에서 시작 · 중지할 수 있다
 #  - Claude는 처리할 때마다 새로 띄우고, 한 차례를 마치면 닫는다(토큰 절약): `claude -p --input-format stream-json --output-format stream-json`. 요청이 생기면 메시지만 보내고 result를 받는다
 #  - 한 차례 안에서 컨텍스트가 커지면 CLI가 스스로 압축한다(CLAUDE_AUTOCOMPACT_PCT_OVERRIDE=80)
 #  - 감시는 watch_requests.pl을 짧게(1분) 반복해 돌린다. 상태 workbench/.agent.json, 중지 workbench/.agent_stop, 기록 workbench/.agent.log
@@ -88,35 +88,28 @@ sub write_usage {
   my @list = @_; return unless @list;
   if (open(my $h, '>:raw', "$WB/.plan_usage.json")) { print $h $J->encode({ at => now(), plan => '', by => 'agent', windows => \@list }); close $h; }
 }
-# 요청이 없을 때도 5분마다 한도 확인: `claude -p /usage`는 모델을 부르지 않아 토큰을 쓰지 않는다(Claude Code가 계정 사용량을 글로 알려 줌)
-#  「Current session: 26% used · resets Nov 4, 2pm (Asia/Seoul)」 · 「Current week (all models): 49% used · resets Nov 6, 3pm」를 읽는다.
-#  글 형식이 바뀌어 못 읽으면 그냥 넘어간다(처리할 때 받는 rate_limit_event로는 계속 갱신)
+# 요청이 없을 때도 5분마다 한도 확인: 아주 짧은 질문(가장 싼 모델 · 도구 없음 · 짧은 시스템 프롬프트, 한 번에 약 850토큰)을 보내
+#  돌아오는 rate_limit_event(5시간 · 주간 사용률)를 읽는다. 예전에는 `claude -p /usage` 글을 읽었는데(토큰 0)
+#  Claude Code 2.1.3xx부터 /usage가 사용률 %를 보여주지 않아 11-05부터 상단 표시가 멈췄다(2026-11-13, 윈도우와 같게)
+#  CLAUDE.md를 읽지 않게 임시 폴더에서 돌린다
 my $USAGE_MIN = 5;
-sub reset_time {
-  my ($s) = @_; $s =~ s/\(.*?\)//g; $s =~ s/^\s+|\s+$//g;
-  return '' unless $s =~ /^([A-Za-z]{3})[a-z]*\.?\s+(\d{1,2}),?\s+(\d{1,2})(?::(\d{2}))?\s*(am|pm)/i;
-  my %mon = (jan => 0, feb => 1, mar => 2, apr => 3, may => 4, jun => 5, jul => 6, aug => 7, sep => 8, oct => 9, nov => 10, dec => 11);
-  my $m = $mon{ lc $1 }; return '' unless defined $m;
-  my ($d, $h, $mi, $ap) = ($2, $3 % 12, $4 // 0, lc $5); $h += 12 if $ap eq 'pm';
-  my $y = (localtime)[5] + 1900;
-  my $t = eval { timelocal(0, $mi, $h, $d, $m, $y) } // return '';
-  $t = eval { timelocal(0, $mi, $h, $d, $m, $y + 1) } // $t if $t < time - 2 * 86400;   # 12월에 본 1월 초기화
-  my $z = strftime('%z', localtime $t); $z =~ s/(\d\d)$/:$1/; return strftime('%Y-%m-%dT%H:%M:%S', localtime $t) . $z;
-}
+our $RUN_DIR = '';   # run_cli가 이 폴더에서 CLI를 띄운다(비면 설치 폴더)
 sub probe_usage {
-  my $o = run_cli(60, '-p', '/usage'); my @list;
-  for my $w (['Current session', '5-hour limit'], ['Current week \(all models\)', 'Weekly · all models']) {
-    next unless $o =~ /^\s*$w->[0]:\s*(\d+)% used([^\r\n]*)/m;
-    my ($pct, $rest) = ($1 + 0, $2); my $rs = $rest =~ /resets\s+(.+)$/ ? reset_time($1) : '';
-    push @list, { label => $w->[1], percentUsed => $pct, resetsAt => $rs };
+  my $dir = ($ENV{TMPDIR} || '/tmp') . '/uxai_usage_probe'; mkdir $dir unless -d $dir; $dir = $ROOT unless -d $dir;
+  local $RUN_DIR = $dir;
+  my $o = run_cli(60, '-p', '.', '--model', 'haiku', '--output-format', 'stream-json', '--verbose', '--tools', '', '--system-prompt', 'Reply with one dot.', '--strict-mcp-config', '--max-turns', '1');
+  for my $l (split /\r?\n/, $o) {
+    next unless $l =~ /"rate_limit_event"/;
+    my $m = eval { $J->decode(encode('UTF-8', $l)) }; next unless ref $m eq 'HASH' && ref $m->{rate_limit_info} eq 'HASH';
+    if (ref $m->{rate_limit_info}{unifiedWindows} eq 'HASH') { save_usage($m->{rate_limit_info}); return; }
   }
-  if (@list) { write_usage(@list); } else { (my $x = $o) =~ s/\s+/ /g; logm('한도 확인: /usage를 읽지 못함 ' . substr($x, 0, 120)); }
+  (my $x = $o) =~ s/\s+/ /g; logm('한도 확인: 사용률을 받지 못함 ' . substr($x, 0, 160));
 }
 # CLI 명령을 짧게 실행해 출력(표준 + 오류)을 받는다. 시간이 넘으면 끊는다
 sub run_cli {
   my ($sec, @a) = @_; my $out = '';
   my $pid = open(my $h, '-|'); return '' unless defined $pid;
-  if (!$pid) { open(STDERR, '>&', \*STDOUT); chdir $ROOT; exec($claude, @a) or exit 127; }
+  if (!$pid) { open(STDERR, '>&', \*STDOUT); chdir($RUN_DIR || $ROOT); exec($claude, @a) or exit 127; }
   # 기다리는 동안 15초마다 상태를 쓴다: 확인(최대 30 + 90 + 60초)이 겹쳐 150초를 넘으면 서버가 에이전트를 죽은 것으로 보고
   #  (탭을 모두 닫았으면) 서버를 끄거나 에이전트를 다시 띄우려다 중지 신호를 지웠다(2026-11-10, 윈도우와 같게)
   my $sel = IO::Select->new($h); my $until = time + $sec; my $ok = 0;
@@ -129,18 +122,18 @@ sub run_cli {
   return $ok ? decode('UTF-8', $out // '') : '';
 }
 # 처리 전 준비 확인(토큰 안 씀): CLI 로그인(`claude auth status`) · Figma MCP 연결(`claude mcp list`의 figma 줄이 Connected)
-#  안 되어 있으면 요청을 보내지 않는다(보내면 Claude가 Figma 없이 「보류」로 돌려 요청이 쌓였다). 상태 login · figma로 시작 안내 7단계에 이유를 보인다
+#  안 되어 있으면 요청을 보내지 않는다(보내면 Claude가 Figma 없이 「보류」로 돌려 요청이 쌓였다). 상태 login · figma로 시작 안내 5단계(CLI)에 이유를 보인다
 sub check_ready {
   my $a = run_cli(30, 'auth', 'status');
   if ($a =~ /"loggedIn"\s*:\s*false/) {
-    save_state('login', 'Claude Code CLI에 로그인되어 있지 않습니다. 7단계 「Claude 로그인 · Figma 연결」 창에서 /login을 하세요.'); logm('준비 확인: CLI 로그인 안 됨'); return 0;
+    save_state('login', 'Claude Code CLI에 로그인되어 있지 않습니다. 시작 안내 5단계(CLI) 「Claude 로그인 · Figma 연결」 창에서 /login을 하세요.'); logm('준비 확인: CLI 로그인 안 됨'); return 0;
   }
   my $m = run_cli(90, 'mcp', 'list');
   my @lines = grep { /^\s*(claude\.ai )?figma\b[^:]*:/i } split /\r?\n/, $m;
   if (grep { /Connected/ } @lines) { logm('준비 확인: 로그인 · Figma 연결됨'); return 1; }
   if ($m !~ /\S/) { logm('준비 확인: mcp list 응답 없음 — 그대로 진행'); return 1; }   # 확인 자체가 안 되면 막지 않는다(처리 중 Claude가 판단)
   my $why = !@lines ? 'Figma MCP가 등록되어 있지 않음' : (grep { /auth/i } @lines) ? 'Figma 인증 필요' : 'Figma 연결 실패';
-  save_state('figma', "Figma 연결이 안 되어 있습니다($why). 7단계 「Claude 로그인 · Figma 연결」 창에서 /mcp → figma → Authenticate를 하세요. 요청은 연결될 때까지 「대기」로 둡니다.");
+  save_state('figma', "Figma 연결이 안 되어 있습니다($why). 시작 안내 5단계(CLI) 「Claude 로그인 · Figma 연결」 창에서 /mcp → figma → Authenticate를 하세요. 요청은 연결될 때까지 「대기」로 둡니다.");
   logm("준비 확인: $why\n" . join("\n", @lines)); return 0;
 }
 sub session_dead { return !$S || waitpid($S->{pid}, WNOHANG) != 0; }
@@ -230,7 +223,7 @@ while (1) {
   logm('처리 끝 (ok ' . ($r->{ok} ? 1 : 0) . ($r->{ms} ? ', ' . int($r->{ms} / 1000) . '초' : '') . ")\n" . ($r->{text} // ''));
   if (($r->{text} // '') =~ /Not logged in|Please run \/login|Invalid API key/) {
     stop_session('로그인 필요');
-    save_state('login', 'Claude CLI 로그인이 필요합니다. 시작 안내 7단계의 「Claude 로그인 · Figma 연결」을 진행하세요.');
+    save_state('login', 'Claude CLI 로그인이 필요합니다. 시작 안내 5단계(CLI)의 「Claude 로그인 · Figma 연결」을 진행하세요.');
     for (1 .. 8) { last if -f $STOP; sleep 15; save_state(); }
     next;
   }

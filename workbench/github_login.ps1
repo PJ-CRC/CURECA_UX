@@ -1,4 +1,4 @@
-﻿# 깃허브 연결 (윈도우): 시작 안내 8단계 [깃허브 연결]이 창으로 띄운다. 한 번이면 끝난다
+﻿# 깃허브 연결 (윈도우): 시작 안내 6단계 [깃허브 연결]이 창으로 띄운다. 한 번이면 끝난다
 #  1. git이 없으면 winget으로 설치한다(이 창에서 진행 · 동의)
 #  2. 작업 이력 저장소(workbench/git_remote.txt)의 history 브랜치에 연결한다 (history_sync.ps1 -Interactive)
 #     로그인 정보가 없으면 Git Credential Manager가 브라우저 로그인 창을 띄운다(토큰 불필요). 로그인은 PC에 저장된다

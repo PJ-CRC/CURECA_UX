@@ -29,10 +29,12 @@ const TYPES = { '.html': 'text/html; charset=utf-8', '.png': 'image/png', '.jpg'
   '.css': 'text/css', '.js': 'application/javascript', '.json': 'application/json; charset=utf-8', '.md': 'text/plain; charset=utf-8', '.csv': 'text/plain; charset=utf-8',
   '.gs': 'text/plain; charset=utf-8', '.svg': 'image/svg+xml', '.ico': 'image/x-icon', '.pdf': 'application/pdf', '.txt': 'text/plain; charset=utf-8' };
 
+// 다른 사이트에서 읽기 막기(2026-11-13 점검 S2): 예전에는 모든 응답에 Access-Control-Allow-Origin: *를 붙여, 로그인한 PC에서 아무 사이트나 API 응답을 읽을 수 있었다.
+//  화면은 같은 서버에서 열려 이 머리글이 필요 없고, Figma 플러그인(iframe, Origin 'null')에만 'null'을 돌려준다
 function send(res, code, type, body, extra) {
   if (res.headersSent) return;
-  res.writeHead(code, Object.assign({ 'Content-Type': type, 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', 'Cache-Control': 'no-store' }, extra || {}));
+  const cors = res._acao ? { 'Access-Control-Allow-Origin': res._acao, 'Access-Control-Allow-Headers': 'Content-Type', 'Access-Control-Allow-Methods': 'GET, POST, OPTIONS' } : {};
+  res.writeHead(code, Object.assign({ 'Content-Type': type, 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' }, cors, extra || {}));
   res.end(body);
 }
 const sendJson = (res, code, obj) => send(res, code, 'application/json; charset=utf-8', JSON.stringify(obj));
@@ -50,6 +52,9 @@ function serveStatic(res, rel) {
   let f = path.join(C.root, rel);
   if (!rel.includes('/')) { const pf = path.join(C.root, 'pages', rel); if (fs.existsSync(pf) && fs.statSync(pf).isFile()) f = pf; }
   if (!path.resolve(f).startsWith(C.root + path.sep)) return send(res, 404, 'text/plain', 'not found');
+  // 한 번 더: 실제로 열 파일의 위치로 숨김 데이터인지 본다(대소문자 무시)
+  const relN = path.relative(C.root, path.resolve(f)).replace(/\\/g, '/').toLowerCase();
+  if (/^(\.git|\.claude|node_modules)(\/|$)/.test(relN) || /^\.history\/(config|accounts|\.git)(\/|$)/.test(relN) || /^\.history\/teams\/[^/]+\/config(\/|$)/.test(relN)) return send(res, 404, 'text/plain', 'not found');
   fs.stat(f, (err, st) => {
     if (err || !st.isFile()) return send(res, 404, 'text/plain', 'not found');
     fs.readFile(f, (e2, buf) => e2 ? send(res, 500, 'text/plain', 'read error') : send(res, 200, TYPES[path.extname(f).toLowerCase()] || 'application/octet-stream', buf));
@@ -65,6 +70,12 @@ const API_WRITE = { '/api/requests': ['workbench', 'history', 'guide', 'plan'], 
 async function handle(req, res) {
   let u; try { u = new URL(req.url, 'http://localhost'); } catch (e) { return send(res, 400, 'text/plain', 'bad url'); }
   let p; try { p = decodeURIComponent(u.pathname); } catch (e) { p = u.pathname; }
+  // 경로 우회 막기(2026-11-13 점검 S1): `\` · 겹친 `/` · 대소문자(윈도우 파일은 대소문자를 가리지 않음)로 `/.History/accounts` · `//.history/config` · `%5C`가
+  //  아래 검사를 피해 계정 · 설정 파일이 열렸다 → 한 모양으로 맞춘 뒤 검사한다. 윈도우가 무시하는 끝의 점 · 공백, 스트림 이름(`:`)이 붙은 칸도 막는다
+  p = p.replace(/\\/g, '/').replace(/\/{2,}/g, '/');
+  if (!p.startsWith('/api/') && p.split('/').some((s) => s !== '.' && s !== '..' && (/[. ]$/.test(s) || s.includes(':')))) return send(res, 404, 'text/plain', 'not found');
+  const pl = p.toLowerCase();
+  if (String(req.headers.origin) === 'null') res._acao = 'null';
   const q = u.searchParams, M = req.method;
   if (M === 'OPTIONS') return send(res, 204, 'text/plain', '');
   // Figma 플러그인(iframe)은 Origin이 'null'로 온다 → 플러그인이 마지막으로 닿은 시각(자동 캡처 · 시작 안내 4단계)
@@ -74,7 +85,7 @@ async function handle(req, res) {
   if (p === '/api/node') return sendJson(res, 200, { ok: true, server: 'node', node: process.version, port: C.port, root: C.root, readonly: C.readonly, setupDir: C.setupDir });
 
   // ── 로그인 · 메뉴 권한(기존 서버 순서 그대로) ──
-  if (p.startsWith('/.history/config') || p.startsWith('/.history/accounts')) return send(res, 404, 'text/plain', 'not found');
+  if (/^\/(\.git|\.claude|node_modules)(\/|$)/.test(pl) || /^\/\.history\/(config|accounts|\.git)(\/|$)/.test(pl)) return send(res, 404, 'text/plain', 'not found');
   if (p === '/api/me' && M === 'GET') return sendJson(res, 200, core.meInfo());
   if (p === '/api/login' && M === 'POST') {
     const b = await bodyJson(req); const a = core.readAccount(b.id);
@@ -95,10 +106,11 @@ async function handle(req, res) {
   let tctx = core.currentTeam(); const qTeam = String(q.get('team') || '');
   if (qTeam && core.teamIds().includes(qTeam) && (!browser || !core.authRequired() || core.myTeams().includes(qTeam))) tctx = qTeam;
   const T = core.teamCtx(tctx);
-  if (/^\/\.history\/teams\/[^/]+\/config(\/|$)/.test(p)) return send(res, 404, 'text/plain', 'not found');
-  let m = /^\/\.history\/teams\/([^/]+)\//.exec(p);
-  if (browser && core.authRequired() && m && !core.myTeams().includes(m[1])) return send(res, 404, 'text/plain', 'not found');
-  m = /^\/\.history\/(guides|minutes)(\/.*)?$/.exec(p);
+  if (/^\/\.history\/teams\/[^/]+\/config(\/|$)/.test(pl)) return send(res, 404, 'text/plain', 'not found');
+  let m = /^\/\.history\/teams\/([^/]+)\//i.exec(p);
+  if (browser && core.authRequired() && m && !core.myTeams().map((x) => String(x).toLowerCase()).includes(m[1].toLowerCase())) return send(res, 404, 'text/plain', 'not found');
+  m = /^\/\.history\/(guides|minutes)(\/.*)?$/i.exec(p);
+  if (m) m[1] = m[1].toLowerCase();
   if (browser && T.team !== 'cureca' && m) p = `/.history/teams/${T.team}/${m[1]}${m[2] || ''}`;
   if (p === '/start' && core.authRequired()) {
     const mi = core.meInfo(); let to = '/Login.html';

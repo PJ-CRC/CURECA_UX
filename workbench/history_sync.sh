@@ -65,7 +65,7 @@ sync_once() {
       done_ false "저장소에 접근할 수 없습니다. 저장소 관리자에게 깃허브 아이디를 알려 초대를 받고, 메일 · 깃허브 알림에서 수락한 뒤 [깃허브 연결]을 다시 누르세요." hard
     fi
     if printf '%s' "$out" | grep -qiE 'Authentication|could not read Username|terminal prompts disabled'; then
-      done_ false "깃허브 로그인이 필요합니다. 시작 안내 8단계의 [깃허브 연결]을 누르세요." hard
+      done_ false "깃허브 로그인이 필요합니다. 시작 안내 6단계의 [깃허브 연결]을 누르세요." hard
     fi
     done_ false "깃 서버에 연결하지 못했습니다. $(last "$out")"
   fi
@@ -94,7 +94,18 @@ sync_once() {
   try=1
   while :; do
     if [ $remote -eq 0 ]; then
-      out=$(git "${id[@]}" -C "$H" pull -q --rebase origin history 2>&1) || { git -C "$H" rebase --abort >/dev/null 2>&1; done_ false "받기(pull) 실패: $(last "$out")"; }
+      if ! out=$(git "${id[@]}" -C "$H" pull -q --rebase origin history 2>&1); then
+        # 충돌(두 PC가 같은 파일을 고침, 2026-11-13 윈도우와 같게): 나중에 저장한 쪽(커밋 시각이 늦은 쪽)으로 맞추고, 진 쪽은 깃 기록에 남기고 conflicts/{PC}.log에 적는다
+        files=$(git -C "$H" diff --name-only --diff-filter=U 2>/dev/null | tr '\n' ',' | sed 's/,$//; s/,/, /g')
+        git -C "$H" rebase --abort >/dev/null 2>&1
+        lt=$(git -C "$H" log -1 --format=%ct HEAD 2>/dev/null || echo 0); git -C "$H" fetch -q origin history >/dev/null 2>&1
+        rt=$(git -C "$H" log -1 --format=%ct FETCH_HEAD 2>/dev/null || echo 0)
+        if [ "${lt:-0}" -ge "${rt:-0}" ]; then side=theirs; win='이 PC'; else side=ours; win='다른 PC'; fi   # rebase에서 theirs = 이 PC가 올릴 커밋
+        out=$(git "${id[@]}" -C "$H" pull -q --rebase -X "$side" origin history 2>&1) || { git -C "$H" rebase --abort >/dev/null 2>&1; done_ false "받기(pull) 실패 · 충돌: $(last "$out")"; }
+        slug=$(hostname | sed 's/\.local$//' | tr 'A-Z' 'a-z' | sed 's/[^a-z0-9-]/-/g')
+        mkdir -p "$H/conflicts" && printf '[%s] 충돌 → 나중에 저장한 %s 내용으로 맞춤: %s\n' "$(now_iso)" "$win" "$files" >> "$H/conflicts/$slug.log"
+        now_iso > "$NOWF" 2>/dev/null
+      fi
     fi
     out=$(git -C "$H" push -q -u origin history 2>&1) && break
     if [ $try -lt 3 ] && printf '%s' "$out" | grep -qiE 'rejected|fetch first|non-fast-forward|failed to push some refs'; then remote=0; sleep "0.$((3 * try))"; try=$((try + 1)); continue; fi

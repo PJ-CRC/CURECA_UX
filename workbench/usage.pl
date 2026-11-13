@@ -39,6 +39,7 @@ my $PC_NAME = decode('UTF-8', hostname()); $PC_NAME =~ s/\.local$//;
 (my $PC_SLUG = lc $PC_NAME) =~ s/[^a-z0-9-]/-/g;
 
 my %meta = (kind => 'work', reqId => '', reqType => '', team => str($o{team}), by => $o{by}, fileKey => $o{'file-key'}, fileName => $o{'file-name'}, page => $o{page}, frame => $o{frame}, nodeId => $o{node}, text => $o{title});
+my $from_given = $o{from} ne '';
 if ($o{req} ne '') {
   my $r = eval { $J->decode(rd("$ROOT/workbench/edit_requests.json")) } || {};
   my ($it) = grep { ref $_ eq 'HASH' && str($_->{id}) eq $o{req} } @{ $r->{items} || [] };
@@ -51,6 +52,19 @@ if ($o{req} ne '') {
 my $t0 = parse_iso($o{from});
 unless (defined $t0) { print "NOSTART (요청이 「진행 중」이 된 시각이 없습니다. --from으로 시작 시각을 주세요)\n"; exit 1; }
 my $t1 = $o{to} ne '' ? parse_iso($o{to}) : time;
+# 처리 구간들(2026-11-13, 윈도우와 같게): 요청이 「보류」 · 「대기」로 갔다가 다시 「진행 중」이 되면 앞 구간 사용량이 빠졌다 → 서버가 쌓은 runs [{from, to}]를 모두 더한다
+my @wins;
+if ($o{req} ne '' && !$from_given) {
+  my $r2 = eval { $J->decode(rd("$ROOT/workbench/edit_requests.json")) } || {};
+  my ($it2) = grep { ref $_ eq 'HASH' && str($_->{id}) eq $o{req} } @{ $r2->{items} || [] };
+  for my $w (@{ ($it2 && ref $it2->{runs} eq 'ARRAY') ? $it2->{runs} : [] }) {
+    next unless ref $w eq 'HASH'; my $a = parse_iso(str($w->{from})); next unless defined $a;
+    my $b = str($w->{to}) ne '' ? parse_iso(str($w->{to})) : $t1; push @wins, [$a, defined $b ? $b : $t1];
+  }
+}
+@wins = ([$t0, $t1]) unless @wins;
+for (@wins) { $t0 = $_->[0] if $_->[0] < $t0; }
+sub in_win { my ($ts) = @_; for (@wins) { return 1 if $ts >= $_->[0] && $ts <= $_->[1]; } return 0; }
 
 my $price = eval { $J->decode(rd("$ROOT/workbench/pricing.json")) } || {};
 sub rate {
@@ -70,7 +84,7 @@ if (-d $dir) {
     open(my $h, '<:raw', $f) or next;
     while (my $l = <$h>) {
       next unless index($l, '"usage"') >= 0 && $l =~ /"timestamp":"([^"]+)"/;
-      my $ts = parse_iso($1); next unless defined $ts && $ts >= $t0 && $ts <= $t1;
+      my $ts = parse_iso($1); next unless defined $ts && in_win($ts);
       my $e = eval { $J->decode($l) } or next;
       my $m = $e->{message}; next unless ref $m eq 'HASH' && $m->{usage} && $m->{id};
       $msgs{ $m->{id} } = $m;   # 같은 응답이 여러 줄이면 마지막 값

@@ -1,12 +1,12 @@
 ﻿# 백그라운드 Claude 에이전트 (윈도우): 창 없이 Workbench 요청을 감시하고, 처리할 것이 생기면 떠 있는 Claude Code CLI 세션에 보내 처리한다
 #   powershell -NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File workbench\agent.ps1 -Claude <claude.exe>
-#  - 서버(guide_server.ps1)가 Figma AI Run 실행 때 숨김으로 띄운다(시작 안내 7단계의 자동 시작). 시작 안내에서 시작 · 중지할 수 있다
+#  - 서버(guide_server.ps1)가 Figma AI Run 실행 때 숨김으로 띄운다(시작 안내 5단계(CLI)의 자동 시작). 시작 안내에서 시작 · 중지할 수 있다
 #  - Claude는 **처리할 때마다 새로 띄운다**: `claude -p --input-format stream-json --output-format stream-json`(창 없음).
 #    한 차례(감시 결과 하나)를 처리하면 세션을 닫는다 — 세션을 계속 두면 매 API 호출마다 앞 요청 대화를 다시 읽어 토큰의 98%가 그것이었다(2026-11-06).
 #  - 한 차례 안에서 컨텍스트가 커지면 CLI가 스스로 압축한다(CLAUDE_AUTOCOMPACT_PCT_OVERRIDE)
 #  - 30분 넘게 요청이 없으면 세션을 새로 띄운다(캐시도 식으므로). 세션이 죽으면 다시 띄운다. 한 요청에서 Claude 출력이 20분 넘게 없으면(멈춤) 끊고 새로 — 오래 걸리는 단계 작업(화면설계 3단계 등)은 출력이 이어지는 한 끊지 않는다(2026-11-12, 규칙 저장소 program-hurdles.md H1)
 #  - 감시는 watch_requests.ps1을 짧게(1분) 반복해 돌린다(상태 갱신 · 중지 확인). PENDING · RESUME · JOBS가 나오면 세션에 보낸다
-#  - Claude는 이 PC에 로그인된 Claude Code CLI 계정 · claude.ai Figma 커넥터를 쓴다. 처음 한 번 시작 안내 7단계의 「Claude 로그인 · Figma 연결」 필요
+#  - Claude는 이 PC에 로그인된 Claude Code CLI 계정 · claude.ai Figma 커넥터를 쓴다. 처음 한 번 시작 안내 5단계(CLI)의 「Claude 로그인 · Figma 연결」 필요
 #  - 상태: workbench/.agent.json {at, host, pid, status(idle|working|login|error|stopped), msg} — 15초~1분마다 씀(시작 안내 · 서버가 본다)
 #  - 중지: workbench/.agent_stop 파일이 생기면 지금 처리를 마치고 끝낸다. 기록: workbench/.agent.log(최근 500KB)
 #  - 같은 감시 결과가 3번 연달아 처리되지 않으면(요청 상태가 그대로) 10분 쉬고 status=error로 알린다(토큰 낭비 방지)
@@ -97,38 +97,25 @@ function Write-Usage($list) {
   $o = [ordered]@{ at = (Now); plan = ''; by = 'agent'; windows = $list.ToArray() }
   [IO.File]::WriteAllText((Join-Path $WB '.plan_usage.json'), ($o | ConvertTo-Json -Depth 5 -Compress), $Utf8)
 }
-# 요청이 없을 때도 5분마다 한도 확인: `claude -p /usage`는 모델을 부르지 않아 토큰을 쓰지 않는다(Claude Code가 계정 사용량을 글로 알려 줌)
-#  「Current session: 26% used · resets Nov 4, 2pm (Asia/Seoul)」 · 「Current week (all models): 49% used · resets Nov 6, 3pm」를 읽는다.
-#  글 형식이 바뀌어 못 읽으면 그냥 넘어간다(처리할 때 받는 rate_limit_event로는 계속 갱신)
+# 요청이 없을 때도 5분마다 한도 확인: 아주 짧은 질문(가장 싼 모델 · 도구 없음 · 짧은 시스템 프롬프트, 한 번에 약 850토큰)을 보내
+#  돌아오는 rate_limit_event(5시간 · 주간 사용률)를 읽는다. 예전에는 `claude -p /usage` 글을 읽었는데(토큰 0)
+#  Claude Code 2.1.3xx부터 /usage가 사용률 %를 보여주지 않아 11-05부터 상단 표시가 멈췄다(2026-11-13)
+#  CLAUDE.md를 읽지 않게 임시 폴더에서 돌린다
 $UsageMin = 5
-function Reset-Time([string]$s) {
-  $s = ($s -replace '\(.*?\)', '').Trim()
-  if ($s -notmatch '(?i)^([A-Za-z]{3})[a-z]*\.?\s+(\d{1,2}),?\s+(\d{1,2})(?::(\d{2}))?\s*(am|pm)') { return '' }
-  $mon = [array]::IndexOf(@('jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'), $Matches[1].ToLower()) + 1
-  if ($mon -lt 1) { return '' }
-  $h = [int]$Matches[3] % 12; if ($Matches[5].ToLower() -eq 'pm') { $h += 12 }
-  $now = Get-Date
-  try { $t = Get-Date -Year $now.Year -Month $mon -Day ([int]$Matches[2]) -Hour $h -Minute ([int]('0' + $Matches[4])) -Second 0 } catch { return '' }
-  if ($t -lt $now.AddDays(-2)) { $t = $t.AddYears(1) }   # 12월에 본 1월 초기화
-  return $t.ToString('yyyy-MM-ddTHH:mm:sszzz')
-}
 function Probe-Usage {
-  $o = Run-Cli '-p /usage' 60
-  $list = New-Object Collections.ArrayList
-  foreach ($w in @(@('Current session', '5-hour limit'), @('Current week \(all models\)', 'Weekly · all models'))) {
-    if ($o -match ('(?m)^\s*' + $w[0] + ':\s*(\d+)% used([^\r\n]*)')) {
-      $pct = [int]$Matches[1]; $rest = $Matches[2]; $rs = ''
-      if ($rest -match 'resets\s+(.+)$') { $rs = Reset-Time $Matches[1] }
-      [void]$list.Add([ordered]@{ label = $w[1]; percentUsed = $pct; resetsAt = $rs })
-    }
+  $dir = Join-Path ([IO.Path]::GetTempPath()) 'uxai_usage_probe'; try { [void](New-Item -ItemType Directory -Force $dir) } catch { $dir = $Root }
+  $o = Run-Cli '-p "." --model haiku --output-format stream-json --verbose --tools "" --system-prompt "Reply with one dot." --strict-mcp-config --max-turns 1' 60 $dir
+  foreach ($l in ($o -split "`r?`n")) {
+    if ($l -notmatch '"rate_limit_event"') { continue }
+    try { $m = $l | ConvertFrom-Json; if ($m.rate_limit_info.unifiedWindows) { Save-Usage $m.rate_limit_info; return } } catch { }
   }
-  if ($list.Count) { Write-Usage $list } else { Log ('한도 확인: /usage를 읽지 못함 ' + ($o -replace '\s+', ' ').Substring(0, [Math]::Min(120, ($o -replace '\s+', ' ').Length))) }
+  $x = ($o -replace '\s+', ' '); Log ('한도 확인: 사용률을 받지 못함 ' + $x.Substring(0, [Math]::Min(160, $x.Length)))
 }
 # CLI 명령을 짧게 실행해 출력(표준 + 오류)을 받는다. 시간이 넘으면 끊는다
-function Run-Cli([string]$cliArgs, [int]$sec) {
+function Run-Cli([string]$cliArgs, [int]$sec, [string]$dir = '') {
   try {
     $psi = New-Object Diagnostics.ProcessStartInfo
-    $psi.FileName = $Claude; $psi.Arguments = $cliArgs; $psi.WorkingDirectory = $Root
+    $psi.FileName = $Claude; $psi.Arguments = $cliArgs; $psi.WorkingDirectory = $(if ($dir) { $dir } else { $Root })
     $psi.UseShellExecute = $false; $psi.CreateNoWindow = $true; $psi.RedirectStandardOutput = $true; $psi.RedirectStandardError = $true
     $psi.StandardOutputEncoding = $Utf8; $psi.StandardErrorEncoding = $Utf8
     $p = [Diagnostics.Process]::Start($psi); $o = $p.StandardOutput.ReadToEndAsync(); $e = $p.StandardError.ReadToEndAsync()
@@ -143,18 +130,18 @@ function Run-Cli([string]$cliArgs, [int]$sec) {
   } catch { return '' }
 }
 # 처리 전 준비 확인(토큰 안 씀): CLI 로그인(`claude auth status`) · Figma MCP 연결(`claude mcp list`의 figma 줄이 Connected)
-#  안 되어 있으면 요청을 보내지 않는다(보내면 Claude가 Figma 없이 「보류」로 돌려 요청이 쌓였다). 상태 login · figma로 시작 안내 7단계에 이유를 보인다
+#  안 되어 있으면 요청을 보내지 않는다(보내면 Claude가 Figma 없이 「보류」로 돌려 요청이 쌓였다). 상태 login · figma로 시작 안내 5단계(CLI)에 이유를 보인다
 function Check-Ready {
   $a = Run-Cli 'auth status' 30
   if ($a -match '"loggedIn"\s*:\s*false') {
-    Save-State 'login' 'Claude Code CLI에 로그인되어 있지 않습니다. 7단계 「Claude 로그인 · Figma 연결」 창에서 /login을 하세요.'; Log '준비 확인: CLI 로그인 안 됨'; return $false
+    Save-State 'login' 'Claude Code CLI에 로그인되어 있지 않습니다. 시작 안내 5단계(CLI) 「Claude 로그인 · Figma 연결」 창에서 /login을 하세요.'; Log '준비 확인: CLI 로그인 안 됨'; return $false
   }
   $m = Run-Cli 'mcp list' 90
   $lines = @(($m -split "`r?`n") | Where-Object { $_ -match '^\s*(claude\.ai )?figma\b[^:]*:' })
   if (@($lines | Where-Object { $_ -match 'Connected' }).Count) { Log '준비 확인: 로그인 · Figma 연결됨'; return $true }
   if (-not $m.Trim()) { Log '준비 확인: mcp list 응답 없음 — 그대로 진행'; return $true }   # 확인 자체가 안 되면 막지 않는다(처리 중 Claude가 판단)
   $why = if (-not $lines.Count) { 'Figma MCP가 등록되어 있지 않음' } elseif (@($lines | Where-Object { $_ -match 'auth' }).Count) { 'Figma 인증 필요' } else { 'Figma 연결 실패' }
-  Save-State 'figma' ("Figma 연결이 안 되어 있습니다($why). 7단계 「Claude 로그인 · Figma 연결」 창에서 /mcp → figma → Authenticate를 하세요. 요청은 연결될 때까지 「대기」로 둡니다.")
+  Save-State 'figma' ("Figma 연결이 안 되어 있습니다($why). 시작 안내 5단계(CLI) 「Claude 로그인 · Figma 연결」 창에서 /mcp → figma → Authenticate를 하세요. 요청은 연결될 때까지 「대기」로 둡니다.")
   Log ("준비 확인: $why`r`n" + ($lines -join "`r`n")); return $false
 }
 # 메시지 한 건을 보내고 result가 올 때까지 읽는다. 기다리는 동안 15초마다 상태를 쓴다
@@ -210,7 +197,7 @@ $last = ''; $repeat = 0
 $script:Ready = $null; $script:NextCheck = Get-Date; $script:NextUsage = Get-Date
 while ($true) {
   if (Test-Path $StopFile) { Remove-Item $StopFile -Force -ErrorAction SilentlyContinue; Stop-Session '중지'; Save-State 'stopped' '중지됨'; Log '중지'; exit 0 }
-  # 한도 표시 갱신(5분마다, 토큰 안 씀). 로그인 전이면 실패하고 넘어간다
+  # 한도 표시 갱신(5분마다, 약 850토큰). 로그인 전이면 실패하고 넘어간다
   if ((Get-Date) -ge $script:NextUsage) { $script:NextUsage = (Get-Date).AddMinutes($UsageMin); Probe-Usage }
   # 세션 관리: 죽었거나 · 오래 쉬었거나 · 로그인 · 연결이 바뀌었으면 버린다(다음 처리 때 새로)
   if (Test-Path $RenewFile) { Remove-Item $RenewFile -Force -ErrorAction SilentlyContinue; Stop-Session '로그인 · Figma 연결 창을 열어 새로 띄움'; $script:Ready = $null; $script:NextCheck = Get-Date }
@@ -241,7 +228,7 @@ while ($true) {
   Log ("처리 끝 (ok $($r.ok)" + $(if ($r.ms) { ", $([math]::Round($r.ms / 1000))초" } else { '' }) + ")`r`n" + $r.text)
   if ($r.text -match 'Not logged in|Please run /login|Invalid API key') {
     Stop-Session '로그인 필요'
-    Save-State 'login' 'Claude CLI 로그인이 필요합니다. 시작 안내 7단계의 「Claude 로그인 · Figma 연결」을 진행하세요.'
+    Save-State 'login' 'Claude CLI 로그인이 필요합니다. 시작 안내 5단계(CLI)의 「Claude 로그인 · Figma 연결」을 진행하세요.'
     for ($i = 0; $i -lt 8; $i++) { if (Test-Path $StopFile) { break }; Start-Sleep -Seconds 15; Save-State $null $null }
     continue
   }
