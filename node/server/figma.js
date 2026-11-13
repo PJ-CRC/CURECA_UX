@@ -191,6 +191,8 @@ module.exports = function register(on, h) {
         const j = await figma(`/files/${encodeURIComponent(key)}?depth=1`), v = nn(j && (j.version || j.lastModified));
         if (!v) continue;
         if (vers[key] && vers[key] !== v) {
+          // 프레임 목록도 새로(2026-11-13): 화면이 생기거나 없어지면 Workbench 목록 · 프로토타입 「화면 추가됨 · 없어짐」에 바로 보이게
+          if (core.exists(path.join(h.projDir(key), 'catalog.json'))) { try { await buildCatalog(key); } catch (e) { if (e.status === 429) throw e; log(`목록 다시 받기 실패 ${key.slice(0, 6)}: ${e.message}`); } }
           const meta = core.readJson(path.join(h.projDir(key), 'shots_meta.json')) || {}, cat = core.readJson(path.join(h.projDir(key), 'catalog.json')) || {};
           const pg = core.arr(cat.pages).find((x) => x.id === p.editablePageId);
           const ids = core.arr(pg && pg.frames).map((f) => nn(f && f[0])).filter((id) => meta[id]);

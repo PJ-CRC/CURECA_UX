@@ -283,7 +283,7 @@ module.exports = function register(on, h) {
         if (b.status) hit.status = nn(b.status);
         if (b.note != null) hit.note = nn(b.note);
         if (b.guide) hit.guide = nn(b.guide);
-        for (const f of ['revFrom', 'revTo', 'proto']) if (b[f]) hit[f] = nn(b[f]);
+        for (const f of ['revFrom', 'revTo', 'proto']) if (b[f]) hit[f] = f === 'proto' && typeof b[f] === 'object' ? nn(b[f].id) : nn(b[f]);   // proto는 {id}로 와도 id만
         if (b.items != null) hit.items = core.arr(b.items);
         hit.updatedAt = now;
         break;
@@ -295,6 +295,8 @@ module.exports = function register(on, h) {
     if (items.length > 300) items = items.slice(0, 300);
     core.writeJson(C.jobFile, { version: (parseInt(jj.version, 10) || 0) + 1, items });
     if (b.action === 'update' && hit && hit.kind === 'guide-check') saveCheckLog(hit);
+    // 프로토타입을 만들거나 고치거나 맞추면: 그때의 페이지 프레임 목록을 기준으로 남긴다(뒤에 생긴 화면만 「화면 추가됨」)
+    if (b.action === 'update' && hit && /^prototype/.test(nn(hit.kind)) && nn(hit.status) === '완료' && hit.proto && h.protoSnapshot) { try { h.protoSnapshot(nn(hit.proto)); } catch (e) {} }
     return { ok: true, job: hit };
   });
 

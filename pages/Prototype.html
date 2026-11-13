@@ -212,7 +212,7 @@ textarea:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:
   }
   document.addEventListener('click', function(e){
     if (!e.target.closest('#syncBtn')) return;
-    post('/api/jobs', { action: 'add', kind: 'prototype-sync', fileKey: P.fileKey, proto: P.id, name: P.name, text: 'Figma에서 바뀐 화면 맞추기: ' + P.stale.map(function(s){ return s.name; }).join(', '), frames: P.stale, by: store('cux.user') || '' })
+    post('/api/jobs', { action: 'add', kind: 'prototype-sync', fileKey: P.fileKey, proto: P.id, name: P.name, text: 'Figma에서 바뀐 화면 맞추기: ' + P.stale.map(function(s){ return s.name + (s.add ? '(추가됨)' : s.gone ? '(없어짐)' : ''); }).join(', '), frames: P.stale, by: store('cux.user') || '' })
       .then(function(d){ toast(d.job.id + ' Figma 맞추기를 요청했습니다'); load(); }, function(err){ toast('요청 실패: ' + err.message); });
   });
   $('editBtn').addEventListener('click', function(){
