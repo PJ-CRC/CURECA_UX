@@ -481,7 +481,8 @@ html.embed,html.embed body{overflow:hidden}
 <script>
 (function(){
   var $ = function(id){ return document.getElementById(id); };
-  var id = (new URLSearchParams(location.search).get('g') || '').replace(/[^A-Za-z0-9_-]/g, '');
+  // 문서 ID: 영문 · 숫자 · 한글 등 글자와 _ . ( ) -(2026-11-13~ 알아보기 쉬운 이름). 경로를 벗어나는 글자(/ \ ..)는 뺀다
+  var id = (new URLSearchParams(location.search).get('g') || '').normalize('NFC').replace(/[^\p{L}\p{N}_.()\-]/gu, '').replace(/\.{2,}/g, '.');
   if (new URLSearchParams(location.search).get('embed')) document.documentElement.classList.add('embed');
   /* 가이드는 작업 이력과 함께 깃으로 공유되는 .history/guides/{id}/ 에 있다. 고친 내용은 rev/ 수정본으로 쌓이고 가장 최근 것이 지금 내용이다 */
   var base = '.history/guides/' + id + '/';
@@ -1204,7 +1205,8 @@ html.embed,html.embed body{overflow:hidden}
     function rat(r){ return String(r.at || '').slice(0, 10) || String(r.rev).replace(/^(\d{4})(\d\d)(\d\d).*/, '$1-$2-$3'); }
     /* 파일형 문서는 파일마다 원본(files/) → 그 파일의 수정본(rev/{rev}/{파일}) 순서로 비교한다 */
     var vers = FILES ? [].concat.apply([], FILES.map(function(f){
-      return [{ url: f.firstPath || base + fdirOf(meta) + f.path, at: String(meta.createdAt || '').slice(0, 10), file: f.path }].concat(   // 처음 내용(원본이 최종이 된 뒤에는 rev/_처음/)revs.filter(function(r){ return r.file === f.path; }).map(function(r){
+      /* 처음 내용(원본이 최종이 된 뒤에는 rev/_처음/) → 그 파일의 수정본들 */
+      return [{ url: f.firstPath || base + fdirOf(meta) + f.path, at: String(meta.createdAt || '').slice(0, 10), file: f.path }].concat(revs.filter(function(r){ return r.file === f.path; }).map(function(r){
         return { url: base + 'rev/' + r.rev + '/' + f.path, at: rat(r), file: f.path };
       }));
     })) : [{ url: (G && G.firstPath) || base + 'guide.md', at: String(meta.createdAt || '').slice(0, 10) }].concat(revs.map(function(r){   // 처음 내용(rev/_처음.md, 없으면 본문)
