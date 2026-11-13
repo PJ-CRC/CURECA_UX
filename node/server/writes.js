@@ -516,7 +516,8 @@ module.exports = function register(on, h) {
       const gid = nn(b.id), dir = path.join(T.guideRoot, gid);
       if (!okId(gid) || gid.startsWith('_') || !core.exists(path.join(dir, 'meta.json'))) throw new Error('문서를 찾지 못했습니다: ' + gid);
       const gm = core.readJson(path.join(dir, 'meta.json')) || {};
-      if (gm.format === 'files') throw new Error('규칙 저장소의 기본 문서(여러 파일로 된 문서)는 지울 수 없습니다.');
+      // 폴더가 곧 목록인 문서(folderList — STAgora 작업규칙 · CURECA 밖 팀의 새 문서)는 여러 파일이어도 일반 문서라 지울 수 있다(2026-11-13)
+      if (gm.format === 'files' && !gm.folderList) throw new Error('규칙 저장소의 기본 문서(여러 파일로 된 문서)는 지울 수 없습니다.');
       const trash = path.join(T.guideRoot, '_trash'), dst = path.join(trash, stamp() + '_' + gid);
       fs.mkdirSync(trash, { recursive: true });
       try { fs.renameSync(dir, dst); } catch (e) { fs.cpSync(dir, dst, { recursive: true }); fs.rmSync(dir, { recursive: true, force: true }); }

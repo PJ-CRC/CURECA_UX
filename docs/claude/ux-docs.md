@@ -68,4 +68,4 @@
     - **프로토타입**: `prototypes/*/meta.json`에서 그 화면 · 내용을 쓰는 프로토타입 → `{type:'proto', proto:{id}, name, fileKey, nodeId, frame, change}`
     - `POST /api/jobs {action:'update', id, status:'완료', items:[…], note:'화면 N · 문서 M · 프로토타입 K'}`. 사람이 고르면 화면은 Workbench 수정 요청(type `{카테고리 이름} 반영`, 예: `화면 정의서 반영`), 문서는 그 문서의 guide-edit(이름 = section), 프로토타입은 prototype-edit으로 등록된다 → 평소 순서대로 처리한다.
 
-- **문서 지우기(최고관리자만, 2026-11-12)**: 문서 보기 화면 머리의 [문서 지우기] → `POST /api/guides {action:'delete', id}`. 서버가 폴더를 `guides/_trash/{시각}_{id}`로 옮기고(깃으로 모든 PC에서 사라짐 · 되살리려면 폴더를 제자리로 옮김), 이 PC 작업 기준에서 그 칸을 비운다. 규칙 저장소의 기본 문서(`format:'files'`)는 지울 수 없다. Claude는 문서를 지우지 않는다(요청이 와도 최고관리자에게 화면에서 지우도록 안내).
+- **문서 지우기(최고관리자만, 2026-11-12)**: 문서 보기 화면 머리의 [문서 지우기] → `POST /api/guides {action:'delete', id}`. 서버가 폴더를 `guides/_trash/{시각}_{id}`로 옮기고(깃으로 모든 PC에서 사라짐 · 되살리려면 폴더를 제자리로 옮김), 이 PC 작업 기준에서 그 칸을 비운다. 규칙 저장소의 기본 문서(`format:'files'`, `folderList` 없음)는 지울 수 없다. 폴더가 곧 목록인 문서(`folderList` — STAgora 작업규칙 · CURECA 밖 팀의 새 문서)는 여러 파일이어도 지울 수 있다(2026-11-13). Claude는 문서를 지우지 않는다(요청이 와도 최고관리자에게 화면에서 지우도록 안내).
