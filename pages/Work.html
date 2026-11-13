@@ -10,22 +10,16 @@
 <script src="common.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
 <style>
-:root{
-  --bg:#f6f7f9; --surface:#ffffff; --surface-2:#f3f6fb; --ink:#14171c; --ink-2:#4a5260; --ink-3:#7a8392;
-  --line:#e3e7ee; --accent:#2747d8; --accent-soft:#e6ebff; --shadow:0 1px 2px rgba(16,24,40,.05);
-  --warn-bg:#fff6e0; --warn-ink:#8a5a00; --ok:#1a7f37; --ok-soft:#e3f4e8; --bad:#c62828; --bad-soft:#fdecec; --rev:#7a3fd1; --rev-soft:#f1e9fd;
+:root{ --shadow:0 1px 2px rgba(16,24,40,.05);
+  --warn-bg:#fff6e0; --warn-ink:#8a5a00; --bad:#c62828; --bad-soft:#fdecec; --rev:#7a3fd1; --rev-soft:#f1e9fd;
 }
 @media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#0f1115; --surface:#171a20; --surface-2:#1e232b; --ink:#e8ebf0; --ink-2:#b4bcc8; --ink-3:#8590a0;
-    --line:#2a3039; --accent:#8ea2ff; --accent-soft:#232c52; --shadow:none;
-    --warn-bg:#3a2e12; --warn-ink:#f2c46d; --ok:#56d364; --ok-soft:#173222; --bad:#ff7b72; --bad-soft:#3a1d1d; --rev:#c39bff; --rev-soft:#2c2142;
+  :root:not([data-theme="light"]){ --shadow:none;
+    --warn-bg:#3a2e12; --warn-ink:#f2c46d; --ok-soft:#173222; --bad:#ff7b72; --bad-soft:#3a1d1d; --rev:#c39bff; --rev-soft:#2c2142;
   }
 }
-:root[data-theme="dark"]{
-  --bg:#0f1115; --surface:#171a20; --surface-2:#1e232b; --ink:#e8ebf0; --ink-2:#b4bcc8; --ink-3:#8590a0;
-  --line:#2a3039; --accent:#8ea2ff; --accent-soft:#232c52; --shadow:none;
-  --warn-bg:#3a2e12; --warn-ink:#f2c46d; --ok:#56d364; --ok-soft:#173222; --bad:#ff7b72; --bad-soft:#3a1d1d; --rev:#c39bff; --rev-soft:#2c2142;
+:root[data-theme="dark"]{ --shadow:none;
+  --warn-bg:#3a2e12; --warn-ink:#f2c46d; --ok-soft:#173222; --bad:#ff7b72; --bad-soft:#3a1d1d; --rev:#c39bff; --rev-soft:#2c2142;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 Pretendard,-apple-system,"Segoe UI","Malgun Gothic",sans-serif;-webkit-font-smoothing:antialiased}
@@ -68,12 +62,14 @@ table.t th{background:var(--surface-2);color:var(--ink-2);font-weight:700;text-a
 table.t td{padding:9px 12px;border-top:1px solid var(--line);vertical-align:top}
 table.t tr:first-child td{border-top:0}
 table.t td.num,table.t th.num{text-align:right;font-variant-numeric:tabular-nums}
+table.t td.ctr,table.t th.ctr{text-align:center}
 table.t td.nw{white-space:nowrap}
 .muted{color:var(--ink-3)}
 .pill{display:inline-block;padding:1px 9px;border-radius:999px;font-size:12.5px;font-weight:600;background:var(--surface-2);color:var(--ink-2);white-space:nowrap;border:1px solid var(--line)}
 .pill.done{background:var(--ok-soft);color:var(--ok);border-color:transparent}
 .pill.prog{background:var(--accent-soft);color:var(--accent);border-color:transparent}
 .pill.review{background:var(--rev-soft);color:var(--rev);border-color:transparent}
+.pill.na{background:none;color:var(--ink-3);border-style:dashed}   /* UI 작업필요X 등: 할 일 없음 */
 /* 작업 기록 단계 막대 */
 .wlbar{display:flex;gap:4px;list-style:none;margin:12px 0 0;padding:0;flex-wrap:wrap}
 .wlbar li{flex:1 1 90px;font-size:12px;font-weight:600;padding:5px 8px;border-radius:6px;background:var(--surface-2,#f1f3f6);color:var(--ink-3,#6b7280);text-align:center;white-space:nowrap}
@@ -537,18 +533,17 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       if (hid[i]) continue;
       var r = V[i] || []; if (!r.some(function(c){ return String(c || '').trim(); })) continue;
       var task = g(r, 'task'), menu = g(r, 'menu'); if (!task && !menu) continue;
-      var st = g(r, 'status');
+      var st = g(r, 'status'), ux = g(r, 'uxStatus'), ui = g(r, 'uiStatus');
       if (!st && (C.uxStatus >= 0 || C.uiStatus >= 0)) {
-        var ux = g(r, 'uxStatus'), ui = g(r, 'uiStatus');
         // UX 완료 · UI 완료(또는 작업필요X · 비어 있음)면 완료, UX만 완료면 진행 중, 그 밖에는 UX 상태
         if (done(ux) && (done(ui) || !ui || /필요\s*X|불필요|N\/?A|^-$/i.test(ui))) st = '완료';
         else if (done(ux)) st = '진행 중'; else st = ux || '(시작 전)';
       }
-      var own = g(r, 'owner');
-      if (!own) { var uo = g(r, 'uxOwner'), io = g(r, 'uiOwner'); own = [uo && uo !== '-' ? 'UX ' + uo : '', io && io !== '-' ? 'UI ' + io : ''].filter(Boolean).join(' · '); }
+      var own = g(r, 'owner'), uo = g(r, 'uxOwner'), io = g(r, 'uiOwner');
+      if (!own) { own =[uo && uo !== '-' ? 'UX ' + uo : '', io && io !== '-' ? 'UI ' + io : ''].filter(Boolean).join(' · '); }
       var pd = dates(g(r, 'period')), sd = dates(g(r, 'start'))[0] || pd[0] || null, ed = dates(g(r, 'end'));
       ed = ed[ed.length - 1] || (pd.length > 1 ? pd[pd.length - 1] : null) || (C.end < 0 && C.start < 0 ? pd[0] : null) || null;
-      out.push({ row: i, menu: menu, task: task, status: st, cat: cat(st), owner: own, start: sd, end: ed, share: dates(g(r, 'share'))[0] || null });
+      out.push({ row: i, menu: menu, task: task, status: st, cat: cat(st), ux: ux, ui: ui, uxOwner: uo, uiOwner: io, owner: own, start: sd, end: ed, share: dates(g(r, 'share'))[0] || null });
     }
     return { items: out, cols: C, labels: T.labels, T: T };
   }
@@ -767,6 +762,12 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
 
   /* ── 주간 진행 현황 ── */
   function pill(it){ var c = it.cat; return '<span class="pill ' + (c === 'etc' ? '' : c) + '">' + esc(it.status || '-') + '</span>'; }
+  /* UX · UI 상태 하나(시트 글 그대로). 작업필요X · 불필요 · N/A · - 는 「필요 없음」으로 흐리게 */
+  function pillS(s){
+    s = String(s || '').trim(); if (!s) return '<span class="muted">-</span>';
+    if (/필요\s*X|불필요|N\/?A|^-$/i.test(s)) return '<span class="pill na" title="' + esc(s) + '">필요 없음</span>';
+    var c = cat(s); return '<span class="pill ' + (c === 'etc' ? '' : c) + '">' + esc(s) + '</span>';
+  }
   function period(it){ return (it.start ? ymd(it.start) : '') + (it.start || it.end ? ' ~ ' : '-') + (it.end ? ymd(it.end) : ''); }
   function name(it){ return (it.menu ? '<span class="muted">' + esc(it.menu) + '</span> · ' : '') + esc(it.task || '-'); }
   // 회의: 회의록(md, 공유) + 시트 회의록 중 아직 md로 옮기지 않은 것
@@ -838,11 +839,16 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       '<div class="stat"><div class="l">진행 중</div><div class="v">' + n.prog + '</div></div>' +
       '<div class="stat"><div class="l">리뷰 중(예정)</div><div class="v">' + n.review + '</div></div>' +
       '<div class="stat"><div class="l">완료</div><div class="v">' + n.done + '</div></div></div>' +
-      '<p class="rule">시트 한 줄이 한 건입니다. 업무 상태는 UX 완료 · UI 완료(또는 작업필요X)면 완료, UX만 완료면 진행 중, 그 밖에는 UX 상태(시트에 업무 상태 열이 있으면 그 값). 시작 전 등은 총에만 들어갑니다.</p>';
-    // 이번 주 마감 업무 내역
+      '<p class="rule">시트 한 줄이 한 건입니다. 위 숫자의 업무 상태는 UX 완료 · UI 완료(또는 작업필요X)면 완료, UX만 완료면 진행 중, 그 밖에는 UX 상태(시트에 업무 상태 열이 있으면 그 값). 시작 전 등은 총에만 들어갑니다. 아래 내역에는 UX · UI 상태를 따로 보입니다.</p>';
+    // 이번 주 마감 업무 내역: 시트에 UX · UI 상태 열이 있으면 따로 보인다(업무 완료는 둘 다 완료일 때 — 위 숫자 카드 기준)
+    // 담당자도 시트에 UX · UI 담당 열이 따로 있으면(한 칸짜리 담당자 열이 없을 때) 나눠 보인다
+    var split = W && (W.cols.uxStatus >= 0 || W.cols.uiStatus >= 0) && W.cols.status < 0;
+    var splitO = W && (W.cols.uxOwner >= 0 || W.cols.uiOwner >= 0) && W.cols.owner < 0;
+    function who(v){ v = String(v || '').trim(); return v && v !== '-' ? esc(v) : '<span class="muted">-</span>'; }
     h += '<section class="card"><h3>이번 주 마감 업무 내역</h3>' + (due.length ?
-      '<div class="tbl-wrap"><table class="t"><thead><tr><th>업무명</th><th>상태</th><th>담당자</th><th>기간</th></tr></thead><tbody>' +
-      due.map(function(it){ return '<tr><td>' + name(it) + '</td><td class="nw">' + pill(it) + '</td><td>' + esc(it.owner || '-') + '</td><td class="nw">' + period(it) + '</td></tr>'; }).join('') +
+      '<div class="tbl-wrap"><table class="t"><thead><tr><th>업무명</th>' + (split ? '<th class="ctr">UX 상태</th><th class="ctr">UI 상태</th>' : '<th class="ctr">상태</th>') + (splitO ? '<th class="ctr">UX 담당</th><th class="ctr">UI 담당</th>' : '<th class="ctr">담당자</th>') + '<th>기간</th></tr></thead><tbody>' +
+      due.map(function(it){ return '<tr><td>' + name(it) + '</td>' + (split ? '<td class="nw ctr">' + pillS(it.ux) + '</td><td class="nw ctr">' + pillS(it.ui) + '</td>' : '<td class="nw ctr">' + pill(it) + '</td>') +
+        (splitO ? '<td class="nw ctr">' + who(it.uxOwner) + '</td><td class="nw ctr">' + who(it.uiOwner) + '</td>' : '<td class="ctr">' + esc(it.owner || '-') + '</td>') + '<td class="nw">' + period(it) + '</td></tr>'; }).join('') +
       '</tbody></table></div>' : '<p class="muted" style="margin:0">' + (W ? '이번 주에 마감하는 업무가 없습니다.' : '일정 연결 전입니다.') + '</p>') + '</section>';
     // 개발사 공유 대상(시트에 공유일 열이 있을 때)
     if (W && W.cols.share >= 0) {

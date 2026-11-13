@@ -10,19 +10,13 @@
 <script src="common.js"></script>
 <style>
 :root{
-  --bg:#f6f7f9; --surface:#ffffff; --surface-2:#f3f6fb; --ink:#14171c; --ink-2:#4a5260; --ink-3:#7a8392;
-  --line:#e3e7ee; --accent:#2747d8; --accent-soft:#e6ebff; --red:#d93025; --red-soft:#fdecea;
   --code-bg:#eef1f6; --shadow:0 1px 2px rgba(16,24,40,.05);
 }
 @media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#0f1115; --surface:#171a20; --surface-2:#1e232b; --ink:#e8ebf0; --ink-2:#b4bcc8; --ink-3:#8590a0;
-    --line:#2a3039; --accent:#8ea2ff; --accent-soft:#232c52; --red:#ff7b72; --red-soft:#3a1f1e; --code-bg:#222831; --shadow:none;
+  :root:not([data-theme="light"]){ --code-bg:#222831; --shadow:none;
   }
 }
-:root[data-theme="dark"]{
-  --bg:#0f1115; --surface:#171a20; --surface-2:#1e232b; --ink:#e8ebf0; --ink-2:#b4bcc8; --ink-3:#8590a0;
-  --line:#2a3039; --accent:#8ea2ff; --accent-soft:#232c52; --red:#ff7b72; --red-soft:#3a1f1e; --code-bg:#222831; --shadow:none;
+:root[data-theme="dark"]{ --code-bg:#222831; --shadow:none;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
