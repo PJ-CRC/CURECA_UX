@@ -63,7 +63,18 @@ a{color:var(--accent)}
 .path code{flex:1;font:12.5px "JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .path .btn{flex:none;height:28px;padding:0 10px;font-size:12.5px}
 .msg{font-size:13px;margin:6px 0 0}
-/* 7단계 Claude Code 위치 */
+/* 4 · 5단계 방법 고르기(둘 중 하나만 해도 완료) */
+.way{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:4px 0 14px}
+.way-b{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);cursor:pointer;font:inherit}
+.way-b b{font-size:14px}
+.way-b small{font-size:12px;color:var(--ink-3);line-height:1.4}
+.way-b:hover{border-color:var(--accent)}
+.way-b[aria-checked="true"]{border-color:var(--accent);background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent)}
+.way-b:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.way-h{font-size:13.5px;margin:16px 0 4px}
+.way-p > .way-h:first-child{margin-top:0}
+@media (max-width:560px){ .way{grid-template-columns:1fr} }
+/* Claude Code 위치(5단계 CLI) */
 .cc-path{background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:8px 0}
 .cc-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px}
 .cc-row + .cc-row{margin-top:8px}
@@ -153,9 +164,9 @@ a{color:var(--accent)}
   <header class="app-head">
     <div class="app-head-t">
       <h1>Workbench 시작 안내</h1>
-      <p class="one-line" title="이 PC에서 Workbench로 Figma 수정 요청을 처리하려면 아래 8단계를 한 번만 해 두면 됩니다.">이 PC에서 Workbench로 Figma 수정 요청을 처리하려면 아래 8단계를 한 번만 해 두면 됩니다.</p>
+      <p class="one-line" title="이 PC에서 Workbench로 Figma 수정 요청을 처리하려면 아래 6단계를 한 번만 해 두면 됩니다.">이 PC에서 Workbench로 Figma 수정 요청을 처리하려면 아래 6단계를 한 번만 해 두면 됩니다(4 · 5단계는 둘 중 하나만).</p>
     </div>
-    <div class="app-head-act"><button type="button" class="btn" id="manBtn" title="Figma AI Run 사용 매뉴얼 · FAQ 보기"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4h6a4 4 0 0 1 4 4v12a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v12a3 3 0 0 1 3-3h7z"/></svg>매뉴얼</button><span class="prog"><span class="bar"><i id="barFill"></i></span><b id="progTxt">0 / 8 완료</b></span></div>
+    <div class="app-head-act"><button type="button" class="btn" id="manBtn" title="Figma AI Run 사용 매뉴얼 · FAQ 보기"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4h6a4 4 0 0 1 4 4v12a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v12a3 3 0 0 1 3-3h7z"/></svg>매뉴얼</button><span class="prog"><span class="bar"><i id="barFill"></i></span><b id="progTxt">0 / 6 완료</b></span></div>
   </header>
   <p class="hint sub">처음 열면 <b>Claude · Figma 실행과 깃허브 연결을 자동으로 시작</b>하고, 끝난 단계는 저절로 체크됩니다.</p>
   <p class="msg" id="autoMsg" hidden></p>
@@ -175,7 +186,7 @@ a{color:var(--accent)}
 
   <!-- 2 -->
   <details class="step" id="s2">
-    <summary><span class="num">2</span><span class="ttl">Figma 데스크톱 앱 실행 · 로그인<small>플러그인은 데스크톱 앱에서만 등록됩니다</small></span><span class="chip" data-chip></span></summary>
+    <summary><span class="num">2</span><span class="ttl">Figma 로그인<small>플러그인을 쓰면 데스크톱 앱, 토큰을 쓰면 웹 로그인만으로도 됩니다</small></span><span class="chip" data-chip></span></summary>
     <div class="body">
       <p class="msg" id="figmaEnv"></p>
       <ol>
@@ -204,10 +215,30 @@ a{color:var(--accent)}
     </div>
   </details>
 
-  <!-- 4 -->
+  <!-- 4: Figma 연결 — 플러그인 · 토큰 중 하나(2026-11-13, 둘 다 해도 된다) -->
   <details class="step" id="s4">
-    <summary><span class="num">4</span><span class="ttl">Figma 플러그인 등록 · 실행<small>Common UX Sync — 캡처 자동 반영, 서버 연결</small></span><span class="chip" data-chip></span></summary>
+    <summary><span class="num">4</span><span class="ttl">Figma 연결<small>플러그인 또는 토큰 중 하나 — 캡처 · 프레임 목록을 받는 방법</small></span><span class="chip" data-chip></span></summary>
     <div class="body">
+      <div class="way" role="radiogroup" aria-label="Figma 연결 방법"><button type="button" class="way-b" role="radio" data-way="token" aria-checked="false"><b>토큰</b><small>Figma 앱을 안 켜도 서버가 받음 · 댓글 보기/쓰기</small></button><button type="button" class="way-b" role="radio" data-way="plugin" aria-checked="false"><b>플러그인</b><small>Figma 데스크톱 앱에서 실행해 두기</small></button></div>
+      <div class="way-p" data-pane="figma-token">
+        <p class="msg" id="tokMsg">확인 중…</p><span class="chip" id="tokChip" hidden></span>
+<ol>
+        <li>Figma(웹 또는 앱) 왼쪽 위 내 계정 › <b>Settings › Security › Personal access tokens</b> › <b>Generate new token</b></li>
+        <li>이름은 아무거나(예: Figma AI Run), <b>만료</b> 기간은 Figma에서 정합니다(최대 90일). <b>그때 고른 기간을 아래 「만료」에도 똑같이 골라 주세요</b> — Figma가 만료일을 알려 주지 않아, 저장한 날부터 그 기간으로 남은 날(D-day)을 보여 줍니다.</li>
+        <li>권한(Scopes)은 <b>File content: Read</b> · <b>File versions: Read</b> · <b>Comments: Read and write</b>만 고르고 나머지는 <b>No access</b>로 둡니다.</li>
+        <li>만든 토큰(<code>figd_</code>로 시작)을 복사해 아래에 붙여 넣고 <b>저장</b>을 누릅니다. 토큰은 만들 때 한 번만 보이니 바로 붙여 넣으세요.</li>
+      </ol>
+      <div class="row">
+        <input class="inp" id="tokIn" type="password" autocomplete="off" spellcheck="false" placeholder="figd_…" aria-label="Figma 개인 액세스 토큰">
+        <select class="inp" id="tokDays" aria-label="토큰 만료 기간" style="flex:none;width:auto"><option value="90" selected>만료 90일</option><option value="30">만료 30일</option><option value="7">만료 7일</option><option value="1">만료 1일</option></select>
+        <button class="btn pri" id="tokSave">저장</button>
+      </div>
+      <div class="row"><button class="btn" id="tokCheck" style="display:none">연결 확인</button><button class="btn" id="tokDel" style="display:none">토큰 지우기</button>
+        <span id="tokExpBox" style="display:none;align-items:center;gap:6px"><label for="tokExpDays" class="hint" style="margin:0">저장한 토큰의 만료 기간</label><select class="inp" id="tokExpDays" style="width:auto"><option value="90">90일</option><option value="30">30일</option><option value="7">7일</option><option value="1">1일</option></select></span></div>
+      <p class="hint">토큰은 <b>이 PC에만</b> 저장되고(작업 이력 · 배포에 들어가지 않음) Figma 말고는 어디에도 보내지 않습니다. 화면에는 끝 4자리만 보입니다.
+        파일을 <b>Full · Dev 좌석</b>으로 볼 수 있는 계정의 토큰이어야 캡처를 충분히 받을 수 있습니다(View · Collab 좌석은 한 달에 몇 번뿐).</p>
+      </div>
+      <div class="way-p" data-pane="figma-plugin">
       <ol>
         <li>Figma 데스크톱 앱에서 3단계의 파일을 엽니다.</li>
         <li>메뉴 › <b>Plugins › Development › Import plugin from manifest…</b></li>
@@ -220,13 +251,17 @@ a{color:var(--accent)}
       </ol>
       <p class="msg" id="pluginEnv"></p>
       <label class="chk"><input type="checkbox" data-check="plugin"> 플러그인에 「서버 연결됨」이 보여요</label>
+      </div>
     </div>
   </details>
 
-  <!-- 5 -->
+  <!-- 5: Claude 연결 — 앱 · CLI(백그라운드) 중 하나(2026-11-13, 둘 다 해도 된다 · 같은 요청을 두 번 처리하지 않는다) -->
   <details class="step" id="s5">
-    <summary><span class="num">5</span><span class="ttl">Claude 앱 실행 · 작업 폴더 열기<small>Claude가 이 폴더의 규칙(CLAUDE.md)을 읽고 일합니다</small></span><span class="chip" data-chip></span></summary>
+    <summary><span class="num">5</span><span class="ttl">Claude 연결<small>앱 또는 CLI(백그라운드) 중 하나 — Claude가 요청을 받아 Figma에 반영</small></span><span class="chip" data-chip></span></summary>
     <div class="body">
+      <div class="way" role="radiogroup" aria-label="Claude 연결 방법"><button type="button" class="way-b" role="radio" data-way="app" aria-checked="false"><b>Claude 앱</b><small>앱 Code 탭에서 대화로 감시 · 창을 켜 두기</small></button><button type="button" class="way-b" role="radio" data-way="cli" aria-checked="false"><b>CLI (백그라운드)</b><small>창 없이 뒤에서 처리 · 실행할 때 자동 시작</small></button></div>
+      <div class="way-p" data-pane="claude-app">
+        <h4 class="way-h">① Claude 앱에서 작업 폴더 열기</h4>
       <p class="msg" id="claudeEnv"></p>
       <ol>
         <li>Claude 데스크톱 앱을 실행하고 <b>본인 계정</b>으로 로그인합니다.</li>
@@ -241,26 +276,18 @@ a{color:var(--accent)}
       <p class="hint" id="cliHint">터미널을 쓰는 경우: 작업 폴더에서 <code>claude</code>를 실행해도 됩니다 (Claude Code CLI).</p>
       <div class="row" id="cliRow" hidden><button class="btn" data-launch="claude-cli">터미널에서 Claude Code 열기 (직접 작업)</button></div>
       <label class="chk"><input type="checkbox" data-check="claude"> Claude Code 탭에서 이 폴더를 열었어요</label>
-    </div>
-  </details>
-
-  <!-- 6 -->
-  <details class="step" id="s6">
-    <summary><span class="num">6</span><span class="ttl">Claude에 Figma 연결<small>Claude가 본인 Figma 계정으로 파일을 고칩니다</small></span><span class="chip" data-chip></span></summary>
-    <div class="body">
+        <h4 class="way-h">② Claude에 Figma 연결</h4>
       <ol>
         <li>Claude 앱 › <b>설정 › 커넥터(Connectors)</b>에서 <b>Figma</b>를 연결하고, 2단계와 같은 Figma 계정으로 로그인합니다.<br><span class="hint">CLI는 Claude 창에서 <code>/mcp</code> › figma › 인증</span></li>
         <li>아래 문장을 복사해 Claude에 보냅니다. Claude가 작업 파일에 접근할 수 있는지 확인해 줍니다.</li>
       </ol>
       <div class="path"><code id="promptCheck">…</code><button class="btn" data-copy="promptCheck">문장 복사</button></div>
       <label class="chk"><input type="checkbox" data-check="connector"> Claude가 Figma 파일 접근을 확인했어요</label>
-    </div>
-  </details>
-
-  <!-- 7 -->
-  <details class="step" id="s7">
-    <summary><span class="num">7</span><span class="ttl">요청 감시 (백그라운드)<small>창 없이 Claude가 Workbench 요청을 받아 Figma에 반영</small></span><span class="chip" data-chip></span></summary>
-    <div class="body">
+        <h4 class="way-h">③ 요청 감시 시작</h4>
+        <div class="path"><code id="promptWatch">…</code><button class="btn" data-copy="promptWatch">문장 복사</button></div>
+        <p class="hint">문장을 복사해 Claude 앱 Code 탭 대화에 보내면 그 대화가 감시합니다. 감시 중에는 그 창을 닫지 마세요.</p>
+      </div>
+      <div class="way-p" data-pane="claude-cli">
       <p class="msg" id="agentEnv"></p>
       <!-- Claude Code 위치: 찾은 경로를 보여 주고, 못 찾으면 터미널의 which claude(윈도우 where claude) 결과를 넣어 직접 지정 -->
       <div class="cc-path" id="ccBox">
@@ -285,16 +312,13 @@ a{color:var(--accent)}
       <p class="msg" id="watchEnv"></p>
       <label class="hint" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="autoWatch"> Figma AI Run을 실행할 때 백그라운드 감시를 자동으로 시작</label>
       <p class="hint">직접 작업할 때는 지금처럼 Claude 앱 Code 탭이나 터미널에서 Claude Code를 열어 쓰면 됩니다. 백그라운드 감시가 켜져 있으면 그 창에서는 감시를 따로 시작하지 않습니다(같은 요청을 두 번 처리하지 않게). 처리 기록은 <code>workbench/.agent.log</code>에 남습니다.</p>
-      <details class="hint"><summary>CLI가 없을 때 (Claude 앱 대화로 감시)</summary>
-        <div class="path"><code id="promptWatch">…</code><button class="btn" data-copy="promptWatch">문장 복사</button></div>
-        <p class="hint">문장을 복사해 Claude 앱 Code 탭 대화에 보내면 그 대화가 감시합니다. 감시 중에는 그 창을 닫지 마세요.</p>
-      </details>
+      </div>
     </div>
   </details>
 
-  <!-- 8 -->
+  <!-- 6 (예전 8): 깃허브 -->
   <details class="step" id="s8">
-    <summary><span class="num">8</span><span class="ttl">작업 이력 공유 (깃허브 연결)<small>누가 · 어떤 프레임을 · 무엇을 고쳤는지 모든 작업자의 「변경 이력」에 보입니다</small></span><span class="chip" data-chip></span></summary>
+    <summary><span class="num">6</span><span class="ttl">작업 이력 공유 (깃허브 연결)<small>누가 · 어떤 프레임을 · 무엇을 고쳤는지 모든 작업자의 「변경 이력」에 보입니다</small></span><span class="chip" data-chip></span></summary>
     <div class="body">
       <p class="msg" id="gitEnv"></p>
       <ol>
@@ -306,28 +330,6 @@ a{color:var(--accent)}
     </div>
   </details>
 
-  <!-- 선택: Figma 토큰(진행 수에 넣지 않는다). 넣으면 Figma 앱 · 플러그인 없이 서버가 Figma REST API로 캡처를 받는다(node/server/figma.js) -->
-  <details class="step opt" id="sTok">
-    <summary><span class="num">+</span><span class="ttl">Figma 토큰 (선택)<small>넣으면 Figma 앱을 켜지 않아도 수정한 화면의 캡처를 서버가 직접 받습니다</small></span><span class="chip" id="tokChip"></span></summary>
-    <div class="body">
-      <p class="msg" id="tokMsg">확인 중…</p>
-      <ol>
-        <li>Figma(웹 또는 앱) 왼쪽 위 내 계정 › <b>Settings › Security › Personal access tokens</b> › <b>Generate new token</b></li>
-        <li>이름은 아무거나(예: Figma AI Run), <b>만료</b> 기간은 Figma에서 정합니다(최대 90일). <b>그때 고른 기간을 아래 「만료」에도 똑같이 골라 주세요</b> — Figma가 만료일을 알려 주지 않아, 저장한 날부터 그 기간으로 남은 날(D-day)을 보여 줍니다.</li>
-        <li>권한(Scopes)은 <b>File content: Read</b> · <b>File versions: Read</b> · <b>Comments: Read and write</b>만 고르고 나머지는 <b>No access</b>로 둡니다.</li>
-        <li>만든 토큰(<code>figd_</code>로 시작)을 복사해 아래에 붙여 넣고 <b>저장</b>을 누릅니다. 토큰은 만들 때 한 번만 보이니 바로 붙여 넣으세요.</li>
-      </ol>
-      <div class="row">
-        <input class="inp" id="tokIn" type="password" autocomplete="off" spellcheck="false" placeholder="figd_…" aria-label="Figma 개인 액세스 토큰">
-        <select class="inp" id="tokDays" aria-label="토큰 만료 기간" style="flex:none;width:auto"><option value="90" selected>만료 90일</option><option value="30">만료 30일</option><option value="7">만료 7일</option><option value="1">만료 1일</option></select>
-        <button class="btn pri" id="tokSave">저장</button>
-      </div>
-      <div class="row"><button class="btn" id="tokCheck" style="display:none">연결 확인</button><button class="btn" id="tokDel" style="display:none">토큰 지우기</button>
-        <span id="tokExpBox" style="display:none;align-items:center;gap:6px"><label for="tokExpDays" class="hint" style="margin:0">저장한 토큰의 만료 기간</label><select class="inp" id="tokExpDays" style="width:auto"><option value="90">90일</option><option value="30">30일</option><option value="7">7일</option><option value="1">1일</option></select></span></div>
-      <p class="hint">토큰은 <b>이 PC에만</b> 저장되고(작업 이력 · 배포에 들어가지 않음) Figma 말고는 어디에도 보내지 않습니다. 화면에는 끝 4자리만 보입니다.
-        파일을 <b>Full · Dev 좌석</b>으로 볼 수 있는 계정의 토큰이어야 캡처를 충분히 받을 수 있습니다(View · Collab 좌석은 한 달에 몇 번뿐).</p>
-    </div>
-  </details>
 
   <div class="pager"><button class="btn" id="prevStep">이전 단계</button><button class="btn pri" id="nextStep">다음 단계</button></div>
   </div>
@@ -346,7 +348,7 @@ a{color:var(--accent)}
   /* 작업 파일(프로젝트)은 3단계에 넣은 링크로만 정한다. 기본 프로젝트는 없다 */
   var S = { state: { checks: {} }, env: null, online: false }, isMac = /Mac/.test(navigator.platform);
   var $ = function(id){ return document.getElementById(id); };
-  var steps = ['s1','s2','s3','s4','s5','s6','s7','s8'];
+  var steps = ['s1','s2','s3','s4','s5','s8'];   // 4 Figma 연결(플러그인 | 토큰) · 5 Claude 연결(앱 | CLI) · s8 = 6 깃허브(2026-11-13 8단계 → 6단계)
   var opened = false;
   /* 넓은 화면: 고른 단계(sel)만 오른쪽에 보인다 */
   var wide = window.matchMedia('(min-width:1100px)'), sel = null;
@@ -357,7 +359,6 @@ a{color:var(--accent)}
       var li = $('nav-' + x); li.classList.toggle('sel', x === id);
       li.querySelector('button').setAttribute('aria-current', x === id ? 'step' : 'false');
     });
-    $('sTok').classList.toggle('sel', id === 'sTok'); var tl = $('nav-sTok'); if (tl) { tl.classList.toggle('sel', id === 'sTok'); tl.querySelector('button').setAttribute('aria-current', id === 'sTok' ? 'step' : 'false'); }
     $(id).open = true;
     var i = steps.indexOf(id);
     $('prevStep').disabled = i <= 0; $('nextStep').disabled = i < 0 || i >= steps.length - 1;
@@ -412,11 +413,14 @@ a{color:var(--accent)}
       s1: { done: ok[0], chip: (S.state.user || '').trim() ? ['ok', S.state.user] : ['wait', '입력 필요'] },
       s2: { done: ok[1], chip: c.figma ? ['ok', '완료'] : (e.figmaInstalled === false ? ['bad', '설치 필요'] : ['wait', '확인 필요']) },
       s3: { done: ok[2], chip: fig ? (edName() ? ['ok', '연결됨 · ' + edName()] : S.cat ? ['ok', '연결됨 · 목록 받음'] : ['ok', '연결됨 · 목록 대기']) : ['wait', '링크 필요'] },
-      s4: { done: ok[3], chip: plugin ? ['ok', '플러그인 연결됨'] : (c.plugin ? ['ok', '완료'] : ['wait', '연결 대기']) },
-      s5: { done: ok[4], chip: c.claude ? ['ok', '완료'] : (e.claudeInstalled === false && !e.claudeCli ? ['bad', '설치 필요'] : ['wait', '확인 필요']) },
-      s6: { done: ok[5], chip: c.connector ? ['ok', '완료'] : ['wait', '확인 필요'] },
-      s7: { done: ok[6], chip: ag.alive ? (ag.status === 'login' ? ['bad', '로그인 필요'] : ag.status === 'figma' ? ['bad', 'Figma 연결 필요'] : ag.status === 'error' ? ['bad', '확인 필요'] : ag.status === 'working' ? ['ok', '처리 중'] : ['ok', '백그라운드 감시 중']) : watch ? ['ok', '감시 중 (Claude 창)'] : ['bad', ag.status === 'stopped' ? '중지됨' : '감시 꺼짐'] },
-      s8: { done: ok[7],
+      /* 4: 플러그인 · 토큰 중 하나 */
+      s4: { done: ok[3], chip: e.figmaToken && plugin ? ['ok', '토큰 · 플러그인'] : e.figmaToken ? ['ok', '토큰' + (S.tok && S.tok.dd != null ? ' · D-' + S.tok.dd : '')] :
+            plugin ? ['ok', '플러그인 연결됨'] : c.plugin ? ['ok', '플러그인 완료'] : S.tok && S.tok.dead ? ['bad', '토큰 만료'] : ['wait', '연결 대기'] },
+      /* 5: 앱(대화로 감시) · CLI(백그라운드) 중 하나 */
+      s5: { done: ok[4], chip: ag.alive ? (ag.status === 'login' ? ['bad', '로그인 필요'] : ag.status === 'figma' ? ['bad', 'Figma 연결 필요'] : ag.status === 'error' ? ['bad', '확인 필요'] : ag.status === 'working' ? ['ok', 'CLI · 처리 중'] : ['ok', 'CLI · 감시 중']) :
+            watch ? (c.connector ? ['ok', '앱 · 감시 중'] : ['wait', '앱 · Figma 연결 체크 필요']) :
+            e.claudeInstalled === false && !e.claudeCli ? ['bad', '설치 필요'] : ['bad', ag.status === 'stopped' ? '감시 중지됨' : '감시 꺼짐'] },
+      s8: { done: ok[5],
             chip: e.historySync && e.historySync.ok ? ['ok', '연결됨'] : e.historySyncing ? ['wait', '연결 중…'] : e.gitInstalled === false ? ['bad', 'git 설치 필요'] :
               e.historySync ? ['bad', /로그인/.test(e.historySync.message) ? '로그인 필요' : '확인 필요'] : ['wait', '연결 대기'] }
     };
@@ -444,14 +448,24 @@ a{color:var(--accent)}
     if (!opened && S.env) {
       opened = true;
       steps.forEach(function(id){ $(id).open = !st[id].done && (id === cur || !cur); });
-      if (!cur) $('s7').open = true;
-      select(cur || 's7');
+      if (!cur) $('s5').open = true;
+      select(cur || 's5');
     }
     if (window.WB_SETUP_WARN && S.env) window.WB_SETUP_WARN({ state: S.state, env: S.env });   // 상단 메뉴 「시작 안내」 경고도 바로
     $('barFill').style.width = (n / steps.length * 100) + '%';
     $('progTxt').textContent = n + ' / ' + steps.length + ' 완료';
 
     var e = S.env || {}, c = checks();
+    /* 방법 고르기(4 · 5단계): 고른 적이 없으면 이미 된 쪽 → 기본(토큰 · 앱) */
+    var way = {
+      figma: S.state.figmaWay || (e.figmaToken ? 'token' : (e.pluginSeenSec != null && e.pluginSeenSec < 600) || c.plugin ? 'plugin' : 'token'),
+      claude: S.state.claudeWay || ((e.agent || {}).alive || (e.claudeCli && !e.claudeInstalled) ? 'cli' : 'app')
+    };
+    document.querySelectorAll('.way').forEach(function(g){
+      var k = g.closest('#s4') ? 'figma' : 'claude';
+      g.querySelectorAll('[data-way]').forEach(function(b){ var on = b.dataset.way === way[k]; b.setAttribute('aria-checked', on); b.tabIndex = on ? 0 : -1; });
+    });
+    document.querySelectorAll('[data-pane]').forEach(function(p){ var a = p.dataset.pane.split('-'); p.hidden = way[a[0]] !== a[1]; });
     document.querySelectorAll('[data-check]').forEach(function(b){ b.checked = !!c[b.dataset.check]; });
     if (document.activeElement !== $('userName') && !$('userName').value) $('userName').value = S.state.user || store('cux.user') || '';
     if (document.activeElement !== $('figUrl') && !$('figUrl').value) $('figUrl').value = S.state.figmaUrl || '';
@@ -542,7 +556,7 @@ a{color:var(--accent)}
       if (!(e.historySync && e.historySync.ok)) { setTimeout(function(){ launch('git-login'); }, 3000); did.push('깃허브 연결' + (e.gitInstalled ? '' : '(git 설치부터)')); }
       var m = $('autoMsg'); m.hidden = false; m.className = 'msg ok';
       m.textContent = '자동으로 시작했습니다: ' + did.join(' · ') + '.' + (todo.length ? ' 남은 것: ' + todo.join(' · ') + '.' : '') +
-        ' 이름 입력(1단계), 플러그인(4단계), Claude에 Figma 연결(6단계), 감시 시작(7단계)은 아래 안내대로 진행하세요.';
+        ' 이름 입력(1단계), Figma 연결(4단계 · 토큰 또는 플러그인), Claude 연결(5단계 · 앱 또는 CLI)은 아래 안내대로 진행하세요.';
     });
   }
   function copy(id){
@@ -590,9 +604,8 @@ a{color:var(--accent)}
   /* 단계 목록: 각 단계 제목(작은 설명 앞 글)으로 만든다 */
   $('snav').innerHTML = steps.map(function(id, i){
     var t = $(id).querySelector('.ttl').firstChild.textContent.trim();
-    return '<li id="nav-' + id + '"><button type="button" data-step="' + id + '"><span class="sn">' + (i + 1) + '</span><span class="st">' + (i + 1) + ' ' + esc(t) + '</span></button></li>';
-  }).join('') +
-    '<li id="nav-sTok" class="opt"><button type="button" data-step="sTok"><span class="sn">+</span><span class="st">Figma 토큰 (선택)</span><span class="dd" id="tokNavDd"></span></button></li>';
+    return '<li id="nav-' + id + '"><button type="button" data-step="' + id + '"><span class="sn">' + (i + 1) + '</span><span class="st">' + (i + 1) + ' ' + esc(t) + '</span>' + (id === 's4' ? '<span class="dd" id="tokNavDd"></span>' : '') + '</button></li>';   // 4단계 옆: 토큰 D-day
+  }).join('');
   /* ── Figma 토큰(선택) ── 서버(/api/figma)는 토큰을 내보내지 않고 있음 · 계정 · 끝 4자리만 */
   function tokPost(b){ return fetch('/api/figma', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(b) }).then(function(r){ return r.json().catch(function(){ return { error: '서버 응답 오류(HTTP ' + r.status + ')' }; }); }).then(function(d){ if (d.error) throw new Error(d.error); return d; }); }
   /* 만료일(YYYY-MM-DD) → 남은 날(오늘 0시 기준) */
@@ -604,9 +617,11 @@ a{color:var(--accent)}
     var dead = on && (!!d.deadAt || (left != null && left < 0)), soon = on && !dead && left != null && left <= 7;
     chip.className = 'chip ' + (on ? (dead ? 'bad' : soon ? 'warn' : 'ok') : '');
     chip.textContent = d === null ? '' : !on ? '선택' : dead ? '만료됨' : left === 0 ? 'D-00 오늘 만료' : dd || '연결됨';
-    $('sTok').classList.toggle('done', !!on && !dead);
-    var tl = $('nav-sTok'); if (tl) { tl.classList.toggle('on', !!on && !dead); tl.querySelector('.sn').textContent = on && !dead ? '✓' : '+'; }
-    /* 왼쪽 단계 목록에도 D-day(제목 옆 표시와 같은 글 · 색) */
+    chip.hidden = !on;
+    /* 4단계(Figma 연결) 완료 · 칩에 쓰도록 기억(서버 env는 15초 보관이라 저장 직후에는 이 값을 쓴다) */
+    S.tok = d ? { on: !!on && !dead, dead: !!dead, dd: dd, soon: soon } : null;
+    if (S.env) { var tv = !!on && !dead; if (S.env.figmaToken !== tv) { S.env.figmaToken = tv; render(); } }
+    /* 왼쪽 단계 목록 4단계 옆에도 D-day(토큰을 쓸 때) */
     var nd = $('tokNavDd'); if (nd) { nd.textContent = on && (dd || dead) ? (dead ? '만료됨' : dd) : ''; nd.className = 'dd ' + (dead ? 'bad' : soon ? 'warn' : 'ok'); }
     $('tokCheck').style.display = $('tokDel').style.display = on ? '' : 'none';
     $('tokExpBox').style.display = on && d.expires ? 'inline-flex' : 'none';
@@ -633,6 +648,21 @@ a{color:var(--accent)}
   tokLoad();
 
   select('s1');
+  /* 방법 고르기: 누르면 저장(PC별 setup.json figmaWay · claudeWay). 좌우 화살표로도 바꾼다(라디오) */
+  function pickWay(b){
+    var k = b.closest('#s4') ? 'figmaWay' : 'claudeWay', p = {}; p[k] = b.dataset.way;
+    S.state[k] = b.dataset.way; render(); b.focus();
+    save(p).catch(function(x){ toast('저장하지 못했습니다: ' + x.message); });
+  }
+  document.querySelectorAll('.way [data-way]').forEach(function(b){
+    b.onclick = function(){ pickWay(b); };
+    b.onkeydown = function(ev){
+      if (ev.key !== 'ArrowLeft' && ev.key !== 'ArrowRight' && ev.key !== 'ArrowUp' && ev.key !== 'ArrowDown') return;
+      ev.preventDefault();
+      var o = b.parentNode.querySelector('[data-way]:not([data-way="' + b.dataset.way + '"])');
+      if (o) pickWay(o);
+    };
+  });
   load();
   setInterval(load, 4000);
 })();
@@ -654,7 +684,7 @@ a{color:var(--accent)}
 <script>
 /* 사용 매뉴얼 · FAQ: 쪽 그림을 같은 화면에서 넘겨 본다(내려받기 버튼 없음). ← → 쪽 넘김, Esc 닫기, 그림 누르면 크게 */
 (function(){
-  var T = ['표지','목차','시작하기 전에','로그인','상단 메뉴','시작 안내 한눈에','시작 안내 1·2단계','시작 안내 3·4단계','시작 안내 5·6단계','시작 안내 7단계','시작 안내 8단계','시작 안내 Figma 토큰','Workbench 화면 구성','수정 요청 · 답변','Figma 댓글','UX 문서 · 작업 기준','UX 문서 · 문서 수정','일정/작업','변경 이력','사용량 통계','이용 시 유의사항 1','이용 시 유의사항 2','문제 해결 FAQ 1','문제 해결 FAQ 2'];
+  var T = ['표지','목차','시작하기 전에','로그인','상단 메뉴','시작 안내 한눈에','시작 안내 1·2단계','시작 안내 3·4단계','4단계 Figma 토큰','5단계 Claude 앱','5단계 CLI(백그라운드)','6단계 깃허브','Workbench 화면 구성','수정 요청 · 답변','Figma 댓글','UX 문서 · 작업 기준','UX 문서 · 문서 수정','일정/작업','변경 이력','사용량 통계','이용 시 유의사항 1','이용 시 유의사항 2','문제 해결 FAQ 1','문제 해결 FAQ 2'];
   var $m = function(id){ return document.getElementById(id); }, cur = 0, last = null;
   var src = function(i){ return 'docs/manual/p' + (i < 9 ? '0' : '') + (i + 1) + '.jpg'; };
   $m('manToc').innerHTML = T.map(function(t, i){ return '<li><button type="button" data-i="' + i + '"><b>' + (i + 1) + '</b><span>' + t + '</span></button></li>'; }).join('');

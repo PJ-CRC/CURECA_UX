@@ -30,14 +30,14 @@ Figma 파일을 프로젝트 단위로 다루는 Workbench(수정 요청 · Clau
 | `Common_UX_Changelog.md` | Figma 화면 수정 이력 |
 | `RELEASE_NOTES.md` | Workbench(Figma AI Run) 버전별 릴리즈 노트 (release 브랜치 · 설치 압축에도 들어감) |
 | `docs/Architecture_and_Resources.md` | 동작 구조, 수정 방식별 흐름, 캡처 방식, 사용 리소스와 비용, 수정자 확인 방법 |
-| `Setup.html` | 첫 실행 시작 안내. 처음 열면 Claude · Figma 실행, 기본 작업 링크, git 설치 또는 깃허브 연결을 자동으로 시작. 작업 링크 · 플러그인 · Figma 연결 · 요청 감시 · 작업 이력 공유까지 8단계로 안내하고 상태를 자동 확인 |
+| `Setup.html` | 첫 실행 시작 안내. 처음 열면 Claude · Figma 실행, 기본 작업 링크, git 설치 또는 깃허브 연결을 자동으로 시작. 작업 링크 · 플러그인 · Figma 연결 · 요청 감시 · 작업 이력 공유까지 6단계로 안내(Figma 연결 = 토큰 또는 플러그인, Claude 연결 = 앱 또는 CLI)하고 상태를 자동 확인 |
 | `docs/Workbench_Setup_Other_PC.md` | 다른 PC · 본인 Figma · Claude 계정으로 Workbench를 실행하고 요청을 처리하는 준비 절차 |
 | `CLAUDE.md` | Claude Code가 이 폴더에서 따르는 작업 규칙 (범위, 요청 처리 순서, 캡처 갱신) |
 | `Prototypes.html` · `Prototype.html` | 프로토타입 목록 · 만들기(화면 고르기) · 보기. Claude가 만든 동작형 HTML 프로토타입이 이 PC의 `prototypes/{id}/`에 쌓인다(예시: `prototypes/assay-pack`, Assay Pack Setting T-IOS 2.0). |
 | `Login.html` · `Account.html` · `Accounts.html` | 로그인 · 내 정보(비밀번호 변경) · 계정 관리(최고관리자). 계정은 `.history/accounts/{id}.json`(비밀번호는 해시)으로 깃을 통해 모든 PC에 공유되고, 계정마다 쓸 수 있는 메뉴를 정한다 |
 | `Change_History.html` | 변경 이력: 모든 작업자의 작업 이력(깃 공유) · 이 PC 수정 요청을 최신순으로 표시. 10개씩 페이지네이션, 종류 필터, [깃 동기화] |
 | `workbench/history_sync.ps1` · `.sh` | 작업 이력(`.history/`)을 깃 `history` 브랜치로 받고 올림. 서버가 뒤에서 실행 |
-| `workbench/agent.ps1` · `.pl` | 백그라운드 Claude 에이전트: 창 없이 요청을 감시하고, 요청 · 작업이 생기면 **계속 떠 있는** Claude Code CLI 세션(`claude -p` stream-json)에 보내 CLAUDE.md 규칙대로 처리. 컨텍스트 80%면 자동 압축, 30분 쉬면 세션 새로. Figma AI Run 실행 때 서버가 자동으로 띄움(시작 안내 7단계에서 시작 · 중지, 처음 한 번 CLI 로그인 · Figma 연결). 상태 `.agent.json`, 기록 `.agent.log` |
+| `workbench/agent.ps1` · `.pl` | 백그라운드 Claude 에이전트: 창 없이 요청을 감시하고, 요청 · 작업이 생기면 **계속 떠 있는** Claude Code CLI 세션(`claude -p` stream-json)에 보내 CLAUDE.md 규칙대로 처리. 컨텍스트 80%면 자동 압축, 30분 쉬면 세션 새로. Figma AI Run 실행 때 서버가 자동으로 띄움(시작 안내 5단계(CLI)에서 시작 · 중지, 처음 한 번 CLI 로그인 · Figma 연결). 상태 `.agent.json`, 기록 `.agent.log` |
 | `Usage_Stats.html` | 사용량 통계: 작업마다 Claude가 쓴 토큰(입력 · 캐시 쓰기 · 캐시 읽기 · 출력)과 금액 환산을 작업자별 · 작업별로 표시. 기간 · 작업자 필터 |
 | `workbench/usage.ps1` · `.pl` · `pricing.json` | 요청 하나의 사용량을 Claude Code 대화 기록에서 더해 `.history/usage/`에 남김(요청 완료 때 서버가 실행). 금액은 `pricing.json` 단가로 환산 |
 | `Figma_Workbench.html` · `workbench/` | 작업 페이지(작업 링크의 페이지). 왼쪽 depth 메뉴 · Claude 답변, 오른쪽 캡처와 그 아래 수정 요청 입력 (아래 사용법) |
@@ -110,7 +110,7 @@ Figma 데스크톱 앱에서 켜 두면 **Claude · Workbench와 연동**한다.
   - 요청을 등록하거나 상태(대기 · 진행 중 · 보류 · 완료)가 바뀌면 서버가 이력 한 건(요청자 · 처리자 · PC · 상태 · 프레임 · 내용 · 메모)을 `.history/`에 남기고, 지우면 뺀다. 완료된 것에는 그때 캡처(원본 크기 JPG)를 붙인다.
   - 이력이 생기면 바로 같은 저장소의 **`history` 브랜치**로 올리고(push), **5초마다** 다른 PC가 올린 것이 있는지 확인해 받는다(pull). 바뀐 게 없으면 가볍게 묻기만 한다. [깃 동기화]로 바로 맞출 수도 있다.
   - 이력은 한 건 한 파일(`entries/{PC}_{요청 ID}.json`)이라 여러 PC가 올려도 충돌하지 않는다. 작업 중인 코드 · 브랜치와도 섞이지 않는다.
-  - 연결: 저장소 관리자가 깃허브 아이디를 초대하고(수락), 시작 안내 8단계 **[깃허브 연결]** 한 번. 열린 창이 git 설치(없으면) → 브라우저 로그인(토큰 불필요) → history 브랜치 연결까지 한다(윈도우 `workbench/github_login.ps1`: winget · Git Credential Manager, 맥 `github_login.sh`: 개발자 도구 · GitHub CLI `gh`). 모든 PC는 `workbench/git_remote.txt`에 적힌 **한 저장소**(지금은 `PJ-CRC/CURECA_UX`)로 공유한다. 압축으로 받은 폴더나 다른 곳에서 clone한 폴더도 같다. 다른 사람은 이 저장소에 쓰기 권한(공동 작업자 초대)이 있어야 한다. 연결이 안 되면 이력은 이 PC에만 남고 화면에 이유가 보인다.
+  - 연결: 저장소 관리자가 깃허브 아이디를 초대하고(수락), 시작 안내 6단계 **[깃허브 연결]** 한 번. 열린 창이 git 설치(없으면) → 브라우저 로그인(토큰 불필요) → history 브랜치 연결까지 한다(윈도우 `workbench/github_login.ps1`: winget · Git Credential Manager, 맥 `github_login.sh`: 개발자 도구 · GitHub CLI `gh`). 모든 PC는 `workbench/git_remote.txt`에 적힌 **한 저장소**(지금은 `PJ-CRC/CURECA_UX`)로 공유한다. 압축으로 받은 폴더나 다른 곳에서 clone한 폴더도 같다. 다른 사람은 이 저장소에 쓰기 권한(공동 작업자 초대)이 있어야 한다. 연결이 안 되면 이력은 이 PC에만 남고 화면에 이유가 보인다.
   - 요청 번호(R001…)는 PC마다 따로 매겨진다. 작업 이력에서는 PC 이름으로 구분한다.
 
 - **토큰 사용량도 같은 방식으로 공유된다(「사용량 통계」).**

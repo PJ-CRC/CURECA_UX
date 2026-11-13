@@ -74,6 +74,7 @@ function watchShl() {
 //  - 사용자가 Figma에서 다른 페이지로 가면 그 페이지 프레임을 보탠다(이미 열린 페이지라 추가 부담 없음)
 //  - 프레임은 페이지 · 섹션 바로 아래 것만 본다(레이어 안쪽은 훑지 않는다)
 // 시작 안내 링크가 이 파일이면, 링크 노드가 있는 페이지를 「수정 가능 페이지」로 표시한다
+// 목록에서 뺄 이름 — 서버(node/server/figma.js 토큰 목록 만들기)와 같게 둔다
 const JUNK = /^(ver|Description|Case-label|section title|SB_Section Divider|진행상태-.*|Frame \d+|Group \d+|Rectangle.*)$/;
 const DIVIDER = /^[\s\-–—_=·.]*$/;
 let link = null;

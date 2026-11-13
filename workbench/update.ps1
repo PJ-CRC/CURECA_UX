@@ -39,7 +39,7 @@ function Remove-Listed {
 }
 
 if (Test-Path (Join-Path $Root '.git')) { Done $true '깃 작업 폴더(개발용)는 자동 업데이트하지 않습니다.' }
-if (-not (Get-Command git -ErrorAction SilentlyContinue)) { Done $false 'git이 없어 업데이트를 확인하지 못했습니다. (시작 안내 8단계 [깃허브 연결])' }
+if (-not (Get-Command git -ErrorAction SilentlyContinue)) { Done $false 'git이 없어 업데이트를 확인하지 못했습니다. (시작 안내 6단계 [깃허브 연결])' }
 $url = ''; $rf = Join-Path (Join-Path $Root 'workbench') 'git_remote.txt'; if (Test-Path $rf) { $url = ([IO.File]::ReadAllText($rf)).Trim() }
 if (-not $url) { Done $false '업데이트 저장소 주소가 없습니다. (workbench/git_remote.txt)' }
 

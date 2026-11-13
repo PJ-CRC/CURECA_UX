@@ -372,7 +372,9 @@ function setupEnv() {
     figmaInstalled: core.exists(C.isMac ? '/Applications/Figma.app' : path.join(LAD, 'Figma', 'Figma.exe')), claudeInstalled: !!findClaude(), claudeCli: !!cc,
     claudePath: String(cc || ''), claudeLook: String(process.env.PATH || ''), claudeSet: String(core.readSetup().claudePath || ''),
     pluginSeenSec: C.pluginSeen ? Math.round((Date.now() - C.pluginSeen) / 1000) : null, watcherSec: hb ? ago(hb.at) : null, watcherHost: hb ? String(hb.host || '') : '', agent: agentInfo(), gitInstalled: findGit(),
-    winget: C.isMac ? false : !!onPath('winget'), historySync: hs, historySyncing: !!(hs && hs.busy) || !!(helpers.isLoginOpen && helpers.isLoginOpen()) };
+    winget: C.isMac ? false : !!onPath('winget'), historySync: hs, historySyncing: !!(hs && hs.busy) || !!(helpers.isLoginOpen && helpers.isLoginOpen()),
+    // Figma 토큰(시작 안내 4단계 「Figma 연결」을 토큰으로 했는지): 있고 Figma가 거부하지 않았으면 true
+    figmaToken: (() => { const t = core.readJson(path.join(C.setupDir, 'figma_token.json')) || {}; return !!(t.token && !t.deadAt); })() };
   envAt = Date.now(); return envCache;
 }
 on('GET', '/api/setup', () => ({ state: core.readSetup(), env: setupEnv() }));
@@ -394,14 +396,19 @@ on('GET', '/api/accounts', () => {
 });
 
 // ── 문서 · 회의록 파일 여러 개를 한 번에 읽기(화면 로딩용, 바꾸지 않음) — .history/guides · minutes 아래만 ──
-on('POST', '/api/files', async ({ body }) => {
+//  팀(2026-11-13 점검): `.history/guides/…` · `minutes/…`는 지금 팀 위치로 읽는다(예전에는 늘 CURECA를 읽어 다른 팀 화면에 CURECA 문서가 보였다).
+//  `.history/teams/{팀}/…`로 직접 주면 그 팀이 내 팀일 때만(화면)
+on('POST', '/api/files', async ({ body, T, browser }) => {
   const b = await body(); const files = {};
-  const gRoot = path.resolve(C.histDir, 'guides') + path.sep, mRoot = path.resolve(C.histDir, 'minutes') + path.sep;
+  const mine = browser && core.authRequired() ? core.myTeams().map(String) : null;
   for (const p of core.arr(b.paths).slice(0, 2000)) {
     let rp; try { rp = decodeURIComponent(String(p)); } catch (e) { rp = String(p); }
-    rp = rp.replace(/\\/g, '/').replace(/^\/+/, '');
-    if (!/^\.history\/(guides|minutes)\//.test(rp)) continue;
-    const fp = path.resolve(C.root, rp);
+    rp = rp.replace(/\\/g, '/').replace(/\/{2,}/g, '/').replace(/^\/+/, '');
+    let tc = T, m = /^\.history\/teams\/([^/]+)\/(guides|minutes)\/(.+)$/i.exec(rp);
+    if (m) { if (!core.teamIds().includes(m[1]) || (mine && !mine.includes(m[1]))) continue; tc = core.teamCtx(m[1]); rp = `.history/${m[2].toLowerCase()}/${m[3]}`; }
+    if (!/^\.history\/(guides|minutes)\//i.test(rp)) continue;
+    const gRoot = path.resolve(tc.guideRoot) + path.sep, mRoot = path.resolve(tc.minDir) + path.sep;
+    const fp = path.resolve(tc.hist, rp.replace(/^\.history\//i, ''));
     if (!(fp.startsWith(gRoot) || fp.startsWith(mRoot))) continue;
     if (/[\\/]config[\\/]/.test(fp) || /[\\/]accounts[\\/]/.test(fp)) continue;
     const t = core.readText(fp); if (t == null) continue;
@@ -434,7 +441,7 @@ on('GET', '/api/plan/files', ({ q, T }) => {
   const walk = (d, rel) => {
     let es = []; try { es = fs.readdirSync(d, { withFileTypes: true }); } catch (e) { return; }
     const names = ciSort(es.map((x) => x.name));
-    for (const n of names) { const x = es.find((e) => e.name === n); if (x.isFile() && n.toLowerCase().endsWith('.md')) { const r = rel ? `${rel}/${n}` : n; out.push({ path: `${dir}/${r}`, url: `.history/guides/${dir}/${r}`, closed: r.startsWith('closed/'), at: localIso(fs.statSync(path.join(d, n)).mtime) }); } }
+    for (const n of names) { const x = es.find((e) => e.name === n); if (x.isFile() && n.toLowerCase().endsWith('.md')) { const r = rel ? `${rel}/${n}` : n; out.push({ path: `${dir}/${r}`, url: `${T.guideRel}/${dir}/${r}`, closed: r.startsWith('closed/'), at: localIso(fs.statSync(path.join(d, n)).mtime) }); } }
     for (const n of names) { const x = es.find((e) => e.name === n); if (x.isDirectory()) walk(path.join(d, n), rel ? `${rel}/${n}` : n); }
   };
   walk(base, '');

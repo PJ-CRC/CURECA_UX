@@ -76,7 +76,7 @@ foreach ($dir in $places) { $lnk = Join-Path $dir 'Figma AI Run.lnk'; try { if (
     if (!h.findClaudeCode()) return;
     const hb = core.readJson(path.join(C.root, 'workbench', '.watcher.json')); const age = hb && hb.at ? (Date.now() - Date.parse(hb.at)) / 1000 : null;
     if (age != null && age < 60) return;
-    try { h.startAgent(); log('요청 감시를 백그라운드로 시작했습니다(창 없음). 상태는 시작 안내 7단계에서 봅니다.'); } catch (e) { log('백그라운드 감시 시작 못 함: ' + e.message); }
+    try { h.startAgent(); log('요청 감시를 백그라운드로 시작했습니다(창 없음). 상태는 시작 안내 5단계(CLI)에서 봅니다.'); } catch (e) { log('백그라운드 감시 시작 못 함: ' + e.message); }
   }
 
   // ── 탭이 모두 닫히면 끄기(Idle-Check): 20초마다 알리던 탭이 150초 동안 소식이 없으면 닫힌 것. 마지막이 닫히고 3초 뒤, 감시가 동작 중이면 끄지 않는다 ──
@@ -89,7 +89,34 @@ foreach ($dir in $places) { $lnk = Join-Path $dir 'Figma AI Run.lnk'; try { if (
     log('Workbench 탭을 모두 닫아 서버를 껐습니다.'); setTimeout(() => process.exit(0), 100);
   }
 
+  // ── 멈춘 「진행 중」 되돌리기(2026-11-13 점검 F1): 처리하던 Claude가 끊기면 요청 · 작업이 「진행 중」으로 영영 남았다(감시는 대기 · 보류만 본다)
+  //  10분 동안 움직임이 없으면 「대기」로 되돌려 다시 처리되게 한다. 움직임 = 그 항목의 updatedAt(상태 · 메모 갱신),
+  //  또는 백그라운드 에이전트가 지금 그 항목을 처리 중(.agent.json 상태 working, 메시지에 그 ID). 오래 걸리는 단계 작업은 Claude가 몇 분마다 메모를 갱신한다(requests.md)
+  const STALE_MS = 10 * 60 * 1000;
+  function freeStale() {
+    const ag = h.agentInfo(), busy = ag.alive && ag.status === 'working' ? ag.msg : '';
+    const old = (x) => { const t = Date.parse(x.updatedAt || x.startedAt || ''); return !isNaN(t) && Date.now() - t > STALE_MS && !(busy && new RegExp('\\b' + String(x.id).replace(/[^\w]/g, '') + '\\b').test(busy)); };
+    const note = '10분 동안 움직임이 없어 「대기」로 되돌림(다시 처리)';
+    const r = core.readJson(C.reqFile);
+    if (r && core.arr(r.items).some((x) => x && x.status === '진행 중' && old(x))) {
+      const now = core.now(), done = [];
+      for (const x of core.arr(r.items)) if (x && x.status === '진행 중' && old(x)) { if (x.startedAt) h.closeRun(x, now); x.status = '대기'; x.note = note; x.updatedAt = now; done.push(x); }
+      r.version = (parseInt(r.version, 10) || 0) + 1; core.writeJson(C.reqFile, r);
+      for (const x of done) { try { h.histFromRequest(x); } catch (e) {} }
+      log('멈춘 요청을 대기로 되돌림: ' + done.map((x) => x.id).join(', '));
+    }
+    const jj = core.readJson(C.jobFile);
+    if (jj && core.arr(jj.items).some((x) => x && x.status === '진행 중' && old(x))) {
+      const now = core.now(), done = [];
+      for (const x of core.arr(jj.items)) if (x && x.status === '진행 중' && old(x)) { x.status = '대기'; x.takenBy = ''; x.note = note; x.updatedAt = now; done.push(x.id); }
+      jj.version = (parseInt(jj.version, 10) || 0) + 1; core.writeJson(C.jobFile, jj);
+      log('멈춘 작업을 대기로 되돌림: ' + done.join(', '));
+    }
+  }
+  let staleAt = Date.now() + 30000;
+
   setInterval(() => {
+    if (Date.now() >= staleAt) { staleAt = Date.now() + 60000; try { freeStale(); } catch (e) { errLog('멈춘 진행 중 확인', e); } }
     try { syncTick(); } catch (e) { errLog('이력 동기화', e); }
     if (Date.now() >= watchAt) { watchAt = Date.now() + 120000; const f = watchFirst; watchFirst = false; try { autoWatch(f); } catch (e) { errLog('감시 자동 시작', e); } }
     try { idleCheck(); } catch (e) { errLog('탭 확인', e); }

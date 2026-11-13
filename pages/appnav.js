@@ -73,7 +73,7 @@
   }
   loadUsage(); setInterval(loadUsage, 60000); setInterval(drawUsage, 30000);
 
-  /* ── 시작 안내 경고: 8단계 중 안 된 것이 있으면 「시작 안내」 메뉴 옆에 붉은 「!」(마우스를 올리면 단계 목록) ──
+  /* ── 시작 안내 경고: 6단계 중 안 된 것이 있으면 「시작 안내」 메뉴 옆에 붉은 「!」(마우스를 올리면 단계 목록) ──
      완료 기준은 시작 안내 화면과 같은 공통 함수(common.js WB.setupMissing). 1분마다 다시 확인 */
   function setupMissing(d){ return window.WB && window.WB.setupMissing ? window.WB.setupMissing(d) : []; }
   /* 시작 안내 페이지는 상태가 바뀔 때마다 받은 값으로 바로 고친다: window.WB_SETUP_WARN({state, env}) */

@@ -77,7 +77,7 @@ function Sync-Once {
   $remote = $code
   if ($remote -ne 0 -and $remote -ne 2) {
     if ($ls -match 'not found|403|denied') { Done $false '저장소에 접근할 수 없습니다. 저장소 관리자에게 깃허브 아이디를 알려 초대를 받고, 메일 · 깃허브 알림에서 수락한 뒤 [깃허브 연결]을 다시 누르세요.' -hard }
-    if ($ls -match 'Authentication|could not read Username|terminal prompts disabled') { Done $false '깃허브 로그인이 필요합니다. 시작 안내 8단계의 [깃허브 연결]을 누르세요.' -hard }
+    if ($ls -match 'Authentication|could not read Username|terminal prompts disabled') { Done $false '깃허브 로그인이 필요합니다. 시작 안내 6단계의 [깃허브 연결]을 누르세요.' -hard }
     Done $false ('깃 서버에 연결하지 못했습니다. ' + (Last $ls))
   }
 
@@ -112,7 +112,25 @@ function Sync-Once {
     if ($remote -eq 0) {
       $args2 = $id + @('-C', $H, 'pull', '-q', '--rebase', 'origin', 'history')
       $o = G @args2
-      if ($code) { G -C $H rebase --abort | Out-Null; Done $false ('받기(pull) 실패: ' + (Last $o)) }
+      if ($code) {
+        # 충돌(두 PC가 같은 파일을 고침, 2026-11-13 점검 F9): 예전에는 받기 실패로 멈춰 그 뒤 이력이 계속 안 올라갔다.
+        #  → 나중에 저장한 쪽(커밋 시각이 늦은 쪽)으로 맞춘다. 진 쪽 내용도 깃 기록에 그대로 남고, 어느 파일이 그랬는지 conflicts/{PC}.log에 적는다
+        $files = @((G -C $H diff --name-only --diff-filter=U) -split "`n" | Where-Object { $_.Trim() })
+        G -C $H rebase --abort | Out-Null
+        $lt = 0; $rt = 0
+        try { $lt = [long](G -C $H log -1 --format=%ct HEAD); [void](G -C $H fetch -q origin history); $rt = [long](G -C $H log -1 --format=%ct FETCH_HEAD) } catch { }
+        $side = if ($lt -ge $rt) { 'theirs' } else { 'ours' }   # rebase에서 theirs = 이 PC가 올릴 커밋, ours = 받은 쪽
+        $args3 = $id + @('-C', $H, 'pull', '-q', '--rebase', '-X', $side, 'origin', 'history')
+        $o = G @args3
+        if ($code) { G -C $H rebase --abort | Out-Null; Done $false ('받기(pull) 실패 · 충돌: ' + (Last $o)) }
+        try {
+          $cd = Join-Path $H 'conflicts'; if (-not (Test-Path $cd)) { New-Item -ItemType Directory -Force $cd | Out-Null }
+          $slug = ([Environment]::MachineName.ToLower() -replace '[^a-z0-9-]', '-')
+          $win = if ($side -eq 'theirs') { '이 PC' } else { '다른 PC' }
+          [IO.File]::AppendAllText((Join-Path $cd ($slug + '.log')), ("[$(Now)] 충돌 → 나중에 저장한 $win 내용으로 맞춤: " + ($files -join ', ') + "`r`n"), (New-Object Text.UTF8Encoding $false))
+          [IO.File]::WriteAllText($NowFile, (Now))   # 기록을 바로 올리게
+        } catch { }
+      }
     }
     $o = G -C $H push -q -u origin history
     if (-not $code) { break }
