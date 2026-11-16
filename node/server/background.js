@@ -50,20 +50,12 @@ foreach ($dir in $places) { $lnk = Join-Path $dir 'Figma AI Run.lnk'; try { if (
     }
   }
 
-  // ── 깃 동기화(Sync-Tick): history_sync 반복 프로세스(5초마다 확인)를 띄운다. 죽으면 30초 뒤 다시 ──
-  let syncProc = null, syncLast = 0;
+  // ── 깃 동기화(Sync-Tick): 2026-11-16부터 서버 안에서 돈다(sync.js — 예전 history_sync.ps1 · .sh 반복 프로세스 대신, 윈도우 · 맥 같은 코드).
+  //  .history_sync_off(이 PC만 끔) · .history_sync_now(바로) · .history_sync.lock(대화형 연결 중 쉼)은 sync.js가 본다
+  let syncStarted = false;
   function syncTick() {
-    // 이 PC만 동기화를 잠시 끔(workbench/.history_sync_off): 새 규칙 구조를 이 PC에서만 시험할 때(2026-11-12). 띄우지 않고, 돌던 것은 끈다
-    if (core.exists(path.join(C.root, 'workbench', '.history_sync_off'))) { if (syncProc && syncProc.exitCode == null) { try { syncProc.kill(); } catch (e) {} } return; }
-    if ((!syncProc || syncProc.exitCode != null || syncProc.signalCode) && Date.now() - syncLast >= 30000) {
-      syncLast = Date.now();
-      const env = Object.assign({}, process.env, { WB_USER: String(core.readSetup().user || '') });   // 깃 사용자 설정이 없는 PC는 작업자 이름으로 커밋
-      try {
-        syncProc = C.isMac ? spawn('/bin/bash', [path.join(C.root, 'workbench', 'history_sync.sh'), '--loop', String(process.pid)], { env, stdio: 'ignore', detached: true })
-          : spawn('powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', path.join(C.root, 'workbench', 'history_sync.ps1'), '-Loop', '-ServerPid', String(process.pid)], { env, stdio: 'ignore', windowsHide: true });   // (윈도우는 detached로 띄우면 PowerShell이 바로 끝난다)
-        syncProc.on('error', () => {}); syncProc.unref();
-      } catch (e) { syncProc = null; }
-    }
+    if (syncStarted) return; syncStarted = true;
+    try { require('./sync').start(log); } catch (e) { log('깃 동기화를 시작하지 못했습니다: ' + e.message); }
   }
 
   // ── 감시 자동 시작(Auto-Watch): 켠 지 5초 뒤, 그 뒤 2분마다. 사용자가 끈 것 · 중지 신호 · 대화형 감시(60초 안)는 건너뛴다 ──
