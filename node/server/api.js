@@ -421,7 +421,8 @@ function agentInfo() {
 }
 let envCache = null, envAt = 0;
 function setupEnv() {
-  if (envCache && Date.now() - envAt < 15000) return envCache;
+  // 환경 정보는 15초 저장해 두고 쓰되, 요청 감시 상태(agent)는 늘 새로 본다(2026-11-16: 서버가 켜진 직후 「감시 꺼짐」이 15초 남아 [감시 시작]을 누르면 「이미 실행 중」이 나왔다)
+  if (envCache && Date.now() - envAt < 15000) return Object.assign({}, envCache, { agent: agentInfo() });
   const hs = core.readJson(C.syncStat), hb = core.readJson(path.join(C.root, 'workbench', '.watcher.json')), cc = findClaudeCode();
   envCache = { root: C.root, manifest: path.join(C.root, 'figma_plugin', 'manifest.json'), os: C.isMac ? 'mac' : 'windows', computer: C.pcName,
     figmaInstalled: core.exists(C.isMac ? '/Applications/Figma.app' : path.join(LAD, 'Figma', 'Figma.exe')), claudeInstalled: !!findClaude(), claudeCli: !!cc,
