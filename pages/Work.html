@@ -525,13 +525,13 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   function done(s){ return /완료|done|closed?/i.test(s) && !/미\s*완료|미완/.test(s); }
   function cat(s){ s = String(s || ''); if (done(s)) return 'done'; if (/리뷰|review/i.test(s)) return 'review'; if (/진행|작업\s*중|in\s*progress|ing\b/i.test(s)) return 'prog'; return 'etc'; }
   var CATN = { done: '완료', review: '리뷰 중(예정)', prog: '진행 중', etc: '' };
-  function wbsItems(sheet){
+  function wbsItems(sheet, withHidden){   // withHidden: 일정 탭 「숨긴 행 · 열 보기」일 때 숨긴 줄도 상태를 읽는다(상태 거르기용, 집계에는 쓰지 않음)
     if (!sheet || !sheet.values) return null;
     var V = sheet.values, T = table(V), C = guessCols(T.labels, (conf && conf.cols) || null), out = [];
     function g(r, f){ var i = C[f]; return i >= 0 ? String(r[i] == null ? '' : r[i]).trim() : ''; }
     var hid = {}; (sheet.hr || []).forEach(function(x){ hid[x] = 1; });   // 시트에서 숨긴 줄(접은 그룹 · 예전 줄)은 세지 않는다
     for (var i = T.start; i < V.length; i++) {
-      if (hid[i]) continue;
+      if (hid[i] && !withHidden) continue;
       var r = V[i] || []; if (!r.some(function(c){ return String(c || '').trim(); })) continue;
       var task = g(r, 'task'), menu = g(r, 'menu'); if (!task && !menu) continue;
       var st = g(r, 'status'), ux = g(r, 'uxStatus'), ui = g(r, 'uiStatus');
@@ -628,7 +628,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     if (!wbs || !wbs.values) { el.innerHTML = head + srcNote(wbs || { error: '값이 없습니다.' }); return; }
     var W = wbsItems(wbs), T = W.T, V = wbs.values, set = function(l){ var o = {}; (l || []).forEach(function(p){ o[Array.isArray(p) ? p[0] + ',' + p[1] : p] = 1; }); return o; };
     var fx = set(wbs.fx), dv = set(wbs.dv), hidR = set(wbs.hr), hidC = set(wbs.hc), BG = wbs.bg || [], FC = wbs.fc || [], FW = wbs.fw || [];
-    var byRow = {}; W.items.forEach(function(it){ byRow[it.row] = it; });
+    var byRow = {}; (showG ? wbsItems(wbs, true) : W).items.forEach(function(it){ byRow[it.row] = it; });   // 숨긴 행을 보일 때는 그 행도 상태로 거를 수 있게
     var q = fq.trim().toLowerCase(), filt = !!(q || fcat), edit = canWrite() && !wbs.cached, shown = 0;
     function val(i, j){ return String((V[i] || [])[j] == null ? '' : V[i][j]); }
     function bg(i, j){ return (BG[i] || [])[j] || ''; }
@@ -980,7 +980,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   /* ══ 화면설계서 작업대기: 화면 정의서(screens) 파일마다 「## 반영 대기 목록」 (규칙 저장소 reference-rules/pending-changes.md) ══
      칸: ID · 타입 · 변경 전 · 변경 후 · 근거 · 상태(대기 · 작업 중 (작업 기록) · 반영 완료 (날짜) · 제외 (날짜, 이유)).
      예전 칸(# · 구분 · 지금 · 바꿀 것)으로 적힌 표도 같은 자리에 읽는다(pending-changes.md 6절). 메뉴 담당자 = _menu.md owner */
-  var BL = null, blSel = '', blAll = false, blKind = '', blQ = '';
+  var BL = null, blSel = (function(){ try { return new URL(location.href).searchParams.get('s') || ''; } catch(x){ return ''; } })(), blAll = false, blKind = '', blQ = '';
   function loadBacklog(){
     return api('/api/guides').then(function(g){
       var doc = (g.items || []).filter(function(i){ return i.id === 'screens'; })[0];
@@ -996,7 +996,9 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
         var T = mdTable(S[key]), H = T.head.map(function(h){ return h.replace(/\s/g, ''); });
         function col(){ for (var i = 0; i < arguments.length; i++) { var c = H.indexOf(arguments[i]); if (c >= 0) return c; } return -1; }
         var ci = { n: col('ID', '#'), kind: col('타입', '구분'), now: col('변경전', '지금'), to: col('변경후', '바꿀것'), why: col('근거'), st: col('상태') };
-        var rows = T.rows.map(function(r){ var g = function(i){ return i >= 0 ? (r[i] || '') : ''; }; return { n: g(ci.n), kind: g(ci.kind), now: g(ci.now), to: g(ci.to), why: g(ci.why), st: g(ci.st) }; }).filter(function(r){ return r.n || r.to; });
+        // 칸 안에 「|」를 그대로 쓴 줄은 칸이 늘어난다: 남는 것은 「변경 전」에 붙인다(서버 /api/backlog · UX 문서와 같음)
+        var fit = function(r){ var x = r.length - H.length; if (x <= 0 || ci.now < 0) return r; return r.slice(0, ci.now).concat([r.slice(ci.now, ci.now + x + 1).join(' | ')], r.slice(ci.now + x + 1)); };
+        var rows = T.rows.map(fit).map(function(r){ var g = function(i){ return i >= 0 ? (r[i] || '') : ''; }; return { n: g(ci.n), kind: g(ci.kind), now: g(ci.now), to: g(ci.to), why: g(ci.why), st: g(ci.st) }; }).filter(function(r){ return r.n || r.to; });
         var h1 = /^#\s+(.+)$/m.exec(p.body);
         screens.push({ cid: p.meta.cid || x.f.path.replace(/^.*\/|\.md$/g, ''), figma: p.meta.figma || '', title: (p.meta.title || (h1 ? h1[1] : '')).replace(/^\S+\s+/, function(m){ return /^[A-Z]{2}-/.test(m) ? '' : m; }), author: p.meta.author || '', dir: dir, menu: p.meta.menu || '', path: x.f.path, rev: x.f.rev, rows: rows,
           wait: rows.filter(function(r){ return /^대기/.test(r.st); }), doing: rows.filter(function(r){ return /^(작업 중|반영 중)/.test(r.st); }) });
@@ -1025,10 +1027,13 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     var S = BL.screens, q = blQ.trim().toLowerCase();
     var waitN = 0, doingN = 0; S.forEach(function(s){ waitN += s.wait.length; doingN += s.doing.length; });
     var act = S.filter(function(s){ return s.wait.length || s.doing.length; }), mg = {};
-    act.forEach(function(s){ (mg[s.menuName] = mg[s.menuName] || { name: s.menuName, owner: s.owner, list: [], n: 0 }).list.push(s); mg[s.menuName].n += s.wait.length; });
+    act.forEach(function(s){ (mg[s.menuName] = mg[s.menuName] || { name: s.menuName, owner: s.owner, list: [], n: 0 }).list.push(s); mg[s.menuName].n += s.wait.length + s.doing.length; });
     var groups = Object.keys(mg).map(function(k){ return mg[k]; }).sort(function(a, b){ return b.n - a.n; });
     groups.forEach(function(g){ g.list.sort(function(a, b){ return b.wait.length - a.wait.length; }); });
-    if (!blSel || !S.some(function(s){ return s.cid === blSel; })) blSel = act.length ? groups[0].list[0].cid : '';
+    /* 왼쪽 목록 = 대기 · 작업 중이 있는 화면 중 찾기에 맞는 것. 메뉴 숫자 · 고른 화면도 이 목록 기준(목록에 없는 화면이 오른쪽에 남지 않게) */
+    var vis = function(s){ return !q || (s.cid + ' ' + s.title).toLowerCase().indexOf(q) >= 0; };
+    var shownScr = []; groups.forEach(function(g){ g.vis = g.list.filter(vis); shownScr = shownScr.concat(g.vis); });
+    if (!blSel || !shownScr.some(function(s){ return s.cid === blSel; })) blSel = shownScr.length ? shownScr[0].cid : '';
     var h = '<div class="stats">' +
       '<div class="stat"><div class="l">반영 대기</div><div class="v">' + waitN.toLocaleString() + '</div><div class="s">상태가 「대기」인 항목</div></div>' +
       '<div class="stat"><div class="l">작업 중</div><div class="v">' + doingN + '</div><div class="s">진행 중인 화면설계 작업이 고른 항목</div></div>' +
@@ -1037,21 +1042,25 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       '<p class="rule">반영 대기 목록 = 내 작업 밖의 다른 화면에 반영해야 하는 변경을 그 화면의 화면 MD에 남겨 둔 것입니다. 화면설계 작업(Case 1)의 1단계에서 「이번에 반영」으로 고르면 「작업 중」, 7단계 완료(화면 컨펌) 때 「반영 완료」가 됩니다.</p>';
     var left = '<div class="mhead"><input type="search" id="blq" class="minp" placeholder="CID · 화면 이름 찾기" value="' + esc(blQ) + '" aria-label="화면 찾기"></div>' +
       groups.map(function(g){
-        var list = g.list.filter(function(s){ return !q || (s.cid + ' ' + s.title).toLowerCase().indexOf(q) >= 0; }); if (!list.length) return '';
-        return '<details class="mgrp" open><summary><span>' + esc(g.name) + '</span><span class="muted">' + g.n + '</span></summary>' +
+        var list = g.vis; if (!list.length) return '';
+        var gw = 0, gd = 0; list.forEach(function(s){ gw += s.wait.length; gd += s.doing.length; });
+        return '<details class="mgrp" open><summary><span>' + esc(g.name) + '</span><span class="muted" title="대기 ' + gw + ' · 작업 중 ' + gd + '">' + (gw + gd) + '</span></summary>' +
           list.map(function(s){ return '<button type="button" class="mitem" data-bl="' + esc(s.cid) + '"' + (s.cid === blSel ? ' aria-current="true"' : '') + '><b>' + esc(s.cid) + '</b><span>' + esc(s.title || '') + '</span><span class="chips">' + (s.wait.length ? '<span class="pill warn">대기 ' + s.wait.length + '</span>' : '') + (s.doing.length ? '<span class="pill prog">작업 중 ' + s.doing.length + '</span>' : '') + (s.author ? '<span class="pill">' + esc(s.author) + '</span>' : '') + '</span></button>'; }).join('') + '</details>';
-      }).join('') + (act.length ? '' : '<p class="muted" style="margin:8px">반영 대기 항목이 없습니다.</p>');
+      }).join('') + (!act.length ? '<p class="muted" style="margin:8px">반영 대기 항목이 없습니다.</p>' : !shownScr.length ? '<p class="muted" style="margin:8px">「' + esc(blQ.trim()) + '」에 맞는 화면이 없습니다.</p>' : '');
     var s = S.filter(function(x){ return x.cid === blSel; })[0], right;
     if (!s) right = '<div class="wempty"><b>고칠 화면이 없습니다</b></div>';
     else {
-      var kinds = {}; s.rows.forEach(function(r){ if (r.kind) kinds[r.kind] = (kinds[r.kind] || 0) + 1; });
+      // 타입별 개수는 지금 보이는 항목 기준(「반영 완료 · 제외도 보기」를 끄면 대기 · 작업 중만 센다). 고른 타입이 없어지면 「전체」로
+      var shown = s.rows.filter(function(r){ return blAll || /^(대기|작업 중|반영 중)/.test(r.st); });
+      var kinds = {}; shown.forEach(function(r){ if (r.kind) kinds[r.kind] = (kinds[r.kind] || 0) + 1; });
+      if (blKind && !kinds[blKind]) blKind = '';
       var W = canWrite(), fig = figOf(s.figma);
-      var rows = s.rows.filter(function(r){ return (blAll || /^(대기|작업 중|반영 중)/.test(r.st)) && (!blKind || r.kind === blKind); });
+      var rows = shown.filter(function(r){ return !blKind || r.kind === blKind; });
       right = '<div class="mtop"><h3>' + esc(s.cid) + ' ' + esc(s.title || '') + '</h3>' +
         '<a class="btn sm" href="UX_Guide.html?g=screens#' + encodeURIComponent(s.cid) + '" target="_blank" rel="noopener">화면 정의서에서 보기</a></div>' +
         '<p class="matt">' + esc(s.menuName) + (s.author ? ' · 작성자 ' + esc(s.author) : '') + ' · 대기 ' + s.wait.length + ' · 작업 중 ' + s.doing.length + ' / 전체 ' + s.rows.length + '항목 · <code>screens/' + esc(s.path) + '</code>' + (s.rev ? ' · 수정본 ' + esc(s.rev) : '') + '</p>' +
         '<div class="bar" style="margin-top:12px"><label class="hint" style="display:inline-flex;gap:4px;align-items:center"><input type="checkbox" id="blAll"' + (blAll ? ' checked' : '') + '>반영 완료 · 제외도 보기</label>' +
-        '<span class="sp"></span>' + ['<button type="button" class="pill' + (blKind ? '' : ' on') + '" data-blk="">전체</button>'].concat(Object.keys(kinds).map(function(k){ return '<button type="button" class="pill' + (blKind === k ? ' on' : '') + '" data-blk="' + esc(k) + '">' + esc(k) + ' ' + kinds[k] + '</button>'; })).join('') + '</div>' +
+        '<span class="sp"></span>' + ['<button type="button" class="pill' + (blKind ? '' : ' on') + '" data-blk="">전체 ' + shown.length + '</button>'].concat(Object.keys(kinds).map(function(k){ return '<button type="button" class="pill' + (blKind === k ? ' on' : '') + '" data-blk="' + esc(k) + '">' + esc(k) + ' ' + kinds[k] + '</button>'; })).join('') + '</div>' +
         // 대기 항목을 골라 화면설계 작업(케이스 1 부분 수정)으로 요청(이미 요청한 항목은 요청 번호 · 상태를 보여 주고 고를 수 없다)
         (W && s.wait.length ? '<div class="blreq"><span class="muted" id="blPickN">고른 항목 0</span>' + (fig ? '' : '<span class="pill warn">이 화면에 Figma 링크(figma:)가 없어 요청을 만들 수 없습니다</span>') +
           '<button class="btn sm primary" type="button" data-blreq' + (fig ? '' : ' disabled') + ' title="Case 1(부분 수정) 새 작업으로 Workbench에 요청합니다. 1단계에서 이 항목들을 「이번에 반영」으로 고릅니다">고른 항목으로 화면설계 작업(Case 1) 요청</button></div>' : '') +
@@ -1108,7 +1117,11 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   }
   function planItems(){ return DS || []; }
   function plMatch(i){ return plStat === 'all' ? true : plStat === 'end' ? !i.open : i.open; }
-  function planCnt(){ setCnt('decisions', (DS || []).filter(function(i){ return i.group === 'g1' || i.group === 'g2' || i.group === 'g3'; }).length, true); }
+  /* 탭 숫자 = 탭을 열면 보이는 「진행 중」 목록 수(보기 「진행 중 (N)」과 같음). 처리할 것(1 결정 · 반영할 것, 2 · 3 논의 중)이 있을 때만 빨갛게 */
+  function planCnt(){
+    var L = DS || [], open = L.filter(function(i){ return i.open; }).length, hot = L.filter(function(i){ return i.group === 'g1' || i.group === 'g2' || i.group === 'g3'; }).length;
+    setCnt('decisions', open, hot > 0); var el = $('cnt-decisions'); if (el) el.title = '진행 중 ' + open + '건' + (hot ? ' · 처리할 것(결정 · 반영할 것, 논의 중) ' + hot + '건' : '');
+  }
   function dsItemHtml(i, sel){
     return '<button type="button" class="mitem" data-pl="' + esc(i.id) + '"' + (i.id === sel ? ' aria-current="true"' : '') + '><b>' + esc(i.title || i.id) + '</b><span>' + esc(i.id) + (i.decider ? ' · ' + esc(i.decider) : '') + (i.date ? ' · ' + esc(i.date) : '') + '</span>' +
       '<span class="chips">' + stPill(i.status) + (i.work ? '<span class="pill review" title="작업 기록 ' + esc(i.work) + '">작업 중</span>' : '') + (i.follow ? '<span class="pill warn" title="' + esc(i.follow) + '">후속 확인</span>' : '') + jobState(i.id) + '</span></button>';
@@ -1341,6 +1354,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
 
   /* ── 회의록(md, .history/minutes, 깃 공유) ── */
   var msel = new URLSearchParams(location.search).get('m') || '', medit = null, mbusy = false;
+  var mPin = !!msel;   // 사람이 고른 회의록(주소 m= · 링크 · 방금 저장): 기간 거르기 밖이면 다른 회의록으로 바꾸지 않고 기간을 푼다
   var mFrom = '', mTo = '', mQuick = '';   // 회의록 기간 거르기(YYYY-MM-DD), 빠른 선택(week · month · 3m)
   var minMe = '', myName = '', nedit = '', ntext = null, ntext0 = '';   // 나(작성자 ID · 이름), 고치는 중인 내 작성분(회의록 ID)과 글
   function loadMd(){ return api('/api/minutes').then(function(j){ mlist = j.items || []; minMe = j.me || ''; snapSave('min', { items: mlist, me: minMe }); }).catch(function(){ mlist = mlist || []; }); }
@@ -1378,6 +1392,8 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     if (!mlist) { el.innerHTML = '<p class="muted">회의록을 읽는 중…</p>'; return; }
     // 기간 거르기(목록 위): 회의 일시(date의 YYYY-MM-DD)가 시작일 ~ 종료일 안인 것만
     var L = ALLM.filter(function(m){ var d = String(m.date || '').slice(0, 10); return (!mFrom || d >= mFrom) && (!mTo || d <= mTo); });
+    if (mPin && msel && !L.some(function(m){ return m.id === msel; }) && ALLM.some(function(m){ return m.id === msel; })) { mFrom = mTo = mQuick = ''; L = ALLM; }
+    mPin = false;
     if (!medit && (!msel || !L.some(function(m){ return m.id === msel; }))) msel = L[0] ? L[0].id : '';
     var S = meetings(), rest = S && S.sheetRest ? S.sheetRest : [];
     // 왼쪽: 월별 묶음(최신이 위)
@@ -1520,7 +1536,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     else if (q === '3m') { var s = new Date(t); s.setMonth(s.getMonth() - 3); mFrom = ymd(s); mTo = ymd(t); }
     mQuick = q; renderMinutes();
   });
-  function mPick(id){ msel = id; medit = null; nedit = ''; ntext = null; try { var u = new URL(location.href); u.searchParams.set('m', id); history.replaceState(null, '', u); } catch(x){} renderMinutes(); }
+  function mPick(id){ msel = id; mPin = true; medit = null; nedit = ''; ntext = null; try { var u = new URL(location.href); u.searchParams.set('m', id); history.replaceState(null, '', u); } catch(x){} renderMinutes(); }
   function nowLocal(){ var d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 16).replace('T', ' ').replace(/:\d\d$/, ':00'); }
   document.addEventListener('click', function(e){
     var b = e.target.closest('[data-mid],[data-mnew],[data-medit],[data-mdel],[data-mcancel],[data-mimport],[data-mopen],[data-nnew],[data-nedit],[data-ncancel],[data-nsave],[data-msum]'); if (!b) return;
@@ -1574,7 +1590,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     medit.date = d; medit.title = $('mTitle').value; medit.attendees = $('mAtt').value.split('\n').join(' / '); medit.body = $('mBody').value;
     mbusy = true; $('mMsg').textContent = '저장하는 중…';
     api('/api/minutes', { action: 'save', id: medit.id || '', date: d, title: medit.title, attendees: $('mAtt').value, body: medit.body }).then(function(j){
-      mbusy = false; medit = null; msel = j.item && j.item.id; return loadMd();
+      mbusy = false; medit = null; msel = j.item && j.item.id; mPin = true; return loadMd();
     }).then(function(){ mPick(msel); toast('회의록을 저장했습니다. 모든 작업자에게 공유됩니다.'); if (cur === 'weekly') renderWeekly(); })
       .catch(function(err){ mbusy = false; var m = $('mMsg'); if (m) m.textContent = err.message; });
   });

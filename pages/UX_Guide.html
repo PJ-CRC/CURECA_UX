@@ -1358,7 +1358,9 @@ html.embed,html.embed body{overflow:hidden}
     var ls = m[1].split('\n').filter(function(l){ return /^\s*\|/.test(l); }); if (ls.length < 2) return [];
     var hd = cells(ls[0]).map(function(h){ return h.replace(/\s/g, ''); }), ix = function(){ for (var i = 0; i < arguments.length; i++) { var p = hd.indexOf(arguments[i]); if (p >= 0) return p; } return -1; };
     var I = { no: ix('ID', '#'), kind: ix('타입', '구분'), now: ix('변경전', '지금'), to: ix('변경후', '바꿀것'), why: ix('근거'), st: ix('상태') };   // 새 칸(reference-rules/pending-changes.md) · 예전 칸 모두
-    return ls.slice(2).map(function(l){ var c = cells(l), g = function(i){ return i >= 0 ? (c[i] || '') : ''; }; return { no: g(I.no), kind: g(I.kind), now: g(I.now), to: g(I.to), why: g(I.why), st: g(I.st) }; });
+    // 칸 안에 「|」를 그대로 쓴 줄은 칸이 늘어난다: 앞 칸(ID · 타입) · 뒤 칸(근거 · 상태)은 양 끝에서 세고 남는 것은 「변경 전」에 붙인다(서버 /api/backlog와 같음)
+    var fit = function(c){ var x = c.length - hd.length; if (x <= 0 || I.now < 0) return c; return c.slice(0, I.now).concat([c.slice(I.now, I.now + x + 1).join(' | ')], c.slice(I.now + x + 1)); };
+    return ls.slice(2).map(function(l){ var c = fit(cells(l)), g = function(i){ return i >= 0 ? (c[i] || '') : ''; }; return { no: g(I.no), kind: g(I.kind), now: g(I.now), to: g(I.to), why: g(I.why), st: g(I.st) }; });
   }
   function scBuild(texts){
     SC = { menus: [], byCid: {}, overview: '' }; var menus = {}, order = [];
@@ -1382,7 +1384,8 @@ html.embed,html.embed body{overflow:hidden}
       var pl = (s.body.match(/^-\s*관련 정책:(.*)$/m) || [])[1] || '';
       s.pols = uniq(listOf(s.o.policies).concat(pl.match(/POL-[A-Z]{3}-\d{3}/g) || []));
       s.pvs = [];   // 예전 임시 정책(provisional) — 새 흐름에서 없앰
-      s.fixes = fixRows(s.body); s.wait = s.fixes.filter(function(f){ return /^대기/.test(f.st); }).length;
+      // 대기 · 작업 중은 Workbench · 작업대기와 같은 기준(작업 중 = 「작업 중 (작업 기록)」 · 예전 「반영 중」)
+      s.fixes = fixRows(s.body); s.wait = s.fixes.filter(function(f){ return /^대기/.test(f.st); }).length; s.doing = s.fixes.filter(function(f){ return /^(작업 중|반영 중)/.test(f.st); }).length;
       var cl = (s.body.match(/^-\s*호출 위치:(.*)$/m) || [])[1] || '';
       s.calls = (cl.match(CID_RE) || []).filter(function(c){ return c !== s.cid; });
     });
@@ -1397,7 +1400,7 @@ html.embed,html.embed body{overflow:hidden}
     scShow(first, true);
   }
   function scChips(s){
-    return (s.wait ? '<em class="sc-chip warn">반영 대기 ' + s.wait + '</em>' : '') + (!s.o.basis && !s.o.rules_version ? '<em class="sc-chip">기준 기록 전</em>' : '');
+    return (s.wait ? '<em class="sc-chip warn">반영 대기 ' + s.wait + '</em>' : '') + (s.doing ? '<em class="sc-chip">작업 중 ' + s.doing + '</em>' : '') + (!s.o.basis && !s.o.rules_version ? '<em class="sc-chip">기준 기록 전</em>' : '');
   }
   function scTree(q){
     var h = '';
@@ -1430,7 +1433,7 @@ html.embed,html.embed body{overflow:hidden}
     var o = s.o, mn = SC.menus.filter(function(m){ return m.key === s.menu; })[0] || { name: s.menu };
     var row = function(k, v){ return v ? '<dt>' + esc(k) + '</dt><dd>' + v + '</dd>' : ''; };
     var h = '<div class="sc-head"><div><h2 class="sc-title">' + esc(cid + ' ' + (o.title || '')) + '</h2><p class="sc-sub">' + esc([o.path, o.type, o.version ? 'Ver ' + o.version : ''].filter(Boolean).join(' · ')) + '</p></div>' +
-      '<span style="display:flex;gap:8px;align-items:flex-start;flex:none">' + (s.wait ? '<span class="sc-chip warn big">반영 대기 ' + s.wait + '</span>' : '') +
+      '<span style="display:flex;gap:8px;align-items:flex-start;flex:none">' + (s.wait ? '<span class="sc-chip warn big">반영 대기 ' + s.wait + '</span>' : '') + (s.doing ? '<span class="sc-chip big">작업 중 ' + s.doing + '</span>' : '') +
       '<button type="button" class="dedit" data-dedit="' + esc(s.file) + '" data-dname="' + esc(cid + ' ' + (o.title || '')) + '" title="이 화면 정의서를 바로 고쳐 저장합니다">직접 수정</button></span></div>';
     h += '<dl class="sc-info">' + row('작성자', esc(o.author || '')) + row('Service Mode', esc(listOf(o.service_mode).join(', '))) + row('User Type', esc(listOf(o.user_type).join(', '))) +
       row('기준(basis)', o.basis ? esc(o.basis) : o.rules_version ? '<span class="sc-muted">예전 기록 · 공통 규칙 ' + esc(o.rules_version) + '</span>' : '<span class="sc-chip">기록 전</span>') +

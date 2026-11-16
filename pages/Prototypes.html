@@ -150,6 +150,8 @@ a.pcard:hover{border-color:var(--accent)}
   var store = window.WB.store;   // 공통(common.js)
   function toast(t){ var el = $('toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(function(){ el.classList.remove('on'); }, 2000); }
   function who(){ return store('cux.user') || ''; }
+  // 화면 수: 상세 화면(Prototype.html)과 같이 참고 프레임(role 'ref')은 빼고, 있으면 「+ 참고 n」으로 따로(만들기 창과 같은 표기)
+  function scrTxt(fr){ var r = (fr || []).filter(function(f){ return f && f.role === 'ref'; }).length; return '화면 ' + ((fr || []).length - r) + '개' + (r ? ' + 참고 ' + r : ''); }
   function fmt(t){ var d = new Date(t); if (isNaN(d)) return ''; var p = function(n){ return (n < 10 ? '0' : '') + n; }; return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes()); }
   function getJ(u){ return fetch(u, { cache: 'no-store' }).then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); }); }
   function shotUrl(key, id, meta){ var m = meta && meta[id]; return m ? 'projects/' + key + '/shots/' + id.replace(':', '-') + '.' + (m.ext || 'png') + '?t=' + encodeURIComponent(m.at || '') : ''; }
@@ -173,7 +175,7 @@ a.pcard:hover{border-color:var(--accent)}
       var fr = j.frames || [];
       h += '<div class="pcard"><div class="thumb">' + (j.status === '진행 중' ? 'Claude가 만드는 중…' : j.status === '대기' ? '요청 감시 중인 Claude를 기다리는 중' : esc(j.note || j.status)) + '</div><div class="bd">' +
         '<div class="t"><b>' + esc(j.name) + '</b><span class="chip ' + (j.status === '실패' ? 'bad' : j.status === '보류' ? 'warn' : 'busy') + '">' + esc(j.status === '대기' || j.status === '진행 중' ? '만드는 중 · ' + j.status : j.status) + '</span></div>' +
-        '<div class="meta"><span>' + esc(j.id) + '</span><span>화면 ' + fr.length + '개</span><span>' + esc(j.env || '') + '</span><span>' + esc(fmt(j.createdAt)) + '</span></div></div></div>';
+        '<div class="meta"><span>' + esc(j.id) + '</span><span>' + scrTxt(fr) + '</span><span>' + esc(j.env || '') + '</span><span>' + esc(fmt(j.createdAt)) + '</span></div></div></div>';
     });
     PROTOS.forEach(function(p){
       var fr = p.frames || [], st = (p.stale || []).length, sj = syncing[p.id], start = fr.filter(function(f){ return f.nodeId === p.start; })[0] || fr[0];
@@ -181,7 +183,7 @@ a.pcard:hover{border-color:var(--accent)}
       var chip = sj ? '<span class="chip busy">' + (sj.kind === 'prototype-edit' ? '수정 중' : '맞추는 중') + '</span>' : st ? '<span class="chip warn">갱신 필요 ' + st + '</span>' : '<span class="chip ok">최신</span>';
       h += '<a class="pcard" href="Prototype.html?id=' + encodeURIComponent(p.id) + '"><div class="thumb"' + (th ? ' style="background-image:url(&quot;' + esc(th) + '&quot;)"' : '') + '>' + (th ? '' : '미리보기 없음') + '</div><div class="bd">' +
         '<div class="t"><b>' + esc(p.name) + '</b>' + chip + '</div>' +
-        '<div class="meta"><span>' + esc(p.fileName || '') + '</span><span>화면 ' + fr.length + '개</span><span>' + esc(p.env || '') + '</span><span>' + esc(fmt(p.updatedAt)) + '</span></div></div></a>';
+        '<div class="meta"><span>' + esc(p.fileName || '') + '</span><span>' + scrTxt(fr) + '</span><span>' + esc(p.env || '') + '</span><span>' + esc(fmt(p.updatedAt)) + '</span></div></div></a>';
     });
     h = h || '<div class="empty">아직 프로토타입이 없습니다. 「＋ 새 프로토타입」으로 화면을 골라 만들기를 요청하세요.</div>';
     if (render.h !== h) { render.h = h; $('grid').innerHTML = h; }   // 5초마다 불러와도 같으면 다시 그리지 않는다(누르는 중인 카드가 바뀌지 않게)

@@ -369,12 +369,11 @@ html.doc-ro #docNew,html.doc-ro #docImport{display:none!important}
         var ap = (d[0].applied || {})[workKey], cur = ap && ap.guideId || '';
         GEN.forEach(function(k){ renderKind(k, byKind[k] || [], ap && ap.docs && ap.docs[k]); });
         renderLog(docs);
-        if (logSince === null && !logLoading) { logLoading = true; fetch('.history/guides/_log.json', { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : {}; }).catch(function(){ return {}; }).then(function(j){
-          var since = (j && j.since) || '';
-          // 깃 기록(파일 직접 수정)도 함께: 기준 시각 이후만
-          return fetch('/api/guides/gitlog' + (since ? '?since=' + encodeURIComponent(since) : ''), { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : {}; }).catch(function(){ return {}; })
-            .then(function(g){ logGit = (g && g.items) || []; logRoot = (g && g.root) || logRoot; logSince = since; renderLog(); });
-        }); }
+        // 깃 기록(파일 직접 수정)도 함께. 기준 시각(since 이전은 지운 기록)은 서버가 지금 팀의 _log.json에서 읽어 돌려준다
+        if (logSince === null && !logLoading) { logLoading = true;
+          fetch('/api/guides/gitlog', { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : {}; }).catch(function(){ return {}; })
+            .then(function(g){ logGit = (g && g.items) || []; logRoot = (g && g.root) || logRoot; logSince = (g && g.since) || ''; renderLog(); });
+        }
         guideMap = {}; guides.forEach(function(g){ guideMap[g.id] = g; });
         if (cur && !guideMap[cur]) cur = '';   // 지운 가이드면 작업 기준 없음
         curGuide = cur;
@@ -500,7 +499,7 @@ html.doc-ro #docNew,html.doc-ro #docImport{display:none!important}
         c.files.forEach(function(f){ var g = docOfPath(f.path); if (!g) return; (by[g.id] = by[g.id] || { g: g, files: [] }).files.push(f); });
         Object.keys(by).forEach(function(k){
           var x = by[k], n = x.files.length;
-          ev.push({ key: 'git|' + c.hash + '|' + k, k: x.g.kind || 'guide', g: x.g, at: c.at, by: (c.by || '') + (pc ? ' · ' + pc : ''), w: 'file', hash: c.hash, files: x.files,
+          ev.push({ key: 'git|' + c.hash + '|' + k, k: x.g.kind || 'guide', g: x.g, at: c.at, by: c.by || pc, w: 'file', hash: c.hash, files: x.files,
             note: '파일 ' + n + '개 직접 수정' });
         });
       });

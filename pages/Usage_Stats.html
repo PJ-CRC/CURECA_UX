@@ -386,15 +386,18 @@ td.usd{font-weight:700}
   function itemsNow(){ var b = baseNow(); return who ? b.filter(function(u){ return name(u) === who; }) : b; }
   function render(){
     $('tip').hidden = true;
-    var base = baseNow(), list = who ? base.filter(function(u){ return name(u) === who; }) : base, s = sum(list);
+    /* ë ì§ë¥¼ ê³ ë¥´ë©´(ë§ë í´ë¦­) ì¹´ë Â· ë¹ì¤ Â· ìììë³ Â· íê° ëª¨ë ê·¸ë  ê¸°ì¤. ì¼ë³ ë§ëë§ ê¸°ê° ì ì²´ë¥¼ ë³´ì¬ ì¤ë¤ */
+    var inDay = function(u){ return !day || bucketOf(u) === day; };
+    var base0 = baseNow(), list0 = who ? base0.filter(function(u){ return name(u) === who; }) : base0;
+    var base = base0.filter(inDay), list = list0.filter(inDay), s = sum(list);
     /* 금액 환산 중 종류별 비중(단가는 모델마다 달라 토큰 비율로 보여 준다) */
     $('cards').innerHTML =
-      '<div class="card"><div class="k">작업 수</div><div class="v">' + num(s.n) + '건</div><div class="s">API 호출 ' + num(s.calls) + '회</div></div>' +
+      '<div class="card"><div class="k">작업 수' + (day ? ' · ' + esc(day) + '만' : '') + '</div><div class="v">' + num(s.n) + '건</div><div class="s">API 호출 ' + num(s.calls) + '회</div></div>' +
       '<div class="card"><div class="k">총 토큰</div><div class="v">' + short(s.total) + '</div><div class="s">입력 ' + short(s.input) + ' · 캐시 읽기 ' + short(s.cacheRead) + '</div></div>' +
       '<div class="card"><div class="k">금액 환산 (API 단가)</div><div class="v">' + usd(s.usd) + '</div><div class="s">출력 ' + short(s.output) + ' · 캐시 쓰기 ' + short(s.cacheWrite) + '</div></div>' +
       '<div class="card"><div class="k">작업당 평균</div><div class="v">' + (s.n ? usd(s.usd / s.n) : '—') + '</div><div class="s">' + (s.n ? short(Math.round(s.total / s.n)) + ' 토큰' : '') + '</div></div>';
 
-    renderDays(list);
+    renderDays(list0);
     renderMix(list);
 
     /* C 작업자별: 금액 큰 순. 누르면 그 작업자만 */
@@ -415,7 +418,7 @@ td.usd{font-weight:700}
     sel.innerHTML = '<option value="">작업자 전체</option>' + names.map(function(n){ return '<option' + (n === who ? ' selected' : '') + '>' + esc(n) + '</option>'; }).join('');
 
     /* D 작업별: 기본 최신순(금액순 선택 가능), 날짜를 고르면 그날만 */
-    var rows = (day ? list.filter(function(u){ return bucketOf(u) === day; }) : list.slice()).sort(sortMode === 'usd'
+    var rows = list.slice().sort(sortMode === 'usd'
       ? function(a, b){ return (+b.usd || 0) - (+a.usd || 0); }
       : sortMode === 'type'   /* 유형순: 요청 유형 순서(요청 칸과 같은 순) → 같은 유형 안에서는 최신순, 요청이 아닌 작업은 맨 뒤 */
       ? function(a, b){ return rtypeRank(a) - rtypeRank(b) || String(rtypeOf(a)).localeCompare(String(rtypeOf(b))) || (Date.parse(b.at) || 0) - (Date.parse(a.at) || 0); }
