@@ -1,0 +1,28 @@
+{
+   "at" : "2026-11-16T18:31:59+09:00",
+   "by" : "안종범",
+   "cacheRead" : 133100,
+   "cacheWrite" : 22511,
+   "calls" : 3,
+   "doneBy" : "Claude",
+   "fileKey" : "cDjaemHjetS7RcAHRUIMY5",
+   "fileName" : "STAgora AI Workspace",
+   "frame" : "AD-LDT-02-01-01-P",
+   "from" : "2026-11-16T18:31:50+09:00",
+   "id" : "anjongbeom-ui-macbookair-2_R015",
+   "input" : 6,
+   "kind" : "request",
+   "models" : {
+      "claude-sonnet-5-5" : 3
+   },
+   "nodeId" : "186:84233",
+   "output" : 1473,
+   "page" : "Test-안종범",
+   "pc" : "anjongbeom-ui-MacBookAir-2",
+   "reqId" : "R015",
+   "reqType" : "질문 · 그 밖",
+   "team" : "stagora",
+   "text" : "너 왜 'This version takes effect at 00:00 ($UTC+9$) on the selected date.' 이 문구는 언어셋에 추가 안햇어?",
+   "total" : 157090,
+   "usd" : 0.1314
+}
