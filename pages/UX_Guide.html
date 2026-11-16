@@ -2061,7 +2061,11 @@ html.embed,html.embed body{overflow:hidden}
     var si = e.target.closest('[data-sc]'); if (si) { scShow(si.dataset.sc); return; }
     var tw = e.target.closest('[data-tw]');
     if (tw) { var g = byId[tw.dataset.tw]; open[g.id] = !tw.classList.contains('open'); tree($('q').value.trim().toLowerCase()); return; }
-    var b = e.target.closest('[data-id]'); if (b) show(b.dataset.id);
+    var b = e.target.closest('[data-id]'); if (!b) return;
+    /* 지금 보고 있는 대분류의 이름을 한 번 더 누르면 접고 펼친다(2026-11-16, 화면 정의서 메뉴처럼). 처음 누를 때는 그 페이지를 열고 펼친다 */
+    var s0 = byId[b.dataset.id];
+    if (s0 && s0 === cur && !s0.parent && s0.kids && s0.kids.length && !$('q').value.trim()) { open[s0.id] = open[s0.id] === false; tree(''); return; }
+    show(b.dataset.id);
   });
   /* ── 수정 요청 입력창(목록 아래, Workbench처럼): 지금 보는 항목을 대상으로 guide-edit 작업을 쌓는다 ── */
   function askTarget(){
