@@ -2,8 +2,8 @@
   "id": "anjongbeom-ui-macbookair-2-local_R002",
   "kind": "request",
   "team": "stagora",
-  "status": "진행 중",
-  "at": "2026-11-16T14:30:49+09:00",
+  "status": "보류",
+  "at": "2026-11-16T14:31:43+09:00",
   "createdAt": "2026-11-16T14:30:38+09:00",
   "by": "안종범",
   "doneBy": "Claude",
@@ -17,12 +17,23 @@
   "type": "질문 · 그 밖",
   "layout": "",
   "text": "현재 작업 페이지에서 선택한 화면인 `GM-DAS-GR`에서 언어셋에 없는 문구를 찾아서 번역 후 등록해줘",
-  "note": "처리 시작: 작업규칙 읽는 중",
+  "note": "언어셋에 없는 문구를 찾아 7개 언어로 번역했습니다. 언어셋에는 아직 등록하지 않았습니다.\n- 대조 범위: GM-DAS-GR 화면 글 중 UI 문구 약 55개를 언어셋 3.GMCS · 0.공통 시트와 비교. 대부분은 이미 있음(Period, Test period, Result, Real-Time Detection Statistics, Report generated: = GM-txt-134, Data from Affiliated Testing Lab = GM-txt-378 등)\n- 없는 문구(4-A-5 형식, ko-KR | en-US | de-DE | es-ES | it-IT | fr-FR | pt-PT)\n 1) 최근 1개월 | Last 1 month | Letzter Monat | Último mes | Ultimo mese | Dernier mois | Último mês\n 2) 기간 내 증가율 * | Rate of increase over period * | Anstiegsrate im Zeitraum * | Tasa de aumento en el período * | Tasso di aumento nel periodo * | Taux d'augmentation sur la période * | Taxa de aumento no período *\n 3) 지금 | Now | Jetzt | Ahora | Adesso | Maintenant | Agora\n 4) 5주 전 | 5 weeks ago | vor 5 Wochen | hace 5 semanas | 5 settimane fa | il y a 5 semaines | há 5 semanas\n 5) 각주 두 줄(동시 검출률 · 교차 검출률 계산식): 영어 원문은 화면에 있으나 ko-KR 문장이 없어 번역 보류\n- 등록하지 않은 이유: 4-6의 추가 절차(Figma AI Run으로 언어셋에 행 추가)와 시트 기록(4-A-8)을 서버 API로 할 방법을 찾지 못함. 화면에 Maintenant · hace 5 semanas · Tasso di aumento처럼 다른 언어가 섞여 있어(최장 언어 화면 가능성) 2) 3) 4)가 실제 영어 원문인지 확인 필요\n작업 기준: 작업규칙 STAgora 작업규칙 · 정책서 없음 · UX가이드 Common UX · 기준데이터 glossary(언어셋) · 화면 정의서 UX Kit(Component) 화면 정의서",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "위 번역을 어떻게 처리할까요?",
+    "options": [
+      {
+        "label": "1)~4) 그대로 언어셋에 등록 방법 안내"
+      },
+      {
+        "label": "2) 3) 4)는 영어 원문부터 다시 알려줄게요"
+      }
+    ],
+    "free": true
+  },
   "replies": []
 }
