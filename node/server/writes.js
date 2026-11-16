@@ -213,6 +213,8 @@ module.exports = function register(on, h) {
         }
         if (kind === 'text' && !core.arr(b.items).length) throw new Error('바꿀 글(items)이 없습니다.');
         if (kind === 'guide-check' || kind === 'guide-edit') { nid = ''; if (!GID_RE.test(nn(b.guide)) || !core.exists(path.join(T.guideRoot, nn(b.guide), 'meta.json'))) throw new Error('가이드를 찾지 못했습니다: ' + nn(b.guide)); }
+        // 수정 요청에도 참고 파일(2026-11-16): md · csv · 그림 등을 올려 「이 파일 내용으로 바꿔 줘」처럼 맡긴다(만들기와 같은 _tmp → job_files/{작업 ID}/)
+        if (kind === 'guide-edit') srcs = core.arr(b.files).filter((x) => x && /^[0-9a-f]{32}\.[a-z0-9]{1,8}$/.test(nn(x.tmp)) && core.exists(path.join(upTmp, nn(x.tmp)))).slice(0, 10);
         if (kind === 'guide') {
           key = h.keyOf(b.link); nid = ''; const m = /[?&]node-id=(\d+)[-:](\d+)/.exec(nn(b.link)); if (m) nid = m[1] + ':' + m[2];
           if (!nn(b.name).trim()) throw new Error('이름을 입력해 주세요.');
@@ -248,6 +250,7 @@ module.exports = function register(on, h) {
             status: '대기', note: '', by: nn(b.by), takenBy: '', createdAt: now, updatedAt: now };
           if (kind === 'guide-check') hit.scope = nn(b.scope) === 'spec' ? 'spec' : '';
           if (kind === 'guide-edit' && nn(b.file)) hit.file = nn(b.file);
+          if (kind === 'guide-edit' && srcs.length) hit.files = saveUploads(hit.id, srcs);
           if (kind === 'capture' && b.auto) hit.auto = true;
           if (kind === 'minutes') { hit.minute = nn(b.minute); if (mmode) hit.mode = mmode; }
           if (kind === 'plan') { hit.sub = nn(b.sub); hit.target = nn(b.target); hit.plan = b.plan === undefined ? null : b.plan; }

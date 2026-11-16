@@ -54,6 +54,19 @@ a.pill:hover{border-color:var(--accent)}
 .ask-act .btn{width:100%}
 .ask-act span{font-size:12px;color:var(--ink-3);min-height:16px;line-height:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ask[aria-disabled="true"] textarea,.ask[aria-disabled="true"] .btn{opacity:.5;pointer-events:none}
+/* 수정 요청 참고 파일(2026-11-16): 입력칸 아래 [파일 첨부] + 고른 파일 칩. 입력칸에 끌어 놓아도 된다 */
+.ask-in{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.att{display:flex;align-items:center;flex-wrap:wrap;gap:6px;min-width:0}
+.att-add{display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 10px;border:1px dashed var(--line);border-radius:7px;background:var(--surface);color:var(--ink-2);font-size:12.5px;font-weight:600;cursor:pointer}
+.att-add:hover,.att.drop .att-add{border-color:var(--accent);color:var(--accent)}
+.att-add svg{width:14px;height:14px}
+.att-chip{display:inline-flex;align-items:center;gap:6px;max-width:260px;height:26px;padding:0 4px 0 9px;border:1px solid var(--line);border-radius:7px;background:var(--surface-2);font-size:12.5px;color:var(--ink)}
+.att-chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.att-chip small{color:var(--ink-3);flex:none}
+.att-chip button{flex:none;width:20px;height:20px;border:0;border-radius:5px;background:none;color:var(--ink-3);font-size:14px;line-height:1;cursor:pointer}
+.att-chip button:hover{background:var(--line);color:var(--ink)}
+.att-hint{font-size:12px;color:var(--ink-3)}
+textarea.drop{outline:2px dashed var(--accent);outline-offset:-2px}
 html.doc-ro .ask{display:none}
 @media (max-width:720px){ .ask{flex-direction:column} .ask-t,.ask-act{width:auto} .layout.rqm{grid-template-columns:1fr} }
 /* 수정 진행 · 결과 패널: 목차 · 내용과 입력창 사이. 길면 그 안에서 스크롤(창 높이의 40%까지) */
@@ -491,7 +504,7 @@ html.embed,html.embed body{overflow:hidden}
     </div>
     <form class="ask" id="ask" aria-label="수정 요청">
       <div class="ask-t"><span>대상</span><b id="askTarget">—</b></div>
-      <textarea id="askText" rows="4" placeholder="이 항목에서 무엇을 어떻게 고칠지 적어 주세요."></textarea>
+      <div class="ask-in"><textarea id="askText" rows="4" placeholder="이 항목에서 무엇을 어떻게 고칠지 적어 주세요."></textarea><div class="att" id="askAtt"></div></div>
       <div class="ask-act"><span id="askMsg" role="status"></span><button type="submit" class="btn pri" id="askSend">Claude에게 수정 요청</button></div>
     </form>
   </section>
@@ -1451,11 +1464,64 @@ html.embed,html.embed body{overflow:hidden}
     Array.prototype.forEach.call($('main').querySelectorAll('.sc-filter button'), function(b){ b.classList.toggle('on', b.dataset.kind === scKind); });
   }
   // 수정 요청 창: 지금 보이는 문서 내용 맨 아래(이전 · 다음 항목 위)에 붙이고 그 자리로 스크롤
+  /* ── 수정 요청 참고 파일(2026-11-16): md · csv · txt · pdf · 그림 · 오피스 파일을 10개(하나 20MB 미만)까지.
+     보낼 때 하나씩 /api/upload로 올려 임시 이름을 받고 작업(guide-edit)의 files로 보낸다 → 서버가 workbench/job_files/{작업 ID}/에 둔다(이 PC에만) ── */
+  var ATT_EXT = /\.(md|markdown|txt|csv|tsv|json|html?|pdf|docx|xlsx|pptx|png|jpe?g|gif|webp)$/i, ATT_N = 10, ATT_MAX = 20 * 1024 * 1024;
+  function attach(box, drop){
+    var list = [], inp = document.createElement('input');
+    inp.type = 'file'; inp.multiple = true; inp.hidden = true; inp.accept = '.md,.markdown,.txt,.csv,.tsv,.json,.html,.htm,.pdf,.docx,.xlsx,.pptx,.png,.jpg,.jpeg,.gif,.webp';
+    function kb(n){ return n < 1048576 ? Math.max(1, Math.round(n / 1024)) + 'KB' : (n / 1048576).toFixed(1) + 'MB'; }
+    function draw(msg){
+      box.innerHTML = '<button type="button" class="att-add" title="참고 파일 올리기(md · csv · txt · pdf · 그림 · 오피스, 10개 · 하나 20MB 미만). 입력칸에 끌어 놓아도 됩니다"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M10.5 4.5 5.6 9.4a1.5 1.5 0 0 0 2.1 2.1l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.5 4.5 0 0 0 6.4 6.4l4.2-4.2"/></svg>파일 첨부</button>' +
+        list.map(function(f, i){ return '<span class="att-chip"><span title="' + esc(f.name) + '">' + esc(f.name) + '</span><small>' + kb(f.size) + '</small><button type="button" data-ati="' + i + '" aria-label="' + esc(f.name) + ' 빼기">×</button></span>'; }).join('') +
+        (msg ? '<span class="att-hint">' + esc(msg) + '</span>' : (!list.length ? '<span class="att-hint">md · csv 등 참고 파일</span>' : ''));
+      box.appendChild(inp);
+    }
+    function add(files){
+      var skip = [];
+      Array.prototype.forEach.call(files || [], function(f){
+        if (!ATT_EXT.test(f.name)) skip.push(f.name + ': 올릴 수 없는 형식');
+        else if (f.size >= ATT_MAX) skip.push(f.name + ': 20MB 이상');
+        else if (list.length >= ATT_N) skip.push(f.name + ': 최대 ' + ATT_N + '개');
+        else if (!list.some(function(u){ return u.name === f.name && u.size === f.size; })) list.push(f);
+      });
+      draw(skip.length ? '올리지 못함 · ' + skip.join(' / ') : '');
+    }
+    box.addEventListener('click', function(e){
+      if (e.target.closest('.att-add')) { inp.click(); return; }
+      var x = e.target.closest('[data-ati]'); if (x) { list.splice(+x.dataset.ati, 1); draw(''); }
+    });
+    inp.addEventListener('change', function(){ add(inp.files); inp.value = ''; });
+    [box, drop].forEach(function(el){
+      if (!el) return;
+      el.addEventListener('dragover', function(e){ if (e.dataTransfer && Array.prototype.indexOf.call(e.dataTransfer.types || [], 'Files') >= 0) { e.preventDefault(); el.classList.add('drop'); } });
+      el.addEventListener('dragleave', function(){ el.classList.remove('drop'); });
+      el.addEventListener('drop', function(e){ if (!e.dataTransfer || !e.dataTransfer.files.length) return; e.preventDefault(); el.classList.remove('drop'); add(e.dataTransfer.files); });
+    });
+    draw('');
+    return {
+      count: function(){ return list.length; },
+      reset: function(){ list = []; draw(''); },
+      /* 하나씩 올려 [{tmp, name}]. say(글)로 진행 표시 */
+      upload: function(say){
+        var out = [];
+        return list.reduce(function(p, f, i){
+          return p.then(function(){
+            if (say) say('참고 파일 올리는 중 ' + (i + 1) + ' / ' + list.length + '…');
+            return fetch('/api/upload?name=' + encodeURIComponent(f.name), { method: 'POST', headers: { 'Content-Type': 'application/octet-stream' }, body: f })
+              .then(function(r){ return r.json(); }).then(function(d){ if (d.error) throw new Error(d.error); out.push({ tmp: d.tmp, name: d.name }); });
+          });
+        }, Promise.resolve()).then(function(){ return out; });
+      }
+    };
+  }
+  var askAtt = attach($('askAtt'), $('askText'));
   function editPane(title, body){
     var m = $('main'), ed = document.createElement('section');
     ed.className = 'edit-pane'; ed.setAttribute('aria-label', '수정 요청');
-    ed.innerHTML = '<h3>' + title + '</h3><div class="editor">' + body +
+    ed.innerHTML = '<h3>' + title + '</h3><div class="editor">' + body + '<div class="att" id="edAtt"></div>' +
       '<div class="act"><button type="button" class="btn" id="edCancel">취소</button><button type="button" class="btn pri" id="edSave">Claude에게 수정 요청</button></div></div>';
+    ed._att = attach(ed.querySelector('#edAtt'), ed.querySelector('#edText'));
     m.insertBefore(ed, m.querySelector('.pager') || null);
     ed.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
     $('edText').focus({ preventScroll: true });
@@ -1471,9 +1537,10 @@ html.embed,html.embed body{overflow:hidden}
     $('edSave').onclick = function(){
       var text = $('edText').value.trim(); if (!text) { $('edText').focus(); return; }
       this.disabled = true;
-      post('/api/jobs', { action: 'add', kind: 'guide-edit', guide: id, fileKey: '', name: s.cid + ' ' + (s.o.title || ''), text: text, by: user(), file: s.file })
+      ed._att.upload(function(t){ $('edSave').textContent = t; })
+        .then(function(files){ return post('/api/jobs', { action: 'add', kind: 'guide-edit', guide: id, fileKey: '', name: s.cid + ' ' + (s.o.title || ''), text: text, by: user(), file: s.file, files: files }); })
         .then(function(){ editing = false; scShow(s.cid, true); fixes(); toast('수정 요청을 보냈습니다. Claude가 고치면 입력창 위에 결과가 나옵니다.'); })
-        .catch(function(x){ $('edSave').disabled = false; alert(x.message || '요청하지 못했습니다.'); });
+        .catch(function(x){ $('edSave').disabled = false; $('edSave').textContent = 'Claude에게 수정 요청'; alert(x.message || '요청하지 못했습니다.'); });
     };
   }
 
@@ -1901,9 +1968,10 @@ html.embed,html.embed body{overflow:hidden}
       var text = $('edText').value.trim();
       if (!text) { $('edText').focus(); return; }
       this.disabled = true;
-      post('/api/jobs', { action: 'add', kind: 'guide-edit', guide: id, fileKey: meta.fileKey, name: label, text: text, by: user(), file: file || '' })
+      ed._att.upload(function(t){ $('edSave').textContent = t; })
+        .then(function(files){ return post('/api/jobs', { action: 'add', kind: 'guide-edit', guide: id, fileKey: meta.fileKey, name: label, text: text, by: user(), file: file || '', files: files }); })
         .then(function(){ editing = false; show(s.id, true); fixes(); toast('수정 요청을 보냈습니다. Claude가 고치면 입력창 위에 결과가 나옵니다.'); })
-        .catch(function(x){ $('edSave').disabled = false; alert(x.message || '요청하지 못했습니다.'); });
+        .catch(function(x){ $('edSave').disabled = false; $('edSave').textContent = 'Claude에게 수정 요청'; alert(x.message || '요청하지 못했습니다.'); });
     };
   }
 
@@ -2087,8 +2155,9 @@ html.embed,html.embed body{overflow:hidden}
     if (!t) return;
     if (!text) { $('askMsg').textContent = '고칠 내용을 적어 주세요.'; $('askText').focus(); return; }
     $('askSend').disabled = true; $('askMsg').textContent = '보내는 중…';
-    post('/api/jobs', { action: 'add', kind: 'guide-edit', guide: id, fileKey: t.fileKey || '', name: t.name, text: text, by: user(), file: t.file })
-      .then(function(){ $('askText').value = ''; $('askMsg').textContent = ''; fixes(); toast('「' + t.name + '」 수정 요청을 보냈습니다. Claude가 고치면 입력창 위에 결과가 나옵니다.'); })
+    askAtt.upload(function(m){ $('askMsg').textContent = m; })
+      .then(function(files){ $('askMsg').textContent = '보내는 중…'; return post('/api/jobs', { action: 'add', kind: 'guide-edit', guide: id, fileKey: t.fileKey || '', name: t.name, text: text, by: user(), file: t.file, files: files }); })
+      .then(function(){ $('askText').value = ''; $('askMsg').textContent = ''; askAtt.reset(); fixes(); toast('「' + t.name + '」 수정 요청을 보냈습니다. Claude가 고치면 입력창 위에 결과가 나옵니다.'); })
       .catch(function(x){ $('askMsg').textContent = x.message || '요청하지 못했습니다.'; })
       .then(function(){ $('askSend').disabled = false; });
   });
