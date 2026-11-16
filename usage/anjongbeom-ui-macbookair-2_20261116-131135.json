@@ -1,0 +1,28 @@
+{
+   "at" : "2026-11-16T13:11:35+09:00",
+   "by" : "안종범",
+   "cacheRead" : 310471,
+   "cacheWrite" : 22217,
+   "calls" : 6,
+   "doneBy" : "Claude",
+   "fileKey" : "",
+   "fileName" : "",
+   "frame" : "",
+   "from" : "2026-11-16T13:11:13+09:00",
+   "id" : "anjongbeom-ui-macbookair-2_20261116-131135",
+   "input" : 11,
+   "kind" : "work",
+   "models" : {
+      "claude-sonnet-5-5" : 6
+   },
+   "nodeId" : "",
+   "output" : 2539,
+   "page" : "",
+   "pc" : "anjongbeom-ui-MacBookAir-2",
+   "reqId" : "",
+   "reqType" : "",
+   "team" : "stagora",
+   "text" : "작업규칙: 4-A. 다국어 번역 (J035)",
+   "total" : 335238,
+   "usd" : 0.1764
+}
