@@ -522,7 +522,7 @@ on('GET', '/api/guides/gitlog', ({ q, T }) => {
     if (!fp.startsWith(gp + '/') || /\/rev\/|\.check-[^/]*\.json$|\/meta\.json$/.test(fp) || fp === gp + '/_log.json') continue;
     const gl = gp.length + 1; cur.files.push({ st, path: fp.slice(gl), from: from ? from.slice(Math.min(gl, from.length)) : '' });
   }
-  return { items: items.filter((x) => x.files.length) };
+  return { items: items.filter((x) => x.files.length), root: ".history/" + gp };   // root: 화면에 전체 경로로 보이게(2026-11-16)
 });
 on('GET', '/api/guides/gitfile', ({ q, T, res, send }) => {
   const h = String(q.get('hash') || ''), fp = String(q.get('path') || '');
