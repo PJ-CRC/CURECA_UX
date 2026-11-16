@@ -1,0 +1,12 @@
+{
+  "rev": "20261116-103525_anjongbeom-ui-macbookair-2-local",
+  "by": "Claude",
+  "at": "2026-11-16T10:35:25+09:00",
+  "note": "4-1-1: 참조를 4절의 4-1로 명확히, 추가 위치를 기준데이터 / 언어셋으로",
+  "base": "20261116-100939_anjongbeom-ui-macbookair-2-local",
+  "pc": "anjongbeom-ui-MacBookAir-2.local",
+  "req": "4-1-1. 적용 범위: 참조 명확화",
+  "jobId": "J029",
+  "file": "4-1. 다국어 번역.md",
+  "orig": true
+}
