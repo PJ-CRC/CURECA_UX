@@ -58,7 +58,7 @@ Workbench 입력창의 첫 선택이 케이스다: **케이스 1 부분 수정(�
       - **보류 요청 다시 진행**: 사람이 Workbench · 변경 이력의 「다시 진행」(질문이 없는 「보류」, 겹침 대기 제외)을 누르면 note를 비우고 「대기」로 돌아온다. 처음 요청처럼 처리한다.
       - 서버가 요청의 등록 · 상태 변경(진행 중 · 보류 · 완료)마다 작업 이력을 남기고 깃으로 공유한다(다른 작업자도 본다). 완료일 때 그때 캡처를 붙이므로 캡처(3)를 완료(5)보다 먼저 한다.
       - **고친 프레임 알리기**: 「완료」 update에 `frames:[{nodeId, name}]`(실제로 고친 최상위 프레임, 고친 순서, 최대 12개)를 함께 보낸다. 서버가 그 프레임들의 캡처를 모두 이력에 붙이고(`shots`, 변경 이력에서 화면 이름 탭으로 넘겨 봄), Workbench 답변에 「고친 화면」으로 보인다. 보내지 않으면 예전처럼 요청 프레임 한 장만 붙는다(요청 프레임만 고쳤으면 생략해도 된다).
-      - **토큰 사용량**: 서버가 「진행 중」이 된 시각(startedAt)을 적고, 「완료」가 되면 `workbench/usage.ps1`(맥 `usage.pl`)로 그 구간 사용량을 `.history/usage/`에 남긴다(「사용량 통계」 페이지). 그래서 요청이 여러 개면 **한 요청씩** 「진행 중」으로 바꾸고 끝낸 뒤 다음 요청을 시작한다(한꺼번에 진행 중으로 두면 구간이 겹친다).
+      - **토큰 사용량**: 서버가 「진행 중」이 된 시각(startedAt)을 적고, 「완료」가 되면 서버(`node/server/usage.js`)가 그 구간 사용량을 `.history/usage/`에 남긴다(「사용량 통계」 페이지). 그래서 요청이 여러 개면 **한 요청씩** 「진행 중」으로 바꾸고 끝낸 뒤 다음 요청을 시작한다(한꺼번에 진행 중으로 두면 구간이 겹친다).
    6. **프로토타입 맞추기**: 완료한 뒤 `GET /api/prototypes`에서 이 프레임이 「갱신 필요」(`stale`)인 프로토타입이 있으면, 프로토타입마다 `POST /api/jobs {action:'add', kind:'prototype-sync', fileKey, proto:{id}, name, text:'R0xx 반영', frames:{stale}, by:'Claude'}`를 쌓는다(같은 프로토타입에 「대기」가 있으면 서버가 합친다). 요청은 기다리게 하지 않고, 다음 감시(`JOBS`)에서 `prototype.md`의 prototype-sync대로 맞춘다.
 - **겹침(다른 작업자와 같은 프레임)**: 감시가 `PENDING`과 함께 `CONFLICT R0xx <다른 이력 id> <in-progress|waiting>`을 출력하면, 그 요청은 Figma를 고치지 않는다.
   - 다른 작업자의 이력 내용은 `.history/entries/<다른 이력 id>.json`(by · pc · reqId · text)에서 본다.
@@ -66,7 +66,7 @@ Workbench 입력창의 첫 선택이 케이스다: **케이스 1 부분 수정(�
   - 감시가 `RESUME R0xx`를 출력하면(겹침이 풀림) 그 요청을 「진행 중」으로 바꾸고, 프레임을 **지금 상태로 다시 읽은 뒤** 위 순서대로 처리한다. 다른 작업자가 이미 같은 수정을 했으면 「완료」로 두고 note에 그렇게 적는다.
   - Workbench는 같은 프레임에 다른 작업자의 「대기 · 진행 중」 요청이 있으면 등록할 때 경고한다(막지는 않는다).
 - 요청 없이 채팅으로 Figma를 고쳤으면 작업 이력을 직접 남긴다: `POST /api/history {action:'add', by:작업자 이름, doneBy:'Claude', title, text, fileKey, fileName, page, frame, nodeId}` (캡처를 먼저 갱신하면 함께 남는다).
-  - 사용량도 직접 남긴다: 윈도우 `powershell -NoProfile -ExecutionPolicy Bypass -File workbench/usage.ps1 -From {작업 시작 시각 ISO} -By {작업자} -Title {작업 내용} [-Frame · -NodeId · -FileKey · -FileName · -Page]`, 맥 `perl workbench/usage.pl --from … --by … --title …`. 시작 시각은 그 작업을 부탁받은 사용자 메시지 시각이다.
+  - 사용량도 직접 남긴다: `POST /api/usage {from:{작업 시작 시각 ISO}, by:{작업자}, title:{작업 내용}, team, frame?, nodeId?, fileKey?, fileName?, page?}`(UTF-8 파일로 curl, 윈도우 · 맥 같음). 시작 시각은 그 작업을 부탁받은 사용자 메시지 시각이다.
 - 요청 데이터: `workbench/edit_requests.json` (`items[]`: id, nodeId, frame, page, fileKey, fileName, editable, type, case(1 · 2 · 3, 없으면 질문 · 그 밖), work(작업 기록 이름, 비면 새 작업), stage(등록 때 본 단계), priority, layout, text, status, note, author, images, ask, replies). 작업 기록 목록은 `GET /api/worklogs?team=`(머리말 · 지금 단계 · `다음:` 줄)
 - **수정할 부분 표시(`marks`)**: 작업자가 Workbench 캡처 위에 사각형을 그려 요청하면 요청에 `marks: [{n, x, y, w, h, att}]` · `shotAt`이 있다. 요청 글의 ① ② …가 `n`이다(하나뿐이면 번호 없이 쓸 수 있다).
   - `x, y, w, h`는 **그 프레임(요청의 `nodeId`) 왼쪽 위 기준 Figma 좌표(px)**다. `use_figma`로 프레임의 `absoluteBoundingBox`를 읽고, 그 아래 레이어 중 `(프레임.x + x, 프레임.y + y, w, h)` 사각형과 겹치는 것을 찾는다 — 사각형 안에 **거의 다 들어오는 가장 작은 레이어**(글자 · 버튼 · 셀 등)가 대상이다. 인스턴스 안쪽이면 그 인스턴스의 속성 · 덮어쓰기로 고친다.

@@ -46,7 +46,7 @@
 
 - **같은 작업 · 요청을 두 번 처리하지 않는다**: 서버는 이미 「진행 중」인 작업(`/api/jobs`) · 요청(`/api/requests`)을 다시 「진행 중」으로 바꾸려 하면 「이미 진행 중」 오류를 돌려준다(백그라운드 감시와 Claude 창이 함께 처리하던 것을 막음, 2026-11-05 J028). 이 오류를 받으면 다른 Claude 세션이 처리 중이니 **그 항목은 건너뛴다**. 내가 처리하다 끊겨 다시 이어야 할 때만 `force:true`를 붙인다.
 - **멈춘 「진행 중」은 10분 뒤 「대기」로**(2026-11-13): 서버가 1분마다 보고, 「진행 중」인 요청 · 작업이 **10분 동안 움직임이 없으면**(updatedAt이 그대로이고 백그라운드 에이전트가 지금 그 ID를 처리 중이 아니면) 「대기」로 되돌린다(note 「10분 동안 움직임이 없어 …」). 그래서 오래 걸리는 처리(케이스 단계 작업 · 문서 만들기 등)는 **5분 안팎마다 `update`로 note(지금 하는 일)를 갱신**한다. 내가 처리하던 것이 「대기」로 돌아가 있으면 「진행 중」으로 다시 바꾸고 이어 한다. 「완료」(작업은 「실패」도)인 항목을 「진행 중」으로 바꾸면 서버가 「이미 끝난 …」 오류를 돌려준다 — 그 항목은 건너뛴다.
-- **사용량**: 끝낸(완료 · 보류 · 실패) 작업마다 `workbench/usage.ps1 -From {「진행 중」으로 바꾼 시각} -By {작업의 by} -Title "{종류}: {이름} ({작업 ID})"`(맥 `usage.pl`)로 남긴다. 종류 이름은 「사용량 통계」가 나눠 보이는 말로 쓴다: UX 문서 = 카테고리 이름(작업규칙 · 정책서 · UX가이드 · 기준데이터 · 화면 정의서), 연관 항목 = 「연관 항목 찾기」 · 「고칠 화면 찾기」, 「회의록 요약」, 「논의 대상」(plan: ds-new · answer · answer-apply), 「프로토타입」, 「목록 만들기」 · 「캡처」. Workbench 요청(R0xx)은 서버가 완료 때 자동으로 남긴다(케이스 요청은 「케이스 n」으로 나뉜다).
+- **사용량**: 끝낸(완료 · 보류 · 실패) 작업마다 `POST /api/usage {from:{「진행 중」으로 바꾼 시각}, by:{작업의 by}, title:"{종류}: {이름} ({작업 ID})", team:{작업의 team}}`로 남긴다(UTF-8 파일로 `curl --data-binary`, 윈도우 · 맥 같음. 2026-11-16~ — 응답 `out`이 `USAGE …`면 남음, `NOUSAGE`면 그 구간 사용량 없음). 다른 문서에 `usage.ps1 -From A -By B -Title C`(맥 `usage.pl`)로 적힌 곳도 이 API로 같은 값을 보낸다(서버가 예전 서버(guide_server.ps1)로 떠 있을 때만 스크립트). 종류 이름은 「사용량 통계」가 나눠 보이는 말로 쓴다: UX 문서 = 카테고리 이름(작업규칙 · 정책서 · UX가이드 · 기준데이터 · 화면 정의서), 연관 항목 = 「연관 항목 찾기」 · 「고칠 화면 찾기」, 「회의록 요약」, 「논의 대상」(plan: ds-new · answer · answer-apply), 「프로토타입」, 「목록 만들기」 · 「캡처」. Workbench 요청(R0xx)은 서버가 완료 때 자동으로 남긴다(케이스 요청은 「케이스 n」으로 나뉜다).
 - **서버로 보내기**: 서버로 JSON을 보낼 때는 **UTF-8 파일로 만들어 `curl --data-binary @파일`**로 보낸다. 명령줄에 한글을 직접 넣으면 윈도우에서 깨진다.
 - `.history`는 작업 폴더 저장소와 별개다. Claude가 `.history`를 직접 커밋 · 푸시하지 않는다. 작업 폴더의 코드 커밋 · 푸시는 지금처럼 사용자가 요청할 때만 한다.
 
@@ -54,7 +54,7 @@
 
 - 화면 파일(html)과 화면이 함께 쓰는 `appnav.js` · `appnav.css` · `common.js`는 **`pages/`**에 있다. 주소는 폴더 이름 없이 그대로다(`http://localhost:8765/Work.html`) — 서버가 `pages/`에서 찾는다. 문서에서 `Work.html`처럼 적은 것은 `pages/Work.html`이다.
 - **서버는 Node.js 한 벌(`node/server/`)**이다(v0.21.0~). Figma AI Run이 처음 한 번 공식 Node를 받아 PC별 폴더에 두고 띄운다(`node/run_win.ps1` · `run_mac.sh`, 설치 없음). Node를 못 쓰면 예전 서버(`guide_server.ps1` · 맥 `guide_server_mac.pl`)로 띄우고, PC별 폴더의 `server_mode.txt` = `ps`면 예전 서버로 고정한다. 서버 기능을 고칠 때는 `node/server/`를 고친다(예전 서버는 대비용으로만 둔다). 옮긴 경위 · 비교 검사는 `node/README.md`.
-- 실행 파일(`Figma AI Run`)은 맨 위, 감시 · 동기화 · 업데이트 스크립트는 `workbench/`, 규칙 문서는 `docs/claude/`, 매뉴얼 그림은 `docs/manual/`, Figma 플러그인은 `figma_plugin/`, 배포 도구는 `tools/`.
+- 실행 파일(`Figma AI Run`)은 맨 위, 업데이트 · 깃허브 연결 스크립트는 `workbench/`(깃 동기화 · 사용량은 2026-11-16부터 서버 안 `node/server/sync.js` · `usage.js`, 백그라운드 감시는 `node/agent.js` — 윈도우 · 맥 같은 코드. `workbench/`의 예전 history_sync · agent · usage · watch_requests 스크립트는 예전 서버 · 대화형 깃허브 연결 · 대화 창 감시용으로 남겨 둔다), 규칙 문서는 `docs/claude/`, 매뉴얼 그림은 `docs/manual/`, Figma 플러그인은 `figma_plugin/`, 배포 도구는 `tools/`.
 
 ## 프로젝트 폴더
 
@@ -85,7 +85,7 @@
 | 작업 기준(이 PC만) | `workbench/guide_apply.json` | `workbench/guide_apply.{id}.json` |
 | 변경 이력 · 사용량 | `.history/entries` · `.history/usage` 한곳, 기록마다 `team`(없으면 CURECA) |
 
-- **Claude가 요청 · 작업을 처리할 때**: 그 항목의 `team`(없으면 `cureca`)으로 일한다. 이 문서 · `docs/claude/` 문서의 `.history/guides/…` · `.history/minutes/…` · `.history/config/sheet.json` 경로는 CURECA 기준이니, 다른 팀이면 위 표대로 `.history/teams/{team}/…`로 바꿔 읽고 쓴다(새 문서 폴더 `.history/teams/{team}/guides/{id}/`도). 서버 API에는 `?team={team}`을 붙이고, 작업을 새로 쌓을 때(prototype-sync · text 등)는 본문에 `team`을 넣는다. 사용량은 `usage.ps1 … -Team {team}`(맥 `--team`). Workbench 요청의 작업 기준은 `GET /api/guides?team={요청 team}`의 `applied[fileKey]`다.
+- **Claude가 요청 · 작업을 처리할 때**: 그 항목의 `team`(없으면 `cureca`)으로 일한다. 이 문서 · `docs/claude/` 문서의 `.history/guides/…` · `.history/minutes/…` · `.history/config/sheet.json` 경로는 CURECA 기준이니, 다른 팀이면 위 표대로 `.history/teams/{team}/…`로 바꿔 읽고 쓴다(새 문서 폴더 `.history/teams/{team}/guides/{id}/`도). 서버 API에는 `?team={team}`을 붙이고, 작업을 새로 쌓을 때(prototype-sync · text 등)는 본문에 `team`을 넣는다. 사용량은 `POST /api/usage`에 `team`. Workbench 요청의 작업 기준은 `GET /api/guides?team={요청 team}`의 `applied[fileKey]`다.
   - 안전장치(빠뜨렸을 때): `?team=` 없이 `jobId`를 담은 문서 저장(`/api/guides save`)은 그 작업의 팀 문서로, 이미 있는 회의록 id의 저장 · 지우기는 그 회의록이 있는 팀으로 서버가 맞춘다. 파일을 직접 고치는 일(논의 대상 · 반영 대기 항목 · 작업 기록 · 규칙 저장소 문서 등)에는 안전장치가 없으니 경로를 꼭 확인한다.
 
 ## 주의

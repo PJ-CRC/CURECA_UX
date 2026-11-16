@@ -5,6 +5,7 @@ const path = require('path');
 const crypto = require('crypto');
 const { spawn, spawnSync } = require('child_process');
 const core = require('./core');
+const usage = require('./usage');
 const { C } = core;
 // 문서 ID(= 폴더 이름): 영문 · 숫자 · 한글 등 글자와 _ . ( ) - (2026-11-13~ 알아보기 쉬운 이름, 예 「작업규칙_STAgora-작업규칙」). _ 로 시작하거나 .. 이 들어가면 안 된다
 const GID_RE = /^(?!_)(?!.*\.\.)[\p{L}\p{N}_.()\-]{1,100}$/u;
@@ -115,15 +116,9 @@ module.exports = function register(on, h) {
     core.writeText(cf, txt);
     return neu.length;
   }
-  // 요청 완료 → 그 구간 토큰 사용량 기록(usage.ps1 · usage.pl, 기다리지 않음)
+  // 요청 완료 → 그 구간 토큰 사용량 기록(2026-11-16~ Node 모듈 usage.js, 예전 usage.ps1 · usage.pl과 같은 기록. 기다리지 않음)
   function startUsage(id) {
-    try {
-      // (윈도우에서 PowerShell을 detached로 띄우면 콘솔이 없어 바로 끝난다 → 맥만 detached)
-      const o = { detached: process.platform !== 'win32', stdio: 'ignore', windowsHide: true, cwd: C.root };
-      const p = process.platform === 'win32' ? spawn('powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', path.join(C.root, 'workbench', 'usage.ps1'), '-ReqId', id], o)
-        : spawn('perl', [path.join(C.root, 'workbench', 'usage.pl'), '--req', id], o);
-      p.unref();
-    } catch (e) {}
+    setTimeout(() => { usage.record({ reqId: id }).then((o) => console.log(`  [${core.now()}] 사용량 ${o}`)).catch((e) => console.log(`  [${core.now()}] 사용량 기록 실패 ${id}: ${e.message}`)); }, 1500);
   }
   // 「진행 중」 한 구간을 runs에 쌓는다(최근 20개)
   function closeRun(it, at) { it.runs = core.arr(it.runs).filter(Boolean).concat([{ from: nn(it.startedAt), to: at }]).slice(-20); }
@@ -725,6 +720,13 @@ module.exports = function register(on, h) {
     if (/^[A-Za-z0-9-]{6,64}$/.test(id)) { if (ep === '/api/alive') { C.pages[id] = Date.now(); C.anyPage = true; C.emptySince = null; } else delete C.pages[id]; }
     return { ok: true, pages: Object.keys(C.pages).length };
   }, { readSafe: true });
+  // ── POST /api/usage — 요청 없이 한 작업의 토큰 사용량 기록(2026-11-16, 예전 usage.ps1 -From … 대신. 윈도우 · 맥 같음) ──
+  //  {from(「진행 중」으로 바꾼 시각, 필수), to?, by, title, team, frame?, nodeId?, fileKey?, fileName?, page?} 또는 {reqId}
+  on('POST', '/api/usage', async ({ body }) => {
+    const b = await body(), s = (v) => (v == null ? '' : String(v));
+    const out = await usage.record({ reqId: s(b.reqId), from: s(b.from), to: s(b.to), by: s(b.by), title: s(b.title), team: s(b.team), frame: s(b.frame), nodeId: s(b.nodeId), fileKey: s(b.fileKey), fileName: s(b.fileName), page: s(b.page) });
+    return { ok: /^(USAGE|NOUSAGE)/.test(out), out };
+  });
   // ── POST /api/shutdown — 서버 끄기(이 서버에서 연 페이지만) ──
   on('POST', '/api/shutdown', async ({ req, res, sendJson }) => {
     const o = req.headers.origin; if (o && o !== `http://localhost:${C.port}`) throw new Error('허용되지 않은 요청입니다.');
@@ -742,6 +744,9 @@ module.exports = function register(on, h) {
     const cc = h.findClaudeCode(); if (!cc) throw new Error('Claude Code를 찾지 못했습니다. Claude 데스크톱 앱(Code 탭)을 한 번 열거나 Claude Code를 설치해 주세요.');
     if (h.agentInfo().alive) throw new Error('이미 백그라운드 감시 중입니다.');
     fs.rmSync(path.join(C.root, 'workbench', '.agent_stop'), { force: true });
+    // 2026-11-16~ Node 한 벌(node/agent.js, 감시까지 포함). 이 서버를 돌리는 Node로 띄운다(서버가 꺼져도 남는다). 파일이 없으면 예전 스크립트
+    const aj = path.join(C.root, 'node', 'agent.js');
+    if (core.exists(aj)) { const p = spawn(process.execPath, [aj, '--claude', cc], { cwd: C.root, stdio: 'ignore', windowsHide: true, detached: true }); p.on('error', () => {}); p.unref(); return; }
     if (C.isMac) detach('/bin/sh', ['-c', `nohup perl '${path.join(C.root, 'workbench', 'agent.pl')}' '${cc}' >/dev/null 2>&1 &`]);
     else detach('powershell', ['-NoProfile', '-WindowStyle', 'Hidden', '-ExecutionPolicy', 'Bypass', '-File', path.join(C.root, 'workbench', 'agent.ps1'), '-Claude', cc]);
   }

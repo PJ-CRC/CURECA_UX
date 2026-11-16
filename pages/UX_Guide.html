@@ -315,12 +315,31 @@ html.doc-ro .dedit{display:none!important}
 .dm-tabs button{height:28px;padding:0 12px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--ink-3);font-size:12.5px;font-weight:700;cursor:pointer}
 .dm-tabs button[aria-selected="true"]{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
 .dm-tabs .p{margin-left:auto;font-size:12px;color:var(--ink-3)}
+.dm-tabs button{white-space:nowrap;flex:0 0 auto}
+.dm-tabs .p{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-left:8px}
 .dm-prev{min-height:420px;max-height:70vh;overflow:auto;padding:4px 2px;border-top:1px dashed var(--line)}
 .dm-text{width:100%;min-height:420px;box-sizing:border-box;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font:13px/1.6 "JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;tab-size:2;resize:vertical;white-space:pre;overflow:auto}
 .dm-text:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
 .dm-act{display:flex;align-items:center;gap:8px;margin-top:10px}
 .dm-act .m{flex:1;font-size:12.5px;color:var(--ink-3)}
 .dm-act .m.err{color:var(--red,#c62828)}
+/* 보이는 대로 편집(2026-11-16): 에디터 · 머리말 칸 · 저장 전 바뀐 줄 */
+.dm-vis{margin:0}
+.dm-vis .toastui-editor-defaultUI{border-color:var(--line);border-radius:10px;font-family:"Pretendard Variable",Pretendard,sans-serif}
+.dm-vis .toastui-editor-contents{font-family:"Pretendard Variable",Pretendard,sans-serif;font-size:14px}
+.dm-fm{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:6px 12px;margin:0 0 10px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2)}
+.dm-fm .dm-fmh{grid-column:1/-1;margin:0;font-size:12.5px;font-weight:700;color:var(--ink-2)}
+.dm-fm .dm-fmh span{font-weight:400;color:var(--ink-3)}
+.dm-fm label{display:flex;align-items:center;gap:8px;min-width:0;font-size:12.5px;color:var(--ink-3)}
+.dm-fm label span{flex:0 0 84px;overflow:hidden;text-overflow:ellipsis;font-family:"JetBrains Mono",Consolas,monospace}
+.dm-fm input{flex:1;min-width:0;height:28px;padding:0 8px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);font-size:12.5px}
+.dm-diff{margin-top:10px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2);overflow:hidden}
+.dm-dh{margin:0;padding:8px 12px;font-size:12.5px;color:var(--ink-2);border-bottom:1px solid var(--line)}
+.dm-dl{max-height:40vh;overflow:auto;padding:6px 0;font:12px/1.55 "JetBrains Mono",Consolas,monospace;white-space:pre-wrap;word-break:break-all}
+.dm-dl div{padding:0 12px}
+.dm-dl .a{background:rgba(46,160,67,.14);color:var(--ink)}
+.dm-dl .d{background:rgba(229,83,75,.14);color:var(--ink-3);text-decoration:line-through}
+.dm-dl .g{color:var(--ink-3)}
 .edit-pane{margin:28px 0 8px;padding:18px 20px;border:2px solid var(--accent);border-radius:12px;background:var(--surface)}
 .edit-pane h3{margin:0 0 10px;font-size:16px;font-weight:800}
 .editor .act{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
@@ -1564,22 +1583,98 @@ html.embed,html.embed body{overflow:hidden}
       if (head) head.insertAdjacentElement('afterend', ed); else m.insertBefore(ed, m.firstChild);
       var bt = m.querySelector('[data-dedit]'); if (bt) bt.disabled = true;
       function restore(){ ed.remove(); hid.forEach(function(x){ x.style.display = x.dataset.dmhid === ' ' ? '' : x.dataset.dmhid; delete x.dataset.dmhid; }); if (bt) bt.disabled = false; }
-      var ta = $('dmText'); ta.value = baseText; head && head.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); ta.focus({ preventScroll: true }); ta.setSelectionRange(0, 0); ta.scrollTop = 0;
+      var ta = $('dmText'); ta.value = baseText; head && head.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      /* 보이는 대로 편집(2026-11-16): md 파일은 에디터(Toast UI)로 연다. 머리말(--- 사이)은 위 「항목 · 값」 칸, 본문은 에디터.
+         저장할 때 내용이 같은 덩어리(문단 · 표 · 목록 …)는 원래 원문을 글자 그대로 두고 고친 덩어리만 바꾼다(dmKeep) → 깃 기록에 고친 곳만 남는다 */
+      var visual = !file || /\.md$/i.test(file), mode = 'src', tui = null, visOrig = '', visBase = '';
+      var fmM = baseText.match(/^---\n([\s\S]*?)\n---\n?/), fmText = fmM ? fmM[0] : '', bodyBase = fmM ? baseText.slice(fmM[0].length) : baseText;
+      var dirUrl = encodeURI(url.slice(0, url.lastIndexOf('/') + 1));
+      function imgIn(t){ return t.replace(/(!\[[^\]]*\]\()(?!https?:|\/|data:)([^)\s]+)/g, function(_, a, p){ return a + dirUrl + p; }); }
+      function imgOut(t){ return t.split('](' + dirUrl).join(']('); }
+      // 머리말 칸: 줄마다 「key: value」(그 밖 줄은 그대로 둔다)
+      var fmLines = fmM ? fmM[1].split('\n') : [];
+      if (visual && fmLines.length) {
+        var fmBox = document.createElement('div'); fmBox.className = 'dm-fm'; fmBox.id = 'dmFm';
+        fmBox.innerHTML = '<p class="dm-fmh">머리말 <span>(파일 맨 위 --- 사이)</span></p>' + fmLines.map(function(l, i){
+          var x = l.match(/^([A-Za-z_][\w-]*):\s?(.*)$/); if (!x) return '';
+          return '<label><span>' + esc(x[1]) + '</span><input data-fm="' + i + '" value="' + esc(x[2]) + '" spellcheck="false"></label>';
+        }).join('');
+        ed.insertBefore(fmBox, $('dmText'));
+      }
+      function fmNow(){
+        if (!fmM) return '';
+        var box = $('dmFm'); if (!box) return fmText;
+        var out = fmLines.slice();
+        box.querySelectorAll('[data-fm]').forEach(function(inp){ var i = +inp.dataset.fm, x = fmLines[i].match(/^([A-Za-z_][\w-]*):\s?(.*)$/); if (x && inp.value !== x[2]) out[i] = x[1] + ': ' + inp.value; });
+        return '---\n' + out.join('\n') + '\n---\n';
+      }
+      // 지금 편집한 글 전체(머리말 + 본문)
+      function current(){
+        if (mode === 'vis' && tui) return fmNow() + dmKeep2(visOrig, visBase, tui.getMarkdown(), imgOut);
+        return ta.value.replace(/\r\n/g, '\n');
+      }
+      function setMode(m){
+        if (m === mode) return;
+        if (m === 'vis' && !tui) return;
+        if (mode === 'vis' && tui) ta.value = current();   // 편집기를 떠날 때 원문 칸을 맞춘다(원문 · 미리 보기는 원문 칸 기준)
+        if (m === 'vis') {
+          var t = ta.value.replace(/\r\n/g, '\n'), f2 = t.match(/^---\n([\s\S]*?)\n---\n?/);
+          if ((f2 ? f2[0] : '') !== fmNow()) { fmM = f2; fmText = f2 ? f2[0] : ''; fmLines = f2 ? f2[1].split('\n') : []; var ob = $('dmFm'); if (ob) ob.remove(); }
+          visOrig = f2 ? t.slice(f2[0].length) : t;
+          tui.setMarkdown(imgIn(visOrig), false);
+          visBase = tui.getMarkdown();   // 편집기가 처음 만든 글: 저장 때 이것과 비교해 사람이 실제로 고친 덩어리만 찾는다
+        }
+        if ($('dmFm')) $('dmFm').hidden = m !== 'vis';
+        mode = m;
+        ta.hidden = m !== 'src'; $('dmVis').hidden = m !== 'vis'; $('dmPrev').hidden = m !== 'prev';
+        ed.querySelectorAll('[data-dmtab]').forEach(function(x){ x.setAttribute('aria-selected', x.dataset.dmtab === m ? 'true' : 'false'); });
+        if (m === 'prev') { var pv = $('dmPrev'); pv.innerHTML = ''; var bx = render(current().replace(/^---\n[\s\S]*?\n---\n?/, '')); Array.prototype.forEach.call(bx.childNodes, function(x){ pv.appendChild(x.cloneNode(true)); }); }
+        if (m === 'src') ta.focus(); else if (m === 'vis') tui.focus();
+      }
+      var visDiv = document.createElement('div'); visDiv.id = 'dmVis'; visDiv.className = 'dm-vis'; visDiv.hidden = true; ed.insertBefore(visDiv, $('dmPrev'));
+      if (visual) {
+        ed.querySelector('.dm-tabs').insertAdjacentHTML('afterbegin', '<button type="button" role="tab" aria-selected="false" data-dmtab="vis">보이는 대로</button>');
+        ed.querySelector('[data-dmtab="src"]').textContent = '원문(마크다운)';
+        ta.hidden = true; $('dmMsg').textContent = '편집기를 불러오는 중…';
+        loadTui().then(function(){
+          tui = new toastui.Editor({ el: visDiv, height: '70vh', initialEditType: 'wysiwyg', previewStyle: 'tab', hideModeSwitch: true, usageStatistics: false, language: 'ko-KR',
+            initialValue: imgIn(bodyBase), autofocus: false,
+            toolbarItems: [['heading', 'bold', 'italic', 'strike'], ['hr', 'quote'], ['ul', 'ol', 'indent', 'outdent'], ['table', 'link'], ['code', 'codeblock']],
+            hooks: { addImageBlobHook: function(){ toast('그림 넣기는 아직 원문(마크다운) 탭에서 경로로 적어 주세요.'); } } });
+          mode = 'src'; setMode('vis');
+          try { tui.moveCursorToStart(false); var sc = visDiv.querySelector('.toastui-editor-ww-container .toastui-editor-contents'); if (sc) sc.scrollTop = 0; } catch (x) {}
+          $('dmMsg').textContent = '보이는 대로 고치고 저장하세요. 고치지 않은 부분은 원문 그대로 남습니다. 저장 전에 바뀐 줄을 보여 드립니다.';
+        }).catch(function(){
+          ta.hidden = false; ed.querySelector('[data-dmtab="vis"]').disabled = true; if ($('dmFm')) $('dmFm').hidden = true;
+          $('dmMsg').className = 'm err'; $('dmMsg').textContent = '편집기를 불러오지 못해 원문(마크다운)으로 엽니다(인터넷 연결 확인).';
+          ta.focus({ preventScroll: true });
+        });
+      } else { ta.focus({ preventScroll: true }); ta.setSelectionRange(0, 0); ta.scrollTop = 0; }
       ed.querySelector('.dm-tabs').addEventListener('click', function(e){
-        var tb = e.target.closest('[data-dmtab]'); if (!tb) return; var prev = tb.dataset.dmtab === 'prev';
-        ed.querySelectorAll('[data-dmtab]').forEach(function(x){ x.setAttribute('aria-selected', x === tb ? 'true' : 'false'); });
-        ta.hidden = prev; $('dmPrev').hidden = !prev;
-        if (prev) { var pv = $('dmPrev'); pv.innerHTML = ''; var bx = render(ta.value.replace(/^---\n[\s\S]*?\n---\n?/, '')); Array.prototype.forEach.call(bx.childNodes, function(x){ pv.appendChild(x.cloneNode(true)); }); } else ta.focus();
+        var tb = e.target.closest('[data-dmtab]'); if (!tb || tb.disabled) return;
+        hideDiff(); setMode(tb.dataset.dmtab);
       });
-      $('dmCancel').onclick = function(){ if (ta.value !== baseText && !confirm('고친 내용을 버릴까요?')) return; editing = false; restore(); };
-      ta.addEventListener('keydown', function(e){ if (e.key === 's' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); $('dmSave').click(); } if (e.key === 'Tab' && !e.shiftKey) { e.preventDefault(); var s = ta.selectionStart; ta.setRangeText('  ', s, ta.selectionEnd, 'end'); } });
+      $('dmCancel').onclick = function(){ if (current() !== baseText && !confirm('고친 내용을 버릴까요?')) return; editing = false; if (tui) { tui.destroy(); tui = null; } restore(); };
+      ed.addEventListener('keydown', function(e){ if (e.key === 's' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); $('dmSave').click(); } });
+      ta.addEventListener('keydown', function(e){ if (e.key === 'Tab' && !e.shiftKey) { e.preventDefault(); var s = ta.selectionStart; ta.setRangeText('  ', s, ta.selectionEnd, 'end'); } });
+      // 저장 전 확인: 바뀐 줄(원래 · 고친 글 줄 비교)을 보여 주고 [이대로 저장]을 눌러야 저장
+      var pending = null;
+      function hideDiff(){ var d = $('dmDiff'); if (d) d.remove(); pending = null; $('dmSave').textContent = '저장'; }
       $('dmSave').onclick = function(){
-        var md = ta.value.replace(/\r\n/g, '\n'), b = this;
-        if (md === baseText) { $('dmMsg').textContent = '바뀐 내용이 없습니다.'; return; }
+        var md = current(), b = this;
+        if (md === baseText) { $('dmMsg').className = 'm'; $('dmMsg').textContent = '바뀐 내용이 없습니다.'; return; }
+        if (pending !== md) {
+          hideDiff(); pending = md;
+          var dv = document.createElement('div'); dv.id = 'dmDiff'; dv.className = 'dm-diff'; dv.innerHTML = lineDiff(baseText, md);
+          ed.querySelector('.dm-act').insertAdjacentElement('beforebegin', dv);
+          b.textContent = '이대로 저장'; $('dmMsg').className = 'm'; $('dmMsg').textContent = '바뀐 줄을 확인하고 [이대로 저장]을 누르세요. 더 고치려면 위에서 고친 뒤 다시 [저장].';
+          dv.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+          return;
+        }
         b.disabled = true; $('dmMsg').className = 'm'; $('dmMsg').textContent = '저장하는 중…';
         post('/api/guides', { action: 'direct', id: id, file: file || '', md: md, base: baseText, name: name || file || '', by: user() })
           .then(function(d){
-            editing = false; ed.remove();
+            editing = false; if (tui) { tui.destroy(); tui = null; } ed.remove();
             toast(d && d.direct ? '원본 파일에 저장했습니다.' : '수정본으로 저장했습니다' + (d && d.saved ? '(' + d.saved + ')' : '') + '.');
             var keep = cur ? Math.max(0, secs.indexOf(cur)) : 0;
             return (SC ? load() : load(keep)).then(function(){ fixes(); });
@@ -1589,6 +1684,204 @@ html.embed,html.embed body{overflow:hidden}
     }).catch(function(x){ editing = false; toast(x.message || '파일을 읽지 못했습니다.'); });
   }
   document.addEventListener('click', function(e){ var b = e.target.closest('[data-dedit]'); if (!b) return; e.preventDefault(); directEdit(b.dataset.dedit, b.dataset.dname); });
+
+  /* 보이는 대로 편집기(Toast UI Editor 3.2.2)는 [직접 수정]을 처음 누를 때만 불러온다 */
+  var tuiP = null;
+  function loadTui(){
+    if (window.toastui && toastui.Editor) return Promise.resolve();
+    if (tuiP) return tuiP;
+    var V = 'https://uicdn.toast.com/editor/3.2.2/';   // NHN 공식 배포(의존 모듈까지 한 파일인 all 판은 여기만 있다)
+    function css(h){ var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = h; document.head.appendChild(l); }
+    function js(s){ return new Promise(function(ok, no){ var e = document.createElement('script'); e.src = s; e.onload = ok; e.onerror = no; document.head.appendChild(e); }); }
+    css(V + 'toastui-editor.min.css');
+    tuiP = js(V + 'toastui-editor-all.min.js').then(function(){ return js(V + 'i18n/ko-kr.min.js').catch(function(){}); })
+      .catch(function(e){ tuiP = null; throw e; });
+    return tuiP;
+  }
+  /* 고친 덩어리만 바꾸기: 원래 글(orig)과 편집기가 만든 글(neu)을 덩어리(문단 · 제목 · 표 · 목록 · 코드 …)로 나눠,
+     보이는 결과가 같은 덩어리는 원래 원문을 글자 그대로 쓴다. 이어진 원래 덩어리 사이의 빈 줄도 원래대로. 나누기가 맞지 않으면 편집기 글 그대로 */
+  function dmKeep(orig, neu, frag){
+    try {
+      var A = marked.lexer(orig), B = marked.lexer(neu);
+      function key(t, lk){ var a = [t]; a.links = lk || {}; return marked.parser(a).replace(/\s+/g, ' ').trim(); }
+      /* 고친 덩어리도 원래 문서 버릇에 맞춘다: 목록 기호(편집기는 *, 원문이 - 면 -), 쓸데없는 \ 이스케이프(\_ 등) 빼기.
+         바꾼 뒤 보이는 결과가 그대로일 때만 쓴다 */
+      var dash = /^\s*- /m.test(orig) && !/^\s*\* /m.test(orig);
+      function keyOf(s, lk){ var T = marked.lexer(s); return T.filter(function(x){ return x.type !== 'space'; }).map(function(x){ return key(x, lk); }).join(' '); }
+      /* 표는 줄 단위로: 같은 머리 줄의 원래 표를 찾아, 칸 내용이 같은 줄(머리 · 구분 줄 포함)은 원래 줄 그대로 */
+      function cells(l){ return l.trim().replace(/^\||\|$/g, '').split(/(?<!\\)\|/).map(function(c){ return c.replace(/\\(.)/g, '$1').replace(/\s+/g, ' ').trim(); }).join('\u0001'); }
+      function tableKeep(s){
+        var L = s.split('\n'); if (L.length < 2 || !/^\s*\|/.test(L[0])) return s;
+        var hk = cells(L[0]), src = null;
+        ob.forEach(function(o){ if (!src && /^\s*\|/.test(o.raw)) { var OL = o.raw.replace(/\n+$/, '').split('\n'); if (cells(OL[0]) === hk) src = OL; } });
+        if (!src) return s;
+        var pool = {}; src.forEach(function(l, i){ if (i !== 1) { var c = cells(l); (pool[c] = pool[c] || []).push(l); } });
+        return L.map(function(l, i){
+          if (i === 1) return src[1].split('|').length === l.split('|').length ? src[1] : l;   // 구분 줄: 칸 수가 같으면 원래 것
+          var c = cells(l), q = pool[c]; if (q && q.length) return q.shift();
+          return /\| \|/.test(src.join('\n')) ? l.replace(/\|\s{2,}(?=\|)/g, '| ') : l;   // 빈 칸 모양도 원래 표처럼
+        }).join('\n');
+      }
+      /* 목록도 줄 단위로: 원래 목록 줄과 내용 · 단계가 같으면 원래 줄 그대로, 아니면 들여쓰기를 원래 단위(보통 2칸)로 바꿔 쓴다(편집기는 4칸) */
+      var LI = /^(\s*)([-*+]|\d+[.)])(\s+)(.*)$/;
+      function lnorm(t){ return t.replace(/\\(.)/g, '$1').replace(/\s+/g, ' ').trim(); }
+      // 줄마다 목록 단계(0, 1, 2 …): 들여쓰기 칸 수가 아니라 「앞 항목보다 더 들어갔나」로 센다(원문 2칸 · 편집기 4칸 · 번호 목록 3칸 모두 같게)
+      function levels(lines){
+        var st = [], lv = 0;
+        return lines.map(function(l){
+          var m = l.match(/^(\s*)(\S.*)?$/), ind = m[1].length;
+          if (!m[2]) return { lv: lv, li: false, ind: ind };
+          var x = m[2].match(/^([-*+]|\d+[.)])\s/);
+          if (!x) return { lv: lv, li: false, ind: ind };
+          while (st.length && ind < st[st.length - 1]) st.pop();
+          if (!st.length || ind > st[st.length - 1]) st.push(ind);
+          lv = st.length - 1; return { lv: lv, li: true, ind: ind };
+        });
+      }
+      function listKeep(s){
+        var L = s.split('\n'); if (!LI.test(L[0])) return s;
+        var pool = {}, indAt = {};
+        ob.forEach(function(o){
+          if (!LI.test(o.raw.split('\n')[0])) return;
+          var OL = o.raw.replace(/\n+$/, '').split('\n'), lv = levels(OL);
+          OL.forEach(function(l, i){
+            var x = l.trim().match(/^([-*+]|\d+[.)])\s+(.*)$/), kk = lv[i].lv + '\u0001' + (lv[i].li && x ? 'L' + lnorm(x[2]) : lnorm(l));
+            (pool[kk] = pool[kk] || []).push(l);
+            if (lv[i].li && indAt[lv[i].lv] == null) indAt[lv[i].lv] = lv[i].ind;
+          });
+        });
+        var nl = levels(L);
+        return L.map(function(l, i){
+          var t = l.trim(), x = t.match(/^([-*+]|\d+[.)])(\s+)(.*)$/), lv = nl[i].lv;
+          var kk = lv + '\u0001' + (nl[i].li && x ? 'L' + lnorm(x[3]) : lnorm(l)), q = pool[kk];
+          if (q && q.length) return q.shift();
+          if (!t) return '';
+          var ind = indAt[lv] != null ? indAt[lv] : lv * 2;
+          if (nl[i].li && x) return new Array(ind + 1).join(' ') + (dash && x[1] === '*' ? '-' : x[1]) + ' ' + x[3];
+          return new Array(ind + (nl[i].li ? 0 : 2) + 1).join(' ') + t;   // 항목 안 이어지는 줄
+        }).join('\n');
+      }
+      function tidy(s, k, lk){
+        var c = s;
+        if (/^\s*\|/.test(c)) { var t0 = tableKeep(c); if (keyOf(t0, lk) === k) c = t0; }
+        if (LI.test(c.split('\n')[0])) { var l0 = listKeep(c); if (keyOf(l0, lk) === k) c = l0; }
+        if (dash) { var c1 = c.replace(/^(\s*)\* /gm, '$1- '); if (keyOf(c1, lk) === k) c = c1; }
+        var c2 = c.replace(/\\([!-\/:-@\[-`{-~])/g, '$1'); if (c2 !== c && keyOf(c2, lk) === k) c = c2;
+        else if (c2 !== c) { var c3 = c.replace(/\\_/g, '_'); if (keyOf(c3, lk) === k) c = c3; }
+        return c;
+      }
+      var ob = [], pos = 0;
+      // 글자 비교 열쇠(k2): 이스케이프(\~ 등) · 공백 · 목록 기호 차이는 같은 것으로 본다 — 두 해석기(보기 marked · 편집기)가 ~ 하나를 다르게 읽는 경우 등
+      function k2(s){ return s.replace(/\\(.)/g, '$1').replace(/^(\s*)[*+] /gm, '$1- ').replace(/\|\s+/g, '|').replace(/\s+\|/g, '|').replace(/\s+/g, ' ').trim(); }
+      A.forEach(function(t){ if (t.type !== 'space') ob.push({ raw: t.raw, start: pos, key: key(t, A.links), k2: k2(t.raw) }); pos += t.raw.length; });
+      if (pos !== orig.length) return neu;
+      var out = '', prevJ = -2, p = 0;
+      B.forEach(function(t){
+        if (t.type === 'space') return;
+        var k = key(t, B.links), j = -1;
+        var kk = k2(t.raw);
+        for (var x = p; x < ob.length; x++) if (ob[x].key === k || ob[x].k2 === kk) { j = x; break; }
+        if (j >= 0) {
+          if (!out) out = frag ? '' : orig.slice(0, ob[j].start);
+          else if (j === prevJ + 1) out += orig.slice(ob[prevJ].start + ob[prevJ].raw.length, ob[j].start);
+          else out = out.replace(/\n*$/, '\n\n');
+          out += ob[j].raw; prevJ = j; p = j + 1;
+        } else {
+          if (out) out = out.replace(/\n*$/, '\n\n');
+          out += tidy(t.raw.replace(/\n+$/, ''), k, B.links) + '\n'; prevJ = -2;
+        }
+      });
+      if (frag) return out.replace(/\n+$/, '');
+      if (/\n$/.test(orig)) out = out.replace(/\n*$/, '\n'); else out = out.replace(/\n+$/, '');
+      return out;
+    } catch (e) { return neu; }
+  }
+  /* 고친 덩어리만 바꾸기(2단): 편집기는 원문을 자기 방식으로 다시 읽어서(머리만 있는 표 · ~~**…**~~ · 코드 안 \| 등) 손대지 않은 덩어리도 글이 달라질 수 있다.
+     그래서 「편집기가 처음 만든 글(base)」과 「저장할 때 글(fin)」을 비교해 사람이 실제로 고친 덩어리만 찾고,
+     손대지 않은 덩어리는 원래 원문(orig)의 그 자리 글을 그대로 쓴다. base 덩어리 ↔ 원문 덩어리는 차례대로 맞추고(LCS), 못 맞춘 구간은 묶음(unit)으로 다룬다 */
+  function dmKeep2(orig, base, fin, imgOut){
+    if (fin === base) return orig;
+    try {
+      var A = marked.lexer(orig), ab = [], pos = 0;
+      A.forEach(function(t){ if (t.type !== 'space') ab.push({ raw: t.raw, start: pos, end: pos + t.raw.replace(/\n+$/, '').length }); pos += t.raw.length; });   // end = 덩어리 글 끝(뒤 줄바꿈 빼고) — 덩어리 사이 글은 end ~ 다음 start
+      if (pos !== orig.length) throw 0;
+      function blocks(s){ return marked.lexer(s).filter(function(t){ return t.type !== 'space'; }).map(function(t){ return t.raw.replace(/\n+$/, ''); }); }
+      var Bb = blocks(base), F = blocks(fin);
+      function mk(raw){ var T = marked.lexer(raw); T.links = T.links || {}; return { h: marked.parser(T).replace(/\s+/g, ' ').trim(), k: raw.replace(/\\(.)/g, '$1').replace(/^(\s*)[*+] /gm, '$1- ').replace(/\|\s+/g, '|').replace(/\s+\|/g, '|').replace(/\s+/g, ' ').trim() }; }
+      function lcs(n, m, eq){
+        if (n * m > 4e6) throw 0;
+        var L = [], i, j; for (i = n; i >= 0; i--) { L[i] = new Int32Array(m + 1); if (i < n) for (j = m - 1; j >= 0; j--) L[i][j] = eq(i, j) ? L[i + 1][j + 1] + 1 : Math.max(L[i + 1][j], L[i][j + 1]); }
+        var P = []; i = 0; j = 0; while (i < n && j < m) { if (eq(i, j)) { P.push([i, j]); i++; j++; } else if (L[i + 1][j] >= L[i][j + 1]) i++; else j++; }
+        return P;
+      }
+      var mA = ab.map(function(o){ return mk(o.raw.replace(/\n+$/, '')); }), mB = Bb.map(function(r){ return mk(imgOut(r)); });
+      var P1 = lcs(ab.length, Bb.length, function(i, j){ return mA[i].h === mB[j].h || mA[i].k === mB[j].k; });
+      // 묶음: 맞춘 짝 하나씩 + 그 사이 못 맞춘 구간(원문 쪽 a · 편집기 쪽 b)
+      var units = [], ia = 0, jb = 0;
+      function range(x, y){ var r = []; for (var q = x; q < y; q++) r.push(q); return r; }
+      P1.concat([[ab.length, Bb.length]]).forEach(function(pr){
+        if (pr[0] > ia || pr[1] > jb) units.push({ a: range(ia, pr[0]), b: range(jb, pr[1]) });
+        if (pr[0] < ab.length) units.push({ a: [pr[0]], b: [pr[1]] });
+        ia = pr[0] + 1; jb = pr[1] + 1;
+      });
+      var bUnit = []; units.forEach(function(u, x){ u.b.forEach(function(j){ bUnit[j] = x; }); });
+      var P2 = lcs(Bb.length, F.length, function(i, j){ return Bb[i] === F[j]; });
+      var keptB = {}; P2.forEach(function(pr){ keptB[pr[0]] = 1; });
+      function kept(u){ return units[u].b.every(function(j){ return keptB[j]; }); }
+      var out = '', lastU = -1, lastOrig = -1, buf = [], done = {};
+      function sepTo(u){   // u 묶음 원문 앞에 붙일 것
+        var a0 = units[u].a[0];
+        if (!out) return orig.slice(0, ab[a0].start);
+        if (lastOrig >= 0 && lastOrig === u - 1) { var pa = units[lastOrig].a; return orig.slice(ab[pa[pa.length - 1]].end, ab[a0].start); }
+        out = out.replace(/\n*$/, ''); return '\n\n';
+      }
+      function emitOrig(u){
+        done[u] = 1; var a = units[u].a; if (!a.length) return;
+        out += sepTo(u) + orig.slice(ab[a[0]].start, ab[a[a.length - 1]].end); lastOrig = u;
+      }
+      function flush(){
+        if (!buf.length) return;
+        var txt = dmKeep(orig, imgOut(buf.join('\n\n')), true); buf = [];
+        if (out) out = out.replace(/\n*$/, '') + '\n\n';
+        out += txt; lastOrig = -1;
+      }
+      function emitUnit(u){
+        flush();
+        for (var x = lastU + 1; x < u; x++) if (!units[x].b.length && units[x].a.length && (x === 0 || done[x - 1])) emitOrig(x);   // 편집기가 못 읽은 원문 덩어리(앞이 남았으면 함께 남김)
+        emitOrig(u); lastU = u;
+      }
+      var fi = 0;
+      P2.concat([[Bb.length, F.length]]).forEach(function(pr){
+        for (; fi < pr[1]; fi++) buf.push(F[fi]);   // 새로 쓴 덩어리
+        if (pr[0] >= Bb.length) return;
+        var u = bUnit[pr[0]];
+        if (kept(u)) { if (!done[u]) emitUnit(u); } else buf.push(F[pr[1]]);
+        fi = pr[1] + 1;
+      });
+      flush();
+      for (var x = lastU + 1; x < units.length; x++) if (!units[x].b.length && units[x].a.length && done[x - 1]) emitOrig(x);
+      if (/\n$/.test(orig)) out = out.replace(/\n*$/, '\n'); else out = out.replace(/\n+$/, '');
+      return out;
+    } catch (e) { return dmKeep(orig, imgOut(fin)); }
+  }
+  /* 바뀐 줄 보기(원래 → 고친 글). 앞뒤 2줄만 함께 보이고 나머지는 「…」 */
+  function lineDiff(x, y){
+    var a = x.split('\n'), b = y.split('\n'), n = a.length, m = b.length;
+    if (n * m > 4e6) return '<p class="dm-dh">문서가 길어 줄 비교를 하지 않았습니다. 미리 보기 탭에서 확인하세요.</p>';
+    var L = [], i, j;
+    for (i = n; i >= 0; i--) { L[i] = new Int32Array(m + 1); if (i < n) for (j = m - 1; j >= 0; j--) L[i][j] = a[i] === b[j] ? L[i + 1][j + 1] + 1 : Math.max(L[i + 1][j], L[i][j + 1]); }
+    var ops = []; i = 0; j = 0;
+    while (i < n && j < m) { if (a[i] === b[j]) { ops.push([' ', a[i]]); i++; j++; } else if (L[i + 1][j] >= L[i][j + 1]) { ops.push(['-', a[i]]); i++; } else { ops.push(['+', b[j]]); j++; } }
+    while (i < n) ops.push(['-', a[i++]]); while (j < m) ops.push(['+', b[j++]]);
+    var add = ops.filter(function(o){ return o[0] === '+'; }).length, del = ops.filter(function(o){ return o[0] === '-'; }).length;
+    var keep = ops.map(function(o, k){ for (var d = -2; d <= 2; d++) { var q = ops[k + d]; if (q && q[0] !== ' ') return true; } return false; });
+    var rows = [], gap = false;
+    ops.forEach(function(o, k){
+      if (!keep[k]) { if (!gap && rows.length) rows.push('<div class="g">…</div>'); gap = true; return; }
+      gap = false; rows.push('<div class="' + (o[0] === '+' ? 'a' : o[0] === '-' ? 'd' : '') + '">' + (o[0] === ' ' ? '  ' : o[0] + ' ') + esc(o[1] || ' ') + '</div>');
+    });
+    return '<p class="dm-dh">바뀐 줄 · 더함 <b>' + add + '</b> · 뺌 <b>' + del + '</b></p><div class="dm-dl">' + rows.join('') + '</div>';
+  }
 
   /* ── 항목 수정 요청: 무엇을 어떻게 고칠지 글로 적으면 Claude가 가이드를 고친다(guide-edit 작업) ── */
   function edit(){
