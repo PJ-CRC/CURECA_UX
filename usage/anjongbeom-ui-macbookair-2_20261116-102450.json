@@ -1,0 +1,28 @@
+{
+   "at" : "2026-11-16T10:24:50+09:00",
+   "by" : "안종범",
+   "cacheRead" : 269810,
+   "cacheWrite" : 21110,
+   "calls" : 5,
+   "doneBy" : "Claude",
+   "fileKey" : "",
+   "fileName" : "",
+   "frame" : "",
+   "from" : "2026-11-16T10:24:28+09:00",
+   "id" : "anjongbeom-ui-macbookair-2_20261116-102450",
+   "input" : 10,
+   "kind" : "work",
+   "models" : {
+      "claude-sonnet-5-5" : 5
+   },
+   "nodeId" : "",
+   "output" : 2664,
+   "page" : "",
+   "pc" : "anjongbeom-ui-MacBookAir-2",
+   "reqId" : "",
+   "reqType" : "",
+   "team" : "stagora",
+   "text" : "작업규칙: 4. 서비스별 화면 언어 · 디스크립션 언어 (J025)",
+   "total" : 293594,
+   "usd" : 0.1651
+}
