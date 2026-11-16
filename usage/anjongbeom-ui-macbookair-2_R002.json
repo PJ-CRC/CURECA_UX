@@ -1,0 +1,28 @@
+{
+   "at" : "2026-11-16T15:07:20+09:00",
+   "by" : "안종범",
+   "cacheRead" : 2643325,
+   "cacheWrite" : 196595,
+   "calls" : 37,
+   "doneBy" : "Claude",
+   "fileKey" : "cDjaemHjetS7RcAHRUIMY5",
+   "fileName" : "STAgora AI Workspace",
+   "frame" : "GM-DAS-GR",
+   "from" : "2026-11-16T14:30:49+09:00",
+   "id" : "anjongbeom-ui-macbookair-2_R002",
+   "input" : 74,
+   "kind" : "request",
+   "models" : {
+      "claude-sonnet-5-5" : 37
+   },
+   "nodeId" : "165:5274",
+   "output" : 21434,
+   "page" : "GMCS",
+   "pc" : "anjongbeom-ui-MacBookAir-2",
+   "reqId" : "R002",
+   "reqType" : "질문 · 그 밖",
+   "team" : "stagora",
+   "text" : "현재 작업 페이지에서 선택한 화면인 `GM-DAS-GR`에서 언어셋에 없는 문구를 찾아서 번역 후 등록해줘",
+   "total" : 2861428,
+   "usd" : 1.5295
+}

@@ -1,0 +1,28 @@
+{
+   "at" : "2026-11-16T15:07:20+09:00",
+   "by" : "안종범",
+   "cacheRead" : 380419,
+   "cacheWrite" : 13442,
+   "calls" : 5,
+   "doneBy" : "Claude",
+   "fileKey" : "",
+   "fileName" : "",
+   "frame" : "",
+   "from" : "2026-11-16T15:07:00+09:00",
+   "id" : "anjongbeom-ui-macbookair-2_20261116-150720",
+   "input" : 9,
+   "kind" : "work",
+   "models" : {
+      "claude-sonnet-5-5" : 5
+   },
+   "nodeId" : "",
+   "output" : 2527,
+   "page" : "",
+   "pc" : "anjongbeom-ui-MacBookAir-2",
+   "reqId" : "",
+   "reqType" : "",
+   "team" : "stagora",
+   "text" : "언어셋: R002",
+   "total" : 396397,
+   "usd" : 0.1551
+}
