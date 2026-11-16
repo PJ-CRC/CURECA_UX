@@ -2,8 +2,8 @@
   "id": "anjongbeom-ui-macbookair-2-local_R012",
   "kind": "request",
   "team": "stagora",
-  "status": "진행 중",
-  "at": "2026-11-16T16:34:19+09:00",
+  "status": "완료",
+  "at": "2026-11-16T16:34:26+09:00",
   "createdAt": "2026-11-16T16:34:09+09:00",
   "by": "안종범",
   "doneBy": "Claude",
@@ -17,9 +17,15 @@
   "type": "질문 · 그 밖",
   "layout": "",
   "text": "왜 굳이 그런 방식으로 되는거지? xlsx가 아니라 csv로 되는 이유는 클로드가 편집하기 좋아서?",
-  "note": "답변 작성 중",
-  "shot": "",
-  "shots": [],
+  "note": "원본은 xlsx 그대로 두고, 작업 사본만 CSV로 푼 것입니다. 이유는 Claude가 편집하기 좋아서가 맞습니다(그것만은 아닙니다).\n- Claude가 읽고 고치기 쉬움: xlsx는 압축된 XML 묶음이라 Claude가 바로 읽거나 한 칸만 고치기 어렵습니다. CSV는 글 파일이라 Language ID로 찾아 해당 행만 정확히 고칩니다.\n- 변경 이력 · 공유: 글 파일이라 .history 깃 동기화에서 무엇이 바뀌었는지 줄 단위로 보이고, xlsx는 통째로 바뀐 바이너리로만 보입니다. 여러 PC가 같이 쓸 때도 충돌 확인이 쉽습니다.\n- 값 · 함수 · 서식 분리: CSV는 값만 담아서 함수는 formulas.json, 색 · 굵기는 styles.json에 따로 둡니다. 그래서 노란색 칠하기 · 원복처럼 서식만 고치는 일도 값은 건드리지 않고 할 수 있습니다.\n- 웹 보기: Workbench 화면이 세 파일을 합쳐 xlsx처럼 시트 탭 · 함수 · 색이 있는 표로 보여 줍니다.\n- 단점: xlsx 기능이 100% 옮겨지지는 않습니다(멀티라인 셀 때문에 CSV 행 번호가 시트 행 번호와 다름 등). 그래서 원본 xlsx는 source/에 따로 보관합니다.\n참고: 이 이유는 Claude가 만든 구조를 설명한 것이고, 별도로 적힌 설계 문서는 찾지 못했습니다. 다른 목적(예: 엑셀로 바로 편집)이 더 중요하면 알려 주세요.\n작업 기준: 작업규칙 STAgora 작업규칙 · 정책서 없음 · UX가이드 없음 · 기준데이터 glossary(언어셋) · 화면 정의서 없음",
+  "shot": "shots/anjongbeom-ui-macbookair-2-local_R012.jpg",
+  "shots": [
+    {
+      "file": "shots/anjongbeom-ui-macbookair-2-local_R012.jpg",
+      "nodeId": "165:5274",
+      "frame": "GM-DAS-GR"
+    }
+  ],
   "images": [],
   "frames": [],
   "marks": [],
