@@ -1,0 +1,28 @@
+{
+   "at" : "2026-11-16T14:15:22+09:00",
+   "by" : "안종범",
+   "cacheRead" : 77249,
+   "cacheWrite" : 19195,
+   "calls" : 2,
+   "doneBy" : "Claude",
+   "fileKey" : "2CYdSdSOO8vGtcYgl6L6Cg",
+   "fileName" : "검증용",
+   "frame" : "",
+   "from" : "2026-11-16T14:15:17+09:00",
+   "id" : "anjongbeom-ui-macbookair-2_R001",
+   "input" : 4,
+   "kind" : "request",
+   "models" : {
+      "claude-sonnet-5-5" : 2
+   },
+   "nodeId" : "",
+   "output" : 838,
+   "page" : "11.2-gmcs-admin",
+   "pc" : "anjongbeom-ui-MacBookAir-2",
+   "reqId" : "R001",
+   "reqType" : "질문 · 그 밖",
+   "team" : "stagora",
+   "text" : "지금 연결된 피그마 페이지 알려줄래? 링크를 주면 더 좋고",
+   "total" : 97286,
+   "usd" : 0.1006
+}
