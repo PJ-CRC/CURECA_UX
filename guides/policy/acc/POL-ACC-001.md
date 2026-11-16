@@ -32,7 +32,7 @@ replaced_by:
 2. User Type별 메뉴 접근 권한을 화면에서 바꾸는 기능은 없음.
 3. 계정은 CURECA마다 따로 있음. 한 CURECA의 T-IOS에서 만든 계정은 그 CURECA의 T-IOS와 L-IOS에서 함께 씀 (POL-COM-005).
 4. Admin은 Tube Setting, Assay Pack Setting을 뺀 Setting 하위 메뉴를 씀.
-5. User Type이 Service일 때만 쓸 수 있는 기능: Tube Setting, Assay Pack Setting, Policy Setting의 NC/PC Dispensing Order·Sample Dispensing Options 영역, Error Rate 표시(POL-EQP-010), Management의 Enabled 변경(POL-EQP-009), [Exit](POL-ACC-004).
+5. User Type이 Service일 때만 쓸 수 있는 기능: Tube Setting, Assay Pack Setting, Policy Setting의 NC/PC Dispensing Order·Sample Dispensing Options 영역, Error Rate 표시(POL-EQP-010), Management의 Enabled 변경(POL-EQP-009), [Exit] (POL-ACC-004).
 6. Account Setting(TI-STN-05) 목록: User Type이 Admin인 사용자에게는 Service 계정을 빼고 보여 줌. User Type이 Service인 사용자에게는 모든 계정(Service · Admin · User)을 보여 줌.
 7. Admin은 다른 Admin 계정을 수정할 수 있음 (User Details, TI-STN-05-03-P).
 

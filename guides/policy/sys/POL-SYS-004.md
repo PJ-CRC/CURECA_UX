@@ -55,5 +55,5 @@ replaced_by:
 | --- | --- | --- | --- |
 | | 2026-11-02 | 최초 작성 | |
 | | 2026-11-03 | Log Export는 Service가 장비 파악에 쓰는 자료라 형식·구성을 정하지 않고 파일 형식 규칙(POL-COM-006)에서 뺌 | 사용자 확인 |
-| | 2026-11-04 | Common UX 참조 번호를 Common UX - PC 기준으로 고침 (COMM-5-j(4/4) → COMM-5-m(2/4)) | `common-ux/common-policy-candidates.md` |
+| | 2026-11-04 | Common UX 참조 번호를 Common UX - PC 기준으로 고침 (COMM-5-j(4/4) → COMM-5-m(2/4)) | `archive/common-ux/common-policy-candidates.md` |
 | | 2026-11-06 | 백업 · 복원은 서버에서 코드로 작업하고 이력은 Log로 서버에서 조회 (규칙 5) | Teams 글 T15 |
