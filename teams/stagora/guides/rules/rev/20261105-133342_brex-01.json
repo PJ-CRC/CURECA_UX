@@ -1,11 +1,12 @@
 {
-    "rev":  "20261105-133342_brex-01",
-    "by":  "Claude",
-    "at":  "2026-11-05T13:33:42+09:00",
-    "note":  "2. 언어셋: \"나머지 5개 언어\" → \"나머지 6개 언어\"(5절 번역 요청 6개 언어와 맞춤)",
-    "base":  "20261105-132936_brex-01",
-    "pc":  "BREX_01",
-    "req":  "2. 언어셋: [작업규칙 반영] 「CURECA 작업규칙」 작업규칙 수정(「헌법」 CURECA_AI 원본과 비교해 CURECA 작업규칙 5개 파일을 원본 내용으로 업데이트 (헌법 constitution.md는 원본과 같아 그대로)\n- claude-work.md: 개발사 전달 보류 안내 · Common UX 우선순위 · 점검 항목 · 예외 추가\n- figma-sync.md: 2절 반영 방향 「보류」\n- language-set.md: 번역 언어 5개 → 6개(독일어)\n- policy-writing.md: 공통 정책과 Common UX B안\n- screen-spec.md: v1.3 (Common UX 따르기 8절 등)\n정책서 · 기준데이터 · 화면 정의서 · provisional · pending 등은 원본과 같아 바꾸지 않음)에 맞게 고쳐 주세요. language-set.md 2절 \"나머지 5개 언어 번역도 고객사를 통해 받습니다\"가 이번에 바뀐 5절(번역 요청 6개 언어, 독일어 포함)과 어긋남 → \"나머지 6개 언어\"로 고침",
-    "jobId":  "J013",
-    "file":  "language-set.md"
+  "rev": "20261105-133342_brex-01",
+  "by": "Claude",
+  "at": "2026-11-05T13:33:42+09:00",
+  "note": "2. 언어셋: \"나머지 5개 언어\" → \"나머지 6개 언어\"(5절 번역 요청 6개 언어와 맞춤)",
+  "base": "20261105-132936_brex-01",
+  "pc": "BREX_01",
+  "req": "2. 언어셋: [작업규칙 반영] 「CURECA 작업규칙」 작업규칙 수정(「헌법」 CURECA_AI 원본과 비교해 CURECA 작업규칙 5개 파일을 원본 내용으로 업데이트 (헌법 constitution.md는 원본과 같아 그대로)\n- claude-work.md: 개발사 전달 보류 안내 · Common UX 우선순위 · 점검 항목 · 예외 추가\n- figma-sync.md: 2절 반영 방향 「보류」\n- language-set.md: 번역 언어 5개 → 6개(독일어)\n- policy-writing.md: 공통 정책과 Common UX B안\n- screen-spec.md: v1.3 (Common UX 따르기 8절 등)\n정책서 · 기준데이터 · 화면 정의서 · provisional · pending 등은 원본과 같아 바꾸지 않음)에 맞게 고쳐 주세요. language-set.md 2절 \"나머지 5개 언어 번역도 고객사를 통해 받습니다\"가 이번에 바뀐 5절(번역 요청 6개 언어, 독일어 포함)과 어긋남 → \"나머지 6개 언어\"로 고침",
+  "jobId": "J013",
+  "file": "language-set.md",
+  "orig": true
 }

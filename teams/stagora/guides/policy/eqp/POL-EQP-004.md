@@ -35,6 +35,7 @@ replaced_by:
 ## 예외
 
 - 지금까지 Pausing이 생기는 경우는 Door Control의 [Unlock]이 유일함.
+- 규칙 1의 "Error일 때도 Paused"는 MT-20260922-01 "Error면 Door를 열어도 Error 유지"와 다름. 고객 확인 중 (CA-0010). 확인 전까지 규칙 1을 그대로 둠.
 
 ## 근거
 
@@ -49,3 +50,4 @@ replaced_by:
 | | 2026-11-02 | 최초 작성 (8월 정책서에 없음, `policy/policy-backlog.md` 추가할 것 3) | |
 | | 2026-11-02 | Run 중이 아닐 때의 Door 잠금 해제와 Door가 여러 개인 Module 규칙 추가 | |
 | | 2026-11-02 | Door가 잠긴 뒤 Paused 전 상태로 돌아가는 규칙 (규칙 7) | |
+| | 2026-11-06 | Error일 때 Door를 여는 경우를 고객 확인 목록에 올림 (예외, CA-0010) | MT-20260922-01 |
