@@ -1,0 +1,28 @@
+{
+    "id":  "brex-06_20261116-110000",
+    "kind":  "work",
+    "reqId":  "",
+    "reqType":  "",
+    "team":  "cureca",
+    "at":  "2026-11-16T11:00:00+09:00",
+    "from":  "2026-11-16T10:00:00+09:00",
+    "by":  "시험",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "시험",
+    "models":  {
+                   "claude-opus-5-5":  126
+               },
+    "calls":  126,
+    "input":  282,
+    "cacheWrite":  215837,
+    "cacheRead":  65000016,
+    "output":  133258,
+    "total":  65349393,
+    "usd":  17.3930
+}
