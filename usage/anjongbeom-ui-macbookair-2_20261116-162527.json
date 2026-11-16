@@ -1,0 +1,28 @@
+{
+   "at" : "2026-11-16T16:25:27+09:00",
+   "by" : "안종범",
+   "cacheRead" : 811895,
+   "cacheWrite" : 46434,
+   "calls" : 12,
+   "doneBy" : "Claude",
+   "fileKey" : "",
+   "fileName" : "",
+   "frame" : "",
+   "from" : "2026-11-16T16:23:18+09:00",
+   "id" : "anjongbeom-ui-macbookair-2_20261116-162527",
+   "input" : 23,
+   "kind" : "work",
+   "models" : {
+      "claude-sonnet-5-5" : 12
+   },
+   "nodeId" : "",
+   "output" : 7022,
+   "page" : "",
+   "pc" : "anjongbeom-ui-MacBookAir-2",
+   "reqId" : "",
+   "reqType" : "",
+   "team" : "stagora",
+   "text" : "작업규칙: 노란색 원복 규칙 (R010)",
+   "total" : 865374,
+   "usd" : 0.4184
+}
