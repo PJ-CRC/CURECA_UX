@@ -2,8 +2,8 @@
   "id": "anjongbeom-ui-macbookair-2-local_R002",
   "kind": "request",
   "team": "stagora",
-  "status": "진행 중",
-  "at": "2026-11-16T14:46:17+09:00",
+  "status": "보류",
+  "at": "2026-11-16T14:46:46+09:00",
   "createdAt": "2026-11-16T14:30:38+09:00",
   "by": "안종범",
   "doneBy": "Claude",
@@ -17,13 +17,27 @@
   "type": "질문 · 그 밖",
   "layout": "",
   "text": "현재 작업 페이지에서 선택한 화면인 `GM-DAS-GR`에서 언어셋에 없는 문구를 찾아서 번역 후 등록해줘",
-  "note": "설명 영역 5번 각주 확인 중",
+  "note": "설명 영역 「동시 검출률·교차 검출률 설명」을 확인했는데, 5번 각주 두 줄은 이미 영어 원문이라 영어를 더할 자리가 없어 고치지 않았습니다.\n- 화면 본문 각주 2줄: 165:5464 「Multi-detection rate = Tests with ≥2 analytes detected ÷ Total tests × 100」, 165:5465 「Cross-detection rate = Tests with analytes detected across analyte groups ÷ Total detected tests × 100」 (둘 다 영어)\n- 설명 영역 165:5294(GM-DAS-GR > description): 같은 영어 두 줄 + 한글은 제목 「동시 검출률·교차 검출률 설명」 · 「노출 / 설명 (각주) 표시 / 표기 / 공통」 · 변경 이력 「[v2.9_11.13 : … 추가]」뿐\n- 그 밖에 화면에 한글로 남은 곳: 「동시 검출」(165:5501 · 5607 · 5668 · 5677), 「바이러스 + 박테리아 동시 검출」(165:5542 · 5603)\n- 설명 영역 각주 2줄은 영어 원문이 이미 있어, 어느 한글에 영어를 붙일지 정해 주세요.\n작업 기준: 작업규칙 확인 안 함 · 정책서 확인 안 함 · UX가이드 확인 안 함 · 기준데이터 확인 안 함 · 화면 정의서 확인 안 함 (Figma는 고치지 않음)",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "어느 한글에 영어 원문을 붙일까요?",
+    "options": [
+      {
+        "label": "차트의 「동시 검출」 글(165:5501 등)을 영어로"
+      },
+      {
+        "label": "설명 영역 제목 · 안내 문구에 영어 병기"
+      },
+      {
+        "label": "고칠 것 없음, 끝내기"
+      }
+    ],
+    "free": true
+  },
   "replies": [
     {
       "at": "2026-11-16T14:44:54+09:00",
