@@ -2,8 +2,8 @@
   "id": "anjongbeom-ui-macbookair-2-local_R011",
   "kind": "request",
   "team": "stagora",
-  "status": "진행 중",
-  "at": "2026-11-16T16:32:23+09:00",
+  "status": "완료",
+  "at": "2026-11-16T16:32:33+09:00",
   "createdAt": "2026-11-16T16:32:14+09:00",
   "by": "안종범",
   "doneBy": "Claude",
@@ -17,9 +17,15 @@
   "type": "질문 · 그 밖",
   "layout": "",
   "text": "질문: 지금 화면에서(기준데이터-언어셋)은 시트가 붙고 함수가 있는 xlsx 형태로 보이는데, 네가 아까 pc에서는 csv로 존재한다고 했지?\n파일 자체는 csv로 있고, 웹에서 Xlsx처럼 합쳐서 보여주는거야?",
-  "note": "질문 확인 중",
-  "shot": "",
-  "shots": [],
+  "note": "네, 맞습니다. 파일은 시트마다 따로 나뉜 CSV로 있고, 웹 화면이 그것들을 합쳐서 xlsx처럼 보여 줍니다.\n- 저장 방식: 시트마다 CSV(값) + formulas.json(함수) + styles.json(서식) 세 파일로 둡니다. 위치는 .history/teams/stagora/guides/glossary/language-set/ 이고 sheet01 ~ sheet12까지 있습니다.\n- 화면: 웹이 이 세 파일을 시트 탭 · 함수 · 색 · 굵기가 있는 표로 합쳐 그립니다. 그래서 xlsx처럼 보입니다.\n- 원본: source/ 폴더에 xlsx 원본(STAgora-언어셋-통합본_v2.31_261110.xlsx)이 따로 있고, 위 파일들은 그 원본에서 풀어 낸 작업 사본입니다.\n- 참고: 사본의 CSV 행 번호는 멀티라인 셀 때문에 시트 행 번호와 8 다릅니다(문구는 Language ID로 찾음).\n작업 기준: 작업규칙 STAgora 작업규칙 · 정책서 없음 · UX가이드 통합운영툴 Common-UX · 기준데이터 glossary · 화면 정의서 UX-Kit(Component) 화면 정의서",
+  "shot": "shots/anjongbeom-ui-macbookair-2-local_R011.jpg",
+  "shots": [
+    {
+      "file": "shots/anjongbeom-ui-macbookair-2-local_R011.jpg",
+      "nodeId": "165:5274",
+      "frame": "GM-DAS-GR"
+    }
+  ],
   "images": [],
   "frames": [],
   "marks": [],
