@@ -66,7 +66,8 @@ on('GET', '/api/history', ({ q, T }) => {
 on('GET', '/api/usage', ({ T }) => {
   const items = readDirJson(C.histUsage).filter((u) => core.itemTeam(u) === T.team);
   // 요청 유형: 기록에 없으면(예전 기록) 같은 이름의 작업 이력에서
-  for (const u of items) { if (u.reqId && !u.reqType) { const e = core.readJson(path.join(C.histEntries, String(u.id) + '.json')); u.reqType = e && e.type ? String(e.type) : ''; } }
+  //  예전 맥 기록은 이름에서 .local이 빠져 있어(mac-book_R001 ↔ 작업 이력 mac-book-local_R001) 그 이름으로도 찾는다
+  for (const u of items) { if (u.reqId && !u.reqType) { const id = String(u.id), e = core.readJson(path.join(C.histEntries, id + '.json')) || core.readJson(path.join(C.histEntries, id.replace(/^([^_]+)_/, '$1-local_') + '.json')); u.reqType = e && e.type ? String(e.type) : ''; } }
   return { pc: C.pcName, pcSlug: C.pcSlug, pricing: core.readJson(path.join(C.root, 'workbench', 'pricing.json')), items };
 });
 
@@ -332,6 +333,37 @@ on('GET', '/api/worklogs', ({ T }) => {
   return { dir: `${T.guideRel}/work-logs`, stages: STAGES, items: items.sort((a, b) => String(b.started).localeCompare(String(a.started)) || a.name.localeCompare(b.name)) };
 });
 
+// ── 반영 대기: 화면 정의서(규칙 저장소 screens/{메뉴}/{CID}.md)마다 「## 반영 대기 목록」 중 대기 · 작업 중 항목 (reference-rules/pending-changes.md)
+//  Workbench가 지금 고른 프레임에 반영할 항목이 있는지 알리는 데 쓴다. 화면 ↔ 프레임은 머리말 figma: 링크(파일 키 · 노드)와 CID로 맞춘다
+function readBacklog(f, rel) {
+  const t = String(core.readText(f) || '').replace(/^﻿/, ''), fm = {}, m = /^---\r?\n([\s\S]*?)\r?\n---/.exec(t);
+  if (m) for (const l of m[1].split(/\r?\n/)) { const k = /^([A-Za-z_]+):\s*(.*?)\s*(#.*)?$/.exec(l); if (k && !/^\s/.test(l)) fm[k[1]] = k[2]; }
+  const sec = /^##\s*반영 대기 목록[^\n]*\n([\s\S]*?)(?=^##\s|(?![\s\S]))/m.exec(t); if (!sec) return null;
+  const lines = sec[1].split(/\r?\n/).filter((l) => /^\s*\|/.test(l));
+  const cells = (l) => l.trim().replace(/^\||\|$/g, '').split('|').map((x) => x.trim());
+  if (lines.length < 2) return null;
+  const H = cells(lines[0]).map((h) => h.replace(/\s/g, ''));
+  const col = (...a) => { for (const n of a) { const i = H.indexOf(n); if (i >= 0) return i; } return -1; };
+  const ci = { n: col('ID', '#'), kind: col('타입', '구분'), now: col('변경전', '지금'), to: col('변경후', '바꿀것'), why: col('근거'), st: col('상태') };
+  // 칸 안에 「|」를 그대로 쓴 줄(예: "Empty | Low")은 칸이 늘어난다: 앞 칸(ID · 타입)과 뒤 칸(근거 · 상태)은 양 끝에서 세고, 남는 것은 「변경 전」에 붙인다
+  const fit = (c) => { const x = c.length - H.length; if (x <= 0 || ci.now < 0) return c; return c.slice(0, ci.now).concat([c.slice(ci.now, ci.now + x + 1).join(' | ')], c.slice(ci.now + x + 1)); };
+  const rows = lines.slice(1).filter((l) => !/^\s*\|[\s:|-]+\|?\s*$/.test(l)).map((l) => { const c = fit(cells(l)), g = (i) => (i >= 0 ? c[i] || '' : ''); return { n: g(ci.n), kind: g(ci.kind), now: g(ci.now), to: g(ci.to), why: g(ci.why), st: g(ci.st) }; })
+    .filter((r) => (r.n || r.to) && /^(대기|작업 중|반영 중)/.test(r.st));
+  if (!rows.length) return null;
+  const fig = String(fm.figma || ''), key = keyOf(fig), nd = /node-id=(\d+)[-:](\d+)/.exec(fig);
+  const h1 = /^#\s+(.+)$/m.exec(t.slice(m ? m[0].length : 0));
+  return { cid: String(fm.cid || path.basename(f, '.md')), title: String(fm.title || (h1 ? h1[1] : '')), author: String(fm.author || ''), path: rel,
+    fileKey: key, nodeId: nd ? `${nd[1]}:${nd[2]}` : '', rows };
+}
+on('GET', '/api/backlog', ({ T }) => {
+  const root = path.join(T.guideRoot, 'screens'), items = [];
+  for (const d of dirNames(root)) for (const n of fileNames(path.join(root, d))) {
+    if (!/\.md$/i.test(n) || /^(readme|_menu)\.md$/i.test(n)) continue;
+    const s = readBacklog(path.join(root, d, n), `${d}/${n}`); if (s) items.push(s);
+  }
+  return { dir: `${T.guideRel}/screens`, items };
+});
+
 // ── 시작 안내(Get-SetupEnv · Agent-Info · Find-Claude · Find-ClaudeCode · Find-Git) ──
 const { spawnSync } = require('child_process');
 const W = process.platform === 'win32', LAD = process.env.LOCALAPPDATA || '';
@@ -511,19 +543,36 @@ function gitUtf8(a) {
 }
 on('GET', '/api/guides/gitlog', ({ q, T }) => {
   let since = String(q.get('since') || ''); if (!/^[0-9T:+.\-]{10,40}$/.test(since)) since = '';
+  // 기준 시각을 안 주면 그 팀의 _log.json(since 이전 기록은 지운 것)을 쓴다 — 예전에는 화면이 늘 CURECA 것을 읽었다
+  if (!q.get('since')) { const lj = core.readJson(path.join(T.guideRoot, '_log.json')); const s = String((lj && lj.since) || ''); if (/^[0-9T:+.\-]{10,40}$/.test(s)) since = s; }
   const gp = T.rel + 'guides';
   const a = ['-C', C.histDir, '-c', 'core.quotepath=false', 'log', '--name-status', '--date=iso-strict', '--pretty=format:@@%H|%ad|%an|%s', '-n', '300'];
   if (since) a.push('--since=' + since); a.push('--', gp);
   const items = []; let cur = null;
+  const gl = gp.length + 1;
   for (let ln of gitUtf8(a).split('\n')) {
     ln = ln.replace(/\r$/, '');
-    if (ln.startsWith('@@')) { const p = ln.slice(2).split('|'); cur = { hash: p[0], at: p[1], by: p[2], msg: p.length > 3 ? p.slice(3).join('|') : '', files: [] }; items.push(cur); continue; }
+    if (ln.startsWith('@@')) { const p = ln.slice(2).split('|'); cur = { hash: p[0], at: p[1], by: p[2], msg: p.length > 3 ? p.slice(3).join('|') : '', files: [], revs: [] }; items.push(cur); continue; }
     if (!cur || !ln.trim()) continue;
     const c2 = ln.split('\t'), st = c2[0].slice(0, 1), fp = c2[c2.length - 1], from = c2.length > 2 ? c2[1] : '';
-    if (!fp.startsWith(gp + '/') || /\/rev\/|\.check-[^/]*\.json$|\/meta\.json$/.test(fp) || fp === gp + '/_log.json') continue;
-    const gl = gp.length + 1; cur.files.push({ st, path: fp.slice(gl), from: from ? from.slice(Math.min(gl, from.length)) : '' });
+    if (!fp.startsWith(gp + '/') || fp === gp + '/_log.json') continue;
+    // 수정본 기록(rev/{rev}.json): 그 저장이 같이 바꾼 원본 파일은 아래에서 뺀다
+    const rv = /^([^/]+)\/rev\/([^/]+)\.json$/.exec(fp.slice(gl)); if (rv && !/\.check-/.test(rv[2]) && st !== 'D') { cur.revs.push({ doc: rv[1], rev: rv[2] }); continue; }
+    if (/\/rev\/|\.check-[^/]*\.json$|\/meta\.json$/.test(fp)) continue;
+    cur.files.push({ st, path: fp.slice(gl), from: from ? from.slice(Math.min(gl, from.length)) : '' });
   }
-  return { items: items.filter((x) => x.files.length), root: ".history/" + gp };   // root: 화면에 전체 경로로 보이게(2026-11-16)
+  /* 수정 요청 · 직접 수정(수정본 경로)은 수정본(rev/)과 원본을 함께 바꿔 같은 커밋에 들어간다. 그 원본까지 「파일 직접 수정」으로 보이면
+     변경이력에 같은 수정이 두 번(수정 · 파일 직접 수정) 잡히므로, 그 커밋에서 수정본이 가리키는 원본 파일과 처음 내용 보관(_처음/)은 뺀다(2026-11-16) */
+  for (const it of items) {
+    for (const r of it.revs) {
+      const dd = path.join(T.guideRoot, r.doc), j = core.readJson(path.join(dd, 'rev', r.rev + '.json')), m = core.readJson(path.join(dd, 'meta.json'));
+      if (!j || !m) continue;   // 지운 문서 · 기록이면 그대로 둔다
+      const orig = path.relative(T.guideRoot, origPath(dd, m, String(j.file || ''))).replace(/\\/g, '/');
+      it.files = it.files.filter((x) => x.path !== orig);
+    }
+    delete it.revs;
+  }
+  return { items: items.filter((x) => x.files.length), root: ".history/" + gp, since };   // root: 화면에 전체 경로로 보이게(2026-11-16)
 });
 on('GET', '/api/guides/gitfile', ({ q, T, res, send }) => {
   const h = String(q.get('hash') || ''), fp = String(q.get('path') || '');

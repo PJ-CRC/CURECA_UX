@@ -12,9 +12,10 @@ const core = require('./core');
 
 const C = core.C;
 const nn = (v) => (v == null ? '' : String(v));
-// PC 이름: 맥은 hostname 끝의 .local을 뺀다(예전 usage.pl과 같은 기록 이름)
-const pcName = () => String(C.pcName || os.hostname()).replace(/\.local$/i, '');
-const pcSlug = () => pcName().toLowerCase().replace(/[^a-z0-9-]/g, '-');
+// PC 이름: 서버 나머지(작업 이력 · 수정본)와 같은 이름(C.pcName · C.pcSlug) — 그래야 사용량 기록 이름이 작업 이력 {pcSlug}_{요청 ID}와 맞는다.
+//  2026-11-16 전 맥 기록은 끝의 .local을 뺀 이름이었다(usage.pl과 같음, GET /api/usage가 두 이름 모두로 찾는다)
+const pcName = () => String(C.pcName || os.hostname());
+const pcSlug = () => C.pcSlug || pcName().toLowerCase().replace(/[^a-z0-9-]/g, '-');
 function iso(ms) {
   const d = new Date(ms), p = (n) => String(n).padStart(2, '0'), off = -d.getTimezoneOffset(), s = off >= 0 ? '+' : '-', a = Math.abs(off);
   return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}${s}${p(Math.floor(a / 60))}:${p(a % 60)}`;
@@ -59,9 +60,17 @@ async function record(o) {
   t0 = Math.min.apply(null, wins.map((w) => w[0]));
   const inWin = (ts) => wins.some((w) => ts >= w[0] && ts <= w[1]);
 
+  /* 같은 시간에 여러 작업이 돌면(백그라운드 감시 + 대화 창, 서브에이전트) 구간만으로는 남의 사용량까지 더해진다(2026-11-16 점검).
+     그래서 요청 · 작업 ID(R0xx · J0xx)가 있으면 그 ID가 적힌 대화 기록(세션 파일)만 센다. 그런 파일이 하나도 없으면 예전처럼 구간 안 전부 */
+  const tag = o.reqId ? String(o.reqId) : ((/\(([RJ]\d{3,})\)\s*$/.exec(nn(o.title)) || [])[1] || '');
+  const files = [];
+  for (const f of jsonlFiles(logDir(), t0 - 1000)) { let txt = ''; try { txt = await fs.promises.readFile(f, 'utf8'); } catch (e) { continue; } files.push({ f, txt }); }
+  const tagged = tag ? files.filter((x) => new RegExp('\\b' + tag + '\\b').test(x.txt)) : [];
+  // 서브에이전트 기록(…/{세션}/subagents/*.jsonl)은 부모 세션 파일이 그 ID를 담고 있으면 함께 센다
+  const keep = tagged.length ? new Set(tagged.map((x) => x.f.replace(/\.jsonl$/, ''))) : null;
   const msgs = new Map();
-  for (const f of jsonlFiles(logDir(), t0 - 1000)) {
-    let txt = ''; try { txt = await fs.promises.readFile(f, 'utf8'); } catch (e) { continue; }
+  for (const { f, txt } of files) {
+    if (keep && !keep.has(f.replace(/\.jsonl$/, '')) && ![...keep].some((k) => f.startsWith(k + path.sep))) continue;
     for (const l of txt.split('\n')) {
       if (!l.includes('"usage"')) continue;
       const m = l.match(/"timestamp":"([^"]+)"/); if (!m) continue;
