@@ -1,28 +1,28 @@
 {
-   "at" : "2026-11-16T14:38:38+09:00",
+   "at" : "2026-11-16T14:42:30+09:00",
    "by" : "안종범",
-   "cacheRead" : 253223,
-   "cacheWrite" : 33263,
-   "calls" : 4,
+   "cacheRead" : 561652,
+   "cacheWrite" : 84973,
+   "calls" : 9,
    "doneBy" : "Claude",
    "fileKey" : "cDjaemHjetS7RcAHRUIMY5",
    "fileName" : "STAgora AI Workspace",
    "frame" : "GM-DAS-GR",
    "from" : "2026-11-16T14:38:13+09:00",
    "id" : "anjongbeom-ui-macbookair-2_R003",
-   "input" : 10,
+   "input" : 22,
    "kind" : "request",
    "models" : {
-      "claude-sonnet-5-5" : 4
+      "claude-sonnet-5-5" : 9
    },
    "nodeId" : "165:5274",
-   "output" : 2754,
+   "output" : 5631,
    "page" : "GMCS",
    "pc" : "anjongbeom-ui-MacBookAir-2",
    "reqId" : "R003",
    "reqType" : "질문 · 그 밖",
    "team" : "stagora",
    "text" : "화면에서만 찾은거야? 혹시 우측 description 영역에서도 찾은 문구는 없는거지?\n지금 네가 없다고 한 문구가 어디에서 나온건지 전혀 못찾겠어. 피그마 내 해당 위치에 코멘트로 남겨볼래?",
-   "total" : 289250,
-   "usd" : 0.2113
+   "total" : 652278,
+   "usd" : 0.5086
 }
