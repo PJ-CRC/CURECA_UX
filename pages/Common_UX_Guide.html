@@ -373,7 +373,7 @@ html.doc-ro #docNew,html.doc-ro #docImport{display:none!important}
           var since = (j && j.since) || '';
           // 깃 기록(파일 직접 수정)도 함께: 기준 시각 이후만
           return fetch('/api/guides/gitlog' + (since ? '?since=' + encodeURIComponent(since) : ''), { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : {}; }).catch(function(){ return {}; })
-            .then(function(g){ logGit = (g && g.items) || []; logSince = since; renderLog(); });
+            .then(function(g){ logGit = (g && g.items) || []; logRoot = (g && g.root) || logRoot; logSince = since; renderLog(); });
         }); }
         guideMap = {}; guides.forEach(function(g){ guideMap[g.id] = g; });
         if (cur && !guideMap[cur]) cur = '';   // 지운 가이드면 작업 기준 없음
@@ -473,7 +473,7 @@ html.doc-ro #docNew,html.doc-ro #docImport{display:none!important}
     /* 변경이력(UX가이드 보기처럼 왼쪽 목록 · 오른쪽 상세): 모든 카테고리 문서의 생성(createdAt) · 수정본(revs)을 카테고리별로 최신순.
        오른쪽은 고른 기록의 수정 일자 · 누가 · 문서 ID · 수정 내용(note) · 요청 글(req) · 바뀐 줄(이전 내용과 비교) · 수정해야 할 화면(checks) */
     var logDocs = [], logSel = '', logOpen = {}, diffCache = {}, logSince = null, logLoading = false;   // logSince: 이 시각 이전 기록은 숨김(.history/guides/_log.json)
-    var logGit = null, logFile = {};   // 깃 기록(파일 직접 수정) · 고른 파일(기록마다)
+    var logGit = null, logFile = {}, logRoot = '.history/guides';   // logRoot: 지금 팀 UX 문서 폴더(작업 폴더 기준)   // 깃 기록(파일 직접 수정) · 고른 파일(기록마다)
     // .history/guides 기준 경로 → 그 파일이 속한 문서(폴더 이름이 문서 ID. 맨 위 파일은 meta.files의 ../ 경로로)
     function npath(p){ var o = []; String(p).split('/').forEach(function(s){ if (s === '..') o.pop(); else if (s && s !== '.') o.push(s); }); return o.join('/'); }
     function docOfPath(p){
@@ -552,9 +552,9 @@ html.doc-ro #docNew,html.doc-ro #docImport{display:none!important}
         h += '<h3>수정 내용</h3><p class="tx">수정 요청이 아니라 파일을 직접 바꿔 넣었습니다(깃 커밋 <code>' + esc(String(e.hash).slice(0, 7)) + '</code>).</p>';
         h += '<h3>바뀐 파일 <span class="muted" style="font-weight:400">' + e.files.length + '개 · 누르면 바뀐 줄</span></h3><ul class="lg-files">' + e.files.map(function(f){
           var s = ST[f.st] || ['mod', f.st];
-          return '<li><button type="button" data-lgf="' + esc(f.path) + '"' + (f.path === sel ? ' class="on" aria-current="true"' : '') + '><span class="fs ' + s[0] + '">' + s[1] + '</span><code>' + esc(f.path) + '</code>' + (f.from ? '<small>← ' + esc(f.from) + '</small>' : '') + '</button></li>';
+          return '<li><button type="button" data-lgf="' + esc(f.path) + '"' + (f.path === sel ? ' class="on" aria-current="true"' : '') + '><span class="fs ' + s[0] + '">' + s[1] + '</span><code>' + esc(logRoot + '/' + f.path) + '</code>' + (f.from ? '<small>← ' + esc(logRoot + '/' + f.from) + '</small>' : '') + '</button></li>';
         }).join('') + '</ul>';
-        h += '<h3>바뀐 부분 <span class="muted" style="font-weight:400">(<code>' + esc(sel) + '</code>)</span></h3><div class="lg-diff" id="logDiff"><div class="g">비교하는 중…</div></div>';
+        h += '<h3>바뀐 부분 <span class="muted" style="font-weight:400">(<code>' + esc(logRoot + '/' + sel) + '</code>)</span></h3><div class="lg-diff" id="logDiff"><div class="g">비교하는 중…</div></div>';
       } else {
         h += '<h3>수정 내용</h3><p class="tx">' + esc(e.note) + '</p>';
         if (e.r.req) h += '<h3>수정 요청</h3><p class="tx">' + esc(e.r.req) + '</p>';
@@ -578,7 +578,7 @@ html.doc-ro #docNew,html.doc-ro #docImport{display:none!important}
     /* 바뀐 줄: 이전 내용(base 수정본, 없으면 guide.md)과 이 수정본을 줄 단위로 비교해 바뀐 곳과 앞뒤 2줄만 보인다.
        파일형 문서는 그 파일만: 원본 files/{파일}('guide.md' 자리) · 수정본 rev/{rev}/{파일} */
     /* 화면에 보이는 문서 경로(.history/guides 기준, 예: rule/schedule.md) */
-    function docPath(g, file){ var d = g.filesDir !== undefined ? String(g.filesDir) : 'files'; return g.id + '/' + (d ? d.replace(/\/+$/, '') + '/' : '') + file; }
+    function docPath(g, file){ var d = g.filesDir !== undefined ? String(g.filesDir) : 'files'; return npath(logRoot + '/' + g.id + '/' + (d ? d.replace(/\/+$/, '') + '/' : '') + file); }
     function mdUrl(id, rev, file){
       var b = '.history/guides/' + encodeURIComponent(id) + '/';
       /* 'guide.md' 자리 = 처음 내용: 원본이 늘 최종이 된 뒤(2026-11-13~)에는 서버가 남긴 rev/_처음(firstPath), 아직 고친 적 없으면 원본 */

@@ -524,6 +524,13 @@ html.embed,html.embed body{overflow:hidden}
   /* 파일형 문서의 원본 폴더(문서 폴더 기준, 끝에 /): meta.filesDir — 없으면 'files/', 빈 값이면 문서 폴더 바로 아래(예: .history/guides/rule/schedule.md) */
   // 문서 경로 보기: 「rules/../constitution.md」 → 「constitution.md」(깃 저장소의 실제 위치)
   function npath(p){ var o = []; String(p).split('/').forEach(function(s){ if (s === '..') o.pop(); else if (s && s !== '.') o.push(s); }); return o.join('/'); }
+  /* 화면에 보이는 문서 경로 = 작업 폴더 기준 전체 경로(2026-11-16, 모든 PC 같음): CURECA 「.history/guides/flow/1-requirements.md」,
+     다른 팀 「.history/teams/stagora/guides/…」. 팀 문서 폴더(앞부분)는 서버가 준 실제 경로(mdPath)에서 읽는다 */
+  function groot(){
+    var g = GINFO || {}, p = g.mdPath || (g.fileList && g.fileList[0] && g.fileList[0].mdPath) || '', i = p.indexOf('/' + id + '/');
+    return i > 0 ? p.slice(0, i) : '.history/guides';
+  }
+  function fullp(rel){ return npath(groot() + '/' + rel); }
   function fdirOf(m){ var d = m && m.filesDir !== undefined ? String(m.filesDir) : 'files'; return d ? d.replace(/\/+$/, '') + '/' : ''; }
   /* 제목 단계 내리기(코드 블록 안은 그대로): n칸 */
   function demote(t, n){
@@ -1405,7 +1412,7 @@ html.embed,html.embed body{overflow:hidden}
     /* 설계 내용: 본문에서 맨 위 # 제목과 반영 대기 목록 절을 뺀 나머지(원문 그대로) */
     var rest = s.body.replace(/^#\s+[^\n]*\n/, '').replace(/^##\s+반영 대기 목록\s*\n[\s\S]*?(?=^##\s|(?![\s\S]))/m, '');
     h += '<h3 class="sc-h">화면 설계 내용</h3><div class="sc-body"></div>';
-    h += '<p class="docpath" title="' + esc(base + s.file) + '">문서 경로 <code>' + esc(npath(id + '/' + fdirOf(meta) + s.file)) + '</code>' + (s.rev ? '<span>수정본 ' + esc(s.rev) + '</span>' : '') + '</p>';
+    h += '<p class="docpath" title="' + esc(base + s.file) + '">문서 경로 <code>' + esc(fullp(id + '/' + fdirOf(meta) + s.file)) + '</code>' + (s.rev ? '<span>수정본 ' + esc(s.rev) + '</span>' : '') + '</p>';
     var m = $('main'); m.innerHTML = h;
     var bx = render(demote(rest, 1)); Array.prototype.forEach.call(bx.childNodes, function(x){ m.querySelector('.sc-body').appendChild(x.cloneNode(true)); });
     scFix();
@@ -1440,7 +1447,7 @@ html.embed,html.embed body{overflow:hidden}
     editing = true; $('editBtn').disabled = true;
     var ed = editPane('「' + esc(s.cid + ' ' + (s.o.title || '')) + '」 수정 요청',
       '<textarea id="edText" aria-label="수정 요청 내용" placeholder="무엇을 어떻게 고칠지 적어 주세요.&#10;예) 반영 대기 목록 5번(오타)을 반영 완료로 바꿔 줘&#10;예) 디스크립션 3절의 활성화 조건을 POL-EQP-008 기준으로 고쳐 줘"></textarea>' +
-      '<p class="tip">이 화면 정의서 파일(<code>' + esc(npath(id + '/' + fdirOf(meta) + s.file)) + '</code>)을 Claude가 고칩니다. 고친 뒤 입력창 위에 결과가 나옵니다(요청 감시가 켜져 있어야 합니다).</p>');
+      '<p class="tip">이 화면 정의서 파일(<code>' + esc(fullp(id + '/' + fdirOf(meta) + s.file)) + '</code>)을 Claude가 고칩니다. 고친 뒤 입력창 위에 결과가 나옵니다(요청 감시가 켜져 있어야 합니다).</p>');
     $('edCancel').onclick = function(){ editing = false; ed.remove(); $('editBtn').disabled = false; };
     $('edSave').onclick = function(){
       var text = $('edText').value.trim(); if (!text) { $('edText').focus(); return; }
@@ -1514,15 +1521,15 @@ html.embed,html.embed body{overflow:hidden}
     var i = secs.indexOf(s), pv = secs[i - 1], nx = secs[i + 1];
     m.insertAdjacentHTML('beforeend', '<div class="pager">' + (pv ? '<button type="button" data-go="' + pv.id + '" title="' + esc(pv.label) + '"><small>‹ 이전</small><span class="pg-t">' + esc(pv.label) + '</span></button>' : '<span></span>') +
       (nx ? '<button type="button" class="nx" data-go="' + nx.id + '" title="' + esc(nx.label) + '"><small>다음 ›</small><span class="pg-t">' + esc(nx.label) + '</span></button>' : '') + '</div>');
-    /* 파일형 문서: 이 항목이 들어 있는 깃 문서 경로(예: rule/schedule.md). 마우스를 올리면 지금 내용 파일의 전체 경로 */
+    /* 문서 경로: 작업 폴더 기준 전체 경로(예: .history/guides/rules/schedule.md, 다른 팀은 .history/teams/{팀}/guides/…) */
     if (isBook) {
-      m.insertAdjacentHTML('beforeend', '<p class="docpath">문서 경로 <code>' + esc(npath(id + '/' + fdirOf(meta) + s.file.slice(6)) + '/') + '</code><span>시트마다 CSV 파일 하나</span></p>');
+      m.insertAdjacentHTML('beforeend', '<p class="docpath">문서 경로 <code>' + esc(fullp(id + '/' + fdirOf(meta) + s.file.slice(6)) + '/') + '</code><span>시트마다 CSV 파일 하나</span></p>');
     } else if (s.file) {
       var fl = (FILES || []).filter(function(f){ return f.path === s.file; })[0];
-      m.insertAdjacentHTML('beforeend', '<p class="docpath" title="' + esc(fl ? fl.mdPath : '') + '">문서 경로 <code>' + esc(npath(id + '/' + fdirOf(meta) + s.file)) + '</code>' + (fl && fl.rev ? '<span>수정본 ' + esc(fl.rev) + '</span>' : '') + '</p>');
+      m.insertAdjacentHTML('beforeend', '<p class="docpath" title="' + esc(fl ? fl.mdPath : '') + '">문서 경로 <code>' + esc(fullp(id + '/' + fdirOf(meta) + s.file)) + '</code>' + (fl && fl.rev ? '<span>수정본 ' + esc(fl.rev) + '</span>' : '') + '</p>');
     } else if (!FILES) {
       /* 한 파일 문서(본문 파일 하나 = 늘 최종, 고친 기록은 rev/): 항목이 모두 그 파일 안에 있으니 그 파일을 보인다 */
-      m.insertAdjacentHTML('beforeend', '<p class="docpath" title="' + esc(GINFO && GINFO.mdPath || '') + '">문서 경로 <code>' + esc(npath(id + '/' + ((meta && meta.main) || 'guide.md'))) + '</code>' + (GINFO && GINFO.rev ? '<span>수정본 ' + esc(GINFO.rev) + '</span>' : '') + '</p>');
+      m.insertAdjacentHTML('beforeend', '<p class="docpath" title="' + esc(GINFO && GINFO.mdPath || '') + '">문서 경로 <code>' + esc(fullp(id + '/' + ((meta && meta.main) || 'guide.md'))) + '</code>' + (GINFO && GINFO.rev ? '<span>수정본 ' + esc(GINFO.rev) + '</span>' : '') + '</p>');
     }
     $('tocCur').textContent = '목차 · ' + s.label; askSet();
     tree($('q').value.trim().toLowerCase());
@@ -1547,7 +1554,7 @@ html.embed,html.embed body{overflow:hidden}
       var m = $('main'), head = m.querySelector('.sc-head') || m.querySelector('.sec-row'), ed = document.createElement('section');
       ed.className = 'dm-inplace'; ed.id = 'dmPane'; ed.setAttribute('aria-label', '직접 수정');
       ed.innerHTML = '<div class="dm-tabs" role="tablist"><button type="button" role="tab" aria-selected="true" data-dmtab="src">원문</button><button type="button" role="tab" aria-selected="false" data-dmtab="prev">미리 보기</button>' +
-        '<span class="p">' + esc(file ? npath(id + '/' + fdirOf(meta) + file) : '문서 전체(마크다운)') + '</span></div>' +
+        '<span class="p">' + esc(file ? fullp(id + '/' + fdirOf(meta) + file) : '문서 전체(마크다운)') + '</span></div>' +
         '<textarea class="dm-text" id="dmText" spellcheck="false" aria-label="원문"></textarea><div class="dm-prev mdv" id="dmPrev" hidden></div>' +
         '<div class="dm-act"><span class="m" id="dmMsg" role="status">저장하면 바로 반영됩니다. 고칠 화면 · 문서는 저장 뒤 「연관 항목 찾기 요청」으로 맡길 수 있습니다.</span><button type="button" class="btn" id="dmCancel">취소</button><button type="button" class="btn pri" id="dmSave">저장</button></div>';
       // 제목 줄 아래 지금 내용(이전 · 다음, 문서 경로 빼고)을 잠시 가리고 그 자리에 편집 칸
