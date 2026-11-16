@@ -1,0 +1,28 @@
+{
+   "at" : "2026-11-16T14:45:59+09:00",
+   "by" : "안종범",
+   "cacheRead" : 654148,
+   "cacheWrite" : 40769,
+   "calls" : 9,
+   "doneBy" : "Claude",
+   "fileKey" : "",
+   "fileName" : "",
+   "frame" : "",
+   "from" : "2026-11-16T14:45:00+09:00",
+   "id" : "anjongbeom-ui-macbookair-2_20261116-144559",
+   "input" : 17,
+   "kind" : "work",
+   "models" : {
+      "claude-sonnet-5-5" : 9
+   },
+   "nodeId" : "",
+   "output" : 5570,
+   "page" : "",
+   "pc" : "anjongbeom-ui-MacBookAir-2",
+   "reqId" : "",
+   "reqType" : "",
+   "team" : "stagora",
+   "text" : "질문 · 그 밖: 각주 영어 원문 (R002)",
+   "total" : 700504,
+   "usd" : 0.3496
+}
