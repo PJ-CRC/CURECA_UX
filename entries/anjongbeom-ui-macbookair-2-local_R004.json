@@ -1,0 +1,39 @@
+{
+  "id": "anjongbeom-ui-macbookair-2-local_R004",
+  "kind": "request",
+  "team": "stagora",
+  "status": "보류",
+  "at": "2026-11-16T14:48:39+09:00",
+  "createdAt": "2026-11-16T14:48:23+09:00",
+  "by": "안종범",
+  "doneBy": "Claude",
+  "pc": "anjongbeom-ui-MacBookAir-2.local",
+  "reqId": "R004",
+  "fileKey": "cDjaemHjetS7RcAHRUIMY5",
+  "fileName": "STAgora AI Workspace",
+  "page": "GMCS",
+  "frame": "GM-DAS-GR",
+  "nodeId": "165:5274",
+  "type": "질문 · 그 밖",
+  "layout": "",
+  "text": "Language ID 알려줄게.\nGM-txt-390\nGM-txt-391",
+  "note": "Language ID 두 개(GM-txt-390, GM-txt-391)를 받았지만 어떤 문구에 붙이고 무엇을 할지 정할 수 없어 Figma는 고치지 않았습니다.\n- 이 두 ID가 어느 문구의 것인지 적혀 있지 않습니다(R002에서 본 5번 각주 두 줄 「Multi-detection rate …」 · 「Cross-detection rate …」로 짐작되지만 확실하지 않음).\n- 받은 ID로 무엇을 할지(화면에 ID 표기, 언어셋 등록 정리, 번역 반영 등)도 적혀 있지 않습니다.\n작업 기준: 작업규칙 확인 안 함 · 정책서 확인 안 함 · UX가이드 확인 안 함 · 기준데이터 확인 안 함 · 화면 정의서 확인 안 함 (Figma는 고치지 않음)",
+  "shot": "",
+  "shots": [],
+  "images": [],
+  "frames": [],
+  "marks": [],
+  "ask": {
+    "q": "GM-txt-390 · GM-txt-391은 각각 어느 문구의 Language ID이고, 무엇을 할까요?",
+    "options": [
+      {
+        "label": "390=Multi-detection 각주, 391=Cross-detection 각주로 보고 기록만"
+      },
+      {
+        "label": "390=Cross-detection 각주, 391=Multi-detection 각주로 보고 기록만"
+      }
+    ],
+    "free": true
+  },
+  "replies": []
+}

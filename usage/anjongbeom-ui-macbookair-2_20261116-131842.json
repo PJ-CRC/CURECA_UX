@@ -1,0 +1,28 @@
+{
+   "at" : "2026-11-16T13:18:42+09:00",
+   "by" : "안종범",
+   "cacheRead" : 287392,
+   "cacheWrite" : 7746,
+   "calls" : 5,
+   "doneBy" : "Claude",
+   "fileKey" : "",
+   "fileName" : "",
+   "frame" : "",
+   "from" : "2026-11-16T13:18:24+09:00",
+   "id" : "anjongbeom-ui-macbookair-2_20261116-131842",
+   "input" : 9,
+   "kind" : "work",
+   "models" : {
+      "claude-sonnet-5-5" : 5
+   },
+   "nodeId" : "",
+   "output" : 3167,
+   "page" : "",
+   "pc" : "anjongbeom-ui-MacBookAir-2",
+   "reqId" : "",
+   "reqType" : "",
+   "team" : "stagora",
+   "text" : "작업규칙: 5.작업유형 (J038)",
+   "total" : 298314,
+   "usd" : 0.1202
+}

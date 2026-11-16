@@ -1,31 +1,35 @@
 {
-    "id":  "bkseo",
-    "name":  "서보경",
-    "admin":  false,
-    "menus":  [
-                  "plan",
-                  "guide",
-                  "workbench",
-                  "history",
-                  "usage",
-                  "proto"
-              ],
-    "createdAt":  "2026-11-02T17:33:07+09:00",
-    "createdBy":  "brex",
-    "salt":  "sbuvOwJ3c+qQsOYxyaJ0gg==",
-    "iter":  100000,
-    "hash":  "+q8dqC3c3CcTPF/NnYiBZKVinsg+iYgSIM+IF7sW6YE=",
-    "pwAt":  "2026-11-02T17:33:07+09:00",
-    "writes":  [
-                   "plan",
-                   "guide",
-                   "workbench",
-                   "history",
-                   "proto"
-               ],
-    "approves":  [
-                     "pv"
-                 ],
-    "active":  true,
-    "updatedAt":  "2026-11-05T10:49:21+09:00"
+  "id": "bkseo",
+  "name": "서보경",
+  "admin": false,
+  "menus": [
+    "plan",
+    "guide",
+    "workbench",
+    "history",
+    "usage",
+    "proto"
+  ],
+  "createdAt": "2026-11-02T17:33:07+09:00",
+  "createdBy": "brex",
+  "salt": "sbuvOwJ3c+qQsOYxyaJ0gg==",
+  "iter": 100000,
+  "hash": "+q8dqC3c3CcTPF/NnYiBZKVinsg+iYgSIM+IF7sW6YE=",
+  "pwAt": "2026-11-02T17:33:07+09:00",
+  "writes": [
+    "plan",
+    "guide",
+    "workbench",
+    "history",
+    "proto"
+  ],
+  "approves": [],
+  "active": true,
+  "updatedAt": "2026-11-16T15:31:03+09:00",
+  "manages": [
+    "teamProjects"
+  ],
+  "teams": [
+    "cureca"
+  ]
 }

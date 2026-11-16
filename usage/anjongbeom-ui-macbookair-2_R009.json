@@ -1,0 +1,28 @@
+{
+   "at" : "2026-11-16T16:00:05+09:00",
+   "by" : "안종범",
+   "cacheRead" : 1165873,
+   "cacheWrite" : 50584,
+   "calls" : 17,
+   "doneBy" : "Claude",
+   "fileKey" : "cDjaemHjetS7RcAHRUIMY5",
+   "fileName" : "STAgora AI Workspace",
+   "frame" : "GM-DAS-GR",
+   "from" : "2026-11-16T15:58:39+09:00",
+   "id" : "anjongbeom-ui-macbookair-2_R009",
+   "input" : 33,
+   "kind" : "request",
+   "models" : {
+      "claude-sonnet-5-5" : 17
+   },
+   "nodeId" : "165:5274",
+   "output" : 10797,
+   "page" : "GMCS",
+   "pc" : "anjongbeom-ui-MacBookAir-2",
+   "reqId" : "R009",
+   "reqType" : "질문 · 그 밖",
+   "team" : "stagora",
+   "text" : "자 그럼 이제 노란색 배경을 제대로된 row에 적용해. 이전에 적용한 엉뚱한 셀은 원복하고.\n그러면 'v2.32 문구 변경(영문 추가)'가 아니라 'v2.32 문구 추가(영문 추가)'가 맞는거 아니야? 변경이라고 한 이유가 뭐야. 그리고 시트 내 리비전 셀에 쓴 내용와 문서 이력에 쓴 내용이 다른 이유도 궁금해.",
+   "total" : 1227287,
+   "usd" : 0.5435
+}

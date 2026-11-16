@@ -55,4 +55,4 @@ replaced_by:
 | --- | --- | --- | --- |
 | | 2026-11-03 | 최초 작성 | 사용자 결정 |
 | | 2026-11-03 | Log Export 제외, Import .csv·엑셀 (IV10-a) | 사용자 확인, CA-0008 |
-| | 2026-11-04 | Common UX 참조 번호를 Common UX - PC 기준으로 고침 (COMM-5-j(4/4) → COMM-5-m(2/4)) | `common-ux/common-policy-candidates.md` |
+| | 2026-11-04 | Common UX 참조 번호를 Common UX - PC 기준으로 고침 (COMM-5-j(4/4) → COMM-5-m(2/4)) | `archive/common-ux/common-policy-candidates.md` |

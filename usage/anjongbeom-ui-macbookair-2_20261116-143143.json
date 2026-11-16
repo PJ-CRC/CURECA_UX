@@ -1,0 +1,28 @@
+{
+   "at" : "2026-11-16T14:31:43+09:00",
+   "by" : "안종범",
+   "cacheRead" : 709992,
+   "cacheWrite" : 42984,
+   "calls" : 9,
+   "doneBy" : "Claude",
+   "fileKey" : "",
+   "fileName" : "",
+   "frame" : "",
+   "from" : "2026-11-16T14:30:49+09:00",
+   "id" : "anjongbeom-ui-macbookair-2_20261116-143143",
+   "input" : 17,
+   "kind" : "work",
+   "models" : {
+      "claude-sonnet-5-5" : 9
+   },
+   "nodeId" : "",
+   "output" : 5856,
+   "page" : "",
+   "pc" : "anjongbeom-ui-MacBookAir-2",
+   "reqId" : "",
+   "reqType" : "",
+   "team" : "stagora",
+   "text" : "Workbench 요청: 언어셋 번역 (R002)",
+   "total" : 758849,
+   "usd" : 0.3725
+}

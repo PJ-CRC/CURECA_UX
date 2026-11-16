@@ -1,0 +1,41 @@
+{
+  "id": "anjongbeom-ui-macbookair-2-local_R003",
+  "kind": "request",
+  "team": "stagora",
+  "status": "완료",
+  "at": "2026-11-16T14:42:30+09:00",
+  "createdAt": "2026-11-16T14:38:03+09:00",
+  "by": "안종범",
+  "doneBy": "Claude",
+  "pc": "anjongbeom-ui-MacBookAir-2.local",
+  "reqId": "R003",
+  "fileKey": "cDjaemHjetS7RcAHRUIMY5",
+  "fileName": "STAgora AI Workspace",
+  "page": "GMCS",
+  "frame": "GM-DAS-GR",
+  "nodeId": "165:5274",
+  "type": "질문 · 그 밖",
+  "layout": "",
+  "text": "화면에서만 찾은거야? 혹시 우측 description 영역에서도 찾은 문구는 없는거지?\n지금 네가 없다고 한 문구가 어디에서 나온건지 전혀 못찾겠어. 피그마 내 해당 위치에 코멘트로 남겨볼래?",
+  "note": "질문 답변: 문구는 모두 화면 본문(DE-INS 프레임) 안에 있고, 우측 description 영역에는 없습니다. Figma 코멘트는 도구 제한으로 남기지 못해 위치를 글로 적습니다.\n- 확인 범위: GM-DAS-GR 전체(description · DE-INS · Frame 2095590028)의 글 레이어를 검색. description(165:5275)에서는 해당 문구가 하나도 나오지 않음\n- 「Last 1 month」 2곳 (둘 다 Timestamp 글, 보이는 상태)\n  1) 165:5476 — DE-INS > … > 03. RP(Virus 중요)_FINAL > 02_Real-Time Detection Statistics > Title > Period > Timestamp (GM-DAS-GR 왼쪽 위 기준 약 x1599, y732)\n  2) 165:5814 — … > Top 3 Detected Pathogens > Title > Period > Frame 2095588816 > Frame 2095588218 > Timestamp (약 x1599, y1468)\n- 「hace 5 semanas」 165:5867 (x1311, y1591), 「Maintenant」 165:5869 (x1451, y1591), 「Tasso di aumento nel periodo *」 165:5871 (x1571, y1582) — 모두 Top 3 Detected Pathogens > Con > Multi-Detection > Table > Header_Test > Data > Text\n- 찾는 요령: Figma에서 165:5476 등 ID로 이동하거나(레이어 검색 · Ctrl+F로 「Last 1 month」), 오른쪽 위 Report 영역(DE-INS > Content > Con > Report)을 펼쳐 보세요. Top 3 표 머리글 3개는 스페인어 · 프랑스어 · 이탈리아어가 섞여 있습니다.\n- 코멘트를 못 남긴 이유: 이 PC에 Figma 토큰이 없고 Figma 연결에 코멘트 쓰기 기능이 없음. 토큰을 등록하면 코멘트로 남길 수 있습니다.\n작업 기준: 작업규칙 확인 안 함 · 정책서 확인 안 함 · UX가이드 확인 안 함 · 기준데이터 확인 안 함 · 화면 정의서 확인 안 함 (질문 답변이라 문서를 읽지 않음)",
+  "shot": "shots/anjongbeom-ui-macbookair-2-local_R003.jpg",
+  "shots": [
+    {
+      "file": "shots/anjongbeom-ui-macbookair-2-local_R003.jpg",
+      "nodeId": "165:5274",
+      "frame": "GM-DAS-GR"
+    }
+  ],
+  "images": [],
+  "frames": [],
+  "marks": [],
+  "ask": null,
+  "replies": [
+    {
+      "at": "2026-11-16T14:41:57+09:00",
+      "by": "안종범",
+      "q": "STI Top 5 표 머리글(스페인어 · 독일어 · 프랑스어 · 이탈리아어 혼합)을 영어로 고칠까요?",
+      "text": "피그마에서 직접 Last 1 month를 찾아보면 아무런 내용이 없는데 도대체 어디에 있다는거야?"
+    }
+  ]
+}

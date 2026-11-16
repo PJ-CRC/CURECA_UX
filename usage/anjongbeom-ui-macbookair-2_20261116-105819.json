@@ -1,0 +1,28 @@
+{
+   "at" : "2026-11-16T10:58:19+09:00",
+   "by" : "안종범",
+   "cacheRead" : 117279,
+   "cacheWrite" : 41544,
+   "calls" : 4,
+   "doneBy" : "Claude",
+   "fileKey" : "",
+   "fileName" : "",
+   "frame" : "",
+   "from" : "2026-11-16T10:55:19+09:00",
+   "id" : "anjongbeom-ui-macbookair-2_20261116-105819",
+   "input" : 8,
+   "kind" : "work",
+   "models" : {
+      "claude-sonnet-5-5" : 4
+   },
+   "nodeId" : "",
+   "output" : 870,
+   "page" : "",
+   "pc" : "anjongbeom-ui-MacBookAir-2",
+   "reqId" : "",
+   "reqType" : "",
+   "team" : "stagora",
+   "text" : "작업규칙: 3. 작업의 흐름 (J030)",
+   "total" : 159701,
+   "usd" : 0.1983
+}

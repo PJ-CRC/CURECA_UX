@@ -46,7 +46,7 @@
                     "rules/terminology-review.md",
                     "rules/weekly-status.md"
                 ],
-    "summary":  "CURECA_AI 저장소의 헌법(constitution.md)과 룰 문서 14개를 원본 파일 그대로 관리하는 작업규칙입니다(.history/guides/rules). 파일 하나가 대분류 하나입니다.",
+    "summary":  "CURECA_AI 저장소의 헌법(constitution.md)과 룰 문서 14개를 원본 파일 그대로 관리하는 작업규칙입니다(.history/teams/stagora/guides/rules). 파일 하나가 대분류 하나입니다.",
     "title":  "CURECA 작업규칙",
     "updatedAt":  "2026-11-05T10:23:55+09:00",
     "importedFrom":  {

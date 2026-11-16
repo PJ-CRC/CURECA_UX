@@ -1,0 +1,28 @@
+{
+   "at" : "2026-11-16T16:32:33+09:00",
+   "by" : "안종범",
+   "cacheRead" : 202954,
+   "cacheWrite" : 5054,
+   "calls" : 4,
+   "doneBy" : "Claude",
+   "fileKey" : "cDjaemHjetS7RcAHRUIMY5",
+   "fileName" : "STAgora AI Workspace",
+   "frame" : "GM-DAS-GR",
+   "from" : "2026-11-16T16:32:23+09:00",
+   "id" : "anjongbeom-ui-macbookair-2_R011",
+   "input" : 8,
+   "kind" : "request",
+   "models" : {
+      "claude-sonnet-5-5" : 4
+   },
+   "nodeId" : "165:5274",
+   "output" : 750,
+   "page" : "GMCS",
+   "pc" : "anjongbeom-ui-MacBookAir-2",
+   "reqId" : "R011",
+   "reqType" : "질문 · 그 밖",
+   "team" : "stagora",
+   "text" : "질문: 지금 화면에서(기준데이터-언어셋)은 시트가 붙고 함수가 있는 xlsx 형태로 보이는데, 네가 아까 pc에서는 csv로 존재한다고 했지?\n파일 자체는 csv로 있고, 웹에서 Xlsx처럼 합쳐서 보여주는거야?",
+   "total" : 208766,
+   "usd" : 0.0683
+}

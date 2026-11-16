@@ -1,0 +1,12 @@
+{
+  "rev": "20261116-102443_anjongbeom-ui-macbookair-2-local",
+  "by": "Claude",
+  "at": "2026-11-16T10:24:43+09:00",
+  "note": "4-3 언어셋 위치(기준데이터 / 언어셋)·Gem 삭제·4-1 참조, 4-6 언어셋 반영 문구 추가",
+  "base": "20261113-161405_anjongbeom-ui-macbookair-2-local",
+  "pc": "anjongbeom-ui-MacBookAir-2.local",
+  "req": "4. 서비스별 화면 언어 · 디스크립션 언어: 4-3 · 4-6 수정 (J025)",
+  "jobId": "J025",
+  "file": "4. 서비스별 화면 언어 · 디스크립션 언어.md",
+  "orig": true
+}

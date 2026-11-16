@@ -1,0 +1,28 @@
+{
+   "at" : "2026-11-16T15:32:06+09:00",
+   "by" : "안종범",
+   "cacheRead" : 1362791,
+   "cacheWrite" : 119086,
+   "calls" : 23,
+   "doneBy" : "Claude",
+   "fileKey" : "cDjaemHjetS7RcAHRUIMY5",
+   "fileName" : "STAgora AI Workspace",
+   "frame" : "GM-DAS-GR",
+   "from" : "2026-11-16T15:21:34+09:00",
+   "id" : "anjongbeom-ui-macbookair-2_R006",
+   "input" : 44,
+   "kind" : "request",
+   "models" : {
+      "claude-sonnet-5-5" : 23
+   },
+   "nodeId" : "165:5274",
+   "output" : 13203,
+   "page" : "GMCS",
+   "pc" : "anjongbeom-ui-MacBookAir-2",
+   "reqId" : "R006",
+   "reqType" : "질문 · 그 밖",
+   "team" : "stagora",
+   "text" : "질문\n1. 언어셋 사본이라고 생각하고 원본이 따로 있다고 판단한 근거가 뭐야?\n2. GM-txt-398이랑 GM-txt-399의 `변경히스토리 이슈체크`에다가 노란색을 채운 이유가 뭐야? 네가 방금 변경한 것은 `GM-txt-390, GM-txt-391`이잖아. 그리고 변경된 row에다가 노란색을 칠하라고 했지 cell에 칠하라고 한게 아니잖아. 심지어 `변경히스토리 이슈체크`에서 버전업은 하지도 않았어.",
+   "total" : 1495124,
+   "usd" : 0.881
+}

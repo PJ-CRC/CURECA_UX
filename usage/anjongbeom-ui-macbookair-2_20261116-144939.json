@@ -1,0 +1,28 @@
+{
+   "at" : "2026-11-16T14:49:39+09:00",
+   "by" : "안종범",
+   "cacheRead" : 406783,
+   "cacheWrite" : 31043,
+   "calls" : 6,
+   "doneBy" : "Claude",
+   "fileKey" : "",
+   "fileName" : "",
+   "frame" : "",
+   "from" : "2026-11-16T14:49:11+09:00",
+   "id" : "anjongbeom-ui-macbookair-2_20261116-144939",
+   "input" : 14,
+   "kind" : "work",
+   "models" : {
+      "claude-sonnet-5-5" : 6
+   },
+   "nodeId" : "",
+   "output" : 2050,
+   "page" : "",
+   "pc" : "anjongbeom-ui-MacBookAir-2",
+   "reqId" : "",
+   "reqType" : "",
+   "team" : "stagora",
+   "text" : "질문 · 그 밖: R002",
+   "total" : 439890,
+   "usd" : 0.2261
+}

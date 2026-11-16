@@ -1,0 +1,28 @@
+{
+   "at" : "2026-11-16T16:41:33+09:00",
+   "by" : "안종범",
+   "cacheRead" : 695230,
+   "cacheWrite" : 49574,
+   "calls" : 11,
+   "doneBy" : "Claude",
+   "fileKey" : "cDjaemHjetS7RcAHRUIMY5",
+   "fileName" : "STAgora AI Workspace",
+   "frame" : "GM-DAS-GR",
+   "from" : "2026-11-16T16:40:22+09:00",
+   "id" : "anjongbeom-ui-macbookair-2_R013",
+   "input" : 21,
+   "kind" : "request",
+   "models" : {
+      "claude-sonnet-5-5" : 11
+   },
+   "nodeId" : "165:5274",
+   "output" : 9578,
+   "page" : "GMCS",
+   "pc" : "anjongbeom-ui-MacBookAir-2",
+   "reqId" : "R013",
+   "reqType" : "질문 · 그 밖",
+   "team" : "stagora",
+   "text" : "0.공통문구~ 시트 쪽 가보면 알겠지만, 여기는 공통으로 쓰이는 문구들의 모음이야. 그래서 이 시트에 존재하는 문구들은 각 시트 하단에 붙어있어야해.(언어셋 파일 보고 먼저 파악해봐.) 공통 시트에 내용이 추가될 때 마다 각 시트 하단에 새로 추가해야해.\n그리고 네가 좀 전에 정책으로 추가한 이전 버전의 노란 BG 삭제는 커먼 시트와 별개야. (커먼 내 최신 리비전은 노란 BG 남아있음. 예: gmcs 시트 최신 리비전 - v2.32 / 0.공통 시트 최신 리비전 - v2.31일 때 공통 시트의 2.31들은 노란 BG가 살아있어야 함)\n\n위 내용을 4-a-8 내용에 추가해주고 실제 언어셋에 반영해볼래? GMCS의 공통 부분에 노란 BG 삭제되었어.",
+   "total" : 754403,
+   "usd" : 0.4332
+}

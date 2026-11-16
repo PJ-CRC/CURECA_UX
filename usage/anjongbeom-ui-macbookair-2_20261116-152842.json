@@ -1,0 +1,28 @@
+{
+   "at" : "2026-11-16T15:28:42+09:00",
+   "by" : "안종범",
+   "cacheRead" : 569492,
+   "cacheWrite" : 45151,
+   "calls" : 9,
+   "doneBy" : "Claude",
+   "fileKey" : "",
+   "fileName" : "",
+   "frame" : "",
+   "from" : "2026-11-16T15:27:52+09:00",
+   "id" : "anjongbeom-ui-macbookair-2_20261116-152842",
+   "input" : 17,
+   "kind" : "work",
+   "models" : {
+      "claude-sonnet-5-5" : 9
+   },
+   "nodeId" : "",
+   "output" : 6294,
+   "page" : "",
+   "pc" : "anjongbeom-ui-MacBookAir-2",
+   "reqId" : "",
+   "reqType" : "",
+   "team" : "stagora",
+   "text" : "Workbench 요청: 질문 · 그 밖 (R006)",
+   "total" : 620954,
+   "usd" : 0.3575
+}

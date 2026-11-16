@@ -1,0 +1,34 @@
+{
+  "id": "anjongbeom-ui-macbookair-2-local_R008",
+  "kind": "request",
+  "team": "stagora",
+  "status": "완료",
+  "at": "2026-11-16T15:43:29+09:00",
+  "createdAt": "2026-11-16T15:42:58+09:00",
+  "by": "안종범",
+  "doneBy": "Claude",
+  "pc": "anjongbeom-ui-MacBookAir-2.local",
+  "reqId": "R008",
+  "fileKey": "cDjaemHjetS7RcAHRUIMY5",
+  "fileName": "STAgora AI Workspace",
+  "page": "GMCS",
+  "frame": "GM-DAS-GR",
+  "nodeId": "165:5274",
+  "type": "질문 · 그 밖",
+  "layout": "",
+  "text": "작업 규칙 4-A에 해당 내용과 더불어, 작업 끝나면 해당 파일이 원본이니 바로 수정해야된다는 맥락을 추가해줘. 그리고 row 전체에 노란색을 적용해야된다는 맥락도 추가하고.",
+  "note": "작업규칙 4-A에 내용을 추가했습니다. Figma는 고치지 않았습니다.\n- 4-A-8 순서 4번 · 4-A-8-3: 노란색은 변경된 row 전체(A~P열)에 적용하고, 「변경히스토리 이슈체크」 칸 하나만 칠하지 않는다고 명시\n- 새 4-A-8-4 「기록 대상 · 위치 찾기」: 언어셋 파일이 원본이라 문구 작업이 끝나면 4-A-8 기록을 바로 그 파일에 수정해 남김(「원본 시트에서 따로」로 미루지 않음)\n- 같은 절: 고칠 row는 행 번호가 아니라 Language ID로 찾고, 행 번호를 받으면 ID를 먼저 대조하며, 고친 뒤 ID · 노란색 범위를 다시 확인하고 「Language ID · 파일 행 번호」로 보고\n- 저장: 수정본으로 남김(STAgora 작업규칙 > 4-A. 다국어 번역)\n작업 기준: 작업규칙 STAgora 작업규칙 · 정책서 없음 · UX가이드 없음 · 기준데이터 glossary(언어셋) · 화면 정의서 없음",
+  "shot": "shots/anjongbeom-ui-macbookair-2-local_R008.jpg",
+  "shots": [
+    {
+      "file": "shots/anjongbeom-ui-macbookair-2-local_R008.jpg",
+      "nodeId": "165:5274",
+      "frame": "GM-DAS-GR"
+    }
+  ],
+  "images": [],
+  "frames": [],
+  "marks": [],
+  "ask": null,
+  "replies": []
+}
