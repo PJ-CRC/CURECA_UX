@@ -2,11 +2,11 @@
   "id": "anjongbeom-ui-macbookair-2-local_R003",
   "kind": "request",
   "team": "stagora",
-  "status": "완료",
-  "at": "2026-11-16T14:38:37+09:00",
+  "status": "대기",
+  "at": "2026-11-16T14:41:57+09:00",
   "createdAt": "2026-11-16T14:38:03+09:00",
   "by": "안종범",
-  "doneBy": "Claude",
+  "doneBy": "안종범",
   "pc": "anjongbeom-ui-MacBookAir-2.local",
   "reqId": "R003",
   "fileKey": "cDjaemHjetS7RcAHRUIMY5",
@@ -17,29 +17,19 @@
   "type": "질문 · 그 밖",
   "layout": "",
   "text": "화면에서만 찾은거야? 혹시 우측 description 영역에서도 찾은 문구는 없는거지?\n지금 네가 없다고 한 문구가 어디에서 나온건지 전혀 못찾겠어. 피그마 내 해당 위치에 코멘트로 남겨볼래?",
-  "note": "화면과 우측 description 영역을 모두 다시 읽었습니다. R002에서 「없다」고 한 문구는 description이 아니라 화면 오른쪽 아래 표(STI Top 5)의 머리글에서 나왔습니다. Figma에 코멘트를 남기는 도구가 이 연결에는 없어 코멘트는 못 달았고, 위치를 아래에 적습니다.\n- 우측 description 영역(프레임 안 x 1921~2253): 글이 「2-4」 · 「기간 필터 / Default : Cumulative / 공통 정의: [Common > 5-T. Global Filter] 참고 / [2-4] 에 해당되는 Test가 없을 경우 / Case. 1 화면 표시」뿐이라, R002의 문구는 여기서 찾은 것이 없습니다.\n- STI Top 5 표 머리글(노드 165:5863 ~ 165:5872, 프레임 왼쪽 위 기준 x 1002~1741 · y 1582~1591): Rango / Posición(스페인어) · Analyten(독일어) · hace 5 semanas(스페인어) · Maintenant(프랑스어) · Tasso di aumento nel periodo *(이탈리아어). 한 표 머리글에 여러 언어가 섞여 있어, 이 글을 영어 원문으로 보고 R002의 2) 3) 4)를 만든 것이 잘못이었습니다. 「Now」는 화면에 없고 「지금」 · 「5주 전」도 화면 글이 아닙니다.\n- 「Last 1 month」: 화면 두 곳에 있습니다(165:5476 x 1599 y 732, 165:5814 x 1599 y 1468). 언어셋에 영어 원문이 있는지 다시 대조해야 합니다.\n- 따라서 R002의 번역 1)~4)는 취소하는 것이 맞습니다. 이 표 머리글은 번역이 잘못 들어간 것으로 보이니 영어 문구(Rank / Analyte / 5 weeks ago / Now / Rate of increase over period *)로 고쳐야 할지 확인이 필요합니다.\n작업 기준: 작업규칙 STAgora 작업규칙 · 정책서 없음 · UX가이드 Common UX · 기준데이터 glossary(언어셋) · 화면 정의서 UX Kit(Component) 화면 정의서",
-  "shot": "shots/anjongbeom-ui-macbookair-2-local_R003.jpg",
-  "shots": [
-    {
-      "file": "shots/anjongbeom-ui-macbookair-2-local_R003.jpg",
-      "nodeId": "165:5274",
-      "frame": "GM-DAS-GR"
-    }
-  ],
+  "note": "",
+  "shot": "",
+  "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": {
-    "q": "STI Top 5 표 머리글(스페인어 · 독일어 · 프랑스어 · 이탈리아어 혼합)을 영어로 고칠까요?",
-    "options": [
-      {
-        "label": "영어로 고치기"
-      },
-      {
-        "label": "그대로 두기"
-      }
-    ],
-    "free": true
-  },
-  "replies": []
+  "ask": null,
+  "replies": [
+    {
+      "at": "2026-11-16T14:41:57+09:00",
+      "by": "안종범",
+      "q": "STI Top 5 표 머리글(스페인어 · 독일어 · 프랑스어 · 이탈리아어 혼합)을 영어로 고칠까요?",
+      "text": "피그마에서 직접 Last 1 month를 찾아보면 아무런 내용이 없는데 도대체 어디에 있다는거야?"
+    }
+  ]
 }
