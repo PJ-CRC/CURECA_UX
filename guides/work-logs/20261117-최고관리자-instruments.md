@@ -197,15 +197,112 @@ started: 2026-11-17
 
 ## 설계
 
+- 그릴 곳 (요청자 답 R039 2026-11-17 16:48 「추천대로: 새 CID 섹션 · 이번에 MD 7개 + Overview T·L」): 작업 페이지(Instrument Ⓛ / Ⓣ _re)의 기존 작업방 그림은 그대로 두고, 그 아래 빈 곳에 메뉴 단위 표시 + CID 섹션으로 새로 그림. 이번 요청은 화면 MD 7개와 Overview T · L 한 쌍, 나머지는 다음 요청
+
+### 화면별 요건
+| 화면 (CID) | 케이스 | 요건 번호 |
+| --- | --- | --- |
+| TI-INS-01-T | 3 | 1 (1-1 · 1-2 · 1-3) |
+| LI-INS-01-T | 3 | 1 (1-1 · 1-2) |
+| TI-INS-02-T | 3 | 1 (1-1 · 1-2) |
+| LI-INS-02-T | 3 | 1 (1-1 · 1-2) |
+| TI-INS-02-01-P | 3 | 1 (1-1 · 1-2) |
+| LI-INS-02-01-P | 3 | 1 (1-1 · 1-2) |
+| LI-INS-01-P | 3 | 1 (1-1 · 1-2) |
+
+### 그린 것
+| T · L 한 쌍 | 섹션 | 기획 프레임 | 상태 · 케이스 프레임 |
+| --- | --- | --- | --- |
+| Overview Tab (TI-INS-01-T · LI-INS-01-T) | [TI-INS-01-T](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=2807-45236) · [LI-INS-01-T](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=2807-45744) | 2807:45237 · 2807:45745 (2252 × 1332 · 2252 × 1394) | 그림 끝 (2026-11-17, R039). 케이스 없음 |
+| All Tab (TI-INS-02-T · LI-INS-02-T) | | | 화면 MD만 (다음 요청) |
+| Management Popup (TI-INS-02-01-P · LI-INS-02-01-P) | | | 화면 MD만 (다음 요청) |
+| Door Control Popup (LI-INS-01-P) | | | 화면 MD만 (다음 요청) |
+
+- 메뉴 단위 표시: T-IOS 줄 시스템 구분 `T-IOS - 2.1` (2807:45232) · 기획 진행 표시 `SB-Update : 2026.11.17 (작업중)` (2807:45234), L-IOS 줄 (2807:45740 · 2807:45742). 너비는 지금 섹션 줄(2877)에 맞춤 — 섹션을 더하면 다시 맞춤
+- 업데이트 메모: 기존 작업방 메모를 그대로 복제해 옮김 (T `v2.1.06 update`, L `v2.1.17 update`)
+
+### 컴포넌트 없이 그린 요소
+<!-- 5단계 완료 때 Common UX 후보 목록으로 올라가는 표. 요소 이름 뒤 괄호에 종류를 적습니다(예: 새로고침 (아이콘 버튼)). -->
+| 요소 이름 (종류) | 하는 일 | 쓴 곳 (CID · 디스크립션 번호) | 어디서 (후보 ID / 신규로 만듦 / 기존 화면에서 따옴) | Figma 링크 |
+| --- | --- | --- | --- | --- |
+| Module 카드 · 장비 이미지 · Module Status 표 (기존 화면 그대로) | Module Type별 현황 요약 | TI-INS-01-T · LI-INS-01-T 3 ~ 3-6 | 기존 화면에서 따옴 (기획 프레임을 복제) | [3249-111508](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3249-111508) · [10069-367211](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=10069-367211) |
+
+### 근거로 풀린 것
+| 질문 | 푼 근거 |
+| --- | --- |
+| LI-INS-01-P R10 (자동 잠금 폐지) · R12 (Confirm_031) | DS-0004 · DS-0005 `결정` (2026-11-17) |
+| 화면 정보 Ver · Date · 작성자 (L 화면 MD 머리말은 2.1.06 · 서보경) | 기존 기획 프레임 패널 값 (LI-INS-01-T · LI-INS-02-T 2.1.17 · 2026.11.13 · 이상헌, LI-INS-01-P 2.1.13 · 2026.11.13 · 이상헌) |
+
+### 찾은 것
+- 기존 T 화면(TI-INS-01-T)은 L 화면을 복제한 듯 번호 표시가 디스크립션과 다름: Door Status Info 아이콘에 5(범례 5와 겹침), Event 줄에 설명 없는 6 → 설명 없는 6 지우고 Door Status 툴팁을 6으로 (C9), 툴팁 설명은 질문 (Q1)
+- LI-INS-01-T 3-5에도 TI와 같은 "우측의 Instrument Detail Info page 참고"가 있으나 고른 반영 대기가 없어 그대로 둠 → 반영 대기 R06 `대기`(점검 발견)로 남김
+- LI-INS-01-P 케이스 프레임에 Case 번호가 없음 → 기존 원본 순서대로 Case 1 ~ 6을 붙여 화면 MD 케이스 표에 옮김 (규칙에 없어 판단한 곳)
+- LI-INS-01-P [Lock] 안내 문구가 세 가지, Door Open일 때 [Lock] 안내 팝업이 디스크립션(Confirm_031)과 케이스 프레임(Alert_048 "The door is open. Close the door, then press Lock again.")이 다름 → Q3 · Q4
+- LI-INS-02-01-P 케이스 「모듈에 Device Unit이 없는 Case」에 번호가 없어 Case 3을 붙임 (규칙에 없어 판단한 곳)
+- 등록되지 않은 Module Type Tab의 Alert_004는 기존 원본에 케이스 화면이 없어 그리지 않음 (디스크립션에만)
+- 패널 글꼴은 SB Description 컴포넌트 그대로(Inter)
+
+### 용어 치환
+| 원래 표현 | 표준어 | 위치 |
+| --- | --- | --- |
+| Cureca | CURECA | TI-INS-01-T · LI-INS-01-T 0 |
+| Dignosctics | Diagnostics | TI-INS-01-T · LI-INS-01-T 2 (화면 글자) |
+| Enablde | Enabled | TI-INS-01-T · LI-INS-01-T 3-2 (화면 글자) |
+| Unconnected | Disconnected | TI-INS-02-T · LI-INS-02-T 1 (화면 MD) |
+| Waste Status | Waste Bin/Bottle Status | TI-INS-02-T · LI-INS-02-T 6 (화면 MD) |
+| Account Type / Account type | User Type | TI/LI-INS-02-T 4, TI/LI-INS-02-01-P 2 · 케이스 (화면 MD) |
+| T-IO S | T-IOS | TI-INS-02-T · LI-INS-02-T 4 (화면 MD) |
+| Cancle, Datail, Ruuning, Lcok | Cancel, Detail, Running, Lock | TI/LI-INS-02-01-P, LI-INS-01-P (화면 MD) |
+
 ## 질문 대기
 
 | 번호 (Q) | 질문 | 관련된 곳 (CID · 디스크립션 번호) | 논의 대상 | T · L 같음 | 풀린 날 · 어떻게 |
 | --- | --- | --- | --- | --- | --- |
+| Q1 | T-IOS Door Status 툴팁 문구 (기존 T 디스크립션에 없음. L-IOS 문구를 따랐으나 Unlock / Lock 기능 안내가 T-IOS에 맞는지) | TI-INS-01-T 6 | | T만 | |
+| Q2 | [Door Control] 버튼 활성화 조건 (기존 디스크립션은 COMM-3-a만, 정책서는 Popup 안 [Unlock] 조건만 정함) | LI-INS-01-T 6 | | L만 | |
+| Q3 | [Lock] 안내 문구 하나 고르기 (Close the door, then press Lock to lock it. / Close the door and press the 'Lock' button to resume the module / Close the door and press Lock. The module will resume once locked.) | LI-INS-01-P 2-6 | | L만 | |
+| Q4 | Door가 Open일 때 [Lock] 안내 팝업 (디스크립션 · DS-0005는 Confirm_031 "Please close the door.", 케이스 프레임은 Alert_048 "The door is open. Close the door, then press Lock again.") | LI-INS-01-P 2-5, LI-INS-02-T 3-1 | DS-0005 | L만 | |
+| Q5 | User Type이 Admin · User일 때 [Save] · Radio 버튼 모습 (숨김 / Disabled, 정책은 "조회만"만 정함) | TI-INS-02-01-P 3 | | T만 | |
 
 ## 변경 확인
 
 | 번호 (C) | 기존 화면 | 바꿔 그린 것 | 관련된 곳 (CID · 디스크립션 번호) | 근거 | T · L 같음 | 업데이트 메모 (O / -) | 확인한 날 · 답 (맞음 / 되돌림) |
 | --- | --- | --- | --- | --- | --- | --- | --- |
+| C1 | Cureca 장비의 현황 | 표기 수정 (Cureca → CURECA) | TI-INS-01-T 0, LI-INS-01-T 0 | TI R02 · LI R01 | 같음 | - | |
+| C2 | Alert_L_004 팝업 노출 | 알럿 ID 수정 (Alert_L_004 → Alert_004, 문구 함께 적음) | TI-INS-01-T 1 | TI R01, DS-0005 | T만 | O | |
+| C3 | Total / In Use / Not in Use | 표출 항목을 화면 표기대로 (Enabled n · Total n (Disabled n)) | TI-INS-01-T 3-2, LI-INS-01-T 3-2 | TI R04 · LI R02, POL-EQP-009 | 같음 | - | |
+| C4 | Dignosctics, Enablde | 표기 수정 (Dignosctics → Diagnostics, Enablde → Enabled) | TI-INS-01-T 2 · 3-2, LI-INS-01-T 2 · 3-2 | TI R05 · LI R03 | 같음 | O | |
+| C5 | 자세한 상태값은 우측의 Instrument Detail Info page 참고 | 상태값 · Door 2개 Module 표시를 풀어 씀 | TI-INS-01-T 3-5 | TI R06, POL-EQP-001 | T만 | - | |
+| C6 | 패널 CID TI-INS-02-T | 패널 CID 수정 (TI-INS-02-T → TI-INS-01-T) | TI-INS-01-T 0 | TI R03 | T만 | - | |
+| C7 | 기능 활성화 조건 COMM-3-a, Door Control 팝업에서 Unlock · Lock 가능 | 동작을 Door Control 기준으로 정리 (Popup 호출, Door별 [Unlock] · [Lock], 자동 잠금 없음) | LI-INS-01-T 6 | LI R04, POL-EQP-008 · DS-0004 | L만 | - | |
+| C8 | 디스크립션 "Unlock 버튼 (L-IOS Only)" / 화면 "Door Control" | 버튼 이름 통일 (Unlock 버튼 → [Door Control] 버튼) | LI-INS-01-T 6 | LI R05 | L만 | - | |
+| C9 | 디스크립션 없는 번호 표시 6, Door Status Info 아이콘 번호 5(범례 5와 겹침) | 번호 표시 정리 (설명 없는 6 지움, Door Status 툴팁 5 → 6) | TI-INS-01-T 0 | 기존 화면 번호 표시가 디스크립션과 다름 | T만 | - | |
+| C10 | Connected / Unconnected | 상태값 수정 (Unconnected → Disconnected) | TI-INS-02-T 1, LI-INS-02-T 1 | R01 | 같음 | O | |
+| C11 | STAT Storage (Upper) · (Lower) | 표기 수정 (→ STAT Storage) | TI-INS-02-T 5, LI-INS-02-T 5 | R03 | 같음 | O | |
+| C12 | Tip · Film Waste Bin (Upper/Lower) | 표기 수정 (→ Waste Bin (Upper), Waste Bin (Lower)) | TI-INS-02-T 6, LI-INS-02-T 6 | R04 | 같음 | O | |
+| C13 | Sample Storage(2), Liquid Waste Bottle(Upper) | 표기 수정 (이름 (번호) 띄어쓰기) | TI-INS-02-T 1 · 6, LI-INS-02-T 1 · 6 | R05 | 같음 | O | |
+| C14 | Waste Status | 표기 수정 (→ Waste Bin/Bottle Status) | TI-INS-02-T 6, LI-INS-02-T 6 | R06 | 같음 | O | |
+| C15 | T-IO S, Account type | 표기 수정 (→ T-IOS, User Type) | TI-INS-02-T 4, LI-INS-02-T 4 | R09 | 같음 | - | |
+| C16 | hh:dd:ss(시:분:초) | 표기 수정 (→ hh:mm:ss) | TI-INS-02-T 7, LI-INS-02-T 7 | TI R11 · LI R10 | 같음 | O | |
+| C17 | [Unlock] · [Lock] 문장 끊김 | 동작을 Door Control 기준으로 정리 (Confirm_008, Paused, 자동 잠금 없음, Confirm_031) | LI-INS-02-T 3 · 3-1 | LI R08, DS-0004 · DS-0005 | L만 | - | |
+| C18 | 취소선 2-1 · 2-2 옛 조건 · 4-1 · 4-2 | 취소선 항목 4개 지움 | TI-INS-02-T 0 | 기존 화면 취소선 | T만 | - | |
+| C19 | 취소선 2-1 · 4-1 | 취소선 항목 2개 지움 | LI-INS-02-T 0 | 기존 화면 취소선 | L만 | - | |
+| C20 | Account Type의 Sevice일 경우만 노출 | 표기 수정 (→ User Type, Service) | TI-INS-02-01-P 2, LI-INS-02-01-P 2 | R01 | 같음 | - | |
+| C21 | [Cancle], Datail | 표기 수정 (→ Cancel, Detail) | TI-INS-02-01-P 0 · 3-1, LI-INS-02-01-P 0 | TI R02 · LI R04 | 같음 (L은 Detail만) | O | |
+| C22 | Enabled 변경 권한 정의 없음 | Enabled 변경은 Service만, Admin · User는 조회만 | TI-INS-02-01-P 0 · 3 | R03, POL-EQP-009 | T만 | O | |
+| C23 | CURECA 구동 상태값이 Ready 및 not initialized | 장비 통합 상태 · 장비 모듈 상태가 Ready 또는 Not Initialized | TI-INS-02-01-P 3 | R04, POL-EQP-009 | T만 | O | |
+| C24 | Device Unit 설정 대상 정의 없음 | 같은 Device Unit이 2대 이상일 때만 Device Unit별 설정 | TI-INS-02-01-P 1-3 | R05, POL-EQP-009 | T만 | O | |
+| C25 | 표 헤더 Enable, Radio Enable / Disable | 표기 수정 (→ Enabled, Disabled) | TI-INS-02-01-P 1 | R08 | T만 | O | |
+| C26 | 조회 전용임이 분명하지 않음 | 모든 User Type이 조회만 가능 명시 | LI-INS-02-01-P 0 | R02, POL-EQP-009 | L만 | - | |
+| C27 | [Unlock all doors] 사용 가능 "Ready, Paused, Error" (케이스 메모) | 활성 조건에 Not Initialized 포함 | LI-INS-01-P 3 | R01, POL-EQP-008 | L만 | O | |
+| C29 | Cannot unlock while the module is running. / … system is running. | 문구 통일 (→ Cannot unlock while the system is running.) | LI-INS-01-P 2-7 | R03 | L만 | O | |
+| C30 | Ruuning, Lcok | 표기 수정 (→ Running, Lock) | LI-INS-01-P 0 · 2-1 | R05 | L만 | - | |
+| C31 | 자동 잠금 표현 혼재, Run Start 자동 잠금 없음 | 자동 잠금 없음 · [Lock]으로 잠금 · Run Start 때 Unlocked Door 자동 잠금 | LI-INS-01-P 0 · 2-5 | R06, POL-EQP-008 · DS-0004 | L만 | O | |
+| C32 | Unlock 1개라도 해당 되면 Paused | 문장 정리 (장비 통합 상태와 관계없이, Door가 여러 개면 하나라도) | LI-INS-01-P 0 · 3 | R07, POL-EQP-004 | L만 | - | |
+| C33 | 즉시 가능 · 불가 조건이 장비 모듈 상태 기준 | 장비 통합 상태별 허용 · 조건부 허용 Module 기준으로 통일 | LI-INS-01-P 2-5 | R08, POL-EQP-008 | L만 | O | |
+| C34 | 취소선 "기존: Module 상태값에 따른 Door Lock해제" | 취소선 항목 1개 지움 | LI-INS-01-P 0 | 기존 화면 취소선 | L만 | - | |
+
+- C28은 쓰지 않음 (번호를 비워 둠)
 
 ## 의견
 
@@ -216,6 +313,7 @@ started: 2026-11-17
 | 날짜 | 단계 | 확인한 것 | 요청자 답 |
 | --- | --- | --- | --- |
 | 2026-11-17 | 1단계 | 요건 목록 · 대상 화면 · 고칠 내용 · 반영 대기 묶음 (Workbench R037 질문: 1 고칠 내용 = 반영 대기 묶음 1 · 2 · 3, 2 TI-TMG-01 뺌, 3 TI-INS-02-02-P 손대지 않음, 4 Design-Update = 기획 프레임만 고침, 5 3단계 끝 관문 뒤 4단계를 다시 물음) | 추천대로 진행 (2026-11-17 16:28, 최고관리자) |
+| 2026-11-17 | 3단계 | 그릴 곳 · 한 요청에 몇 화면씩 (Workbench R039 질문) | 추천대로: 새 CID 섹션 · 이번에 MD 7개 + Overview T·L (2026-11-17 16:48, 최고관리자) |
 | 2026-11-17 | 2단계 | 근거 확인 (Workbench R038 질문: 1 정책 수정 범위 DS-0004 · DS-0005, 4 TI-INS-02-01-P User Type 케이스 화면, 5 [Lock] 버튼 이름 용어집, 확인할 것 5 남은 `대기 (확인 필요)` 3건, 확인할 것 8 `대기` 3건) | 추천대로 진행 (2026-11-17 16:41, 최고관리자): 1 DS-0004 A안 결정, 2 DS-0005 결정, 3(질문 4) TI-INS-02-01-P User Type 케이스 화면 그리지 않음(디스크립션에만), 4(질문 5) [Lock] 용어집에 올림, 5 확인할 것 5 이번엔 안 함, 6 TI-INS-02-T R11 · LI-INS-02-T R10 이번에 반영 · LI-INS-01-P R11 Ver 표기는 4단계 UX 확정 때 |
 
 ## 이 작업의 결정 (5단계에서 한꺼번에 반영)
