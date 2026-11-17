@@ -163,7 +163,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=28
 
 | 번호 (C) | 디스크립션 번호 | 기존 화면 | 바꿔 그린 것 | 근거 (정책 ID · 반영 대기 ID · 이유) | 업데이트 메모 (O / -) | 확인한 날 · 답 (맞음 / 되돌림) |
 | --- | --- | --- | --- | --- | --- | --- |
-| C1 | 0 | Cureca 장비의 현황 | 표기 수정 (Cureca → CURECA) | R01, `glossary/terms.csv` | - | |
+| C1 | 0 | Cureca 장비의 현황 | 표기 수정 (Cureca → CURECA) | R01, `glossary/terms.csv` | - | 맞음 (2026-11-17) |
 | C3 | 3-2 | Total / In Use / Not in Use | 표출 항목을 화면 표기대로 (Enabled n · Total n (Disabled n)) | R02, POL-EQP-009 | - | |
 | C4 | 2, 3-2 | Dignosctics, Enablde | 표기 수정 (Dignosctics → Diagnostics, Enablde → Enabled) | R03, 오타 | O | |
 | C7 | 6 | 기능 활성화 조건 COMM-3-a, Door Control 팝업에서 Unlock · Lock 가능 | 동작을 Door Control 기준으로 정리 (Popup 호출, Door별 [Unlock] · [Lock], 자동 잠금 없음) | R04, POL-EQP-008 · DS-0004 | - | |

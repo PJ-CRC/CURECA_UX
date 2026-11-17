@@ -157,7 +157,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=28
 
 | 번호 (C) | 디스크립션 번호 | 기존 화면 | 바꿔 그린 것 | 근거 (정책 ID · 반영 대기 ID · 이유) | 업데이트 메모 (O / -) | 확인한 날 · 답 (맞음 / 되돌림) |
 | --- | --- | --- | --- | --- | --- | --- |
-| C1 | 0 | Cureca 장비의 현황 | 표기 수정 (Cureca → CURECA) | R02, `glossary/terms.csv` | - | |
+| C1 | 0 | Cureca 장비의 현황 | 표기 수정 (Cureca → CURECA) | R02, `glossary/terms.csv` | - | 맞음 (2026-11-17) |
 | C2 | 1 | Alert_L_004 팝업 노출 | 알럿 ID 수정 (Alert_L_004 → Alert_004, 문구 함께 적음) | R01, `policy/alert-catalog.csv` | O | |
 | C3 | 3-2 | Total / In Use / Not in Use | 표출 항목을 화면 표기대로 (Enabled n · Total n (Disabled n)) | R04, POL-EQP-009 | - | |
 | C4 | 2, 3-2 | Dignosctics, Enablde | 표기 수정 (Dignosctics → Diagnostics, Enablde → Enabled) | R05, 오타 | O | |

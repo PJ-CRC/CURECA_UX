@@ -274,7 +274,7 @@ started: 2026-11-17
 
 | 번호 (C) | 기존 화면 | 바꿔 그린 것 | 관련된 곳 (CID · 디스크립션 번호) | 근거 | T · L 같음 | 업데이트 메모 (O / -) | 확인한 날 · 답 (맞음 / 되돌림) |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| C1 | Cureca 장비의 현황 | 표기 수정 (Cureca → CURECA) | TI-INS-01-T 0, LI-INS-01-T 0 | TI R02 · LI R01 | 같음 | - | |
+| C1 | Cureca 장비의 현황 | 표기 수정 (Cureca → CURECA) | TI-INS-01-T 0, LI-INS-01-T 0 | TI R02 · LI R01 | 같음 | - | 맞음 (2026-11-17) |
 | C2 | Alert_L_004 팝업 노출 | 알럿 ID 수정 (Alert_L_004 → Alert_004, 문구 함께 적음) | TI-INS-01-T 1 | TI R01, DS-0005 | T만 | O | |
 | C3 | Total / In Use / Not in Use | 표출 항목을 화면 표기대로 (Enabled n · Total n (Disabled n)) | TI-INS-01-T 3-2, LI-INS-01-T 3-2 | TI R04 · LI R02, POL-EQP-009 | 같음 | - | |
 | C4 | Dignosctics, Enablde | 표기 수정 (Dignosctics → Diagnostics, Enablde → Enabled) | TI-INS-01-T 2 · 3-2, LI-INS-01-T 2 · 3-2 | TI R05 · LI R03 | 같음 | O | |
