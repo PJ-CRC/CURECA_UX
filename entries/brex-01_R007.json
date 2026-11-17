@@ -2,8 +2,8 @@
   "id": "brex-01_R007",
   "kind": "request",
   "team": "cureca",
-  "status": "진행 중",
-  "at": "2026-11-17T18:04:45+09:00",
+  "status": "보류",
+  "at": "2026-11-17T18:05:20+09:00",
   "createdAt": "2026-11-17T17:47:23+09:00",
   "by": "서보경",
   "doneBy": "Claude",
@@ -17,12 +17,23 @@
   "type": "요청",
   "layout": "",
   "text": "instrument 작업 이어서 해줘",
-  "note": "케이스 3 · 3단계 · 20261117-최고관리자-instruments\n작업 기록 3단계(All Tab → Management Popup → Door Control Popup)를 이어 그리는 중입니다.",
+  "note": "이 파일에 UX가이드가 적용돼 있지 않아 3단계 그리기를 시작하지 않았습니다.\n- 이어 갈 작업 기록: 20261117-최고관리자-instruments (케이스 3 · 3단계, Overview T · L 한 쌍까지 그림). 다음은 All Tab → Management Popup → Door Control Popup\n- 작업 기록의 작업 기준(basis_start 16:30)은 Common UX 가이드(UX가이드_Common-UX-가이드)인데, 지금 UX AI TEST 파일의 적용 문서에는 UX가이드가 없습니다(작업규칙 · 정책서 · 기준데이터 · 화면 정의서만 있음)\n- 참고: 작업 기록 요청자는 최고관리자, 이번 요청은 서보경입니다. 같은 Instrument 작업으로 보고 이어 가려 합니다\n작업 기준: basis 2026-11-17 18:05 · 작업규칙 CURECA 작업규칙 (rules) · 정책서 (policy) · UX가이드 없음 · 기준데이터 (glossary) · 화면 정의서 (screens)",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "UX 문서에서 이 파일에 Common UX 가이드를 적용한 뒤 이어서 진행할까요?",
+    "options": [
+      {
+        "label": "적용했으니 이어서 진행"
+      },
+      {
+        "label": "UX가이드 없이 진행"
+      }
+    ],
+    "free": true
+  },
   "replies": []
 }
