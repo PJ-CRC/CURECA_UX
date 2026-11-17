@@ -264,7 +264,7 @@ started: 2026-11-17
 
 | 번호 (Q) | 질문 | 관련된 곳 (CID · 디스크립션 번호) | 논의 대상 | T · L 같음 | 풀린 날 · 어떻게 |
 | --- | --- | --- | --- | --- | --- |
-| Q1 | T-IOS Door Status 툴팁 문구 (기존 T 디스크립션에 없음. L-IOS 문구를 따랐으나 Unlock / Lock 기능 안내가 T-IOS에 맞는지) | TI-INS-01-T 6 | | T만 | |
+| Q1 | T-IOS Door Status 툴팁 문구 (기존 T 디스크립션에 없음. L-IOS 문구를 따랐으나 Unlock / Lock 기능 안내가 T-IOS에 맞는지) | TI-INS-01-T 6 | | T만 | 2026-11-17 · 요청자 답: Lock 내용을 빼고 정리 → "Shows door open/close status" (C36) |
 | Q2 | [Door Control] 버튼 활성화 조건 (기존 디스크립션은 COMM-3-a만, 정책서는 Popup 안 [Unlock] 조건만 정함) | LI-INS-01-T 6 | | L만 | |
 | Q3 | [Lock] 안내 문구 하나 고르기 (Close the door, then press Lock to lock it. / Close the door and press the 'Lock' button to resume the module / Close the door and press Lock. The module will resume once locked.) | LI-INS-01-P 2-6 | | L만 | |
 | Q4 | Door가 Open일 때 [Lock] 안내 팝업 (디스크립션 · DS-0005는 Confirm_031 "Please close the door.", 케이스 프레임은 Alert_048 "The door is open. Close the door, then press Lock again.") | LI-INS-01-P 2-5, LI-INS-02-T 3-1 | DS-0005 | L만 | |
@@ -308,6 +308,7 @@ started: 2026-11-17
 | C33 | 즉시 가능 · 불가 조건이 장비 모듈 상태 기준 | 장비 통합 상태별 허용 · 조건부 허용 Module 기준으로 통일 | LI-INS-01-P 2-5 | R08, POL-EQP-008 | L만 | O | |
 | C34 | 취소선 "기존: Module 상태값에 따른 Door Lock해제" | 취소선 항목 1개 지움 | LI-INS-01-P 0 | 기존 화면 취소선 | L만 | - | |
 | C35 | 디스크립션 없는 번호 표시 1-3 | 번호 표시 1-3 지움 | LI-INS-02-01-P 0 | 기존 화면 번호 표시가 디스크립션과 다름 | L만 | - | |
+| C36 | (기존 T 디스크립션에 툴팁 문구 없음, L-IOS 문구를 따라 그림) | 툴팁 문구에서 Unlock / Lock 안내를 뺌 (→ Shows door open/close status) | TI-INS-01-T 6 | Q1의 답 | T만 | O | 맞음 (2026-11-17) |
 
 - C28은 쓰지 않음 (번호를 비워 둠)
 
@@ -325,6 +326,7 @@ started: 2026-11-17
 | 2026-11-17 | 3단계 | 작업 파일에 UX가이드가 적용돼 있지 않아 적용 뒤 이어 갈지 (Workbench R007 질문, BREX_01) | 적용했으니 이어서 진행 (2026-11-17 18:05, 서보경. Common UX 가이드 적용 18:06) |
 | 2026-11-17 | 3단계 | 3단계 끝 관문 뒤 4단계를 이어 갈지 (Workbench R007 질문) | 4단계 초안대로 진행 (UX 확정까지) (2026-11-17 18:18, 서보경) |
 | 2026-11-17 | 4단계 | 절차 1 사용자 확인 목록: 질문 대기 Q1 ~ Q5, 변경 확인 C1 ~ C35 (C28 비움) (Workbench R007 질문) | 하나씩 답하기 (2026-11-17 18:29, 서보경) → Q1부터 하나씩 여쭘 |
+| 2026-11-17 | 4단계 | Q1 T-IOS Door Status 툴팁 문구 (Workbench R007 질문) | T-IOS 안내 문구는 Lock 상태를 제외한 내용으로 정리 (2026-11-17 18:33, 서보경) → 화면 MD · Figma 고침, 화면 라벨 · Figma의 사용자 확인 목록에서 Q1 지움, C36 (맞음) |
 
 ## 이 작업의 결정 (5단계에서 한꺼번에 반영)
 | 논의 대상 | 내용 | 후속 확인 필요 (누구 · 무엇, 없으면 비움) | 5단계 반영 |
