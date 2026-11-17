@@ -62,6 +62,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=28
 
 1-3  Radio 버튼
  ● 기능 : Module 또는 Device Unit의 사용 여부(Enabled / Disabled) 선택
+ ● 활성화 조건 : User Type이 Service일 때 (Admin · User이면 Disabled)
  ● 노출 조건
    - Module : 같은 Module이 2대 이상일 때 Module마다 설정
    - Device Unit : 한 Module 안에 같은 Device Unit이 2대 이상일 때 Device Unit마다 설정 (예: CFX96, Sealer, Sample Pretreatment 2대)
@@ -82,7 +83,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=28
  ● 정책 참고 : POL-EQP-010
 
 3  [Save] 버튼
- ● 활성화 조건 : User Type이 Service일 때
+ ● 활성화 조건 : User Type이 Service일 때 (Admin · User이면 Disabled)
  ● 동작
    - 장비 통합 상태가 Ready 또는 Not Initialized이고 장비 모듈 상태가 Ready 또는 Not Initialized일 때만 저장 가능
    - 장비 모듈 상태가 Running이면 Alert_013 노출
@@ -144,12 +145,13 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=28
 | C23 | 3 | 수정 가능 상태 "CURECA 구동 상태값이 Ready 및 not initialized" | 장비 통합 상태 · 장비 모듈 상태가 Ready 또는 Not Initialized일 때 | R04, POL-EQP-009 | O | |
 | C24 | 1-3 | Device Unit 설정 대상 정의 없음 | 같은 Device Unit이 2대 이상일 때만 Device Unit별 설정 | R05, POL-EQP-009 | O | |
 | C25 | 1 | 표 헤더 Enable, Radio Enable / Disable | 표기 수정 (Enable → Enabled, Disable → Disabled) | R08 | O | |
+| C39 | 1-3, 3 | Admin · User일 때 [Save] · Radio 모습 정의 없음 | User Type이 Admin · User이면 [Save] · Radio 버튼 Disabled | Q5의 답, POL-EQP-009 | O | 맞음 (2026-11-17) |
 
 ## 질문 대기
 
 | 번호 (Q) | 디스크립션 번호 | 질문 | 논의 대상 (DS) | 풀린 날 · 어떻게 |
 | --- | --- | --- | --- | --- |
-| Q5 | 3 | User Type이 Admin · User일 때 [Save] · Radio 버튼 모습 (숨김 / Disabled, 정책은 "조회만"만 정함) | | |
+| Q5 | 3 | User Type이 Admin · User일 때 [Save] · Radio 버튼 모습 (숨김 / Disabled, 정책은 "조회만"만 정함) | | 2026-11-17 · 요청자 답: Service만 변경할 수 있어 Admin · User이면 [Save] · Radio 버튼 Disabled (C39) |
 
 ## 반영 대기 목록
 
@@ -171,3 +173,4 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=28
 | 2.1.01 | 2026-08-07 | Enable setting Popup을 Management Popup으로 변경 및 화면설계 변경. Module 및 Device에 Serial Number 추가. Device Enable 정책 변경(관리 대상 추가 및 대수 관련 정책 변경) | 서보경 | Figma 버전 메모 |
 | | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |
 | | 2026-11-17 | 화면 MD를 tobe로 새로 씀 (기존 작업방 Instruments 2.1 2차 [3249-112456](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3249-112456) · Ver 2.1.01). 반영 대기 R01 ~ R05 · R08 반영(작업 중), C20 ~ C25 · Q5. User Type 케이스 화면은 그리지 않고 디스크립션에만(2단계 답). 기존 원본의 「모듈에 Device Unit이 없는 Case」를 Case 3으로 옮김(R007에서 케이스 표 · 1 참고 줄에 더함). 작업방에 새로 그림 (섹션 [2823-26013](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=2823-26013), Figma는 R041 · R007에서 그림) | Claude (요청 최고관리자) | 20261117-최고관리자-instruments |
+| | 2026-11-17 | 4단계: Q5 답으로 1-3 Radio · 3 [Save]에 Admin · User이면 Disabled를 더함 (C39) | Claude (요청 서보경) | 20261117-최고관리자-instruments |
