@@ -71,7 +71,7 @@ Table/Filled Table Cell (26), Frame/Instrument_Status (19), Tag Status (18), Des
 - 상태값: Connected / Unconnected
 - Status: 모듈의 작동 상태 표시됨
 - 상세 정의는 Common UX 기준 따름
-- Enable → Enabled: 장비의 사용 여부 값 표기
+- ~~Enable~~ → Enabled: 장비의 사용 여부 값 표기
 - Enabled = ‘Y’ / Disabled = ‘N’
 - Run-time: 장비가 가동된 시간 기준으로 표기
 - 가동 시간 = 상태가 Running 중인 시간의 총합
@@ -184,6 +184,9 @@ Table/Filled Table Cell (26), Frame/Instrument_Status (19), Tag Status (18), Des
 
 - 선택된 장비의 Event 내역을 확인할 수 있는 영역
 - 발생 시간 기준 최신순으로 Status가 Open인 Event 최대 4건 표시
+- Date/Time 표기방법
+- 오늘 일 경우: hh:dd:ss(시:분:초)
+- 오늘 이전 일인 경우: mm-dd(월-일)
 
 #### 7-1. Event History More 버튼
 
