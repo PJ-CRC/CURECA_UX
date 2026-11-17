@@ -105,9 +105,9 @@ started: 2026-11-17
 
 | 묶음 (근거) | 화면 (CID) | 항목 ID | 반영 / 이번엔 안 함 |
 | --- | --- | --- | --- |
-| 1 표기 · 오타 · 용어 (`glossary/`) | LI-INS-01-P · LI-INS-01-T · LI-INS-02-01-P · LI-INS-02-T · TI-INS-01-T · TI-INS-02-01-P · TI-INS-02-T | LI-INS-01-P R02 · R03 · R05 / LI-INS-01-T R01 · R03 · R05 / LI-INS-02-01-P R01 · R04 / LI-INS-02-T R01 · R03 · R04 · R05 · R06 · R09 / TI-INS-01-T R02 · R03 · R05 / TI-INS-02-01-P R01 · R02 · R08 / TI-INS-02-T R01 · R03 · R04 · R05 · R06 · R09 | |
-| 2 정책 반영 (POL-EQP-001 · 004 · 008 · 009) | 같음 | LI-INS-01-P R01 · R06 · R07 · R08 / LI-INS-01-T R02 · R04 / LI-INS-02-01-P R02 / LI-INS-02-T R08 / TI-INS-01-T R04 · R06 / TI-INS-02-01-P R03 · R04 · R05 | |
-| 3 알럿 (`policy/alert-catalog.csv`) | TI-INS-01-T | R01 | |
+| 1 표기 · 오타 · 용어 (`glossary/`) | LI-INS-01-P · LI-INS-01-T · LI-INS-02-01-P · LI-INS-02-T · TI-INS-01-T · TI-INS-02-01-P · TI-INS-02-T | LI-INS-01-P R02 · R03 · R05 / LI-INS-01-T R01 · R03 · R05 / LI-INS-02-01-P R01 · R04 / LI-INS-02-T R01 · R03 · R04 · R05 · R06 · R09 / TI-INS-01-T R02 · R03 · R05 / TI-INS-02-01-P R01 · R02 · R08 / TI-INS-02-T R01 · R03 · R04 · R05 · R06 · R09 | 반영 (2026-11-17, 화면 MD `작업 중`) |
+| 2 정책 반영 (POL-EQP-001 · 004 · 008 · 009) | 같음 | LI-INS-01-P R01 · R06 · R07 · R08 / LI-INS-01-T R02 · R04 / LI-INS-02-01-P R02 / LI-INS-02-T R08 / TI-INS-01-T R04 · R06 / TI-INS-02-01-P R03 · R04 · R05 | 반영 (2026-11-17, 화면 MD `작업 중`. LI-INS-01-P R02 · R06은 확인할 것 6) |
+| 3 알럿 (`policy/alert-catalog.csv`) | TI-INS-01-T | R01 | 반영 (2026-11-17, 화면 MD `작업 중`) |
 
 (변경 전 · 변경 후는 각 화면 MD 반영 대기 목록 그대로)
 
