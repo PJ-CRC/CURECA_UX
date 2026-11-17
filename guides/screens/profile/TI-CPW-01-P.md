@@ -8,7 +8,7 @@ type: Popup
 version: 2.1.11
 date: 2026-10-08
 author: 정다예
-service_mode: []
+client_mode: []
 user_type: [Service, Admin, User]
 policies: []
 rules_version:
@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # TI-CPW-01-P Profile (General)
 
-> 기존 화면(작업방 Profile / Information 페이지, 2.1 2차 영역, Ver 2.1.11)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 Profile / Information 페이지, 2.1 2차 영역, Ver 2.1.11)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - T/L 차이: T-IOS에만 Event notifications(On/Off)가 있음
 - 관련 정책: POL-ACC-009, POL-EVT-003
@@ -123,3 +123,4 @@ figma_region: 2.1 2차
 | --- | --- | --- | --- | --- |
 | 2.1.01 | | X 버튼 → Cancel 버튼으로 변경 | 정다예 | Figma 버전 메모 |
 | 2.1.11 | 2026-10-08 | Event 알림 수신 설정 기능 추가 | 정다예 | Figma 버전 메모 |
+| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

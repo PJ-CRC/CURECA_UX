@@ -10,7 +10,7 @@ delivered_date:
 ---
 # Statistical Analysis
 
-- 2026-11-02: 작업방 Statistical Analysis 페이지의 2.1 2차 영역에서 기획 화면 17개를 옮김. T-IOS 전용 메뉴. 상태 칸은 아직 기록하지 않음
+- 2026-11-02: 기존 작업방 Statistical Analysis 페이지의 2.1 2차 영역에서 기획 화면 17개를 옮김. T-IOS 전용 메뉴. 상태 칸은 아직 기록하지 않음
 - 화면 구성: Test Analytics(Test Count, Test Ratio, Test TAT, Test Cost를 Key Metrics로 전환, 각각 Chart·Table), Instrument(Run-time Trend, Error Rate Trend Tab), Inventory(Usage & Cost Trend), Event(Event Trend), Test Forecasting. Instrument, Inventory, Event 화면은 Figma 경로가 "Statistical Analysis > Instrument / Inventory / Event"인데 IA에는 모두 Test Analytics 아래 Lv.3로 있음
 - IA CID 계층이 겹침: TI-STA-05는 Test Forecasting, TI-STA-05-01·05-02는 Instrument Run-time. Instrument·Inventory·Event 화면의 디스크립션이 "TI-STA-05_Skeleton"을 참조함
 - IA 화면 이름 일부가 한국어: TI-STA-07-01·07-02 "소모품 및 시약 사용량", TI-STA-08-01·08-02 "Event 통계" (화면 타이틀은 Usage & Cost Trend, Event Trend)

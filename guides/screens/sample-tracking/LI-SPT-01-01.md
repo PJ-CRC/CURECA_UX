@@ -8,7 +8,7 @@ type: Popup
 version: 2.1.11
 date: 2026-10-08
 author: 정다예
-service_mode: [Main Mode, Console Mode, TSS Mode]
+client_mode: [Main Mode, Console Mode, MS Mode]
 user_type: [Service, Admin, User]
 policies: []
 rules_version:
@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # LI-SPT-01-01 Samples Details
 
-> 기존 화면(작업방 Sample Tracking 페이지, 2.1 2차 영역, Ver 2.1.11)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 Sample Tracking 페이지, 2.1 2차 영역, Ver 2.1.11)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - T/L 차이: Sample Location의 항목 이름이 T-IOS는 Trolley Name, L-IOS는 Trolley ID (반영 대기 목록 1)
 - 관련 정책: POL-SMP-002
@@ -61,3 +61,4 @@ figma_region: 2.1 2차
 | --- | --- | --- | --- | --- |
 | 2.1.02 | | Sample Detail 화면 보완: 정보 그룹핑 기준 수정, Sample Location 정보 항목 추가, Protocol Info 정보 추가 | 정다예 | Figma 버전 메모 |
 | 2.1.11 | 2026-10-08 | 워딩 수정 (언어셋 반영): Tray Floor / Position → Tray Position | 정다예 | Figma 버전 메모 |
+| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

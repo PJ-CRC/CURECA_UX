@@ -8,7 +8,7 @@ type: Popup
 version: 2.1.03
 date: 2026-08-21
 author: 정다예
-service_mode: []
+client_mode: []
 user_type: [Service, Admin]
 policies: []
 rules_version:
@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # TI-STN-05-02-P Account Created
 
-> 기존 화면(작업방 Setting 페이지, 2.1 2차 영역, Ver 2.1.03)을 2026-11-02에 옮긴 것입니다. 같은 CID에 Ver 1.1 프레임(568:57953)도 있어 Ver 2.1.03 프레임을 옮겼습니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 Setting 페이지, 2.1 2차 영역, Ver 2.1.03)을 2026-11-02에 옮긴 것입니다. 같은 CID에 Ver 1.1 프레임(568:57953)도 있어 Ver 2.1.03 프레임을 옮겼습니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - 관련 정책: POL-ACC-001, POL-ACC-002, POL-ACC-005, POL-ACC-006 / 임시 정책 PV-0002
 - 다른 프레임: [TI-STN-05-02-P/Case](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=568-58762) (SMTP 미연동, 이메일 미입력, 메일 전송 실패)
@@ -67,3 +67,4 @@ figma_region: 2.1 2차
 | 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
 | --- | --- | --- | --- | --- |
 | 2.1.03 | 2026-08-21 | (버전 메모 없음) | 정다예 | Figma 화면 정보 |
+| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

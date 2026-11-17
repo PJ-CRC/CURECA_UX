@@ -8,7 +8,7 @@ type: Page
 version: 2.1.03
 date: 2026-08-21
 author: 서보경
-service_mode: [Main Mode, Console Mode, TSS Mode]
+client_mode: [Main Mode, Console Mode, MS Mode]
 user_type: [Service, Admin]
 policies: []
 rules_version:
@@ -20,10 +20,10 @@ figma_region: 2.1 1차
 ---
 # LI-STN-02 System Setting
 
-> 기존 화면(작업방 Setting 페이지, 2.1 1차 영역, Ver 2.1.03)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 Setting 페이지, 2.1 1차 영역, Ver 2.1.03)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - T/L 차이: TI-STN-02에 더해 Export / Import Location이 있음
-- Service Mode: View는 모든 Mode, 설정 변경은 Main Mode만 (`policy/service-mode-matrix.csv`)
+- L-IOS Client Mode: Main Mode, Console Mode, MS Mode 모두 조회와 설정 변경을 함 (`policy/client-mode-matrix.csv` System Setting)
 - 관련 정책: POL-ACC-008, Export / Import Location·Log Management는 SYS 정책
 
 - 취소선(Figma에서 제거된 항목): 4 Data Backup, 4-1 [Backup], 5 Restore from Backup, 5-1 [Restore]
@@ -98,3 +98,4 @@ figma_region: 2.1 1차
 | 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
 | --- | --- | --- | --- | --- |
 | 2.1.03 | 2026-08-21 | Data Backup and Restore 기능 제거 | 서보경 | Figma 버전 메모 |
+| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`). 노출 모드 값을 새 기능 표대로 고침 | 서보경 | DS-0001 |
