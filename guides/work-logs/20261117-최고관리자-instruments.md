@@ -221,6 +221,8 @@ started: 2026-11-17
 ## 이 작업의 결정 (5단계에서 한꺼번에 반영)
 | 논의 대상 | 내용 | 후속 확인 필요 (누구 · 무엇, 없으면 비움) | 5단계 반영 |
 | --- | --- | --- | --- |
+| DS-0004 | A안: Door 자동 잠금 없앰 · [Lock]으로 잠금 (POL-EQP-008 요약 · 규칙 3 · `alerts`, POL-EQP-004 규칙 7, `policy/equipment-states.md` 5절, POL-EQP-001 `cids`) | | |
+| DS-0005 | `policy/alert-catalog.csv` Confirm_031 더함 · Alert_004 사용 화면에 TI-INS-01-T | | |
 
 ## 이 작업이 남긴 것
 
