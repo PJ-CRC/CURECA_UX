@@ -101,7 +101,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=28
  ● [Lock]
    - Lock Status가 Unlocked일 때 노출, 늘 활성
    - 클릭 시 즉시 잠금 → Lock Status Locked, 버튼은 [Unlock]으로 바뀜
-   - Door가 Open이면 클릭 시 Confirm_031 노출 (Please close the door.), [OK] 클릭 시 닫힘, Door는 Unlocked 유지
+   - Door가 Open이면 클릭 시 Confirm_031 노출 (제목 : Please close the door. / 내용 : The door is open. Close the door, then press Lock again.), [OK] 클릭 시 닫힘, Door는 Unlocked 유지
    - Door를 닫아도 자동으로 잠기지 않음
  ● 정책 참고 : POL-EQP-004, POL-EQP-008
 
@@ -163,7 +163,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=28
 | 3 | Door, Status, Lock Status, Open, Closed, Locked, Unlocked | | | |
 | 3-1 | Unlock, Lock | | | |
 | 3-1 | Unlock the door? | | | |
-| 3-1 | Please close the door. | | | |
+| 3-1 | Please close the door., The door is open. Close the door, then press Lock again. | | 변경 (Please close the door. → 제목 Please close the door. + 내용 The door is open. Close the door, then press Lock again.) | |
 | 4 | Device, Unit, Connected, Status, Enabled | | | |
 | 5 | Storage, Unit, Docking Status, Storage Type, Current Temp, No item | | | |
 | 6 | Waste Bin/Bottle, Unit, Docking Status, Waste Bin/Bottle Status | | | |
@@ -197,6 +197,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=28
 | C16 | 7 | hh:dd:ss(시:분:초) | 표기 수정 (hh:dd:ss → hh:mm:ss) | R10, 오타 | O | |
 | C17 | 3, 3-1 | "Unlock을 클릭 시," · "클릭 시," 문장 끊김 | [Unlock] · [Lock] 동작을 Door Control 기준으로 정리 (Confirm_008, Paused, 자동 잠금 없음, Confirm_031) | R08, POL-EQP-008 · DS-0004 · DS-0005 | - | |
 | C19 | 0 | 취소선 2-1 Error Rate, 4-1 [Run-time Info] | 취소선 항목 2개 지움 (기존 디스크립션에서 이미 지운 기능) | 기존 화면 취소선 (R02 · R07 제외) | - | |
+| C38 | 3-1 | Confirm_031 "Please close the door." (제목만), 케이스 화면은 Alert_048 | Confirm_031 문구를 케이스 화면 그대로 (제목 Please close the door. + 내용 The door is open. Close the door, then press Lock again.) | Q4의 답, DS-0005 | O | 맞음 (2026-11-17) |
 
 ## 질문 대기
 
@@ -228,3 +229,4 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=28
 | | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |
 | 2.1.17 | 2026-11-13 | Door(3) · [Unlock] 클릭(3-1)에 Lock Status 값과 [Lock] 버튼 정의 추가. 문 열린 채 [Lock] → 문 닫기 안내 팝업(Confirm_031) | 이상헌 | Figma 버전 메모 v2.1.17 |
 | | 2026-11-17 | 화면 MD를 tobe로 새로 씀 (기존 작업방 Instruments 2.1 2차 [10069-367730](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=10069-367730) · Ver 2.1.17). 화면 정보 Ver · Date · 작성자를 기존 패널 값(2.1.17 · 2026.11.13 · 이상헌)으로 맞춤, 반영 대기 R01 · R03 ~ R06 · R08 ~ R10 반영(작업 중), 취소선 항목 지움, C10 ~ C17 · C19 · Q4. 작업방에 새로 그림 (섹션 [2816-25368](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=2816-25368), Figma는 R041 · R007에서 그림) | Claude (요청 최고관리자) | 20261117-최고관리자-instruments |
+| | 2026-11-17 | 4단계: Q4 답으로 3-1 Confirm_031 문구를 케이스 화면 그대로 (제목 + 내용) (C38) | Claude (요청 서보경) | 20261117-최고관리자-instruments, DS-0005 |

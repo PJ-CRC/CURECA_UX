@@ -89,7 +89,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=28
  ● [Lock]
    - Lock Status가 Unlocked일 때 노출, 늘 활성
    - 클릭 시 그 Door 즉시 잠금(Locked), 버튼은 [Unlock]으로 바뀜
-   - Door가 Open이면 클릭 시 Confirm_031 노출 (Please close the door.), [OK] 클릭 시 닫힘, Door는 Unlocked 유지
+   - Door가 Open이면 클릭 시 Confirm_031 노출 (제목 : Please close the door. / 내용 : The door is open. Close the door, then press Lock again.), [OK] 클릭 시 닫힘, Door는 Unlocked 유지
  ● 참고 : LI-INS-01-P/Case > Case 1, Case 2, Case 3, Case 5, Case 6
  ● 정책 참고 : POL-EQP-004, POL-EQP-008
 
@@ -136,7 +136,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=28
 | 2-2 | Door (Left), Door (Right), Door (Rear) | | | |
 | 2-3 | Open, Closed | | | |
 | 2-5 | Unlock, Lock | | | |
-| 2-5 | Please close the door. | | | |
+| 2-5 | Please close the door., The door is open. Close the door, then press Lock again. | | 변경 (Please close the door. → 제목 Please close the door. + 내용 The door is open. Close the door, then press Lock again.) | |
 | 2-5 | Finishing current task, then pausing. Once paused, the lock will be released and the door can be opened. | | | |
 | 2-5 | For safety, PCR Setup Module will also pause. | | | |
 | 2-6 | Close the door, then press Lock to lock it. | | | |
@@ -173,6 +173,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=28
 | C32 | 0, 3 | Unlock 1개라도 해당 되면 Module의 상태값은 Paused로 변경됨 | 문장 정리 (장비 통합 상태와 관계없이 잠금 해제 시 Paused, Door가 여러 개면 하나라도) | R07, POL-EQP-004 | - | |
 | C33 | 2-5 | 즉시 가능 · 불가 조건이 장비 모듈 상태(Ready, Error, Paused) 기준 | 장비 통합 상태별 허용 · 조건부 허용 Module 기준으로 통일 | R08, POL-EQP-008, `policy/equipment-states.md` 5절 | O | |
 | C34 | 0 | 취소선 "기존: Module 상태값에 따른 Door Lock해제를 할 수 있음." | 취소선 항목 1개 지움 (기존 디스크립션에서 이미 지운 내용) | 기존 화면 취소선 | - | |
+| C38 | 2-5 | Confirm_031 "Please close the door." (제목만), 케이스 화면은 Alert_048 | Confirm_031 문구를 케이스 화면 그대로 (제목 Please close the door. + 내용 The door is open. Close the door, then press Lock again.) | Q4의 답, DS-0005 | O | 맞음 (2026-11-17) |
 
 ## 질문 대기
 
@@ -207,3 +208,4 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=28
 | 2.1.13 | 2026-11-13 | Unlocked 상태 Door의 버튼을 “Unlocked”(Disabled) → [Lock]으로 변경, 하단 안내 문구 [Lock] 버튼 안내, 자동 잠금 폐지, 문 열린 채 [Lock] → 문 닫기 안내 팝업(Confirm_031) (버전 메모 v2.1.17) | 이상헌 | Figma 버전 메모 v2.1.17 |
 | | 2026-11-17 | 화면 MD를 tobe로 새로 씀 (기존 작업방 Instruments 2.1 2차 [10069-368536](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=10069-368536) · 패널 Ver 2.1.13). 화면 정보를 기존 패널 값(2.1.13 · 2026.11.13 · 이상헌)으로 맞춤, 반영 대기 R01 ~ R03 · R05 ~ R08 반영(작업 중, R02 · R06은 DS-0004 A안 기준 — R02는 Q3로), 취소선 항목 지움, 기존 원본 케이스 6개에 Case 번호를 붙여 옮김, C27 · C29 ~ C34 · Q3 · Q4. 작업방에 새로 그림 (섹션 [2826-26709](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=2826-26709), Figma는 R041 · R007에서 그림) | Claude (요청 최고관리자) | 20261117-최고관리자-instruments, DS-0004, DS-0005 |
 | | 2026-11-17 | 4단계: Q3 답으로 2-6 [Lock] 안내 문구를 ① Close the door, then press Lock to lock it.으로 확정 (화면 · 디스크립션 그대로) | Claude (요청 서보경) | 20261117-최고관리자-instruments |
+| | 2026-11-17 | 4단계: Q4 답으로 2-5 Confirm_031 문구를 케이스 화면 그대로 (제목 + 내용) (C38) | Claude (요청 서보경) | 20261117-최고관리자-instruments, DS-0005 |
