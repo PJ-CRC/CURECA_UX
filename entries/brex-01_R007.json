@@ -2,11 +2,11 @@
   "id": "brex-01_R007",
   "kind": "request",
   "team": "cureca",
-  "status": "대기",
-  "at": "2026-11-17T18:53:30+09:00",
+  "status": "보류",
+  "at": "2026-11-17T18:54:10+09:00",
   "createdAt": "2026-11-17T17:47:23+09:00",
   "by": "서보경",
-  "doneBy": "서보경",
+  "doneBy": "Claude",
   "pc": "BREX_01",
   "reqId": "R007",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,13 +17,24 @@
   "type": "요청",
   "layout": "",
   "text": "instrument 작업 이어서 해줘",
-  "note": "",
+  "note": "[4단계] 사용자 확인 목록 하나씩 — 4 / 39 (Q4 답 확인)\nQ3: [Lock] 안내 문구는 지금 본 화면 · 케이스 화면 7곳 · 디스크립션 모두 「Close the door, then press Lock to lock it.」입니다(다른 문구가 남은 곳 없음)\nQ4: 답대로 Confirm_031에 케이스 화면 문구를 다 적으려 합니다(DS-0005에는 제목만 옮겨져 있었음). 다만 본문 끝이 Q3 문구와 달라 한 곳만 여쭙니다\n- A: 제목 \"Please close the door.\" + 본문 \"The door is open. Close the door, then press Lock to lock it.\" (본문 안내를 Q3 문구로 맞춤)\n- B: 제목 \"Please close the door.\" + 본문 \"The door is open. Close the door, then press Lock again.\" (케이스 화면 그대로)\n고르시면 LI-INS-01-P 2-5 · LI-INS-02-T 3-1 디스크립션 · 알럿 표 · Case 6 팝업과 DS-0005 결정 내용을 함께 고칩니다\n남은 것: Q5, C1 ~ C35\n작업 기준: basis 2026-11-17 18:29 · 작업규칙 CURECA 작업규칙 (rules) @원본 · 정책서 (policy) @원본 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 (glossary) @원본 · 화면 정의서 (screens) @원본",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "Q4 Confirm_031 본문 끝을 어느 쪽으로 할까요?",
+    "options": [
+      {
+        "label": "A … press Lock to lock it. (Q3 문구)"
+      },
+      {
+        "label": "B … press Lock again. (케이스 화면 그대로)"
+      }
+    ],
+    "free": true
+  },
   "replies": [
     {
       "at": "2026-11-17T18:05:53+09:00",

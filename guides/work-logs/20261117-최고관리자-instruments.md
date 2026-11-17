@@ -330,6 +330,7 @@ started: 2026-11-17
 | 2026-11-17 | 4단계 | Q1 T-IOS Door Status 툴팁 문구 (Workbench R007 질문) | T-IOS 안내 문구는 Lock 상태를 제외한 내용으로 정리 (2026-11-17 18:33, 서보경) → 화면 MD · Figma 고침, 화면 라벨 · Figma의 사용자 확인 목록에서 Q1 지움, C36 (맞음) |
 | 2026-11-17 | 4단계 | Q2 [Door Control] 버튼 활성화 조건 (Workbench R007 질문) | Door가 없는 Module은 없음, 비활성화되는 경우 없이 늘 제공하는 버튼 (2026-11-17 18:37, 서보경) → 화면 MD · Figma 고침, Q2 지움, C37 (맞음) |
 | 2026-11-17 | 4단계 | Q3 [Lock] 안내 문구 (Workbench R007 질문) | ① Close the door, then press Lock to lock it. (2026-11-17 18:43, 서보경) → 화면 · 케이스 화면 · 디스크립션이 이미 이 문구라 그대로, Q3 지움 |
+| 2026-11-17 | 4단계 | Q4 Door가 Open일 때 [Lock] 팝업 (Workbench R007 질문) | "Q3은 Close the door, then press Lock to lock it.이 맞아. 이것으로 다시 변경해줘. Q4는 같은 것이라 케이스 화면 문구 그대로 다 적어도 무방, 아마 타이틀만 옮겨 놓은 것" (2026-11-17 18:53, 서보경) → 본문 끝(press Lock again / press Lock to lock it)을 다시 여쭘 |
 
 ## 이 작업의 결정 (5단계에서 한꺼번에 반영)
 | 논의 대상 | 내용 | 후속 확인 필요 (누구 · 무엇, 없으면 비움) | 5단계 반영 |
