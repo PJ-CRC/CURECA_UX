@@ -2,8 +2,8 @@
   "id": "brex-01_R007",
   "kind": "request",
   "team": "cureca",
-  "status": "진행 중",
-  "at": "2026-11-17T19:04:05+09:00",
+  "status": "보류",
+  "at": "2026-11-17T19:05:25+09:00",
   "createdAt": "2026-11-17T17:47:23+09:00",
   "by": "서보경",
   "doneBy": "Claude",
@@ -17,13 +17,27 @@
   "type": "요청",
   "layout": "",
   "text": "instrument 작업 이어서 해줘",
-  "note": "케이스 3 · 4단계 · 20261117-최고관리자-instruments\nQ5 답(Admin · User일 때 [Save] · Radio Disabled)을 화면 MD → Figma에 반영하는 중입니다.",
+  "note": "[4단계] 사용자 확인 목록 하나씩 — 6 / 39 (질문 대기 5건 모두 반영함, 이제 변경 확인)\nQ5 반영함: TI-INS-02-01-P 1-3 Radio · 3 [Save] 활성화 조건에 \"(Admin · User이면 Disabled)\"를 더함, 화면 라벨 · 사용자 확인 목록에서 Q5 지움, 변경 확인 C39 (맞음)\nC1 Overview (TI-INS-01-T · LI-INS-01-T) 0 화면 정의\n- 기존 화면: \"Cureca 장비의 현황\"\n- 바꿔 그린 것: Cureca → CURECA (용어집 표준어)\n- 근거: 반영 대기 TI R02 · LI R01, glossary/terms.csv\n남은 것: C2 ~ C35 (33건)\n작업 기준: basis 2026-11-17 18:29 · 작업규칙 CURECA 작업규칙 (rules) @원본 · 정책서 (policy) @원본 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 (glossary) @원본 · 화면 정의서 (screens) @원본",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "C1 Cureca → CURECA, 맞나요?",
+    "options": [
+      {
+        "label": "맞음"
+      },
+      {
+        "label": "되돌림"
+      },
+      {
+        "label": "C1 ~ C35 모두 맞음"
+      }
+    ],
+    "free": true
+  },
   "replies": [
     {
       "at": "2026-11-17T18:05:53+09:00",
