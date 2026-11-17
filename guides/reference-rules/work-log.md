@@ -179,7 +179,7 @@ started: YYYY-MM-DD
 **기준이 되는 것**
 
 - **공통 기준:** 작업규칙 · 정책서 · 기준데이터 · 화면 정의서. 팀 모두 같은 것 하나를 씁니다.
-- **UX가이드(Common UX):** `sources.md`에 적은 가이드를 씁니다(지금은 "Common UX 가이드 _1105"). 그릴 곳의 Figma 파일에 다른 가이드가 적용돼 있으면 어느 쪽으로 할지 요청자에게 묻습니다.
+- **UX가이드(Common UX):** `sources.md`에 적은 가이드를 씁니다(지금은 "Common UX 가이드"). 그릴 곳의 Figma 파일에 다른 가이드가 적용돼 있으면 어느 쪽으로 할지 요청자에게 묻습니다.
 
 **기준점 두 개**
 
@@ -189,14 +189,14 @@ started: YYYY-MM-DD
 | 화면 기준 `basis` (시각 · `history` 커밋) · `basis_versions` | 작업 기록 머리말, 화면 MD 머리말 | 4단계 UX 확정 때(`flow/4-revise-verify.md` 절차 3번 "UX 확정을 기입함" 순서 6). UX 확정 뒤에 정책 · 기준데이터를 다시 읽고 고친 화면은 그때 다시 적음 | 다음 작업에서 이 뒤로 바뀐 것만 뽑아 봄 |
 
 ```yaml
-basis_start: 2026-11-13 10:00 · history 624d27f · Common UX 가이드 _1105
+basis_start: 2026-11-13 10:00 · history 624d27f · Common UX 가이드
 basis: 2026-11-20 16:00 · history 8a1b2c3
 basis_versions:          # 문서마다 basis 시각 전에 마지막으로 바뀐 때
   rules: CURECA 작업규칙 @2026-11-12 17:22
   policy: CURECA 정책서 @2026-11-12 16:22
   glossary: 기준데이터 @2026-11-13 09:45
   screens: 화면 정의서 @2026-11-12 17:21
-  ux_guide: Common UX 가이드 _1105 @2026-11-05 14:20
+  ux_guide: Common UX 가이드 @2026-11-05 14:20
 ```
 
 **적는 법**
