@@ -8,7 +8,7 @@ type: Popup
 version:       # 확인 필요 (질문 대기 Q1)
 date:
 author: 서보경
-service_mode: [Main Mode, Console Mode, TSS Mode]
+client_mode: [Main Mode, Console Mode, MS Mode]
 user_type: [Service, Admin, User]
 policies: [POL-EVT-001, POL-EVT-002]
 rules_version:
@@ -19,7 +19,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/?node-id=2081-5637   
 ---
 # LI-EVT-01-P Event History Detail
 
-- T/L 차이: L-IOS는 Status Toggle(1-1)과 Notes 작성(3)이 있음. 둘 다 Main Mode에서만 쓸 수 있고 그 밖의 Service Mode는 보기만 함 (POL-EVT-002 규칙 2)
+- T/L 차이: L-IOS는 Status Toggle(1-1)과 Notes 작성(3)이 있음. 둘 다 Main Mode에서만 쓸 수 있고 그 밖의 L-IOS Client Mode는 보기만 함 (POL-EVT-002 규칙 2)
 - 호출하는 화면: [LI-EVT-P] Event History ([List] 클릭 시)
 - 호출되는 곳: [LI-EVT-P] 리스트의 줄 클릭 시, [LI-EVT-02-P] Event Message Popup의 [View Details] 클릭 시
 
@@ -35,8 +35,8 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/?node-id=2081-5637   
   - Event Message Popup의 [View Details] 클릭 시 진입
 - User Type
   - Service, Admin, User
-- Service Mode
-  - Main Mode, Console Mode, TSS Mode
+- L-IOS Client Mode
+  - Main Mode, Console Mode, MS Mode
 - 정책 참고
   - POL-EVT-001, POL-EVT-002
 
@@ -65,7 +65,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/?node-id=2081-5637   
 - 기능 활성화 조건
   - Common UX 참고: COMM-3-a
   - Main Mode에서만 조작 가능
-  - Console Mode, TSS Mode에서는 View 모드로 노출
+  - Console Mode, MS Mode에서는 View 모드로 노출
 - 정책 참고: POL-EVT-002
 
 ### 2. Instrument Info
@@ -92,7 +92,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/?node-id=2081-5637   
 - 기능 활성화 조건
   - Common UX 참고: COMM-3-a
   - Main Mode에서만 작성 가능
-  - Console Mode, TSS Mode에서는 View 모드로 노출
+  - Console Mode, MS Mode에서는 View 모드로 노출
 - 정책 참고: POL-EVT-002
 
 ### 4. Updated Date/Time, Updated by
@@ -172,5 +172,6 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/?node-id=2081-5637   
 | 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 (CR, PD, PV, 정책 ID) |
 | --- | --- | --- | --- | --- |
 | 2.1.14 | 2026-10-30 | Effect 항목 추가 | 서보경 | Figma 버전 메모 |
-| | 2026-11-06 | 신규 작업방 규칙으로 새로 그림 (테스트: UX-AI-TEST Page 10. 기존: 작업방 · Ver 2.1.14). R02 · R03 · R04 반영. Status Toggle을 1-1(L-IOS만)로, 일시를 분까지(COMM-4-a) | 서보경 | 케이스 1, POL-EVT-001 · 002 |
+| | 2026-11-06 | 작업방 규칙으로 새로 그림 (테스트: UX-AI-TEST Page 10. 기존 작업방 · Ver 2.1.14). R02 · R03 · R04 반영. Status Toggle을 1-1(L-IOS만)로, 일시를 분까지(COMM-4-a) | 서보경 | 케이스 1, POL-EVT-001 · 002 |
 | | 2026-11-06 | 디스크립션을 기존 작업방 원본(T · L 각각)을 다시 읽고 고객사 · 개발사가 읽는 말투로 다시 씀. 짝 화면 참조("원문은 …와 같음") 없앰 | 서보경 | 8절 "읽는 사람과 말투" |
+| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

@@ -8,7 +8,7 @@ type: Tab
 version: 2.1.06
 date: 2026-09-28
 author: 서보경
-service_mode: [Main Mode, Console Mode, TSS Mode]
+client_mode: [Main Mode, Console Mode, MS Mode]
 user_type: [Service, Admin, User]
 policies: []
 rules_version:
@@ -20,7 +20,7 @@ figma_region: 2.1 1차
 ---
 # LI-INS-02-T All Tab
 
-> 기존 화면(작업방 Instruments 페이지, 2.1 1차 영역, Ver 2.1.06)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 Instruments 페이지, 2.1 1차 영역, Ver 2.1.06)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - T/L 차이: TI-INS-02-T에 더해 Door 영역의 [Unlock](3-1)이 있음. [Management]는 조회 전용 Popup(LI-INS-02-01-P)을 엶
 - 관련 정책: POL-EQP-001, POL-EQP-005, POL-EQP-008, POL-EQP-009, POL-EQP-010
@@ -104,3 +104,4 @@ Table/Filled Table Cell (26), Frame/Instrument_Status (19), Tag Status (18), Des
 | --- | --- | --- | --- | --- |
 | 2.1.01 | | Error Rate 제거(2-1). Run-time Info 버튼 제거(4-1). Management 버튼 추가(2-2). 좌측 목록과 Device 영역 항목명 Enable → Enabled. Run-time 집계 대상에 Sample Pretreatment, Sample Aliquot 추가 | 서보경 | Figma 버전 메모 |
 | 2.1.06 | 2026-09-28 | Detail Door 영역 UI 변경 | 서보경 | Figma 버전 메모 |
+| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

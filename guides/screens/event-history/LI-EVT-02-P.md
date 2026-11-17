@@ -8,7 +8,7 @@ type: Popup
 version:       # 확인 필요 (질문 대기 Q1)
 date:
 author: 서보경
-service_mode: [Main Mode, Console Mode]
+client_mode: [Main Mode, Console Mode]
 user_type: [Service, Admin, User]
 policies: [POL-EVT-001, POL-EVT-003]
 rules_version:
@@ -19,7 +19,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/?node-id=2082-5981   
 ---
 # LI-EVT-02-P Event Message Popup
 
-- T/L 차이: 노출 조건만 다름. L-IOS는 Main Mode · Console Mode일 때 노출, TSS Mode는 노출하지 않음 (POL-EVT-003 규칙 1)
+- T/L 차이: 노출 조건만 다름. L-IOS는 Main Mode · Console Mode일 때 노출, MS Mode는 노출하지 않음 (POL-EVT-003 규칙 1)
 - 호출하는 화면: [LI-EVT-01-P] Event History Detail ([View Details] 클릭 시)
 - 호출되는 곳: Event가 생기면 지금 보고 있는 화면 위에 바로 노출
 
@@ -34,7 +34,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/?node-id=2082-5981   
   - 로그인 이후 발생한 Event부터 자동으로 노출
 - User Type
   - Service, Admin, User
-- Service Mode
+- L-IOS Client Mode
   - Main Mode, Console Mode
 - 정책 참고
   - POL-EVT-001, POL-EVT-003
@@ -125,7 +125,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/?node-id=2082-5981   
 
 | ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| R01 | 정책 반영 | 0 "Main PC, 콘솔용 PC" | Service Mode로 표기: Main Mode, Console Mode (TSS Mode 제외) | POL-EVT-003, `policy/service-mode.md` | 반영 완료 (2026-11-06) |
+| R01 | 정책 반영 | 0 "Main PC, 콘솔용 PC" | L-IOS Client Mode로 표기: Main Mode, Console Mode (MS Mode 제외) | POL-EVT-003, `policy/client-mode.md` | 반영 완료 (2026-11-06) |
 | R02 | 디스크립션 | 3 Type "Instrument, Consumable, Reagent" | Instrument, Inventory, Sample, System | `glossary/status-values.csv` | 반영 완료 (2026-11-06) |
 | R03 | 표기 | Eorrer, warning | Error, Warning | 오타 | 반영 완료 (2026-11-06) |
 
@@ -134,5 +134,6 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/?node-id=2082-5981   
 | 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 (CR, PD, PV, 정책 ID) |
 | --- | --- | --- | --- | --- |
 | 2.1.01 | 2026-08-07 | 다중 메시지 노출 정책 및 기능 추가 | 서보경 | Figma 버전 메모 |
-| | 2026-11-06 | 신규 작업방 규칙으로 새로 그림 (테스트: UX-AI-TEST Page 10. 기존: 작업방 2.1 1차 영역 · Ver 2.1.01). R01 ~ R03 반영. Common UX 5-m(3/4) 모양으로 바꿈, Effect 더함 | 서보경 | 케이스 1, POL-EVT-001 · 003 |
+| | 2026-11-06 | 작업방 규칙으로 새로 그림 (테스트: UX-AI-TEST Page 10. 기존 작업방 2.1 1차 영역 · Ver 2.1.01). R01 ~ R03 반영. Common UX 5-m(3/4) 모양으로 바꿈, Effect 더함 | 서보경 | 케이스 1, POL-EVT-001 · 003 |
 | | 2026-11-06 | 디스크립션을 기존 작업방 원본(T · L 각각)을 다시 읽고 고객사 · 개발사가 읽는 말투로 다시 씀. 짝 화면 참조("원문은 …와 같음") 없앰 | 서보경 | 8절 "읽는 사람과 말투" |
+| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

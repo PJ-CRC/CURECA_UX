@@ -10,7 +10,7 @@ delivered_date:
 ---
 # Event History
 
-- 2026-11-02: 작업방 Event History 페이지에서 기획 화면 6개를 옮김. Event History, Detail은 2.1 2차 영역, Event Message Popup은 2.1 1차 영역(2차 없음)
+- 2026-11-02: 기존 작업방 Event History 페이지에서 기획 화면 6개를 옮김. Event History, Detail은 2.1 2차 영역, Event Message Popup은 2.1 1차 영역(2차 없음)
 
 ## 상태 이력
 

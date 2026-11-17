@@ -8,7 +8,7 @@ type: Popup
 version:       # 확인 필요 (질문 대기 Q1)
 date:
 author: 서보경
-service_mode: []
+client_mode: []
 user_type: [Service, Admin, User]
 policies: [POL-EVT-001, POL-EVT-002]
 rules_version:
@@ -151,5 +151,6 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/?node-id=2081-5350   
 | 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 (CR, PD, PV, 정책 ID) |
 | --- | --- | --- | --- | --- |
 | 2.1.14 | 2026-10-30 | Effect 항목 추가 | 서보경 | Figma 버전 메모 |
-| | 2026-11-06 | 신규 작업방 규칙으로 새로 그림 (테스트: UX-AI-TEST Page 10. 기존: 작업방 · Ver 2.1.14). R01 · R02 · R03 반영. 일시를 분까지(COMM-4-a) | 서보경 | 케이스 1, POL-EVT-001 · 002 |
+| | 2026-11-06 | 작업방 규칙으로 새로 그림 (테스트: UX-AI-TEST Page 10. 기존 작업방 · Ver 2.1.14). R01 · R02 · R03 반영. 일시를 분까지(COMM-4-a) | 서보경 | 케이스 1, POL-EVT-001 · 002 |
 | | 2026-11-06 | 디스크립션을 기존 작업방 원본(T · L 각각)을 다시 읽고 고객사 · 개발사가 읽는 말투로 다시 씀. 짝 화면 참조("원문은 …와 같음") 없앰 | 서보경 | 8절 "읽는 사람과 말투" |
+| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

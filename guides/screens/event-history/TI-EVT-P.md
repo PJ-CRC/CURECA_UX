@@ -8,7 +8,7 @@ type: Popup
 version:       # 확인 필요 (질문 대기 Q1)
 date:
 author: 서보경
-service_mode: []
+client_mode: []
 user_type: [Service, Admin, User]
 policies: [POL-EVT-001, POL-EVT-002, POL-COM-006, POL-COM-007]
 rules_version:
@@ -183,7 +183,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/?node-id=2078-4662   
 | # | 질문 | 걸린 번호 | 올린 곳 (PD · CA) |
 | --- | --- | --- | --- |
 | Q1 | 이번 작업의 Ver | 머리말 | 요청자 |
-| Q2 | Event Status Open · Closed 표시 색 (Common UX 4-a에 색 정의 없음) | 2 | `common-ux/feedback.md` |
+| Q2 | Event Status Open · Closed 표시 색 (Common UX 4-a에 색 정의 없음) | 2 | `old-common-ux/feedback.md` |
 | Q3 | 빈 상태 문구 | 2 | 요청자 |
 | Q4 | 데이터가 없을 때 [Export] 비활성화 여부 | 3 | 요청자 |
 
@@ -204,5 +204,6 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/?node-id=2078-4662   
 | 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 (CR, PD, PV, 정책 ID) |
 | --- | --- | --- | --- | --- |
 | 2.1.01 | 2026-08-07 | Event Type 항목 변경: Instrument, Consumable, Reagent, Waste Bin/bottle, System → Instrument, Inventory, Sample, System | 서보경 | Figma 버전 메모 |
-| | 2026-11-06 | 신규 작업방 규칙으로 새로 그림 (테스트: UX-AI-TEST Page 10. 기존: 작업방 node 1875-43955 · Ver 2.1.01). R05 · R06 · R07 반영. 검색 Event ID · Code 칸 뺌, T-IOS 노출 개수 드롭다운 더함(COMM-5-g), 실시간 갱신(POL-COM-007) | 서보경 | 케이스 1, POL-EVT-001 · 002, POL-COM-006 · 007 |
+| | 2026-11-06 | 작업방 규칙으로 새로 그림 (테스트: UX-AI-TEST Page 10. 기존 작업방 node 1875-43955 · Ver 2.1.01). R05 · R06 · R07 반영. 검색 Event ID · Code 칸 뺌, T-IOS 노출 개수 드롭다운 더함(COMM-5-g), 실시간 갱신(POL-COM-007) | 서보경 | 케이스 1, POL-EVT-001 · 002, POL-COM-006 · 007 |
 | | 2026-11-06 | 디스크립션을 기존 작업방 원본(T · L 각각)을 다시 읽고 고객사 · 개발사가 읽는 말투로 다시 씀. 짝 화면 참조("원문은 …와 같음") 없앰 | 서보경 | 8절 "읽는 사람과 말투" |
+| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |
