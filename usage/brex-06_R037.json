@@ -1,0 +1,28 @@
+{
+  "id": "brex-06_R037",
+  "kind": "request",
+  "reqId": "R037",
+  "reqType": "요청",
+  "team": "cureca",
+  "at": "2026-11-17T16:35:11+09:00",
+  "from": "2026-11-17T16:25:25+09:00",
+  "by": "최고관리자",
+  "doneBy": "Claude",
+  "pc": "BREX_06",
+  "fileKey": "etCQFF3CTf1EA6C79d4BBf",
+  "fileName": "UX AI TEST",
+  "page": "Instrument Ⓛ / Ⓣ _re",
+  "frame": "",
+  "nodeId": "",
+  "text": "현재 적용된 UX문서를 기반으로 만들어진 화면들 전부 수정해줘\n(Design-Update 내용은 수정하지 말것)\n4단계 UX 확정까지만 진행",
+  "models": {
+    "claude-opus-5-5": 49
+  },
+  "calls": 49,
+  "input": 92,
+  "cacheWrite": 252953,
+  "cacheRead": 6959244,
+  "output": 56559,
+  "total": 7268848,
+  "usd": 4.547
+}
