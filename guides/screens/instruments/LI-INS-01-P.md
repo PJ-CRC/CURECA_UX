@@ -77,6 +77,7 @@ Description Number (10), Square (3), Frame/Instrument_Status (1), Interface/Lock
 - Unlock 버튼 또는 Unlock all doors 버튼 클릭 시 → Door가 Unlocked로 변경되면서 Module 상태값도 함께 갱신됨
 - Running 상태에서 Unlock을 클릭할 경우 → Module 상태가 Running에서 Pausing으로 전환됨
 - 즉, Door 제어 이벤트가 발생하면 Module 상태값도 동기화되어 업데이트됨
+- [Lock] 클릭으로 Door가 Locked가 되면 Module 상태값도 함께 갱신됨 (기존 자동 Lock 후 장비 재시작(Running) 흐름을 [Lock] 클릭 기준으로 적용)
 
 #### 2-2. Door Unit Name
 
@@ -98,7 +99,7 @@ Description Number (10), Square (3), Frame/Instrument_Status (1), Interface/Lock
 - Locked 상태 → 닫힌 자물쇠 아이콘
 - Unlocked 상태 → 열린 자물쇠 아이콘
 
-#### 2-5. [Unlock] 버튼
+#### 2-5. [Unlock] / [Lock] 버튼
 
 - Door Unlock이 즉시 가능한 케이스
 - Module 상태가 ‘Ready, Error, Paused’일 경우, Unlock을 클릭할 경우 즉시 해제가 되어 문을 열 수 있음
