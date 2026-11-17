@@ -27,7 +27,6 @@
     "../templates/meeting.md",
     "../templates/menu.md",
     "../templates/policy.md",
-    "../templates/screen-asis.md",
     "../templates/screen.md"
   ],
   "filesDir": "",
