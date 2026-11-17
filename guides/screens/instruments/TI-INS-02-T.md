@@ -119,21 +119,21 @@ Table/Filled Table Cell (26), Frame/Instrument_Status (19), Tag Status (18), Des
 
 - Module 내 Unit 단위 장비의 상세 정보를 확인하는 영역
 
-#### 2-1. Error Rate
+#### 2-1. ~~Error Rate
 
 - Account Type에 따라 항목 노출
-- Account Type의 Sevice일 경우만 노출
+- Account Type의 Sevice일 경우만 노출~~
 
-#### 2-2. [Enable setting → Management] 버튼
+#### 2-2. [~~Enable setting~~ → Management] 버튼
 
 - 클릭 시, 조건 없이 Management Popup(TI-INS-02-01-P) 노출
 - 아래 조건 모두 제거 요청 및 관련 조건은 팝업 안에서 처리할 예정
-- 장비 상태가 ‘Running’일 경우
+- ~~장비 상태가 ‘Running’일 경우
 - Alert_013 팝업 노출
 - 관리되는 Module이 1대일 경우
 - Alert_014 팝업 노출
 - 장비 상태가 ‘Ready 또는 not initialized일 경우
-- TI-INS-02-01-P 팝업 노출
+- TI-INS-02-01-P 팝업 노출~~
 
 #### 3. Door
 
@@ -145,22 +145,20 @@ Table/Filled Table Cell (26), Frame/Instrument_Status (19), Tag Status (18), Des
 - Unit: Device 장비명 표시
 - Connected: Device 연결 상태 표시
 - Status: Device 작동 상태 표시(Ready, Running, Error)
-- Enable → Enabled
+- ~~Enable~~ → Enabled
 - 현재 적용 대상: ‘TI-INS-02-01-P’ 화면 참고
 - 해당 없을 경우 ‘-’ 표기
 - 상태값: 사용(Enabled)=Y, 사용안함(Disabled)=N으로 표기
 - T-IO S에서 사용 여부 설정 가능
 - 참고: 각 항목별 상태값의 상세 정의는 ‘APP,Web_Common UX’의 ‘COMM-4-a’ 참고
-
-#### 4-1. [Run-time Info] 클릭
-
+- ~~4-1~~
+- ~~[Run-time Info] 클릭
 - Run-time Info_TI-INS-02-02-P 팝업 제공
 - Account type에 따라 팝업 내역이 달라짐
-- 자세한 내역은 해당 페이지 화면 참고
-
-#### 4-2. [Enable setting] 클릭 (T-IOS Only)
-
-- Enable Setting_TI-INS-02-01-P 팝업 노출
+- 자세한 내역은 해당 페이지 화면 참고~~
+- ~~4-2~~
+- ~~[Enable setting] 클릭 (T-IOS Only)
+- Enable Setting_TI-INS-02-01-P 팝업 노출~~
 
 #### 5. Storage
 
