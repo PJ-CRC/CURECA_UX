@@ -268,7 +268,7 @@ started: 2026-11-17
 | Q2 | [Door Control] 버튼 활성화 조건 (기존 디스크립션은 COMM-3-a만, 정책서는 Popup 안 [Unlock] 조건만 정함) | LI-INS-01-T 6 | | L만 | 2026-11-17 · 요청자 답: 늘 활성, 비활성화되는 경우 없음 (모든 Module에 Door가 있음) (C37) |
 | Q3 | [Lock] 안내 문구 하나 고르기 (Close the door, then press Lock to lock it. / Close the door and press the 'Lock' button to resume the module / Close the door and press Lock. The module will resume once locked.) | LI-INS-01-P 2-6 | | L만 | 2026-11-17 · 요청자 답: ① Close the door, then press Lock to lock it. (이미 그린 문구, 화면 바뀌지 않음) |
 | Q4 | Door가 Open일 때 [Lock] 안내 팝업 (디스크립션 · DS-0005는 Confirm_031 "Please close the door.", 케이스 프레임은 Alert_048 "The door is open. Close the door, then press Lock again.") | LI-INS-01-P 2-5, LI-INS-02-T 3-1 | DS-0005 | L만 | 2026-11-17 · 요청자 답: Confirm_031에 케이스 화면 문구 그대로 (제목 Please close the door. + 내용 The door is open. Close the door, then press Lock again.), DS-0005 결정 줄 더함 (C38) |
-| Q5 | User Type이 Admin · User일 때 [Save] · Radio 버튼 모습 (숨김 / Disabled, 정책은 "조회만"만 정함) | TI-INS-02-01-P 3 | | T만 | |
+| Q5 | User Type이 Admin · User일 때 [Save] · Radio 버튼 모습 (숨김 / Disabled, 정책은 "조회만"만 정함) | TI-INS-02-01-P 3 | | T만 | 2026-11-17 · 요청자 답: Service만 변경할 수 있어 Admin · User이면 [Save] · Radio 버튼 Disabled (C39) |
 
 ## 변경 확인
 
@@ -311,6 +311,7 @@ started: 2026-11-17
 | C36 | (기존 T 디스크립션에 툴팁 문구 없음, L-IOS 문구를 따라 그림) | 툴팁 문구에서 Unlock / Lock 안내를 뺌 (→ Shows door open/close status) | TI-INS-01-T 6 | Q1의 답 | T만 | O | 맞음 (2026-11-17) |
 | C37 | 활성화 조건 : 공통 UX 참고 COMM-3-a | 활성화 조건을 늘 활성으로 (비활성화되는 경우 없음, 모든 Module에 Door가 있음) | LI-INS-01-T 6 | Q2의 답 | L만 | O | 맞음 (2026-11-17) |
 | C38 | Confirm_031 "Please close the door." (제목만), 케이스 화면은 Alert_048 | Confirm_031 문구를 케이스 화면 그대로 (제목 Please close the door. + 내용 The door is open. Close the door, then press Lock again.) | LI-INS-01-P 2-5, LI-INS-02-T 3-1 | Q4의 답, DS-0005 | L만 | O | 맞음 (2026-11-17) |
+| C39 | Admin · User일 때 [Save] · Radio 모습 정의 없음 | User Type이 Admin · User이면 [Save] · Radio 버튼 Disabled | TI-INS-02-01-P 1-3, 3 | Q5의 답, POL-EQP-009 | T만 | O | 맞음 (2026-11-17) |
 
 - C28은 쓰지 않음 (번호를 비워 둠)
 
@@ -333,6 +334,7 @@ started: 2026-11-17
 | 2026-11-17 | 4단계 | Q3 [Lock] 안내 문구 (Workbench R007 질문) | ① Close the door, then press Lock to lock it. (2026-11-17 18:43, 서보경) → 화면 · 케이스 화면 · 디스크립션이 이미 이 문구라 그대로, Q3 지움 |
 | 2026-11-17 | 4단계 | Q4 Door가 Open일 때 [Lock] 팝업 (Workbench R007 질문) | "Q3은 Close the door, then press Lock to lock it.이 맞아. 이것으로 다시 변경해줘. Q4는 같은 것이라 케이스 화면 문구 그대로 다 적어도 무방, 아마 타이틀만 옮겨 놓은 것" (2026-11-17 18:53, 서보경) → 본문 끝(press Lock again / press Lock to lock it)을 다시 여쭘 |
 | 2026-11-17 | 4단계 | Q4 Confirm_031 본문 끝 (Workbench R007 질문) | B … press Lock again. (케이스 화면 그대로) (2026-11-17 18:56, 서보경) → 화면 MD 2개 · Figma 패널 고침, DS-0005 결정 줄 더함, Q4 지움, C38 (맞음) |
+| 2026-11-17 | 4단계 | Q5 Admin · User일 때 [Save] · Radio 버튼 모습 (Workbench R007 질문) | Service만 가능해서 Disabled 처리 (2026-11-17 19:03, 서보경) → 화면 MD · Figma 패널 1-3 · 3 고침, Q5 지움, C39 (맞음) |
 
 ## 이 작업의 결정 (5단계에서 한꺼번에 반영)
 | 논의 대상 | 내용 | 후속 확인 필요 (누구 · 무엇, 없으면 비움) | 5단계 반영 |
