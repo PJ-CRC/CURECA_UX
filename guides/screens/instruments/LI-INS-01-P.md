@@ -108,12 +108,18 @@ Description Number (10), Square (3), Frame/Instrument_Status (1), Interface/Lock
 - Unlock 클릭 → 확인 팝업 → Pausing 상태로 전환 → Paused 상태가 된 이후 Unlock 진행 → 도어 오픈 가능
 - Door Unlock이 불가능한 케이스
 - [Unlock] 버튼이 Disabled 상태로 제공됨(하단 내역 참고)
-- 상태 갱신: Module의 Door가 Unlock 상태가 되면 버튼 라벨이 “Unlocked”로 변경됨
+- 상태 갱신: Door가 Unlocked 상태가 되면 버튼이 [Lock]으로 바뀜 (기존 “Unlocked” Disabled 표기 대신)
+- [Lock] 버튼: Lock Status가 Unlocked일 때 표시
+- 클릭 시 해당 Door를 즉시 잠금(Locked) → 버튼은 [Unlock]으로 바뀜
+- [Lock] 버튼은 늘 활성(Enabled) 상태로 표시 (Unlock과 같은 Filled 스타일)
+- Door가 Open인 상태에서 [Lock] 클릭 시 문 닫기 안내 팝업 Confirm_031(“Please close the door.”) 노출, [OK] 클릭 시 닫힘 · Door는 Unlocked 유지 (하단 케이스 참고)
+- 자동 잠금 없음: 문을 닫아도 잠기지 않으며, [Lock]을 눌러야 잠김 (기존: 닫고 5초 후 자동 Lock)
 - **자세한 내역은 아래 케이스 내역을 반드시 참고 부탁드립니다.
 
 #### 2-6. 안내 문구
 
-- 사용자가 문을 닫고 5초 후 자동으로 Lock이 되는 내용을 안내하는 문구
+- 문을 닫은 뒤 [Lock] 버튼을 눌러야 잠긴다는 내용을 안내하는 문구 (기존: 닫고 5초 후 자동 Lock 안내)
+- [안내 문구 변경 됨]
 
 #### 2-7. Door Unit 영역 내 안내문구(하단 케이스 화면 페이지 참고)
 
