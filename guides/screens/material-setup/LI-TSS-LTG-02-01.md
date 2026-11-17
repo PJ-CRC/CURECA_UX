@@ -8,7 +8,7 @@ type: Page
 version: 2.0
 date: 2026-06-15
 author: BREX
-service_mode: [TSS Mode]
+client_mode: [Console Mode]
 user_type: [Service, Admin, User]
 policies: []
 rules_version:
@@ -20,9 +20,9 @@ figma_region: SH2-MS 얼럿 수정 테스트 (2026-11-03 기준)
 ---
 # LI-TSS-LTG-02-01 Scan the IC tube
 
-> 기존 화면(작업방 SH2-MS-얼럿 수정 테스트 페이지, Ver 2.0)을 2026-11-03에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 SH2-MS-얼럿 수정 테스트 페이지, Ver 2.0)을 2026-11-03에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
-- L-IOS 전용. Service Mode: TSS Mode. Group PCR Reagent Kit Step 1
+- L-IOS 전용. L-IOS Client Mode: Console Mode. Group PCR Reagent Kit Step 1
 - 관련 정책: POL-INV-007 (`cids`에 있음), POL-MAT-002, POL-MAT-004, POL-MAT-009
 - 호출하는 화면: LI-TSS-CMP-01 (Remove), LI-TSS-LTG-02-02, MS_Alert_002, MS_Alert_003, MS_Alert_004, MS_Alert_005, MS_Alert_006, MS_Alert_032
 - 다른 프레임: 없음
@@ -108,3 +108,4 @@ Description Number (4), Divider (2), layout/spacing (2), Frame (1), Button/Terti
 | 2.1.05 | | 디스크립션 수정 (빨간 텍스트 & 취소선) | BREX | Figma 버전 메모 |
 | 2.1.06 | | Alert_036 추가: Lot 구성을 완료한 PCR box·IC tube 재스캔 Case | BREX | Figma 버전 메모 |
 | 2.1.12 | | Alert / Confirm 업데이트 | BREX | Figma 버전 메모 |
+| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`). 노출 모드 값을 새 기능 표대로 고침 | 서보경 | DS-0001 |

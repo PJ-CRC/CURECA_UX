@@ -8,7 +8,7 @@ type: Page
 version: 2.0
 date: 2026-06-15
 author: BREX
-service_mode: [TSS Mode]
+client_mode: [MS Mode]
 user_type: [Service, Admin, User]
 policies: []
 rules_version:
@@ -20,9 +20,9 @@ figma_region: SH2-MS 얼럿 수정 테스트 (2026-11-03 기준)
 ---
 # LI-TSS-PSI-SAM-03-02 Scan loaded tray
 
-> 기존 화면(작업방 SH2-MS-얼럿 수정 테스트 페이지, Ver 2.0)을 2026-11-03에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 SH2-MS-얼럿 수정 테스트 페이지, Ver 2.0)을 2026-11-03에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
-- L-IOS 전용. Service Mode: TSS Mode. Load Tray into Trolley (Sample) Step 2 (Tray 스캔 → Trolley floor 스캔)
+- L-IOS 전용. L-IOS Client Mode: MS Mode. Load Tray into Trolley (Sample) Step 2 (Tray 스캔 → Trolley floor 스캔)
 - 관련 정책: POL-MAT-002, POL-MAT-003, POL-MAT-004, POL-MAT-005, POL-MAT-006, POL-LOD-001
 - 호출하는 화면: LI-TSS-CMP-01 (Remove), LI-TSS-PSI-SAM-03-03, MS_Confirm_007, MS_Confirm_008, MS_Alert_017, MS_Alert_018, MS_Alert_019, MS_Alert_032
 - 이 화면의 [Done] 시점이 LI-TSS-PSI-01의 Setup Date/Time이 됨 (LI-TSS-PSI-01 1-1)
@@ -122,3 +122,4 @@ Description Number (4), Device&Electronic/Repeat (1), Frame (1), Button/Secondar
 | --- | --- | --- | --- | --- |
 | 2.1.05 | | 디스크립션 수정 (빨간 텍스트 & 취소선) | BREX | Figma 버전 메모 |
 | 2.1.11 | | 투입 Trolley 1F 제외 정책 추가 (오류 2 > Case 2) | BREX | Figma 버전 메모 |
+| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

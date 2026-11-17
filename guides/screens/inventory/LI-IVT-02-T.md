@@ -8,7 +8,7 @@ type: Tab
 version: 2.1.13
 date: 2026-10-23
 author: 서보경
-service_mode: [Main Mode, Console Mode, TSS Mode]
+client_mode: [Main Mode, Console Mode, MS Mode]
 user_type: [Service, Admin, User]
 policies: []
 rules_version:
@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # LI-IVT-02-T Inventory Overview
 
-> 기존 화면(작업방 Inventory 페이지, 2.1 2차 영역, Ver 2.1.13)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 Inventory 페이지, 2.1 2차 영역, Ver 2.1.13)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - T/L 차이: 없음 (화면 글자와 디스크립션이 TI-IVT-02-T와 같음)
 - 관련 정책: POL-INV-001, POL-INV-002, POL-EQP-009, POL-LOD-001
@@ -54,3 +54,4 @@ figma_region: 2.1 2차
 | --- | --- | --- | --- | --- |
 | 2.1.12 | | Sample Storage Module 추가. 일부 UX/UI 변경. 신규 모듈 추가에 따른 일부 UI 변경. 잔여표기량 정책 변경에 따른 UI 변경. 잔여량 표기 정책 변경 | 서보경 | Figma 버전 메모 |
 | 2.1.13 | 2026-10-23 | 표기 및 정렬 기준 변경 반영 | 서보경 | Figma 버전 메모 |
+| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

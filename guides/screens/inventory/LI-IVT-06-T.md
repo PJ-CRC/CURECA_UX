@@ -8,7 +8,7 @@ type: Tab
 version: "0.6"
 date: 2026-05-14
 author: 서보경
-service_mode: [Main Mode, Console Mode, TSS Mode]
+client_mode: [Main Mode, Console Mode, MS Mode]
 user_type: [Service, Admin, User]
 policies: []
 rules_version:
@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # LI-IVT-06-T Inventory Usage History
 
-> 기존 화면(작업방 Inventory 페이지, 2.1 2차 영역, Ver 0.6)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 Inventory 페이지, 2.1 2차 영역, Ver 0.6)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - 2차 영역 프레임도 Ver 0.6 (2026-05-14)이라 TI-IVT-06-T(Ver 2.1.11)보다 오래됨. 1차 영역 프레임(5635:105929)도 Ver 0.6
 - T/L 차이: Export 동작이 다름(L-IOS는 경로 저장 또는 USB 저장 선택 팝업). 나머지 차이는 버전 차이로 보임 (아래 디스크립션)
@@ -63,3 +63,4 @@ figma_region: 2.1 2차
 | 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
 | --- | --- | --- | --- | --- |
 | 0.6 | 2026-05-14 | (버전 메모 없음) | 서보경 | Figma 화면 정보 |
+| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

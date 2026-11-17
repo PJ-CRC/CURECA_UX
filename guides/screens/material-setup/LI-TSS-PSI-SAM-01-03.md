@@ -8,7 +8,7 @@ type: Page
 version: 2.0
 date: 2026-06-15
 author: BREX
-service_mode: [TSS Mode]
+client_mode: [MS Mode]
 user_type: [Service, Admin, User]
 policies: []
 rules_version:
@@ -20,9 +20,9 @@ figma_region: SH2-MS 얼럿 수정 테스트 (2026-11-03 기준)
 ---
 # LI-TSS-PSI-SAM-01-03 Insert the sample tube
 
-> 기존 화면(작업방 SH2-MS-얼럿 수정 테스트 페이지, Ver 2.0)을 2026-11-03에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 SH2-MS-얼럿 수정 테스트 페이지, Ver 2.0)을 2026-11-03에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
-- L-IOS 전용. Service Mode: TSS Mode. Load Samples into Socket Step 3 (하이라이트된 Hole에 Sample 적재)
+- L-IOS 전용. L-IOS Client Mode: MS Mode. Load Samples into Socket Step 3 (하이라이트된 Hole에 Sample 적재)
 - 관련 정책: POL-MAT-002, POL-MAT-003, POL-MAT-004, POL-MAT-005, POL-MAT-006
 - 호출하는 화면: LI-TSS-CMP-01 (Remove), LI-TSS-PSI-SAM-01-04, MS_Confirm_001, MS_Alert_007, MS_Alert_008, MS_Alert_009, MS_Alert_011, MS_Alert_012, MS_Alert_013, MS_Alert_014, MS_Alert_032
 - 다른 프레임: 없음
@@ -130,3 +130,4 @@ Description Number (5), Frame (1), Button/Tertiary_1Button_28 (1), Button/Second
 | --- | --- | --- | --- | --- |
 | 2.1.05 | | Alert / Confirm 업데이트 (Alert_033 추가) | BREX | Figma 버전 메모 |
 | 2.1.06 | | G40 socket 명칭 변경 (G41 → G40, G42 → G41) | BREX | Figma 버전 메모 |
+| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

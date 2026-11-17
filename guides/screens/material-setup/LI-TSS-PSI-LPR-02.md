@@ -8,7 +8,7 @@ type: Page
 version: 2.0
 date: 2026-06-15
 author: BREX
-service_mode: [TSS Mode]
+client_mode: [Console Mode]
 user_type: [Service, Admin, User]
 policies: []
 rules_version:
@@ -20,9 +20,9 @@ figma_region: SH2-MS 얼럿 수정 테스트 (2026-11-03 기준)
 ---
 # LI-TSS-PSI-LPR-02 Scan the socket
 
-> 기존 화면(작업방 SH2-MS-얼럿 수정 테스트 페이지, Ver 2.0)을 2026-11-03에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 SH2-MS-얼럿 수정 테스트 페이지, Ver 2.0)을 2026-11-03에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
-- L-IOS 전용. Service Mode: TSS Mode. Load PCR Reagents Step 2
+- L-IOS 전용. L-IOS Client Mode: Console Mode. Load PCR Reagents Step 2
 - 관련 정책: POL-MAT-003, POL-MAT-008
 - 호출하는 화면: LI-TSS-PSI-LPR-03, MS_Confirm_015
 - 다른 프레임: 없음
@@ -90,3 +90,4 @@ Description Number (3), Frame (1), Button/Secondary_1Button_44 (1), layout/spaci
 | 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 (CR, PD, PV, 정책 ID) |
 | --- | --- | --- | --- | --- |
 | 2.1.05 | | 디스크립션 수정 (빨간 텍스트 & 취소선) | BREX | Figma 버전 메모 |
+| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`). 노출 모드 값을 새 기능 표대로 고침 | 서보경 | DS-0001 |
