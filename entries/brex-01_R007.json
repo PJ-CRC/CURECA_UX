@@ -2,11 +2,11 @@
   "id": "brex-01_R007",
   "kind": "request",
   "team": "cureca",
-  "status": "보류",
-  "at": "2026-11-17T18:35:50+09:00",
+  "status": "대기",
+  "at": "2026-11-17T18:37:11+09:00",
   "createdAt": "2026-11-17T17:47:23+09:00",
   "by": "서보경",
-  "doneBy": "Claude",
+  "doneBy": "서보경",
   "pc": "BREX_01",
   "reqId": "R007",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,24 +17,13 @@
   "type": "요청",
   "layout": "",
   "text": "instrument 작업 이어서 해줘",
-  "note": "[4단계] 사용자 확인 목록 하나씩 — 2 / 39\nQ1 반영함: TI-INS-01-T 6 툴팁 문구를 \"Shows door open/close status\"로 (Unlock / Lock 안내 뺌), 화면 라벨 · 사용자 확인 목록에서 Q1 지움, 변경 확인 C36 (맞음)\nQ2 Overview (LI-INS-01-T) 6 [Door Control] 버튼 활성화 조건\n- 지금 그린 것: 활성화 조건 = 공통 UX COMM-3-a만 (기존 디스크립션 그대로)\n- 정책서(POL-EQP-008)는 Popup 안의 [Unlock] · [Unlock all doors] 조건만 정하고, Overview의 [Door Control] 버튼 조건은 정하지 않음\n- 추천: 없음 (근거 없음)\n남은 것: Q3 ~ Q5, C1 ~ C35\n작업 기준: basis 2026-11-17 18:29 · 작업규칙 CURECA 작업규칙 (rules) @원본 · 정책서 (policy) @원본 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 (glossary) @원본 · 화면 정의서 (screens) @원본",
+  "note": "",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": {
-    "q": "Q2 [Door Control] 버튼은 언제 활성화할까요?",
-    "options": [
-      {
-        "label": "기존대로 COMM-3-a만"
-      },
-      {
-        "label": "Door가 있는 Module Type일 때만"
-      }
-    ],
-    "free": true
-  },
+  "ask": null,
   "replies": [
     {
       "at": "2026-11-17T18:05:53+09:00",
@@ -59,6 +48,12 @@
       "by": "서보경",
       "q": "Q1 T-IOS Door Status 툴팁에서 Unlock · Lock 안내를 뺄까요?",
       "text": "그러면 T-IOS 안내 문구는 lock 상태를 제외한 내용으로 정리해줘"
+    },
+    {
+      "at": "2026-11-17T18:37:11+09:00",
+      "by": "서보경",
+      "q": "Q2 [Door Control] 버튼은 언제 활성화할까요?",
+      "text": "door가 없는 모듈은 없어. 모두 door를 갖고 있지 않아? 비활성화되는 케이스는 없고 항상 제공하는 버튼이야."
     }
   ]
 }
