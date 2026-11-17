@@ -16,11 +16,11 @@ provisional: []
 flags: []
 source: asis
 figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3249-111508
-figma_region: 2.1 1차
+figma_region: 2.1 2차 (2026-11-17 다시 옮김)
 ---
 # TI-INS-01-T Overview Tab
 
-> 기존 화면(기존 작업방 Instruments 페이지, 2.1 1차 영역, Ver 2.1.06)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 Instruments 페이지, 2.1 1차 영역, Ver 2.1.06)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다. 2026-11-17 기존 작업방 2.1 2차 영역(Ver 2.1.06)에서 다시 옮겼습니다(바뀐 곳 없음, R037 · 20261117-최고관리자-instruments).
 
 - T/L 차이: L-IOS(LI-INS-01-T)에는 Door Status Tooltip과 [Unlock](Door Control) 버튼이 더 있음
 - 관련 정책: POL-EQP-001, POL-EQP-002, POL-EQP-009
@@ -128,12 +128,12 @@ Frame/Instrument_Status (54), Table/Filled Table Cell (25), Tag Status (16), Des
 
 | ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| R01 | 알럿 | 등록되지 않은 Module Tab 진입 시 "Alert_L_004" | Alert_004 | `policy/alert-catalog.csv`, LI-INS-01-T | 대기 |
-| R02 | 디스크립션 | "Cureca 장비의 현황" | CURECA | `glossary/terms.csv` | 대기 |
-| R03 | 화면 정보 | 오른쪽 패널의 CID 칸이 "TI-INS-02-T" | TI-INS-01-T | Figma 프레임 이름, IA | 대기 |
-| R04 | 디스크립션 | 3-2가 "Total / In Use / Not in Use" | 화면(v2.1.06)은 "Enabled n · Total n (Disabled n)". 디스크립션을 화면과 POL-EQP-009의 Enabled 표기에 맞춤 | Figma 버전 메모 v2.1.06 | 대기 |
-| R05 | 표기 | Enablde, Dignosctics | Enabled, Diagnostics | 오타 | 대기 |
-| R06 | 디스크립션 | 3-5 "우측의 Instrument Detail Info page 참고" | 상태값은 `glossary/status-values.csv`와 POL-EQP-001 참조 | POL-EQP-001 | 대기 |
+| R01 | 알럿 | 등록되지 않은 Module Tab 진입 시 "Alert_L_004" | Alert_004 | `policy/alert-catalog.csv`, LI-INS-01-T | 작업 중 (20261117-최고관리자-instruments) |
+| R02 | 디스크립션 | "Cureca 장비의 현황" | CURECA | `glossary/terms.csv` | 작업 중 (20261117-최고관리자-instruments) |
+| R03 | 화면 정보 | 오른쪽 패널의 CID 칸이 "TI-INS-02-T" | TI-INS-01-T | Figma 프레임 이름, IA | 작업 중 (20261117-최고관리자-instruments) |
+| R04 | 디스크립션 | 3-2가 "Total / In Use / Not in Use" | 화면(v2.1.06)은 "Enabled n · Total n (Disabled n)". 디스크립션을 화면과 POL-EQP-009의 Enabled 표기에 맞춤 | Figma 버전 메모 v2.1.06 | 작업 중 (20261117-최고관리자-instruments) |
+| R05 | 표기 | Enablde, Dignosctics | Enabled, Diagnostics | 오타 | 작업 중 (20261117-최고관리자-instruments) |
+| R06 | 디스크립션 | 3-5 "우측의 Instrument Detail Info page 참고" | 상태값은 `glossary/status-values.csv`와 POL-EQP-001 참조 | POL-EQP-001 | 작업 중 (20261117-최고관리자-instruments) |
 
 ## 변경 이력
 

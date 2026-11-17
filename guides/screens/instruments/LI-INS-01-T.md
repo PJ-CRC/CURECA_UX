@@ -15,12 +15,12 @@ rules_version:
 provisional: []
 flags: []
 source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3249-117810
-figma_region: 2.1 1차
+figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=10069-367211
+figma_region: 2.1 2차 (2026-11-17 다시 옮김)
 ---
 # LI-INS-01-T Overview Tab
 
-> 기존 화면(기존 작업방 Instruments 페이지, 2.1 1차 영역, Ver 2.1.06)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 Instruments 페이지, 2.1 1차 영역, Ver 2.1.06)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다. 2026-11-17 기존 작업방 2.1 2차 영역(Ver 2.1.17)에서 다시 옮겼습니다(바뀐 곳 있음, R037 · 20261117-최고관리자-instruments).
 
 - T/L 차이: TI-INS-01-T에 더해 Door Status Tooltip(5)과 [Unlock](Door Control) 버튼(6)이 있음
 - 관련 정책: POL-EQP-001, POL-EQP-002, POL-EQP-008, POL-EQP-009
@@ -77,11 +77,11 @@ Frame/Instrument_Status (54), Table/Filled Table Cell (25), Tag Status (16), Des
 
 | ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| R01 | 디스크립션 | "Cureca 장비의 현황" | CURECA | `glossary/terms.csv` | 대기 |
-| R02 | 디스크립션 | 3-2가 "Total / In Use / Not in Use" | 화면(v2.1.06)은 "Enabled n · Total n (Disabled n)". 화면과 POL-EQP-009의 Enabled 표기에 맞춤 | Figma 버전 메모 v2.1.06 | 대기 |
-| R03 | 표기 | Enablde, Dignosctics | Enabled, Diagnostics | 오타 | 대기 |
-| R04 | 디스크립션 | 6 "기능 활성화 조건 - 공통 UX 참고 : COMM-3-a" | Door Control 잠금 해제 조건은 POL-EQP-008 참조 | POL-EQP-008 | 대기 |
-| R05 | 문구 | Door 버튼 라벨이 화면은 "Door Control", 디스크립션은 "Unlock 버튼" | 하나로 통일 | 화면 글자와 디스크립션 6 | 대기 |
+| R01 | 디스크립션 | "Cureca 장비의 현황" | CURECA | `glossary/terms.csv` | 작업 중 (20261117-최고관리자-instruments) |
+| R02 | 디스크립션 | 3-2가 "Total / In Use / Not in Use" | 화면(v2.1.06)은 "Enabled n · Total n (Disabled n)". 화면과 POL-EQP-009의 Enabled 표기에 맞춤 | Figma 버전 메모 v2.1.06 | 작업 중 (20261117-최고관리자-instruments) |
+| R03 | 표기 | Enablde, Dignosctics | Enabled, Diagnostics | 오타 | 작업 중 (20261117-최고관리자-instruments) |
+| R04 | 디스크립션 | 6 "기능 활성화 조건 - 공통 UX 참고 : COMM-3-a" | Door Control 잠금 해제 조건은 POL-EQP-008 참조 | POL-EQP-008 | 작업 중 (20261117-최고관리자-instruments) |
+| R05 | 문구 | Door 버튼 라벨이 화면은 "Door Control", 디스크립션은 "Unlock 버튼" | 하나로 통일 | 화면 글자와 디스크립션 6 | 작업 중 (20261117-최고관리자-instruments) |
 
 ## 변경 이력
 

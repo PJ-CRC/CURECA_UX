@@ -15,12 +15,12 @@ rules_version:
 provisional: []
 flags: []
 source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3249-119585
-figma_region: 2.1 1차
+figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=10069-368209
+figma_region: 2.1 2차 (2026-11-17 다시 옮김)
 ---
 # LI-INS-02-01-P Management Popup
 
-> 기존 화면(기존 작업방 Instruments 페이지, 2.1 1차 영역, Ver 2.1.01)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 Instruments 페이지, 2.1 1차 영역, Ver 2.1.01)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다. 2026-11-17 기존 작업방 2.1 2차 영역(Ver 2.1.01)에서 다시 옮겼습니다(바뀐 곳 없음, R037 · 20261117-최고관리자-instruments).
 
 - T/L 차이: L-IOS는 조회만. T-IOS(TI-INS-02-01-P)는 Service가 Enabled를 바꿀 수 있음
 - 관련 정책: POL-EQP-005, POL-EQP-009, POL-EQP-010 / 고객 논의 CA-0001
@@ -85,10 +85,10 @@ Description Number (5), Table (4), Arrow/Chevron_Up (3), Interface/Close (1), Dr
 
 | ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| R01 | 디스크립션 | "Account Type의 Sevice일 경우만 노출" | User Type이 Service일 때만 | `glossary/terms.csv` | 대기 |
-| R02 | 정책 반영 | 조회 전용임이 디스크립션에 분명하지 않음 | L-IOS는 모든 User Type이 조회만 (Enabled 변경 없음) | POL-EQP-009 | 대기 |
+| R01 | 디스크립션 | "Account Type의 Sevice일 경우만 노출" | User Type이 Service일 때만 | `glossary/terms.csv` | 작업 중 (20261117-최고관리자-instruments) |
+| R02 | 정책 반영 | 조회 전용임이 디스크립션에 분명하지 않음 | L-IOS는 모든 User Type이 조회만 (Enabled 변경 없음) | POL-EQP-009 | 작업 중 (20261117-최고관리자-instruments) |
 | R03 | 디스크립션 | Error Rate 표시 위치 | 고객 논의 중(CA-0001) | POL-EQP-010 | 대기 (고객 논의) |
-| R04 | 디스크립션 | Datail | Detail | 오타 | 대기 |
+| R04 | 디스크립션 | Datail | Detail | 오타 | 작업 중 (20261117-최고관리자-instruments) |
 
 ## 변경 이력
 

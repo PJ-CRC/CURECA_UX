@@ -16,11 +16,11 @@ provisional: []
 flags: []
 source: asis
 figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3249-112456
-figma_region: 2.1 1차
+figma_region: 2.1 2차 (2026-11-17 다시 옮김)
 ---
 # TI-INS-02-01-P Management Popup
 
-> 기존 화면(기존 작업방 Instruments 페이지, 2.1 1차 영역, Ver 2.1.01)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 Instruments 페이지, 2.1 1차 영역, Ver 2.1.01)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다. 2026-11-17 기존 작업방 2.1 2차 영역(Ver 2.1.01)에서 다시 옮겼습니다(바뀐 곳 없음, R037 · 20261117-최고관리자-instruments).
 
 - T/L 차이: T-IOS는 Service가 Enabled를 바꿀 수 있음. L-IOS(LI-INS-02-01-P)는 조회만
 - 관련 정책: POL-EQP-005, POL-EQP-009, POL-EQP-010 / 고객 논의 CA-0001
@@ -136,14 +136,14 @@ Radio Button (18), Description Number (5), Table (4), Arrow/Chevron_Up (3), Squa
 
 | ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| R01 | 디스크립션 | "Account Type의 Sevice일 경우만 노출" | User Type이 Service일 때만 | `glossary/terms.csv` | 대기 |
-| R02 | 디스크립션 | [Cancle], Datail | [Cancel], Detail | 오타 | 대기 |
-| R03 | 정책 반영 | Enabled 변경 권한이 화면에 없음 | 변경은 User Type이 Service일 때만, Admin·User는 조회만 | POL-EQP-009, `policy/permission-matrix.csv` | 대기 |
-| R04 | 정책 반영 | 변경 가능 조건 "CURECA 구동 상태값이 Ready 및 not initialized일 경우" | 장비 통합 상태가 Ready 또는 Not Initialized이고 장비 모듈 상태가 Ready 또는 Not Initialized일 때 | POL-EQP-009 | 대기 |
-| R05 | 정책 반영 | Device Unit 설정 대상이 정해져 있지 않음 | 한 Module 안에 같은 Device Unit이 2대 이상일 때만 Device Unit별로 설정 (예: CFX96, Sealer, Sample Pretreatment 2대) | POL-EQP-009 | 대기 |
+| R01 | 디스크립션 | "Account Type의 Sevice일 경우만 노출" | User Type이 Service일 때만 | `glossary/terms.csv` | 작업 중 (20261117-최고관리자-instruments) |
+| R02 | 디스크립션 | [Cancle], Datail | [Cancel], Detail | 오타 | 작업 중 (20261117-최고관리자-instruments) |
+| R03 | 정책 반영 | Enabled 변경 권한이 화면에 없음 | 변경은 User Type이 Service일 때만, Admin·User는 조회만 | POL-EQP-009, `policy/permission-matrix.csv` | 작업 중 (20261117-최고관리자-instruments) |
+| R04 | 정책 반영 | 변경 가능 조건 "CURECA 구동 상태값이 Ready 및 not initialized일 경우" | 장비 통합 상태가 Ready 또는 Not Initialized이고 장비 모듈 상태가 Ready 또는 Not Initialized일 때 | POL-EQP-009 | 작업 중 (20261117-최고관리자-instruments) |
+| R05 | 정책 반영 | Device Unit 설정 대상이 정해져 있지 않음 | 한 Module 안에 같은 Device Unit이 2대 이상일 때만 Device Unit별로 설정 (예: CFX96, Sealer, Sample Pretreatment 2대) | POL-EQP-009 | 작업 중 (20261117-최고관리자-instruments) |
 | R06 | 알럿 | Module 상태가 Running이 아닌 이유(Error, Paused 등)로 바꿀 수 없을 때의 알럿이 없음. Alert_013은 "while the module is running" | 알럿 정의 필요 | POL-EQP-009, 헌법 8조 | 대기 (정의 필요) |
 | R07 | 디스크립션 | Error Rate 표시 위치 | 고객 논의 중(CA-0001) | POL-EQP-010 | 대기 (고객 논의) |
-| R08 | 표기 | 표 헤더 "Enable" | Enabled (L-IOS, All Tab과 같게) | LI-INS-02-01-P | 대기 |
+| R08 | 표기 | 표 헤더 "Enable" | Enabled (L-IOS, All Tab과 같게) | LI-INS-02-01-P | 작업 중 (20261117-최고관리자-instruments) |
 
 ## 변경 이력
 

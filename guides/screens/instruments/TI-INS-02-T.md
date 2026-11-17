@@ -16,11 +16,11 @@ provisional: []
 flags: []
 source: asis
 figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3249-111981
-figma_region: 2.1 1차
+figma_region: 2.1 2차 (2026-11-17 다시 옮김)
 ---
 # TI-INS-02-T All Tab
 
-> 기존 화면(기존 작업방 Instruments 페이지, 2.1 1차 영역, Ver 2.1.06)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 Instruments 페이지, 2.1 1차 영역, Ver 2.1.06)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다. 2026-11-17 기존 작업방 2.1 2차 영역(Ver 2.1.06)에서 다시 옮겼습니다(바뀐 곳 있음, R037 · 20261117-최고관리자-instruments).
 
 - T/L 차이: L-IOS(LI-INS-02-T)에는 Door 영역의 [Unlock]이 더 있음
 - 관련 정책: POL-EQP-001, POL-EQP-005, POL-EQP-008, POL-EQP-009, POL-EQP-010
@@ -193,18 +193,19 @@ Table/Filled Table Cell (26), Frame/Instrument_Status (19), Tag Status (18), Des
 
 ## 반영 대기 목록
 
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
+| ID | 타입 | 변경 전 | 변경 후 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| R01 | 표기 | Connected 항목 상태값 "Connected / Unconnected" | Connected / Disconnected | `glossary/status-values.csv` 연결 상태 | 대기 |
+| R01 | 표기 | Connected 항목 상태값 "Connected / Unconnected" | Connected / Disconnected | `glossary/status-values.csv` 연결 상태 | 작업 중 (20261117-최고관리자-instruments) |
 | R02 | 디스크립션 | 2-1 Error Rate가 남아 있음. 버전 메모 v2.1.01은 "Error Rate 제거(2-1)" | 취소선으로 이미 제거됨. 표시 위치는 고객 논의 중(CA-0001) | POL-EQP-010 | 제외 (2026-11-04, 취소선) |
-| R03 | 표기 | Module Details (Sample Preparation): STAT Storage (Upper), STAT Storage (Lower) | STAT Storage | `glossary/module-units.csv`, `archive/glossary/review-v0.md` | 대기 |
-| R04 | 표기 | Module Details (Sample Preparation): Tip Waste Bin (Upper/Lower), Film Waste Bin (Upper/Lower) | Waste Bin (Upper), Waste Bin (Lower) | 같음 | 대기 |
-| R05 | 표기 | Liquid Waste Bottle(Upper), Sample Storage(2) 등 이름과 번호 붙여 씀 | Liquid Waste Bottle (Upper), Sample Storage (2) | 이름 (번호) 띄어쓰기 | 대기 |
-| R06 | 표기 | Waste Status | Waste Bin/Bottle Status | `glossary/terms.csv` | 대기 |
+| R03 | 표기 | Module Details (Sample Preparation): STAT Storage (Upper), STAT Storage (Lower) | STAT Storage | `glossary/module-units.csv`, `archive/glossary/review-v0.md` | 작업 중 (20261117-최고관리자-instruments) |
+| R04 | 표기 | Module Details (Sample Preparation): Tip Waste Bin (Upper/Lower), Film Waste Bin (Upper/Lower) | Waste Bin (Upper), Waste Bin (Lower) | 같음 | 작업 중 (20261117-최고관리자-instruments) |
+| R05 | 표기 | Liquid Waste Bottle(Upper), Sample Storage(2) 등 이름과 번호 붙여 씀 | Liquid Waste Bottle (Upper), Sample Storage (2) | 이름 (번호) 띄어쓰기 | 작업 중 (20261117-최고관리자-instruments) |
+| R06 | 표기 | Waste Status | Waste Bin/Bottle Status | `glossary/terms.csv` | 작업 중 (20261117-최고관리자-instruments) |
 | R07 | 디스크립션 | 4-1 [Run-time Info], 4-2 [Enable setting] 설명이 남아 있음 | 취소선으로 이미 제거됨 | Figma 취소선 | 제외 (2026-11-04, 취소선) |
 | R08 | 디스크립션 | 2-2 "[Enable setting → Management] 버튼 ... 아래 조건 모두 제거 요청" 메모 | 옛 조건은 취소선으로 제거됨. [Management]를 누르면 조건 없이 Popup을 엶 | Figma 취소선, POL-EQP-009 | 제외 (2026-11-04, 취소선) |
-| R09 | 표기 | T-IO S, Account type | T-IOS, User Type | 오타, `glossary/terms.csv` | 대기 |
+| R09 | 표기 | T-IO S, Account type | T-IOS, User Type | 오타, `glossary/terms.csv` | 작업 중 (20261117-최고관리자-instruments) |
 | R10 | 표기 | LNB에 Instrument가 두 번 | 확인 필요 (디자인 화면 기준) | 화면 글자 | 대기 (확인 필요) |
+| R11 | 점검 발견 | 7 Date/Time 표기 "hh:dd:ss(시:분:초)" | hh:mm:ss | 오타, 2026-11-17 다시 옮김 | 대기 |
 
 ## 변경 이력
 
