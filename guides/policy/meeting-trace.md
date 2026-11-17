@@ -9,7 +9,7 @@
 | 8월 정책서 | `reference/policy-doc-2026-08-28.md`. 8월 초 기준이며 V2.1.01(08-07) · V2.1.04(08-21) 개정이 들어 있음. 그 뒤 회의 결정은 정책서에 없는 것이 정상 |
 | 지금 정책 | `policy/` 정책 파일 (2026-11-06 기준) |
 | 화면 | 관련 화면 MD의 `date`(Figma 화면 정보). 회의보다 뒤면 반영됐을 수 있어 내용을 확인함. **Material Setup 화면은 거의 모두 2026-06-15로 남아 있어 date로 판단할 수 없음** |
-| Common UX | 적용된 "Common UX 가이드 _1105" (g20261105-daye-J001) |
+| Common UX | 적용된 "Common UX 가이드" (g20261105-daye-J001) |
 | Teams 글 | `reference/teams/2026-11-06-policy-notes.md` (T01 ~ T15, 2026-08-16 이후, 대부분 9 ~ 10월) |
 | 같은 주제가 여러 번 | 마지막 결정을 따르고, 바뀐 순서를 "흐름" 칸에 남김 |
 
@@ -59,7 +59,7 @@
 | 1 | 06-16 | 다중 관제: L-IOS 하나를 골라 보거나 여러 L을 통합 대시보드로, 권한별 차등 없음 | T-IOS | 없음 | POL-COM-005 | 반영 |
 | 2 | 06-22 | Error 처리 후 재가동 트리거를 장비 회사에 확인, 소모품 Error는 입고 후 자동 인지 | 전체 Module | 없음 | `policy-backlog.md` 추가 12 (복구 후 정상 아니면 동작 미정) | **고객 확인** CA-0002 · CA-0010 (09-22 #49와 같은 주제) |
 | 3 | 06-30 | 프로그램 종료는 Service만, 시스템 종료는 전체 | L-IOS | 있음(로그인/로그아웃) | POL-ACC-004 | 반영 |
-| 4 | 06-30 | Service Mode별 메뉴 숨김, 기능은 보이되 안내 팝업 | L-IOS | Preset Mode(가칭) | `policy/service-mode.md` | 반영 |
+| 4 | 06-30 | L-IOS Client Mode별 메뉴 숨김, 기능은 보이되 안내 팝업 | L-IOS | Preset Mode(가칭) | `policy/client-mode.md` | 반영 |
 | 5 | 07-13 | Inventory: Dx Module이 N대면 어느 Module로 보낼지 미리 정해 필요 개수 표시 | Dx | 없음 | POL-INV-001 · 003 (Module Index별) | 반영 |
 | 6 | 07-14 | LIS: HL7 편집 불가, REST API 삭제, 쿼리 · Push 방식, T-IOS Port 20200 | SYS | LIS 1:1만 | POL-SYS-001 | 반영 |
 | 7 | 07-14 · 07-28 | 통계: 가동 시간 · 가동률 · 불량률(Module · Unit별), 소모품 사용 비용 | STA | 통계(기간) | POL-STA-004 · 006 | 반영 |
@@ -106,7 +106,7 @@
 | 48 | 09-22 | **Error 상태면 Door를 열어도 Error 유지** | EQP | 없음 | POL-EQP-004 규칙 1 (Error에서도 Paused) | **고객 확인** CA-0010 |
 | 49 | 09-22 | 사용자가 풀 수 있는 Error(소모품 부족 등)는 문을 닫으면 자동으로 Ready | EQP | 없음 | `policy-backlog.md` 추가 12 | **고객 확인** CA-0010 (Error와 Door와 함께) |
 | 50 | 09-22 | Tube Setting: 튜브 하나에 Sample Type N개, LIS Code 선택 · 중복 불가, System Code 필수 | TST | 없음 | POL-TST-009 규칙 4 ~ 6 (11-06 고침) | 반영 (11-06 답: Sample Type 선택 입력) |
-| 51 | 09-22 | Profile 수정은 Service Mode와 관계없이 같음 | ACC | 없음 | POL-ACC-009 | 반영 여부 확인 |
+| 51 | 09-22 | Profile 수정은 L-IOS Client Mode와 관계없이 같음 | ACC | 없음 | POL-ACC-009 | 반영 여부 확인 |
 | 52 | 09-23 | Trolley를 도킹하면 Run Start 전에도 Inventory 상태 · 부족 수량을 보여 줌. Event 알람은 Run Start 뒤 | INV | 없음 | POL-INV-003 규칙 2 | 반영 (POL-INV-003 규칙 3-1) |
 | 53 | 09-29 | STAT으로 검체를 넣으면 STAT Storage를 닫는 때 소모품 수량을 계산 | INV | 없음 | 없음 | 반영 (11-06: POL-INV-003 규칙 3-2) |
 | 54 | 09-30 | Test Status: Running = 검체 스캔 때, Complete = DWP 분주 완료 때 | SMP | 다름(결과 수신) | POL-SMP-002 | **확인** (어느 상태의 기준인지) |

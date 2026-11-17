@@ -8,7 +8,7 @@ type: Page
 version: 2.1.03
 date: 2026-08-21
 author: 정다예
-service_mode: []
+client_mode: []
 user_type: [Service, Admin, User]
 policies: []
 rules_version:
@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # TI-STA-07-02 소모품 및 시약 사용량 - Table
 
-> 기존 화면(작업방 Statistical Analysis 페이지, 2.1 2차 영역, Ver 2.1.03)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 Statistical Analysis 페이지, 2.1 2차 영역, Ver 2.1.03)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - T-IOS 전용 메뉴. TI-STA-07-01의 Segmented Control을 Table로 바꾼 화면. 화면 타이틀은 "Usage & Cost Trend"
 - 관련 정책: POL-STA-001, POL-STA-002, POL-STA-003, POL-STA-006, POL-TST-003, POL-INV-006, POL-COM-006
@@ -97,3 +97,4 @@ Table (26), Square (6), 1 Depth (6), 2 Depth (5), Description Number (4), Dropdo
 | 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
 | --- | --- | --- | --- | --- |
 | 2.1.03 | 2026-08-21 | (버전 메모 없음) | 정다예 | Figma 화면 정보 |
+| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

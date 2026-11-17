@@ -8,7 +8,7 @@ type: Page
 version: 2.0
 date: 2026-06-15
 author: 정다예
-service_mode: []
+client_mode: []
 user_type: [Service, Admin, User]
 policies: []
 rules_version:
@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # TI-SPT-01 Samples
 
-> 기존 화면(작업방 Sample Tracking 페이지, 2.1 2차 영역, Ver 2.0)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 Sample Tracking 페이지, 2.1 2차 영역, Ver 2.0)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - T/L 차이: IA는 짝 화면 동일(Y). 디스크립션 3 [Export] 설명이 L-IOS(LI-SPT-01)와 다름 (반영 대기 목록 4)
 - 관련 정책: POL-SMP-001, POL-SMP-002, POL-SMP-003, POL-SMP-005, POL-COM-006
@@ -195,3 +195,4 @@ Description Number (12), Table (11), Tag Status (10), Table/Filled Table Cell (1
 | --- | --- | --- | --- | --- |
 | 2.0 | 2026-06-15 | (화면 정보 기준) | 정다예 | Figma 화면 정보 |
 | 2.1.01 | | [3] Export 선택 시 노출 내용 수정 | 정다예 | Figma 버전 메모 |
+| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

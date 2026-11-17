@@ -8,7 +8,7 @@ type: Popup
 version: 2.1.06
 date: 2026-09-28
 author: 서보경
-service_mode: [Main Mode, Console Mode]
+client_mode: [Main Mode, Console Mode]
 user_type: [Service, Admin, User]
 policies: []
 rules_version:
@@ -20,7 +20,7 @@ figma_region: 2.1 1차
 ---
 # LI-INS-01-P Door Control Popup
 
-> 기존 화면(작업방 Instruments 페이지, 2.1 1차 영역, Ver 2.1.06)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 Instruments 페이지, 2.1 1차 영역, Ver 2.1.06)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - 호출 위치: Instruments Overview(LI-INS-01-T), Instruments All(LI-INS-02-T), Material Setup > Load Materials, Empty Waste Bin (`ia/ia-screens.csv`)
 - 관련 정책: POL-EQP-004, POL-EQP-008 / 임시 정책 PV-0001, POL-LOD-001
@@ -152,3 +152,4 @@ Description Number (10), Square (3), Frame/Instrument_Status (1), Interface/Lock
 | 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
 | --- | --- | --- | --- | --- |
 | 2.1.06 | 2026-09-28 | 정책 변경에 따른 UX/UI 변경 | 서보경 | Figma 버전 메모 |
+| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

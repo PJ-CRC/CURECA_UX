@@ -1,0 +1,28 @@
+{
+   "at" : "2026-11-16T18:16:26+09:00",
+   "by" : "안종범",
+   "cacheRead" : 1907473,
+   "cacheWrite" : 80365,
+   "calls" : 21,
+   "doneBy" : "Claude",
+   "fileKey" : "cDjaemHjetS7RcAHRUIMY5",
+   "fileName" : "STAgora AI Workspace",
+   "frame" : "AD-LDT-02-01-01-P",
+   "from" : "2026-11-16T18:13:31+09:00",
+   "id" : "anjongbeom-ui-macbookair-2_R014",
+   "input" : 40,
+   "kind" : "request",
+   "models" : {
+      "claude-sonnet-5-5" : 21
+   },
+   "nodeId" : "186:84233",
+   "output" : 21355,
+   "page" : "Test",
+   "pc" : "anjongbeom-ui-MacBookAir-2",
+   "reqId" : "R014",
+   "reqType" : "질문 · 그 밖",
+   "team" : "stagora",
+   "text" : "이 화면에서 새로 추가된 문구가 있다면 언어셋에 등록해줘. 이 화면은 Admin 서비스의 화면이야.",
+   "total" : 2009233,
+   "usd" : 0.9166
+}

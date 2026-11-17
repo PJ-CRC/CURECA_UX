@@ -8,7 +8,7 @@ type: Popup
 version: 2.0
 date: 2026-06-15
 author: BREX
-service_mode: [Console Mode]
+client_mode: [Console Mode]
 user_type: [Service, Admin, User]
 policies: []
 rules_version:
@@ -20,9 +20,9 @@ figma_region: SH2-MS 얼럿 수정 테스트 (2026-11-03 기준)
 ---
 # LI-TSS-DXI-08 Buffer Cartridge Cap Refill
 
-> 기존 화면(작업방 SH2-MS-얼럿 수정 테스트 페이지, Ver 2.0)을 2026-11-03에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 SH2-MS-얼럿 수정 테스트 페이지, Ver 2.0)을 2026-11-03에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
-- L-IOS 전용. Service Mode: Console Mode. LI-TSS-DXI의 [Refill Cartridge Cap]으로 여는 Popup. Flexible Extraction Module마다 Spare Cap 5개 보충을 확인
+- L-IOS 전용. L-IOS Client Mode: Console Mode. LI-TSS-DXI의 [Refill Cartridge Cap]으로 여는 Popup. Flexible Extraction Module마다 Spare Cap 5개 보충을 확인
 - 관련 정책: POL-LOD-004
 - 호출하는 화면: MS_Confirm_021
 - 다른 프레임: 세부 정의 [8313:140133](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=8313-140133) (Module N대 / 1대 Case)
@@ -91,3 +91,4 @@ Square (3), Popup/Data Popup (2), layout/spacing (2), Description Number (2), To
 | --- | --- | --- | --- | --- |
 | 2.1.12 | | Buffer Cartridge Cap 보충 (Confirm 버튼 추가), Alert / Confirm 업데이트 | BREX | Figma 버전 메모 |
 | 2.1.14 | | 대소문자 변경 (spare caps → Spare Caps) | BREX | Figma 버전 메모 |
+| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

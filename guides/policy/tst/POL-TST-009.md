@@ -11,7 +11,7 @@ date: 2026-11-06
 sources: [TI-SVS-01·TI-SVS-01-P 디스크립션 (Ver 2.1.01), MT-20260917-01, MT-20260922-01, MT-20261006-01, 2026-11-06 사용자 확인]
 provisional: []
 alerts: [Confirm_010, Confirm_012]
-data: [policy/permission-matrix.csv, policy/service-mode-matrix.csv]
+data: [policy/permission-matrix.csv, policy/client-mode-matrix.csv]
 replaced_by:
 ---
 # POL-TST-009 Tube Setting
@@ -22,7 +22,7 @@ replaced_by:
 
 ## 규칙
 
-1. Tube Setting은 User Type이 Service일 때만 씀. L-IOS는 모든 Service Mode에서 조회만 함 (POL-ACC-001).
+1. Tube Setting은 User Type이 Service일 때만 씀. L-IOS는 모든 L-IOS Client Mode에서 조회만 함 (POL-ACC-001).
 2. T-IOS에서 Tube를 추가·수정·삭제함. System Code는 필수임.
 3. 목록은 등록일 최신순으로 보여 줌.
 4. Tube 하나를 등록할 때 Sample Type은 선택 입력임. 같은 Sample Type을 여러 Tube에 넣는 것을 막지 않음 (2026-11-06 사용자 확인).
@@ -46,7 +46,7 @@ replaced_by:
 ## 근거
 
 - TI-SVS-01, TI-SVS-01-P 디스크립션
-- 권한: `policy/permission-matrix.csv` (Tube Setting Service만), `policy/service-mode-matrix.csv`
+- 권한: `policy/permission-matrix.csv` (Tube Setting Service만), `policy/client-mode-matrix.csv`
 
 ## 변경 이력
 
@@ -54,3 +54,4 @@ replaced_by:
 | --- | --- | --- | --- |
 | | 2026-11-02 | 최초 작성 | |
 | | 2026-11-06 | Sample Type 선택 입력(규칙 4), LIS Tube Type 유무에 따라 찾는 방법(규칙 5 · 6), 이유 · 질문 더함 | 회의 09-17 · 09-22 · 10-06, 사용자 확인 |
+| | 2026-11-12 | 용어 Service Mode → L-IOS Client Mode, TSS Mode → MS Mode, 데이터 경로 `policy/client-mode-matrix.csv` · `policy/client-mode.md` (규칙 뜻은 그대로) | DS-0001 (2026-11-12, 서보경) |

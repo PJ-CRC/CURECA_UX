@@ -1,0 +1,28 @@
+{
+   "at" : "2026-11-16T15:13:10+09:00",
+   "by" : "안종범",
+   "cacheRead" : 730501,
+   "cacheWrite" : 48337,
+   "calls" : 12,
+   "doneBy" : "Claude",
+   "fileKey" : "cDjaemHjetS7RcAHRUIMY5",
+   "fileName" : "STAgora AI Workspace",
+   "frame" : "GM-DAS-GR",
+   "from" : "2026-11-16T15:10:42+09:00",
+   "id" : "anjongbeom-ui-macbookair-2_R005",
+   "input" : 23,
+   "kind" : "request",
+   "models" : {
+      "claude-sonnet-5-5" : 12
+   },
+   "nodeId" : "165:5274",
+   "output" : 6523,
+   "page" : "GMCS",
+   "pc" : "anjongbeom-ui-MacBookAir-2",
+   "reqId" : "R005",
+   "reqType" : "질문 · 그 밖",
+   "team" : "stagora",
+   "text" : "GM-txt-390, GM-txt-391 두개를 변경했으면 `4-A-8. 언어셋 기록 흐름`에 따라서 리비전 이력을 남겨야지. 왜 안했어?",
+   "total" : 785384,
+   "usd" : 0.4047
+}

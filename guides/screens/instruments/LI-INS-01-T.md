@@ -8,7 +8,7 @@ type: Page
 version: 2.1.06
 date: 2026-09-28
 author: 서보경
-service_mode: [Main Mode, Console Mode, TSS Mode]
+client_mode: [Main Mode, Console Mode, MS Mode]
 user_type: [Service, Admin, User]
 policies: []
 rules_version:
@@ -20,7 +20,7 @@ figma_region: 2.1 1차
 ---
 # LI-INS-01-T Overview Tab
 
-> 기존 화면(작업방 Instruments 페이지, 2.1 1차 영역, Ver 2.1.06)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 Instruments 페이지, 2.1 1차 영역, Ver 2.1.06)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - T/L 차이: TI-INS-01-T에 더해 Door Status Tooltip(5)과 [Unlock](Door Control) 버튼(6)이 있음
 - 관련 정책: POL-EQP-001, POL-EQP-002, POL-EQP-008, POL-EQP-009
@@ -83,3 +83,4 @@ Frame/Instrument_Status (54), Table/Filled Table Cell (25), Tag Status (16), Des
 | 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
 | --- | --- | --- | --- | --- |
 | 2.1.06 | 2026-09-28 | Module 상태값에 Paused 추가. 상태값 표기 순서 변경. 상단 Enabled 요약 영역 UI 변경. 단어 변경 Enable → Enabled. Door Control 버튼 UI 변경 | 서보경 | Figma 버전 메모 |
+| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

@@ -14,7 +14,7 @@
 | 4 | [Unlock all doors]는 장비 통합 상태가 Ready, Error, Paused, Not Initialized일 때만 활성화 | 2026-11-02 | `policy/equipment-states.md` 5절 |
 | 5 | Check Test Protocol 단계는 Setting에서 사용으로 설정했을 때만 Run 준비 단계에 나온다 | 2026-10-30 | `policy/permission.md` 3절 **닫힘: POL-TST-001 (2026-11-02)** |
 | 6 | 최초 설치 때는 Service 계정만 있고, Service User가 고객용 Admin 계정을 만들어 전달한다 | 2026-10-30 | `policy/permission.md` 5절 **닫힘: POL-ACC-002 (2026-11-02)** |
-| 7 | Service Mode별 메뉴·기능 (Main Mode / Console Mode / TSS Mode) | 2026-10-30 | `policy/service-mode.md` |
+| 7 | L-IOS Client Mode별 메뉴·기능 (Main Mode / Console Mode / MS Mode) | 2026-10-30 | `policy/client-mode.md` |
 | 8 | User Type별 권한 | 2026-10-30 | `policy/permission-matrix.csv` **닫힘: POL-ACC-001 (2026-11-02)** |
 | 9 | 검사군: RP(RP1~RVM 7개), GI(GI-V~H.ClariR 8개), HPV(3개), RTI(STI-12~STI-7e 12개)와 검사군별 사용 가능 검체 타입. 8월 정책서 "PCR Regents 조합 검사 정책"(호흡기 4개·소화기 4개만 조합, STI-12·HPV28 단독)과 다르므로 TST 정책을 쓸 때 조합 규칙을 판정받아 반영 | 2026-11-02 (원본 확인) | `glossary/test-items.csv`, `glossary/sample-types.csv`, 씨젠 검사 항목 261022 **닫힘: POL-TST-010 (2026-11-02, HPV·RTI 조합은 확인 중)** |
 | 10 | 검사 항목별 추출 장치(M9600, STARlet) 사용 가능 여부는 기본값이며 T-IOS에서 바꿀 수 있고, 최소 1개는 사용 가능이어야 한다 | 2026-11-02 (원본 확인) | `glossary/test-items.csv`, 씨젠 검사 항목 261022 > 검사 항목별 추출 장치 매핑 정보 **닫힘: POL-TST-005 (2026-11-02)** |
@@ -30,7 +30,7 @@
 | --- | --- | --- | --- |
 | 1 | "Admin은 Setting 메뉴 접근 불가" | Admin은 Tube Setting, Assay Pack Setting을 뺀 Setting 하위 메뉴를 쓴다 | `policy/permission-matrix.csv` **닫힘: POL-ACC-001 (2026-11-02)** |
 | 2 | 종료 옵션: Service, Admin은 로그아웃·프로그램 종료·시스템 종료 | Service는 [Exit](프로그램·시스템 종료), Admin과 User는 [Shut Down](시스템 종료) | Common UX COMM-3-a(1/2) **닫힘: POL-ACC-004 (2026-11-02)** |
-| 3 | "Preset Mode(가칭)", "설치 모드" | Service Mode (Main Mode / Console Mode / TSS Mode) | 용어집 |
+| 3 | "Preset Mode(가칭)", "설치 모드" | L-IOS Client Mode (Main Mode / Console Mode / MS Mode) | 용어집 |
 | 4 | Session Timeout "Idle(Ready)" | Ready | 2026-10-30 결정 (Idle → Ready) **닫힘: POL-ACC-008 (2026-11-02)** |
 | 5 | "Not Tested (가칭)" | Not Tested | 용어집 |
 | 6 | 계정 유형, 등급, Account Type, 소문자 user/admin/service | User Type, Service / Admin / User | 용어집 **닫힘: POL-ACC-001 (2026-11-02)** |

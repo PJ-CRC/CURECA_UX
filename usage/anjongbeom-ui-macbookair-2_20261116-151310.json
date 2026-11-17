@@ -1,0 +1,28 @@
+{
+   "at" : "2026-11-16T15:13:10+09:00",
+   "by" : "안종범",
+   "cacheRead" : 624018,
+   "cacheWrite" : 23417,
+   "calls" : 10,
+   "doneBy" : "Claude",
+   "fileKey" : "",
+   "fileName" : "",
+   "frame" : "",
+   "from" : "2026-11-16T15:12:30+09:00",
+   "id" : "anjongbeom-ui-macbookair-2_20261116-151310",
+   "input" : 19,
+   "kind" : "work",
+   "models" : {
+      "claude-sonnet-5-5" : 10
+   },
+   "nodeId" : "",
+   "output" : 5000,
+   "page" : "",
+   "pc" : "anjongbeom-ui-MacBookAir-2",
+   "reqId" : "",
+   "reqType" : "",
+   "team" : "stagora",
+   "text" : "질문 · 그 밖: 언어셋 기록 (R005)",
+   "total" : 652454,
+   "usd" : 0.2685
+}

@@ -1,0 +1,46 @@
+{
+  "id": "anjongbeom-ui-macbookair-2-local_R015",
+  "kind": "request",
+  "team": "stagora",
+  "status": "완료",
+  "at": "2026-11-16T18:31:59+09:00",
+  "createdAt": "2026-11-16T18:31:44+09:00",
+  "by": "안종범",
+  "doneBy": "Claude",
+  "pc": "anjongbeom-ui-MacBookAir-2.local",
+  "reqId": "R015",
+  "fileKey": "cDjaemHjetS7RcAHRUIMY5",
+  "fileName": "STAgora AI Workspace",
+  "page": "Test-안종범",
+  "frame": "AD-LDT-02-01-01-P",
+  "nodeId": "186:84233",
+  "type": "질문 · 그 밖",
+  "layout": "",
+  "text": "너 왜 'This version takes effect at 00:00 ($UTC+9$) on the selected date.' 이 문구는 언어셋에 추가 안햇어?",
+  "note": "R014에서 이 문구는 새로 등록하지 않았습니다. 언어셋 Admin 시트에 이미 같은 문구가 있다고 보고 「이미 있어 등록하지 않음」으로 넘겼습니다.\n- 이미 있는 행: Admin-txt-1136 (ko 「본 버전은 선택한 일자의 00:00 (UTC+9)에 발효됩니다.」 / en 「This version takes effect at 00:00 ($UTC+9$) on the selected date.」, Menu 「Add Privacy Policy」, CID AD-PRV-01-01-P, v1.90)\n- 놓친 점: 같은 문구라도 이 화면(AD-LDT-02-01-01-P, 이용약관·개인정보 수집·이용 동의 추가)의 CID · Menu로는 따로 연결돼 있지 않은데, 그 확인 없이 건너뛰었습니다. 새 문구 14건에는 이 화면 CID를 붙였으므로 일관성이 없었습니다.\n- 이번 요청에서는 언어셋을 고치지 않았습니다(질문 답변만).\n작업 기준: 작업규칙 STAgora 작업규칙 · 기준데이터 glossary(언어셋)",
+  "shot": "shots/anjongbeom-ui-macbookair-2-local_R015.jpg",
+  "shots": [
+    {
+      "file": "shots/anjongbeom-ui-macbookair-2-local_R015.jpg",
+      "nodeId": "186:84233",
+      "frame": "AD-LDT-02-01-01-P"
+    }
+  ],
+  "images": [],
+  "frames": [],
+  "marks": [],
+  "ask": {
+    "q": "이 문구를 Admin 시트에 새 행(v2.32, AD-LDT-02-01-01-P)으로 추가할까요?",
+    "options": [
+      {
+        "label": "새 행으로 추가"
+      },
+      {
+        "label": "기존 1136 그대로 두기",
+        "action": "done"
+      }
+    ],
+    "free": true
+  },
+  "replies": []
+}

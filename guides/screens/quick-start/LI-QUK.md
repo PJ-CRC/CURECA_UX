@@ -8,7 +8,7 @@ type: Popup
 version: 2.1.11
 date: 2026-10-08
 author: 정다예
-service_mode: [Main Mode, Console Mode]
+client_mode: [Main Mode, Console Mode]
 user_type: [Service, Admin, User]
 policies: []
 rules_version:
@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # LI-QUK Quick Start
 
-> 기존 화면(작업방 Run/Quick Start 페이지, 2.1 2차 영역, Ver 2.1.11)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 Run/Quick Start 페이지, 2.1 2차 영역, Ver 2.1.11)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - L-IOS 전용. Run Preparation 단계(LI-RUN-01 ~ LI-RUN-04) 대신 요약 Popup 하나로 확인하고 검사 실행. 진입 경로는 LNB > Quick Start, Test Status > Quick Start
 - 관련 정책: POL-EQP-003 (Quick Start 버튼 활성 조건), POL-SMP-005, POL-SMP-007, POL-INV-002, POL-INV-003, POL-INV-005
@@ -156,3 +156,4 @@ Table (11), Table/Filled Table Cell (10), Description Number (9), Interface/Chec
 | --- | --- | --- | --- | --- |
 | 2.1.04 | | 유효기한 상태 수정 (Under 30 Days 삭제). 유효기간 초과 시약 안내 문구 추가 | 정다예 | Figma 버전 메모 |
 | 2.1.11 | 2026-10-08 | 폐기물 상태 정보 추가 | 정다예 | Figma 버전 메모 |
+| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

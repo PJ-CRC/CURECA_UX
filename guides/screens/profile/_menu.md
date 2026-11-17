@@ -10,7 +10,7 @@ delivered_date:
 ---
 # Profile
 
-- 2026-11-02: 작업방 Profile / Information 페이지의 2.1 2차 영역에서 기획 화면 4개를 옮김
+- 2026-11-02: 기존 작업방 Profile / Information 페이지의 2.1 2차 영역에서 기획 화면 4개를 옮김
 
 ## 상태 이력
 

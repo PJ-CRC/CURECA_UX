@@ -1,0 +1,40 @@
+{
+  "id": "anjongbeom-ui-macbookair-2-local_R017",
+  "kind": "request",
+  "team": "stagora",
+  "status": "완료",
+  "at": "2026-11-17T11:00:52+09:00",
+  "createdAt": "2026-11-17T11:00:27+09:00",
+  "by": "안종범",
+  "doneBy": "Claude",
+  "pc": "anjongbeom-ui-MacBookAir-2.local",
+  "reqId": "R017",
+  "fileKey": "cDjaemHjetS7RcAHRUIMY5",
+  "fileName": "STAgora AI Workspace",
+  "page": "GMCS",
+  "frame": "",
+  "nodeId": "",
+  "type": "질문 · 그 밖",
+  "layout": "",
+  "text": "1. 오늘 화면 만들 때 언어셋 내 GMCS 시트만 확인했어? 아니면 모든 시트를 확인했어?\n1-a. GMCS 시트만 확인했다면 해당 시트 내 하단의 Common 영역까지 확인했어?",
+  "note": "질문 답변 (Figma · 언어셋은 고치지 않음)\n1. 확인 범위: R016 때 3.GMCS 시트(하단 Common 영역 포함)에서 Login · ID · Password · Search · Reset · Cancel · Print · Close 등 14건을 Common-* ID로 재사용했습니다. 그러나 모든 시트를 대조하지는 않았습니다. 제 처리 기록상 다른 시트와의 중복 검사는 없었습니다.\n2. 지금 다시 대조해 보니 이미 있는데 새로 추가한 것이 있습니다.\n- GM-btn-.. 「생성 완료 / Generated」(GM-txt-519) → Common-btn-161과 같은 문구\n- GM-txt-513 「검체 ID / Sample ID」 → LA-title-54(5.LA 시트)와 같은 문구\n- GM-txt-516 「검사명 / Test name」 → 5.LA 시트 344행 부근에 같은 문구(검사명)\n- GM-btn-521 「조회 / View」는 Common-btn-253(보기 / View)과 한글이 달라 별개로 둠\n3. 나머지(Test date, Zoom in/out, Copies, Report ID, Reprint, Requested by 등)는 다른 시트에서 같은 영어 문구를 찾지 못했습니다.\n- 한계: 영어 문구 정확히 일치만 봤습니다. 비슷한 뜻(예: 검사일, 의뢰 병원)은 한글 기준 점검이 더 필요합니다.\n작업 기준: 작업규칙 STAgora 작업규칙 · 정책서 없음 · UX가이드 없음 · 기준데이터 기준데이터(언어셋) · 화면 정의서 없음",
+  "shot": "",
+  "shots": [],
+  "images": [],
+  "frames": [],
+  "marks": [],
+  "ask": {
+    "q": "중복 3건(생성 완료 · 검체 ID · 검사명)을 기존 Common/LA ID로 바꾸고 GM 행을 지울까요?",
+    "options": [
+      {
+        "label": "기존 ID로 바꾸기"
+      },
+      {
+        "label": "그대로 두기",
+        "action": "done"
+      }
+    ],
+    "free": true
+  },
+  "replies": []
+}

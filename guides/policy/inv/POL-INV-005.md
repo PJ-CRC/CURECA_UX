@@ -27,7 +27,7 @@ replaced_by:
 2. 만재 센서가 감지하지 않았으면 계산값이 100% 이상이어도 99%로 보여 주고 상태는 Almost Full임.
 3. 최대 개수에 이르기 전에 만재 센서가 감지하면 바로 100%, Full로 바꿈.
 4. 만재 센서가 없는 Waste Bin/Bottle은 계산값이 100%에 이르면 100%, Full로 바꿈.
-5. 비움 처리는 L-IOS의 Material Setup > Empty Waste Bin에서 [Confirm Empty]로 하며, 지금은 Console Mode에서만 제공함 (`policy/service-mode-matrix.csv`). 그때부터 누적 사용 개수를 0부터 다시 셈.
+5. 비움 처리는 L-IOS의 Material Setup > Empty Waste Bin에서 [Confirm Empty]로 하며, 지금은 Console Mode에서만 제공함 (`policy/client-mode-matrix.csv`). 그때부터 누적 사용 개수를 0부터 다시 셈.
 6. T-IOS는 원격 관제용이라 비움 처리 기능을 제공하지 않음 (POL-COM-001).
 7. Waste Bin/Bottle Tab은 Waste Bin이나 Liquid Waste Bottle이 있는 Module을 모두 보여 주며, Unit 칸에는 Module마다 가진 Unit 이름(예: Waste Bin (Upper), Liquid Waste Bottle (Lower))을 보여 줌 (`glossary/module-units.csv`).
 8. Waste Bin/Bottle Tab은 Module 유형별 카드로 묶고, 카드 상태는 그 안의 Waste Bin/Bottle 중 가장 높은 상태로 보여 줌 (Full > Almost Full > Available). 카드 순서는 Sample Preparation, High-throughput Extraction, Flexible Extraction, PCR Setup, Plate Sealing, Universal PCR이고, 상세는 Module Index 오름차순임.
@@ -56,3 +56,4 @@ replaced_by:
 | | 2026-11-03 | 비움 처리 위치, T-IOS 미제공, Liquid Waste Bottle 포함 정함 (IV9) | 사용자 확인 |
 | | 2026-11-03 | 비움 처리는 우선 Console Mode에서만 (IV9-a) | 사용자 확인, CA-0007 |
 | | 2026-11-06 | Sealer Waste Bin 최대 수용 개수 20장 예시, 99% 규칙의 이유와 최신임을 남김 | 사용자 확인 |
+| | 2026-11-12 | 용어 Service Mode → L-IOS Client Mode, TSS Mode → MS Mode, 데이터 경로 `policy/client-mode-matrix.csv` · `policy/client-mode.md` (규칙 뜻은 그대로) | DS-0001 (2026-11-12, 서보경) |

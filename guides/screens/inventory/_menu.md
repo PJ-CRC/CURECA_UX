@@ -10,7 +10,7 @@ delivered_date:
 ---
 # Inventory
 
-- 2026-11-02: 작업방 Inventory 페이지의 2.1 2차 영역에서 기획 화면 16개를 옮김. 상태 칸은 아직 기록하지 않음
+- 2026-11-02: 기존 작업방 Inventory 페이지의 2.1 2차 영역에서 기획 화면 16개를 옮김. 상태 칸은 아직 기록하지 않음
 - 작성자: 서보경 (Waste Bin/Bottle Tab TI/LI-IVT-05-T는 정다예)
 - LI-IVT-03-T-P, LI-IVT-04-T-P는 IA에서 Run 메뉴 아래에도 중복으로 있음. 파일은 여기에만 둠. Run 페이지에도 같은 CID 프레임(Ver 2.1.11, 정다예)이 있어 두 파일에 비교를 적음
 - Item details Popup 프레임 TI-IVT-04-T-P, LI-IVT-04-T-P는 프레임 이름과 화면 정보 CID가 "-04-T"로 되어 있음 (반영 대기 목록)

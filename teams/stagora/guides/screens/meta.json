@@ -232,7 +232,7 @@
                       "statistical-analysis",
                       "material-setup"
                   ],
-    "request":  ".history/guides/screens의 내용을 기반으로 화면 정의서 작성(상세 내용 구성은 이미지 참고)",
+    "request":  ".history/teams/stagora/guides/screens의 내용을 기반으로 화면 정의서 작성(상세 내용 구성은 이미지 참고)",
     "scope":  "참고 파일",
     "sources":  [
                     "README.md",
@@ -439,7 +439,7 @@
                     "material-setup/LI-TSS-WBM-P.md",
                     "material-setup/LI-TSS-WBM.md"
                 ],
-    "summary":  "CURECA_AI 저장소의 화면설계서(screens/)를 원본 파일 그대로 관리합니다(.history/guides/screens). 메뉴마다 CID 화면, 화면마다 정보 · 임시 정책 · 반영 대기 목록이 보입니다.",
+    "summary":  "CURECA_AI 저장소의 화면설계서(screens/)를 원본 파일 그대로 관리합니다(.history/teams/stagora/guides/screens). 메뉴마다 CID 화면, 화면마다 정보 · 임시 정책 · 반영 대기 목록이 보입니다.",
     "title":  "화면 정의서",
     "updatedAt":  "2026-11-04T11:01:28+09:00",
     "view":  "screens",

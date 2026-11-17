@@ -11,7 +11,7 @@ date: 2026-11-02
 sources: [TI-STN-08·TI-STN-08-P 디스크립션 (Ver 0.3.0·0.4.0, 2026-10-22), LI-STN-08 디스크립션]
 provisional: []
 alerts: [Alert_039, Alert_040, Alert_041, Alert_042, Confirm_026, Confirm_028, Confirm_029, Confirm_030]
-data: [policy/permission-matrix.csv, policy/service-mode-matrix.csv, reference/customer/assay-pack/README.md]
+data: [policy/permission-matrix.csv, policy/client-mode-matrix.csv, reference/customer/assay-pack/README.md]
 replaced_by:
 ---
 # POL-TST-008 Assay Pack 관리
@@ -23,7 +23,7 @@ replaced_by:
 
 ## 규칙
 
-1. Assay Pack Setting은 User Type이 Service일 때만 쓰며, L-IOS는 Main Mode에서 조회만 함 (POL-ACC-001, `policy/service-mode-matrix.csv`).
+1. Assay Pack Setting은 User Type이 Service일 때만 쓰며, L-IOS는 Main Mode에서 조회만 함 (POL-ACC-001, `policy/client-mode-matrix.csv`).
 2. 등록([Import])은 T-IOS에서 JSON 파일로 하며 여러 파일을 한 번에 올릴 수 있음. JSON이 아니면 Alert_041, 양식이 맞지 않으면 Alert_040을 보여 주고 아무것도 등록하지 않음.
 3. 같은 File type, Product Name, 버전의 파일이 이미 있으면 Confirm_028로 덮어쓸지 물음.
 4. 등록하면 그 제품의 최신 버전이 자동으로 Active가 되고 Alert_039를 보여 줌.
@@ -38,10 +38,11 @@ replaced_by:
 ## 근거
 
 - TI-STN-08, TI-STN-08-P 디스크립션 (2026-10-22). TI-STN-08 정책 프레임은 아직 옮기지 않음
-- 권한: `policy/permission-matrix.csv` (Assay Pack Setting Service만), `policy/service-mode-matrix.csv` (Main Mode만)
+- 권한: `policy/permission-matrix.csv` (Assay Pack Setting Service만), `policy/client-mode-matrix.csv` (Main Mode만)
 
 ## 변경 이력
 
 | 버전 | 날짜 | 내용 | 근거 (PD, PV, CR, ADR) |
 | --- | --- | --- | --- |
 | | 2026-11-02 | 최초 작성 | |
+| | 2026-11-12 | 용어 Service Mode → L-IOS Client Mode, TSS Mode → MS Mode, 데이터 경로 `policy/client-mode-matrix.csv` · `policy/client-mode.md` (규칙 뜻은 그대로) | DS-0001 (2026-11-12, 서보경) |

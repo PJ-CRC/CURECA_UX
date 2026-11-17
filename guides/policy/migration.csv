@@ -11,7 +11,7 @@
 ,,,POL-EQP-004,새로 씀 (반영 대기 추가할 것 3),2026-11-02,
 ,,,POL-EQP-005,새로 씀 (화면 디스크립션),2026-11-02,
 ,,,POL-EQP-007,새로 씀 (씨젠 경광등 시나리오),2026-11-02,
-"Event, System, 사용자 및 권한",계정 유형 및 권한,POL-SYS-01,POL-ACC-001,옮김 (Admin Setting 접근 정정),2026-11-02,Preset Mode(가칭)는 Service Mode로 policy/service-mode.md
+"Event, System, 사용자 및 권한",계정 유형 및 권한,POL-SYS-01,POL-ACC-001,옮김 (Admin Setting 접근 정정),2026-11-02,Preset Mode(가칭)는 L-IOS Client Mode로 policy/client-mode.md
 로그인/로그아웃,계정 생성,POL-LOG-01,POL-ACC-002,옮김,2026-11-02,
 로그인/로그아웃,초기 비밀번호 변경,POL-LOG-02,POL-ACC-003,옮김,2026-11-02,
 로그인/로그아웃,아이디 생성 조건,POL-LOG-03,(아래 줄로 옮김),2026-11-02,

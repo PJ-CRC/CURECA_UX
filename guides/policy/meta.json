@@ -70,7 +70,7 @@
     "modules/universal-pcr.md",
     "permission.md",
     "policy-backlog.md",
-    "service-mode.md",
+    "client-mode.md",
     "smp/POL-SMP-001.md",
     "smp/POL-SMP-002.md",
     "smp/POL-SMP-003.md",
@@ -242,14 +242,14 @@
     "integrated-state-transitions.csv",
     "permission.md",
     "permission-matrix.csv",
-    "service-mode.md",
-    "service-mode-matrix.csv",
+    "client-mode.md",
+    "client-mode-matrix.csv",
     "warning-light.csv",
     "policy-backlog.md",
     "meeting-trace.md",
     "migration.csv"
   ],
-  "summary": "CURECA_AI 저장소의 정책서(policy/)를 원본 파일 그대로 관리합니다(.history/guides/policy). 영역마다 대분류, 정책 하나가 항목이며 기준 자료(알럿 · 권한 · Service Mode · 장비 상태 등)는 표로 보입니다.",
+  "summary": "CURECA_AI 저장소의 정책서(policy/)를 원본 파일 그대로 관리합니다(.history/guides/policy). 영역마다 대분류, 정책 하나가 항목이며 기준 자료(알럿 · 권한 · L-IOS Client Mode · 장비 상태 등)는 표로 보입니다.",
   "title": "정책서",
   "titles": {
     "alert-catalog-ms.csv": "알럿 카탈로그 (Material Setup) · alert-catalog-ms.csv",
@@ -257,9 +257,9 @@
     "integrated-state-transitions.csv": "장비 통합 상태 전이 · integrated-state-transitions.csv",
     "migration.csv": "정책 ID 대응 · migration.csv",
     "permission-matrix.csv": "권한 매트릭스 · permission-matrix.csv",
-    "service-mode-matrix.csv": "Service Mode 매트릭스 · service-mode-matrix.csv",
+    "client-mode-matrix.csv": "L-IOS Client Mode 매트릭스 · client-mode-matrix.csv",
     "warning-light.csv": "경광등 · warning-light.csv"
   },
-  "updatedAt": "2026-11-12T00:34:33.221Z",
-  "note": "2026-11-12 CURECA_AI 새 흐름 구조로 맞춤(이 PC). 예전 수정본은 _rev_before_20261112/"
+  "updatedAt": "2026-11-17T06:52:42.818Z",
+  "note": "2026-11-17 CURECA_AI_20261117로 전부 교체"
 }

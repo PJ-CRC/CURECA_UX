@@ -46,6 +46,8 @@ replaced_by:
 12. [Remove]는 위치 스캔 Storage에만 있음. MB Tube Storage는 안의 BCR 장치가 위치를 읽어 관리하고, Tip/PCR Plate Storage는 순서가 없는 같은 재료라 [Remove]를 두지 않음 (POL-MAT-004 규칙 8).
 13. [Done]을 누르거나 Storage를 물리적으로 닫으면 저장하고 Load Materials 화면으로 돌아감 (Toast "DX storage loading is complete."). 저장에 실패하면 MS_Alert_032.
 14. Required Quantity 버튼은 Instrument 스케줄에 따라 이 Storage(Index)에 필요한 수량을 보여 주며, 적재를 막지 않음.
+15. MB Tube Storage는 MB Tube를 5개까지 넣음. 원래 10칸이지만 Buffer Cartridge 입고 단위(5)에 맞춰 남은 5칸의 입구를 막아 씀 (MT-20260819-01, MT-20260820-01).
+16. Dx Storage의 칸 수는 장비 모델에 따라 다름(표준형은 기본 개수, 맞춤형은 최대 개수. 예: DWP 5칸 · 6칸). 칸 수는 하드웨어에서 관리하고, 화면은 장비가 올려 주는 값을 그대로 보여 줌 (MT-20260819-01, MT-20260820-01).
 
 ## 예외
 
@@ -63,3 +65,4 @@ replaced_by:
 | 버전 | 날짜 | 내용 | 근거 (PD, PV, CR, ADR) |
 | --- | --- | --- | --- |
 | | 2026-11-03 | 최초 작성 (이전 ID: 팀원 POL-DCK-02) | |
+| | 2026-11-06 | MB Tube 5개(규칙 15), Dx Storage 칸 수는 모델별 · 장비 값 그대로(규칙 16) | MT-20260819-01, MT-20260820-01 |

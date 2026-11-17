@@ -27,7 +27,7 @@ replaced_by:
 3. 장비 통합 상태가 Ready 또는 Not Initialized일 때만 Session Timeout을 적용함.
 4. 시간이 지나 세션이 끝난 뒤 사용자가 화면을 조작하면 Alert_016을 보여 주고 로그인 화면으로 이동함.
 5. 설정을 바꾸면 이미 로그인한 세션은 기존 값을 유지하고, 바꾼 뒤 새로 로그인한 세션부터 새 값을 씀.
-6. 설정은 System Setting에서 User Type이 Service 또는 Admin일 때 바꿈. L-IOS는 Main Mode에서만 바꿈 (`policy/service-mode-matrix.csv`).
+6. 설정은 System Setting에서 User Type이 Service 또는 Admin일 때 바꿈. L-IOS는 모든 L-IOS Client Mode(Main Mode, Console Mode, MS Mode)에서 바꿈 (`policy/client-mode-matrix.csv`).
 
 ## 예외
 
@@ -44,3 +44,4 @@ replaced_by:
 | 버전 | 날짜 | 내용 | 근거 (PD, PV, CR, ADR) |
 | --- | --- | --- | --- |
 | | 2026-11-02 | 최초 작성 (이전 ID: 팀원 POL-LOG-05) | |
+| | 2026-11-12 | 규칙 6: L-IOS에서 설정을 바꾸는 모드를 Main Mode만 → 모든 L-IOS Client Mode로 (L-IOS Client 시스템별 기능 분류의 System Setting이 All 한 행, 세 모드 O). 용어 · 데이터 경로 바꿈 | DS-0001 (2026-11-12, 서보경) |

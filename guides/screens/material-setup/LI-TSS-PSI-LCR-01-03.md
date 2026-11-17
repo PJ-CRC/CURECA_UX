@@ -8,7 +8,7 @@ type: Page
 version: 2.0
 date: 2026-06-15
 author: BREX
-service_mode: [TSS Mode]
+client_mode: [Console Mode]
 user_type: [Service, Admin, User]
 policies: []
 rules_version:
@@ -20,9 +20,9 @@ figma_region: SH2-MS 얼럿 수정 테스트 (2026-11-03 기준)
 ---
 # LI-TSS-PSI-LCR-01-03 Scan loaded consumables/reagents
 
-> 기존 화면(작업방 SH2-MS-얼럿 수정 테스트 페이지, Ver 2.0)을 2026-11-03에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 SH2-MS-얼럿 수정 테스트 페이지, Ver 2.0)을 2026-11-03에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
-- L-IOS 전용. Service Mode: TSS Mode. Load Consumables and Reagents into Tray Step 3 (Consumable/Reagent 스캔 → Tray slot 스캔)
+- L-IOS 전용. L-IOS Client Mode: Console Mode. Load Consumables and Reagents into Tray Step 3 (Consumable/Reagent 스캔 → Tray slot 스캔)
 - 관련 정책: POL-MAT-002, POL-MAT-003, POL-MAT-004, POL-MAT-005, POL-MAT-007
 - 호출하는 화면: LI-TSS-CMP-01 (Remove), LI-TSS-PSI-LCR-01-03-01 (Step 1. Guide), LI-TSS-PSI-LCR-01-04, MS_Confirm_010, MS_Confirm_011, MS_Alert_001, MS_Alert_003, MS_Alert_004, MS_Alert_016, MS_Alert_020, MS_Alert_021, MS_Alert_032
 - 다른 프레임: 세부 정의 [8011:133851](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=8011-133851) (LI-TSS-PSI-01 [Skip] Case, 화면 정보 패널 Ver 2.0)
@@ -205,3 +205,4 @@ Description Number (5), Button/Secondary_1Button_44 (2), Frame (1), Button/Terti
 | 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 (CR, PD, PV, 정책 ID) |
 | --- | --- | --- | --- | --- |
 | 2.1.05 | | 정책 변경: Prep Consumable 투입 항목 추가 (PK/IC 정책 변경), Reagent 영역 스크롤 추가 | BREX | Figma 버전 메모 |
+| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`). 노출 모드 값을 새 기능 표대로 고침 | 서보경 | DS-0001 |

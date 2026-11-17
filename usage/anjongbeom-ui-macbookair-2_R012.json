@@ -1,0 +1,28 @@
+{
+   "at" : "2026-11-16T16:34:26+09:00",
+   "by" : "안종범",
+   "cacheRead" : 31135,
+   "cacheWrite" : 20212,
+   "calls" : 1,
+   "doneBy" : "Claude",
+   "fileKey" : "cDjaemHjetS7RcAHRUIMY5",
+   "fileName" : "STAgora AI Workspace",
+   "frame" : "GM-DAS-GR",
+   "from" : "2026-11-16T16:34:19+09:00",
+   "id" : "anjongbeom-ui-macbookair-2_R012",
+   "input" : 2,
+   "kind" : "request",
+   "models" : {
+      "claude-sonnet-5-5" : 1
+   },
+   "nodeId" : "165:5274",
+   "output" : 448,
+   "page" : "GMCS",
+   "pc" : "anjongbeom-ui-MacBookAir-2",
+   "reqId" : "R012",
+   "reqType" : "질문 · 그 밖",
+   "team" : "stagora",
+   "text" : "왜 굳이 그런 방식으로 되는거지? xlsx가 아니라 csv로 되는 이유는 클로드가 편집하기 좋아서?",
+   "total" : 51797,
+   "usd" : 0.0916
+}

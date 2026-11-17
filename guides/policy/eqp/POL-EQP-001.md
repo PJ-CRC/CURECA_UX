@@ -1,6 +1,6 @@
 ---
 id: POL-EQP-001
-title: CURECA Status 구조
+title: Hardware Status 구조
 summary: CURECA 상태는 장비 통합 상태, 장비 모듈 상태, 검사 장치 상태의 3단계와 Unit Type별 상태로 나뉨
 domain: EQP
 menus: [Dashboard, Instruments]
@@ -14,11 +14,11 @@ alerts: []
 data: [glossary/status-values.csv, policy/equipment-states.md]
 replaced_by:
 ---
-# POL-EQP-001 CURECA Status 구조
+# POL-EQP-001 Hardware Status 구조
 
 ## 정의
 
-- CURECA Status: Instrument 자체의 상태. Sample·재고·Event처럼 소프트웨어가 관리하는 System Status와 구분함.
+- Hardware Status: Instrument 자체의 상태. Sample·재고·Event처럼 소프트웨어가 관리하는 System Status와 구분함.
 - 상태값의 코드명, UI 표기, 정의는 `glossary/status-values.csv`가 기준임. 이 정책은 상태의 단계와 관계만 정함.
 
 | 단계 | 대상 | 상태값 |
@@ -52,3 +52,4 @@ replaced_by:
 | 버전 | 날짜 | 내용 | 근거 (PD, PV, CR, ADR) |
 | --- | --- | --- | --- |
 | | 2026-11-02 | 최초 작성 (8월 정책서 "CURECA 전체 구동 상태값 정의", "모듈 상태값 정의", "디바이스 상태값 정의"를 씨젠 상태 정보 261021 기준으로 정리) | |
+| | 2026-11-12 | 상태 분류 이름 CURECA Status → Hardware Status로 바꿈 (뜻 그대로). CURECA Status는 장비 통합 상태의 영문 · 화면 라벨로 씀 | DS-0003 |

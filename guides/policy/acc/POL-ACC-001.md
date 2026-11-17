@@ -1,7 +1,7 @@
 ---
 id: POL-ACC-001
 title: User Type과 권한
-summary: 사용자는 Service, Admin, User 세 User Type으로 나뉘며 메뉴와 기능은 권한 매트릭스, Service Mode, 제품 제한이 모두 허용할 때만 보임
+summary: 사용자는 Service, Admin, User 세 User Type으로 나뉘며 메뉴와 기능은 권한 매트릭스, L-IOS Client Mode, 제품 제한이 모두 허용할 때만 보임
 domain: ACC
 menus: [Setting, Instruments, Login]
 cids: [TI-STN-05, TI-STN-05-01-P, TI-STN-05-03-P]
@@ -11,7 +11,7 @@ date: 2026-11-05
 sources: [정책서_2026.08.28 > Event, System, 사용자 및 권한, Common UX V2.2.00 COMM-3-a(1/2), 2026-10-30 권한 결정, PV-0002 (2026-11-05 승인)]
 provisional: []
 alerts: []
-data: [policy/permission-matrix.csv, policy/service-mode-matrix.csv, policy/permission.md]
+data: [policy/permission-matrix.csv, policy/client-mode-matrix.csv, policy/permission.md]
 replaced_by:
 ---
 # POL-ACC-001 User Type과 권한
@@ -24,11 +24,11 @@ replaced_by:
 | Admin | Instrument를 구매한 기관의 관리자. 운영 관리 메뉴 |
 | User | 구매 기관에서 검사를 하는 사용자. 권한이 부여된 기본 메뉴와 기능 |
 
-- 메뉴·기능별 허용 여부는 `policy/permission-matrix.csv`, L-IOS Service Mode별 허용 여부는 `policy/service-mode-matrix.csv`가 기준임
+- 메뉴·기능별 허용 여부는 `policy/permission-matrix.csv`, L-IOS Client Mode별 허용 여부는 `policy/client-mode-matrix.csv`가 기준임
 
 ## 규칙
 
-1. 메뉴와 버튼은 User Type 권한, Service Mode(L-IOS만), 제품 제한(T-IOS에서만 설정 등)이 모두 허용할 때만 보임.
+1. 메뉴와 버튼은 User Type 권한, L-IOS Client Mode(L-IOS만), 제품 제한(T-IOS에서만 설정 등)이 모두 허용할 때만 보임.
 2. User Type별 메뉴 접근 권한을 화면에서 바꾸는 기능은 없음.
 3. 계정은 CURECA마다 따로 있음. 한 CURECA의 T-IOS에서 만든 계정은 그 CURECA의 T-IOS와 L-IOS에서 함께 씀 (POL-COM-005).
 4. Admin은 Tube Setting, Assay Pack Setting을 뺀 Setting 하위 메뉴를 씀.
@@ -51,3 +51,4 @@ replaced_by:
 | --- | --- | --- | --- |
 | | 2026-11-02 | 최초 작성 (이전 ID: 팀원 POL-SYS-01) | |
 | | 2026-11-05 | 규칙 6 · 7 추가 (Account Setting 목록 범위, Admin의 Admin 계정 수정). 반영 대기 줄: TI-STN-05-R04 · R05, TI-STN-05-03-P-R01 · R03 | PV-0002 (2026-11-05 승인, 서보경), CA-0003 |
+| | 2026-11-12 | 용어 Service Mode → L-IOS Client Mode, TSS Mode → MS Mode, 데이터 경로 `policy/client-mode-matrix.csv` · `policy/client-mode.md` (규칙 뜻은 그대로) | DS-0001 (2026-11-12, 서보경) |

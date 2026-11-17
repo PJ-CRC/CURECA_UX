@@ -1,8 +1,20 @@
 # Common UX
 
-> 상태: Common UX의 원본은 팀 프로그램 UX 문서 › UX가이드에서 "적용"한 가이드 문서(MD)입니다(2026-11-05 사용자 결정). 가이드가 항상 최신본이고, 가이드를 고친 뒤 Figma "Common UX - PC" 페이지(V2.2.00, 2026-10-30)에 반영합니다. Figma 페이지는 원본이 아닙니다. Common UX 가이드는 한 벌만 둡니다(2026-11-05 사용자 결정). 팀 프로그램의 "가이드 적용"은 모바일 작업처럼 다른 가이드로 바꿔 쓸 때를 위한 범용 기능이며, 같은 대상(PC 화면)의 Common UX를 두 벌로 나누지 않습니다. 화면을 그릴 때 따르는 법은 `old-rules/screen-spec.md` 8절 "Common UX 따르기"입니다.
+> 상태: 새로 정의하는 중 (2026-11-12). 이전 문서는 `old-common-ux/`로 옮겼고 작업 근거로 쓰지 않습니다.
 
-| 파일 | 내용 |
-| --- | --- |
-| [feedback.md](feedback.md) | Common UX 수정 요청 목록. 누구든 올리고 함께 확인해 반영 (헌법 4조 v1.6, [반영] 기능은 제안서 R24) |
-| [drawing-materials-options.md](drawing-materials-options.md) | 그리는 재료 결정 안 (라이브러리 / 와이어프레임, 폰트). Common UX 담당자와 정할 것 (2026-11-05) |
+Common UX의 원본은 UX가이드 문서입니다(`sources.md`). 이 폴더에는 **Common UX에 없는 요소를 모아 두었다가 Common UX에 추가할지 정하는 일**에 쓰는 문서를 둡니다.
+
+| 문서 | 무엇 | 상태 |
+| --- | --- | --- |
+| [candidates.md](candidates.md) 후보 목록 | Common UX에 없어서 화면에서 직접 그린 요소를 모은 목록 (쓴 화면, 쓴 화면 수, 상태) | 초안 (2026-11-12), 비어 있음 |
+| [candidate-rules.md](candidate-rules.md) 후보 올리는 법 | 5단계 완료 때 무엇을 어떻게 올리고, 3화면 이상이면 Common UX 추가를 제안함 | 초안 (2026-11-12) |
+
+- 3단계(화면 설계)에서 가이드에 없는 요소를 그렸을 때 무엇을 어디에 남기는지는 `flow/3-design.md` 공통 3 "Figma 그리기" 3번(`공통 3-3` 요소를 찾는 순서)에 있습니다.
+- 완료(5단계)에서 후보 목록에 올리는 일은 `flow/5-done.md` 절차 4번 "언어셋 문서에 반영하고 Common UX 후보를 올림"에 있습니다.
+
+## 이전 문서에서 다시 볼 것
+
+| 이전 문서 | 내용 | 어떻게 할지 |
+| --- | --- | --- |
+| `old-common-ux/feedback.md` | Common UX 수정 요청 19건 (모두 전달 전) | 새로 정의하면서 정함 |
+| `old-common-ux/drawing-materials-options.md` | 그리는 재료(라이브러리 / 와이어프레임 · 폰트) 결정 안 | 새로 정의하면서 정함 |

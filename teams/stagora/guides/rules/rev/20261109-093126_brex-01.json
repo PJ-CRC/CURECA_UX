@@ -1,11 +1,12 @@
 {
-    "rev":  "20261109-093126_brex-01",
-    "by":  "Claude",
-    "at":  "2026-11-09T09:31:26+09:00",
-    "note":  "5. 화면 정의서 반영 대기 목록: 가리키는 곳을 「케이스 1 지킬 것 6 · 2단계 묻기」로 바꾸고, 케이스 1은 「대기」 줄을 줄마다 물어 반영한다는 줄을 더함",
-    "base":  "guide.md",
-    "pc":  "BREX_01",
-    "req":  "5. 화면 정의서 반영 대기 목록: [작업규칙 반영] 「CURECA 작업규칙」 작업규칙 수정(「헌법」 원본 작업 반영 2026-11-06: 정책서 1차 다시 쌓기, 화면설계 케이스 1 규칙 v1.5, Event History 화면 정의서 (원본 dedeae0)\n- 수정본으로 저장 31개: 작업규칙 2(claude-work · screen-spec) · 정책서 21 · 화면 정의서 6(event-history) · 기준데이터 3 (rev 20261109-092626 ~ 092723_brex-01)\n- 직접 바꿈 7개: CLAUDE.md · templates/screen.md · background 2 · common-ux/feedback.md · customer-agenda/agenda.md · meetings/README.md\n- 새 파일 18개: 정책서 11(POL-COM-007 · meeting-trace · modules/ 9) · background 2 · language-set 1 · meetings 1 · pending/PD-0009 · reference 2\n- policy/meta.json files · sources에 11개 추가, groupOrder · groups에 modules(Module 특성) 추가\n- 확인: 56개 모두 원본과 바이트 비교 같음, 서버가 새 정책 파일 11개를 읽음\n참고: 지시서대로 내용은 고치지 않고 원본 그대로 옮김(헌법 constitution.md는 바뀐 것 없음). 여러 문서에 걸친 반영이라 연관 항목 찾기 · 반영 대기 줄 추가는 하지 않음 — 필요하면 문서별로 요청해 주세요.)에 맞게 고쳐 주세요. 「화면을 다시 그릴 때는 반영 대기 목록을 먼저 읽습니다(4절, 2절)」 — 케이스 1은 반영 대기 「대기」 줄을 마음대로 반영하지 않고 줄마다 요청자에게 물어 반영(지킬 것 6 · 2단계 묻기). 가리키는 곳을 「케이스 1 지킬 것 6 · 2단계 묻기」로 바꾸고 이 규칙을 한 줄 더할지.",
-    "jobId":  "J034",
-    "file":  "discussion-answer.md"
+  "rev": "20261109-093126_brex-01",
+  "by": "Claude",
+  "at": "2026-11-09T09:31:26+09:00",
+  "note": "5. 화면 정의서 반영 대기 목록: 가리키는 곳을 「케이스 1 지킬 것 6 · 2단계 묻기」로 바꾸고, 케이스 1은 「대기」 줄을 줄마다 물어 반영한다는 줄을 더함",
+  "base": "guide.md",
+  "pc": "BREX_01",
+  "req": "5. 화면 정의서 반영 대기 목록: [작업규칙 반영] 「CURECA 작업규칙」 작업규칙 수정(「헌법」 원본 작업 반영 2026-11-06: 정책서 1차 다시 쌓기, 화면설계 케이스 1 규칙 v1.5, Event History 화면 정의서 (원본 dedeae0)\n- 수정본으로 저장 31개: 작업규칙 2(claude-work · screen-spec) · 정책서 21 · 화면 정의서 6(event-history) · 기준데이터 3 (rev 20261109-092626 ~ 092723_brex-01)\n- 직접 바꿈 7개: CLAUDE.md · templates/screen.md · background 2 · common-ux/feedback.md · customer-agenda/agenda.md · meetings/README.md\n- 새 파일 18개: 정책서 11(POL-COM-007 · meeting-trace · modules/ 9) · background 2 · language-set 1 · meetings 1 · pending/PD-0009 · reference 2\n- policy/meta.json files · sources에 11개 추가, groupOrder · groups에 modules(Module 특성) 추가\n- 확인: 56개 모두 원본과 바이트 비교 같음, 서버가 새 정책 파일 11개를 읽음\n참고: 지시서대로 내용은 고치지 않고 원본 그대로 옮김(헌법 constitution.md는 바뀐 것 없음). 여러 문서에 걸친 반영이라 연관 항목 찾기 · 반영 대기 줄 추가는 하지 않음 — 필요하면 문서별로 요청해 주세요.)에 맞게 고쳐 주세요. 「화면을 다시 그릴 때는 반영 대기 목록을 먼저 읽습니다(4절, 2절)」 — 케이스 1은 반영 대기 「대기」 줄을 마음대로 반영하지 않고 줄마다 요청자에게 물어 반영(지킬 것 6 · 2단계 묻기). 가리키는 곳을 「케이스 1 지킬 것 6 · 2단계 묻기」로 바꾸고 이 규칙을 한 줄 더할지.",
+  "jobId": "J034",
+  "file": "discussion-answer.md",
+  "orig": true
 }

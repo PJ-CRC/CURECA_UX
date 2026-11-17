@@ -8,7 +8,7 @@ type: Page
 version: 2.1.14
 date: 2026-10-30
 author: 정다예
-service_mode: []
+client_mode: []
 user_type: [Service, Admin, User]
 policies: []
 rules_version:
@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # TI-STA-04-01 Avg. Test Cost - Chart
 
-> 기존 화면(작업방 Statistical Analysis 페이지, 2.1 2차 영역, Ver 2.1.14)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 Statistical Analysis 페이지, 2.1 2차 영역, Ver 2.1.14)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - T-IOS 전용 메뉴. Figma 화면 이름은 "Test Analytics _ Test Cost"
 - 관련 정책: POL-STA-001, POL-STA-002, POL-STA-003, POL-STA-004, POL-TST-003, POL-COM-006
@@ -149,3 +149,4 @@ Square (20), Description Number (12), 1 Depth (7), Table (5), Table/Filled Table
 | --- | --- | --- | --- | --- |
 | 2.1.01 | | [5] Export 선택 시 노출 내용 수정 | 정다예 | Figma 버전 메모 |
 | 2.1.14 | 2026-10-30 | Policy Setting : Cost Setting 입력 값에 따른 데이터 노출 조건 | 정다예 | Figma 버전 메모 |
+| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

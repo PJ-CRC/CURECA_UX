@@ -8,7 +8,7 @@ type: Popup
 version: 2.1.03
 date: 2026-08-21
 author: BREX
-service_mode: [TSS Mode, Console Mode]
+client_mode: [Console Mode, MS Mode]
 user_type: [Service, Admin, User]
 policies: []
 rules_version:
@@ -20,10 +20,10 @@ figma_region: SH2-MS 얼럿 수정 테스트 (2026-11-03 기준)
 ---
 # LI-TSS-CMP-01 Select positions to remove (Remove 공통 Popup)
 
-> 기존 화면(작업방 SH2-MS-얼럿 수정 테스트 페이지, Ver 2.1.03)을 2026-11-03에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 SH2-MS-얼럿 수정 테스트 페이지, Ver 2.1.03)을 2026-11-03에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - L-IOS 전용. Material Setup 각 적재 화면의 [Remove]에서 여는 공통 Popup (IA 비고 "Material Setup > Reset 화면 공통 사용 팝업"). IA 위치는 Group Lots > Group Universal Cartridge Kit > Scan for Lot grouping 아래
-- Service Mode: TSS Mode(Group Lots·Prepare Carrier)와 Console Mode(Load Materials) 양쪽에서 씀
+- L-IOS Client Mode: MS Mode(Load Samples into Trolley)와 Console Mode(Group Lots, Prepare Carrier의 Consumable·Reagent 준비, Load Materials) 양쪽에서 씀
 - 관련 정책: POL-MAT-004, POL-MAT-010
 - 호출하는 화면: MS_Confirm_023 (세부 정의는 기존 Confirm_006으로 적음), MS_Alert_033 (MS 목록상 MS_Confirm_023 다음에 노출, 디스크립션에는 없음)
 - 부르는 화면: LI-TSS-LTG-01-01, LI-TSS-LTG-02-01, LI-TSS-PSI-SAM-01-03, LI-TSS-PSI-SAM-02-02, LI-TSS-PSI-SAM-03-02, LI-TSS-PSI-LCR-01-03, LI-TSS-PSI-LCR-02-02, LI-TSS-PSI-PKI-03, LI-TSS-PSI-LPR-03, LI-TSS-DXI-01, LI-TSS-DXI-02, LI-TSS-DXI-04, LI-TSS-DXI-06
@@ -135,3 +135,4 @@ Marterial Setup/Trolley (6), Check/Line (5), layout/spacing (3), Description Num
 | --- | --- | --- | --- | --- |
 | 2.1.03 | 2026-08-21 | 화면 정보 기준 | BREX | Figma 화면 정보 |
 | 2.1.05 | | 선택 Remove 팝업 추가 (기존 Remove(reset) 기능 + 선택 Remove 기능) | BREX | Figma 버전 메모 |
+| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`). 노출 모드 값을 새 기능 표대로 고침 | 서보경 | DS-0001 |

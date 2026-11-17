@@ -10,7 +10,7 @@ delivered_date:
 ---
 # Instruments
 
-- 2026-11-02: 기존 화면 MD화 시험 메뉴. 작업방 Instruments 페이지의 2.1 1차 영역(2차 영역 없음)에서 기획 화면 7개를 옮김. 상태 칸은 아직 기록하지 않음
+- 2026-11-02: 기존 화면 MD화 시험 메뉴. 기존 작업방 Instruments 페이지의 2.1 1차 영역(2차 영역 없음)에서 기획 화면 7개를 옮김. 상태 칸은 아직 기록하지 않음
 - Module Type별 Tab(Sample Storage ~ Universal PCR)은 IA에 CID가 없어 옮기지 않음
 
 ## 상태 이력

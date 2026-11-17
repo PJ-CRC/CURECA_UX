@@ -1,0 +1,28 @@
+{
+   "at" : "2026-11-16T15:40:02+09:00",
+   "by" : "안종범",
+   "cacheRead" : 440478,
+   "cacheWrite" : 34262,
+   "calls" : 8,
+   "doneBy" : "Claude",
+   "fileKey" : "cDjaemHjetS7RcAHRUIMY5",
+   "fileName" : "STAgora AI Workspace",
+   "frame" : "GM-DAS-GR",
+   "from" : "2026-11-16T15:39:20+09:00",
+   "id" : "anjongbeom-ui-macbookair-2_R007",
+   "input" : 15,
+   "kind" : "request",
+   "models" : {
+      "claude-sonnet-5-5" : 8
+   },
+   "nodeId" : "165:5274",
+   "output" : 5956,
+   "page" : "GMCS",
+   "pc" : "anjongbeom-ui-MacBookAir-2",
+   "reqId" : "R007",
+   "reqType" : "질문 · 그 밖",
+   "team" : "stagora",
+   "text" : "너 이번에도 엉뚱하게 403번 행에 넣었어. 기준데이터-언어셋 기준 395번, 396번 행에 넣어야하고 GM-txt-390, GM-txt-391에 넣어야 하는데 GM-txt-398, GM-txt-399에 넣었단말이야. 왜 또 이런 이슈가 생긴거야? 이유에 대해 알아보고 다음부터는 이런 틀어짐이 생기지 않도록 해야해.",
+   "total" : 480711,
+   "usd" : 0.2847
+}

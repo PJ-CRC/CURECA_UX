@@ -8,7 +8,7 @@ type: Page
 version: 2.0
 date: 2026-06-15
 author: BREX
-service_mode: [Console Mode]
+client_mode: [Console Mode]
 user_type: [Service, Admin, User]
 policies: []
 rules_version:
@@ -20,9 +20,9 @@ figma_region: SH2-MS 얼럿 수정 테스트 (2026-11-03 기준)
 ---
 # LI-TSS-DXI-05 Tip/PCR Plate storage
 
-> 기존 화면(작업방 SH2-MS-얼럿 수정 테스트 페이지, Ver 2.0)을 2026-11-03에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 SH2-MS-얼럿 수정 테스트 페이지, Ver 2.0)을 2026-11-03에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
-- L-IOS 전용. Service Mode: Console Mode. PCR Setup의 1000 μL Tip Storage, 300 μL Tip Storage (1)·(2), PCR Plate Storage에 적재 (위치 스캔 없음)
+- L-IOS 전용. L-IOS Client Mode: Console Mode. PCR Setup의 1000 μL Tip Storage, 300 μL Tip Storage (1)·(2), PCR Plate Storage에 적재 (위치 스캔 없음)
 - 관련 정책: POL-MAT-002, POL-MAT-004, POL-LOD-002
 - 호출하는 화면: LI-TSS-DXI (Done), MS_Alert_004, MS_Alert_027, MS_Alert_029, MS_Alert_030, MS_Alert_032
 - 다른 프레임: 세부 정의 [8313:139047](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=8313-139047). Required Quantity 버튼 세부 정의는 LI-TSS-DXI-02, 공통 정의는 LI-TSS-DXI-01
@@ -160,3 +160,4 @@ Description Number (8), Frame (1), Accordion/Default (1), Tool Tip/Default (1), 
 | 2.1.05 | | 디스크립션 수정 (빨간 텍스트 & 취소선) | BREX | Figma 버전 메모 |
 | 2.1.06 | | DX storage를 닫으면 [Done]과 같은 동작 | BREX | Figma 버전 메모 |
 | 2.1.12 | | DX 필요 수량 추가, Module index 표기 | BREX | Figma 버전 메모 |
+| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

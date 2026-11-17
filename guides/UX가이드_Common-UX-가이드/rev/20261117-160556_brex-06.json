@@ -1,0 +1,12 @@
+{
+  "rev": "20261117-160556_brex-06",
+  "by": "Claude",
+  "at": "2026-11-17T16:05:56+09:00",
+  "note": "작업규칙 기준으로 맞춤: 원본 · 우선순위, L-IOS Client Mode(MS Mode, Profile), 장비 상태(Partial Running · Paused), 용어집 표기, MO 참고 표시",
+  "base": "Common UX 가이드.md",
+  "pc": "BREX_06",
+  "req": "Common UX 가이드가 작업규칙과 다른 곳을 규칙 기준으로 맞춤",
+  "jobId": "",
+  "file": "",
+  "orig": true
+}

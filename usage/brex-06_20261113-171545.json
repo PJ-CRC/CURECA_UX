@@ -1,0 +1,28 @@
+{
+    "id":  "brex-06_20261113-171545",
+    "kind":  "work",
+    "reqId":  "",
+    "reqType":  "",
+    "team":  "stagora",
+    "at":  "2026-11-13T17:15:45+09:00",
+    "from":  "2026-11-13T17:15:28+09:00",
+    "by":  "최고관리자",
+    "doneBy":  "Claude",
+    "pc":  "BREX_06",
+    "fileKey":  "",
+    "fileName":  "",
+    "page":  "",
+    "frame":  "",
+    "nodeId":  "",
+    "text":  "작업규칙: 9. 시험 항목 (J401)",
+    "models":  {
+                   "claude-opus-5-5":  4
+               },
+    "calls":  4,
+    "input":  7,
+    "cacheWrite":  4332,
+    "cacheRead":  283681,
+    "output":  1749,
+    "total":  289769,
+    "usd":  0.1264
+}

@@ -1,0 +1,28 @@
+{
+   "at" : "2026-11-13T16:00:06+09:00",
+   "by" : "안종범",
+   "cacheRead" : 210787,
+   "cacheWrite" : 4143,
+   "calls" : 4,
+   "doneBy" : "Claude",
+   "fileKey" : "",
+   "fileName" : "",
+   "frame" : "",
+   "from" : "2026-11-13T15:59:53+09:00",
+   "id" : "anjongbeom-ui-macbookair-2_20261113-160006",
+   "input" : 8,
+   "kind" : "work",
+   "models" : {
+      "claude-sonnet-5-5" : 4
+   },
+   "nodeId" : "",
+   "output" : 1885,
+   "page" : "",
+   "pc" : "anjongbeom-ui-MacBookAir-2",
+   "reqId" : "",
+   "reqType" : "",
+   "team" : "stagora",
+   "text" : "작업규칙: 3. h2 test (J017)",
+   "total" : 216823,
+   "usd" : 0.0776
+}

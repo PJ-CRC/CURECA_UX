@@ -8,7 +8,7 @@ type: Page
 version: 2.0
 date: 2026-06-15
 author: BREX
-service_mode: [Console Mode]
+client_mode: [Console Mode]
 user_type: [Service, Admin, User]
 policies: []
 rules_version:
@@ -20,9 +20,9 @@ figma_region: SH2-MS 얼럿 수정 테스트 (2026-11-03 기준)
 ---
 # LI-TSS-DXI Load Materials
 
-> 기존 화면(작업방 SH2-MS-얼럿 수정 테스트 페이지, Ver 2.0)을 2026-11-03에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 SH2-MS-얼럿 수정 테스트 페이지, Ver 2.0)을 2026-11-03에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
-- L-IOS 전용. Service Mode: Console Mode. 장비 배치도에서 Door 영역을 눌러 Door를 열고, Storage QR code를 스캔해 Storage를 열어 적재 가이드 화면으로 감
+- L-IOS 전용. L-IOS Client Mode: Console Mode. 장비 배치도에서 Door 영역을 눌러 Door를 열고, Storage QR code를 스캔해 Storage를 열어 적재 가이드 화면으로 감
 - 관련 정책: POL-MAT-001, POL-LOD-002
 - 호출하는 화면: LI-INS-01-P (Door control), LI-TSS-DXI-01 ~ LI-TSS-DXI-09, MS_Alert_026
 - 다른 프레임: 없음. 공통 정의 프레임 8313:138747은 LI-TSS-DXI-01에 옮김
@@ -108,7 +108,7 @@ Description Number (10), Tool Tip/Default (8), Arrow/Chevron_Right (2), Interfac
 
 | ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| R01 | 화면 정보 | Ver 2.0 (2026-06-15), 경로 "TSS > Load Materials" | 버전 메모(v2.1.14까지) 반영 Ver. 경로 Material Setup > Load Materials (Load Materials는 Console Mode) | 버전 메모, `policy/service-mode-matrix.csv` | 대기 |
+| R01 | 화면 정보 | Ver 2.0 (2026-06-15), 경로 "TSS > Load Materials" | 버전 메모(v2.1.14까지) 반영 Ver. 경로 Material Setup > Load Materials (Load Materials는 Console Mode) | 버전 메모, `policy/client-mode-matrix.csv` | 대기 |
 | R02 | 화면 | 제목 "Select a task to initiate Drawer Loading" | Drawer는 Unit 이름. Load Materials 화면 목적에 맞는 문구로 | `glossary/terms.csv` Drawer | 대기 (확인 필요) |
 | R03 | 화면 | "Universal Pcr" | Universal PCR | `glossary/modules.csv` | 대기 |
 | R04 | 디스크립션 | Storage 이름이 "STAT storage", "Plate sealing storage" 등 소문자·임의 이름 | Unit UI 표기: STAT Storage, Cold Storage (Plate Sealing), MB Tube Storage, Buffer Cartridge Storage 등 | `glossary/module-units.csv` | 대기 |
@@ -127,3 +127,4 @@ Description Number (10), Tool Tip/Default (8), Arrow/Chevron_Right (2), Interfac
 | 2.1.06 | | Door control 기능, Film 적재 기능 추가 | BREX | Figma 버전 메모 |
 | 2.1.12 | | Buffer Cartridge Cap 보충 (Confirm 버튼 추가) | BREX | Figma 버전 메모 |
 | 2.1.14 | | Refill Tub Cap 버튼 추가 | BREX | Figma 버전 메모 |
+| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

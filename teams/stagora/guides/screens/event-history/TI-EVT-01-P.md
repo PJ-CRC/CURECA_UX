@@ -3,97 +3,153 @@ cid: TI-EVT-01-P
 pair_cid: LI-EVT-01-P
 tl_relation: 기능 추가
 title: Event History Detail
-path: Event History > Event Detail
+path: Event History > Detail
 type: Popup
-version: 2.1.14
-date: 2026-10-30
+version:       # 확인 필요 (질문 대기 Q1)
+date:
 author: 서보경
 service_mode: []
 user_type: [Service, Admin, User]
-policies: []
+policies: [POL-EVT-001, POL-EVT-002]
 rules_version:
 provisional: []
 flags: []
-source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=1875-44254
-figma_region: 2.1 2차
+source: tobe
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/?node-id=2081-5350   # 테스트 (UX-AI-TEST Page 10)
 ---
 # TI-EVT-01-P Event History Detail
 
-> 기존 화면(작업방 Event History 페이지, 2.1 2차 영역, Ver 2.1.14)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `rules/screen-spec.md`를 따릅니다.
+- T/L 차이: T-IOS는 Status와 Notes를 보기만 함(L-IOS에서 바꾼 값과 쓴 Notes만 보임). L-IOS(LI-EVT-01-P)는 Status Toggle과 Notes 작성이 있음 (POL-EVT-002 규칙 1 · 3)
+- 호출하는 화면: [TI-EVT-P] Event History ([List] 클릭 시)
+- 호출되는 곳: [TI-EVT-P] Event History 리스트의 줄 클릭 시, [TI-EVT-02-P] Event Message Popup의 [View Details] 클릭 시
 
-- T/L 차이: T-IOS는 Notes가 읽기 전용(L-IOS에서 쓴 내용만 보임). L-IOS(LI-EVT-01-P)는 Notes 작성과 Status 변경이 있음
-- 관련 정책: POL-EVT-001, POL-EVT-002
+## 디스크립션
 
-## 기존 화면
+### 0. 화면 정의
 
-### 화면 글자
+- 화면 정의
+  - Event History에서 선택한 Event의 상세 정보가 표기되는 화면이다.
+  - 이중 Popup이 아닌, Event History Popup 안에서 목록 → 상세로 전환되는 구조이다.
+- 진입점
+  - Event History 목록에서 Event 행 클릭 시 진입
+  - Event Message Popup의 [View Details] 클릭 시 진입
+- User Type
+  - Service, Admin, User
+- 정책 참고
+  - POL-EVT-001, POL-EVT-002
 
-- Updated Date/Time. 2026-09-29 16:01 / Updated by. ID123423
-- Type | Instrument | Occurred Date/Time | 2025-09-29 15:57
-- F180T001 | Level | Error | Status | Open
-- Pick Up Fail
-- Vision inspection for After Used consumable Check failed / Failed to dispose of consumable (Effect)
-- Verify the unit inside the device (Recommended Action)
-- Module: FlexibleExtraction | Unit: Starlet | Process: Nucleic Acid Extraction
-- List
+### 1. Event Info
 
-### 디스크립션 (원문)
+- 정의: 선택한 Event의 주요 속성을 확인하는 영역
+- 노출 항목
+  - Event ID: Event를 식별하는 고유 ID. Event 생성 시 시스템이 순차로 증가하는 값을 자동 부여하며 중복되지 않음
+  - Event Code: Event의 발생 유형을 구분하는 코드
+  - Type: Instrument, Inventory, Sample, System 중 해당 항목 표기
+  - Level: Event의 중요도. Error 또는 Warning 표기
+  - Status: Open 또는 Closed 표기
+  - Occurred Date/Time: Event 발생 일시 (YYYY-MM-DD hh:mm)
+  - Description: Event Code에 따라 정의된 Event 내용
+  - Effect: Event Code에 연계된 Scenario Code의 설명. 연계된 코드가 없으면 '-' 표기, 여러 개면 목록형으로 줄을 바꿔 모두 표기 (UI 참고)
+  - Recommended Action: Event Code에 따라 정의된 조치 방법
+- 정책 참고: POL-EVT-001
 
-#### 0. 화면 정의
+### 2. Instrument Info
 
-- Event History의 특정 Event의 상세 정보가 표기되는 화면이다.
-- 진입 방법: Event History 목록에서 특정 Event을 클릭 시 진입된다. (이중 팝업이 아닌, Event 팝업 내에서 목록 → 상세로 전환되는 구조)
+- 정의: Event가 발생한 Instrument 정보 영역
+- 노출 항목
+  - Module: Event가 발생한 Module. 같은 Type의 Module이 2대 이상이면 번호와 함께 표기
+  - Unit: Event가 발생한 Unit
+  - Process: Event가 발생한 검사 단계
+- Module 단위에서만 유효한 Event는 Unit을 '-'로 표기
+- Instrument와 관계없는 Event는 Module · Unit · Process를 모두 '-'로 표기
 
-#### 1. Event Info
+### 3. Notes
 
-- Event Info 영역은 선택한 Event의 상세 정보를 확인할 수 있는 영역으로, Event과 관련된 주요 속성들을 제공함
-- Event ID: Event을 식별하기 위한 고유 키 값으로, Event별로 서로 다른 ID가 부여됨
-- ID 생성규칙: Event 생성 시 시스템에서 자동으로 순차 증가되는 고유 ID가 부여. 생성된 ID는 중복되지 않으며, Event 식별을 위한 Primary Key로 사용됨.
-- Event Code: Event의 발생 유형을 구분하는 코드 값(에러 코드와 유사한 개념)
-- Description: Event Code에 따라 정의된 Event의 상세 내용이 표시됨
-- Effect: Event Code에 연계된 Scenario Code의 ‘description’ 내용 표기. 연계된 코드가 없는 경우, ‘-’ 표기. N개인 경우, 목록형으로 기호를 표기하여 N개 표시(UI참고). 참고 문서명: [SRD] CURECA Prep 및 Dx 장비 Event 정의
-- Recommended Action: Event Code에 따라 정의된 조치 방법이 표시됨
-- Level: Event의 중요도를 나타내며, Error 또는 Warning 값으로 구분됨
-- Status: Event Status 값인 Open 또는 Closed가 표기됨
-- Created Date: Event 발생 일시
+- Read Only 영역으로, L-IOS에서 조치 기록(Resolution Notes)을 작성한 경우에만 노출됨
+- 정책 참고: POL-EVT-002
 
-#### 2. Instrument Info
+### 4. Updated Date/Time, Updated by
 
-- Event이 장비에서 발생한 경우, 해당 장비의 Module / Unit / Process 정보 표시
-- Event이 Module 단위에서만 유효한 경우, Unit 값은 -으로 표시
-- 장비와 무관한 Event의 경우, Module / Unit / Process 전체를 -으로 표시
-
-#### 3. Notes
-
-- Read only 영역으로 L-IOS에서 작성했을 경우, 노출됨
-
-#### 4. Updated Date/Time, Updated by
-
-- Event의 Status 값이나 Resolution Notes가 변경/작성될 경우, 변경 시점과 변경 사용자의 정보를 표시하는 영역
-- Updated Date: 정보가 변경된 일시
+- Event의 Status가 변경되거나 Notes가 작성 · 변경되면, 변경 시점과 변경한 사용자 정보를 표기하는 영역
+- Updated Date/Time: 정보가 마지막으로 변경된 일시 (YYYY-MM-DD hh:mm)
 - Updated by: 정보를 변경한 사용자의 로그인 ID
 
-#### 5. List 버튼
+### 5. [List]
 
-- 동작: 버튼 클릭 시 Event 목록 페이지로 이동
-- 이전 페이지 유지: 사용자가 특정 페이지(예: 페이지 3)에서 상세 페이지로 진입한 경우, 이전에 조회하던 페이지(페이지 3)로 복귀
+- Common UX 참고: COMM-5-c
+- 클릭 시, Event History 목록으로 이동
+- 이전 페이지 유지: 특정 페이지(예: 3페이지)에서 상세로 진입한 경우, 조회하던 페이지로 복귀
 
-#### 6. 닫기
+### 6. [X]
 
-- 클릭 시, Event 팝업이 닫힘
+- 클릭 시, Event History Popup이 닫힘
+
+## 화면 예시
+
+| 번호 | 요소 | 예시 값 | 기준 |
+| --- | --- | --- | --- |
+| 1 | Event ID | 000128 | 지어 씀 (규칙 2의 순번) |
+| 1 | Event Code · Description | ER-6105 · Pick Up Fail | 기준데이터에 없어 지어 씀 |
+| 1 | Type · Level · Status | Instrument · Error · Open | `status-values.csv` |
+| 1 | Occurred Date/Time | 2026-11-06 15:57 | COMM-4-a |
+| 1 | Effect | Vision inspection for used consumable failed. / Failed to dispose of consumable. | 지어 씀, 여러 줄 예 |
+| 1 | Recommended Action | Check the unit inside the instrument. | 지어 씀 |
+| 2 | Module · Unit · Process | Flexible Extraction (1) · STARlet · Nucleic Acid Extraction | `module-units.csv`, `test-stages.csv` |
+| 3 | Notes | Replaced the tip rack and restarted the run. | 지어 씀 |
+| 4 | Updated | 2026-11-06 16:01 · service01 | 지어 씀 |
+
+## 문구
+
+| 번호 | 영어 문구 | 언어셋 ID | 최장 언어 · 표현 | 상태 (확정 / 번역 대기) |
+| --- | --- | --- | --- | --- |
+| 1 | Event ID, Event Code, Type, Level, Status, Occurred Date/Time, Description, Effect, Recommended Action | | | 확정 |
+| 2 | Module, Unit, Process | | | 확정 |
+| 3 · 4 | Notes, Updated Date/Time, Updated by | | | 확정 |
+| 5 | List | | | 확정 |
+
+## 상태별 화면
+
+| 상태 | 언제 | 화면에서 바뀌는 것 | 프레임 |
+| --- | --- | --- | --- |
+| 정상 | 상세를 열었을 때 | 기획 프레임 | TI-EVT-01-P |
+| 로딩 | 해당 없음: 리스트에서 이미 받은 값으로 바로 노출 | | |
+| 비활성 | 해당 없음: 바꿀 수 있는 요소 없음 | | |
+| 오류 | 상세를 불러오지 못함 | Alert_020 | 해당 없음: 알럿으로 처리 |
+| 빈 상태 | 값이 없는 칸 | 칸마다 '-' | 기획 프레임의 Notes · Updated 예 |
+| 장비 이상 | 해당 없음 | | |
+
+## 알럿
+
+| 번호 | 알럿 ID | 언제 | 버튼 동작 |
+| --- | --- | --- | --- |
+| 1 | Alert_020 | 상세를 불러오지 못했을 때 | OK: 알럿 닫힘 |
+
+## 케이스
+
+| # | 케이스 | 조건 | 프레임 |
+| --- | --- | --- | --- |
+| 1 | Effect 여러 개 | Scenario Code가 2개 이상 | 기획 프레임 예시 값 |
+
+## 질문 대기
+
+| # | 질문 | 걸린 번호 | 올린 곳 (PD · CA) |
+| --- | --- | --- | --- |
+| Q1 | 이번 작업의 Ver | 머리말 | 요청자 |
+| Q2 | Event Message Popup에서 들어온 뒤 [List] 클릭 시 돌아갈 리스트 조건 | 5 | 요청자 |
 
 ## 반영 대기 목록
 
 | ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| R01 | 표기 | Module "FlexibleExtraction", Unit "Starlet" (코드명·소문자) | Flexible Extraction (1), STARlet | `glossary/modules.csv`, `module-units.csv` | 대기 |
-| R02 | 디스크립션 | 1 "Created Date", 화면 "Occurred Date/Time" | 하나로 통일 | 화면 글자 | 대기 |
-| R03 | 정책 반영 | T-IOS에서 Status를 바꿀 수 있는지 상세 화면에 없음 (목록 TI-EVT-P 4는 바꿀 수 있음) | POL-EVT-002 참조 | POL-EVT-002 | 대기 |
+| R01 | 표기 | Module "FlexibleExtraction", Unit "Starlet" (코드명·소문자) | Flexible Extraction (1), STARlet | `glossary/modules.csv`, `module-units.csv` | 반영 완료 (2026-11-06) |
+| R02 | 디스크립션 | 1 "Created Date", 화면 "Occurred Date/Time" | 하나로 통일 | 화면 글자 | 반영 완료 (2026-11-06, Occurred Date/Time) |
+| R03 | 정책 반영 | T-IOS에서 Status를 바꿀 수 있는지 상세 화면에 없음 (목록 TI-EVT-P 4는 바꿀 수 있음) | POL-EVT-002 참조 | POL-EVT-002 | 반영 완료 (2026-11-06) |
 | R04 | 출처 | Effect의 참고 문서 "[SRD] CURECA Prep 및 Dx 장비 Event 정의"가 기준 출처 목록에 없음 | 값은 고객·개발사가 관리하는 문서를 따름. 저장소에 넣지 않음 | POL-EVT-001 규칙 7 | 제외 (2026-11-04, 바꿀 것 칸 참고) |
 
 ## 변경 이력
 
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
+| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 (CR, PD, PV, 정책 ID) |
 | --- | --- | --- | --- | --- |
 | 2.1.14 | 2026-10-30 | Effect 항목 추가 | 서보경 | Figma 버전 메모 |
+| | 2026-11-06 | 신규 작업방 규칙으로 새로 그림 (테스트: UX-AI-TEST Page 10. 기존: 작업방 · Ver 2.1.14). R01 · R02 · R03 반영. 일시를 분까지(COMM-4-a) | 서보경 | 케이스 1, POL-EVT-001 · 002 |
+| | 2026-11-06 | 디스크립션을 기존 작업방 원본(T · L 각각)을 다시 읽고 고객사 · 개발사가 읽는 말투로 다시 씀. 짝 화면 참조("원문은 …와 같음") 없앰 | 서보경 | 8절 "읽는 사람과 말투" |

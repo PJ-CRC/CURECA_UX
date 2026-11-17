@@ -19,7 +19,7 @@ replaced_by:
 ## 정의
 
 - 폐기함/폐액통 상태 값과 정의는 `glossary/status-values.csv`의 폐기함/폐액통 상태(Waste Bin/Bottle Status)가 기준임: Available(적재율 70% 미만), Almost Full(70% 이상), Full(100%)
-- Fill Level(%) = (지금까지 누적 사용 개수 ÷ 최대 수용 개수) × 100
+- Fill Level(%) = (지금까지 누적 사용 개수 ÷ 최대 수용 개수) × 100. 최대 수용 개수 예: Sealer Waste Bin은 버린 Film 20장, 만재 센서 있음 (Teams 글 2026-11-06 T08, 2026-11-06 사용자 확인)
 
 ## 규칙
 
@@ -32,6 +32,10 @@ replaced_by:
 7. Waste Bin/Bottle Tab은 Waste Bin이나 Liquid Waste Bottle이 있는 Module을 모두 보여 주며, Unit 칸에는 Module마다 가진 Unit 이름(예: Waste Bin (Upper), Liquid Waste Bottle (Lower))을 보여 줌 (`glossary/module-units.csv`).
 8. Waste Bin/Bottle Tab은 Module 유형별 카드로 묶고, 카드 상태는 그 안의 Waste Bin/Bottle 중 가장 높은 상태로 보여 줌 (Full > Almost Full > Available). 카드 순서는 Sample Preparation, High-throughput Extraction, Flexible Extraction, PCR Setup, Plate Sealing, Universal PCR이고, 상세는 Module Index 오름차순임.
 9. Summary의 Waste Bin/Bottle Status는 Full, Almost Full인 것만 Full, Almost Full 순으로, 같은 상태에서는 Fill Level이 높은 순으로, 같으면 Name 오름차순으로 보여 줌. 없으면 "No actions required"를 보여 줌.
+
+## 이유
+
+- 규칙 2 · 3: 계산값은 버린 개수를 세어 나온 예상치라 실제와 다를 수 있음. 그래서 Full(100%)은 만재 센서가 감지한 때만 바꾸고, 그 전에는 계산값이 100%를 넘어도 99%, Almost Full로 보여 줌. MT-20260916-01에서 "100% 유지, Almost Full"로 말했으나 99%가 최신임 (화면 TI-IVT-05-T Ver 2.1.11, 2026-11-06 사용자 확인).
 
 ## 예외
 
@@ -51,3 +55,4 @@ replaced_by:
 | | 2026-11-03 | 최초 작성 | |
 | | 2026-11-03 | 비움 처리 위치, T-IOS 미제공, Liquid Waste Bottle 포함 정함 (IV9) | 사용자 확인 |
 | | 2026-11-03 | 비움 처리는 우선 Console Mode에서만 (IV9-a) | 사용자 확인, CA-0007 |
+| | 2026-11-06 | Sealer Waste Bin 최대 수용 개수 20장 예시, 99% 규칙의 이유와 최신임을 남김 | 사용자 확인 |

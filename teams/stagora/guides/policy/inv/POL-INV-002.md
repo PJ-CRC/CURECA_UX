@@ -30,6 +30,7 @@ replaced_by:
 4. Capacity는 최대 적재량을 관리하는 Storage에만 보여 주며, 값은 Instrument 셋팅 때 설정한 값임. Cold Storage처럼 여러 품목을 섞어 적재하는 Storage는 Capacity를 보여 주지 않음.
 5. 수량 표기는 용어집 표기 규칙을 따름: Consumable은 `{수량} ea ({n} {단위})`, Reagent는 `{quantity} {baseUnit} ({n} {packagingUnit})`, 단위는 1개면 단수, 2개 이상이면 복수 (`glossary/glossary.md`).
 6. 사용량은 폐기할 때만 Usage History에 기록함. 반환할 때는 Remaining Qty만 줄이고 사용량은 기록하지 않음 (POL-INV-006).
+7. 여분의 Cap이 없는 Reagent(재사용할 Tub 등)도 Remaining Qty에 넣음 (MT-20261013-01).
 
 ## 예외
 
@@ -48,3 +49,4 @@ replaced_by:
 | --- | --- | --- | --- |
 | | 2026-11-03 | 최초 작성 | |
 | | 2026-11-03 | 사용량은 폐기할 때만 기록 (IV5) | 사용자 확인 |
+| | 2026-11-06 | Cap이 없는 Reagent도 Remaining Qty에 넣음 (규칙 7) | MT-20261013-01 |

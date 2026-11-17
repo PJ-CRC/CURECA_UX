@@ -9,7 +9,7 @@
 | 자료 | 내용 | 비고 |
 | --- | --- | --- |
 | 정책서 | 정책 하나 = 파일 하나. `policy/<영역>/POL-영역-###.md` | 작성 규칙 `old-rules/policy-writing.md`. 8월 정책서·팀원 ID 대응은 `migration.csv` |
-| Service Mode 매트릭스 | L-IOS Main Mode / Console Mode / TSS Mode별 메뉴·기능. [service-mode.md](service-mode.md), [service-mode-matrix.csv](service-mode-matrix.csv) | 초안 v0.1 (2026-10-30). 고객사 제안을 우리가 검토·확정해 개발사에 전달 |
+| L-IOS Client 시스템별 기능 분류 | L-IOS Client Mode(Main Mode / Console Mode / MS Mode)별 메뉴·기능. [client-mode.md](client-mode.md), [client-mode-matrix.csv](client-mode-matrix.csv) | 초안 v0.2 (2026-11-12, DS-0001). 고객사 제안을 우리가 검토·확정해 개발사에 전달 |
 | 권한 매트릭스 | User Type(Service / Admin / User)별 메뉴·기능 허용. [permission.md](permission.md), [permission-matrix.csv](permission-matrix.csv) | 초안 완료 (2026-10-30). 30행 모두 확정 |
 | 장비 상태 정의서 | 상태값, 전이 조건, 상태별 허용 동작과 화면 표시. [equipment-states.md](equipment-states.md), [integrated-state-transitions.csv](integrated-state-transitions.csv) | 초안 v0.1 (2026-10-30). 확인 필요 6개 |
 | 알럿·안내 카탈로그 | 알럿 ID, 발생 조건, 심각도, 문구·버튼. [alert-catalog.md](alert-catalog.md), [alert-catalog.csv](alert-catalog.csv) | 초안 v0.2 (2026-11-02). 알럿 관리 페이지 기준 73개 ID |

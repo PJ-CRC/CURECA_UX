@@ -62,7 +62,7 @@
         "language-set/sheet03.csv": "0.공통문구얼럿버튼범례 등-v2.31-261110",
         "language-set/sheet04.csv": "1. 임상의-v1.97-261030",
         "language-set/sheet05.csv": "2. 검사실-v1.95-261027",
-        "language-set/sheet06.csv": "3. GMCS-v2.31-261110",
+        "language-set/sheet06.csv": "3. GMCS-v2.33-261117",
         "language-set/sheet07.csv": "4. 고객센터-v1.95-261027",
         "language-set/sheet08.csv": "5. 체험초대이메일-v2.01-261105",
         "language-set/sheet09.csv": "6. 임상의 리포트-v1.43-260715",
@@ -444,8 +444,8 @@
         "language-set/sheet06.csv": [
           {
             "ranges": [
-              "D6:D514",
-              "D517:D1897"
+              "D6:D549",
+              "D552:D1932"
             ],
             "values": [
               "txt",
@@ -550,7 +550,7 @@
   "jobId": "",
   "kind": "data",
   "link": "",
-  "request": ".history/guides/glossary의 내용을 기반으로 기준 데이터 작성. 상세 내용은 테이블 형태(csv)로",
+  "request": ".history/teams/stagora/guides/glossary의 내용을 기반으로 기준 데이터 작성. 상세 내용은 테이블 형태(csv)로",
   "scope": "참고 파일",
   "sources": [
     "glossary.md",
@@ -565,7 +565,7 @@
     "pcr-reagents.csv",
     "review-v0.md"
   ],
-  "summary": "CURECA_AI 저장소의 용어집과 기준 표(glossary/)를 원본 파일 그대로 관리합니다(.history/guides/glossary). 표(CSV)는 표 그대로 보입니다.",
+  "summary": "CURECA_AI 저장소의 용어집과 기준 표(glossary/)를 원본 파일 그대로 관리합니다(.history/teams/stagora/guides/glossary). 표(CSV)는 표 그대로 보입니다.",
   "title": "기준데이터",
   "titles": {
     "consumables.csv": "Consumable · Reagent · consumables.csv",

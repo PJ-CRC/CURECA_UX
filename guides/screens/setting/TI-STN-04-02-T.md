@@ -8,7 +8,7 @@ type: Tab
 version: 2.1.12
 date: 2026-10-16
 author: 서보경
-service_mode: []
+client_mode: []
 user_type: [Service, Admin]
 policies: []
 rules_version:
@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # TI-STN-04-02-T Code Mapping
 
-> 기존 화면(작업방 Setting 페이지, 2.1 2차 영역, Ver 2.1.12)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 Setting 페이지, 2.1 2차 영역, Ver 2.1.12)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - T-IOS 전용 메뉴
 - 관련 정책: POL-SYS-002
@@ -110,3 +110,4 @@ figma_region: 2.1 2차
 | --- | --- | --- | --- | --- |
 | 2.1.11 | | 메뉴명 변경 LIS Settings → LIS Setting | 서보경 | Figma 버전 메모 |
 | 2.1.12 | 2026-10-16 | Code Mapping 데이터 관련 정의 추가, 고정 관리 항목에서 동적 추가 방식으로 변경, 2depth 구조 UI 추가(Target Code) | 서보경 | Figma 버전 메모 |
+| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

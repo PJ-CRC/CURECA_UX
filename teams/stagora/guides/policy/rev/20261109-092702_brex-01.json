@@ -1,11 +1,12 @@
 {
-    "rev":  "20261109-092702_brex-01",
-    "by":  "Claude",
-    "at":  "2026-11-09T09:27:02+09:00",
-    "note":  "원본 작업 반영 2026-11-06 (원본 dedeae0): sys/POL-SYS-004.md",
-    "base":  "",
-    "pc":  "BREX_01",
-    "req":  "헌법: C:\\Users\\exroc\\Documents\\CURECA_AI\\SYNC-2026-11-06.md 를 읽고, 거기 적힌 대로 메인 저장소 내역을 대표 저장소에 업데이트해줘.",
-    "jobId":  "J030",
-    "file":  "sys/POL-SYS-004.md"
+  "rev": "20261109-092702_brex-01",
+  "by": "Claude",
+  "at": "2026-11-09T09:27:02+09:00",
+  "note": "원본 작업 반영 2026-11-06 (원본 dedeae0): sys/POL-SYS-004.md",
+  "base": "",
+  "pc": "BREX_01",
+  "req": "헌법: C:\\Users\\exroc\\Documents\\CURECA_AI\\SYNC-2026-11-06.md 를 읽고, 거기 적힌 대로 메인 저장소 내역을 대표 저장소에 업데이트해줘.",
+  "jobId": "J030",
+  "file": "sys/POL-SYS-004.md",
+  "orig": true
 }

@@ -8,7 +8,7 @@ type: Page
 version: 2.1.13
 date: 2026-10-23
 author: 정다예
-service_mode: [Main Mode, Console Mode]
+client_mode: [Main Mode, Console Mode]
 user_type: [Service, Admin, User]
 policies: []
 rules_version:
@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # LI-RUN-02 Run Preparation (Check Consumables)
 
-> 기존 화면(작업방 Run/Quick Start 페이지, 2.1 2차 영역, Ver 2.1.13)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 Run/Quick Start 페이지, 2.1 2차 영역, Ver 2.1.13)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - L-IOS 전용. Run Preparation Step 2 (Check Test Protocol을 쓰면 Step 3). IA 화면 이름은 "Check Consumables"
 - 관련 정책: POL-SMP-007, POL-INV-002, POL-INV-003
@@ -261,3 +261,4 @@ Description Number (16), Status (9), Description (7), Square (4), Chip (3), Inte
 | 2.1.04 | | 소모품 데이터 표출 방안 수정 (테이블 형태 → 카드 형태, 소모품 유형별 그룹핑) | 정다예 | Figma 버전 메모 |
 | 2.1.11 | | Item details 버튼 추가 (기존 유효기한 만료 시약 안내 문구 내 more 버튼 삭제). 카드 및 하위 항목 노출 조건 수정 | 정다예 | Figma 버전 메모 |
 | 2.1.13 | 2026-10-23 | 정렬 기준 변경(재정의) | 정다예 | Figma 버전 메모 |
+| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

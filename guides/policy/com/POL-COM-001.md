@@ -11,7 +11,7 @@ date: 2026-11-02
 sources: [정책서_2026.08.28 > 공통 > 플랫폼 설명]
 provisional: []
 alerts: []
-data: [policy/service-mode.md]
+data: [policy/client-mode.md]
 replaced_by:
 ---
 # POL-COM-001 플랫폼 구성
@@ -26,7 +26,7 @@ replaced_by:
 
 ## 규칙
 
-1. L-IOS는 설치할 때 Service Mode(Main Mode, Console Mode, TSS Mode) 중 하나로 정해지며, 모드에 따라 보이는 메뉴와 기능이 다름 (`policy/service-mode.md`).
+1. L-IOS는 설치할 때 L-IOS Client Mode(Main Mode, Console Mode, MS Mode) 중 하나로 정해지며, 모드에 따라 보이는 메뉴와 기능이 다름 (`policy/client-mode.md`).
 2. 계정은 T-IOS에서 만들고 T-IOS와 L-IOS에서 함께 씀 (POL-ACC-001).
 3. L-IOS는 서버 PC에서 L-IOS UI와 L-IOS 서버로 나뉘어 돌아감. L-IOS UI가 문제로 꺼지면 Windows가 L-IOS UI 프로그램을 자동으로 다시 실행함 (MT-20260805-01).
 
@@ -45,3 +45,4 @@ replaced_by:
 | --- | --- | --- | --- |
 | | 2026-11-02 | 최초 작성 (이전 ID: 팀원 POL-CMN-01) | |
 | | 2026-11-06 | L-IOS UI 자동 재실행 (규칙 3) | MT-20260805-01 |
+| | 2026-11-12 | 용어 Service Mode → L-IOS Client Mode, TSS Mode → MS Mode, 데이터 경로 `policy/client-mode-matrix.csv` · `policy/client-mode.md` (규칙 뜻은 그대로) | DS-0001 (2026-11-12, 서보경) |
