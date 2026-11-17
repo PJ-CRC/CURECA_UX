@@ -185,12 +185,37 @@ async function sendTurn(text) {
     }
   }
 }
+// 감시 결과에 적힌 요청 · 작업의 내용을 메시지에 함께 넣는다(2026-11-17): Claude가 처리를 시작할 때 다시 조회하느라(curl · python 시도 등) 10 ~ 20초를 쓰던 것을 없앤다.
+//  긴 글 · 첨부는 줄여 넣고(첨부는 이름 · 파일 경로만), 지금 상태를 바꿀 때는 Claude가 서버에서 다시 확인한다
+function details(out) {
+  const ids = (k) => { const m = new RegExp('^' + k + ' (.+)$', 'm').exec(out); return m ? m[1].split(',').map((s) => s.trim()).filter(Boolean) : []; };
+  const rq = ids('PENDING').concat(ids('RESUME')), jb = ids('JOBS'), lines = [];
+  const cut = (s, n) => { s = String(s == null ? '' : s); return s.length > n ? s.slice(0, n) + '…(' + s.length + '자, 나머지는 서버에서)' : s; };
+  if (rq.length) {
+    const items = ((readJson(path.join(WB, 'edit_requests.json')) || {}).items || []).filter(Boolean);
+    for (const id of rq) {
+      const r = items.find((x) => x.id === id); if (!r) continue;
+      const o = { id: r.id, team: r.team || 'cureca', status: r.status, priority: r.priority, fileKey: r.fileKey, fileName: r.fileName, page: r.page, nodeId: r.nodeId, frame: r.frame, editable: r.editable,
+        author: r.author, createdAt: r.createdAt, text: cut(r.text, 3000), layout: r.layout || undefined, case: r.case || undefined, work: r.work || undefined, from: r.from || undefined,
+        images: (r.images || []).length ? r.images.map((m) => ({ file: m.file, name: m.name })) : undefined,
+        marks: (r.marks || []).length ? r.marks : undefined, shotAt: r.shotAt || undefined, fixRows: (r.fixRows || []).length ? r.fixRows : undefined,
+        replies: (r.replies || []).length ? r.replies.slice(-3).map((x) => ({ at: x.at, by: x.by, q: cut(x.q, 400), text: cut(x.text, 1500) })) : undefined,
+        note: r.status === '대기' && r.note ? cut(r.note, 1500) : undefined };
+      lines.push(JSON.stringify(o));
+    }
+  }
+  if (jb.length) {
+    const items = ((readJson(path.join(WB, 'jobs.json')) || {}).items || []).filter(Boolean);
+    for (const id of jb) { const j = items.find((x) => x.id === id); if (j) lines.push(cut(JSON.stringify(j), 4000)); }
+  }
+  return lines.length ? '\n[요청 · 작업 내용 — 감시가 지금 파일에서 읽은 것. 처리를 시작할 때 다시 조회하지 말고 바로 쓴다]\n' + lines.join('\n') + '\n' : '';
+}
 function makePrompt(out) {
   return `[Workbench 요청 감시 결과]
 ${out}
-
+${details(out)}
 먼저 규칙 문서를 Read로 읽어라(읽지 않고 처리하지 마라): PENDING · RESUME(요청 R0xx)이면 docs/claude/requests.md, JOBS(작업 J0xx)이면 GET /api/jobs에서 그 작업의 kind를 보고 CLAUDE.md 「작업별 문서」 표의 문서(guide · guide-edit · guide-check = docs/claude/ux-docs.md, prototype* = docs/claude/prototype.md, minutes · plan = docs/claude/plan.md, 그 밖 = docs/claude/jobs.md). 그 문서와 CLAUDE.md 규칙대로 위 항목만 처리하라. 너는 창 없이 떠 있는 백그라운드 Claude이고 사용자는 이 대화를 보지 않는다(기록은 한국어).
-- 앞서 이 대화에서 처리한 요청과 섞지 마라. 요청 · 작업의 지금 상태를 파일 · 서버에서 다시 읽고 시작한다.
+- 앞서 이 대화에서 처리한 요청과 섞지 마라. 요청 · 작업 내용은 위에 있으니 다시 조회하지 말고, 상태를 바꿀 때(「진행 중」 등) 서버 응답으로 지금 상태를 확인한다. 이 PC에는 python이 없을 수 있으니 JSON은 node · PowerShell로 다룬다.
 - 감시는 하지 마라(백그라운드 에이전트가 처리 뒤 다시 감시한다).
 - 사용 한도 표시(get_usage · .plan_usage.json)는 건너뛴다(이 실행에는 그 도구가 없다).
 - 요청 · 작업의 team(없으면 cureca)대로 일한다: CLAUDE.md 「팀」처럼 서버 API에 ?team={team}, 다른 팀이면 .history/teams/{team}/… 폴더, 사용량 기록(POST /api/usage)에도 team, Workbench 요청의 작업 기준은 GET /api/guides?team={team}.

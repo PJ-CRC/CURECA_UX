@@ -349,17 +349,23 @@ function readGuides(T) {
 on('GET', '/api/guides', ({ T }) => readGuides(T));
 
 // GET /api/worklogs?team=: 화면설계 작업 기록(규칙 저장소 work-logs/*.md, reference-rules/work-log.md 틀) 목록
-//  머리말(status · case · requester · menu · cids · test · started)과 지금 단계(「단계」 표에서 관문 칸이 빈 첫 줄), `다음:` 줄
-const STAGES = ['0. 시작', '1. 요건 정의', '2. 근거 · 분석', '3. 화면 설계', '4. 검토', '5. 고객 UX 리뷰', '6. 다국어', '7. 완료'];
+//  머리말(status · requester · menu · cids · test · started)과 지금 단계(「단계」 표에서 「끝낸 날」 칸이 빈 첫 줄), `이어서 작업할 곳:` 줄
+//  단계 이름은 그 기록의 「단계」 표 첫 칸을 그대로 쓴다(2026-11-17 CURECA_AI: 1 ~ 5단계, 관문 칸에 틀 글이 미리 들어 있어 「끝낸 날」로 본다)
+const STAGES = ['1. 시작 · 요건 정의', '2. 근거 · 분석', '3. 화면 설계', '4. 수정 · 확인', '5. 완료'];
 function readWorkLog(f) {
   const t = String(core.readText(f) || '').replace(/^﻿/, ''), fm = {}, m = /^---\r?\n([\s\S]*?)\r?\n---/.exec(t);
   if (m) for (const l of m[1].split(/\r?\n/)) { const k = /^([A-Za-z_]+):\s*(.*?)\s*(#.*)?$/.exec(l); if (!k || /^\s/.test(l)) continue; let v = k[2]; if (/^\[.*\]$/.test(v)) v = v.slice(1, -1).split(',').map((x) => x.trim().replace(/^["']|["']$/g, '')).filter(Boolean); fm[k[1]] = v; }
   const title = (/^#\s*작업 기록:\s*(.+)$/m.exec(t) || [])[1] || '';
-  let stage = -1; const sec = /##\s*단계\s*\r?\n([\s\S]*?)(\r?\n##\s|$)/.exec(t);
-  if (sec) { const rows = sec[1].split(/\r?\n/).filter((l) => /^\|\s*\d\./.test(l)); for (let i = 0; i < rows.length; i++) { const c = rows[i].split('|').map((x) => x.trim()); if (!c[2] && !c[3]) { stage = i; break; } } if (stage < 0 && rows.length) stage = rows.length; }
-  const next = (/^다음:\s*(.+)$/m.exec(t) || [])[1] || '';
+  let stage = -1, names = STAGES; const sec = /##\s*단계\s*\r?\n([\s\S]*?)(\r?\n##\s|$)/.exec(t);
+  if (sec) {
+    const rows = sec[1].split(/\r?\n/).filter((l) => /^\|\s*\d\./.test(l)).map((l) => l.split('|').map((x) => x.trim()));
+    if (rows.length) names = rows.map((c) => c[1]);
+    for (let i = 0; i < rows.length; i++) if (!rows[i][2]) { stage = i; break; }   // 「끝낸 날」이 빈 첫 단계 = 지금 단계
+    if (stage < 0 && rows.length) stage = rows.length;
+  }
+  const next = (/^(?:이어서 작업할 곳|다음):\s*(.+)$/m.exec(t) || [])[1] || '';
   return { name: path.basename(f, '.md'), title: title.trim(), status: String(fm.status || ''), case: String(fm.case || ''), requester: String(fm.requester || ''), menu: String(fm.menu || ''),
-    cids: Array.isArray(fm.cids) ? fm.cids : [], test: String(fm.test) === 'true', started: String(fm.started || ''), stage, stageName: stage >= 0 && stage < STAGES.length ? STAGES[stage] : stage >= STAGES.length ? '끝' : '', next: next.trim() };
+    cids: Array.isArray(fm.cids) ? fm.cids : [], test: String(fm.test) === 'true', started: String(fm.started || ''), stage, stages: names, stageName: stage >= 0 && stage < names.length ? names[stage] : stage >= names.length ? '끝' : '', next: next.trim() };
 }
 on('GET', '/api/worklogs', ({ T }) => {
   const dir = path.join(T.guideRoot, 'work-logs');
@@ -465,7 +471,15 @@ function findClaudeCode() {
   const set = String(core.readSetup().claudePath || ''); try { if (set && fs.statSync(set).isFile()) { if (C.isMac) addPath(path.dirname(set)); return set; } } catch (e) {}
   if (C.isMac) return findClaudeCodeMac();
   const g = onPath('claude'); if (g) return g;
-  if (W) {   // Claude 데스크톱 앱에 들어 있는 것(가장 최근)
+  // 따로 설치한 Claude Code CLI(공식 설치 스크립트 ~\.local\bin, npm 전역, winget)를 앱 안의 것보다 먼저 쓴다(2026-11-17).
+  //  서버를 띄운 PATH에 이 폴더들이 없어 앱 안의 것(Claude-Data\claude_{계정}\…)으로 넘어가면, Claude 앱에서 로그아웃할 때 백그라운드 감시도 같이 끊겼다
+  if (W) {
+    const home = process.env.USERPROFILE || '', ad = process.env.APPDATA || '';
+    for (const f of [path.join(home, '.local', 'bin', 'claude.exe'), path.join(ad, 'npm', 'claude.cmd'), path.join(LAD, 'Microsoft', 'WinGet', 'Links', 'claude.exe'), path.join(LAD, 'Programs', 'claude', 'claude.exe')]) {
+      try { if (fs.statSync(f).isFile()) return f; } catch (e) {}
+    }
+  }
+  if (W) {   // Claude 데스크톱 앱에 들어 있는 것(가장 최근) — 따로 설치한 것이 없을 때만
     let best = null, bt = 0; const walk = (d, depth) => { if (depth > 8) return; let es = []; try { es = fs.readdirSync(d, { withFileTypes: true }); } catch (e) { return; }
       for (const x of es) { const f = path.join(d, x.name); if (x.isDirectory()) walk(f, depth + 1); else if (x.name.toLowerCase() === 'claude.exe' && /\\claude-code\\/i.test(f)) { const t = fs.statSync(f).mtimeMs; if (t > bt) { bt = t; best = f; } } } };
     walk(path.join(LAD, 'Claude-Data'), 0); return best;

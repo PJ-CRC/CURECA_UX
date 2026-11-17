@@ -2,8 +2,8 @@
 //  - 작업 페이지를 고치면 그 프레임 캡처를 자동으로 올린다
 //  - Workbench 「캡처 받기」 · Claude 글 수정(text, Pretendard 등 이 PC 폰트) 작업을 처리한다
 //  - 이 파일의 페이지 · 프레임 목록을 Workbench로 보낸다
-// 창은 연결 상태만 보이는 작은 크기(내용 높이에 맞춤)
-figma.showUI(__html__, { width: 280, height: 150, themeColors: true });
+// 창은 상태 원 하나(RUN · Check · Error, 2026-11-17). 원에 마우스를 올리면 UI가 'fit'으로 넓혀 자세한 상태를 보인다
+figma.showUI(__html__, { width: 96, height: 76, themeColors: true });
 
 // ── Workbench 캡처 ──
 // 작업 페이지(수정 가능 페이지)에서 무언가 바뀌면 그 최상위 프레임을 JPG(원본 크기)로 내보내 UI → 로컬 서버(/api/shots)로 보낸다.
@@ -62,10 +62,9 @@ function watchShl() {
     if (dirty.size) schedule();
   });
 }
+// 자동 캡처는 늘 켜짐(2026-11-17, 끄는 칸을 없앰 — 예전에 꺼 둔 PC도 다시 켠다)
 (async () => {
-  const saved = await figma.clientStorage.getAsync('autoShots');
-  if (saved === false) autoShots = false;
-  figma.ui.postMessage({ type: 'shots-state', auto: autoShots });
+  try { await figma.clientStorage.deleteAsync('autoShots'); } catch (e) {}
   watchShl();
 })();
 
@@ -277,19 +276,8 @@ figma.ui.onmessage = async msg => {
     if (msg.type === 'xfer-check') { figma.ui.postMessage(Object.assign({ type: 'xfer-check-done', reqId: msg.reqId }, await xferCheck(msg.job))); return; }
     if (msg.type === 'xfer-img') { const im = figma.getImageByHash(msg.hash); figma.ui.postMessage({ type: 'xfer-img-done', reqId: msg.reqId, bytes: im ? await im.getBytesAsync() : null }); return; }
     if (msg.type === 'xfer-build') { figma.ui.postMessage(Object.assign({ type: 'xfer-build-done', reqId: msg.reqId }, await xferBuild(msg.job, msg.data, msg.imgs || {}))); return; }
-    // 창 높이를 내용에 맞춘다
-    if (msg.type === 'fit') { figma.ui.resize(280, Math.max(60, Math.min(400, Math.round(msg.h)))); return; }
-    if (msg.type === 'shots-auto') {
-      autoShots = !!msg.on; await figma.clientStorage.setAsync('autoShots', autoShots); return;
-    }
-    if (msg.type === 'shots-now') {
-      // 지금 화면에 보이는 프레임(최대 4개)만 캡처한다. 페이지 전체 캡처는 무거워서 두지 않는다(필요하면 Workbench에서 프레임별 「캡처」)
-      const list = framesInView();
-      if (!list.length) throw new Error('화면에 보이는 프레임이 없습니다.');
-      list.forEach(f => dirty.add(f.id)); await flushShots();
-      figma.ui.postMessage({ type: 'shots-now-done', reqId: msg.reqId, count: list.length });
-      return;
-    }
+    // 창 크기: 평소 원만(96×76), 원에 마우스를 올리면 자세히(280×112)
+    if (msg.type === 'fit') { figma.ui.resize(Math.max(70, Math.min(400, Math.round(msg.w || 96))), Math.max(60, Math.min(400, Math.round(msg.h || 76)))); return; }
     if (msg.type === 'close') {
       figma.closePlugin();
     }

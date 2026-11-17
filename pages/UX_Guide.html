@@ -457,6 +457,17 @@ html.embed,html.embed body{overflow:hidden}
   .side.fold .toc-btn{margin-bottom:0}
   .main{padding:16px 14px 20px}
 }
+/* 화면 정의서 T-IOS · L-IOS 표시(2026-11-17) */
+.sc-env{display:inline-block;margin-left:6px;padding:0 6px;border-radius:5px;font-style:normal;font-size:11px;font-weight:700;line-height:17px;vertical-align:2px;white-space:nowrap}
+.sc-env.t{background:var(--accent-soft);color:var(--accent)}
+.sc-env.l{background:var(--ok-soft);color:var(--ok)}
+.sc-title .sc-env{font-size:12px;line-height:20px;vertical-align:3px}
+/* 「시스템 확인」 구분 색 · 목록 배지(2026-11-17) */
+.sysk{display:inline-block;white-space:nowrap;padding:1px 8px;border-radius:999px;font-size:12px;font-weight:700}
+.sysk.bad{background:var(--red-soft);color:var(--red)}
+.sysk.diff{background:var(--accent-soft);color:var(--accent)}
+.sysk.todo{background:var(--warn-soft);color:var(--warn)}
+.sysn{display:inline-block;margin-left:6px;padding:0 7px;border-radius:999px;background:var(--warn-soft);color:var(--warn);font-size:11.5px;font-weight:700;vertical-align:1px}
 </style>
 </head>
 <body>
@@ -1221,6 +1232,9 @@ html.embed,html.embed body{overflow:hidden}
     });
     /* 파일형 문서: 대분류 · 항목마다 그 파일(수정 요청 · 아래 경로 표시에 쓴다) */
     if (FILEMAP) { var hi = 0; secs.forEach(function(s){ if (s.level >= 1) s.file = FILEMAP[hi++] || (s.parent ? s.parent.file : '') || ''; }); }
+    /* 같은 제목이 둘 이상이면(예: templates/screen.md · screen-asis.md가 모두 「CID 화면 이름」) 목록에서 구분되게 파일 이름을 붙인다(2026-11-17) */
+    (function(){ var cnt = {}; secs.forEach(function(s){ if (s.level === 1) cnt[s.label] = (cnt[s.label] || 0) + 1; });
+      secs.forEach(function(s){ if (s.level === 1 && cnt[s.label] > 1 && s.file) s.label += ' (' + String(s.file).replace(/^.*\//, '') + ')'; }); })();
     /* 한 번에 보기(작업규칙 · meta.whole): 대분류를 누르면 그 아래 항목까지 순서대로 한 화면에(목차에는 대분류만) */
     if (meta && (meta.whole || (meta.kind === 'rule' && meta.whole !== false))) {
       secs.forEach(function(s){ if (s.level === 2 && s.parent) s.parent.raw += s.raw; });
@@ -1401,6 +1415,9 @@ html.embed,html.embed body{overflow:hidden}
   function scChips(s){
     return (s.wait ? '<em class="sc-chip warn">반영 대기 ' + s.wait + '</em>' : '') + (s.doing ? '<em class="sc-chip">작업 중 ' + s.doing + '</em>' : '') + (!s.o.basis && !s.o.rules_version ? '<em class="sc-chip">기준 기록 전</em>' : '');
   }
+  /* T-IOS · L-IOS 표시(2026-11-17): TI · LI 화면은 이름이 같아(「Overview Tab」이 둘) 목록 · 제목에서 구분되게 */
+  function scEnvOf(cid){ var m = /^(?:M-)?(TI|LI)-/.exec(String(cid || '')); return m ? (m[1] === 'TI' ? 'T-IOS' : 'L-IOS') : ''; }
+  function scEnv(cid){ var e = scEnvOf(cid); return e ? ' <em class="sc-env ' + (e === 'T-IOS' ? 't' : 'l') + '">' + e + '</em>' : ''; }
   function scTree(q){
     var h = '';
     SC.menus.forEach(function(mn){
@@ -1409,7 +1426,7 @@ html.embed,html.embed body{overflow:hidden}
       var open = q ? true : !!scOpen[mn.key];
       h += '<li class="sc-grp"><button type="button" class="node grp" data-scg="' + esc(mn.key) + '" aria-expanded="' + open + '"><span class="tw' + (open ? ' open' : '') + '">▸</span><span class="lbl">' + esc(mn.name) + '</span><span class="sc-cnt">' + list.length + '</span></button>';
       if (open) h += '<ul class="sc-list">' + list.map(function(s){
-        return '<li><button type="button" class="sc-it' + (s.cid === scCur ? ' cur' : '') + '" data-sc="' + esc(s.cid) + '"><b>' + esc(s.o.title || s.cid) + '</b><span>' + esc(s.cid) + '</span>' + (scChips(s) ? '<i>' + scChips(s) + '</i>' : '') + '</button></li>';
+        return '<li><button type="button" class="sc-it' + (s.cid === scCur ? ' cur' : '') + '" data-sc="' + esc(s.cid) + '"><b>' + esc(s.o.title || s.cid) + scEnv(s.cid) + '</b><span>' + esc(s.cid) + '</span>' + (scChips(s) ? '<i>' + scChips(s) + '</i>' : '') + '</button></li>';
       }).join('') + '</ul>';
       h += '</li>';
     });
@@ -1431,7 +1448,7 @@ html.embed,html.embed body{overflow:hidden}
     scCur = cid; scKind = ''; scOpen[s.menu] = true;
     var o = s.o, mn = SC.menus.filter(function(m){ return m.key === s.menu; })[0] || { name: s.menu };
     var row = function(k, v){ return v ? '<dt>' + esc(k) + '</dt><dd>' + v + '</dd>' : ''; };
-    var h = '<div class="sc-head"><div><h2 class="sc-title">' + esc(cid + ' ' + (o.title || '')) + '</h2><p class="sc-sub">' + esc([o.path, o.type, o.version ? 'Ver ' + o.version : ''].filter(Boolean).join(' · ')) + '</p></div>' +
+    var h = '<div class="sc-head"><div><h2 class="sc-title">' + esc(cid + ' ' + (o.title || '')) + scEnv(cid) + '</h2><p class="sc-sub">' + esc([o.path, o.type, o.version ? 'Ver ' + o.version : ''].filter(Boolean).join(' · ')) + '</p></div>' +
       '<span style="display:flex;gap:8px;align-items:flex-start;flex:none">' + (s.wait ? '<span class="sc-chip warn big">반영 대기 ' + s.wait + '</span>' : '') + (s.doing ? '<span class="sc-chip big">작업 중 ' + s.doing + '</span>' : '') +
       '<button type="button" class="dedit" data-dedit="' + esc(s.file) + '" data-dname="' + esc(cid + ' ' + (o.title || '')) + '" title="이 화면 정의서를 바로 고쳐 저장합니다">직접 수정</button></span></div>';
     h += '<dl class="sc-info">' + row('작성자', esc(o.author || '')) + row('Service Mode', esc(listOf(o.service_mode).join(', '))) + row('User Type', esc(listOf(o.user_type).join(', '))) +
@@ -1546,6 +1563,17 @@ html.embed,html.embed body{overflow:hidden}
     };
   }
 
+  /* 「시스템 확인」(2026-11-17, docs/claude/system-basis.md 3절): 표의 구분 칸(못 함 · 다름 · 정해야 함)을 색으로, 목록에는 남은 줄 수 배지 */
+  var SYS_K = { '못 함': 'bad', '다름': 'diff', '정해야 함': 'todo' };
+  function isSys(s){ return s && /^시스템 확인$/.test(String(s.label || '').trim()); }
+  function sysCount(s){ return isSys(s) && s.box ? s.box.querySelectorAll('tbody tr').length : 0; }
+  function sysMark(s, m){
+    if (!isSys(s)) return;
+    Array.prototype.forEach.call(m.querySelectorAll('td'), function(td){
+      var k = SYS_K[td.textContent.trim()]; if (k) td.innerHTML = '<span class="sysk ' + k + '">' + esc(td.textContent.trim()) + '</span>';
+    });
+  }
+  function sysBadge(s){ var n = sysCount(s); return n ? '<span class="sysn" aria-label="확인할 것 ' + n + '건">' + n + '</span>' : ''; }
   function tree(q){
     if (SC) { scTree(q); return; }
     var h = '', hit = function(s){ return !q || s.text.indexOf(q) >= 0; };
@@ -1556,7 +1584,7 @@ html.embed,html.embed body{overflow:hidden}
       var isOpen = q ? true : open[g.id] !== false && (open[g.id] || (cur && (cur === g || cur.parent === g)));
       h += '<li role="treeitem" aria-expanded="' + (g.kids.length ? !!isOpen : 'false') + '">' +
         '<button type="button" class="node' + (g.level ? ' grp' : '') + (cur === g ? ' cur' : '') + '" data-id="' + g.id + '">' +
-        '<span class="tw' + (g.kids.length ? (isOpen ? ' open' : '') : ' none') + '" data-tw="' + g.id + '">▸</span><span class="lbl">' + label(g.label) + '</span></button>';
+        '<span class="tw' + (g.kids.length ? (isOpen ? ' open' : '') : ' none') + '" data-tw="' + g.id + '">▸</span><span class="lbl">' + label(g.label) + sysBadge(g) + '</span></button>';
       if (g.kids.length && isOpen) h += '<ul role="group">' + (q ? kids : g.kids).map(function(k){
         return '<li role="treeitem"><button type="button" class="node' + (cur === k ? ' cur' : '') + '" data-id="' + k.id + '"><span class="tw none"></span><span class="lbl">' + label(k.label) + '</span></button></li>';
       }).join('') + '</ul>';
@@ -1582,6 +1610,7 @@ html.embed,html.embed body{overflow:hidden}
     $('editBtn').disabled = false; $('editBtn').title = '「' + s.label + '」 항목 수정 요청';
     m.querySelector('h2.sec').textContent = s.label;
     Array.prototype.forEach.call(s.box.childNodes, function(x){ m.appendChild(x.cloneNode(true)); });
+    sysMark(s, m);
     if (document.documentElement.classList.contains('wb-full-on')) { document.documentElement.classList.remove('wb-full-on'); frameFull(false); }
     var wx = wbMain(); if (wx && wx.d) { wx.d.sel = -1; wx.d.full = false; wbRedraw(wx.w, wx.d); }   // 시트 묶음: 복사한 그림 대신 지금 자료(보던 시트)로 다시 그린다
     if (s.kids && s.kids.length) {
