@@ -8,16 +8,16 @@ type:          # Page | Popup | Tab
 version:       # 기존 화면의 Ver 그대로
 date:          # 기존 화면의 Date 그대로 (YYYY.MM.DD)
 author:        # 기존 화면 담당자 그대로
-service_mode: []
+client_mode: []
 user_type: []
 policies: []   # 기존 화면에 걸린 것으로 보이는 정책 ID (2단계에서 다시 확인)
-source: asis   # 기존 작업방 화면을 옮겨 적은 것. 신규 작업방에 다시 그리면 templates/screen.md로 다시 쓰고 tobe로 바꿈
+source: asis   # 기존 작업방 화면을 옮겨 적은 것. 작업방에 다시 그리면 templates/screen.md로 다시 쓰고 tobe로 바꿈
 figma:         # 기존 작업방의 기획 화면 프레임 링크
 figma_region:  # 2.1 1차 | 2.1 2차
 ---
 # CID 화면 이름
 
-> 기존 화면(작업방 OO 페이지, 영역, Ver)을 YYYY-MM-DD에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
+> 기존 화면(기존 작업방 OO 페이지, 영역, Ver)을 YYYY-MM-DD에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
 
 - T/L 차이:
 - 호출하는 화면: [CID] 화면 이름 (어디서 → 어디로)

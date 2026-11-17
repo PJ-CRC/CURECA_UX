@@ -1,5 +1,5 @@
-// 작업방 기획 화면(오른쪽 화면 정보·디스크립션 패널이 있는 2252px 프레임)을 MD 본문으로 옮긴다.
-// 사용: 아래 CONFIG를 채워 use_figma(fileKey=작업방)의 code로 실행한다. Figma는 읽기만 한다.
+// 기존 작업방 기획 화면(오른쪽 화면 정보·디스크립션 패널이 있는 2252px 프레임)을 MD 본문으로 옮긴다.
+// 사용: 아래 CONFIG를 채워 use_figma(fileKey=기존 작업방)의 code로 실행한다. Figma는 읽기만 한다.
 // 규칙: old-rules/screen-spec.md 3절. 결과는 20KB 제한이 있어 한 번에 2개 프레임 정도만 넣는다. GNB(위 72px), LNB(왼쪽 250px)는 따로 묶는다.
 const CONFIG = {
   pageId: '281:1770',
@@ -29,6 +29,8 @@ const out = [];
 
 for (const cfg of CONFIG.frames) {
   const F = await figma.getNodeByIdAsync(cfg.id);
+  // 케이스 1 복제본(`CID-복제본`)은 원복용 사본이라 화면 MD 추출의 근거로 쓰지 않음 (flow/3-design.md, 2026-11-12)
+  if (F.name.endsWith('-복제본')) { out.push('<!-- 건너뜀: ' + F.name + ' (복제본) -->'); continue; }
   const [fx, fy] = absXY(F);
   // 취소선 글자는 제거된 항목이라 ~~ ~~로 감싸 구분함 (old-rules/screen-spec.md 3절)
   const strike = n => {
