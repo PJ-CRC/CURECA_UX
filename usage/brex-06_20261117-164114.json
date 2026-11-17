@@ -1,0 +1,28 @@
+{
+  "id": "brex-06_20261117-164114",
+  "kind": "work",
+  "reqId": "",
+  "reqType": "",
+  "team": "cureca",
+  "at": "2026-11-17T16:41:14+09:00",
+  "from": "2026-11-17T16:37:20+09:00",
+  "by": "최고관리자",
+  "doneBy": "Claude",
+  "pc": "BREX_06",
+  "fileKey": "",
+  "fileName": "",
+  "page": "",
+  "frame": "",
+  "nodeId": "",
+  "text": "화면설계 2단계: Instrument 근거 · 분석 (R038)",
+  "models": {
+    "claude-opus-5-5": 22
+  },
+  "calls": 22,
+  "input": 40,
+  "cacheWrite": 132740,
+  "cacheRead": 2962850,
+  "output": 27098,
+  "total": 3122728,
+  "usd": 2.1966
+}
