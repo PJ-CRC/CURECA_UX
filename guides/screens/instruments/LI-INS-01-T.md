@@ -14,7 +14,7 @@ policies: [POL-EQP-001, POL-EQP-002, POL-EQP-008 · DS-0004, POL-EQP-009]
 basis:
 basis_versions:
 source: tobe
-figma:
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=2807-45744
 ---
 # LI-INS-01-T Overview Tab
 
