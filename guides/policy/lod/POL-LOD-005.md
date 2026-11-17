@@ -8,7 +8,7 @@ cids: [LI-TSS-WBM, LI-TSS-WBM-P, TI-IVT-05-T, LI-IVT-05-T]
 status: 확정
 version:
 date: 2026-11-03
-sources: [LI-TSS-WBM·WBM-P 디스크립션 (Material Setup 2차 페이지), policy/service-mode-matrix.csv, POL-INV-005, 2026-11-03 사용자 답변 (IV9, IV9-a, MS9 일부)]
+sources: [LI-TSS-WBM·WBM-P 디스크립션 (Material Setup 2차 페이지), policy/client-mode-matrix.csv, POL-INV-005, 2026-11-03 사용자 답변 (IV9, IV9-a, MS9 일부)]
 provisional: []
 alerts: []
 data: [glossary/module-units.csv]
@@ -22,7 +22,7 @@ replaced_by:
 
 ## 규칙
 
-1. 비움 처리는 L-IOS의 Material Setup > Empty Waste Bin에서만 함. 지금은 Console Mode에서만 제공함 (`policy/service-mode-matrix.csv`). T-IOS는 원격 관제용이라 비움 기능이 없음 (POL-INV-005).
+1. 비움 처리는 L-IOS의 Material Setup > Empty Waste Bin에서만 함. 지금은 Console Mode에서만 제공함 (`policy/client-mode-matrix.csv`). T-IOS는 원격 관제용이라 비움 기능이 없음 (POL-INV-005).
 2. 배치도에서 Waste Bin이 있는 Storage QR을 스캔하면 그 Storage가 열림. Storage 안에서 품목이 옮겨지는 중이면 열지 않고 Alert을 보여 줌 (판단 기준은 Instrument 내부 로직).
 3. Waste Bin이 Drawer형이 아니라 유리 Door 안에 있는 경우를 위해 Door Control Popup을 둠. Instrument의 Door Control(LI-INS-01-P)과 같은 UI를 쓰되, Waste Bin/Bottle이 있는 Door만 골라 보여 줌.
 4. [Confirm Empty] Popup(LI-TSS-WBM-P)은 Module을 고르면(All 또는 Module) 그 Module Index의 Waste Bin과 Liquid Waste Bottle을 보여 줌. 정렬은 Module 순서와 Index 오름차순이며, 고른 Module이 맨 위에 옴.
@@ -43,3 +43,4 @@ replaced_by:
 | 버전 | 날짜 | 내용 | 근거 (PD, PV, CR, ADR) |
 | --- | --- | --- | --- |
 | | 2026-11-03 | 최초 작성 | |
+| | 2026-11-12 | 용어 Service Mode → L-IOS Client Mode, TSS Mode → MS Mode, 데이터 경로 `policy/client-mode-matrix.csv` · `policy/client-mode.md` (규칙 뜻은 그대로) | DS-0001 (2026-11-12, 서보경) |

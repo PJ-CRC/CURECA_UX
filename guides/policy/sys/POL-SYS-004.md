@@ -11,7 +11,7 @@ date: 2026-11-02
 sources: [TI-STN-02·LI-STN-02 디스크립션 (Ver 2.1.03)]
 provisional: []
 alerts: [Confirm_009, Confirm_016]
-data: [policy/permission-matrix.csv, policy/service-mode-matrix.csv]
+data: [policy/permission-matrix.csv, policy/client-mode-matrix.csv]
 replaced_by:
 ---
 # POL-SYS-004 Log 내보내기와 파일 위치
@@ -57,3 +57,4 @@ replaced_by:
 | | 2026-11-03 | Log Export는 Service가 장비 파악에 쓰는 자료라 형식·구성을 정하지 않고 파일 형식 규칙(POL-COM-006)에서 뺌 | 사용자 확인 |
 | | 2026-11-04 | Common UX 참조 번호를 Common UX - PC 기준으로 고침 (COMM-5-j(4/4) → COMM-5-m(2/4)) | `archive/common-ux/common-policy-candidates.md` |
 | | 2026-11-06 | 백업 · 복원은 서버에서 코드로 작업하고 이력은 Log로 서버에서 조회 (규칙 5) | Teams 글 T15 |
+| | 2026-11-12 | 용어 Service Mode → L-IOS Client Mode, TSS Mode → MS Mode, 데이터 경로 `policy/client-mode-matrix.csv` · `policy/client-mode.md` (규칙 뜻은 그대로) | DS-0001 (2026-11-12, 서보경) |

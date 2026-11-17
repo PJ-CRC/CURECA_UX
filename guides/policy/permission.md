@@ -1,6 +1,6 @@
 # User Type 권한
 
-> 상태: v1.0 초안 완료 (2026-10-30). 30행 모두 확정. 데이터: [permission-matrix.csv](permission-matrix.csv). 출처: 정책서_2026.08.28, 작업방 화면 디스크립션, Common UX COMM-3-a(1/2), `archive/background/rules-review-draft.md` 권한 매트릭스 초안
+> 상태: v1.0 초안 완료 (2026-10-30). 30행 모두 확정. 데이터: [permission-matrix.csv](permission-matrix.csv). 출처: 정책서_2026.08.28, 기존 작업방 화면 디스크립션, Common UX COMM-3-a(1/2), `archive/background/rules-review-draft.md` 권한 매트릭스 초안
 
 ## 1. User Type
 
@@ -18,7 +18,7 @@
 메뉴와 버튼은 아래 세 가지가 모두 허용할 때만 보입니다.
 
 1. **User Type 권한:** [permission-matrix.csv](permission-matrix.csv)
-2. **Service Mode** (L-IOS만): [service-mode-matrix.csv](service-mode-matrix.csv)
+2. **L-IOS Client Mode** (L-IOS만): [client-mode-matrix.csv](client-mode-matrix.csv)
 3. **제품 제한:** T-IOS에서만 설정·변경하고 L-IOS에서는 View만 되는 기능, T-IOS 전용 메뉴 (matrix의 "제품 제한" 칸)
 
 ## 3. 요약 (2026-10-30)

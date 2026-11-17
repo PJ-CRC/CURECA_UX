@@ -4,26 +4,27 @@ title: Material Setup 구성과 적재 계층
 summary: Material Setup은 L-IOS에서 Sample과 Consumable·Reagent를 Socket·Tray·Trolley나 Dx Storage에 적재하는 메뉴이며, 적재 단위는 상위·하위와 데이터로 연결되고 Sample과 Consumable·Reagent는 한 단위에 섞을 수 없음
 domain: MAT
 menus: [Material Setup]
-cids: [LI-TSS-LTG, LI-TSS-PSI, LI-TSS-PSI-SAM, LI-TSS-PSI-LCR, LI-TSS-DXI, LI-TSS-WBM]
+cids: [LI-TSS-LTG, LI-TSS-PSI, LI-TSS-PSI-SAM, LI-TSS-PSI-LCR, LI-TSS-DXI, LI-TSS-WBM, LI-TSS-RGE-01]
 status: 확정
 version:
 date: 2026-11-03
-sources: [정책서_2026.08.28 > Material Setup > Carrier(기물) 장착 정책, MS 적재 정책서 (20261102) > common-loading-policy 2장, policy/service-mode-matrix.csv, policy/permission-matrix.csv, 팀원 POL-MAT-01]
+sources: [정책서_2026.08.28 > Material Setup > Carrier(기물) 장착 정책, MS 적재 정책서 (20261102) > common-loading-policy 2장, policy/client-mode-matrix.csv, policy/permission-matrix.csv, 팀원 POL-MAT-01]
 provisional: []
 alerts: []
-data: [policy/service-mode-matrix.csv, glossary/consumables.csv]
+data: [policy/client-mode-matrix.csv, glossary/consumables.csv]
 replaced_by:
 ---
 # POL-MAT-001 Material Setup 구성과 적재 계층
 
 ## 정의
 
-| 중메뉴 | 하는 일 | Service Mode |
+| 중메뉴 | 하는 일 | L-IOS Client Mode |
 | --- | --- | --- |
-| Group Lots | 같은 박스에서 나온 Reagent 구성품을 Lot으로 묶음 (POL-MAT-009) | TSS Mode |
-| Prepare Carrier | Sample, Consumable·Reagent, PK/IC Tube, PCR Reagent, MM Tube를 Socket·Tray·Trolley에 적재 | TSS Mode |
+| Group Lots | 같은 박스에서 나온 Reagent 구성품을 Lot으로 묶음 (POL-MAT-009) | Console Mode |
+| Prepare Carrier | Sample, Consumable·Reagent, PK/IC Tube, PCR Reagent, MM Tube를 Socket·Tray·Trolley에 적재 | Load Samples into Trolley는 MS Mode. Load Consumables and Reagents into Trolley, Load PK/IC Tubes, Load PCR Reagents, Load MM Tubes는 Console Mode |
 | Load Materials | Dx 시스템 Module의 Storage에 직접 적재 (POL-LOD-002) | Console Mode |
 | Empty Waste Bin | Waste Bin/Bottle 비움 처리 (POL-LOD-005) | Console Mode |
+| View Trolley Info | Consumable Trolley를 스캔하거나 목록에서 골라 남은 Consumable·Reagent와 재사용 안내를 봄 (LI-TSS-RGE-01 · 02 디스크립션, IA 미등록) | Console Mode |
 
 | 계열 | 하위 | 중위 | 상위 |
 | --- | --- | --- | --- |
@@ -39,7 +40,7 @@ replaced_by:
 
 ## 규칙
 
-1. Material Setup은 L-IOS에서만 쓰며, Service, Admin, User 모두 쓸 수 있음. 중메뉴마다 보이는 Service Mode는 정의 표와 같음.
+1. Material Setup은 L-IOS에서만 쓰며, Service, Admin, User 모두 쓸 수 있음. 중메뉴마다 보이는 L-IOS Client Mode는 정의 표와 같음.
 2. 각 적재 단위는 상위·하위 단위와 데이터로 연결됨. 시스템은 데이터 연결만 막을 수 있고, 사용자가 물리적으로 잘못 넣는 것은 막지 못함.
 3. Socket, Tray, Trolley는 같은 계열끼리만 구성함. Sample과 Consumable·Reagent를 한 Socket·Tray·Trolley에 섞어 적재할 수 없음 (예: Sample Socket과 Consumable Socket을 한 Tray에 적재 불가).
 4. Trolley는 Sample Trolley, Consumable Trolley, 데이터 없는 Trolley 세 가지이며, 한 Trolley에 두 계열이 함께 있는 경우는 없음.
@@ -57,10 +58,11 @@ replaced_by:
 - 정책서_2026.08.28 "Carrier(기물) 장착 정책" (같은 메뉴의 같은 항목끼리 구성, Sample과 Consumable·Reagent 혼합 불가)
 - MS 적재 정책서 (20261102) common-loading-policy 2.1 ~ 2.3 (`reference/team/material-setup-20261102/`)
 - LI-TSS-PSI-SAM-01-03 디스크립션 2 (Socket type별 hole 수, v2.1.06)
-- `policy/service-mode-matrix.csv`, `policy/permission-matrix.csv` Material Setup (2026-10-30 결정)
+- `policy/client-mode-matrix.csv`, `policy/permission-matrix.csv` Material Setup (2026-10-30 결정. L-IOS Client Mode는 2026-11-12 DS-0001로 바꿈)
 
 ## 변경 이력
 
 | 버전 | 날짜 | 내용 | 근거 (PD, PV, CR, ADR) |
 | --- | --- | --- | --- |
 | | 2026-11-03 | 최초 작성 (이전 ID: 팀원 POL-MAT-01) | |
+| | 2026-11-12 | 정의 표: Group Lots와 Prepare Carrier의 Consumable·Reagent 준비(Load Consumables and Reagents into Trolley, Load PK/IC Tubes, Load PCR Reagents, Load MM Tubes)는 Console Mode, Load Samples into Trolley는 MS Mode(이전 TSS Mode), View Trolley Info 줄 추가(Console Mode). 용어 Service Mode → L-IOS Client Mode, 데이터 경로 바꿈 | DS-0001 (2026-11-12, 서보경) |

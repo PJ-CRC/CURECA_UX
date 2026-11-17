@@ -31,7 +31,7 @@ replaced_by:
 5. Protocol Name은 공백 포함 최대 50자이며 \ / : * ? " < > | 를 쓸 수 없음.
 6. 종류마다 [Apply]한 Protocol 하나가 사용 중(Applied)이 됨. 다른 Protocol을 Apply하면 기존 Applied는 해제됨.
 7. Extraction Protocol은 최소 1개, 최대 25개임.
-8. 고친 내용은 [Save] (Confirm_010)로 저장하고, 저장하지 않고 [Cancel]하면 Confirm_012로 확인함.
+8. 고친 내용은 [Save](Confirm_010)로 저장하고, 저장하지 않고 [Cancel]하면 Confirm_012로 확인함.
 
 ## 예외
 
