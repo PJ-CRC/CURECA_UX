@@ -266,7 +266,7 @@ started: 2026-11-17
 | --- | --- | --- | --- | --- | --- |
 | Q1 | T-IOS Door Status 툴팁 문구 (기존 T 디스크립션에 없음. L-IOS 문구를 따랐으나 Unlock / Lock 기능 안내가 T-IOS에 맞는지) | TI-INS-01-T 6 | | T만 | 2026-11-17 · 요청자 답: Lock 내용을 빼고 정리 → "Shows door open/close status" (C36) |
 | Q2 | [Door Control] 버튼 활성화 조건 (기존 디스크립션은 COMM-3-a만, 정책서는 Popup 안 [Unlock] 조건만 정함) | LI-INS-01-T 6 | | L만 | 2026-11-17 · 요청자 답: 늘 활성, 비활성화되는 경우 없음 (모든 Module에 Door가 있음) (C37) |
-| Q3 | [Lock] 안내 문구 하나 고르기 (Close the door, then press Lock to lock it. / Close the door and press the 'Lock' button to resume the module / Close the door and press Lock. The module will resume once locked.) | LI-INS-01-P 2-6 | | L만 | |
+| Q3 | [Lock] 안내 문구 하나 고르기 (Close the door, then press Lock to lock it. / Close the door and press the 'Lock' button to resume the module / Close the door and press Lock. The module will resume once locked.) | LI-INS-01-P 2-6 | | L만 | 2026-11-17 · 요청자 답: ① Close the door, then press Lock to lock it. (이미 그린 문구, 화면 바뀌지 않음) |
 | Q4 | Door가 Open일 때 [Lock] 안내 팝업 (디스크립션 · DS-0005는 Confirm_031 "Please close the door.", 케이스 프레임은 Alert_048 "The door is open. Close the door, then press Lock again.") | LI-INS-01-P 2-5, LI-INS-02-T 3-1 | DS-0005 | L만 | |
 | Q5 | User Type이 Admin · User일 때 [Save] · Radio 버튼 모습 (숨김 / Disabled, 정책은 "조회만"만 정함) | TI-INS-02-01-P 3 | | T만 | |
 
@@ -329,6 +329,7 @@ started: 2026-11-17
 | 2026-11-17 | 4단계 | 절차 1 사용자 확인 목록: 질문 대기 Q1 ~ Q5, 변경 확인 C1 ~ C35 (C28 비움) (Workbench R007 질문) | 하나씩 답하기 (2026-11-17 18:29, 서보경) → Q1부터 하나씩 여쭘 |
 | 2026-11-17 | 4단계 | Q1 T-IOS Door Status 툴팁 문구 (Workbench R007 질문) | T-IOS 안내 문구는 Lock 상태를 제외한 내용으로 정리 (2026-11-17 18:33, 서보경) → 화면 MD · Figma 고침, 화면 라벨 · Figma의 사용자 확인 목록에서 Q1 지움, C36 (맞음) |
 | 2026-11-17 | 4단계 | Q2 [Door Control] 버튼 활성화 조건 (Workbench R007 질문) | Door가 없는 Module은 없음, 비활성화되는 경우 없이 늘 제공하는 버튼 (2026-11-17 18:37, 서보경) → 화면 MD · Figma 고침, Q2 지움, C37 (맞음) |
+| 2026-11-17 | 4단계 | Q3 [Lock] 안내 문구 (Workbench R007 질문) | ① Close the door, then press Lock to lock it. (2026-11-17 18:43, 서보경) → 화면 · 케이스 화면 · 디스크립션이 이미 이 문구라 그대로, Q3 지움 |
 
 ## 이 작업의 결정 (5단계에서 한꺼번에 반영)
 | 논의 대상 | 내용 | 후속 확인 필요 (누구 · 무엇, 없으면 비움) | 5단계 반영 |

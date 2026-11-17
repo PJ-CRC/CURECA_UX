@@ -178,7 +178,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=28
 
 | 번호 (Q) | 디스크립션 번호 | 질문 | 논의 대상 (DS) | 풀린 날 · 어떻게 |
 | --- | --- | --- | --- | --- |
-| Q3 | 2-6 | [Lock] 안내 문구 하나 고르기 (Close the door, then press Lock to lock it. / Close the door and press the 'Lock' button to resume the module / Close the door and press Lock. The module will resume once locked.) | | |
+| Q3 | 2-6 | [Lock] 안내 문구 하나 고르기 (Close the door, then press Lock to lock it. / Close the door and press the 'Lock' button to resume the module / Close the door and press Lock. The module will resume once locked.) | | 2026-11-17 · 요청자 답: ① Close the door, then press Lock to lock it. (이미 그린 문구, 화면 바뀌지 않음) |
 | Q4 | 2-5 | Door가 Open일 때 [Lock] 안내 팝업 (디스크립션 · DS-0005는 Confirm_031 "Please close the door.", 케이스 프레임은 Alert_048 "The door is open. Close the door, then press Lock again.") | DS-0005 | |
 
 ## 반영 대기 목록
@@ -206,3 +206,4 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=28
 | | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |
 | 2.1.13 | 2026-11-13 | Unlocked 상태 Door의 버튼을 “Unlocked”(Disabled) → [Lock]으로 변경, 하단 안내 문구 [Lock] 버튼 안내, 자동 잠금 폐지, 문 열린 채 [Lock] → 문 닫기 안내 팝업(Confirm_031) (버전 메모 v2.1.17) | 이상헌 | Figma 버전 메모 v2.1.17 |
 | | 2026-11-17 | 화면 MD를 tobe로 새로 씀 (기존 작업방 Instruments 2.1 2차 [10069-368536](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=10069-368536) · 패널 Ver 2.1.13). 화면 정보를 기존 패널 값(2.1.13 · 2026.11.13 · 이상헌)으로 맞춤, 반영 대기 R01 ~ R03 · R05 ~ R08 반영(작업 중, R02 · R06은 DS-0004 A안 기준 — R02는 Q3로), 취소선 항목 지움, 기존 원본 케이스 6개에 Case 번호를 붙여 옮김, C27 · C29 ~ C34 · Q3 · Q4. 작업방에 새로 그림 (섹션 [2826-26709](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=2826-26709), Figma는 R041 · R007에서 그림) | Claude (요청 최고관리자) | 20261117-최고관리자-instruments, DS-0004, DS-0005 |
+| | 2026-11-17 | 4단계: Q3 답으로 2-6 [Lock] 안내 문구를 ① Close the door, then press Lock to lock it.으로 확정 (화면 · 디스크립션 그대로) | Claude (요청 서보경) | 20261117-최고관리자-instruments |
