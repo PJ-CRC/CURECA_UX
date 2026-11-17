@@ -3,7 +3,7 @@ status: 진행 중
 requester: 최고관리자
 menu: Instruments
 cids: [TI-INS-01-T, LI-INS-01-T, TI-INS-02-T, LI-INS-02-T, TI-INS-02-01-P, LI-INS-02-01-P, LI-INS-01-P]
-policies: []
+policies: [POL-EQP-008, POL-EQP-004, POL-EQP-001]
 cid_system:
 figma: UX AI TEST (etCQFF3CTf1EA6C79d4BBf) · Instrument Ⓛ / Ⓣ _re
 test: false
