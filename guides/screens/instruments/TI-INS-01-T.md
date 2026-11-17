@@ -110,7 +110,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=28
 
 6  Door Status Tooltip
  ● 동작 : Door Status 옆 Info 아이콘에 올리면 툴팁 노출
- ● 툴팁 내용 : Shows door open/close status and provides Unlock / Lock functions to open or lock the module door
+ ● 툴팁 내용 : Shows door open/close status
  ● 공통 UX 참고 : COMM-5-o
 ```
 
@@ -138,7 +138,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=28
 | 3-5 | Connected, Status, Door Status, Open, Closed | | | |
 | 3-6 | Event | | | |
 | 5 | Connected, Disconnected, Running, Paused, Error, Ready | | | |
-| 6 | Shows door open/close status and provides Unlock / Lock functions to open or lock the module door | | | |
+| 6 | Shows door open/close status | | 변경 (Shows door open/close status and provides Unlock / Lock functions to open or lock the module door → Shows door open/close status) | |
 
 ## 알럿
 
@@ -164,12 +164,13 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=28
 | C5 | 3-5 | 자세한 상태값은 우측의 Instrument Detail Info page 참고 | 상태값 · Door 2개 Module 표시를 풀어 씀 | R06, POL-EQP-001, `glossary/status-values.csv` | - | |
 | C6 | 0 | 패널 CID TI-INS-02-T | 패널 CID 수정 (TI-INS-02-T → TI-INS-01-T) | R03, IA · 프레임 이름 | - | |
 | C9 | 0 | 디스크립션 없는 번호 표시 6(Event 줄), Door Status Info 아이콘 번호 5(범례 5와 겹침) | 번호 표시 정리 (설명 없는 6 지움, Door Status 툴팁 5 → 6) | 기존 화면 번호 표시가 디스크립션과 다름 | - | |
+| C36 | 6 | (기존 T 디스크립션에 툴팁 문구 없음, L-IOS 문구를 따라 그림) | 툴팁 문구에서 Unlock / Lock 안내를 뺌 (→ Shows door open/close status) | Q1의 답 | O | 맞음 (2026-11-17) |
 
 ## 질문 대기
 
 | 번호 (Q) | 디스크립션 번호 | 질문 | 논의 대상 (DS) | 풀린 날 · 어떻게 |
 | --- | --- | --- | --- | --- |
-| Q1 | 6 | T-IOS Door Status 툴팁 문구 (기존 T 디스크립션에 없음. L-IOS 문구를 따랐으나 Unlock / Lock 기능 안내가 T-IOS에 맞는지) | | |
+| Q1 | 6 | T-IOS Door Status 툴팁 문구 (기존 T 디스크립션에 없음. L-IOS 문구를 따랐으나 Unlock / Lock 기능 안내가 T-IOS에 맞는지) | | 2026-11-17 · 요청자 답: Lock 내용을 빼고 정리 → "Shows door open/close status" (C36) |
 
 ## 반영 대기 목록
 
@@ -189,3 +190,4 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=28
 | 2.1.06 | 2026-09-28 | Module 상태값에 Paused 추가. 단어 변경 Enable → Enabled | 서보경 | Figma 버전 메모 |
 | | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |
 | | 2026-11-17 | 작업방에 새로 그림 (기존 작업방 Instruments 2.1 2차 [3249-111508](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3249-111508) · Ver 2.1.06). `source: asis` → `tobe`, 반영 대기 R01 ~ R06 반영(작업 중), C1 ~ C6 · C9 · Q1 | Claude (요청 최고관리자) | 20261117-최고관리자-instruments, R01 ~ R06 |
+| | 2026-11-17 | 4단계: Q1 답으로 6 Door Status 툴팁 문구에서 Unlock / Lock 안내를 뺌 (C36) | Claude (요청 서보경) | 20261117-최고관리자-instruments |
