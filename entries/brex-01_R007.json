@@ -2,11 +2,11 @@
   "id": "brex-01_R007",
   "kind": "request",
   "team": "cureca",
-  "status": "보류",
-  "at": "2026-11-17T19:10:16+09:00",
+  "status": "대기",
+  "at": "2026-11-17T20:20:14+09:00",
   "createdAt": "2026-11-17T17:47:23+09:00",
   "by": "서보경",
-  "doneBy": "Claude",
+  "doneBy": "서보경",
   "pc": "BREX_01",
   "reqId": "R007",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,27 +17,13 @@
   "type": "요청",
   "layout": "",
   "text": "instrument 작업 이어서 해줘",
-  "note": "[4단계] 사용자 확인 목록 하나씩 — 8 / 39\nC2 맞음 반영함 (화면 라벨 · 사용자 확인 목록에서 지움)\nC3 Overview (TI-INS-01-T · LI-INS-01-T) 3-2 사용 여부\n- 기존 화면: Total / In Use / Not in Use\n- 바꿔 그린 것: 화면 표기대로 \"Enabled n · Total n (Disabled n)\" (예: Enabled 3 · Total 4 (Disabled 1))\n- 근거: 반영 대기 TI R04 · LI R02, POL-EQP-009 (Enabled 표기)\n남은 것: C4 ~ C35 (31건)\n작업 기준: basis 2026-11-17 18:29 · 작업규칙 CURECA 작업규칙 (rules) @원본 · 정책서 (policy) @원본 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 (glossary) @원본 · 화면 정의서 (screens) @원본",
+  "note": "",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": {
-    "q": "C3 Total / In Use / Not in Use → Enabled n · Total n (Disabled n), 맞나요?",
-    "options": [
-      {
-        "label": "맞음"
-      },
-      {
-        "label": "되돌림"
-      },
-      {
-        "label": "C3 ~ C35 모두 맞음"
-      }
-    ],
-    "free": true
-  },
+  "ask": null,
   "replies": [
     {
       "at": "2026-11-17T18:05:53+09:00",
@@ -103,6 +89,12 @@
       "at": "2026-11-17T19:09:18+09:00",
       "by": "서보경",
       "q": "C2 Alert_L_004 → Alert_004, 맞나요?",
+      "text": "맞음"
+    },
+    {
+      "at": "2026-11-17T20:20:14+09:00",
+      "by": "서보경",
+      "q": "C3 Total / In Use / Not in Use → Enabled n · Total n (Disabled n), 맞나요?",
       "text": "맞음"
     }
   ]
