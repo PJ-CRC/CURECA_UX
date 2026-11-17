@@ -14,7 +14,7 @@ policies: [POL-EQP-001, POL-EQP-005, POL-EQP-009, POL-EQP-010]
 basis:
 basis_versions:
 source: tobe
-figma:
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=2815-24789
 ---
 # TI-INS-02-T All Tab
 
@@ -203,4 +203,4 @@ figma:
 | 2.1.01 | | Error Rate 제거(2-1). Setting 버튼명 변경 Setting → Management(2-2). Run-time Info 버튼 제거(4-1). Enable setting 버튼 제거(4-2). 좌측 목록과 Device 영역 항목명 Enable → Enabled. Run-time 집계 대상에 Sample Pretreatment, Sample Aliquot 추가 | 서보경 | Figma 버전 메모 |
 | 2.1.06 | 2026-09-28 | Detail Door 영역 UI 변경 | 서보경 | Figma 버전 메모 |
 | | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |
-| | 2026-11-17 | 화면 MD를 tobe로 새로 씀 (기존 작업방 Instruments 2.1 2차 [3249-111981](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3249-111981) · Ver 2.1.06). 반영 대기 R01 · R03 ~ R06 · R09 · R11 반영(작업 중), 취소선 항목 지움, C10 ~ C16 · C18. Figma는 다음 요청에서 그림 | Claude (요청 최고관리자) | 20261117-최고관리자-instruments |
+| | 2026-11-17 | 화면 MD를 tobe로 새로 씀 (기존 작업방 Instruments 2.1 2차 [3249-111981](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3249-111981) · Ver 2.1.06). 반영 대기 R01 · R03 ~ R06 · R09 · R11 반영(작업 중), 취소선 항목 지움, C10 ~ C16 · C18. 작업방에 새로 그림 (섹션 [2815-24789](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=2815-24789), Figma는 R041 · R007에서 그림) | Claude (요청 최고관리자) | 20261117-최고관리자-instruments |

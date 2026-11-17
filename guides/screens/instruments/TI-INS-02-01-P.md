@@ -14,7 +14,7 @@ policies: [POL-EQP-005, POL-EQP-009, POL-EQP-010]
 basis:
 basis_versions:
 source: tobe
-figma:
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=2823-26013
 ---
 # TI-INS-02-01-P Management Popup
 
@@ -168,4 +168,4 @@ figma:
 | --- | --- | --- | --- | --- |
 | 2.1.01 | 2026-08-07 | Enable setting Popup을 Management Popup으로 변경 및 화면설계 변경. Module 및 Device에 Serial Number 추가. Device Enable 정책 변경(관리 대상 추가 및 대수 관련 정책 변경) | 서보경 | Figma 버전 메모 |
 | | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |
-| | 2026-11-17 | 화면 MD를 tobe로 새로 씀 (기존 작업방 Instruments 2.1 2차 [3249-112456](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3249-112456) · Ver 2.1.01). 반영 대기 R01 ~ R05 · R08 반영(작업 중), C20 ~ C25 · Q5. User Type 케이스 화면은 그리지 않고 디스크립션에만(2단계 답). Figma는 다음 요청에서 그림 | Claude (요청 최고관리자) | 20261117-최고관리자-instruments |
+| | 2026-11-17 | 화면 MD를 tobe로 새로 씀 (기존 작업방 Instruments 2.1 2차 [3249-112456](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3249-112456) · Ver 2.1.01). 반영 대기 R01 ~ R05 · R08 반영(작업 중), C20 ~ C25 · Q5. User Type 케이스 화면은 그리지 않고 디스크립션에만(2단계 답). 작업방에 새로 그림 (섹션 [2823-26013](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=2823-26013), Figma는 R041 · R007에서 그림) | Claude (요청 최고관리자) | 20261117-최고관리자-instruments |

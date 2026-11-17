@@ -14,7 +14,7 @@ policies: [POL-EQP-001, POL-EQP-005, POL-EQP-008 · DS-0004 · DS-0005, POL-EQP-
 basis:
 basis_versions:
 source: tobe
-figma:
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=2816-25368
 ---
 # LI-INS-02-T All Tab
 
@@ -227,4 +227,4 @@ figma:
 | 2.1.06 | 2026-09-28 | Detail Door 영역 UI 변경 | 서보경 | Figma 버전 메모 |
 | | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |
 | 2.1.17 | 2026-11-13 | Door(3) · [Unlock] 클릭(3-1)에 Lock Status 값과 [Lock] 버튼 정의 추가. 문 열린 채 [Lock] → 문 닫기 안내 팝업(Confirm_031) | 이상헌 | Figma 버전 메모 v2.1.17 |
-| | 2026-11-17 | 화면 MD를 tobe로 새로 씀 (기존 작업방 Instruments 2.1 2차 [10069-367730](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=10069-367730) · Ver 2.1.17). 화면 정보 Ver · Date · 작성자를 기존 패널 값(2.1.17 · 2026.11.13 · 이상헌)으로 맞춤, 반영 대기 R01 · R03 ~ R06 · R08 ~ R10 반영(작업 중), 취소선 항목 지움, C10 ~ C17 · C19 · Q4. Figma는 다음 요청에서 그림 | Claude (요청 최고관리자) | 20261117-최고관리자-instruments |
+| | 2026-11-17 | 화면 MD를 tobe로 새로 씀 (기존 작업방 Instruments 2.1 2차 [10069-367730](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=10069-367730) · Ver 2.1.17). 화면 정보 Ver · Date · 작성자를 기존 패널 값(2.1.17 · 2026.11.13 · 이상헌)으로 맞춤, 반영 대기 R01 · R03 ~ R06 · R08 ~ R10 반영(작업 중), 취소선 항목 지움, C10 ~ C17 · C19 · Q4. 작업방에 새로 그림 (섹션 [2816-25368](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=2816-25368), Figma는 R041 · R007에서 그림) | Claude (요청 최고관리자) | 20261117-최고관리자-instruments |

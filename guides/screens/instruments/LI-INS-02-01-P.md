@@ -14,7 +14,7 @@ policies: [POL-EQP-005, POL-EQP-009, POL-EQP-010]
 basis:
 basis_versions:
 source: tobe
-figma:
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=2824-26490
 ---
 # LI-INS-02-01-P Management Popup
 
@@ -110,6 +110,7 @@ figma:
 | C20 | 2 | Account Type의 Sevice일 경우만 노출, Case Account Type | 표기 수정 (Account Type → User Type, Sevice → Service) | R01, `glossary/terms.csv` | - | |
 | C21 | 0 | Datail | 표기 수정 (Datail → Detail) | R04, 오타 | - | |
 | C26 | 0 | 조회 전용임이 분명하지 않음 | 모든 User Type이 조회만 가능 (변경 없음) 명시 | R02, POL-EQP-009 | - | |
+| C35 | 0 | 디스크립션 없는 번호 표시 1-3 | 번호 표시 1-3 지움 (기존 화면 1-3 표시에 맞는 디스크립션 없음) | 기존 화면 번호 표시가 디스크립션과 다름 | - | |
 
 ## 질문 대기
 
@@ -131,4 +132,4 @@ figma:
 | --- | --- | --- | --- | --- |
 | 2.1.01 | 2026-08-07 | 팝업 재정의 | 서보경 | Figma 버전 메모 |
 | | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |
-| | 2026-11-17 | 화면 MD를 tobe로 새로 씀 (기존 작업방 Instruments 2.1 2차 [10069-368209](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=10069-368209) · Ver 2.1.01). 반영 대기 R01 · R02 · R04 반영(작업 중), 기존 원본 케이스 3개 옮김(Case 3은 원본 「모듈에 Device Unit이 없는 Case」에 번호를 붙임), C20 · C21 · C26. Figma는 다음 요청에서 그림 | Claude (요청 최고관리자) | 20261117-최고관리자-instruments |
+| | 2026-11-17 | 화면 MD를 tobe로 새로 씀 (기존 작업방 Instruments 2.1 2차 [10069-368209](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=10069-368209) · Ver 2.1.01). 반영 대기 R01 · R02 · R04 반영(작업 중), 기존 원본 케이스 3개 옮김(Case 3은 원본 「모듈에 Device Unit이 없는 Case」에 번호를 붙임), C20 · C21 · C26 · C35. 작업방에 새로 그림 (섹션 [2824-26490](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=2824-26490), Figma는 R041 · R007에서 그림) | Claude (요청 최고관리자) | 20261117-최고관리자-instruments |
