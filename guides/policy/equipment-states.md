@@ -1,7 +1,7 @@
 # 장비 상태 정의서
 
-> 상태: 초안 v0.3 (2026-11-02).
-> 출처: 씨젠 "CURECA 시스템 구성 요소 및 상태 정보" 261021 (원본 `reference/customer/system-status/`)이 1차 출처입니다. Common UX 최종본 V2.2.00의 COMM-4-a(2/4)~(4/4)는 이 문서를 옮긴 것이고, 화면 동작은 작업방 화면 디스크립션과 정책서_2026.08.28에서 모았습니다.
+> 상태: 초안 v0.4 (2026-11-12). v0.4에서 상태 분류 이름 CURECA Status를 Hardware Status로 바꿈(DS-0003, 뜻 그대로).
+> 출처: 씨젠 "CURECA 시스템 구성 요소 및 상태 정보" 261021 (원본 `reference/customer/system-status/`)이 1차 출처입니다. Common UX 최종본 V2.2.00의 COMM-4-a(2/4)~(4/4)는 이 문서를 옮긴 것이고, 화면 동작은 기존 작업방 화면 디스크립션과 정책서_2026.08.28에서 모았습니다.
 
 화면 흐름을 점검하는 기준 자료입니다(헌법 8조). 상태값의 이름과 표기는 [glossary/status-values.csv](../glossary/status-values.csv)에 있고, 이 문서는 상태가 바뀌는 조건과 상태별로 할 수 있는 일을 정합니다.
 
@@ -16,7 +16,7 @@
 
 장비 통합 상태는 Module 상태들을 모아 정해집니다(4절).
 
-이 문서가 다루는 상태는 CURECA Status(장비 자체의 상태)입니다. Sample·Plate·검사 배치, 재고, 시약 만료, 폐기함, 이벤트 같은 System Status(소프트웨어가 관리하는 상태)는 상태값 표의 분류 칸으로 구분합니다.
+이 문서가 다루는 상태는 Hardware Status(장비 자체의 상태)입니다. Sample·Plate·검사 배치, 재고, 시약 만료, 폐기함, 이벤트 같은 System Status(소프트웨어가 관리하는 상태)는 상태값 표의 분류 칸으로 구분합니다.
 
 ## 2. 장비 통합 상태별 화면 동작
 
@@ -103,7 +103,7 @@
 
 | # | 내용 | 처리 |
 | --- | --- | --- |
-| 1 | COMM-4-a의 Partial Running "UX action"이 Stopping과 같은 문장임 | 2026-11-02 확인: 복사 실수. 2절대로 Run 중 확인이 필요한 Module이 있다는 신호. Common UX 수정 요청 (`common-ux/feedback.md`) |
+| 1 | COMM-4-a의 Partial Running "UX action"이 Stopping과 같은 문장임 | 2026-11-02 확인: 복사 실수. 2절대로 Run 중 확인이 필요한 Module이 있다는 신호. Common UX 수정 요청 (`old-common-ux/feedback.md`) |
 | 2 | COMM-4-a의 Paused "발생 Case", "UX action"이 비어 있음 ("-") | 2026-11-02 확인: 5절 "Pausing과 Paused". Common UX 수정 요청 |
 | 3 | [Unlock all doors] 활성 조건: Instrument 화면 한 곳은 "Ready, Error, Paused, Not Initialized", Door Control 팝업(LI-INS-01-P)은 "Ready, Paused, Error" | 2026-11-02 확인: Ready, Error, Paused, Not Initialized. LI-INS-01-P 문구는 화면 정정 대상 |
 | 4 | 검사 장치 상태 Ready의 코드명: COMM-4-a(3/4)는 `Idle`, 사용자 제공 표는 `Ready` | 2026-11-02 확인: 코드명은 Common UX처럼 `Idle`을 유지하고, UI 표기만 Ready |

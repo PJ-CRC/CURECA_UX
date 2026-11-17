@@ -26,7 +26,7 @@ replaced_by:
 2. Name은 필수가 아니며 글자 수와 형식 제한이 없음.
 3. Email은 필수가 아니며, 입력한 경우에만 이메일 형식(abc@domain.com)을 검증함. 계정 생성의 Email도 같음.
 4. 비밀번호를 바꿀 때는 현재 비밀번호, 새 비밀번호, 새 비밀번호 확인을 모두 입력해야 하며, 새 비밀번호는 POL-ACC-006 조건을 따름.
-5. 바꾼 값은 [Save] (Confirm_010)로 저장하고, [Cancel]은 Confirm_007로 확인함.
+5. 바꾼 값은 [Save](Confirm_010)로 저장하고, [Cancel]은 Confirm_007로 확인함.
 6. T-IOS General 탭의 Event notifications는 POL-EVT-003을 따름.
 
 ## 예외
