@@ -16,14 +16,14 @@
 
 ## 3. 논의 중 · 내부
 
-| ID | 제목 | 누가 정하나 | 걸린 정책 | 걸린 화면 | 생긴 날 | 상태 |
-| --- | --- | --- | --- | --- | --- | --- |
-| [DS-0004](DS-0004.md) | Door 자동 잠금을 없애고 Door Control의 [Lock] 버튼으로 잠그게 할지 (화면 v2.1.17과 POL-EQP-008이 다름) | 내부 | POL-EQP-008, POL-EQP-004, POL-EQP-001 | LI-INS-01-P, LI-INS-01-T, LI-INS-02-T, TI-INS-02-T, LI-DAS, TI-DAS | 2026-11-17 | 논의 중 |
-| [DS-0005](DS-0005.md) | 알럿 카탈로그를 Instruments 화면에 맞춤 (Confirm_031 더함, Alert_004 · Confirm_008 사용 화면) | 내부 | POL-EQP-008 | LI-INS-01-P, LI-INS-02-T, TI-INS-01-T, LI-INS-01-T | 2026-11-17 | 논의 중 |
+없음
 
 ## 4. 결정 · 작업 중
 
-없음
+| ID | 제목 | 누가 정하나 | 걸린 정책 | 걸린 화면 | 생긴 날 | 상태 |
+| --- | --- | --- | --- | --- | --- | --- |
+| [DS-0004](DS-0004.md) | Door 자동 잠금을 없애고 Door Control의 [Lock] 버튼으로 잠그게 할지 (화면 v2.1.17과 POL-EQP-008이 다름) | 내부 | POL-EQP-008, POL-EQP-004, POL-EQP-001 | LI-INS-01-P, LI-INS-01-T, LI-INS-02-T, TI-INS-02-T, LI-DAS, TI-DAS | 2026-11-17 | 결정 (20261117-최고관리자-instruments) |
+| [DS-0005](DS-0005.md) | 알럿 카탈로그를 Instruments 화면에 맞춤 (Confirm_031 더함, Alert_004 · Confirm_008 사용 화면) | 내부 | POL-EQP-008 | LI-INS-01-P, LI-INS-02-T, TI-INS-01-T, LI-INS-01-T | 2026-11-17 | 결정 (20261117-최고관리자-instruments) |
 
 ## 5. 보류
 
