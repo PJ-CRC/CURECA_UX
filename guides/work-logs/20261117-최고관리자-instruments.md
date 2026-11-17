@@ -67,7 +67,15 @@ started: 2026-11-17
 
 | 화면 (CID) | 읽은 것 | Figma 링크 |
 | --- | --- | --- |
-| Instruments 7개 (TI/LI-INS-…) | 화면 MD 머리말 · 반영 대기 목록만 (다시 옮기기 전). 케이스 3 다시 옮기기는 요건 확인 뒤 | 기존 작업방 kI8nm6HBJsfBa4fbReZwgh (화면 MD `figma`) |
+| Overview Tab (TI-INS-01-T) | 화면 MD (다시 옮김 · 바뀐 곳 없음, 2.1 2차, Ver 2.1.06. 패널 CID가 TI-INS-02-T인 것은 R03 그대로), 반영 대기 | [3249-111508](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3249-111508) |
+| All Tab (TI-INS-02-T) | 화면 MD (다시 옮김 · 바뀐 곳 있음 (취소선 표시, 7 Date/Time 표기 줄), 2.1 2차, Ver 2.1.06), 반영 대기 | [3249-111981](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3249-111981) |
+| Management Popup (TI-INS-02-01-P) | 화면 MD (다시 옮김 · 바뀐 곳 없음, 2.1 2차, Ver 2.1.01), 케이스 2개(Error Rate 표기 / 미표기), 반영 대기 | [3249-112456](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3249-112456) |
+| Overview Tab (LI-INS-01-T) | 화면 MD (다시 옮김 · 바뀐 곳 있음 (v2.1.17 Door Status 툴팁 · 6 Unlock 버튼에 Lock 기능), 2.1 2차, Ver 2.1.17), 반영 대기 | [10069-367211](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=10069-367211) |
+| All Tab (LI-INS-02-T) | 화면 MD (다시 옮김 · 바뀐 곳 있음 (v2.1.17 Door 3 · 3-1 Lock Status · [Lock] 버튼 · Confirm_031), 2.1 2차, Ver 2.1.17), 반영 대기 | [10069-367730](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=10069-367730) |
+| Management Popup (LI-INS-02-01-P) | 화면 MD (다시 옮김 · 바뀐 곳 없음, 2.1 2차, Ver 2.1.01), 케이스 2개, 반영 대기 | [10069-368209](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=10069-368209) |
+| Door Control Popup (LI-INS-01-P) | 화면 MD (다시 옮김 · 바뀐 곳 있음 (v2.1.17 자동 잠금 폐지 · [Lock] 버튼 · 안내 문구 · Confirm_031), 2.1 2차, 패널 Ver 2.1.13), 케이스 프레임 10069-368639, 반영 대기 | [10069-368536](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=10069-368536) |
+
+- 기존 작업방 Instrument 페이지(281:1770)에서 7개 CID가 모두 민트색(2.1 2차) 영역에 있어 그 화면을 옮김. 화면 MD의 예전 `figma` 링크 가운데 L-IOS 4개는 노드가 없어져 새 노드로 바꿈. 녹색(2.1 1차) 영역의 같은 CID 화면(9203:…)은 읽지 않음
 
 ## 요건별 진행 경로
 
