@@ -70,7 +70,7 @@
     "modules/universal-pcr.md",
     "permission.md",
     "policy-backlog.md",
-    "service-mode.md",
+    "client-mode.md",
     "smp/POL-SMP-001.md",
     "smp/POL-SMP-002.md",
     "smp/POL-SMP-003.md",
@@ -260,6 +260,6 @@
     "service-mode-matrix.csv": "Service Mode 매트릭스 · service-mode-matrix.csv",
     "warning-light.csv": "경광등 · warning-light.csv"
   },
-  "updatedAt": "2026-11-12T00:34:33.221Z",
+  "updatedAt": "2026-11-17T06:07:35.028Z",
   "note": "2026-11-12 CURECA_AI 새 흐름 구조로 맞춤(이 PC). 예전 수정본은 _rev_before_20261112/"
 }

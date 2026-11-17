@@ -19,7 +19,7 @@
     "../policy/integrated-state-transitions.csv",
     "../policy/migration.csv",
     "../policy/permission-matrix.csv",
-    "../policy/service-mode-matrix.csv",
+    "../policy/client-mode-matrix.csv",
     "../policy/warning-light.csv",
     "../ia/ia-screens.csv"
   ],
@@ -58,6 +58,6 @@
     "test-items.csv": "검사 항목 · test-items.csv",
     "test-stages.csv": "검사 단계 · test-stages.csv"
   },
-  "updatedAt": "2026-11-12T00:34:33.222Z",
+  "updatedAt": "2026-11-17T06:07:35.023Z",
   "note": "2026-11-12 CURECA_AI 새 흐름 구조로 맞춤(이 PC). 예전 수정본은 _rev_before_20261112/"
 }

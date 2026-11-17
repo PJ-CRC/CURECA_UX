@@ -441,7 +441,7 @@
   ],
   "summary": "CURECA_AI 저장소의 화면설계서(screens/)를 원본 파일 그대로 관리합니다(.history/guides/screens). 메뉴마다 CID 화면, 화면마다 정보 · 임시 정책 · 반영 대기 목록이 보입니다.",
   "title": "화면 정의서",
-  "updatedAt": "2026-11-12T00:34:33.230Z",
+  "updatedAt": "2026-11-17T06:07:35.037Z",
   "view": "screens",
   "note": "2026-11-12 CURECA_AI 새 흐름 구조로 맞춤(이 PC). 예전 수정본은 _rev_before_20261112/"
 }

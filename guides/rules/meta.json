@@ -8,15 +8,11 @@
     "../constitution.md",
     "../sources.md",
     "../flow/README.md",
-    "../flow/guide.md",
-    "../flow/0-start.md",
     "../flow/1-requirements.md",
     "../flow/2-evidence.md",
     "../flow/3-design.md",
-    "../flow/4-review.md",
-    "../flow/5-customer-review.md",
-    "../flow/6-multilingual.md",
-    "../flow/7-done.md",
+    "../flow/4-revise-verify.md",
+    "../flow/5-done.md",
     "../reference-rules/README.md",
     "../reference-rules/description.md",
     "../reference-rules/discussions.md",
@@ -32,7 +28,6 @@
     "../templates/menu.md",
     "../templates/policy.md",
     "../templates/screen-asis.md",
-    "../templates/screen-fix.md",
     "../templates/screen.md"
   ],
   "filesDir": "",
@@ -63,6 +58,6 @@
   ],
   "summary": "CURECA_AI 저장소의 헌법(constitution.md)과 룰 문서 14개를 원본 파일 그대로 관리하는 작업규칙입니다(.history/guides/rules). 파일 하나가 대분류 하나입니다.",
   "title": "CURECA 작업규칙",
-  "updatedAt": "2026-11-12T00:34:33.216Z",
-  "note": "2026-11-12 CURECA_AI 새 흐름 구조로 맞춤(이 PC). 예전 수정본은 _rev_before_20261112/"
+  "updatedAt": "2026-11-17T06:07:35.020Z",
+  "note": "2026-11-17 CURECA_AI(2026-11-17) 기준으로 교체: 흐름 1 ~ 5단계(flow/4-revise-verify · 5-done), 예전 0 · 4 ~ 7단계 · guide · templates/screen-fix 뺌"
 }
