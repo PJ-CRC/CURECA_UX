@@ -359,13 +359,13 @@ button{cursor:pointer}
   function answer(id, text, resolve, b){
     if (b) b.disabled = true;
     return reqPost({action:'answer', id:id, text:text, resolve:!!resolve}).then(function(){ delete drafts[id]; done(); })
-      .catch(function(err){ if (b) b.disabled = false; alert(id + ' 답 보내기 실패: ' + err.message); });
+      .catch(function(err){ if (b) b.disabled = false; WB.alert(id + ' 답 보내기 실패: ' + err.message); });
   }
   function sendDraft(id, b){
-    var t = String(drafts[id] || '').trim(); if (!t) { alert('답을 입력해 주세요.'); return; }
+    var t = String(drafts[id] || '').trim(); if (!t) { WB.alert('답을 입력해 주세요.'); return; }
     answer(id, t, false, b);
   }
-  document.addEventListener('click', function(e){
+  document.addEventListener('click', async function(e){
     /* 고친 화면 탭: 그 화면 캡처로 바꾼다 */
     var t = e.target.closest('[data-shot]');
     if (t) {
@@ -377,16 +377,16 @@ button{cursor:pointer}
     var sp = e.target.closest('[data-stop]');
     if (sp) {
       var sid = sp.dataset.stop;
-      if (!confirm(sid + ' 요청을 멈출까요?' + (sp.dataset.st === '진행 중' ? '\n\nClaude가 처리 중입니다. 그때까지 Figma에 반영된 것은 그대로 남고, 요청은 「보류」가 됩니다.' : ''))) return;
+      if (!(await WB.confirm(sid + ' 요청을 멈출까요?' + (sp.dataset.st === '진행 중' ? '\nClaude가 처리 중입니다. 그때까지 Figma에 반영된 것은 그대로 남고, 요청은 「보류」가 됩니다.' : ''), { ok: '멈추기', danger: true }))) return;
       sp.disabled = true;
-      reqPost({action:'stop', id:sid}).then(done).catch(function(err){ sp.disabled = false; alert(sid + ' 멈추기 실패: ' + err.message); });
+      reqPost({action:'stop', id:sid}).then(done).catch(function(err){ sp.disabled = false; WB.alert(sid + ' 멈추기 실패: ' + err.message); });
       return;
     }
     var b = e.target.closest('[data-retry]');
     if (b) {
       var id = b.dataset.retry; b.disabled = true;
       reqPost({action:'update', id:id, status:'대기', note:''}).then(done)
-        .catch(function(err){ b.disabled = false; alert(id + ' 다시 진행 실패: ' + err.message); });
+        .catch(function(err){ b.disabled = false; WB.alert(id + ' 다시 진행 실패: ' + err.message); });
       return;
     }
     var s = e.target.closest('[data-send]'); if (s) { sendDraft(s.dataset.send, s); return; }
@@ -395,11 +395,11 @@ button{cursor:pointer}
     var opt = row && (row.ask.options || [])[+o.dataset.i]; if (!opt) return;
     if (opt.action === 'delete') {
       var ids = (opt.ids || []).filter(function(x){ return x !== rid; });
-      if (!ids.length || !confirm(ids.join(', ') + ' 요청을 지웁니다. 첨부 이미지와 작업 이력도 함께 지워지고 되돌릴 수 없습니다. 지울까요?')) return;
+      if (!ids.length || !(await WB.confirm(ids.join(', ') + ' 요청을 지울까요?\n첨부 이미지와 작업 이력도 함께 지워지고 되돌릴 수 없습니다.', { ok: '지우기', danger: true }))) return;
       o.disabled = true;
       ids.reduce(function(p, x){ return p.then(function(){ return reqPost({action:'delete', id:x}); }); }, Promise.resolve())
         .then(function(){ return answer(rid, opt.label + ' (' + ids.join(', ') + ' 지움)', true, null); })
-        .catch(function(err){ o.disabled = false; alert('지우기 실패: ' + err.message); });
+        .catch(function(err){ o.disabled = false; WB.alert('지우기 실패: ' + err.message); });
       return;
     }
     answer(rid, opt.label, opt.action === 'done', o);

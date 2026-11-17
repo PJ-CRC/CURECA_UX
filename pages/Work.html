@@ -375,12 +375,12 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       <h4 class="dsub">내 토큰 (이 PC에만)</h4>
       <ol>
         <li>DevOps 오른쪽 위 사용자 설정 › Personal access tokens › New Token</li>
-        <li>Organization은 위 조직, Scopes는 <b>Work Items · Read &amp; write</b>, 만료일은 최대 1년</li>
+        <li>토큰 만들기 화면의 <b>Organization</b> 칸에서 위 「조직 주소」의 조직을 고르기(토큰을 그 조직에서 쓰게 하는 칸 · 토큰은 그대로 본인 것), <b>Scopes</b>는 Custom defined › <b>Work Items · Read</b>(나중에 화면에서 고치기까지 쓰려면 Read &amp; write), 만료일은 최대 1년</li>
         <li>만든 토큰을 아래에 붙여 넣기 (다시 보여 주지 않습니다. 바꿀 때만 다시 넣기)</li>
       </ol>
       <label for="fPat">개인 액세스 토큰(PAT)</label>
       <input id="fPat" type="password" autocomplete="off" spellcheck="false">
-      <p class="muted" style="margin:6px 0 0;font-size:12.5px">연결 확인 · 일정 표시는 다음 단계에서 붙입니다. 지금은 입력값만 저장합니다.</p>
+      <p class="muted" style="margin:6px 0 0;font-size:12.5px">저장하면 이 PC 토큰으로 작업 항목을 한 번 읽어 연결을 확인합니다. 일정 탭에 표로 보이고(읽기만), 고치기는 DevOps에서 합니다.</p>
     </div>
     <div class="acts">
       <span class="msg" id="dlgMsg" role="status"></span>
@@ -527,7 +527,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   var CATN = { done: '완료', review: '리뷰 중(예정)', prog: '진행 중', etc: '' };
   function wbsItems(sheet, withHidden){   // withHidden: 일정 탭 「숨긴 행 · 열 보기」일 때 숨긴 줄도 상태를 읽는다(상태 거르기용, 집계에는 쓰지 않음)
     if (!sheet || !sheet.values) return null;
-    var V = sheet.values, T = table(V), C = guessCols(T.labels, (conf && conf.cols) || null), out = [];
+    var V = sheet.values, T = table(V), C = guessCols(T.labels, (conf && !isAzure() && conf.cols) || null), out = [];   // Azure DevOps 표는 열 이름이 정해져 있어 시트용 열 맞춤을 쓰지 않는다
     function g(r, f){ var i = C[f]; return i >= 0 ? String(r[i] == null ? '' : r[i]).trim() : ''; }
     var hid = {}; (sheet.hr || []).forEach(function(x){ hid[x] = 1; });   // 시트에서 숨긴 줄(접은 그룹 · 예전 줄)은 세지 않는다
     for (var i = T.start; i < V.length; i++) {
@@ -556,7 +556,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   function sheetUrl(){ return (conf && conf.sheetUrl) || DEF_SHEET; }
   function gidOf(){ var g = conf && conf.wbsGid; if (!g) { var m = /[#&?]gid=(\d+)/.exec(sheetUrl()); g = m ? m[1] : ''; } return g; }
   function minName(){ return (conf && conf.minutes) || DEF_MIN; }
-  /* 일정 연결 종류가 Azure DevOps면 구글 시트를 읽지 않는다(일정 표시는 다음 단계) */
+  /* 일정 연결 종류가 Azure DevOps면 구글 시트 대신 DevOps 작업 항목을 표로 받아 같은 화면에 보인다(2026-11-17, 읽기만) */
   function isAzure(){ return !!(conf && conf.provider === 'azure'); }
   function canWrite(){ return !!(conf && conf.canWrite) && !document.documentElement.classList.contains('perm-ro'); }
 
@@ -576,9 +576,9 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     });
   }
   function loadWbs(){
-    if (!conf || !conf.configured || isAzure()) { wbs = null; return Promise.resolve(); }
+    if (!conf || !conf.configured || (isAzure() && !conf.azurePat)) { wbs = null; return Promise.resolve(); }
     loading.wbs = true; sheetFresh.wbs = false; renderSchedule();
-    return cacheFirst('style=1&gid=' + encodeURIComponent(gidOf()), function(d){ wbs = d; }, 'wbs', function(){ renderSchedule(); if (cur === 'weekly') renderWeekly(); })
+    return cacheFirst(isAzure() ? 'azure=1' : 'style=1&gid=' + encodeURIComponent(gidOf()), function(d){ wbs = d; }, 'wbs', function(){ renderSchedule(); if (cur === 'weekly') renderWeekly(); })
       .then(function(){ loading.wbs = false; });
   }
   function loadMins(){
@@ -622,21 +622,21 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     var el = $('body-schedule'); if (!el) return;
     var head = '<h2>일정</h2>' + (TABS[0].about ? '<p class="intro">' + esc(TABS[0].about) + '</p>' : '');
     if (!conf) { el.innerHTML = head + '<p class="muted">불러오는 중…</p>'; return; }
-    if (isAzure()) { var az = conf.azure || {}; el.innerHTML = head + '<div class="wempty"><b>Azure DevOps로 연결되어 있습니다</b><p>' + esc(az.org || '') + ' › ' + esc(az.project || '') + (az.scope ? ' · 범위 ' + esc(az.scope) : '') + '</p><p>' + (conf.azurePat ? '이 PC에 토큰이 저장되어 있습니다.' : '이 PC에는 아직 토큰이 없습니다. [일정 연결]에서 각자 토큰을 넣어 주세요.') + '</p><p class="muted">작업 항목을 가져와 일정 · 주간 진행 현황에 보여 주는 기능은 다음 단계에서 붙입니다.</p></div>'; return; }
+    if (isAzure() && conf.configured && !conf.azurePat) { var az = conf.azure || {}; el.innerHTML = head + '<div class="wempty"><b>Azure DevOps로 연결되어 있습니다</b><p>' + esc(az.org || '') + ' › ' + esc(az.project || '') + (az.scope ? ' · 범위 ' + esc(az.scope) : '') + '</p><p>이 PC에는 아직 토큰이 없습니다. [일정 연결]에서 각자 개인 액세스 토큰(PAT)을 넣으면 작업 항목을 가져옵니다.</p>' + (canWrite() ? '<button class="btn primary" type="button" data-act="conn">일정 연결</button>' : '') + '</div>'; return; }
     if (!conf.configured) { el.innerHTML = head + notConnected(); return; }
     if (loading.wbs && !wbs) { el.innerHTML = head + '<p class="muted">일정을 읽는 중…</p>'; return; }
     if (!wbs || !wbs.values) { el.innerHTML = head + srcNote(wbs || { error: '값이 없습니다.' }); return; }
     var W = wbsItems(wbs), T = W.T, V = wbs.values, set = function(l){ var o = {}; (l || []).forEach(function(p){ o[Array.isArray(p) ? p[0] + ',' + p[1] : p] = 1; }); return o; };
     var fx = set(wbs.fx), dv = set(wbs.dv), hidR = set(wbs.hr), hidC = set(wbs.hc), BG = wbs.bg || [], FC = wbs.fc || [], FW = wbs.fw || [];
     var byRow = {}; (showG ? wbsItems(wbs, true) : W).items.forEach(function(it){ byRow[it.row] = it; });   // 숨긴 행을 보일 때는 그 행도 상태로 거를 수 있게
-    var q = fq.trim().toLowerCase(), filt = !!(q || fcat), edit = canWrite() && !wbs.cached, shown = 0;
+    var q = fq.trim().toLowerCase(), filt = !!(q || fcat), edit = canWrite() && !wbs.cached && !wbs.readonly, shown = 0;   // Azure DevOps 표는 읽기만
     function val(i, j){ return String((V[i] || [])[j] == null ? '' : V[i][j]); }
     function bg(i, j){ return (BG[i] || [])[j] || ''; }
-    var h = head + srcNote(wbs) +
+    var h = head + srcNote(wbs) + (wbs.warn ? '<p class="notice bad">' + esc(wbs.warn) + '</p>' : '') +
       '<div class="bar"><input type="search" id="sq" placeholder="업무 · 담당자 · 메뉴 찾기" value="' + esc(fq) + '" aria-label="일정 찾기">' +
       '<select id="sc" aria-label="상태로 거르기"><option value="">상태 전체</option><option value="prog">진행 중</option><option value="review">리뷰 중(예정)</option><option value="done">완료</option><option value="etc">그 밖(시작 전 등)</option></select>' +
       ((wbs.hr || []).length || (wbs.hc || []).length ? '<label class="hint" style="display:inline-flex;gap:4px;align-items:center"><input type="checkbox" id="sg"' + (showG ? ' checked' : '') + '>숨긴 행 · 열 보기</label>' : '') +
-      '<span class="sp"></span><span class="hint">' + esc(wbs.name || '') + ' · ' + (edit ? '칸을 누르면 고칠 수 있습니다(드롭다운 칸은 목록에서 고름 · 글 칸은 Enter 저장 · Esc 취소, 수식 칸 제외)' : '보기 전용') + (wbs.at ? ' · ' + esc(new Date(wbs.at).toLocaleTimeString()) + ' 기준' : '') + (loading.wbs && !sheetFresh.wbs ? ' · <b class="refreshing">시트에서 새로 받는 중…</b>' : '') + '</span></div>';
+      '<span class="sp"></span><span class="hint">' + esc(wbs.name || '') + ' · ' + (edit ? '칸을 누르면 고칠 수 있습니다(드롭다운 칸은 목록에서 고름 · 글 칸은 Enter 저장 · Esc 취소, 수식 칸 제외)' : wbs.azure ? '작업 항목 ' + (wbs.count || 0) + '개 · 보기 전용(고치기는 [원본 열기]에서 DevOps로)' : '보기 전용') + (wbs.at ? ' · ' + esc(new Date(wbs.at).toLocaleTimeString()) + ' 기준' : '') + (loading.wbs && !sheetFresh.wbs ? ' · <b class="refreshing">' + (isAzure() ? 'DevOps' : '시트') + '에서 새로 받는 중…</b>' : '') + '</span></div>';
     // 열: 시트에서 숨긴 열은 빼고(「숨긴 행 · 열 보기」면 보임), 머리말 아래로 값도 색도 없는 열은 뺀다
     var cols = [];
     for (var j = 0; j < T.width; j++) {
@@ -752,7 +752,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
         var n = document.querySelector('#sheetBox td[data-r="' + r + '"][data-c="' + c + '"]'); if (n) { n.classList.add('just'); setTimeout(function(){ n.classList.remove('just'); }, 1500); }
         toast((r + 1) + '행 ' + (c + 1) + '열을 원본에 저장했습니다.');
         if (cur === 'weekly') renderWeekly();
-      }).catch(function(err){ renderSchedule(); alert('원본에 저장하지 못했습니다.\n' + err.message); });
+      }).catch(function(err){ renderSchedule(); WB.alert('원본에 저장하지 못했습니다.\n' + err.message); });
     }
     ta.addEventListener('keydown', function(k){
       if (k.key === 'Escape') { k.preventDefault(); close(false); }
@@ -1271,27 +1271,27 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     if (e.target.classList && e.target.classList.contains('blpick')) blPickCount();
   });
   // 고른 반영 대기 항목 → Workbench 화면설계 작업 요청(케이스 1 부분 수정 · 새 작업). fixRows를 담아 1단계에서 「이번에 반영」으로 고르게 한다
-  document.addEventListener('click', function(e){
+  document.addEventListener('click', async function(e){
     var b = e.target.closest('[data-blreq]'); if (!b) return;
     var s = BL && BL.screens.filter(function(x){ return x.cid === blSel; })[0], fig = s && figOf(s.figma); if (!s || !fig) return;
     var picks = Array.prototype.map.call(document.querySelectorAll('.blpick:checked'), function(c){ return c.value; });
-    if (!picks.length) { alert('반영할 항목을 골라 주세요.'); return; }
+    if (!picks.length) { WB.alert('반영할 항목을 골라 주세요.'); return; }
     var rows = s.rows.filter(function(r){ return picks.indexOf(r.n) >= 0; });
     var text = '화면설계서 작업대기 · ' + s.cid + ' ' + (s.title || '') + '의 반영 대기 ' + rows.length + '항목을 반영하는 화면 부분 수정입니다. 1단계에서 이 항목들을 「이번에 반영」으로 골라 주세요.\n' +
       rows.map(function(r){ return '- ' + r.n + ' [' + r.kind + '] 변경 전: ' + r.now + ' → 변경 후: ' + r.to + (r.why ? ' (근거: ' + r.why + ')' : ''); }).join('\n');
-    if (!confirm(s.cid + ' 화면의 ' + rows.length + '항목으로 화면설계 작업(Case 1 · 새 작업)을 요청합니다.')) return;
+    if (!(await WB.confirm('화면설계 작업을 요청할까요?\n' + s.cid + ' 화면의 ' + rows.length + '항목으로 Case 1 · 새 작업을 등록합니다.', { ok: '요청' }))) return;
     b.disabled = true;
     api('/api/requests', { action: 'add', fileKey: fig.key, fileName: '', nodeId: fig.node, frame: s.cid + (s.title ? ' ' + s.title : ''), page: '', editable: true, type: 'Case 1 · 부분 수정 · 0단계 시작', case: '1', work: '', stage: 0, priority: '보통', layout: '', text: text, by: myName,
       fixRows: rows.map(function(r){ return { doc: 'screens', file: s.path, n: r.n, cid: s.cid }; }) })
       .then(function(j){ return loadFixReqs().then(function(){ renderBacklog(); var id = j && j.items && j.items[0] && j.items[0].id; toast((id ? id + ' ' : '') + '화면설계 작업을 요청했습니다. Workbench · 변경 이력에서 진행을 볼 수 있습니다.'); }); })
-      .catch(function(err){ b.disabled = false; alert('요청을 만들지 못했습니다.\n' + err.message); });
+      .catch(function(err){ b.disabled = false; WB.alert('요청을 만들지 못했습니다.\n' + err.message); });
   });
-  document.addEventListener('click', function(e){
+  document.addEventListener('click', async function(e){
     var b = e.target.closest('[data-bl],[data-blk],[data-pl],[data-dsnew],[data-dscancel],[data-dans],[data-dapply],[data-dcancel],[data-dre],[data-dok],[data-dmin]'); if (!b) return;
     var d = b.dataset;
     if (d.bl != null) { blSel = d.bl; blKind = ''; return renderBacklog(); }
     if (d.blk != null) { blKind = d.blk; return renderBacklog(); }
-    if (d.pl != null) { if ((dForm || nForm) && !confirm('쓰던 내용을 버리고 이동할까요?')) return; planSel = d.pl; nForm = null; dForm = null; return renderPlan(); }
+    if (d.pl != null) { if ((dForm || nForm) && !(await WB.confirm('쓰던 내용을 버리고 이동할까요?', { ok: '이동', danger: true }))) return; planSel = d.pl; nForm = null; dForm = null; return renderPlan(); }
     if (b.hasAttribute('data-dsnew')) { nForm = { title: '', question: '', decider: '내부', from: '회의', policies: '', cids: '', basis: '' }; dForm = null; return renderPlan(); }
     if (b.hasAttribute('data-dscancel')) { nForm = null; return renderPlan(); }
     if (b.hasAttribute('data-dans') || b.hasAttribute('data-dre')) { dForm = { text: '', date: today(), basis: '', apply: false }; return renderPlan(); }
@@ -1302,7 +1302,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       var j = pjobs[planSel]; if (!j) return; b.disabled = true;
       addPlanJob('answer-apply', planSel, { from: j.id, proposal: j.note || '', answer: (j.plan || {}).answer, date: (j.plan || {}).date, basis: (j.plan || {}).basis, apply: !!(j.plan || {}).apply, by: myName }, planSel + ' 정리안 반영')
         .then(function(){ return api('/api/jobs', { action: 'update', id: j.id, status: '완료', note: (j.note || '') + '\n\n(확인: ' + myName + ' · 반영 요청)' }); })
-        .then(loadPlanJobs).then(function(){ renderPlan(); toast('확인했습니다. Claude가 정리안대로 반영합니다.'); }).catch(function(err){ b.disabled = false; alert(err.message); });
+        .then(loadPlanJobs).then(function(){ renderPlan(); toast('확인했습니다. Claude가 정리안대로 반영합니다.'); }).catch(function(err){ b.disabled = false; WB.alert(err.message); });
     }
   });
   document.addEventListener('submit', function(e){
@@ -1484,7 +1484,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     return '<div class="mimp">열린 논의 대상을 안건으로 넣기 (누르면 내용에 주제 줄이 들어갑니다)<div class="box">' +
       L.map(function(x){ return '<button type="button" class="chip" data-mins="' + esc(x.id + ' ' + x.title) + '" title="' + esc(x.kind + ' · ' + x.title) + '">' + esc(x.id + ' ' + x.title) + '</button>'; }).join('') + '</div></div>';
   }
-  document.addEventListener('click', function(e){
+  document.addEventListener('click', async function(e){
     var b = e.target.closest('[data-mins],[data-mext]'); if (!b) return;
     if (b.dataset.mins) {   // 커서 자리(없으면 끝)에 [ID 제목] 주제 줄을 넣는다
       var ta = $('mBody'); if (!ta) return;
@@ -1494,11 +1494,11 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       return;
     }
     var mm = (mlist || []).filter(function(x){ return x.id === msel; })[0]; if (!mm) return;
-    if (!confirm('「' + mm.title + '」 정리본에서 바꾸기로 한 정책 · 더 논의할 것 · 고객 답을 기다리는 것을 Claude가 찾아\n논의 대상(DS)에 올립니다. 이미 있는 항목이면 그 항목에 회의 결과를 적습니다.\n요청할까요?')) return;
+    if (!(await WB.confirm('논의 대상(DS) 뽑기를 요청할까요?\n「' + mm.title + '」 정리본에서 바꾸기로 한 정책 · 더 논의할 것 · 고객 답을 기다리는 것을 Claude가 찾아 논의 대상에 올립니다. 이미 있는 항목이면 그 항목에 회의 결과를 적습니다.', { ok: '요청' }))) return;
     b.disabled = true;
     api('/api/jobs', { action: 'add', kind: 'minutes', mode: 'extract', minute: mm.id, name: mm.title, text: '정책 · 논의 뽑기', by: myName })
       .then(function(){ return loadMjobs(); }).then(function(){ renderMinutes(); toast('정책 · 논의 뽑기를 요청했습니다. 요청 감시 중인 Claude가 올리면 여기 나옵니다.'); })
-      .catch(function(err){ b.disabled = false; alert(err.message); });
+      .catch(function(err){ b.disabled = false; WB.alert(err.message); });
   });
   // 요약 정리 버튼 · 진행 상태(작업 대기열 kind 'minutes')
   function sumBar(m, W){
@@ -1538,10 +1538,10 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   });
   function mPick(id){ msel = id; mPin = true; medit = null; nedit = ''; ntext = null; try { var u = new URL(location.href); u.searchParams.set('m', id); history.replaceState(null, '', u); } catch(x){} renderMinutes(); }
   function nowLocal(){ var d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 16).replace('T', ' ').replace(/:\d\d$/, ':00'); }
-  document.addEventListener('click', function(e){
+  document.addEventListener('click', async function(e){
     var b = e.target.closest('[data-mid],[data-mnew],[data-medit],[data-mdel],[data-mcancel],[data-mimport],[data-mopen],[data-nnew],[data-nedit],[data-ncancel],[data-nsave],[data-msum]'); if (!b) return;
     if (b.dataset.mopen) { select('minutes'); mPick(b.dataset.mopen); return; }
-    if (b.dataset.mid != null) { if ((medit || (nedit && ntext !== null && $('nText') && $('nText').value !== ntext0)) && !confirm('작성 중인 내용을 버리고 이동할까요?')) return; return mPick(b.dataset.mid); }
+    if (b.dataset.mid != null) { if ((medit || (nedit && ntext !== null && $('nText') && $('nText').value !== ntext0)) && !(await WB.confirm('작성 중인 내용을 버리고 이동할까요?', { ok: '이동', danger: true }))) return; return mPick(b.dataset.mid); }
     // 각자 작성: 내 내용 쓰기 · 고치기 · 저장
     if (b.hasAttribute('data-nnew') || b.hasAttribute('data-nedit')) { nedit = msel; ntext = null; renderMinutes(); var t = $('nText'); if (t) { ntext0 = t.value; t.focus(); t.scrollIntoView({ block: 'nearest' }); } return; }
     if (b.hasAttribute('data-ncancel')) { nedit = ''; ntext = null; return renderMinutes(); }
@@ -1555,11 +1555,11 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     if (b.hasAttribute('data-msum')) {
       var mm = (mlist || []).filter(function(x){ return x.id === msel; })[0]; if (!mm) return;
       var nn = (mm.notes || []).length;
-      if (!confirm('각자 작성한 ' + nn + '건(' + mm.notes.map(function(n){ return n.author; }).join(', ') + ')을 Claude가 합쳐 정리본을 씁니다.' + (mm.body ? '\n지금 정리본은 새 요약으로 바뀝니다.' : '') + '\n요청할까요?')) return;
+      if (!(await WB.confirm('정리본 쓰기를 요청할까요?\n각자 작성한 ' + nn + '건(' + mm.notes.map(function(n){ return n.author; }).join(', ') + ')을 Claude가 합쳐 정리본을 씁니다.' + (mm.body ? ' 지금 정리본은 새 요약으로 바뀝니다.' : ''), { ok: '요청' }))) return;
       b.disabled = true;
       api('/api/jobs', { action: 'add', kind: 'minutes', minute: mm.id, name: mm.title, text: '각자 작성 ' + nn + '건 요약 정리', by: myName })
         .then(function(){ return loadMjobs(); }).then(function(){ renderMinutes(); toast('요약 정리를 요청했습니다. 요청 감시 중인 Claude가 정리하면 여기 바로 나옵니다.'); })
-        .catch(function(err){ b.disabled = false; alert(err.message); });
+        .catch(function(err){ b.disabled = false; WB.alert(err.message); });
       return;
     }
     if (b.hasAttribute('data-mnew')) { medit = { date: nowLocal(), title: '', attendees: '', body: '' }; return renderMinutes(); }
@@ -1567,13 +1567,13 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     var m = (mlist || []).filter(function(x){ return x.id === msel; })[0];
     if (b.hasAttribute('data-medit') && m) { medit = { id: m.id, date: m.date, title: m.title, attendees: m.attendees, body: m.body }; return renderMinutes(); }
     if (b.hasAttribute('data-mdel') && m) {
-      if (!confirm('「' + m.title + '」 회의록을 지울까요? 모든 작업자에게서 지워집니다.')) return;
-      api('/api/minutes', { action: 'delete', id: m.id }).then(function(){ msel = ''; return loadMd(); }).then(function(){ renderMinutes(); toast('회의록을 지웠습니다.'); }).catch(function(err){ alert(err.message); });
+      if (!(await WB.confirm('「' + m.title + '」 회의록을 지울까요?\n모든 작업자에게서 지워집니다.', { ok: '지우기', danger: true }))) return;
+      api('/api/minutes', { action: 'delete', id: m.id }).then(function(){ msel = ''; return loadMd(); }).then(function(){ renderMinutes(); toast('회의록을 지웠습니다.'); }).catch(function(err){ WB.alert(err.message); });
       return;
     }
     if (b.hasAttribute('data-mimport')) {
       var rest = (meetings() || {}).sheetRest || []; if (!rest.length) return;
-      if (!confirm('시트 「' + minName() + '」의 회의 ' + rest.length + '건을 회의록(md)으로 옮길까요? 시트는 그대로 둡니다.')) return;
+      if (!(await WB.confirm('회의 ' + rest.length + '건을 회의록으로 옮길까요?\n시트 「' + minName() + '」의 회의를 회의록으로 옮깁니다. 시트는 그대로 둡니다.', { ok: '옮기기' }))) return;
       b.disabled = true; var n = 0;
       rest.reduce(function(p, s){
         return p.then(function(){
@@ -1581,7 +1581,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
           s.fields.forEach(function(f){ if (/^참석/.test(f[0])) att = f[1]; else if (/^내용$/.test(f[0])) body.unshift(f[1]); else body.push('## ' + f[0] + '\n' + f[1]); });
           return api('/api/minutes', { action: 'save', date: sKey(s), title: s.title || '회의', attendees: att, body: body.join('\n\n') }).then(function(){ n++; b.textContent = '옮기는 중… ' + n + ' / ' + rest.length; });
         });
-      }, Promise.resolve()).then(loadMd).then(function(){ renderMinutes(); toast(n + '건을 옮겼습니다.'); }).catch(function(err){ alert('옮기다 멈췄습니다(' + n + '건 완료).\n' + err.message); loadMd().then(renderMinutes); });
+      }, Promise.resolve()).then(loadMd).then(function(){ renderMinutes(); toast(n + '건을 옮겼습니다.'); }).catch(function(err){ WB.alert('옮기다 멈췄습니다(' + n + '건 완료).\n' + err.message); loadMd().then(renderMinutes); });
     }
   });
   document.addEventListener('submit', function(e){
@@ -1623,18 +1623,21 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   });
   $('fSheet').addEventListener('change', function(){ var m = /[#&?]gid=(\d+)/.exec($('fSheet').value); if (m) $('fGid').value = m[1]; });
   $('dlgSave').addEventListener('click', function(){
-    // Azure DevOps: 팀 설정(공유)과 토큰(이 PC)만 저장한다. 연결 확인 · 일정 표시는 다음 단계
+    // Azure DevOps: 팀 설정(공유)과 토큰(이 PC)을 저장하고, 토큰이 있으면 작업 항목을 한 번 읽어 연결을 확인한다
     if (provNow() === 'azure') {
       var org = $('fOrg').value.trim().replace(/\/+$/, ''), prj = $('fProj').value.trim(), pat = $('fPat').value.trim();
       if (!/^https:\/\/(dev\.azure\.com\/[^\/\s]+|[A-Za-z0-9-]+\.visualstudio\.com)$/.test(org)) { $('dlgMsg').textContent = '조직 주소는 https://dev.azure.com/{조직} 형식입니다.'; $('fOrg').focus(); return; }
       if (!prj) { $('dlgMsg').textContent = '프로젝트 이름을 넣어 주세요.'; $('fProj').focus(); return; }
       var abody = { action: 'config', provider: 'azure', azure: { org: org, project: prj, scope: $('fScope').value.trim(), startField: $('fStartF').value.trim(), endField: $('fEndF').value.trim(), doneStates: $('fDone').value.trim() } };
       $('dlgSave').disabled = true; $('dlgMsg').textContent = '저장하는 중…';
+      var hasPat = !!pat || !!(conf && conf.azurePat), saved = '저장했습니다 · 팀 설정은 이 팀 작업자 모두에게 공유됩니다' + (pat ? ', 토큰은 이 PC에만 저장했습니다' : '');
       api('/api/sheet', abody).then(function(){ return pat ? api('/api/sheet', { action: 'pat', pat: pat }) : null; }).then(function(){
         $('fPat').value = '';
-        $('dlgMsg').textContent = '저장했습니다 · 팀 설정은 이 팀 작업자 모두에게 공유됩니다' + (pat ? ', 토큰은 이 PC에만 저장했습니다' : (conf && conf.azurePat ? '' : ' · 이 PC 토큰은 아직 없습니다')) + '. 연결 확인 · 일정 표시는 다음 단계에서 붙입니다.';
-        return loadConf().then(reloadAll);
-      }).catch(function(e){ $('dlgMsg').textContent = '저장하지 못했습니다: ' + e.message; })
+        if (!hasPat) { $('dlgMsg').textContent = saved + ' · 이 PC 토큰이 아직 없어 연결 확인은 하지 않았습니다.'; return; }
+        $('dlgMsg').textContent = saved + ' · 연결 확인 중…';
+        return api('/api/sheet', { action: 'test' }).then(function(t){ $('dlgMsg').textContent = saved + ' · 연결됨: 작업 항목 ' + t.count + '개' + (t.warn ? ' · ' + t.warn : ''); },
+          function(e){ $('dlgMsg').textContent = saved + ' · 연결 확인 실패: ' + e.message; });
+      }).then(function(){ wbs = null; return loadConf().then(reloadAll); }).catch(function(e){ $('dlgMsg').textContent = '저장하지 못했습니다: ' + e.message; })
         .then(function(){ $('dlgSave').disabled = false; });
       return;
     }

@@ -39,6 +39,12 @@ a.pcard:hover{border-color:var(--accent)}
 .chip.warn{background:var(--warn-soft);color:var(--warn)}
 .chip.busy{background:var(--accent-soft);color:var(--accent)}
 .chip.bad{background:var(--red-soft);color:var(--red)}
+.pwrap{position:relative;display:flex;min-width:0}
+.pwrap>.pcard{flex:1}
+.pdel{position:absolute;top:8px;right:8px;height:28px;padding:0 10px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--red);font-size:12.5px;font-weight:600;opacity:0;transition:opacity .15s}
+.pwrap:hover .pdel,.pdel:focus-visible{opacity:1}
+.pdel:hover{border-color:var(--red)}
+@media (hover:none){.pdel{opacity:1}}
 .empty{padding:40px 20px;text-align:center;color:var(--ink-3);background:var(--surface);border:1px dashed var(--line);border-radius:var(--card-r)}
 
 /* 새 프로토타입 */
@@ -181,9 +187,10 @@ a.pcard:hover{border-color:var(--accent)}
       var fr = p.frames || [], st = (p.stale || []).length, sj = syncing[p.id], start = fr.filter(function(f){ return f.nodeId === p.start; })[0] || fr[0];
       var th = start && SHOTS[p.fileKey] ? shotUrl(p.fileKey, start.nodeId, SHOTS[p.fileKey]) : '';
       var chip = sj ? '<span class="chip busy">' + (sj.kind === 'prototype-edit' ? '수정 중' : '맞추는 중') + '</span>' : st ? '<span class="chip warn">갱신 필요 ' + st + '</span>' : '<span class="chip ok">최신</span>';
-      h += '<a class="pcard" href="Prototype.html?id=' + encodeURIComponent(p.id) + '"><div class="thumb"' + (th ? ' style="background-image:url(&quot;' + esc(th) + '&quot;)"' : '') + '>' + (th ? '' : '미리보기 없음') + '</div><div class="bd">' +
+      h += '<div class="pwrap"><a class="pcard" href="Prototype.html?id=' + encodeURIComponent(p.id) + '"><div class="thumb"' + (th ? ' style="background-image:url(&quot;' + esc(th) + '&quot;)"' : '') + '>' + (th ? '' : '미리보기 없음') + '</div><div class="bd">' +
         '<div class="t"><b>' + esc(p.name) + '</b>' + chip + '</div>' +
-        '<div class="meta"><span>' + esc(p.fileName || '') + '</span><span>' + scrTxt(fr) + '</span><span>' + esc(p.env || '') + '</span><span>' + esc(fmt(p.updatedAt)) + '</span></div></div></a>';
+        '<div class="meta"><span>' + esc(p.fileName || '') + '</span><span>' + scrTxt(fr) + '</span><span>' + esc(p.env || '') + '</span><span>' + esc(fmt(p.updatedAt)) + '</span></div></div></a>' +
+        (sj ? '' : '<button class="pdel w-only" type="button" data-del="' + esc(p.id) + '" aria-label="' + esc(p.name) + ' 지우기">지우기</button>') + '</div>';
     });
     h = h || '<div class="empty">아직 프로토타입이 없습니다. 「＋ 새 프로토타입」으로 화면을 골라 만들기를 요청하세요.</div>';
     if (render.h !== h) { render.h = h; $('grid').innerHTML = h; }   // 5초마다 불러와도 같으면 다시 그리지 않는다(누르는 중인 카드가 바뀌지 않게)
@@ -291,6 +298,19 @@ a.pcard:hover{border-color:var(--accent)}
   $('pSel').addEventListener('click', function(e){
     var b = e.target.closest('button[data-rm]'); if (b) { picked.splice(+b.dataset.rm, 1); renderSel(); renderPick(); return; }
     var r = e.target.closest('input[data-start]'); if (r) startId = r.dataset.start;
+  });
+  /* 카드의 「지우기」: 상세 화면의 「목록에서 지우기」와 같음(prototypes/_trash로 옮겨 되살릴 수 있음) */
+  $('grid').addEventListener('click', function(e){
+    var b = e.target.closest('button[data-del]'); if (!b) return;
+    e.preventDefault();
+    var p = PROTOS.filter(function(x){ return x.id === b.dataset.del; })[0]; if (!p) return;
+    WB.confirm('「' + p.name + '」 프로토타입을 지울까요?\n지우면 다시 볼 수 없습니다.', { ok: '지우기', danger: true }).then(function(ok){
+    if (!ok) return;
+    b.disabled = true;
+    fetch('/api/prototypes', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'delete', id: p.id }) })
+      .then(function(r){ return r.json(); }).then(function(d){ if (d.error) throw new Error(d.error); toast('「' + p.name + '」을 지웠습니다'); load(); })
+      .catch(function(err){ b.disabled = false; toast('지우지 못했습니다: ' + err.message); });
+    });
   });
   $('pProj').addEventListener('change', loadCatalog);
   $('pPage').addEventListener('change', function(){ $('pSearch').value = ''; pickPage(); });

@@ -303,6 +303,7 @@ html.perm-ro .cmp-mark{display:none}
 .tree>li.pgi+li.pgi{margin-top:2px}
 /* 페이지 전체 보기: 프레임을 Figma에 놓인 자리대로(캡처 · 없으면 회색 자리), 누르면 그 프레임으로 */
 #pgCanvas{position:relative;margin:24px 8px 8px}
+#pgCanvas .pg-empty{margin:48px auto;max-width:420px;text-align:center;color:var(--text-2);font-size:13px;line-height:1.6}
 #pgCanvas[hidden]{display:none}
 #pgCanvas .pf{position:absolute;background:var(--surface);box-shadow:0 1px 6px rgba(0,0,0,.16);cursor:pointer;overflow:hidden}
 #pgCanvas .pf img{display:block;width:100%;height:100%;object-fit:fill;user-select:none;-webkit-user-drag:none}
@@ -872,7 +873,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
         var st, cls = '';
         if (j.mode === 'check') {   // 비교 창의 「바뀐 것 확인」: 플러그인이 ①의 옮긴 화면을 읽어 옮긴 뒤 바뀌었는지 본다(옮기지는 않음)
           var cn = j.compare ? j.compare.changed : 0;
-          st = j.status === '완료' ? '✓ ' + dest + '와 비교 확인 끝 — 옮긴 뒤 바뀐 화면 ' + cn + '개' : j.status === '실패' ? '✕ 비교 확인 못 함' : j.status === '진행 중' ? src + '에서 확인 중…' : src + ' 파일을 Figma에서 열고 플러그인을 켜면 확인 시작';
+          st = j.status === '완료' ? '✓ ' + dest + '와 비교 확인 끝 — ' + (j.compare && j.compare.direct ? '①과 다른 화면 ' : '옮긴 뒤 바뀐 화면 ') + cn + '개' : j.status === '실패' ? '✕ 비교 확인 못 함' : j.phase === 'scan' ? (j.status === '진행 중' ? dest + ' 화면 읽는 중…' : dest.split('(')[0] + ' 파일을 Figma에서 열고 플러그인을 켜면 확인 시작') : j.status === '진행 중' ? src + '에서 확인 중…' : src + ' 파일을 Figma에서 열고 플러그인을 켜면 확인 시작';
           cls = j.status === '완료' ? 'ok' : j.status === '실패' ? 'bad' : ''; what = '비교';
         }
         else if (j.status === '완료' && made.length) { st = '✓ ' + dest + '에 옮겼습니다' + (nRep ? ' (새로 ' + nNew + ' · 바뀐 화면 ' + nRep + '개 교체)' : made.length > 1 ? ' (' + made.length + '개)' : ''); cls = 'ok'; }
@@ -986,6 +987,11 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
   var PG = null;   // {id, list, x0, y0, w, h}
   function renderPage(){
     var list = pgFrames(cur.d1), x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+    if (!list.length) {   // 프레임이 없는 페이지: 빈 화면에 안내 한 줄
+      PG = null; $('pgCanvas').style.width = ''; $('pgCanvas').style.height = '';
+      $('pgCanvas').innerHTML = '<p class="pg-empty">' + (cur.unknown ? 'Figma에서 이 페이지를 열면 프레임 목록이 들어옵니다.' : '이 페이지에는 프레임이 없습니다.') + (cur.editable ? ' 페이지 전체에 요청하면 Claude가 이 페이지에 새 화면을 만듭니다.' : '') + '</p>';
+      return;
+    }
     list.forEach(function(p){ x0 = Math.min(x0, p.x); y0 = Math.min(y0, p.y); x1 = Math.max(x1, p.x + p.w); y1 = Math.max(y1, p.y + p.h); });
     PG = { id: cur.d1, list: list, x0: x0, y0: y0, w: Math.max(1, x1 - x0), h: Math.max(1, y1 - y0) };
     $('pgCanvas').innerHTML = list.map(function(p){
@@ -1044,11 +1050,11 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
   function edPage(){ var e = CAT && CAT.pages ? CAT.pages.filter(function(pg){ return pg.editable; })[0] : null; return e ? e.name : ''; }
   function edId(c){ var e = c && c.pages ? c.pages.filter(function(pg){ return pg.editable; })[0] : null; return e ? e.id : ''; }
   /* 작업 페이지 바꾸기: 이 프로젝트의 작업 링크를 그 페이지로 → 서버가 수정 가능 페이지 · 시작 안내 링크(같은 파일이면)를 바꾼다 */
-  function setEditable(pageId, pageName, lead){
+  async function setEditable(pageId, pageName, lead){
     if (!online) { toast('서버가 꺼져 있어 바꿀 수 없습니다'); return; }
     var ed = edPage();
-    if (!confirm((lead || '') + '작업 페이지를 「' + pageName + '」로 바꿀까요?\n\n' + (ed ? '「' + ed + '」는 보기 전용이 됩니다. ' : '') +
-      'Claude와 Figma 플러그인도 이제 「' + pageName + '」만 고칩니다.\n이미 등록한 다른 페이지 요청은 처리할 때 「보류」가 됩니다.')) return;
+    if (!(await window.WB.confirm((lead || '') + '작업 페이지를 「' + pageName + '」로 바꿀까요?\n' + (ed ? '「' + ed + '」는 보기 전용이 됩니다. ' : '') +
+      'Claude와 Figma 플러그인도 이제 「' + pageName + '」만 고칩니다. 이미 등록한 다른 페이지 요청은 처리할 때 「보류」가 됩니다.', { ok: '바꾸기' }))) return;
     fetch('/api/projects', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'editable', key: FILE.key, pageId: pageId }) })
       .then(function(r){ return r.json(); }).then(function(d){
         if (d.error) throw new Error(d.error);
@@ -1135,12 +1141,22 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       to: { key: nx.key, name: nx.name, step: nx.step } }) })
       .then(function(r){ return r.json(); }).then(function(d){ if (d.error) throw new Error(d.error); loadJobs(); return d.job; });
   }
-  if ($('sendNext')) $('sendNext').onclick = function(){
+  /* 보내기 전에 ① · ② 파일의 플러그인이 켜져 있는지(서버가 아는 파일별 마지막 물음 시각, 1분 안이면 켜짐) — 꺼져 있어도 막지 않고 경고만 */
+  function plugWarn(nx){
+    return fetch('/api/jobs?kind=-', { cache: 'no-store' }).then(function(r){ return r.json(); }).then(function(d){
+      var pl = d.plugins || {}, on = function(k){ return pl[k] != null && pl[k] < 60; }, off = [];
+      if (!on(FILE.key)) off.push(stepMark(nx.from) + ' ' + pname(FILE.key));
+      if (!on(nx.key)) off.push(stepMark(nx.step) + ' ' + nx.name);
+      return off.length ? '플러그인이 꺼져 있습니다: ' + off.join(' · ') + '\nFigma 데스크톱에서 그 파일을 열고 플러그인을 켜야 빠르게 옮길 수 있습니다.\n지금 보내 두면 켤 때 이어서 옮깁니다.' : '';
+    }).catch(function(){ return ''; });
+  }
+  if ($('sendNext')) $('sendNext').onclick = async function(){
     var nx = nextStep(); if (!nx || !cur) return;
     if (!online) { say('로컬 서버가 꺼져 있어 요청할 수 없습니다.', true); return; }
     if (!who()) { say('상단의 「작업자」에 이름을 입력해 주세요.', true); return; }
     if (!nx.page) { say(nx.name + '의 작업 페이지가 아직 없습니다. ' + stepMark(nx.step) + ' 탭에서 작업 페이지를 먼저 고르세요.', true); return; }
-    if (!confirm(stepMark(nx.from) + ' ' + pname(FILE.key) + ' › ' + srcLabel() + '\n→ ' + stepMark(nx.step) + ' ' + nx.name + ' › ' + nx.page + '\n\n그대로 옮깁니다(이 프로젝트의 원본은 그대로). 이미 옮긴 적이 있으면 바뀌었거나 새로 생긴 프레임만 옮깁니다.\n\n' + XFER_HINT)) return;
+    var warn = await plugWarn(nx);
+    if (!(await window.WB.confirm(stepMark(nx.step) + ' ' + nx.name + '로 옮길까요?\n' + stepMark(nx.from) + ' ' + pname(FILE.key) + ' › ' + srcLabel() + '\n→ ' + stepMark(nx.step) + ' ' + nx.name + ' › ' + nx.page + '\n\n그대로 옮깁니다(이 프로젝트의 원본은 그대로). 이미 옮긴 적이 있으면 바뀌었거나 새로 생긴 프레임만 옮깁니다.' + (warn ? '' : '\n\n' + XFER_HINT), { ok: '옮기기', warn: warn }))) return;
     this.disabled = true; var btn = this;
     transferJob(nx, 'copy').then(function(j){ say(j.id + ' 옮기기를 맡겼습니다. ' + XFER_HINT); })
       .catch(function(e){ say('등록 실패: ' + e.message, true); }).then(function(){ btn.disabled = false; });
@@ -1168,15 +1184,18 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       var rows = pgFrames(edp.id).map(function(f){
         var rc = recOf[f.id] || (f.secId && recOf[f.secId]) || null, unit = rc ? rc.from.node : f.id, st;
         if (!rc) st = 'new';
-        else if (rc.to && rc.to.node && !have[rc.to.node]) st = 'gone';
-        else { var hc = hashOf[unit]; st = !hc || String(chk.updatedAt) < String(rc.at) ? 'unk' : hc.gone ? 'srcgone' : hc.hash === rc.hash ? 'same' : 'changed'; }
+        // ②에 없는지는 ②를 직접 읽은 확인 결과를 먼저 본다(②의 프레임 목록은 늦게 갱신될 수 있음)
+        else if (rc.to && rc.to.node && !have[rc.to.node] && !(hashOf[unit] && hashOf[unit].by2 && String(chk.updatedAt) >= String(rc.at))) st = 'gone';
+        else { var hc = hashOf[unit]; st = !hc || String(chk.updatedAt) < String(rc.at) ? 'unk' : hc.gone ? 'srcgone'
+          // 확인 결과에 상태가 있으면 그대로(② 내용을 ①과 직접 비교한 결과, 2026-11-17). 없으면 예전 방식(①의 지금 해시 ↔ 옮길 때 해시)
+          : hc.st ? ({ same: 'same', changed: 'changed', gone2: 'gone', gone: 'srcgone' })[hc.st] || 'unk' : hc.hash === rc.hash ? 'same' : 'changed'; }
         return { f: f, rc: rc, unit: unit, st: st };
       });
       CMP = { nx: nx, page: { id: edp.id, name: edp.name }, rows: rows, chk: chk, units: Object.keys(recOf) };
       return CMP;
     });
   }
-  var CST = { new: ['안 옮김', 'n'], changed: ['옮긴 뒤 바뀜', 'c'], unk: ['옮김 · 바뀜 확인 전', 'u'], same: ['옮김 · 같음', 's'], gone: ['②에서 없어짐', 'g'], srcgone: ['①에서 바뀜 확인 못 함', 'g'] };
+  var CST = { new: ['안 옮김', 'n'], changed: ['옮김 · ①과 다름', 'c'], unk: ['옮김 · 확인 전', 'u'], same: ['옮김 · 같음', 's'], gone: ['②에서 없어짐', 'g'], srcgone: ['①에서 바뀜 확인 못 함', 'g'] };
   function cmpRender(){
     var c = CMP; if (!c) return;
     var o = $('cmpPop'); if (!o) { o = document.createElement('div'); o.id = 'cmpPop'; o.className = 'cmp-pop'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-label', '다음 단계와 비교'); document.body.appendChild(o); }
@@ -1185,10 +1204,10 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     if (!c.sel) c.sel = {};   // 고른 줄(번호). 처음엔 아무것도 고르지 않는다
     o.innerHTML = '<div class="cv-box"><div class="cmp-h"><b>' + esc(stepMark(c.nx.from) + ' ' + pname(FILE.key) + ' › ' + c.page.name) + ' 와 ' + esc(stepMark(c.nx.step) + ' ' + c.nx.name) + ' 비교</b><button type="button" class="x" data-cmpx aria-label="닫기">×</button></div>' +
       '<p class="cmp-s">' + esc(stepMark(c.nx.from)) + ' 작업 페이지 화면 ' + c.rows.length + '개 기준 · ' + ['new', 'changed', 'unk', 'same', 'gone', 'srcgone'].filter(function(k){ return n[k]; }).map(function(k){ return '<span class="cst ' + CST[k][1] + '">' + esc(k === 'gone' ? gone : CST[k][0]) + ' ' + n[k] + '</span>'; }).join(' ') + '</p>' +
-      '<p class="cmp-note">' + (c.chk ? '바뀐 것 확인: ' + esc(String(c.chk.updatedAt).replace('T', ' ').slice(0, 16)) + ' 기준.' : '아직 「바뀐 것 확인」을 하지 않아, 옮긴 화면이 그 뒤 바뀌었는지는 모릅니다.') + ' 확인은 ' + esc(stepMark(c.nx.from)) + ' 파일을 Figma에서 열고 플러그인을 켜 두면 몇 초면 끝납니다(옮기지는 않음).</p>' +
-      '<div class="cmp-tool w-only"><label><input type="checkbox" id="cmpAll" aria-label="전체 선택"> 전체 선택</label><button type="button" class="gen-btn" data-cmppick="new,changed">안 옮김 · 바뀐 화면만 고르기</button><span class="sp"></span><span id="cmpCnt"></span></div>' +
+      '<p class="cmp-note">' + (c.chk ? '바뀐 것 확인: ' + esc(String(c.chk.updatedAt).replace('T', ' ').slice(0, 16)) + ' 기준.' : '아직 「바뀐 것 확인」을 하지 않아, 옮긴 화면이 그 뒤 바뀌었는지는 모릅니다.') + ' 확인은 ' + esc(stepMark(c.nx.from)) + ' · ' + esc(stepMark(c.nx.step)) + ' 파일을 Figma에서 열고 플러그인을 켜 두면 끝납니다(옮기지는 않음). ' + esc(stepMark(c.nx.step)) + '도 열려 있으면 Figma에서 직접 복사해 옮긴 화면도 「옮김」으로 찾습니다.</p>' +
+      '<div class="cmp-tool w-only"><label><input type="checkbox" id="cmpAll" aria-label="전체 선택"> 전체 선택</label><button type="button" class="gen-btn" data-cmppick="new,changed">안 옮김 · 다른 화면만 고르기</button><span class="sp"></span><span id="cmpCnt"></span></div>' +
       '<ul class="cmp-list">' + c.rows.map(function(x, i){ var s = CST[x.st]; return '<li><input type="checkbox" class="w-only" data-cmpsel="' + i + '"' + (c.sel[i] ? ' checked' : '') + ' aria-label="' + esc(x.f.name) + ' 고르기"><button type="button" data-cmpgo="' + esc(x.f.id) + '"><span class="nm">' + esc(x.f.name) + '</span>' + (x.f.sec ? '<small>' + esc(x.f.sec) + '</small>' : '') + '</button><span class="cst ' + s[1] + '">' + esc(x.st === 'gone' ? gone : s[0]) + '</span>' + (x.rc ? '<small class="at">' + esc(String(x.rc.at).replace('T', ' ').slice(5, 16)) + ' 옮김</small>' : '') + '</li>'; }).join('') + '</ul>' +
-      '<div class="cmp-act w-only"><button type="button" class="btn" data-cmpchk' + (c.units.length ? '' : ' disabled') + '>바뀐 것 확인</button><button type="button" class="btn primary" data-cmpsend></button></div></div>';
+      '<div class="cmp-act w-only"><button type="button" class="btn" data-cmpchk>바뀐 것 확인</button><button type="button" class="btn primary" data-cmpsend></button></div></div>';
     cmpCount();
   }
   // 고른 수 · 보내기 버튼 · 전체 선택 상태만 바꾼다(다시 그리면 목록 스크롤이 처음으로 가므로)
@@ -1210,7 +1229,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     var ck = e.target.closest('[data-cmpchk]');
     if (ck && CMP) {
       ck.disabled = true;
-      transferJob(CMP.nx, 'check', CMP.units, [], CMP.page).then(function(j){ say(j.id + ' 바뀐 것 확인을 맡겼습니다. ' + stepMark(CMP.nx.from) + ' 파일을 Figma에서 열고 플러그인을 켜 두면 확인합니다.'); cmpClose(); })
+      transferJob(CMP.nx, 'check', CMP.units, [], CMP.page).then(function(j){ say(j.id + ' 바뀐 것 확인을 맡겼습니다. ' + (j.phase === 'scan' ? stepMark(CMP.nx.step) + ' 화면을 먼저 읽고 ' + stepMark(CMP.nx.from) + '에서 확인합니다.' : stepMark(CMP.nx.from) + ' 파일을 Figma에서 열고 플러그인을 켜 두면 확인합니다.')); cmpClose(); })
         .catch(function(err){ ck.disabled = false; say('확인 요청 실패: ' + err.message, true); });
       return;
     }
@@ -1222,10 +1241,14 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       var units = [], names = [];
       CMP.rows.forEach(function(x, i){ if (CMP.sel[i] && units.indexOf(x.unit) < 0) { units.push(x.unit); names.push(x.rc ? x.rc.from.name : x.f.name); } });
       if (units.length > 200) { say('한 번에 200개까지 보낼 수 있습니다(고른 ' + units.length + '개).', true); return; }
-      if (!units.length || !confirm('고른 화면 ' + units.length + '개를 ' + stepMark(CMP.nx.step) + ' ' + CMP.nx.name + '로 보낼까요?\n(새 화면은 새로 만들고, 이미 옮긴 화면은 바뀌었을 때만 ' + stepMark(CMP.nx.step) + '의 같은 자리에서 바꿔 끼웁니다)\n\n' + XFER_HINT)) return;
-      sd.disabled = true;
-      transferJob(CMP.nx, 'copy', units, names, CMP.page).then(function(j){ say(j.id + ' 옮기기를 맡겼습니다(' + units.length + '개). ' + XFER_HINT); cmpClose(); })
-        .catch(function(err){ sd.disabled = false; say('등록 실패: ' + err.message, true); });
+      if (!units.length) return;
+      var nx0 = CMP.nx, pg0 = CMP.page;
+      plugWarn(nx0).then(function(warn){ return window.WB.confirm('고른 화면 ' + units.length + '개를 ' + stepMark(nx0.step) + ' ' + nx0.name + '로 보낼까요?\n새 화면은 새로 만들고, 이미 옮긴 화면은 바뀌었을 때만 ' + stepMark(nx0.step) + '의 같은 자리에서 바꿔 끼웁니다.' + (warn ? '' : '\n\n' + XFER_HINT), { ok: '보내기', warn: warn }); }).then(function(ok){
+        if (!ok) return;
+        sd.disabled = true;
+        transferJob(nx0, 'copy', units, names, pg0).then(function(j){ say(j.id + ' 옮기기를 맡겼습니다(' + units.length + '개). ' + XFER_HINT); cmpClose(); })
+          .catch(function(err){ sd.disabled = false; say('등록 실패: ' + err.message, true); });
+      });
     }
   });
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && CMP) cmpClose(); });
@@ -1347,17 +1370,24 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
   /* 페이지 고르기: 그 페이지 전체가 작업 대상(general). 기억해 둘 프레임(cur)은 그 페이지에서 마지막으로 본 프레임, 없으면 첫 프레임 */
   function selectPage(pid){
     var last = store('wb.last.' + pid), first = pgFrames(pid)[0];
-    if (!first) {
-      var pg = CAT.pages.filter(function(x){ return x.id === pid; })[0];
-      /* 프레임이 없는 페이지도 작업 페이지로 정할 수 있다(새 화면을 그 페이지에 만들 때) */
-      if (pg && pg.frames !== null && !pg.editable) { setEditable(pg.id, pg.name, '「' + pg.name + '」 페이지에는 프레임이 없습니다.\n'); return; }
-      toast(pg && pg.frames === null ? 'Figma에서 이 페이지를 열면 목록이 들어옵니다' : '이 페이지에는 프레임이 없습니다');
-      return;
-    }
+    if (!first) { selectEmpty(pid); return; }
     if (cur) store('wb.last.' + cur.d1, cur.id);
     openPg = {}; openPg[pid] = true;   // 다른 페이지는 접는다(고른 페이지가 목록 아래로 밀리지 않게)
     go(byId[last] && byId[last].d1 === pid ? last : first.id, true, true);
   }
+  /* 프레임이 없는 페이지(2026-11-17): 그 페이지를 고른 상태로 빈 화면을 보인다(예전에는 알림만 띄우고 고르지 못했다).
+     페이지 전체 요청(새 화면 만들기 등)을 보낼 수 있고, 보기 전용이면 위 안내의 「이 페이지를 작업 페이지로」로 바꾼다 */
+  function selectEmpty(pid){
+    var pg = (CAT.pages || []).filter(function(x){ return x.id === pid; })[0]; if (!pg) return;
+    if (cur && !cur.empty && cur.d1 !== pid) store('wb.last.' + cur.d1, cur.id);
+    liveOnce = false; if (!general) fit = 'a'; general = true;
+    cur = { id: pid, name: pg.name, page: pg.name, pageId: pid, d1: pid, d1l: pg.name, screen: '', d3l: pg.name, editable: !!pg.editable, empty: true, unknown: pg.frames === null, w: 0, h: 0 };
+    openPg = {};
+    renderMenu(); revealCur(); renderViewer(); renderTarget(); renderReqs(); renderMarks(); autoCapture();
+    store('wb.cur.' + FILE.key, pid); store('wb.mode.' + FILE.key, 'page');   // 다시 열거나 탭을 바꿔도 이 빈 페이지로(start)
+    if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+  }
+  function emptyPg(id){ return !byId[id] && CAT && (CAT.pages || []).some(function(p){ return p.id === id; }) && !pgFrames(id).length; }
   function togglePg(pid, open){ openPg[pid] = open === undefined ? !openPg[pid] : open; renderMenu(); }
   $('edBar').addEventListener('click', function(e){ var b = e.target.closest('[data-ed]'); if (b && cur) setEditable(b.dataset.ed, cur.page); });
   /* 트리: 묶음 줄은 펼치기/접기, 프레임 줄은 그 프레임으로 */
@@ -1823,12 +1853,12 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       .then(function(){ delete drafts[id]; renderReqs(); say(id + (resolve ? ' 요청을 「완료」로 마쳤습니다.' : ' 답을 보냈습니다. 백그라운드 Claude가 이어서 처리합니다.')); })
       .catch(function(e){ if (btn) btn.disabled = false; say('답 보내기 실패: ' + e.message, true); });
   }
-  function pickOption(id, i, btn){
+  async function pickOption(id, i, btn){
     var r = (reqData.items || []).filter(function(x){ return x.id === id; })[0]; if (!r || !hasAsk(r)) return;
     var o = (r.ask.options || [])[i]; if (!o) return;
     if (o.action === 'delete') {
       var ids = (o.ids || []).filter(function(x){ return x !== id; });
-      if (!ids.length || !confirm(ids.join(', ') + ' 요청을 지웁니다. 첨부 파일과 작업 이력도 함께 지워지고 되돌릴 수 없습니다. 지울까요?')) return;
+      if (!ids.length || !(await window.WB.confirm(ids.join(', ') + ' 요청을 지울까요?\n첨부 파일과 작업 이력도 함께 지워지고 되돌릴 수 없습니다.', { ok: '지우기', danger: true }))) return;
       btn.disabled = true;
       ids.reduce(function(p, x){ return p.then(function(){ return post({action:'delete', id:x}); }); }, Promise.resolve())
         .then(function(){ return answer(id, o.label + ' (' + ids.join(', ') + ' 지움)', true, null); })
@@ -1845,9 +1875,9 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       .catch(function(e){ btn.disabled = false; say('다시 진행 실패: ' + e.message, true); });
   }
   /* 멈추기: 대기 · 진행 중 요청을 「보류」로(서버 stop). 진행 중이면 백그라운드 Claude가 그 요청 처리를 끊는다. 이미 Figma에 반영된 것은 그대로 */
-  function stopReq(id, st, btn){
+  async function stopReq(id, st, btn){
     if (!online) { say('로컬 서버가 꺼져 있어 바꿀 수 없습니다.', true); return; }
-    if (!confirm(id + ' 요청을 멈출까요?' + (st === '진행 중' ? '\n\nClaude가 처리 중입니다. 그때까지 Figma에 반영된 것은 그대로 남고, 요청은 「보류」가 됩니다. 다시 하려면 「다시 진행」을 누르세요.' : ''))) return;
+    if (!(await window.WB.confirm(id + ' 요청을 멈출까요?' + (st === '진행 중' ? '\nClaude가 처리 중입니다. 그때까지 Figma에 반영된 것은 그대로 남고, 요청은 「보류」가 됩니다. 다시 하려면 「다시 진행」을 누르세요.' : ''), { ok: '멈추기', danger: true }))) return;
     btn.disabled = true;
     post({action:'stop', id:id})
       .then(function(){ say(id + ' 요청을 멈췄습니다(보류).'); })
@@ -1904,14 +1934,14 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       .then(function(r){ return r.json(); }).then(function(d){ if (d.error) throw new Error(d.error); reqData = d; renderReqs(); if (cur) renderMenu(); return d; });
   }
   function say(t, err){ $('msg').textContent = t; $('msg').className = 'msg' + (err ? ' err' : ''); }
-  function add(){
+  async function add(){
     var t = $('rtext').value.trim();
     if (!online) { say('로컬 서버가 꺼져 있어 저장할 수 없습니다. Figma AI Run을 실행해 주세요.', true); return; }
     if (!cur) { say('이 파일의 프레임 목록이 들어온 뒤 요청할 수 있습니다.', true); return; }
     if (!t) { say('수정 내용을 입력해 주세요.', true); $('rtext').focus(); return; }
     if (!who()) { say('상단의 「작업자」에 이름을 입력해 주세요. 누가 요청했는지 기록됩니다.', true); userInput.focus(); return; }
     var ol = general ? [] : overlaps(cur.id);
-    if (ol.length && !confirm('다른 작업자가 이 프레임을 수정 요청 중입니다.\n\n' + olText(ol).replace(/ \/ /g, '\n') + '\n\n등록하면 Claude가 그 요청이 끝난 뒤 이어서 처리합니다. 등록할까요?')) return;
+    if (ol.length && !(await window.WB.confirm('다른 작업자가 이 프레임을 수정 요청 중입니다\n' + olText(ol).replace(/ \/ /g, '\n') + '\n\n등록하면 Claude가 그 요청이 끝난 뒤 이어서 처리합니다. 등록할까요?', { ok: '등록' }))) return;
     var ms = general ? [] : curMarks().slice();
     if (atts.length + ms.length > ATT_MAX) { say('첨부와 표시를 합쳐 ' + ATT_MAX + '개까지 보낼 수 있습니다(첨부 ' + atts.length + ' · 표시 ' + ms.length + ').', true); return; }
     $('add').disabled = true;
@@ -2062,7 +2092,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       open.slice().reverse().map(function(r){ var pg = r.page || (byId[r.nodeId] ? byId[r.nodeId].page : edPage()); return '- ' + r.id + ' [' + pg + ' › ' + (r.nodeId ? r.frame + ' · ' + r.nodeId : '페이지 전체') + '] ' + r.type + (r.priority === '높음' ? ' · 우선순위 높음' : '') + (r.layout ? ' · 레이아웃 ' + r.layout : '') + (r.author ? ' · 요청자 ' + r.author : '') + '\n  ' + r.text.replace(/\n/g, '\n  ') + ((r.images || []).length ? '\n  첨부: ' + r.images.map(function(m){ return m.file; }).join(', ') : ''); }).join('\n');
     (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject())
       .then(function(){ toast(open.length + '건 요청문을 복사했습니다'); })
-      .catch(function(){ window.prompt('아래 내용을 복사해 주세요', txt); });
+      .catch(function(){ window.WB.prompt('요청문을 복사해 주세요\n자동으로 복사하지 못했습니다. 아래 칸을 Ctrl+C로 복사하세요.', txt, { readonly: true, ok: '닫기', cancel: false }); });
   };
 
   function pollShots(){
@@ -2117,6 +2147,9 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     var home = byId[FILE.node] || ed[0] || pages[0];
     var saved = store('wb.cur.' + FILE.key) || '';
     try { openKeys = JSON.parse(store('wb.open.' + FILE.key) || '{}') || {}; } catch(x){ openKeys = {}; }
+    /* 프레임이 없는 페이지(2026-11-17): 지난번에 그 빈 페이지를 보고 있었거나, 작업 페이지가 비어 있으면(새 작업방 등) 그 페이지를 고른다 */
+    var edEmpty = (CAT.pages || []).filter(function(p){ return p.editable; }).map(function(p){ return p.id; }).filter(emptyPg)[0];
+    if (!byId[h] && !byId[saved] && (emptyPg(saved) || (edEmpty && !byId[FILE.node]))) { selectEmpty(emptyPg(saved) ? saved : edEmpty); loadComments(true); return; }
     if (!home) { showWaiting(); return; }
     /* 기본은 페이지 전체(주소에 프레임 #이 있거나 지난번에 프레임을 보고 있었으면 그 프레임) */
     if (byId[h]) go(h, false);
@@ -2175,7 +2208,9 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       if (CAT && CAT.savedAt === c.savedAt && edId(CAT) === edId(c) && !first) return true;
       FILE.name = c.fileName || FILE.name;
       var keep = cur && cur.id; build(c);
-      if (keep && byId[keep]) go(keep, false, general); else start();
+      if (keep && byId[keep]) go(keep, false, general);
+      else if (keep && cur.empty && (c.pages || []).some(function(p){ return p.id === keep; })) selectEmpty(keep);   // 빈 페이지를 보던 중(작업 페이지로 바꾼 뒤 등)
+      else start();
       if (!first) toast('페이지 · 프레임 목록을 받았습니다');
       return true;
     }).catch(function(){ if (first) showWaiting(); return false; });
@@ -2229,11 +2264,11 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
   $('ptAdd').addEventListener('click', function(){ ppop($('ppop').hidden); });
   document.addEventListener('click', function(e){ if (!$('ppop').hidden && !e.target.closest('#ppop,#ptAdd')) ppop(false); });
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !$('ppop').hidden) ppop(false); });
-  $('pList').addEventListener('click', function(e){
+  $('pList').addEventListener('click', async function(e){
     /* 프로젝트 지우기: 이 PC의 등록(projects/{key})만 지운다. Figma 파일 · 변경 이력은 그대로, projects/_trash로 옮겨 되살릴 수 있다 */
     var d = e.target.closest('[data-del]');
     if (d) {
-      if (!confirm('「' + d.dataset.nm + '」 프로젝트를 이 PC에서 지울까요?\n\nFigma 파일과 변경 이력은 그대로이고, 캡처 · 프레임 목록은 projects/_trash 폴더로 옮겨집니다.')) return;
+      if (!(await window.WB.confirm('「' + d.dataset.nm + '」 프로젝트를 이 PC에서 지울까요?\nFigma 파일과 변경 이력은 그대로입니다. 이 PC의 캡처 · 프레임 목록은 지워져 다시 볼 수 없습니다.', { ok: '지우기', danger: true }))) return;
       fetch('/api/projects', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'delete', key: d.dataset.del }) })
         .then(function(r){ return r.json(); }).then(function(x){
           if (x.error) throw new Error(x.error);

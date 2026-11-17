@@ -455,19 +455,19 @@ html.doc-ro #docNew,html.doc-ro #docImport{display:none!important}
       var sel = e.target.closest('select[data-k]'); if (!sel) return;
       var k = sel.dataset.k; kView[k] = sel.value; renderKind(k, Object.keys(kMap[k] || {}).map(function(x){ return kMap[k][x]; }), kSa[k]);
     });
-    $g('genPanels').addEventListener('click', function(e){
+    $g('genPanels').addEventListener('click', async function(e){
       var bk = e.target.closest('[data-back]');
       if (bk) { var kb = bk.dataset.back; kView[kb] = kCur[kb] || ''; renderKind(kb, Object.keys(kMap[kb] || {}).map(function(x){ return kMap[kb][x]; }), kSa[kb]); return; }
       var b = e.target.closest('button.gd-apply[data-k]'); if (!b) return;
       var k = b.dataset.k, L = KINDS[k].label, id = kView[k] || '', m = kMap[k] || {}; if (id && !m[id]) return;
-      var what = id ? '「' + m[id].title + '」(으)로 바꿀까요?' : '「작업 기준 없음」으로 바꿀까요? (Claude가 ' + KINDS[k].obj + ' 보지 않습니다)';
-      if (!confirm('「' + L + '」 작업 기준(이 PC의 모든 프로젝트)을 ' + what + '\n이 PC(나)에만 적용됩니다. 다른 작업자에게는 영향이 없습니다.')) return;
+      var what = id ? '「' + m[id].title + '」(으)로 바꿀까요?' : '「작업 기준 없음」으로 바꿀까요?';
+      if (!(await WB.confirm('「' + L + '」 작업 기준을 ' + what + '\n' + (id ? '' : 'Claude가 ' + KINDS[k].obj + ' 보지 않습니다. ') + '이 PC(나)의 모든 프로젝트에 적용됩니다. 다른 작업자에게는 영향이 없습니다.', { ok: '바꾸기' }))) return;
       b.disabled = true;
       fetch('/api/guides', { method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'apply', kind: k, fileKey: workKey, guideId: id, by: userInput.value.trim() }) })
         .then(function(r){ return r.json(); })
         .then(function(d){ if (d.error) throw new Error(d.error); load(); })
-        .catch(function(x){ alert(x.message || '서버에 연결할 수 없습니다.'); b.disabled = false; });
+        .catch(function(x){ WB.alert(x.message || '서버에 연결할 수 없습니다.'); b.disabled = false; });
     });
     /* 변경이력(UX가이드 보기처럼 왼쪽 목록 · 오른쪽 상세): 모든 카테고리 문서의 생성(createdAt) · 수정본(revs)을 카테고리별로 최신순.
        오른쪽은 고른 기록의 수정 일자 · 누가 · 문서 ID · 수정 내용(note) · 요청 글(req) · 바뀐 줄(이전 내용과 비교) · 수정해야 할 화면(checks) */
@@ -733,15 +733,15 @@ html.doc-ro #docNew,html.doc-ro #docImport{display:none!important}
     /* 선택 상자에서 고르면 그 가이드를 바로 보여 준다(보기만). [적용]을 눌러야 내 작업 기준이 된다 */
     $g('gdSel').addEventListener('change', function(){ viewId = this.value; load(); });
     $g('gdProj').addEventListener('change', function(){ workKey = this.value; try { localStorage.setItem('cux.gdProj', workKey); } catch(x){} viewId = null; load(); });
-    $g('gdApply').addEventListener('click', function(){
+    $g('gdApply').addEventListener('click', async function(){
       var b = this, id = $g('gdSel').value; if (!guideMap[id]) return; var title = guideMap[id].title;
-      if (!confirm('「' + workName + '」 파일의 UX가이드를 「' + title + '」(으)로 바꿀까요?\n이 Figma 파일에만, 이 PC(나)에만 적용됩니다.')) return;
+      if (!(await WB.confirm('「' + workName + '」 파일의 UX가이드를 「' + title + '」(으)로 바꿀까요?\n이 Figma 파일에만, 이 PC(나)에만 적용됩니다.', { ok: '바꾸기' }))) return;
       b.disabled = true;
       fetch('/api/guides', { method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'apply', kind: 'guide', fileKey: workKey, guideId: id, by: userInput.value.trim() }) })
         .then(function(r){ return r.json(); })
         .then(function(d){ if (d.error) throw new Error(d.error); curGuide = id; viewId = id; load(); })
-        .catch(function(x){ alert(x.message || '서버에 연결할 수 없습니다.'); b.disabled = false; });
+        .catch(function(x){ WB.alert(x.message || '서버에 연결할 수 없습니다.'); b.disabled = false; });
     });
     $g('gdLink').addEventListener('input', function(){ this.classList.toggle('bad', !!this.value.trim() && !parseFig(this.value)); });
     $g('gdForm').addEventListener('submit', function(e){
@@ -816,7 +816,7 @@ html.doc-ro #docNew,html.doc-ro #docImport{display:none!important}
           var sk = d.skipped || [];
           if (!(d.imported || []).length) { imMsg('가져오지 못했습니다: ' + sk.join(', '), true); imSync(); return; }
           $g('imDlg').close();
-          if (sk.length) alert('가져오지 못한 문서: ' + sk.join(', ')); location.reload();
+          (sk.length ? WB.alert('일부 문서를 가져오지 못했습니다\n' + sk.join(', ')) : Promise.resolve()).then(function(){ location.reload(); });
         }).catch(function(x){ imMsg(x.message || '서버에 연결할 수 없습니다.', true); imSync(); });
     });
     load(); setInterval(function(){ if (!document.hidden) load(); }, 10000);

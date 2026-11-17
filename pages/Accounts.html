@@ -261,7 +261,7 @@ body.limited .split{grid-template-columns:minmax(0,760px)}
     else if (a === 'ren') { tpEdit = k; tpRender(); tpsay(''); }
     else if (a === 'cancel') { tpEdit = ''; tpRender(); }
     else if (a === 'save') tpPost({ action: 'update', key: k, name: $('tpEditName').value.trim() }, '이름을 바꿨습니다.');
-    else if (a === 'del' && p && confirm('「' + (p.name || p.key) + '」을(를) 팀 프로젝트에서 뺄까요?\n\nFigma 파일과 각 PC의 캡처 · 변경 이력은 그대로입니다.')) tpPost({ action: 'delete', key: k }, '팀 프로젝트에서 뺐습니다.');
+    else if (a === 'del' && p) WB.confirm('「' + (p.name || p.key) + '」을(를) 팀 프로젝트에서 뺄까요?\nFigma 파일과 각 PC의 캡처 · 변경 이력은 그대로입니다.', { ok: '빼기', danger: true }).then(function(ok){ if (ok) tpPost({ action: 'delete', key: k }, '팀 프로젝트에서 뺐습니다.'); });
   });
   $('tpList').addEventListener('keydown', function(e){
     if (e.target.id !== 'tpEditName') return;
@@ -371,22 +371,22 @@ body.limited .split{grid-template-columns:minmax(0,760px)}
   $('allRead').addEventListener('click', function(){ if (!locked()) setLevels(function(){ return 'read'; }); });
   $('allOff').addEventListener('click', function(){ if (!locked()) setLevels(function(){ return 'none'; }); });
   function post(b){ return fetch('/api/accounts', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(b) }).then(function(r){ return r.json(); }).then(function(d){ if (d.error) throw new Error(d.error); return d; }); }
-  $('form').addEventListener('submit', function(e){
+  $('form').addEventListener('submit', async function(e){
     e.preventDefault();
     var menus = MENUS.filter(function(m){ return levelOf(m.key) !== 'none'; }).map(function(m){ return m.key; });
     var writes = MENUS.filter(function(m){ return levelOf(m.key) === 'write'; }).map(function(m){ return m.key; });
     var b = { action: sel ? 'update' : 'add', id: $('fId').value.trim().toLowerCase(), name: $('fName').value.trim(), pw: $('fPw').value, menus: menus, writes: writes, approves: approvesOf(), manages: managesOf(), teams: teamsOf() };
     if (sel) b.active = $('fActive').checked;
-    if (!sel && !menus.length && !confirm('사용할 메뉴가 하나도 없습니다. 이대로 만들까요? (로그인하면 「시작 안내」 · 「내 정보」만 보입니다)')) return;
+    if (!sel && !menus.length && !(await WB.confirm('사용할 메뉴가 하나도 없습니다.\n로그인하면 「시작 안내」 · 「내 정보」만 보입니다. 이대로 만들까요?', { ok: '만들기' }))) return;
     var cur = sel && ITEMS.filter(function(x){ return x.id === sel; })[0];
     var teamMenu = MENUS.filter(function(m){ return m.team && menus.indexOf(m.key) >= 0; }).map(function(m){ return m.label; });
-    if (!(cur && cur.admin) && !b.teams.length && teamMenu.length && !confirm('소속 팀이 없어 ' + teamMenu.join(' · ') + ' 메뉴는 쓸 수 없습니다. 이대로 저장할까요?')) return;
+    if (!(cur && cur.admin) && !b.teams.length && teamMenu.length && !(await WB.confirm('소속 팀이 없습니다.\n' + teamMenu.join(' · ') + ' 메뉴는 쓸 수 없습니다. 이대로 저장할까요?', { ok: '저장' }))) return;
     $('saveBtn').disabled = true;
     post(b).then(function(){ var id = b.id; return load(false).then(function(){ pick(id); say(sel === id && b.action === 'add' ? '계정을 만들었습니다. 아이디 · 비밀번호를 본인에게 알려 주세요.' : '저장했습니다.', true); }); })
       .catch(function(err){ say(err.message); }).then(function(){ $('saveBtn').disabled = false; });
   });
-  $('delBtn').addEventListener('click', function(){
-    if (!sel || !confirm('「' + sel + '」 계정을 지울까요? 지우면 그 사람은 로그인할 수 없습니다.')) return;
+  $('delBtn').addEventListener('click', async function(){
+    if (!sel || !(await WB.confirm('「' + sel + '」 계정을 지울까요?\n지우면 그 사람은 로그인할 수 없습니다.', { ok: '지우기', danger: true }))) return;
     post({ action: 'delete', id: sel }).then(function(){ return load(false); }).then(function(){ say('지웠습니다.', true); }).catch(function(err){ say(err.message); });
   });
   /* 팀 추가 · 이름 바꾸기 · 지우기 */
@@ -402,7 +402,7 @@ body.limited .split{grid-template-columns:minmax(0,760px)}
     if (btn.dataset.act === 'tren') { tEdit = id; renderTeams(); tsay(''); }
     else if (btn.dataset.act === 'tcancel') { tEdit = null; renderTeams(); }
     else if (btn.dataset.act === 'tsave') teamPost({ action: 'team-update', team: { id: id, name: $('tEditName').value.trim() } }, '팀 이름을 바꿨습니다.');
-    else if (btn.dataset.act === 'tdel' && t && confirm('「' + t.name + '」 팀을 지울까요?')) teamPost({ action: 'team-delete', team: { id: id } }, '팀을 지웠습니다.');
+    else if (btn.dataset.act === 'tdel' && t) WB.confirm('「' + t.name + '」 팀을 지울까요?', { ok: '지우기', danger: true }).then(function(ok){ if (ok) teamPost({ action: 'team-delete', team: { id: id } }, '팀을 지웠습니다.'); });
   });
   $('tlist').addEventListener('keydown', function(e){
     if (e.target.id !== 'tEditName') return;
