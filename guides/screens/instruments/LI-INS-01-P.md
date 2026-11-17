@@ -35,11 +35,11 @@ figma_region: 2.1 1차
 - Door Control
 - Sample Storage | Unlock all doors
 - Sample Preparation (1) | Paused
-- Door (Left) | Open | Unlocked
-- Locks automatically 5 seconds after the door is closed.
+- Door (Left) | Open | Lock
+- Close the door, then press Lock to lock it.
 - Door (Right) | Closed | Unlock
 - 예시)안내문구 노출영역 - 자세한 내역은 하단케이스 참고필요
-- The door will be automatically locked 5 seconds after it is closed.
+- Close the door and press the 'Lock' button to resume the module
 
 ### 사용 컴포넌트
 
@@ -55,6 +55,7 @@ Description Number (10), Square (3), Frame/Instrument_Status (1), Interface/Lock
 - 기존: Module 상태값에 따른 Door Lock해제를 할 수 있음.
 - 변경: 통합 상태에 따라 Lcok 해제를 할 수 있음.
 - Unlock 1개라도 해당 되면 Module의 상태값은 Paused로 변경됨
+- 변경: 문을 닫아도 자동으로 잠기지 않음. [Lock] 버튼을 눌러야 Door가 잠김 (Door 단위, 기존: 닫고 5초 후 자동 Lock)
 
 #### 1. Module type
 

@@ -51,10 +51,10 @@ Table/Filled Table Cell (26), Frame/Instrument_Status (19), Tag Status (18), Des
 - Module 내 Unit 단위 장비의 상세 정보를 확인하는 영역
 - Title : 모듈명+인덱스 표기
 
-#### 2-1. Error Rate
+#### 2-1. ~~Error Rate~~
 
-- Account Type에 따라 항목 노출
-- Account Type의 Sevice일 경우만 노출
+- ~~Account Type에 따라 항목 노출
+- Account Type의 Sevice일 경우만 노출~~
 
 #### 2-2. [Management 버튼]
 
@@ -63,26 +63,34 @@ Table/Filled Table Cell (26), Frame/Instrument_Status (19), Tag Status (18), Des
 #### 3. Door
 
 - Module의 Door Status와 lock Status를 확인할 수 있음
-- Unlock을 클릭 시,
+- Lock Status: Locked / Unlocked
+- Locked → [Unlock] 버튼, Unlocked → [Lock] 버튼 표시
 
 #### 3-1. [Unlock] 클릭
 
 - 클릭 시,
 - Confirm_008 팝업 노출
+- [Lock] 클릭 (Lock Status = Unlocked일 때)
+- 클릭 시 즉시 잠금 → Lock Status Locked, 버튼은 [Unlock]으로 바뀜
+- [Lock] 버튼은 늘 활성(Enabled) 상태로 표시
+- Door가 Open이면 [Lock] 클릭 시 Confirm_031 팝업(문 닫기 안내) 노출 (LI-INS-01-P 케이스 참고)
 
 #### 4. Device
 
-- 원문은 TI-INS-02-T 4와 같음
-
-#### 4-1. [Run-time Info] 클릭
-
+- 원문은 TI-INS-02-T 4와 같음 (4-1 [Run-time Info] 취소선 · 팝업 이름만 Run-time Info_LI-INS-02-02-P. TI의 4-2 [Enable setting]은 없음)
+- ~~4-1~~
+- ~~[Run-time Info] 클릭
 - Run-time Info_LI-INS-02-02-P 팝업 제공
 - Account type에 따라 팝업 내역이 달라짐
-- 자세한 내역은 해당 페이지 화면 참고
+- 자세한 내역은 해당 페이지 화면 참고~~
 
 #### 5 ~ 7-1
 
-- 원문은 TI-INS-02-T 5 ~ 7-1과 같음
+- 원문은 TI-INS-02-T 5 ~ 7-1과 같음 (7 Date/Time 표기방법 포함)
+
+### 버전 메모
+
+- v2.1.17 update / Door(3) · [Unlock] 클릭(3-1)에 Lock Status 값과 [Lock] 버튼 정의 추가 / 3-1: 문 열린 채 [Lock] → 문 닫기 안내 팝업(Confirm_031) (패널 Ver 2.1.17, 2026-11-13, 이상헌)
 
 ## 반영 대기 목록
 
