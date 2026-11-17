@@ -35,6 +35,7 @@ started: 2026-11-17
 
 - 요청 글: "현재 적용된 UX문서를 기반으로 만들어진 화면들 전부 수정해줘 (Design-Update 내용은 수정하지 말것) 4단계 UX 확정까지만 진행"
 - 출처: Workbench 요청 R037 (최고관리자, 2026-11-17 16:25), 페이지 요청(프레임 지정 없음) · Instrument Ⓛ / Ⓣ _re
+- 이어 받은 요청: R038 · R039 · R040 · R041 (BREX_06, 최고관리자. R041 "나머지 전부 다 작업 진행"은 17:37에 요청자가 멈춤), R007 (BREX_01, 서보경, 17:47 "instrument 작업 이어서 해줘")
 - 요청 자료 없음
 - 시작 주체: -
 
@@ -214,11 +215,12 @@ started: 2026-11-17
 | T · L 한 쌍 | 섹션 | 기획 프레임 | 상태 · 케이스 프레임 |
 | --- | --- | --- | --- |
 | Overview Tab (TI-INS-01-T · LI-INS-01-T) | [TI-INS-01-T](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=2807-45236) · [LI-INS-01-T](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=2807-45744) | 2807:45237 · 2807:45745 (2252 × 1332 · 2252 × 1394) | 그림 끝 (2026-11-17, R039). 케이스 없음 |
-| All Tab (TI-INS-02-T · LI-INS-02-T) | | | 화면 MD만 (다음 요청) |
-| Management Popup (TI-INS-02-01-P · LI-INS-02-01-P) | | | 화면 MD만 (다음 요청) |
-| Door Control Popup (LI-INS-01-P) | | | 화면 MD만 (다음 요청) |
+| All Tab (TI-INS-02-T · LI-INS-02-T) | [TI-INS-02-T](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=2815-24789) · [LI-INS-02-T](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=2816-25368) | 2815:24790 · 2816:25369 (2252 × 1488 · 2252 × 1706) | 그림 끝 (R041 · R007, 2026-11-17). 케이스 없음 |
+| Management Popup (TI-INS-02-01-P · LI-INS-02-01-P) | [TI-INS-02-01-P](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=2823-26013) · [LI-INS-02-01-P](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=2824-26490) | 2823:26014 · 2824:26491 (2252 × 1212 · 2252 × 1080) | 그림 끝 (R041 · R007). 케이스 프레임 2823:26402 · 2824:26818 (Case 1 ~ 3) |
+| Door Control Popup (LI-INS-01-P) | [LI-INS-01-P](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=2826-26709) | 2826:26710 (2252 × 1568) | 그림 끝 (R041 · R007). 케이스 프레임 2826:26952 (2676 × 3142, 기존 원본 너비, Case 1 ~ 6). T 자리는 비워 둠 (짝 없음) |
 
-- 메뉴 단위 표시: T-IOS 줄 시스템 구분 `T-IOS - 2.1` (2807:45232) · 기획 진행 표시 `SB-Update : 2026.11.17 (작업중)` (2807:45234), L-IOS 줄 (2807:45740 · 2807:45742). 너비는 지금 섹션 줄(2877)에 맞춤 — 섹션을 더하면 다시 맞춤
+- 메뉴 단위 표시: T-IOS 줄 시스템 구분 `T-IOS - 2.1` (2807:45232) · 기획 진행 표시 `SB-Update : 2026.11.17 (작업중)` (2807:45234), L-IOS 줄 (2807:45740 · 2807:45742). 너비는 섹션 줄 너비 12342(x 10000 ~ 22342)에 맞춤 (R007)
+- 배치 (R007에서 다시 맞춤): 섹션 줄 순서 INS-01-T → INS-01-P(L만) → INS-02-T → INS-02-01-P, 가로 간격 200px. LI-INS-01-P 섹션(너비 3111)이 LI-INS-02-T와 34px 겹쳐 있어 INS-02-T · INS-02-01-P를 T · L 함께 오른쪽으로 옮김. T-IOS 줄에서 가장 긴 섹션(TI-INS-02-01-P) 아래 끝 54225 → L-IOS 시스템 구분 표시 56225 (2000px), L-IOS 섹션 줄 y 57445
 - 업데이트 메모: 기존 작업방 메모를 그대로 복제해 옮김 (T `v2.1.06 update`, L `v2.1.17 update`)
 
 ### 컴포넌트 없이 그린 요소
@@ -241,6 +243,10 @@ started: 2026-11-17
 - LI-INS-02-01-P 케이스 「모듈에 Device Unit이 없는 Case」에 번호가 없어 Case 3을 붙임 (규칙에 없어 판단한 곳)
 - 등록되지 않은 Module Type Tab의 Alert_004는 기존 원본에 케이스 화면이 없어 그리지 않음 (디스크립션에만)
 - 패널 글꼴은 SB Description 컴포넌트 그대로(Inter)
+- R041이 그리다 멈춘 것을 R007에서 화면 MD와 대조함: 섹션 5개 · 케이스 프레임 3개 · 패널 디스크립션 번호 · 화면 번호 표시 · 화면 라벨 · 사용자 확인 목록이 화면 MD와 같음. 다른 곳 둘을 화면 MD에 맞춰 넣음
+  - LI-INS-02-01-P: 기존 화면의 번호 표시 1-3에 맞는 디스크립션이 없어(L은 조회 전용이라 Radio 없음) Figma에서 지우고 사용자 확인 목록에 C35를 둠 → 화면 MD · 작업 기록 변경 확인 표에 C35를 더함 (TI-INS-01-T C9와 같은 종류)
+  - TI-INS-02-01-P: 기존 원본에도 「모듈에 Device Unit이 없는 Case」가 있어(1단계 "읽은 기존 화면"에는 케이스 2개로 적음) Figma에 Case 3으로 옮겨져 있음 → 화면 MD 케이스 표 · 1 참고 줄에 Case 3을 더함
+- 화면 MD 머리말 `figma`를 새 섹션 링크로 채움 (5개)
 
 ### 용어 치환
 | 원래 표현 | 표준어 | 위치 |
@@ -301,6 +307,7 @@ started: 2026-11-17
 | C32 | Unlock 1개라도 해당 되면 Paused | 문장 정리 (장비 통합 상태와 관계없이, Door가 여러 개면 하나라도) | LI-INS-01-P 0 · 3 | R07, POL-EQP-004 | L만 | - | |
 | C33 | 즉시 가능 · 불가 조건이 장비 모듈 상태 기준 | 장비 통합 상태별 허용 · 조건부 허용 Module 기준으로 통일 | LI-INS-01-P 2-5 | R08, POL-EQP-008 | L만 | O | |
 | C34 | 취소선 "기존: Module 상태값에 따른 Door Lock해제" | 취소선 항목 1개 지움 | LI-INS-01-P 0 | 기존 화면 취소선 | L만 | - | |
+| C35 | 디스크립션 없는 번호 표시 1-3 | 번호 표시 1-3 지움 | LI-INS-02-01-P 0 | 기존 화면 번호 표시가 디스크립션과 다름 | L만 | - | |
 
 - C28은 쓰지 않음 (번호를 비워 둠)
 
