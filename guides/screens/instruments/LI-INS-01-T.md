@@ -107,8 +107,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=28
 6  [Door Control] 버튼
  ● 정의
    - Module Type별 Door Control Popup을 여는 버튼
- ● 활성화 조건
-   - 공통 UX 참고 : COMM-3-a
+ ● 활성화 조건 : 늘 활성 (비활성화되는 경우 없음, 모든 Module에 Door가 있음)
  ● 동작
    - 클릭 시 그 Module Type의 Door Control Popup 노출 : LI-INS-01-P
    - Popup에서 Door별 [Unlock](잠금 해제) · [Lock](잠금) 가능
@@ -169,12 +168,13 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=28
 | C4 | 2, 3-2 | Dignosctics, Enablde | 표기 수정 (Dignosctics → Diagnostics, Enablde → Enabled) | R03, 오타 | O | |
 | C7 | 6 | 기능 활성화 조건 COMM-3-a, Door Control 팝업에서 Unlock · Lock 가능 | 동작을 Door Control 기준으로 정리 (Popup 호출, Door별 [Unlock] · [Lock], 자동 잠금 없음) | R04, POL-EQP-008 · DS-0004 | - | |
 | C8 | 6 | 디스크립션 제목 "Unlock 버튼 (L-IOS Only)" / 화면 글자 "Door Control" | 버튼 이름 통일 (Unlock 버튼 → [Door Control] 버튼) | R05, 화면 글자 | - | |
+| C37 | 6 | 활성화 조건 : 공통 UX 참고 COMM-3-a | 활성화 조건을 늘 활성으로 (비활성화되는 경우 없음, 모든 Module에 Door가 있음) | Q2의 답 | O | 맞음 (2026-11-17) |
 
 ## 질문 대기
 
 | 번호 (Q) | 디스크립션 번호 | 질문 | 논의 대상 (DS) | 풀린 날 · 어떻게 |
 | --- | --- | --- | --- | --- |
-| Q2 | 6 | [Door Control] 버튼 활성화 조건 (기존 디스크립션은 COMM-3-a만, 정책서는 Popup 안 [Unlock] 조건만 정함) | | |
+| Q2 | 6 | [Door Control] 버튼 활성화 조건 (기존 디스크립션은 COMM-3-a만, 정책서는 Popup 안 [Unlock] 조건만 정함) | | 2026-11-17 · 요청자 답: 늘 활성, 비활성화되는 경우 없음 (모든 Module에 Door가 있음) (C37) |
 
 ## 반영 대기 목록
 
@@ -195,3 +195,4 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=28
 | | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |
 | 2.1.17 | 2026-11-13 | Door Status 툴팁 · Unlock 버튼(6) 정의에 Lock 기능 추가 | 이상헌 | Figma 버전 메모 v2.1.17 |
 | | 2026-11-17 | 작업방에 새로 그림 (기존 작업방 Instruments 2.1 2차 [10069-367211](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=10069-367211) · Ver 2.1.17). `source: asis` → `tobe`, 화면 정보 Ver · Date · 작성자를 기존 패널 값(2.1.17 · 2026.11.13 · 이상헌)으로 맞춤, 반영 대기 R01 ~ R05 반영(작업 중), R06(점검 발견) 더함, C1 · C3 · C4 · C7 · C8 · Q2 | Claude (요청 최고관리자) | 20261117-최고관리자-instruments, R01 ~ R05 |
+| | 2026-11-17 | 4단계: Q2 답으로 6 [Door Control] 활성화 조건을 늘 활성으로 (C37) | Claude (요청 서보경) | 20261117-최고관리자-instruments |
