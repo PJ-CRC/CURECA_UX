@@ -4,7 +4,7 @@
 
 ## 백그라운드 감시 (에이전트)
 
-- **백그라운드 감시(기본)**: 서버가 켜진 지 5초 뒤 `node/agent.js`(2026-11-16~ 윈도우 · 맥 같은 Node 코드, 서버를 돌리는 Node로 띄움. 파일이 없거나 예전 서버면 `workbench/agent.ps1` · 맥 `agent.pl`)를 **창 없이** 띄운다(시작 안내 5단계(CLI) 체크박스, `setup.autoWatch`가 false면 안 함, 시작 · 중지 버튼도 5단계 CLI). 에이전트는 처리할 것이 생길 때 Claude Code CLI를 띄우고 **한 차례를 마치면 닫는다**(다음 요청은 새 세션 — 세션을 계속 두면 매 API 호출마다 앞 요청 대화를 다시 읽어 토큰의 98%가 그것이었다, 2026-11-06)(`claude -p --input-format stream-json --output-format stream-json`, `--permission-mode acceptEdits`, 허용 도구 Bash · 파일 · Skill · Agent(하위 에이전트) · Figma MCP). 감시(예전 `watch_requests`와 같은 판단 — 대기 · 겹침 · 겹침 풀림 · 작업 대기열)를 1분씩 반복하고, `PENDING` · `RESUME` · `JOBS`가 나오면 그 결과를 떠 있는 세션에 메시지로 보낸다. 받은 Claude는 이 문서 규칙대로 그 항목만 처리하고 차례를 끝낸다(감시 재실행 · 사용 한도 표시는 하지 않고, 묻지 말고 모호하면 「보류」, 앞서 처리한 요청과 섞지 않고 상태를 다시 읽는다).
+- **백그라운드 감시(기본)**: 서버가 켜진 지 5초 뒤 `node/agent.js`(윈도우 · 맥 같은 Node 코드, 서버를 돌리는 Node로 띄움. 예전 서버로 떴을 때만 `workbench/agent.ps1` · 맥 `agent.pl`)를 **창 없이** 띄운다(시작 안내 5단계(CLI) 체크박스, `setup.autoWatch`가 false면 안 함, 시작 · 중지 버튼도 5단계 CLI). 에이전트는 처리할 것이 생길 때 Claude Code CLI를 띄우고 **한 차례를 마치면 닫는다**(다음 요청은 새 세션 — 세션을 계속 두면 매 API 호출마다 앞 요청 대화를 다시 읽어 토큰의 98%가 그것이었다, 2026-11-06)(`claude -p --input-format stream-json --output-format stream-json`, `--permission-mode acceptEdits`, 허용 도구 Bash · 파일 · Skill · Agent(하위 에이전트) · Figma MCP). 감시(예전 `watch_requests`와 같은 판단 — 대기 · 겹침 · 겹침 풀림 · 작업 대기열)를 1분씩 반복하고, `PENDING` · `RESUME` · `JOBS`가 나오면 그 결과를 떠 있는 세션에 메시지로 보낸다. 받은 Claude는 이 문서 규칙대로 그 항목만 처리하고 차례를 끝낸다(감시 재실행 · 사용 한도 표시는 하지 않고, 묻지 말고 모호하면 「보류」, 앞서 처리한 요청과 섞지 않고 상태를 다시 읽는다).
   - 한 차례 안에서 컨텍스트가 80%를 넘으면 CLI가 스스로 압축한다(`CLAUDE_AUTOCOMPACT_PCT_OVERRIDE=80`). 세션이 죽거나 한 요청에서 Claude 출력이 20분 넘게 없으면(멈춤) 새로 띄운다 — 출력이 이어지는 한 오래 걸리는 단계 작업은 끊지 않는다(2026-11-12).
   - Claude Code는 PATH의 `claude`, 없으면 Claude 데스크톱 앱에 들어 있는 것(윈도우 `%LOCALAPPDATA%\Claude-Data\claude_*\claude-code\{버전}\…\claude.exe`, 맥 `~/Library/Application Support/Claude/claude-code/{버전}/{해시}/claude.app/Contents/MacOS/claude`. 못 찾으면 시작 안내 5단계(CLI)에 경로를 직접 넣는다). CLI는 데스크톱 앱 로그인과 별개라 처음 한 번 시작 안내 5단계(CLI) 「Claude 로그인 · Figma 연결」(Claude Code 창에서 `/login`, `/mcp` → figma 인증)이 필요하다. 서버가 그때 Figma MCP(`https://mcp.figma.com/mcp`)를 CLI에 등록해 둔다.
   - 상태 `workbench/.agent.json` {at, host, pid, status: idle|working|login|figma|error|stopped, msg}, 중지 신호 `.agent_stop`(처리 중이면 마친 뒤 멈춤), 세션 새로 띄우기 신호 `.agent_renew`(5단계 CLI 「Claude 로그인 · Figma 연결」 창을 열 때 서버가 씀. 로그인 · Figma 연결 전에 뜬 세션을 버린다), 기록 `.agent.log`. 같은 감시 결과가 3번 연달아 처리되지 않으면 10분 쉰다. 백그라운드 감시가 동작 중이면 Workbench 탭을 모두 닫아도 서버가 꺼지지 않는다(에이전트가 API를 써야 한다). 자동 시작은 시작 안내 「완료」와 상관없이 `autoWatch`만 본다. **준비 확인**: 세션을 띄우기 전에 `claude auth status`(로그인) · `claude mcp list`(figma 줄이 Connected)를 확인하고, 안 되어 있으면 요청을 보내지 않고 상태 `login` · `figma`로 이유를 5단계 CLI에 보인다(2분마다 · 연결 창을 열면 바로 다시 확인). **사용 한도**: CLI가 차례마다 보내는 `rate_limit_event`와, 요청이 없어도 **5분마다** 아주 짧은 질문(haiku · 도구 없음 · 짧은 시스템 프롬프트, 임시 폴더에서, 한 번에 약 850토큰)을 보내 돌아오는 `rate_limit_event`로 에이전트가 `.plan_usage.json`을 쓴다(백그라운드만 쓰는 PC도 상단 메뉴 한도가 계속 갱신된다). 예전의 `claude -p /usage` 글 읽기는 Claude Code 2.1.3xx부터 사용률 %가 나오지 않아 11-05부터 멈췄다(2026-11-13 바꿈).
@@ -22,7 +22,7 @@
   - 개인 데이터(`workbench/edit_requests.json` · `jobs.json`, `projects/`, `.claude/`)는 이미 있으면 그대로 둔다.
   - 깃 작업 폴더(개발용 clone, 이 폴더)는 자동 업데이트하지 않는다.
 - **배포는 사용자가 「배포해줘」(버전 포함)라고 할 때만** 한다. 「배포해줘」는 **develop 커밋 · 푸시까지 포함한 요청**이다(develop이 먼저, 배포본은 그 커밋으로 만든다).
-  1. **`RELEASE_NOTES.md`**(Workbench 릴리즈 노트) 에 `### v{버전} · 날짜 · 요약` 항목을 쓰고(미배포 항목은 「v{버전}에 포함」으로), `VERSION`을 `{버전}`으로 고친다. 프로그램 변경은 `Common_UX_Changelog.md`(Figma 화면 수정 이력)에 쓰지 않는다.
+  1. **`RELEASE_NOTES.md`**(Workbench 릴리즈 노트) 에 `### v{버전} · 날짜 · 요약` 항목을 쓰고(미배포 항목은 「v{버전}에 포함」으로), `VERSION`을 `{버전}`으로 고친다.
      - 릴리즈 노트는 **가운데 자리마다 하나로 묶는다**(2026-11-10): `## v0.17 · 기간 · 요약` 아래에 `### v0.17.0` … `### v0.17.7`(최신이 위). 같은 묶음이면 그 묶음 맨 위에 `###` 항목을 더하고 묶음 제목 · 맨 위 표(묶음 · 기간 · 버전 · 주요 내용)의 기간 · 버전을 늘린다. 가운데 자리가 바뀌면(0.17.x → 0.18.0) 맨 위에 새 `## v0.18` 묶음과 표 줄을 만든다(묶음 요약 = x.y.0 요약).
   2. 작업 폴더의 변경을 모두 **develop에 커밋하고 푸시**한다(`origin` = PJ-CRC/CURECA_UX, Deploy key).
   3. `powershell -ExecutionPolicy Bypass -File tools\release.ps1 -Version {버전} -Publish` — 커밋 안 한 변경이 있거나, VERSION이 다르거나, 푸시 안 한 커밋이 있으면 스크립트가 멈춘다(그때는 2번부터 다시).
@@ -41,25 +41,60 @@
   - 쓰기로 되는 것: 일정/작업 = 일정(구글 시트) 칸 수정 · 시트 연결(`POST /api/sheet`) · UX 문서 = 새 가이드 · 정의서 만들기, 항목 수정 요청, 연관 항목 찾기 · 반영 요청(jobs `guide` · `guide-edit` · `guide-check`, guides `save`, `/api/upload`) · Workbench = 수정 요청 등록 · 답하기 · 다시 진행 · 지우기, 캡처 · 목록 요청, 프로젝트 추가 · 작업 페이지 바꾸기(`/api/requests` · `/api/attach` · `/api/projects` · `/api/catalog` · `/api/shots`, jobs `capture` · `catalog`) · 변경 이력 = 다시 진행 · 답하기(`/api/requests`) · 프로토타입 = 만들기 · 수정 요청 · 맞추기 · 지우기(jobs `prototype*`, `/api/prototypes`). `/api/requests`는 Workbench · 변경 이력 · UX 문서(반영 요청) 쓰기 중 하나면 된다.
   - 읽기만이면 화면에 「보기 전용」 표시, 바꾸는 버튼(`.w-only`)이 숨고(`html.perm-ro`, appnav.js), 서버가 그 POST를 403 · 오류로 막는다.
   - `writes`가 없는 예전 계정은 고른 메뉴 모두 쓰기(UX 문서만 예전 `guideEdit`이 있을 때). 최고관리자는 전부 쓰기. `/api/me`의 `writes`.
-- **승인 권한**(메뉴 권한과 따로, v0.12.0): 계정의 `approves`. 계정 관리 「승인 권한」에서 항목마다 체크한다. 항목 목록은 서버의 승인 항목 목록(Node `core.js` · 예전 서버 `$Approvals` · 맥 `@APPROVALS`). **새 흐름(2026-11-12)에서 임시 정책(PV)을 없애 Node 서버의 목록은 비어 있고(`pv` 빠짐), 승인할 것이 없으면 계정 관리에 「승인 권한」이 보이지 않는다.** 논의 대상의 결정은 정한 사람(내부 · 고객)이 하고, 반영은 [확인 · 반영](plan `answer-apply`)으로 한다(헌법 4조). 승인할 것이 다시 생기면 목록에 한 줄 더하고 그 버튼 · 서버에서 `canApprove`로 확인한다.
+- **승인 권한**(메뉴 권한과 따로): 계정의 `approves`, 항목 목록은 `core.js`. 지금은 승인할 항목이 없어(임시 정책 PV를 없앰) 목록이 비어 있고 계정 관리에 「승인 권한」이 보이지 않는다. 다시 생기면 목록에 한 줄 더하고 그 버튼 · 서버에서 `canApprove`로 확인한다.
+- **관리 권한**(메뉴 · 승인 권한과 따로, 2026-11-16): 계정의 `manages`. 계정 관리 「관리 권한」에서 체크한다(목록 = `core.js` `MANAGES`). 지금 항목은 `teamProjects` **팀 프로젝트 링크 관리** 하나 — 받은 사람은 최고관리자가 아니어도 상단 메뉴 **「프로젝트 관리」**(같은 `Accounts.html`, 제목도 「프로젝트 관리」. 최고관리자에게는 「계정 관리」)로 들어오고 「팀 프로젝트」 칸만 보이며(`GET /api/accounts`가 `limited:true`, 계정 · 팀 목록 없음), **자기 소속 팀**의 프로젝트만 고친다. 계정 · 팀 바꾸기(`POST /api/accounts`)는 브라우저에서 최고관리자만.
+- **팀 프로젝트**(2026-11-16): 팀이 함께 쓰는 Figma 파일(프로젝트)과 **작업 순서**(1 → 2 → 3, 예: 1차 설계 → 확인 → 최종). CURECA = `.history/config/projects.json`, 다른 팀 = `.history/teams/{id}/config/projects.json` `{items:[{key, name, link, addedAt, by}]}`(배열 순서 = 작업 순서, 깃 공유, 웹으로 내보내지 않음). `GET /api/teamprojects?team=`(누구나 읽음, `canEdit`), `POST /api/teamprojects {action: add|update|move|delete, team, link, name, key, dir}`(관리 권한 + 자기 팀, Claude · curl은 그대로, 20개까지). 계정 관리 「팀 프로젝트」 칸에서 팀을 골라 링크 추가 · ↑↓ 순서 · 이름 · 지우기.
+  - **Workbench**: `GET /api/projects`가 지금 팀의 팀 프로젝트를 이 PC에 없으면 바로 등록하고(`projects/{key}/project.json`, 이름 = 팀 프로젝트 이름) `team.items`(순서 · `step`)를 함께 돌려준다. 탭 줄 맨 앞에 팀 프로젝트가 순서 번호(①②③)와 함께 늘 보이고(닫기 없음), 따로 연 프로젝트는 세로 줄 뒤에. **작업 페이지는 지금처럼 PC마다 담당자가 고른다**(처음은 링크의 노드 페이지). 팀 프로젝트에서 빼도 PC의 캡처 · 목록 · 변경 이력은 그대로(따로 연 탭처럼 남음).
+  - **프레임 목록**: 목록이 없는 팀 프로젝트는 Figma 토큰이 있는 PC에서 서버가 뒤에서 바로 받는다(`GET /api/projects` 때, 토큰 없으면 플러그인 · Claude 목록 요청). 팀 프로젝트가 아니어도 토큰이 있으면 Workbench 목록 대기 화면이 파일마다 한 번 알아서 받는다.
+    - 목록 기준(토큰 · 플러그인 같음): 섹션 안에 화면으로 볼 프레임이 하나도 없으면(「Frame 123」 · 그룹뿐인 그림판) **섹션 자체를 한 화면**으로 넣는다. 토큰은 3분마다 파일의 **`lastModified`**로 바뀜을 보고 목록 · 캡처를 다시 받는다(예전 `version`은 Figma 버전 기록 때만 바뀌어 붙여 넣은 화면을 못 알아챘다, 2026-11-16).
+  - **UX가이드**: UX가이드를 따로 고르지 않은 단계는 앞 단계(1차 → 2차 → 3차)의 UX가이드를 같이 쓴다 — `GET /api/guides`의 `applied[fileKey]`를 읽을 때 계산(`fillTeamGuide`, 저장 안 함, `docs.guide.from` = 가져온 단계 파일 키, `teamGuide:true`). 1차를 바꾸면 따라가고, 그 단계에서 직접 [적용]하면 그것이 우선. Claude도 같은 값을 작업 기준으로 쓴다.
+  - **다음 단계로 보내기 · 비교**: 「② ○○(으)로 보내기」 · 「②와 비교」는 Figma 플러그인이 옮기는 작업(`kind: 'transfer'`)이다. 자세한 것은 `transfer.md`.
 - **보안(2026-11-13 점검)**: 정적 파일은 경로를 한 모양(`` → `/`, 겹친 `/` 정리, 대소문자 무시)으로 맞춘 뒤 `.git` · `.claude` · `.history/accounts` · `.history/config` · `.history/teams/*/config`를 막는다(끝의 점 · 공백, `:` 붙은 칸도 404). 응답에 `Access-Control-Allow-Origin: *`를 붙이지 않는다(Figma 플러그인 Origin `null`에만 `null`) — 다른 사이트가 로그인한 PC의 API를 읽지 못한다. 마크다운(UX 문서 · 회의록 · Claude 답)은 `WB.safeHtml`(common.js, marked에 `WB.guardMarked()`로 연결)로 스크립트 · on… 속성 · `javascript:` 주소를 걸러 넣는다. 새로 marked를 쓰는 화면은 `marked.min.js` 다음 줄에 `<script>WB.guardMarked()</script>`를 둔다.
 - **작업 이력 동기화 충돌**: 받기는 이름 바뀜 짐작을 끄고(`-X no-renames`, 지운 파일과 비슷한 새 파일을 같은 파일로 보고 내용을 옮겨 합치지 않게) rebase로 한다. 두 PC가 같은 `.history` 파일을 고쳐 충돌하면 rebase를 멈추고 merge로 다시 하고, **충돌한 파일은 파일 통째로** 커밋 시각이 늦은 쪽(나중에 저장한 쪽) 것을 쓴다(그쪽이 지웠으면 지움 — 예전 `-X theirs/ours`는 부딪친 줄만 골라 한 파일 안에 두 PC의 줄이 섞였다, 2026-11-13 고침). 진 쪽 파일은 `.history/conflicts/kept/{시각}_{PC}/{원래 경로}`에 남기고, 파일마다 누구 것으로 맞췄는지 `.history/conflicts/{PC}.log`에 적는다(다음 동기화 때 올라가 모든 PC에 보인다). 서로 다른 줄만 고친 경우(충돌 아님)는 지금처럼 둘 다 합쳐진다(`node/server/sync.js` resolveConflict, 예전 스크립트 `history_sync.ps1` Resolve-Conflict · `.sh` resolve_conflict도 같게).
 - 권한 검사는 **브라우저 페이지에서 온 요청만**(`Sec-Fetch-Site` 머리글, Origin이 `null`이 아님). **Claude(curl) · Figma 플러그인은 로그인 없이 그대로** 쓴다. Claude는 계정 파일을 직접 고치지 않는다(사용자가 요청하면 화면 · API로).
 - 작업자 이름(요청 · 이력의 작성자, Workbench 「작업자」 칸 · 시작 안내 1단계)은 로그인한 계정 이름으로 고정된다.
-- 서버 API: `GET /api/me`, `POST /api/login` · `/api/logout` · `/api/me/password {current, next}` · `/api/me/team {team}`, `GET/POST /api/accounts {action: add|update|delete|team-add|team-update|team-delete}`(최고관리자).
+- 서버 API: `GET /api/me`, `POST /api/login` · `/api/logout` · `/api/me/password {current, next}` · `/api/me/team {team}`, `GET/POST /api/accounts {action: add|update|delete|team-add|team-update|team-delete}`(최고관리자, 계정 `manages`도 함께), `GET/POST /api/teamprojects`(위 「팀 프로젝트」).
+
+
+## Workbench 프로젝트 · 작업 페이지 (CLAUDE.md에서 옮김)
+
+- **작업 링크 · 새 설치**: 작업 파일은 시작 안내 3단계 링크의 파일이다. 시작 안내 상태(`setup.json`)는 설치 폴더 밖(PC별)이라 다시 설치해도 남는다. 그래서 새로 설치한 폴더를 처음 켜면(`projects/` 없음 · `workbench/.installed` 없음) 서버가 예전 작업 링크 · 완료 표시를 비운다(이름 · 로그인은 그대로). Workbench는 이 설치에 등록된 프로젝트 · 시작 안내 링크의 파일만 연다(브라우저에 남은 예전 탭 · `?p=`는 무시).
+- **수정 가능 페이지**: 서버는 프레임 목록을 받을 때(플러그인 · Claude)와 켤 때마다 project.json의 작업 링크로 수정 가능 페이지를 다시 정한다. 보내온 `editablePageId`는 링크로 정하지 못할 때만 쓴다.
+- **작업 페이지 바꾸기**: Workbench 왼쪽 목록 위 상태 줄(또는 수정 요청 칸 보기 전용 안내)의 「이 페이지를 작업 페이지로」 → `POST /api/projects {action:'editable', key, pageId}`로 그 프로젝트 작업 링크의 node-id가 그 페이지로 바뀐다(시작 안내 링크가 같은 파일이면 그것도).
+- **프로젝트 탭**: Workbench 위쪽 탭이 프로젝트(Figma 파일)다. 주소 `Figma_Workbench.html?p={fileKey}`(Ctrl+클릭하면 새 창), 「+」로 등록된 프로젝트를 열거나 Figma 링크로 새 프로젝트를 등록한다(`POST /api/projects {action:'add', link}`). 팀 프로젝트는 탭 맨 앞에 순서대로 붙는다(위 「팀 프로젝트」).
+- Figma 플러그인은 열린 파일의 프로젝트 작업 링크(`GET /api/projects`)로 수정 가능 페이지를 정한다(아직 모르는 파일이면 시작 안내 링크).
+- Workbench 메뉴는 1 구분 = Figma 페이지, 2 페이지 = 화면 ID(예: TI-STN-08), 3 상세 = 프레임(예: TI-STN-08-P)이다.
+
+## 폴더 · 서버 API (CLAUDE.md에서 옮김)
+
+- **프로그램 폴더**: 화면(html)과 공용 `appnav.js` · `appnav.css` · `common.js`는 `pages/`(주소는 폴더 이름 없이 `http://localhost:8765/Work.html`). 서버는 Node 한 벌 `node/server/`(v0.21.0~, 깃 동기화 `sync.js` · 사용량 `usage.js` 포함), 백그라운드 감시 `node/agent.js`. Figma AI Run이 처음 한 번 공식 Node를 받아 PC별 폴더에 두고 띄운다(`node/run_win.ps1` · `run_mac.sh`). PC별 폴더의 `server_mode.txt` = `ps`면 예전 서버(`guide_server.ps1` · 맥 `guide_server_mac.pl`, 대비용 — 기능은 고치지 않는다). 실행 파일은 맨 위, 업데이트 · 깃허브 연결 스크립트는 `workbench/`, 규칙 문서 `docs/claude/`, 매뉴얼 그림 `docs/manual/`, Figma 플러그인 `figma_plugin/`, 배포 도구 `tools/`.
+- **프로젝트 폴더** `projects/{fileKey}/`(PC마다 따로, 저장소 · 배포본에 넣지 않음): `project.json`(key · name · link 작업 링크 · editablePageId/Name · uxGuideLink), `catalog.json`(`pages[].frames: [nodeId, 이름, w, h, x, y, 섹션 이름?, 섹션 id?]`, `frames: null`은 아직 모르는 페이지), `labels.json`(있으면 화면 ID 제목 `titles` · 프레임 라벨 `labels`), `shots/{nodeId의 :를 -로}.png|.jpg` + `shots_meta.json` `{nodeId: {at, w, h, by, name, ext}}`.
+- **서버 API**(`node/server/api.js` GET · `writes.js` POST): requests · jobs · projects · catalog · shots · history · usage · guides · worklogs · backlog · prototypes · minutes · sheet · plan · figma · transfer · teamprojects · accounts · setup · storage · attach · upload · files.
+  - 쓰기(POST)는 이 서버에서 연 페이지 · Figma 플러그인(Origin `null`) · Origin 없는 호출(Claude · curl)만 받는다. 다른 사이트에서 온 POST는 403.
+  - 팀 안전장치: `?team=` 없이 `jobId`를 담은 문서 저장(`/api/guides save`)은 그 작업의 팀 문서로, 이미 있는 회의록 id의 저장 · 지우기는 그 회의록이 있는 팀으로 서버가 맞춘다.
+
+## UX 문서 화면 (ux-docs.md에서 옮김)
+
+- **UX 문서 · 카테고리(탭)**: 「UX 문서」 메뉴(`Common_UX_Guide.html`)는 탭 **작업규칙 | 정책서 | UX가이드 | 기준데이터 | 화면 정의서 | 변경이력**으로 나눈다(`?doc=rule|policy|guide|data|spec|log`, 없으면 작업규칙). 예전 「공통 규칙」 가이드는 UX가이드(`kind` 없음 = `guide`), 예전 「정의서」는 화면 정의서(`spec`)다. 예전 기본 「Common UX 작성 가이드」(`Common_UX_Guide.md` · `images/`)는 2026-11-03에 지웠다.
+- **보이는 대로 편집(2026-11-16)**: [직접 수정]은 md 파일이면 편집기(Toast UI Editor 3.2.2, NHN 공식 CDN `uicdn.toast.com`, 처음 누를 때만 불러옴)로 연다. 탭 「보이는 대로 · 원문(마크다운) · 미리 보기」. 파일 맨 위 머리말(`---` 사이)은 편집기 위 「항목 · 값」 칸. 저장하면 손대지 않은 덩어리(문단 · 표 줄 · 목록 줄)는 원래 원문을 글자 그대로 두고 고친 곳만 바꾼다(목록 기호 · 들여쓰기 · 불필요한 `` 이스케이프도 원래 문서 버릇으로). 저장 전에 「바뀐 줄」을 보여 주고 [이대로 저장]을 눌러야 저장된다. 편집기를 못 불러오면(인터넷 끊김) 원문 칸으로 연다. CSV · 시트 묶음은 지금처럼 표에서 고친다. 새 그림 넣기는 아직 원문 탭에서 경로로.
+- UX가이드 탭은 고른 가이드를 바로 보여 주고, 다른 카테고리 탭은 카드 목록이다. 어느 탭이든 위쪽 「내 작업 기준」 선택 + [적용](카테고리마다 하나).
+- 「변경이력」 탭(UX가이드 보기처럼): 왼쪽은 카테고리(작업규칙 · 정책서 · UX가이드 · 기준데이터 · 화면 정의서)별 생성 · 수정 · **직접 수정**(파일을 바꿔 넣은 것: `.history` 깃 기록 `GET /api/guides/gitlog` · 파일 글 `/api/guides/gitfile`, rev/ · meta.json 제외) 목록(최신순, `.history/guides/_log.json`의 `since` 이전 기록은 숨김 — 2026-11-04 이전 기록은 사용자 요청으로 지움), 오른쪽은 고른 기록의 수정 일자 · 누가 · 문서 ID · 수정본 · 수정 내용 · 수정 요청 · 바뀐 줄(이전 수정본과 비교) · 수정해야 할 화면 · 연관 항목(반영 여부)이다.
+- 보기 화면 공통: 목록 · 내용 아래에 따로 「수정 요청」 입력창(지금 고른 항목 대상, guide-edit). 작업규칙(meta.kind rule, 또는 meta.whole:true)은 대분류(파일)를 누르면 그 아래 항목까지 한 화면에(목차에는 대분류만).
+- 보기: 파일 맨 위 머리말(`---` 사이 key: value)은 제목 아래 표로, CSV는 표로 보인다(`meta.titles`로 표 제목). 화면 정의서는 왼쪽 메뉴별 화면 목록(반영 대기 수 · 「기준 기록 전」 표시), 오른쪽 화면 정보(작성자 · Service Mode · User Type · 기준(basis) · 관련 정책 · 짝 화면 · 부르는 화면 · Figma) · 반영 대기 목록(구분 거르기) · 설계 내용으로 보인다. 관련 정책 = 머리말 `policies` + 본문 「관련 정책:」 줄, 부르는 화면 = 「호출 위치:」 줄 + 본문에서 그 CID를 적은 다른 화면.
+- 보기 화면은 파일 하나를 대분류 하나로(파일의 `#` → `##`, `##` → `###`로 한 칸씩 내려) 보이고, 항목 아래에 문서 경로(작업 폴더 기준 전체 경로, 모든 PC 같음 — 예: `.history/guides/rules/schedule.md`, 다른 팀은 `.history/teams/{팀}/guides/…`)를 보인다.
 
 ## 팀 · 구현
 
 경로 표와 「Claude가 요청 · 작업을 처리할 때」는 `CLAUDE.md` 「팀」에 있다.
 
-- 같은 회사 안의 업무 구분이다. **일정/작업 · UX 문서 · 변경 이력 · 사용량 통계**를 팀 단위로 쓴다(`$TeamMenus` · 맥 `@TEAM_MENUS`). Workbench · 프로토타입은 PC마다라 팀과 상관없다. 팀끼리 서로 못 보게 막는 것은 화면 · 서버 권한 수준이다(모든 팀 데이터가 같은 `history` 브랜치로 모든 PC에 내려온다).
+- 같은 회사 안의 업무 구분이다. **일정/작업 · UX 문서 · 변경 이력 · 사용량 통계**를 팀 단위로 쓴다(`core.js`의 팀 메뉴 목록). Workbench · 프로토타입은 PC마다라 팀과 상관없다. 팀끼리 서로 못 보게 막는 것은 화면 · 서버 권한 수준이다(모든 팀 데이터가 같은 `history` 브랜치로 모든 PC에 내려온다).
 - 팀 목록 = `.history/config/teams.json` `{items:[{id, name, legacy, createdAt, by, color}]}`(깃 공유, 웹으로 내보내지 않음. `color` 0~7 = 계정 관리 팀 칩 색, 팀을 만들 때 서버가 다른 팀이 쓰지 않는 첫 색을 정한다). 파일이 없으면 **CURECA**(`cureca`) 하나로 본다. 「기본 팀」은 없다. 최고관리자만 계정 관리 「팀」에서 추가 · 이름 바꾸기 · 지우기(지금까지의 데이터가 있는 팀 · 계정이 있는 팀 · `.history/teams/{id}`에 데이터가 있는 팀은 못 지움).
 - 서버는 요청마다 팀을 정한다: 화면 = 이 PC에서 고른 팀, Claude · curl = `?team={id}`(없으면 이 PC에서 고른 팀). 그 팀으로 `/api/guides` · `/api/minutes` · `/api/sheet*` · `/api/plan/files` · `/api/guides/gitlog|gitfile` · `/api/history`(GET, `?all=1`이면 모든 팀 — Workbench 겹침 표시) · `/api/usage`가 바뀐다. 화면이 `.history/guides/…` · `.history/minutes/…`를 읽으면 서버가 그 팀 위치로 바꿔 준다. 남의 팀 폴더(`/.history/teams/{남의 팀}/`) · 팀 시트 비밀값은 내보내지 않는다.
 - 새 요청(`/api/requests` add) · 작업(`/api/jobs` add) · 이력(`/api/history` add)에는 그때 팀이 `team`으로 붙는다(본문에 `team`을 주면 그것). 요청이 끝나면 서버(`usage.js`)가 요청의 팀으로 사용량을 남긴다.
 - 계정 `teams:[팀 id]`(여러 개 가능). `teams`가 없는 예전 계정 = CURECA. 최고관리자는 모든 팀. **팀이 없는 계정은 팀 메뉴를 못 쓴다**(읽기 · 쓰기 권한이 있어도 메뉴가 숨고 서버가 막는다).
 - 지금 보는 팀은 PC마다(`setup.json`의 `team`, `/api/me`의 `team` · `teams`). 여러 팀 소속이면 상단 메뉴의 팀 고르기로 바꾼다(`POST /api/me/team`). 화면에서는 `window.WB_TEAM` · `WB_TEAMS`.
 - 새 팀은 문서 · 시트 연결 · 회의록이 비어 있다. 그 팀 사람이 UX 문서 「새 {카테고리} 만들기」 · 일정/작업 「일정 연결」로 채운다.
-- **다른 팀 문서 가져오기**(UX 문서, 두 팀 이상 소속 · UX 문서 쓰기): 고른 팀의 지금 탭 카테고리 문서를 지금 팀으로 복사한다 — `POST /api/guides {action:'import', from:팀 id, ids:[문서 id]}`. 문서 폴더 통째(지금 내용 · 수정본, 그 팀의 연관 항목 기록 `rev/*.check-*.json`은 뺌) + 문서 폴더 밖 파일(meta.files의 `../x`, 예: `constitution.md`)이 없으면 함께, meta에 `importedFrom {team, id, at, by}`. 같은 id가 이미 있으면 건너뛴다. 가져온 뒤에는 두 팀 문서가 따로 고쳐진다. `provisional/` 등 일정/작업 폴더는 가져오지 않는다.
+- **다른 팀 문서 가져오기**(UX 문서, 두 팀 이상 소속 · UX 문서 쓰기): 고른 팀의 지금 탭 카테고리 문서를 지금 팀으로 복사한다 — `POST /api/guides {action:'import', from:팀 id, ids:[문서 id]}`. 문서 폴더 통째(지금 내용 · 수정본, 그 팀의 연관 항목 기록 `rev/*.check-*.json`은 뺌) + 문서 폴더 밖 파일(meta.files의 `../x`, 예: `constitution.md`)이 없으면 함께, meta에 `importedFrom {team, id, at, by}`. 같은 id가 이미 있으면 건너뛴다. 가져온 뒤에는 두 팀 문서가 따로 고쳐진다. 일정/작업 폴더는 가져오지 않는다.
 
 ## 일정/작업 · 구글 시트
 
@@ -68,10 +103,9 @@
 - 연결 정보 `.history/config/sheet.json` {provider, sheetUrl, webapp, token, wbsGid, minutes, cols(열 맞추기 {항목: 머리말}), azure, by, at} — 깃으로 모든 PC에 공유, 웹으로 내보내지 않는다(`/.history/config` 404). 화면 「일정 연결」(일정/작업 쓰기)에서 넣는다. 웹 앱 주소 · 비밀값을 비워 보내면 그대로 둔다. Claude는 이 파일을 직접 고치지 않는다.
 - API: `GET /api/sheet`(연결 정보, 비밀값 없음 · canWrite) · `GET /api/sheet/data?gid=|name=`(그 탭 `{name, gid, values, fx(수식 칸), at}`, 시트에 닿지 못하면 마지막 사본 `workbench/.sheet_cache/`를 `{cached, error, data}`로) · `POST /api/sheet {action:'config'|'test'|'write', gid|name, cells:[{row, col, value}](1부터)}`. 읽기 = `plan` 읽기, POST = `plan` 쓰기.
 - 일정 탭: 시트 모양 그대로(`style=1`로 배경 · 글자색 · 굵기 · 숨긴 행 · 열 · 병합 · 드롭다운 칸 · 고정 열을 함께 받음). 숨긴 줄 · 열은 빼고(「숨긴 행 · 열 보기」), 드롭다운 값은 칩 색(완료 · 진행 중 · 대기 · T/L · T-only · L-only …)이고 고칠 때는 시트와 같은 값 목록(`dvl`)에서 고른다(글 입력 없음), 간트 열은 셀 배경색이 막대, 오늘 열은 빨간 선, 고정 열은 왼쪽에 붙임(화면 폭 60%까지). 주간 진행 현황도 숨긴 줄은 세지 않는다. 쓰기 권한이면 칸을 눌러 고치면 그 칸만 시트에 쓴다(수식 칸 제외).
-- 주간 진행 현황(월~일, ‹ › 주 이동): 마감 = 작업 완료일이 그 주인 줄. 업무 상태 = 상태 열, 없으면 UX 완료 · UI 완료(또는 작업필요X)면 완료, UX만 완료면 진행 중, 그 밖에는 UX 상태. 개발사 공유 대상(공유일 열이 있을 때) · 정책 변동(정책서 `date`가 그 주 = 신규, 수정본이 그 주 = 변경, 논의 대상 `discussions/DS-*`(예전: 임시 정책 `provisional/PV-*.md` 승인 대기) · 주요 내용 · 영역별 신규 정책 · 회의 내역(회의록 탭에서 날짜가 그 주인 줄, 여러 개면 넘겨 보기) · 차주 일정.
+- 주간 진행 현황(월~일, ‹ › 주 이동): 마감 = 작업 완료일이 그 주인 줄. 업무 상태 = 상태 열, 없으면 UX 완료 · UI 완료(또는 작업필요X)면 완료, UX만 완료면 진행 중, 그 밖에는 UX 상태. 개발사 공유 대상(공유일 열이 있을 때) · 정책 변동(정책서 `date`가 그 주 = 신규, 수정본이 그 주 = 변경, 논의 대상 `discussions/DS-*` · 주요 내용 · 영역별 신규 정책 · 회의 내역(회의록 탭에서 날짜가 그 주인 줄, 여러 개면 넘겨 보기) · 차주 일정.
 
 ## 작업 이력 공유 (깃)
 
 - 작업 이력은 `.history/`(한 건 한 파일: `entries/{PC}_{요청 ID}.json`, `shots/`, 토큰 사용량 `usage/{PC}_{요청 ID}.json`, UX 가이드 `guides/{id}/`(수정본 `rev/`). 작업 기준 가이드 선택은 PC마다 따로라 공유하지 않는다)에 쌓이고, 서버가 `workbench/git_remote.txt`의 저장소(모든 PC가 같은 하나, 지금은 `PJ-CRC/CURECA_UX`, 2026-11-03 `sh94-hub/UX_AI_TEST`에서 옮김) **`history` 브랜치**로 받고 올린다(2026-11-16~ 서버 안 `node/server/sync.js`가 돈다 — 이력이 생기면 바로, 그 밖에는 5초마다 확인. 윈도우 · 맥 같은 코드. 처음 깃허브 연결(로그인 창)만 예전 `workbench/history_sync.ps1` · `.sh -Interactive`가 하고, 그동안 `.history_sync.lock`으로 서버 동기화가 쉰다).
-- `.history`는 작업 폴더 저장소와 별개다. Claude가 `.history`를 직접 커밋 · 푸시하지 않는다. 작업 폴더의 코드 커밋 · 푸시는 지금처럼 사용자가 요청할 때만 한다.
 - 다른 작업자의 이력은 「변경 이력」 페이지(작업 이력 (공유))에서 본다.

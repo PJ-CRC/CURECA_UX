@@ -4,7 +4,7 @@
 
 ## 실행
 
-- 윈도우: `powershell -ExecutionPolicy Bypass -File node\run_win.ps1 [-Port 8766] [-ReadOnly]`
+- 윈도우: `powershell -ExecutionPolicy Bypass -File node\run_win.ps1 [-Port 8765] [-ReadOnly]`
 - 맥: `bash node/run_mac.sh [--port 8766] [--readonly]`
 - Node.js는 설치하지 않는다(B 방식). `NODE_VERSION`의 공식 Node를 처음 한 번 nodejs.org에서 받아 PC별 폴더에 두고(공식 SHASUMS256.txt로 확인), 다음부터는 그것을 쓴다. `NODE_VERSION`을 올리면 다음 실행 때 그 버전을 받는다.
   - 윈도우 `%LOCALAPPDATA%\UX_AI_TEST_Workbench\node\{버전}\`, 맥 `~/Library/Application Support/UX_AI_TEST_Workbench/node/{버전}/`

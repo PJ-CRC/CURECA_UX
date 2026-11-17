@@ -132,7 +132,7 @@ module.exports = function register(on, h) {
   // ── POST /api/jobs {action: add | take | update} — 작업 대기열(캡처 · 목록 · UX 문서 · 프로토타입 · 회의록 · 일정/작업 · 글 수정) ──
   const upTmp = path.join(C.root, 'workbench', 'job_files', '_tmp'), upDir = path.join(C.root, 'workbench', 'job_files');
   const jobMenu = (k) => (['guide', 'guide-edit', 'guide-check'].includes(k) ? 'guide' : ['minutes', 'plan'].includes(k) ? 'plan' : /^prototype/.test(k) ? 'proto' : 'workbench');
-  const KINDS = ['capture', 'catalog', 'guide', 'guide-check', 'guide-edit', 'text', 'prototype', 'prototype-edit', 'prototype-sync', 'minutes', 'plan'];
+  const KINDS = ['capture', 'catalog', 'guide', 'guide-check', 'guide-edit', 'text', 'prototype', 'prototype-edit', 'prototype-sync', 'minutes', 'plan', 'transfer'];
   // 참고 파일(Save-Uploads): _tmp에 올린 것을 job_files/{작업 ID}/ 원래 이름으로
   function saveUploads(jid, list) {
     const out = [], dir = path.join(upDir, jid); let n = 0;
@@ -212,6 +212,22 @@ module.exports = function register(on, h) {
           if (kind === 'prototype-edit' && !nn(b.text).trim()) throw new Error('수정 내용을 입력해 주세요.');
         }
         if (kind === 'text' && !core.arr(b.items).length) throw new Error('바꿀 글(items)이 없습니다.');
+        // 다음 단계로 옮기기(팀 프로젝트, 2026-11-16): Claude가 아니라 Figma 플러그인이 한다 — 읽기(보내는 파일을 연 플러그인) → 만들기(받는 파일을 연 플러그인)
+        let xfer = null;
+        if (kind === 'transfer') {
+          const f = b.from || {}, t = b.to || {};
+          if (!h.testKey(nn(f.key)) || !h.testKey(nn(t.key))) throw new Error('보내는 · 받는 파일 키가 잘못되었습니다.');
+          if (nn(f.key) === nn(t.key)) throw new Error('같은 파일로는 옮길 수 없습니다.');
+          const tp = h.readProj(nn(t.key));
+          if (!tp || !tp.editablePageId) throw new Error('받는 파일의 작업 페이지가 아직 없습니다. 그 탭에서 작업 페이지를 먼저 고르세요.');
+          const ids = core.arr(f.nodeIds).filter((x) => /^\d+:\d+$/.test(nn(x))).slice(0, 200);
+          if (!ids.length && !/^\d+:\d+$/.test(nn(f.pageId))) throw new Error('옮길 프레임 · 페이지가 없습니다.');
+          xfer = { from: { key: nn(f.key), name: nn(f.name).slice(0, 80), page: nn(f.page).slice(0, 120), pageId: /^\d+:\d+$/.test(nn(f.pageId)) ? nn(f.pageId) : '', nodeIds: ids, names: core.arr(f.names).slice(0, 200).map((s) => nn(s).slice(0, 120)), step: parseInt(f.step, 10) || 0 },
+            to: { key: nn(t.key), name: nn(t.name).slice(0, 80) || tp.name || '', page: tp.editablePageName || '', pageId: tp.editablePageId, step: parseInt(t.step, 10) || 0 },
+            // mode: copy = 옮기기, check = 비교 창의 「바뀐 것 확인」(보내는 파일 플러그인이 옮긴 화면을 읽어 해시만 보냄, 옮기지 않음). 2026-11-17 수정본(edit)은 없앰
+            mode: nn(b.mode) === 'check' ? 'check' : 'copy', priority: nn(b.priority) };
+          key = xfer.from.key; nid = '';
+        }
         if (kind === 'guide-check' || kind === 'guide-edit') { nid = ''; if (!GID_RE.test(nn(b.guide)) || !core.exists(path.join(T.guideRoot, nn(b.guide), 'meta.json'))) throw new Error('가이드를 찾지 못했습니다: ' + nn(b.guide)); }
         // 수정 요청에도 참고 파일(2026-11-16): md · csv · 그림 등을 올려 「이 파일 내용으로 바꿔 줘」처럼 맡긴다(만들기와 같은 _tmp → job_files/{작업 ID}/)
         if (kind === 'guide-edit') srcs = core.arr(b.files).filter((x) => x && /^[0-9a-f]{32}\.[a-z0-9]{1,8}$/.test(nn(x.tmp)) && core.exists(path.join(upTmp, nn(x.tmp)))).slice(0, 10);
@@ -241,7 +257,7 @@ module.exports = function register(on, h) {
         const specNoFile = !key && ((kind === 'guide-check' && nn(b.scope) === 'spec') || ['guide-edit', 'guide', 'minutes', 'plan'].includes(kind));
         if (!h.testKey(key) && !specNoFile) throw new Error(kind === 'guide' ? 'Figma 링크 형식이 아닙니다.' : '잘못된 파일 키입니다.');
         if ((kind === 'capture' || kind === 'text') && !/^\d+:\d+$/.test(nid)) throw new Error('잘못된 nodeId: ' + nid);
-        if (!['guide', 'guide-check', 'guide-edit', 'text', 'prototype', 'prototype-edit', 'prototype-sync', 'minutes', 'plan'].includes(kind)) hit = items.find((x) => x.kind === kind && x.fileKey === key && x.nodeId === nid && ['대기', '진행 중'].includes(x.status)) || null;
+        if (!['guide', 'guide-check', 'guide-edit', 'text', 'transfer', 'prototype', 'prototype-edit', 'prototype-sync', 'minutes', 'plan'].includes(kind)) hit = items.find((x) => x.kind === kind && x.fileKey === key && x.nodeId === nid && ['대기', '진행 중'].includes(x.status)) || null;
         if (kind === 'prototype-sync') hit = items.find((x) => x.kind === kind && x.proto === nn(b.proto) && x.status === '대기') || null;
         if (!hit) {
           let n = 1; for (const i of items) { const v = parseInt(nn(i.id).replace(/\D/g, ''), 10) || 0; if (v >= n) n = v + 1; }
@@ -252,6 +268,9 @@ module.exports = function register(on, h) {
           if (kind === 'guide-edit' && nn(b.file)) hit.file = nn(b.file);
           if (kind === 'guide-edit' && srcs.length) hit.files = saveUploads(hit.id, srcs);
           if (kind === 'capture' && b.auto) hit.auto = true;
+          if (xfer && xfer.mode === 'check') { Object.assign(hit, xfer, { phase: 'check', note: (xfer.from.name || '보내는 파일') + '을(를) Figma에서 열고 플러그인을 켜면 바뀐 것 확인 시작(옮기지 않음)' }); if (!hit.name) hit.name = '비교 · ' + (xfer.to.name || '다음 단계'); }
+          else if (xfer) { Object.assign(hit, xfer, { phase: 'read', note: (xfer.from.name || '보내는 파일') + '을(를) Figma에서 열고 플러그인을 켜면 옮기기 시작' });
+            if (!hit.name) hit.name = (xfer.from.nodeIds.length ? xfer.from.nodeIds.length + '개 프레임' : xfer.from.page + ' 페이지') + ' → ' + (xfer.to.name || '다음 단계'); }
           if (kind === 'minutes') { hit.minute = nn(b.minute); if (mmode) hit.mode = mmode; }
           if (kind === 'plan') { hit.sub = nn(b.sub); hit.target = nn(b.target); hit.plan = b.plan === undefined ? null : b.plan; }
           if (kind === 'guide') { hit.docKind = ['spec', 'rule', 'policy', 'data'].includes(nn(b.docKind)) ? nn(b.docKind) : ''; hit.files = saveUploads(hit.id, srcs); }
@@ -290,12 +309,88 @@ module.exports = function register(on, h) {
     }
     // 끝난 캡처 작업은 최근 30개만, 전체는 300개까지
     let cn = 0; items = items.filter((x) => { if (x.kind === 'capture' && !['대기', '진행 중'].includes(x.status)) { cn++; return cn <= 30; } return true; });
-    if (items.length > 300) items = items.slice(0, 300);
+    // 300개를 넘으면 오래된 것부터 버리되, 끝나지 않은 옮기기 작업은 남긴다(자동 캡처에 밀려 사라지지 않게, 2026-11-17)
+    if (items.length > 300) { let k = 0; items = items.filter((x) => (x.kind === 'transfer' && ['대기', '진행 중'].includes(x.status)) || ++k <= 300); }
     core.writeJson(C.jobFile, { version: (parseInt(jj.version, 10) || 0) + 1, items });
     if (b.action === 'update' && hit && hit.kind === 'guide-check') saveCheckLog(hit);
     // 프로토타입을 만들거나 고치거나 맞추면: 그때의 페이지 프레임 목록을 기준으로 남긴다(뒤에 생긴 화면만 「화면 추가됨」)
     if (b.action === 'update' && hit && /^prototype/.test(nn(hit.kind)) && nn(hit.status) === '완료' && hit.proto && h.protoSnapshot) { try { h.protoSnapshot(nn(hit.proto)); } catch (e) {} }
     return { ok: true, job: hit };
+  });
+
+  // ── 다음 단계로 옮기기(transfer, 2026-11-16): Figma 플러그인끼리 서버를 거쳐 프레임을 넘긴다(Claude를 거치지 않음 → 몇 초, 사용량 0) ──
+  //  1) 보내는 파일 플러그인: GET record(받는 쪽 기록) → 바뀐 · 새 프레임만 읽어 put(+ 이미지 img) → 작업이 build 단계 · 받는 파일 키로
+  //  2) 받는 파일 플러그인: GET 데이터 · 이미지 → 만들기 → done(기록 · 프레임 목록 · 수정본이면 Claude 수정 요청)
+  const xDir = path.join(C.root, 'workbench', 'transfer');
+  // 받는 쪽 기록: .history(깃 공유)에 둔다 — 다른 PC에서 보내도 바꿔 끼우고 비교도 같게(2026-11-17, 예전 projects/{key}/transfer.json은 읽기만)
+  const xRec = (k) => path.join(C.histDir, 'transfer', k + '.json');
+  const xRecRead = (k) => core.readJson(xRec(k)) || core.readJson(path.join(h.projDir(k), 'transfer.json')) || { items: [] };
+  const xRecWrite = (k, v) => { fs.mkdirSync(path.dirname(xRec(k)), { recursive: true }); core.writeJson(xRec(k), v); };
+  const xJob = (id) => { const jj = core.readJson(C.jobFile) || { items: [] }; return { jj, j: core.arr(jj.items).find((x) => x && x.id === nn(id) && x.kind === 'transfer') }; };
+  const xSave = (jj) => core.writeJson(C.jobFile, { version: (parseInt(jj.version, 10) || 0) + 1, items: core.arr(jj.items) });
+  on('GET', '/api/transfer', ({ q }) => {
+    if (q.get('record')) { const k = q.get('record'); if (!h.testKey(k)) throw new Error('잘못된 파일 키입니다.'); return xRecRead(k); }
+    const id = nn(q.get('id')); if (!/^J\d{3,}$/.test(id)) throw new Error('잘못된 작업 ID입니다.');
+    if (q.get('img')) { const hs = nn(q.get('img')); if (!/^[0-9a-f]{40}$/.test(hs)) throw new Error('잘못된 이미지입니다.'); const f = path.join(xDir, id, hs + '.bin'); return core.exists(f) ? { b64: fs.readFileSync(f).toString('base64') } : { b64: '' }; }
+    return core.readJson(path.join(xDir, id, 'data.json')) || { frames: [] };
+  });
+  on('POST', '/api/transfer', async ({ body }) => {
+    const b = await body(); const id = nn(b.id); if (!/^J\d{3,}$/.test(id)) throw new Error('잘못된 작업 ID입니다.');
+    const { jj, j } = xJob(id); if (!j) throw new Error('옮기기 작업을 찾지 못했습니다: ' + id);
+    const now = core.now();
+    switch (nn(b.action)) {
+      case 'img': {   // 이미지 한 장(보내는 파일의 이미지 채우기) — 받는 파일에서 figma.createImage로 다시 만든다
+        const hs = nn(b.hash); if (!/^[0-9a-f]{40}$/.test(hs)) throw new Error('잘못된 이미지입니다.');
+        if (j.phase !== 'read' || !['대기', '진행 중'].includes(nn(j.status))) throw new Error('이미지를 받을 단계가 아닙니다: ' + id);
+        if (nn(b.b64).length > 40 * 1024 * 1024) throw new Error('이미지가 너무 큽니다(30MB까지).');
+        fs.mkdirSync(path.join(xDir, id), { recursive: true }); fs.writeFileSync(path.join(xDir, id, hs + '.bin'), Buffer.from(nn(b.b64), 'base64'));
+        return { ok: true };
+      }
+      case 'put': {
+        if (j.phase !== 'read') throw new Error('이미 읽은 작업입니다: ' + id);
+        const frames = core.arr(b.frames).filter(Boolean);
+        fs.mkdirSync(path.join(xDir, id), { recursive: true });
+        core.writeJson(path.join(xDir, id, 'data.json'), { frames, defs: b.defs || {}, fonts: core.arr(b.fonts), imgs: core.arr(b.imgs).filter((x) => /^[0-9a-f]{40}$/.test(nn(x))), at: now });
+        const skip = core.arr(b.skipped).length;
+        if (!frames.length) { j.status = '완료'; j.phase = 'done'; j.note = '바뀐 프레임이 없어 옮기지 않았습니다' + (skip ? `(같음 ${skip}개)` : ''); j.updatedAt = now; xSave(jj); try { fs.rmSync(path.join(xDir, id), { recursive: true, force: true }); } catch (e) {} return { ok: true, job: j }; }
+        j.phase = 'build'; j.fileKey = j.to.key; j.status = '대기'; j.takenBy = ''; j.updatedAt = now;
+        j.note = `읽음: ${frames.length}개` + (skip ? ` (바뀌지 않아 건너뜀 ${skip}개)` : '') + ` — ${j.to.name || '받는 파일'}을(를) Figma에서 열고 플러그인을 켜면 만들기 시작`;
+        xSave(jj); return { ok: true, job: j };
+      }
+      case 'done': {
+        if (j.phase !== 'build' || nn(j.status) !== '진행 중') throw new Error(`만들기 중인 작업이 아닙니다: ${id} (${nn(j.status)})`);
+        const made = core.arr(b.made).filter((m) => m && /^\d+:\d+$/.test(nn(m.to)));
+        // 기록: 보내는 프레임 → 받는 프레임 · 해시(다음에 바뀐 것만 옮기기)
+        const rec = xRecRead(j.to.key); const ri = core.arr(rec.items).filter(Boolean);
+        for (const m of made) {
+          const o = ri.find((x) => x.from && x.from.key === j.from.key && x.from.node === nn(m.from));
+          const it = { from: { key: j.from.key, node: nn(m.from), name: nn(m.name), page: j.from.page }, to: { node: nn(m.to) }, hash: nn(m.hash), at: now, by: nn(j.by), job: id };
+          if (o) Object.assign(o, it); else ri.push(it);
+        }
+        xRecWrite(j.to.key, { items: ri });
+        try { addCatalogFrames(j.to.key, j.to.page, made.map((m) => ({ nodeId: nn(m.to), name: nn(m.name) }))); } catch (e) {}
+        j.status = '완료'; j.phase = 'done'; j.updatedAt = now; j.made = made.map((m) => ({ nodeId: nn(m.to), name: nn(m.name), replaced: !!m.replaced }));
+        const nNew = made.filter((m) => !m.replaced).length, nRep = made.length - nNew;
+        j.note = `옮김: 새로 ${nNew}개` + (nRep ? ` · 바꿔 끼움 ${nRep}개` : '') + (nn(b.note) ? ' — ' + nn(b.note).slice(0, 300) : '');
+        xSave(jj);
+        try { fs.rmSync(path.join(xDir, id), { recursive: true, force: true }); } catch (e) {}
+        return { ok: true, job: j };
+      }
+      // 비교 「바뀐 것 확인」(phase check): 보내는 파일 플러그인이 옮긴 화면들의 지금 해시를 보낸다 → 받는 쪽 기록 해시와 견줘 결과를 작업에 남긴다(옮기지 않음)
+      case 'check': {
+        if (j.phase !== 'check') throw new Error('비교 확인 작업이 아닙니다: ' + id);
+        const rec = core.arr(xRecRead(j.to.key).items).filter((x) => x && x.from && x.from.key === j.from.key), recOf = {};
+        for (const x of rec) recOf[x.from.node] = x;
+        const items = core.arr(b.frames).filter((x) => x && /^\d+:\d+$/.test(nn(x.from))).map((x) => ({ from: nn(x.from), hash: nn(x.hash), gone: !!x.gone }));
+        const changed = items.filter((x) => !x.gone && recOf[x.from] && recOf[x.from].hash !== x.hash).length, gone = items.filter((x) => x.gone).length;
+        j.compare = { at: now, items, changed, gone }; j.status = '완료'; j.phase = 'done'; j.updatedAt = now;
+        j.note = `바뀐 것 확인: 옮긴 화면 ${items.length}개 중 옮긴 뒤 바뀜 ${changed}개` + (gone ? ` · ①에서 없어짐 ${gone}개` : '');
+        xSave(jj); return { ok: true, job: j };
+      }
+      // 끝난 작업(완료 · 실패)은 바꾸지 않는다 — 늦게 온 실패가 「완료」를 덮지 않게(2026-11-17)
+      case 'fail': { if (!['대기', '진행 중'].includes(nn(j.status))) return { ok: true, job: j }; try { fs.rmSync(path.join(xDir, id), { recursive: true, force: true }); } catch (e) {} j.status = '실패'; j.note = nn(b.note).slice(0, 500) || '옮기지 못함'; j.updatedAt = now; xSave(jj); return { ok: true, job: j }; }
+      default: throw new Error('알 수 없는 action: ' + nn(b.action));
+    }
   });
 
   // ── 프로젝트(Ensure-Proj · Save-Proj · Set-EditablePage) ──
@@ -653,8 +748,42 @@ module.exports = function register(on, h) {
     return { ok: true };
   });
 
+  // ── POST /api/teamprojects {action: add|update|move|delete, team, key, link, name, dir} — 팀 프로젝트(Figma 링크) 목록 · 순서(2026-11-16) ──
+  //  관리 권한 teamProjects(최고관리자는 늘) + 자기 소속 팀만. 배열 순서 = 작업 순서(1 → 2 → 3). 지워도 PC의 projects/{key}(캡처 · 목록)는 그대로
+  on('POST', '/api/teamprojects', async ({ req, body, T }) => {
+    const b = await body(), act = nn(b.action);
+    const tid = nn(b.team) || T.team;
+    if (!core.teamIds().includes(tid)) throw new Error('팀을 찾지 못했습니다: ' + tid);
+    if (!core.canManage(req, 'teamProjects')) throw new Error('「팀 프로젝트 링크 관리」 권한이 없습니다. 최고관리자에게 요청하세요.');
+    if (core.isBrowser(req) && core.authRequired() && !core.myTeams().includes(tid)) throw new Error('소속된 팀의 프로젝트만 고칠 수 있습니다.');
+    let items = core.readTeamProjects(tid); const cu = core.currentUser();
+    const k = nn(b.key), i = items.findIndex((x) => x.key === k);
+    if (act === 'add') {
+      const link = nn(b.link).trim(), key = h.keyOf(link);
+      if (!h.testKey(key)) throw new Error('Figma 파일 링크가 아닙니다.');
+      if (items.some((x) => x.key === key)) throw new Error('이미 이 팀 프로젝트에 있는 파일입니다.');
+      if (items.length >= 20) throw new Error('팀 프로젝트는 20개까지 둘 수 있습니다.');
+      items.push({ key, name: nn(b.name).trim().slice(0, 60), link, addedAt: core.now(), by: cu ? cu.name || cu.id : '' });
+    } else if (act === 'update') {
+      if (i < 0) throw new Error('팀 프로젝트를 찾지 못했습니다.');
+      if (b.name != null) items[i].name = nn(b.name).trim().slice(0, 60);
+      if (b.link != null) { const link = nn(b.link).trim(); if (h.keyOf(link) !== k) throw new Error('같은 Figma 파일의 링크만 바꿀 수 있습니다(다른 파일이면 지우고 새로 추가).'); items[i].link = link; }
+    } else if (act === 'move') {
+      if (i < 0) throw new Error('팀 프로젝트를 찾지 못했습니다.');
+      const j = i + (parseInt(b.dir, 10) < 0 ? -1 : 1); if (j < 0 || j >= items.length) return { ok: true, items };
+      const t = items[i]; items[i] = items[j]; items[j] = t;
+    } else if (act === 'delete') {
+      if (i < 0) throw new Error('팀 프로젝트를 찾지 못했습니다.');
+      items.splice(i, 1);
+    } else throw new Error('알 수 없는 작업: ' + act);
+    core.saveTeamProjects(tid, items);
+    return { ok: true, items };
+  });
+
   // ── POST /api/accounts — 계정 · 팀 관리(최고관리자) ──
-  on('POST', '/api/accounts', async ({ body }) => {
+  on('POST', '/api/accounts', async ({ req, body }) => {
+    // 「팀 프로젝트 링크 관리」 권한으로 계정 관리에 들어온 사람은 계정 · 팀을 바꿀 수 없다(팀 프로젝트는 /api/teamprojects)
+    if (!core.isAdmin(req)) throw new Error('계정 · 팀 설정은 최고관리자만 바꿀 수 있습니다.');
     const b = await body(); const act = nn(b.action);
     if (act.startsWith('team-')) {
       const tid = nn(b.team && b.team.id).trim().toLowerCase(), tname = nn(b.team && b.team.name).trim();
@@ -688,13 +817,14 @@ module.exports = function register(on, h) {
     const pickMenus = core.arr(b.menus).filter((x) => core.MENU_KEYS.includes(x));
     const pickWrites = core.arr(b.writes).filter((x) => core.WRITE_KEYS.includes(x) && pickMenus.includes(x));
     const pickApproves = core.arr(b.approves).filter((x) => core.APPROVE_KEYS.includes(x));
+    const pickManages = core.arr(b.manages).filter((x) => core.MANAGE_KEYS.includes(x));
     if (act === 'add') {
       if (!/^[a-z0-9._-]{3,32}$/.test(id)) throw new Error('아이디는 영문 소문자 · 숫자 · . _ - 로 3~32자입니다.');
       if (core.readAccount(id)) throw new Error('이미 있는 아이디입니다: ' + id);
       if (!nn(b.name).trim()) throw new Error('이름을 입력해 주세요.');
       if (nn(b.pw).length < 8) throw new Error('비밀번호는 8자 이상이어야 합니다.');
       const cu = core.currentUser();
-      const a = { id, name: nn(b.name).trim(), admin: false, teams: pickTeams, menus: pickMenus, writes: pickWrites, approves: pickApproves, active: true, createdAt: core.now(), createdBy: cu ? cu.id : null };
+      const a = { id, name: nn(b.name).trim(), admin: false, teams: pickTeams, menus: pickMenus, writes: pickWrites, approves: pickApproves, manages: pickManages, active: true, createdAt: core.now(), createdBy: cu ? cu.id : null };
       core.setPw(a, nn(b.pw)); core.saveAccount(a);
     } else if (act === 'update') {
       const a = core.readAccount(id); if (!a) throw new Error('계정을 찾지 못했습니다: ' + id);
@@ -702,6 +832,7 @@ module.exports = function register(on, h) {
       if (!a.admin) {
         if (b.menus != null) { a.menus = pickMenus; a.writes = pickWrites; }
         if (b.approves != null) a.approves = pickApproves;
+        if (b.manages != null) a.manages = pickManages;
         if (b.teams != null) a.teams = pickTeams;
         if (b.active != null) a.active = !!b.active;
       }
@@ -878,7 +1009,7 @@ module.exports = function register(on, h) {
   });
 
   // ── POST /api/requests {action: add | update | answer | delete} ──
-  on('POST', '/api/requests', async ({ body, T, res, send }) => {
+  on('POST', '/api/requests', async ({ req, body, T, res, send }) => {
     const b = await body();
     if (!core.exists(C.reqFile)) core.writeText(C.reqFile, '{"version":1,"items":[]}');
     const r = core.readJson(C.reqFile) || { version: 1, items: [] };
@@ -900,6 +1031,14 @@ module.exports = function register(on, h) {
           .map((m, i) => ({ n: i + 1, x: Math.round(+m.x || 0), y: Math.round(+m.y || 0), w: Math.round(+m.w), h: Math.round(+m.h), att: parseInt(m.att, 10) || 0 }));
         if (mk.length) { it.marks = mk; if (b.shotAt) it.shotAt = nn(b.shotAt); }
         if (b.fixRows) it.fixRows = core.arr(b.fixRows).slice(0, 200).map((x) => ({ doc: nn(x.doc), file: nn(x.file), n: nn(x.n), cid: nn(x.cid) }));
+        // 앞 단계에서 가져오기(팀 프로젝트, 2026-11-16): 요청은 받는 쪽(다음 단계) 파일 · 작업 페이지에 걸고, 원본은 from에. 원본 파일은 고치지 않는다
+        //  mode 'copy' = 그대로 옮기기(「다음 단계로 보내기」 버튼), 'edit' = 원본을 읽고 고친 수정본을 받는 쪽에 만들기
+        if (b.from && h.testKey(nn(b.from.key))) {
+          const f = b.from;
+          it.from = { key: nn(f.key), name: nn(f.name).slice(0, 80), page: nn(f.page).slice(0, 120), pageId: /^\d+:\d+$/.test(nn(f.pageId)) ? nn(f.pageId) : '',
+            nodeId: /^\d+:\d+$/.test(nn(f.nodeId)) ? nn(f.nodeId) : '', frame: nn(f.frame).slice(0, 120), step: parseInt(f.step, 10) || 0, toStep: parseInt(f.toStep, 10) || 0 };
+          it.mode = nn(b.mode) === 'copy' ? 'copy' : 'edit';
+        }
         items = [it].concat(items); histFromRequest(it); break;
       }
       case 'update': {
@@ -907,6 +1046,12 @@ module.exports = function register(on, h) {
         if (nn(b.status) === '진행 중' && nn(hit.status) === '진행 중' && !b.force) throw new Error(`이미 진행 중인 요청입니다(다른 Claude 세션이 처리 중): ${hit.id}. 이 요청은 건너뛰세요.`);
         // 끝난 요청을 다시 집지 않기(2026-11-13 점검 F6): 「완료」를 Claude가 「진행 중」으로 바꾸려 하면 거절. 다시 하려면 사람이 Workbench 「다시 진행」(→ 대기)
         if (nn(b.status) === '진행 중' && nn(hit.status) === '완료' && !b.force) throw new Error(`이미 끝난 요청입니다: ${hit.id}. 이 요청은 건너뛰세요(다시 하려면 Workbench에서 「다시 진행」).`);
+        // 사람이 멈춘 요청: 「다시 진행」(→ 대기)으로 풀기 전에는 Claude가 진행 중 · 완료로 바꾸지 못한다(멈춘 줄 모르고 이어 하던 세션이 덮어쓰지 않게)
+        //  2026-11-17: force로도 넘지 못하고, 멈춤을 푸는 것(→ 대기)은 화면(사람)에서만 — 끊겼다 이어 하던 Claude가 force · 대기로 풀던 구멍을 막음
+        if (hit.stopped && nn(hit.status) === '보류') {
+          if (!core.isBrowser(req)) throw new Error(`사람이 멈춘 요청입니다: ${hit.id}. 처리하지 말고 멈추세요(다시 하려면 사람이 Workbench에서 「다시 진행」).`);
+          if (nn(b.status) === '대기') hit.stopped = null;
+        }
         if (b.status === '진행 중' && hit.status !== '진행 중') { hit.startedAt = now; hit.frames = []; }
         // 처리 구간(runs): 「진행 중」이 끝날 때마다 쌓아, 보류 · 대기로 갔다가 다시 한 요청도 사용량을 모두 더한다(usage.ps1 · F7)
         if (b.status && nn(b.status) !== '진행 중' && nn(hit.status) === '진행 중' && hit.startedAt) h.closeRun(hit, now);
@@ -934,6 +1079,19 @@ module.exports = function register(on, h) {
         hit.ask = null;
         if (b.resolve) hit.status = '완료'; else { hit.status = '대기'; hit.note = ''; }
         hit.updatedAt = now; if (b.by) hit.updatedBy = nn(b.by);
+        histFromRequest(hit); break;
+      }
+      // 멈추기(2026-11-16): 「대기」 · 「진행 중」 요청을 사람이 멈춘다 → 「보류」(stopped). 진행 중이면 백그라운드 감시에 그 요청을 끊으라고 알린다
+      //  (workbench/.agent_cancel에 요청 ID — agent.js가 그 요청을 처리 중인 Claude 세션만 끊는다). 이미 Figma에 반영된 것은 되돌리지 않는다
+      case 'stop': {
+        const hit = find(), prev = nn(hit.status);
+        if (!['대기', '진행 중'].includes(prev)) throw new Error(`「${prev}」인 요청은 멈출 수 없습니다(대기 · 진행 중만).`);
+        if (prev === '진행 중' && hit.startedAt) h.closeRun(hit, now);
+        const hm = now.slice(11, 16), who = nn(b.by) || core.meName() || '사람';   // 누가 멈췄는지: 로그인 계정 이름(없으면 시작 안내 이름)
+        hit.status = '보류'; hit.ask = null; hit.stopped = { by: who, at: now, was: prev };
+        hit.note = `멈춤 — ${who}가 ${hm}에 멈췄습니다.` + (prev === '진행 중' ? ' 그때까지 Figma에 반영된 것은 그대로입니다.' : '') + ' 다시 하려면 「다시 진행」을 누르세요.';
+        hit.updatedAt = now; hit.updatedBy = who;
+        if (prev === '진행 중') { try { const cf = path.join(C.root, 'workbench', '.agent_cancel'); const old = String(core.readText(cf) || ''); core.writeText(cf, (old ? old + '\n' : '') + hit.id); } catch (e) {} }
         histFromRequest(hit); break;
       }
       case 'delete': {

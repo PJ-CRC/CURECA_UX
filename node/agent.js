@@ -23,6 +23,9 @@ const { spawn } = require('child_process');
 const ROOT = path.resolve(__dirname, '..'), WB = path.join(ROOT, 'workbench');
 const W = process.platform === 'win32';
 const STATE = path.join(WB, '.agent.json'), STOP = path.join(WB, '.agent_stop'), LOGF = path.join(WB, '.agent.log'), RENEW = path.join(WB, '.agent_renew');
+// 사람이 Workbench · 변경 이력에서 「멈추기」를 누른 요청 ID(한 줄에 하나, 서버가 씀). 처리 중인 차례에 그 ID가 있으면 그 세션만 끊는다(2026-11-16)
+const CANCEL = path.join(WB, '.agent_cancel');
+const cancelIds = () => { try { return fs.readFileSync(CANCEL, 'utf8').split(/\s+/).filter(Boolean); } catch (e) { return []; } };
 const HOST = (W && process.env.COMPUTERNAME) || os.hostname();
 const SLUG = HOST.toLowerCase().replace(/[^a-z0-9-]/g, '-');
 const COMPACT = 80, IDLE_MIN = 30, TURN_MIN = 20, USAGE_MIN = 5;
@@ -162,6 +165,11 @@ async function sendTurn(text) {
   while (true) {
     const l = await nextLine(15000);
     if (Date.now() - savedAt >= 15000) save(null, null);
+    // 멈추기: 이 차례에서 처리 중인 요청 · 작업 ID가 멈춤 목록에 있으면 바로 끊는다(남은 ID는 다음 처리 때를 위해 파일에 둔다)
+    if (exists(CANCEL)) {
+      const ids = cancelIds(), mine = (S.turnIds || []).filter((x) => ids.includes(x));
+      if (mine.length) { const rest = ids.filter((x) => !mine.includes(x)); try { if (rest.length) fs.writeFileSync(CANCEL, rest.join('\n')); else fs.rmSync(CANCEL, { force: true }); } catch (e) {} return { ok: false, cancelled: mine, text: '사람이 멈춤: ' + mine.join(', ') }; }
+    }
     if (l === null) { if (Date.now() > until) return { ok: false, dead: true, text: `응답이 ${TURN_MIN}분 넘게 없음` }; continue; }
     if (l === undefined) return { ok: false, dead: true, text: (out + S.err).trim() };
     until = Date.now() + TURN_MIN * 60000;   // 출력이 오면 다시 20분(멈춤만 끊는다)
@@ -220,7 +228,7 @@ function scan() {
   }
   const q = readJson(path.join(WB, 'jobs.json'));
   if (q) {
-    const todo = (q.items || []).filter((x) => x && x.status === '대기' && x.kind !== 'text' && (x.kind !== 'capture' || (!x.auto && Date.now() - (T(x.createdAt) || Date.now()) >= 20000)));
+    const todo = (q.items || []).filter((x) => x && x.status === '대기' && x.kind !== 'text' && x.kind !== 'transfer' && (x.kind !== 'capture' || (!x.auto && Date.now() - (T(x.createdAt) || Date.now()) >= 20000)));
     if (todo.length) out.push('JOBS ' + todo.map((x) => x.id).join(','));
   }
   return out.join('\n');
@@ -236,6 +244,20 @@ async function watch(maxMs) {
     await sleep(2000);
   }
   return '';
+}
+
+// 「resets 6:50pm (Asia/Seoul)」 → 그 시각(이 PC 시간, 지났으면 다음 날) + 1분. 못 읽으면 30분 뒤
+// 풀리는 시각: 「resets 6:50pm」(5시간) · 「resets Nov 20, 6pm」 · 「resets Nov 20 at 6pm」(주간, 2026-11-17 — 예전에는 날짜를 못 읽어 30분마다 다시 띄웠다)
+const MON = { jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5, jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11 };
+function limitUntil(t) {
+  const m = /resets\s+(?:on\s+)?(?:([A-Za-z]{3})[a-z]*\.?\s+(\d{1,2}),?\s+)?(?:at\s+)?(\d{1,2})(?::(\d{2}))?\s*(am|pm)?/i.exec(t);
+  if (!m) return Date.now() + 30 * 60000;
+  let h = parseInt(m[3], 10) % 12; if (/pm/i.test(m[5] || '')) h += 12; if (!m[5] && parseInt(m[3], 10) === 12) h = 12;
+  const d = new Date(); d.setHours(h, parseInt(m[4] || '0', 10), 0, 0);
+  const mo = m[1] ? MON[m[1].toLowerCase()] : undefined;
+  if (mo !== undefined) { d.setMonth(mo, parseInt(m[2], 10)); if (d.getTime() <= Date.now() - 86400000) d.setFullYear(d.getFullYear() + 1); }
+  else if (d.getTime() <= Date.now()) d.setDate(d.getDate() + 1);
+  return Math.max(d.getTime(), Date.now()) + 60000;
 }
 
 async function main() {
@@ -257,6 +279,8 @@ async function main() {
     if (!S && Ready !== true && Date.now() >= nextCheck) { Ready = await checkReady(); nextCheck = Date.now() + 120000; if (Ready) save('idle', '요청을 기다리는 중'); }
     if (Ready === false) { await pause(8); continue; }
     save(null, null);
+    // 처리 중이 아닐 때 남은 멈춤 표시(이미 끝났거나 다른 세션이 처리하던 요청)는 지운다 — 다음에 같은 ID를 다시 진행할 때 잘못 끊지 않게
+    if (exists(CANCEL)) { try { fs.rmSync(CANCEL, { force: true }); } catch (e) {} }
     const out = await watch(60000);
     if (!out) continue;
     if (out === last) repeat++; else { last = out; repeat = 1; }
@@ -264,8 +288,22 @@ async function main() {
     if (!S) startSession();
     if (!S) { save('error', 'Claude 세션을 띄우지 못했습니다. 기록: workbench/.agent.log'); await sleep(30000); continue; }
     save('working', '처리 중: ' + out.split('\n').join(' · ')); log('처리 시작: ' + out);
+    S.turnIds = out.match(/\b[RJ]\d{3,}\b/g) || [];
     const r = await sendTurn(makePrompt(out));
     log(`처리 끝 (ok ${r.ok}${r.ms ? ', ' + Math.round(r.ms / 1000) + '초' : ''})\n${r.text}`);
+    // 사람이 멈춤: 세션을 끊는다. 같은 차례의 다른 요청은 서버가 10분 뒤 「대기」로 돌려 다시 처리된다
+    if (r.cancelled) { await stopSession('사람이 멈춤: ' + r.cancelled.join(', ')); save('idle', '멈춤: ' + r.cancelled.join(', ') + ' — 요청을 기다리는 중'); continue; }
+    // 사용 한도(5시간 · 주간)에 걸림: 풀리는 시각까지 다시 띄우지 않는다(2026-11-16 — 예전에는 3번 실패 후 10분마다 헛되이 다시 띄우며 「확인 필요」로만 보였다)
+    //  실패한 차례만 본다(2026-11-17 — 정상 답에 「rate limit」(Figma API 한도 등)이란 말만 있어도 30분 쉬던 것)
+    const lim = !r.ok && /hit your .{0,20}limit|usage limit|limit reached|rate limit/i.test(r.text) ? limitUntil(r.text) : 0;
+    if (lim) {
+      await stopSession('사용 한도');
+      const hm = new Date(lim).toTimeString().slice(0, 5);
+      save('limit', `Claude 사용 한도에 걸려 ${hm}에 다시 시작합니다. 그 사이 요청은 「대기」로 남습니다.`); log(`사용 한도 — ${hm}까지 쉼: ${out.split('\n')[0]}`);
+      last = ''; repeat = 0;
+      await pause(Math.max(4, Math.ceil((lim - Date.now()) / 15000)));
+      save('idle', '사용 한도가 풀려 요청을 기다리는 중'); continue;
+    }
     if (/Not logged in|Please run \/login|Invalid API key/.test(r.text)) { await stopSession('로그인 필요'); save('login', 'Claude CLI 로그인이 필요합니다. 시작 안내 5단계(CLI)의 「Claude 로그인 · Figma 연결」을 진행하세요.'); await pause(8); continue; }
     if (r.dead) { await stopSession('응답 없음 · 세션 끊김'); save('error', '처리 중 세션이 끊겨 새로 띄웁니다. 기록: workbench/.agent.log'); continue; }
     const pct = S.win ? Math.round(100 * S.ctx / S.win) : 0, ctx = S.ctx;

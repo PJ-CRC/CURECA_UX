@@ -15,7 +15,8 @@ function find(p, method) { return routes.find((r) => r.method === method && (r.p
 const testKey = (k) => /^[A-Za-z0-9]{10,64}$/.test(String(k || ''));
 const projDir = (k) => path.join(C.projRoot, k);
 const readProj = (k) => core.readJson(path.join(projDir(k), 'project.json'));
-const keyOf = (url) => { const m = /figma\.com\/(?:design|file|proto)\/([A-Za-z0-9]+)/.exec(String(url || '')); return m ? m[1] : ''; };
+// 링크 맨 앞이 Figma 주소여야 한다(2026-11-17 — 예전에는 중간에 figma.com/design/만 있어도 통과해 javascript: 링크도 저장됐다)
+const keyOf = (url) => { const m = /^\s*(?:https?:\/\/)?(?:www\.)?figma\.com\/(?:design|file|proto)\/([A-Za-z0-9]+)/i.exec(String(url || '')); return m ? m[1] : ''; };
 const workKey = () => keyOf(core.readSetup().figmaUrl);
 
 // GET /api/requests: 수정 요청 목록 파일 그대로(없으면 빈 목록)
@@ -35,7 +36,20 @@ on('GET', '/api/jobs', ({ q, req }) => {
 });
 
 // GET /api/projects: 등록된 프로젝트 목록 + 시작 안내 작업 링크의 파일
-on('GET', '/api/projects', () => {
+const catBusy = new Set();   // 토큰으로 목록을 받는 중인 파일(같은 파일을 겹쳐 받지 않게)
+const catFail = {};          // 받지 못한 파일 → 다시 해 볼 시각(ms)
+on('GET', '/api/projects', ({ T }) => {
+  // 지금 팀의 팀 프로젝트는 이 PC에 없으면 바로 등록한다(작업 페이지는 링크의 노드로 처음 정하고, 그 뒤는 담당자가 고른다)
+  const teamItems = core.readTeamProjects(T.team);
+  for (const tp of teamItems) if (testKey(tp.key) && !readProj(tp.key) && helpers.ensureProj) { try { helpers.ensureProj(tp.key, tp.link); const pj = readProj(tp.key); if (pj && tp.name && !pj.name) { pj.name = tp.name; helpers.saveProj(pj); } } catch (e) {} }
+  // 프레임 목록이 아직 없는 팀 프로젝트: Figma 토큰이 있으면 뒤에서 바로 받는다(Workbench가 5초마다 목록을 다시 읽어 저절로 채워짐). 토큰이 없으면 플러그인 · Claude로
+  if (!C.readonly && helpers.figmaHasToken && helpers.figmaHasToken() && helpers.figmaCatalog) {
+    for (const tp of teamItems) {
+      if (!testKey(tp.key) || core.exists(path.join(projDir(tp.key), 'catalog.json')) || catBusy.has(tp.key) || (catFail[tp.key] || 0) > Date.now()) continue;
+      // 실패하면(토큰으로 못 보는 파일 · 한도) 10분 동안 다시 받지 않는다(2026-11-17 — 예전에는 5초마다 Figma API를 다시 불렀다)
+      catBusy.add(tp.key); helpers.figmaCatalog(tp.key).then(() => { delete catFail[tp.key]; }, () => { catFail[tp.key] = Date.now() + 10 * 60 * 1000; }).then(() => catBusy.delete(tp.key));
+    }
+  }
   const list = [];
   let dirs = []; try { dirs = fs.readdirSync(C.projRoot, { withFileTypes: true }).filter((d) => d.isDirectory()).map((d) => d.name); } catch (e) {}
   for (const d of dirs) {
@@ -44,7 +58,8 @@ on('GET', '/api/projects', () => {
     list.push({ key: p.key, name: p.name, link: p.link, editablePageId: p.editablePageId, editablePageName: p.editablePageName, uxGuideLink: p.uxGuideLink,
       hasCatalog: core.exists(path.join(C.projRoot, d, 'catalog.json')), shots, isDefault: p.key === workKey() });
   }
-  return { defaultKey: workKey(), workKey: workKey(), projects: list };
+  return { defaultKey: workKey(), workKey: workKey(), projects: list,
+    team: { id: T.team, items: teamItems.map((p, i) => ({ key: p.key, name: p.name || '', link: p.link || '', step: i + 1 })) } };
 });
 
 // GET /api/catalog?key=: 프레임 목록 파일 그대로
@@ -218,6 +233,21 @@ function fillApplied(applied) {
   }
   return applied;
 }
+/* 팀 프로젝트(2026-11-16): UX가이드를 따로 고르지 않은 단계는 앞 단계(1차 → 2차 → 3차)의 UX가이드를 같이 쓴다.
+   저장하지 않고 읽을 때마다 계산한다(1차를 바꾸면 따라간다). 그 단계에서 직접 고르면 그것이 우선. docs.guide.from = 가져온 단계의 파일 키 */
+function fillTeamGuide(applied, T) {
+  const steps = core.readTeamProjects(T.team).map((p) => p.key);
+  let prev = null;
+  for (const k of steps) {
+    const docs = appliedDocs(applied[k]);
+    if (docs.guide) { prev = { g: docs.guide, key: k }; continue; }
+    if (!prev) continue;
+    docs.guide = Object.assign({}, prev.g, { from: prev.key });
+    const e = applied[k] || { fileKey: k, by: '', pc: '', at: '' };
+    applied[k] = Object.assign({}, e, { fileKey: k, guideId: String(prev.g.id), docs, teamGuide: true });
+  }
+  return applied;
+}
 /* 「지금 내용」 = 원본 파일(2026-11-13~): 한 파일 문서는 guide.md, 여러 파일 문서는 meta.files의 그 파일(filesDir 아래).
    수정본(rev/)은 고친 기록(이력)으로만 남는다. 고칠 때마다 서버가 원본도 새 내용으로 바꾸고 수정본 정보에 orig:true를 적는다.
    예전 버전 PC가 수정본만 쓴 경우(orig 없음)는 읽을 때 그 수정본을 원본으로 옮겨 맞춘다(한 번만, 깃으로 공유) */
@@ -309,7 +339,7 @@ function readGuides(T) {
     if (e.guideId && alias[e.guideId]) e.guideId = alias[e.guideId];
     for (const t of Object.keys(e.docs || {})) { const v = e.docs[t]; if (v && v.id && alias[v.id]) v.id = alias[v.id]; }
   }
-  const applied = fillApplied(raw);
+  const applied = fillTeamGuide(fillApplied(raw), T);
   return { items: sortDescPS(list, (x) => String(x.updatedAt || '')), applied };
 }
 on('GET', '/api/guides', ({ T }) => readGuides(T));
@@ -470,17 +500,30 @@ on('GET', '/api/setup', () => ({ state: core.readSetup(), env: setupEnv() }));
 // ── 계정 목록(최고관리자, Public-Account · Team-Members) — 비밀번호 해시는 내보내지 않는다 ──
 function publicAccount(a) {
   return { id: a.id, name: a.name, admin: !!a.admin, teams: core.userTeams(a), menus: a.admin ? core.userMenus(a) : core.arr(a.menus).filter((k) => core.MENU_KEYS.includes(k)),
-    writes: core.userWrites(a), approves: core.userApproves(a), active: a.active !== false, createdAt: a.createdAt === undefined ? null : a.createdAt,
+    writes: core.userWrites(a), approves: core.userApproves(a), manages: core.userManages(a), active: a.active !== false, createdAt: a.createdAt === undefined ? null : a.createdAt,
     updatedAt: a.updatedAt === undefined ? null : a.updatedAt, pwAt: a.pwAt === undefined ? null : a.pwAt };
 }
-on('GET', '/api/accounts', () => {
+on('GET', '/api/accounts', ({ req }) => {
+  // 최고관리자가 아니면(「팀 프로젝트 링크 관리」 권한으로 들어온 사람) 계정 · 팀 설정은 내보내지 않고 자기 팀 목록만
+  if (!core.isAdmin(req)) {
+    const mine = core.myTeams();
+    return { limited: true, items: [], approvals: [], manages: [], menus: [], teamMenus: [],
+      teams: core.fillTeamColors(core.readTeams()).filter((t) => mine.includes(String(t.id))).map((t) => ({ id: String(t.id), name: String(t.name || ''), color: parseInt(t.color, 10), members: 0 })) };
+  }
   const accts = core.readAccounts();
   const sorted = accts.slice().sort((x, y) => (x.admin ? 0 : 1) - (y.admin ? 0 : 1) || (String(x.id).toLowerCase() < String(y.id).toLowerCase() ? -1 : String(x.id).toLowerCase() > String(y.id).toLowerCase() ? 1 : 0));
   const teams = core.fillTeamColors(core.readTeams()).map((t) => ({ id: String(t.id), name: String(t.name || ''), legacy: !!t.legacy,
     members: accts.filter((a) => !a.admin && core.userTeams(a).includes(String(t.id))).length, createdAt: String(t.createdAt || ''), color: parseInt(t.color, 10) }));
   return { items: sorted.map(publicAccount), teams, teamMenus: core.TEAM_MENUS.slice(),
     menus: core.MENUS.filter((m) => core.MENU_KEYS.includes(m.key)).map((m) => ({ key: m.key, label: m.label, write: String(m.write || ''), team: core.TEAM_MENUS.includes(m.key) })),
-    approvals: core.APPROVALS };
+    approvals: core.APPROVALS, manages: core.MANAGES };
+});
+
+// ── 팀 프로젝트(2026-11-16): GET /api/teamprojects?team= — 그 팀의 프로젝트(Figma 링크) 목록 · 순서. 모두 읽을 수 있고, 고치기는 writes.js(관리 권한) ──
+on('GET', '/api/teamprojects', ({ req, T }) => {
+  const items = core.readTeamProjects(T.team).map((p, i) => ({ ...p, step: i + 1, registered: !!readProj(p.key) }));
+  const mineOk = !core.isBrowser(req) || !core.authRequired() || core.myTeams().includes(T.team);
+  return { team: T.team, items, canEdit: core.canManage(req, 'teamProjects') && mineOk };
 });
 
 // ── 문서 · 회의록 파일 여러 개를 한 번에 읽기(화면 로딩용, 바꾸지 않음) — .history/guides · minutes 아래만 ──

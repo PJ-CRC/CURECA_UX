@@ -109,7 +109,7 @@ module.exports = function register(on, h) {
     const pages = [], secs = [];   // secs: [페이지 인덱스, 섹션 노드, 바깥 섹션 이름]
     const take = (pi, n, sec) => {
       if (!n || n.visible === false) return;
-      if (n.type === 'SECTION') { const nm = nn(n.name).trim() || '섹션'; secs.push([pi, n, sec ? sec.name + ' › ' + nm : nm]); return; }
+      if (n.type === 'SECTION') { const nm = nn(n.name).trim() || '섹션'; secs.push([pi, n, sec ? sec.name + ' › ' + nm : nm, sec]); return; }
       if (!/^(FRAME|COMPONENT|COMPONENT_SET|INSTANCE)$/.test(n.type) || JUNK.test(nn(n.name).trim())) return;
       const b = n.absoluteBoundingBox || {}, row = [n.id, nn(n.name).trim(), Math.round(b.width || 0), Math.round(b.height || 0), Math.round(b.x || 0), Math.round(b.y || 0)];
       if (sec) row.push(sec.name, sec.id);
@@ -122,7 +122,16 @@ module.exports = function register(on, h) {
     for (let guard = 0; secs.length && guard < 20; guard++) {
       const batch = secs.splice(0, 20);
       const j = await figma(`/files/${encodeURIComponent(key)}/nodes?ids=${encodeURIComponent(batch.map((s) => s[1].id).join(','))}&depth=1`);
-      for (const [pi, sn, name] of batch) { const doc = j && j.nodes && j.nodes[sn.id] && j.nodes[sn.id].document; core.arr(doc && doc.children).forEach((c) => take(pi, c, { name, id: sn.id })); }
+      for (const [pi, sn, name, outer] of batch) {
+        const doc = j && j.nodes && j.nodes[sn.id] && j.nodes[sn.id].document, n0 = pages[pi].frames.length, s0 = secs.length;
+        core.arr(doc && doc.children).forEach((c) => take(pi, c, { name, id: sn.id }));
+        // 섹션 안에 화면으로 볼 프레임이 하나도 없으면(이름이 「Frame 123」 · 그룹뿐인 그림판 등) 섹션 자체를 한 화면으로 넣는다(2026-11-16 — 예전에는 0개로 보였다)
+        if (pages[pi].frames.length === n0 && secs.length === s0) {
+          const b = (doc && doc.absoluteBoundingBox) || sn.absoluteBoundingBox || {}, row = [sn.id, nn(sn.name).trim() || '섹션', Math.round(b.width || 0), Math.round(b.height || 0), Math.round(b.x || 0), Math.round(b.y || 0)];
+          if (outer) row.push(outer.name, outer.id);
+          pages[pi].frames.push(row);
+        }
+      }
     }
     pages.forEach((p) => p.frames.sort((a, b) => a[5] - b[5] || a[4] - b[4]));
     const body = { fileKey: key, fileName: nn(f && f.name), editablePageId: '', by: 'Figma API', pages };
@@ -188,7 +197,8 @@ module.exports = function register(on, h) {
     for (const key of dirs) {
       const p = h.readProj(key); if (!p || !p.link) continue;
       try {
-        const j = await figma(`/files/${encodeURIComponent(key)}?depth=1`), v = nn(j && (j.version || j.lastModified));
+        // 바뀜 기준 = lastModified(고치면 바로 바뀜). version은 Figma가 버전 기록을 남길 때(수십 분 간격)만 바뀌어 붙여 넣은 화면을 못 알아챘다(2026-11-16)
+        const j = await figma(`/files/${encodeURIComponent(key)}?depth=1`), v = nn(j && (j.lastModified || j.version));
         if (!v) continue;
         if (vers[key] && vers[key] !== v) {
           // 프레임 목록도 새로(2026-11-13): 화면이 생기거나 없어지면 Workbench 목록 · 프로토타입 「화면 추가됨 · 없어짐」에 바로 보이게
