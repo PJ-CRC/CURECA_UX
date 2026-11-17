@@ -28,7 +28,7 @@ figma:
  ● 정의
    - CURECA 장비의 현황을 확인하고 상세 내용을 조회하는 화면
    - 장비를 Module 단위로 조회
- ● 진입 방법
+ ● 동작
    - LNB의 Instrument 메뉴로 진입
  ● User Type : Service, Admin, User
 
@@ -86,9 +86,9 @@ figma:
  ● 산출 방식
    - Event Status가 Open인 Event만 합산
    - Level별로 Error와 Warning 수를 따로 노출
- ● 표기
-   - Error : 빨강
-   - Warning : 노랑
+ ● 표출 항목
+   - Error 수 : 빨강
+   - Warning 수 : 노랑
 
 4  Event 표기 영역
  ● 정의
