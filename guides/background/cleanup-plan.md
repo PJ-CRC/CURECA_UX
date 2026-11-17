@@ -1,10 +1,10 @@
-# 문서 정리 계획 (7단계 기준)
+# 문서 정리 계획 (6단계 기준)
 
-> 상태: 논의용 초안 (2026-11-09). 아직 아무 파일도 고치지 않았습니다. 2026-11-05 감사(`archive/background/rules-overhaul-audit.md`)를 바탕으로, 그 뒤 바뀐 것(케이스 3 v1.5, 빨간 글씨 질문 대기)과 7단계 흐름(`background/work-flow-draft.md`)에 맞춰 다시 봤습니다.
+> 상태: 논의용 초안 (2026-11-09). 아직 아무 파일도 고치지 않았습니다. 2026-11-05 감사(`archive/background/rules-overhaul-audit.md`)를 바탕으로, 그 뒤 바뀐 것(케이스 3 v1.5, 빨간 글씨 질문 대기)과 6단계 흐름(`background/work-flow-draft.md`)에 맞춰 다시 봤습니다.
 
 ## 1. 기조
 
-1. **7단계가 뼈대:** 절차는 단계 문서에만 씀. 단계에서 같이 쓰는 "쓰는 법"(디스크립션, 정책 쓰는 법, ID)은 따로 한 곳.
+1. **6단계가 뼈대:** 절차는 단계 문서에만 씀. 단계에서 같이 쓰는 "쓰는 법"(디스크립션, 정책 쓰는 법, ID)은 따로 한 곳.
 2. **한 개념은 한 곳:** 같은 규칙이 두 문서에 있으면 하나만 남김. 다른 곳은 한 줄 링크만.
 3. **실제로 하는 것만:** 한 번도 안 쓴 절차(CR · ADR · 긴급 · 10일 정리)는 뺌.
 4. **Claude가 할 수 있는 것만:** 알림 · 매일 점검 · 프로그램 버튼 동작은 규칙에서 빼고 프로그램 요청서로.
@@ -13,7 +13,7 @@
 ## 2. 큰 방향 A — 논의 리스트 하나 (안 v2, 2026-11-09)
 > **2026-11-10 다시 바뀜 (사용자 결정):** 상태는 넷(`논의 중` · `결정` · `보류` · `종료`). 결정 갈래를 없애고, 영향 범위(`정책서 + 화면` · `화면` · `없음`)는 Claude가 정리안에서 보여 주고 확인받음. "확인 대기"는 "후속 확인 필요" 한 줄(상태 아님, 정책서에 표시하지 않음)로 바꿈. 합침은 상태가 아니라 정리 순서(없어지는 쪽 파일은 지움). 반영하는 때는 "그 결정으로 화면을 그리는 작업이 있는지"로 나눔. 바로 아래 메모의 갈래 · `결정 (작업 중)` · 확인 대기는 이 결정으로 바뀌었습니다.
 >
-> **2026-11-10 바뀜 (사용자 결정):** 임시 정책을 없앰. 결정 갈래는 ① 최종 정책 ② 화면 설계 결정(예전 "화면만") ③ 보류 · 기각 · 합침 셋이고, 확답 전인 것은 "확인 대기" 표시(정책서 한 곳). 화면설계 작업 중 결정은 `결정 (작업 중)`으로 두고 그 작업의 7단계 완료 때 한꺼번에 반영, 작업 밖 결정은 바로 반영. 아래의 임시 정책 · 세 곳 표시 · 리스트 묶음 4는 이 결정으로 바뀌었고, 최신 내용은 `reference-rules/discussions.md` · `pending-changes.md`입니다.
+> **2026-11-10 바뀜 (사용자 결정):** 임시 정책을 없앰. 결정 갈래는 ① 최종 정책 ② 화면 설계 결정(예전 "화면만") ③ 보류 · 기각 · 합침 셋이고, 확답 전인 것은 "확인 대기" 표시(정책서 한 곳). 화면설계 작업 중 결정은 `결정 (작업 중)`으로 두고 그 작업의 6단계 완료 때 한꺼번에 반영, 작업 밖 결정은 바로 반영. 아래의 임시 정책 · 세 곳 표시 · 리스트 묶음 4는 이 결정으로 바뀌었고, 최신 내용은 `reference-rules/discussions.md` · `pending-changes.md`입니다.
 
 ### 기조
 
@@ -158,11 +158,11 @@ date: YYYY-MM-DD
 
 1. ~~이름~~ → **정함 (2026-11-09):** "논의 대상" · `DS` · `discussions/`
 2. ~~리스트 파일~~ → **정함 (2026-11-09):** `discussions/list.md` 파일로 두고 항목이 바뀔 때마다 다시 만듦. 이 파일을 여는 화면을 팀 프로그램 요청서에 넣음
-3. ~~임시 표시 위치~~ → **정함 (2026-11-09):** 세 곳에 표시함. ① 정책서 규칙 끝 `(임시 · DS-0000)` ② 화면 MD 0번 정책 참고의 정책 ID 옆 `(임시 · DS-0000)` ③ Figma 패널에 질문 대기와 같은 모양으로, 색만 다르게(주황 제안) "※ 임시 정책 · DS-0000 (확정 대기)". ③은 빨간 질문 대기처럼 고객사 · 개발사 전달 전에 지움. 5단계 고객 UX 리뷰에서 이 표시를 보고 확정을 받음
+3. ~~임시 표시 위치~~ → **정함 (2026-11-09):** 세 곳에 표시함. ① 정책서 규칙 끝 `(임시 · DS-0000)` ② 화면 MD 0번 정책 참고의 정책 ID 옆 `(임시 · DS-0000)` ③ Figma 패널에 질문 대기와 같은 모양으로, 색만 다르게(주황 제안) "※ 임시 정책 · DS-0000 (확정 대기)". ③은 빨간 질문 대기처럼 고객사 · 개발사 전달 전에 지움. 4단계 수정 및 검증의 고객 리뷰에서 이 표시를 보고 확정을 받음
 4. ~~결정한 사람~~ → **정함 (2026-11-09):** 승인 담당자 기능은 지금 하지 않음. 논의 결과를 정한 사람의 이름을 5절 "정한 사람"에 남김
 
 ## 3. 큰 방향 B — 반영 대기 목록 다시 정의 (안)
-> **2026-11-10 바뀜:** 타입 "임시 정책"을 뺌(다섯 개). 줄은 작업 중에는 만들지 않고 7단계 완료 때 한꺼번에. 최신 내용은 `reference-rules/pending-changes.md`.
+> **2026-11-10 바뀜:** 타입 "임시 정책"을 뺌(다섯 개). 줄은 작업 중에는 만들지 않고 6단계 완료 때 한꺼번에. 최신 내용은 `reference-rules/pending-changes.md`.
 
 ### 뜻
 
@@ -219,11 +219,11 @@ date: YYYY-MM-DD
 | `meeting-notes.md` | 줄임 | 회의 ID · 원본 · 정책 후보 → 논의 대상으로 넣는 길. 0번 참석자 · 버튼 · 접어 두기 → 요청서로 |
 | `policy-writing.md` | 남김 | 쓰는 법 문서(정책 쓰는 법). 근거 칸 ADR 뺌. 임시 표시 넣기(방향 A 정할 것 1) |
 | `repository-and-id.md` | 줄임 | 쓰는 법 문서(ID · 파일 이름). CR · ADR 줄 뺌, PD · PV · CA → DS |
-| `status-lifecycle.md` | 줄임 | 7단계 문서. 시트 대응표는 schedule과 한 곳. 표시 5개 정리. 상태 원본 하나(정할 것) |
-| `schedule.md` | 줄임 | 7단계 문서에 합침. 열 구성 · 색은 요청서로 |
+| `status-lifecycle.md` | 줄임 | 6단계 문서. 시트 대응표는 schedule과 한 곳. 표시 5개 정리. 상태 원본 하나(정할 것) |
+| `schedule.md` | 줄임 | 6단계 문서에 합침. 열 구성 · 색은 요청서로 |
 | `weekly-status.md` | 줄임 | "원본에 있는 것만 요약" 몇 줄만 남김. 카드 구성은 요청서로 |
-| `language-set.md` | 줄임 | 6단계 문서. "담당자 관리" vs "Claude 관리" 어긋남 정리. 최장 언어 화면은 보류로 |
-| `figma-sync.md` | 뺌 | 1절 → 1단계(케이스 3 이행 기간). 2절 보류 → 7단계 "정할 것" 한 줄 |
+| `language-set.md` | 줄임 | 5단계 문서. "담당자 관리" vs "Claude 관리" 어긋남 정리. 최장 언어 화면은 보류로 |
+| `figma-sync.md` | 뺌 | 1절 → 1단계(케이스 3 이행 기간). 2절 보류 → 6단계 "정할 것" 한 줄 |
 | `terminology-review.md` | 뺌 | 빈 문서. 용어 점검은 2 · 4단계와 쓰는 법 문서에 |
 
 ### templates
@@ -253,10 +253,10 @@ date: YYYY-MM-DD
 | 문서 | 판정 | 이유 · 옮길 곳 |
 | --- | --- | --- |
 | `background/todo.md` | **남김 (할 일 한 곳)** | 새로 만듦. 아래 문서들의 할 일을 모음 |
-| `background/work-flow-draft.md` | 남김 → 단계 문서가 다 차면 보관 | 7단계 흐름의 원안. 단계 문서로 옮겨 감 |
+| `background/work-flow-draft.md` | 남김 → 단계 문서가 다 차면 보관 | **보관함 (2026-11-17, `archive/background/`)**  6단계 흐름의 원안. 단계 문서로 옮겨 감 |
 | `background/cleanup-plan.md` · `migration-map.md` | 남김 → 옮김이 끝나면 보관 | 이번 정리의 기준 |
 | `background/program-hurdles.md` | 남김 | 요청서를 다시 쓸 때 근거 (todo 2-1) |
-| `background/program-change-request.md` | 다시 씀 (todo 2-1) | 승인 담당자 · PV · PD · CA 기준으로 쓰여 있음 |
+| `background/program-change-request.md` | 다시 씀 (todo 2-1) | 승인 담당자 · PV · PD · CA 기준으로 쓰여 있음. **2026-11-17 비움, 다음에 다시 씀** |
 | `archive/background/worklist.md` | **보관** (2026-11-10 옮김) | 2026-11-02 뒤로 갱신 안 됨. 할 일은 todo로, 결정 기록(10-29 · 10-30)은 근거로 남음 |
 | `archive/background/handoff-summary.md` · `rules-review-draft.md` | **보관** (2026-11-10 옮김) | 10-28 · 10-29 출발 문서. 열린 줄은 끝났거나 todo로 옮김(todo 7절) |
 | `archive/background/rules-overhaul-audit.md` | **보관** (2026-11-10 옮김) | `cleanup-plan.md` · `migration-map.md`가 이어받음 |
@@ -266,9 +266,9 @@ date: YYYY-MM-DD
 | `archive/background/screen-md-notes.md` · `screen-md-notes-ms.md` | **보관** (2026-11-10 옮김. 질문은 todo 4절에서 옮김) | 정책 후보는 정책 파일에 반영됨. 열린 질문은 논의 대상으로 |
 | `archive/background/teammate-review.md` | **보관** (2026-11-10 옮김) | 팀원 저장소 검토가 끝남. 남은 확인 1개는 todo 3-6 |
 | `archive/glossary/review-v0.md` | **보관** (남은 확인 R1 ~ R4를 옮긴 뒤) | 용어집 v0 결정의 근거 |
-| `common-ux/common-policy-candidates.md` | 보관 (2026-11-10 바뀜) | 가이드 번호는 가이드 원본에서 직접 찾음. "화면에서 정할 것"만 `reference-rules/description.md` 3절로 옮기고 문서는 `archive/common-ux/`로. 공통 정책 3가지는 `todo.md` 4절 |
-| `common-ux/drawing-materials-options.md` · `language-set/multilingual-screen-options.md` | 남김 | 3 · 6단계에서 다시 꺼낼 안 (5절 표) |
-| `common-ux/feedback.md` · `ia/change-requests.md` | 남김 | 전달 · 반영을 기다리는 목록 (todo 3-1 · 3-3) |
+| `archive/common-ux/common-policy-candidates.md` | 보관 (2026-11-10 바뀜) | 가이드 번호는 가이드 원본에서 직접 찾음. "화면에서 정할 것"만 `reference-rules/description.md` 3절로 옮기고 문서는 `archive/common-ux/`로. 공통 정책 3가지는 `todo.md` 4절 |
+| `old-common-ux/drawing-materials-options.md` · `language-set/multilingual-screen-options.md` | 남김 | 3 · 5단계에서 다시 꺼낼 안 (5절 표) |
+| `old-common-ux/feedback.md` · `ia/change-requests.md` | 남김 | 전달 · 반영을 기다리는 목록 (todo 3-1 · 3-3) |
 | `language-set/analysis-v0.03.md` · `policy/meeting-trace.md` | 남김 | 재료의 근거. 할 일은 todo로 |
 | `meetings/next-agenda.md` | 뺌 (논의 대상을 옮길 때) | 비어 있음. "논의 중 · 고객" 묶음이 대신함 |
 | `SYNC-2026-11-06.md` | **지움** (2026-11-10) | 대표 저장소 반영이 끝남 (2026-11-09). 저장소에 올리지 않은 파일 |
@@ -279,21 +279,21 @@ date: YYYY-MM-DD
 
 | 주제 | 꺼낼 단계 | 지금 어디 | 다시 정할 것 |
 | --- | --- | --- | --- |
-| 논의 대상 통일 | 2 · 5 | 방향 A (이 문서 2절) | 임시 정책 위치, ID, 상태 |
-| 반영 대기 목록 | 2 끝 · 3 시작 · 5 | 방향 B (3절) | 타입, 주기 점검, 상태 |
+| 논의 대상 통일 | 2 · 4 | 방향 A (이 문서 2절) | 임시 정책 위치, ID, 상태 |
+| 반영 대기 목록 | 2 끝 · 3 시작 · 4 | 방향 B (3절) | 타입, 주기 점검, 상태 |
 | 적용 버전 5개 | 0 | 11-05 감사 2절 | `rules_version` · `POL@버전`을 `applied:`로 바꿀지 |
 | 요건서 형식 | 1 | 없음 | 케이스별 틀 |
 | 문서 지도 | 2 | 없음 | 색인 모양, 만드는 스크립트 |
-| 그리는 재료 · 컴포넌트 대응표 | 3 | `common-ux/drawing-materials-options.md` | 라이브러리 / 와이어프레임, 요소 → 컴포넌트 표 |
+| 그리는 재료 · 컴포넌트 대응표 | 3 | `old-common-ux/drawing-materials-options.md` | 라이브러리 / 와이어프레임, 요소 → 컴포넌트 표 |
 | 가이드에 이미지만 있는 요소 | 3 | `background/todo.md` 5절 · 3-2 | 가이드 이미지대로 / 기존 기획대로 |
 | 케이스 1 변경 표시 | 3 | 없음 | 바뀐 곳 표시 방법 |
 | 알럿 체계 | 3 · 4 | `background/todo.md` 5-2 | 화면 MD 알럿 정보 정리 시점 |
 | 검토 에이전트 점검표 | 4 | 케이스 3 5단계 점검 | 에이전트 3개 기준 |
-| 고객 피드백 분류 기준 | 5 | `work-flow-draft.md` 5단계 | 간단 수정 / 재정의 |
-| 고객 컨펌 · 개발사 전달 흐름 | 5 · 7 | 보류 (`figma-sync.md` 2절) | 이행 뒤 |
-| 언어셋 관리 체계 · 다국어 그리기 | 6 | 보류 (`language-set/multilingual-screen-options.md`) | 관리 주체, 언어별 Figma |
-| 상태 원본 하나 | 7 | 11-05 감사 4절 D | 일정 시트 / `_menu.md` / Figma 카드 |
-| 화면 Ver 체계 | 7 | `repository-and-id.md` | 언제 누가 올리는지 |
+| 고객 피드백 분류 기준 | 4 | `work-flow-draft.md` 4단계 | 간단 수정 / 재정의 |
+| 고객 컨펌 · 개발사 전달 흐름 | 4 · 6 | 보류 (`figma-sync.md` 2절) | 이행 뒤 |
+| 언어셋 관리 체계 · 다국어 그리기 | 5 | 보류 (`language-set/multilingual-screen-options.md`) | 관리 주체, 언어별 Figma |
+| 상태 원본 하나 | 6 | 11-05 감사 4절 D | 일정 시트 / `_menu.md` / Figma 카드 |
+| 화면 Ver 체계 | 6 | `repository-and-id.md` | 언제 누가 올리는지 |
 | 동시 작업 겹침 | 0 | 없음 | 작업 기록에 고칠 대상 적기 |
 
 ## 6. 정리하는 순서 (제안)
