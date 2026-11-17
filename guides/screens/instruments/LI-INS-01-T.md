@@ -56,17 +56,22 @@ Frame/Instrument_Status (54), Table/Filled Table Cell (25), Tag Status (16), Des
 #### 5. Door Status Tooltip
 
 - 동작 : COMM-5-o
-- 툴팁 내용 : Shows door open/close status and provides an Unlock function to open the module door
+- 툴팁 내용 : Shows door open/close status and provides Unlock / Lock functions to open or lock the module door
 
 #### 6. Unlock 버튼 (L-IOS Only)
 
 - 버튼 클릭 시, Door Control 팝업 제공
 - 기능 활성화 조건
 - 공통 UX 참고 : COMM-3-a
+- Door Control 팝업에서 Door별 Unlock(잠금 해제) · Lock(잠금) 가능
 
 #### 7. 범례 영역
 
 - 상단 상태값 표시 영역의 범례 제공함
+
+### 버전 메모
+
+- v2.1.17 update / Door Status 툴팁 · Unlock 버튼(6) 정의에 Lock 기능 추가 (패널 Ver 2.1.17, 2026-11-13, 이상헌)
 
 ## 반영 대기 목록
 
