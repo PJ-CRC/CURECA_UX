@@ -1,0 +1,28 @@
+{
+  "id": "brex-06_20261117-164745",
+  "kind": "work",
+  "reqId": "",
+  "reqType": "",
+  "team": "cureca",
+  "at": "2026-11-17T16:47:45+09:00",
+  "from": "2026-11-17T16:45:43+09:00",
+  "by": "최고관리자",
+  "doneBy": "Claude",
+  "pc": "BREX_06",
+  "fileKey": "",
+  "fileName": "",
+  "page": "",
+  "frame": "",
+  "nodeId": "",
+  "text": "Workbench 요청: 3단계 진행 (R039)",
+  "models": {
+    "claude-opus-5-5": 26
+  },
+  "calls": 26,
+  "input": 53,
+  "cacheWrite": 107961,
+  "cacheRead": 10891443,
+  "output": 15678,
+  "total": 11015135,
+  "usd": 3.3557
+}
