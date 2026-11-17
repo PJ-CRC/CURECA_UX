@@ -29,7 +29,7 @@
 | Workbench 수정 요청(`PENDING` · `RESUME`, R0xx — 흐름은 그 팀 작업규칙대로), 요청 감시, 채팅으로 Figma를 고쳤을 때 이력 · 캡처 | `docs/claude/requests.md` |
 | 팀 프로젝트 다음 단계로 옮기기 · 비교(플러그인 작업 `transfer` — Claude는 옮기지 않음, 참고용) | `docs/claude/transfer.md` |
 | 작업 대기열(`JOBS`) 공통, `catalog` 프레임 목록 · `capture` 캡처 · `text` 글 수정(플러그인) | `docs/claude/jobs.md` |
-| `guide` 새 UX 문서 · `guide-edit` 문서 수정 · `guide-check` 고칠 화면 · 연관 항목 찾기, 파일형 문서 | `docs/claude/ux-docs.md` |
+| `guide` 새 UX 문서 · `guide-edit` 문서 수정 · `guide-check` 고칠 화면 · 연관 항목 찾기, 파일형 문서 | `docs/claude/ux-docs.md` (새 문서 · 작업규칙 수정은 `docs/claude/system-basis.md`도) |
 | `prototype` 만들기 · `prototype-edit` 수정 · `prototype-sync` Figma 맞추기 | `docs/claude/prototype.md` |
 | `minutes` 회의록 요약, `plan` 논의 대상(DS) · 화면설계서 작업대기(`fixRows`) · 작업 기록, 회의록 쓰기 | `docs/claude/plan.md` |
 | 프로그램 수정 · **배포**(「배포해줘」), 계정 · 권한, 서버 · 에이전트 구조, 폴더 · API, 일정 연결(시트) | `docs/claude/dev.md` |

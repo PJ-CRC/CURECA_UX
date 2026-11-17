@@ -293,6 +293,7 @@ a{color:var(--accent)}
       <!-- Claude Code 위치: 찾은 경로를 보여 주고, 못 찾으면 터미널의 which claude(윈도우 where claude) 결과를 넣어 직접 지정 -->
       <div class="cc-path" id="ccBox">
         <div class="cc-row"><b>Claude Code 위치</b> <code id="ccFound">확인 중…</code></div>
+        <p class="msg bad" id="ccAppWarn" hidden>Claude 데스크톱 앱 안에 들어 있는 Claude Code를 쓰고 있습니다. 앱에서 로그아웃하면 백그라운드 감시도 같이 끊깁니다. Claude Code CLI를 따로 설치하면(터미널에서 <code>irm https://claude.ai/install.ps1 | iex</code> 후 <code>claude</code>로 한 번 로그인) 그것을 먼저 씁니다 — Figma AI Run을 다시 실행하면 바뀝니다.</p>
         <div class="cc-row" id="ccSetRow">
           <input id="ccPath" type="text" spellcheck="false" autocomplete="off" placeholder="못 찾으면: 터미널에서 which claude 실행 → 나온 경로를 붙여 넣기">
           <button class="btn" id="ccSave" type="button">경로 저장</button>
@@ -488,6 +489,7 @@ a{color:var(--accent)}
     /* Claude Code 위치: 찾은 경로 · 직접 넣은 경로 · 찾아본 PATH */
     $('ccFound').textContent = e.claudePath || '찾지 못함';
     $('ccFound').className = e.claudePath ? 'ok' : 'bad';
+    $('ccAppWarn').hidden = !(e.claudePath && /[\\/]Claude-Data[\\/]|Application Support[\\/]Claude/i.test(e.claudePath));   // 앱 안의 것이면 로그아웃 때 끊긴다고 알린다
     $('ccLook').textContent = String(e.claudeLook || '').split(isMac ? ':' : ';').filter(Boolean).join('\n');
     $('ccAuto').hidden = !e.claudeSet;
     if (document.activeElement !== $('ccPath') && !$('ccPath').value) $('ccPath').value = e.claudeSet || '';

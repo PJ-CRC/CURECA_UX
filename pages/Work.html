@@ -410,7 +410,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     { k: 'backlog', label: '화면설계서 작업대기', about: '화면설계서의 반영 대기 목록 중 아직 화면에 반영하지 않은 것을 메뉴 · 화면별로 봅니다.' },
     { k: 'minutes', label: '회의록', about: '회의록을 봅니다.' },
     { k: 'decisions', label: '논의 대상', about: '정책 · 화면에서 정해야 할 것을 한 리스트로 봅니다(규칙 저장소 discussions/).' },
-    { k: 'worklogs', label: '작업 기록', about: '화면설계 작업(Case 1 · 2 · 3)의 단계 진행과 다음 할 일을 봅니다(규칙 저장소 work-logs/).' }
+    { k: 'worklogs', label: '작업 기록', about: '화면설계 작업의 단계(1 ~ 5단계) 진행과 이어서 작업할 곳을 봅니다(규칙 저장소 work-logs/).' }
   ];
   $('tabs').innerHTML = TABS.map(function(t, i){
     return '<button type="button" role="tab" id="tab-' + t.k + '" data-tab="' + t.k + '" aria-controls="panel-' + t.k + '" aria-selected="' + (i ? 'false' : 'true') + '"' + (i ? ' tabindex="-1"' : '') + '>' + esc(t.label) + '<span class="cnt" id="cnt-' + t.k + '"></span></button>';
@@ -1039,7 +1039,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       '<div class="stat"><div class="l">작업 중</div><div class="v">' + doingN + '</div><div class="s">진행 중인 화면설계 작업이 고른 항목</div></div>' +
       '<div class="stat"><div class="l">작업 대기 화면</div><div class="v">' + act.length + '</div><div class="s">전체 화면 ' + S.length + '개</div></div>' +
       '<div class="stat"><div class="l">메뉴</div><div class="v">' + groups.length + '</div></div></div>' +
-      '<p class="rule">반영 대기 목록 = 내 작업 밖의 다른 화면에 반영해야 하는 변경을 그 화면의 화면 MD에 남겨 둔 것입니다. 화면설계 작업(Case 1)의 1단계에서 「이번에 반영」으로 고르면 「작업 중」, 7단계 완료(화면 컨펌) 때 「반영 완료」가 됩니다.</p>';
+      '<p class="rule">반영 대기 목록 = 내 작업 밖의 다른 화면에 반영해야 하는 변경을 그 화면의 화면 MD에 남겨 둔 것입니다. 화면설계 작업(Case 1)의 1단계에서 「이번에 반영」으로 고르면 「작업 중」, 5단계(완료) 때 「반영 완료」가 됩니다.</p>';
     var left = '<div class="mhead"><input type="search" id="blq" class="minp" placeholder="CID · 화면 이름 찾기" value="' + esc(blQ) + '" aria-label="화면 찾기"></div>' +
       groups.map(function(g){
         var list = g.vis; if (!list.length) return '';
@@ -1219,7 +1219,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
 
   /* ══ 작업 기록: 규칙 저장소 work-logs/*.md (reference-rules/work-log.md) — 누가 어느 메뉴를 몇 단계까지, 다음 할 일 ══ */
   var WL = null, wlSel = new URLSearchParams(location.search).get('w') || '', wlStat = 'open', wlText = {};
-  var WL_ST = ['0. 시작', '1. 요건 정의', '2. 근거 · 분석', '3. 화면 설계', '4. 검토', '5. 고객 UX 리뷰', '6. 다국어', '7. 완료'];
+  var WL_ST = ['1. 시작 · 요건 정의', '2. 근거 · 분석', '3. 화면 설계', '4. 수정 · 확인', '5. 완료'];   // 2026-11-17 CURECA_AI 1 ~ 5단계. 기록마다 서버가 그 기록의 「단계」 표 이름(w.stages)을 준다
   var CASE_N = { '1': 'Case 1 · 부분 수정', '2': 'Case 2 · 신규 화면', '3': 'Case 3 · 다시 그리기' };
   function loadWl(){
     return api('/api/worklogs').then(function(j){ WL = j; setCnt('worklogs', (j.items || []).filter(function(w){ return w.status === '진행 중'; }).length); })
@@ -1233,21 +1233,22 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     if (wlSel && !L.some(function(w){ return w.name === wlSel; }) && all.some(function(w){ return w.name === wlSel; })) { wlStat = 'all'; L = all; }
     if (!wlSel || !L.some(function(w){ return w.name === wlSel; })) wlSel = L[0] ? L[0].name : '';
     var n = function(f){ return all.filter(f).length; }, opt = function(v, label, c){ return '<option value="' + v + '"' + (wlStat === v ? ' selected' : '') + '>' + label + ' (' + c + ')</option>'; };
-    var stg = function(w){ return w.stage >= 0 && w.stage < WL_ST.length ? WL_ST[w.stage] : '끝'; };
+    var stOf = function(w){ return (w.stages && w.stages.length) ? w.stages : WL_ST; };
+    var stg = function(w){ var S = stOf(w); return w.stage >= 0 && w.stage < S.length ? S[w.stage] : '끝'; };
     var left = '<div class="mhead pvh"><label class="dstat"><span>보기</span><select id="wlStat" class="minp" aria-label="작업 기록 거르기">' +
       opt('open', '진행 중', n(function(w){ return w.status !== '끝남' && w.status !== '멈춤'; })) + opt('끝남', '끝남', n(function(w){ return w.status === '끝남'; })) + opt('멈춤', '멈춤', n(function(w){ return w.status === '멈춤'; })) + opt('all', '전체', all.length) + '</select></label></div>' +
       (L.length ? L.map(function(w){
         return '<button type="button" class="mitem" data-wl="' + esc(w.name) + '"' + (w.name === wlSel ? ' aria-current="true"' : '') + '><b>' + esc(w.title || w.name) + '</b><span>' + esc([w.requester, w.menu, w.started].filter(Boolean).join(' · ')) + '</span>' +
-          '<span class="chips"><span class="pill">' + esc(CASE_N[w.case] || ('Case ' + (w.case || '?'))) + '</span><span class="pill ' + (w.status === '끝남' ? 'done' : w.status === '멈춤' ? 'warn' : 'prog') + '">' + esc(w.status === '끝남' ? '끝남' : stg(w)) + '</span>' + (w.test ? '<span class="pill review">테스트</span>' : '') + '</span></button>';
-      }).join('') : '<p class="muted" style="margin:8px">' + (wlStat === 'open' ? '진행 중인 화면설계 작업이 없습니다. Figma Workbench에서 Case를 골라 「새 작업」으로 요청하면 0단계에서 작업 기록이 생깁니다.' : '작업 기록이 없습니다.') + '</p>');
+          '<span class="chips">' + (w.case ? '<span class="pill">' + esc(CASE_N[w.case] || ('Case ' + w.case)) + '</span>' : '') + '<span class="pill ' + (w.status === '끝남' ? 'done' : w.status === '멈춤' ? 'warn' : 'prog') + '">' + esc(w.status === '끝남' ? '끝남' : stg(w)) + '</span>' + (w.test ? '<span class="pill review">테스트</span>' : '') + '</span></button>';
+      }).join('') : '<p class="muted" style="margin:8px">' + (wlStat === 'open' ? '진행 중인 화면설계 작업이 없습니다. Figma Workbench에서 화면설계를 요청하면 1단계에서 작업 기록이 생깁니다.' : '작업 기록이 없습니다.') + '</p>');
     var w = all.filter(function(x){ return x.name === wlSel; })[0], right;
     if (!w) right = '<div class="wempty"><b>작업 기록이 없습니다</b><p>화면설계 작업 하나에 기록 하나를 둡니다(<code>' + esc(WL.dir || 'work-logs') + '</code>).</p></div>';
     else {
-      var bar = '<ol class="wlbar" aria-label="단계">' + WL_ST.map(function(s, i){ var c = w.stage < 0 || i < w.stage || w.status === '끝남' ? 'done' : i === w.stage ? 'now' : ''; return '<li class="' + c + '"' + (c === 'now' ? ' aria-current="step"' : '') + '>' + esc(s) + '</li>'; }).join('') + '</ol>';
+      var bar = '<ol class="wlbar" aria-label="단계">' + stOf(w).map(function(s, i){ var c = w.stage < 0 || i < w.stage || w.status === '끝남' ? 'done' : i === w.stage ? 'now' : ''; return '<li class="' + c + '"' + (c === 'now' ? ' aria-current="step"' : '') + '>' + esc(s) + '</li>'; }).join('') + '</ol>';
       var t = wlText[w.name];
-      right = '<div class="mtop"><div style="flex:1"><h3>' + esc(w.title || w.name) + '</h3><p class="matt" style="border:0;padding:0">' + esc(CASE_N[w.case] || '') + ' · <code>' + esc((WL.dir || 'work-logs') + '/' + w.name + '.md') + '</code></p></div>' +
+      right = '<div class="mtop"><div style="flex:1"><h3>' + esc(w.title || w.name) + '</h3><p class="matt" style="border:0;padding:0">' + (w.case ? esc(CASE_N[w.case] || '') + ' · ' : '') + '<code>' + esc((WL.dir || 'work-logs') + '/' + w.name + '.md') + '</code></p></div>' +
         (w.status === '진행 중' ? '<a class="btn sm primary" href="Figma_Workbench.html" title="Workbench 입력창에서 이 작업 기록을 골라 다음 단계를 요청합니다">Workbench에서 이어 하기</a>' : '') + '</div>' + bar +
-        '<dl class="kv" style="margin:14px 0"><dt>지금 단계</dt><dd>' + esc(w.status === '끝남' ? '끝남' : stg(w)) + '</dd>' + (w.next ? '<dt>다음</dt><dd>' + esc(w.next) + '</dd>' : '') +
+        '<dl class="kv" style="margin:14px 0"><dt>지금 단계</dt><dd>' + esc(w.status === '끝남' ? '끝남' : stg(w)) + '</dd>' + (w.next ? '<dt>이어서 작업할 곳</dt><dd>' + esc(w.next) + '</dd>' : '') +
         '<dt>요청자</dt><dd>' + esc(w.requester || '-') + '</dd><dt>메뉴</dt><dd>' + esc(w.menu || '-') + '</dd><dt>대상 CID</dt><dd>' + (w.cids.length ? w.cids.map(function(c){ return '<span class="chip">' + esc(c) + '</span>'; }).join('') : '-') + '</dd></dl>' +
         '<div class="dbody" id="wlBody">' + (t == null ? '<p class="muted">기록을 읽는 중…</p>' : md(fm(t).body)) + '</div>';
       if (t == null) getText((WL.dir || '.history/guides/work-logs') + '/' + w.name + '.md').then(function(x){ wlText[w.name] = x; if (cur === 'worklogs' && wlSel === w.name) renderWl(); });
@@ -1281,7 +1282,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       rows.map(function(r){ return '- ' + r.n + ' [' + r.kind + '] 변경 전: ' + r.now + ' → 변경 후: ' + r.to + (r.why ? ' (근거: ' + r.why + ')' : ''); }).join('\n');
     if (!(await WB.confirm('화면설계 작업을 요청할까요?\n' + s.cid + ' 화면의 ' + rows.length + '항목으로 Case 1 · 새 작업을 등록합니다.', { ok: '요청' }))) return;
     b.disabled = true;
-    api('/api/requests', { action: 'add', fileKey: fig.key, fileName: '', nodeId: fig.node, frame: s.cid + (s.title ? ' ' + s.title : ''), page: '', editable: true, type: 'Case 1 · 부분 수정 · 0단계 시작', case: '1', work: '', stage: 0, priority: '보통', layout: '', text: text, by: myName,
+    api('/api/requests', { action: 'add', fileKey: fig.key, fileName: '', nodeId: fig.node, frame: s.cid + (s.title ? ' ' + s.title : ''), page: '', editable: true, type: 'Case 1 · 부분 수정 · 1단계 시작', case: '1', work: '', stage: 0, priority: '보통', layout: '', text: text, by: myName,
       fixRows: rows.map(function(r){ return { doc: 'screens', file: s.path, n: r.n, cid: s.cid }; }) })
       .then(function(j){ return loadFixReqs().then(function(){ renderBacklog(); var id = j && j.items && j.items[0] && j.items[0].id; toast((id ? id + ' ' : '') + '화면설계 작업을 요청했습니다. Workbench · 변경 이력에서 진행을 볼 수 있습니다.'); }); })
       .catch(function(err){ b.disabled = false; WB.alert('요청을 만들지 못했습니다.\n' + err.message); });
