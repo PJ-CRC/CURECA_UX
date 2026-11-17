@@ -127,8 +127,9 @@
       var p = (a.getAttribute('href') || '').split(/[?#]/)[0], k = pageMenu[p];
       if (k && m.allowed.indexOf(k) < 0) a.hidden = true;
     });
-    if (m.user.admin && !nav.querySelector('a[href="Accounts.html"]')) {
-      var acc = document.createElement('a'); acc.href = 'Accounts.html'; acc.textContent = '계정 관리';
+    /* 계정 관리: 최고관리자, 또는 「팀 프로젝트 링크 관리」 권한이 있는 사람(서버 allowed에 accounts — 그 사람은 팀 프로젝트 칸만 봄) */
+    if ((m.user.admin || (m.allowed || []).indexOf('accounts') >= 0) && !nav.querySelector('a[href="Accounts.html"]')) {
+      var acc = document.createElement('a'); acc.href = 'Accounts.html'; acc.textContent = m.user.admin ? '계정 관리' : '프로젝트 관리';   // 권한만 있는 사람은 팀 프로젝트 칸만 보므로
       if (/Accounts\.html$/.test(location.pathname)) acc.setAttribute('aria-current', 'page');
       var sp = nav.querySelector('.appnav-sp'); nav.insertBefore(acc, sp);
     }

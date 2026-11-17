@@ -220,6 +220,7 @@ a{color:var(--accent)}
     <summary><span class="num">4</span><span class="ttl">Figma 연결<small>플러그인 또는 토큰 중 하나 — 캡처 · 프레임 목록을 받는 방법</small></span><span class="chip" data-chip></span></summary>
     <div class="body">
       <div class="way" role="radiogroup" aria-label="Figma 연결 방법"><button type="button" class="way-b" role="radio" data-way="token" aria-checked="false"><b>토큰</b><small>Figma 앱을 안 켜도 서버가 받음 · 댓글 보기/쓰기</small></button><button type="button" class="way-b" role="radio" data-way="plugin" aria-checked="false"><b>플러그인</b><small>Figma 데스크톱 앱에서 실행해 두기</small></button></div>
+      <p class="hint">팀 프로젝트의 <b>다음 단계로 보내기</b>(① → ②)는 토큰과 상관없이 <b>플러그인</b>이 합니다. 보낼 때는 두 파일을 Figma 데스크톱에서 열고(탭 두 개) 각각 플러그인을 켜 두세요(창은 최소화해도 됨).</p>
       <div class="way-p" data-pane="figma-token">
         <p class="msg" id="tokMsg">확인 중…</p><span class="chip" id="tokChip" hidden></span>
 <ol>
@@ -422,7 +423,7 @@ a{color:var(--accent)}
          예전에는 CLI가 로그인 필요여도 앱 감시로 ✓인데 칩이 「로그인 필요」로 보였다 */
       s5: { done: ok[4], chip: ag.alive && (ag.status === 'idle' || ag.status === 'working') ? (ag.status === 'working' ? ['ok', 'CLI · 처리 중'] : ['ok', 'CLI · 감시 중']) :
             e.watcherSec != null && e.watcherSec < 90 && c.connector ? ['ok', '앱 · 감시 중'] :
-            ag.alive ? (ag.status === 'login' ? ['bad', '로그인 필요'] : ag.status === 'figma' ? ['bad', 'Figma 연결 필요'] : ag.status === 'error' ? ['bad', '확인 필요'] : ['wait', 'CLI · ' + (ag.status || '확인 중')]) :
+            ag.alive ? (ag.status === 'login' ? ['bad', '로그인 필요'] : ag.status === 'figma' ? ['bad', 'Figma 연결 필요'] : ag.status === 'limit' ? ['wait', 'CLI · 사용 한도'] : ag.status === 'error' ? ['bad', '확인 필요'] : ['wait', 'CLI · ' + (ag.status || '확인 중')]) :
             watch ? ['wait', '앱 · Figma 연결 체크 필요'] :
             e.claudeInstalled === false && !e.claudeCli ? ['bad', '설치 필요'] : ['bad', ag.status === 'stopped' ? '감시 중지됨' : '감시 꺼짐'] },
       s8: { done: ok[5],
@@ -506,6 +507,7 @@ a{color:var(--accent)}
     setMsg('agentEnv', !e.claudeCli ? ['bad','Claude Code CLI를 찾지 못했습니다. Claude 앱 Code 탭을 한 번 열면 함께 설치됩니다. (없으면 아래 「CLI가 없을 때」)'] :
       ag.alive && ag.stopping ? ['wait', '중지하는 중… 처리 중인 요청이 있으면 마친 뒤 멈춥니다.'] :
       ag.alive ? (ag.status === 'login' || ag.status === 'figma' ? ['bad', ag.msg || '로그인이 필요합니다: 「Claude 로그인 · Figma 연결」을 눌러 /login · /mcp를 진행하세요.'] :
+        ag.status === 'limit' ? ['wait', '백그라운드 감시: ' + (ag.msg || 'Claude 사용 한도에 걸려 쉬는 중')] :
         ag.status === 'error' ? ['bad', '백그라운드 감시: ' + (ag.msg || '오류')] :
         ['ok', '✓ 백그라운드 감시 중 (창 없음) — ' + (ag.msg || '') + ' · ' + ago(ag.sec)]) :
       ag.status === 'stopped' ? [off, '백그라운드 감시가 중지되어 있습니다.' + (off === 'bad' ? ' 요청이 처리되지 않습니다.' : '') + ''] :

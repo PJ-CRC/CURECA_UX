@@ -106,6 +106,10 @@ const TEAM_MENUS = ['plan', 'guide', 'history', 'usage'];
 // 승인 항목: 새 흐름(2026-11-12)에서 임시 정책(PV) 승인을 없애 비어 있다(논의 대상의 결정은 정한 사람이, 반영은 [확인 · 반영]). 승인할 것이 다시 생기면 { key, label, menu, where }를 더한다
 const APPROVALS = [];
 const APPROVE_KEYS = APPROVALS.map((a) => a.key);
+// 관리 권한(메뉴 · 승인 권한과 따로, 2026-11-16): 계정의 manages. teamProjects = 자기 소속 팀의 프로젝트(Figma 링크) 목록 · 순서 고치기.
+//  이 권한이 있으면 최고관리자가 아니어도 계정 관리 화면에 들어가지만 「팀 프로젝트」 칸만 보인다
+const MANAGES = [{ key: 'teamProjects', label: '팀 프로젝트 링크 관리', where: '계정 관리 › 팀 프로젝트 — 자기 소속 팀의 Figma 링크 추가 · 순서 · 지우기' }];
+const MANAGE_KEYS = MANAGES.map((m) => m.key);
 const arr = (v) => (v == null ? [] : Array.isArray(v) ? v : [v]);
 
 function pickMenus(a) { return arr(a.menus).filter((k) => MENU_KEYS.includes(k)); }
@@ -117,9 +121,11 @@ function userWrites(a) {
   return p.filter((k) => WRITE_KEYS.includes(k) && (k !== 'guide' || arr(a.menus).includes('guideEdit')));
 }
 function userApproves(a) { if (!a) return []; if (a.admin) return APPROVE_KEYS.slice(); return arr(a.approves).filter((k) => APPROVE_KEYS.includes(k)); }
+function userManages(a) { if (!a) return []; if (a.admin) return MANAGE_KEYS.slice(); return arr(a.manages).filter((k) => MANAGE_KEYS.includes(k)); }
 function userMenus(a) {
   if (!a) return []; if (a.admin) return MENUS.map((m) => m.key);
   let p = pickMenus(a); if (!userTeams(a).length) p = p.filter((k) => !TEAM_MENUS.includes(k));
+  if (userManages(a).includes('teamProjects') && userTeams(a).length) p = p.concat(['accounts']);   // 팀 프로젝트 칸만 보는 계정 관리
   return MENUS.filter((m) => m.always || p.includes(m.key)).map((m) => m.key);
 }
 // 요청이 브라우저 화면에서 온 것인지(권한 검사는 이것만). Claude(curl) · Figma 플러그인(Origin null)은 그대로
@@ -134,6 +140,13 @@ function canApprove(req, key) {
   const u = currentUser(); if (!u) return false;
   return userApproves(u).includes(key);
 }
+// 관리 권한: 브라우저가 아니면(Claude · curl) 그대로, 로그인을 쓰지 않으면 그대로
+function canManage(req, key) {
+  if (!isBrowser(req) || !authRequired()) return true;
+  const u = currentUser(); if (!u) return false;
+  return userManages(u).includes(key);
+}
+function isAdmin(req) { if (!isBrowser(req) || !authRequired()) return true; const u = currentUser(); return !!(u && u.admin); }
 function roMsg(key) { const m = MENUS.find((x) => x.key === key); const l = m ? m.label : key; return `「${l}」 메뉴는 읽기 권한만 있습니다(보기만 가능). 최고관리자에게 「${l} · 쓰기」 권한을 요청하세요.`; }
 
 // ── 팀(Read-Teams · Fill-TeamColors · User-Teams · Current-Team · Set-TeamCtx) ──
@@ -173,6 +186,12 @@ function teamCtx(tid) {
     guideApply: rel ? path.join(C.root, 'workbench', `guide_apply.${tid}.json`) : path.join(C.root, 'workbench', 'guide_apply.json') };
 }
 function itemTeam(e) { return (e && e.team) ? String(e.team) : 'cureca'; }
+/* 팀 프로젝트(2026-11-16): 팀이 함께 쓰는 Figma 파일(프로젝트) 목록과 순서 — 작업물을 1 → 2 → 3 순서로 옮겨 가며 쓴다.
+   CURECA = .history/config/projects.json, 다른 팀 = .history/teams/{id}/config/projects.json (깃 공유, 웹으로 내보내지 않음)
+   {items:[{key, name, link, addedAt, by}]} — 배열 순서가 곧 작업 순서. 작업 페이지는 PC마다(projects/{key}/project.json) 담당자가 고른다 */
+function teamProjFile(tid) { return path.join(teamCtx(tid).hist, 'config', 'projects.json'); }
+function readTeamProjects(tid) { const d = readJson(teamProjFile(tid)); return arr(d && d.items).filter((x) => x && x.key); }
+function saveTeamProjects(tid, items) { writeJson(teamProjFile(tid), { items }); syncWant(); }
 
 // ── 내 정보(Me-Info) ──
 function meInfo() {
@@ -182,7 +201,8 @@ function meInfo() {
   if (!first) for (const m of MENUS) { if (m.pages.length && allowed.includes(m.key)) { first = m.pages[0]; break; } }
   const ns = needSync(); const hs = ns ? readJson(C.syncStat) : null;
   return { required: req, needSync: ns, syncMsg: hs ? String(hs.message || '') : '', syncBusy: hs ? !!hs.busy : false,
-    user: u ? { id: u.id, name: u.name, admin: !!u.admin, menus: allowed, writes: userWrites(u), approves: userApproves(u) } : null,
+    user: u ? { id: u.id, name: u.name, admin: !!u.admin, menus: allowed, writes: userWrites(u), approves: userApproves(u), manages: userManages(u) } : null,
+    manages: req ? userManages(u) : MANAGE_KEYS.slice(),
     approves: req ? userApproves(u) : APPROVE_KEYS.slice(),
     menus: MENUS.map((m) => ({ key: m.key, label: m.label, page: m.pages[0], pages: m.pages, admin: !!m.admin, write: String(m.write || '') })),
     allowed, writes: req ? userWrites(u) : WRITE_KEYS.slice(), first: first || 'Account.html',
@@ -191,4 +211,5 @@ function meInfo() {
 
 module.exports = { C, init, readText, readJson, exists, listJson, now, arr, writeText, writeJson, rmGlob, syncWant, writeLogin, setPw, saveAccount, saveTeams, setMyTeam, meName, readSetup, readAccounts, readAccount, pwHash, testPw, hasAccounts, histReady,
   authRequired, needSync, currentUser, MENUS, MENU_KEYS, ALWAYS_KEYS, WRITE_KEYS, TEAM_MENUS, APPROVALS, APPROVE_KEYS, userWrites, userApproves, userMenus,
-  isBrowser, canWrite, canApprove, roMsg, readTeams, fillTeamColors, teamIds, userTeams, myTeams, currentTeam, teamList, teamCtx, itemTeam, meInfo };
+  isBrowser, canWrite, canApprove, roMsg, readTeams, fillTeamColors, teamIds, userTeams, myTeams, currentTeam, teamList, teamCtx, itemTeam, meInfo,
+  MANAGES, MANAGE_KEYS, userManages, canManage, isAdmin, readTeamProjects, saveTeamProjects };

@@ -5,6 +5,9 @@
 # OS
 Thumbs.db
 desktop.ini
+# 맥이 폴더를 열 때 만드는 시스템 파일
+.DS_Store
+._*
 # 공유용 압축 파일
 UX_AI_TEST_Workbench.zip
 UX_AI_TEST_Workbench_Mac.zip
@@ -51,3 +54,7 @@ workbench/*.tmp
 /Figma AI Run.lnk
 # 실행 중 화면의 진행 표시(실행할 때마다 다시 씀)
 workbench/.launch_progress.js
+# 옮기기 임시 데이터 · 테스트 작업 기록 · 멈추기 신호(PC마다, 2026-11-17)
+workbench/transfer/
+workbench/test-work/
+workbench/.agent_cancel

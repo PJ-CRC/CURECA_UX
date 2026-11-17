@@ -386,7 +386,7 @@ td.usd{font-weight:700}
   function itemsNow(){ var b = baseNow(); return who ? b.filter(function(u){ return name(u) === who; }) : b; }
   function render(){
     $('tip').hidden = true;
-    /* ë ì§ë¥¼ ê³ ë¥´ë©´(ë§ë í´ë¦­) ì¹´ë Â· ë¹ì¤ Â· ìììë³ Â· íê° ëª¨ë ê·¸ë  ê¸°ì¤. ì¼ë³ ë§ëë§ ê¸°ê° ì ì²´ë¥¼ ë³´ì¬ ì¤ë¤ */
+    /* 날짜를 고르면(막대 클릭) 카드 · 비중 · 작업자별 · 표가 모두 그날 기준. 일별 막대만 기간 전체를 보여 준다 */
     var inDay = function(u){ return !day || bucketOf(u) === day; };
     var base0 = baseNow(), list0 = who ? base0.filter(function(u){ return name(u) === who; }) : base0;
     var base = base0.filter(inDay), list = list0.filter(inDay), s = sum(list);

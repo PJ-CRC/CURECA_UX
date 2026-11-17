@@ -727,7 +727,7 @@ html.embed,html.embed body{overflow:hidden}
     $('title').textContent = m.title || id;
     var pills = [], keys = appliedKeys();
     if (keys.length) pills.push('<span class="pill on" title="이 문서를 작업 기준으로 적용한 프로젝트(Figma 파일) — 이 PC의 Claude가 이 프로젝트를 고칠 때 이 문서를 따릅니다">적용 프로젝트 <b>' + esc(keys.map(function(k){ return names[k] || k.slice(0, 6); }).join(', ')) + '</b></span>');
-    if (m.link) pills.push('<a class="pill" href="' + esc(m.link) + '" target="_blank" rel="noopener">기준 Figma <b>열기 ↗</b></a>');
+    if (/^https:\/\//i.test(m.link || '')) pills.push('<a class="pill" href="' + esc(m.link) + '" target="_blank" rel="noopener">기준 Figma <b>열기 ↗</b></a>');
     pills.push('<span class="pill">' + (G && G.rev ? '수정일' : '작성일') + ' <b>' + esc(String((G && G.updatedAt) || m.updatedAt || '').slice(0, 10)) + '</b></span>');
     if (m.by) pills.push('<span class="pill">요청 <b>' + esc(m.by) + '</b></span>');
     if (m.frames) pills.push('<span class="pill">참고 프레임 <b>' + esc(m.frames) + '개</b></span>');
@@ -1439,7 +1439,7 @@ html.embed,html.embed body{overflow:hidden}
       row('기준(basis)', o.basis ? esc(o.basis) : o.rules_version ? '<span class="sc-muted">예전 기록 · 공통 규칙 ' + esc(o.rules_version) + '</span>' : '<span class="sc-chip">기록 전</span>') +
       row('관련 정책', s.pols.map(idChip).join(' ')) + row('짝 화면', o.pair_cid ? idChip(o.pair_cid) + (o.tl_relation ? ' <span class="sc-muted">' + esc(o.tl_relation) + '</span>' : '') : '') +
       row('부르는 화면', s.callers.map(idChip).join(' ')) + row('날짜', esc(o.date || '')) +
-      row('Figma', o.figma ? '<a href="' + esc(o.figma) + '" target="_blank" rel="noopener">작업방 ' + esc(mn.name) + (o.figma_region ? ' ' + esc(o.figma_region) : '') + '</a>' : '') + '</dl>';
+      row('Figma', /^https:\/\//i.test(o.figma || '') ? '<a href="' + esc(o.figma) + '" target="_blank" rel="noopener">작업방 ' + esc(mn.name) + (o.figma_region ? ' ' + esc(o.figma_region) : '') + '</a>' : '') + '</dl>';
     var kinds = uniq(s.fixes.map(function(f){ return f.kind; }));
     h += '<h3 class="sc-h">반영 대기 목록</h3>' + (s.fixes.length
       ? '<div class="sc-filter" role="group" aria-label="구분">' + ['전체'].concat(kinds).map(function(k, i){ var n = i ? s.fixes.filter(function(f){ return f.kind === k; }).length : s.fixes.length; return '<button type="button" data-kind="' + (i ? esc(k) : '') + '"' + (i ? '' : ' class="on"') + '>' + esc(k) + ' <b>' + n + '</b></button>'; }).join('') + '</div><div class="tbl" id="scFix"></div>'

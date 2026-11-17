@@ -29,7 +29,7 @@
     1. 「진행 중」으로. id는 `p{YYYYMMDD}-{작업 ID 소문자}`(예: `p20261030-j013`). **작업 기준 문서를 먼저 읽는다**(위).
     2. 화면마다 `get_screenshot`(원본 크기)과 `use_figma`(위 「값은 Figma에서 읽은 그대로」)로 읽고, 아이콘 · 이미지를 내보낸 뒤 위 규칙대로 `prototypes/{id}/`에 만든다. 화면이 많으면 공통 틀 · kit를 먼저, 화면은 하나씩.
     3. 브라우저(미리보기)로 `Prototype.html?id={id}`를 열어 시작 화면 · 흐름 이동이 되는지 확인하고, 화면 · 상태마다 Figma 캡처와 겹쳐 보고 맞춘다(위 「겹쳐 보고 고친다」).
-    4. `meta.json`(syncedAt · updatedAt = 지금, jobId) → `POST /api/jobs {action:'update', id, status:'완료', proto:{id}, note:'화면 N개 · 동작: … · Figma와 다른 곳: …\n작업 기준: …'}`. 사용량은 `usage.ps1 -Title "프로토타입: {name}"`.
+    4. `meta.json`(syncedAt · updatedAt = 지금, jobId) → `POST /api/jobs {action:'update', id, status:'완료', proto:{id}, note:'화면 N개 · 동작: … · Figma와 다른 곳: …\n작업 기준: …'}`. 사용량(`POST /api/usage`) 제목은 「프로토타입: {name}」.
   - **prototype-edit (수정 요청)**: 작업의 `proto` · `text` · `frames`(그때 보던 화면). 작업 기준 문서를 읽고(위), 관계있는 화면 파일(필요하면 kit · index)만 고친 뒤 고친 화면을 Figma 캡처와 겹쳐 본다. `updatedAt` 갱신 → 「완료」(note 마지막 줄 작업 기준). Figma는 고치지 않는다(Figma도 바꿔야 하면 note에 Workbench 요청을 안내).
   - **prototype-sync (Figma 맞추기)**: 작업의 `frames`(또는 `GET /api/prototypes`의 그 프로토타입 `stale`) 화면을 Figma에서 다시 읽어(위 「Figma 프레임과 똑같이」 · 작업 기준) 그 화면 파일만 맞추고 겹쳐 본다. `add:true`(화면 추가됨)는 그 프레임을 읽어 화면 파일을 새로 만들고 `meta.frames`에 넣은 뒤 디스크립션 · 작업 기준대로 흐름(이동 버튼)에 잇는다(흐름에 낄 자리가 없으면 note에 적고 화면만 둔다). `gone:true`(화면 없어짐)는 그 화면 파일과 `meta.frames` 항목을 빼고 그 화면으로 가던 이동을 고친다(start였으면 다음 화면으로). `syncedAt` · `updatedAt` = 지금 → 「완료」, note에 맞춘 화면 · 작업 기준. 사용량 `-Title "프로토타입 맞추기: {name}"`.
   - 예전 한 파일 프로토타입(`format:'single'`, 예: `assay-pack`)은 그 파일 안에서 고친다. 크게 고칠 일이 생기면 화면별 파일로 옮겨도 된다.

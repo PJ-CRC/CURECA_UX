@@ -100,10 +100,20 @@ foreach ($dir in $places) { $lnk = Join-Path $dir 'Figma AI Run.lnk'; try { if (
     const jj = core.readJson(C.jobFile);
     if (jj && core.arr(jj.items).some((x) => x && x.status === '진행 중' && old(x))) {
       const now = core.now(), done = [];
-      for (const x of core.arr(jj.items)) if (x && x.status === '진행 중' && old(x)) { x.status = '대기'; x.takenBy = ''; x.note = note; x.updatedAt = now; done.push(x.id); }
+      for (const x of core.arr(jj.items)) if (x && x.status === '진행 중' && old(x)) {
+        // 옮기기 「만들기」는 되돌려 다시 하면 프레임이 두 번 생긴다 → 실패로(사람이 받는 파일을 확인하고 다시 보내기, 2026-11-17)
+        if (x.kind === 'transfer' && x.phase === 'build') { x.status = '실패'; x.note = '만들다 10분 동안 소식이 없어 멈춤 — 받는 파일 작업 페이지에 일부가 만들어졌을 수 있습니다. 확인한 뒤 다시 보내세요'; }
+        else { x.status = '대기'; x.takenBy = ''; x.note = note; }
+        x.updatedAt = now; done.push(x.id);
+      }
       jj.version = (parseInt(jj.version, 10) || 0) + 1; core.writeJson(C.jobFile, jj);
       log('멈춘 작업을 대기로 되돌림: ' + done.join(', '));
     }
+    // 옮기기 임시 폴더(workbench/transfer/{작업 ID}): 끝났거나 목록에서 사라진 작업 것은 지운다(실패 · 오래된 작업에 남던 것, 2026-11-17)
+    try {
+      const xd = path.join(C.root, 'workbench', 'transfer'), live = new Set(core.arr((core.readJson(C.jobFile) || {}).items).filter((x) => x && x.kind === 'transfer' && ['대기', '진행 중'].includes(x.status)).map((x) => x.id));
+      if (core.exists(xd)) for (const d of fs.readdirSync(xd)) if (/^J\d{3,}$/.test(d) && !live.has(d)) fs.rmSync(path.join(xd, d), { recursive: true, force: true });
+    } catch (e) {}
   }
   let staleAt = Date.now() + 30000;
 

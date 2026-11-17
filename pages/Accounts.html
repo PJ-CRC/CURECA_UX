@@ -83,8 +83,8 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
 .note{font-size:12.5px;color:var(--ink-3);background:var(--surface-2);border-radius:8px;padding:8px 12px;margin:0 0 var(--gap)}
 .left{display:flex;flex-direction:column;gap:var(--gap);min-width:0}
 .teams{padding:16px 18px}
-.teams-h{display:flex;align-items:baseline;gap:10px;margin:0 0 10px}
-.teams-h h2{margin:0;font-size:15px}
+.teams-h{display:flex;align-items:baseline;gap:4px 10px;margin:0 0 10px;flex-wrap:wrap}
+.teams-h h2{margin:0;font-size:15px;white-space:nowrap}
 .teams-h small{font-size:12.5px;color:var(--ink-3)}
 .tlist{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
 .trow{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--line);border-radius:8px}
@@ -101,6 +101,30 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
 .tag{font-size:11px;font-weight:700;padding:0 6px;border-radius:999px;background:var(--ok-soft);color:var(--ok);margin-left:6px;vertical-align:1px}
 #tmsg{font-size:12.5px;margin-top:6px;min-height:18px}
 #tmsg.bad{color:var(--red)} #tmsg.ok{color:var(--ok)}
+/* 팀 프로젝트: 팀마다 Figma 파일을 작업 순서대로(1 → 2 → 3). 번호 동그라미 = 순서, 오른쪽 버튼 = 위로 · 아래로 · 이름 · 지우기 */
+.tproj{padding:16px 18px}
+.tp-team{display:flex;gap:4px;flex-wrap:wrap;margin:0 0 10px}
+.tp-team button{height:30px;padding:0 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-size:13px;font-weight:600;color:var(--ink-2)}
+.tp-team button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+:root[data-theme="dark"] .tp-team button[aria-pressed="true"]{color:#0f1115}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tp-team button[aria-pressed="true"]{color:#0f1115}}
+.tp-list{list-style:none;margin:0 0 12px;padding:0;display:flex;flex-direction:column;gap:6px}
+.tp-row{display:grid;grid-template-columns:28px minmax(0,1fr) auto;align-items:center;gap:10px;padding:8px 10px 8px 8px;border:1px solid var(--line);border-radius:8px}
+.tp-n{width:26px;height:26px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+.tp-row .tp-t{min-width:0;display:flex;flex-direction:column}
+.tp-row .tp-t b{font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tp-row .tp-t a{font-size:12px;color:var(--ink-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-decoration:none}
+.tp-row .tp-t a:hover{color:var(--accent);text-decoration:underline}
+.tp-row .tp-t input{height:30px;border:1px solid var(--line);border-radius:7px;background:var(--surface);padding:0 8px;font-size:13.5px;max-width:280px}
+.tp-row .row{gap:4px;flex-wrap:nowrap}
+.tp-row .ic{width:30px;padding:0;font-size:14px}
+.tp-empty{font-size:13px;color:var(--ink-3);padding:10px 0}
+#tpmsg{font-size:12.5px;margin-top:6px;min-height:18px}
+#tpmsg.bad{color:var(--red)} #tpmsg.ok{color:var(--ok)}
+.chip.mg{background:var(--warn-soft);color:var(--warn)}
+/* 「팀 프로젝트 링크 관리」 권한만 있는 사람: 계정 · 팀 설정은 숨기고 팀 프로젝트 칸만 */
+body.limited .admin-only{display:none !important}
+body.limited .split{grid-template-columns:minmax(0,760px)}
 </style>
 </head>
 <body>
@@ -118,19 +142,26 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
 </nav>
 <main class="app-wrap wide">
   <header class="app-head">
-    <div class="app-head-t"><h1>계정 관리</h1><p>계정을 만들고 사용할 메뉴를 정합니다. 바꾼 내용은 몇 초 후 반영됩니다.</p></div>
-    <div class="app-head-act"><button class="btn primary" id="newBtn">＋ 계정 추가</button></div>
+    <div class="app-head-t"><h1 id="headH">계정 관리</h1><p id="headP">계정을 만들고 사용할 메뉴를 정합니다. 바꾼 내용은 몇 초 후 반영됩니다.</p></div>
+    <div class="app-head-act admin-only"><button class="btn primary" id="newBtn">＋ 계정 추가</button></div>
   </header>
-  <p class="note">비밀번호는 해시로만 저장됩니다. 최고관리자 계정은 삭제 또는 중지할 수 없고, 모든 메뉴에 접근 가능합니다.</p>
+  <p class="note admin-only">비밀번호는 해시로만 저장됩니다. 최고관리자 계정은 삭제 또는 중지할 수 없고, 모든 메뉴에 접근 가능합니다.</p>
   <div class="split">
     <div class="left">
-    <section class="card teams" aria-labelledby="teamsTitle">
+    <section class="card tproj" aria-labelledby="tpTitle">
+      <div class="teams-h"><h2 id="tpTitle">팀 프로젝트</h2><small>팀이 함께 쓰는 Figma 파일을 작업 순서대로 둡니다. Workbench 탭이 이 순서로 보이고, 작업 페이지는 각자 고릅니다.</small></div>
+      <div class="tp-team" id="tpTeams" role="group" aria-label="팀 고르기"></div>
+      <ol class="tp-list" id="tpList"></ol>
+      <div class="tadd" id="tpAddRow"><input id="tpLink" placeholder="Figma 파일 링크" autocomplete="off" spellcheck="false" aria-label="새 프로젝트 Figma 링크" style="flex:3 1 220px"><input id="tpName" placeholder="이름 (예: 1차 설계)" maxlength="60" aria-label="새 프로젝트 이름"><button class="btn sm" type="button" id="tpAdd">＋ 추가</button></div>
+      <div id="tpmsg" role="status"></div>
+    </section>
+    <section class="card teams admin-only" aria-labelledby="teamsTitle">
       <div class="teams-h"><h2 id="teamsTitle">팀</h2><small>일정/작업 · UX 문서 · 변경 이력 · 사용량 통계를 팀 단위로 씁니다. 한 계정이 여러 팀에 속할 수 있습니다.</small></div>
       <div class="tlist" id="tlist"></div>
       <div class="tadd"><input id="tId" placeholder="팀 아이디 (영문 소문자, 예: lims)" maxlength="32" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="새 팀 아이디"><input id="tName" placeholder="팀 이름" maxlength="30" aria-label="새 팀 이름"><button class="btn sm" type="button" id="tAdd">＋ 팀 추가</button></div>
       <div id="tmsg" role="status"></div>
     </section>
-    <section class="card">
+    <section class="card admin-only">
       <div class="find" role="search">
         <select id="qTeam" aria-label="팀으로 거르기"><option value="">팀 전체</option></select>
         <input id="q" type="search" placeholder="이름 · 아이디 검색" aria-label="이름 · 아이디 검색">
@@ -142,7 +173,7 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
       </table>
     </section>
     </div>
-    <form class="card form" id="form" autocomplete="off">
+    <form class="card form admin-only" id="form" autocomplete="off">
       <h2 id="fTitle">계정 추가</h2>
       <p class="sub" id="fSub">아이디는 만든 뒤 바꿀 수 없습니다.</p>
       <label class="f">아이디 <small>영문 소문자 · 숫자 · . _ - (3~32자)</small><input id="fId" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="32"></label>
@@ -157,6 +188,9 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
       <div class="mh" id="apH">승인 권한</div>
       <div class="menus" id="fApproves"></div>
       <p class="sub" id="apSub" style="margin:-4px 0 12px">메뉴 권한과 따로 줍니다(여러 명에게 줄 수 있음). 체크한 사람에게만 승인 · 반려 버튼이 보입니다.</p>
+      <div class="mh" id="mgH">관리 권한</div>
+      <div class="menus" id="fManages"></div>
+      <p class="sub" id="mgSub" style="margin:-4px 0 12px">메뉴 권한과 따로 줍니다. 받은 사람은 계정 관리에 들어와 자기 소속 팀의 그 항목만 고칩니다(계정 · 팀 설정은 보이지 않음).</p>
       <label class="sw" id="activeRow"><input type="checkbox" id="fActive" checked> 사용 (끄면 로그인할 수 없음)</label>
       <div class="row"><button class="btn primary" id="saveBtn">저장</button><button class="btn" type="button" id="cancelBtn">새로 입력</button><span style="flex:1"></span><button class="btn danger sm" type="button" id="delBtn" hidden>지우기</button></div>
       <div class="msg" id="msg" role="status"></div>
@@ -181,6 +215,59 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
     }).join('') || '<p class="sub">팀이 없습니다.</p>';
     var e = $('tEditName'); if (e) { e.focus(); e.select(); }
   }
+  var MANS = [], MLAB = {};
+  function setManages(list, all, lock){ [].forEach.call($('fManages').querySelectorAll('input[name="mg"]'), function(c){ c.checked = !!all || list.indexOf(c.value) >= 0; c.disabled = !!lock; }); }
+  function managesOf(){ return [].map.call($('fManages').querySelectorAll('input[name="mg"]:checked'), function(c){ return c.value; }); }
+  /* ── 팀 프로젝트: 팀마다 Figma 파일 목록 · 순서(GET/POST /api/teamprojects). 최고관리자 · 「팀 프로젝트 링크 관리」 권한(자기 팀)만 고친다 ── */
+  var tpTeam = '', TP = [], tpEdit = '', tpCan = false;
+  function tpsay(t, ok){ $('tpmsg').textContent = t; $('tpmsg').className = ok ? 'ok' : 'bad'; }
+  function tpLoad(){
+    if (!tpTeam) { $('tpList').innerHTML = '<li class="tp-empty">팀이 없습니다.</li>'; return Promise.resolve(); }
+    return fetch('/api/teamprojects?team=' + encodeURIComponent(tpTeam), { cache: 'no-store' }).then(function(r){ return r.json(); }).then(function(d){
+      if (d.error) throw new Error(d.error); TP = d.items || []; tpCan = !!d.canEdit; tpRender();
+    }).catch(function(e){ $('tpList').innerHTML = '<li class="tp-empty">' + esc(e.message) + '</li>'; });
+  }
+  function tpRender(){
+    $('tpTeams').innerHTML = TEAMS.length > 1 ? TEAMS.map(function(t){ return '<button type="button" data-tpt="' + esc(t.id) + '" aria-pressed="' + (t.id === tpTeam) + '">' + esc(t.name) + '</button>'; }).join('') : '';
+    $('tpAddRow').hidden = !tpCan;
+    $('tpList').innerHTML = TP.length ? TP.map(function(p, i){
+      var nm = p.name || ('Figma 파일 ' + p.key.slice(0, 6));
+      var body = tpEdit === p.key ? '<input id="tpEditName" value="' + esc(p.name || '') + '" maxlength="60" placeholder="이름" aria-label="프로젝트 이름">'
+        : '<b>' + esc(nm) + '</b><a href="' + esc(/^https:\/\//i.test(p.link || '') ? p.link : '#') + '" target="_blank" rel="noopener" title="Figma에서 열기">' + esc(p.link) + '</a>';
+      var act = !tpCan ? '' : tpEdit === p.key
+        ? '<button class="btn sm primary" type="button" data-tpa="save">저장</button><button class="btn sm" type="button" data-tpa="cancel">취소</button>'
+        : '<button class="btn sm ic" type="button" data-tpa="up"' + (i ? '' : ' disabled') + ' aria-label="' + esc(nm) + ' 앞으로" title="앞 순서로">↑</button>' +
+          '<button class="btn sm ic" type="button" data-tpa="down"' + (i < TP.length - 1 ? '' : ' disabled') + ' aria-label="' + esc(nm) + ' 뒤로" title="뒤 순서로">↓</button>' +
+          '<button class="btn sm" type="button" data-tpa="ren">이름</button><button class="btn sm danger" type="button" data-tpa="del">지우기</button>';
+      return '<li class="tp-row" data-k="' + esc(p.key) + '"><span class="tp-n" aria-label="' + (i + 1) + '번째">' + (i + 1) + '</span><span class="tp-t">' + body + '</span><span class="row">' + act + '</span></li>';
+    }).join('') : '<li class="tp-empty">아직 프로젝트가 없습니다.' + (tpCan ? ' 아래에 Figma 파일 링크를 넣어 순서대로 추가하세요.' : '') + '</li>';
+    var e = $('tpEditName'); if (e) { e.focus(); e.select(); }
+  }
+  function tpPost(b, done){
+    b.team = tpTeam;
+    return fetch('/api/teamprojects', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(b) }).then(function(r){ return r.json(); })
+      .then(function(d){ if (d.error) throw new Error(d.error); tpEdit = ''; return tpLoad().then(function(){ if (done) tpsay(done, true); }); })
+      .catch(function(err){ tpsay(err.message); });
+  }
+  $('tpTeams').addEventListener('click', function(e){ var b = e.target.closest('[data-tpt]'); if (!b) return; tpTeam = b.dataset.tpt; tpEdit = ''; tpsay(''); tpLoad(); });
+  $('tpAdd').addEventListener('click', function(){
+    var link = $('tpLink').value.trim(); if (!/figma\.com\/(design|file|proto)\//.test(link)) { tpsay('Figma 파일 링크를 넣어 주세요.'); return; }
+    tpPost({ action: 'add', link: link, name: $('tpName').value.trim() }, (TP.length + 1) + '번째 프로젝트로 추가했습니다.').then(function(){ if ($('tpmsg').className === 'ok') { $('tpLink').value = ''; $('tpName').value = ''; } });
+  });
+  $('tpName').addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.preventDefault(); $('tpAdd').click(); } });
+  $('tpList').addEventListener('click', function(e){
+    var b = e.target.closest('[data-tpa]'); if (!b) return; var k = b.closest('[data-k]').dataset.k, p = TP.filter(function(x){ return x.key === k; })[0], a = b.dataset.tpa;
+    if (a === 'up' || a === 'down') tpPost({ action: 'move', key: k, dir: a === 'up' ? -1 : 1 });
+    else if (a === 'ren') { tpEdit = k; tpRender(); tpsay(''); }
+    else if (a === 'cancel') { tpEdit = ''; tpRender(); }
+    else if (a === 'save') tpPost({ action: 'update', key: k, name: $('tpEditName').value.trim() }, '이름을 바꿨습니다.');
+    else if (a === 'del' && p && confirm('「' + (p.name || p.key) + '」을(를) 팀 프로젝트에서 뺄까요?\n\nFigma 파일과 각 PC의 캡처 · 변경 이력은 그대로입니다.')) tpPost({ action: 'delete', key: k }, '팀 프로젝트에서 뺐습니다.');
+  });
+  $('tpList').addEventListener('keydown', function(e){
+    if (e.target.id !== 'tpEditName') return;
+    if (e.key === 'Enter') { e.preventDefault(); var s = $('tpList').querySelector('[data-tpa="save"]'); if (s) s.click(); }
+    if (e.key === 'Escape') { tpEdit = ''; tpRender(); }
+  });
   function setApproves(list, all, lock){ [].forEach.call($('fApproves').querySelectorAll('input[name="ap"]'), function(c){ c.checked = !!all || list.indexOf(c.value) >= 0; c.disabled = !!lock; }); }
   function approvesOf(){ return [].map.call($('fApproves').querySelectorAll('input[name="ap"]:checked'), function(c){ return c.value; }); }
   function say(t, ok){ $('msg').textContent = t; $('msg').className = 'msg ' + (ok ? 'ok' : 'bad'); }
@@ -190,10 +277,19 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
       $('srv').textContent = '로컬 서버 연결됨'; $('srv').className = 'badge on';
       /* 메뉴가 1개면 예전 서버가 배열 대신 글자로 보냈다 → 늘 배열로 */
       TEAMS = [].concat(d.teams || []); TLAB = {}; TEAMS.forEach(function(t, i){ TLAB[t.id] = t.name; TCOL[t.id] = t.color != null ? t.color % 8 : i % 8; }); renderTeams(); fillTeamFilter();
+      /* 팀 프로젝트: 고른 팀이 없으면 지금 보는 팀(상단) → 첫 팀 */
+      if (!TEAMS.some(function(t){ return t.id === tpTeam; })) tpTeam = (TEAMS.some(function(t){ return t.id === window.WB_TEAM; }) ? window.WB_TEAM : (TEAMS[0] && TEAMS[0].id)) || '';
+      tpLoad();
+      /* 「팀 프로젝트 링크 관리」 권한으로만 들어온 사람: 팀 프로젝트 칸만 */
+      document.body.classList.toggle('limited', !!d.limited);
+      if (d.limited) { $('headH').textContent = '프로젝트 관리'; document.title = '프로젝트 관리 · Figma AI Run'; $('headP').textContent = '소속 팀의 프로젝트(Figma 파일)와 작업 순서를 정합니다. 계정 · 팀 설정은 최고관리자만 바꿉니다.'; return; }
+      MANS = [].concat(d.manages || []); MANS.forEach(function(m){ MLAB[m.key] = m.label; });
+      $('fManages').innerHTML = MANS.map(function(m){ return '<label class="mrow ap"><input type="checkbox" name="mg" value="' + esc(m.key) + '"><b>' + esc(m.label) + '</b><small>' + esc(m.where || '') + '</small></label>'; }).join('');
+      ['mgH', 'fManages', 'mgSub'].forEach(function(id){ $(id).style.display = MANS.length ? '' : 'none'; });
       $('fTeams').innerHTML = TEAMS.length ? TEAMS.map(function(t){
         return '<label class="mrow ap"><input type="checkbox" name="tm" value="' + esc(t.id) + '"><b>' + esc(t.name) + '</b><small>' + esc(t.id) + ' · 계정 ' + t.members + '개</small></label>';
       }).join('') : '<p class="sub">팀이 없습니다. 왼쪽에서 먼저 팀을 만드세요.</p>';
-      ITEMS = (d.items || []).map(function(a){ a.teams = [].concat(a.teams || []); a.menus = [].concat(a.menus || []); a.writes = [].concat(a.writes || []); a.approves = [].concat(a.approves || []); return a; }); MENUS = [].concat(d.menus || []); MENUS.forEach(function(m){ LAB[m.key] = m.label; });
+      ITEMS = (d.items || []).map(function(a){ a.teams = [].concat(a.teams || []); a.menus = [].concat(a.menus || []); a.writes = [].concat(a.writes || []); a.approves = [].concat(a.approves || []); a.manages = [].concat(a.manages || []); return a; }); MENUS = [].concat(d.menus || []); MENUS.forEach(function(m){ LAB[m.key] = m.label; });
       /* 승인 권한(메뉴 권한과 따로): 항목마다 체크 */
       APPR = [].concat(d.approvals || []); APPR.forEach(function(p){ ALAB[p.key] = p.label; });
       $('fApproves').innerHTML = APPR.length ? APPR.map(function(p){
@@ -234,7 +330,8 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
       return '<tr data-id="' + esc(a.id) + '" class="' + (sel === a.id ? 'on' : '') + '"><td class="id">' + esc(a.id) + '</td><td>' + esc(a.name) + (a.admin ? ' <span class="chip adm">최고관리자</span>' : '') + '</td>' +
         '<td><div class="chips">' + (a.admin ? '<span class="chip adm">모든 팀</span>' : a.teams.length ? a.teams.map(function(k){ return '<span class="chip tm tc' + (TCOL[k] || 0) + '">' + esc(TLAB[k] || k) + '</span>'; }).join('') : '<span class="chip off">없음</span>') + '</div></td>' +
         '<td><div class="chips">' + (a.admin ? '<span class="chip adm">전부 쓰기</span>' : a.menus.length ? a.menus.map(function(k){ var w = a.writes.indexOf(k) >= 0; return '<span class="chip' + (w ? ' w' : '') + '">' + esc(LAB[k] || k) + ' · ' + (w ? '쓰기' : '읽기') + '</span>'; }).join('') : '<span class="chip off">없음</span>') +
-          (!a.admin && a.approves.length ? a.approves.map(function(k){ return '<span class="chip ap">승인 · ' + esc(ALAB[k] || k) + '</span>'; }).join('') : '') + '</div></td>' +
+          (!a.admin && a.approves.length ? a.approves.map(function(k){ return '<span class="chip ap">승인 · ' + esc(ALAB[k] || k) + '</span>'; }).join('') : '') +
+          (!a.admin && a.manages.length ? a.manages.map(function(k){ return '<span class="chip mg">관리 · ' + esc(MLAB[k] || k) + '</span>'; }).join('') : '') + '</div></td>' +
         '<td>' + (a.active ? '<span class="chip ok">사용</span>' : '<span class="chip off">중지</span>') + '</td><td style="color:var(--ink-3);font-size:12.5px">' + esc(fmt(a.updatedAt)) + '</td></tr>';
     }).join('') || '<tr><td colspan="6">' + (filt && ITEMS.length ? '찾는 계정이 없습니다.' : '계정이 없습니다.') + '</td></tr>';
   }
@@ -254,7 +351,7 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
     $('fTitle').textContent = '계정 추가'; $('fSub').textContent = '아이디는 만든 뒤 바꿀 수 없습니다.';
     $('fId').value = ''; $('fId').readOnly = false; $('fName').value = ''; $('fPw').value = ''; $('fPw').placeholder = '';
     $('pwLabel').innerHTML = '비밀번호 <small>8자 이상</small>';
-    setMenus(['workbench'], ['workbench'], false, false); setApproves([], false, false); setTeams(TEAMS.length === 1 ? [TEAMS[0].id] : [], false, false); $('fActive').checked = true; $('activeRow').hidden = true; $('delBtn').hidden = true; say('');
+    setMenus(['workbench'], ['workbench'], false, false); setApproves([], false, false); setManages([], false, false); setTeams(TEAMS.length === 1 ? [TEAMS[0].id] : [], false, false); $('fActive').checked = true; $('activeRow').hidden = true; $('delBtn').hidden = true; say('');
   }
   function pick(id){
     var a = ITEMS.filter(function(x){ return x.id === id; })[0]; if (!a) { fresh(); return; }
@@ -262,7 +359,7 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
     $('fTitle').textContent = a.name + ' 수정'; $('fSub').textContent = a.admin ? '최고관리자: 이름 · 비밀번호만 바꿀 수 있습니다.' : '만든 날 ' + fmt(a.createdAt) + ' · 비밀번호 바꾼 날 ' + fmt(a.pwAt);
     $('fId').value = a.id; $('fId').readOnly = true; $('fName').value = a.name; $('fPw').value = ''; $('fPw').placeholder = '바꿀 때만 입력';
     $('pwLabel').innerHTML = '비밀번호 초기화 <small>비우면 그대로 · 바꾸면 그 사람은 다시 로그인</small>';
-    setMenus(a.menus, a.writes, a.admin, a.admin); setApproves(a.approves, a.admin, a.admin); setTeams(a.teams, a.admin, a.admin); $('fActive').checked = a.active; $('fActive').disabled = a.admin; $('activeRow').hidden = false; $('delBtn').hidden = a.admin; say('');
+    setMenus(a.menus, a.writes, a.admin, a.admin); setApproves(a.approves, a.admin, a.admin); setManages(a.manages, a.admin, a.admin); setTeams(a.teams, a.admin, a.admin); $('fActive').checked = a.active; $('fActive').disabled = a.admin; $('activeRow').hidden = false; $('delBtn').hidden = a.admin; say('');
   }
   $('q').addEventListener('input', renderRows);
   $('qTeam').addEventListener('change', renderRows);
@@ -278,7 +375,7 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
     e.preventDefault();
     var menus = MENUS.filter(function(m){ return levelOf(m.key) !== 'none'; }).map(function(m){ return m.key; });
     var writes = MENUS.filter(function(m){ return levelOf(m.key) === 'write'; }).map(function(m){ return m.key; });
-    var b = { action: sel ? 'update' : 'add', id: $('fId').value.trim().toLowerCase(), name: $('fName').value.trim(), pw: $('fPw').value, menus: menus, writes: writes, approves: approvesOf(), teams: teamsOf() };
+    var b = { action: sel ? 'update' : 'add', id: $('fId').value.trim().toLowerCase(), name: $('fName').value.trim(), pw: $('fPw').value, menus: menus, writes: writes, approves: approvesOf(), manages: managesOf(), teams: teamsOf() };
     if (sel) b.active = $('fActive').checked;
     if (!sel && !menus.length && !confirm('사용할 메뉴가 하나도 없습니다. 이대로 만들까요? (로그인하면 「시작 안내」 · 「내 정보」만 보입니다)')) return;
     var cur = sel && ITEMS.filter(function(x){ return x.id === sel; })[0];

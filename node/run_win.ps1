@@ -1,10 +1,10 @@
-﻿# Node 서버 실행 (윈도우) — 기존 서버(guide_server.ps1, 8765)와 별개로 만드는 새 서버(기본 8766)
+﻿# Node 서버 실행 (윈도우, 창에 붙여 실행 — 보통은 Figma AI Run(workbench\launch_win.ps1)이 창 없이 띄운다)
 #  - Node.js는 설치하지 않는다(B 방식): node\NODE_VERSION의 공식 Node를 처음 한 번 nodejs.org에서 받아 PC별 폴더에 둔다
 #    %LOCALAPPDATA%\UX_AI_TEST_Workbench\node\{버전}\node.exe — 받은 파일은 공식 SHASUMS256.txt로 확인한다
 #  - 이미 받아 둔 버전이 있으면 받지 않는다. NODE_VERSION을 올리면 다음 실행 때 그 버전을 받는다
-#  - 실행: powershell -ExecutionPolicy Bypass -File node\run_win.ps1 [-Port 8766] [-ReadOnly]
-#    -ReadOnly: 쓰기 API · 깃 동기화 · 감시를 끈다(기존 서버와 같은 데이터를 읽기만 하며 비교할 때)
-param([int]$Port = 8766, [switch]$ReadOnly, [switch]$NoStart)
+#  - 실행: powershell -ExecutionPolicy Bypass -File node\run_win.ps1 [-Port 8765] [-ReadOnly]
+#    -ReadOnly: 쓰기 API · 깃 동기화 · 감시를 끈다(같은 데이터를 읽기만 하며 비교할 때 — 다른 포트로)
+param([int]$Port = 8765, [switch]$ReadOnly, [switch]$NoStart)
 $ErrorActionPreference = 'Stop'
 $Here = $PSScriptRoot; $Root = Split-Path $Here -Parent
 $Ver = ([IO.File]::ReadAllText((Join-Path $Here 'NODE_VERSION'))).Trim()
