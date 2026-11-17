@@ -276,7 +276,7 @@ started: 2026-11-17
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | C1 | Cureca 장비의 현황 | 표기 수정 (Cureca → CURECA) | TI-INS-01-T 0, LI-INS-01-T 0 | TI R02 · LI R01 | 같음 | - | 맞음 (2026-11-17) |
 | C2 | Alert_L_004 팝업 노출 | 알럿 ID 수정 (Alert_L_004 → Alert_004, 문구 함께 적음) | TI-INS-01-T 1 | TI R01, DS-0005 | T만 | O | 맞음 (2026-11-17) |
-| C3 | Total / In Use / Not in Use | 표출 항목을 화면 표기대로 (Enabled n · Total n (Disabled n)) | TI-INS-01-T 3-2, LI-INS-01-T 3-2 | TI R04 · LI R02, POL-EQP-009 | 같음 | - | |
+| C3 | Total / In Use / Not in Use | 표출 항목을 화면 표기대로 (Enabled n · Total n (Disabled n)) | TI-INS-01-T 3-2, LI-INS-01-T 3-2 | TI R04 · LI R02, POL-EQP-009 | 같음 | - | 맞음 (2026-11-17) |
 | C4 | Dignosctics, Enablde | 표기 수정 (Dignosctics → Diagnostics, Enablde → Enabled) | TI-INS-01-T 2 · 3-2, LI-INS-01-T 2 · 3-2 | TI R05 · LI R03 | 같음 | O | |
 | C5 | 자세한 상태값은 우측의 Instrument Detail Info page 참고 | 상태값 · Door 2개 Module 표시를 풀어 씀 | TI-INS-01-T 3-5 | TI R06, POL-EQP-001 | T만 | - | |
 | C6 | 패널 CID TI-INS-02-T | 패널 CID 수정 (TI-INS-02-T → TI-INS-01-T) | TI-INS-01-T 0 | TI R03 | T만 | - | |
@@ -337,6 +337,7 @@ started: 2026-11-17
 | 2026-11-17 | 4단계 | Q5 Admin · User일 때 [Save] · Radio 버튼 모습 (Workbench R007 질문) | Service만 가능해서 Disabled 처리 (2026-11-17 19:03, 서보경) → 화면 MD · Figma 패널 1-3 · 3 고침, Q5 지움, C39 (맞음) |
 | 2026-11-17 | 4단계 | C1 Cureca → CURECA (Workbench R007 질문) | 맞음 (2026-11-17 19:07, 서보경, 채팅 · Workbench) → Figma의 사용자 확인 목록에서 C1 지움 |
 | 2026-11-17 | 4단계 | C2 Alert_L_004 → Alert_004 (Workbench R007 질문) | 맞음 (2026-11-17 19:09, 서보경) → 화면 라벨 · Figma의 사용자 확인 목록에서 C2 지움 |
+| 2026-11-17 | 4단계 | C3 사용 여부 표출 항목 Enabled n · Total n (Disabled n) (Workbench R007 질문) | 맞음 (2026-11-17 20:20, 서보경) → 화면 라벨 · Figma의 사용자 확인 목록에서 C3 지움 |
 
 ## 이 작업의 결정 (5단계에서 한꺼번에 반영)
 | 논의 대상 | 내용 | 후속 확인 필요 (누구 · 무엇, 없으면 비움) | 5단계 반영 |
