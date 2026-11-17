@@ -1,0 +1,28 @@
+{
+   "at" : "2026-11-17T10:46:20+09:00",
+   "by" : "안종범",
+   "cacheRead" : 86936,
+   "cacheWrite" : 2800,
+   "calls" : 2,
+   "doneBy" : "Claude",
+   "fileKey" : "",
+   "fileName" : "",
+   "frame" : "",
+   "from" : "2026-11-17T10:46:15+09:00",
+   "id" : "anjongbeom-ui-macbookair-2_20261117-104620",
+   "input" : 4,
+   "kind" : "work",
+   "models" : {
+      "claude-sonnet-5-5" : 2
+   },
+   "nodeId" : "",
+   "output" : 540,
+   "page" : "",
+   "pc" : "anjongbeom-ui-MacBookAir-2",
+   "reqId" : "",
+   "reqType" : "",
+   "team" : "stagora",
+   "text" : "연관 항목 찾기: STAgora 작업규칙 (J050)",
+   "total" : 90280,
+   "usd" : 0.034
+}
