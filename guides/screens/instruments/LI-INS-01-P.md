@@ -141,6 +141,12 @@ Description Number (10), Square (3), Frame/Instrument_Status (1), Interface/Lock
 - [X] 닫기 버튼
 - 클릭 시, 해당 팝업 닫힘, 기존 진입 화면 유지
 
+### 버전 메모
+
+- v2.1.06 update / 정책 변경에 따른 UX/UI 변경
+- v2.1.17 update / Unlocked 상태 Door의 버튼을 “Unlocked”(Disabled) → [Lock]으로 변경 / 하단 안내 문구: 자동 잠금 → [Lock] 버튼 안내 / [Unlock] / [Lock] 버튼(2-5) · 정책(0)에 Lock 동작 추가 / 자동 잠금 폐지 → [Lock]을 눌러야 잠김 (0 · 2-1 · 2-6) / 2-5: 문 열린 채 [Lock] → 문 닫기 안내 팝업(Confirm_031)
+- 패널 Ver는 2.1.13 (2026-11-13, 이상헌) — 버전 메모 v2.1.17과 다름
+
 ## 반영 대기 목록
 
 | ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
