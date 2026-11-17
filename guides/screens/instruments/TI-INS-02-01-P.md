@@ -46,6 +46,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=28
    - 집계 대상 Module : 전체
    - 집계 대상 Device : Sample Pretreatment, Sample Aliquot, M9600, STARlet, Sealer, CFX96
    - Module 또는 Device 상태가 Running인 시간의 누적 값
+ ● 참고 : TI-INS-02-01-P/Case > Case 3
  ● 정책 참고 : POL-EQP-005
 
 1-1  Module Type(Dropdown)
@@ -131,6 +132,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=28
 | --- | --- | --- | --- | --- | --- |
 | 1 | User Type이 User 또는 Admin일 때 Error Rate 미표기 | User, Admin | 2 | 3 | 기존 원본 |
 | 2 | User Type이 Service일 때 Error Rate 표기 | Service | 2 | 3 | 기존 원본 |
+| 3 | Module에 Device Unit이 없을 때 | Device Unit 없음 | 1, 1-2 | 3 | 기존 원본 |
 
 ## 변경 확인
 
@@ -168,4 +170,4 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=28
 | --- | --- | --- | --- | --- |
 | 2.1.01 | 2026-08-07 | Enable setting Popup을 Management Popup으로 변경 및 화면설계 변경. Module 및 Device에 Serial Number 추가. Device Enable 정책 변경(관리 대상 추가 및 대수 관련 정책 변경) | 서보경 | Figma 버전 메모 |
 | | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |
-| | 2026-11-17 | 화면 MD를 tobe로 새로 씀 (기존 작업방 Instruments 2.1 2차 [3249-112456](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3249-112456) · Ver 2.1.01). 반영 대기 R01 ~ R05 · R08 반영(작업 중), C20 ~ C25 · Q5. User Type 케이스 화면은 그리지 않고 디스크립션에만(2단계 답). 작업방에 새로 그림 (섹션 [2823-26013](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=2823-26013), Figma는 R041 · R007에서 그림) | Claude (요청 최고관리자) | 20261117-최고관리자-instruments |
+| | 2026-11-17 | 화면 MD를 tobe로 새로 씀 (기존 작업방 Instruments 2.1 2차 [3249-112456](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3249-112456) · Ver 2.1.01). 반영 대기 R01 ~ R05 · R08 반영(작업 중), C20 ~ C25 · Q5. User Type 케이스 화면은 그리지 않고 디스크립션에만(2단계 답). 기존 원본의 「모듈에 Device Unit이 없는 Case」를 Case 3으로 옮김(R007에서 케이스 표 · 1 참고 줄에 더함). 작업방에 새로 그림 (섹션 [2823-26013](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=2823-26013), Figma는 R041 · R007에서 그림) | Claude (요청 최고관리자) | 20261117-최고관리자-instruments |
