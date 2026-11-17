@@ -2,8 +2,8 @@
   "id": "brex-01_R007",
   "kind": "request",
   "team": "cureca",
-  "status": "진행 중",
-  "at": "2026-11-17T19:07:27+09:00",
+  "status": "보류",
+  "at": "2026-11-17T19:08:05+09:00",
   "createdAt": "2026-11-17T17:47:23+09:00",
   "by": "서보경",
   "doneBy": "Claude",
@@ -17,13 +17,27 @@
   "type": "요청",
   "layout": "",
   "text": "instrument 작업 이어서 해줘",
-  "note": "케이스 3 · 4단계 · 20261117-최고관리자-instruments\nC1 맞음(채팅 답, 서보경)을 반영하는 중입니다.",
+  "note": "[4단계] 사용자 확인 목록 하나씩 — 7 / 39\nC1 맞음 반영함 (사용자 확인 목록에서 지움)\nC2 Overview (TI-INS-01-T) 1 등록되지 않은 Module Type Tab\n- 기존 화면: Alert_L_004 팝업 노출\n- 바꿔 그린 것: 알럿 ID를 Alert_004로 고치고 문구를 함께 적음 (L-IOS 전용 ID가 T 화면에 있었음)\n- 근거: 반영 대기 TI R01, policy/alert-catalog.csv Alert_004, DS-0005 (사용 화면에 TI-INS-01-T 더함)\n남은 것: C3 ~ C35 (32건)\n작업 기준: basis 2026-11-17 18:29 · 작업규칙 CURECA 작업규칙 (rules) @원본 · 정책서 (policy) @원본 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 (glossary) @원본 · 화면 정의서 (screens) @원본",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "C2 Alert_L_004 → Alert_004, 맞나요?",
+    "options": [
+      {
+        "label": "맞음"
+      },
+      {
+        "label": "되돌림"
+      },
+      {
+        "label": "C2 ~ C35 모두 맞음"
+      }
+    ],
+    "free": true
+  },
   "replies": [
     {
       "at": "2026-11-17T18:05:53+09:00",

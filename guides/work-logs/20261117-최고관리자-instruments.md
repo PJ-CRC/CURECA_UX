@@ -335,6 +335,7 @@ started: 2026-11-17
 | 2026-11-17 | 4단계 | Q4 Door가 Open일 때 [Lock] 팝업 (Workbench R007 질문) | "Q3은 Close the door, then press Lock to lock it.이 맞아. 이것으로 다시 변경해줘. Q4는 같은 것이라 케이스 화면 문구 그대로 다 적어도 무방, 아마 타이틀만 옮겨 놓은 것" (2026-11-17 18:53, 서보경) → 본문 끝(press Lock again / press Lock to lock it)을 다시 여쭘 |
 | 2026-11-17 | 4단계 | Q4 Confirm_031 본문 끝 (Workbench R007 질문) | B … press Lock again. (케이스 화면 그대로) (2026-11-17 18:56, 서보경) → 화면 MD 2개 · Figma 패널 고침, DS-0005 결정 줄 더함, Q4 지움, C38 (맞음) |
 | 2026-11-17 | 4단계 | Q5 Admin · User일 때 [Save] · Radio 버튼 모습 (Workbench R007 질문) | Service만 가능해서 Disabled 처리 (2026-11-17 19:03, 서보경) → 화면 MD · Figma 패널 1-3 · 3 고침, Q5 지움, C39 (맞음) |
+| 2026-11-17 | 4단계 | C1 Cureca → CURECA (Workbench R007 질문) | 맞음 (2026-11-17 19:07, 서보경, 채팅 · Workbench) → Figma의 사용자 확인 목록에서 C1 지움 |
 
 ## 이 작업의 결정 (5단계에서 한꺼번에 반영)
 | 논의 대상 | 내용 | 후속 확인 필요 (누구 · 무엇, 없으면 비움) | 5단계 반영 |
