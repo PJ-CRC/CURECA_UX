@@ -105,7 +105,7 @@ Table/Filled Table Cell (26), Frame/Instrument_Status (19), Tag Status (18), Des
 | R07 | 디스크립션 | 4-1 [Run-time Info] 설명이 남아 있음 | 취소선으로 이미 제거됨 | Figma 취소선 | 제외 (2026-11-04, 취소선) |
 | R08 | 디스크립션 | 3 "Unlock을 클릭 시,", 3-1 "클릭 시," 문장이 끊김 | [Unlock]을 누르면 Door Control 흐름(POL-EQP-008)으로 정리. Confirm_008 문구 확인 필요 | POL-EQP-008, `policy/alert-catalog.md` 3절 | 작업 중 (20261117-최고관리자-instruments) |
 | R09 | 표기 | T-IO S, Account type | T-IOS, User Type | 오타, `glossary/terms.csv` | 작업 중 (20261117-최고관리자-instruments) |
-| R10 | 점검 발견 | 7 Date/Time 표기 "hh:dd:ss(시:분:초)" | hh:mm:ss | 오타, 2026-11-17 다시 옮김 | 대기 |
+| R10 | 점검 발견 | 7 Date/Time 표기 "hh:dd:ss(시:분:초)" | hh:mm:ss | 오타, 2026-11-17 다시 옮김 | 작업 중 (20261117-최고관리자-instruments) |
 
 ## 변경 이력
 

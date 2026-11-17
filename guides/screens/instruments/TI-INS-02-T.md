@@ -205,7 +205,7 @@ Table/Filled Table Cell (26), Frame/Instrument_Status (19), Tag Status (18), Des
 | R08 | 디스크립션 | 2-2 "[Enable setting → Management] 버튼 ... 아래 조건 모두 제거 요청" 메모 | 옛 조건은 취소선으로 제거됨. [Management]를 누르면 조건 없이 Popup을 엶 | Figma 취소선, POL-EQP-009 | 제외 (2026-11-04, 취소선) |
 | R09 | 표기 | T-IO S, Account type | T-IOS, User Type | 오타, `glossary/terms.csv` | 작업 중 (20261117-최고관리자-instruments) |
 | R10 | 표기 | LNB에 Instrument가 두 번 | 확인 필요 (디자인 화면 기준) | 화면 글자 | 대기 (확인 필요) |
-| R11 | 점검 발견 | 7 Date/Time 표기 "hh:dd:ss(시:분:초)" | hh:mm:ss | 오타, 2026-11-17 다시 옮김 | 대기 |
+| R11 | 점검 발견 | 7 Date/Time 표기 "hh:dd:ss(시:분:초)" | hh:mm:ss | 오타, 2026-11-17 다시 옮김 | 작업 중 (20261117-최고관리자-instruments) |
 
 ## 변경 이력
 
