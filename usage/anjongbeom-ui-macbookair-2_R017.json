@@ -1,0 +1,28 @@
+{
+   "at" : "2026-11-17T11:00:52+09:00",
+   "by" : "안종범",
+   "cacheRead" : 192076,
+   "cacheWrite" : 28049,
+   "calls" : 4,
+   "doneBy" : "Claude",
+   "fileKey" : "cDjaemHjetS7RcAHRUIMY5",
+   "fileName" : "STAgora AI Workspace",
+   "frame" : "",
+   "from" : "2026-11-17T11:00:35+09:00",
+   "id" : "anjongbeom-ui-macbookair-2_R017",
+   "input" : 8,
+   "kind" : "request",
+   "models" : {
+      "claude-sonnet-5-5" : 4
+   },
+   "nodeId" : "",
+   "output" : 2444,
+   "page" : "GMCS",
+   "pc" : "anjongbeom-ui-MacBookAir-2",
+   "reqId" : "R017",
+   "reqType" : "질문 · 그 밖",
+   "team" : "stagora",
+   "text" : "1. 오늘 화면 만들 때 언어셋 내 GMCS 시트만 확인했어? 아니면 모든 시트를 확인했어?\n1-a. GMCS 시트만 확인했다면 해당 시트 내 하단의 Common 영역까지 확인했어?",
+   "total" : 222577,
+   "usd" : 0.1751
+}
