@@ -62,7 +62,7 @@
         "language-set/sheet03.csv": "0.공통문구얼럿버튼범례 등-v2.31-261110",
         "language-set/sheet04.csv": "1. 임상의-v1.97-261030",
         "language-set/sheet05.csv": "2. 검사실-v1.95-261027",
-        "language-set/sheet06.csv": "3. GMCS-v2.32-261116",
+        "language-set/sheet06.csv": "3. GMCS-v2.33-261117",
         "language-set/sheet07.csv": "4. 고객센터-v1.95-261027",
         "language-set/sheet08.csv": "5. 체험초대이메일-v2.01-261105",
         "language-set/sheet09.csv": "6. 임상의 리포트-v1.43-260715",
@@ -444,8 +444,8 @@
         "language-set/sheet06.csv": [
           {
             "ranges": [
-              "D6:D514",
-              "D517:D1897"
+              "D6:D549",
+              "D552:D1932"
             ],
             "values": [
               "txt",
