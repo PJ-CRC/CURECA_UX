@@ -1,0 +1,28 @@
+{
+  "id": "brexui-macbookpro-2-local_20261117-225330",
+  "kind": "work",
+  "reqId": "",
+  "reqType": "",
+  "team": "stagora",
+  "at": "2026-11-17T22:53:30+09:00",
+  "from": "2026-11-17T22:53:24+09:00",
+  "by": "유병규",
+  "doneBy": "Claude",
+  "pc": "BREXui-MacBookPro-2.local",
+  "fileKey": "",
+  "fileName": "",
+  "page": "",
+  "frame": "",
+  "nodeId": "",
+  "text": "작업규칙: 9. 케이스 작성 (J002)",
+  "models": {
+    "claude-opus-5-5": 3
+  },
+  "calls": 3,
+  "input": 6,
+  "cacheWrite": 4597,
+  "cacheRead": 259065,
+  "output": 1364,
+  "total": 265032,
+  "usd": 0.1159
+}
