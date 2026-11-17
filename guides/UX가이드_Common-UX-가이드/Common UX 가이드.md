@@ -1,8 +1,9 @@
 # Common UX 가이드
 
-UX AI TEST 파일의 **Common UX** 페이지(`355:53300`, Common UX 2.2 · V2.2.00 · 2026-10-30)를 기준으로 정리한 UX 가이드다. 화면을 설계하거나 기존 화면을 고칠 때 이 규칙을 따른다. 구성은 CURECA UX 가이드(`g20261028-brex-06-J003`)를 본보기로 했고, 1~4장은 그 가이드와 Figma 내용이 같아 같은 글을 쓰고 캡처만 새로 받았다. 5장 컴포넌트는 2.2 목차에 맞춰 **23개(5-a ~ 5-w)**로 새로 정리했다. 상태값 · 표기 정의는 씨젠이 공유하는 「CURECA 시스템 구성 요소 및 상태 정보」 문서를 최우선으로 한다.
+CURECA의 공통 UX 규칙이다. 화면을 설계하거나 기존 화면을 고칠 때 이 규칙을 따른다. **이 문서가 원본이자 최신본**이고, UX AI TEST 파일의 **Common UX** 페이지(`355:53300`, Common UX 2.2 · V2.2.00 · 2026-10-30)는 이 문서를 고친 뒤 반영하는 곳이다(`sources.md` 「Common UX」). 처음에는 그 페이지를 옮겨 정리했고, 5장 컴포넌트는 2.2 목차에 맞춰 **23개(5-a ~ 5-w)**로 정리했다. 상태값 · 표기 · 용어 · 모드처럼 저장소 기준 자료(정책서 · 용어집 · 기준데이터)에 있는 것은 **그 기준 자료를 따른다**(우리 기준 > Common UX > 기존 화면, `reference-rules/guide-element-defaults.md`). 씨젠 「CURECA 시스템 구성 요소 및 상태 정보」 문서는 기준 자료의 출처일 뿐이다.
 
-> 왼쪽 목차는 Figma 문서의 목차(COMM-0)와 같은 구조다. 대분류를 누르면 그 아래 항목이, 항목을 누르면 세부 내용이 오른쪽에 나온다. 그림을 누르면 크게 볼 수 있다. 모바일(MO) 정의는 「6. Mobile」에 목록으로 정리했다.
+> 왼쪽 목차는 Figma 문서의 목차(COMM-0)와 같은 구조다. 대분류를 누르면 그 아래 항목이, 항목을 누르면 세부 내용이 오른쪽에 나온다. 그림을 누르면 크게 볼 수 있다. 「6. Mobile」은 모바일(MO) 목차를 참고로 옮긴 것이다(근거 아님 — 모바일 화면은 모바일 가이드를 따로 적용한다, `sources.md`).
+> 이 가이드를 고칠 것이 생기면 본문에 질문을 남기지 않고 작업규칙대로 올린다(`common-ux/candidate-rules.md` · 논의 대상).
 
 ### 프레임 구성
 
@@ -13,6 +14,7 @@ UX AI TEST 파일의 **Common UX** 페이지(`355:53300`, Common UX 2.2 · V2.2.
 | 목차 (`COMM-0`) | 1920 × 1295 | 대분류 1~5와 각 상세 프레임 CID · 이름, 기존 번호 |
 | 대분류 표지 (`COMM-1` ~ `COMM-5`) | 1920 × 1080 | `Title`(Common UX · 대분류명 · 번호) + `Items`(하위 CID · 이름) |
 | 상세 프레임 (`COMM-1-a` …) | 폭 1920, 높이는 내용에 맞춤 | `Header` + `Body` |
+| 기획 공통 컴포넌트 (`SB-Components (기획 공통)`) | — | 화면설계(SB)에서 쓰는 기획 공통 컴포넌트(`2673:21866`, `reference-rules/description.md` · `flow/3-design.md`) |
 | 컴포넌트 (`P-Components (PC)`) | 7360 × 25548 | PC 컴포넌트 모음(Navigation · Status · Button · Input · List · Overlay · Feedback · Icon) |
 | 모바일 (`M-COMM-*`, `Connon UX (Mobile)` 섹션) | 1920 × 내용 | MO 목차 · MO 정의 화면 |
 
@@ -128,7 +130,7 @@ L-IOS · T-IOS 화면의 기본 프레임(GNB · LNB · Contents 영역)과 사�
 | 4 | 프로그램 종료 버튼 | 사용자 유형에 따라 버튼명 · 노출 항목이 다름 (Case 1 · 2) |
 | 5 | Contents 영역 | 각 페이지의 Contents 노출 |
 
-**L-IOS 2Depth 메뉴 예**: Material Setup › Group Lots · Prepare Carrier · Load Materials · Empty Waste Bin / Test Management › Test Order · Test Status / Sample Tracking › Samples · 96-DWP · PCR Plate / Setting › Policy · System · Protocol · Tube · AssayPack Setting / Information › Program · Manual
+**L-IOS 2Depth 메뉴 예**: Material Setup › Group Lots · Prepare Carrier · Load Materials · Empty Waste Bin / Test Management › Test Order · Test Status / Sample Tracking › Samples · 96-DWP · PCR Plate / Setting › Policy · System · Protocol · Tube · Assay Pack Setting / Information › Program · Manual
 
 **사용자 유형에 따른 종료 버튼**
 
@@ -146,31 +148,31 @@ L-IOS · T-IOS 화면의 기본 프레임(GNB · LNB · Contents 영역)과 사�
 | 6 | GNB L-IOS 선택 | L-IOS가 여러 대면 드롭다운 노출, 한 대면 미노출 |
 | — | GNB | 네트워크 상태 · Running 구동 상태 · Event 건수 · 일시 |
 | — | LNB 1Depth | Dashboard, Test Management, Sample Tracking, Instrument, Inventory, Statistical Analysis, Setting, Information |
-| — | 2Depth 예 | Statistical Analysis › Test Analytics · Instruments · Test Forecasting / Setting › Policy · Protocol · LIS · System · Account · SMTP · AssayPack · Tube Setting / Information › Run Report · Program · Manual |
+| — | 2Depth 예 | Statistical Analysis › Test Analytics · Instruments · Test Forecasting / Setting › Policy · Protocol · LIS · System · Account · SMTP · Assay Pack Setting · Tube Setting / Information › Run Report · Program · Manual |
 | — | Contents 영역 | 각 페이지의 Contents 노출 |
 
 **3 상세 — [더보기] 선택 시 노출 항목 (L-IOS · T-IOS 공통)**
 
 | 번호 | 항목 | 동작 |
 |---|---|---|
-| 3.1 | Profile | L-IOS: 팝업 `LI-CPW-P`(비밀번호 · 아이디 · 이메일 변경). Console · TSS 모드에서는 미노출 / T-IOS: 팝업 `TI-CPW-P`(비밀번호 · 아이디 · 이메일 변경, 이벤트 알람 노출 여부) |
+| 3.1 | Profile | L-IOS: 팝업 `LI-CPW-P`(비밀번호 · 아이디 · 이메일 변경). L-IOS Client Mode 세 모드(Main · Console · MS Mode) 모두 노출(`policy/client-mode.md`) / T-IOS: 팝업 `TI-CPW-P`(비밀번호 · 아이디 · 이메일 변경, 이벤트 알람 노출 여부) |
 | 3.2 | Logout | 팝업 `Confirm_018` |
 
 ### 3-a. Base Frame Area (2/2) · 모드별 LNB
 
-L-IOS 모드(Main · Console · TSS)별 LNB 노출 메뉴와 메뉴 단위 기능 동작 여부를 정의한다.
+L-IOS Client Mode(Main Mode · Console Mode · MS Mode)별 LNB 노출 메뉴와 메뉴 단위 기능 동작 여부를 정의한다. **모드별 메뉴 · 기능의 기준은 `policy/client-mode.md` · `policy/client-mode-matrix.csv`**이고, 아래는 그 요약이다(다르면 정책서를 따른다).
 
 ![COMM-3-a(2/2)](images/comm-3-a-2.png)
 *COMM-3-a(2/2) · 모드별 LNB 노출 메뉴*
 
 | Case | 모드 | LNB 노출 |
 |---|---|---|
-| Case 1 | Main | 전체 메뉴 (Dashboard · Material Setup · Test Management · Sample Tracking · Instrument · Inventory · Setting · Information · Quick Start · Run) |
-| Case 2 | Console | Main 기준, 모드에서 쓰지 않는 메뉴는 미노출 (그림 참고) |
-| Case 3 | TSS | Main 기준, 모드에서 쓰지 않는 메뉴는 미노출 (그림 참고) |
+| Case 1 | Main Mode | Dashboard · Test Management · Sample Tracking · Instrument · Inventory · Setting(Policy · System · Protocol · Tube · Assay Pack Setting) · Information(Program) · Quick Start · Run · User Name(Profile · Logout) · Shut Down. Material Setup 없음 |
+| Case 2 | Console Mode | Dashboard · Material Setup(Group Lots · Prepare Carrier · Load Materials · Empty Waste Bin · View Trolley Info) · Test Management · Sample Tracking · Instrument · Inventory · Setting(Policy · System · Protocol · Tube Setting) · Information(Program) · Quick Start · Run · User Name(Profile · Logout) · Shut Down |
+| Case 3 | MS Mode | Dashboard · Material Setup(Prepare Carrier — Load Samples into Trolley만) · Test Management · Sample Tracking · Instrument · Inventory · Setting(Policy · System · Protocol · Tube Setting) · Information(Program) · User Name(Profile · Logout) · Shut Down. Quick Start · Run 없음 |
 
-- 메뉴 단위 모드별 기능 동작 표: Menu(1)~(4) · Function · Main · Console · TSS 열에 `O = 동작`, `X = 미동작`으로 적는다.
-- Function 값이 `All`이면서 `X`인 항목은 그 모드에서 **메뉴 자체를 노출하지 않는다.** (예: Profile은 Console · TSS에서 X)
+- 메뉴 단위 모드별 기능 동작 표: Menu(1)~(4) · Function · Main Mode · Console Mode · MS Mode 열에 `O = 동작`, `X = 미동작`으로 적는다.
+- Function 값이 `All`이면서 `X`인 항목은 그 모드에서 **메뉴 자체를 노출하지 않는다.** (기능 표 · 메뉴 이름은 `policy/client-mode-matrix.csv`를 따른다)
 - 대상 기능 예: Login · Logout · Profile · Event History(View · Status Control · Note Writing) · Initialize · Stop · Door Control · Group Lots · Prepare Carrier(Load Samples · Socket · Tray · Consumables and Reagents …) · Load Materials(PK/IC · PCR Reagents · MM Tubes) · Empty Waste Bin · Settings
 
 ## 4. Writing
@@ -208,11 +210,11 @@ L-IOS 모드(Main · Console · TSS)별 LNB 노출 메뉴와 메뉴 단위 기�
 | 조건 | 표기 | 예 | 노출 순서 |
 |---|---|---|---|
 | 같은 Type 모듈 1대 | Module type명 | Sample Storage | 각 페이지별 상이 |
-| 같은 Type 모듈 2대 이상 | `ModuleType(index)` | Sample Storage(1) | 각 페이지별 상이 |
+| 같은 Type 모듈 2대 이상 | `ModuleType (index)` | Sample Storage (1) | 각 페이지별 상이 |
 
 ### 4-a. Data Notation Rules (2/4) · 장비 상태 · 컨트롤러
 
-CURECA 장비 전체의 구동 상태값과 구동 컨트롤러, 장비 통합 상태 처리 조건, 도어 잠금 해제 조건을 정의한다. 씨젠이 공유하는 「CURECA 시스템 구성 요소 및 상태 정보」 문서를 참고해 작성했고, 그 문서를 최우선으로 따른다.
+CURECA 장비 전체의 구동 상태값과 구동 컨트롤러, 장비 통합 상태 처리 조건, 도어 잠금 해제 조건을 정의한다. 상태값 · 조건 · 화면 동작의 기준은 `glossary/status-values.csv` · `policy/equipment-states.md`이고, 아래 표는 그 요약이다(다르면 기준 자료를 따른다). 씨젠 「CURECA 시스템 구성 요소 및 상태 정보」 문서는 그 출처다.
 
 ![COMM-4-a(2/4)](images/comm-4-a-2.png)
 *COMM-4-a(2/4)*
@@ -225,12 +227,11 @@ CURECA 장비 전체의 구동 상태값과 구동 컨트롤러, 장비 통합 �
 | Initializing | Initializing | 초기화 중 | 초기화 진행 중 | 초기화 프로세스 실행 시 | 로딩 · 진행바 표시, 모든 기능 제한, 완료 시 「준비 완료」 전환 · 안내 |
 | Ready | Ready | 준비 완료 | 검사를 시작할 수 있는 상태 | 초기화, 중지 완료 또는 작업 종료 후 | 모든 기능 사용 가능, 작업 시작 버튼 활성화 |
 | Running | Running | 가동 중 | 검사 정상 진행 중 (모듈 1대라도 Running, Error 없음) | 작업(검사) 시작 시 | 중지(Stop) 기능 제공 |
-| PartialRunning | Partial Running | 부분 가동 중 | 일부 모듈 Running, 일부 Paused 또는 Error | 1대 이상 모듈 구동 중일 때 일부 모듈에서 Error 발생 시 | 장비 중지 진행 상태 표시 및 팝업으로 중지 중 로딩 · 진행바, 모든 기능 일시 제한, 완료 시 「준비 완료」 자동 전환 ⚠️ |
+| PartialRunning | Partial Running | 부분 가동 중 | 일부 모듈 Running, 일부 Paused 또는 Error | 1대 이상 모듈 구동 중일 때 일부 모듈에서 Error 발생 시 | Run은 계속되지만 확인이 필요한 Module이 있다는 신호. 사용자가 해당 Module을 확인해야 함. 중지(Stop) 기능 제공 |
 | Stopping | Stopping | 가동 중지 중 | 사용자 Run Stop 요청으로 정지 중 (전체 장비 Stop) | 사용자가 중지 버튼을 눌렀을 때 | 중지 진행 팝업 · 진행바, 모든 기능 일시 제한, 완료 시 「준비 완료」 |
-| Paused | Paused | 일시 정지 | 일부 모듈 Paused, Running 모듈 없음 | | |
+| Paused | Paused | 일시 정지 | 일부 모듈 Paused, Running 모듈 없음 | 사용자가 Door 잠금을 해제했거나, 열려 있는 서랍형 Storage에 Module이 접근해야 할 때 | 장비 고장이 아니므로 Error가 아님 |
 | Error | Error | 오류 | 가동 중 모든 모듈 Error, 또는 비가동 중 일부 모듈 Error | 1대 이상 모듈이 구동 중일 때 모든 모듈이 Error인 경우 / 모든 모듈이 구동 중이 아닐 때 1대 이상 모듈이 Error인 경우 | 상황별 상이 |
 
-- ⚠️ Figma의 PartialRunning UX action이 Stopping과 거의 같은 문구다. 복사 실수일 수 있어 확인이 필요하다.
 
 **구동 컨트롤러 (버튼)**
 
@@ -323,7 +324,7 @@ CURECA 장비 전체의 구동 상태값과 구동 컨트롤러, 장비 통합 �
 
 | Unit | 값 | 설명 |
 |---|---|---|
-| Device (예: M9600) | Idle 등 | Device 구동 상태 |
+| Device (예: M9600) | Ready(코드 Idle) 등 — 표기는 `glossary/status-values.csv` | Device 구동 상태 |
 | Storage — Docking | Undocked(도킹 해제) / Docked(도킹됨) | Trolley 미장착 · drawer 열림 / 장착 · 닫힘 |
 | Storage — Type | RT / Refrigerator | 상온 / 냉장 저장 장치 |
 | Waste Bin — Full status | Available(여유) / AlmostFull(만재 임박) / Full(가득 참) | 적재율 70% 미만 / 70% 이상 / 100%. 카운팅 기반이며 최대 개수 초과 후 만재 센서 미작동 시 Almost Full로 노출 |
@@ -339,7 +340,7 @@ CURECA 장비 전체의 구동 상태값과 구동 컨트롤러, 장비 통합 �
 
 | 코드명 | 한글 | 설명 |
 |---|---|---|
-| Ordered | 검사 접수 | 오더 접수, 검사 시작 전 (TSS로 Socket 구성 → Run Start) |
+| Ordered | 검사 접수 | 오더 접수, 검사 시작 전 (MS Mode로 Socket 구성 → Run Start) |
 | Ready | 검사 준비 | 배치 시작 후 검체 로딩 전 |
 | Running | 검사 진행 중 | 검체 로딩 후 검사 중 |
 | Completed | 검사 완료 | 정상 완료 |
@@ -500,7 +501,7 @@ Figma 목차(COMM-0)에 정의된 컴포넌트 23개(5-a ~ 5-w)의 번호와 상
 | `COMM-5-w` | Validation Check | COMM-5-Y | 1장 |
 
 - 화면 디스크립션 · 요청에서 컴포넌트를 가리킬 때는 **이 표의 CID**를 쓴다. 「기존 CID」는 Figma Header에 적힌 이전 번호다.
-- CURECA UX 가이드(`g20261028-brex-06-J003`, 2026-10-30 판 20개)와 번호가 다르다. 예: Badge → **Label(5-j)**, Table → **Data Table(5-g)**, Text Input → **Text Field(5-t)**, Progress Step → **Progress Bar(5-n)**, Tooltip → **Tool Tip(5-v)**.
+- 예전 「CURECA UX 가이드」(2026-10-30 판 20개, 근거로 쓰지 않음)와 번호가 다르다. 예: Badge → **Label(5-j)**, Table → **Data Table(5-g)**, Text Input → **Text Field(5-t)**, Progress Step → **Progress Bar(5-n)**, Tooltip → **Tool Tip(5-v)**.
 
 ### Figma 컴포넌트 (P-Components · PC)
 
@@ -534,7 +535,7 @@ Common UX 페이지의 **P-Components (PC)**(`1801:15821`, 「CURECA Common UX P
 | `COMM-5-v` | Tooltip · Tooltip/Event · Tooltip/Table | Type = Ellipsis · Info / Event = Error · Warning / Items = 1 ~ 10 | `1388:14748` · `1401:14739` · `1531:15035` |
 
 - `⛔️`가 붙은 컴포넌트(Item_Line Tabs · Item_Segment Tabs · Item_Overflow Menu)는 쓰지 않는다.
-- Loading(5-k) · Scroll Bar(5-o) · Search Bar(5-p)는 이 묶음에 따로 된 컴포넌트가 없다. 화면에 쓸 때는 아래 규칙대로 그린다.
+- Loading(5-k) · Scroll Bar(5-o) · Search Bar(5-p)는 이 묶음에 따로 된 컴포넌트가 없다. 화면에 쓸 때는 아래 규칙대로 그리고, 작업규칙의 「가이드에 컴포넌트가 없는 요소」로 다룬다(`flow/3-design.md`).
 - **Tab 생성 가이드**(`Tab` 프레임 `1964:30940`): 탭은 오토 레이아웃으로 구성, 최소 2개(Active · Inactive)이고 활성 탭은 반드시 1개. 탭이 콘텐츠 폭보다 길면 오른쪽 끝에 Fade out edges(Scroll Fog)를 최상위 레이어로 둔다. Underline은 하단 Stroke gray400 1px · Padding 8px, Outline은 Padding 8px, 건수는 0이면 미노출 · 1~99 노출. Item은 단독으로 쓰지 않는다.
 
 ### 5-a. Accordion
@@ -1038,7 +1039,7 @@ Import · Export 기능을 고르면 뜨는 위치 선택 팝업을 정의한다
 | Type | 이름 | 규칙 |
 |---|---|---|
 | Type 1 | Input Validation | API 호출 전 화면에서 입력값 확인. 검사 항목: 미입력 · 숫자/문자 구분 · 입력 형식. 오류 시 Error 상태(필수) + 오류 메시지(선택). 필드 Error 상태는 COMM-5-t |
-| Type 2 | API Validation | API 호출 뒤 결과 알림. 성공: 완료 토스트(COMM-5-u). 오류: Alert · Confirm 등 결과 메시지(COMM-5-m) |
+| Type 2 | API Validation | API 호출 뒤 결과 알림. 성공: 알림 방식(Toast COMM-5-u · Alert)은 `reference-rules/guide-element-defaults.md` #9대로 정한다. 오류: Alert · Confirm 등 결과 메시지(COMM-5-m) |
 
 ## 6. Mobile
 
