@@ -209,15 +209,26 @@ async function transferJobs() {
     for (const j of (d.items || []).filter(x => x.status === '대기')) {
       const reading = j.phase === 'read' && j.from && j.from.key === myKey, building = j.phase === 'build' && j.to && j.to.key === myKey;
       const checking = j.phase === 'check' && j.from && j.from.key === myKey;   // 비교 「바뀐 것 확인」 — 옮기지 않고 해시만
-      if (!reading && !building && !checking) continue;
+      const scanning = j.phase === 'scan' && j.to && j.to.key === myKey;   // 그 앞 단계: ② 작업 페이지 화면 해시(직접 복사해 옮긴 화면 찾기)
+      if (!reading && !building && !checking && !scanning) continue;
       const t = await (await jobPost({ action: 'take', id: j.id, kind: 'transfer', fileKey: myKey, by: 'Figma 플러그인' })).json();
       if (!t || !t.job || t.job.id !== j.id) continue;   // 다른 PC 플러그인이 먼저 가져감
       let built = false, beat = 0;
       try {
-        if (checking) {
+        if (scanning) {
+          log('비교: ② 작업 페이지 화면을 읽는 중(직접 옮긴 화면 찾기)…');
+          await jobPost({ action: 'update', id: j.id, note: '② 플러그인이 작업 페이지 화면을 읽는 중' });
+          beat = setInterval(() => { jobPost({ action: 'update', id: j.id, note: '② 플러그인이 작업 페이지 화면을 읽는 중 · ' + new Date().toTimeString().slice(0, 5) }).catch(() => {}); }, 120000);
+          const r = await call('xfer-scan', { job: j });
+          clearInterval(beat); beat = 0;
+          const out = await xPost({ action: 'scan', id: j.id, frames: r.frames });
+          log('비교: ② 화면 ' + r.frames.length + '개 읽음 — ' + ((out.job && out.job.note) || ''));
+        } else if (checking) {
           log('비교: 옮긴 화면이 바뀌었는지 확인하는 중…');
           await jobPost({ action: 'update', id: j.id, note: '플러그인이 옮긴 화면을 확인하는 중' });
+          beat = setInterval(() => { jobPost({ action: 'update', id: j.id, note: '플러그인이 옮긴 화면을 확인하는 중 · ' + new Date().toTimeString().slice(0, 5) }).catch(() => {}); }, 120000);
           const r = await call('xfer-check', { job: j });
+          clearInterval(beat); beat = 0;
           const out = await xPost({ action: 'check', id: j.id, frames: r.frames });
           log('비교: ' + ((out.job && out.job.note) || '확인 끝'));
         } else if (reading) {

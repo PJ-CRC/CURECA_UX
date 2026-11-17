@@ -268,7 +268,10 @@ module.exports = function register(on, h) {
           if (kind === 'guide-edit' && nn(b.file)) hit.file = nn(b.file);
           if (kind === 'guide-edit' && srcs.length) hit.files = saveUploads(hit.id, srcs);
           if (kind === 'capture' && b.auto) hit.auto = true;
-          if (xfer && xfer.mode === 'check') { Object.assign(hit, xfer, { phase: 'check', note: (xfer.from.name || '보내는 파일') + '을(를) Figma에서 열고 플러그인을 켜면 바뀐 것 확인 시작(옮기지 않음)' }); if (!hit.name) hit.name = '비교 · ' + (xfer.to.name || '다음 단계'); }
+          // ②(받는 파일)에도 플러그인이 켜져 있으면 먼저 ② 작업 페이지를 읽어 Figma에서 직접 복사해 옮긴 화면도 찾는다(2026-11-17, phase scan → check)
+          const toLive = xfer && xfer.mode === 'check' && C.pluginKeys && Date.now() - (C.pluginKeys[xfer.to.key] || 0) < 60000;
+          if (toLive) { Object.assign(hit, xfer, { phase: 'scan', fileKey: xfer.to.key, scanSkip: core.arr(xRecRead(xfer.to.key).items).filter((x) => x && x.to && x.to.node).map((x) => x.to.node), note: (xfer.to.name || '받는 파일') + '의 플러그인이 작업 페이지 화면을 읽은 뒤 ' + (xfer.from.name || '보내는 파일') + '에서 바뀐 것 확인(옮기지 않음)' }); if (!hit.name) hit.name = '비교 · ' + (xfer.to.name || '다음 단계'); }
+          else if (xfer && xfer.mode === 'check') { Object.assign(hit, xfer, { phase: 'check', note: (xfer.from.name || '보내는 파일') + '을(를) Figma에서 열고 플러그인을 켜면 바뀐 것 확인 시작(옮기지 않음)' }); if (!hit.name) hit.name = '비교 · ' + (xfer.to.name || '다음 단계'); }
           else if (xfer) { Object.assign(hit, xfer, { phase: 'read', note: (xfer.from.name || '보내는 파일') + '을(를) Figma에서 열고 플러그인을 켜면 옮기기 시작' });
             if (!hit.name) hit.name = (xfer.from.nodeIds.length ? xfer.from.nodeIds.length + '개 프레임' : xfer.from.page + ' 페이지') + ' → ' + (xfer.to.name || '다음 단계'); }
           if (kind === 'minutes') { hit.minute = nn(b.minute); if (mmode) hit.mode = mmode; }
@@ -376,15 +379,58 @@ module.exports = function register(on, h) {
         try { fs.rmSync(path.join(xDir, id), { recursive: true, force: true }); } catch (e) {}
         return { ok: true, job: j };
       }
-      // 비교 「바뀐 것 확인」(phase check): 보내는 파일 플러그인이 옮긴 화면들의 지금 해시를 보낸다 → 받는 쪽 기록 해시와 견줘 결과를 작업에 남긴다(옮기지 않음)
+      // 비교 앞 단계(phase scan, 2026-11-17): ② 플러그인이 ② 작업 페이지 화면 해시를 보낸다 → ① 화면 중 기록이 없고 이름이 같은 것을 확인 대상에 더해 ①로 넘긴다
+      case 'scan': {
+        if (j.phase !== 'scan') throw new Error('② 화면 읽기 단계가 아닙니다: ' + id);
+        // ② 작업 페이지 화면마다 내용 확인값(sig: 크기 · 레이어 수 · 글자 · 컴포넌트 이름 — 파일이 달라도 같게 나옴). rec = 이미 기록이 있는 ② 화면
+        const scan = core.arr(b.frames).filter((x) => x && /^\d+:\d+$/.test(nn(x.node))).slice(0, 300).map((x) => ({ node: nn(x.node), name: nn(x.name).trim(), sig: nn(x.sig), rec: x.rec ? 1 : 0 }));
+        const recFrom = new Set(core.arr(xRecRead(j.to.key).items).filter((x) => x && x.from && x.from.key === j.from.key).map((x) => x.from.node));
+        const names = new Set(scan.filter((x) => !x.rec).map((x) => x.name).filter(Boolean)), cat = core.readJson(path.join(h.projDir(j.from.key), 'catalog.json')) || {};
+        const pg = core.arr(cat.pages).find((p) => p && p.id === j.from.pageId) || core.arr(cat.pages).find((p) => p && p.editable) || {};
+        // 짝 후보: 기록이 없는 ① 화면 중 ②에 같은 이름이 있는 것(이름은 후보를 줄이는 데만 쓰고, 짝은 내용 확인값이 같아야 짓는다)
+        const cands = core.arr(pg.frames).filter((f) => f && names.has(nn(f[1]).trim()) && !recFrom.has(f[0]) && !(f[7] && recFrom.has(f[7]))).map((f) => ({ node: f[0], name: nn(f[1]).trim() })).slice(0, 200);
+        j.scan = scan; j.cands = cands; j.from.nodeIds = [...new Set(core.arr(j.from.nodeIds).concat(cands.map((x) => x.node)))].slice(0, 400);
+        j.phase = 'check'; j.fileKey = j.from.key; j.status = '대기'; j.takenBy = ''; j.updatedAt = now;
+        j.note = `② 화면 ${scan.length}개 읽음 — ${j.from.name || '보내는 파일'}에서 확인 대기(Figma에서 열고 플러그인 켜기)`;
+        xSave(jj); return { ok: true, job: j };
+      }
+      // 비교 「바뀐 것 확인」(phase check): ① 플러그인이 대상 화면의 해시(hash, 옮기기용) · 내용 확인값(sig)을 보낸다(옮기지 않음)
+      //  ②를 읽었으면(scan) ① 기준으로 ②의 지금 내용과 바로 비교한다: 옮긴 화면마다 ② 쪽 sig가 ①과 같으면 같음, 다르면 바뀜, ②에 없으면 없어짐.
+      //  ②를 못 읽었으면 예전처럼 ①의 지금 해시와 옮길 때 해시를 비교한다
       case 'check': {
         if (j.phase !== 'check') throw new Error('비교 확인 작업이 아닙니다: ' + id);
         const rec = core.arr(xRecRead(j.to.key).items).filter((x) => x && x.from && x.from.key === j.from.key), recOf = {};
         for (const x of rec) recOf[x.from.node] = x;
-        const items = core.arr(b.frames).filter((x) => x && /^\d+:\d+$/.test(nn(x.from))).map((x) => ({ from: nn(x.from), hash: nn(x.hash), gone: !!x.gone }));
-        const changed = items.filter((x) => !x.gone && recOf[x.from] && recOf[x.from].hash !== x.hash).length, gone = items.filter((x) => x.gone).length;
-        j.compare = { at: now, items, changed, gone }; j.status = '완료'; j.phase = 'done'; j.updatedAt = now;
-        j.note = `바뀐 것 확인: 옮긴 화면 ${items.length}개 중 옮긴 뒤 바뀜 ${changed}개` + (gone ? ` · ①에서 없어짐 ${gone}개` : '');
+        const items = core.arr(b.frames).filter((x) => x && /^\d+:\d+$/.test(nn(x.from))).map((x) => ({ from: nn(x.from), hash: nn(x.hash), sig: nn(x.sig), gone: !!x.gone }));
+        const scan = core.arr(j.scan), sigOf = {}; for (const x of scan) sigOf[x.node] = x.sig;
+        // 짝 짓기: 기록이 없던 ① 화면과 내용 확인값이 같은 ② 화면 → 옮긴 것으로 기록(Figma에서 직접 복사해 옮긴 화면도 「옮김」). 이름만 같으면 짓지 않는다
+        let found = 0;
+        if (core.arr(j.cands).length && scan.length) {
+          const nameOf = {}; for (const c of j.cands) nameOf[c.node] = c.name;
+          const used = new Set(rec.map((x) => x.to && x.to.node)), pairs = [];
+          for (const x of items) {
+            if (x.gone || !x.sig || nameOf[x.from] == null || recOf[x.from]) continue;
+            const s2 = scan.find((y) => !y.rec && !used.has(y.node) && y.sig === x.sig) || scan.find((y) => !y.rec && y.sig === x.sig);   // ①에 똑같은 화면이 둘이면 같은 ② 화면과 짝
+            if (s2) { used.add(s2.node); pairs.push({ from: x.from, to: s2, hash: x.hash }); }
+          }
+          if (pairs.length) {
+            const all = core.arr(xRecRead(j.to.key).items).filter(Boolean);
+            for (const p of pairs) { const it = { from: { key: j.from.key, node: p.from, name: nameOf[p.from], page: j.from.page }, to: { node: p.to.node }, hash: p.hash, at: now, by: nn(j.by), job: id }; all.push(it); rec.push(it); recOf[p.from] = it; }
+            xRecWrite(j.to.key, { items: all }); found = pairs.length;
+          }
+        }
+        // 옮긴 화면마다 상태(st): same · changed · gone2(②에 없음) · gone(①에 없음)
+        for (const x of items) {
+          const r = recOf[x.from]; if (!r) continue;
+          if (x.gone) x.st = 'gone';
+          else if (scan.length) { const s2 = sigOf[r.to && r.to.node]; x.st = s2 == null ? 'gone2' : s2 === x.sig ? 'same' : 'changed'; x.by2 = 1; }
+          else x.st = r.hash === x.hash ? 'same' : 'changed';
+        }
+        delete j.scan; delete j.cands;
+        const mine = items.filter((x) => recOf[x.from]);
+        const changed = mine.filter((x) => x.st === 'changed').length, gone = mine.filter((x) => x.st === 'gone').length, gone2 = mine.filter((x) => x.st === 'gone2').length;
+        j.compare = { at: now, items: mine, changed, gone, gone2, direct: scan.length ? 1 : 0 }; j.status = '완료'; j.phase = 'done'; j.updatedAt = now;
+        j.note = `바뀐 것 확인: 옮긴 화면 ${mine.length}개 중 ${scan.length ? '②가 ①과 다름' : '옮긴 뒤 바뀜'} ${changed}개` + (found ? ` (기록에 없던 옮긴 화면 ${found}개 찾음)` : '') + (gone2 ? ` · ②에 없음 ${gone2}개` : '') + (gone ? ` · ①에서 없어짐 ${gone}개` : '');
         xSave(jj); return { ok: true, job: j };
       }
       // 끝난 작업(완료 · 실패)은 바꾸지 않는다 — 늦게 온 실패가 「완료」를 덮지 않게(2026-11-17)
@@ -981,7 +1027,11 @@ module.exports = function register(on, h) {
         if (v) pt[T.team] = v; else delete pt[T.team];
         core.writeJson(f, pt); return { ok: true, azurePat: !!v };
       }
-      case 'test': send(res, 200, 'application/json; charset=utf-8', await sheetCall(T, { action: 'sheets' })); return;
+      // 연결 확인: Azure DevOps면 작업 항목을 한 번 읽어 몇 개인지(2026-11-17), 구글이면 시트 목록
+      case 'test': {
+        if (nn(old.provider) === 'azure') { const d = await h.azureItems(T); return { ok: true, count: d.count, total: d.total, warn: d.warn, sample: d.values.slice(1, 4).map((r) => r[0] + ' ' + r[2]) }; }
+        send(res, 200, 'application/json; charset=utf-8', await sheetCall(T, { action: 'sheets' })); return;
+      }
       case 'write': {
         const cells = core.arr(b.cells).map((c) => ({ row: parseInt(c.row, 10) || 0, col: parseInt(c.col, 10) || 0, value: nn(c.value) }));
         if (!cells.length) throw new Error('바꿀 칸이 없습니다.');

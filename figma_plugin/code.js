@@ -49,7 +49,7 @@ function workPageId() { return (typeof linkPageId === 'string' && linkPageId) ||
 let workHandler = null;
 function watchShl() {
   // 작업 링크가 다른 페이지로 바뀌었으면 예전 작업 페이지의 감시를 뗀다
-  if (workPage && workPage.id !== workPageId()) { workPage.off('nodechange', workHandler); workPage = null; }
+  if (workPage && workPage.id !== workPageId()) { try { workPage.off('nodechange', workHandler); } catch (e) {} workPage = null; }   // 페이지가 이미 사라졌으면(파일 · 페이지가 닫힘) off가 오류를 낸다 — 무시
   if (workPage || !workPageId() || figma.currentPage.id !== workPageId()) return;
   workPage = figma.currentPage;
   workPage.on('nodechange', workHandler = e => {
@@ -142,7 +142,7 @@ let lastEdit = 0;
 function watchList() {
   const pg = figma.currentPage;
   if (listPage === pg) return;
-  if (listPage) listPage.off('nodechange', listHandler);
+  if (listPage) { try { listPage.off('nodechange', listHandler); } catch (e) {} }   // 이전 페이지가 이미 없으면 무시(2026-11-17 「in off: node … does not exist」)
   listPage = pg;
   pg.on('nodechange', listHandler = e => {
     lastEdit = Date.now();
@@ -273,6 +273,7 @@ figma.ui.onmessage = async msg => {
     }
     // ── 다음 단계로 옮기기(transfer): 읽기 · 이미지 · 만들기 (아래 XFER 함수들) ──
     if (msg.type === 'xfer-read') { figma.ui.postMessage(Object.assign({ type: 'xfer-read-done', reqId: msg.reqId }, await xferRead(msg.job, msg.record || []))); return; }
+    if (msg.type === 'xfer-scan') { figma.ui.postMessage(Object.assign({ type: 'xfer-scan-done', reqId: msg.reqId }, await xferScan(msg.job))); return; }
     if (msg.type === 'xfer-check') { figma.ui.postMessage(Object.assign({ type: 'xfer-check-done', reqId: msg.reqId }, await xferCheck(msg.job))); return; }
     if (msg.type === 'xfer-img') { const im = figma.getImageByHash(msg.hash); figma.ui.postMessage({ type: 'xfer-img-done', reqId: msg.reqId, bytes: im ? await im.getBytesAsync() : null }); return; }
     if (msg.type === 'xfer-build') { figma.ui.postMessage(Object.assign({ type: 'xfer-build-done', reqId: msg.reqId }, await xferBuild(msg.job, msg.data, msg.imgs || {}))); return; }
@@ -427,7 +428,39 @@ async function xferCheck(job) {
     const n = await figma.getNodeByIdAsync(id);
     if (!n || n.removed) { frames.push({ from: id, gone: true }); continue; }
     const o = await R.ser(n); delete o.x; delete o.y;
-    frames.push({ from: id, hash: xfnv(JSON.stringify(o)) });
+    frames.push({ from: id, hash: xfnv(JSON.stringify(o)), sig: await xSig(n) });
+  }
+  return { frames };
+}
+
+// 파일이 달라도 같게 나오는 내용 확인값(2026-11-17): 크기 · 레이어 수 · 글자(순서대로) · 쓰인 컴포넌트 이름.
+//  옮기기용 해시(xReader)는 파일마다 달라지는 값(컴포넌트 비교 결과 등)이 섞여, Figma에서 그대로 복사한 화면도 ①과 ②가 다르게 나왔다
+//  컴포넌트 안쪽 레이어는 원본 컴포넌트를 불러와야 다 나오므로(처음엔 덜 보여 같은 화면도 개수가 달랐다), 개수가 더 늘지 않을 때까지 불러온 뒤 센다. 숨긴 레이어는 뺀다
+async function xSig(n) {
+  if (!('children' in n)) return [Math.round(n.width), Math.round(n.height)].join('.');
+  const vis = () => { const out = []; const walk = c => { if (c.visible === false) return; out.push(c); if ('children' in c) c.children.forEach(walk); }; n.children.forEach(walk); return out; };
+  let all = vis(), comps = [];
+  for (let k = 0; k < 6; k++) {
+    // 이름은 마지막 「 / 」 뒤만(옮기기가 만든 대체 컴포넌트는 「묶음 / 변형」, 원본 변형은 「변형」만이라)
+    comps = []; for (const i of all) if (i.type === 'INSTANCE') { const m = await i.getMainComponentAsync(); comps.push(m ? m.name.split(' / ').pop().trim() : '?'); }
+    const again = vis(); if (again.length === all.length) break; all = again;
+  }
+  const texts = all.filter(c => c.type === 'TEXT').map(c => c.characters).join('\u0001');
+  return [Math.round(n.width), Math.round(n.height), all.length, xfnv(texts), xfnv(comps.join('\u0001'))].join('.');
+}
+
+// 비교 「바뀐 것 확인」의 앞 단계(2026-11-17): 받는 파일(②)을 연 플러그인이 ② 작업 페이지 화면마다 같은 방식의 해시를 낸다
+//  → 서버가 ①의 화면과 맞춰 Figma에서 직접 복사해 옮긴 화면을 찾는다(옮기지 않음). skip = 이미 기록이 있는 ② 노드
+async function xferScan(job) {
+  xMains = {};
+  const to = job.to || {}, skip = new Set(job.scanSkip || []), frames = [];
+  const pg = await figma.getNodeByIdAsync(to.pageId);
+  if (!pg || pg.type !== 'PAGE') throw new Error('받는 작업 페이지를 찾지 못했습니다');
+  await pg.loadAsync();
+  const reg = pg.children.find(c => c.type === 'SECTION' && c.name === XREG);
+  for (const f of topFrames(pg).filter(f => !reg || f[7] !== reg.id).slice(0, 300)) {   // 옮기기가 만든 대체 컴포넌트 섹션은 뺀다
+    const n = await figma.getNodeByIdAsync(f[0]); if (!n || n.removed) continue;
+    frames.push({ node: f[0], name: f[1], sig: await xSig(n), rec: skip.has(f[0]) ? 1 : 0 });   // 기록이 있는 ② 화면도 읽는다(①과 내용 비교)
   }
   return { frames };
 }

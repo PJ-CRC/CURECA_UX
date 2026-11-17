@@ -159,7 +159,7 @@
           selT.disabled = true;
           fetch('/api/me/team', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ team: selT.value }) })
             .then(function(r){ return r.json(); }).then(function(d){ if (d.error) throw new Error(d.error); location.reload(); })
-            .catch(function(e){ alert(e.message); selT.disabled = false; selT.value = m.team; });
+            .catch(function(e){ (window.WB && WB.alert ? WB.alert : alert)(e.message); selT.disabled = false; selT.value = m.team; });
         };
       }
       right.appendChild(tb);

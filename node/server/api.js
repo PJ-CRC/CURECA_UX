@@ -29,10 +29,14 @@ on('GET', '/api/requests', ({ res, send }) => {
 on('GET', '/api/jobs', ({ q, req }) => {
   // 플러그인이 캡처 작업을 물으면 자동 캡처 목록에서 대기열을 먼저 채운다(writes.js autoFill)
   if (q.get('kind') === 'capture' && String(req.headers.origin) === 'null' && helpers.autoFill) { try { helpers.autoFill(q.get('key')); } catch (e) {} }
+  // 어느 파일에 플러그인이 켜져 있는지(파일마다 마지막으로 물은 시각) — 비교 때 ②가 열려 있으면 ②도 읽게(2026-11-17)
+  if (String(req.headers.origin) === 'null' && testKey(q.get('key') || '')) { C.pluginKeys = C.pluginKeys || {}; C.pluginKeys[q.get('key')] = Date.now(); }
   const j = core.readJson(C.jobFile) || { version: 0, items: [] };
   let items = core.arr(j.items);
   for (const f of ['key', 'kind', 'status']) { const v = q.get(f); if (v) { const prop = f === 'key' ? 'fileKey' : f; items = items.filter((x) => x && x[prop] === v); } }
-  return { version: j.version, items, pluginSec: C.pluginSeen ? Math.floor((Date.now() - C.pluginSeen) / 1000) : null };
+  // plugins: 파일 키 → 그 파일 플러그인이 마지막으로 물은 지 몇 초(10분 안의 것만). Workbench 「보내기」에서 ① · ② 플러그인이 켜져 있는지 알릴 때 쓴다
+  const plugins = {}; for (const k of Object.keys(C.pluginKeys || {})) { const s = Math.floor((Date.now() - C.pluginKeys[k]) / 1000); if (s < 600) plugins[k] = s; }
+  return { version: j.version, items, pluginSec: C.pluginSeen ? Math.floor((Date.now() - C.pluginSeen) / 1000) : null, plugins };
 });
 
 // GET /api/projects: 등록된 프로젝트 목록 + 시작 안내 작업 링크의 파일
@@ -636,7 +640,94 @@ function sheetCheck(txt) {
   if (txt.startsWith('{"error"')) { let e = ''; try { e = String(JSON.parse(txt).error); } catch (x) {} throw new Error(e); }
   return txt;
 }
+// ── Azure DevOps Boards에서 작업 항목 가져오기(2026-11-17) ──
+//  팀 설정(sheet.json azure {org, project, scope, startField, endField, doneStates}) + 이 PC 토큰(azure_pat.json[팀])으로 읽기만 한다.
+//  범위: 비우면 프로젝트 전체 · 저장 쿼리 링크(…/_queries/query/{id}) · 영역(Area) 또는 반복(Iteration) 경로(그 아래 전부)
+//  결과는 구글 시트와 같은 표 모양(values)으로 돌려줘 일정 · 주간 진행 현황이 그대로 쓴다
+const AZ_MAX = 1000;
+function azureConf(T) {
+  const cf = core.readJson(T.sheetConf) || {}, az = cf.azure || {};
+  if (cf.provider !== 'azure' || !az.org || !az.project) throw new Error('Azure DevOps가 연결되지 않았습니다. [일정 연결]에서 조직 · 프로젝트를 넣어 주세요.');
+  const pat = String((core.readJson(path.join(C.setupDir, 'azure_pat.json')) || {})[T.team] || '');
+  if (!pat) throw new Error('이 PC에 Azure DevOps 토큰이 없습니다. [일정 연결]에서 각자 개인 액세스 토큰(PAT)을 넣어 주세요.');
+  return { az, pat };
+}
+async function azureCall({ az, pat }, method, url, body) {
+  let r;
+  try {
+    r = await fetch(url, { method, redirect: 'manual', signal: AbortSignal.timeout(60000),
+      headers: { Authorization: 'Basic ' + Buffer.from(':' + pat).toString('base64'), Accept: 'application/json', 'Content-Type': 'application/json' }, body: body ? JSON.stringify(body) : undefined });
+  } catch (e) { throw new Error('Azure DevOps에 닿지 못했습니다: ' + e.message); }
+  const txt = await r.text(); let j = null; try { j = JSON.parse(txt); } catch (e) {}
+  // 토큰이 틀리면 로그인 화면으로 넘기거나(302 · 203 HTML) 401을 준다
+  if (r.status === 401 || r.status === 203 || (r.status >= 300 && r.status < 400) || (!j && r.ok)) throw new Error('토큰이 거부되었습니다. 토큰이 만료되었거나, 조직이 다르거나, 범위(Work Items · Read)가 빠졌는지 확인해 주세요.');
+  if (!r.ok) {
+    const m = j && (j.message || (j.value && j.value.Message)) ? String(j.message || j.value.Message) : txt.slice(0, 200);
+    if (r.status === 404) throw new Error('조직 · 프로젝트 · 쿼리를 찾지 못했습니다(' + m + ')');
+    throw new Error('Azure DevOps 오류 ' + r.status + ': ' + m);
+  }
+  return j;
+}
+const azDate = (v) => { if (!v) return ''; const d = new Date(v); if (isNaN(d)) return String(v); const p = (n) => String(n).padStart(2, '0'); return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`; };
+async function azureItems(T) {
+  const cx = azureConf(T), { az } = cx, base = az.org + '/' + encodeURIComponent(az.project) + '/_apis/wit/', v = 'api-version=7.0';
+  const scope = String(az.scope || '').trim(), qm = /_queries\/query(?:-edit)?\/([0-9a-f-]{36})/i.exec(scope) || /^([0-9a-f-]{36})$/i.exec(scope);
+  let res;
+  if (qm) res = await azureCall(cx, 'GET', base + 'wiql/' + qm[1] + '?' + v + '&$top=' + AZ_MAX);
+  else {
+    const esc = (s) => s.replace(/'/g, "''");
+    const where = scope ? ` AND ([System.AreaPath] UNDER '${esc(scope)}' OR [System.IterationPath] UNDER '${esc(scope)}')` : '';
+    res = await azureCall(cx, 'POST', base + 'wiql?' + v + '&$top=' + AZ_MAX, { query: `SELECT [System.Id] FROM WorkItems WHERE [System.TeamProject] = @project AND [System.State] <> 'Removed'${where} ORDER BY [System.ChangedDate] DESC` });
+  }
+  // 평면 쿼리는 workItems, 트리 · 링크 쿼리는 workItemRelations(target)
+  let ids = core.arr(res && res.workItems).map((x) => x.id);
+  if (!ids.length) ids = core.arr(res && res.workItemRelations).map((x) => x && x.target && x.target.id).filter(Boolean);
+  ids = [...new Set(ids)].slice(0, AZ_MAX);
+  const sf = az.startField || 'Microsoft.VSTS.Scheduling.StartDate', ef = az.endField || 'Microsoft.VSTS.Scheduling.TargetDate';
+  const base2 = ['System.Id', 'System.WorkItemType', 'System.Title', 'System.State', 'System.AssignedTo', 'System.AreaPath', 'System.IterationPath'];
+  let fields = base2.concat([sf, ef]), missing = '';
+  const got = [];
+  for (let i = 0; i < ids.length; i += 200) {
+    const part = ids.slice(i, i + 200);
+    let r;
+    try { r = await azureCall(cx, 'POST', base + 'workitemsbatch?' + v, { ids: part, fields }); }
+    catch (e) {
+      // 시작일 · 목표일 필드 이름이 이 프로세스에 없으면 그 필드 없이 다시(알림에 남김)
+      if (!/TF51535|field|필드/i.test(e.message) || fields.length === base2.length) throw e;
+      missing = e.message; fields = base2.slice(); r = await azureCall(cx, 'POST', base + 'workitemsbatch?' + v, { ids: part, fields });
+    }
+    got.push(...core.arr(r && r.value));
+  }
+  const byId = {}; got.forEach((w) => { byId[w.id] = w; });
+  const doneSet = String(az.doneStates || 'Done, Closed, Resolved').split(/[,，]/).map((s) => s.trim().toLowerCase()).filter(Boolean);
+  const NEW = /^(new|to do|todo|proposed|approved|design)$/i;
+  const values = [['ID', '유형', '업무명', '업무 상태', '담당자', '시작일', '완료일', '구분', '반복']];
+  for (const id of ids) {
+    const w = byId[id]; if (!w) continue; const f = w.fields || {};
+    const st = String(f['System.State'] || ''), lo = st.toLowerCase();
+    // 상태 → 일정 탭 분류(완료 · 진행 중 · 그 밖): 「완료로 볼 상태」면 완료, 새로 만든 상태면 그대로, 그 밖은 진행 중
+    const stv = doneSet.includes(lo) ? (/완료|done|closed?/i.test(st) ? st : '완료 (' + st + ')') : NEW.test(st) ? st : (/진행|in\s*progress|active|doing|committed/i.test(st) ? '진행 중 (' + st + ')' : '진행 중 (' + st + ')');
+    const who = f['System.AssignedTo']; const own = who && typeof who === 'object' ? String(who.displayName || who.uniqueName || '') : String(who || '');
+    const area = String(f['System.AreaPath'] || ''), iter = String(f['System.IterationPath'] || '');
+    values.push([String(w.id), String(f['System.WorkItemType'] || ''), String(f['System.Title'] || ''), stv, own, azDate(f[sf]), azDate(f[ef]), area.split('\\').slice(1).join(' › ') || area, iter.split('\\').slice(1).join(' › ') || iter]);
+  }
+  return { name: 'Azure DevOps · ' + az.project, values, at: Date.now(), readonly: true, azure: true, count: values.length - 1, total: ids.length,
+    warn: missing ? '시작일 · 목표일 필드를 찾지 못해 날짜 없이 가져왔습니다. [일정 연결]에서 필드 이름을 확인해 주세요.' : '' };
+}
 on('GET', '/api/sheet/data', async ({ q, T, res, send, sendJson }) => {
+  // Azure DevOps로 연결된 팀: 작업 항목을 표로(마지막으로 받은 사본은 cache=1로 먼저)
+  if ((core.readJson(T.sheetConf) || {}).provider === 'azure') {
+    const ck = path.join(T.sheetCache, 'azure.json');
+    if (q.get('cache') && core.exists(ck)) return send(res, 200, 'application/json; charset=utf-8', '{"cache":true,"cachedAt":"' + localIso(fs.statSync(ck).mtime) + '","data":' + core.readText(ck) + '}');
+    try {
+      const d = await azureItems(T), txt = JSON.stringify(d);
+      if (!C.readonly) { fs.mkdirSync(path.dirname(ck), { recursive: true }); fs.writeFileSync(ck, txt, 'utf8'); }
+      return send(res, 200, 'application/json; charset=utf-8', txt);
+    } catch (e) {
+      if (core.exists(ck)) return send(res, 200, 'application/json; charset=utf-8', '{"cached":true,"error":' + JSON.stringify(e.message) + ',"data":' + core.readText(ck) + '}');
+      return sendJson(res, 502, { error: e.message });
+    }
+  }
   const sq = { action: 'read' };
   if (q.get('gid')) sq.gid = q.get('gid'); if (q.get('name')) sq.sheet = q.get('name'); if (q.get('style')) sq.style = 1;
   const ck = path.join(T.sheetCache, ((String(sq.gid || '') + '_' + String(sq.sheet || '')).replace(/[^A-Za-z0-9가-힣_-]/g, '_')) + '.json');
@@ -658,7 +749,7 @@ on('GET', '/api/sheet/data', async ({ q, T, res, send, sendJson }) => {
 });
 
 // 쓰기 API(2단계)
-const helpers = { protoSnapshot, testKey, projDir, readProj, keyOf, workKey, readMinute, readNotes, noteKey, readGuides, origPath, writeOrig, keepFirst, mainName, applyKeys, appliedDocs, agentInfo, findClaudeCode, sheetCheck, setupEnv: () => { envCache = null; return setupEnv(); } };
+const helpers = { azureItems, protoSnapshot, testKey, projDir, readProj, keyOf, workKey, readMinute, readNotes, noteKey, readGuides, origPath, writeOrig, keepFirst, mainName, applyKeys, appliedDocs, agentInfo, findClaudeCode, sheetCheck, setupEnv: () => { envCache = null; return setupEnv(); } };
 require('./figma')(on, helpers);   // Figma 토큰(REST API) — 캡처. writes.js가 요청 완료 때 helpers.figmaAfterDone을 부른다
 require('./writes')(on, helpers);
 

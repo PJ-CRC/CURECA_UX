@@ -236,8 +236,9 @@ textarea:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:
       .then(function(d){ $('editText').value = ''; $('editMsg').textContent = ''; toast(d.job.id + ' 수정을 요청했습니다'); load(); }, function(err){ $('editMsg').textContent = '요청 실패: ' + err.message; });
   });
   $('delBtn').addEventListener('click', function(){
-    if (!confirm('「' + P.name + '」을 목록에서 지울까요?\n파일은 prototypes/_trash 폴더로 옮겨져 되살릴 수 있습니다.')) return;
-    post('/api/prototypes', { action: 'delete', id: P.id }).then(function(){ location.href = 'Prototypes.html'; }, function(err){ toast('지우지 못했습니다: ' + err.message); });
+    WB.confirm('「' + P.name + '」 프로토타입을 지울까요?\n지우면 다시 볼 수 없습니다.', { ok: '지우기', danger: true }).then(function(ok){
+      if (ok) post('/api/prototypes', { action: 'delete', id: P.id }).then(function(){ location.href = 'Prototypes.html'; }, function(err){ toast('지우지 못했습니다: ' + err.message); });
+    });
   });
 
   function load(){

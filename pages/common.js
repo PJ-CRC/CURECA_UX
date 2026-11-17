@@ -64,4 +64,92 @@
     var ok = WB.setupDone(d);
     return WB.SETUP_STEPS.map(function(t, i){ return ok[i] ? null : (i + 1) + '. ' + t; }).filter(Boolean);
   };
+
+  /* ── 확인 · 알림 · 입력 팝업(2026-11-17): 브라우저 기본 confirm · alert · prompt 대신 쓴다 ──
+     WB.confirm(글, {ok:'지우기', danger:true}) → Promise<true|false>
+     WB.alert(글) → Promise(닫으면)
+     WB.prompt(글, 처음 값, {ok:'만들기'}) → Promise<입력한 값 | null(취소)>
+     {warn:'…'}을 주면 설명 아래에 주황 경고 칸을 둔다(막지는 않고 알리기만)
+     글: 첫 줄이 제목, 나머지가 설명. 줄이 하나면 첫 문장이 제목({title}로 따로 줄 수도 있음).
+         설명은 문장마다 줄을 나눈다(한 문장 안에서 끊을 자리는 글에 \n으로). 설명이 4줄을 넘으면 왼쪽 정렬.
+     기본 팝업과 달리 화면을 멈추지 않으니 답을 받은 뒤 할 일은 then(또는 await) 안에 쓴다.
+     Enter = 확인(지우기처럼 위험한 것은 처음 포커스가 「취소」), Esc · 바깥 누르기 = 취소. 여러 개가 겹치면 차례로 띄운다. */
+  var DLG_CSS = 'dialog.wbd-ov{position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;border:0;border-radius:0;box-shadow:none;background:rgba(20,23,28,.38);padding:16px;box-sizing:border-box;overflow:hidden;color:inherit;opacity:0;transition:opacity .12s}' +
+    'dialog.wbd-ov[open]{display:flex;align-items:center;justify-content:center}' +
+    'dialog.wbd-ov::backdrop{background:transparent}' +
+    'dialog.wbd-ov.on{opacity:1}' +
+    '.wbd{width:100%;max-width:360px;max-height:calc(100vh - 32px);background:var(--surface,#fff);color:var(--ink,#14171c);border:1px solid var(--line,#e3e7ee);border-radius:14px;box-shadow:0 12px 32px rgba(15,17,21,.18),0 2px 6px rgba(15,17,21,.08);padding:22px 24px 20px;min-height:200px;display:flex;flex-direction:column;text-align:center;font:14px/1.6 Pretendard,-apple-system,"Segoe UI","Malgun Gothic",sans-serif;transform:translateY(6px) scale(.98);transition:transform .14s}' +
+    '.wbd-ov.on .wbd{transform:none}' +
+    '.wbd.wide{max-width:440px}' +
+    '.wbd-bd{flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;justify-content:center;word-break:keep-all;overflow-wrap:anywhere}' +
+    '.wbd h3{margin:0 0 6px;font-size:17px;font-weight:800;line-height:1.4;text-wrap:balance}' +
+    '.wbd p{margin:0;color:var(--ink-2,#4a5260);font-size:14px;white-space:pre-line;text-wrap:balance}' +
+    '.wbd p.left{text-align:left;text-wrap:wrap}' +
+    '.wbd .wbd-warn{margin-top:14px;padding:10px 12px;border-radius:8px;background:var(--warn-soft,#fff1e0);color:var(--warn,#a35100);font-size:13px;line-height:1.55;white-space:pre-line;text-wrap:balance}' +
+    '.wbd input{width:100%;box-sizing:border-box;margin-top:14px;height:38px;border:1px solid var(--line,#e3e7ee);border-radius:8px;background:var(--surface,#fff);color:inherit;padding:0 10px;font:inherit;text-align:left}' +
+    '.wbd input:focus{outline:2px solid var(--accent,#2747d8);outline-offset:-1px;border-color:transparent}' +
+    '.wbd-acts{display:flex;justify-content:center;gap:8px;padding-top:20px;flex:none}' +
+    '.wbd-acts button{height:36px;padding:0 16px;border:1px solid var(--line,#e3e7ee);border-radius:8px;background:var(--surface,#fff);color:inherit;font:inherit;font-weight:600;white-space:nowrap;cursor:pointer}' +
+    '.wbd-acts button:hover{border-color:var(--accent,#2747d8)}' +
+    '.wbd-acts button:focus-visible{outline:2px solid var(--accent,#2747d8);outline-offset:2px}' +
+    '.wbd-acts .ok{background:var(--accent,#2747d8);border-color:var(--accent,#2747d8);color:#fff}' +
+    '.wbd-acts .ok.danger{background:var(--red,#c4281c);border-color:var(--red,#c4281c)}' +
+    '.wbd-acts .ok:hover{filter:brightness(1.08)}' +
+    ':root[data-theme="dark"] .wbd-acts .ok{color:#0f1115}' +
+    '@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .wbd-acts .ok{color:#0f1115}}' +
+    '@media (prefers-reduced-motion:reduce){.wbd-ov,.wbd{transition:none}}';
+  var dlgQ = Promise.resolve();
+  function dlgSplit(msg, o){
+    var s = String(msg == null ? '' : msg).replace(/\r/g, '').trim(), t = o.title || '', b = '';
+    if (!t) {
+      var i = s.indexOf('\n');
+      if (i >= 0) { t = s.slice(0, i).trim(); b = s.slice(i + 1); }
+      else { var m = /^(.+?[^\d\s][.?!])\s+(\S[\s\S]*)$/.exec(s); if (m && m[1].length <= 60) { t = m[1]; b = m[2]; } else t = s; }
+    } else b = s;
+    b = b.replace(/^\n+|\n+$/g, '').replace(/([^\d\s][.?!])[ \t]+(?=[^\s)\]])/g, '$1\n');   // 문장마다 줄 바꿈(「1. 항목」 같은 번호는 그대로)
+    return { t: t, b: b };
+  }
+  function dlgOpen(kind, msg, o){
+    o = o || {};
+    var run = function(){ return new Promise(function(done){
+      if (!document.getElementById('wbd-css')) { var st = document.createElement('style'); st.id = 'wbd-css'; st.textContent = DLG_CSS; document.head.appendChild(st); }
+      var x = dlgSplit(msg, o), lines = x.b ? x.b.split('\n').length : 0, prev = document.activeElement;
+      var ov = document.createElement('dialog'); ov.className = 'wbd-ov';   // <dialog> showModal: 페이지에 열린 다른 dialog(모달)보다 위에 뜬다
+      ov.innerHTML = '<div class="wbd' + (x.b.length > 160 ? ' wide' : '') + '" role="' + (kind === 'alert' ? 'alertdialog' : 'dialog') + '" aria-modal="true" aria-labelledby="wbd-t">' +
+        '<div class="wbd-bd"><h3 id="wbd-t">' + WB.esc(x.t) + '</h3>' + (x.b ? '<p class="' + (lines > 4 ? 'left' : '') + '">' + WB.esc(x.b) + '</p>' : '') +
+        (o.warn ? '<div class="wbd-warn" role="note">' + WB.esc(o.warn) + '</div>' : '') +
+        (kind === 'prompt' ? '<input type="text" aria-label="' + WB.esc(x.t) + '"' + (o.readonly ? ' readonly' : '') + '>' : '') + '</div>' +
+        '<div class="wbd-acts">' + (kind === 'alert' || o.cancel === false ? '' : '<button type="button" class="no">' + WB.esc(o.cancel || '취소') + '</button>') +
+        '<button type="button" class="ok' + (o.danger ? ' danger' : '') + '">' + WB.esc(o.ok || '확인') + '</button></div></div>';
+      var inp = ov.querySelector('input'), okB = ov.querySelector('.ok'), noB = ov.querySelector('.no');
+      if (inp) inp.value = o.value == null ? '' : String(o.value);
+      function close(v){
+        document.removeEventListener('keydown', key, true); try { ov.close(); } catch (e) {} ov.remove();
+        try { if (prev && prev.focus && document.contains(prev)) prev.focus(); } catch (e) {}
+        done(v);
+      }
+      var yes = function(){ close(kind === 'prompt' ? inp.value : kind === 'confirm' ? true : undefined); };
+      var no = function(){ close(kind === 'prompt' ? null : kind === 'confirm' ? false : undefined); };
+      function key(e){
+        if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); no(); }
+        else if (e.key === 'Enter' && e.target === inp) { e.preventDefault(); yes(); }
+        else if (e.key === 'Tab') {   // 포커스가 팝업 밖으로 나가지 않게
+          var f = Array.prototype.slice.call(ov.querySelectorAll('input,button')), i = f.indexOf(document.activeElement);
+          e.preventDefault(); f[(i + (e.shiftKey ? f.length - 1 : 1)) % f.length].focus();
+        }
+      }
+      okB.onclick = yes; if (noB) noB.onclick = no;
+      ov.addEventListener('mousedown', function(e){ if (e.target === ov) no(); });
+      document.addEventListener('keydown', key, true);
+      ov.addEventListener('cancel', function(e){ e.preventDefault(); no(); });
+      document.body.appendChild(ov);
+      try { ov.showModal(); } catch (e) { ov.setAttribute('open', ''); }
+      void ov.offsetWidth; ov.classList.add('on');   // 레이아웃을 한 번 잡은 뒤 켜야 나타나는 움직임이 보인다(rAF는 숨은 탭에서 멈춤)
+      if (inp) { inp.focus(); inp.select(); } else ((o.danger && noB) || okB).focus();
+    }); };
+    var p = dlgQ.then(run); dlgQ = p.catch(function(){}); return p;
+  }
+  WB.confirm = function(msg, o){ return dlgOpen('confirm', msg, o); };
+  WB.alert = function(msg, o){ return dlgOpen('alert', msg, o); };
+  WB.prompt = function(msg, value, o){ o = Object.assign({}, o || {}); o.value = value; return dlgOpen('prompt', msg, o); };
 })();
