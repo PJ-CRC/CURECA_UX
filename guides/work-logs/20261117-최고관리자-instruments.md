@@ -122,6 +122,76 @@ started: 2026-11-17
 
 ## 근거
 
+- 2단계 시작 때 `basis_start`(history ec67717) 뒤로 바뀐 정책 · 기준데이터 · 논의 대상: 없음 (2026-11-17 16:40 git 확인). 대상 화면 MD는 모두 `basis` 없음
+- 걸린 열린 논의 대상: 없음 (`discussions/list.md`, DS-0001 · DS-0003은 종료 · INS 화면 걸리지 않음). 옛 목록: 고객 논의 CA-0001 (Error Rate 위치) · CA-0010 (Error일 때 Door를 열면 Paused인지), 임시 정책 PV-0001 (승인 대기) — 무엇이 정해지지 않았는지 확인하는 용도로만 읽음
+
+### 읽은 자료 목록
+
+| 요건 | 종류 | 자료 (ID · 파일) | 연결 근거 (왜 이 요건과 관련 있나) | 설계에 씀 (O / -) | 쓰는 화면 · 요소 | 무엇에 쓰나 |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1-1 | 용어집 | `glossary/terms.csv` CURECA · User Type · T-IOS / L-IOS · Waste Bin/Bottle Status · Door · 연결 상태 | 반영 대기 근거 칸 | O | TI-INS-01-T R02 · LI-INS-01-T R01 (CURECA), TI-INS-02-01-P R01 · LI-INS-02-01-P R01 · TI/LI-INS-02-T R09 (User Type, T-IOS), TI/LI-INS-02-T R06 (Waste Bin/Bottle Status) | 표준어 확인 (모두 표준어로 있음) |
+| 1-1 | 기준데이터 | `glossary/status-values.csv` 연결 상태 · Door 상태 | 반영 대기 근거 칸 | O | TI/LI-INS-02-T R01 Connected 상태값 | Connected / Disconnected |
+| 1-1 | 기준데이터 | `glossary/module-units.csv` Sample Preparation Unit | 반영 대기 근거 칸 | O | TI/LI-INS-02-T R03 · R04 · R05 Module Details Unit 이름 | STAT Storage, Waste Bin (Upper) · (Lower), Liquid Waste Bottle (Upper) 표기 |
+| 1-2 | 정책 | POL-EQP-001 | 정책 `cids`에 TI/LI-INS-01-T · 02-T · 02-01-P | O | TI-INS-01-T 3-5 (R06), TI/LI-INS-02-T 1-4 | 상태 단계 · Door 2개 Module 열림 표시 |
+| 1-2 | 정책 | POL-EQP-002 | 정책 `cids`에 TI/LI-INS-01-T · 02-T, POL-EQP-004 규칙 8이 가리킴 | - | | (장비 통합 상태 계산 규칙. 이번 반영 대기에 걸린 문장 없음) |
+| 1-2 | 정책 | POL-EQP-004 | 정책 `cids`에 LI-INS-01-P · TI/LI-INS-01-T · 02-T, 반영 대기 근거 칸 | O | LI-INS-01-P 0 · 3 (R07), 2-1 | Door 잠금 해제 → Paused, Door 여럿이면 하나라도 → Paused. 규칙 7(5초 자동 잠금 뒤 복귀)은 화면 v2.1.17과 다름 → DS-0004 |
+| 1-2 | 정책 | POL-EQP-008 | 정책 `cids`에 LI-INS-01-P · LI-INS-01-T · LI/TI-INS-02-T, 반영 대기 근거 칸 | O | LI-INS-01-P 0 · 2-5 · 3 (R01 · R06 · R08), LI-INS-01-T 6 (R04), LI-INS-02-T 3 · 3-1 (R08) | 잠금 해제 허용 · [Unlock all doors] 활성 조건 · Run Start 자동 잠금. 규칙 3(다시 잠그는 기능 없음 · 5초 자동 잠금)은 화면 v2.1.17과 다름 → DS-0004 |
+| 1-2 | 정책 | POL-EQP-009 | 정책 `cids`에 INS 6개, 반영 대기 근거 칸 | O | TI-INS-02-01-P 3 (R03 · R04 · R05), LI-INS-02-01-P 0 (R02), TI/LI-INS-01-T 3-2 (R04 · R02) | Service만 변경 · 조회 전용 · 변경 가능 상태 · Device Unit 설정 대상 · Enabled 표기 |
+| 1-2 | 정책 | POL-EQP-005 · POL-EQP-010 | 화면 MD "관련 정책" (길 ③) | - | | (Run-time · Error Rate. 이번 반영 대기에 걸린 것은 `대기 (고객 논의)` CA-0001뿐) |
+| 1-2 | 장비 | `policy/equipment-states.md` 5절 | POL-EQP-008 `data` (길 ④) | O | LI-INS-01-P 2-5 · 2-7 · 3 (R08 · R03) | 장비 통합 상태별 허용 · 조건부 허용 Module 표, "Cannot unlock while the system is running." 문구. 끝 줄(5초 자동 잠금)은 DS-0004 |
+| 1-2 | 옛 임시 정책 | `old-provisional/PV-0001.md` | POL-EQP-008 `provisional`, LI-INS-01-P R09 | - | | 승인 대기 · 고객 미정의. DS-0004 `old_ids`로 이음 (확인 용도만) |
+| 1-2 | 옛 고객 논의 | `old-customer-agenda/agenda.md` CA-0010 | POL-EQP-004 예외 | - | | 규칙 1 "Error일 때도 Paused"는 고객 확인 중 — 확인 전까지 규칙 1 그대로 (LI-INS-01-P R07에 그대로 씀) |
+| 1-3 | 알럿 | `policy/alert-catalog.csv` Alert_004 · Alert_013 · 014 · 015 · Confirm_008 | 반영 대기 근거 칸, POL-EQP-008 · 009 `alerts` | O | TI-INS-01-T 1 (R01 Alert_004), TI-INS-02-01-P 3 (Alert_013 · 014 · 015), LI-INS-02-T 3-1 (Confirm_008) | 알럿 ID · 문구. Confirm_031 없음 → DS-0005 |
+| 1-3 | 권한 | `policy/permission-matrix.csv` | POL-EQP-009 `data` | O | TI-INS-02-01-P (R03) | T-IOS Service만 Enabled 변경 |
+
+### 관련 자료 없는 영역 · 요소
+
+| 화면 · 영역 · 요소 | 근거로 삼는 것 |
+| --- | --- |
+| LI-INS-01-T R05 Door 버튼 라벨 ("Door Control" / "Unlock 버튼") | 용어집 · 정책에 버튼 이름 없음. 기존 UX 화면설계서만 근거 (화면 글자 "Door Control") |
+| TI-INS-01-T R03 오른쪽 패널 CID 칸 | IA · Figma 프레임 이름 (TI-INS-01-T) |
+| 오타 (TI/LI-INS-01-T R03 · R05, LI-INS-01-P R05, TI-INS-02-01-P R02, LI-INS-02-01-P R04) | 기존 UX 화면설계서만 근거 (오타 고침) |
+
+### 대조
+
+| 요건 · 화면 · 요소 | 결과 | 근거 | 다음 |
+| --- | --- | --- | --- |
+| 1-1 묶음 1 표기 · 용어 (7개 화면) | 기존 화면이 정책과 다름 | 용어집 · 기준데이터에 표준어가 모두 있음 | 기준 자료대로 고치고 3단계에서 변경 확인 |
+| 1-2 TI-INS-02-01-P R03 · R04 · R05, LI-INS-02-01-P R02, TI/LI-INS-01-T R04 · R02 | 정책에 있음 | POL-EQP-009 규칙 4 · 7 · 8 · 9, 정의 | 3단계에서 디스크립션 끝에 정책 ID |
+| 1-2 TI-INS-01-T R06 | 정책에 있음 | POL-EQP-001 | 같음 |
+| 1-2 LI-INS-01-P R01 · R08, LI-INS-01-T R04, LI-INS-02-T R08 | 정책에 있음 | POL-EQP-008 규칙 4 ~ 8, `policy/equipment-states.md` 5절 | 같음 |
+| 1-2 LI-INS-01-P R07 | 정책에 있음 | POL-EQP-004 규칙 1 · 2 (Error일 때는 CA-0010 고객 확인 중, 규칙 1 그대로) | 같음 |
+| 1-1 LI-INS-01-P R03 문구 둘 | 정책에 있음 | `policy/equipment-states.md` 5절 "Cannot unlock while the system is running." (장비 통합 상태 기준) | 근거로 풀림: 통합 상태로 막을 때 system 문구 |
+| 1-1 LI-INS-01-P R02 · 1-2 R06 (5초 자동 잠금) | 정책을 바꿔야 함 | 화면 v2.1.17 (자동 잠금 폐지 · [Lock]) ↔ POL-EQP-008 규칙 3, POL-EQP-004 규칙 7 | 정책 수정 범위 1 ~ 3, DS-0004. 결정 전이면 3단계 질문 대기 |
+| LI-INS-01-P 2-5 · LI-INS-02-T 3-1 Confirm_031 | 정책에 없음 | `policy/alert-catalog.csv`에 없음 | 정책 수정 범위 4, DS-0005 |
+| 1-3 TI-INS-01-T R01 Alert_004 | 정책에 있음 | `policy/alert-catalog.csv` Alert_004 (사용 화면에 TI-INS-01-T 없음) | 디스크립션 Alert_004로. 사용 화면은 정책 수정 범위 5, DS-0005 |
+| LI-INS-01-P R09 Run 중 해제 뒤 열지 않음 | 논의 대상에 이미 있음 | PV-0001 (승인 대기) → DS-0004 `old_ids` | 이번 묶음 아님 (`대기` 그대로) |
+
+### 정책 수정 범위
+
+| # | 바꿈 / 더함 | 정책 ID · 규칙 (또는 기준 자료) | 변경 전 | 변경 후 (안) | 논의 대상 |
+| --- | --- | --- | --- | --- | --- |
+| 1 | 바꿈 | POL-EQP-008 요약 · 규칙 3 · 머리말 `alerts` | 다시 잠그는 기능 없음. Door를 닫으면 5초 뒤 자동 Locked | [Lock](Unlocked일 때 표시, 늘 활성)으로 잠금. 닫아도 자동으로 잠기지 않음. Open일 때 [Lock]이면 Confirm_031 · Unlocked 유지. `alerts`에 Confirm_031 | DS-0004 |
+| 2 | 바꿈 | POL-EQP-004 규칙 7 | Door가 닫히고 5초 뒤 자동으로 잠기면 Paused 전 상태로 | [Lock]으로 Door가 잠기면 Paused 전 상태로 | DS-0004 |
+| 3 | 바꿈 | `policy/equipment-states.md` 5절 규칙 끝 줄 | 닫히고 5초 뒤 자동 잠금 · 다시 가동 | [Lock]으로 잠그면 다시 가동 | DS-0004 |
+| 4 | 더함 | `policy/alert-catalog.csv` Confirm_031 | 없음 | "Please close the door." · OK · Door가 Open일 때 [Lock] · 사용 화면 LI-INS-01-P, LI-INS-02-T | DS-0005 |
+| 5 | 바꿈 | `policy/alert-catalog.csv` Alert_004 사용 화면 | LI-INS-01-T | LI-INS-01-T, TI-INS-01-T | DS-0005 |
+| 6 | 바꿈 | POL-EQP-001 `cids` | LI-INS-01-P 없음 | LI-INS-01-P 더함 (Door 열림 상태 표시, POL-EQP-008 규칙 10) | DS-0004 |
+
+### 용어 목록
+
+| 원래 표현 | 표준어 | 어디서 | 새 용어면 처리 |
+| --- | --- | --- | --- |
+| Cureca | CURECA | TI-INS-01-T 0, LI-INS-01-T 0 | |
+| Account Type / Account type | User Type | TI/LI-INS-02-01-P 2 · 케이스, TI/LI-INS-02-T 2-1 · 4-1 | |
+| T-IO S | T-IOS | TI-INS-02-T 4 | |
+| Unconnected | Disconnected | TI/LI-INS-02-T 1 | |
+| Waste Status | Waste Bin/Bottle Status | TI/LI-INS-02-T 6 · 화면 글자 | |
+| Tip Waste Bin · Film Waste Bin (Upper/Lower) | Waste Bin (Upper) · (Lower) | TI/LI-INS-02-T Module Details | |
+| STAT Storage (Upper) · (Lower) | STAT Storage | TI/LI-INS-02-T Module Details | |
+| Enable (표 헤더) | Enabled | TI-INS-02-01-P 화면 글자 | |
+| [Lock] (버튼) | (용어집 Door 줄에 버튼 이름 Unlock만 있음) | LI-INS-01-P 2-5, LI-INS-02-T 3-1 | 순서 6 질문 5 |
+
 ## 설계
 
 ## 질문 대기
@@ -143,6 +213,7 @@ started: 2026-11-17
 | 날짜 | 단계 | 확인한 것 | 요청자 답 |
 | --- | --- | --- | --- |
 | 2026-11-17 | 1단계 | 요건 목록 · 대상 화면 · 고칠 내용 · 반영 대기 묶음 (Workbench R037 질문: 1 고칠 내용 = 반영 대기 묶음 1 · 2 · 3, 2 TI-TMG-01 뺌, 3 TI-INS-02-02-P 손대지 않음, 4 Design-Update = 기획 프레임만 고침, 5 3단계 끝 관문 뒤 4단계를 다시 물음) | 추천대로 진행 (2026-11-17 16:28, 최고관리자) |
+| 2026-11-17 | 2단계 | 근거 확인 (Workbench R038 질문: 1 정책 수정 범위 DS-0004 · DS-0005, 4 TI-INS-02-01-P User Type 케이스 화면, 5 [Lock] 버튼 이름 용어집, 확인할 것 5 남은 `대기 (확인 필요)` 3건, 확인할 것 8 `대기` 3건) | |
 
 ## 이 작업의 결정 (5단계에서 한꺼번에 반영)
 | 논의 대상 | 내용 | 후속 확인 필요 (누구 · 무엇, 없으면 비움) | 5단계 반영 |
@@ -150,6 +221,6 @@ started: 2026-11-17
 
 ## 이 작업이 남긴 것
 
-- 논의 대상:
+- 논의 대상: DS-0004 (Door 자동 잠금 폐지 · [Lock], 2단계), DS-0005 (알럿 카탈로그 Confirm_031 · Alert_004, 2단계)
 - 다른 화면의 반영 대기 항목:
 - 커밋:
