@@ -2,11 +2,11 @@
   "id": "brex-01_R007",
   "kind": "request",
   "team": "cureca",
-  "status": "대기",
-  "at": "2026-11-17T18:29:25+09:00",
+  "status": "보류",
+  "at": "2026-11-17T18:29:51+09:00",
   "createdAt": "2026-11-17T17:47:23+09:00",
   "by": "서보경",
-  "doneBy": "서보경",
+  "doneBy": "Claude",
   "pc": "BREX_01",
   "reqId": "R007",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,13 +17,24 @@
   "type": "요청",
   "layout": "",
   "text": "instrument 작업 이어서 해줘",
-  "note": "",
+  "note": "[4단계] 사용자 확인 목록 하나씩 — 1 / 39 (질문 대기 5 · 변경 확인 34)\nQ1 Overview (TI-INS-01-T) 6 Door Status 툴팁\n- 지금 그린 것: L-IOS 문구를 따라 Door 상태 설명과 Unlock · Lock 안내를 함께 적음 (기존 T 디스크립션에는 툴팁 문구가 없음)\n- 걸리는 점: T-IOS에는 Door Control Popup이 없음 (LI-INS-01-P는 L-IOS만, 짝 없음)\n- 추천: Unlock · Lock 안내를 빼고 Door 상태 설명만 둠\n남은 것: Q2 ~ Q5, C1 ~ C35\n작업 기준: basis 2026-11-17 18:29 · 작업규칙 CURECA 작업규칙 (rules) @원본 · 정책서 (policy) @원본 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 (glossary) @원본 · 화면 정의서 (screens) @원본",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "Q1 T-IOS Door Status 툴팁에서 Unlock · Lock 안내를 뺄까요?",
+    "options": [
+      {
+        "label": "Unlock · Lock 안내 뺌 (추천)"
+      },
+      {
+        "label": "L 문구 그대로"
+      }
+    ],
+    "free": true
+  },
   "replies": [
     {
       "at": "2026-11-17T18:05:53+09:00",
