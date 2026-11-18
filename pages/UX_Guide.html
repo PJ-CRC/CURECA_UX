@@ -1343,10 +1343,10 @@ html.embed,html.embed body{overflow:hidden}
     var P = outer();
     if (P) {
       var y = P.scrollY + window.frameElement.getBoundingClientRect().top + m.getBoundingClientRect().top - navOf(P) - 12;
-      if (P.scrollY > y) P.scrollTo({ top: y, behavior: 'smooth' });
+      if (P.scrollY > y) P.scrollTo({ top: y, behavior: WB.sb() });
     } else {
       var y2 = m.getBoundingClientRect().top + scrollY - 76;
-      if (scrollY > y2) window.scrollTo({ top: y2, behavior: 'smooth' });
+      if (scrollY > y2) window.scrollTo({ top: y2, behavior: WB.sb() });
     }
   }
   window.addEventListener('resize', fit);
@@ -1542,7 +1542,7 @@ html.embed,html.embed body{overflow:hidden}
       '<div class="act"><button type="button" class="btn" id="edCancel">취소</button><button type="button" class="btn pri" id="edSave">Claude에게 수정 요청</button></div></div>';
     ed._att = attach(ed.querySelector('#edAtt'), ed.querySelector('#edText'));
     m.insertBefore(ed, m.querySelector('.pager') || null);
-    ed.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    ed.scrollIntoView({ block: 'nearest', behavior: WB.sb() });
     $('edText').focus({ preventScroll: true });
     return ed;
   }
@@ -1682,7 +1682,7 @@ html.embed,html.embed body{overflow:hidden}
       if (head) head.insertAdjacentElement('afterend', ed); else m.insertBefore(ed, m.firstChild);
       var bt = m.querySelector('[data-dedit]'); if (bt) bt.disabled = true;
       function restore(){ ed.remove(); hid.forEach(function(x){ x.style.display = x.dataset.dmhid === ' ' ? '' : x.dataset.dmhid; delete x.dataset.dmhid; }); if (bt) bt.disabled = false; }
-      var ta = $('dmText'); ta.value = baseText; head && head.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      var ta = $('dmText'); ta.value = baseText; head && head.scrollIntoView({ block: 'nearest', behavior: WB.sb() });
       /* 보이는 대로 편집(2026-11-16): md 파일은 에디터(Toast UI)로 연다. 머리말(--- 사이)은 위 「항목 · 값」 칸, 본문은 에디터.
          저장할 때 내용이 같은 덩어리(문단 · 표 · 목록 …)는 원래 원문을 글자 그대로 두고 고친 덩어리만 바꾼다(dmKeep) → 깃 기록에 고친 곳만 남는다 */
       var visual = !file || /\.md$/i.test(file), mode = 'src', tui = null, visOrig = '', visBase = '';
@@ -1767,7 +1767,7 @@ html.embed,html.embed body{overflow:hidden}
           var dv = document.createElement('div'); dv.id = 'dmDiff'; dv.className = 'dm-diff'; dv.innerHTML = lineDiff(baseText, md);
           ed.querySelector('.dm-act').insertAdjacentElement('beforebegin', dv);
           b.textContent = '이대로 저장'; $('dmMsg').className = 'm'; $('dmMsg').textContent = '바뀐 줄을 확인하고 [이대로 저장]을 누르세요. 더 고치려면 위에서 고친 뒤 다시 [저장].';
-          dv.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+          dv.scrollIntoView({ block: 'nearest', behavior: WB.sb() });
           return;
         }
         b.disabled = true; $('dmMsg').className = 'm'; $('dmMsg').textContent = '저장하는 중…';
@@ -2228,7 +2228,7 @@ html.embed,html.embed body{overflow:hidden}
   /* 할 일 수(진행 중 · 결과 확인 대기)를 [문서 수정]에 표시 */
   function rqBadge(){ var n = edits.length + jobs.length, nb = $('editNb'); if (!nb) return; nb.textContent = n; nb.hidden = !n; nb.title = n ? '진행 중이거나 확인할 수정 ' + n + '건' : ''; }
   ['revBox'].forEach(function(pid){
-    $('revBtn').onclick = function(){ var on = $(pid).hidden; panel(pid, on); if (on) $(pid).scrollIntoView({ block: 'nearest', behavior: 'smooth' }); };
+    $('revBtn').onclick = function(){ var on = $(pid).hidden; panel(pid, on); if (on) $(pid).scrollIntoView({ block: 'nearest', behavior: WB.sb() }); };
     $(pid).addEventListener('toggle', function(){ if (!this.open && !this.hidden) panel(pid, false); });
   });
   $('main').addEventListener('click', function(e){

@@ -629,7 +629,7 @@ html.doc-ro #docNew,html.doc-ro #docImport{display:none!important}
       logSel = b.dataset.ev;
       [].forEach.call($g('logTree').querySelectorAll('[data-ev]'), function(x){ var on = x === b; x.classList.toggle('on', on); if (on) x.setAttribute('aria-current', 'true'); else x.removeAttribute('aria-current'); });
       var ev = logEvents().filter(function(x){ return x.key === logSel; })[0]; if (ev) showLog(ev);
-      if (window.matchMedia('(max-width:900px)').matches) $g('logDetail').scrollIntoView({ block: 'start', behavior: 'smooth' });
+      if (window.matchMedia('(max-width:900px)').matches) $g('logDetail').scrollIntoView({ block: 'start', behavior: WB.sb() });
     });
     /* 문서 보기(iframe)는 안쪽 내용 높이 그대로(UX_Guide.html이 postMessage로 알려 줌) → 페이지 전체가 스크롤된다(안쪽 스크롤 없음)
        변경이력 목록 · 상세는 남은 창 높이를 채운다(스크롤은 각자 안에서) */

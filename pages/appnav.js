@@ -57,11 +57,14 @@
     var gone = hasReset && Date.parse(five.resetsAt) <= Date.now(), age = Math.round((Date.now() - Date.parse(usage.at)) / 60000), p = +five.percentUsed || 0;
     /* 초기화 시각이 지났으면 %는 알 수 없다(다음에 Claude가 깰 때 갱신) */
     /* 좁은 화면에서는 주간 · 남은 시간 순서로 접힌다(마우스를 올리면 전체) */
-    usageEl.innerHTML = '<i style="width:' + (gone ? 0 : Math.min(100, p)) + '%"></i>' + (gone ? '<b>Claude 한도 초기화됨 · 갱신 대기</b>' :
+    /* 어느 창이든 100%이고 아직 초기화 전이면(주간 한도 등) 그 창을 앞에 보인다 — 5시간만 보던 것(2026-11-18) */
+    var full = ws.filter(function(w){ return (+w.percentUsed || 0) >= 100 && Date.parse(w.resetsAt) > Date.now(); })[0];
+    if (full) { usageEl.innerHTML = '<i style="width:100%"></i><b>Claude ' + (/^Weekly/.test(full.label) ? '주간 ' : '') + '한도 · ' + when(full.resetsAt) + ' 초기화</b>'; }
+    else usageEl.innerHTML = '<i style="width:' + (gone ? 0 : Math.min(100, p)) + '%"></i>' + (gone ? '<b>Claude 한도 초기화됨 · 갱신 대기</b>' :
       '<b>Claude ' + p + '%</b>' + (hasReset ? '<b class="rs"> · ' + left(five.resetsAt) + ' 후 초기화</b>' : '') +
       (week && Date.parse(week.resetsAt) > Date.now() ? '<b class="wk"> · 주간 ' + (+week.percentUsed || 0) + '%</b>' : ''));
     usageEl.hidden = false;
-    usageEl.className = 'badge appnav-usage' + (gone || age > 180 ? ' old' : p >= 95 ? ' off' : p >= 80 ? ' warn' : '');
+    usageEl.className = 'badge appnav-usage' + (full ? ' off' : gone || age > 180 ? ' old' : p >= 95 ? ' off' : p >= 80 ? ' warn' : '');
     usageEl.title = ws.map(function(w){
       if (isNaN(Date.parse(w.resetsAt))) return (LABEL[w.label] || w.label) + ' ' + w.percentUsed + '% 사용';
       return (LABEL[w.label] || w.label) + ' ' + w.percentUsed + '% 사용 · ' + when(w.resetsAt) + ' 초기화' + (Date.parse(w.resetsAt) > Date.now() ? ' (' + left(w.resetsAt) + ' 후)' : ' (지남)');

@@ -60,7 +60,7 @@ code,kbd,pre,samp,.mono{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular
    오른쪽 계정은 테두리 버튼(이름 · 내 정보) + 파랑 채운 버튼(로그아웃) */
 :root{
   --nav-h:64px;
-  --nav-bg:#ffffff; --nav-line:#eceef2; --nav-ink:#1d2433; --nav-ink2:#4a5260; --nav-ink3:#5f6874; --nav-accent:#1570ef;
+  --nav-bg:#ffffff; --nav-line:#eceef2; --nav-ink:#1d2433; --nav-ink2:#4a5260; --nav-ink3:#5f6874; --nav-accent:#0f5fd6;
   --nav-hover:#f3f5f8; --nav-on:#eaf2ff; --nav-btn-line:#cfd6e0;
   --nav-ok:#17722f; --nav-ok-soft:#e3f4e8; --nav-red:#c4281c; --nav-red-soft:#fdecea; --nav-chip:#f5f7fa; --nav-warn:#a35100;
 }
@@ -190,3 +190,7 @@ html.embed.low .app-head .app-head-t > p{display:none}
 .wb-off button{flex:none;height:32px;padding:0 14px;border-radius:8px;border:1px solid currentColor;background:var(--surface);color:var(--warn);font:inherit;font-weight:600;cursor:pointer}
 .wb-off button:focus-visible{outline:2px solid var(--warn);outline-offset:2px}
 @media (max-width:640px){.wb-off{flex-direction:column;align-items:stretch;gap:8px;bottom:12px}}
+/* 움직임 줄이기(운영체제 설정, 2026-11-18 harden): 모든 화면의 전환 · 애니메이션 · 부드러운 스크롤을 바로 바뀌게 한다(상태 변화는 그대로 보임) */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:.01ms!important;transition-delay:0s!important;animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important;scroll-behavior:auto!important}
+}

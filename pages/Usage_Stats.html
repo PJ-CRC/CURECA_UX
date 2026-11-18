@@ -475,7 +475,7 @@ td.usd{font-weight:700}
   });
   $('detTgl').addEventListener('click', function(){ det = !det; this.setAttribute('aria-pressed', det); this.textContent = det ? '토큰 자세히 ▾' : '토큰 자세히 ▸'; render(); });
   $('dayChip').addEventListener('click', function(e){ if (e.target.closest('#dayX')) { day = ''; page = 1; render(); } });
-  $('pager').addEventListener('click', function(e){ var b = e.target.closest('button'); if (!b || b.disabled) return; page = +b.dataset.p; render(); $('jobs').scrollIntoView({behavior:'smooth'}); });
+  $('pager').addEventListener('click', function(e){ var b = e.target.closest('button'); if (!b || b.disabled) return; page = +b.dataset.p; render(); $('jobs').scrollIntoView({behavior: WB.sb()}); });
 
   /* A 막대: 누르면 그날 작업만(다시 누르면 해제), 마우스를 올리면 그날 합계 */
   function pickDay(c){ day = day === c.dataset.d ? '' : c.dataset.d; page = 1; render(); }

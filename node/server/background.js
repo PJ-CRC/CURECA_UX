@@ -60,9 +60,23 @@ foreach ($dir in $places) { $lnk = Join-Path $dir 'Figma AI Run.lnk'; try { if (
 
   // ── 감시 자동 시작(Auto-Watch): 켠 지 5초 뒤, 그 뒤 2분마다. 사용자가 끈 것 · 중지 신호 · 대화형 감시(60초 안)는 건너뛴다 ──
   let watchAt = Date.now() + 5000, watchFirst = true;
+  // 떠 있는 에이전트가 예전 코드 · 다른 CLI 경로면(업데이트 · 「경로 저장」 뒤) 처리 중이 아닐 때 끄고 다시 띄운다(2026-11-18 — 서버만 새로 뜨고 에이전트는 예전 것으로 남던 것)
+  let agentRestart = false;
+  const agentVer = () => { try { return require('crypto').createHash('sha1').update(fs.readFileSync(path.join(C.root, 'node', 'agent.js'))).digest('hex').slice(0, 12); } catch (e) { return ''; } };
+  function agentStale(a) {
+    if (!a.alive || a.status === 'working' || a.stopping) return false;
+    const v = agentVer(), cc = h.findClaudeCode() || '';
+    return (a.ver !== v && !!v) || (!!cc && !!a.claude && path.resolve(a.claude).toLowerCase() !== path.resolve(cc).toLowerCase());
+  }
   function autoWatch(first) {
-    const s = core.readSetup(); if (s.autoWatch === false) return;
-    const a = h.agentInfo(); if (a.alive) return;
+    const s = core.readSetup(); if (s.autoWatch === false && !agentRestart) return;
+    const a = h.agentInfo();
+    if (a.alive) {
+      if (agentStale(a)) { agentRestart = true; core.writeText(path.join(C.root, 'workbench', '.agent_stop'), new Date().toISOString()); log('백그라운드 감시가 예전 코드 · 다른 Claude Code 경로라 새로 띄웁니다.'); }
+      return;
+    }
+    if (agentRestart) { agentRestart = false; try { h.startAgent(); log('백그라운드 감시를 새 코드로 다시 시작했습니다.'); } catch (e) { log('백그라운드 감시 다시 시작 못 함: ' + e.message); } return; }
+    if (s.claudeWay === 'app') return;   // 5단계에서 「Claude 앱」을 고른 PC는 백그라운드를 저절로 띄우지 않는다(앱 Code 탭이 감시, 2026-11-18)
     if (!first && (a.status === 'stopped' || a.stopping)) return;
     if (!first && core.exists(path.join(C.root, 'workbench', '.agent_stop'))) return;
     if (!h.findClaudeCode()) return;

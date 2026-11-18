@@ -76,6 +76,27 @@ on('GET', '/api/catalog', ({ q, res, send, sendJson }) => {
 
 // ── 작업 이력 · 사용량(Read-Hist · Read-Usage) — 한 건 한 파일, 지금 팀 것만(예전 기록 = CURECA) ──
 function readDirJson(dir) { return core.listJson(dir).map((n) => core.readJson(path.join(dir, n))).filter((x) => x != null); }
+// GET /api/changes?key=: 바뀌었는지만(파일 수정 시각 · 개수) — 화면이 3 ~ 5초마다 큰 목록(이력 140KB · 캡처 목록 180KB · 요청 50KB)을
+//  통째로 받던 것을 이것 하나로 묻고, 바뀐 것만 다시 받는다(2026-11-18 audit). 파일을 읽지 않고 stat만 한다
+const mt = (f) => { try { return Math.round(fs.statSync(f).mtimeMs); } catch (e) { return 0; } };
+on('GET', '/api/changes', ({ q, T }) => {
+  const key = q.get('key'), out = { req: mt(C.reqFile), jobs: mt(C.jobFile) };
+  let n = 0, m = 0; for (const f of core.listJson(C.histEntries)) { n++; const t = mt(path.join(C.histEntries, f)); if (t > m) m = t; }
+  out.hist = n + ':' + m;
+  if (testKey(key)) { out.shots = mt(path.join(projDir(key), 'shots_meta.json')); out.cat = mt(path.join(projDir(key), 'catalog.json')); }
+  // 플러그인이 마지막으로 닿은 지 몇 초 — 화면이 이 값 하나 때문에 작업 목록(약 40KB)을 30초마다 다시 받지 않게 여기에 싣는다
+  out.plugin = C.pluginSeen ? Math.floor((Date.now() - C.pluginSeen) / 1000) : null;
+  // 반영 대기(/api/backlog 약 270KB) · 작업 기준(/api/guides 약 66KB)도 1분마다 통째로 받지 않게: 지금 팀 문서 파일의 개수 · 최근 수정 시각
+  if (T && T.guideRoot) {
+    const sr = path.join(T.guideRoot, 'screens'); let bn = 0, bm = 0;
+    for (const d of dirNames(sr)) for (const n of fileNames(path.join(sr, d))) { if (!/\.md$/i.test(n)) continue; bn++; const t = mt(path.join(sr, d, n)); if (t > bm) bm = t; }
+    out.blg = bn + ':' + bm;
+    let gn = 0, gm = mt(T.guideApply);
+    for (const d of dirNames(T.guideRoot)) { gn++; const dd = path.join(T.guideRoot, d); for (const f of [path.join(dd, 'meta.json'), path.join(dd, 'rev')]) { const t = mt(f); if (t > gm) gm = t; } }
+    out.gd = gn + ':' + gm;
+  }
+  return out;
+});
 on('GET', '/api/history', ({ q, T }) => {
   const all = q.get('all') === '1';
   let items = readDirJson(C.histEntries); if (!all) items = items.filter((e) => core.itemTeam(e) === T.team);
@@ -414,8 +435,13 @@ function onPath(cmd) {
   return null;
 }
 let claudeApp; // Claude 데스크톱 앱(한 번 찾으면 기억)
+let claudeAppMiss = 0;   // 못 찾았을 때도 10분 동안 기억(2026-11-18 — 앱 없는 PC에서 15초마다 PowerShell을 돌려 서버가 1 ~ 3초씩 멈추던 것)
 function findClaude() {
   if (claudeApp) return claudeApp;
+  if (Date.now() - claudeAppMiss < 600000) return null;
+  const r0 = findClaude0(); if (!r0) claudeAppMiss = Date.now(); return r0;
+}
+function findClaude0() {
   if (C.isMac) { if (core.exists('/Applications/Claude.app')) claudeApp = '/Applications/Claude.app'; return claudeApp || null; }
   try { const r = spawnSync('powershell', ['-NoProfile', '-Command', "(Get-AppxPackage -Name 'Claude' | Select-Object -First 1).PackageFamilyName"], { encoding: 'utf8', timeout: 15000, windowsHide: true });
     const fam = String(r.stdout || '').trim(); if (fam) { claudeApp = `shell:AppsFolder\\${fam}!Claude`; return claudeApp; } } catch (e) {}
@@ -496,8 +522,8 @@ function agentInfo() {
   const o = core.readJson(path.join(C.root, 'workbench', '.agent.json')), stopping = core.exists(path.join(C.root, 'workbench', '.agent_stop'));
   if (!o) return { alive: false, stopping, sec: null, status: '', msg: '', host: '' };
   const sec = ago(o.at); let alive = sec != null && sec < 150 && String(o.status) !== 'stopped';
-  if (alive && !C.isMac && o.pid) { try { process.kill(parseInt(o.pid, 10), 0); } catch (e) { if (e.code === 'ESRCH') alive = false; } }
-  return { alive, stopping: stopping && alive, sec, status: String(o.status || ''), msg: String(o.msg || ''), host: String(o.host || '') };
+  if (alive && o.pid) { try { process.kill(parseInt(o.pid, 10), 0); } catch (e) { if (e.code === 'ESRCH') alive = false; } }   // 맥도 pid를 본다(2026-11-18 — 죽은 뒤 150초 동안 「처리 중」으로 보이던 것)
+  return { alive, stopping: stopping && alive, sec, status: String(o.status || ''), msg: String(o.msg || ''), host: String(o.host || ''), ver: String(o.ver || ''), claude: String(o.claude || '') };
 }
 let envCache = null, envAt = 0;
 function setupEnv() {
