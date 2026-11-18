@@ -8,23 +8,11 @@
 <link rel="stylesheet" href="appnav.css">
 <script src="common.js"></script>
 <style>
+/* 그래프 색은 appnav.css 공통(A 잉크, 2026-11-18): 작업자 = --s1 ~ --s6(사람마다 같은 순서), 토큰 종류 = 한 계열 --t1 ~ --t4(진한 쪽이 캐시 읽기) */
 :root{
-  --c-in:#7a8392; --c-cw:#b35900; --c-cr:#2747d8; --c-out:#1a7f37;
-  /* 작업자 색(고정 6색, 넘으면 반복) */
-  --w0:#2747d8; --w1:#e07b00; --w2:#1a8f5a; --w3:#c2387d; --w4:#7b4fd6; --w5:#0f8fa8;
-  --grid:#e9edf2;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --c-in:#8590a0; --c-cw:#f0a24f; --c-cr:#8ea2ff; --c-out:#56d364;
-    --w0:#8ea2ff; --w1:#f0a24f; --w2:#56d364; --w3:#f17bb6; --w4:#b69cff; --w5:#4fc8de;
-    --grid:#232831;
-  }
-}
-:root[data-theme="dark"]{
-  --c-in:#8590a0; --c-cw:#f0a24f; --c-cr:#8ea2ff; --c-out:#56d364;
-  --w0:#8ea2ff; --w1:#f0a24f; --w2:#56d364; --w3:#f17bb6; --w4:#b69cff; --w5:#4fc8de;
-  --grid:#232831;
+  --c-cr:var(--t1); --c-cw:var(--t2); --c-out:var(--t3); --c-in:var(--t4);
+  --w0:var(--s1); --w1:var(--s2); --w2:var(--s3); --w3:var(--s4); --w4:var(--s5); --w5:var(--s6);
+  --grid:var(--line);
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 Pretendard,-apple-system,"Segoe UI","Malgun Gothic",sans-serif}
@@ -35,7 +23,7 @@ button,select{font:inherit;color:inherit;cursor:pointer}
 .seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}
 .seg button{border:0;background:none;padding:6px 12px;font-size:13px}
 .seg button+button{border-left:1px solid var(--line)}
-.seg button.on{background:var(--accent);color:#fff;font-weight:700}
+.seg button.on{background:var(--accent);color:var(--on-accent);font-weight:700}
 .seg.sm button{padding:3px 9px;font-size:12px}
 :root[data-theme="dark"] .seg button.on{color:#0f1115}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .seg button.on{color:#0f1115}}
@@ -61,7 +49,7 @@ select{border:1px solid var(--line);background:var(--surface);border-radius:8px;
 /* A 날짜별 막대 */
 .bars{position:relative;height:220px;margin-left:44px}
 .bars .gl{position:absolute;left:0;right:0;border-top:1px solid var(--grid)}
-.bars .gl span{position:absolute;right:100%;margin-right:6px;top:-9px;font-size:11px;color:var(--ink-3);font-variant-numeric:tabular-nums;white-space:nowrap}
+.bars .gl span{position:absolute;right:100%;margin-right:6px;top:-9px;font-size:12px;color:var(--ink-3);font-variant-numeric:tabular-nums;white-space:nowrap}
 .bars .cols{position:absolute;inset:0;display:flex;align-items:flex-end;gap:4px}
 .bars .col{flex:1 1 0;min-width:0;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;cursor:pointer;border-radius:4px 4px 0 0}
 .bars .col:hover{background:var(--surface-2)}
@@ -70,10 +58,10 @@ select{border:1px solid var(--line);background:var(--surface);border-radius:8px;
 .bars .col .stk i:last-child{border-radius:3px 3px 0 0}
 .bars.picked .col:not(.on) .stk{opacity:.35}
 .xl{display:flex;gap:4px;margin-left:44px;margin-top:4px}
-.xl span{flex:1 1 0;min-width:0;display:flex;justify-content:center;font-size:11px;color:var(--ink-3);white-space:nowrap;overflow:visible;font-variant-numeric:tabular-nums}
-.xl.many span{overflow:visible;justify-content:center;font-size:10.5px}
+.xl span{flex:1 1 0;min-width:0;display:flex;justify-content:center;font-size:12px;color:var(--ink-3);white-space:nowrap;overflow:visible;font-variant-numeric:tabular-nums}
+.xl.many span{overflow:visible;justify-content:center;font-size:12px}
 .bars .cols.many{gap:2px}
-.xl span.sun{color:#d23c3c}.xl span.sat{color:#2f6fd6}.xl span.today{font-weight:800;color:var(--ink)}
+.xl span.sun{color:var(--red)}.xl span.sat{color:var(--prog)}.xl span.today{font-weight:800;color:var(--ink)}
 /* 주 이동(일 ~ 토) */
 .wnav{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;color:var(--ink-2);font-variant-numeric:tabular-nums}
 .wnav button{border:1px solid var(--line);background:var(--surface);border-radius:6px;width:26px;height:24px;padding:0;font-size:14px;line-height:1;color:var(--ink-2)}
@@ -126,23 +114,23 @@ table:not(.det) .d{display:none}
 table.det{min-width:1120px}
 td.date{white-space:nowrap;color:var(--ink-2);font-variant-numeric:tabular-nums}
 td.who{color:var(--ink-2)}
-td.who small{display:block;color:var(--ink-3);font-size:11.5px}
+td.who small{display:block;color:var(--ink-3);font-size:12px}
 td .clamp{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;color:var(--ink-2)}
 td .sub{display:block;color:var(--ink-3);font-size:12px;margin-top:2px}
 td.usd{font-weight:700}
-.kind{display:inline-block;font-size:11px;font-weight:700;padding:1px 6px;border-radius:4px;background:var(--ok-soft);color:var(--ok);margin-right:6px;vertical-align:1px}
+.kind{display:inline-block;font-size:12px;font-weight:700;padding:1px 6px;border-radius:4px;background:var(--ok-soft);color:var(--ok);margin-right:6px;vertical-align:1px}
 /* 요청 유형(케이스 1 · 2 · 3 · 질문, 예전 기록은 일반 · 텍스트 수정 …): 종류 표시 옆에 테두리만 */
-.rtype{display:inline-block;font-size:11px;font-weight:600;padding:0 6px;border:1px solid var(--line);border-radius:4px;color:var(--ink-2);margin-right:6px;vertical-align:1px}
+.rtype{display:inline-block;font-size:12px;font-weight:600;padding:0 6px;border:1px solid var(--line);border-radius:4px;color:var(--ink-2);margin-right:6px;vertical-align:1px}
 /* 종류별 색: 요청 = 초록(기본), UX 문서 · 연관 항목 = 파랑, 회의록 · 논의 대상 = 주황, 그 밖 = 회색 */
-.kind[data-k="UX 문서"],.kind[data-k="연관 항목"]{background:var(--accent-soft,#eaf2ff);color:var(--accent,#1570ef)}
-.kind[data-k="회의록"],.kind[data-k="논의 대상"]{background:#fff1e0;color:#b35900}
+.kind[data-k="UX 문서"],.kind[data-k="연관 항목"]{background:var(--accent-soft);color:var(--accent)}
+.kind[data-k="회의록"],.kind[data-k="논의 대상"]{background:var(--warn-soft);color:var(--warn)}
 .kind[data-k="Figma 직접 수정"]{background:var(--ok-soft);color:var(--ok)}
 .kind[data-k="프로토타입"],.kind[data-k="목록 · 캡처"],.kind[data-k="기타"]{background:var(--surface-2);color:var(--ink-3)}
 .empty{text-align:center;color:var(--ink-3);padding:36px 0}
 .pager{display:flex;justify-content:center;align-items:center;gap:4px;margin-top:14px;flex-wrap:wrap}
 .pager button{min-width:34px;height:34px;padding:0 8px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:13px}
 .pager button:hover:not(:disabled){border-color:var(--accent)}
-.pager button.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
+.pager button.on{background:var(--accent);border-color:var(--accent);color:var(--on-accent);font-weight:700}
 :root[data-theme="dark"] .pager button.on{color:#0f1115}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pager button.on{color:#0f1115}}
 .pager button:disabled{opacity:.35;cursor:default}
@@ -376,7 +364,7 @@ td.usd{font-weight:700}
     var center = mixMode === 'usd' ? usd(tot) : short(tot);
     $('mix').innerHTML = '<div class="donut"><svg viewBox="0 0 140 140" role="img" aria-label="토큰 종류 비율">' +
       '<circle cx="70" cy="70" r="' + R + '" fill="none" stroke="var(--surface-2)" stroke-width="22"/>' + arcs +
-      '<text x="70" y="66" text-anchor="middle" font-size="11" fill="var(--ink-3)">' + (mixMode === 'usd' ? '금액 환산' : '총 토큰') + '</text>' +
+      '<text x="70" y="66" text-anchor="middle" font-size="12" fill="var(--ink-3)">' + (mixMode === 'usd' ? '금액 환산' : '총 토큰') + '</text>' +
       '<text x="70" y="84" text-anchor="middle" font-size="16" font-weight="800" fill="var(--ink)">' + center + '</text></svg>' +
       '<div class="lg">' + KEYS.map(function(k, i){ var p = vals[i] / tot * 100; return '<div><b style="background:var(' + k[2] + ')"></b>' + k[1] + '<em>' + (p < 0.1 && p > 0 ? '<0.1' : p.toFixed(1)) + '%<small>' + (mixMode === 'usd' ? usd(vals[i]) : short(vals[i])) + '</small></em></div>'; }).join('') + '</div></div>' +
       (mixMode === 'usd' ? '<div class="hint">모델별 단가를 호출 수 비중으로 섞어 나눈 추정값입니다. 캐시 쓰기는 금액 환산에서 나머지 몫입니다.</div>' : '');

@@ -98,25 +98,60 @@
   /* ── 로그인 · 메뉴 권한 ──
      계정이 있으면(.history/accounts) 로그인한 계정의 메뉴만 보이고, 오른쪽에 이름(내 정보) · 로그아웃.
      작업자 이름 칸은 계정 이름으로 고정한다(요청 · 이력의 작성자). 서버도 페이지 · API를 막는다(이 표시는 화면 정리) */
-  /* ── 이력 캡처 용량 알림: 작업 이력에 붙는 캡처 사본(.history/shots · attach, 깃으로 모든 PC에 공유)이 1GB를 넘으면
-     상단 메뉴 오른쪽에 붉은 「이력 캡처 1.2GB」(최고관리자 · 계정 없이 쓸 때만). 10분마다 다시 본다(서버는 5분 동안 지난 값) */
+  /* ── 작업 데이터 용량 알림(2026-11-18): .history 전체(작업 이력 · 사용량 통계 · UX 문서 · 회의록 · 캡처 · 첨부 …, 깃으로 모든 PC에 공유)가
+     0.9GB를 넘으면 상단 메뉴 오른쪽에 배지(1GB부터 붉게), 그리고 이력이 바뀌는 동작(요청 · 답하기 · UX 문서 · 회의록 · 사용량 · 계정 저장 등)을
+     한 뒤에 팝업 — 모든 작업자에게, 이 브라우저에서 하루 한 번. 백업 · 보관 기간을 검토하라는 알림이다. 서버 값은 5분 동안 같다 */
+  var ST_HIST = /^\/api\/(requests|history|guides|minutes|usage|attach|shots|accounts|me\/password|teamprojects|sheet|transfer)(\?|$)/;
+  var stLast = null;
+  function stGB(n){ return (+n / 1073741824).toFixed(2) + 'GB'; }
+  function stBadge(s){
+    var right = nav.querySelector('.appnav-right'); if (!right || !s) return;
+    var b = right.querySelector('.appnav-store'), tot = +s.totalBytes || 0;
+    if (tot < +s.warnBytes) { if (b) b.remove(); return; }
+    if (!b) { b = document.createElement('span'); right.insertBefore(b, right.firstChild); }
+    b.className = 'badge appnav-store ' + (tot >= +s.limitBytes ? 'off' : 'warn');
+    b.textContent = '작업 데이터 ' + stGB(tot);
+    b.title = stText(s).join('\n');
+  }
+  function stText(s){
+    var tot = +s.totalBytes || 0, k = s.kinds || {};
+    var parts = Object.keys(k).filter(function(x){ return k[x] >= 1048576; }).sort(function(x, y){ return k[y] - k[x]; }).map(function(x){ return x + ' ' + (k[x] >= 107374182 ? stGB(k[x]) : Math.round(k[x] / 1048576) + 'MB'); });
+    return ['작업 데이터가 ' + stGB(tot) + '입니다' + (tot >= +s.limitBytes ? ' (1GB 넘음)' : ' (1GB에 가까움)'),
+      '작업 이력 · 사용량 통계 · UX 문서 · 캡처 등 모든 PC가 함께 쓰는 데이터의 합계입니다.',
+      parts.length ? '항목별: ' + parts.join(' · ') : '',
+      '커질수록 새 PC의 첫 동기화와 평소 동기화가 느려집니다. 백업과 보관 기간(오래된 캡처 · 기록 정리)을 검토해 주세요.'].filter(Boolean);
+  }
+  function stToday(){ var d = new Date(); return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); }
+  function stCheck(popup){
+    return fetch('/api/storage', { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : null; }).then(function(s){
+      if (!s || s.totalBytes == null) return; stLast = s; stBadge(s);
+      if (!popup || +s.totalBytes < +s.warnBytes) return;
+      var seen = ''; try { seen = localStorage.getItem('wb.storeAlert') || ''; } catch (e) {}
+      if (seen === stToday()) return;
+      try { localStorage.setItem('wb.storeAlert', stToday()); } catch (e) {}
+      if (window.WB && window.WB.alert) window.WB.alert(stText(s).join('\n'), { ok: '확인' });
+    }).catch(function(){});
+  }
   function storageWarn(){
-    function check(){
-      fetch('/api/storage', { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : null; }).then(function(s){
-        var right = nav.querySelector('.appnav-right'); if (!right || !s) return;
-        var b = right.querySelector('.appnav-store'), over = +s.shotsBytes >= +s.limitBytes;
-        if (!over) { if (b) b.remove(); return; }
-        if (!b) { b = document.createElement('span'); b.className = 'badge off appnav-store'; right.insertBefore(b, right.firstChild); }
-        var gb = (+s.shotsBytes / 1073741824).toFixed(1);
-        b.textContent = '이력 캡처 ' + gb + 'GB';
-        b.title = '작업 이력에 붙는 캡처 사본(.history/shots · attach, ' + (+s.shotsCount || 0) + '장)이 ' + gb + 'GB로 1GB를 넘었습니다.\n깃으로 모든 PC에 공유되어, 커질수록 새 PC의 첫 동기화 · 평소 동기화가 느려집니다. 오래된 캡처 정리가 필요합니다.';
-      }).catch(function(){});
+    stCheck(false); setInterval(function(){ stCheck(false); }, 600000);
+    // 이력이 바뀌는 동작(POST)이 성공하면 잠시 뒤 확인해 팝업(하루 한 번)
+    var of = window.fetch;
+    if (of && !of.__wbStore) {
+      var wrapped = function(input, init){
+        var p = of.apply(this, arguments);
+        try {
+          var url = typeof input === 'string' ? input : (input && input.url) || '', m = ((init && init.method) || (input && input.method) || 'GET').toUpperCase();
+          var path = url.replace(/^https?:\/\/[^/]+/, '');
+          if (m !== 'GET' && ST_HIST.test(path)) p.then(function(r){ if (r && r.ok) setTimeout(function(){ stCheck(true); }, 800); }).catch(function(){});
+        } catch (e) {}
+        return p;
+      };
+      wrapped.__wbStore = true; window.fetch = wrapped;
     }
-    check(); setInterval(check, 600000);
   }
 
   fetch('/api/me', { cache: 'no-store' }).then(function(r){ return r.json(); }).then(function(m){
-    if (m && (!m.required || (m.user && m.user.admin))) storageWarn();
+    storageWarn();   // 모든 작업자(2026-11-18)
     if (!m || !m.required) return;
     if (!m.user) { location.replace('/Login.html?next=' + encodeURIComponent(location.pathname + location.search + location.hash)); return; }
     window.WB_ME = m;

@@ -33,15 +33,15 @@ a{color:var(--accent)}
 .step>summary{list-style:none;display:flex;align-items:center;gap:12px;padding:16px 20px;cursor:pointer}
 .step>summary::-webkit-details-marker{display:none}
 .num{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:13px;background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line)}
-.step.done .num{background:var(--ok);color:#fff;border-color:transparent}
+.step.done .num{background:var(--ok);color:var(--surface);border-color:transparent}
 .step.opt .num{background:var(--surface-2);color:var(--ink-2)}
 .snav li.opt{margin-top:6px;padding-top:6px;border-top:1px solid var(--line)}
 .snav li.opt.on .sn{background:var(--ok-soft);color:var(--ok);border-color:transparent}
 .step.cur{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
-.step.cur .num{background:var(--accent);color:#fff;border-color:transparent}
+.step.cur .num{background:var(--accent);color:var(--on-accent);border-color:transparent}
 /* 연결 안 됨 · 오류(칩이 bad): 지금 단계 표시(파랑)보다 앞서 붉게 — 연결된 것처럼 보이지 않게 */
 .step.bad{border-color:var(--red);box-shadow:0 0 0 3px var(--red-soft)}
-.step.bad .num{background:var(--red);color:#fff;border-color:transparent}
+.step.bad .num{background:var(--red);color:var(--surface);border-color:transparent}
 .step.bad .ttl small{color:var(--red)}
 .ttl{flex:1;font-weight:700;font-size:15px}
 .ttl small{display:block;font-weight:400;font-size:12.5px;color:var(--ink-3)}
@@ -55,7 +55,7 @@ a{color:var(--accent)}
 .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0}
 .btn{height:34px;padding:0 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface);font-size:13.5px;font-weight:600;display:inline-flex;align-items:center;gap:6px;text-decoration:none;color:var(--ink)}
 .btn:hover{border-color:var(--accent)}
-.btn.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
 .btn:disabled{opacity:.45;cursor:default}
 .inp{height:36px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:14px;flex:1;min-width:0}
 .inp:focus,.btn:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
@@ -71,7 +71,7 @@ a{color:var(--accent)}
 .way-b:hover{border-color:var(--accent)}
 .way-b[aria-checked="true"]{border-color:var(--accent);background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent)}
 .way-b:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.way-h{font-size:13.5px;margin:16px 0 4px}
+.way-h{font-size:13.5px;margin:16px 0 4px;font-weight:700}
 .way-p > .way-h:first-child{margin-top:0}
 @media (max-width:560px){ .way{grid-template-columns:1fr} }
 /* Claude Code 위치(5단계 CLI) */
@@ -84,7 +84,7 @@ a{color:var(--accent)}
 .cc-row input{flex:1;min-width:220px;height:32px;padding:0 10px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--ink);font:12.5px "JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
 .cc-look{margin-top:8px;font-size:12px;color:var(--ink-3)}
 .cc-look summary{cursor:pointer}
-.cc-look code{display:block;white-space:pre-wrap;word-break:break-all;margin-top:4px;font-size:11.5px}
+.cc-look code{display:block;white-space:pre-wrap;word-break:break-all;margin-top:4px;font-size:12px}
 .msg.ok{color:var(--ok)} .msg.bad{color:var(--red)} .msg.wait{color:var(--warn)}
 .chk{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;margin-top:6px;cursor:pointer}
 .chk input{width:16px;height:16px;accent-color:var(--accent)}
@@ -100,14 +100,14 @@ a{color:var(--accent)}
   .snav button{width:100%;display:flex;align-items:center;gap:10px;padding:8px 10px;border:0;border-radius:8px;background:none;text-align:left;font-size:13.5px;color:var(--ink-2)}
   .snav button:hover{background:var(--surface-2)}
   .snav button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
-  .snav .sn{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:11.5px;font-weight:800;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-3)}
+  .snav .sn{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-3)}
   .snav .st{flex:1}
   .snav li.done .sn{background:var(--ok-soft);color:var(--ok);border-color:transparent}
-  .snav li.cur .sn{background:var(--accent);color:#fff;border-color:transparent}
+  .snav li.cur .sn{background:var(--accent);color:var(--on-accent);border-color:transparent}
   .snav li.bad .sn{background:var(--red);color:#fff;border-color:transparent}
   .snav li.bad .st{color:var(--red);font-weight:700}
   .snav li.sel button{background:var(--accent-soft);color:var(--accent);font-weight:700}
-  .snav .dd{flex:none;font-size:11.5px;font-weight:700;padding:1px 8px;border-radius:999px;white-space:nowrap}
+  .snav .dd{flex:none;font-size:12px;font-weight:700;padding:1px 8px;border-radius:999px;white-space:nowrap}
   .snav .dd:empty{display:none}
   .snav .dd.ok{background:var(--ok-soft);color:var(--ok)}.snav .dd.warn{background:var(--warn-soft);color:var(--warn)}.snav .dd.bad{background:var(--red-soft);color:var(--red)}
   .steps .step{display:none;margin:0}
@@ -262,7 +262,7 @@ a{color:var(--accent)}
     <div class="body">
       <div class="way" role="radiogroup" aria-label="Claude 연결 방법"><button type="button" class="way-b" role="radio" data-way="app" aria-checked="false"><b>Claude 앱</b><small>앱 Code 탭에서 대화로 감시 · 창을 켜 두기</small></button><button type="button" class="way-b" role="radio" data-way="cli" aria-checked="false"><b>CLI (백그라운드)</b><small>창 없이 뒤에서 처리 · 실행할 때 자동 시작</small></button></div>
       <div class="way-p" data-pane="claude-app">
-        <h4 class="way-h">① Claude 앱에서 작업 폴더 열기</h4>
+        <h2 class="way-h">① Claude 앱에서 작업 폴더 열기</h2>
       <p class="msg" id="claudeEnv"></p>
       <ol>
         <li>Claude 데스크톱 앱을 실행하고 <b>본인 계정</b>으로 로그인합니다.</li>
@@ -277,14 +277,14 @@ a{color:var(--accent)}
       <p class="hint" id="cliHint">터미널을 쓰는 경우: 작업 폴더에서 <code>claude</code>를 실행해도 됩니다 (Claude Code CLI).</p>
       <div class="row" id="cliRow" hidden><button class="btn" data-launch="claude-cli">터미널에서 Claude Code 열기 (직접 작업)</button></div>
       <label class="chk"><input type="checkbox" data-check="claude"> Claude Code 탭에서 이 폴더를 열었어요</label>
-        <h4 class="way-h">② Claude에 Figma 연결</h4>
+        <h2 class="way-h">② Claude에 Figma 연결</h2>
       <ol>
         <li>Claude 앱 › <b>설정 › 커넥터(Connectors)</b>에서 <b>Figma</b>를 연결하고, 2단계와 같은 Figma 계정으로 로그인합니다.<br><span class="hint">CLI는 Claude 창에서 <code>/mcp</code> › figma › 인증</span></li>
         <li>아래 문장을 복사해 Claude에 보냅니다. Claude가 작업 파일에 접근할 수 있는지 확인해 줍니다.</li>
       </ol>
       <div class="path"><code id="promptCheck">…</code><button class="btn" data-copy="promptCheck">문장 복사</button></div>
       <label class="chk"><input type="checkbox" data-check="connector"> Claude가 Figma 파일 접근을 확인했어요</label>
-        <h4 class="way-h">③ 요청 감시 시작</h4>
+        <h2 class="way-h">③ 요청 감시 시작</h2>
         <div class="path"><code id="promptWatch">…</code><button class="btn" data-copy="promptWatch">문장 복사</button></div>
         <p class="hint">문장을 복사해 Claude 앱 Code 탭 대화에 보내면 그 대화가 감시합니다. 감시 중에는 그 창을 닫지 마세요.</p>
       </div>

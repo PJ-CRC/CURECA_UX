@@ -20,7 +20,7 @@ button{cursor:pointer}
 .app-head p{color:var(--ink-2)}
 .btn{height:36px;padding:0 16px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:14px;font-weight:600;white-space:nowrap}
 .btn:hover:not(:disabled){border-color:var(--accent)}
-.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
 .btn.sm{height:30px;padding:0 10px;font-size:13px}
 .btn.danger{color:var(--red)}
 .btn:disabled{opacity:.45;cursor:default}
@@ -30,6 +30,7 @@ button{cursor:pointer}
 @media (max-width:1000px){.split{grid-template-columns:1fr}}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--card-r)}
 table{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl-scroll{overflow-x:auto;max-width:100%}   /* 좁은 화면: 표만 옆으로 밀고 화면은 넘치지 않게(2026-11-18) */
 th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:middle}
 th{font-size:12.5px;color:var(--ink-3);font-weight:700;background:var(--surface-2)}
 tr:last-child td{border-bottom:0}
@@ -43,7 +44,7 @@ tbody tr:hover{background:var(--surface-2)}
 tbody tr.on{background:var(--accent-soft)}
 td.id{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px}
 .chips{display:flex;flex-wrap:wrap;gap:3px}
-.chip{font-size:11.5px;font-weight:700;padding:0 7px;border-radius:999px;background:var(--surface-2);color:var(--ink-2);white-space:nowrap}
+.chip{font-size:12px;font-weight:700;padding:0 7px;border-radius:999px;background:var(--surface-2);color:var(--ink-2);white-space:nowrap}
 .chip.adm{background:var(--accent-soft);color:var(--accent)}
 .chip.ok{background:var(--ok-soft);color:var(--ok)}
 .chip.off{background:var(--red-soft);color:var(--red)}
@@ -58,18 +59,18 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
 .menus{display:flex;flex-direction:column;gap:6px;margin:4px 0 12px}
 .mrow{display:grid;grid-template-columns:1fr auto;align-items:center;gap:3px 10px;padding:7px 10px;border:1px solid var(--line);border-radius:8px}
 .mrow b{font-size:13.5px;font-weight:600;color:var(--ink)}
-.mrow small{grid-column:1/-1;font-size:11.5px;font-weight:400;color:var(--ink-3)}
+.mrow small{grid-column:1/-1;font-size:12px;font-weight:400;color:var(--ink-3)}
 .seg{display:inline-flex;border:1px solid var(--line);border-radius:7px;overflow:hidden}
 .seg label{position:relative;display:block;cursor:pointer}
 .seg label+label{border-left:1px solid var(--line)}
 .seg input{position:absolute;opacity:0;pointer-events:none}
 .seg span{display:block;padding:4px 11px;font-size:12.5px;font-weight:600;color:var(--ink-2)}
-.seg input:checked+span{background:var(--accent);color:#fff}
+.seg input:checked+span{background:var(--accent);color:var(--on-accent)}
 .seg input[value=none]:checked+span{background:var(--surface-2);color:var(--ink-3)}
 .seg input:focus-visible+span{outline:2px solid var(--accent);outline-offset:-2px}
 .seg input:disabled+span{opacity:.6;cursor:default}
 .chip.w{background:var(--accent-soft);color:var(--accent)}
-.chip.ap{background:#f1e9fd;color:#7a3fd1}
+.chip.ap{background:color-mix(in srgb,var(--s2) 14%,var(--surface));color:var(--s2)}
 .mrow.ap{grid-template-columns:auto 1fr;cursor:pointer}
 .mrow.ap input{margin:0;width:16px;height:16px}
 .mrow.ap small{grid-column:2}
@@ -98,14 +99,14 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
 .chip.tm{background:var(--ok-soft);color:var(--ok)}
 /* 팀 색: 팀을 만들 때 서버가 정한 번호(teams.json color 0~7). 색표는 appnav.css(.tc0~.tc7, 상단 팀 표시와 같음) */
 .chip.tm[class*="tc"]{background:var(--tc-bg);color:var(--tc-fg)}
-.tag{font-size:11px;font-weight:700;padding:0 6px;border-radius:999px;background:var(--ok-soft);color:var(--ok);margin-left:6px;vertical-align:1px}
+.tag{font-size:12px;font-weight:700;padding:0 6px;border-radius:999px;background:var(--ok-soft);color:var(--ok);margin-left:6px;vertical-align:1px}
 #tmsg{font-size:12.5px;margin-top:6px;min-height:18px}
 #tmsg.bad{color:var(--red)} #tmsg.ok{color:var(--ok)}
 /* 팀 프로젝트: 팀마다 Figma 파일을 작업 순서대로(1 → 2 → 3). 번호 동그라미 = 순서, 오른쪽 버튼 = 위로 · 아래로 · 이름 · 지우기 */
 .tproj{padding:16px 18px}
 .tp-team{display:flex;gap:4px;flex-wrap:wrap;margin:0 0 10px}
 .tp-team button{height:30px;padding:0 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-size:13px;font-weight:600;color:var(--ink-2)}
-.tp-team button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.tp-team button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
 :root[data-theme="dark"] .tp-team button[aria-pressed="true"]{color:#0f1115}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tp-team button[aria-pressed="true"]{color:#0f1115}}
 .tp-list{list-style:none;margin:0 0 12px;padding:0;display:flex;flex-direction:column;gap:6px}
@@ -167,10 +168,10 @@ body.limited .split{grid-template-columns:minmax(0,760px)}
         <input id="q" type="search" placeholder="이름 · 아이디 검색" aria-label="이름 · 아이디 검색">
         <span id="qCount"></span>
       </div>
-      <table>
+      <div class="tbl-scroll"><table>
         <thead><tr><th>아이디</th><th>이름</th><th>팀</th><th>메뉴 권한</th><th>상태</th><th>변경</th></tr></thead>
         <tbody id="rows"><tr><td colspan="6">불러오는 중…</td></tr></tbody>
-      </table>
+      </table></div>
     </section>
     </div>
     <form class="card form admin-only" id="form" autocomplete="off">

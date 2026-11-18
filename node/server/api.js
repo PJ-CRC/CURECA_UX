@@ -303,7 +303,7 @@ function writeOrig(abs, text) {
    CURECA 문서 · 가져온 규칙 저장소 문서(rules · policy · screens · glossary)에는 이 표시가 없어 meta.files 그대로다 */
 const natSort = (a) => a.slice().sort((x, y) => x.localeCompare(y, 'ko', { numeric: true, sensitivity: 'base' }));
 function folderFiles(dir, listed) {
-  const here = fileNames(dir).filter((n) => /\.md$/i.test(n) && !/^[_.]/.test(n));
+  const here = fileNames(dir).filter((n) => /\.(md|csv)$/i.test(n) && !/^[_.]/.test(n));   // 기준데이터 표(CSV)도 목록에(2026-11-18 기본 템플릿)
   const keep = core.arr(listed).map(String).filter((p) => here.includes(p));
   return keep.concat(natSort(here.filter((n) => !keep.includes(n))));
 }
@@ -319,7 +319,8 @@ function readGuides(T) {
     for (const rn of bases) {
       const info = core.readJson(path.join(rd, rn + '.json'));
       if (!isFiles && !core.exists(path.join(rd, rn + '.md'))) continue;
-      if (isFiles && !(info && info.file && core.exists(path.join(rd, rn, String(info.file))))) continue;
+      // 파일형 수정본은 rev/{수정본}/{파일}. 문서 폴더 밖 파일(../flow/…)은 저장할 때 「../」를 「_up/」로 바꿔 둔다(writes.js save) — 같은 규칙으로 찾는다(2026-11-18, 작업규칙 수정이 변경이력에서 빠지던 것)
+      if (isFiles && !(info && info.file && core.exists(path.join(rd, rn, ...String(info.file).replace(/\.\.\//g, '_up/').split('/'))))) continue;
       const checks = files.filter((n) => n.startsWith(rn + '.check-') && n.toLowerCase().endsWith('.json')).map((n) => core.readJson(path.join(rd, n))).filter((x) => x != null);
       const s = (k) => (info && info[k] != null ? String(info[k]) : '');
       revs.push({ rev: rn, at: s('at'), by: s('by'), note: s('note'), base: s('base'), req: s('req'), jobId: s('jobId'), file: s('file'), checks });
@@ -593,13 +594,42 @@ on('POST', '/api/files', async ({ body, T, browser }) => {
   return { files };
 }, { readSafe: true });
 
-// ── 작업 이력 캡처 사본 크기(1GB 넘으면 알림), 5분 기억 ──
+// ── 작업 데이터(.history) 크기, 5분 기억 (2026-11-18) ──
+//  .history 전체(깃 폴더 .git 빼고) 합계와 항목별 크기. 0.9GB부터 미리 알림, 1GB부터 경고(화면은 appnav.js — 모든 작업자에게 하루 한 번 팝업).
+//  항목: 캡처 · 첨부 · UX 문서(팀 문서 포함) · 사용량 통계 · 작업 이력 · 회의록 · 그 밖(계정 · 설정 · 충돌 기록 · 옮기기 기록 등)
 let storeVal = null, storeAt = 0;
+const STORE_KIND = { shots: '캡처', attach: '첨부', guides: 'UX 문서', usage: '사용량 통계', entries: '작업 이력', minutes: '회의록' };
+function dirBytes(d) {
+  let sum = 0, cnt = 0; let es = [];
+  try { es = fs.readdirSync(d, { withFileTypes: true }); } catch (e) { return { sum, cnt }; }
+  for (const x of es) {
+    if (x.name === '.git') continue;
+    const p = path.join(d, x.name);
+    if (x.isDirectory()) { const r = dirBytes(p); sum += r.sum; cnt += r.cnt; }
+    else { try { sum += fs.statSync(p).size; cnt++; } catch (e) {} }
+  }
+  return { sum, cnt };
+}
 on('GET', '/api/storage', () => {
   if (!storeVal || Date.now() - storeAt >= 300000) {
-    let sum = 0, cnt = 0;
-    for (const d of [path.join(C.histDir, 'shots'), path.join(C.histDir, 'attach')]) for (const n of fileNames(d)) { try { sum += fs.statSync(path.join(d, n)).size; cnt++; } catch (e) {} }
-    storeVal = { shotsBytes: sum, shotsCount: cnt, limitBytes: 1073741824 }; storeAt = Date.now();
+    const kinds = {}; let total = 0, files = 0;
+    const add = (k, r) => { kinds[k] = (kinds[k] || 0) + r.sum; total += r.sum; files += r.cnt; };
+    let es = []; try { es = fs.readdirSync(C.histDir, { withFileTypes: true }); } catch (e) {}
+    for (const x of es) {
+      if (x.name === '.git') continue;
+      const p = path.join(C.histDir, x.name);
+      if (!x.isDirectory()) { try { add('그 밖', { sum: fs.statSync(p).size, cnt: 1 }); } catch (e) {} continue; }
+      if (x.name === 'teams') {   // 다른 팀: teams/{id}/guides · minutes · config …
+        let ts = []; try { ts = fs.readdirSync(p, { withFileTypes: true }); } catch (e) {}
+        for (const t of ts) { if (!t.isDirectory()) continue; let ss = []; try { ss = fs.readdirSync(path.join(p, t.name), { withFileTypes: true }); } catch (e) {}
+          for (const s of ss) { const sp = path.join(p, t.name, s.name); add(STORE_KIND[s.name] || '그 밖', s.isDirectory() ? dirBytes(sp) : (() => { try { return { sum: fs.statSync(sp).size, cnt: 1 }; } catch (e) { return { sum: 0, cnt: 0 }; } })()); } }
+        continue;
+      }
+      add(STORE_KIND[x.name] || '그 밖', dirBytes(p));
+    }
+    const shots = (kinds['캡처'] || 0) + (kinds['첨부'] || 0);
+    storeVal = { totalBytes: total, files, kinds, warnBytes: 966367641, limitBytes: 1073741824, shotsBytes: shots, at: new Date().toISOString() };
+    storeAt = Date.now();
   }
   return storeVal;
 });
