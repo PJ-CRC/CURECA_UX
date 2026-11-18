@@ -37,9 +37,11 @@ function now() {
   return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}${s}${p(Math.floor(a / 60))}:${p(a % 60)}`;
 }
 const St = { status: 'idle', msg: '' }; let savedAt = 0;
+// 이 에이전트 코드의 버전(파일 해시). 서버가 지금 agent.js와 다르면(업데이트 · 수정) 중지 → 다시 띄운다(2026-11-18)
+const VER = (() => { try { return crypto.createHash('sha1').update(fs.readFileSync(__filename)).digest('hex').slice(0, 12); } catch (e) { return ''; } })();
 function save(status, msg) {
   if (status) St.status = status; if (msg != null) St.msg = msg;
-  try { fs.writeFileSync(STATE, JSON.stringify({ at: now(), host: HOST, pid: process.pid, status: St.status, msg: St.msg }), 'utf8'); } catch (e) {}
+  try { fs.writeFileSync(STATE, JSON.stringify({ at: now(), host: HOST, pid: process.pid, status: St.status, msg: St.msg, ver: VER, claude: CLAUDE }), 'utf8'); } catch (e) {}
   savedAt = Date.now();
 }
 function log(s) {
@@ -97,19 +99,25 @@ function runCli(args, sec, dir) {
 function saveUsage(ri) {
   try {
     const w = ri && ri.unifiedWindows; if (!w) return;
-    const isoS = (s) => { const d = new Date(Number(s) * 1000); const p = (n) => String(n).padStart(2, '0'), off = -d.getTimezoneOffset(), sg = off >= 0 ? '+' : '-', a = Math.abs(off); return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}${sg}${p(Math.floor(a / 60))}:${p(a % 60)}`; };
+    const isoS = (s) => { if (!(Number(s) > 0)) return ''; const d = new Date(Number(s) * 1000); const p = (n) => String(n).padStart(2, '0'), off = -d.getTimezoneOffset(), sg = off >= 0 ? '+' : '-', a = Math.abs(off); return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}${sg}${p(Math.floor(a / 60))}:${p(a % 60)}`; };
     const list = [];
-    if (w.five_hour) list.push({ label: '5-hour limit', percentUsed: Math.round(100 * Number(w.five_hour.utilization)), resetsAt: isoS(w.five_hour.resetsAt) });
-    if (w.seven_day) list.push({ label: 'Weekly · all models', percentUsed: Math.round(100 * Number(w.seven_day.utilization)), resetsAt: isoS(w.seven_day.resetsAt) });
+    const win = (label, x) => { const o = { label, percentUsed: Math.round(100 * Number(x.utilization) || 0) }; const r = isoS(x.resetsAt); if (r) o.resetsAt = r; return o; };
+    if (w.five_hour) list.push(win('5-hour limit', w.five_hour));
+    if (w.seven_day) list.push(win('Weekly · all models', w.seven_day));
     if (list.length) fs.writeFileSync(path.join(WB, '.plan_usage.json'), JSON.stringify({ at: now(), plan: '', by: 'agent', windows: list }), 'utf8');
   } catch (e) {}
+}
+// 한도가 풀렸는지: 마지막으로 읽은 사용량에서 5시간 · 주간 모두 100% 미만이면 풀림(사용량을 아직 못 읽었으면 모름 = false)
+function limitOver(since) {
+  const u = readJson(path.join(WB, '.plan_usage.json')); const w = u && Array.isArray(u.windows) ? u.windows : [];
+  return w.length > 0 && (T(u.at) || 0) >= since - 2000 && w.every((x) => Number(x.percentUsed) < 100);
 }
 // 요청이 없을 때도 5분마다: 아주 짧은 질문(가장 싼 모델 · 도구 없음)을 보내 rate_limit_event를 읽는다. CLAUDE.md를 읽지 않게 임시 폴더에서
 async function probeUsage() {
   let dir = path.join(os.tmpdir(), 'uxai_usage_probe'); try { fs.mkdirSync(dir, { recursive: true }); } catch (e) { dir = ROOT; }
-  const o = await runCli(['-p', '.', '--model', 'haiku', '--output-format', 'stream-json', '--verbose', '--tools', '', '--system-prompt', 'Reply with one dot.', '--strict-mcp-config', '--max-turns', '1'], 60, dir);
-  for (const l of o.split(/\r?\n/)) { if (!l.includes('"rate_limit_event"')) continue; try { const m = JSON.parse(l); if (m.rate_limit_info && m.rate_limit_info.unifiedWindows) { saveUsage(m.rate_limit_info); return; } } catch (e) {} }
-  log('한도 확인: 사용률을 받지 못함 ' + o.replace(/\s+/g, ' ').slice(0, 160));
+  const o = await runCli(['-p', '.', '--model', 'haiku', '--output-format', 'stream-json', '--verbose', '--tools', '', '--system-prompt', 'Reply with one dot.', '--strict-mcp-config', '--max-turns', '1', '--no-session-persistence'], 60, dir);
+  for (const l of o.split(/\r?\n/)) { if (!l.includes('"rate_limit_event"')) continue; try { const m = JSON.parse(l); if (m.rate_limit_info && m.rate_limit_info.unifiedWindows) { saveUsage(m.rate_limit_info); return true; } } catch (e) {} }
+  log('한도 확인: 사용률을 받지 못함 ' + o.replace(/\s+/g, ' ').slice(0, 160)); return false;
 }
 // 처리 전 준비 확인(토큰 안 씀)
 async function checkReady() {
@@ -161,9 +169,10 @@ function nextLine(ms) {
 async function sendTurn(text) {
   const p = S.p;
   try { p.stdin.write(JSON.stringify({ type: 'user', message: { role: 'user', content: text } }) + '\n'); } catch (e) { return { ok: false, dead: true, text: '보내기 실패: ' + e.message }; }
-  let until = Date.now() + TURN_MIN * 60000, out = '', started = false;
+  let until = Date.now() + TURN_MIN * 60000, out = '', started = false, tick = Date.now();
   while (true) {
     const l = await nextLine(15000);
+    { const gap = Date.now() - tick; if (gap > 60000) until += gap - 15000; tick = Date.now(); }   // 절전에서 깨어남: 멈춘 동안은 「응답 없음」으로 세지 않는다(2026-11-18)
     if (Date.now() - savedAt >= 15000) save(null, null);
     // 멈추기: 이 차례에서 처리 중인 요청 · 작업 ID가 멈춤 목록에 있으면 바로 끊는다(남은 ID는 다음 처리 때를 위해 파일에 둔다)
     if (exists(CANCEL)) {
@@ -277,11 +286,13 @@ const MON = { jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5, jul: 6, aug: 7, se
 function limitUntil(t) {
   const m = /resets\s+(?:on\s+)?(?:([A-Za-z]{3})[a-z]*\.?\s+(\d{1,2}),?\s+)?(?:at\s+)?(\d{1,2})(?::(\d{2}))?\s*(am|pm)?/i.exec(t);
   if (!m) return Date.now() + 30 * 60000;
-  let h = parseInt(m[3], 10) % 12; if (/pm/i.test(m[5] || '')) h += 12; if (!m[5] && parseInt(m[3], 10) === 12) h = 12;
+  // 오전 · 오후 표시가 없으면 24시간 표기로 읽는다(「20:51」이 8:51이 되던 것, 2026-11-18)
+  const h0 = parseInt(m[3], 10); let h = m[5] ? (h0 % 12) + (/pm/i.test(m[5]) ? 12 : 0) : h0 % 24;
   const d = new Date(); d.setHours(h, parseInt(m[4] || '0', 10), 0, 0);
   const mo = m[1] ? MON[m[1].toLowerCase()] : undefined;
   if (mo !== undefined) { d.setMonth(mo, parseInt(m[2], 10)); if (d.getTime() <= Date.now() - 86400000) d.setFullYear(d.getFullYear() + 1); }
-  else if (d.getTime() <= Date.now()) d.setDate(d.getDate() + 1);
+  // 시각이 막 지난 뒤(1시간 안)에 받은 메시지는 「곧 풀림」— 다음 날로 넘기지 않는다(리셋 몇 초 뒤 받으면 24시간 쉬던 것)
+  else if (d.getTime() <= Date.now() && Date.now() - d.getTime() > 3600000) d.setDate(d.getDate() + 1);
   return Math.max(d.getTime(), Date.now()) + 60000;
 }
 
@@ -294,10 +305,21 @@ async function main() {
   try { fs.rmSync(STOP, { force: true }); } catch (e) {}
   save('idle', '준비 확인 중 (Claude 로그인 · Figma 연결)'); log(`시작 (Node pid ${process.pid}, ${CLAUDE})`);
   let last = '', repeat = 0, nextUsage = 0;
-  const pause = async (n) => { for (let i = 0; i < n; i++) { if (exists(STOP) || exists(RENEW)) break; await sleep(15000); save(null, null); } };
+  const pause = (n) => pauseUntil(Date.now() + n * 15000, false);
+  // 시각까지 쉼(2026-11-18): 횟수로 세면 PC가 절전 · 잠자기에 들어간 동안 타이머가 멈춰, 풀리는 시각이 한참 지나도 계속 쉬었다(20:51 → 다음 날 아침까지 「한도」)
+  //  벽시계로 보고, 쉬는 동안에도 5분마다 사용량을 읽어 한도가 이미 풀렸으면(5시간 사용률 100% 미만) 바로 끝낸다
+  const pauseUntil = async (t, early) => {
+    let probe = Date.now() + USAGE_MIN * 60000;
+    while (Date.now() < t) {
+      if (exists(STOP)) return 'stop'; if (exists(RENEW)) return 'renew';
+      await sleep(Math.max(1000, Math.min(15000, t - Date.now()))); save(null, null);
+      if (early && Date.now() >= probe) { const at = Date.now(); probe = at + USAGE_MIN * 60000; if ((await probeUsage()) && limitOver(at)) return 'over'; }
+    }
+    return 'time';
+  };
   while (true) {
     if (exists(STOP)) { try { fs.rmSync(STOP, { force: true }); } catch (e) {} await stopSession('중지'); save('stopped', '중지됨'); log('중지'); process.exit(0); }
-    if (Date.now() >= nextUsage) { nextUsage = Date.now() + USAGE_MIN * 60000; await probeUsage(); }
+    if (Date.now() >= nextUsage && Ready !== false) { nextUsage = Date.now() + USAGE_MIN * 60000; await probeUsage(); }
     if (exists(RENEW)) { try { fs.rmSync(RENEW, { force: true }); } catch (e) {} await stopSession('로그인 · Figma 연결 창을 열어 새로 띄움'); Ready = null; nextCheck = 0; }
     if (S && S.ended) await stopSession('세션이 끝나 있음');
     else if (S && S.turns > 0 && Date.now() - S.last >= IDLE_MIN * 60000) await stopSession(`${IDLE_MIN}분 쉼`);
@@ -323,11 +345,13 @@ async function main() {
     const lim = !r.ok && /hit your .{0,20}limit|usage limit|limit reached|rate limit/i.test(r.text) ? limitUntil(r.text) : 0;
     if (lim) {
       await stopSession('사용 한도');
-      const hm = new Date(lim).toTimeString().slice(0, 5);
+      const ld = new Date(lim), same = ld.toDateString() === new Date().toDateString(), hm = (same ? '' : (ld.getMonth() + 1) + '/' + ld.getDate() + ' ') + ld.toTimeString().slice(0, 5);
       save('limit', `Claude 사용 한도에 걸려 ${hm}에 다시 시작합니다. 그 사이 요청은 「대기」로 남습니다.`); log(`사용 한도 — ${hm}까지 쉼: ${out.split('\n')[0]}`);
       last = ''; repeat = 0;
-      await pause(Math.max(4, Math.ceil((lim - Date.now()) / 15000)));
-      save('idle', '사용 한도가 풀려 요청을 기다리는 중'); continue;
+      // 5시간 한도일 때만 사용량 확인으로 일찍 끝낸다(주간 · 모델별 한도 · API 429는 두 창으로 알 수 없어 시각까지)
+      const why = await pauseUntil(Math.max(lim, Date.now() + 60000), /5-hour|five.hour/i.test(r.text));
+      if (why === 'stop' || why === 'renew') continue;   // 중지 · 로그인 창: 위에서 처리(「풀림」이라고 하지 않음)
+      nextUsage = Date.now() + USAGE_MIN * 60000; save('idle', '사용 한도가 풀려 요청을 기다리는 중'); log('사용 한도 풀림 — 다시 받음' + (why === 'over' ? ' (사용량 확인)' : '')); continue;
     }
     if (/Not logged in|Please run \/login|Invalid API key/.test(r.text)) { await stopSession('로그인 필요'); save('login', 'Claude CLI 로그인이 필요합니다. 시작 안내 5단계(CLI)의 「Claude 로그인 · Figma 연결」을 진행하세요.'); await pause(8); continue; }
     if (r.dead) { await stopSession('응답 없음 · 세션 끊김'); save('error', '처리 중 세션이 끊겨 새로 띄웁니다. 기록: workbench/.agent.log'); continue; }
@@ -337,4 +361,5 @@ async function main() {
   }
 }
 process.on('uncaughtException', (e) => { log('잡지 못한 오류: ' + (e && e.stack || e)); });
+process.on('exit', () => { try { if (S && S.p && S.p.exitCode == null) killTree(S.p); } catch (e) {} });
 main().catch((e) => { log('에이전트 오류로 끝남: ' + (e && e.stack || e)); save('error', '에이전트 오류: ' + e.message); process.exit(1); });

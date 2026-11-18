@@ -29,6 +29,8 @@
   WB.guardMarked = function(){ if (!window.marked || window.marked.__wbSafe) return; window.marked.use({ hooks: { postprocess: function(h){ return WB.safeHtml(h); } } }); window.marked.__wbSafe = true; };
 
   /* 브라우저 저장(localStorage): store(k) 읽기 · store(k, v) 쓰기. 사생활 보호 모드 등에서 막혀도 오류 없이 null */
+  /* 스크롤 방식: 운영체제에서 「움직임 줄이기」를 켰으면 바로 이동(JS의 behavior:'smooth'는 CSS 설정을 따르지 않는다, 2026-11-18) */
+  WB.sb = function(){ try { return window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'; } catch(e){ return 'auto'; } };
   WB.store = function(k, v){ try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch(e){ return null; } };
 
   /* Figma 링크 → {key, node('12:34' 또는 '')}, 형식이 아니면 null (design · file · proto, www · https:// 없어도 됨) */
@@ -47,7 +49,7 @@
     var s = (d && d.state) || {}, e = (d && d.env) || {}, c = s.checks || {}, ag = e.agent || {};
     var plugin = e.pluginSeenSec != null && e.pluginSeenSec < 600;
     /* 백그라운드는 기다림(idle) · 처리 중(working)일 때만. 오류 · 로그인 필요는 감시가 돌아도 요청을 처리하지 못한다 */
-    var cli = !!ag.alive && (ag.status === 'idle' || ag.status === 'working');
+    var cli = !!ag.alive && (ag.status === 'idle' || ag.status === 'working' || ag.status === 'limit');   // 한도로 쉬는 것은 설정 문제가 아니다(2026-11-18)
     /* 앱: Code 탭 대화가 감시 중(하트비트 90초 안)이고 Claude에 Figma를 연결했다고 체크 */
     var app = e.watcherSec != null && e.watcherSec < 90 && !!c.connector;
     return [

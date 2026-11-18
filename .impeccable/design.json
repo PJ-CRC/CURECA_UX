@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-18T09:40:00+09:00",
+  "title": "Design System: Figma AI Run · Workbench",
+  "extensions": {
+    "colorMeta": {
+      "canvas": { "role": "neutral", "displayName": "Canvas", "canonical": "#f6f7f9", "dark": "#0f1115", "tonalRamp": ["#1b1d21", "#33363c", "#4f535a", "#6f747c", "#959aa2", "#bfc3c9", "#e2e4e8", "#f6f7f9"] },
+      "paper": { "role": "neutral", "displayName": "Paper", "canonical": "#ffffff", "dark": "#171a20" },
+      "paper-recessed": { "role": "neutral", "displayName": "Paper Recessed", "canonical": "#f3f6fb", "dark": "#1e232b" },
+      "hairline": { "role": "neutral", "displayName": "Hairline", "canonical": "#e3e7ee", "dark": "#2a3039" },
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "#14171c", "dark": "#e8ebf0" },
+      "ink-secondary": { "role": "neutral", "displayName": "Ink Secondary", "canonical": "#4a5260", "dark": "#b4bcc8" },
+      "ink-tertiary": { "role": "neutral", "displayName": "Ink Tertiary", "canonical": "#5f6874", "dark": "#8590a0" },
+      "drafting-blue": { "role": "primary", "displayName": "Drafting Blue", "canonical": "#2747d8", "dark": "#8ea2ff", "tonalRamp": ["#0e1a52", "#162a85", "#1f3bb5", "#2747d8", "#5470e4", "#8ea2ff", "#c3cefb", "#e6ebff"] },
+      "drafting-blue-wash": { "role": "primary", "displayName": "Drafting Blue Wash", "canonical": "#e6ebff", "dark": "#232c52" },
+      "nav-blue": { "role": "secondary", "displayName": "Nav Blue", "canonical": "#0f5fd6", "dark": "#7fb0ff" },
+      "nav-blue-wash": { "role": "secondary", "displayName": "Nav Blue Wash", "canonical": "#eaf2ff", "dark": "#1c2a44" },
+      "approved-green": { "role": "status", "displayName": "Approved Green", "canonical": "#17722f", "dark": "#56d364" },
+      "approved-green-wash": { "role": "status", "displayName": "Approved Green Wash", "canonical": "#e3f4e8", "dark": "#16301d" },
+      "caution-amber": { "role": "status", "displayName": "Caution Amber", "canonical": "#a35100", "dark": "#f0a24f" },
+      "caution-amber-wash": { "role": "status", "displayName": "Caution Amber Wash", "canonical": "#fff1e0", "dark": "#38270f" },
+      "redline": { "role": "status", "displayName": "Redline", "canonical": "#c4281c", "dark": "#ff7b72" },
+      "redline-wash": { "role": "status", "displayName": "Redline Wash", "canonical": "#fdecea", "dark": "#3a1f1e" }
+    },
+    "cssVariables": {
+      "canvas": "--bg", "paper": "--surface", "paper-recessed": "--surface-2", "hairline": "--line",
+      "ink": "--ink", "ink-secondary": "--ink-2", "ink-tertiary": "--ink-3",
+      "drafting-blue": "--accent", "drafting-blue-wash": "--accent-soft", "nav-blue": "--nav-accent", "nav-blue-wash": "--nav-on",
+      "approved-green": "--ok", "approved-green-wash": "--ok-soft", "caution-amber": "--warn", "caution-amber-wash": "--warn-soft", "redline": "--red", "redline-wash": "--red-soft"
+    },
+    "typographyMeta": {
+      "headline": { "displayName": "Headline", "purpose": "페이지 제목. 한 페이지에 하나." },
+      "title": { "displayName": "Title", "purpose": "문서 · 화면 정의서 · 상세 패널 제목." },
+      "subtitle": { "displayName": "Subtitle", "purpose": "카드 · 구역 · 팝업 제목." },
+      "body": { "displayName": "Body", "purpose": "본문 · 표 · 설명." },
+      "label": { "displayName": "Label", "purpose": "칩 · 배지 · 표 머리 · 구분 라벨." },
+      "mono": { "displayName": "Mono", "purpose": "경로 · fileKey · CID · 코드만." }
+    },
+    "shadows": [
+      { "name": "dialog-lift", "value": "0 12px 32px rgba(15,17,21,.18), 0 2px 6px rgba(15,17,21,.08)", "purpose": "확인 · 알림 팝업, 비교 창 같은 모달만." },
+      { "name": "backdrop", "value": "rgba(20,23,28,.38)", "purpose": "모달 뒤 어둡게." }
+    ],
+    "motion": [
+      { "name": "state", "value": "150ms ease", "purpose": "메뉴 · 버튼 호버의 바탕색 바뀜." },
+      { "name": "dialog-in", "value": "opacity 120ms, transform 140ms (translateY 6px · scale .98 → 0)", "purpose": "팝업 나타남. 움직임 줄이기 설정이면 없음." }
+    ],
+    "breakpoints": [
+      { "name": "narrow", "value": "760px" },
+      { "name": "laptop", "value": "1280px" },
+      { "name": "desktop", "value": "1440px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "그 화면의 주된 동작 하나(요청 보내기 · 저장).",
+      "html": "<button class=\"ds-btn ds-btn-primary\">요청 보내기</button>",
+      "css": ".ds-btn{height:36px;padding:0 16px;border-radius:8px;font:600 14px Pretendard,sans-serif;cursor:pointer;border:1px solid transparent} .ds-btn-primary{background:var(--accent,#2747d8);border-color:var(--accent,#2747d8);color:#fff} .ds-btn-primary:hover{filter:brightness(1.08)} .ds-btn-primary:focus-visible{outline:2px solid var(--accent,#2747d8);outline-offset:2px}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "그 밖의 동작. 흰 바탕 + 선.",
+      "html": "<button class=\"ds-btn2\">취소</button>",
+      "css": ".ds-btn2{height:36px;padding:0 16px;border-radius:8px;font:600 14px Pretendard,sans-serif;cursor:pointer;background:var(--surface,#fff);color:var(--ink,#14171c);border:1px solid var(--line,#e3e7ee)} .ds-btn2:hover{border-color:var(--accent,#2747d8)} .ds-btn2:focus-visible{outline:2px solid var(--accent,#2747d8);outline-offset:2px}"
+    },
+    {
+      "name": "Danger Button",
+      "kind": "button",
+      "refersTo": "button-danger",
+      "description": "확인 팝업 안의 지우기 · 멈추기.",
+      "html": "<button class=\"ds-btn-danger\">지우기</button>",
+      "css": ".ds-btn-danger{height:36px;padding:0 16px;border-radius:8px;font:600 14px Pretendard,sans-serif;cursor:pointer;background:var(--red,#c4281c);border:1px solid var(--red,#c4281c);color:#fff} .ds-btn-danger:hover{filter:brightness(1.08)} .ds-btn-danger:focus-visible{outline:2px solid var(--accent,#2747d8);outline-offset:2px}"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "한 줄 입력.",
+      "html": "<input class=\"ds-input\" placeholder=\"화면 ID · 프레임 이름\">",
+      "css": ".ds-input{height:36px;box-sizing:border-box;padding:7px 10px;border:1px solid var(--line,#e3e7ee);border-radius:8px;background:var(--surface,#fff);color:var(--ink,#14171c);font:14px Pretendard,sans-serif;min-width:220px} .ds-input:focus{outline:2px solid var(--accent,#2747d8);outline-offset:-1px;border-color:transparent}"
+    },
+    {
+      "name": "Status Chips",
+      "kind": "chip",
+      "refersTo": "chip-status-ok",
+      "description": "상태 세 가지: 승인 · 주의 · 오류.",
+      "html": "<span class=\"ds-chip ok\">완료</span> <span class=\"ds-chip warn\">갱신 필요 3</span> <span class=\"ds-chip bad\">실패</span>",
+      "css": ".ds-chip{display:inline-block;padding:1px 8px;border-radius:999px;font:700 12px Pretendard,sans-serif;white-space:nowrap} .ds-chip.ok{background:var(--ok-soft,#e3f4e8);color:var(--ok,#17722f)} .ds-chip.warn{background:var(--warn-soft,#fff1e0);color:var(--warn,#a35100)} .ds-chip.bad{background:var(--red-soft,#fdecea);color:var(--red,#c4281c)}"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "작업대 위 종이 한 장. 그림자 없음.",
+      "html": "<div class=\"ds-card\"><b>Instrument</b><p>UX AI TEST · 화면 4개 · T-IOS</p></div>",
+      "css": ".ds-card{background:var(--surface,#fff);border:1px solid var(--line,#e3e7ee);border-radius:12px;padding:16px 20px;font:14px/1.6 Pretendard,sans-serif;color:var(--ink,#14171c);max-width:320px} .ds-card b{font-size:16px;font-weight:800} .ds-card p{margin:4px 0 0;font-size:12.5px;color:var(--ink-3,#5f6874)}"
+    },
+    {
+      "name": "Top Navigation",
+      "kind": "nav",
+      "refersTo": "nav-item-active",
+      "description": "상단 메뉴. 지금 메뉴는 연파랑 바탕.",
+      "html": "<nav class=\"ds-nav\"><a>일정/작업</a><a>UX 문서</a><a aria-current=\"page\">Figma Workbench</a><a>변경 이력</a></nav>",
+      "css": ".ds-nav{display:flex;gap:4px;align-items:center;height:64px;padding:0 24px;background:var(--nav-bg,#fff);border-bottom:1px solid var(--nav-line,#eceef2);font:500 14.5px Pretendard,sans-serif} .ds-nav a{display:flex;align-items:center;height:40px;padding:0 16px;border-radius:10px;color:var(--nav-ink,#1d2433);cursor:pointer} .ds-nav a:hover{background:var(--nav-hover,#f3f5f8)} .ds-nav a[aria-current=page]{background:var(--nav-on,#eaf2ff);color:var(--nav-accent,#0f5fd6)}"
+    },
+    {
+      "name": "Confirm Dialog",
+      "kind": "custom",
+      "refersTo": "dialog",
+      "description": "브라우저 기본 팝업 대신 쓰는 확인 창.",
+      "html": "<div class=\"ds-dlg\"><h3>「Instrument」 프로토타입을 지울까요?</h3><p>지우면 다시 볼 수 없습니다.</p><div class=\"a\"><button class=\"n\">취소</button><button class=\"y\">지우기</button></div></div>",
+      "css": ".ds-dlg{width:360px;min-height:200px;box-sizing:border-box;display:flex;flex-direction:column;text-align:center;padding:22px 24px 20px;background:var(--surface,#fff);border:1px solid var(--line,#e3e7ee);border-radius:14px;box-shadow:0 12px 32px rgba(15,17,21,.18),0 2px 6px rgba(15,17,21,.08);font:14px/1.6 Pretendard,sans-serif;color:var(--ink,#14171c)} .ds-dlg h3{margin:auto 0 6px;font-size:17px;font-weight:800} .ds-dlg p{margin:0 0 auto;color:var(--ink-2,#4a5260)} .ds-dlg .a{display:flex;justify-content:center;gap:8px;padding-top:20px} .ds-dlg button{height:36px;padding:0 16px;border-radius:8px;font:600 14px Pretendard,sans-serif;cursor:pointer} .ds-dlg .n{background:var(--surface,#fff);border:1px solid var(--line,#e3e7ee);color:var(--ink,#14171c)} .ds-dlg .y{background:var(--red,#c4281c);border:1px solid var(--red,#c4281c);color:#fff} .ds-dlg button:focus-visible{outline:2px solid var(--accent,#2747d8);outline-offset:2px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Design Studio Desk",
+    "overview": "Workbench는 설계 사무실의 책상이다. 한쪽에는 Figma 화면(도면), 다른 쪽에는 UX 문서(사양서)와 요청(작업 지시)이 펼쳐져 있고, 기획자는 그 사이를 오가며 고친다. 그래서 화면의 주인공은 늘 작업물이다. 회색 작업대(canvas) 위에 흰 종이(paper) 카드가 놓이고, 도구는 테두리 한 줄 · 글자 굵기 · 파랑 한 점으로만 자기를 드러낸다.\n\n느낌은 또렷하고 단단하다. 제목은 굵게(800), 본문은 14px로 촘촘하되 줄 간격(1.6)으로 숨을 쉬게 한다. 경계는 그림자가 아니라 1px 선으로 긋고, 상태(승인 · 주의 · 오류)는 약속된 세 가지 색과 옅은 바탕으로만 말한다.",
+    "keyCharacteristics": [
+      "회색 작업대 위 흰 종이 카드, 1px 선으로 나눈 평평한 층",
+      "파랑은 「지금 할 일」 하나와 지금 위치에만",
+      "상태는 초록(승인) · 주황(주의) · 빨강(오류) 세 가지, 옅은 바탕 + 진한 글자 칩",
+      "굵은 제목과 14px 본문, 고정폭 글꼴은 경로 · ID · 코드에만",
+      "밝은 · 어두운 테마 모두 같은 역할 이름으로"
+    ],
+    "rules": [
+      { "name": "The One Blue Rule", "body": "한 화면에서 파랑으로 채운 버튼은 하나(그 화면의 주된 동작)다. 나머지 동작은 흰 바탕 + 선 버튼이다.", "section": "colors" },
+      { "name": "The Three Signals Rule", "body": "상태 색은 초록 · 주황 · 빨강 셋뿐이고, 늘 「옅은 바탕 + 같은 계열 진한 글자」로 쓴다. 상태가 아닌 것에 상태 색을 쓰지 않는다.", "section": "colors" },
+      { "name": "The Same Role Rule", "body": "색은 값이 아니라 역할 변수로 쓴다. 어두운 테마가 같은 역할에 다른 값을 넣는다.", "section": "colors" },
+      { "name": "The Weight-Not-Size Rule", "body": "위계는 크기보다 굵기로 먼저 나눈다. 보조 정보는 12 ~ 13px + Ink Tertiary로 한 단만 낮춘다.", "section": "typography" },
+      { "name": "The Keep-All Rule", "body": "한국어는 단어 단위로 줄을 바꾼다. 한 줄 정보는 말줄임으로 자른다.", "section": "typography" },
+      { "name": "The Flat Desk Rule", "body": "페이지 안에 놓인 카드 · 패널 · 표는 그림자가 없다. 경계는 Hairline 1px. 그림자는 위로 떠서 다른 것을 가리는 것에만.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do 색을 역할 변수로 쓰고, 새 페이지는 appnav.css의 공통 색을 그대로 쓴다.",
+      "Do 한 화면의 주된 동작 하나만 Drafting Blue로 채운다(The One Blue Rule).",
+      "Do 상태는 「옅은 바탕 + 진한 글자」 칩으로, 초록 · 주황 · 빨강 세 가지 뜻만 쓴다.",
+      "Do 경계는 1px Hairline으로 긋고, 깊이는 톤 차이로 만든다.",
+      "Do 제목은 800, 본문은 14px / 1.6, 메타 정보는 12 ~ 13px Ink Tertiary로.",
+      "Do 밝은 · 어두운 테마를 같은 역할로 함께 맞춘다.",
+      "Do 버튼 · 팝업 확인 버튼에 무엇을 하는지 동사로 적는다."
+    ],
+    "donts": [
+      "Don't 그라데이션 · 장식 배경 · 장식 도형을 쓰지 않는다.",
+      "Don't 페이지 안 카드 · 패널에 큰 그림자를 주어 띄우지 않는다. 그림자는 팝업 · 떠 있는 메뉴만.",
+      "Don't 상단 메뉴의 Nav Blue를 본문 강조색으로 가져오지 않는다.",
+      "Don't 상태가 아닌 곳에 초록 · 주황 · 빨강을 쓰지 않는다.",
+      "Don't 브라우저 기본 confirm · alert · prompt를 쓰지 않는다.",
+      "Don't 라벨을 대문자 · 넓은 자간으로 꾸미지 않는다.",
+      "Don't 테두리를 두껍게 해서 강조하지 않는다(색을 바꾼다)."
+    ]
+  }
+}

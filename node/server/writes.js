@@ -269,7 +269,7 @@ module.exports = function register(on, h) {
           if (kind === 'guide-edit' && srcs.length) hit.files = saveUploads(hit.id, srcs);
           if (kind === 'capture' && b.auto) hit.auto = true;
           // ②(받는 파일)에도 플러그인이 켜져 있으면 먼저 ② 작업 페이지를 읽어 Figma에서 직접 복사해 옮긴 화면도 찾는다(2026-11-17, phase scan → check)
-          const toLive = xfer && xfer.mode === 'check' && C.pluginKeys && Date.now() - (C.pluginKeys[xfer.to.key] || 0) < 60000;
+          const toLive = xfer && xfer.mode === 'check' && C.pluginKeys && Date.now() - (C.pluginKeys[xfer.to.key] || 0) < 180000;   // 3분: Figma 창이 뒤에 있으면 플러그인이 1분에 한 번쯤만 묻는다
           if (toLive) { Object.assign(hit, xfer, { phase: 'scan', fileKey: xfer.to.key, scanSkip: core.arr(xRecRead(xfer.to.key).items).filter((x) => x && x.to && x.to.node).map((x) => x.to.node), note: (xfer.to.name || '받는 파일') + '의 플러그인이 작업 페이지 화면을 읽은 뒤 ' + (xfer.from.name || '보내는 파일') + '에서 바뀐 것 확인(옮기지 않음)' }); if (!hit.name) hit.name = '비교 · ' + (xfer.to.name || '다음 단계'); }
           else if (xfer && xfer.mode === 'check') { Object.assign(hit, xfer, { phase: 'check', note: (xfer.from.name || '보내는 파일') + '을(를) Figma에서 열고 플러그인을 켜면 바뀐 것 확인 시작(옮기지 않음)' }); if (!hit.name) hit.name = '비교 · ' + (xfer.to.name || '다음 단계'); }
           else if (xfer) { Object.assign(hit, xfer, { phase: 'read', note: (xfer.from.name || '보내는 파일') + '을(를) Figma에서 열고 플러그인을 켜면 옮기기 시작' });
@@ -932,7 +932,19 @@ module.exports = function register(on, h) {
   }
   function openClaudeCli() {
     const cc = h.findClaudeCode(); if (!cc) throw new Error('Claude Code를 찾지 못했습니다. Claude 데스크톱 앱(Code 탭)을 한 번 열거나 Claude Code를 설치해 주세요.');
-    try { const r = spawnSync(cc, ['mcp', 'list'], { encoding: 'utf8', timeout: 60000, windowsHide: true }); if (!/^(claude\.ai )?figma/mi.test(String(r.stdout || '') + String(r.stderr || ''))) spawnSync(cc, ['mcp', 'add', '--transport', 'http', '--scope', 'user', 'figma', 'https://mcp.figma.com/mcp'], { timeout: 60000, windowsHide: true }); } catch (e) {}
+    // Figma MCP가 없으면 등록: 서버를 멈추지 않게 비동기로(2026-11-18 — spawnSync로 최대 2분 모든 API가 멈추던 것). npm으로 깐 claude.cmd는 cmd.exe로 감싼다(셸 없이 .cmd를 띄우면 EINVAL)
+    const cli = (args, done) => {
+      let p, out = '';
+      try {
+        p = !C.isMac && /\.(cmd|bat)$/i.test(cc)
+          ? spawn('cmd.exe', ['/d', '/s', '/c', '"' + [cc].concat(args).map((x) => '"' + String(x).replace(/"/g, '""') + '"').join(' ') + '"'], { windowsHide: true, windowsVerbatimArguments: true })
+          : spawn(cc, args, { windowsHide: true });
+      } catch (e) { return done(''); }
+      const t = setTimeout(() => { try { p.kill(); } catch (e) {} }, 60000);
+      p.stdout.on('data', (d) => { out += d; }); p.stderr.on('data', (d) => { out += d; });
+      p.on('error', () => { clearTimeout(t); done(out); }); p.on('close', () => { clearTimeout(t); done(out); });
+    };
+    cli(['mcp', 'list'], (o) => { if (!/^(claude\.ai )?figma/mi.test(o)) cli(['mcp', 'add', '--transport', 'http', '--scope', 'user', 'figma', 'https://mcp.figma.com/mcp'], (o2) => console.log(`  [${core.now()}] Figma MCP 등록: ` + String(o2).replace(/\s+/g, ' ').slice(0, 160))); });
     if (C.isMac) spawn('osascript', ['-e', `tell application "Terminal" to do script "cd '${C.root}' && '${cc}'"`, '-e', 'tell application "Terminal" to activate'], { detached: true, stdio: 'ignore' }).unref();
     else detach('powershell', ['-NoExit', '-Command', `& '${cc}'`], { windowsHide: false, detached: true });
     try { core.writeText(path.join(C.root, 'workbench', '.agent_renew'), new Date().toISOString()); } catch (e) {}

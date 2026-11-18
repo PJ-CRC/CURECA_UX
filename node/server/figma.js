@@ -146,7 +146,8 @@ module.exports = function register(on, h) {
 
   // 캡처 작업 처리: 토큰이 있으면 「대기」 캡처 작업(캡처 버튼 · 자동 캡처)을 서버가 받는다 — 같은 파일끼리 10개씩 한 요청. 한도(429)에 걸리면 잠시 쉰다
   let busyCap = false, restUntil = 0;
-  function jobsSet(fn) { const jj = core.readJson(C.jobFile) || { version: 0, items: [] }; const items = core.arr(jj.items).filter(Boolean); const r = fn(items); core.writeJson(C.jobFile, { version: (parseInt(jj.version, 10) || 0) + 1, items }); return r; }
+  // onlyIf: fn이 무언가 돌려줄 때만 쓴다 — 받을 캡처가 없을 때도 3초마다 다시 써서 version · 수정 시각이 늘 바뀌었다(화면이 「작업 목록 바뀜」으로 보고 매번 다시 받음, 2026-11-18)
+  function jobsSet(fn, onlyIf) { const jj = core.readJson(C.jobFile) || { version: 0, items: [] }; const items = core.arr(jj.items).filter(Boolean); const r = fn(items); if (onlyIf && !r) return r; core.writeJson(C.jobFile, { version: (parseInt(jj.version, 10) || 0) + 1, items }); return r; }
   // 서버가 캡처 중에 꺼졌거나 토큰이 거부되면 「진행 중」(Figma API(토큰))으로 남던 캡처 작업을 「대기」로 되돌린다(2026-11-13 점검 F2) — 플러그인 · Claude · 다음 차례가 다시 가져간다
   function freeStale() {
     const jj = core.readJson(C.jobFile); if (!jj) return;
@@ -168,7 +169,7 @@ module.exports = function register(on, h) {
         const pick = wait.filter((x) => x.fileKey === key).sort((a, b) => (a.auto ? 1 : 0) - (b.auto ? 1 : 0)).slice(0, 10);
         const at = core.now(); pick.forEach((x) => { x.status = '진행 중'; x.takenBy = 'Figma API(토큰)'; x.updatedAt = at; });
         return { key, ids: pick.map((x) => x.id), nodes: pick.map((x) => x.nodeId) };
-      });
+      }, true);
       if (!take) return;
       let res = [], err = null;
       try { res = await capture(take.key, take.nodes, 'Figma API(토큰)', false); } catch (e) { err = e; if (e.status === 429) restUntil = Date.now() + 60000; }
