@@ -2,41 +2,55 @@
 name: Figma AI Run · Workbench
 description: 기획자가 Figma 화면 · UX 문서 · 요청을 한 책상에서 다루는 업무 도구
 colors:
-  canvas: "#f6f7f9"
+  canvas: "#eef0f2"
   paper: "#ffffff"
-  paper-recessed: "#f3f6fb"
-  hairline: "#e3e7ee"
-  ink: "#14171c"
-  ink-secondary: "#4a5260"
-  ink-tertiary: "#5f6874"
-  drafting-blue: "#2747d8"
-  drafting-blue-wash: "#e6ebff"
-  nav-blue: "#0f5fd6"
-  nav-blue-wash: "#eaf2ff"
-  approved-green: "#17722f"
-  approved-green-wash: "#e3f4e8"
-  redline: "#c4281c"
+  paper-recessed: "#f6f6f7"
+  hairline: "#e3e4e8"
+  hairline-strong: "#d4d6db"
+  ink: "#1c1d1f"
+  ink-secondary: "#3a3c41"
+  ink-tertiary: "#64676e"
+  ink-accent: "#1c1d1f"
+  ink-accent-wash: "#ececee"
+  on-accent: "#ffffff"
+  approved-green: "#1f6b3a"
+  approved-green-wash: "#e8f4ec"
+  progress-blue: "#1d5fb0"
+  progress-blue-wash: "#e6effb"
+  waiting-gray: "#55585e"
+  waiting-gray-wash: "#eeeff1"
+  redline: "#b3261e"
   redline-wash: "#fdecea"
-  caution-amber: "#a35100"
-  caution-amber-wash: "#fff1e0"
-  workbench-canvas: "#d9dde3"
-  dark-canvas: "#0f1115"
-  dark-paper: "#171a20"
-  dark-paper-recessed: "#1e232b"
-  dark-hairline: "#2a3039"
-  dark-ink: "#e8ebf0"
-  dark-ink-secondary: "#b4bcc8"
-  dark-ink-tertiary: "#8590a0"
-  dark-drafting-blue: "#8ea2ff"
-  dark-drafting-blue-wash: "#232c52"
-  dark-nav-blue: "#7fb0ff"
-  dark-nav-blue-wash: "#1c2a44"
-  dark-approved-green: "#56d364"
-  dark-approved-green-wash: "#16301d"
-  dark-redline: "#ff7b72"
-  dark-redline-wash: "#3a1f1e"
-  dark-caution-amber: "#f0a24f"
-  dark-caution-amber-wash: "#38270f"
+  caution-amber: "#8a5300"
+  caution-amber-wash: "#fbf3e4"
+  caution-amber-fill: "#b26b0a"
+  workbench-canvas: "#dcdee2"
+  series-1: "#c0603f"
+  series-2: "#665cb0"
+  series-3: "#2e957d"
+  series-4: "#c3962a"
+  series-5: "#b0577f"
+  series-6: "#5f7f3a"
+  series-7: "#4f7aa8"
+  series-8: "#8a6a52"
+  ratio-1: "#6e2a48"
+  ratio-2: "#a14c71"
+  ratio-3: "#cf8eab"
+  ratio-4: "#ecd0dc"
+  dark-canvas: "#121315"
+  dark-paper: "#1b1c1f"
+  dark-paper-recessed: "#232428"
+  dark-hairline: "#2e3035"
+  dark-ink: "#ececee"
+  dark-ink-secondary: "#c3c4c8"
+  dark-ink-tertiary: "#9a9ca2"
+  dark-ink-accent: "#ececee"
+  dark-ink-accent-wash: "#2c2e33"
+  dark-on-accent: "#16171a"
+  dark-approved-green: "#5cc983"
+  dark-progress-blue: "#7fb0f0"
+  dark-redline: "#ff8a80"
+  dark-caution-amber: "#e6ad57"
 typography:
   headline:
     fontFamily: "Pretendard, -apple-system, Segoe UI, Malgun Gothic, sans-serif"
@@ -87,8 +101,8 @@ spacing:
   xl: "32px"
 components:
   button-primary:
-    backgroundColor: "{colors.drafting-blue}"
-    textColor: "{colors.paper}"
+    backgroundColor: "{colors.ink-accent}"
+    textColor: "{colors.on-accent}"
     rounded: "{rounded.sm}"
     padding: "0 16px"
     height: "36px"
@@ -119,6 +133,16 @@ components:
     textColor: "{colors.approved-green}"
     rounded: "{rounded.pill}"
     padding: "1px 8px"
+  chip-status-progress:
+    backgroundColor: "{colors.progress-blue-wash}"
+    textColor: "{colors.progress-blue}"
+    rounded: "{rounded.pill}"
+    padding: "0 8px"
+  chip-status-waiting:
+    backgroundColor: "{colors.waiting-gray-wash}"
+    textColor: "{colors.waiting-gray}"
+    rounded: "{rounded.pill}"
+    padding: "0 8px"
   chip-status-warn:
     backgroundColor: "{colors.caution-amber-wash}"
     textColor: "{colors.caution-amber}"
@@ -135,8 +159,8 @@ components:
     padding: "0 16px"
     height: "40px"
   nav-item-active:
-    backgroundColor: "{colors.nav-blue-wash}"
-    textColor: "{colors.nav-blue}"
+    backgroundColor: "{colors.ink-accent-wash}"
+    textColor: "{colors.ink}"
     rounded: "{rounded.md}"
     padding: "0 16px"
     height: "40px"
@@ -151,58 +175,56 @@ components:
 
 ## Overview
 
-**Creative North Star: "The Design Studio Desk"**
+**Creative North Star: "The Design Studio Desk" · 잉크(2026-11-18)**
 
-Workbench는 설계 사무실의 책상이다. 한쪽에는 Figma 화면(도면), 다른 쪽에는 UX 문서(사양서)와 요청(작업 지시)이 펼쳐져 있고, 기획자는 그 사이를 오가며 고친다. 그래서 화면의 주인공은 늘 작업물이다. 회색 작업대(canvas) 위에 흰 종이(paper) 카드가 놓이고, 도구는 테두리 한 줄 · 글자 굵기 · 파랑 한 점으로만 자기를 드러낸다.
+Workbench는 설계 사무실의 책상이다. 한쪽에는 Figma 화면(도면), 다른 쪽에는 UX 문서(사양서)와 요청(작업 지시)이 펼쳐져 있고, 기획자는 그 사이를 오가며 고친다. 그래서 화면의 주인공은 늘 작업물이다. 옅은 회색 작업대(canvas) 위에 흰 종이(paper) 카드가 놓이고, 도구는 테두리 한 줄 · 글자 굵기 · **검정 잉크 한 점**으로만 자기를 드러낸다.
 
-느낌은 **또렷하고 단단하다**. 제목은 굵게(800), 본문은 14px로 촘촘하되 줄 간격(1.6)으로 숨을 쉬게 한다. 경계는 그림자가 아니라 1px 선으로 긋고, 상태(승인 · 주의 · 오류)는 약속된 세 가지 색과 옅은 바탕으로만 말한다. 정보가 많은 업무 도구라, 한 화면 안에서 같은 뜻은 늘 같은 모양으로 보인다.
+느낌은 **또렷하고 단단하다**. 제목은 굵게(800), 본문은 14px로 촘촘하되 줄 간격(1.6)으로 숨을 쉬게 한다. 경계는 그림자가 아니라 1px 선으로 긋는다. 화면 색은 거의 무채색이고, 색은 **상태와 그래프에만** 쓴다. 그래서 색이 보이면 늘 뜻이 있다.
 
 한국어 업무 문서를 다루므로 단어 단위 줄바꿈(`word-break: keep-all`)이 기본이고, 밝은 화면과 어두운 화면을 모두 같은 역할 색으로 맞춘다. 장식 배경 · 그라데이션 · 떠 있는 듯한 큰 그림자는 쓰지 않는다.
 
 **Key Characteristics:**
-- 회색 작업대 위 흰 종이 카드, 1px 선으로 나눈 평평한 층
-- 파랑은 「지금 할 일」 하나와 지금 위치에만
-- 상태는 초록(승인) · 주황(주의) · 빨강(오류) 세 가지, 옅은 바탕 + 진한 글자 칩
-- 굵은 제목과 14px 본문, 고정폭 글꼴은 경로 · ID · 코드에만
-- 밝은 · 어두운 테마 모두 같은 역할 이름(`--bg` · `--surface` · `--ink` …)으로
+- 옅은 회색 작업대 위 흰 종이 카드, 1px 선으로 나눈 평평한 층
+- 강조는 검정 하나: 지금 고른 것 · 주 버튼 · 고른 테두리 · 처리 중인 줄의 왼쪽 막대
+- 상태 색 다섯: 대기 회색 · 진행 중 파랑 · 보류(봐야 할 것) 주황 · 완료 초록 · 실패 빨강
+- 그래프는 채도를 낮춘 8색(사람 · 항목마다 같은 순서), 한 묶음 비율은 장미색 한 계열
+- 굵은 제목과 14px 본문, 글자 하한 12px, 고정폭 글꼴은 경로 · ID · 코드에만
 
 ## Colors
 
-중성 회색 위에 파랑 하나와 상태 색 셋. 색은 꾸밈이 아니라 뜻을 전한다.
+무채색 잉크 위에 상태 색과 그래프 색. 색은 꾸밈이 아니라 뜻을 전한다. 값은 모두 `pages/appnav.css` 한곳(밝은 · 어두운 블록)에 있고, 화면은 역할 변수만 쓴다.
 
 ### Primary
-- **Drafting Blue** (#2747d8): 주요 버튼(요청 보내기 · 저장 · 확인), 지금 고른 항목, 포커스 고리, 링크. 어두운 테마에서는 밝은 파랑(#8ea2ff)에 버튼 글자를 거의 검정(#0f1115)으로.
-- **Drafting Blue Wash** (#e6ebff): 고른 행 · 강조 칩 · 안내 상자의 바탕.
-
-### Secondary
-- **Nav Blue** (#0f5fd6) · **Nav Blue Wash** (#eaf2ff): 상단 메뉴 전용(2026-11-18 #1570ef → #0f5fd6: 옅은 파랑 바탕 위 선택 메뉴 글자 4.08 → 5.1:1). 지금 메뉴 · 로고 · 로그아웃 버튼. 본문 화면의 강조색으로 쓰지 않는다.
+- **Ink Accent** (#1c1d1f, `--accent`): 주 버튼(요청 보내기 · 저장 · 확인), 지금 고른 항목, 포커스 고리, 처리 중인 줄 막대. 그 위 글자는 `--on-accent`(흰색, 어두운 테마에서는 강조가 #ececee로 밝아지고 글자가 #16171a).
+- **Ink Accent Wash** (#ececee, `--accent-soft`): 고른 행 · 고른 칩 · 상단 메뉴의 지금 메뉴 바탕.
 
 ### Neutral
-- **Canvas** (#f6f7f9): 페이지 바탕(작업대). Workbench · 프로토타입 보기처럼 작업물이 큰 화면은 더 짙은 회색 작업대(**Workbench Canvas** #d9dde3, `--canvas`)를 쓴다. 그 위 글씨는 Ink Secondary 이상(Ink Tertiary는 4.16:1이라 쓰지 않는다).
-- **Paper** (#ffffff): 카드 · 패널 · 팝업 · 입력 칸.
-- **Paper Recessed** (#f3f6fb): 카드 안의 한 단 낮은 구역(표 머리 · 요약 상자 · 그룹 머리 줄).
-- **Hairline** (#e3e7ee): 모든 경계선 · 표 구분선 · 기본 버튼 테두리.
-- **Ink** (#14171c): 제목 · 본문.
-- **Ink Secondary** (#4a5260): 설명 · 보조 글.
-- **Ink Tertiary** (#5f6874): 날짜 · 개수 · 경로 같은 메타 정보(옅은 바탕에서도 4.5:1 이상).
+- **Canvas** (#eef0f2): 페이지 바탕. Workbench · 프로토타입 보기의 작업물 뒤는 **Workbench Canvas** (#dcdee2, `--canvas`), 그 위 글씨는 Ink Secondary 이상.
+- **Paper** (#ffffff) · **Paper Recessed** (#f6f6f7): 카드 · 패널 / 한 단 낮은 구역(표 머리 · 처리 중인 줄 · 질문 상자).
+- **Hairline** (#e3e4e8) · **Hairline Strong** (#d4d6db, `--line-2`): 경계선 / 버튼 · 칩 테두리.
+- **Ink** (#1c1d1f) · **Ink Secondary** (#3a3c41) · **Ink Tertiary** (#64676e): 제목 · 본문 / 설명 / 날짜 · 개수 · 경로(옅은 바탕에서도 4.5:1 이상).
 
 ### Status
-- **Approved Green** (#17722f / wash #e3f4e8): 완료 · 연결됨 · 최신 · 같음.
-- **Caution Amber** (#a35100 / wash #fff1e0): 대기 · 확인 필요 · 갱신 필요 · 한도 임박.
-- **Redline** (#c4281c / wash #fdecea): 오류 · 실패 · 지우기 같은 되돌리기 어려운 동작.
+- **Waiting Gray** (#55585e / wash #eeeff1, `--wait`): 대기(순서를 기다림).
+- **Progress Blue** (#1d5fb0 / wash #e6effb, `--prog`): 진행 중. 화면에서 파랑은 이것뿐이다.
+- **Caution Amber** (#8a5300 / wash #fbf3e4 / fill #b26b0a, `--warn`): 보류 · 확인 필요 · 반영 대기 · 한도 임박 — 「사람이 봐야 할 것」.
+- **Approved Green** (#1f6b3a / wash #e8f4ec, `--ok`): 완료 · 연결됨 · 같음.
+- **Redline** (#b3261e / wash #fdecea, `--red`): 실패 · 오류 · 지우기 · 캡처 위 표시 영역.
+
+### Charts
+- **Series 1 ~ 8** (`--s1` ~ `--s8`: #c0603f · #665cb0 · #2e957d · #c3962a · #b0577f · #5f7f3a · #4f7aa8 · #8a6a52): 작업자 · 항목처럼 서로 다른 것. 채도와 밝기를 낮춰 잉크 톤에 맞췄고, 앞 4색은 색각 이상 검사(인접 ΔE ≥ 8)를 통과한다. 사람마다 늘 같은 순서로 준다.
+- **Ratio 1 ~ 4** (`--t1` ~ `--t4`: #6e2a48 → #ecd0dc): 한 묶음 안의 비율(토큰 종류). 작업자 색과 겹치지 않게 장미색 한 계열.
+- 팀 탭 · 댓글 작성자처럼 흰 글씨를 얹는 색은 Series를 진하게 한 #a8502f · #544a9c · #22745f · #7d5f12 · #8e4466 · #4a6630 · #3d6290(4.5:1 이상).
 
 ### Dark
-같은 역할에 어두운 값을 넣는다(`appnav.css`의 다크 블록 하나가 기준). Canvas #0f1115 · Paper #171a20 · Paper Recessed #1e232b · Hairline #2a3039 · Ink #e8ebf0 / #b4bcc8 / #8590a0 · Drafting Blue #8ea2ff(wash #232c52, 그 위 버튼 글자는 `var(--bg)`) · Nav Blue #7fb0ff(wash #1c2a44) · 상태 #56d364 · #f0a24f · #ff7b72(wash #16301d · #38270f · #3a1f1e). 화면에서 다크 값을 직접 적지 않고 역할 변수만 쓴다.
-
-### Categorical
-프로젝트 탭 · 댓글 핀처럼 「서로 다름」만 보이면 되는 색 묶음은 상태 색과 따로 둔다. 흰 글씨를 얹으면 4.5:1 이상인 진한 색만 쓴다(탭: #2747d8 · #0c7a5d · #c23e0c · #7c3aed · #c2255c · #0b7285 · #8a6a00).
+같은 역할에 어두운 값을 넣는다(`appnav.css`의 다크 블록). Canvas #121315 · Paper #1b1c1f / #232428 · Hairline #2e3035 · Ink #ececee / #c3c4c8 / #9a9ca2 · Accent #ececee(글자 #16171a) · 상태 #b4b6bb · #7fb0f0 · #e6ad57 · #5cc983 · #ff8a80 · 그래프는 같은 색을 한 단 밝게.
 
 ### Named Rules
-**The One Blue Rule.** 한 화면에서 파랑으로 채운 버튼은 하나(그 화면의 주된 동작)다. 나머지 동작은 흰 바탕 + 선 버튼이다.
+**The One Ink Rule.** 한 화면에서 검정으로 채운 버튼은 하나(그 화면의 주된 동작)다. 나머지는 흰 바탕 + 선 버튼 · 회색 칩이다. 보내기 · 비교 · 우선순위 같은 옵션도 회색 칩이다.
 
-**The Three Signals Rule.** 상태 색은 초록 · 주황 · 빨강 셋뿐이고, 늘 「옅은 바탕 + 같은 계열 진한 글자」로 쓴다. 상태가 아닌 것(꾸밈 · 구분)에 상태 색을 쓰지 않는다.
+**The Five Signals Rule.** 상태 색은 회색 · 파랑 · 주황 · 초록 · 빨강 다섯뿐이고, 늘 「옅은 바탕 + 같은 계열 진한 글자」로 쓴다. 상태가 아닌 것(꾸밈 · 구분)에 상태 색을 쓰지 않는다. 구분은 Series 색으로.
 
-**The Same Role Rule.** 색은 값이 아니라 역할 변수(`--accent` · `--ok` · `--line` …)로 쓴다. 어두운 테마가 같은 역할에 다른 값을 넣는다.
+**The Same Role Rule.** 색은 값이 아니라 역할 변수(`--accent` · `--ok` · `--line` · `--s1` …)로 쓴다. 어두운 테마가 같은 역할에 다른 값을 넣는다. 강조색 위 글자는 `#fff`가 아니라 `--on-accent`.
 
 ## Typography
 

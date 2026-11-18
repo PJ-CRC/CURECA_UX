@@ -68,7 +68,7 @@ module.exports = function register(on, h) {
     saveHistEntry(name, { id: name, kind: 'request', team: core.itemTeam(r), status: nn(r.status), at: nn(r.updatedAt), createdAt: nn(r.createdAt), by: nn(r.author), doneBy: nn(r.updatedBy), pc: C.pcName,
       reqId: nn(r.id), fileKey: nn(r.fileKey), fileName: nn(r.fileName), page: nn(r.page), frame: nn(r.frame), nodeId: nn(r.nodeId),
       type: nn(r.type), layout: nn(r.layout), text: nn(r.text), note: nn(r.note), shot, shots, images: att,
-      frames: core.arr(r.frames).filter(Boolean), marks: core.arr(r.marks).filter(Boolean), ask: r.ask === undefined ? null : r.ask, replies: core.arr(r.replies).filter(Boolean) });
+      frames: core.arr(r.frames).filter(Boolean), marks: core.arr(r.marks).filter(Boolean), ask: r.ask === undefined ? null : r.ask, replies: core.arr(r.replies).filter(Boolean), raws: core.arr(r.raws).filter(Boolean) });
   }
   function histRemove(id) {
     const name = C.pcSlug + '_' + nn(id);
@@ -550,6 +550,30 @@ module.exports = function register(on, h) {
   // ── POST /api/guides {action: import | save | apply} — UX 문서 ──
   on('POST', '/api/guides', async ({ req, body, browser, qTeam, T: T0 }) => {
     const b = await body(); let T = T0;
+    // 기본 템플릿으로 새 문서 만들기(2026-11-18): docs/templates/ux-base/{kind}/를 지금 팀 UX 문서로 복사한다(Claude 없이 바로).
+    //  폴더가 곧 목록인 문서(folderList)로 만들어 파일을 더하고 지울 수 있다. 이름은 「{카테고리}_{제목}」(다른 팀 새 문서와 같은 모양)
+    if (b.action === 'template') {
+      if (!core.canWrite(req, ['guide'])) throw new Error(core.roMsg('guide'));
+      const kind = nn(b.kind), base = path.join(C.root, 'docs', 'templates', 'ux-base');
+      const tj = core.readJson(path.join(base, 'templates.json')) || {}, tk = tj[kind];
+      if (!tk || !core.exists(path.join(base, kind))) throw new Error('기본 템플릿이 없는 종류입니다: ' + kind);
+      const title = nn(b.name).trim().slice(0, 60); if (!title) throw new Error('문서 이름을 입력해 주세요.');
+      const gid = (tk.label.replace(/\s+/g, '') + '_' + title).replace(/[^\p{L}\p{N}_.()\-]+/gu, '-').replace(/-+/g, '-').replace(/^[-_.]+|[-.]+$/g, '').slice(0, 100);
+      if (!okId(gid)) throw new Error('쓸 수 없는 이름입니다: ' + title);
+      const d = path.join(T.guideRoot, gid);
+      if (core.exists(d)) throw new Error('같은 이름의 문서가 이미 있습니다: ' + title);
+      fs.mkdirSync(d, { recursive: true });
+      const src = path.join(base, kind), names = fs.readdirSync(src).filter((n) => /\.(md|csv)$/i.test(n));
+      for (const n of names) fs.copyFileSync(path.join(src, n), path.join(d, n));
+      const order = core.arr(tk.order).filter((n) => names.includes(n)), at = core.now(), who = nn(b.by) || meName();
+      const files = order.concat(names.filter((n) => !order.includes(n)).sort((x, y) => x.localeCompare(y, 'ko', { numeric: true })));
+      const meta = { id: gid, kind, title, summary: nn(tk.summary), link: '', fileKey: '', fileName: '', scope: '기본 템플릿', frames: 0, sources: [], by: who,
+        request: '기본 템플릿으로 시작', jobId: '', team: T.team, createdAt: at, updatedAt: at, format: 'files', filesDir: '', folderList: true, files, fromTemplate: { kind, at } };
+      if (tk.titles) meta.titles = tk.titles;
+      core.writeJson(path.join(d, 'meta.json'), meta);
+      core.syncWant();
+      return Object.assign({ created: gid }, h.readGuides(T));
+    }
     if (b.action === 'import') {   // 다른 팀 문서 가져오기(지금 내용 · 수정본, 그 팀의 연관 항목 기록 빼고)
       if (!core.canWrite(req, ['guide'])) throw new Error(core.roMsg('guide'));
       const from = nn(b.from);
@@ -656,7 +680,8 @@ module.exports = function register(on, h) {
       if (!okId(gid) || gid.startsWith('_') || !core.exists(path.join(dir, 'meta.json'))) throw new Error('문서를 찾지 못했습니다: ' + gid);
       const gm = core.readJson(path.join(dir, 'meta.json')) || {};
       // 폴더가 곧 목록인 문서(folderList — STAgora 작업규칙 · CURECA 밖 팀의 새 문서)는 여러 파일이어도 일반 문서라 지울 수 있다(2026-11-13)
-      if (gm.format === 'files' && !gm.folderList) throw new Error('규칙 저장소의 기본 문서(여러 파일로 된 문서)는 지울 수 없습니다.');
+      // CURECA 밖 팀의 규칙 저장소형 문서는 CURECA에서 복사해 온 사본이라 지울 수 있다(2026-11-18 — 원본과 내용이 이미 다름). CURECA 원본만 막는다
+      if (gm.format === 'files' && !gm.folderList && T.team === 'cureca') throw new Error('규칙 저장소의 기본 문서(여러 파일로 된 문서)는 지울 수 없습니다.');
       const trash = path.join(T.guideRoot, '_trash'), dst = path.join(trash, stamp() + '_' + gid);
       fs.mkdirSync(trash, { recursive: true });
       try { fs.renameSync(dir, dst); } catch (e) { fs.cpSync(dir, dst, { recursive: true }); fs.rmSync(dir, { recursive: true, force: true }); }
@@ -926,7 +951,7 @@ module.exports = function register(on, h) {
     fs.rmSync(path.join(C.root, 'workbench', '.agent_stop'), { force: true });
     // 2026-11-16~ Node 한 벌(node/agent.js, 감시까지 포함). 이 서버를 돌리는 Node로 띄운다(서버가 꺼져도 남는다). 파일이 없으면 예전 스크립트
     const aj = path.join(C.root, 'node', 'agent.js');
-    if (core.exists(aj)) { const p = spawn(process.execPath, [aj, '--claude', cc], { cwd: C.root, stdio: 'ignore', windowsHide: true, detached: true }); p.on('error', () => {}); p.unref(); return; }
+    if (core.exists(aj)) { const p = spawn(process.execPath, [aj, '--claude', cc, '--port', String(C.port)], { cwd: C.root, stdio: 'ignore', windowsHide: true, detached: true }); p.on('error', () => {}); p.unref(); return; }
     if (C.isMac) detach('/bin/sh', ['-c', `nohup perl '${path.join(C.root, 'workbench', 'agent.pl')}' '${cc}' >/dev/null 2>&1 &`]);
     else detach('powershell', ['-NoProfile', '-WindowStyle', 'Hidden', '-ExecutionPolicy', 'Bypass', '-File', path.join(C.root, 'workbench', 'agent.ps1'), '-Claude', cc]);
   }
@@ -1142,6 +1167,18 @@ module.exports = function register(on, h) {
         if (b.resolve) hit.status = '완료'; else { hit.status = '대기'; hit.note = ''; }
         hit.updatedAt = now; if (b.by) hit.updatedBy = nn(b.by);
         histFromRequest(hit); break;
+      }
+      // 원래 답변(2026-11-18): 백그라운드 감시가 한 차례를 마치면 Claude가 남긴 원래 답변(요약 글 전체)을 그 차례에 처리한 요청마다 붙인다.
+      //  Workbench는 note(요약본)를 보이고 「자세히」를 누르면 이것을 보인다. 요청마다 최근 5개(차례마다 하나), 하나에 2만 자까지. 상태 · 변경 시각은 바꾸지 않는다
+      case 'raw': {
+        const txt = nn(b.text).trim(); if (!txt) throw new Error('원래 답변이 비어 있습니다.');
+        const ids = core.arr(b.ids).map(nn).filter((x) => /^R\d+$/.test(x));
+        for (const id of ids) {
+          const hit = items.find((i) => i.id === id); if (!hit) continue;
+          hit.raws = core.arr(hit.raws).filter(Boolean).concat([{ at: now, text: txt.slice(0, 20000), cut: txt.length > 20000 }]).slice(-5);
+          histFromRequest(hit);
+        }
+        break;
       }
       // 멈추기(2026-11-16): 「대기」 · 「진행 중」 요청을 사람이 멈춘다 → 「보류」(stopped). 진행 중이면 백그라운드 감시에 그 요청을 끊으라고 알린다
       //  (workbench/.agent_cancel에 요청 ID — agent.js가 그 요청을 처리 중인 Claude 세션만 끊는다). 이미 Figma에 반영된 것은 되돌리지 않는다

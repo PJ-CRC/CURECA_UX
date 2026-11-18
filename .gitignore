@@ -20,6 +20,7 @@ workbench/.agent_renew
 workbench/.agent.lock
 workbench/.installed
 workbench/.agent.log
+workbench/.agent_mcp.json
 workbench/.agent_prompt.txt
 workbench/.agent_out.txt
 workbench/.agent_out.txt.err

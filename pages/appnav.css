@@ -15,28 +15,38 @@
   --card-r:12px; --card-pad:16px 20px; --gap:16px; --section-gap:32px;
 }
 @media (max-width:760px){ :root{ --page-gutter:16px; --page-top:16px; } }
-/* 공통 색(모든 페이지가 이것을 쓴다 — 2026-11-13 페이지마다 복사돼 있던 것을 여기 한 곳으로).
-   페이지는 일부러 다르게 할 것만 자기 :root에 다시 적는다(예: Workbench · 프로토타입 보기의 회색 작업대 --bg).
-   보조 글씨(--ink-3) · 상태 글씨(--ok · --red · --warn)는 옅은 바탕에서도 4.5:1이 넘게 진하게 했다 */
+/* 공통 색(모든 페이지가 이것을 쓴다). 2026-11-18 「A 잉크」: 강조는 검정 하나(지금 고른 것 · 주 버튼 · 고른 테두리),
+   상태색은 상태에만 — 대기 --wait(회색) · 진행 중 --prog(파랑) · 보류 · 봐야 할 것 --warn(주황) · 완료 --ok · 실패 · 표시 --red.
+   그래프는 --s1 ~ --s8(차분한 색, 색각 이상 검사 통과 · 사람마다 같은 순서), 한 계열 비율은 --t1 ~ --t4.
+   주 버튼 글자는 --on-accent(다크 모드에서 강조가 밝아지면 어두운 글자). 보조 글씨는 옅은 바탕에서도 4.5:1 이상 */
 :root{
-  --bg:#f6f7f9; --surface:#ffffff; --surface-2:#f3f6fb; --line:#e3e7ee;
-  --ink:#14171c; --ink-2:#4a5260; --ink-3:#5f6874;
-  --accent:#2747d8; --accent-soft:#e6ebff;
-  --ok:#17722f; --ok-soft:#e3f4e8; --red:#c4281c; --red-soft:#fdecea; --warn:#a35100; --warn-soft:#fff1e0;
+  --bg:#eef0f2; --surface:#ffffff; --surface-2:#f6f6f7; --line:#e3e4e8; --line-2:#d4d6db;
+  --ink:#1c1d1f; --ink-2:#3a3c41; --ink-3:#64676e;
+  --accent:#1c1d1f; --accent-hover:#3a3c41; --accent-soft:#ececee; --on-accent:#ffffff;
+  --ok:#1f6b3a; --ok-soft:#e8f4ec; --red:#b3261e; --red-soft:#fdecea; --warn:#8a5300; --warn-soft:#fbf3e4; --warn-fill:#b26b0a;
+  --prog:#1d5fb0; --prog-soft:#e6effb; --wait:#55585e; --wait-soft:#eeeff1;
+  --s1:#c0603f; --s2:#665cb0; --s3:#2e957d; --s4:#c3962a; --s5:#b0577f; --s6:#5f7f3a; --s7:#4f7aa8; --s8:#8a6a52;
+  --t1:#6e2a48; --t2:#a14c71; --t3:#cf8eab; --t4:#ecd0dc;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#0f1115; --surface:#171a20; --surface-2:#1e232b; --line:#2a3039;
-    --ink:#e8ebf0; --ink-2:#b4bcc8; --ink-3:#8590a0;
-    --accent:#8ea2ff; --accent-soft:#232c52;
-    --ok:#56d364; --ok-soft:#16301d; --red:#ff7b72; --red-soft:#3a1f1e; --warn:#f0a24f; --warn-soft:#38270f;
+    --bg:#121315; --surface:#1b1c1f; --surface-2:#232428; --line:#2e3035; --line-2:#3c3e44;
+    --ink:#ececee; --ink-2:#c3c4c8; --ink-3:#9a9ca2;
+    --accent:#ececee; --accent-hover:#ffffff; --accent-soft:#2c2e33; --on-accent:#16171a;
+    --ok:#5cc983; --ok-soft:#173222; --red:#ff8a80; --red-soft:#3a1f1e; --warn:#e6ad57; --warn-soft:#352812; --warn-fill:#c98a2a;
+    --prog:#7fb0f0; --prog-soft:#1a2a40; --wait:#b4b6bb; --wait-soft:#2a2c30;
+    --s1:#d9805f; --s2:#a39ae0; --s3:#4fb89d; --s4:#d6ad4c; --s5:#d27ea3; --s6:#88a85e; --s7:#7fa5cf; --s8:#b0917a;
+    --t1:#e8a9c3; --t2:#c9739a; --t3:#9a4d70; --t4:#5e2a42;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#0f1115; --surface:#171a20; --surface-2:#1e232b; --line:#2a3039;
-  --ink:#e8ebf0; --ink-2:#b4bcc8; --ink-3:#8590a0;
-  --accent:#8ea2ff; --accent-soft:#232c52;
-  --ok:#56d364; --ok-soft:#16301d; --red:#ff7b72; --red-soft:#3a1f1e; --warn:#f0a24f; --warn-soft:#38270f;
+  --bg:#121315; --surface:#1b1c1f; --surface-2:#232428; --line:#2e3035; --line-2:#3c3e44;
+  --ink:#ececee; --ink-2:#c3c4c8; --ink-3:#9a9ca2;
+  --accent:#ececee; --accent-hover:#ffffff; --accent-soft:#2c2e33; --on-accent:#16171a;
+  --ok:#5cc983; --ok-soft:#173222; --red:#ff8a80; --red-soft:#3a1f1e; --warn:#e6ad57; --warn-soft:#352812; --warn-fill:#c98a2a;
+  --prog:#7fb0f0; --prog-soft:#1a2a40; --wait:#b4b6bb; --wait-soft:#2a2c30;
+  --s1:#d9805f; --s2:#9389d6; --s3:#4fb89d; --s4:#d6ad4c; --s5:#d27ea3; --s6:#88a85e; --s7:#7fa5cf; --s8:#b0917a;
+  --t1:#e8a9c3; --t2:#c9739a; --t3:#9a4d70; --t4:#5e2a42;
 }
 html{word-break:keep-all;overflow-wrap:break-word}
 /* 화면 읽기 프로그램에만 들리는 글(예: 제목이 화면에 따로 없는 Workbench의 h1) */
@@ -44,7 +54,11 @@ html{word-break:keep-all;overflow-wrap:break-word}
 pre,code,kbd,.mono{word-break:normal;overflow-wrap:anywhere}
 /* 글꼴 통일: 버튼 · 입력 칸 · 선택 상자도 본문 글꼴(브라우저 기본 글꼴로 나오지 않게), 코드 · 경로 글자는 한 가지 고정폭 글꼴 */
 button,input,select,textarea,optgroup{font-family:inherit}
-code,kbd,pre,samp,.mono{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code,kbd,pre,samp,.mono{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:max(12px,.92em)}
+small{font-size:max(12px,.85em)}
+/* 클래스 없는 링크(문서 · 기록 안 링크): 브라우저 기본 파랑 대신 글자색 + 밑줄(다크 모드에서도 보이게, 2026-11-18). :where()라 화면 스타일이 이긴다 */
+:where(a:not([class])){color:var(--ink);text-decoration:underline;text-underline-offset:2px;text-decoration-color:var(--line-2)}
+:where(a:not([class])):hover{text-decoration-color:currentColor}   /* 글자 하한 12px(2026-11-18) */
 .one-line{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .app-wrap{box-sizing:border-box;max-width:var(--page-max);margin:0 auto;padding:var(--page-top) var(--page-gutter) 64px}
 .app-wrap.read{max-width:var(--page-max-read)}
@@ -60,21 +74,21 @@ code,kbd,pre,samp,.mono{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular
    오른쪽 계정은 테두리 버튼(이름 · 내 정보) + 파랑 채운 버튼(로그아웃) */
 :root{
   --nav-h:64px;
-  --nav-bg:#ffffff; --nav-line:#eceef2; --nav-ink:#1d2433; --nav-ink2:#4a5260; --nav-ink3:#5f6874; --nav-accent:#0f5fd6;
-  --nav-hover:#f3f5f8; --nav-on:#eaf2ff; --nav-btn-line:#cfd6e0;
-  --nav-ok:#17722f; --nav-ok-soft:#e3f4e8; --nav-red:#c4281c; --nav-red-soft:#fdecea; --nav-chip:#f5f7fa; --nav-warn:#a35100;
+  --nav-bg:#ffffff; --nav-line:#e3e4e8; --nav-ink:#1c1d1f; --nav-ink2:#3a3c41; --nav-ink3:#64676e; --nav-accent:#1c1d1f;
+  --nav-hover:#f3f3f5; --nav-on:#ececee; --nav-btn-line:#d4d6db;
+  --nav-ok:#1f6b3a; --nav-ok-soft:#e8f4ec; --nav-red:#b3261e; --nav-red-soft:#fdecea; --nav-chip:#f6f6f7; --nav-warn:#8a5300;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --nav-bg:#171a20; --nav-line:#2a3039; --nav-ink:#e8ebf0; --nav-ink2:#b4bcc8; --nav-ink3:#8590a0; --nav-accent:#7fb0ff;
-    --nav-hover:#1e232b; --nav-on:#1c2a44; --nav-btn-line:#3a414c;
-    --nav-ok:#56d364; --nav-ok-soft:#16301d; --nav-red:#ff7b72; --nav-red-soft:#3a1f1e; --nav-chip:#1e232b; --nav-warn:#f0a24f;
+    --nav-bg:#1b1c1f; --nav-line:#2e3035; --nav-ink:#ececee; --nav-ink2:#c3c4c8; --nav-ink3:#9a9ca2; --nav-accent:#ececee;
+    --nav-hover:#232428; --nav-on:#2c2e33; --nav-btn-line:#3c3e44;
+    --nav-ok:#5cc983; --nav-ok-soft:#173222; --nav-red:#ff8a80; --nav-red-soft:#3a1f1e; --nav-chip:#232428; --nav-warn:#e6ad57;
   }
 }
 :root[data-theme="dark"]{
-  --nav-bg:#171a20; --nav-line:#2a3039; --nav-ink:#e8ebf0; --nav-ink2:#b4bcc8; --nav-ink3:#8590a0; --nav-accent:#7fb0ff;
-  --nav-hover:#1e232b; --nav-on:#1c2a44; --nav-btn-line:#3a414c;
-  --nav-ok:#56d364; --nav-ok-soft:#16301d; --nav-red:#ff7b72; --nav-red-soft:#3a1f1e; --nav-chip:#1e232b; --nav-warn:#f0a24f;
+  --nav-bg:#1b1c1f; --nav-line:#2e3035; --nav-ink:#ececee; --nav-ink2:#c3c4c8; --nav-ink3:#9a9ca2; --nav-accent:#ececee;
+  --nav-hover:#232428; --nav-on:#2c2e33; --nav-btn-line:#3c3e44;
+  --nav-ok:#5cc983; --nav-ok-soft:#173222; --nav-red:#ff8a80; --nav-red-soft:#3a1f1e; --nav-chip:#232428; --nav-warn:#e6ad57;
 }
 .appnav{position:sticky;top:0;z-index:40;box-sizing:border-box;flex:none;height:var(--nav-h);margin:0;padding:0 24px;
   display:flex;align-items:center;gap:4px;background:var(--nav-bg);border-bottom:1px solid var(--nav-line);
@@ -93,6 +107,7 @@ code,kbd,pre,samp,.mono{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular
 .appnav .badge{font-size:12px;font-weight:600;line-height:1.4;padding:2px 9px;border-radius:999px;background:var(--nav-chip);border:1px solid var(--nav-line);color:var(--nav-ink2);white-space:nowrap}
 .appnav .badge.on{background:var(--nav-ok-soft);color:var(--nav-ok);border-color:transparent}
 .appnav .badge.off{background:var(--nav-red-soft);color:var(--nav-red);border-color:transparent}
+.appnav .badge.warn{background:var(--warn-soft);color:var(--warn);border-color:transparent}   /* 작업 데이터 0.9GB 넘음(1GB부터 .off) */
 /* Claude 사용 한도: 배경에 사용률 막대, 80% 이상 주황 · 95% 이상 빨강, 오래된 값은 흐리게 */
 .appnav .appnav-usage{position:relative;overflow:hidden;cursor:help;font-variant-numeric:tabular-nums;white-space:nowrap;flex:none}
 .appnav-usage i{position:absolute;left:0;top:0;bottom:0;background:var(--nav-accent);opacity:.13}
@@ -121,7 +136,7 @@ html.perm-ro .ro-only{display:block}
 .appnav-team select{height:30px;border:0;border-radius:6px;background:var(--nav-chip);color:var(--nav-ink);font:inherit;font-size:13.5px;font-weight:700;padding:0 6px;cursor:pointer}
 .appnav-team select:focus-visible{outline:2px solid var(--nav-accent);outline-offset:1px}
 /* 팀 색(서버가 팀을 만들 때 정한 번호 0~7, teams.json color): 상단 팀 표시 · 계정 관리 팀 칩이 같이 쓴다 */
-.tc0{--tc-bg:#e3f4e8;--tc-fg:#1a7f37} .tc1{--tc-bg:#f3e8fd;--tc-fg:#7b3fbf} .tc2{--tc-bg:#fff1e0;--tc-fg:#b35900} .tc3{--tc-bg:#e6ebff;--tc-fg:#2747d8}
+.tc0{--tc-bg:#e8f4ec;--tc-fg:#1f6b3a} .tc1{--tc-bg:#f3e8fd;--tc-fg:#7b3fbf} .tc2{--tc-bg:#fff1e0;--tc-fg:#b35900} .tc3{--tc-bg:#e6ebff;--tc-fg:#2747d8}
 .tc4{--tc-bg:#e0f4f7;--tc-fg:#0b7285} .tc5{--tc-bg:#fde8ef;--tc-fg:#b4235a} .tc6{--tc-bg:#f6f3dc;--tc-fg:#7a6400} .tc7{--tc-bg:#eceff3;--tc-fg:#4a5260}
 :root[data-theme="dark"] .tc0{--tc-bg:#16301d;--tc-fg:#56d364} :root[data-theme="dark"] .tc1{--tc-bg:#2e2340;--tc-fg:#c7a3f5} :root[data-theme="dark"] .tc2{--tc-bg:#38270f;--tc-fg:#f0a24f} :root[data-theme="dark"] .tc3{--tc-bg:#232c52;--tc-fg:#8ea2ff}
 :root[data-theme="dark"] .tc4{--tc-bg:#12303a;--tc-fg:#66d0e0} :root[data-theme="dark"] .tc5{--tc-bg:#3a1d29;--tc-fg:#f58bb0} :root[data-theme="dark"] .tc6{--tc-bg:#33300f;--tc-fg:#e3cc5c} :root[data-theme="dark"] .tc7{--tc-bg:#252a32;--tc-fg:#b4bcc8}
@@ -138,7 +153,7 @@ html.perm-ro .ro-only{display:block}
 .appnav .appnav-acct a{height:40px;padding:0 16px;border:1px solid var(--nav-btn-line);border-radius:9px;background:var(--nav-bg);font-size:14px;font-weight:500}
 .appnav .appnav-acct a:hover{border-color:var(--nav-accent);background:var(--nav-bg)}
 .appnav .appnav-acct a[aria-current="page"]{border-color:var(--nav-accent);background:var(--nav-on)}
-.appnav-acct button{height:40px;padding:0 18px;border:1px solid var(--nav-accent);border-radius:9px;background:var(--nav-accent);color:#fff;font:inherit;font-size:14px;font-weight:500;cursor:pointer}
+.appnav-acct button{height:40px;padding:0 18px;border:1px solid var(--nav-accent);border-radius:9px;background:var(--nav-accent);color:var(--on-accent);font:inherit;font-size:14px;font-weight:500;cursor:pointer}
 .appnav-acct button:hover{filter:brightness(1.08)}
 :root[data-theme="dark"] .appnav-acct button{color:#0f1115}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .appnav-acct button{color:#0f1115}}
@@ -194,3 +209,6 @@ html.embed.low .app-head .app-head-t > p{display:none}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition-duration:.01ms!important;transition-delay:0s!important;animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important;scroll-behavior:auto!important}
 }
+/* 버튼 모양 링크(<a class="btn">, 2026-11-18): 링크 기본 모양(줄 안 글자라 높이 · 가운데 맞춤 무시, 밑줄, 링크 파랑)이 남아 버튼이 찌그러져 보이던 것 — 모든 화면 공통 */
+a.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;box-sizing:border-box;text-decoration:none;cursor:pointer;vertical-align:middle}
+a.btn:not(.primary):not(.bad){color:var(--ink)}

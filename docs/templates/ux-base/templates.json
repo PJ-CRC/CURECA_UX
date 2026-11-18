@@ -1,0 +1,10 @@
+{
+  "_about": "UX 문서 기본 템플릿(2026-11-18). 「새 ○○ 만들기」에서 「기본 템플릿으로 시작」을 고르면 서버가 이 폴더의 {kind}/ 파일을 새 문서로 복사한다(POST /api/guides {action:'template'}). 파일을 더하거나 고치면 다음에 만드는 문서부터 반영된다",
+  "rule": { "label": "작업규칙", "summary": "기본 템플릿으로 시작한 작업규칙. 개요(요청 나누기 · 보류 기준 · 고칠 범위 · 완료 때 남길 것) · 헌법 · 화면설계 흐름(1 ~ 5단계) · 디스크립션 · 작업 기록 · 논의 대상 · ID 규칙. 「※ 정할 것」을 팀에 맞게 채웁니다." },
+  "policy": { "label": "정책서", "summary": "기본 템플릿으로 시작한 정책서. 개요(영역 · 정책 ID · 상태) · 정책 템플릿 · 계정 · 권한 · 알림 · 오류 · 상태 · 전이. 「※ 정할 것」을 채우고 영역 파일을 더합니다." },
+  "guide": { "label": "UX가이드", "summary": "기본 템플릿으로 시작한 UX가이드. 개요(대상 · 기준 해상도) · 내비게이션 · 레이아웃(기본 프레임 · 화면 구조 9종) · 표기 · 컴포넌트. Figma Common UX 페이지로 채우게 수정 요청할 수 있습니다." },
+  "data": { "label": "기준데이터", "summary": "기본 템플릿으로 시작한 기준데이터. 개요와 용어집 · 상태값 · 알럿 목록 · 화면 목록(IA) 표(CSV). 각 표의 예시 줄을 지우고 채웁니다.",
+    "titles": { "terms.csv": "용어집 · terms.csv", "status-values.csv": "상태값 · status-values.csv", "alert-catalog.csv": "알럿 목록 · alert-catalog.csv", "ia-screens.csv": "화면 목록 (IA) · ia-screens.csv" },
+    "order": ["1. 기준데이터 개요.md", "terms.csv", "status-values.csv", "alert-catalog.csv", "ia-screens.csv"] },
+  "spec": { "label": "화면 정의서", "summary": "기본 템플릿으로 시작한 화면 정의서. 개요(구성 · 상태) · 메뉴 템플릿 · 화면 템플릿(디스크립션 · 케이스 · 변경 확인 · 질문 대기 · 반영 대기). 화면마다 템플릿을 복사해 더합니다." }
+}

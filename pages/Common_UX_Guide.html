@@ -10,13 +10,13 @@
 <script src="common.js"></script>
 <style>
 :root{
-  --code-bg:#eef1f6; --shadow:0 1px 2px rgba(16,24,40,.05);
+  --code-bg:#f0f1f3; --shadow:0 1px 2px rgba(16,24,40,.05);
 }
 @media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){ --code-bg:#222831; --shadow:none;
+  :root:not([data-theme="light"]){ --code-bg:#26282c; --shadow:none;
   }
 }
-:root[data-theme="dark"]{ --code-bg:#222831; --shadow:none;
+:root[data-theme="dark"]{ --code-bg:#26282c; --shadow:none;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -29,23 +29,23 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 Pretendard,-ap
 .gd-lab{font-size:13px;font-weight:700;color:var(--ink);white-space:nowrap;cursor:help}
 .gd-lab .gd-by{font-weight:400}
 .gd select{min-width:200px;max-width:280px;height:32px;padding:0 8px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:13.5px}
-#gdApply,.gd-apply{height:32px;padding:0 14px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:#fff;font:inherit;font-size:13.5px;font-weight:700;cursor:pointer}
+#gdApply,.gd-apply{height:32px;padding:0 14px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:var(--on-accent);font:inherit;font-size:13.5px;font-weight:700;cursor:pointer}
 #gdApply:disabled,.gd-apply:disabled{opacity:.4;cursor:default}
 :root[data-theme="dark"] #gdApply,:root[data-theme="dark"] .gd-apply{color:#0f1115}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) #gdApply,:root:not([data-theme="light"]) .gd-apply{color:#0f1115}}
 .gd-by{color:var(--ink-3);font-size:12.5px;white-space:nowrap}
 .gd-by:empty{display:none}
-.gd-btn{padding:8px 14px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:#fff;font:inherit;font-size:13.5px;font-weight:700;cursor:pointer;white-space:nowrap}
+.gd-btn{padding:8px 14px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:var(--on-accent);font:inherit;font-size:13.5px;font-weight:700;cursor:pointer;white-space:nowrap}
 .gd-btn:disabled{opacity:.5;cursor:default}
 :root[data-theme="dark"] .gd-btn{color:#0f1115}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .gd-btn{color:#0f1115}}
 .gd-jobs{display:flex;flex-wrap:wrap;gap:6px;margin-left:auto}
 .gd-jobs:empty{display:none}
-.gd-st{flex:none;display:inline-block;font-size:11px;font-weight:700;line-height:1.5;padding:0 6px;border-radius:999px;background:var(--surface);color:var(--ink-2)}
-.gd-st.wait{background:#fff1e0;color:#b35900}.gd-st.prog{background:var(--accent-soft);color:var(--accent)}.gd-st.bad{background:var(--red-soft);color:var(--red)}
-.gd-st.on{background:#e3f4e8;color:#1a7f37}
-.gd-st.fix{background:#fff1e0;color:#b35900;text-decoration:none}
-.gd-warn{margin:-8px 0 var(--gap);font-size:13px;color:#b35900}
+.gd-st{flex:none;display:inline-block;font-size:12px;font-weight:700;line-height:1.5;padding:0 6px;border-radius:999px;background:var(--surface);color:var(--ink-2)}
+.gd-st.wait{background:var(--wait-soft);color:var(--wait)}.gd-st.prog{background:var(--prog-soft);color:var(--prog)}.gd-st.bad{background:var(--red-soft);color:var(--red)}
+.gd-st.on{background:var(--ok-soft);color:var(--ok)}
+.gd-st.fix{background:var(--warn-soft);color:var(--warn);text-decoration:none}
+.gd-warn{margin:-8px 0 var(--gap);font-size:13px;color:var(--warn)}
 .gd-view{margin:0 0 var(--gap)}
 .gd-viewing:empty{display:none}
 .gd-viewing{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13.5px;color:var(--ink-2);margin:0 0 8px}
@@ -58,10 +58,19 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 Pretendard,-ap
 dialog.gd-dlg{border:1px solid var(--line);border-radius:14px;padding:0;width:min(640px,calc(100vw - 32px));background:var(--surface);color:var(--ink);box-shadow:0 20px 50px rgba(0,0,0,.25)}
 dialog.gd-dlg::backdrop{background:rgba(10,12,16,.45)}
 .gd-dlg form{padding:20px 22px}
-.gd-dlg h3{margin:0 0 4px;font-size:18px}
+.gd-dlg h2,.gd-dlg h3{margin:0 0 4px;font-size:18px}
 .gd-dlg .gd-help{color:var(--ink-2);font-size:13.5px;margin:0 0 14px}
 .gd-dlg label{display:block;font-size:13px;font-weight:700;margin:12px 0 5px}
 .gd-dlg label span{font-weight:400;color:var(--ink-3)}
+/* 시작 방식(자료로 만들기 / 기본 템플릿): 고른 쪽은 검정 테두리 */
+.gd-dlg .gd-mode{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 4px}
+.gd-dlg .gd-mode label{margin:0;display:grid;grid-template-columns:auto 1fr;gap:2px 8px;align-items:start;padding:10px 12px;border:1px solid var(--line);border-radius:10px;cursor:pointer;font-weight:400}
+.gd-dlg .gd-mode label:has(input:checked){border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);background:var(--surface-2)}
+.gd-dlg .gd-mode input{margin:3px 0 0;grid-row:span 2;accent-color:var(--accent)}
+.gd-dlg .gd-mode b{font-size:13.5px}
+.gd-dlg .gd-mode small{font-size:12px;color:var(--ink-3);line-height:1.5}
+.gd-dlg #gdSrc[hidden]{display:none}
+@media (max-width:520px){.gd-dlg .gd-mode{grid-template-columns:1fr}}
 .gd-dlg input,.gd-dlg textarea{width:100%;padding:9px 11px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:14px}
 .gd-dlg textarea{min-height:150px;resize:vertical;line-height:1.55}
 .gd-dlg input.bad{border-color:var(--red);background:var(--red-soft)}
@@ -69,7 +78,7 @@ dialog.gd-dlg::backdrop{background:rgba(10,12,16,.45)}
 .gd-dlg .gd-msg.err{color:var(--red)}
 .gd-dlg .gd-act{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
 .gd-dlg .gd-act button{padding:9px 16px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:14px;cursor:pointer}
-.gd-dlg .gd-act button.pri{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
+.gd-dlg .gd-act button.pri{background:var(--accent);border-color:var(--accent);color:var(--on-accent);font-weight:700}
 .gd-dlg .gd-act button:disabled{opacity:.5;cursor:default}
 /* 참고 파일: 끌어다 놓기 · 눌러서 고르기, 고른 파일 목록(× 빼기) */
 .up-zone{display:flex;flex-direction:column;gap:3px;align-items:center;justify-content:center;padding:16px;border:1.5px dashed var(--line);border-radius:10px;background:var(--surface-2);text-align:center;cursor:pointer}
@@ -119,7 +128,7 @@ html.doc-ro #docNew,html.doc-ro #docImport{display:none!important}
 .dcards p{margin:0 0 8px;color:var(--ink-2);font-size:13.5px}
 .dcards span{color:var(--ink-3);font-size:12.5px}
 .dcards a.cur{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset,var(--shadow)}
-.dcards em.cur{display:inline-block;margin:0 0 6px;padding:1px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:11.5px;font-style:normal;font-weight:700}
+.dcards em.cur{display:inline-block;margin:0 0 6px;padding:1px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:12px;font-style:normal;font-weight:700}
 .dempty{padding:40px 20px;text-align:center;background:var(--surface);border:1px dashed var(--line);border-radius:var(--card-r);color:var(--ink-2)}
 .dempty b{display:block;font-size:15px;color:var(--ink);margin-bottom:6px}
 .dempty p{margin:0 auto;max-width:520px;font-size:13.5px}
@@ -130,6 +139,16 @@ html.doc-ro #docNew,html.doc-ro #docImport{display:none!important}
 .lg-list{position:sticky;top:calc(var(--nav-h) + 12px);max-height:calc(100vh - var(--nav-h) - 24px);overflow:auto;padding:6px 0 10px}
 .lg-head{display:flex;align-items:baseline;gap:8px;padding:10px 16px 8px;font-size:13px}
 .lg-head span{color:var(--ink-3);font-size:12px}
+/* 날짜로 찾기(2026-11-18): 시작일 ~ 종료일, 빠른 선택 */
+.lg-range{display:flex;align-items:center;gap:6px;padding:0 16px 6px}
+.lg-range input{flex:1;min-width:0;height:32px;padding:0 8px;border:1px solid var(--line-2);border-radius:8px;background:var(--surface);color:var(--ink);font:inherit;font-size:13px}
+.lg-range input:focus{outline:0;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.lg-range span{color:var(--ink-3)}
+.lg-quick{display:flex;flex-wrap:wrap;gap:6px;padding:0 16px 10px;border-bottom:1px solid var(--line)}
+.lg-quick button{min-height:26px;padding:0 10px;border:1px solid var(--line-2);border-radius:999px;background:var(--surface);color:var(--ink-2);font:inherit;font-size:12px;font-weight:600;cursor:pointer}
+.lg-quick button:hover{border-color:var(--ink-3);color:var(--ink)}
+.lg-quick button.on{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.lg-quick button[hidden]{display:none}
 .lg-grp{margin:0}
 .lg-grp>button{display:flex;align-items:center;gap:8px;width:100%;padding:8px 16px;border:0;background:none;color:var(--ink);font:inherit;font-size:13.5px;font-weight:700;cursor:pointer;text-align:left}
 .lg-grp>button::before{content:"";width:6px;height:6px;border-right:1.6px solid var(--ink-3);border-bottom:1.6px solid var(--ink-3);transform:rotate(-45deg);transition:transform .15s}
@@ -149,8 +168,8 @@ html.doc-ro #docNew,html.doc-ro #docImport{display:none!important}
 .lg-meta span,.lg-meta a{display:inline-flex;gap:5px;padding:3px 10px;border-radius:999px;background:var(--surface-2);color:var(--ink-2);font-size:12.5px;text-decoration:none}
 .lg-meta b{color:var(--ink);font-weight:700}
 .lg-meta a:hover{background:var(--accent-soft);color:var(--accent)}
-.lg-meta .w.new{background:#e3f4e8;color:#1a7f37;font-weight:700}.lg-meta .w.mod{background:var(--accent-soft);color:var(--accent);font-weight:700}
-.lg-meta .w.file{background:#fff4dc;color:#8a5a00;font-weight:700}
+.lg-meta .w.new{background:var(--ok-soft);color:var(--ok);font-weight:700}.lg-meta .w.mod{background:var(--accent-soft);color:var(--accent);font-weight:700}
+.lg-meta .w.file{background:var(--warn-soft);color:var(--warn);font-weight:700}
 .lg-files{list-style:none;margin:0 0 4px;padding:0 4px 0 0;display:grid;gap:4px;max-height:260px;overflow:auto}
 .lg-files button{display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:1px solid var(--line);border-radius:8px;background:var(--surface);padding:6px 10px;color:var(--ink);cursor:pointer}
 .lg-files button:hover{border-color:var(--accent)}
@@ -158,7 +177,7 @@ html.doc-ro #docNew,html.doc-ro #docImport{display:none!important}
 .lg-files code{font-size:12.5px}
 .lg-files small{color:var(--ink-3);font-size:12px}
 .lg-files .fs{flex:none;min-width:58px;text-align:center;font-size:12px;font-weight:700;border-radius:999px;padding:1px 8px}
-.lg-files .fs.add{background:#e3f4e8;color:#1a7f37}.lg-files .fs.mod{background:var(--accent-soft);color:var(--accent)}.lg-files .fs.del{background:#fdecea;color:#b42318}
+.lg-files .fs.add{background:var(--ok-soft);color:var(--ok)}.lg-files .fs.mod{background:var(--accent-soft);color:var(--accent)}.lg-files .fs.del{background:var(--red-soft);color:var(--red)}
 .lg-detail h3{margin:20px 0 8px;font-size:14.5px;font-weight:800}
 .lg-detail p.tx{margin:0;white-space:pre-wrap;word-break:break-word;font-size:14px;line-height:1.6}
 .lg-detail .muted{color:var(--ink-3);font-size:13px;margin:0}
@@ -173,11 +192,11 @@ html.doc-ro #docNew,html.doc-ro #docImport{display:none!important}
 .lg-chk>div b{color:var(--ink);font-size:13px}
 .lg-chk ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
 .lg-chk li{display:grid;grid-template-columns:auto 1fr;gap:2px 8px;font-size:13.5px}
-.lg-chk li i{grid-row:span 2;font-style:normal;align-self:start;padding:1px 7px;border-radius:5px;background:var(--surface-2);color:var(--ink-2);font-size:11.5px;font-weight:700}
+.lg-chk li i{grid-row:span 2;font-style:normal;align-self:start;padding:1px 7px;border-radius:5px;background:var(--surface-2);color:var(--ink-2);font-size:12px;font-weight:700}
 .lg-chk li b{font-weight:600}
 .lg-chk li span{color:var(--ink-2);font-size:13px}
-.lg-chk .st{padding:0 7px;border-radius:999px;font-size:11.5px;font-weight:700;background:var(--surface-2);color:var(--ink-2)}
-.lg-chk .st.on{background:#e3f4e8;color:#1a7f37}.lg-chk .st.wait{background:#fff1e0;color:#b35900}
+.lg-chk .st{padding:0 7px;border-radius:999px;font-size:12px;font-weight:700;background:var(--surface-2);color:var(--ink-2)}
+.lg-chk .st.on{background:var(--ok-soft);color:var(--ok)}.lg-chk .st.wait{background:var(--warn-soft);color:var(--warn)}
 .lg-go{display:inline-block;margin-top:20px;color:var(--accent);font-weight:700;text-decoration:none;font-size:13.5px}
 .lg-go:hover{text-decoration:underline}
 /* 창 높이에 맞춤(넓은 화면): 변경 목록과 상세를 같은 높이로, 스크롤은 각자 안에서. 높이는 fitPage()가 --fit으로 */
@@ -234,6 +253,10 @@ html.doc-ro #docNew,html.doc-ro #docImport{display:none!important}
   <div class="lg" id="logWrap">
     <aside class="lg-list" aria-label="문서 변경 목록">
       <div class="lg-head"><b>변경 목록</b><span id="logCount"></span></div>
+      <div class="lg-range" role="group" aria-label="날짜로 찾기">
+        <input type="date" id="lgFrom" aria-label="시작일"><span>~</span><input type="date" id="lgTo" aria-label="종료일">
+      </div>
+      <div class="lg-quick"><button type="button" data-lq="today">오늘</button><button type="button" data-lq="week">이번 주</button><button type="button" data-lq="month">이번 달</button><button type="button" data-lq="3m">최근 3개월</button><button type="button" data-lq="" id="lgClear" hidden>기간 지우기</button></div>
       <div id="logTree"></div>
     </aside>
     <section class="lg-detail" id="logDetail" aria-live="polite"></section>
@@ -244,10 +267,15 @@ html.doc-ro #docNew,html.doc-ro #docImport{display:none!important}
 <!-- 새 가이드 · 정의서 만들기 창(두 탭이 같이 쓴다. 탭 패널 밖에 두어야 숨은 탭에서도 열린다) -->
 <dialog class="gd-dlg" id="gdDlg" aria-labelledby="gdDlgTitle">
   <form id="gdForm" method="dialog" novalidate>
-    <h3 id="gdDlgTitle">새 UX 가이드 만들기</h3>
+    <h2 id="gdDlgTitle">새 UX 가이드 만들기</h2>
     <p class="gd-help" id="gdHelp">Claude가 Figma 링크의 화면이나 올린 참고 파일을 읽고, 아래 작업 방법대로 정리합니다. 다 되면 목록에 나타납니다(요청 감시가 켜져 있어야 합니다).</p>
+    <div class="gd-mode" role="radiogroup" aria-label="시작 방식">
+      <label><input type="radio" name="gdMode" value="src" checked><b>자료로 만들기</b><small>Claude가 Figma 링크 · 참고 파일을 읽고 정리합니다</small></label>
+      <label><input type="radio" name="gdMode" value="tpl"><b>기본 템플릿으로 시작</b><small>틀이 잡힌 문서를 바로 만들고, 내용을 채워 갑니다</small></label>
+    </div>
     <label for="gdName" id="gdNameLab">가이드 이름</label>
     <input id="gdName" type="text" maxlength="60" placeholder="예) CURECA 화면 설계 가이드" required>
+    <div id="gdSrc">
     <label for="gdLink">기준 Figma 링크 <span>(선택 · 파일 · 페이지 · 섹션 · 프레임 링크)</span></label>
     <input id="gdLink" type="url" placeholder="https://www.figma.com/design/…?node-id=…">
     <label>참고 파일 <span>(선택 · md · txt · pdf · docx · xlsx · csv · 이미지 등, 최대 10개 · 하나에 20MB 미만)</span></label>
@@ -259,6 +287,7 @@ html.doc-ro #docNew,html.doc-ro #docImport{display:none!important}
     <ul class="up-list" id="upList"></ul>
     <label for="gdText">작업 방법 <span>(무엇을 어떤 구성으로 정리할지)</span></label>
     <textarea id="gdText" placeholder="예)&#10;- 이 페이지의 공통 컴포넌트(버튼 · 입력 · 팝업)를 정리하고 사용 규칙을 적어 줘&#10;- 레이아웃은 화면 유형별로 영역 크기를 표로&#10;- CURECA UX 가이드와 같은 목차 구성으로, 화면 캡처를 함께 넣어 줘"></textarea>
+    </div>
     <label for="gdBy">요청자</label>
     <input id="gdBy" type="text" maxlength="20" placeholder="이름">
     <div class="gd-msg" id="gdMsg" role="status"></div>
@@ -269,7 +298,7 @@ html.doc-ro #docNew,html.doc-ro #docImport{display:none!important}
 <!-- 다른 팀 문서 가져오기 창: 고른 팀의 지금 탭 카테고리 문서를 골라 지금 팀으로 복사 -->
 <dialog class="gd-dlg" id="imDlg" aria-labelledby="imTitle">
   <form id="imForm" method="dialog" novalidate>
-    <h3 id="imTitle">다른 팀 문서 가져오기</h3>
+    <h2 id="imTitle">다른 팀 문서 가져오기</h2>
     <p class="gd-help" id="imHelp">고른 팀의 문서를 지금 보는 팀으로 복사합니다. 지금 내용과 수정본이 그대로 오고, 가져온 뒤에는 이 팀 문서로 따로 고칩니다. 같은 문서가 이미 있으면 가져올 수 없습니다.</p>
     <label for="imTeam">가져올 팀</label>
     <select id="imTeam"></select>
@@ -510,12 +539,41 @@ html.doc-ro #docNew,html.doc-ro #docImport{display:none!important}
       return ev.sort(function(a, b){ return String(b.at || '').localeCompare(String(a.at || '')); });
     }
     function when(t){ return String(t || '').replace('T', ' ').slice(0, 16); }
+    /* 날짜로 찾기(2026-11-18): 시작일 ~ 종료일(이 PC 날짜, 둘 다 포함). 빠른 선택은 오늘 · 이번 주(월요일부터) · 이번 달 · 최근 3개월 */
+    var lgFrom = '', lgTo = '', lgQuick = '';
+    function ymdOf(d){ return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+    function evDay(e){ var d = new Date(e.at || 0); return isNaN(d) ? '' : ymdOf(d); }
+    function lgSet(from, to, q){
+      lgFrom = from || ''; lgTo = to || ''; lgQuick = q || '';
+      if (lgFrom && lgTo && lgFrom > lgTo) { var x = lgFrom; lgFrom = lgTo; lgTo = x; }
+      $g('lgFrom').value = lgFrom; $g('lgTo').value = lgTo;
+      $g('lgFrom').max = lgTo || ''; $g('lgTo').min = lgFrom || '';
+      document.querySelectorAll('.lg-quick [data-lq]').forEach(function(b){ b.classList.toggle('on', !!b.dataset.lq && b.dataset.lq === lgQuick); });
+      $g('lgClear').hidden = !(lgFrom || lgTo);
+      renderLog();
+    }
+    $g('lgFrom').addEventListener('change', function(){ lgSet(this.value, lgTo, ''); });
+    $g('lgTo').addEventListener('change', function(){ lgSet(lgFrom, this.value, ''); });
+    document.querySelector('.lg-quick').addEventListener('click', function(e){
+      var b = e.target.closest('[data-lq]'); if (!b) return;
+      var q = b.dataset.lq, t = new Date(), today = ymdOf(t);
+      if (!q) return lgSet('', '', '');
+      if (q === 'today') return lgSet(today, today, q);
+      if (q === 'week') { var m = new Date(t); m.setDate(t.getDate() - ((t.getDay() + 6) % 7)); return lgSet(ymdOf(m), today, q); }
+      if (q === 'month') return lgSet(ymdOf(new Date(t.getFullYear(), t.getMonth(), 1)), today, q);
+      if (q === '3m') { var s = new Date(t); s.setMonth(t.getMonth() - 3); return lgSet(ymdOf(s), today, q); }
+    });
     function renderLog(docs){
       if (docs) logDocs = docs;
-      var ev = logEvents();
-      $g('logEmpty').hidden = !!ev.length; $g('logWrap').hidden = !ev.length;
-      $g('logCount').textContent = ev.length ? ev.length + '건' : '';
-      if (!ev.length) return;
+      var all = logEvents(), ev = all;
+      if (lgFrom || lgTo) ev = all.filter(function(e){ var d = evDay(e); return d && (!lgFrom || d >= lgFrom) && (!lgTo || d <= lgTo); });
+      $g('logEmpty').hidden = !!all.length; $g('logWrap').hidden = !all.length;
+      $g('logCount').textContent = all.length ? ((lgFrom || lgTo) ? ev.length + ' / ' + all.length + '건' : all.length + '건') : '';
+      if (!all.length) return;
+      if (!ev.length) {   // 기간에 맞는 기록이 없을 때: 목록 자리에 안내, 오른쪽은 비움
+        var none = '<p class="lg-none" style="margin:12px 16px;color:var(--ink-3);font-size:13px">' + esc((lgFrom || '처음') + ' ~ ' + (lgTo || '오늘')) + ' 사이에 바뀐 문서가 없습니다.</p>';
+        var tr = $g('logTree'); tr.innerHTML = none; tr.dataset.html = none; $g('logDetail').innerHTML = ''; fitPage(); return;
+      }
       if (!ev.some(function(e){ return e.key === logSel; })) logSel = ev[0].key;
       var selEv = ev.filter(function(e){ return e.key === logSel; })[0];
       if (logOpen[selEv.k] === undefined) logOpen[selEv.k] = true;
@@ -586,7 +644,7 @@ html.doc-ro #docNew,html.doc-ro #docImport{display:none!important}
         /* 원본 폴더: 그 문서의 filesDir(없으면 files/, 빈 값이면 문서 폴더 바로 아래) */
         var d = g.filesDir !== undefined ? String(g.filesDir) : 'files', fl = (g.fileList || []).filter(function(x){ return x.path === file; })[0];
         if (rev === 'guide.md' && fl && fl.firstPath) return fl.firstPath;
-        return b + (rev === 'guide.md' ? (d ? d.replace(/\/+$/, '') + '/' : '') + file : 'rev/' + encodeURIComponent(rev) + '/' + file);
+        return b + (rev === 'guide.md' ? (d ? d.replace(/\/+$/, '') + '/' : '') + file : 'rev/' + encodeURIComponent(rev) + '/' + String(file).replace(/\.\.\//g, '_up/'));   // 문서 폴더 밖 파일의 수정본은 _up/(서버 저장 규칙)
       }
       if (rev === 'guide.md') return g.firstPath || b + encodeURIComponent(g.main || 'guide.md');
       return b + 'rev/' + encodeURIComponent(rev) + '.md';
@@ -692,8 +750,19 @@ html.doc-ro #docNew,html.doc-ro #docImport{display:none!important}
       $g('gdName').placeholder = K.name;
       $g('gdText').placeholder = K.text;
       $g('gdBy').value = userInput.value.trim();
+      gdModeSync();
       dlg.showModal(); $g('gdName').focus();
     }
+    /* 시작 방식(2026-11-18): 「자료로 만들기」(Claude 작업) · 「기본 템플릿으로 시작」(서버가 docs/templates/ux-base/{종류}를 바로 복사) */
+    function gdMode(){ var r = document.querySelector('input[name="gdMode"]:checked'); return r ? r.value : 'src'; }
+    function gdModeSync(){
+      var tpl = gdMode() === 'tpl';
+      $g('gdSrc').hidden = tpl;
+      $g('gdHelp').textContent = tpl ? '기본 템플릿으로 ' + KINDS[mkKind].label + ' 문서를 바로 만듭니다. 「※ 정할 것」을 팀에 맞게 채우고, 직접 수정 · 수정 요청으로 내용을 더해 가세요.'
+        : 'Claude가 Figma 링크의 화면이나 올린 참고 파일을 읽고, 아래 작업 방법대로 정리합니다. 다 되면 목록에 나타납니다(요청 감시가 켜져 있어야 합니다).';
+      $g('gdSend').textContent = tpl ? '만들기' : '요청 보내기';
+    }
+    document.querySelectorAll('input[name="gdMode"]').forEach(function(r){ r.addEventListener('change', gdModeSync); });
     $g('docNew').onclick = function(){ openMake(curDoc); };
     function renderUps(){
       $g('upList').innerHTML = ups.map(function(f, i){
@@ -749,6 +818,15 @@ html.doc-ro #docNew,html.doc-ro #docImport{display:none!important}
       var name = $g('gdName').value.trim(), link = $g('gdLink').value.trim(), text = $g('gdText').value.trim(), by = $g('gdBy').value.trim();
       var what = KINDS[mkKind].label;
       if (!name) { msg(what + ' 이름을 입력해 주세요.', true); $g('gdName').focus(); return; }
+      if (gdMode() === 'tpl') {   // 기본 템플릿: 바로 만들고 그 문서를 연다
+        if (by) { userInput.value = by; try { localStorage.setItem('cux.user', by); } catch(x){} }
+        $g('gdSend').disabled = true; msg('만드는 중…');
+        fetch('/api/guides', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'template', kind: mkKind, name: name, by: by }) })
+          .then(function(r){ return r.json(); })
+          .then(function(d){ if (d.error) throw new Error(d.error); dlg.close(); location.href = 'UX_Guide.html?g=' + encodeURIComponent(d.created); })
+          .catch(function(x){ msg(x.message || '서버에 연결할 수 없습니다.', true); $g('gdSend').disabled = false; });
+        return;
+      }
       if (!link && !ups.length) { msg('Figma 링크를 넣거나 참고 파일을 올려 주세요(둘 중 하나 이상).', true); $g('gdLink').focus(); return; }
       if (link && !parseFig(link)) { msg('Figma 링크(figma.com/design/…)를 붙여 넣어 주세요.', true); $g('gdLink').classList.add('bad'); $g('gdLink').focus(); return; }
       if (!text) { msg('작업 방법을 적어 주세요. 어떤 내용을 어떤 구성으로 정리할지 적으면 됩니다.', true); $g('gdText').focus(); return; }

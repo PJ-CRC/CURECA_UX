@@ -11,24 +11,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
 <script>window.WB && WB.guardMarked && WB.guardMarked();</script>
 <style>
+/* 색은 appnav.css 공통(A 잉크, 2026-11-18). 이 화면 이름만 공통 토큰에 잇는다(검토 --rev = 그래프 보라 --s2) */
 :root{ --shadow:0 1px 2px rgba(16,24,40,.05);
-  --warn-bg:#fff6e0; --warn-ink:#8a5a00; --bad:#c62828; --bad-soft:#fdecec; --rev:#7a3fd1; --rev-soft:#f1e9fd;
+  --warn-bg:var(--warn-soft); --warn-ink:var(--warn); --bad:var(--red); --bad-soft:var(--red-soft); --rev:var(--s2); --rev-soft:color-mix(in srgb,var(--s2) 14%,var(--surface));
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){ --shadow:none;
-    --warn-bg:#3a2e12; --warn-ink:#f2c46d; --ok-soft:#173222; --bad:#ff7b72; --bad-soft:#3a1d1d; --rev:#c39bff; --rev-soft:#2c2142;
-  }
-}
-:root[data-theme="dark"]{ --shadow:none;
-  --warn-bg:#3a2e12; --warn-ink:#f2c46d; --ok-soft:#173222; --bad:#ff7b72; --bad-soft:#3a1d1d; --rev:#c39bff; --rev-soft:#2c2142;
-}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --shadow:none; } }
+:root[data-theme="dark"]{ --shadow:none; }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 Pretendard,-apple-system,"Segoe UI","Malgun Gothic",sans-serif;-webkit-font-smoothing:antialiased}
 button{font:inherit;color:inherit;cursor:pointer}
 .app-head h1{font-weight:800}
 .btn{height:36px;padding:0 14px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:14px;font-weight:600;white-space:nowrap}
 .btn:hover:not(:disabled){border-color:var(--accent)}
-.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
 .btn.sm{height:30px;padding:0 10px;font-size:13px}
 .btn:disabled{opacity:.45;cursor:default}
 .btn:focus-visible,.icon:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
@@ -68,14 +63,14 @@ table.t td.nw{white-space:nowrap}
 .muted{color:var(--ink-3)}
 .pill{display:inline-block;padding:1px 9px;border-radius:999px;font-size:12.5px;font-weight:600;background:var(--surface-2);color:var(--ink-2);white-space:nowrap;border:1px solid var(--line)}
 .pill.done{background:var(--ok-soft);color:var(--ok);border-color:transparent}
-.pill.prog{background:var(--accent-soft);color:var(--accent);border-color:transparent}
+.pill.prog{background:var(--prog-soft);color:var(--prog);border-color:transparent}
 .pill.review{background:var(--rev-soft);color:var(--rev);border-color:transparent}
 .pill.na{background:none;color:var(--ink-3);border-style:dashed}   /* UI 작업필요X 등: 할 일 없음 */
 /* 작업 기록 단계 막대 */
 .wlbar{display:flex;gap:4px;list-style:none;margin:12px 0 0;padding:0;flex-wrap:wrap}
 .wlbar li{flex:1 1 90px;font-size:12px;font-weight:600;padding:5px 8px;border-radius:6px;background:var(--surface-2,#f1f3f6);color:var(--ink-3,#6b7280);text-align:center;white-space:nowrap}
 .wlbar li.done{background:var(--ok-soft);color:var(--ok)}
-.wlbar li.now{background:var(--accent);color:#fff}
+.wlbar li.now{background:var(--accent);color:var(--on-accent)}
 /* 논의 대상 목록의 종류 표시 */
 .pill.kpv{background:var(--accent-soft);color:var(--accent);border-color:transparent;font-weight:700}
 .pill.kd{background:var(--rev-soft);color:var(--rev);border-color:transparent;font-weight:700}
@@ -145,9 +140,9 @@ table.sh{border-collapse:separate;border-spacing:0;font-size:12.5px;width:max-co
 table.sh th,table.sh td{padding:4px 8px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);max-width:300px;vertical-align:middle;white-space:pre-wrap;word-break:break-word;line-height:1.45}
 table.sh td{min-width:56px}
 /* 간트 날짜 열: 「11/13」 같은 두 자리 날짜가 잘리지 않는 폭 */
-table.sh .g{min-width:40px;width:40px;max-width:40px;padding:2px 0;text-align:center;font-size:10.5px;white-space:nowrap;overflow:hidden}
+table.sh .g{min-width:40px;width:40px;max-width:40px;padding:2px 0;text-align:center;font-size:12px;white-space:nowrap;overflow:hidden}
 table.sh thead th.g{font-weight:600}
-table.sh .today{box-shadow:inset 2px 0 0 #e53935}
+table.sh .today{box-shadow:inset 2px 0 0 var(--red)}
 table.sh .fz{position:sticky;z-index:1;background:var(--surface)}
 table.sh thead .fz{z-index:4;background:var(--surface-2)}
 table.sh .fz-end{box-shadow:inset -2px 0 0 var(--line)}
@@ -229,6 +224,15 @@ button.pill{cursor:pointer;font:inherit;font-size:12.5px;font-weight:600}
 .propose{margin-top:16px;padding:14px 16px;border:2px solid var(--accent);border-radius:12px;background:var(--surface)}
 .propose h4{margin:0 0 4px;font-size:15px;font-weight:800}
 .dbody{margin-top:18px;padding-top:12px;border-top:1px solid var(--line)}
+/* 문서 안 표(tidyTables): 머리 한 줄 · 번호/날짜 가운데 한 줄 · 짧은 칸 한 줄 · 긴 칸 여러 줄 */
+.dbody .tbl-wrap{overflow-x:auto;margin:8px 0}
+.dbody .tbl-wrap table{width:100%;margin:0;border-collapse:collapse;font-size:13px}
+.dbody .tbl-wrap th{white-space:nowrap;vertical-align:bottom;font-weight:700}
+.dbody .tbl-wrap td{vertical-align:top;line-height:1.55}
+.dbody .tbl-wrap .c-code{white-space:nowrap;text-align:center;font-variant-numeric:tabular-nums}
+.dbody .tbl-wrap .c-short{white-space:nowrap}
+.dbody .tbl-wrap td.c-long{min-width:7em;word-break:keep-all;overflow-wrap:anywhere}
+.dbody .tbl-wrap td.c-xlong{min-width:12em;word-break:keep-all;overflow-wrap:anywhere}
 .mright .kv dd{font-weight:500}
 .msec{display:flex;align-items:center;gap:8px;margin:20px 0 8px;min-height:32px}   /* 요약 정리 · 내 내용 작성 버튼이 숨어도 높이가 같게 */
 .msec h4{margin:0 !important;flex:1;font-size:15px;font-weight:800}
@@ -269,7 +273,7 @@ button.pill{cursor:pointer;font:inherit;font-size:12.5px;font-weight:600}
 dialog{width:min(720px,calc(100vw - 32px));border:1px solid var(--line);border-radius:14px;padding:0;background:var(--surface);color:var(--ink)}
 dialog::backdrop{background:rgba(10,14,20,.45)}
 .dlg{padding:22px 24px}
-.dlg h3{margin:0 0 4px;font-size:18px;font-weight:800}
+.dlg h2,.dlg h3{margin:0 0 4px;font-size:18px;font-weight:800}
 .dlg ol{margin:8px 0 16px;padding-left:20px;font-size:13.5px;color:var(--ink-2)}
 .dlg ol li{margin:3px 0}
 .dlg label{display:block;margin:10px 0 4px;font-size:13px;font-weight:700}
@@ -327,7 +331,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
 
 <dialog id="dlg" aria-labelledby="dlgT">
   <form class="dlg" method="dialog" id="dlgForm">
-    <h3 id="dlgT">일정 연결</h3>
+    <h2 id="dlgT">일정 연결</h2>
     <!-- 일정을 어디서 가져올지: 팀마다 하나(구글 시트 · Azure DevOps Boards) -->
     <div class="seg2wrap" role="radiogroup" aria-label="연결 종류">
       <label class="seg2"><input type="radio" name="prov" value="google" checked>구글 시트</label>
@@ -359,7 +363,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     <!-- Azure DevOps Boards: 팀 설정(모든 팀원 공유, 비밀값 없음) + 토큰(이 PC에만) -->
     <div id="aBox" hidden>
       <p class="muted" style="margin:0;font-size:13.5px">팀 설정은 한 번 넣으면 이 팀 모든 작업자에게 공유됩니다. 토큰은 각자 이 PC에만 저장되고, 화면에서 고친 내용은 DevOps에 본인 이름으로 남습니다.</p>
-      <h4 class="dsub">팀 설정 (공유)</h4>
+      <h3 class="dsub">팀 설정 (공유)</h3>
       <div class="row2">
         <div><label for="fOrg">조직 주소</label><input id="fOrg" type="url" placeholder="https://dev.azure.com/{조직}"></div>
         <div><label for="fProj">프로젝트</label><input id="fProj" type="text" placeholder="DevOps 프로젝트 이름"></div>
@@ -372,7 +376,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       </div>
       <label for="fDone">완료로 볼 상태</label>
       <input id="fDone" type="text" placeholder="Done, Closed, Resolved (쉼표로 구분)">
-      <h4 class="dsub">내 토큰 (이 PC에만)</h4>
+      <h3 class="dsub">내 토큰 (이 PC에만)</h3>
       <ol>
         <li>DevOps 오른쪽 위 사용자 설정 › Personal access tokens › New Token</li>
         <li>토큰 만들기 화면의 <b>Organization</b> 칸에서 위 「조직 주소」의 조직을 고르기(토큰을 그 조직에서 쓰게 하는 칸 · 토큰은 그대로 본인 것), <b>Scopes</b>는 Custom defined › <b>Work Items · Read</b>(나중에 화면에서 고치기까지 쓰려면 Read &amp; write), 만료일은 최대 1년</li>
@@ -698,9 +702,9 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     stickSheet(wbs.fzc || g0, todayC, sl, stp);
     setCnt('schedule', null);
   }
-  // 드롭다운 칸 색(시트의 칩 색과 같게). 맞는 것이 없으면 글자 + ▾
-  var CHIPS = [[/^완료$/, '#8a8f98', '#fff'], [/진행/, '#e53935', '#fff'], [/^대기$/, '#ffe082', '#5d4300'], [/리뷰/, '#8e5bd6', '#fff'], [/범위|제외/, '#bdbdbd', '#2b2b2b'],
-    [/필요\s*X/i, '#e6e6e6', '#444'], [/^T\/L$/, '#bfe6f7', '#0b4a66'], [/^T-only$/, '#7c4dce', '#fff'], [/^L-only$/, '#0097a7', '#fff'], [/^기타$/, '#e6e6e6', '#333']];
+  // 드롭다운 칸 색(시트의 칩과 같은 뜻의 색). A 잉크 톤으로 맞추고 흰 글씨 칩은 4.5:1 이상으로 진하게(2026-11-18). 맞는 것이 없으면 글자 + ▾
+  var CHIPS = [[/^완료$/, '#64676e', '#fff'], [/진행/, '#b3261e', '#fff'], [/^대기$/, '#f3e2b3', '#5d4300'], [/리뷰/, '#544a9c', '#fff'], [/범위|제외/, '#d4d6db', '#2b2b2b'],
+    [/필요\s*X/i, '#e6e7ea', '#3a3c41'], [/^T\/L$/, '#d3e4f2', '#0b4a66'], [/^T-only$/, '#8e4466', '#fff'], [/^L-only$/, '#22745f', '#fff'], [/^기타$/, '#e6e7ea', '#3a3c41']];
   function chip(v){ for (var i = 0; i < CHIPS.length; i++) if (CHIPS[i][0].test(String(v).trim())) return [CHIPS[i][1], CHIPS[i][2]]; return null; }
   // 머리말 줄 · 시트의 고정 열은 스크롤해도 보이게, 처음 열 때는 오늘 열로
   function stickSheet(fzc, todayC, sl, stp){
@@ -980,6 +984,10 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   /* ══ 화면설계서 작업대기: 화면 정의서(screens) 파일마다 「## 반영 대기 목록」 (규칙 저장소 reference-rules/pending-changes.md) ══
      칸: ID · 타입 · 변경 전 · 변경 후 · 근거 · 상태(대기 · 작업 중 (작업 기록) · 반영 완료 (날짜) · 제외 (날짜, 이유)).
      예전 칸(# · 구분 · 지금 · 바꿀 것)으로 적힌 표도 같은 자리에 읽는다(pending-changes.md 6절). 메뉴 담당자 = _menu.md owner */
+  /* 왼쪽 목록 묶음(details.mgrp)의 접힘: 항목을 눌러 목록을 다시 그려도 접은 묶음은 접힌 채로(2026-11-18) — 키 = 탭|묶음 이름, 이 페이지를 연 동안 */
+  var SHUT = {};
+  function grpAttr(key){ return ' data-g="' + esc(key) + '"' + (SHUT[key] ? '' : ' open'); }
+  document.addEventListener('toggle', function(e){ var d = e.target; if (d && d.classList && d.classList.contains('mgrp') && d.dataset.g) { if (d.open) delete SHUT[d.dataset.g]; else SHUT[d.dataset.g] = 1; } }, true);
   var BL = null, blSel = (function(){ try { return new URL(location.href).searchParams.get('s') || ''; } catch(x){ return ''; } })(), blAll = false, blKind = '', blQ = '';
   function loadBacklog(){
     return api('/api/guides').then(function(g){
@@ -1044,7 +1052,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       groups.map(function(g){
         var list = g.vis; if (!list.length) return '';
         var gw = 0, gd = 0; list.forEach(function(s){ gw += s.wait.length; gd += s.doing.length; });
-        return '<details class="mgrp" open><summary><span>' + esc(g.name) + '</span><span class="muted" title="대기 ' + gw + ' · 작업 중 ' + gd + '">' + (gw + gd) + '</span></summary>' +
+        return '<details class="mgrp"' + grpAttr('bl|' + g.name) + '><summary><span>' + esc(g.name) + '</span><span class="muted" title="대기 ' + gw + ' · 작업 중 ' + gd + '">' + (gw + gd) + '</span></summary>' +
           list.map(function(s){ return '<button type="button" class="mitem" data-bl="' + esc(s.cid) + '"' + (s.cid === blSel ? ' aria-current="true"' : '') + '><b>' + esc(s.cid) + '</b><span>' + esc(s.title || '') + '</span><span class="chips">' + (s.wait.length ? '<span class="pill warn">대기 ' + s.wait.length + '</span>' : '') + (s.doing.length ? '<span class="pill prog">작업 중 ' + s.doing.length + '</span>' : '') + (s.author ? '<span class="pill">' + esc(s.author) + '</span>' : '') + '</span></button>'; }).join('') + '</details>';
       }).join('') + (!act.length ? '<p class="muted" style="margin:8px">반영 대기 항목이 없습니다.</p>' : !shownScr.length ? '<p class="muted" style="margin:8px">「' + esc(blQ.trim()) + '」에 맞는 화면이 없습니다.</p>' : '');
     var s = S.filter(function(x){ return x.cid === blSel; })[0], right;
@@ -1143,7 +1151,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     if (!L.length) left += '<p class="muted" style="margin:8px">' + (plStat === 'open' ? '진행 중인 논의 대상이 없습니다.' : '항목이 없습니다.') + '</p>';
     else if (plStat === 'open') left += DS_GROUPS.map(function(g){
       var gl = L.filter(function(i){ return i.group === g.k; }); if (!gl.length) return '';
-      return '<details class="mgrp" open><summary><span title="' + esc(g.about) + '">' + esc(g.label) + '</span><span class="muted">' + gl.length + '</span></summary>' + gl.map(function(i){ return dsItemHtml(i, sel); }).join('') + '</details>';
+      return '<details class="mgrp"' + grpAttr('ds|' + g.k) + '><summary><span title="' + esc(g.about) + '">' + esc(g.label) + '</span><span class="muted">' + gl.length + '</span></summary>' + gl.map(function(i){ return dsItemHtml(i, sel); }).join('') + '</details>';
     }).join('');
     else left += L.map(function(i){ return dsItemHtml(i, sel); }).join('');
     var right;
@@ -1206,8 +1214,30 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     var known = !BL || BL.screens.some(function(s){ return s.cid === id; });
     return known ? '<a class="idl" href="UX_Guide.html?g=screens#' + id + '" title="화면 정의서에서 보기">' + id + '</a>' : id;
   }
+  /* 문서 안 표 정리(2026-11-18, 작업 기록 · 논의 대상): 내용이 바뀌어도 같은 구조로 보이게 칸마다 성격을 보고 모양을 정한다.
+     - 머리 칸은 늘 한 줄. 표가 넓어지면 표만 옆으로 밀린다(.tbl-wrap)
+     - 번호 · 날짜 · ID처럼 한글 없는 짧은 값만 있는 칸 → 가운데 · 한 줄(c-code)
+     - 짧은 칸(한글 기준 12자 이하) → 한 줄(c-short)
+     - 긴 칸 → 여러 줄, 단어 단위로 끊고 긴 경로 · 코드는 아무 데서나 끊음(c-long, 아주 길면 c-xlong으로 더 넓게) */
+  function tidyTables(root){
+    if (!root) return;
+    root.querySelectorAll('table').forEach(function(tb){
+      if (tb.dataset.tidy) return; tb.dataset.tidy = '1';
+      if (!tb.parentNode.classList.contains('tbl-wrap')) { var wr = document.createElement('div'); wr.className = 'tbl-wrap'; tb.parentNode.insertBefore(wr, tb); wr.appendChild(tb); }
+      var rows = Array.prototype.slice.call(tb.rows), n = rows.reduce(function(m, r){ return Math.max(m, r.cells.length); }, 0);
+      for (var c = 0; c < n; c++) {
+        var cells = rows.map(function(r){ return r.cells[c]; }).filter(Boolean), body = cells.filter(function(x){ return x.tagName === 'TD'; });
+        var vals = body.map(function(x){ return x.textContent.replace(/\s+/g, ' ').trim(); }).filter(Boolean);
+        var max = vals.reduce(function(m, v){ return Math.max(m, v.length); }, 0);
+        var code = vals.length && vals.every(function(v){ return v.length <= 24 && !/[가-힣]/.test(v); });
+        var cls = code ? 'c-code' : max <= 12 ? 'c-short' : max > 60 ? 'c-xlong' : 'c-long';
+        cells.forEach(function(x){ x.classList.add(cls); });
+      }
+    });
+  }
   function linkIds(root){
     if (!root) return;
+    tidyTables(root);
     var w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: function(n){ return n.parentNode.closest('a,button,input,textarea,select,form,.mitem,code,h3,.mmeta') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT; } }), list = [];
     while (w.nextNode()) { ID_RE.lastIndex = 0; if (ID_RE.test(w.currentNode.nodeValue)) list.push(w.currentNode); }
     list.forEach(function(n){ var s = document.createElement('span'); s.innerHTML = esc(n.nodeValue).replace(ID_RE, function(m){ return idLink(m); }); n.parentNode.replaceChild(s, n); });
@@ -1410,7 +1440,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       (W && rest.length ? '<button class="btn sm mimport" type="button" data-mimport>시트 회의록 가져오기 (' + rest.length + '건)</button>' : '') +
       (L.length ? groups.map(function(k){
         var y = k.slice(0, 4), mo = +k.slice(5, 7);
-        return '<details class="mgrp" open><summary><span>' + (y === thisY ? '' : y + '년 ') + mo + '월</span><span class="muted">' + gm[k].length + '</span></summary>' +
+        return '<details class="mgrp"' + grpAttr('mt|' + k) + '><summary><span>' + (y === thisY ? '' : y + '년 ') + mo + '월</span><span class="muted">' + gm[k].length + '</span></summary>' +
           gm[k].map(function(m){
             return '<button type="button" class="mitem" data-mid="' + esc(m.id) + '"' + (m.id === msel && !(medit && !medit.id) ? ' aria-current="true"' : '') + '><b>' + fmtWhen(m.date) + ' · ' + esc(m.title) + '</b><span>' + esc(msub(m)) + '</span></button>';
           }).join('') + '</details>';
