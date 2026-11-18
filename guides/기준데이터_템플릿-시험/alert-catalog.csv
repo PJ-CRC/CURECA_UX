@@ -1,0 +1,2 @@
+﻿ID,종류,등급,사용 여부,발생 조건,제목 (Main title),부제 (Sub title),Primary 버튼,Secondary 버튼,버튼 동작,사용 화면 (CID),확인할 점
+Confirm_001,Confirm,Warning,사용,지우기 버튼을 눌렀을 때,Delete this item?,This cannot be undone.,Delete,Cancel,Delete: 지우고 목록으로 · Cancel: 닫기,(예시),

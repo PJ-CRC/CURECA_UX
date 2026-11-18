@@ -1,0 +1,38 @@
+{
+  "id": "기준데이터_템플릿-시험",
+  "kind": "data",
+  "title": "템플릿 시험",
+  "summary": "기본 템플릿으로 시작한 기준데이터. 개요와 용어집 · 상태값 · 알럿 목록 · 화면 목록(IA) 표(CSV). 각 표의 예시 줄을 지우고 채웁니다.",
+  "link": "",
+  "fileKey": "",
+  "fileName": "",
+  "scope": "기본 템플릿",
+  "frames": 0,
+  "sources": [],
+  "by": "최고관리자",
+  "request": "기본 템플릿으로 시작",
+  "jobId": "",
+  "team": "cureca",
+  "createdAt": "2026-11-18T16:07:07+09:00",
+  "updatedAt": "2026-11-18T16:07:07+09:00",
+  "format": "files",
+  "filesDir": "",
+  "folderList": true,
+  "files": [
+    "1. 기준데이터 개요.md",
+    "terms.csv",
+    "status-values.csv",
+    "alert-catalog.csv",
+    "ia-screens.csv"
+  ],
+  "fromTemplate": {
+    "kind": "data",
+    "at": "2026-11-18T16:07:07+09:00"
+  },
+  "titles": {
+    "terms.csv": "용어집 · terms.csv",
+    "status-values.csv": "상태값 · status-values.csv",
+    "alert-catalog.csv": "알럿 목록 · alert-catalog.csv",
+    "ia-screens.csv": "화면 목록 (IA) · ia-screens.csv"
+  }
+}
