@@ -412,11 +412,22 @@ async function xferCheck(job) {
   xMains = {};
   const R = xReader(), from = job.from || {}, frames = [];
   if (from.pageId) { const pg = await figma.getNodeByIdAsync(from.pageId); if (pg && pg.type === 'PAGE') await pg.loadAsync(); }
+  // 화면마다 따로(2026-11-18): 컴포넌트 원본을 Figma 서버에서 불러오다 10초를 넘기면(「Unable to establish connection」) 그 화면만 두 번 더 해 보고,
+  //  그래도 안 되면 그 화면만 「확인 못 함」(err)으로 두고 나머지는 계속한다 — 예전에는 화면 하나 때문에 확인 전체가 실패했다
+  const slow = e => /establish connection|connection to Figma|timed? ?out/i.test(String(e && e.message || e));
   for (const id of from.nodeIds || []) {
-    const n = await figma.getNodeByIdAsync(id);
-    if (!n || n.removed) { frames.push({ from: id, gone: true }); continue; }
-    const o = await R.ser(n); delete o.x; delete o.y;
-    frames.push({ from: id, hash: xfnv(JSON.stringify(o)), sig: await xSig(n) });
+    let done = false;
+    for (let k = 0; k < 3 && !done; k++) {
+      try {
+        const n = await figma.getNodeByIdAsync(id);
+        if (!n || n.removed) { frames.push({ from: id, gone: true }); done = true; break; }
+        const o = await R.ser(n); delete o.x; delete o.y;
+        frames.push({ from: id, hash: xfnv(JSON.stringify(o)), sig: await xSig(n) }); done = true;
+      } catch (e) {
+        if (!slow(e)) throw e;
+        if (k < 2) await new Promise(r => setTimeout(r, 3000)); else { frames.push({ from: id, err: String(e.message || e).slice(0, 120) }); done = true; }
+      }
+    }
   }
   return { frames };
 }

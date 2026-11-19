@@ -129,6 +129,7 @@ button{cursor:pointer}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pager button.on{color:#0f1115}}
 .pager button:disabled{opacity:.35;cursor:default}
 .note{color:var(--ink-3);font-size:13px;margin:var(--section-gap) 0 0}
+.hoff{margin:8px 0 0;padding:8px 12px;border-radius:8px;background:var(--prog-soft);color:var(--prog);font-size:13px;font-weight:600}
 .raw{margin-top:8px;font-size:13px}
 .raw summary{cursor:pointer;color:var(--ink-3);font-weight:600;min-height:24px;display:flex;align-items:center}
 .raw summary:hover{color:var(--ink)}
@@ -224,7 +225,7 @@ button{cursor:pointer}
         status:h.kind === 'request' ? (h.status || '완료') : '작업', who:who, people:[h.by, h.doneBy], pc:h.pc,
         badge:h.reqId ? '작업 ' + h.reqId : '작업', title:h.reqId ? (h.frame || first) : (first || h.frame || '작업'),
         frame:h.frame || '', page:h.page, file:h.fileName || '', type:h.type, layout:h.layout,
-        text:h.text, note:h.note, raws:h.raws, ask:h.ask, replies:h.replies, nodeId:h.nodeId,
+        text:h.text, note:h.note, raws:h.raws, handoff:h.handoff, work:h.work, ask:h.ask, replies:h.replies, nodeId:h.nodeId,
         /* 캡처: 실제로 고친 화면들(shots), 예전 기록은 요청 화면 한 장(shot) */
         shots:(h.shots && h.shots.length ? h.shots : h.shot ? [{file:h.shot, frame:h.frame}] : []).map(function(s){ return {src:'.history/' + s.file, frame:s.frame || h.frame || ''}; }),
         images:(h.images || []).map(function(x){ return {src:'.history/' + x, full:'.history/' + x}; })});
@@ -234,7 +235,7 @@ button{cursor:pointer}
       var who = r.author || '—'; if (r.updatedBy && r.updatedBy !== r.author) who += ' → ' + r.updatedBy;
       out.push({key:'r:' + r.id, kind:'req', mine:true, rid:r.id, at:r.updatedAt || r.createdAt, status:r.status, who:who, people:[r.author, r.updatedBy],
         badge:'요청 ' + r.id, title:r.frame || r.id, frame:r.frame || '', page:r.page, file:r.fileName || '',
-        type:r.type, layout:r.layout, text:r.text, note:r.note, raws:r.raws, ask:r.ask, replies:r.replies, nodeId:r.nodeId,
+        type:r.type, layout:r.layout, text:r.text, note:r.note, raws:r.raws, handoff:r.handoff, work:r.work, ask:r.ask, replies:r.replies, nodeId:r.nodeId,
         images:(r.images || []).map(function(m){ return {src:m.small || m.file, full:m.file}; })});
     });
     return out.sort(function(a, b){ return (Date.parse(b.at) || 0) - (Date.parse(a.at) || 0); });
@@ -284,6 +285,7 @@ button{cursor:pointer}
     }
     if (r.text) h += '<h3>요청</h3><p class="req">' + esc(r.text) + '</p>';
     if ((r.images || []).length) h += '<div class="ims">' + r.images.map(function(m, i){ return '<a href="' + esc(m.full) + '" target="_blank" rel="noopener" title="첨부 이미지 ' + (i + 1) + ' 크게 보기"><img loading="lazy" alt="첨부 이미지 ' + (i + 1) + '" src="' + esc(m.src) + '"></a>'; }).join('') + '</div>';
+    if (r.handoff) h += '<p class="hoff">' + (r.status === '완료' ? '이어 받아 끝남' : '이어 받음') + ' — ' + esc((r.handoff.by || '다른 작업자') + (r.handoff.pc ? '(' + r.handoff.pc + ')' : '') + '의 ' + (r.handoff.req || '') + '에서 작업 기록 「' + (r.work || '') + '」을 이어서 ' + (r.status === '완료' ? '마쳤습니다.' : '진행합니다.')) + '</p>';
     h += '<h3>Claude 답변</h3>' + (r.note ? '<div class="ans">' + noteHtml(r.note) + '</div>' : '<p class="none">아직 답변이 없습니다.</p>');
     var rawMd = function(s){ return esc(s).replace(/\*\*([^*\n]+)\*\*/g, '<b>$1</b>').replace(/`([^`\n]+)`/g, '<code>$1</code>'); };   // 원래 답변의 **굵게** · `코드`만 모양으로(나머지는 글 그대로)
     /* 「자세히」(2026-11-18): Claude가 그 차례에 남긴 원래 답변 전체(최근 것이 위). Workbench와 같은 값 */
