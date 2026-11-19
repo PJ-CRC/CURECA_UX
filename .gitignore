@@ -38,6 +38,7 @@ workbench/auto_capture.json
 workbench/.update.json
 dist/
 workbench/guide_apply.json
+workbench/guide_apply.*.json
 # 프로토타입은 PC마다 따로(저장소 · 배포본에 넣지 않는다)
 prototypes/
 # PC마다 따로 쌓이는 데이터(서버가 없으면 빈 파일로 만든다)
