@@ -59,3 +59,5 @@ workbench/.launch_progress.js
 workbench/transfer/
 workbench/test-work/
 workbench/.agent_cancel
+# 개발 PC 표시(이 PC에서만 「감시 상태」 메뉴 · /api/agents). 배포 · 깃에 넣지 않는다
+workbench/dev.flag

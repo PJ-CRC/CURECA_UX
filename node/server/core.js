@@ -206,7 +206,8 @@ function meInfo() {
     approves: req ? userApproves(u) : APPROVE_KEYS.slice(),
     menus: MENUS.map((m) => ({ key: m.key, label: m.label, page: m.pages[0], pages: m.pages, admin: !!m.admin, write: String(m.write || '') })),
     allowed, writes: req ? userWrites(u) : WRITE_KEYS.slice(), first: first || 'Account.html',
-    teams: teamList(myTeams()), team: currentTeam(), teamMenus: TEAM_MENUS.slice() };
+    teams: teamList(myTeams()), team: currentTeam(), teamMenus: TEAM_MENUS.slice(),
+    dev: exists(path.join(C.root, 'workbench', 'dev.flag')) };   // 개발 PC만 「감시 상태」 메뉴(2026-11-19)
 }
 
 module.exports = { C, init, readText, readJson, exists, listJson, now, arr, writeText, writeJson, rmGlob, syncWant, writeLogin, setPw, saveAccount, saveTeams, setMyTeam, meName, readSetup, readAccounts, readAccount, pwHash, testPw, hasAccounts, histReady,

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>감시 상태</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="appnav.css">
+<script src="common.js"></script>
+<style>
+/* PC별 감시(백그라운드 에이전트) 상태 — 개발 PC(workbench/dev.flag)에서만 열린다(2026-11-19) */
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 Pretendard,-apple-system,"Segoe UI","Malgun Gothic",sans-serif}
+button{font:inherit;color:inherit}
+.app-head h1{font-weight:800}
+.badge{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
+.badge.on{background:var(--ok-soft);color:var(--ok);border-color:transparent}
+.badge.off{background:var(--red-soft);color:var(--red);border-color:transparent}
+.bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 12px;font-size:13px;color:var(--ink-3)}
+.bar .sp{flex:1}
+.btn{height:32px;padding:0 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:13px;font-weight:600;cursor:pointer}
+.btn:focus-visible,.pc-tg:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tbl-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--card-r);background:var(--surface)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{font-size:12px;font-weight:700;color:var(--ink-3);white-space:nowrap;background:var(--surface-2)}
+tr:last-child td{border-bottom:0}
+td.nw{white-space:nowrap}
+td.c{text-align:center}
+.pc-tg{display:inline-flex;align-items:flex-start;gap:6px;border:0;background:none;padding:0;cursor:pointer;text-align:left}
+.pc-tg svg{width:14px;height:14px;margin-top:3px;flex:none;transition:transform .15s}
+.pc-tg[aria-expanded="true"] svg{transform:rotate(180deg)}
+.pc-tg b{display:block;font-weight:700}
+.pc-tg small{display:block;color:var(--ink-3);font-size:12px}
+.me{font-size:11px;font-weight:700;color:var(--accent);margin-left:4px}
+.st{display:inline-block;font-size:12px;font-weight:700;padding:1px 9px;border-radius:999px;white-space:nowrap}
+.st.prog{background:var(--prog-soft);color:var(--prog)}
+.st.ok{background:var(--ok-soft);color:var(--ok)}
+.st.warn{background:var(--warn-soft);color:var(--warn)}
+.st.red{background:var(--red-soft);color:var(--red)}
+.st.wait{background:var(--wait-soft);color:var(--wait)}
+.sub{display:block;color:var(--ink-3);font-size:12px;margin-top:2px}
+.old{color:var(--warn);font-weight:700}
+.prob{color:var(--red)}
+.none{color:var(--ink-3)}
+tr.det td{background:var(--surface-2);padding:14px 16px 16px 34px}
+.det h3{font-size:12px;font-weight:700;color:var(--ink-3);margin:0 0 6px}
+.det .msg{margin:0 0 12px;word-break:break-all}
+.det ol{list-style:none;margin:0 0 12px;padding:0;display:grid;gap:4px}
+.det li{display:grid;grid-template-columns:120px minmax(0,1fr);gap:10px;font-size:12.5px}
+.det li time{color:var(--ink-3);white-space:nowrap;font-variant-numeric:tabular-nums}
+.det li span{word-break:break-all}
+.k-error{color:var(--red)} .k-limit{color:var(--warn)} .k-stop,.k-start{color:var(--ink-2)}
+.empty{padding:28px;text-align:center;color:var(--ink-3)}
+.note{font-size:12.5px;color:var(--ink-3);margin:14px 0 0}
+@media (max-width:560px){ .det li{grid-template-columns:1fr;gap:0} tr.det td{padding-left:16px} }
+@media (prefers-reduced-motion:reduce){ .pc-tg svg{transition:none} }
+</style>
+</head>
+<body>
+<nav class="appnav" aria-label="도구 메뉴">
+  <b class="appnav-brand">Figma AI Run</b>
+  <a href="Setup.html">시작 안내</a>
+  <a href="Work.html">일정/작업</a>
+  <a href="Common_UX_Guide.html">UX 문서</a>
+  <a href="Figma_Workbench.html">Figma Workbench</a>
+  <a href="Change_History.html">변경 이력</a>
+  <a href="Usage_Stats.html">사용량 통계</a>
+  <a href="Prototypes.html">프로토타입</a>
+  <span class="appnav-sp"></span>
+  <div class="appnav-right"><span class="badge" id="srv">확인 중…</span></div>
+</nav>
+<main class="app-wrap">
+  <header class="app-head"><div class="app-head-t"><h1>감시 상태</h1><p>작업자 PC마다 백그라운드 감시(Claude)가 살아 있는지, 최근 끊김 · 오류를 봅니다. 이 PC(개발 PC)에서만 보입니다.</p></div></header>
+  <div class="bar"><span id="when" role="status"></span><span class="sp"></span><button class="btn" type="button" id="reload">새로 보기</button></div>
+  <div class="tbl-scroll"><table>
+    <thead><tr><th scope="col">PC · 작업자</th><th scope="col">감시</th><th scope="col">마지막 소식</th><th scope="col">버전</th><th scope="col">Claude</th><th scope="col">최근 문제</th></tr></thead>
+    <tbody id="rows"><tr><td colspan="6" class="empty">불러오는 중…</td></tr></tbody>
+  </table></div>
+  <p class="note">각 PC의 서버가 1분마다 보고, 바뀐 것이 있거나 10분이 지나면 공유 기록(.history/agents)에 남깁니다. 「마지막 소식」이 15분보다 오래면 그 PC의 Figma AI Run이 꺼져 있거나 이력 공유가 끊긴 것입니다. 이 기능이 들어간 버전을 받기 전 일은 보이지 않습니다.</p>
+</main>
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); }, esc = window.WB.esc;
+  var OPEN = {}, D = null, STALE = 15 * 60;
+  /* 감시 표시는 넷만(2026-11-19): 감시 중 · 중지됨 · 오류 · 알 수 없음(15분 넘게 소식 없음). 사용 한도 · 로그인 · Figma 연결은 「최근 문제」에 나온다 */
+  var ON = ['감시 중', 'ok'], OFF = ['중지됨', 'wait'], BAD = ['오류', 'red'];
+  var ST = { working: ON, idle: ON, limit: ON, login: ON, figma: ON, stopped: OFF, none: OFF, error: BAD, dead: BAD };
+  function sec(t){ var x = Date.parse(t || ''); return isNaN(x) ? null : Math.round((Date.now() - x) / 1000); }
+  function ago(s){ if (s == null) return '-'; if (s < 60) return '방금'; if (s < 3600) return Math.floor(s / 60) + '분 전'; if (s < 86400) return Math.floor(s / 3600) + '시간 전'; return Math.floor(s / 86400) + '일 전'; }
+  function hm(t){ var d = new Date(t); if (isNaN(d)) return esc(t || ''); var p = function(n){ return (n < 10 ? '0' : '') + n; }; return (d.getMonth() + 1) + '/' + d.getDate() + ' ' + p(d.getHours()) + ':' + p(d.getMinutes()); }
+  function vcmp(a, b){ a = String(a || '').split('.').map(Number); b = String(b || '').split('.').map(Number); for (var i = 0; i < 3; i++) { if ((a[i] || 0) !== (b[i] || 0)) return (a[i] || 0) - (b[i] || 0); } return 0; }
+  function render(){
+    if (!D) return;
+    var mine = (D.items.filter(function(x){ return x.me; })[0] || {}).version || '';
+    var L = D.items.slice().sort(function(a, b){ return (b.me ? 1 : 0) - (a.me ? 1 : 0) || String(a.pc).localeCompare(String(b.pc)); });
+    $('rows').innerHTML = L.length ? L.map(function(x){
+      var age = sec(x.reportAt), stale = age != null && age > STALE, st = ST[x.status] || ['알 수 없음', 'wait'], op = !!OPEN[x.slug];
+      var stHtml = stale ? '<span class="st wait">알 수 없음</span><span class="sub">서버 꺼짐 · 공유 끊김</span>' : '<span class="st ' + st[1] + '">' + esc(st[0]) + '</span>' + (x.autoWatch === false ? '<span class="sub">자동 시작 끔</span>' : '');
+      var er = (x.events || []).filter(function(e){ return e.kind === 'error' || e.kind === 'limit'; })[0];
+      var older = mine && x.version && vcmp(x.version, mine) < 0;
+      var cl = x.claudeWay === 'app' ? '앱 Code 탭' : (x.claude || '-');
+      var row = '<tr><td><button type="button" class="pc-tg" data-pc="' + esc(x.slug) + '" aria-expanded="' + op + '" aria-controls="d-' + esc(x.slug) + '"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg><span><b>' + esc(x.pc) + (x.me ? '<span class="me">이 PC</span>' : '') + '</b><small>' + esc(x.user || '이름 없음') + ' · ' + (x.os === 'mac' ? '맥' : '윈도우') + '</small></span></button></td>' +
+        '<td class="nw">' + stHtml + '</td>' +
+        '<td class="nw"' + (stale ? ' style="color:var(--warn)"' : '') + '>' + ago(age) + '<span class="sub">' + hm(x.reportAt) + '</span></td>' +
+        '<td class="nw">' + (older ? '<span class="old" title="이 PC(' + esc(mine) + ')보다 예전 버전">' + esc(x.version) + '</span>' : esc(x.version || '-')) + '</td>' +
+        '<td class="nw">' + esc(cl) + '</td>' +
+        '<td>' + (er ? '<span class="prob">' + esc(er.text) + '</span><span class="sub">' + hm(er.at) + '</span>' : '<span class="none">없음</span>') + '</td></tr>';
+      if (op) {
+        var ev = (x.events || []).map(function(e){ return '<li><time>' + hm(e.at) + '</time><span class="k-' + esc(e.kind) + '">' + esc(e.text) + '</span></li>'; }).join('');
+        var tu = (x.turns || []).map(function(t){ var r = t.ok === true ? '끝남' + (t.sec != null ? ' · ' + Math.round(t.sec / 60) + '분' : '') : t.ok === false ? '<span class="k-error">오류 응답</span>' : '끝 기록 없음(처리 중 · 끊김)'; return '<li><time>' + hm(t.at) + '</time><span>' + esc(t.what) + (t.resume ? ' (같은 세션에 답)' : '') + ' — ' + r + '</span></li>'; }).join('');
+        row += '<tr class="det" id="d-' + esc(x.slug) + '"><td colspan="6"><div class="det">' +
+          '<h3>지금 상태 글</h3><p class="msg">' + esc(x.msg || '-') + (x.statusAt ? ' <span class="sub">' + hm(x.statusAt) + ' 기준</span>' : '') + '</p>' +
+          '<h3>최근 처리 ' + (x.turns || []).length + '건</h3>' + (tu ? '<ol>' + tu + '</ol>' : '<p class="msg none">기록 없음</p>') +
+          '<h3>끊김 · 오류 · 시작 · 중지 (최근 ' + (x.events || []).length + '건)</h3>' + (ev ? '<ol>' + ev + '</ol>' : '<p class="msg none">기록 없음</p>') +
+          '</div></td></tr>';
+      }
+      return row;
+    }).join('') : '<tr><td colspan="6" class="empty">아직 상태를 남긴 PC가 없습니다.</td></tr>';
+    $('when').textContent = 'PC ' + L.length + '대 · ' + hm(D.now) + ' 기준 (30초마다 새로 봄)';
+  }
+  function load(){
+    return fetch('/api/agents', { cache: 'no-store' }).then(function(r){ return r.json().then(function(d){ if (!r.ok) throw new Error(d.error || r.status); return d; }); })
+      .then(function(d){ D = d; $('srv').textContent = '로컬 서버 연결됨'; $('srv').className = 'badge on'; render(); })
+      .catch(function(e){ $('rows').innerHTML = '<tr><td colspan="6" class="empty">' + esc(e.message || '불러오지 못했습니다.') + '</td></tr>'; $('when').textContent = ''; });
+  }
+  $('rows').addEventListener('click', function(e){
+    var b = e.target.closest('.pc-tg'); if (!b) return; var k = b.dataset.pc;
+    if (OPEN[k]) delete OPEN[k]; else OPEN[k] = 1; render();
+    var nb = $('rows').querySelector('.pc-tg[data-pc="' + k + '"]'); if (nb) nb.focus();
+  });
+  $('reload').addEventListener('click', load);
+  load(); setInterval(function(){ if (!document.hidden) load(); }, 30000);
+})();
+</script>
+<script src="appnav.js" defer></script>
+</body>
+</html>
