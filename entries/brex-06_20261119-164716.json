@@ -1,0 +1,19 @@
+{
+  "id": "brex-06_20261119-164716",
+  "kind": "work",
+  "team": "cureca",
+  "at": "2026-11-19T16:47:16+09:00",
+  "by": "최고관리자",
+  "doneBy": "Claude",
+  "pc": "BREX_06",
+  "reqId": "",
+  "fileKey": "etCQFF3CTf1EA6C79d4BBf",
+  "fileName": "UX AI TEST",
+  "page": "메뉴얼 (삭제 X)",
+  "frame": "flow",
+  "nodeId": "2918:140028",
+  "type": "",
+  "text": "flow 그림 다시 그림 · 소개 슬라이드 순서 정리",
+  "note": "채팅 요청: 「Workbench 소개」 슬라이드 26장을 쪽 순서대로 4열 격자에 다시 배치(새로 넣은 08 · 09 등이 아래에 있던 것). 「flow」를 지금 구조로 다시 그림: ① 지금 구조(작업자 PC 안 Workbench 화면 · Node.js 서버 · .history, Claude 요청 감시, Figma(MCP · 토큰 REST · 플러그인), Azure DevOps, Git history ↔ 다른 PC, release 자동 업데이트) ② 처음 설정 흐름(설치 → 시작 안내 ①~⑥ → 팀 · 내 작업 기준 → 팀 프로젝트 → 첫 요청) ③ 요청 처리 · 팀 공유(작업자별 PC의 Claude, 겹침 대기, 결과 → .history → Git → 팀 전체, 보류 질문 · 멈추기 · 이어 받기). 예전 그림 3개는 아래 「flow (예전 그림 · 확인 후 지워도 됨)」 섹션으로 옮김",
+  "shot": ""
+}
