@@ -1,18 +1,23 @@
 {
-  "reportAt": "2026-11-19T13:40:01+09:00",
+  "reportAt": "2026-11-19T13:41:01+09:00",
   "pc": "anjongbeom-ui-MacBookAir-2.local",
   "slug": "anjongbeom-ui-macbookair-2-local",
   "user": "안종범",
   "os": "mac",
   "version": "0.29.2",
-  "alive": true,
-  "status": "idle",
-  "msg": "마지막 처리: PENDING R017 · 컨텍스트 6%",
-  "statusAt": "2026-11-19T13:39:37+09:00",
+  "alive": false,
+  "status": "stopped",
+  "msg": "중지됨",
+  "statusAt": "2026-11-19T13:40:37+09:00",
   "claude": "",
   "claudeWay": "",
   "autoWatch": true,
   "events": [
+    {
+      "at": "2026-11-19T13:40:37+09:00",
+      "kind": "stop",
+      "text": "감시 중지"
+    },
     {
       "at": "2026-11-13T11:12:41+09:00",
       "kind": "error",
