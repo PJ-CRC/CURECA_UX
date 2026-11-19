@@ -11,7 +11,8 @@ const { C } = core;
 const DIR = () => path.join(C.histDir, 'agents');
 const FILE = () => path.join(DIR(), `${C.pcSlug}.json`);
 const isDev = () => core.exists(path.join(C.root, 'workbench', 'dev.flag'));
-const HEARTBEAT = 10 * 60 * 1000, EVENTS = 20, TURNS = 5;
+// 기록은 최근 7일치(2026-11-19). 개수 상한(CAP)은 파일이 지나치게 커지지 않게 막는 안전장치일 뿐이다
+const HEARTBEAT = 10 * 60 * 1000, DAYS = 7, CAP = 300, TAIL = 2 * 1024 * 1024;
 
 // 기록 한 줄이 「끊김 · 오류 · 시작 · 중지」면 {kind, text}. 평소 일(처리 시작 · 정상 세션 종료 · 한도 확인)은 빼고 처리 차례는 turns로 따로 본다
 function classify(t) {
@@ -28,7 +29,7 @@ function classify(t) {
 }
 function readLog() {
   const f = path.join(C.root, 'workbench', '.agent.log'); let s = '';
-  try { const st = fs.statSync(f), n = Math.min(st.size, 200 * 1024), fd = fs.openSync(f, 'r'), b = Buffer.alloc(n); fs.readSync(fd, b, 0, n, st.size - n); fs.closeSync(fd); s = b.toString('utf8'); } catch (e) { return { events: [], turns: [] }; }
+  try { const st = fs.statSync(f), n = Math.min(st.size, TAIL), fd = fs.openSync(f, 'r'), b = Buffer.alloc(n); fs.readSync(fd, b, 0, n, st.size - n); fs.closeSync(fd); s = b.toString('utf8'); } catch (e) { return { events: [], turns: [] }; }
   const events = [], turns = []; let open = null;
   for (const line of s.split(/\r?\n/)) {
     const m = /^\[([^\]]+)\] (.*)$/.exec(line); if (!m) continue;
@@ -39,10 +40,10 @@ function readLog() {
     const c = classify(t); if (c) events.push({ at, kind: c.kind, text: c.text.slice(0, 200) });
   }
   if (open) turns.push(Object.assign(open, { end: '', ok: null, sec: null }));   // 처리 중이거나 끝 줄 없이 끊김
-  // 끊김 · 오류는 최근 EVENTS건, 시작 · 중지(업데이트 때 저절로 다시 켜짐이 많다)는 최근 6건만 섞는다 — 오류가 밀려나지 않게
-  const life = (e) => e.kind === 'start' || (e.kind === 'stop' && e.text === '감시 중지');
-  const ev = events.filter((e) => !life(e)).slice(-EVENTS).concat(events.filter(life).slice(-6)).sort((a, b) => (Date.parse(b.at) || 0) - (Date.parse(a.at) || 0));
-  return { events: ev, turns: turns.slice(-TURNS).reverse() };
+  // 최근 7일치만(시각을 못 읽는 줄은 뺌). 새것이 위로
+  const since = Date.now() - DAYS * 86400000, inRange = (x) => (Date.parse(x.at) || 0) >= since;
+  const ev = events.filter(inRange).slice(-CAP).sort((a, b) => (Date.parse(b.at) || 0) - (Date.parse(a.at) || 0));
+  return { events: ev, turns: turns.filter(inRange).slice(-CAP).reverse() };
 }
 function claudeKind(p) {
   p = String(p || ''); if (!p) return '';

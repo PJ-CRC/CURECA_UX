@@ -139,6 +139,10 @@ ul.list li{margin:2px 0}
 table.sh{border-collapse:separate;border-spacing:0;font-size:12.5px;width:max-content;min-width:100%}
 table.sh th,table.sh td{padding:4px 8px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);max-width:300px;vertical-align:middle;white-space:pre-wrap;word-break:break-word;line-height:1.45}
 table.sh td{min-width:56px}
+/* 세부 일정 접기 · 펼치기(주간보고 일정표) */
+table.sh .wtog{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;margin:0 6px 0 0;padding:0;border:1px solid var(--line);border-radius:4px;background:var(--surface);color:var(--ink-2);font-size:11px;line-height:1;vertical-align:-2px;cursor:pointer}
+table.sh .wtog:hover{border-color:var(--accent);color:var(--accent)}
+table.sh .wtog[aria-expanded="true"]{background:var(--accent-soft)}
 /* 간트 날짜 열: 「11/13」 같은 두 자리 날짜가 잘리지 않는 폭 */
 table.sh .g{min-width:40px;width:40px;max-width:40px;padding:2px 0;text-align:center;font-size:12px;white-space:nowrap;overflow:hidden}
 table.sh thead th.g{font-weight:600}
@@ -376,6 +380,9 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       </div>
       <label for="fDone">완료로 볼 상태</label>
       <input id="fDone" type="text" placeholder="Done, Closed, Resolved (쉼표로 구분)">
+      <label for="fReport">주간보고로 일정표(WBS) 만들기</label>
+      <input id="fReport" type="text" placeholder="예: [주간보고 UX/UI] — 비우면 작업 항목 목록">
+      <p class="muted" style="margin:4px 0 0;font-size:12.5px">넣으면 이 제목의 가장 최근 스프린트 「… / All」 주간보고의 <b>주요 일정</b>(User Story)과 그 아래 [UX] · [UI] 작업으로 일정표를 만듭니다. 새 스프린트 주간보고가 생기면 저절로 그것을 씁니다. 「가져올 범위」는 쓰지 않습니다.</p>
       <h3 class="dsub">내 토큰 (이 PC에만)</h3>
       <ol>
         <li>DevOps 오른쪽 위 사용자 설정 › Personal access tokens › New Token</li>
@@ -534,8 +541,9 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     var V = sheet.values, T = table(V), C = guessCols(T.labels, (conf && !isAzure() && conf.cols) || null), out = [];   // Azure DevOps 표는 열 이름이 정해져 있어 시트용 열 맞춤을 쓰지 않는다
     function g(r, f){ var i = C[f]; return i >= 0 ? String(r[i] == null ? '' : r[i]).trim() : ''; }
     var hid = {}; (sheet.hr || []).forEach(function(x){ hid[x] = 1; });   // 시트에서 숨긴 줄(접은 그룹 · 예전 줄)은 세지 않는다
+    var sub = {}; (sheet.kids || []).forEach(function(k){ (k.rows || []).forEach(function(r){ sub[r] = 1; }); });   // 주간보고 일정표의 세부 일정 줄(작업명 아래 UX · UI 작업)은 세지 않는다
     for (var i = T.start; i < V.length; i++) {
-      if (hid[i] && !withHidden) continue;
+      if ((hid[i] && !withHidden) || sub[i]) continue;
       var r = V[i] || []; if (!r.some(function(c){ return String(c || '').trim(); })) continue;
       var task = g(r, 'task'), menu = g(r, 'menu'); if (!task && !menu) continue;
       var st = g(r, 'status'), ux = g(r, 'uxStatus'), ui = g(r, 'uiStatus');
@@ -556,7 +564,8 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   /* ── 상태 ── */
   var conf = null, wbs = null, mins = null, mlist = null, pols = null, pvs = null, week = monday(new Date()), mtIdx = 0;
   var loading = { wbs: false, mins: false };
-  function azUrl(){ var a = (conf && conf.azure) || {}; return a.org ? a.org + '/' + encodeURIComponent(a.project || '') + '/_workitems' : '#'; }
+  // 원본 열기: 주간보고 일정표면 그 주간보고 작업 항목, 아니면 작업 항목 목록
+  function azUrl(){ if (wbs && wbs.src && wbs.src.url) return wbs.src.url; var a = (conf && conf.azure) || {}; return a.org ? a.org + '/' + encodeURIComponent(a.project || '') + '/_workitems' : '#'; }
   function sheetUrl(){ return (conf && conf.sheetUrl) || DEF_SHEET; }
   function gidOf(){ var g = conf && conf.wbsGid; if (!g) { var m = /[#&?]gid=(\d+)/.exec(sheetUrl()); g = m ? m[1] : ''; } return g; }
   function minName(){ return (conf && conf.minutes) || DEF_MIN; }
@@ -580,9 +589,9 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     });
   }
   function loadWbs(){
-    if (!conf || !conf.configured || (isAzure() && !conf.azurePat)) { wbs = null; return Promise.resolve(); }
+    if (!conf || !conf.configured || (isAzure() && !conf.azurePat && !conf.azureShared)) { wbs = null; return Promise.resolve(); }   // 토큰이 없어도 팀 공유 사본이 있으면 그것을 본다
     loading.wbs = true; sheetFresh.wbs = false; renderSchedule();
-    return cacheFirst(isAzure() ? 'azure=1' : 'style=1&gid=' + encodeURIComponent(gidOf()), function(d){ wbs = d; }, 'wbs', function(){ renderSchedule(); if (cur === 'weekly') renderWeekly(); })
+    return cacheFirst(isAzure() ? 'azure=1' : 'style=1&gid=' + encodeURIComponent(gidOf()), function(d){ wbs = d; if (isAzure() && $('openSheet')) $('openSheet').href = azUrl(); }, 'wbs', function(){ renderSchedule(); if (cur === 'weekly') renderWeekly(); })
       .then(function(){ loading.wbs = false; });
   }
   function loadMins(){
@@ -610,7 +619,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   function loadPvs(){ return Promise.resolve(); }
 
   /* ── 일정 탭(시트 그대로 · 고치기) ── */
-  var fq = '', fcat = '', showG = false;
+  var fq = '', fcat = '', showG = false, wexp = {};   // wexp: 펼친 세부 일정(작업명 key)
   function notConnected(){
     return '<div class="wempty"><b>일정이 아직 연결되지 않았습니다</b><p>일정은 연결한 원본(구글 시트 또는 Azure DevOps)을 그대로 보여 주고, 여기서 고치면 원본에 바로 들어갑니다.</p>' +
       '<p>원본 편집 권한이 있는 사람이 한 번만 [일정 연결]을 하면 이 팀 모든 작업자 PC에 공유됩니다.</p>' +
@@ -626,7 +635,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     var el = $('body-schedule'); if (!el) return;
     var head = '<h2>일정</h2>' + (TABS[0].about ? '<p class="intro">' + esc(TABS[0].about) + '</p>' : '');
     if (!conf) { el.innerHTML = head + '<p class="muted">불러오는 중…</p>'; return; }
-    if (isAzure() && conf.configured && !conf.azurePat) { var az = conf.azure || {}; el.innerHTML = head + '<div class="wempty"><b>Azure DevOps로 연결되어 있습니다</b><p>' + esc(az.org || '') + ' › ' + esc(az.project || '') + (az.scope ? ' · 범위 ' + esc(az.scope) : '') + '</p><p>이 PC에는 아직 토큰이 없습니다. [일정 연결]에서 각자 개인 액세스 토큰(PAT)을 넣으면 작업 항목을 가져옵니다.</p>' + (canWrite() ? '<button class="btn primary" type="button" data-act="conn">일정 연결</button>' : '') + '</div>'; return; }
+    if (isAzure() && conf.configured && !conf.azurePat && !conf.azureShared) { var az = conf.azure || {}; el.innerHTML = head + '<div class="wempty"><b>Azure DevOps로 연결되어 있습니다</b><p>' + esc(az.org || '') + ' › ' + esc(az.project || '') + (az.scope ? ' · 범위 ' + esc(az.scope) : '') + '</p><p>이 PC에는 아직 토큰이 없습니다. [일정 연결]에서 각자 개인 액세스 토큰(PAT)을 넣으면 작업 항목을 가져옵니다.</p>' + (canWrite() ? '<button class="btn primary" type="button" data-act="conn">일정 연결</button>' : '') + '</div>'; return; }
     if (!conf.configured) { el.innerHTML = head + notConnected(); return; }
     if (loading.wbs && !wbs) { el.innerHTML = head + '<p class="muted">일정을 읽는 중…</p>'; return; }
     if (!wbs || !wbs.values) { el.innerHTML = head + srcNote(wbs || { error: '값이 없습니다.' }); return; }
@@ -640,7 +649,8 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       '<div class="bar"><input type="search" id="sq" placeholder="업무 · 담당자 · 메뉴 찾기" value="' + esc(fq) + '" aria-label="일정 찾기">' +
       '<select id="sc" aria-label="상태로 거르기"><option value="">상태 전체</option><option value="prog">진행 중</option><option value="review">리뷰 중(예정)</option><option value="done">완료</option><option value="etc">그 밖(시작 전 등)</option></select>' +
       ((wbs.hr || []).length || (wbs.hc || []).length ? '<label class="hint" style="display:inline-flex;gap:4px;align-items:center"><input type="checkbox" id="sg"' + (showG ? ' checked' : '') + '>숨긴 행 · 열 보기</label>' : '') +
-      '<span class="sp"></span><span class="hint">' + esc(wbs.name || '') + ' · ' + (edit ? '칸을 누르면 고칠 수 있습니다(드롭다운 칸은 목록에서 고름 · 글 칸은 Enter 저장 · Esc 취소, 수식 칸 제외)' : wbs.azure ? '작업 항목 ' + (wbs.count || 0) + '개 · 보기 전용(고치기는 [원본 열기]에서 DevOps로)' : '보기 전용') + (wbs.at ? ' · ' + esc(new Date(wbs.at).toLocaleTimeString()) + ' 기준' : '') + (loading.wbs && !sheetFresh.wbs ? ' · <b class="refreshing">' + (isAzure() ? 'DevOps' : '시트') + '에서 새로 받는 중…</b>' : '') + '</span></div>';
+      '<span class="sp"></span><span class="hint">' + esc(wbs.name || '') + ' · ' + (edit ? '칸을 누르면 고칠 수 있습니다(드롭다운 칸은 목록에서 고름 · 글 칸은 Enter 저장 · Esc 취소, 수식 칸 제외)' : wbs.azure ? '작업 항목 ' + (wbs.count || 0) + '개 · 보기 전용(고치기는 [원본 열기]에서 DevOps로)' : '보기 전용') +
+        (wbs.shared ? ' · <b>팀 공유 사본</b>(' + esc(wbs.shared.by || wbs.shared.pc || '') + ' · ' + esc(new Date(wbs.shared.at).toLocaleString()) + ' 기준, 토큰이 있는 팀원 PC가 30분마다 새로 받습니다)' : wbs.at ? ' · ' + esc(new Date(wbs.at).toLocaleTimeString()) + ' 기준' : '') + (loading.wbs && !sheetFresh.wbs ? ' · <b class="refreshing">' + (isAzure() ? 'DevOps' : '시트') + '에서 새로 받는 중…</b>' : '') + '</span></div>';
     // 열: 시트에서 숨긴 열은 빼고(「숨긴 행 · 열 보기」면 보임), 머리말 아래로 값도 색도 없는 열은 뺀다
     var cols = [];
     for (var j = 0; j < T.width; j++) {
@@ -652,13 +662,16 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     T.rows.forEach(function(ri){ cols.forEach(function(j){ if (T.gantt[j] && val(ri, j).trim() === tdy) todayC = j; }); });
     // 줄: 머리말 줄 + 내용 줄(숨긴 줄 · 빈 줄 빼고, 찾기 · 거르기)
     var hrows = T.rows.filter(function(ri){ return (!hidR[ri] || showG) && cols.some(function(j){ return val(ri, j).trim() || bg(ri, j); }); });
-    var brows = [];
+    // 세부 일정(주간보고 일정표): 작업명 줄 아래 접힌 줄 — ▸를 누른 작업명만 펼친다. 세부 줄은 펼친 작업명 줄이 보일 때만
+    var kidOf = {}, subOf = {}; (wbs.kids || []).forEach(function(k){ kidOf[k.row] = k; (k.rows || []).forEach(function(r){ subOf[r] = k; }); });
+    var brows = [], shownRow = {};
     for (var i = T.start; i < V.length; i++) {
+      if (subOf[i]) { if (wexp[subOf[i].key] && shownRow[subOf[i].row]) brows.push(i); continue; }
       if (hidR[i] && !showG) continue;
       if (!cols.some(function(j){ return val(i, j).trim() || bg(i, j); })) continue;
       if (q && (V[i] || []).join(' ').toLowerCase().indexOf(q) < 0) continue;
       if (fcat) { var it = byRow[i]; if (!it || it.cat !== fcat) continue; }
-      brows.push(i);
+      brows.push(i); shownRow[i] = 1;
     }
     shown = brows.length;
     // 병합: 찾기 · 거르기 중이 아니면 보이는 줄 · 열만큼 rowspan · colspan (머리말 · 내용 구역 안에서만)
@@ -684,6 +697,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       if (b) { st.push('background:' + b); st.push('color:' + (f || '#14171c')); } else if (f && f !== '#000000') st.push('color:' + f);
       if (w) st.push('font-weight:700');
       var body = esc(v);
+      if (tag === 'td' && kidOf[i] && j === W.cols.task) { var kk = kidOf[i], on = !!wexp[kk.key]; body = '<button type="button" class="wtog" data-wt="' + esc(kk.key) + '" aria-expanded="' + on + '" aria-label="세부 일정 ' + (on ? '접기' : '펼치기') + '" title="세부 일정 ' + (on ? '접기' : '펼치기') + ' (' + kk.rows.length + '건)">' + (on ? '▾' : '▸') + '</button>' + body; }
       if (tag === 'td' && dv[i + ',' + j]) { var c = chip(v); body = v ? (c ? '<span class="dd" style="background:' + c[0] + ';color:' + c[1] + '">' + esc(v) + '</span>' : '<span class="dd plain">' + esc(v) + '</span>') : ''; }
       return '<' + tag + (s && s.r > 1 ? ' rowspan="' + s.r + '"' : '') + (s && s.c > 1 ? ' colspan="' + s.c + '"' : '') + ' data-r="' + i + '" data-c="' + j + '"' +
         (cls.length ? ' class="' + cls.join(' ') + '"' : '') + (st.length ? ' style="' + st.join(';') + '"' : '') + (fx[i + ',' + j] ? ' title="수식 칸(시트에서 고치세요)"' : '') + '>' + body + '</' + tag + '>';
@@ -726,6 +740,16 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     else if (todayC >= 0) { var t = box.querySelector('[data-c="' + todayC + '"]'); if (t) box.scrollLeft = Math.max(0, t.offsetLeft - fzw - 24 * 3); }
   }
   document.addEventListener('input', function(e){ if (e.target.id === 'sq') { fq = e.target.value; renderSchedule(); } });
+  // 세부 일정 ▸/▾: 그 작업명의 UX · UI 작업 줄을 펼치고 접는다(스크롤 위치는 그대로)
+  document.addEventListener('click', function(e){
+    var b = e.target.closest && e.target.closest('[data-wt]'); if (!b) return;
+    e.preventDefault(); e.stopPropagation();
+    var k = b.dataset.wt, box = $('sheetBox'), sl = box ? box.scrollLeft : 0, st = box ? box.scrollTop : 0;
+    if (wexp[k]) delete wexp[k]; else wexp[k] = 1;
+    renderSchedule();
+    box = $('sheetBox'); if (box) { box.scrollLeft = sl; box.scrollTop = st; }
+    var nb = document.querySelector('[data-wt="' + (window.CSS && CSS.escape ? CSS.escape(k) : k) + '"]'); if (nb) nb.focus({ preventScroll: true });
+  }, true);
   document.addEventListener('change', function(e){ if (e.target.id === 'sc') { fcat = e.target.value; renderSchedule(); } else if (e.target.id === 'sg') { showG = e.target.checked; renderSchedule(); } });
   // 칸 고치기
   document.addEventListener('click', function(e){
@@ -1369,7 +1393,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     // Azure DevOps(팀 설정 + 이 PC 토큰). 지금 연결 종류를 먼저 고른 채로 연다
     var az = (conf && conf.azure) || {};
     $('fOrg').value = az.org || ''; $('fProj').value = az.project || ''; $('fScope').value = az.scope || '';
-    $('fStartF').value = az.startField || ''; $('fEndF').value = az.endField || ''; $('fDone').value = az.doneStates || '';
+    $('fStartF').value = az.startField || ''; $('fEndF').value = az.endField || ''; $('fDone').value = az.doneStates || ''; $('fReport').value = az.report || '';
     $('fPat').value = ''; $('fPat').placeholder = conf && conf.azurePat ? '이 PC에 저장되어 있음 · 바꿀 때만 입력' : '이 PC에만 저장됩니다';
     setProv(conf && conf.provider === 'azure' ? 'azure' : 'google');
     $('dlg').showModal(); gsText = ''; gsLoad().catch(function(){});
@@ -1659,7 +1683,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       var org = $('fOrg').value.trim().replace(/\/+$/, ''), prj = $('fProj').value.trim(), pat = $('fPat').value.trim();
       if (!/^https:\/\/(dev\.azure\.com\/[^\/\s]+|[A-Za-z0-9-]+\.visualstudio\.com)$/.test(org)) { $('dlgMsg').textContent = '조직 주소는 https://dev.azure.com/{조직} 형식입니다.'; $('fOrg').focus(); return; }
       if (!prj) { $('dlgMsg').textContent = '프로젝트 이름을 넣어 주세요.'; $('fProj').focus(); return; }
-      var abody = { action: 'config', provider: 'azure', azure: { org: org, project: prj, scope: $('fScope').value.trim(), startField: $('fStartF').value.trim(), endField: $('fEndF').value.trim(), doneStates: $('fDone').value.trim() } };
+      var abody = { action: 'config', provider: 'azure', azure: { org: org, project: prj, scope: $('fScope').value.trim(), startField: $('fStartF').value.trim(), endField: $('fEndF').value.trim(), doneStates: $('fDone').value.trim(), report: $('fReport').value.trim() } };
       $('dlgSave').disabled = true; $('dlgMsg').textContent = '저장하는 중…';
       var hasPat = !!pat || !!(conf && conf.azurePat), saved = '저장했습니다 · 팀 설정은 이 팀 작업자 모두에게 공유됩니다' + (pat ? ', 토큰은 이 PC에만 저장했습니다' : '');
       api('/api/sheet', abody).then(function(){ return pat ? api('/api/sheet', { action: 'pat', pat: pat }) : null; }).then(function(){

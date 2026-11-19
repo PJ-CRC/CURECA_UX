@@ -216,7 +216,8 @@ on('GET', '/api/sheet', ({ req, T }) => {
   const cf = core.readJson(T.sheetConf) || {};
   const prov = cf.provider === 'azure' ? 'azure' : 'google';
   const pat = core.readJson(path.join(C.setupDir, 'azure_pat.json')) || {};
-  return { provider: prov, azure: cf.azure === undefined ? null : cf.azure, azurePat: !!String(pat[T.team] || ''),
+  const sh = prov === 'azure' ? core.readJson(path.join(path.dirname(T.sheetConf), 'azure_shared.json')) : null;   // 팀 공유 일정 사본(토큰 없는 PC가 볼 것)
+  return { provider: prov, azure: cf.azure === undefined ? null : cf.azure, azurePat: !!String(pat[T.team] || ''), azureShared: sh && sh.data ? { at: sh.at, pc: sh.pc, by: sh.by } : null,
     configured: prov === 'azure' ? !!(cf.azure && cf.azure.org && cf.azure.project) : !!(cf.webapp && cf.token),
     sheetUrl: String(cf.sheetUrl || ''), wbsGid: String(cf.wbsGid || ''), minutes: String(cf.minutes || ''), cols: cf.cols === undefined ? null : cf.cols,
     by: String(cf.by || ''), at: String(cf.at || ''), canWrite: core.canWrite(req, ['plan']) };
@@ -746,8 +747,112 @@ async function azureCall({ az, pat }, method, url, body) {
   return j;
 }
 const azDate = (v) => { if (!v) return ''; const d = new Date(v); if (isNaN(d)) return String(v); const p = (n) => String(n).padStart(2, '0'); return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`; };
+// ── 주간보고로 일정표(WBS) 만들기(2026-11-19, STAgora) ──
+//  팀 설정 azure.report(예: 「[주간보고 UX/UI]」)가 있으면: 제목에 그 글이 들고 「/ All」로 끝나는 WorkPlanner 중 가장 최근 스프린트(태그 · 제목의 PL-월.주차, 같으면 나중에 만든 것)를 골라
+//  그 보고서(Custom.WPN_Report HTML)의 「주요 일정」 표에서 User Story와 묶음(Local · 운영팀 …)을 읽고, User Story의 하위 [UX] · [UI] 작업을 DevOps에서 바로 읽어
+//  CURECA 일정표(구글 시트)와 같은 모양의 표로 만든다 — 열: Part · ID · 메뉴(User Story) · 작업명 · 시작일 · 완료일 · UX/UI 담당자 · UX/UI 상태 + 평일 간트(UX 초록 · UI 파랑)
+const WBS_DAYS = '일월화수목금토';
+function azState(s) { s = String(s || ''); if (/^(resolved|closed|done|completed)$/i.test(s)) return '완료'; if (/^(in progress|active|doing|committed|developed)$/i.test(s)) return '진행 중'; if (/^(new|to do|todo|proposed|approved)$/i.test(s)) return '대기'; return s; }
+function azWho(w) { const n = w && typeof w === 'object' ? String(w.displayName || w.uniqueName || '') : String(w || ''); return n.replace(/\s*\([^)]*\)\s*$/, ''); }
+async function azureWbs(T, cx) {
+  const az = cx.az, base = az.org + '/' + encodeURIComponent(az.project) + '/_apis/wit/', v = 'api-version=7.0', key = String(az.report).trim();
+  const esc = (s) => s.replace(/'/g, "''");
+  // ① 최신 스프린트 「… / All」 보고서
+  const q = await azureCall(cx, 'POST', base + 'wiql?' + v + '&$top=200', { query: `SELECT [System.Id] FROM WorkItems WHERE [System.TeamProject] = @project AND [System.Title] CONTAINS '${esc(key)}' AND [System.Title] CONTAINS 'All' ORDER BY [System.CreatedDate] DESC` });
+  const cand = core.arr(q && q.workItems).map((x) => x.id).slice(0, 200);
+  if (!cand.length) throw new Error(`「${key} … / All」 주간보고를 찾지 못했습니다.`);
+  const cb = await azureCall(cx, 'POST', base + 'workitemsbatch?' + v, { ids: cand, fields: ['System.Id', 'System.Title', 'System.Tags', 'System.CreatedDate'] });
+  const spr = (f) => { const m = /PL-(\d+)\.(\d+)/i.exec(String(f['System.Tags'] || '') + ' ' + String(f['System.Title'] || '')); return m ? +m[1] * 100 + +m[2] : 0; };
+  const reps = core.arr(cb && cb.value).filter((w) => /\/\s*All\s*$/i.test(String(w.fields['System.Title'] || '')))
+    .sort((a, b) => (spr(b.fields) - spr(a.fields)) || (Date.parse(b.fields['System.CreatedDate']) - Date.parse(a.fields['System.CreatedDate'])));
+  if (!reps.length) throw new Error(`「${key} … / All」 주간보고를 찾지 못했습니다.`);
+  const rep = await azureCall(cx, 'GET', base + 'workitems/' + reps[0].id + '?' + v);
+  const rf = rep.fields || {}, html = String(rf['Custom.WPN_Report'] || ''), sprint = (/PL-\d+\.\d+/i.exec(String(rf['System.Tags'] || '') + ' ' + rf['System.Title']) || [''])[0];
+  // ② 「주요 일정」 표: 묶음 제목(div title="[주간보고…]") 아래 User Story 줄(└ 없는 줄). 같은 묶음 제목이 다시 나오면 「상세 일정」이라 멈춘다
+  const s0 = html.indexOf('주요 일정'); if (s0 < 0) throw new Error('주간보고에 「주요 일정」이 없습니다(WorkPlanner 보고서를 다시 만들어 주세요).');
+  const part = html.slice(s0), groups = [], seenG = {}, stories = [];
+  const re = /<tr\b([\s\S]*?)<\/tr>/g; let m, g = '';
+  while ((m = re.exec(part))) {
+    const row = m[1], gt = /<div title="(\[[^"]*주간보고[^"]*)"/.exec(row);   // 묶음 제목은 표 머리 줄 안에 있다
+    if (gt) { const t = gt[1].replace(/&amp;/g, '&'); if (seenG[t]) break; seenG[t] = 1; g = t; groups.push(t); continue; }
+    const id = /_workitems\/edit\/(\d+)/.exec(row); if (!id || !g || row.includes('└')) continue;
+    if (stories.some((x) => x.id === +id[1])) break;   // 같은 User Story가 다시 나오면 「상세 일정」
+    stories.push({ id: +id[1], group: g });
+  }
+  if (!stories.length) throw new Error('주간보고 「주요 일정」에서 User Story를 찾지 못했습니다.');
+  // ③ User Story + 하위 작업(Hierarchy-Forward) 읽기
+  const sf = az.startField || 'Microsoft.VSTS.Scheduling.StartDate', ef = az.endField || 'Microsoft.VSTS.Scheduling.TargetDate';
+  const st = await azureCall(cx, 'GET', base + 'workitems?ids=' + stories.map((x) => x.id).join(',') + '&$expand=relations&errorPolicy=omit&' + v);
+  const sById = {}; core.arr(st && st.value).forEach((w) => { if (w) sById[w.id] = w; });
+  const kidIds = []; stories.forEach((s) => { const w = sById[s.id]; s.kids = core.arr(w && w.relations).filter((r) => r.rel === 'System.LinkTypes.Hierarchy-Forward').map((r) => +String(r.url).split('/').pop()).filter(Boolean); kidIds.push(...s.kids); });
+  const kById = {}, OE = 'Microsoft.VSTS.Scheduling.OriginalEstimate', CW = 'Microsoft.VSTS.Scheduling.CompletedWork';
+  let kf = ['System.Id', 'System.Title', 'System.State', 'System.AssignedTo', sf, ef, OE, CW];
+  for (let i = 0; i < kidIds.length; i += 200) {
+    let r;
+    try { r = await azureCall(cx, 'POST', base + 'workitemsbatch?' + v, { ids: kidIds.slice(i, i + 200), fields: kf, errorPolicy: 'omit' }); }
+    catch (e) { if (!/TF51535|field|필드/i.test(e.message) || kf.length === 6) throw e; kf = kf.slice(0, 6); r = await azureCall(cx, 'POST', base + 'workitemsbatch?' + v, { ids: kidIds.slice(i, i + 200), fields: kf, errorPolicy: 'omit' }); }   // 시간 필드가 없는 프로세스면 시간 없이
+    core.arr(r && r.value).forEach((w) => { if (w) kById[w.id] = w; });
+  }
+  // ④ 줄 만들기: User Story마다 [UX] · [UI] 작업을 같은 이름끼리 한 줄로(UX 담당 · 상태 / UI 담당 · 상태)
+  const d0 = (x) => { if (!x) return null; const d = new Date(x); return isNaN(d) ? null : new Date(d.getFullYear(), d.getMonth(), d.getDate()); };
+  const lines = [];
+  stories.forEach((s) => {
+    const w = sById[s.id]; if (!w) return; const f = w.fields || {}, pairs = [], byKey = {};
+    s.kids.map((id) => kById[id]).filter(Boolean).forEach((k) => {
+      const t = String(k.fields['System.Title'] || ''), mm = /^\s*\[(UX|UI)[^\]]*\]\s*/i.exec(t); if (!mm) return;   // [UX] · [UI] 작업만(개발 · 요청 작업은 뺀다)
+      const kind = mm[1].toUpperCase(), name = t.slice(mm[0].length).trim(), kk = name.toLowerCase();
+      let p = byKey[kk]; if (!p || p[kind]) { p = { name }; pairs.push(p); byKey[kk] = p; }
+      const num = (x) => (x == null || x === '' ? null : +x);
+      p[kind] = { id: k.id, title: t, who: azWho(k.fields['System.AssignedTo']), st: azState(k.fields['System.State']), raw: String(k.fields['System.State'] || ''), s: d0(k.fields[sf]), e: d0(k.fields[ef]), oe: num(k.fields[OE]), cw: num(k.fields[CW]) };
+    });
+    const sl = { part: s.group.replace(/^.*\/\s*/, '').trim() || s.group, id: s.id, menu: String(f['System.Title'] || ''), s: d0(f[sf]), e: d0(f[ef]), st: azState(f['System.State']) };
+    if (!pairs.length) lines.push(Object.assign({ name: '', UX: null, UI: null, solo: true }, sl));
+    pairs.sort((a, b) => ((a.UX || a.UI).s || 0) - ((b.UX || b.UI).s || 0)).forEach((p) => lines.push(Object.assign({}, sl, p)));
+  });
+  // ⑤ 간트 범위: 가장 이른 시작 주 월요일 ~ 가장 늦은 끝(오늘 포함), 평일만, 최대 26주
+  const all = []; lines.forEach((l) => [l.UX, l.UI].forEach((x) => { if (x) { if (x.s) all.push(x.s); if (x.e) all.push(x.e); } }));
+  const today = d0(new Date()); all.push(today);
+  let lo = new Date(Math.min(...all)), hi = new Date(Math.max(...all)); lo.setDate(lo.getDate() - ((lo.getDay() + 6) % 7));
+  if ((hi - lo) / 864e5 > 182) hi = new Date(lo.getTime() + 182 * 864e5);
+  const days = []; for (let d = new Date(lo); d <= hi; d.setDate(d.getDate() + 1)) if (d.getDay() % 6) days.push(new Date(d));
+  const L = ['Part', 'ID', '메뉴(User Story)', '작업명', '시작일', '완료일', '시간(예상 → 실적)', 'UX 담당자', 'UI 담당자', 'UX 상태', 'UI 상태'], G0 = L.length;
+  const hrs = (xs) => { const o = xs.filter((x) => x && x.oe != null), c = xs.filter((x) => x && x.cw != null); if (!o.length && !c.length) return ''; const f = (n) => String(Math.round(n * 10) / 10); return (o.length ? f(o.reduce((a, x) => a + x.oe, 0)) : '-') + ' → ' + (c.length ? f(c.reduce((a, x) => a + x.cw, 0)) : '-'); };
+  const ymd = (d) => d ? `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}` : '';
+  const H0 = L.slice(), H1 = L.map(() => ''), H2 = L.map(() => '');
+  days.forEach((d, k) => { H0.push(k === 0 || d.getMonth() !== days[k - 1].getMonth() ? (d.getMonth() + 1) + '월' : ''); H1.push((d.getMonth() + 1) + '/' + d.getDate()); H2.push(WBS_DAYS[d.getDay()]); });
+  const values = [H0, H1, H2], bg = [[], [], []], dv = [], fw = [[], [], []], fc = [[], [], []], mg = [], kids = [];
+  L.forEach((_, j) => { fw[0][j] = true; });
+  const UXC = '#d9ead3', UIC = '#cfe2f3', BOTH = '#b7dcc8', SUBC = '#5f6368';
+  const XU = L.indexOf('UX 담당자'), XI = L.indexOf('UI 담당자'), SU = L.indexOf('UX 상태'), SI = L.indexOf('UI 상태');
+  const bar = (ranges) => { const b = []; days.forEach((d, k) => { const hit = ranges.map((x) => !!(x.t && x.t.s && x.t.e && d >= x.t.s && d <= x.t.e)); if (hit[0] || hit[1]) b[G0 + k] = hit[0] && hit[1] ? BOTH : hit[0] ? ranges[0].c : ranges[1].c; }); return b; };
+  lines.forEach((l) => {
+    const r = values.length, ux = l.UX, ui = l.UI;
+    const ss = [ux && ux.s, ui && ui.s].filter(Boolean), ee = [ux && ux.e, ui && ui.e].filter(Boolean);
+    const sd = ss.length ? new Date(Math.min(...ss)) : l.solo ? l.s : null, ed = ee.length ? new Date(Math.max(...ee)) : l.solo ? l.e : null;
+    const row = [l.part, String(l.id), l.menu, l.name, ymd(sd), ymd(ed), hrs([ux, ui]), ux ? ux.who : '', ui ? ui.who : '', ux ? ux.st : (l.solo ? l.st : ''), ui ? ui.st : ''];
+    days.forEach(() => row.push(''));
+    values.push(row); bg.push(bar([{ t: ux, c: UXC }, { t: ui, c: UIC }])); fc.push([]); dv.push([r, SU], [r, SI]);
+    // 세부 일정(접힘): 이 작업명의 [UX] 작업 · [UI] 작업 한 줄씩 — 주간보고 「세부 일정」의 └ 줄과 같다(ID · 담당 · 상태 · 예상 → 실적 · 기간)
+    const ch = [];
+    [['UX', ux, XU, SU, UXC], ['UI', ui, XI, SI, UIC]].forEach(([, t, wc, sc, col]) => {
+      if (!t) return; const cr = values.length, crow = [l.part, String(l.id), l.menu, '└ #' + t.id + ' ' + t.title, ymd(t.s), ymd(t.e), hrs([t]), '', '', '', ''];
+      crow[wc] = t.who; crow[sc] = t.st; days.forEach(() => crow.push(''));
+      const f = []; for (let j = 3; j < G0; j++) f[j] = SUBC;
+      values.push(crow); bg.push(bar([{ t, c: col }, { t: null, c: col }])); fc.push(f); dv.push([cr, sc]); ch.push(cr);
+    });
+    if (ch.length) kids.push({ row: r, key: l.id + '|' + l.name, rows: ch });
+  });
+  // 같은 Part · 같은 User Story는 위아래 병합(엑셀 일정표처럼)
+  const merge = (c, same) => { let a = 3; for (let r = 4; r <= values.length; r++) { if (r < values.length && same(r) && values[r][c]) continue; if (r - a > 1 && values[a][c]) mg.push([a, c, r - a, 1]); a = r; } };
+  merge(0, (r) => values[r][0] === values[r - 1][0]);
+  [1, 2].forEach((c) => merge(c, (r) => values[r][1] === values[r - 1][1]));
+  const url = az.org + '/' + encodeURIComponent(az.project) + '/_workitems/edit/' + rep.id;
+  return { name: String(rf['System.Title'] || '') + (sprint ? ' (' + sprint + ')' : ''), values, bg, dv, fw, fc, mg, fzc: 4, kids, at: Date.now(), readonly: true, azure: true, wbs: true,   // kids: 접는 세부 줄 [{row: 작업명 줄, key, rows: [세부 줄]}]
+    count: lines.length, total: stories.length, src: { id: rep.id, url, sprint }, warn: kf.length === 6 ? '작업 시간(예상 · 실적) 필드가 없어 시간 없이 가져왔습니다.' : '' };
+}
 async function azureItems(T) {
   const cx = azureConf(T), { az } = cx, base = az.org + '/' + encodeURIComponent(az.project) + '/_apis/wit/', v = 'api-version=7.0';
+  if (String(az.report || '').trim()) return azureWbs(T, cx);
   const scope = String(az.scope || '').trim(), qm = /_queries\/query(?:-edit)?\/([0-9a-f-]{36})/i.exec(scope) || /^([0-9a-f-]{36})$/i.exec(scope);
   let res;
   if (qm) res = await azureCall(cx, 'GET', base + 'wiql/' + qm[1] + '?' + v + '&$top=' + AZ_MAX);
@@ -791,15 +896,108 @@ async function azureItems(T) {
   return { name: 'Azure DevOps · ' + az.project, values, at: Date.now(), readonly: true, azure: true, count: values.length - 1, total: ids.length,
     warn: missing ? '시작일 · 목표일 필드를 찾지 못해 날짜 없이 가져왔습니다. [일정 연결]에서 필드 이름을 확인해 주세요.' : '' };
 }
+// ── Azure DevOps Wiki에 시트 묶음 엑셀 올리기(2026-11-19, 지금은 STAgora 언어셋 — meta.books.{묶음}.wiki에 페이지 주소가 있을 때만) ──
+//  이 PC 토큰(Wiki · Read & write)으로: ① 첨부(.attachments) 올리기 ② 페이지 읽기(ETag) ③ 맨 위 「업데이트 기록」 자리에 [파일](경로) + 변경 줄을 넣어 고치기
+//  조직 · 프로젝트는 팀 [일정 연결] 설정의 것만 쓴다(페이지 주소가 다른 조직이면 거절 — 토큰을 엉뚱한 곳에 쓰지 않게)
+async function azureReq({ pat }, method, url, opt) {
+  opt = opt || {}; let r;
+  const headers = Object.assign({ Authorization: 'Basic ' + Buffer.from(':' + pat).toString('base64'), Accept: 'application/json' }, opt.json !== undefined ? { 'Content-Type': 'application/json' } : {}, opt.headers || {});
+  try { r = await fetch(url, { method, redirect: 'manual', signal: AbortSignal.timeout(120000), headers, body: opt.json !== undefined ? JSON.stringify(opt.json) : opt.raw }); }
+  catch (e) { throw new Error('Azure DevOps에 닿지 못했습니다: ' + e.message); }
+  const txt = await r.text(); let j = null; try { j = JSON.parse(txt); } catch (e) {}
+  if (r.status === 401 || r.status === 203 || (r.status >= 300 && r.status < 400) || (!j && r.ok && txt)) throw new Error('토큰이 거부되었습니다. 토큰이 만료되었거나 범위(Wiki · Read & write)가 빠졌는지 확인해 주세요.');
+  if (!r.ok) {
+    const m = j && (j.message || (j.value && j.value.Message)) ? String(j.message || j.value.Message) : txt.slice(0, 200);
+    if (r.status === 403) throw new Error('Wiki 권한이 없습니다(' + m + '). 토큰 범위에 Wiki · Read & write가 있는지, 이 Wiki를 고칠 권한이 있는지 확인해 주세요.');
+    if (r.status === 404) throw new Error('Wiki 페이지를 찾지 못했습니다(' + m + ')');
+    if (r.status === 412) throw new Error('그사이 Wiki 페이지가 바뀌었습니다. 다시 눌러 주세요.');
+    throw new Error('Azure DevOps 오류 ' + r.status + ': ' + m);
+  }
+  return { j, etag: r.headers.get('etag') || '' };
+}
+function wikiTarget(T, pageUrl) {
+  const cx = azureConf(T), org = String(cx.az.org).replace(/\/+$/, '');
+  const m = /^(https:\/\/[^/]+\/[^/]+)\/([^/]+)\/_wiki\/wikis\/([^/?#]+)\/(\d+)/.exec(String(pageUrl || ''));
+  if (!m) throw new Error('Wiki 페이지 주소가 아닙니다: ' + pageUrl);
+  if (m[1].toLowerCase() !== org.toLowerCase()) throw new Error('Wiki 페이지의 조직이 [일정 연결]의 조직과 다릅니다.');
+  const base = org + '/' + m[2] + '/_apis/wiki/wikis/' + m[3];
+  return { cx, base, page: base + '/pages/' + m[4] + '?api-version=7.1', pageId: m[4] };
+}
+// 묶음의 Wiki 주소: 이 팀 UX 문서 meta.books[book].wiki
+function bookWiki(T, gid, book) {
+  if (!/^[\w.()\-가-힣]+$/.test(String(gid || '')) || !/^[\w.\-]+$/.test(String(book || ''))) throw new Error('문서 · 묶음 이름이 잘못되었습니다.');
+  const m = core.readJson(path.join(T.guideRoot, gid, 'meta.json')) || {}, b = (m.books || {})[book];
+  if (!b || !b.wiki) throw new Error('이 시트 묶음에는 올릴 Wiki 페이지가 정해져 있지 않습니다.');
+  return String(b.wiki);
+}
+// 작업 항목 찾기 · 읽기(읽기만): 제목에 글이 든 항목 목록, 또는 항목 하나의 모든 필드(설명 HTML 포함)
+on('GET', '/api/azure/find', async ({ q, T }) => {
+  const cx = azureConf(T), base = cx.az.org + '/' + encodeURIComponent(cx.az.project) + '/_apis/wit/', v = 'api-version=7.0';
+  const t = String(q.get('title') || '').trim(); if (!t) throw new Error('찾을 제목을 넣어 주세요.');
+  const res = await azureCall(cx, 'POST', base + 'wiql?' + v + '&$top=50', { query: `SELECT [System.Id] FROM WorkItems WHERE [System.TeamProject] = @project AND [System.Title] CONTAINS '${t.replace(/'/g, "''")}' ORDER BY [System.ChangedDate] DESC` });
+  const ids = core.arr(res && res.workItems).map((x) => x.id).slice(0, 50); if (!ids.length) return { items: [] };
+  const r = await azureCall(cx, 'POST', base + 'workitemsbatch?' + v, { ids, fields: ['System.Id', 'System.WorkItemType', 'System.Title', 'System.State', 'System.ChangedDate', 'System.AreaPath'] });
+  return { items: core.arr(r && r.value).map((w) => ({ id: w.id, type: w.fields['System.WorkItemType'], title: w.fields['System.Title'], state: w.fields['System.State'], changed: w.fields['System.ChangedDate'], area: w.fields['System.AreaPath'] })) };
+});
+on('GET', '/api/azure/item', async ({ q, T }) => {
+  const cx = azureConf(T), id = parseInt(q.get('id'), 10); if (!(id > 0)) throw new Error('작업 항목 번호가 잘못되었습니다.');
+  const r = await azureCall(cx, 'GET', cx.az.org + '/' + encodeURIComponent(cx.az.project) + '/_apis/wit/workitems/' + id + '?$expand=relations&api-version=7.0');
+  return { id: r.id, rev: r.rev, fields: r.fields || {}, relations: core.arr(r.relations).map((x) => ({ rel: x.rel, url: x.url, name: x.attributes && x.attributes.name })) };
+});
+on('GET', '/api/azure/wiki', async ({ q, T }) => {
+  const t = wikiTarget(T, bookWiki(T, q.get('id'), q.get('book')));
+  const { j } = await azureReq(t.cx, 'GET', t.page + '&includeContent=true');
+  return { path: j && j.path, content: String((j && j.content) || ''), url: j && j.remoteUrl };
+});
+on('POST', '/api/azure/wiki', async ({ req, body, T }) => {
+  if (!core.canWrite(req, ['guide'])) throw new Error(core.roMsg('guide'));
+  const b = (await body()) || {}, name = String(b.fileName || '').trim(), data = String(b.data || ''), lines = core.arr(b.lines).map((x) => String(x).trim()).filter(Boolean);
+  if (!/^[^\\/:*?"<>|]+\.xlsx$/i.test(name)) throw new Error('파일 이름이 잘못되었습니다.');
+  if (!data || data.length > 60 * 1024 * 1024 || !/^[A-Za-z0-9+/=]+$/.test(data)) throw new Error('엑셀 파일 내용이 잘못되었습니다.');
+  const t = wikiTarget(T, bookWiki(T, b.id, b.book));
+  // 같은 이름 파일이 이미 페이지에 있으면 올리지 않는다(두 번 누름 · 같은 날 같은 버전)
+  const pg0 = await azureReq(t.cx, 'GET', t.page + '&includeContent=true');
+  if (String((pg0.j && pg0.j.content) || '').includes('[' + name + ']')) throw new Error('Wiki에 같은 이름의 파일(' + name + ')이 이미 있습니다.');
+  // ① 첨부: 내용은 base64 글 그대로 보낸다(Azure Wiki 첨부 API 규칙)
+  const up = await azureReq(t.cx, 'PUT', t.base + '/attachments?name=' + encodeURIComponent(name) + '&api-version=7.1', { raw: data, headers: { 'Content-Type': 'application/octet-stream' } });
+  const ap = String((up.j && up.j.path) || '/.attachments/' + name);
+  // ② 페이지 다시 읽기(ETag) → ③ 「[변경사항]」 제목 바로 아래(없으면 맨 위)에 새 기록: [파일](경로) + 「*   [구분] 내용」 줄들, 기록 사이는 빈 줄
+  const pg = await azureReq(t.cx, 'GET', t.page + '&includeContent=true');
+  const block = '[' + name + '](' + ap.replace(/ /g, '%20') + ')\n' + lines.map((l) => '*   ' + l + '\n').join('');
+  const old = String((pg.j && pg.j.content) || ''), hm = /^(\s*\[변경사항\][^\n]*\n)\s*/.exec(old);
+  const content = hm ? hm[1] + '\n' + block + '\n' + old.slice(hm[0].length) : block + (old ? '\n' + old : '');
+  await azureReq(t.cx, 'PATCH', t.page, { json: { content }, headers: { 'If-Match': pg.etag } });
+  return { ok: true, attachment: ap, url: (pg.j && pg.j.remoteUrl) || '' };
+});
+// ── Azure 일정 팀 공유 사본(2026-11-19) ──
+//  토큰이 있는 PC가 일정을 받을 때마다(화면 · 30분마다 백그라운드) 팀 config 폴더의 azure_shared.json에 사본을 남긴다(깃으로 모든 PC에 공유, 웹으로 내보내지 않음).
+//  토큰이 없는 PC는 그 사본을 보기 전용으로 본다 — 토큰은 공유하지 않는다. 내용이 바뀌었거나 1시간이 지났을 때만 써서 이력 동기화를 늘리지 않는다
+const azShared = (T) => path.join(path.dirname(T.sheetConf), 'azure_shared.json');
+const hasAzPat = (T) => !!String((core.readJson(path.join(C.setupDir, 'azure_pat.json')) || {})[T.team] || '');
+async function azureRefresh(T) {
+  const d = await azureItems(T), txt = JSON.stringify(d);
+  if (C.readonly) return d;
+  const ck = path.join(T.sheetCache, 'azure.json'); fs.mkdirSync(path.dirname(ck), { recursive: true }); fs.writeFileSync(ck, txt, 'utf8');
+  try {
+    const f = azShared(T), old = core.readJson(f) || {}, key = (x) => JSON.stringify(Object.assign({}, x, { at: 0 }));
+    if (!old.data || key(old.data) !== key(d) || Date.now() - (old.at || 0) > 3600000) { core.writeJson(f, { at: Date.now(), pc: C.pcName, by: core.meName(), data: d }); core.syncWant(); }
+  } catch (e) {}
+  return d;
+}
 on('GET', '/api/sheet/data', async ({ q, T, res, send, sendJson }) => {
   // Azure DevOps로 연결된 팀: 작업 항목을 표로(마지막으로 받은 사본은 cache=1로 먼저)
   if ((core.readJson(T.sheetConf) || {}).provider === 'azure') {
     const ck = path.join(T.sheetCache, 'azure.json');
+    // 이 PC에 토큰이 없으면 팀 공유 사본(누가 · 언제 받았는지 함께)
+    if (!hasAzPat(T)) {
+      const sh = core.readJson(azShared(T));
+      if (!sh || !sh.data) return sendJson(res, 502, { error: '아직 팀에 공유된 일정이 없습니다. 토큰이 있는 팀원이 일정 탭을 한 번 열면 모두에게 보입니다.' });
+      return sendJson(res, 200, Object.assign({}, sh.data, { shared: { at: sh.at, pc: sh.pc, by: sh.by } }));
+    }
     if (q.get('cache') && core.exists(ck)) return send(res, 200, 'application/json; charset=utf-8', '{"cache":true,"cachedAt":"' + localIso(fs.statSync(ck).mtime) + '","data":' + core.readText(ck) + '}');
     try {
-      const d = await azureItems(T), txt = JSON.stringify(d);
-      if (!C.readonly) { fs.mkdirSync(path.dirname(ck), { recursive: true }); fs.writeFileSync(ck, txt, 'utf8'); }
-      return send(res, 200, 'application/json; charset=utf-8', txt);
+      const d = await azureRefresh(T);
+      return send(res, 200, 'application/json; charset=utf-8', JSON.stringify(d));
     } catch (e) {
       if (core.exists(ck)) return send(res, 200, 'application/json; charset=utf-8', '{"cached":true,"error":' + JSON.stringify(e.message) + ',"data":' + core.readText(ck) + '}');
       return sendJson(res, 502, { error: e.message });
@@ -830,4 +1028,4 @@ const helpers = { azureItems, protoSnapshot, testKey, projDir, readProj, keyOf, 
 require('./figma')(on, helpers);   // Figma 토큰(REST API) — 캡처. writes.js가 요청 완료 때 helpers.figmaAfterDone을 부른다
 require('./writes')(on, helpers);
 
-module.exports = { helpers, find, routes, testKey, projDir, readProj, keyOf, workKey };
+module.exports = { helpers, find, routes, testKey, projDir, readProj, keyOf, workKey, azureRefresh, hasAzPat };

@@ -71,7 +71,7 @@ tr.det td{background:var(--surface-2);padding:14px 16px 16px 34px}
   <div class="appnav-right"><span class="badge" id="srv">확인 중…</span></div>
 </nav>
 <main class="app-wrap">
-  <header class="app-head"><div class="app-head-t"><h1>감시 상태</h1><p>작업자 PC마다 백그라운드 감시(Claude)가 살아 있는지, 최근 끊김 · 오류를 봅니다. 이 PC(개발 PC)에서만 보입니다.</p></div></header>
+  <header class="app-head"><div class="app-head-t"><h1>감시 상태</h1><p>작업자 PC마다 백그라운드 감시(Claude)가 살아 있는지, 최근 7일의 처리 · 끊김 · 오류를 봅니다. 이 PC(개발 PC)에서만 보입니다.</p></div></header>
   <div class="bar"><span id="when" role="status"></span><span class="sp"></span><button class="btn" type="button" id="reload">새로 보기</button></div>
   <div class="tbl-scroll"><table>
     <thead><tr><th scope="col">PC · 작업자</th><th scope="col">감시</th><th scope="col">마지막 소식</th><th scope="col">버전</th><th scope="col">Claude</th><th scope="col">최근 문제</th></tr></thead>
@@ -111,8 +111,8 @@ tr.det td{background:var(--surface-2);padding:14px 16px 16px 34px}
         var tu = (x.turns || []).map(function(t){ var r = t.ok === true ? '끝남' + (t.sec != null ? ' · ' + Math.round(t.sec / 60) + '분' : '') : t.ok === false ? '<span class="k-error">오류 응답</span>' : '끝 기록 없음(처리 중 · 끊김)'; return '<li><time>' + hm(t.at) + '</time><span>' + esc(t.what) + (t.resume ? ' (같은 세션에 답)' : '') + ' — ' + r + '</span></li>'; }).join('');
         row += '<tr class="det" id="d-' + esc(x.slug) + '"><td colspan="6"><div class="det">' +
           '<h3>지금 상태 글</h3><p class="msg">' + esc(x.msg || '-') + (x.statusAt ? ' <span class="sub">' + hm(x.statusAt) + ' 기준</span>' : '') + '</p>' +
-          '<h3>최근 처리 ' + (x.turns || []).length + '건</h3>' + (tu ? '<ol>' + tu + '</ol>' : '<p class="msg none">기록 없음</p>') +
-          '<h3>끊김 · 오류 · 시작 · 중지 (최근 ' + (x.events || []).length + '건)</h3>' + (ev ? '<ol>' + ev + '</ol>' : '<p class="msg none">기록 없음</p>') +
+          '<h3>최근 7일 처리 ' + (x.turns || []).length + '건</h3>' + (tu ? '<ol>' + tu + '</ol>' : '<p class="msg none">기록 없음</p>') +
+          '<h3>끊김 · 오류 · 시작 · 중지 (최근 7일 ' + (x.events || []).length + '건)</h3>' + (ev ? '<ol>' + ev + '</ol>' : '<p class="msg none">기록 없음</p>') +
           '</div></td></tr>';
       }
       return row;

@@ -10,6 +10,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
 <script>window.WB && WB.guardMarked && WB.guardMarked();</script>
 <script src="wbcalc.js"></script>
+<script src="wbxlsx.js"></script>
 <style>
 /* 만든 UX 가이드 보기: .history/guides/{id}/guide.md (깃으로 공유)
    왼쪽 = 목차 트리(## 대분류 › ### 상세), 오른쪽 = 고른 항목의 내용. 좁은 화면에서는 트리가 위쪽 「목차」로 접힌다 */
@@ -168,6 +169,14 @@ table.wide td{word-break:keep-all;overflow-wrap:anywhere}
 .wb-fx .fxv{flex:1;min-width:0;padding:0 10px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:"JetBrains Mono",ui-monospace,Consolas,monospace}
 .wb-grid table.fixw{table-layout:fixed;min-width:0}
 .wb-grid table.fixw th,.wb-grid table.fixw td{max-width:none}
+/* 엑셀 서식이 있는 시트: 칸 안 여백 · 아래 맞춤 · 글꼴은 엑셀처럼(열 너비가 엑셀 기준이라 여백이 크면 글이 덜 들어간다). 줄 바꿈 칸은 칸 서식(w)이, 병합은 colspan · rowspan이 정한다 */
+.wb-grid table.xs td:not(.rn),.wb-grid table.xs tr.hd th:not(.rn){padding:2px 4px;vertical-align:bottom;line-height:1.3}
+.wb-grid table.xs tr.hd th:not(.rn){line-height:1.3}
+/* 넘침: 줄 바꿈이 아닌 글은 오른쪽 빈칸까지 이어서 보인다(엑셀처럼) — 칸은 넘침을 허용하고, 안쪽 글은 빈칸이 끝나는 너비에서 자른다 */
+.wb-grid td.ov,.wb-grid th.ov{overflow:visible;text-overflow:clip}
+.wb-grid thead th.ov{z-index:3}   /* 고정 줄 칸은 서로 겹쳐 그려지므로(sticky) 넘치는 칸을 옆 칸보다 위로 */
+.wb-grid thead th.rn{z-index:4}   /* 행 번호는 넘친 글보다 위(옆으로 밀어도 보이게) */
+.wb-grid .ovt{display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 .wb-grid thead tr.hd th{height:29px;box-sizing:border-box;line-height:18px}
 .wb-grid thead tr.hd th[data-r]{font-weight:600}
 .wb-grid table.xs thead tr.hd th[data-r]{background:var(--surface);font-weight:400}   /* 엑셀 서식이 있는 시트: 고정 줄도 엑셀 칸처럼(색은 서식이 정한다) */
@@ -493,6 +502,8 @@ html.embed,html.embed body{overflow:hidden}
   <div class="app-head-act">
     <button type="button" class="btn pri" id="editBtn" aria-controls="rq" aria-expanded="false" hidden>문서 수정<span class="nb" id="editNb" hidden></span></button>
     <button type="button" class="btn" id="csvBtn" title="지금 보고 있는 표(CSV)를 지금 저장된 내용으로 받습니다. 파일 이름 끝에 받은 날짜가 붙습니다" hidden>CSV 다운로드</button>
+    <button type="button" class="btn" id="wikiBtn" title="지금 저장된 내용의 엑셀을 Azure DevOps Wiki 페이지에 올리고, 맨 위 [변경사항]에 이번 버전 기록을 넣습니다" hidden>Wiki에 올리기</button>
+    <button type="button" class="btn" id="xlsxBtn" title="시트 묶음 전체를 지금 저장된 내용으로 엑셀(.xlsx) 파일 하나로 받습니다. 파일 이름 끝에 받은 날짜가 붙습니다" hidden>엑셀 다운로드</button>
     <button type="button" class="btn" id="revBtn" aria-controls="revBox" aria-expanded="false" hidden>수정 이력</button>
     <button type="button" class="btn del-doc" id="delBtn" title="이 문서를 지웁니다(최고관리자만). 모든 작업자에게서 사라지고, 휴지통(_trash)에 남아 되살릴 수 있습니다" hidden>문서 지우기</button>
   </div>
@@ -567,8 +578,80 @@ html.embed,html.embed body{overflow:hidden}
   var FILES = null, FILEMAP = null, RAW = {};
   /* CSV 다운로드(2026-11-18): 지금 보고 있는 항목이 CSV면(시트 묶음은 지금 시트) 머리에 [CSV 다운로드]. 저장된 내용 그대로, 엑셀에서 한글이 깨지지 않게 BOM을 붙이고
      파일 이름 = 원래 이름(- → _) + _받은날짜(예: alert_catalog_20261118.csv) */
-  function csvPath(){ var p = bookFile(cur); return /\.csv$/i.test(p || '') ? p : ''; }
-  function csvSync(){ var b = $('csvBtn'); if (b) b.hidden = !csvPath(); }
+  // 시트 묶음은 화면을 그리기 전에도 버튼을 보이게 첫 시트로 판단한다(누를 때는 그때 보고 있는 시트)
+  function csvPath(){ var p = bookFile(cur); if (!p && xlsxKey()) p = Object.keys(meta.books[xlsxKey()].sheets || {})[0] || ''; return /\.csv$/i.test(p || '') ? p : ''; }
+  function csvSync(){
+    var b = $('csvBtn'); if (b) b.hidden = !csvPath(); var x = $('xlsxBtn'); if (x) x.hidden = !(window.WBXLSX && xlsxKey());
+    var w = $('wikiBtn'), k = xlsxKey(); if (w) w.hidden = !(window.WBXLSX && k && meta.books[k].wiki);   // Wiki 주소가 정해진 묶음만(지금은 STAgora 언어셋)
+  }
+  /* 엑셀 만들 재료(지금 저장된 내용) · 파일 이름 */
+  function xlsxBook(k){ var md = bookChunk(meta, k, RAW, 2), m = /```wbook\n([\s\S]*)\n```/.exec(md); try { return m ? JSON.parse(m[1]) : null; } catch (e) { return null; } }
+  function xlsxFile(k, book){ var b = meta.books[k], src = String(b.source || '').split('/').pop().replace(/\.xlsx?$/i, ''); return xlsxName(src || b.title || k, book) + '.xlsx'; }
+  /* Wiki에 넣을 변경 줄: 「문서이력」 시트에서 이번(가장 높은) 버전의 줄들 → 「[구분] 내용」. 버전 칸이 빈 아래 줄은 같은 버전으로 본다 */
+  function wikiLines(book, ver){
+    var s = (book.sheets || []).filter(function(x){ return /이력|history/i.test(x.name || ''); })[0]; if (!s) return [];
+    var rows = s.rows || [], hr = -1, cv = -1, cg = -1, cc = -1;
+    rows.some(function(r, i){ var a = r.map(function(v){ return String(v || '').trim(); }); var v = a.indexOf('Ver'); if (v < 0) return false; hr = i; cv = v; cg = a.indexOf('구분'); cc = a.indexOf('내용'); return true; });
+    if (hr < 0 || cc < 0) return [];
+    var out = [], on = false;
+    for (var i = hr + 1; i < rows.length; i++) {
+      var r = rows[i], v = String(r[cv] || '').trim();
+      if (v) { if (on) break; on = v.toLowerCase() === String(ver).toLowerCase(); }
+      if (!on) continue;
+      var g = cg >= 0 ? String(r[cg] || '').trim() : '', c = String(r[cc] || '').trim();
+      if (c) out.push((g ? '[' + g + '] ' : '') + c);
+    }
+    return out;
+  }
+  function wikiUpload(){
+    var k = xlsxKey(), btn = $('wikiBtn'); if (!k || !window.WBXLSX) return;
+    var book = xlsxBook(k); if (!book || !book.sheets || !book.sheets.length) { WB.alert('이 시트 묶음의 내용을 아직 불러오지 못했습니다.\n잠시 뒤 다시 눌러 주세요.'); return; }
+    var nm = xlsxFile(k, book), ver = (/_(v\d+(?:\.\d+)+)_\d{6}\.xlsx$/i.exec(nm) || [])[1] || '', lines = wikiLines(book, ver);
+    var q = '?id=' + encodeURIComponent(id) + '&book=' + encodeURIComponent(k);
+    btn.disabled = true;
+    fetch('/api/azure/wiki' + q, { cache: 'no-store' }).then(function(r){ return r.json(); }).then(function(pg){
+      if (pg.error) throw new Error(pg.error);
+      // 이미 올라간 같은 버전이 있으면 경고(다른 날짜면 올릴 수는 있다)
+      var same = ver && new RegExp('_' + ver.replace(/\./g, '\\.') + '_\\d{6}\\.xlsx\\]', 'i').test(pg.content || '');
+      var msg = 'Wiki 「' + String(pg.path || '').split('/').pop() + '」에 올립니다.\n\n' + nm + '\n' + (lines.length ? lines.map(function(l){ return '  · ' + l; }).join('\n') : '  (문서이력에 ' + (ver || '이번 버전') + ' 줄이 없어 변경 내용 없이 올라갑니다)') + '\n\n페이지 맨 위 [변경사항]에 위 내용이 추가됩니다.';
+      return WB.confirm(msg, { title: 'Wiki에 올리기', ok: '올리기', warn: same ? 'Wiki에 ' + ver + ' 파일이 이미 있습니다. 문서이력에 새 버전을 먼저 적었는지 확인해 주세요.' : '' });
+    }).then(function(ok){
+      if (!ok) return null;
+      btn.textContent = '올리는 중…';
+      return WBXLSX.build(book).then(function(blob){ return new Promise(function(res, rej){ var fr = new FileReader(); fr.onload = function(){ res(String(fr.result).replace(/^data:[^,]*,/, '')); }; fr.onerror = function(){ rej(new Error('파일을 읽지 못했습니다.')); }; fr.readAsDataURL(blob); }); })
+        .then(function(b64){ return post('/api/azure/wiki', { id: id, book: k, fileName: nm, data: b64, lines: lines }); })
+        .then(function(d){ return WB.alert('Wiki에 올렸습니다.\n' + nm, { title: 'Wiki에 올리기' }).then(function(){ if (d.url) window.open(d.url, '_blank', 'noopener'); }); });
+    }).catch(function(e){ WB.alert('Wiki에 올리지 못했습니다.\n' + (e && e.message || e), { title: 'Wiki에 올리기' }); })
+      .then(function(){ btn.disabled = false; btn.textContent = 'Wiki에 올리기'; });
+  }
+  function ymdNow(){ var d = new Date(); return d.getFullYear() + String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0'); }
+  /* 엑셀 다운로드(2026-11-19): 시트 묶음(언어셋 등)을 보고 있으면 머리에 [엑셀 다운로드]. 묶음 전체를 지금 저장된 내용으로 .xlsx 하나로(wbxlsx.js) —
+     시트 · 값 · 수식 · 칸 서식 · 열 너비 · 고정 행 · 필터 · 목록. 파일 이름 = 원본 엑셀 이름(meta.books.source, 없으면 묶음 제목, - · 빈칸 → _) + _받은날짜.xlsx */
+  /* 엑셀 파일 이름(2026-11-19): 원본 이름은 그대로 두고 버전 · 날짜만 바꾼다 — 예: 2.STAgora-언어셋-통합본_v2.31_261110 → 2.STAgora-언어셋-통합본_v2.33_261119
+     버전 = 「문서이력」(이력 · History) 시트의 가장 높은 vN.NN과 원본 이름의 버전 중 높은 것. 날짜 = 받는 날 YYMMDD.
+     원본 이름에 버전이 없으면 _버전을, 끝에 6자리 날짜가 없으면 _날짜를 붙인다 */
+  function xlsxName(base, book){
+    var vs = [], vnum = function(v){ return String(v).replace(/^v/i, '').split('.').map(Number); };
+    var cmp = function(a, b){ var x = vnum(a), y = vnum(b); for (var n = 0; n < Math.max(x.length, y.length); n++) { var d = (x[n] || 0) - (y[n] || 0); if (d) return d; } return 0; };
+    (book.sheets || []).filter(function(s){ return /이력|history/i.test(s.name || ''); }).forEach(function(s){ (s.rows || []).forEach(function(r){ r.forEach(function(v){ v = String(v || '').trim(); if (/^v\d+(\.\d+)+$/i.test(v)) vs.push(v); }); }); });
+    var m = /v\d+(\.\d+)+/i.exec(base); if (m) vs.push(m[0]);
+    var ver = vs.sort(cmp).pop() || '', d = new Date(), yymmdd = String(d.getFullYear()).slice(2) + String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0');
+    var nm = String(base).replace(/[\\\/:*?"<>|]/g, '_');
+    if (ver) nm = m ? nm.replace(m[0], ver) : nm + '_' + ver;
+    return /_\d{6}$/.test(nm) ? nm.replace(/_\d{6}$/, '_' + yymmdd) : nm + '_' + yymmdd;
+  }
+  function xlsxKey(){ var f = cur && cur.file || ''; var k = /^@book:/.test(f) ? f.slice(6) : ''; return k && meta && meta.books && meta.books[k] ? k : ''; }
+  function xlsxDownload(){
+    var k = xlsxKey(), btn = $('xlsxBtn'); if (!k || !window.WBXLSX) return;
+    var book = xlsxBook(k);
+    if (!book || !book.sheets || !book.sheets.length) { WB.alert('이 시트 묶음의 내용을 아직 불러오지 못했습니다.\n잠시 뒤 다시 눌러 주세요.'); return; }
+    var nm = xlsxFile(k, book);
+    if (btn) { btn.disabled = true; btn.textContent = '만드는 중…'; }
+    WBXLSX.build(book).then(function(blob){
+      var url = URL.createObjectURL(blob), a = document.createElement('a'); a.href = url; a.download = nm; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function(){ URL.revokeObjectURL(url); }, 4000);
+    }, function(e){ WB.alert('엑셀 파일을 만들지 못했습니다.\n' + (e && e.message || e)); }).then(function(){ if (btn) { btn.disabled = false; btn.textContent = '엑셀 다운로드'; } });
+  }
   function csvDownload(){
     var p = csvPath(); if (!p) return;
     var t = RAW[p]; if (t == null) { WB.alert('이 표의 내용을 아직 불러오지 못했습니다.\n잠시 뒤 다시 눌러 주세요.'); return; }
@@ -669,9 +752,10 @@ html.embed,html.embed body{overflow:hidden}
       if (sp && byPath[sp] != null) { try { so = JSON.parse(String(byPath[sp]).replace(/^﻿/, '') || 'null'); } catch (x) { so = null; } }
       return { name: b.sheets[p], path: p, rows: sheetRows(String(byPath[p]).replace(/^﻿/, '').replace(/\r\n/g, '\n')),
         fpath: fp, f: fo, spath: sp, sty: so, freeze: +((b.freeze || {})[p] || 0), widths: (b.widths || {})[p] || null,
-        filter: (b.filters || {})[p] || '', lists: (b.lists || {})[p] || null };
+        filter: (b.filters || {})[p] || '', lists: (b.lists || {})[p] || null,
+        merges: (b.merges || {})[p] || null, heights: (b.heights || {})[p] || null, hrows: (b.hrows || {})[p] || null };
     });
-    return H + ' ' + (b.title || k) + '\n\n' + (ov ? ov + '\n\n' : '') + '```wbook\n' + JSON.stringify({ title: b.title || k, sheets: sheets }) + '\n```';
+    return H + ' ' + (b.title || k) + '\n\n' + (ov ? ov + '\n\n' : '') + '```wbook\n' + JSON.stringify({ title: b.title || k, font: b.font || null, sheets: sheets }) + '\n```';
   }
   function combine(m, texts){
     var lay = m.layout || 'files', pieces = [{ t: '# ' + (m.title || id) + '\n\n' + (m.summary ? m.summary + '\n\n' : ''), f: '' }], byPath = {};
@@ -737,6 +821,8 @@ html.embed,html.embed body{overflow:hidden}
   function otherTeam(){ var p = (G && (G.mdPath || G.firstPath)) || ((FILES || [])[0] || {}).mdPath || ''; return /^\.history\/teams\//.test(p); }
   function delShow(){ var b = $('delBtn'); if (b) b.hidden = !(ADMIN && id && meta && meta.title !== undefined && (meta.format !== 'files' || meta.folderList || otherTeam())); }
   $('csvBtn').onclick = csvDownload;
+  $('xlsxBtn').onclick = xlsxDownload;
+  $('wikiBtn').onclick = wikiUpload;
   $('delBtn').onclick = async function(){
     var keys = appliedKeys(), nm = meta.title || id;
     if (!(await WB.confirm('「' + nm + '」(' + kindName(meta.kind) + ') 문서를 지울까요?\n모든 작업자에게서 사라지고, 지우면 다시 볼 수 없습니다.' +
@@ -854,17 +940,31 @@ html.embed,html.embed body{overflow:hidden}
       /* 칸 드롭다운(엑셀 데이터 확인 목록): [{rects: [{r1, c1, r2, c2}], values}] — 엑셀 줄 번호 기준 */
       s.lv = (s.lists || []).map(function(L){ return { values: L.values || [], rects: (L.ranges || []).map(function(rg){ var a = /^([A-Z]+)(\d+)(?::([A-Z]+)(\d+))?$/.exec(rg); return a && CALC ? { r1: +a[2] - 1, c1: CALC.colNum(a[1]), r2: +(a[4] || a[2]) - 1, c2: CALC.colNum(a[3] || a[1]) } : null; }).filter(Boolean) }; });
       s.orig = cloneRows(s.rows); s.fmOrig = cloneFm(s.fm); s.stOrig = cloneRows(s.st); s.ids = s.rows.map(function(_, k){ return k; });
+      /* 엑셀 모양(2026-11-19): 셀 병합 · 행 높이 · 숨긴 행 — 모두 엑셀(처음 불러온) 줄 번호 기준(0부터). 줄을 더하거나 지워도 s.ids로 원래 줄을 찾는다 */
+      s.mg = (s.merges || []).map(function(rg){ var a = /^([A-Z]+)(\d+):([A-Z]+)(\d+)$/.exec(rg); return a && CALC ? { r1: +a[2] - 1, c1: CALC.colNum(a[1]), r2: +a[4] - 1, c2: CALC.colNum(a[3]) } : null; }).filter(Boolean);
+      s.ht = {}; Object.keys(s.heights || {}).forEach(function(r){ s.ht[+r - 1] = +s.heights[r]; });
+      s.hr = {}; (s.hrows || []).forEach(function(r){ s.hr[+r - 1] = 1; });
     });
     d.cur = 0; d.sel = -1;
     w.dataset.wbid = WBOOKS.push(d) - 1; w.innerHTML = wbHtml(d);
+    requestAnimationFrame(function(){ wbTops(w); });   // 붙은 뒤 고정 줄 위치를 실제 높이로
     return w;
   }
   /* 칸 서식 → style 글 */
   function styAttr(s, r, c){
     var k = (s.st[r] || [])[c], o = k != null ? s.sp[k] : null; if (!o) return '';
     var css = (o.bg ? 'background:' + o.bg + ';' + (o.fg ? '' : 'color:#14171c;') : '') + (o.fg ? 'color:' + o.fg + ';' : '') + (o.b ? 'font-weight:700;' : '') + (o.i ? 'font-style:italic;' : '') +
-      (o.u || o.s ? 'text-decoration:' + (o.u ? 'underline ' : '') + (o.s ? 'line-through' : '') + ';' : '') + (o.al ? 'text-align:' + o.al + ';' : '');
+      (o.u || o.s ? 'text-decoration:' + (o.u ? 'underline ' : '') + (o.s ? 'line-through' : '') + ';' : '') + (o.al ? 'text-align:' + o.al + ';' : '') +
+      (o.w ? 'white-space:pre-wrap;overflow-wrap:anywhere;text-overflow:clip;' : '') + (o.va ? 'vertical-align:' + o.va + ';' : '') + (o.sz ? 'font-size:' + Math.round(o.sz * 4 / 3 * 10) / 10 + 'px;' : '');
     return css;
+  }
+  function cellWrap(s, r, c){ var k = (s.st[r] || [])[c], o = k != null ? s.sp[k] : null; return !!(o && o.w); }
+  function cellAlign(s, r, c){ var k = (s.st[r] || [])[c], o = k != null ? s.sp[k] : null; return (o && o.al) || ''; }
+  /* 고정 줄(thead) 위치: 줄 높이가 서로 달라(줄 바꿈 · 엑셀 행 높이) 그린 뒤 실제 높이로 맞춘다 */
+  function wbTops(w){
+    var t = w && w.querySelector('.wb-grid thead'); if (!t) return;
+    var col = t.querySelector('tr.col'), y = col ? col.offsetHeight : COL_H;
+    t.querySelectorAll('tr.hd').forEach(function(tr){ tr.querySelectorAll('th').forEach(function(th){ th.style.top = y + 'px'; }); y += tr.offsetHeight; });
   }
   /* 이 칸의 드롭다운 목록(엑셀 줄 기준: 새 줄은 위 줄을 따른다) */
   function cellList(s, r, c){
@@ -913,7 +1013,7 @@ html.embed,html.embed body{overflow:hidden}
   function wbRedraw(w, d){
     if (WB_EDIT) { var pe = WB_EDIT; WB_EDIT = null; pe(true); return; }
     var g = w.querySelector('.wb-grid'), sx = g ? g.scrollLeft : 0, sy = g ? g.scrollTop : 0;
-    w.innerHTML = wbHtml(d);
+    w.innerHTML = wbHtml(d); wbTops(w);
     g = w.querySelector('.wb-grid'); if (g) { g.scrollLeft = sx; g.scrollTop = sy; }
     /* 키보드로 쓰던 중이면 다시 그린 뒤에도 표에 초점을 돌려주고, 고른 칸을 표시한다 */
     if (d.kb && g) { g.focus({ preventScroll: true }); if (d.ac) { var ac = g.querySelector('[data-r="' + d.ac[0] + '"][data-c="' + d.ac[1] + '"]'); if (ac) ac.classList.add('ac'); } }
@@ -935,30 +1035,61 @@ html.embed,html.embed body{overflow:hidden}
     var vis = []; for (c = 0; c < n; c++) if (wd[c] !== 0) vis.push(c);   // 엑셀에서 숨긴 열(너비 0)은 그리지 않는다
     var fz = Math.min(Math.max(1, s.freeze || 0), rows.length || 1);
     function cellTxt(r, c){ var e = (s.fm[r] || [])[c]; if (e && ctx) return CALC.text(ctx.val(i, r, c)); var v = (rows[r] || [])[c]; return v == null ? '' : v; }
+    var memoT = {}; function tx(r, c){ var k = r + ':' + c; return k in memoT ? memoT[k] : (memoT[k] = cellTxt(r, c)); }
+    /* 엑셀 모양: 숨긴 행(그리지 않음) · 행 높이 · 셀 병합(span = 왼쪽 위 칸의 [열 수, 줄 수], cover = 가려지는 칸) */
+    var xs = !!s.sty, fN = fltN(s), inv = {}; s.ids.forEach(function(o, r){ if (o >= 0) inv[o] = r; });
+    function hidden(r){ var o = s.ids[r]; return o >= 0 && !!(s.hr && s.hr[o]); }
+    // 행 높이: 엑셀에서 정한 줄은 그 높이, 아니면 시트 기본 높이(heights "0" → s.ht[-1]). 줄 바꿈 글이 더 길면 늘어난다(엑셀의 자동 맞춤처럼)
+    function rowH(r){ var o = s.ids[r], hpx = s.ht ? (o >= 0 && s.ht[o]) || s.ht[-1] : 0; return hpx ? ' style="height:' + hpx + 'px"' : ''; }
+    var span = {}, cover = {};
+    (s.mg || []).forEach(function(m){
+      var a = inv[m.r1], b = inv[m.r2]; if (a == null || b == null || b - a !== m.r2 - m.r1) return;   // 그사이 줄을 더하거나 지웠으면 병합을 풀어 보인다
+      if (a < fz && b >= fz) b = fz - 1;   // 고정 줄과 아래 줄에 걸치면 고정 줄 안에서만
+      var cs = vis.filter(function(c){ return c >= m.c1 && c <= m.c2; }), rs = [];
+      for (var r = a; r <= b; r++) if (!hidden(r)) rs.push(r);
+      if (fN && a >= fz) rs = rs.slice(0, 1);   // 거르는 중에는 가로 병합만(가려진 줄이 생기지 않게)
+      if (!cs.length || !rs.length || (cs.length < 2 && rs.length < 2)) return;
+      span[rs[0] + ':' + cs[0]] = [cs.length, rs.length];
+      rs.forEach(function(r){ cs.forEach(function(c){ if (r !== rs[0] || c !== cs[0]) cover[r + ':' + c] = 1; }); });
+    });
+    var vpos = {}; vis.forEach(function(c, k){ vpos[c] = k; });
     function cell(tag, r, c, extra){
-      var e = (s.fm[r] || [])[c], v = cellTxt(r, c), k = cellCls(s, r, c), er = e && /^#/.test(v) && CALC && CALC.isErr(ctx.val(i, r, c));
-      var cls = [k || (v === '' || v === '-' ? 'em' : ''), e ? 'fx' : '', er ? 'xe' : '', cellList(s, r, c) ? 'dl' : ''].filter(Boolean).join(' ');
+      if (cover[r + ':' + c]) return '';
+      var e = (s.fm[r] || [])[c], v = tx(r, c), k = cellCls(s, r, c), er = e && /^#/.test(v) && CALC && CALC.isErr(ctx.val(i, r, c));
+      var sp = span[r + ':' + c], spa = sp ? (sp[0] > 1 ? ' colspan="' + sp[0] + '"' : '') + (sp[1] > 1 ? ' rowspan="' + sp[1] + '"' : '') : '';
+      /* 넘침(엑셀처럼): 줄 바꿈이 아닌 왼쪽 정렬 글은 오른쪽 빈칸들까지 이어서 보인다(빈칸이 끝나는 곳에서 자름) */
+      var ovw = 0, ovl = 0, aln = xs && s.widths && !sp && v !== '' && !cellWrap(s, r, c) ? cellAlign(s, r, c) : 'x';
+      if (aln === '' || aln === 'right') {   // 왼쪽 정렬은 오른쪽 빈칸으로, 오른쪽 정렬은 왼쪽 빈칸으로(엑셀처럼)
+        var dir = aln === 'right' ? -1 : 1, p = vpos[c] + dir, wsum = wd[c] || 120;
+        while (p >= 0 && p < vis.length) { var nc = vis[p], key = r + ':' + nc; if (cover[key] || span[key] || tx(r, nc) !== '') break; wsum += wd[nc] || 120; p += dir; }
+        if (p !== vpos[c] + dir) { ovw = wsum - 9; if (dir < 0) ovl = wsum - (wd[c] || 120); }
+      }
+      var cls = [k || (v === '' || v === '-' ? 'em' : ''), e ? 'fx' : '', er ? 'xe' : '', cellList(s, r, c) ? 'dl' : '', ovw ? 'ov' : ''].filter(Boolean).join(' ');
       var css = styAttr(s, r, c), top = extra || '';
       if (css) top = top ? top.replace(/style="/, 'style="' + css) : ' style="' + css + '"';
       /* 필터 머리 칸: ▾ 버튼(거르고 있으면 채운 깔때기 표시) */
       var fb = s.flt && r === s.flt.r && c >= s.flt.c1 && c <= s.flt.c2 ? '<button type="button" class="flt' + (s.fsel[c] ? ' on' : '') + '" data-flt="' + c + '" aria-label="' + esc(colName(c)) + ' 열 필터" title="필터">' + (s.fsel[c] ? '⏷' : '▾') + '</button>' : '';
-      return '<' + tag + ' data-r="' + r + '" data-c="' + c + '"' + (cls ? ' class="' + cls + (fb ? ' fh' : '') + '"' : fb ? ' class="fh"' : '') + top + ' title="' + esc(e ? '=' + fAt(e, r) + '\n→ ' + v : v) + '">' + esc(v) + fb + '</' + tag + '>';
+      var body = ovw ? '<span class="ovt" style="width:' + ovw + 'px' + (ovl ? ';margin-left:-' + ovl + 'px' : '') + '">' + esc(v) + '</span>' : esc(v);
+      return '<' + tag + ' data-r="' + r + '" data-c="' + c + '"' + spa + (cls ? ' class="' + cls + (fb ? ' fh' : '') + '"' : fb ? ' class="fh"' : '') + top + ' title="' + esc(e ? '=' + fAt(e, r) + '\n→ ' + v : v) + '">' + body + fb + '</' + tag + '>';
     }
-    var memoT = {}; function tx(r, c){ var k = r + ':' + c; return k in memoT ? memoT[k] : (memoT[k] = cellTxt(r, c)); }
     var tw = 40 + vis.reduce(function(a, c){ return a + (wd[c] || 120); }, 0);
-    var h = '<table class="' + (s.widths ? 'fixw' : '') + (s.sty ? ' xs' : '') + '"' + (s.widths ? ' style="width:' + tw + 'px"' : '') + '>' + (s.widths ? '<colgroup><col style="width:40px">' + vis.map(function(c){ return '<col style="width:' + (wd[c] || 120) + 'px">'; }).join('') + '</colgroup>' : '') +
+    // 엑셀 서식 시트는 원본 엑셀의 기본 글꼴 · 크기(pt → px)로 — 열 너비가 그 글꼴 기준이라 글이 엑셀만큼 들어간다
+    var fnt = xs && d.font && d.font.name ? 'font-family:&quot;' + esc(d.font.name) + '&quot;,var(--font,system-ui),sans-serif;font-size:' + Math.round((+d.font.size || 10) * 4 / 3 * 10) / 10 + 'px;' : '';
+    var h = '<table class="' + (s.widths ? 'fixw' : '') + (xs ? ' xs' : '') + '"' + (s.widths || fnt ? ' style="' + (s.widths ? 'width:' + tw + 'px;' : '') + fnt + '"' : '') + '>' + (s.widths ? '<colgroup><col style="width:40px">' + vis.map(function(c){ return '<col style="width:' + (wd[c] || 120) + 'px">'; }).join('') + '</colgroup>' : '') +
       '<thead><tr class="col"><th class="rn"></th>' + vis.map(function(c){ return '<th>' + colName(c) + '</th>'; }).join('') + '</tr>';
     for (var hr = 0; hr < fz; hr++) {
-      var top = ' style="top:' + (COL_H + hr * ROW_H) + 'px"';
-      h += '<tr class="hd' + (d.sel === hr ? ' sel' : '') + '"><th class="rn"' + top + (hr ? ' data-row="' + hr + '"' : '') + '>' + (hr + 1) + '</th>' + vis.map(function(c){ return cell('th', hr, c, top); }).join('') + '</tr>';
+      if (hidden(hr)) continue;   // 엑셀에서 숨긴 행
+      var top = ' style="top:' + (COL_H + hr * ROW_H) + 'px"';   // 그린 뒤 wbTops가 실제 높이로 고친다
+      h += '<tr class="hd' + (d.sel === hr ? ' sel' : '') + '"' + rowH(hr) + '><th class="rn"' + top + (hr ? ' data-row="' + hr + '"' : '') + '>' + (hr + 1) + '</th>' + vis.map(function(c){ return cell('th', hr, c, top); }).join('') + '</tr>';
     }
     h += '</thead><tbody>';
-    var fN = fltN(s), shown = 0, total = 0;
+    var shown = 0, total = 0;
     for (var r = fz; r < rows.length; r++) {
+      if (hidden(r)) continue;
       if (s.flt && r > s.flt.r) total++;
       if (fN && !rowShown(s, r, tx)) continue;   // 필터로 거른 줄은 그리지 않는다(행 번호는 엑셀 그대로 — 거르는 중이면 파란색)
       if (s.flt && r > s.flt.r) shown++;
-      h += '<tr' + (d.sel === r ? ' class="sel"' : '') + '><td class="rn' + (fN ? ' fl' : '') + '" data-row="' + r + '" title="' + (can ? '눌러서 이 줄 고르기' : '') + '">' + (r + 1) + '</td>' + vis.map(function(c){ return cell('td', r, c); }).join('') + '</tr>';
+      h += '<tr' + (d.sel === r ? ' class="sel"' : '') + rowH(r) + '><td class="rn' + (fN ? ' fl' : '') + '" data-row="' + r + '" title="' + (can ? '눌러서 이 줄 고르기' : '') + '">' + (r + 1) + '</td>' + vis.map(function(c){ return cell('td', r, c); }).join('') + '</tr>';
     }
     h += '</tbody></table>';
     if (fN && !shown) h += '<p class="wb-none">필터에 맞는 줄이 없습니다.</p>';
