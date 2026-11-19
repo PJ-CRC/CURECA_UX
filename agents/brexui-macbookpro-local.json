@@ -1,0 +1,53 @@
+{
+  "reportAt": "2026-11-19T15:06:48+09:00",
+  "pc": "BREXui-MacBookPro.local",
+  "slug": "brexui-macbookpro-local",
+  "user": "이상헌",
+  "os": "mac",
+  "version": "0.29.2",
+  "alive": false,
+  "status": "stopped",
+  "msg": "중지됨",
+  "statusAt": "2026-11-19T15:06:38+09:00",
+  "claude": "",
+  "claudeWay": "",
+  "autoWatch": true,
+  "events": [
+    {
+      "at": "2026-11-19T15:06:38+09:00",
+      "kind": "stop",
+      "text": "감시 중지"
+    },
+    {
+      "at": "2026-11-16T11:26:24+09:00",
+      "kind": "start",
+      "text": "감시 시작"
+    },
+    {
+      "at": "2026-11-10T09:13:02+09:00",
+      "kind": "error",
+      "text": "준비 확인: CLI 로그인 안 됨"
+    },
+    {
+      "at": "2026-11-10T09:12:16+09:00",
+      "kind": "error",
+      "text": "준비 확인: CLI 로그인 안 됨"
+    },
+    {
+      "at": "2026-11-10T09:10:13+09:00",
+      "kind": "error",
+      "text": "준비 확인: CLI 로그인 안 됨"
+    },
+    {
+      "at": "2026-11-10T09:08:12+09:00",
+      "kind": "error",
+      "text": "준비 확인: CLI 로그인 안 됨"
+    },
+    {
+      "at": "2026-11-10T09:06:11+09:00",
+      "kind": "error",
+      "text": "준비 확인: CLI 로그인 안 됨"
+    }
+  ],
+  "turns": []
+}
