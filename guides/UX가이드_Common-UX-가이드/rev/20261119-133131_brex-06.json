@@ -1,0 +1,12 @@
+{
+  "rev": "20261119-133131_brex-06",
+  "by": "Claude",
+  "at": "2026-11-19T13:31:31+09:00",
+  "note": "Figma Common UX 맞춤: 5-c Floating Button을 Type 3 Top · Type 4 Expand로 나눔, T-IOS Statistical Analysis 2Depth에 Inventory · Event 추가, Header 항목에 Ver · Date · CID, 그림 6장(2-a · 3-a 1/2 · 3-a 2/2 · 5-c · 5-o · 5-s) 교체",
+  "base": "20261117-160556_brex-06",
+  "pc": "BREX_06",
+  "req": "Figma Common UX(node 355-53300) 기준으로 Common UX 가이드 내용 반영, 이미지 교체",
+  "jobId": "",
+  "file": "",
+  "orig": true
+}

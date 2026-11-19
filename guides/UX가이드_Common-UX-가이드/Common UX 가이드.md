@@ -18,7 +18,7 @@ CURECA의 공통 UX 규칙이다. 화면을 설계하거나 기존 화면을 고
 | 컴포넌트 (`P-Components (PC)`) | 7360 × 25548 | PC 컴포넌트 모음(Navigation · Status · Button · Input · List · Overlay · Feedback · Icon) |
 | 모바일 (`M-COMM-*`, `Connon UX (Mobile)` 섹션) | 1920 × 내용 | MO 목차 · MO 정의 화면 |
 
-- **Header 항목**: 대분류(예: `5. Component`) · 제목(예: `5-a. Accordion`) · 기존 번호(예: `기존 COMM-5-a`) · 한 줄 설명(「…합니다.」)
+- **Header 항목**: 대분류(예: `5. Component`) · 제목(예: `5-a. Accordion`) · 기존 번호(예: `기존 COMM-5-a`) · 한 줄 설명(「…합니다.」) · Ver(예: `2.0.01`) · Date · CID
 - **Body**: `Type n` 블록마다 예시 그림 + 「상태 · 정의 · 동작 · 조건 · 크기」 표 + 「번호 · 영역 · 동작」 표.
 - 한 주제가 길면 `(1/2)`, `(1/4)`처럼 나눠 프레임을 이어 붙인다.
 
@@ -148,7 +148,7 @@ L-IOS · T-IOS 화면의 기본 프레임(GNB · LNB · Contents 영역)과 사�
 | 6 | GNB L-IOS 선택 | L-IOS가 여러 대면 드롭다운 노출, 한 대면 미노출 |
 | — | GNB | 네트워크 상태 · Running 구동 상태 · Event 건수 · 일시 |
 | — | LNB 1Depth | Dashboard, Test Management, Sample Tracking, Instrument, Inventory, Statistical Analysis, Setting, Information |
-| — | 2Depth 예 | Statistical Analysis › Test Analytics · Instruments · Test Forecasting / Setting › Policy · Protocol · LIS · System · Account · SMTP · Assay Pack Setting · Tube Setting / Information › Run Report · Program · Manual |
+| — | 2Depth 예 | Statistical Analysis › Test Analytics · Instruments · Inventory · Event · Test Forecasting / Setting › Policy · Protocol · LIS · System · Account · SMTP · Assay Pack Setting · Tube Setting / Information › Run Report · Program · Manual |
 | — | Contents 영역 | 각 페이지의 Contents 노출 |
 
 **3 상세 — [더보기] 선택 시 노출 항목 (L-IOS · T-IOS 공통)**
@@ -597,12 +597,24 @@ Common UX 페이지의 **P-Components (PC)**(`1801:15821`, 「CURECA Common UX P
 
 **Type 2 · Text Button** — Basic · Underline. 텍스트 기반 버튼 중 주요 작업을 수행하는 버튼. 글자 크기 XXL 24 · XL 20 · L 18 · M 16 · S 14 · XS 12px.
 
-**Type 3 · Floating Button** — 화면 오른쪽 아래에 떠 있는 버튼.
+**Type 3 · Floating Button - Top Button** — 화면 오른쪽 아래에 떠 있는 버튼. 긴 페이지를 스크롤할 때 화면 최상단으로 쉽고 빠르게 돌아가게 한다.
 
-| Case | 버튼 | 규칙 |
+- 조건: 화면 높이 1개(1 Viewport, PC 500px 기준) 이상 스크롤하면 페이드인, 최상단(Top 0)에 닿으면 페이드아웃.
+- 상태: Enabled · Pressed · Focused
+
+| 번호 | 영역 | 동작 |
 |---|---|---|
-| Case 1 | Top Button | 화면 높이 1개(1 Viewport, PC 500px 기준) 이상 스크롤하면 페이드인, 최상단(Top 0)에 닿으면 페이드아웃. 선택 시 최상단으로 이동 |
-| Case 2 | FullScreen Button | 선택 시 콘텐츠 영역을 전체 화면으로 확대. 전체 화면에서는 오른쪽 아래 X 버튼으로 복귀(커서를 움직이면 페이드인, 움직임이 없으면 페이드아웃) |
+| 1 | Top Button | 선택 시 화면 최상단으로 이동 |
+
+**Type 4 · Floating Button - Expand Button** — 화면 오른쪽 아래에 떠 있는 버튼. 콘텐츠 영역을 전체 화면으로 확대해 보여 준다.
+
+- 조건: 전체 화면의 X 버튼은 마우스 커서를 움직이면 페이드인, 움직임이 없으면 페이드아웃.
+- 상태: Enabled · Pressed · Focused
+
+| 번호 | 영역 | 동작 |
+|---|---|---|
+| 1 | Expand Button | 선택 시 콘텐츠 영역을 전체 화면으로 확대 |
+| 2 | X 버튼 | 선택 시 기존 화면으로 복귀 |
 
 ### 5-d. Calendar
 
