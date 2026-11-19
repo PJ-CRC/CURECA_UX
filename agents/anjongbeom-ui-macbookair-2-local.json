@@ -1,5 +1,5 @@
 {
-  "reportAt": "2026-11-19T16:15:08+09:00",
+  "reportAt": "2026-11-19T16:16:08+09:00",
   "pc": "anjongbeom-ui-MacBookAir-2.local",
   "slug": "anjongbeom-ui-macbookair-2-local",
   "user": "안종범",
@@ -8,7 +8,7 @@
   "alive": true,
   "status": "idle",
   "msg": "요청을 기다리는 중",
-  "statusAt": "2026-11-19T16:14:53+09:00",
+  "statusAt": "2026-11-19T16:15:53+09:00",
   "claude": "따로 설치",
   "claudeWay": "",
   "autoWatch": true,
@@ -585,11 +585,6 @@
     },
     {
       "at": "2026-11-12T16:17:51+09:00",
-      "kind": "error",
-      "text": "준비 확인: CLI 로그인 안 됨"
-    },
-    {
-      "at": "2026-11-12T16:15:50+09:00",
       "kind": "error",
       "text": "준비 확인: CLI 로그인 안 됨"
     }
