@@ -25,11 +25,12 @@
   ],
   "approves": [],
   "active": true,
-  "updatedAt": "2026-11-16T15:31:06+09:00",
+  "updatedAt": "2026-11-19T15:06:43+09:00",
   "manages": [
     "teamProjects"
   ],
   "teams": [
-    "cureca"
+    "cureca",
+    "stagora"
   ]
 }
