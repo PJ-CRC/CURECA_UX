@@ -1,5 +1,5 @@
 {
-  "reportAt": "2026-11-19T16:34:09+09:00",
+  "reportAt": "2026-11-19T16:35:19+09:00",
   "pc": "BREXui-MacBookPro.local",
   "slug": "brexui-macbookpro-local",
   "user": "이상헌",
@@ -8,8 +8,8 @@
   "alive": true,
   "status": "idle",
   "msg": "요청을 기다리는 중",
-  "statusAt": "2026-11-19T16:34:09+09:00",
-  "claude": "따로 설치",
+  "statusAt": "2026-11-19T16:35:19+09:00",
+  "claude": "",
   "claudeWay": "",
   "autoWatch": true,
   "events": [
