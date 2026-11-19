@@ -1,5 +1,5 @@
 {
-  "reportAt": "2026-11-19T14:21:05+09:00",
+  "reportAt": "2026-11-19T14:22:06+09:00",
   "pc": "BREX_06",
   "slug": "brex-06",
   "user": "최고관리자",
@@ -8,7 +8,7 @@
   "alive": true,
   "status": "idle",
   "msg": "요청을 기다리는 중",
-  "statusAt": "2026-11-19T14:20:54+09:00",
+  "statusAt": "2026-11-19T14:21:55+09:00",
   "claude": "따로 설치",
   "claudeWay": "cli",
   "autoWatch": true,
