@@ -194,6 +194,7 @@ a.tbtn{color:var(--ink-2);text-decoration:none}
 .cmp-h .x:hover{background:var(--surface-2);color:var(--ink)}
 .cmp-s{margin:0 16px 4px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13px;color:var(--ink-2)}
 .cmp-note{margin:0 16px 8px;font-size:12px;color:var(--ink-3)}
+.cmp-note.busy{color:var(--prog)}.cmp-note.busy b{font-weight:700}
 .cmp-list{list-style:none;margin:0;padding:0 8px;overflow:auto;flex:1 1 auto;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .cmp-list li{display:flex;align-items:center;gap:8px;padding:6px 8px;border-bottom:1px solid var(--line)}
 .cmp-list li:last-child{border-bottom:0}
@@ -221,6 +222,8 @@ a.tbtn{color:var(--ink-2);text-decoration:none}
 .gen-btn.send-next{border-color:var(--line-2);color:var(--ink-2)}
 .gen-btn.send-next:hover{background:var(--surface);color:var(--ink);border-color:var(--ink-3)}
 .gen-btn.send-next[hidden]{display:none}
+/* 이어 받음: 다른 작업자가 이 작업을 이어서 하는 중(진행 중 색) */
+.req .ho{font-size:12px;font-weight:600;color:var(--prog);background:var(--prog-soft);border-radius:999px;padding:0 8px;white-space:nowrap}
 .req .to{font-size:12px;font-weight:700;color:var(--ok);background:var(--ok-soft);border-radius:999px;padding:0 7px;white-space:nowrap}
 .req .cs{font-size:12px;font-weight:600;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:1px 8px;white-space:nowrap}
 .cmp-opts select.opt-pri{background:var(--surface);color:var(--ink-2);border-color:var(--line-2)}
@@ -1231,6 +1234,8 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       var chk = (r[2].items || []).filter(function(j){ return j.mode === 'check' && j.status === '완료' && j.compare && j.from && j.to && j.from.key === FILE.key && j.to.key === nx.key; })
         .sort(function(a, b){ return String(b.updatedAt).localeCompare(String(a.updatedAt)); })[0];
       var hashOf = {}; if (chk) (chk.compare.items || []).forEach(function(x){ hashOf[x.from] = x; });
+      // 지금 돌고 있는 확인(대기 · 진행 중) — 있으면 자동 확인을 또 만들지 않고, 끝나면 창을 새로 그린다
+      var pend = (r[2].items || []).filter(function(j){ return j.mode === 'check' && (j.status === '대기' || j.status === '진행 중') && j.from && j.to && j.from.key === FILE.key && j.to.key === nx.key; })[0] || null;
       var rows = pgFrames(edp.id).map(function(f){
         var rc = recOf[f.id] || (f.secId && recOf[f.secId]) || null, unit = rc ? rc.from.node : f.id, st;
         if (!rc) st = 'new';
@@ -1241,7 +1246,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
           : hc.st ? ({ same: 'same', changed: 'changed', gone2: 'gone', gone: 'srcgone' })[hc.st] || 'unk' : hc.hash === rc.hash ? 'same' : 'changed'; }
         return { f: f, rc: rc, unit: unit, st: st };
       });
-      CMP = { nx: nx, page: { id: edp.id, name: edp.name }, rows: rows, chk: chk, units: Object.keys(recOf) };
+      CMP = { nx: nx, page: { id: edp.id, name: edp.name }, rows: rows, chk: chk, pend: pend, units: Object.keys(recOf), sel: CMP && CMP.nx && CMP.nx.key === nx.key ? CMP.sel : null };
       return CMP;
     });
   }
@@ -1261,16 +1266,17 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     if (!c.sel) c.sel = {};   // 고른 줄(번호). 처음엔 아무것도 고르지 않는다
     o.innerHTML = '<div class="cv-box"><div class="cmp-h"><h2 id="cmpTitle" tabindex="-1">' + esc(stepMark(c.nx.from) + ' ' + pname(FILE.key) + ' › ' + c.page.name) + ' 와 ' + esc(stepMark(c.nx.step) + ' ' + c.nx.name) + ' 비교</h2><button type="button" class="x" data-cmpx aria-label="비교 닫기">×</button></div>' +
       '<p class="cmp-s">' + esc(stepMark(c.nx.from)) + ' 작업 페이지 화면 ' + c.rows.length + '개 기준 · ' + ['new', 'changed', 'unk', 'same', 'gone', 'srcgone'].filter(function(k){ return n[k]; }).map(function(k){ return '<span class="cst ' + CST[k][1] + '">' + esc(k === 'gone' ? gone : CST[k][0]) + ' ' + n[k] + '</span>'; }).join(' ') + '</p>' +
-      '<p class="cmp-note">' + (c.chk ? '바뀐 것 확인: ' + esc(String(c.chk.updatedAt).replace('T', ' ').slice(0, 16)) + ' 기준.' : '아직 「바뀐 것 확인」을 하지 않아, 옮긴 화면이 그 뒤 바뀌었는지는 모릅니다.') + ' 확인은 ' + esc(stepMark(c.nx.from)) + ' · ' + esc(stepMark(c.nx.step)) + ' 파일을 Figma에서 열고 플러그인을 켜 두면 끝납니다(옮기지는 않음). ' + esc(stepMark(c.nx.step)) + '도 열려 있으면 Figma에서 직접 복사해 옮긴 화면도 「옮김」으로 찾습니다.</p>' +
+      '<p class="cmp-note' + (c.pend ? ' busy' : '') + '">' + (c.pend ? '<b>바뀐 것을 확인하는 중입니다</b> — ' + esc(c.pend.note || '') + '. 끝나면 이 창이 저절로 바뀝니다(' + esc(stepMark(c.nx.from)) + ' · ' + esc(stepMark(c.nx.step)) + ' 파일이 Figma에서 열려 있고 플러그인이 켜져 있어야 함).'
+        : (c.chk ? '바뀐 것 확인: ' + esc(String(c.chk.updatedAt).replace('T', ' ').slice(0, 16)) + ' 기준. 옮긴 뒤 확인하지 않은 화면이 생기면 창을 열 때 알아서 다시 확인합니다.' : '옮긴 화면이 바뀌었는지는 창을 열 때 알아서 확인합니다.')) + '</p>' +
       '<div class="cmp-tool w-only"><label><input type="checkbox" id="cmpAll" aria-label="전체 선택"> 전체 선택</label><button type="button" class="gen-btn" data-cmppick="new,changed">안 옮김 · 다른 화면만 고르기</button><span class="sp"></span><span id="cmpCnt"></span></div>' +
       '<ul class="cmp-list">' + cmpGroups(c).map(function(g, gi){
         // 섹션마다 묶음 머리(2026-11-18): 섹션 이름 · 화면 수 · 그 섹션 전체 고르기. 섹션 밖 화면은 「섹션 밖」 하나로
         //  섹션 이름을 누르면 그 섹션 화면을 접었다 편다(접은 섹션은 다시 그려도 · 비교를 다시 열어도 접힌 채, 이 페이지를 연 동안)
         var shut = !!CMP_SHUT[g.k];
         var head = '<li class="cmp-grp"><input type="checkbox" class="w-only" data-cmpgrp="' + gi + '" aria-label="' + esc(g.name) + ' 전체 고르기"><button type="button" class="gtg" data-cmptg="' + gi + '" aria-expanded="' + !shut + '" aria-label="' + esc(g.name) + ' 섹션 ' + (shut ? '펼치기' : '접기') + '"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg><span class="gnm">' + esc(g.name) + '</span></button><span class="gct">' + g.idx.length + '개</span></li>';
-        return head + g.idx.map(function(i){ var x = c.rows[i], s = CST[x.st]; return '<li data-cg="' + gi + '"' + (shut ? ' hidden' : '') + '><input type="checkbox" class="w-only" data-cmpsel="' + i + '"' + (c.sel[i] ? ' checked' : '') + ' aria-label="' + esc(x.f.name) + ' 고르기"><button type="button" data-cmpgo="' + esc(x.f.id) + '"><span class="nm">' + esc(x.f.name) + '</span></button><span class="cst ' + s[1] + '">' + esc(x.st === 'gone' ? gone : s[0]) + '</span>' + (x.rc ? '<small class="at">' + esc(String(x.rc.at).replace('T', ' ').slice(5, 16)) + ' 옮김</small>' : '') + '</li>'; }).join('');
+        return head + g.idx.map(function(i){ var x = c.rows[i], s = CST[x.st]; return '<li data-cg="' + gi + '"' + (shut ? ' hidden' : '') + '><input type="checkbox" class="w-only" data-cmpsel="' + i + '"' + (c.sel[i] ? ' checked' : '') + ' aria-label="' + esc(x.f.name) + ' 고르기"><button type="button" data-cmpgo="' + esc(x.f.id) + '"><span class="nm">' + esc(x.f.name) + '</span></button><span class="cst ' + s[1] + '">' + esc(x.st === 'gone' ? gone : x.st === 'unk' && c.pend ? '옮김 · 확인 중' : s[0]) + '</span>' + (x.rc ? '<small class="at">' + esc(String(x.rc.at).replace('T', ' ').slice(5, 16)) + ' 옮김</small>' : '') + '</li>'; }).join('');
       }).join('') + '</ul>' +
-      '<div class="cmp-act w-only"><button type="button" class="btn" data-cmpchk>바뀐 것 확인</button><button type="button" class="btn primary" data-cmpsend></button></div></div>';
+      '<div class="cmp-act w-only"><button type="button" class="btn" data-cmpchk' + (c.pend ? ' disabled' : '') + '>' + (c.pend ? '확인 중…' : '다시 확인') + '</button><button type="button" class="btn primary" data-cmpsend></button></div></div>';
     cmpCount();
     if (fresh || hadFocus) { var t = $('cmpTitle'); if (t) t.focus(); }   // 처음 열 때 · 다시 그려 포커스를 잃었을 때 제목으로(화면 읽기 프로그램이 창 제목부터 읽음)
   }
@@ -1312,7 +1318,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     var ck = e.target.closest('[data-cmpchk]');
     if (ck && CMP) {
       ck.disabled = true;
-      transferJob(CMP.nx, 'check', CMP.units, [], CMP.page).then(function(j){ say(j.id + ' 바뀐 것 확인을 맡겼습니다. ' + (j.phase === 'scan' ? stepMark(CMP.nx.step) + ' 화면을 먼저 읽고 ' + stepMark(CMP.nx.from) + '에서 확인합니다.' : stepMark(CMP.nx.from) + ' 파일을 Figma에서 열고 플러그인을 켜 두면 확인합니다.')); cmpClose(); })
+      var c0 = CMP; transferJob(c0.nx, 'check', c0.units, [], c0.page).then(function(j){ if (CMP === c0) { c0.pend = j; cmpRender(); cmpKeepWatch(); } })
         .catch(function(err){ ck.disabled = false; say('확인 요청 실패: ' + err.message, true); });
       return;
     }
@@ -1335,10 +1341,27 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     }
   });
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && CMP) cmpClose(); });
+  /* 바뀐 것 확인은 알아서(2026-11-18): 비교 창을 열 때 「확인 전」인 화면이 있으면(옮긴 뒤 확인한 적이 없으면) 확인 작업을 바로 맡기고,
+     창이 열려 있는 동안 5초마다 보다가 끝나면 결과로 다시 그린다. 같은 짝의 확인은 서버가 하나만 둔다(여러 번 맡겨도 겹치지 않음) */
+  var cmpWatch = 0;
+  function cmpAuto(){
+    var c = CMP; if (!c || c.pend || !c.units.length) return;
+    if (!c.rows.some(function(x){ return x.st === 'unk'; })) return;
+    transferJob(c.nx, 'check', c.units, [], c.page).then(function(j){ if (CMP === c) { c.pend = j; cmpRender(); cmpKeepWatch(); } }).catch(function(){});
+  }
+  function cmpKeepWatch(){
+    if (cmpWatch) return;
+    cmpWatch = setInterval(function(){
+      var c = CMP; if (!c || !$('cmpPop')) { clearInterval(cmpWatch); cmpWatch = 0; return; }
+      if (!c.pend) { clearInterval(cmpWatch); cmpWatch = 0; return; }
+      var sel = c.sel;
+      cmpLoad(c.nx).then(function(n){ n.sel = sel; if (!n.pend) { cmpRender(); clearInterval(cmpWatch); cmpWatch = 0; } else if (n.pend.status !== c.pend.status || n.pend.note !== c.pend.note) cmpRender(); }).catch(function(){});
+    }, 5000);
+  }
   if ($('cmpNext')) $('cmpNext').onclick = function(){
     var nx = nextStep(); if (!nx || !cur) return;
     var b = this; b.disabled = true;
-    cmpLoad(nx).then(cmpRender).catch(function(err){ say('비교하지 못했습니다: ' + err.message, true); }).then(function(){ b.disabled = false; });
+    cmpLoad(nx).then(function(){ cmpRender(); if (CMP.pend) cmpKeepWatch(); else cmpAuto(); }).catch(function(err){ say('비교하지 못했습니다: ' + err.message, true); }).then(function(){ b.disabled = false; });
   };
 
   /* 반영 대기(GET /api/backlog, 지금 팀의 규칙 저장소 screens/): 정책서 · 기준데이터 등이 바뀌어 이 화면에 반영해야 할 항목.
@@ -2027,6 +2050,8 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       var fromTag = r.from ? (sent(r) ? '<span class="to" title="' + esc((r.mode === 'copy' ? '그대로 옮기기' : '수정본 만들기') + ' · ' + (r.fileName || '') + ' › ' + (r.page || '')) + '">→ ' + esc(stepMark(r.from.toStep || 2) + ' ' + (r.fileName || '다음 단계')) + (r.mode === 'copy' ? ' · 옮기기' : ' · 수정본') + '</span>'
         : '<span class="to" title="원본: ' + esc((r.from.name || '') + ' › ' + (r.from.frame || r.from.page + ' 전체')) + ' (원본은 고치지 않음)">← ' + esc(stepMark(r.from.step || 1) + ' ' + (r.from.frame || r.from.page + ' 전체')) + (r.mode === 'copy' ? ' · 옮기기' : ' · 수정본') + '</span>') : '';
       return '<li class="req' + (r.status === '진행 중' ? ' live' : '') + '" data-id="' + esc(r.id) + '"><div class="h"><b>' + esc(r.id) + '</b><span class="st ' + stc + '">' + esc(r.status) + '</span><span title="등록 ' + esc(r.createdAt) + ' / 변경 ' + esc(r.updatedAt) + '">' + fmt(r.updatedAt || r.createdAt) + '</span>' + fromTag +
+        // 이어 받음(2026-11-18): 같은 팀의 다른 작업자가 이 요청의 작업 기록을 이어서 처리 중 · 끝냄
+        (r.handoff ? '<span class="ho" title="' + esc((r.handoff.by || '') + (r.handoff.pc ? '(' + r.handoff.pc + ')' : '') + ' · ' + (r.handoff.req || '') + ' · ' + (r.handoff.status || '') + ' · 작업 기록 ' + (r.work || '')) + '">' + (r.status === '완료' ? '이어 받아 끝남' : '이어 받음') + ' · ' + esc(r.handoff.by || '다른 작업자') + '</span>' : '') +
         (sent(r) ? '' : !r.nodeId ?(general && (r.page || edPage()) === cur.page ? '' : '<button class="go" data-pgo="' + esc(r.page || edPage()) + '" title="이 요청의 페이지 전체 보기">' + esc(r.page || edPage()) + ' 전체 ›</button>') : r.nodeId !== cur.id || general ? '<button class="go" data-go="' + esc(r.nodeId) + '">' + esc(r.frame) + ' ›</button>' : '') +
         '<span class="sp"></span><span class="who">' + esc(r.author || '이름 없음') + '</span>' +
         '</div>' + (r.case ? '<div class="h"><span class="cs" title="' + esc(r.work ? '작업 기록 ' + r.work : '새 작업') + '">' + esc(String(r.type || '').replace(/^케이스 /, 'Case ')) + '</span>' + (r.work ? '<span class="who">' + esc(r.work) + '</span>' : '') + '</div>' : '') + '<div class="q" title="' + esc(r.text) + '">요청 · ' + esc(String(r.text || '').split('\n')[0]) + '</div>' +

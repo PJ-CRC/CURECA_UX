@@ -68,7 +68,7 @@ module.exports = function register(on, h) {
     saveHistEntry(name, { id: name, kind: 'request', team: core.itemTeam(r), status: nn(r.status), at: nn(r.updatedAt), createdAt: nn(r.createdAt), by: nn(r.author), doneBy: nn(r.updatedBy), pc: C.pcName,
       reqId: nn(r.id), fileKey: nn(r.fileKey), fileName: nn(r.fileName), page: nn(r.page), frame: nn(r.frame), nodeId: nn(r.nodeId),
       type: nn(r.type), layout: nn(r.layout), text: nn(r.text), note: nn(r.note), shot, shots, images: att,
-      frames: core.arr(r.frames).filter(Boolean), marks: core.arr(r.marks).filter(Boolean), ask: r.ask === undefined ? null : r.ask, replies: core.arr(r.replies).filter(Boolean), raws: core.arr(r.raws).filter(Boolean) });
+      frames: core.arr(r.frames).filter(Boolean), marks: core.arr(r.marks).filter(Boolean), ask: r.ask === undefined ? null : r.ask, replies: core.arr(r.replies).filter(Boolean), raws: core.arr(r.raws).filter(Boolean), work: nn(r.work), handoff: r.handoff || null });
   }
   function histRemove(id) {
     const name = C.pcSlug + '_' + nn(id);
@@ -127,7 +127,33 @@ module.exports = function register(on, h) {
     const it = core.arr((core.readJson(C.reqFile) || {}).items).find((x) => x && x.id === id);
     if (it && it.status === '완료') histFromRequest(it);
   }
-  Object.assign(h, { histFromRequest, histRemove, saveHistEntry, copyHistShot, addCatalogFrames, startUsage, toJpeg, closeRun, histRefresh });
+  /* 이어 받기(2026-11-18): 같은 팀의 다른 PC가 내 요청과 같은 작업 기록(work)을 이어서 처리하면, 내 「보류」 요청에 이어 받음(handoff)을 표시하고
+     질문(ask)을 내린다(두 사람이 같은 단계를 따로 하지 않게). 그 작업 기록이 「끝남」이 되면 내 요청도 「완료」로 닫는다. 1분마다(background.js) */
+  function handoffTick() {
+    const r = core.readJson(C.reqFile); if (!r) return;
+    const items = core.arr(r.items).filter(Boolean);
+    const mine = items.filter((x) => x.work && nn(x.status) === '보류' && !x.stopped);
+    if (!mine.length) return;
+    let names = []; try { names = fs.readdirSync(C.histEntries).filter((n) => n.endsWith('.json') && !n.startsWith(C.pcSlug + '_')); } catch (e) { return; }
+    const ents = names.map((n) => core.readJson(path.join(C.histEntries, n))).filter((e) => e && e.kind === 'request' && e.work);
+    const now = core.now(); let changed = false;
+    for (const x of mine) {
+      const team = core.itemTeam(x);
+      const o = ents.filter((e) => e.work === x.work && core.itemTeam(e) === team && String(e.createdAt || '') > String(x.updatedAt || '')).sort((a, b) => String(b.at || '').localeCompare(String(a.at || '')))[0];
+      if (!o) continue;
+      const ho = { by: nn(o.by), pc: nn(o.pc), req: nn(o.reqId), status: nn(o.status), at: nn(o.at) };
+      let st = ''; try { const t = String(core.readText(path.join(core.teamCtx(team).guideRoot, 'work-logs', x.work + '.md')) || ''); st = ((/^---[\s\S]*?^status:\s*(\S+)/m.exec(t)) || [])[1] || ''; } catch (e) {}
+      if (/끝남/.test(st)) {
+        x.status = '완료'; x.ask = null; x.handoff = ho; x.updatedAt = now; x.updatedBy = ho.by;
+        x.note = `이어 받아 끝남 — ${ho.by}(${ho.pc}) ${ho.req}에서 작업 기록 「${x.work}」을 마쳤습니다.` + (x.note ? '\n' + x.note : '');
+        histFromRequest(x); changed = true;
+      } else if (!x.handoff || x.handoff.req !== ho.req || x.handoff.status !== ho.status || x.handoff.at !== ho.at) {
+        x.handoff = ho; x.ask = null; histFromRequest(x); changed = true;
+      }
+    }
+    if (changed) { r.items = items; r.version = (parseInt(r.version, 10) || 0) + 1; core.writeJson(C.reqFile, r); }
+  }
+  Object.assign(h, { histFromRequest, histRemove, saveHistEntry, copyHistShot, addCatalogFrames, startUsage, toJpeg, closeRun, histRefresh, handoffTick });
 
   // ── POST /api/jobs {action: add | take | update} — 작업 대기열(캡처 · 목록 · UX 문서 · 프로토타입 · 회의록 · 일정/작업 · 글 수정) ──
   const upTmp = path.join(C.root, 'workbench', 'job_files', '_tmp'), upDir = path.join(C.root, 'workbench', 'job_files');
@@ -259,6 +285,8 @@ module.exports = function register(on, h) {
         if ((kind === 'capture' || kind === 'text') && !/^\d+:\d+$/.test(nid)) throw new Error('잘못된 nodeId: ' + nid);
         if (!['guide', 'guide-check', 'guide-edit', 'text', 'transfer', 'prototype', 'prototype-edit', 'prototype-sync', 'minutes', 'plan'].includes(kind)) hit = items.find((x) => x.kind === kind && x.fileKey === key && x.nodeId === nid && ['대기', '진행 중'].includes(x.status)) || null;
         if (kind === 'prototype-sync') hit = items.find((x) => x.kind === kind && x.proto === nn(b.proto) && x.status === '대기') || null;
+        // 바뀐 것 확인은 같은 ① → ② 짝에 하나만(2026-11-18 — 여러 번 눌러 같은 확인이 겹쳐 돌다 Figma 연결 오류로 실패하던 것). 이미 대기 · 진행 중이면 그것을 돌려준다
+        if (kind === 'transfer' && xfer && xfer.mode === 'check') hit = items.find((x) => x && x.kind === 'transfer' && x.mode === 'check' && x.from && x.to && x.from.key === xfer.from.key && x.to.key === xfer.to.key && ['대기', '진행 중'].includes(x.status)) || null;
         if (!hit) {
           let n = 1; for (const i of items) { const v = parseInt(nn(i.id).replace(/\D/g, ''), 10) || 0; if (v >= n) n = v + 1; }
           hit = { id: 'J' + String(n).padStart(3, '0'), kind, team: b.team ? nn(b.team) : T.team, fileKey: key, nodeId: nid, name: nn(b.name).trim(), link: nn(b.link), text: nn(b.text).trim(),
@@ -401,7 +429,7 @@ module.exports = function register(on, h) {
         if (j.phase !== 'check') throw new Error('비교 확인 작업이 아닙니다: ' + id);
         const rec = core.arr(xRecRead(j.to.key).items).filter((x) => x && x.from && x.from.key === j.from.key), recOf = {};
         for (const x of rec) recOf[x.from.node] = x;
-        const items = core.arr(b.frames).filter((x) => x && /^\d+:\d+$/.test(nn(x.from))).map((x) => ({ from: nn(x.from), hash: nn(x.hash), sig: nn(x.sig), gone: !!x.gone }));
+        const items = core.arr(b.frames).filter((x) => x && /^\d+:\d+$/.test(nn(x.from))).map((x) => ({ from: nn(x.from), hash: nn(x.hash), sig: nn(x.sig), gone: !!x.gone, err: x.err ? nn(x.err).slice(0, 120) : '' }));   // err: 그 화면만 Figma 연결이 늦어 확인 못 함(2026-11-18)
         const scan = core.arr(j.scan), sigOf = {}; for (const x of scan) sigOf[x.node] = x.sig;
         // 짝 짓기: 기록이 없던 ① 화면과 내용 확인값이 같은 ② 화면 → 옮긴 것으로 기록(Figma에서 직접 복사해 옮긴 화면도 「옮김」). 이름만 같으면 짓지 않는다
         let found = 0;
@@ -409,7 +437,7 @@ module.exports = function register(on, h) {
           const nameOf = {}; for (const c of j.cands) nameOf[c.node] = c.name;
           const used = new Set(rec.map((x) => x.to && x.to.node)), pairs = [];
           for (const x of items) {
-            if (x.gone || !x.sig || nameOf[x.from] == null || recOf[x.from]) continue;
+            if (x.gone || x.err || !x.sig || nameOf[x.from] == null || recOf[x.from]) continue;
             const s2 = scan.find((y) => !y.rec && !used.has(y.node) && y.sig === x.sig) || scan.find((y) => !y.rec && y.sig === x.sig);   // ①에 똑같은 화면이 둘이면 같은 ② 화면과 짝
             if (s2) { used.add(s2.node); pairs.push({ from: x.from, to: s2, hash: x.hash }); }
           }
@@ -422,7 +450,8 @@ module.exports = function register(on, h) {
         // 옮긴 화면마다 상태(st): same · changed · gone2(②에 없음) · gone(①에 없음)
         for (const x of items) {
           const r = recOf[x.from]; if (!r) continue;
-          if (x.gone) x.st = 'gone';
+          if (x.err) x.st = 'unk';   // 확인 못 한 화면은 「확인 전」 그대로(다음 확인 때 다시)
+          else if (x.gone) x.st = 'gone';
           else if (scan.length) { const s2 = sigOf[r.to && r.to.node]; x.st = s2 == null ? 'gone2' : s2 === x.sig ? 'same' : 'changed'; x.by2 = 1; }
           else x.st = r.hash === x.hash ? 'same' : 'changed';
         }
@@ -430,7 +459,7 @@ module.exports = function register(on, h) {
         const mine = items.filter((x) => recOf[x.from]);
         const changed = mine.filter((x) => x.st === 'changed').length, gone = mine.filter((x) => x.st === 'gone').length, gone2 = mine.filter((x) => x.st === 'gone2').length;
         j.compare = { at: now, items: mine, changed, gone, gone2, direct: scan.length ? 1 : 0 }; j.status = '완료'; j.phase = 'done'; j.updatedAt = now;
-        j.note = `바뀐 것 확인: 옮긴 화면 ${mine.length}개 중 ${scan.length ? '②가 ①과 다름' : '옮긴 뒤 바뀜'} ${changed}개` + (found ? ` (기록에 없던 옮긴 화면 ${found}개 찾음)` : '') + (gone2 ? ` · ②에 없음 ${gone2}개` : '') + (gone ? ` · ①에서 없어짐 ${gone}개` : '');
+        j.note = `바뀐 것 확인: 옮긴 화면 ${mine.length}개 중 ${scan.length ? '②가 ①과 다름' : '옮긴 뒤 바뀜'} ${changed}개` + (found ? ` (기록에 없던 옮긴 화면 ${found}개 찾음)` : '') + (mine.some((x) => x.err) ? ` · Figma 연결이 늦어 확인 못 함 ${mine.filter((x) => x.err).length}개(다음 확인 때 다시)` : '') + (gone2 ? ` · ②에 없음 ${gone2}개` : '') + (gone ? ` · ①에서 없어짐 ${gone}개` : '');
         xSave(jj); return { ok: true, job: j };
       }
       // 끝난 작업(완료 · 실패)은 바꾸지 않는다 — 늦게 온 실패가 「완료」를 덮지 않게(2026-11-17)
@@ -1152,6 +1181,8 @@ module.exports = function register(on, h) {
         if (b.status) hit.status = nn(b.status);
         if (b.note != null) hit.note = nn(b.note);
         if (b.text != null && nn(b.text).trim()) hit.text = nn(b.text).trim();
+        // 이 요청이 이어 가는 작업 기록 이름(2026-11-18 이어 받기): 다른 PC가 같은 기록을 이어 받으면 서버가 이 요청에 표시한다
+        if (b.work != null && /^[^\\/:*?"<>|]{1,120}$/.test(nn(b.work).trim())) hit.work = nn(b.work).trim().replace(/\.md$/i, '');
         hit.updatedAt = now;
         if (b.by) hit.updatedBy = nn(b.by);
         if (nn(hit.status) === '완료' && core.arr(hit.frames).length) { try { addCatalogFrames(nn(hit.fileKey), nn(hit.page), hit.frames); } catch (e) {} }

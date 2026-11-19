@@ -204,6 +204,14 @@ const XFER_API = BASE + 'transfer';
 const xPost = body => fetch(XFER_API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }).then(r => r.json()).then(d => { if (d.error) throw new Error(d.error); return d; });
 function unb64(s) { const bin = atob(s), u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); return u; }
 let xferBusy = false;
+// 읽기만 하는 단계(②읽기 · 바뀐 것 확인 · 보낼 화면 읽기)는 Figma가 「연결하지 못함」(다른 페이지를 불러오다 10초 넘김)으로 실패하면 두 번까지 다시 한다(2026-11-18).
+//  만들기(xfer-build)는 다시 하지 않는다(두 번 생길 수 있음)
+async function callRetry(type, extra) {
+  for (let i = 0; ; i++) {
+    try { return await call(type, extra); }
+    catch (e) { if (i >= 2 || !/establish connection|connection to Figma|timed? ?out/i.test(String(e && e.message || e))) throw e; log('Figma 연결이 늦어 다시 시도합니다(' + (i + 1) + '/2)…'); await new Promise(r => setTimeout(r, 4000)); }
+  }
+}
 async function transferJobs() {
   if (xferBusy || !myKey) return;
   xferBusy = true;
@@ -222,7 +230,7 @@ async function transferJobs() {
           log('비교: ② 작업 페이지 화면을 읽는 중(직접 옮긴 화면 찾기)…');
           await jobPost({ action: 'update', id: j.id, note: '② 플러그인이 작업 페이지 화면을 읽는 중' });
           beat = setInterval(() => { jobPost({ action: 'update', id: j.id, note: '② 플러그인이 작업 페이지 화면을 읽는 중 · ' + new Date().toTimeString().slice(0, 5) }).catch(() => {}); }, 120000);
-          const r = await call('xfer-scan', { job: j });
+          const r = await callRetry('xfer-scan', { job: j });
           clearInterval(beat); beat = 0;
           const out = await xPost({ action: 'scan', id: j.id, frames: r.frames });
           log('비교: ② 화면 ' + r.frames.length + '개 읽음 — ' + ((out.job && out.job.note) || ''));
@@ -230,7 +238,7 @@ async function transferJobs() {
           log('비교: 옮긴 화면이 바뀌었는지 확인하는 중…');
           await jobPost({ action: 'update', id: j.id, note: '플러그인이 옮긴 화면을 확인하는 중' });
           beat = setInterval(() => { jobPost({ action: 'update', id: j.id, note: '플러그인이 옮긴 화면을 확인하는 중 · ' + new Date().toTimeString().slice(0, 5) }).catch(() => {}); }, 120000);
-          const r = await call('xfer-check', { job: j });
+          const r = await callRetry('xfer-check', { job: j });
           clearInterval(beat); beat = 0;
           const out = await xPost({ action: 'check', id: j.id, frames: r.frames });
           log('비교: ' + ((out.job && out.job.note) || '확인 끝'));
@@ -238,7 +246,7 @@ async function transferJobs() {
           log('옮기기: 보낼 화면 읽는 중…');
           await jobPost({ action: 'update', id: j.id, note: '플러그인이 보낼 화면을 읽는 중' });
           const rec = await (await fetch(XFER_API + '?record=' + encodeURIComponent(j.to.key), { cache: 'no-store' })).json();
-          const r = await call('xfer-read', { job: j, record: rec.items || [] });
+          const r = await callRetry('xfer-read', { job: j, record: rec.items || [] });
           for (const h of r.imgs || []) { const im = await call('xfer-img', { hash: h }); if (im.bytes) await xPost({ action: 'img', id: j.id, hash: h, b64: b64(im.bytes) }); }
           const out = await xPost({ action: 'put', id: j.id, frames: r.frames, skipped: r.skipped, defs: r.defs, fonts: r.fonts, imgs: r.imgs });
           log('옮기기: ' + r.frames.length + '개 읽음' + (r.skipped.length ? ' · 같아서 건너뜀 ' + r.skipped.length + '개' : '') + (out.job && out.job.phase === 'build' ? ' — 받는 파일에서 만들기 대기' : ''));

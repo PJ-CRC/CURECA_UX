@@ -143,11 +143,13 @@ foreach ($dir in $places) { $lnk = Join-Path $dir 'Figma AI Run.lnk'; try { if (
     log(`절전에서 깨어남(${Math.round(gap / 1000)}초 멈춤) — 탭 · 진행 중 확인을 잠시 미룹니다.`);
   }
 
+  let handAt = Date.now() + 20000;
   setInterval(() => {
     try { wakeCheck(); } catch (e) {}
     if (Date.now() >= staleAt) { staleAt = Date.now() + 60000; try { freeStale(); } catch (e) { errLog('멈춘 진행 중 확인', e); } }
     try { syncTick(); } catch (e) { errLog('이력 동기화', e); }
     if (Date.now() >= watchAt) { watchAt = Date.now() + 120000; const f = watchFirst; watchFirst = false; try { autoWatch(f); } catch (e) { errLog('감시 자동 시작', e); } }
     try { idleCheck(); } catch (e) { errLog('탭 확인', e); }
+    if (Date.now() >= handAt) { handAt = Date.now() + 60000; try { if (h.handoffTick) h.handoffTick(); } catch (e) { errLog('이어 받기 확인', e); } }   // 다른 PC가 내 작업을 이어 받았는지(2026-11-18)
   }, 1000);
 };
