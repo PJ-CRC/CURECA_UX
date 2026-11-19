@@ -1,0 +1,45 @@
+{
+  "reportAt": "2026-11-19T16:07:09+09:00",
+  "pc": "BREXui-MacBookPro-2.local",
+  "slug": "brexui-macbookpro-2-local",
+  "user": "유병규",
+  "os": "mac",
+  "version": "0.30.2",
+  "alive": false,
+  "status": "stopped",
+  "msg": "중지됨",
+  "statusAt": "2026-11-19T16:06:59+09:00",
+  "claude": "",
+  "claudeWay": "cli",
+  "autoWatch": true,
+  "events": [
+    {
+      "at": "2026-11-19T16:06:59+09:00",
+      "kind": "stop",
+      "text": "감시 중지"
+    },
+    {
+      "at": "2026-11-17T22:48:59+09:00",
+      "kind": "start",
+      "text": "감시 시작"
+    }
+  ],
+  "turns": [
+    {
+      "at": "2026-11-17T22:56:54+09:00",
+      "what": "JOBS J003",
+      "resume": false,
+      "end": "2026-11-17T22:57:05+09:00",
+      "ok": true,
+      "sec": 9
+    },
+    {
+      "at": "2026-11-17T22:53:06+09:00",
+      "what": "JOBS J002",
+      "resume": false,
+      "end": "2026-11-17T22:53:34+09:00",
+      "ok": true,
+      "sec": 27
+    }
+  ]
+}
