@@ -867,7 +867,13 @@ module.exports = function register(on, h) {
     } else if (act === 'update') {
       if (i < 0) throw new Error('팀 프로젝트를 찾지 못했습니다.');
       if (b.name != null) items[i].name = nn(b.name).trim().slice(0, 60);
-      if (b.link != null) { const link = nn(b.link).trim(); if (h.keyOf(link) !== k) throw new Error('같은 Figma 파일의 링크만 바꿀 수 있습니다(다른 파일이면 지우고 새로 추가).'); items[i].link = link; }
+      // 링크 바꾸기(2026-11-19): 같은 파일의 다른 페이지 링크든 다른 파일이든 바꿀 수 있다. 다른 파일이면 프로젝트 키도 바뀐다(이 팀에 이미 있는 파일이면 거절)
+      if (b.link != null) {
+        const link = nn(b.link).trim(), nk = h.keyOf(link);
+        if (!h.testKey(nk)) throw new Error('Figma 파일 링크(figma.com/design/…)를 넣어 주세요.');
+        if (nk !== k && items.some((x, j) => j !== i && x.key === nk)) throw new Error('이 팀에 이미 있는 Figma 파일입니다.');
+        items[i].link = link; items[i].key = nk;
+      }
     } else if (act === 'move') {
       if (i < 0) throw new Error('팀 프로젝트를 찾지 못했습니다.');
       const j = i + (parseInt(b.dir, 10) < 0 ? -1 : 1); if (j < 0 || j >= items.length) return { ok: true, items };

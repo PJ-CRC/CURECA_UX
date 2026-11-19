@@ -610,6 +610,13 @@ function dirBytes(d) {
   }
   return { sum, cnt };
 }
+// ── PC별 감시 상태(2026-11-19): 개발 PC(workbench/dev.flag)에서만. 다른 PC는 404 ──
+on('GET', '/api/agents', ({ res, sendJson }) => {
+  const ag = require('./agents');
+  if (!ag.isDev()) return sendJson(res, 404, { error: '이 PC에서는 볼 수 없습니다.' });
+  try { ag.report(agentInfo); } catch (e) {}   // 이 PC 것은 지금 값으로
+  return { now: core.now(), me: C.pcSlug, items: ag.list() };
+});
 on('GET', '/api/storage', () => {
   if (!storeVal || Date.now() - storeAt >= 300000) {
     const kinds = {}; let total = 0, files = 0;

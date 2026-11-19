@@ -120,6 +120,20 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
 .tp-row .row{gap:4px;flex-wrap:nowrap}
 .tp-row .ic{width:30px;padding:0;font-size:14px}
 .tp-empty{font-size:13px;color:var(--ink-3);padding:10px 0}
+/* 팀 묶음(2026-11-19): 머리(접기 · 펴기 버튼 + 팀 버튼) · 편 팀 안에 프로젝트 목록 · 추가 칸 */
+.tgrp{border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.tgrp > .trow{border:0;border-radius:10px}
+.tgrp.open > .trow{border-bottom:1px solid var(--line);border-radius:10px 10px 0 0;background:var(--surface-2)}
+.ttg{display:flex;align-items:center;gap:6px;min-width:0;min-height:30px;padding:0;border:0;background:none;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.ttg svg{flex:none;width:14px;height:14px;color:var(--ink-3);transition:transform .15s;transform:rotate(-90deg)}
+.ttg[aria-expanded="true"] svg{transform:none}
+.ttg:hover .chip b{text-decoration:underline}
+.tbody{padding:10px 12px 12px}
+.tbody .tp-list{margin-bottom:10px}
+.tp-row.editing .tp-t{gap:6px}
+.tp-row.editing .tp-t input{max-width:none;width:100%}
+.tpmsg{font-size:12.5px;margin-top:6px;min-height:0}
+.tpmsg.ok{color:var(--ok)}.tpmsg.bad{color:var(--red)}
 #tpmsg{font-size:12.5px;margin-top:6px;min-height:18px}
 #tpmsg.bad{color:var(--red)} #tpmsg.ok{color:var(--ok)}
 .chip.mg{background:var(--warn-soft);color:var(--warn)}
@@ -149,17 +163,11 @@ body.limited .split{grid-template-columns:minmax(0,760px)}
   <p class="note admin-only">비밀번호는 해시로만 저장됩니다. 최고관리자 계정은 삭제 또는 중지할 수 없고, 모든 메뉴에 접근 가능합니다.</p>
   <div class="split">
     <div class="left">
-    <section class="card tproj" aria-labelledby="tpTitle">
-      <div class="teams-h"><h2 id="tpTitle">팀 프로젝트</h2><small>팀이 함께 쓰는 Figma 파일을 작업 순서대로 둡니다. Workbench 탭이 이 순서로 보이고, 작업 페이지는 각자 고릅니다.</small></div>
-      <div class="tp-team" id="tpTeams" role="group" aria-label="팀 고르기"></div>
-      <ol class="tp-list" id="tpList"></ol>
-      <div class="tadd" id="tpAddRow"><input id="tpLink" placeholder="Figma 파일 링크" autocomplete="off" spellcheck="false" aria-label="새 프로젝트 Figma 링크" style="flex:3 1 220px"><input id="tpName" placeholder="이름 (예: 1차 설계)" maxlength="60" aria-label="새 프로젝트 이름"><button class="btn sm" type="button" id="tpAdd">＋ 추가</button></div>
-      <div id="tpmsg" role="status"></div>
-    </section>
-    <section class="card teams admin-only" aria-labelledby="teamsTitle">
-      <div class="teams-h"><h2 id="teamsTitle">팀</h2><small>일정/작업 · UX 문서 · 변경 이력 · 사용량 통계를 팀 단위로 씁니다. 한 계정이 여러 팀에 속할 수 있습니다.</small></div>
+    <!-- 팀 · 팀 프로젝트(2026-11-19 합침): 팀마다 접었다 펴고, 펴면 그 팀의 프로젝트(Figma 파일 · 작업 순서)를 고치고 더한다 -->
+    <section class="card teams" aria-labelledby="teamsTitle">
+      <div class="teams-h"><h2 id="teamsTitle">팀 · 팀 프로젝트</h2><small>팀마다 일정/작업 · UX 문서 · 변경 이력 · 사용량 통계를 따로 씁니다. 팀을 펴면 그 팀이 함께 쓰는 Figma 파일(프로젝트)을 작업 순서대로 둡니다 — Workbench 탭이 이 순서로 보이고, 작업 페이지는 각자 고릅니다.</small></div>
       <div class="tlist" id="tlist"></div>
-      <div class="tadd"><input id="tId" placeholder="팀 아이디 (영문 소문자, 예: lims)" maxlength="32" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="새 팀 아이디"><input id="tName" placeholder="팀 이름" maxlength="30" aria-label="새 팀 이름"><button class="btn sm" type="button" id="tAdd">＋ 팀 추가</button></div>
+      <div class="tadd admin-only"><input id="tId" placeholder="팀 아이디 (영문 소문자, 예: lims)" maxlength="32" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="새 팀 아이디"><input id="tName" placeholder="팀 이름" maxlength="30" aria-label="새 팀 이름"><button class="btn sm" type="button" id="tAdd">＋ 팀 추가</button></div>
       <div id="tmsg" role="status"></div>
     </section>
     <section class="card admin-only">
@@ -207,68 +215,55 @@ body.limited .split{grid-template-columns:minmax(0,760px)}
   function setTeams(list, all, lock){ [].forEach.call($('fTeams').querySelectorAll('input[name="tm"]'), function(c){ c.checked = !!all || list.indexOf(c.value) >= 0; c.disabled = !!lock; }); }
   function teamsOf(){ return [].map.call($('fTeams').querySelectorAll('input[name="tm"]:checked'), function(c){ return c.value; }); }
   function tsay(t, ok){ $('tmsg').textContent = t; $('tmsg').className = ok ? 'ok' : 'bad'; }
-  /* 팀 목록(최고관리자만 바꾼다). 지금까지의 데이터가 있는 팀(legacy)과 계정이 있는 팀은 지울 수 없다 */
+  /* 팀 · 팀 프로젝트(2026-11-19 합침): 팀마다 한 묶음. 머리를 누르면 펴고 접는다(편 팀은 이 페이지를 연 동안 기억).
+     편 팀 안에 그 팀의 프로젝트(Figma 파일 · 작업 순서) — 순서 ↑↓ · 고치기(이름 · 링크) · 지우기, 아래에 새 프로젝트(이름, 링크).
+     팀 이름 바꾸기 · 지우기 · 팀 추가는 최고관리자만, 프로젝트는 최고관리자 · 「팀 프로젝트 링크 관리」 권한(자기 팀) */
+  var OPEN = {}, TPS = {}, tpEdit = null;   // TPS[팀] = { items, can, err, msg, ok }
+  function tpHtml(tid){
+    var s = TPS[tid]; if (!s) return '<p class="tp-empty">불러오는 중…</p>';
+    if (s.err) return '<p class="tp-empty">' + esc(s.err) + '</p>';
+    var L = s.items, h = '<ol class="tp-list">' + (L.length ? L.map(function(p, i){
+      var nm = p.name || ('Figma 파일 ' + p.key.slice(0, 6)), ed = tpEdit && tpEdit.t === tid && tpEdit.k === p.key;
+      var body = ed ? '<input class="tp-in-name" value="' + esc(p.name || '') + '" maxlength="60" placeholder="이름" aria-label="프로젝트 이름"><input class="tp-in-link" value="' + esc(p.link || '') + '" placeholder="Figma 파일 링크" aria-label="프로젝트 Figma 링크" spellcheck="false">'
+        : '<b>' + esc(nm) + '</b><a href="' + esc(/^https:\/\//i.test(p.link || '') ? p.link : '#') + '" target="_blank" rel="noopener" title="Figma에서 열기">' + esc(p.link) + '</a>';
+      var act = !s.can ? '' : ed
+        ? '<button class="btn sm primary" type="button" data-tpa="save">저장</button><button class="btn sm" type="button" data-tpa="cancel">취소</button>'
+        : '<button class="btn sm ic" type="button" data-tpa="up"' + (i ? '' : ' disabled') + ' aria-label="' + esc(nm) + ' 앞으로" title="앞 순서로">↑</button>' +
+          '<button class="btn sm ic" type="button" data-tpa="down"' + (i < L.length - 1 ? '' : ' disabled') + ' aria-label="' + esc(nm) + ' 뒤로" title="뒤 순서로">↓</button>' +
+          '<button class="btn sm" type="button" data-tpa="edit">고치기</button><button class="btn sm danger" type="button" data-tpa="del">지우기</button>';
+      return '<li class="tp-row' + (ed ? ' editing' : '') + '" data-k="' + esc(p.key) + '"><span class="tp-n" aria-label="' + (i + 1) + '번째">' + (i + 1) + '</span><span class="tp-t">' + body + '</span><span class="row">' + act + '</span></li>';
+    }).join('') : '<li class="tp-empty">아직 프로젝트가 없습니다.' + (s.can ? ' 아래에 이름과 Figma 파일 링크를 넣어 순서대로 추가하세요.' : '') + '</li>') + '</ol>';
+    if (s.can) h += '<div class="tadd tp-add"><input class="tp-new-name" placeholder="이름 (예: 1차 설계)" maxlength="60" aria-label="새 프로젝트 이름"><input class="tp-new-link" placeholder="Figma 파일 링크" autocomplete="off" spellcheck="false" aria-label="새 프로젝트 Figma 링크" style="flex:3 1 220px"><button class="btn sm" type="button" data-tpa="add">＋ 추가</button></div>';
+    h += '<div class="tpmsg ' + (s.ok ? 'ok' : 'bad') + '" role="status">' + esc(s.msg || '') + '</div>';
+    return h;
+  }
   function renderTeams(){
+    var limited = document.body.classList.contains('limited');
     $('tlist').innerHTML = TEAMS.map(function(t){
-      if (tEdit === t.id) return '<div class="trow" data-t="' + esc(t.id) + '"><input id="tEditName" value="' + esc(t.name) + '" maxlength="30" aria-label="팀 이름"><span class="row"><button class="btn sm primary" type="button" data-act="tsave">저장</button><button class="btn sm" type="button" data-act="tcancel">취소</button></span></div>';
-      return '<div class="trow" data-t="' + esc(t.id) + '"><span><span class="chip tm tc' + (TCOL[t.id] || 0) + '"><b>' + esc(t.name) + '</b></span><span class="tid">' + esc(t.id) + '</span><span class="tmeta">계정 ' + t.members + '개' + (t.legacy ? ' · 지금까지의 데이터' : '') + '</span></span>' +
-        '<span class="row"><button class="btn sm" type="button" data-act="tren">이름 바꾸기</button>' + (t.legacy ? '' : '<button class="btn sm danger" type="button" data-act="tdel"' + (t.members ? ' disabled title="계정에서 이 팀을 먼저 빼 주세요"' : '') + '>지우기</button>') + '</span></div>';
+      var op = !!OPEN[t.id], n = TPS[t.id] && !TPS[t.id].err ? TPS[t.id].items.length : null;
+      var meta = [n != null ? '프로젝트 ' + n + '개' : '', limited ? '' : '계정 ' + t.members + '개', t.legacy ? '지금까지의 데이터' : ''].filter(Boolean).join(' · ');
+      var head = tEdit === t.id
+        ? '<div class="trow"><input id="tEditName" value="' + esc(t.name) + '" maxlength="30" aria-label="팀 이름"><span class="row"><button class="btn sm primary" type="button" data-act="tsave">저장</button><button class="btn sm" type="button" data-act="tcancel">취소</button></span></div>'
+        : '<div class="trow"><button type="button" class="ttg" data-act="ttog" aria-expanded="' + op + '"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg><span class="chip tm tc' + (TCOL[t.id] || 0) + '"><b>' + esc(t.name) + '</b></span><span class="tid">' + esc(t.id) + '</span><span class="tmeta">' + esc(meta) + '</span></button>' +
+          (limited ? '' : '<span class="row"><button class="btn sm" type="button" data-act="tren">이름 바꾸기</button>' + (t.legacy ? '' : '<button class="btn sm danger" type="button" data-act="tdel"' + (t.members ? ' disabled title="계정에서 이 팀을 먼저 빼 주세요"' : '') + '>지우기</button>') + '</span>') + '</div>';
+      return '<div class="tgrp' + (op ? ' open' : '') + '" data-t="' + esc(t.id) + '">' + head + (op ? '<div class="tbody">' + tpHtml(t.id) + '</div>' : '') + '</div>';
     }).join('') || '<p class="sub">팀이 없습니다.</p>';
-    var e = $('tEditName'); if (e) { e.focus(); e.select(); }
+    var e = $('tEditName') || $('tlist').querySelector('.tp-row.editing .tp-in-name'); if (e) { e.focus(); e.select(); }
+  }
+  function tpLoad(tid){
+    return fetch('/api/teamprojects?team=' + encodeURIComponent(tid), { cache: 'no-store' }).then(function(r){ return r.json(); }).then(function(d){
+      if (d.error) throw new Error(d.error); var old = TPS[tid] || {}; TPS[tid] = { items: d.items || [], can: !!d.canEdit, msg: old.msg, ok: old.ok };
+    }).catch(function(e){ TPS[tid] = { items: [], can: false, err: e.message }; }).then(renderTeams);
+  }
+  function tpPost(tid, b, done){
+    b.team = tid;
+    return fetch('/api/teamprojects', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(b) }).then(function(r){ return r.json(); })
+      .then(function(d){ if (d.error) throw new Error(d.error); tpEdit = null; if (TPS[tid]) { TPS[tid].msg = done || ''; TPS[tid].ok = true; } return tpLoad(tid).then(function(){ return true; }); })
+      .catch(function(err){ if (TPS[tid]) { TPS[tid].msg = err.message; TPS[tid].ok = false; } renderTeams(); return false; });
   }
   var MANS = [], MLAB = {};
   function setManages(list, all, lock){ [].forEach.call($('fManages').querySelectorAll('input[name="mg"]'), function(c){ c.checked = !!all || list.indexOf(c.value) >= 0; c.disabled = !!lock; }); }
   function managesOf(){ return [].map.call($('fManages').querySelectorAll('input[name="mg"]:checked'), function(c){ return c.value; }); }
-  /* ── 팀 프로젝트: 팀마다 Figma 파일 목록 · 순서(GET/POST /api/teamprojects). 최고관리자 · 「팀 프로젝트 링크 관리」 권한(자기 팀)만 고친다 ── */
-  var tpTeam = '', TP = [], tpEdit = '', tpCan = false;
-  function tpsay(t, ok){ $('tpmsg').textContent = t; $('tpmsg').className = ok ? 'ok' : 'bad'; }
-  function tpLoad(){
-    if (!tpTeam) { $('tpList').innerHTML = '<li class="tp-empty">팀이 없습니다.</li>'; return Promise.resolve(); }
-    return fetch('/api/teamprojects?team=' + encodeURIComponent(tpTeam), { cache: 'no-store' }).then(function(r){ return r.json(); }).then(function(d){
-      if (d.error) throw new Error(d.error); TP = d.items || []; tpCan = !!d.canEdit; tpRender();
-    }).catch(function(e){ $('tpList').innerHTML = '<li class="tp-empty">' + esc(e.message) + '</li>'; });
-  }
-  function tpRender(){
-    $('tpTeams').innerHTML = TEAMS.length > 1 ? TEAMS.map(function(t){ return '<button type="button" data-tpt="' + esc(t.id) + '" aria-pressed="' + (t.id === tpTeam) + '">' + esc(t.name) + '</button>'; }).join('') : '';
-    $('tpAddRow').hidden = !tpCan;
-    $('tpList').innerHTML = TP.length ? TP.map(function(p, i){
-      var nm = p.name || ('Figma 파일 ' + p.key.slice(0, 6));
-      var body = tpEdit === p.key ? '<input id="tpEditName" value="' + esc(p.name || '') + '" maxlength="60" placeholder="이름" aria-label="프로젝트 이름">'
-        : '<b>' + esc(nm) + '</b><a href="' + esc(/^https:\/\//i.test(p.link || '') ? p.link : '#') + '" target="_blank" rel="noopener" title="Figma에서 열기">' + esc(p.link) + '</a>';
-      var act = !tpCan ? '' : tpEdit === p.key
-        ? '<button class="btn sm primary" type="button" data-tpa="save">저장</button><button class="btn sm" type="button" data-tpa="cancel">취소</button>'
-        : '<button class="btn sm ic" type="button" data-tpa="up"' + (i ? '' : ' disabled') + ' aria-label="' + esc(nm) + ' 앞으로" title="앞 순서로">↑</button>' +
-          '<button class="btn sm ic" type="button" data-tpa="down"' + (i < TP.length - 1 ? '' : ' disabled') + ' aria-label="' + esc(nm) + ' 뒤로" title="뒤 순서로">↓</button>' +
-          '<button class="btn sm" type="button" data-tpa="ren">이름</button><button class="btn sm danger" type="button" data-tpa="del">지우기</button>';
-      return '<li class="tp-row" data-k="' + esc(p.key) + '"><span class="tp-n" aria-label="' + (i + 1) + '번째">' + (i + 1) + '</span><span class="tp-t">' + body + '</span><span class="row">' + act + '</span></li>';
-    }).join('') : '<li class="tp-empty">아직 프로젝트가 없습니다.' + (tpCan ? ' 아래에 Figma 파일 링크를 넣어 순서대로 추가하세요.' : '') + '</li>';
-    var e = $('tpEditName'); if (e) { e.focus(); e.select(); }
-  }
-  function tpPost(b, done){
-    b.team = tpTeam;
-    return fetch('/api/teamprojects', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(b) }).then(function(r){ return r.json(); })
-      .then(function(d){ if (d.error) throw new Error(d.error); tpEdit = ''; return tpLoad().then(function(){ if (done) tpsay(done, true); }); })
-      .catch(function(err){ tpsay(err.message); });
-  }
-  $('tpTeams').addEventListener('click', function(e){ var b = e.target.closest('[data-tpt]'); if (!b) return; tpTeam = b.dataset.tpt; tpEdit = ''; tpsay(''); tpLoad(); });
-  $('tpAdd').addEventListener('click', function(){
-    var link = $('tpLink').value.trim(); if (!/figma\.com\/(design|file|proto)\//.test(link)) { tpsay('Figma 파일 링크를 넣어 주세요.'); return; }
-    tpPost({ action: 'add', link: link, name: $('tpName').value.trim() }, (TP.length + 1) + '번째 프로젝트로 추가했습니다.').then(function(){ if ($('tpmsg').className === 'ok') { $('tpLink').value = ''; $('tpName').value = ''; } });
-  });
-  $('tpName').addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.preventDefault(); $('tpAdd').click(); } });
-  $('tpList').addEventListener('click', function(e){
-    var b = e.target.closest('[data-tpa]'); if (!b) return; var k = b.closest('[data-k]').dataset.k, p = TP.filter(function(x){ return x.key === k; })[0], a = b.dataset.tpa;
-    if (a === 'up' || a === 'down') tpPost({ action: 'move', key: k, dir: a === 'up' ? -1 : 1 });
-    else if (a === 'ren') { tpEdit = k; tpRender(); tpsay(''); }
-    else if (a === 'cancel') { tpEdit = ''; tpRender(); }
-    else if (a === 'save') tpPost({ action: 'update', key: k, name: $('tpEditName').value.trim() }, '이름을 바꿨습니다.');
-    else if (a === 'del' && p) WB.confirm('「' + (p.name || p.key) + '」을(를) 팀 프로젝트에서 뺄까요?\nFigma 파일과 각 PC의 캡처 · 변경 이력은 그대로입니다.', { ok: '빼기', danger: true }).then(function(ok){ if (ok) tpPost({ action: 'delete', key: k }, '팀 프로젝트에서 뺐습니다.'); });
-  });
-  $('tpList').addEventListener('keydown', function(e){
-    if (e.target.id !== 'tpEditName') return;
-    if (e.key === 'Enter') { e.preventDefault(); var s = $('tpList').querySelector('[data-tpa="save"]'); if (s) s.click(); }
-    if (e.key === 'Escape') { tpEdit = ''; tpRender(); }
-  });
   function setApproves(list, all, lock){ [].forEach.call($('fApproves').querySelectorAll('input[name="ap"]'), function(c){ c.checked = !!all || list.indexOf(c.value) >= 0; c.disabled = !!lock; }); }
   function approvesOf(){ return [].map.call($('fApproves').querySelectorAll('input[name="ap"]:checked'), function(c){ return c.value; }); }
   function say(t, ok){ $('msg').textContent = t; $('msg').className = 'msg ' + (ok ? 'ok' : 'bad'); }
@@ -277,10 +272,11 @@ body.limited .split{grid-template-columns:minmax(0,760px)}
       if (d.error) throw new Error(d.error);
       $('srv').textContent = '로컬 서버 연결됨'; $('srv').className = 'badge on';
       /* 메뉴가 1개면 예전 서버가 배열 대신 글자로 보냈다 → 늘 배열로 */
+      document.body.classList.toggle('limited', !!d.limited);   // 팀 줄을 그리기 전에(관리 권한만 있으면 팀 버튼 없이)
       TEAMS = [].concat(d.teams || []); TLAB = {}; TEAMS.forEach(function(t, i){ TLAB[t.id] = t.name; TCOL[t.id] = t.color != null ? t.color % 8 : i % 8; }); renderTeams(); fillTeamFilter();
-      /* 팀 프로젝트: 고른 팀이 없으면 지금 보는 팀(상단) → 첫 팀 */
-      if (!TEAMS.some(function(t){ return t.id === tpTeam; })) tpTeam = (TEAMS.some(function(t){ return t.id === window.WB_TEAM; }) ? window.WB_TEAM : (TEAMS[0] && TEAMS[0].id)) || '';
-      tpLoad();
+      /* 처음에는 지금 보는 팀(상단, 없으면 첫 팀)을 펴 둔다. 편 팀은 프로젝트를 읽는다 */
+      if (!Object.keys(OPEN).length) { var t0 = TEAMS.some(function(t){ return t.id === window.WB_TEAM; }) ? window.WB_TEAM : (TEAMS[0] && TEAMS[0].id); if (t0) OPEN[t0] = 1; }
+      TEAMS.forEach(function(t){ if (OPEN[t.id]) tpLoad(t.id); });
       /* 「팀 프로젝트 링크 관리」 권한으로만 들어온 사람: 팀 프로젝트 칸만 */
       document.body.classList.toggle('limited', !!d.limited);
       if (d.limited) { $('headH').textContent = '프로젝트 관리'; document.title = '프로젝트 관리 · Figma AI Run'; $('headP').textContent = '소속 팀의 프로젝트(Figma 파일)와 작업 순서를 정합니다. 계정 · 팀 설정은 최고관리자만 바꿉니다.'; return; }
@@ -399,16 +395,37 @@ body.limited .split{grid-template-columns:minmax(0,760px)}
   });
   $('tName').addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.preventDefault(); $('tAdd').click(); } });
   $('tlist').addEventListener('click', function(e){
-    var btn = e.target.closest('button[data-act]'); if (!btn) return; var row = btn.closest('[data-t]'), id = row.dataset.t, t = TEAMS.filter(function(x){ return x.id === id; })[0];
-    if (btn.dataset.act === 'tren') { tEdit = id; renderTeams(); tsay(''); }
+    var g = e.target.closest('[data-t]'); if (!g) return; var id = g.dataset.t, t = TEAMS.filter(function(x){ return x.id === id; })[0];
+    var pb = e.target.closest('button[data-tpa]');
+    if (pb) {
+      var a = pb.dataset.tpa, row = pb.closest('[data-k]'), k = row ? row.dataset.k : '', p = k && TPS[id] ? TPS[id].items.filter(function(x){ return x.key === k; })[0] : null;
+      if (a === 'add') {
+        var nm = g.querySelector('.tp-new-name').value.trim(), link = g.querySelector('.tp-new-link').value.trim();
+        if (link.indexOf('figma.com/') < 0) { TPS[id].msg = 'Figma 파일 링크를 넣어 주세요.'; TPS[id].ok = false; renderTeams(); return; }
+        tpPost(id, { action: 'add', link: link, name: nm }, (TPS[id].items.length + 1) + '번째 프로젝트로 추가했습니다.');
+      } else if (a === 'up' || a === 'down') tpPost(id, { action: 'move', key: k, dir: a === 'up' ? -1 : 1 });
+      else if (a === 'edit') { tpEdit = { t: id, k: k }; TPS[id].msg = ''; renderTeams(); }
+      else if (a === 'cancel') { tpEdit = null; renderTeams(); }
+      else if (a === 'save') {
+        var nm2 = row.querySelector('.tp-in-name').value.trim(), lk = row.querySelector('.tp-in-link').value.trim();
+        if (lk.indexOf('figma.com/') < 0) { TPS[id].msg = 'Figma 파일 링크를 넣어 주세요.'; TPS[id].ok = false; renderTeams(); return; }
+        tpPost(id, { action: 'update', key: k, name: nm2, link: lk }, '프로젝트를 고쳤습니다.');
+      } else if (a === 'del' && p) WB.confirm('「' + (p.name || p.key) + '」을(를) 팀 프로젝트에서 뺄까요?\nFigma 파일과 각 PC의 캡처 · 변경 이력은 그대로입니다.', { ok: '빼기', danger: true }).then(function(ok){ if (ok) tpPost(id, { action: 'delete', key: k }, '팀 프로젝트에서 뺐습니다.'); });
+      return;
+    }
+    var btn = e.target.closest('button[data-act]'); if (!btn) return;
+    if (btn.dataset.act === 'ttog') { if (OPEN[id]) delete OPEN[id]; else { OPEN[id] = 1; if (!TPS[id]) tpLoad(id); } renderTeams(); var b2 = $('tlist').querySelector('[data-t="' + id + '"] .ttg'); if (b2) b2.focus(); }
+    else if (btn.dataset.act === 'tren') { tEdit = id; renderTeams(); tsay(''); }
     else if (btn.dataset.act === 'tcancel') { tEdit = null; renderTeams(); }
     else if (btn.dataset.act === 'tsave') teamPost({ action: 'team-update', team: { id: id, name: $('tEditName').value.trim() } }, '팀 이름을 바꿨습니다.');
     else if (btn.dataset.act === 'tdel' && t) WB.confirm('「' + t.name + '」 팀을 지울까요?', { ok: '지우기', danger: true }).then(function(ok){ if (ok) teamPost({ action: 'team-delete', team: { id: id } }, '팀을 지웠습니다.'); });
   });
+  // 입력 칸: 팀 이름(Enter 저장 · Esc 취소), 새 프로젝트(Enter 추가), 고치는 프로젝트(Enter 저장 · Esc 취소)
   $('tlist').addEventListener('keydown', function(e){
-    if (e.target.id !== 'tEditName') return;
-    if (e.key === 'Enter') { e.preventDefault(); var s = $('tlist').querySelector('[data-act="tsave"]'); if (s) s.click(); }
-    if (e.key === 'Escape') { tEdit = null; renderTeams(); }
+    var el = e.target; if (!el.classList) return;
+    if (el.id === 'tEditName') { if (e.key === 'Enter') { e.preventDefault(); var s = $('tlist').querySelector('[data-act="tsave"]'); if (s) s.click(); } if (e.key === 'Escape') { tEdit = null; renderTeams(); } return; }
+    if (el.classList.contains('tp-new-name') || el.classList.contains('tp-new-link')) { if (e.key === 'Enter') { e.preventDefault(); el.closest('.tp-add').querySelector('[data-tpa="add"]').click(); } return; }
+    if (el.classList.contains('tp-in-name') || el.classList.contains('tp-in-link')) { if (e.key === 'Enter') { e.preventDefault(); el.closest('.tp-row').querySelector('[data-tpa="save"]').click(); } if (e.key === 'Escape') { tpEdit = null; renderTeams(); } }
   });
   load(false);
 })();

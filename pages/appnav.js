@@ -152,6 +152,12 @@
 
   fetch('/api/me', { cache: 'no-store' }).then(function(r){ return r.json(); }).then(function(m){
     storageWarn();   // 모든 작업자(2026-11-18)
+    /* 감시 상태: 개발 PC(workbench/dev.flag)만 — 다른 PC에는 메뉴가 없고 서버도 막는다(2026-11-19) */
+    if (m && m.dev && !nav.querySelector('a[href="Agents.html"]')) {
+      var ag = document.createElement('a'); ag.href = 'Agents.html'; ag.textContent = '감시 상태';
+      if (/Agents\.html$/.test(location.pathname)) ag.setAttribute('aria-current', 'page');
+      nav.insertBefore(ag, nav.querySelector('.appnav-sp'));
+    }
     if (!m || !m.required) return;
     if (!m.user) { location.replace('/Login.html?next=' + encodeURIComponent(location.pathname + location.search + location.hash)); return; }
     window.WB_ME = m;
