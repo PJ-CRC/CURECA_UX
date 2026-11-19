@@ -1,0 +1,13 @@
+{
+  "provider": "azure",
+  "azure": {
+    "org": "https://dev.azure.com/SG-Collaboration-Projects",
+    "project": "STAgora",
+    "scope": "",
+    "startField": "",
+    "endField": "",
+    "doneStates": ""
+  },
+  "by": "최고관리자",
+  "at": "2026-11-19T14:41:32+09:00"
+}
