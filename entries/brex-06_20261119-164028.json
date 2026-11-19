@@ -1,0 +1,19 @@
+{
+  "id": "brex-06_20261119-164028",
+  "kind": "work",
+  "team": "cureca",
+  "at": "2026-11-19T16:40:28+09:00",
+  "by": "최고관리자",
+  "doneBy": "Claude",
+  "pc": "BREX_06",
+  "reqId": "",
+  "fileKey": "etCQFF3CTf1EA6C79d4BBf",
+  "fileName": "UX AI TEST",
+  "page": "메뉴얼 (삭제 X)",
+  "frame": "P08 · 03 서버 Node.js 한 벌",
+  "nodeId": "2938:4",
+  "type": "",
+  "text": "Workbench 소개에 Node.js 쪽 추가",
+  "note": "채팅 요청: 08쪽 「서버를 Node.js 한 벌로 - 예전 vs 지금」 추가(예전: 윈도우 PowerShell · 맥 Perl 두 벌, 고칠 때마다 두 번, 맥 누락, 스크립트 따로, 화면과 다른 언어 / 지금: 한 벌 · 한 번 고치면 두 OS · 서버 안에서 동기화 · 감시 · 사용량 · Azure 갱신 · 기본 기능 · 화면과 같은 자바스크립트로 기능 추가가 쉬움). 25쪽 → 26쪽, 쪽 번호 · 목차 · 프레임 이름 · 쪽 참조(09쪽) 맞춤",
+  "shot": ""
+}
