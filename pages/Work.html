@@ -1015,7 +1015,9 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   var BL = null, blSel = (function(){ try { return new URL(location.href).searchParams.get('s') || ''; } catch(x){ return ''; } })(), blAll = false, blKind = '', blQ = '';
   function loadBacklog(){
     return api('/api/guides').then(function(g){
-      var doc = (g.items || []).filter(function(i){ return i.id === 'screens'; })[0];
+      // 이 팀에서 적용한 화면 정의서(없으면 CURECA는 screens, 다른 팀은 없음 — 서버 specDoc)
+      BLDOC = g.specDoc === undefined ? 'screens' : (g.specDoc || '');
+      var doc = BLDOC ? (g.items || []).filter(function(i){ return i.id === BLDOC; })[0] : null; BLTITLE = doc ? doc.title || BLDOC : '';
       var list = (doc ? (doc.fileList || []) : []).filter(function(f){ return /\.md$/i.test(f.path) && !/(^|\/)readme\.md$/i.test(f.path); })
         .map(function(f){ return { url: f.mdPath, path: f.path, rev: f.rev }; });
       return getTexts(list.map(function(f){ return f.url; })).then(function(ts){ return list.map(function(f, i){ return { f: f, t: ts[i] }; }); });
@@ -1036,7 +1038,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
           wait: rows.filter(function(r){ return /^대기/.test(r.st); }), doing: rows.filter(function(r){ return /^(작업 중|반영 중)/.test(r.st); }) });
       });
       screens.forEach(function(s){ var m = menus[s.dir]; s.menuName = m ? m.name : (s.menu || s.dir); s.owner = m ? m.owner : ''; });
-      BL = { screens: screens }; snapSave('bl', BL);
+      BL = { screens: screens, doc: BLDOC, title: BLTITLE }; snapSave('bl', BL);
       var n = 0; screens.forEach(function(s){ n += s.wait.length; }); setCnt('backlog', n);
     }).catch(function(e){ BL = { screens: [], error: e.message }; });
   }
@@ -1044,7 +1046,8 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   function figOf(u){ var k = /figma\.com\/(?:design|file)\/([A-Za-z0-9]+)/.exec(u || ''), n = /node-id=(\d+)[-:](\d+)/.exec(u || ''); return k && n ? { key: k[1], node: n[1] + ':' + n[2] } : null; }
   // 작업대기에서 만든 Workbench 요청(fixRows)을 줄마다: {doc|파일|ID → 요청}
   var fixReq = {};
-  function fixKey(s, r){ return 'screens|' + s.path + '|' + r.n; }
+  var BLDOC = 'screens', BLTITLE = '';   // 작업대기가 읽는 화면 정의서 ID · 제목
+  function fixKey(s, r){ return BLDOC + '|' + s.path + '|' + r.n; }
   function loadFixReqs(){
     return api('/api/requests').then(function(j){
       var o = {};
@@ -1056,6 +1059,8 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   function renderBacklog(){
     var el = $('body-backlog'); if (!el) return;
     if (!BL) { el.innerHTML = '<p class="muted">화면 정의서를 읽는 중…</p>'; return; }
+    // 이 팀에서 적용한 화면 정의서가 없으면 비워 두고 안내(다른 팀 문서를 대신 보이지 않는다)
+    if (!BLDOC) { el.innerHTML = '<div class="wempty"><b>이 팀에서 적용한 화면 정의서가 없습니다</b><p>UX 문서 › 화면 정의서에서 이 팀 화면 정의서를 「내 작업 기준」으로 [적용]하면, 그 문서의 「반영 대기 목록」이 여기 보입니다.</p></div>'; return; }
     var S = BL.screens, q = blQ.trim().toLowerCase();
     var waitN = 0, doingN = 0; S.forEach(function(s){ waitN += s.wait.length; doingN += s.doing.length; });
     var act = S.filter(function(s){ return s.wait.length || s.doing.length; }), mg = {};
@@ -1066,7 +1071,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     var vis = function(s){ return !q || (s.cid + ' ' + s.title).toLowerCase().indexOf(q) >= 0; };
     var shownScr = []; groups.forEach(function(g){ g.vis = g.list.filter(vis); shownScr = shownScr.concat(g.vis); });
     if (!blSel || !shownScr.some(function(s){ return s.cid === blSel; })) blSel = shownScr.length ? shownScr[0].cid : '';
-    var h = '<div class="stats">' +
+    var h = (BLTITLE ? '<p class="hint" style="margin:0 0 10px">기준 화면 정의서 · ' + esc(BLTITLE) + '</p>' : '') + '<div class="stats">' +
       '<div class="stat"><div class="l">반영 대기</div><div class="v">' + waitN.toLocaleString() + '</div><div class="s">상태가 「대기」인 항목</div></div>' +
       '<div class="stat"><div class="l">작업 중</div><div class="v">' + doingN + '</div><div class="s">진행 중인 화면설계 작업이 고른 항목</div></div>' +
       '<div class="stat"><div class="l">작업 대기 화면</div><div class="v">' + act.length + '</div><div class="s">전체 화면 ' + S.length + '개</div></div>' +
@@ -1337,7 +1342,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     if (!(await WB.confirm('화면설계 작업을 요청할까요?\n' + s.cid + ' 화면의 ' + rows.length + '항목으로 Case 1 · 새 작업을 등록합니다.', { ok: '요청' }))) return;
     b.disabled = true;
     api('/api/requests', { action: 'add', fileKey: fig.key, fileName: '', nodeId: fig.node, frame: s.cid + (s.title ? ' ' + s.title : ''), page: '', editable: true, type: 'Case 1 · 부분 수정 · 1단계 시작', case: '1', work: '', stage: 0, priority: '보통', layout: '', text: text, by: myName,
-      fixRows: rows.map(function(r){ return { doc: 'screens', file: s.path, n: r.n, cid: s.cid }; }) })
+      fixRows: rows.map(function(r){ return { doc: BLDOC, file: s.path, n: r.n, cid: s.cid }; }) })
       .then(function(j){ return loadFixReqs().then(function(){ renderBacklog(); var id = j && j.items && j.items[0] && j.items[0].id; toast((id ? id + ' ' : '') + '화면설계 작업을 요청했습니다. Workbench · 변경 이력에서 진행을 볼 수 있습니다.'); }); })
       .catch(function(err){ b.disabled = false; WB.alert('요청을 만들지 못했습니다.\n' + err.message); });
   });
@@ -1723,7 +1728,8 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   // 지난번에 받아 둔 자료로 먼저 그린다(메뉴를 옮겼다 돌아와도 바로 보임). 새 자료가 오면 바뀐다
   (function(){
     var b = snapLoad('bl'), d = snapLoad('ds'), m = snapLoad('min');
-    if (b && b.screens) { BL = b; var n = 0; b.screens.forEach(function(s){ n += (s.wait || []).length; }); setCnt('backlog', n); }
+    // 작업대기 사본: 어느 화면 정의서였는지(doc) 없는 예전 사본은 쓰지 않는다
+    if (b && b.screens && b.doc !== undefined) { BL = b; BLDOC = b.doc; BLTITLE = b.title || ''; var n = 0; b.screens.forEach(function(s){ n += (s.wait || []).length; }); setCnt('backlog', n); }
     if (d && d.length && d[0].group) { DS = d; DISC = { ds: d }; planCnt(); }
     if (m && m.items) { mlist = m.items; minMe = m.me || ''; }
   })();

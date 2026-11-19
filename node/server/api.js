@@ -88,9 +88,9 @@ on('GET', '/api/changes', ({ q, T }) => {
   out.plugin = C.pluginSeen ? Math.floor((Date.now() - C.pluginSeen) / 1000) : null;
   // 반영 대기(/api/backlog 약 270KB) · 작업 기준(/api/guides 약 66KB)도 1분마다 통째로 받지 않게: 지금 팀 문서 파일의 개수 · 최근 수정 시각
   if (T && T.guideRoot) {
-    const sr = path.join(T.guideRoot, 'screens'); let bn = 0, bm = 0;
-    for (const d of dirNames(sr)) for (const n of fileNames(path.join(sr, d))) { if (!/\.md$/i.test(n)) continue; bn++; const t = mt(path.join(sr, d, n)); if (t > bm) bm = t; }
-    out.blg = bn + ':' + bm;
+    const sd = specDoc(T); let bn = 0, bm = 0;
+    if (sd) for (const f of specFiles(T, sd)) { bn++; const t = mt(f.abs); if (t > bm) bm = t; }
+    out.blg = sd + ':' + bn + ':' + bm;
     let gn = 0, gm = mt(T.guideApply);
     for (const d of dirNames(T.guideRoot)) { gn++; const dd = path.join(T.guideRoot, d); for (const f of [path.join(dd, 'meta.json'), path.join(dd, 'rev')]) { const t = mt(f); if (t > gm) gm = t; } }
     out.gd = gn + ':' + gm;
@@ -367,7 +367,7 @@ function readGuides(T) {
     for (const t of Object.keys(e.docs || {})) { const v = e.docs[t]; if (v && v.id && alias[v.id]) v.id = alias[v.id]; }
   }
   const applied = fillTeamGuide(fillApplied(raw), T);
-  return { items: sortDescPS(list, (x) => String(x.updatedAt || '')), applied };
+  return { items: sortDescPS(list, (x) => String(x.updatedAt || '')), applied, specDoc: specDoc(T) };   // specDoc: 화면설계서 작업대기가 읽을 화면 정의서
 }
 on('GET', '/api/guides', ({ T }) => readGuides(T));
 
@@ -418,13 +418,24 @@ function readBacklog(f, rel) {
   return { cid: String(fm.cid || path.basename(f, '.md')), title: String(fm.title || (h1 ? h1[1] : '')), author: String(fm.author || ''), path: rel,
     fileKey: key, nodeId: nd ? `${nd[1]}:${nd[2]}` : '', rows };
 }
+// 반영 대기를 읽을 화면 정의서(2026-11-19): 이 PC가 그 팀에서 「내 작업 기준」으로 적용한 화면 정의서(카테고리마다 하나라 어느 파일 칸이든 같다).
+//  적용한 것이 없으면 CURECA는 원래의 screens, 다른 팀은 없음(예전에는 팀과 상관없이 늘 screens — 다른 팀에 CURECA에서 복사해 온 사본이 있으면 CURECA 항목이 보였다)
+function specDoc(T) {
+  const raw = core.readJson(T.guideApply) || {};
+  for (const k of Object.keys(raw)) { const s = raw[k] && raw[k].docs && raw[k].docs.spec; if (s && s.id && core.exists(path.join(T.guideRoot, String(s.id), 'meta.json'))) return String(s.id); }
+  return T.team === 'cureca' && core.exists(path.join(T.guideRoot, 'screens', 'meta.json')) ? 'screens' : '';
+}
+// 그 문서의 md 파일(문서 폴더 바로 아래 + 한 단계 아래 폴더, README · _menu · rev · _ · . 로 시작하는 것은 빼고): [{abs, rel}]
+function specFiles(T, id) {
+  const root = path.join(T.guideRoot, id), out = [], ok = (n) => /\.md$/i.test(n) && !/^(readme|_menu)\.md$/i.test(n) && !/^[_.]/.test(n);
+  for (const n of fileNames(root)) if (ok(n)) out.push({ abs: path.join(root, n), rel: n });
+  for (const d of dirNames(root)) { if (/^(rev|_trash)$/i.test(d) || /^[_.]/.test(d)) continue; for (const n of fileNames(path.join(root, d))) if (ok(n)) out.push({ abs: path.join(root, d, n), rel: `${d}/${n}` }); }
+  return out;
+}
 on('GET', '/api/backlog', ({ T }) => {
-  const root = path.join(T.guideRoot, 'screens'), items = [];
-  for (const d of dirNames(root)) for (const n of fileNames(path.join(root, d))) {
-    if (!/\.md$/i.test(n) || /^(readme|_menu)\.md$/i.test(n)) continue;
-    const s = readBacklog(path.join(root, d, n), `${d}/${n}`); if (s) items.push(s);
-  }
-  return { dir: `${T.guideRel}/screens`, items };
+  const id = specDoc(T), items = [];
+  if (id) for (const f of specFiles(T, id)) { const s = readBacklog(f.abs, f.rel); if (s) items.push(s); }
+  return { doc: id, dir: id ? `${T.guideRel}/${id}` : '', items };
 });
 
 // ── 시작 안내(Get-SetupEnv · Agent-Info · Find-Claude · Find-ClaudeCode · Find-Git) ──
