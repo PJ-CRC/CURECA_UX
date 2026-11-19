@@ -143,7 +143,7 @@ foreach ($dir in $places) { $lnk = Join-Path $dir 'Figma AI Run.lnk'; try { if (
     log(`절전에서 깨어남(${Math.round(gap / 1000)}초 멈춤) — 탭 · 진행 중 확인을 잠시 미룹니다.`);
   }
 
-  let handAt = Date.now() + 20000, agAt = Date.now() + 15000;
+  let handAt = Date.now() + 20000, agAt = Date.now() + 15000, azAt = Date.now() + 90000, azBusy = false;
   setInterval(() => {
     try { wakeCheck(); } catch (e) {}
     if (Date.now() >= staleAt) { staleAt = Date.now() + 60000; try { freeStale(); } catch (e) { errLog('멈춘 진행 중 확인', e); } }
@@ -151,6 +151,22 @@ foreach ($dir in $places) { $lnk = Join-Path $dir 'Figma AI Run.lnk'; try { if (
     if (Date.now() >= watchAt) { watchAt = Date.now() + 120000; const f = watchFirst; watchFirst = false; try { autoWatch(f); } catch (e) { errLog('감시 자동 시작', e); } }
     try { idleCheck(); } catch (e) { errLog('탭 확인', e); }
     if (Date.now() >= handAt) { handAt = Date.now() + 60000; try { if (h.handoffTick) h.handoffTick(); } catch (e) { errLog('이어 받기 확인', e); } }   // 다른 PC가 내 작업을 이어 받았는지(2026-11-18)
+    // Azure 일정(2026-11-19): 이 PC에 토큰이 있는 팀은 30분마다 새로 받아 팀 공유 사본을 갱신 — 토큰 없는 팀원도 화면을 열지 않아도 최신에 가깝게 본다
+    if (Date.now() >= azAt && !azBusy) {
+      azAt = Date.now() + 30 * 60000; azBusy = true;
+      (async () => {
+        try {
+          const api = require('./api'), core = require('./core'), path = require('path');
+          const pats = core.readJson(path.join(core.C.setupDir, 'azure_pat.json')) || {};
+          for (const tid of Object.keys(pats)) {
+            if (!String(pats[tid] || '')) continue;
+            const T = core.teamCtx(tid); if ((core.readJson(T.sheetConf) || {}).provider !== 'azure') continue;
+            try { await api.azureRefresh(T); } catch (e) { errLog('Azure 일정 받기(' + tid + ')', e); }
+          }
+        } catch (e) { errLog('Azure 일정 받기', e); }
+        azBusy = false;
+      })();
+    }
     if (Date.now() >= agAt) { agAt = Date.now() + 60000; try { require('./agents').report(h.agentInfo); } catch (e) { errLog('감시 상태 남기기', e); } }   // PC별 감시 상태 → .history/agents(2026-11-19)
   }, 1000);
 };

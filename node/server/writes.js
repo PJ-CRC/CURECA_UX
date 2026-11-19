@@ -1085,7 +1085,7 @@ module.exports = function register(on, h) {
           const az = b.azure || {}, org = nn(az.org).trim().replace(/\/+$/, '');
           if (!/^https:\/\/(dev\.azure\.com\/[^/\s]+|[A-Za-z0-9-]+\.visualstudio\.com)$/.test(org)) throw new Error('조직 주소는 https://dev.azure.com/{조직} 또는 https://{조직}.visualstudio.com 형식입니다.');
           if (!nn(az.project).trim()) throw new Error('프로젝트 이름을 넣어 주세요.');
-          const cf = Object.assign({}, old, { provider: 'azure', azure: { org, project: nn(az.project).trim(), scope: nn(az.scope).trim(), startField: nn(az.startField).trim(), endField: nn(az.endField).trim(), doneStates: nn(az.doneStates).trim() }, by: meName(), at: core.now() });
+          const cf = Object.assign({}, old, { provider: 'azure', azure: { org, project: nn(az.project).trim(), scope: nn(az.scope).trim(), startField: nn(az.startField).trim(), endField: nn(az.endField).trim(), doneStates: nn(az.doneStates).trim(), report: nn(az.report).trim().slice(0, 80) }, by: meName(), at: core.now() });   // report: 주간보고 WBS(2026-11-19) — 이 제목의 최신 「… / All」 주간보고로 일정표
           core.writeJson(T.sheetConf, cf); core.syncWant(); return { ok: true };
         }
         let wa = nn(b.webapp).trim(); if (wa && !/^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]+\/exec$/.test(wa)) throw new Error('웹 앱 주소는 https://script.google.com/macros/s/…/exec 형식입니다.');
