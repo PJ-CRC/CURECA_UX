@@ -1,0 +1,19 @@
+{
+  "id": "brex-06_20261119-161939",
+  "kind": "work",
+  "team": "cureca",
+  "at": "2026-11-19T16:19:39+09:00",
+  "by": "최고관리자",
+  "doneBy": "Claude",
+  "pc": "BREX_06",
+  "reqId": "",
+  "fileKey": "etCQFF3CTf1EA6C79d4BBf",
+  "fileName": "UX AI TEST",
+  "page": "메뉴얼 (삭제 X)",
+  "frame": "P02 · 목차",
+  "nodeId": "2515:126975",
+  "type": "",
+  "text": "Workbench 소개 목차 세로 가운데 정렬",
+  "note": "채팅 요청: 「Workbench 소개」 02 목차의 모든 행(번호 · 제목 · 쪽 번호)을 구분선 사이 세로 가운데로 옮김(위 7px · 아래 17px → 위아래 같게)",
+  "shot": "shots/brex-06_20261119-161939.jpg"
+}
