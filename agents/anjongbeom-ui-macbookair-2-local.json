@@ -1,5 +1,5 @@
 {
-  "reportAt": "2026-11-19T16:52:11+09:00",
+  "reportAt": "2026-11-19T16:54:11+09:00",
   "pc": "anjongbeom-ui-MacBookAir-2.local",
   "slug": "anjongbeom-ui-macbookair-2-local",
   "user": "안종범",
@@ -495,11 +495,6 @@
     },
     {
       "at": "2026-11-12T16:56:03+09:00",
-      "kind": "error",
-      "text": "준비 확인: CLI 로그인 안 됨"
-    },
-    {
-      "at": "2026-11-12T16:54:03+09:00",
       "kind": "error",
       "text": "준비 확인: CLI 로그인 안 됨"
     }
