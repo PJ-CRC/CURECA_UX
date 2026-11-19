@@ -1,0 +1,28 @@
+{
+  "id": "brex-06_20261119-160953",
+  "kind": "work",
+  "reqId": "",
+  "reqType": "",
+  "team": "cureca",
+  "at": "2026-11-19T16:09:53+09:00",
+  "from": "2026-11-19T15:56:00+09:00",
+  "by": "최고관리자",
+  "doneBy": "Claude",
+  "pc": "BREX_06",
+  "fileKey": "etCQFF3CTf1EA6C79d4BBf",
+  "fileName": "UX AI TEST",
+  "page": "메뉴얼 (삭제 X)",
+  "frame": "Workbench 소개",
+  "nodeId": "2515:126318",
+  "text": "채팅: Workbench 소개 · flow 최신화(v0.30)",
+  "models": {
+    "claude-opus-5-5": 17
+  },
+  "calls": 17,
+  "input": 34,
+  "cacheWrite": 73549,
+  "cacheRead": 13485946,
+  "output": 36028,
+  "total": 13595557,
+  "usd": 4.0063
+}

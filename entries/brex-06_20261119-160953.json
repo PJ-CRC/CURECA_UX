@@ -1,0 +1,19 @@
+{
+  "id": "brex-06_20261119-160953",
+  "kind": "work",
+  "team": "cureca",
+  "at": "2026-11-19T16:09:53+09:00",
+  "by": "최고관리자",
+  "doneBy": "Claude",
+  "pc": "BREX_06",
+  "reqId": "",
+  "fileKey": "etCQFF3CTf1EA6C79d4BBf",
+  "fileName": "UX AI TEST",
+  "page": "메뉴얼 (삭제 X)",
+  "frame": "Workbench 소개",
+  "nodeId": "2515:126318",
+  "type": "",
+  "text": "Workbench 소개 · flow 최신화(v0.30)",
+  "note": "채팅 요청으로 「메뉴얼 (삭제 X)」 페이지(작업 페이지 아님 — 사용자 허락)의 「Workbench 소개」 · 「flow」를 지금 Workbench에 맞춤. 소개 22쪽 → 25쪽: 기준 v0.30 · 2026.11.19, 쪽 번호 · 목차, Case 선택 없앰(케이스 · 단계는 팀 작업규칙), 「적용 프로젝트」 → 팀마다 「내 작업 기준」(UX가이드는 파일마다), Azure DevOps(주간보고 일정표 · Wiki), 팀 프로젝트 · 다음 단계로 보내기, 요청 멈추기 · 자세히, 기본 템플릿, 언어셋 엑셀. 새 쪽: 08 팀으로 나눠 쓰기(CURECA · STAgora), 13 처음 설정 흐름, 17 팀 프로젝트 · 다음 단계로 보내기. flow: 서버 · 토큰(REST) · MCP · .history 동기화, 시작 안내 ④⑤⑥, 팀 프로젝트 · UX가이드(파일마다) · 작업 페이지(PC마다), PC마다 Claude · 겹침 대기로 이름 고침",
+  "shot": ""
+}
