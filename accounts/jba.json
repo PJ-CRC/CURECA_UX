@@ -1,34 +1,31 @@
 {
-    "id":  "jba",
-    "name":  "안종범",
-    "admin":  false,
-    "menus":  [
-                  "plan",
-                  "guide",
-                  "workbench",
-                  "history",
-                  "usage",
-                  "proto"
-              ],
-    "createdAt":  "2026-11-10T14:13:06+09:00",
-    "createdBy":  "brex",
-    "salt":  "Jr+mpByj2C9GuuOjUZMOQg==",
-    "iter":  100000,
-    "hash":  "906BWLxLv+9AXGE1d9tNEMxs9UIFKSLUlwiUKs15C4k=",
-    "pwAt":  "2026-11-10T14:13:06+09:00",
-    "writes":  [
-                   "plan",
-                   "guide",
-                   "workbench",
-                   "history",
-                   "proto"
-               ],
-    "approves":  [
-
-                 ],
-    "teams":  [
-                  "stagora"
-              ],
-    "active":  true,
-    "updatedAt":  "2026-11-11T17:02:36+09:00"
+  "id": "jba",
+  "name": "안종범",
+  "admin": false,
+  "menus": [
+    "plan",
+    "guide",
+    "workbench",
+    "history",
+    "usage"
+  ],
+  "createdAt": "2026-11-10T14:13:06+09:00",
+  "createdBy": "brex",
+  "salt": "Jr+mpByj2C9GuuOjUZMOQg==",
+  "iter": 100000,
+  "hash": "906BWLxLv+9AXGE1d9tNEMxs9UIFKSLUlwiUKs15C4k=",
+  "pwAt": "2026-11-10T14:13:06+09:00",
+  "writes": [
+    "plan",
+    "guide",
+    "workbench",
+    "history"
+  ],
+  "approves": [],
+  "teams": [
+    "stagora"
+  ],
+  "active": true,
+  "updatedAt": "2026-11-19T17:16:32+09:00",
+  "manages": []
 }
