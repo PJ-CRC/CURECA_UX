@@ -21,7 +21,21 @@
     "../policy/permission-matrix.csv",
     "../policy/client-mode-matrix.csv",
     "../policy/warning-light.csv",
-    "../ia/ia-screens.csv"
+    "../ia/ia-screens.csv",
+    "language-set/sheet01.csv",
+    "language-set/sheet01.styles.json",
+    "language-set/sheet02.csv",
+    "language-set/sheet02.styles.json",
+    "language-set/sheet03.csv",
+    "language-set/sheet03.styles.json",
+    "language-set/sheet04.csv",
+    "language-set/sheet04.styles.json",
+    "language-set/sheet05.csv",
+    "language-set/sheet05.styles.json",
+    "language-set/sheet06.csv",
+    "language-set/sheet06.styles.json",
+    "language-set/sheet07.csv",
+    "language-set/sheet07.styles.json"
   ],
   "filesDir": "",
   "format": "files",
@@ -58,6 +72,241 @@
     "test-items.csv": "검사 항목 · test-items.csv",
     "test-stages.csv": "검사 단계 · test-stages.csv"
   },
-  "updatedAt": "2026-11-17T06:52:42.818Z",
-  "note": "2026-11-17 CURECA_AI_20261117로 전부 교체"
+  "updatedAt": "2026-11-19T04:05:50.408Z",
+  "note": "2026-11-17 CURECA_AI_20261117로 전부 교체",
+  "books": {
+    "language-set": {
+      "title": "언어셋",
+      "source": "../language-set/source/CURECA_Language Set_v0.03.xlsx",
+      "sheets": {
+        "language-set/sheet01.csv": "표지",
+        "language-set/sheet02.csv": "문서이력",
+        "language-set/sheet03.csv": "A.고유명사_용어집",
+        "language-set/sheet04.csv": "B.메뉴_내비게이션",
+        "language-set/sheet05.csv": "C.상태값_코드값",
+        "language-set/sheet06.csv": "D.버튼",
+        "language-set/sheet07.csv": "목록"
+      },
+      "freeze": {
+        "language-set/sheet03.csv": 3,
+        "language-set/sheet04.csv": 3,
+        "language-set/sheet05.csv": 3
+      },
+      "widths": {
+        "language-set/sheet01.csv": [
+          62,
+          93,
+          93,
+          93,
+          93,
+          93,
+          93,
+          93,
+          93,
+          93,
+          93,
+          93
+        ],
+        "language-set/sheet02.csv": [
+          22,
+          93,
+          171,
+          175,
+          93,
+          323,
+          93
+        ],
+        "language-set/sheet03.csv": [
+          173,
+          127,
+          81,
+          81,
+          289,
+          289,
+          289,
+          289,
+          289,
+          289,
+          244,
+          293
+        ],
+        "language-set/sheet04.csv": [
+          173,
+          127,
+          81,
+          81,
+          289,
+          289,
+          289,
+          289,
+          289,
+          289,
+          158,
+          158
+        ],
+        "language-set/sheet05.csv": [
+          173,
+          127,
+          81,
+          81,
+          289,
+          289,
+          289,
+          289,
+          289,
+          289,
+          215,
+          158
+        ],
+        "language-set/sheet06.csv": [
+          173,
+          127,
+          81,
+          81,
+          184,
+          184,
+          184,
+          184,
+          184,
+          184,
+          158,
+          158
+        ],
+        "language-set/sheet07.csv": [
+          23,
+          219,
+          118,
+          93,
+          93,
+          219,
+          320,
+          289,
+          0,
+          0,
+          289,
+          289,
+          289,
+          289,
+          289,
+          149,
+          149,
+          93,
+          263
+        ]
+      },
+      "styles": {
+        "language-set/sheet01.csv": "language-set/sheet01.styles.json",
+        "language-set/sheet02.csv": "language-set/sheet02.styles.json",
+        "language-set/sheet03.csv": "language-set/sheet03.styles.json",
+        "language-set/sheet04.csv": "language-set/sheet04.styles.json",
+        "language-set/sheet05.csv": "language-set/sheet05.styles.json",
+        "language-set/sheet06.csv": "language-set/sheet06.styles.json",
+        "language-set/sheet07.csv": "language-set/sheet07.styles.json"
+      },
+      "filters": {
+        "language-set/sheet07.csv": "B8:Q8"
+      },
+      "lists": {
+        "language-set/sheet02.csv": [
+          {
+            "ranges": [
+              "C4:C5"
+            ],
+            "values": [
+              "0.공통",
+              "1.Event History"
+            ]
+          }
+        ],
+        "language-set/sheet03.csv": [
+          {
+            "ranges": [
+              "D5:D218"
+            ],
+            "values": [
+              "번역",
+              "미번역",
+              "번역",
+              "미번역",
+              "한국어 번역(Only)"
+            ]
+          },
+          {
+            "ranges": [
+              "D4"
+            ],
+            "values": [
+              "번역",
+              "미번역"
+            ]
+          }
+        ],
+        "language-set/sheet04.csv": [
+          {
+            "ranges": [
+              "D5:D37"
+            ],
+            "values": [
+              "번역",
+              "미번역",
+              "번역",
+              "미번역",
+              "한국어 번역(Only)"
+            ]
+          }
+        ],
+        "language-set/sheet05.csv": [
+          {
+            "ranges": [
+              "D5:D47"
+            ],
+            "values": [
+              "번역",
+              "미번역",
+              "번역",
+              "미번역",
+              "한국어 번역(Only)"
+            ]
+          }
+        ],
+        "language-set/sheet06.csv": [
+          {
+            "ranges": [
+              "D5:D22"
+            ],
+            "values": [
+              "번역",
+              "미번역",
+              "번역",
+              "미번역",
+              "한국어 번역(Only)"
+            ]
+          }
+        ],
+        "language-set/sheet07.csv": [
+          {
+            "ranges": [
+              "E5:E1455"
+            ],
+            "values": [
+              "txt",
+              "title",
+              "alt-txt",
+              "btn"
+            ]
+          },
+          {
+            "ranges": [
+              "D6:D1455"
+            ],
+            "values": [
+              "T/L",
+              "T",
+              "L"
+            ]
+          }
+        ]
+      }
+    }
+  }
 }
