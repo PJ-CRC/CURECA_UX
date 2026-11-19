@@ -1,0 +1,19 @@
+{
+  "id": "anjongbeom-ui-macbookair-2-local_20261119-171107",
+  "kind": "work",
+  "team": "stagora",
+  "at": "2026-11-19T17:11:07+09:00",
+  "by": "안종범",
+  "doneBy": "Claude",
+  "pc": "anjongbeom-ui-MacBookAir-2.local",
+  "reqId": "",
+  "fileKey": "cDjaemHjetS7RcAHRUIMY5",
+  "fileName": "STAgora AI Workspace",
+  "page": "Test-안종범",
+  "frame": "결과",
+  "nodeId": "424:588",
+  "type": "",
+  "text": "AMR 전용 분석 카드 추천안(계층형 막대) 시안",
+  "note": "11.19-임상의 AMR 섹션 옆에 새 섹션(424:587)을 만들고, 기존 카드를 복제해 차트를 계층형 막대(총 검사 → MTB 검출 → AMR 검출)와 MTB 관련 AMR Marker별 막대(rpoB · katG · inhA, 예시 값)로 바꿈. AMR 비율 분모를 MTB 검출 수로 가정해 KPI 60.0% → 93.1%. Pretendard · Arial을 불러올 수 없어 새 글은 Noto Sans KR로 씀.",
+  "shot": "shots/anjongbeom-ui-macbookair-2-local_20261119-171107.jpg"
+}
