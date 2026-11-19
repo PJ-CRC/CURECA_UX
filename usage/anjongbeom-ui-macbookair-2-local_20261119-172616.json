@@ -1,0 +1,28 @@
+{
+  "id": "anjongbeom-ui-macbookair-2-local_20261119-172616",
+  "kind": "work",
+  "reqId": "",
+  "reqType": "",
+  "team": "stagora",
+  "at": "2026-11-19T17:26:16+09:00",
+  "from": "2026-11-19T17:24:00+09:00",
+  "by": "안종범",
+  "doneBy": "Claude",
+  "pc": "anjongbeom-ui-MacBookAir-2.local",
+  "fileKey": "cDjaemHjetS7RcAHRUIMY5",
+  "fileName": "STAgora AI Workspace",
+  "page": "Test-안종범",
+  "frame": "결과",
+  "nodeId": "431:604",
+  "text": "채팅: AMR 선버스트 · 생키 시안",
+  "models": {
+    "claude-opus-5-5": 6
+  },
+  "calls": 6,
+  "input": 14,
+  "cacheWrite": 14791,
+  "cacheRead": 957090,
+  "output": 12051,
+  "total": 983946,
+  "usd": 0.5508
+}

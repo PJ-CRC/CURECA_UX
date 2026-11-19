@@ -1,0 +1,19 @@
+{
+  "id": "anjongbeom-ui-macbookair-2-local_20261119-172616",
+  "kind": "work",
+  "team": "stagora",
+  "at": "2026-11-19T17:26:16+09:00",
+  "by": "안종범",
+  "doneBy": "Claude",
+  "pc": "anjongbeom-ui-MacBookAir-2.local",
+  "reqId": "",
+  "fileKey": "cDjaemHjetS7RcAHRUIMY5",
+  "fileName": "STAgora AI Workspace",
+  "page": "Test-안종범",
+  "frame": "결과",
+  "nodeId": "431:604",
+  "type": "",
+  "text": "AMR 전용 분석 카드 선버스트 · 생키 시안",
+  "note": "추천안 섹션(424:587)을 「추천안 비교(계층형 막대 · 선버스트 · 생키)」로 바꾸고, 계층형 막대 카드 옆에 B. 선버스트(431:604) · C. 생키(431:796) 카드를 더함. 두 카드 모두 아래에 MTB 관련 AMR Marker 막대(예시 값)를 둠. 마커는 서로 겹칠 수 있어 고리 · 흐름으로 나누지 않음.",
+  "shot": "shots/anjongbeom-ui-macbookair-2-local_20261119-172616.jpg"
+}
