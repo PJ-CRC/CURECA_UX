@@ -1,34 +1,31 @@
 {
-    "id":  "ahnahn",
-    "name":  "안희수",
-    "admin":  false,
-    "menus":  [
-                  "plan",
-                  "guide",
-                  "workbench",
-                  "history",
-                  "usage",
-                  "proto"
-              ],
-    "createdAt":  "2026-11-10T14:12:34+09:00",
-    "createdBy":  "brex",
-    "salt":  "9fpypovDkfRBuzaLQ1uSRg==",
-    "iter":  100000,
-    "hash":  "xjr9Lyk53DFWhHjcbt94isySicpPLHPYD1rQbKhYBvM=",
-    "pwAt":  "2026-11-10T14:12:34+09:00",
-    "writes":  [
-                   "plan",
-                   "guide",
-                   "workbench",
-                   "history",
-                   "proto"
-               ],
-    "approves":  [
-
-                 ],
-    "teams":  [
-                  "stagora"
-              ],
-    "active":  true,
-    "updatedAt":  "2026-11-11T17:02:25+09:00"
+  "id": "ahnahn",
+  "name": "안희수",
+  "admin": false,
+  "menus": [
+    "plan",
+    "guide",
+    "workbench",
+    "history",
+    "usage"
+  ],
+  "createdAt": "2026-11-10T14:12:34+09:00",
+  "createdBy": "brex",
+  "salt": "9fpypovDkfRBuzaLQ1uSRg==",
+  "iter": 100000,
+  "hash": "xjr9Lyk53DFWhHjcbt94isySicpPLHPYD1rQbKhYBvM=",
+  "pwAt": "2026-11-10T14:12:34+09:00",
+  "writes": [
+    "plan",
+    "guide",
+    "workbench",
+    "history"
+  ],
+  "approves": [],
+  "teams": [
+    "stagora"
+  ],
+  "active": true,
+  "updatedAt": "2026-11-19T17:16:39+09:00",
+  "manages": []
 }
