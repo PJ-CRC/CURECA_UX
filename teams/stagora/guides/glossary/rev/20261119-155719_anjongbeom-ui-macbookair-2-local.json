@@ -1,0 +1,13 @@
+{
+  "rev": "20261119-155719_anjongbeom-ui-macbookair-2-local",
+  "by": "안종범",
+  "at": "2026-11-19T15:57:19+09:00",
+  "note": "직접 수정: 언어셋 › 문서이력 (서식)",
+  "base": "20261119-155719_anjongbeom-ui-macbookair-2-local",
+  "pc": "anjongbeom-ui-MacBookAir-2.local",
+  "req": "(직접 수정)",
+  "jobId": "",
+  "file": "language-set/sheet02.styles.json",
+  "direct": true,
+  "orig": true
+}
