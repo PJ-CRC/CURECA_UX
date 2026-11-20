@@ -555,8 +555,14 @@ function agentInfo() {
   if (!o) return { alive: false, stopping, sec: null, status: '', msg: '', host: '' };
   const sec = ago(o.at); let alive = sec != null && sec < 150 && String(o.status) !== 'stopped';
   if (alive && o.pid) { try { process.kill(parseInt(o.pid, 10), 0); } catch (e) { if (e.code === 'ESRCH') alive = false; } }   // 맥도 pid를 본다(2026-11-18 — 죽은 뒤 150초 동안 「처리 중」으로 보이던 것)
-  return { alive, stopping: stopping && alive, sec, status: String(o.status || ''), msg: String(o.msg || ''), host: String(o.host || ''), ver: String(o.ver || ''), claude: String(o.claude || '') };
+  return { alive, stopping: stopping && alive, sec, status: String(o.status || ''), msg: String(o.msg || ''), host: String(o.host || ''), ver: String(o.ver || ''), claude: String(o.claude || ''),
+    act: String(o.act || ''), tool: String(o.tool || ''), ids: Array.isArray(o.ids) ? o.ids.map(String) : [] };
 }
+// GET /api/agent/live (2026-11-20): Workbench 답변의 「살아 있음」 표시 — 이 PC 감시가 지금 처리 중인 ID · 마지막으로 움직인 시각 · 쓰는 도구
+on('GET', '/api/agent/live', () => {
+  const a = agentInfo(), w = a.alive && a.status === 'working';
+  return { now: core.now(), alive: a.alive, working: w, ids: w ? a.ids : [], act: w ? a.act : '', tool: w ? a.tool : '' };
+});
 let envCache = null, envAt = 0;
 function setupEnv() {
   // 환경 정보는 15초 저장해 두고 쓰되, 요청 감시 상태(agent)는 늘 새로 본다(2026-11-16: 서버가 켜진 직후 「감시 꺼짐」이 15초 남아 [감시 시작]을 누르면 「이미 실행 중」이 나왔다)
