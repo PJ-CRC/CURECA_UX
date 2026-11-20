@@ -1,6 +1,6 @@
 ---
 cid: LI-SPT-01-01
-pair_cid: LI-SPT-01-01
+pair_cid: TI-SPT-01-01
 tl_relation: 동일
 title: Details
 path: Sample Tracking > Samples > Details
