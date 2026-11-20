@@ -241,6 +241,9 @@ module.exports = function register(on, h) {
         // 다음 단계로 옮기기(팀 프로젝트, 2026-11-16): Claude가 아니라 Figma 플러그인이 한다 — 읽기(보내는 파일을 연 플러그인) → 만들기(받는 파일을 연 플러그인)
         let xfer = null;
         if (kind === 'transfer') {
+          // 옮기기(copy)는 2026-11-20에 없앴다 — 플러그인은 파일끼리 복사할 수 없어 다시 그리는데, 라이브러리에 없는 컴포넌트까지 새로 그려 버려서.
+          //  옮기기는 사람이 Figma에서 복사 · 붙여넣기로 하고, 이 작업은 비교의 「바뀐 것 확인」(check)만 받는다
+          if (nn(b.mode) !== 'check') throw new Error('다음 단계로 보내기(옮기기)는 없앴습니다. Figma에서 화면을 복사해 붙여 넣고, Workbench 「②와 비교」로 확인하세요.');
           const f = b.from || {}, t = b.to || {};
           if (!h.testKey(nn(f.key)) || !h.testKey(nn(t.key))) throw new Error('보내는 · 받는 파일 키가 잘못되었습니다.');
           if (nn(f.key) === nn(t.key)) throw new Error('같은 파일로는 옮길 수 없습니다.');
@@ -250,8 +253,8 @@ module.exports = function register(on, h) {
           if (!ids.length && !/^\d+:\d+$/.test(nn(f.pageId))) throw new Error('옮길 프레임 · 페이지가 없습니다.');
           xfer = { from: { key: nn(f.key), name: nn(f.name).slice(0, 80), page: nn(f.page).slice(0, 120), pageId: /^\d+:\d+$/.test(nn(f.pageId)) ? nn(f.pageId) : '', nodeIds: ids, names: core.arr(f.names).slice(0, 200).map((s) => nn(s).slice(0, 120)), step: parseInt(f.step, 10) || 0 },
             to: { key: nn(t.key), name: nn(t.name).slice(0, 80) || tp.name || '', page: tp.editablePageName || '', pageId: tp.editablePageId, step: parseInt(t.step, 10) || 0 },
-            // mode: copy = 옮기기, check = 비교 창의 「바뀐 것 확인」(보내는 파일 플러그인이 옮긴 화면을 읽어 해시만 보냄, 옮기지 않음). 2026-11-17 수정본(edit)은 없앰
-            mode: nn(b.mode) === 'check' ? 'check' : 'copy', priority: nn(b.priority) };
+            // mode: check = 비교 창의 「바뀐 것 확인」(플러그인이 화면을 읽어 확인값만 보냄, 옮기지 않음). 수정본(edit)은 2026-11-17, 옮기기(copy)는 11-20에 없앰
+            mode: 'check', priority: nn(b.priority) };
           key = xfer.from.key; nid = '';
         }
         if (kind === 'guide-check' || kind === 'guide-edit') { nid = ''; if (!GID_RE.test(nn(b.guide)) || !core.exists(path.join(T.guideRoot, nn(b.guide), 'meta.json'))) throw new Error('가이드를 찾지 못했습니다: ' + nn(b.guide)); }
