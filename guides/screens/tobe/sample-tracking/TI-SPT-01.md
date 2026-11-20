@@ -1,114 +1,212 @@
 ---
-cid:
-pair_cid:
-tl_relation:   # 동일 | 권한 차이 | 기능 추가 | 단독
-title:
-path:
-type:          # Page | Popup | Tab
-version:       # X.Y.ZZ. 케이스 1 · 2는 4단계 UX 확정 때 요청자가 정한 값(그 전까지 케이스 1은 기존 Ver, 케이스 2는 비움), 케이스 3은 기존 화면의 Ver 그대로 (reference-rules/description.md 7절 "화면 정보에 적는 값")
-date:          # YYYY.MM.DD. 케이스 3은 기존 화면의 Date 그대로, 케이스 1 · 2는 작성일
-author:        # 케이스 3은 기존 화면 담당자 그대로, 케이스 1 · 2는 요청자
+cid: TI-SPT-01
+pair_cid: LI-SPT-01
+tl_relation: 동일
+title: Samples
+path: Sample Tracking > Samples
+type: Page
+version: 2.0
+date: 2026.06.15
+author: 정다예
 client_mode: []
-user_type: []
-policies: []   # 정책 ID. 작업 완료 전인 결정으로 그렸으면 "POL-EQP-004 · DS-0012"처럼 논의 대상 ID를 함께 적고, 5단계(완료) 반영 뒤 뗌
-basis:         # 화면 기준: 시각 · history 커밋 (reference-rules/work-log.md "작업 기준")
-basis_versions: # 문서마다 basis 시각 전에 마지막으로 바뀐 때 (rules · policy · glossary · screens · ux_guide 모두 @날짜)
-source: tobe   # To-Be 화면 MD. 작업방에 그렸는지는 머리말 figma로 가름
-figma:         # 작업방의 이 CID 섹션 링크
+user_type: [Service, Admin, User]
+policies: [POL-SMP-001, POL-SMP-002, POL-SMP-005, POL-COM-006]
+basis:
+basis_versions:
+source: tobe
+figma:
 ---
 # TI-SPT-01 Samples
 
-- T/L 차이:
-- 호출하는 화면: [CID] 화면 이름 (어디서 → 어디로)
-- 호출되는 곳: (공통 팝업이면 호출 위치 목록)
+- T/L 차이: 3 [Export]의 저장 방법만 다름 (T-IOS는 OS 파일 탐색기, L-IOS는 경로 저장 · USB 저장 Popup). 2-3 노출 개수 Dropdown은 T-IOS에만 있음 (Common UX COMM-5-g)
+- 호출하는 화면: [TI-SPT-01-01] Details (목록 행 선택 → 같은 화면 오른쪽에 열림)
+- 호출되는 곳: LNB Sample Tracking > Samples
 
 ## 디스크립션
 
-<!-- 원본입니다. Figma 패널에 그대로 들어갑니다. 쓰는 법은 reference-rules/description.md, 작성예시문서는 examples/description-samples.md.
-     바뀐 글 표시(빨간 글씨 · 빨간 취소선)는 reference-rules/description.md 7절 "바뀐 글 표시"의 HTML 태그로 적습니다.
-     코드(화면 · 케이스 · Alert · Confirm · Toast · 공통 UX · 정책)는 화면 MD에 색을 적지 않습니다. Figma 패널에서만 파란색으로 칠합니다(reference-rules/description.md 7절 "참고 코드 표시").
-     아래는 모양 예시입니다. 실제 내용으로 바꿔 씁니다. -->
-
-**0  ○○ 화면**
+**0  Samples 화면**
 - 정의
-  - 내용
+  - Run Start<span style="color:red">를</span> 통해 검사를 시작한 검체 정보
+  - 검체별 검사 단위로 리스트 노출
 - 동작
-  - 내용
-- User Type : 
-- L-IOS Client Mode : (L-IOS 화면에만 씀)
+  - 리스트 영역 선택 시, 기존 리스트 영역이 좌측으로 축소되며 우측에서 상세 페이지가 밀고 나오며 노출
+- User Type : Service, Admin, User
 
-**1  ○○ 영역**
+**1  검색 영역**
 - 정의
-  - 내용
-- 공통 UX 참고 : 
+  - 검색 조건에 따라 리스트 내 데이터를 필터링하여 조회하는 영역
+- 공통 UX 참고 : COMM-5-p
 
-**1-1  항목 이름(Dropdown)**
-- 기능 : 
-- Default : 
+**1-1  Sample ID(Text Input)**
+- 기능 : 검체 ID를 입력하여 데이터 조회
+- 동작
+  - 하위 리스트 내 Sample ID 컬럼 대상으로 입력
+  - 입력한 텍스트가 DB와 완전 일치하는 항목만 리스트에 노출
+  - 영문 입력 시 대소문자를 구분하지 않음
+
+**1-2  Product(Multi-Select Dropdown)**
+- 기능
+  - 검사 항목을 다중 선택하여 데이터 조회
+- Default : All
 - 드롭다운 리스트 항목
-  - 내용
-- 공통 UX 참고 : 
+  - All, RP1, RP2, RP3, PB, GI-V, GI-B1, GI-B2, GI-P, Allplex HPV28, STI-12
+- 공통 UX 참고 : COMM-5-h(2/2)
 
-**2  ○○ 리스트**
-- 정의 : 
+**1-3  Sample Type(Multi-Select Dropdown)**
+- 기능
+  - 검체 타입을 다중 선택하여 데이터 조회
+- Default : All
+- 드롭다운 리스트 항목
+  - All, Swab, Aspirate, BAL, Saliva, Sputum, Raw stool, Cary-blair, eNAT stool, Fecal swab, Thinprep, Surepath, Cellpreserv, Urine, Semen
+- 공통 UX 참고 : COMM-5-h(2/2)
+
+**1-4  Date(Cascading Dropdown)**
+- 기능
+  - 조회 기준(일자 유형)을 먼저 선택하고, 특정 일자 및 기간 설정하여 데이터 조회
+  - 일자 유형[좌] : 조회하고 싶은 일자 유형 선택
+  - 특정 일자 및 기간[우] : 선택 유형에 대한 일자 및 기간 설정
+  - 단, 오늘 기준 미래일자는 선택 불가
+- Default
+  - 일자 유형[좌] : Order Date
+  - 특정 일자 및 기간[우] : 시작일-7일 전 ~ 종료일-Today
+- 드롭다운 리스트 항목
+  - Order Date, Start Date, End Date
+- 공통 UX 참고 : COMM-5-d(1/5)
+
+**1-5  Status(Dropdown)**
+- 기능
+  - 검사 상태를 단일 선택하여 데이터 조회
+- Default : All
+- 드롭다운 리스트 항목
+  - All, <span style="color:red">Ready, Running, Completed, Failed, Not Tested</span>
+- 공통 UX 참고 : COMM-5-h(1/2)
+- 정책 참고 : POL-SMP-001
+
+**1-6  STAT Only(Check box)**
+- 기능 : 응급 상태의 검체 데이터 조회
+- Default : UnSelected(미선택)
+- 리스트 노출
+  - Selected(선택) 시, 응급 상태의 검체만 노출
+  - UnSelected(미선택) 시, 전체 검체 노출
+- 공통 UX 참고 : COMM-5-q
+
+**2  Samples 리스트**
+- 정의 : 검사 접수된 검체 중 Run을 실행한 검체 리스트
 - 정렬
-  - Default : 
-- 표출 항목
-  - 항목 이름 : 무슨 값인지 / 표기 / 값이 없을 때
+  - Default : Start Date/Time 기준 최신순(내림차순)
+  - Default 조건 동일 시, Sample ID 기준 오름차순
+  - 정렬되는 칸 : Order Date, Start Date/Time, End Date/Time
 - 동작
-  - 내용
-- 공통 UX 참고 : 
+  - 특정 샘플 행 클릭 시 샘플 상세 노출 : TI-SPT-01-01
+- 공통 UX 참고 : COMM-5-g, COMM-5-r
+- 정책 참고 : POL-SMP-005
 
-**3  [버튼 이름] 버튼**
-- 정의
-  - 내용
-- 활성화 조건
-  - 내용
-- 동작
-  - 내용
-- 정책 참고 : 
+**2-1  리스트 표출 항목**
+- Sample ID
+  - T-IOS에서 수신되는 검체 ID 정보
+- Product
+  - T-IOS에서 수신되는 검사 항목 정보
+  - 하나의 검사 항목 단위 정보 노출
+- Sample Type
+  - T-IOS에서 수신되는 검체 타입 정보
+- Order Date
+  - LIS 접수 일자 정보
+  - 표기 : YYYY-MM-DD
+- Status
+  - 검체의 검사 진행 상태 정보
+  - 상태 값 : COMM-4-a
+- Progress
+  - 전체 검사 프로세스 대비 단계별 진행 현황 정보
+  - <span style="color:red">검사 단계 : Sample Preparation, Nucleic Acid Extraction, PCR Setup, Plate Sealing, PCR</span>
+- Start Date/Time
+  - <span style="color:red">Prep 시스템이 Sample Barcode를 읽은 시점</span>
+- End Date/Time
+  - L-IOS가 <span style="color:red">D.A PC</span>(결과처리 시스템)로부터 검사 결과를 받은 시점
+- STAT
+  - T-IOS에서 수신되는 검체 응급 여부 상태 정보
+- 정책 참고 : POL-SMP-001, POL-SMP-002
+
+**2-2  Progress 상태 정보(Tooltip)**
+- 공통 UX 참고 : COMM-5-v
+- 케이스 참고 : TI-SPT-01/Case > Case 2
+
+**2-3  노출 개수(Dropdown)**
+- Default : 10 items
+- 드롭다운 리스트 항목
+  - 10, 30, 50, 100
+- 공통 UX 참고 : COMM-5-g
+
+**3  [Export] 버튼**
+- 윈도우 탐색기가 호출되며, 원하는 경로를 지정할 수 있음
+- 대상 범위 : 목록에 노출된 전체 리스트
+- 저장 항목 : Detail이 있을 경우 Detail에서 제공되는 모든 내용
+- 형식 : <span style="color:red">.csv</span>
+- 정책 참고 : POL-COM-006
+
+**4  페이지네이션**
+- 숫자형 페이지네이션
+- 공통 UX 참고 : COMM-5-l
+
+- 케이스 참고 : TI-SPT-01/Case > Case 1 (Sample 상태별 데이터 노출, 2-1 블록에서 가리킴)
 
 ## 화면 예시
 
-<!-- 그릴 때 화면에 넣는 예시 값. 상태값 · 단위 · 품목 · 수치는 용어집 · 정책 · glossary csv 기준. 기준이 없으면 만들지 않고 "질문 대기"에 올립니다.
-     목록 · 표는 한 페이지 최대 노출 개수만큼 행을 채웁니다. 줄였으면 이유를 적습니다. -->
-
 | 번호 | 요소 | 예시 값 | 기준 |
 | --- | --- | --- | --- |
+| 1-1 | Sample ID 입력 | (빈 칸, placeholder Sample ID) | 기존 기획 프레임 (기존 작업방 1460:110169) |
+| 1-2 · 1-3 | Product · Sample Type | All | Default |
+| 1-4 | Date | Order Date, 2026-03-05 ~ 2026-03-11 | 기존 기획 프레임 |
+| 1-5 | Status | All | Default |
+| 2 | Items | 638 | 기존 기획 프레임 |
+| 2-1 | 행 1 ~ 3 | AA0005001 · RP1 / RP2 / RP3 · Sputum · 2026-03-05 · Not Tested · - · - · STAT | `test-items.csv` · `sample-types.csv` · `status-values.csv`, 기존 기획 프레임 |
+| 2-1 | 행 4 | AA0005002 · STI-12 · Thinprep · 2026-03-05 · Ready · - · - | 같음 |
+| 2-1 | 행 5 | AA0005003 · STI-12 · Surepath · 2026-03-05 · Failed · 2026-03-05 10:22:48 · 2026-03-05 11:22:48 | 같음 |
+| 2-1 | 행 6 | AA0005004 · STI-12 · Swab · 2026-03-05 · Completed · 2026-03-05 10:22:48 · 2026-03-05 11:22:48 | 같음 |
+| 2-1 | 행 7 | AA0005005 · PB · Saliva · 2026-03-05 · Running · 2026-03-05 10:22:48 · - | 같음 |
+| 2-1 | 행 8 · 9 | AA0005006 · GI-B1 / GI-B2 · eNAT stool · 2026-03-05 · Running · 2026-03-05 10:22:48 · - | 같음 |
+| 2-1 | 행 10 | AA0005007 · Allplex HPV28 · Surepath · 2026-03-05 · Running · 2026-03-05 10:22:48 · - | 같음 |
+| 2-3 | 노출 개수 | 10 items | Common UX COMM-5-g |
+| 4 | 페이지네이션 | 2페이지 선택 (1 ~ 10) | 기존 기획 프레임 |
+
+- 목록 10행 = 한 페이지 노출 개수 (Common UX COMM-5-g)
 
 ## 화면 표기 글자
 
-<!-- 화면에 표기되는 영어 글자를 디스크립션 번호와 함께 적습니다. 번역 전체는 여기에 적지 않습니다(flow/4-revise-verify.md 절차 4번 "언어셋을 정리하고 UI팀에 넘길 것을 보여 줌"에서 대상 목록을 모아서 함).
-     출처: 그 글자를 찾은 곳. 화면(기획 프레임) / 디스크립션(디스크립션에 적힌 화면 표기 글자, 예: 드롭다운 리스트 항목 · 툴팁 · 안내 문구) / 케이스(케이스 화면). 여러 곳이면 한 줄에 `화면 · 케이스`처럼 적습니다. 디스크립션의 설명 글은 적지 않습니다. 3단계에서 적습니다.
-     Language ID: 언어셋 원본(language-set/db/)에 있는 글자의 ID. 번역 전체는 이 ID로 원본에서 찾습니다. 아직 언어셋과 맞춰 보지 않았으면 비워 둡니다.
-     상태: 진행 중인 작업에서 생긴 글자는 신규, 영어 글자가 바뀐 줄은 변경("화면 표기 글자 (영어)" 칸에 "변경 전 → 변경 후"), 이 화면에서 없어진 글자는 줄을 지우지 않고 제거(다른 화면은 쓸 수 있으므로 언어셋에서 삭제한다는 뜻이 아님). 바뀐 것이 없는 글자는 `-`. 5단계에서 언어셋 원본에 반영하면 다시 `-`로 돌립니다.
-     가장 긴 언어 · 번역 글자: 제공 언어 가운데 가장 긴 언어와 그 언어로 번역한 글자(예: "DE · (독일어로 번역한 글자)"). 4단계 절차 4번에서 채웁니다. 그 전에는 비워 둡니다. -->
-
 | 번호 | 화면 표기 글자 (영어) | 출처 (화면 / 디스크립션 / 케이스) | Language ID | 상태 (신규 / 변경 / 제거 / -) | 가장 긴 언어 · 번역 글자 |
 | --- | --- | --- | --- | --- | --- |
+| 0 | Samples | 화면 | | - | |
+| 1-1 | Sample ID | 화면 | | - | |
+| 1-2 | Product | 화면 | | - | |
+| 1-2 · 1-3 · 1-5 | All | 화면 · 디스크립션 | | - | |
+| 1-3 | Sample Type | 화면 | | - | |
+| 1-4 | Date | 화면 | | - | |
+| 1-4 | Order Date | 화면 · 디스크립션 | | - | |
+| 1-4 | Start Date | 디스크립션 | | - | |
+| 1-4 | End Date | 디스크립션 | | - | |
+| 1-5 | Status | 화면 | | - | |
+| 1-6 | STAT Only | 화면 | | - | |
+| 1 | Reset | 화면 | | - | |
+| 1 | Search | 화면 | | - | |
+| 2 | Items | 화면 | | - | |
+| 2-1 | Progress | 화면 | | - | |
+| 2-1 | Start Date/Time | 화면 | | - | |
+| 2-1 | End Date/Time | 화면 | | - | |
+| 2-1 | STAT | 화면 | | - | |
+| 2-3 | 10 items | 화면 · 디스크립션 | | - | |
+| 3 | Export | 화면 | | - | |
 
 ## Alert · Confirm · Toast
 
-<!-- Alert · Confirm · Toast를 모두 적습니다. 코드는 카탈로그(alert/)의 ID. 카탈로그에 없으면 3단계에서 카탈로그에 새 줄을 더해 그 코드를 씁니다(flow/3-design.md 공통 1의 9, 케이스 3의 토스트는 3-2). 토스트는 버튼 동작을 `-`로 둡니다. -->
-
-| 번호 | 종류 (알럿 / 컨펌 / 토스트) | 코드 | 언제 | 버튼 동작 |
-| --- | --- | --- | --- | --- |
+없음
 
 ## 케이스
 
-<!-- 케이스 화면의 원본입니다 (flow/3-design.md 공통 5 "케이스 화면", 작성예시문서 examples/case-samples.md).
-     근거는 셋 중 하나: 기존 원본 / 디스크립션 조건 / 요청자. 어느 것도 아니면 올리지 않고 질문 대기에 둡니다.
-     종류(디스크립션 조건일 때): 1 상태별 데이터 노출, 2 올리거나 눌렀을 때 뜨는 것, 3 유형 · 대상에 따라 표출 항목 구성이 다른 것,
-     4 개수가 기준을 넘어 요소가 생기거나 배치가 바뀌는 것, 5 처음 들어왔거나 데이터가 없을 때, 6 한 번의 조작으로 여러 단계를 거쳐 바뀌는 것.
-     Case 번호는 바꾸지 않고, 지워도 다시 쓰지 않습니다. 케이스가 없으면 "없음"이라고 적습니다. -->
-
 | Case | 제목 | 조건 | 디스크립션 번호 | 종류 | 근거 |
 | --- | --- | --- | --- | --- | --- |
+| 1 | Sample 상태별 데이터 노출 예시 | 1-1 검사 시작 후 회수된 검체 (Not Tested) / 1-2 검사 실패한 검체 (Failed) / 1-3 대기 중인 검체 (Ready) | 2-1 | 1 | 기존 원본 |
+| 2 | Progress 상태 정보 Tooltip | Progress 영역에 마우스를 올렸을 때 | 2-2 | 2 | 기존 원본 |
 
 ## 반영 대기 목록
-
-<!-- 쓰는 법은 reference-rules/pending-changes.md. 타입: 논의 결정 / 다른 화면 파급 / 기준 자료 변경 / 외부 원본 변경 / 점검 발견.
-     상태: 대기 / 작업 중 (작업 기록 이름) / 반영 완료 (날짜) / 제외 (날짜, 이유). 줄은 지우지 않습니다. -->
 
 | ID | 타입 | 변경 전 | 변경 후 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
@@ -126,3 +224,4 @@ figma:         # 작업방의 이 CID 섹션 링크
 
 | 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 (논의 대상 · 정책 ID · 반영 대기 ID) |
 | --- | --- | --- | --- | --- |
+| 2.0 | 2026-11-20 | 작업방에 새로 그림 (기존 작업방 [1460:110169](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=1460-110169) · Ver 2.0). 3단계 초안: R03 · R04 · R06 · R07 · R09 반영(작업 중), 상태값 순서 · 노출 개수 Dropdown(Common UX) | Claude (최고관리자 요청) | 20261120-최고관리자-samples, POL-SMP-001 · 002 · 005, POL-COM-006 |
