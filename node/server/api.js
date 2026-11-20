@@ -387,8 +387,9 @@ function readWorkLog(f) {
     if (stage < 0 && rows.length) stage = rows.length;
   }
   const next = (/^(?:이어서 작업할 곳|다음):\s*(.+)$/m.exec(t) || [])[1] || '';
+  const sm = /^멈춤 \(([^)]*)\):\s*(.+?)(?:\. 반영 대기의 .*)?$/m.exec(t), stopNote = sm ? `${sm[2]} (${sm[1]})` : '';   // 이유 (멈춘 날 · 누구) — 작업 기록 멈추기(2026-11-20)
   return { name: path.basename(f, '.md'), title: title.trim(), status: String(fm.status || ''), case: String(fm.case || ''), requester: String(fm.requester || ''), menu: String(fm.menu || ''),
-    cids: Array.isArray(fm.cids) ? fm.cids : [], test: String(fm.test) === 'true', started: String(fm.started || ''), stage, stages: names, stageName: stage >= 0 && stage < names.length ? names[stage] : stage >= names.length ? '끝' : '', next: next.trim() };
+    cids: Array.isArray(fm.cids) ? fm.cids : [], test: String(fm.test) === 'true', started: String(fm.started || ''), stage, stages: names, stageName: stage >= 0 && stage < names.length ? names[stage] : stage >= names.length ? '끝' : '', next: next.trim(), stopNote };
 }
 on('GET', '/api/worklogs', ({ T }) => {
   const dir = path.join(T.guideRoot, 'work-logs');

@@ -188,6 +188,7 @@ table.sh td textarea{width:100%;min-width:140px;min-height:30px;padding:4px 6px;
 .mitem:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
 .mright{padding:24px 28px;min-height:360px}
 .mtop{display:flex;align-items:flex-start;gap:8px}
+.wlact{display:flex;gap:6px;flex:none;align-items:center}
 .mtop h3{flex:1;margin:0;font-size:20px;font-weight:800;line-height:1.4}
 .mtop h3 .h3pill{display:inline-block;margin-left:6px;vertical-align:3px}
 .mtop h3 .h3pill .pill{font-size:12.5px;font-weight:600}
@@ -1306,8 +1307,11 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       var bar = '<ol class="wlbar" aria-label="단계">' + stOf(w).map(function(s, i){ var c = w.stage < 0 || i < w.stage || w.status === '끝남' ? 'done' : i === w.stage ? 'now' : ''; return '<li class="' + c + '"' + (c === 'now' ? ' aria-current="step"' : '') + '>' + esc(s) + '</li>'; }).join('') + '</ol>';
       var t = wlText[w.name];
       right = '<div class="mtop"><div style="flex:1"><h3>' + esc(w.title || w.name) + '</h3><p class="matt" style="border:0;padding:0">' + (w.case ? esc(CASE_N[w.case] || '') + ' · ' : '') + '<code>' + esc((WL.dir || 'work-logs') + '/' + w.name + '.md') + '</code></p></div>' +
-        (w.status === '진행 중' ? '<a class="btn sm primary" href="Figma_Workbench.html" title="Workbench 입력창에서 이 작업 기록을 골라 다음 단계를 요청합니다">Workbench에서 이어 하기</a>' : '') + '</div>' + bar +
-        '<dl class="kv" style="margin:14px 0"><dt>지금 단계</dt><dd>' + esc(w.status === '끝남' ? '끝남' : stg(w)) + '</dd>' + (w.next ? '<dt>이어서 작업할 곳</dt><dd>' + esc(w.next) + '</dd>' : '') +
+        '<div class="wlact">' +
+        (w.status !== '끝남' && w.status !== '멈춤' ? '<button type="button" class="btn sm w-only" data-wlstop="' + esc(w.name) + '" title="이 작업을 그만둡니다. 반영 대기의 「작업 중」 항목은 「대기」로 돌아가고, 이 작업을 이어 하던 요청도 멈춥니다">멈추기</button>' : '') +
+        (w.status === '멈춤' ? '<button type="button" class="btn sm primary w-only" data-wlresume="' + esc(w.name) + '" title="멈춘 작업을 「진행 중」으로 되돌립니다">다시 시작</button>' : '') +
+        (w.status === '진행 중' ? '<a class="btn sm primary" href="Figma_Workbench.html" title="Workbench 입력창에서 이 작업 기록을 골라 다음 단계를 요청합니다">Workbench에서 이어 하기</a>' : '') + '</div></div>' + bar +
+        '<dl class="kv" style="margin:14px 0"><dt>지금 단계</dt><dd>' + esc(w.status === '끝남' ? '끝남' : w.status === '멈춤' ? '멈춤 · ' + stg(w) + '에서' : stg(w)) + '</dd>' + (w.status === '멈춤' && w.stopNote ? '<dt>멈춘 이유</dt><dd>' + esc(w.stopNote) + '</dd>' : '') + (w.next && w.status !== '멈춤' ? '<dt>이어서 작업할 곳</dt><dd>' + esc(w.next) + '</dd>' : '') +
         '<dt>요청자</dt><dd>' + esc(w.requester || '-') + '</dd><dt>메뉴</dt><dd>' + esc(w.menu || '-') + '</dd><dt>대상 CID</dt><dd>' + (w.cids.length ? w.cids.map(function(c){ return '<span class="chip">' + esc(c) + '</span>'; }).join('') : '-') + '</dd></dl>' +
         '<div class="dbody" id="wlBody">' + (t == null ? '<p class="muted">기록을 읽는 중…</p>' : md(fm(t).body)) + '</div>';
       if (t == null) getText((WL.dir || '.history/guides/work-logs') + '/' + w.name + '.md').then(function(x){ wlText[w.name] = x; if (cur === 'worklogs' && wlSel === w.name) renderWl(); });
@@ -1320,6 +1324,23 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     var b = e.target.closest('[data-wl],[data-wlgo]'); if (!b) return;
     if (b.dataset.wlgo) { e.preventDefault(); wlSel = b.dataset.wlgo; select('worklogs'); return; }
     wlSel = b.dataset.wl; renderWl();
+  });
+  // 작업 기록 멈추기 · 다시 시작(2026-11-20): 서버가 작업 기록 · 반영 대기 · 이 PC의 열린 요청을 함께 바꾼다(POST /api/worklogs)
+  document.addEventListener('click', function(e){
+    var s = e.target.closest('[data-wlstop]'), r = e.target.closest('[data-wlresume]'); if (!s && !r) return;
+    var b = s || r, name = s ? s.dataset.wlstop : r.dataset.wlresume, w = (WL.items || []).filter(function(x){ return x.name === name; })[0] || { title: name };
+    var go = function(body, done){
+      b.disabled = true;
+      api('/api/worklogs', body).then(function(j){ wlText[name] = null; delete wlText[name]; return loadWl().then(function(){ if (s) wlStat = '멈춤'; else wlStat = 'open'; wlSel = name; renderWl(); toast(done(j)); }); })
+        .catch(function(err){ b.disabled = false; WB.alert(err.message); });
+    };
+    if (s) WB.prompt('이 작업을 멈출까요?\n「' + (w.title || name) + '」\n멈추면 반영 대기의 「작업 중」 항목은 「대기」로 돌아가고, 이 작업을 이어 하던 요청도 멈춥니다.\n멈추는 이유를 적어 주세요.', '', { ok: '멈추기' }).then(function(v){
+      if (v == null) return; v = String(v).trim(); if (!v) { WB.alert('멈추는 이유를 적어 주세요.'); return; }
+      go({ action: 'stop', name: name, reason: v }, function(j){ return '작업을 멈췄습니다.' + (j.rows ? ' 반영 대기 ' + j.rows + '건을 「대기」로 되돌렸습니다.' : '') + (j.reqs ? ' 요청 ' + j.reqs + '건을 멈췄습니다.' : ''); });
+    });
+    else WB.confirm('이 작업을 다시 시작할까요?\n「' + (w.title || name) + '」\n「진행 중」으로 돌아갑니다. 「대기」로 되돌렸던 반영 대기 항목은 이어 할 때 다시 고릅니다.', { ok: '다시 시작' }).then(function(ok){
+      if (ok) go({ action: 'resume', name: name }, function(){ return '작업을 다시 시작했습니다. Workbench에서 이어 하기를 요청하세요.'; });
+    });
   });
 
   // 작업대기 · 논의 대상의 누르기 · 보내기

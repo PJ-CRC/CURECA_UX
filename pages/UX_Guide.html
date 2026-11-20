@@ -228,7 +228,9 @@ html.wb-full-on,html.wb-full-on body{overflow:hidden}
 .wb-grid tr.sel td.rn{background:var(--accent);color:var(--surface)}
 .wb-grid td.rn[data-row]{cursor:pointer}
 .wb-grid .ed{outline:2px solid var(--xl);outline-offset:-2px;background:var(--surface)!important;white-space:pre-wrap;max-width:none;overflow:visible;text-overflow:clip;cursor:text}
-.main img{display:block;max-width:100%;height:auto;border:1px solid var(--line);border-radius:8px;background:#fff;margin:12px 0 4px;cursor:zoom-in}
+.main img{display:block;width:100%;max-width:100%;height:auto;box-sizing:border-box;border:1px solid var(--line);border-radius:8px;background:#fff;margin:12px 0 4px;cursor:zoom-in}
+/* 본문 이미지는 표와 같은 폭(본문 폭)으로 맞춘다(2026-11-20). 원래 폭이 160px보다 작은 아이콘만 원래 크기(.ic, render에서 붙임) */
+.main img.ic{display:inline;width:auto;margin:0 2px;border:0;vertical-align:middle;cursor:default}
 .main p>em:only-child{display:block;font-size:12.5px;color:var(--ink-3);font-style:normal}
 /* 대분류를 고르면 하위 항목을 폴더 모양 카드로 보여 준다(색은 순서대로 돌아가며, 글자는 어두운 색 고정)
    모양: 안쪽 .fd를 clip-path로 폴더(왼쪽 위 탭)로 자르고, 바깥 버튼의 drop-shadow 네 겹으로 테두리를 그린다 */
@@ -901,6 +903,8 @@ html.embed,html.embed body{overflow:hidden}
       var s = im.getAttribute('src') || '';
       if (s && !/^(https?:|data:|\/)/.test(s)) im.setAttribute('src', base + s.replace(/^\.\//, ''));
       im.loading = 'lazy';
+      var ic = function(){ if (im.naturalWidth && im.naturalWidth < 160) im.classList.add('ic'); };
+      if (im.complete) ic(); else im.addEventListener('load', ic);
     });
     box.querySelectorAll('table').forEach(function(t){ var w = document.createElement('div'); w.className = 'tbl'; t.parentNode.insertBefore(w, t); w.appendChild(t); widen(t); });
     box.querySelectorAll('code.language-wbook').forEach(function(c){ var d; try { d = JSON.parse(c.textContent); } catch (x) { return; } var pre = c.closest('pre') || c; pre.parentNode.replaceChild(wbook(d), pre); });

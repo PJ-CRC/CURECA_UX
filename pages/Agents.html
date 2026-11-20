@@ -99,7 +99,7 @@ tr.det td{background:var(--surface-2);padding:14px 16px 16px 34px}
       var stHtml = stale ? '<span class="st wait">알 수 없음</span><span class="sub">서버 꺼짐 · 공유 끊김</span>' : '<span class="st ' + st[1] + '">' + esc(st[0]) + '</span>' + (x.autoWatch === false ? '<span class="sub">자동 시작 끔</span>' : '');
       var er = (x.events || []).filter(function(e){ return e.kind === 'error' || e.kind === 'limit'; })[0];
       var older = mine && x.version && vcmp(x.version, mine) < 0;
-      var cl = x.claudeWay === 'app' ? '앱 Code 탭' : (x.claude || '-');
+      var cl = x.claudeWay === 'app' ? '앱' : 'CLI';   // 시작 안내 5단계에서 고른 연결 방법(앱 Code 탭 · CLI 백그라운드)
       var row = '<tr><td><button type="button" class="pc-tg" data-pc="' + esc(x.slug) + '" aria-expanded="' + op + '" aria-controls="d-' + esc(x.slug) + '"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg><span><b>' + esc(x.pc) + (x.me ? '<span class="me">이 PC</span>' : '') + '</b><small>' + esc(x.user || '이름 없음') + ' · ' + (x.os === 'mac' ? '맥' : '윈도우') + '</small></span></button></td>' +
         '<td class="nw">' + stHtml + '</td>' +
         '<td class="nw"' + (stale ? ' style="color:var(--warn)"' : '') + '>' + ago(age) + '<span class="sub">' + hm(x.reportAt) + '</span></td>' +
