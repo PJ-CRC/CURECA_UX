@@ -1,0 +1,19 @@
+{
+  "id": "anjongbeom-ui-macbookair-2-local_20261120-100533",
+  "kind": "work",
+  "team": "stagora",
+  "at": "2026-11-20T10:05:33+09:00",
+  "by": "안종범",
+  "doneBy": "Claude",
+  "pc": "anjongbeom-ui-MacBookAir-2.local",
+  "reqId": "",
+  "fileKey": "cDjaemHjetS7RcAHRUIMY5",
+  "fileName": "STAgora AI Workspace",
+  "page": "Test-안종범",
+  "frame": "결과",
+  "nodeId": "431:796",
+  "type": "",
+  "text": "AMR 시안: 생키 카드 수평 배치 · 수치 아래열",
+  "note": "C. 생키 카드(431:796)를 사용자가 고친 선버스트 카드 구성에 맞춤: 숫자 카드를 400 / 320 · 298 두 장으로 바꾸고, 생키를 그 오른쪽(위쪽 패널 안)에 작게 둠. 흐름에는 글을 넣지 않고 수치를 아래 한 줄에 노드 열(왼쪽 · 가운데 · 오른쪽)에 맞춰 색 표시 · 이름 · 건수 · %로 적음. AMR 검출 순위 패널을 위로 올려 카드 높이 869로 맞춤.",
+  "shot": "shots/anjongbeom-ui-macbookair-2-local_20261120-100533.jpg"
+}
