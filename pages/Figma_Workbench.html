@@ -215,10 +215,6 @@ a.tbtn{color:var(--ink-2);text-decoration:none}
 .cst.n{background:var(--warn-soft);color:var(--warn)}.cst.c{background:var(--red-soft);color:var(--red)}.cst.u{background:var(--surface-2);color:var(--ink-2)}
 .cst.s{background:var(--ok-soft);color:var(--ok)}.cst.g{background:var(--surface);color:var(--ink-3);border:1px solid var(--line)}
 .cmp-act{display:flex;gap:8px;justify-content:flex-end;padding:12px 16px}
-.cmp-tool{display:flex;align-items:center;gap:10px;padding:6px 16px 8px;font-size:13px;color:var(--ink-2)}
-.cmp-tool label{display:inline-flex;align-items:center;min-height:24px;gap:6px;font-weight:600;cursor:pointer}
-.cmp-tool .sp{flex:1}
-.cmp-list li input[type=checkbox],.cmp-tool input[type=checkbox]{flex:none;width:18px;height:18px;margin:3px;cursor:pointer}
 .gen-btn.send-next{border-color:var(--line-2);color:var(--ink-2)}
 .gen-btn.send-next:hover{background:var(--surface);color:var(--ink);border-color:var(--ink-3)}
 .gen-btn.send-next[hidden]{display:none}
@@ -610,7 +606,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       <div class="form composer" id="composer">
         <!-- 위 줄: 왼쪽 대상 프레임, 그 옆에 선택 옵션(유형 · 우선순위 · 레이아웃) -->
         <div class="cmp-top">
-          <div class="target">대상 <span id="tgtPage" class="badge"></span> <b id="tgt"></b> <code id="tgtId" class="badge"></code> <button type="button" class="gen-btn" id="genBtn" aria-pressed="false" title="프레임 선택을 풀고 이 페이지 전체에 요청합니다(새 프레임 만들기 · 여러 화면 수정 · 질문). 선택된 프레임을 한 번 더 눌러도 됩니다">페이지 전체로</button><button type="button" class="gen-btn send-next w-only" id="sendNext" hidden></button><button type="button" class="gen-btn send-next" id="cmpNext" hidden title="① 이 프로젝트 작업 페이지를 기준으로, 다음 단계에 옮겼는지 · 옮긴 뒤 바뀌었는지 봅니다">비교</button></div>
+          <div class="target">대상 <span id="tgtPage" class="badge"></span> <b id="tgt"></b> <code id="tgtId" class="badge"></code> <button type="button" class="gen-btn" id="genBtn" aria-pressed="false" title="프레임 선택을 풀고 이 페이지 전체에 요청합니다(새 프레임 만들기 · 여러 화면 수정 · 질문). 선택된 프레임을 한 번 더 눌러도 됩니다">페이지 전체로</button><button type="button" class="gen-btn send-next" id="cmpNext" hidden title="① 이 프로젝트 작업 페이지를 기준으로, 다음 단계에 옮겼는지(Figma에서 복사해 붙여 넣은 화면 포함) · 옮긴 뒤 바뀌었는지 봅니다">비교</button></div>
           <div class="cmp-opts">
             <!-- Workbench는 모든 팀이 같이 쓰므로 팀별 작업 흐름(케이스 · 단계 · 작업 기록)은 고르지 않는다(2026-11-17). 흐름은 Claude가 요청 글과 그 팀 작업규칙으로 정한다 -->
             <select id="rpri" class="opt-pri" aria-label="우선순위" title="우선순위"><option value="보통">우선순위 보통</option><option value="높음">우선순위 높음</option></select>
@@ -901,7 +897,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
         var now = Date.now(), live = jobs.some(function(j){ return j && j.kind === 'transfer' && (j.status === '대기' || j.status === '진행 중' || now - Date.parse(j.updatedAt || 0) < 600000); });   // 오래전에 끝난 옮기기는 보지 않는다
         if (xferFirst || xferShown || live) { xferFirst = false; loadXfer(); } }).catch(function(){});
   }
-  /* 옮기기 진행(이 파일이 보내는 쪽이거나 받는 쪽): 진행 중 · 대기, 그리고 끝난 지 10분 안의 것 */
+  /* 비교 진행(이 파일이 ① 또는 ②): 진행 중 · 대기, 그리고 끝난 지 10분 안의 것. 옮기기(보내기)는 2026-11-20에 없앴고, 남은 예전 옮기기 작업은 서버가 「실패」로 둔다 */
   function loadXfer(){
     var el = $('xferNote'); if (!el || location.protocol === 'file:') return;
     fetch('/api/jobs?kind=transfer', { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : { items: [] }; }).then(function(d){
@@ -929,7 +925,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
         else if (j.phase === 'build') st = j.status === '진행 중' ? dest + '에 만드는 중…' : dest.split('(')[0] + ' 파일을 Figma에서 열고 플러그인을 켜면 만들기 시작';
         else st = j.status === '진행 중' ? src + '에서 읽는 중…' : src + ' 파일을 Figma에서 열고 플러그인을 켜면 시작';
         var when = j.updatedAt ? String(j.updatedAt).slice(11, 16) : '';
-        return '<span class="xf-row ' + cls + '" title="' + esc(src + ' → ' + dest + ' · 작업 ' + j.id) + '"><b>옮기기 · ' + esc(what) + '</b> ' + esc(st) + '<small class="xf-meta">' + esc([when, j.by].filter(Boolean).join(' · ')) + '</small>' +
+        return '<span class="xf-row ' + cls + '" title="' + esc(src + ' → ' + dest + ' · 작업 ' + j.id) + '"><b>' + esc(j.mode === 'check' ? '비교' : '옮기기 · ' + what) + '</b> ' + esc(st) + '<small class="xf-meta">' + esc([when, j.by].filter(Boolean).join(' · ')) + '</small>' +
           (extra ? '<small class="xf-sub">' + esc(extra) + '</small>' : '') + '</span>';
       }).join('');
     }).catch(function(){});
@@ -1157,9 +1153,9 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     renderPD([cur]); renderDest();
   }
 
-  /* ── 다음 단계로(팀 프로젝트, 2026-11-16): 이 파일이 팀 프로젝트 n번째이고 n+1번째가 있으면
-     「② ○○로 보내기」(그대로 옮기기) 버튼과 「결과 위치」(다음 단계에 수정본, 이 파일 원본은 그대로)를 보인다.
-     요청은 받는 쪽(다음 단계) 파일 · 작업 페이지에 걸고 원본은 from에 담는다 — Claude가 원본을 읽기만 하고 받는 쪽에 만든다 ── */
+  /* ── 다음 단계와 비교(팀 프로젝트, 2026-11-16): 이 파일이 팀 프로젝트 n번째이고 n+1번째가 있으면 「②와 비교」 버튼을 보인다.
+     「② ○○로 보내기」(플러그인 옮기기)는 2026-11-20에 없앴다 — 플러그인은 파일끼리 복사할 수 없어 다시 그리는데,
+     라이브러리에 없는 컴포넌트까지 새로 그려 버려서. 옮기기는 사람이 Figma에서 복사 · 붙여넣기로 한다(컴포넌트 연결이 그대로 감) ── */
   var STEPN = ['①', '②', '③', '④', '⑤', '⑥', '⑦', '⑧', '⑨', '⑩'];
   function stepMark(n){ return STEPN[n - 1] || String(n); }
   function nextStep(){
@@ -1169,18 +1165,12 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     return { key: n.key, step: n.step, from: t.step, name: n.name || (p && p.name) || 'Figma 파일 ' + n.key.slice(0, 6), page: (p && p.editablePageName) || '' };
   }
   function renderDest(){
-    var nx = nextStep(), bt = $('sendNext'), cb = $('cmpNext'); if (!bt) return;
-    bt.hidden = !nx; if (cb) cb.hidden = !nx;
+    var nx = nextStep(), cb = $('cmpNext'); if (!cb) return;
+    cb.hidden = !nx;
     if (!nx) return;
-    if (cb) cb.textContent = stepMark(nx.step) + '와 비교';
-    bt.textContent = stepMark(nx.step) + ' ' + nx.name + '(으)로 보내기';
-    bt.title = (general ? '이 페이지(' + (cur ? cur.page : '') + ') 전체' : '이 프레임(' + (cur ? cur.name : '') + ')') + '을(를) 그대로 ' + nx.name + '의 작업 페이지' + (nx.page ? '(' + nx.page + ')' : '') + '로 옮깁니다(Figma 플러그인이 처리, 원본은 그대로). 두 번째부터는 바뀌었거나 새로 생긴 프레임만 옮깁니다.';
+    cb.textContent = stepMark(nx.step) + '와 비교';
   }
-  function srcLabel(){ return general ? cur.page + ' 페이지 전체' : cur.name; }
-  /* 옮기기는 Figma 플러그인이 한다(2026-11-16): 서버 작업(kind transfer) — 보내는 파일을 연 플러그인이 읽고, 받는 파일을 연 플러그인이 만든다.
-     Claude를 거치지 않아 몇 초면 되고, 두 번째부터는 바뀌었거나 새로 생긴 프레임만 옮긴다. mode 'edit'(수정본)이면 옮긴 뒤 Claude 수정 요청이 이어진다 */
-  var XFER_HINT = 'Figma 데스크톱에서 두 파일을 열고(탭 두 개) 각각 Common UX Sync 플러그인을 켜 두면 옮깁니다.';
-  // ids · names를 주면 그 프레임들만(비교 창의 「안 옮김 · 바뀜 보내기」 · 「바뀐 것 확인」), 없으면 지금 고른 프레임 · 페이지 전체
+  /* 「바뀐 것 확인」 작업(kind transfer, mode check — 옮기지 않는다): ① · ② 파일을 연 플러그인이 화면 내용 확인값을 낸다 */
   function transferJob(nx, mode, ids, names, page){
     var pg = page || { name: cur.page, id: cur.pageId || '' };
     return fetch('/api/jobs', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'add', kind: 'transfer', mode: mode, priority: $('rpri').value, by: who(),
@@ -1188,32 +1178,11 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       to: { key: nx.key, name: nx.name, step: nx.step } }) })
       .then(function(r){ return r.json(); }).then(function(d){ if (d.error) throw new Error(d.error); loadJobs(); return d.job; });
   }
-  /* 보내기 전에 ① · ② 파일의 플러그인이 켜져 있는지(서버가 아는 파일별 마지막 물음 시각, 1분 안이면 켜짐) — 꺼져 있어도 막지 않고 경고만 */
-  function plugWarn(nx){
-    return fetch('/api/jobs?kind=-', { cache: 'no-store' }).then(function(r){ return r.json(); }).then(function(d){
-      var pl = d.plugins || {}, on = function(k){ return pl[k] != null && pl[k] < 180; }   // Figma 창이 뒤에 있으면 플러그인 타이머가 1분에 한 번쯤으로 늦춰져 3분까지 켜짐으로 본다(2026-11-18), off = [];
-      if (!on(FILE.key)) off.push(stepMark(nx.from) + ' ' + pname(FILE.key));
-      if (!on(nx.key)) off.push(stepMark(nx.step) + ' ' + nx.name);
-      return off.length ? '플러그인이 꺼져 있습니다: ' + off.join(' · ') + '\nFigma 데스크톱에서 그 파일을 열고 플러그인을 켜야 빠르게 옮길 수 있습니다.\n지금 보내 두면 켤 때 이어서 옮깁니다.' : '';
-    }).catch(function(){ return ''; });
-  }
-  if ($('sendNext')) $('sendNext').onclick = async function(){
-    var nx = nextStep(); if (!nx || !cur) return;
-    if (!online) { say('로컬 서버가 꺼져 있어 요청할 수 없습니다.', true); return; }
-    if (!who()) { say('상단의 「작업자」에 이름을 입력해 주세요.', true); return; }
-    if (!nx.page) { say(nx.name + '의 작업 페이지가 아직 없습니다. ' + stepMark(nx.step) + ' 탭에서 작업 페이지를 먼저 고르세요.', true); return; }
-    var warn = await plugWarn(nx);
-    if (!(await window.WB.confirm(stepMark(nx.step) + ' ' + nx.name + '로 옮길까요?\n' + stepMark(nx.from) + ' ' + pname(FILE.key) + ' › ' + srcLabel() + '\n→ ' + stepMark(nx.step) + ' ' + nx.name + ' › ' + nx.page + '\n\n그대로 옮깁니다(이 프로젝트의 원본은 그대로). 이미 옮긴 적이 있으면 바뀌었거나 새로 생긴 프레임만 옮깁니다.' + (warn ? '' : '\n\n' + XFER_HINT), { ok: '옮기기', warn: warn }))) return;
-    this.disabled = true; var btn = this;
-    transferJob(nx, 'copy').then(function(j){ say(j.id + ' 옮기기를 맡겼습니다. ' + XFER_HINT); })
-      .catch(function(e){ say('등록 실패: ' + e.message, true); }).then(function(){ btn.disabled = false; });
-  };
-
   /* ── 비교(2026-11-17): ①(이 프로젝트) 작업 페이지를 기준으로 다음 단계에 넘어갔는지 본다.
      - 안 옮김: 이 작업 페이지 화면 중 옮긴 기록(받는 쪽 transfer.json)에 없는 것 = ①에서 새로 만든 화면
      - 옮김 · 같음 / 옮긴 뒤 바뀜: 「바뀐 것 확인」(플러그인이 ①의 옮긴 화면을 읽어 해시 비교, 옮기지 않음) 결과로. 확인 전이면 「바뀜 확인 전」
      - ②에서 없어짐: 옮긴 기록은 있는데 ②의 프레임 목록에 그 화면이 없음(지웠거나 목록이 아직 안 바뀜)
-     섹션째 옮긴 화면은 그 섹션 기록으로 본다. 맨 아래에서 안 옮김 · 바뀐 화면만 골라 보낼 수 있다 ── */
+     섹션째 옮긴 화면은 그 섹션 기록으로 본다. (고른 화면 보내기는 2026-11-20에 없앰) ── */
   var CMP = null, cmpOpener = null;
   // 비교 창은 모달(2026-11-18 harden): 뒤 화면은 inert(포커스 · 클릭 · 읽기 안 됨), 닫으면 연 버튼으로 포커스를 돌려준다
   function cmpClose(){
@@ -1256,7 +1225,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
           : hc.st ? ({ same: 'same', changed: 'changed', gone2: 'gone', gone: 'srcgone' })[hc.st] || 'unk' : hc.hash === rc.hash ? 'same' : 'changed'; }
         return { f: f, rc: rc, unit: unit, st: st };
       });
-      CMP = { nx: nx, page: { id: edp.id, name: edp.name }, rows: rows, chk: chk, pend: pend, units: Object.keys(recOf), sel: CMP && CMP.nx && CMP.nx.key === nx.key ? CMP.sel : null };
+      CMP = { nx: nx, page: { id: edp.id, name: edp.name }, rows: rows, chk: chk, pend: pend, units: Object.keys(recOf) };
       return CMP;
     });
   }
@@ -1273,21 +1242,18 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     }
     var n = {}; c.rows.forEach(function(x){ n[x.st] = (n[x.st] || 0) + 1; });
     var gone = CST.gone[0].replace('②', stepMark(c.nx.step));
-    if (!c.sel) c.sel = {};   // 고른 줄(번호). 처음엔 아무것도 고르지 않는다
     o.innerHTML = '<div class="cv-box"><div class="cmp-h"><h2 id="cmpTitle" tabindex="-1">' + esc(stepMark(c.nx.from) + ' ' + pname(FILE.key) + ' › ' + c.page.name) + ' 와 ' + esc(stepMark(c.nx.step) + ' ' + c.nx.name) + ' 비교</h2><button type="button" class="x" data-cmpx aria-label="비교 닫기">×</button></div>' +
       '<p class="cmp-s">' + esc(stepMark(c.nx.from)) + ' 작업 페이지 화면 ' + c.rows.length + '개 기준 · ' + ['new', 'changed', 'unk', 'same', 'gone', 'srcgone'].filter(function(k){ return n[k]; }).map(function(k){ return '<span class="cst ' + CST[k][1] + '">' + esc(k === 'gone' ? gone : CST[k][0]) + ' ' + n[k] + '</span>'; }).join(' ') + '</p>' +
       '<p class="cmp-note' + (c.pend ? ' busy' : '') + '">' + (c.pend ? '<b>바뀐 것을 확인하는 중입니다</b> — ' + esc(c.pend.note || '') + '. 끝나면 이 창이 저절로 바뀝니다(' + esc(stepMark(c.nx.from)) + ' · ' + esc(stepMark(c.nx.step)) + ' 파일이 Figma에서 열려 있고 플러그인이 켜져 있어야 함).'
         : (c.chk ? '바뀐 것 확인: ' + esc(String(c.chk.updatedAt).replace('T', ' ').slice(0, 16)) + ' 기준. 옮긴 뒤 확인하지 않은 화면이 생기면 창을 열 때 알아서 다시 확인합니다.' : '옮긴 화면이 바뀌었는지는 창을 열 때 알아서 확인합니다.')) + '</p>' +
-      '<div class="cmp-tool w-only"><label><input type="checkbox" id="cmpAll" aria-label="전체 선택"> 전체 선택</label><button type="button" class="gen-btn" data-cmppick="new,changed">안 옮김 · 다른 화면만 고르기</button><span class="sp"></span><span id="cmpCnt"></span></div>' +
       '<ul class="cmp-list">' + cmpGroups(c).map(function(g, gi){
         // 섹션마다 묶음 머리(2026-11-18): 섹션 이름 · 화면 수 · 그 섹션 전체 고르기. 섹션 밖 화면은 「섹션 밖」 하나로
         //  섹션 이름을 누르면 그 섹션 화면을 접었다 편다(접은 섹션은 다시 그려도 · 비교를 다시 열어도 접힌 채, 이 페이지를 연 동안)
         var shut = !!CMP_SHUT[g.k];
-        var head = '<li class="cmp-grp"><input type="checkbox" class="w-only" data-cmpgrp="' + gi + '" aria-label="' + esc(g.name) + ' 전체 고르기"><button type="button" class="gtg" data-cmptg="' + gi + '" aria-expanded="' + !shut + '" aria-label="' + esc(g.name) + ' 섹션 ' + (shut ? '펼치기' : '접기') + '"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg><span class="gnm">' + esc(g.name) + '</span></button><span class="gct">' + g.idx.length + '개</span></li>';
-        return head + g.idx.map(function(i){ var x = c.rows[i], s = CST[x.st]; return '<li data-cg="' + gi + '"' + (shut ? ' hidden' : '') + '><input type="checkbox" class="w-only" data-cmpsel="' + i + '"' + (c.sel[i] ? ' checked' : '') + ' aria-label="' + esc(x.f.name) + ' 고르기"><button type="button" data-cmpgo="' + esc(x.f.id) + '"><span class="nm">' + esc(x.f.name) + '</span></button><span class="cst ' + s[1] + '">' + esc(x.st === 'gone' ? gone : x.st === 'unk' && c.pend ? '옮김 · 확인 중' : s[0]) + '</span>' + (x.rc ? '<small class="at">' + esc(String(x.rc.at).replace('T', ' ').slice(5, 16)) + ' 옮김</small>' : '') + '</li>'; }).join('');
+        var head = '<li class="cmp-grp"><button type="button" class="gtg" data-cmptg="' + gi + '" aria-expanded="' + !shut + '" aria-label="' + esc(g.name) + ' 섹션 ' + (shut ? '펼치기' : '접기') + '"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg><span class="gnm">' + esc(g.name) + '</span></button><span class="gct">' + g.idx.length + '개</span></li>';
+        return head + g.idx.map(function(i){ var x = c.rows[i], s = CST[x.st]; return '<li data-cg="' + gi + '"' + (shut ? ' hidden' : '') + '><button type="button" data-cmpgo="' + esc(x.f.id) + '"><span class="nm">' + esc(x.f.name) + '</span></button><span class="cst ' + s[1] + '">' + esc(x.st === 'gone' ? gone : x.st === 'unk' && c.pend ? '옮김 · 확인 중' : s[0]) + '</span>' + (x.rc ? '<small class="at">' + esc(String(x.rc.at).replace('T', ' ').slice(5, 16)) + ' 옮김</small>' : '') + '</li>'; }).join('');
       }).join('') + '</ul>' +
-      '<div class="cmp-act w-only"><button type="button" class="btn" data-cmpchk' + (c.pend ? ' disabled' : '') + '>' + (c.pend ? '확인 중…' : '다시 확인') + '</button><button type="button" class="btn primary" data-cmpsend></button></div></div>';
-    cmpCount();
+      '<div class="cmp-act w-only"><button type="button" class="btn" data-cmpchk' + (c.pend ? ' disabled' : '') + '>' + (c.pend ? '확인 중…' : '다시 확인') + '</button></div></div>';
     if (fresh || hadFocus) { var t = $('cmpTitle'); if (t) t.focus(); }   // 처음 열 때 · 다시 그려 포커스를 잃었을 때 제목으로(화면 읽기 프로그램이 창 제목부터 읽음)
   }
   var CMP_SHUT = {};   // 비교 창에서 접은 섹션(섹션 ID, 섹션 밖은 '')
@@ -1297,25 +1263,10 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     c.rows.forEach(function(x, i){ var k = x.f.secId || ''; if (!(k in at)) { at[k] = groups.length; groups.push({ k: k, name: x.f.sec || '섹션 밖', idx: [] }); } groups[at[k]].idx.push(i); });
     c.groups = groups; return groups;
   }
-  // 고른 수 · 보내기 버튼 · 전체 선택 상태만 바꾼다(다시 그리면 목록 스크롤이 처음으로 가므로)
-  function cmpCount(){
-    var c = CMP; if (!c) return;
-    var n = c.rows.filter(function(x, i){ return c.sel[i]; }).length, all = $('cmpAll'), sd = document.querySelector('[data-cmpsend]');
-    if (all) { all.checked = n > 0 && n === c.rows.length; all.indeterminate = n > 0 && n < c.rows.length; }
-    if ($('cmpCnt')) $('cmpCnt').textContent = n ? n + '개 고름' : '';
-    (c.groups || []).forEach(function(g, gi){ var b = document.querySelector('[data-cmpgrp="' + gi + '"]'); if (!b) return; var k = g.idx.filter(function(i){ return c.sel[i]; }).length; b.checked = k > 0 && k === g.idx.length; b.indeterminate = k > 0 && k < g.idx.length; });
-    if (sd) { sd.disabled = !n; sd.textContent = '고른 화면 ' + n + '개 ' + stepMark(c.nx.step) + '로 보내기'; }
-  }
-  document.addEventListener('change', function(e){
-    if (!CMP) return;
-    if (e.target.id === 'cmpAll') { var on = e.target.checked; CMP.rows.forEach(function(x, i){ CMP.sel[i] = on; }); document.querySelectorAll('[data-cmpsel]').forEach(function(b){ b.checked = on; }); cmpCount(); return; }
-    if (e.target.dataset && e.target.dataset.cmpgrp != null) { var g = (CMP.groups || [])[+e.target.dataset.cmpgrp], on2 = e.target.checked; if (g) g.idx.forEach(function(i){ CMP.sel[i] = on2; var b = document.querySelector('[data-cmpsel="' + i + '"]'); if (b) b.checked = on2; }); cmpCount(); return; }
-    if (e.target.dataset && e.target.dataset.cmpsel != null) { CMP.sel[+e.target.dataset.cmpsel] = e.target.checked; cmpCount(); }
-  });
   document.addEventListener('click', function(e){
     if (e.target.id === 'cmpPop' || e.target.closest('[data-cmpx]')) { cmpClose(); return; }
     var g = e.target.closest('[data-cmpgo]'); if (g) { cmpClose(); go(g.dataset.cmpgo); return; }
-    // 섹션 접기 · 펴기: 다시 그리지 않고 그 섹션 줄만 숨긴다(목록 스크롤 · 고른 것 유지)
+    // 섹션 접기 · 펴기: 다시 그리지 않고 그 섹션 줄만 숨긴다(목록 스크롤 유지)
     var tg = e.target.closest('[data-cmptg]');
     if (tg && CMP) {
       var gi = tg.dataset.cmptg, grp = (CMP.groups || [])[+gi]; if (!grp) return;
@@ -1332,23 +1283,6 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
         .catch(function(err){ ck.disabled = false; say('확인 요청 실패: ' + err.message, true); });
       return;
     }
-    var pk = e.target.closest('[data-cmppick]');
-    if (pk && CMP) { var ks = pk.dataset.cmppick.split(','); CMP.rows.forEach(function(x, i){ CMP.sel[i] = ks.indexOf(x.st) >= 0; }); document.querySelectorAll('[data-cmpsel]').forEach(function(b){ b.checked = !!CMP.sel[+b.dataset.cmpsel]; }); cmpCount(); return; }
-    var sd = e.target.closest('[data-cmpsend]');
-    if (sd && CMP) {
-      // 고른 줄 → 보낼 단위(섹션째 옮긴 화면은 그 섹션). 이미 옮긴 화면을 고르면 받는 쪽 같은 자리에서 다시 바꿔 끼운다(같으면 플러그인이 건너뜀)
-      var units = [], names = [];
-      CMP.rows.forEach(function(x, i){ if (CMP.sel[i] && units.indexOf(x.unit) < 0) { units.push(x.unit); names.push(x.rc ? x.rc.from.name : x.f.name); } });
-      if (units.length > 200) { say('한 번에 200개까지 보낼 수 있습니다(고른 ' + units.length + '개).', true); return; }
-      if (!units.length) return;
-      var nx0 = CMP.nx, pg0 = CMP.page;
-      plugWarn(nx0).then(function(warn){ return window.WB.confirm('고른 화면 ' + units.length + '개를 ' + stepMark(nx0.step) + ' ' + nx0.name + '로 보낼까요?\n새 화면은 새로 만들고, 이미 옮긴 화면은 바뀌었을 때만 ' + stepMark(nx0.step) + '의 같은 자리에서 바꿔 끼웁니다.' + (warn ? '' : '\n\n' + XFER_HINT), { ok: '보내기', warn: warn }); }).then(function(ok){
-        if (!ok) return;
-        sd.disabled = true;
-        transferJob(nx0, 'copy', units, names, pg0).then(function(j){ say(j.id + ' 옮기기를 맡겼습니다(' + units.length + '개). ' + XFER_HINT); cmpClose(); })
-          .catch(function(err){ sd.disabled = false; say('등록 실패: ' + err.message, true); });
-      });
-    }
   });
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && CMP) cmpClose(); });
   /* 바뀐 것 확인은 알아서(2026-11-18): 비교 창을 열 때 「확인 전」인 화면이 있으면(옮긴 뒤 확인한 적이 없으면) 확인 작업을 바로 맡기고,
@@ -1364,8 +1298,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     cmpWatch = setInterval(function(){
       var c = CMP; if (!c || !$('cmpPop')) { clearInterval(cmpWatch); cmpWatch = 0; return; }
       if (!c.pend) { clearInterval(cmpWatch); cmpWatch = 0; return; }
-      var sel = c.sel;
-      cmpLoad(c.nx).then(function(n){ n.sel = sel; if (!n.pend) { cmpRender(); clearInterval(cmpWatch); cmpWatch = 0; } else if (n.pend.status !== c.pend.status || n.pend.note !== c.pend.note) cmpRender(); }).catch(function(){});
+      cmpLoad(c.nx).then(function(n){ if (!n.pend) { cmpRender(); clearInterval(cmpWatch); cmpWatch = 0; } else if (n.pend.status !== c.pend.status || n.pend.note !== c.pend.note) cmpRender(); }).catch(function(){});
     }, 5000);
   }
   if ($('cmpNext')) $('cmpNext').onclick = function(){

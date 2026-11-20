@@ -112,6 +112,13 @@ foreach ($dir in $places) { $lnk = Join-Path $dir 'Figma AI Run.lnk'; try { if (
       log('멈춘 요청을 대기로 되돌림: ' + done.map((x) => x.id).join(', '));
     }
     const jj = core.readJson(C.jobFile);
+    // 예전 옮기기(보내기, mode copy) 작업이 남아 있으면 「실패」로 — 플러그인이 더는 받지 않는다(2026-11-20 없앰)
+    const legacy = (x) => x && x.kind === 'transfer' && x.mode !== 'check' && ['대기', '진행 중'].includes(x.status);
+    if (jj && core.arr(jj.items).some(legacy)) {
+      const now = core.now();
+      for (const x of core.arr(jj.items)) if (legacy(x)) { x.status = '실패'; x.note = '다음 단계로 보내기는 없앴습니다 — Figma에서 화면을 복사해 붙여 넣고 「②와 비교」로 확인하세요'; x.updatedAt = now; }
+      jj.version = (parseInt(jj.version, 10) || 0) + 1; core.writeJson(C.jobFile, jj);
+    }
     if (jj && core.arr(jj.items).some((x) => x && x.status === '진행 중' && old(x))) {
       const now = core.now(), done = [];
       for (const x of core.arr(jj.items)) if (x && x.status === '진행 중' && old(x)) {

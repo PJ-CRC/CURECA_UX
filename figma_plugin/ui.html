@@ -198,14 +198,12 @@ async function textJobs() {
 }
 setInterval(textJobs, 3000);
 
-/* ── 다음 단계로 옮기기(transfer, 2026-11-16): Workbench 「② ○○로 보내기」 작업
-   이 파일이 보내는 쪽이면 읽어서 서버에 넣고(이미지 포함), 받는 쪽이면 서버에서 꺼내 작업 페이지에 만든다. Claude를 거치지 않는다 ── */
+/* ── 다음 단계와 비교(transfer check): Workbench 「②와 비교」 작업 — ①이면 옮긴 화면 확인값, ②이면 작업 페이지 화면 확인값을 낸다(옮기지 않음).
+   「② ○○로 보내기」(읽기 · 만들기)는 2026-11-20에 없앴다 ── */
 const XFER_API = BASE + 'transfer';
 const xPost = body => fetch(XFER_API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }).then(r => r.json()).then(d => { if (d.error) throw new Error(d.error); return d; });
-function unb64(s) { const bin = atob(s), u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); return u; }
 let xferBusy = false;
-// 읽기만 하는 단계(②읽기 · 바뀐 것 확인 · 보낼 화면 읽기)는 Figma가 「연결하지 못함」(다른 페이지를 불러오다 10초 넘김)으로 실패하면 두 번까지 다시 한다(2026-11-18).
-//  만들기(xfer-build)는 다시 하지 않는다(두 번 생길 수 있음)
+// ② 읽기 · 바뀐 것 확인은 Figma가 「연결하지 못함」(다른 페이지를 불러오다 10초 넘김)으로 실패하면 두 번까지 다시 한다(2026-11-18)
 async function callRetry(type, extra) {
   for (let i = 0; ; i++) {
     try { return await call(type, extra); }
@@ -218,13 +216,12 @@ async function transferJobs() {
   try {
     const d = await (await fetch(JOBS_API + '?key=' + encodeURIComponent(myKey) + '&kind=transfer', { cache: 'no-store' })).json();
     for (const j of (d.items || []).filter(x => x.status === '대기')) {
-      const reading = j.phase === 'read' && j.from && j.from.key === myKey, building = j.phase === 'build' && j.to && j.to.key === myKey;
       const checking = j.phase === 'check' && j.from && j.from.key === myKey;   // 비교 「바뀐 것 확인」 — 옮기지 않고 해시만
       const scanning = j.phase === 'scan' && j.to && j.to.key === myKey;   // 그 앞 단계: ② 작업 페이지 화면 해시(직접 복사해 옮긴 화면 찾기)
-      if (!reading && !building && !checking && !scanning) continue;
+      if (!checking && !scanning) continue;   // 예전 옮기기 작업(read · build)은 받지 않는다
       const t = await (await jobPost({ action: 'take', id: j.id, kind: 'transfer', fileKey: myKey, by: 'Figma 플러그인' })).json();
       if (!t || !t.job || t.job.id !== j.id) continue;   // 다른 PC 플러그인이 먼저 가져감
-      let built = false, beat = 0;
+      let beat = 0;
       try {
         if (scanning) {
           log('비교: ② 작업 페이지 화면을 읽는 중(직접 옮긴 화면 찾기)…');
@@ -242,39 +239,11 @@ async function transferJobs() {
           clearInterval(beat); beat = 0;
           const out = await xPost({ action: 'check', id: j.id, frames: r.frames });
           log('비교: ' + ((out.job && out.job.note) || '확인 끝'));
-        } else if (reading) {
-          log('옮기기: 보낼 화면 읽는 중…');
-          await jobPost({ action: 'update', id: j.id, note: '플러그인이 보낼 화면을 읽는 중' });
-          const rec = await (await fetch(XFER_API + '?record=' + encodeURIComponent(j.to.key), { cache: 'no-store' })).json();
-          const r = await callRetry('xfer-read', { job: j, record: rec.items || [] });
-          for (const h of r.imgs || []) { const im = await call('xfer-img', { hash: h }); if (im.bytes) await xPost({ action: 'img', id: j.id, hash: h, b64: b64(im.bytes) }); }
-          const out = await xPost({ action: 'put', id: j.id, frames: r.frames, skipped: r.skipped, defs: r.defs, fonts: r.fonts, imgs: r.imgs });
-          log('옮기기: ' + r.frames.length + '개 읽음' + (r.skipped.length ? ' · 같아서 건너뜀 ' + r.skipped.length + '개' : '') + (out.job && out.job.phase === 'build' ? ' — 받는 파일에서 만들기 대기' : ''));
-        } else {
-          log('옮기기: 받는 작업 페이지에 만드는 중…');
-          await jobPost({ action: 'update', id: j.id, note: '플러그인이 작업 페이지에 만드는 중' });
-          const data = await (await fetch(XFER_API + '?id=' + encodeURIComponent(j.id), { cache: 'no-store' })).json();
-          const imgs = {};
-          for (const h of data.imgs || []) { const x = await (await fetch(XFER_API + '?id=' + encodeURIComponent(j.id) + '&img=' + h, { cache: 'no-store' })).json(); if (x.b64) imgs[h] = unb64(x.b64); }
-          // 오래 걸려도 서버가 멈춘 것으로 보지 않게 2분마다 메모를 갱신한다(10분 소식 없으면 실패 처리)
-          beat = setInterval(() => { jobPost({ action: 'update', id: j.id, note: '플러그인이 작업 페이지에 만드는 중 · ' + new Date().toTimeString().slice(0, 5) }).catch(() => {}); }, 120000);
-          const r = await call('xfer-build', { job: j, data, imgs });
-          clearInterval(beat); beat = 0; built = true;
-          const m = r.miss || {}, notes = [];
-          if (m.local) notes.push('라이브러리에 없는 컴포넌트 ' + m.local + '종은 「옮긴 컴포넌트」 섹션에 대체 컴포넌트로 만듦');
-          if (m.comp) notes.push('컴포넌트 ' + m.comp + '개를 빈 틀로 넣음');
-          if (m.img) notes.push('이미지 ' + m.img + '개 못 옮김');
-          if (m.font) notes.push('없는 글꼴 ' + m.font + '종은 Inter로');
-          if (m.ov) notes.push('덮어쓰기 ' + m.ov + '곳 못 맞춤');
-          await xPost({ action: 'done', id: j.id, made: r.made, note: notes.join(' · ') });
-          log('옮기기: ' + r.made.length + '개 만듦' + (notes.length ? ' (' + notes.join(' · ') + ')' : ''));
         }
       } catch (e) {
         if (beat) clearInterval(beat);
-        // 이미 만들었으면 「실패」로 바꾸지 않는다(다시 보내면 두 번 생김) — 서버에 알리지 못한 것만 남긴다
-        if (built) { log('옮기기: 만들었지만 서버에 알리지 못함 — ' + (e.message || e)); continue; }
         await xPost({ action: 'fail', id: j.id, note: '플러그인 오류: ' + (e.message || e) }).catch(() => {});
-        log('옮기기 실패: ' + (e.message || e));
+        log('비교 실패: ' + (e.message || e));
       }
     }
   } catch (e) { /* 서버가 꺼져 있으면 다음에 다시 */ }
