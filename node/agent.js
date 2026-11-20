@@ -268,7 +268,7 @@ function makeResume(out) {
   return `[Workbench 요청 감시 결과 — 이 대화에서 질문을 남긴 요청에 답이 왔다]
 ${out}
 ${details(out)}
-이 대화에서 「보류」 + 질문으로 멈춘 요청에 사람이 답했다(위 replies의 마지막). 규칙 문서 · 작업 기록 · 화면 MD는 이 대화에서 이미 읽었으니 다시 읽지 말고(이 대화 뒤에 바뀌었을 수 있는 작업 기록 · 요청 상태만 필요하면 확인), 그 답대로 하던 작업을 이어서 처리하라. 처리 방식(「진행 중」 → 처리 → 「완료」 또는 「보류」 + ask, 캡처, frames, 사용자에게 대화로 묻지 않기, 끝나면 몇 줄 요약)은 앞과 같다.${usageHint()}`;
+이 대화에서 「보류」 + 질문으로 멈춘 요청에 사람이 답했다(위 replies의 마지막). 규칙 문서 · 화면 MD는 이 대화에서 이미 읽었으니 다시 읽지 말고, 작업 기록은 처음부터 읽지 말고 머리말 · 「단계」 표 · 이어서 작업할 곳 줄만 다시 읽어 내가 마지막에 쓴 것과 같은지만 본다(다르면 처음부터 — docs/claude/requests-flow.md 「같은 세션에서 이어 갈 때」). 그 답대로 하던 작업을 이어서 처리하라. 처리 방식(「진행 중」 → 처리 → 「완료」 또는 「보류」 + ask, 캡처, frames, 사용자에게 대화로 묻지 않기, 끝나면 몇 줄 요약)은 앞과 같다.${usageHint()}`;
 }
 // 차례가 끝난 뒤 그 차례의 요청 중 「보류」 + 질문(ask)으로 답을 기다리는 것(겹침 대기는 빼고)
 function waitingIds(ids) {
@@ -286,7 +286,7 @@ function makePrompt(out) {
   return `[Workbench 요청 감시 결과]
 ${out}
 ${details(out)}
-먼저 규칙 문서를 Read로 읽어라(읽지 않고 처리하지 마라): PENDING · RESUME(요청 R0xx)이면 docs/claude/requests.md, JOBS(작업 J0xx)이면 GET /api/jobs에서 그 작업의 kind를 보고 CLAUDE.md 「작업별 문서」 표의 문서(guide · guide-edit · guide-check = docs/claude/ux-docs.md, prototype* = docs/claude/prototype.md, minutes · plan = docs/claude/plan.md, 그 밖 = docs/claude/jobs.md). 그 문서와 CLAUDE.md 규칙대로 위 항목만 처리하라. 너는 창 없이 떠 있는 백그라운드 Claude이고 사용자는 이 대화를 보지 않는다(기록은 한국어).
+먼저 규칙 문서를 Read로 읽어라(읽지 않고 처리하지 마라): PENDING · RESUME(요청 R0xx)이면 docs/claude/requests.md, JOBS(작업 J0xx)이면 아래 작업 내용의 kind를 보고(GET /api/jobs를 다시 부르지 않는다) CLAUDE.md 「작업별 문서」 표의 문서(guide · guide-edit · guide-check = docs/claude/ux-docs.md, prototype* = docs/claude/prototype.md, minutes · plan = docs/claude/plan.md, 그 밖 = docs/claude/jobs.md). 그 문서와 CLAUDE.md 규칙대로 위 항목만 처리하라. 너는 창 없이 떠 있는 백그라운드 Claude이고 사용자는 이 대화를 보지 않는다(기록은 한국어).
 - 앞서 이 대화에서 처리한 요청과 섞지 마라. 요청 · 작업 내용은 위에 있으니 다시 조회하지 말고, 상태를 바꿀 때(「진행 중」 등) 서버 응답으로 지금 상태를 확인한다. 이 PC에는 python이 없을 수 있으니 JSON은 node · PowerShell로 다룬다.
 - 감시는 하지 마라(백그라운드 에이전트가 처리 뒤 다시 감시한다).
 - 사용 한도 표시(get_usage · .plan_usage.json)는 건너뛴다(이 실행에는 그 도구가 없다).
