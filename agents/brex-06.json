@@ -1,5 +1,5 @@
 {
-  "reportAt": "2026-11-20T13:24:45+09:00",
+  "reportAt": "2026-11-20T13:25:46+09:00",
   "pc": "BREX_06",
   "slug": "brex-06",
   "user": "최고관리자",
@@ -7,8 +7,8 @@
   "version": "0.30.6",
   "alive": true,
   "status": "idle",
-  "msg": "준비 확인 중 (Claude 로그인 · Figma 연결)",
-  "statusAt": "2026-11-20T13:24:44+09:00",
+  "msg": "요청을 기다리는 중",
+  "statusAt": "2026-11-20T13:25:30+09:00",
   "claude": "따로 설치",
   "claudeWay": "cli",
   "autoWatch": true,
