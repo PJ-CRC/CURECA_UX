@@ -1,0 +1,29 @@
+{
+  "id": "anjongbeom-ui-macbookair-2-local_20261120-101352",
+  "kind": "work",
+  "reqId": "",
+  "reqType": "",
+  "team": "stagora",
+  "at": "2026-11-20T10:13:52+09:00",
+  "from": "2026-11-20T10:11:00+09:00",
+  "by": "안종범",
+  "doneBy": "Claude",
+  "pc": "anjongbeom-ui-MacBookAir-2.local",
+  "fileKey": "cDjaemHjetS7RcAHRUIMY5",
+  "fileName": "STAgora AI Workspace",
+  "page": "Test-안종범",
+  "frame": "결과",
+  "nodeId": "424:588",
+  "text": "채팅: AMR 계층형 막대 두께 조정",
+  "models": {
+    "claude-opus-5-5": 5,
+    "<synthetic>": 1
+  },
+  "calls": 6,
+  "input": 12,
+  "cacheWrite": 12096,
+  "cacheRead": 1166243,
+  "output": 4302,
+  "total": 1182653,
+  "usd": 0.4161
+}

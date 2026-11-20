@@ -1,0 +1,19 @@
+{
+  "id": "anjongbeom-ui-macbookair-2-local_20261120-101352",
+  "kind": "work",
+  "team": "stagora",
+  "at": "2026-11-20T10:13:52+09:00",
+  "by": "안종범",
+  "doneBy": "Claude",
+  "pc": "anjongbeom-ui-MacBookAir-2.local",
+  "reqId": "",
+  "fileKey": "cDjaemHjetS7RcAHRUIMY5",
+  "fileName": "STAgora AI Workspace",
+  "page": "Test-안종범",
+  "frame": "결과",
+  "nodeId": "424:588",
+  "type": "",
+  "text": "AMR 시안: 계층형 막대 두께 · 우측 영역 채우기",
+  "note": "A. 계층형 막대 카드(424:588, 사용자 수정본)의 검출 구조 영역을 왼쪽 숫자 카드 높이(301)에 맞추고, 막대를 16 → 48px로 두껍게, 막대 폭을 300 → 270px로 바꿔 오른쪽까지 채움. 줄 간격은 균등 배치, 값은 건수(22px) 아래에 %를 두는 두 줄로 바꿈.",
+  "shot": "shots/anjongbeom-ui-macbookair-2-local_20261120-101352.jpg"
+}
