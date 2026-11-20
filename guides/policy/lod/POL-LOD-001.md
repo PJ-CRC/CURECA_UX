@@ -28,11 +28,11 @@ replaced_by:
 3. Sample Trolley 한 대에 Consumable Trolley 여러 대를 구성할 수 있음.
 4. Consumable Trolley는 Run 중에도 언제든 빼고 새 Trolley를 바로 도킹할 수 있음. 바꿀 때 Prep 시스템에서 쓰던 품목은 새 Trolley의 1F 빈 Tray로 돌아옴 (POL-MAT-007 규칙 10).
 5. Run 하나에는 Sample Trolley 한 대만 씀. 새 Sample Trolley를 넣을 때마다 Run 준비에서 [Run Start]를 눌러야 그 Trolley의 검사가 시작됨.
-6. [Run Start] 뒤에는 Inbound Trolley에 Sample이 남아 있는 동안 도킹을 해제할 수 없음. 마지막 Sample이 Sample Preparation으로 넘어가 Inbound Trolley가 비면, Run 중이라도 도킹을 해제하고 Inbound Trolley와 Outbound Trolley를 함께 바꿀 수 있음. 이때 아직 처리 중이던 Rack은 새 Outbound Trolley의 1F 빈 Tray로 돌아옴 (MT-20261026-01, 2026-11-06 사용자 확인).
+6. [Run Start] 뒤에는 Inbound Trolley에 Sample이 남아 있는 동안 도킹을 해제할 수 없음. 마지막 Sample이 Sample Pre-treatment로 넘어가 Inbound Trolley가 비면, Run 중이라도 도킹을 해제하고 Inbound Trolley와 Outbound Trolley를 함께 바꿀 수 있음. 이때 아직 처리 중이던 Rack은 새 Outbound Trolley의 1F 빈 Tray로 돌아옴 (MT-20261026-01, 2026-11-06 사용자 확인).
 7. Sample이 남은 Inbound Trolley를 빼야 하면 Run을 멈춘 뒤 뺌. 이때 Prep 시스템으로 들어가지 못한 Sample은 Ordered로 돌아감 (POL-SMP-001 규칙 6).
 8. 그래서 Inbound Trolley는 1F에 Tray를 두지 않고(POL-MAT-006 규칙 8), Outbound Trolley는 1F에 빈 Tray를 넣어 둠. Outbound Trolley는 따로 구성하지 않고 그대로 넣음.
 9. 사용자는 Inventory > Overview의 Sample Storage 현황(Samples (Inbound Trolley), Samples (Test In Progress), Samples (Outbound Trolley))을 보고 바꿀 때를 정함 (POL-INV-001 규칙 7).
-10. 도킹 방식은 Sample Preparation 제조사마다 다름. 단디메카는 센서로 정상 도킹을 확인하고, 사용자가 유리문을 닫으면 Door가 자동으로 잠기고 Trolley가 도킹됨. 진행하던 Run이 있으면 이어서 진행함. 로체시스템즈는 Trolley를 넣고 QR을 스캔해 확인한 뒤, 유리문을 닫고 Door의 걸쇠를 걸면 도킹됨 (MT-20260828-01).
+10. 도킹 방식은 Sample Pre-treatment 제조사마다 다름. 단디메카는 센서로 정상 도킹을 확인하고, 사용자가 유리문을 닫으면 Door가 자동으로 잠기고 Trolley가 도킹됨. 진행하던 Run이 있으면 이어서 진행함. 로체시스템즈는 Trolley를 넣고 QR을 스캔해 확인한 뒤, 유리문을 닫고 Door의 걸쇠를 걸면 도킹됨 (MT-20260828-01).
 11. 도킹을 풀기 위한 장치는 따로 없음. Instrument가 Door 상태가 바뀌는 것을 보고 도킹 · 도킹 해제를 처리함. Trolley를 빼려면 Door Control에서 [Unlock]하면 Instrument가 도킹을 풀고 Door 잠금을 해제함 (MT-20260828-01).
 12. 도킹된 Trolley를 Material Setup에서 스캔하면 쓸 수 없다는 알럿을 보여 줌 (MT-20261105-01, 추가 예정. 알럿 ID는 질문 1).
 
@@ -69,3 +69,4 @@ Event Message는 Instrument와 개발사가 만들고, CURECA 화면은 받은 �
 | | 2026-11-03 | 최초 작성 (이전 ID: 팀원 POL-DCK-01·05·06) | |
 | | 2026-11-06 | Inbound Trolley는 Sample이 남아 있으면 도킹 해제 불가, 비면 Run 중에도 해제 가능 (규칙 6 · 7). 규칙 번호 다시 매김 | MT-20261026-01, 사용자 확인 |
 | | 2026-11-06 | 제조사별 도킹(규칙 10), 도킹 해제는 Door 상태로(규칙 11), 도킹된 Trolley 스캔 알럿(규칙 12, 추가 예정), 관련 Event 참고 | MT-20260828-01, MT-20261021-01, MT-20261105-01 |
+| | 2026-11-18 | Module · Unit 이름 바꿈: Prep Consumable Storage → Consumable Storage, Sample Preparation Module → Sample Pre-treatment, Sample Pretreatment → Sample Processing, Sample Aliquot → Sample Aliquoting. 검사 단계 · Prep 시스템의 Sample Preparation은 그대로 | 사용자 결정 (서보경), `glossary/modules.csv` · `module-units.csv` |

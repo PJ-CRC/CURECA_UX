@@ -8,7 +8,7 @@ cids: [TI-TMG-01, LI-TMG-01, TI-TMG-02, LI-TMG-02, TI-SPT-01, LI-SPT-01, TI-DAS,
 status: 확정
 version:
 date: 2026-11-02
-sources: [씨젠 상태 정보 261021 > 검사 상태, 정책서_2026.08.28 > 검체/검사 정의, 2026-11-02 사용자 결정 (Not Tested)]
+sources: [씨젠 상태 정보 261119 > 검사 상태, 정책서_2026.08.28 > 검체/검사 정의, 2026-11-02 사용자 결정 (Not Tested)]
 provisional: []
 alerts: []
 data: [glossary/status-values.csv]
@@ -37,7 +37,7 @@ replaced_by:
 
 ## 근거
 
-- 씨젠 상태 정보 261021 > 검사 상태 (상태 값, Not Tested 원인)
+- 씨젠 상태 정보 261119 > 검사 상태 (상태 값, Not Tested 원인)
 - 정책서_2026.08.28 "검체 상태값", "데이터 상태 전환 시점", "Not Tested 트리거 조건", "Failed - LIS 결과 전송X"
 - Not Tested 정의: 2026-11-02 사용자 결정 (`policy/policy-backlog.md` 추가할 것 11, 팀원 Q7)
 

@@ -18,7 +18,7 @@ replaced_by:
 
 ## 정의
 
-- Module 8종: Sample Storage, Prep Consumable Storage, Sample Preparation (Prep 시스템), High-throughput Extraction, Flexible Extraction, PCR Setup, Plate Sealing, Universal PCR (Dx 시스템). 기준은 `glossary/modules.csv`
+- Module 8종: Sample Storage, Consumable Storage, Sample Pre-treatment (Prep 시스템), High-throughput Extraction, Flexible Extraction, PCR Setup, Plate Sealing, Universal PCR (Dx 시스템). 기준은 `glossary/modules.csv`
 
 ## 규칙
 
@@ -39,3 +39,4 @@ replaced_by:
 | 버전 | 날짜 | 내용 | 근거 (PD, PV, CR, ADR) |
 | --- | --- | --- | --- |
 | | 2026-11-02 | 최초 작성 (이전 ID: 팀원 POL-CMN-04) | |
+| | 2026-11-18 | Module · Unit 이름 바꿈: Prep Consumable Storage → Consumable Storage, Sample Preparation Module → Sample Pre-treatment, Sample Pretreatment → Sample Processing, Sample Aliquot → Sample Aliquoting. 검사 단계 · Prep 시스템의 Sample Preparation은 그대로 | 사용자 결정 (서보경), `glossary/modules.csv` · `module-units.csv` |

@@ -8,7 +8,7 @@ cids: [TI-SPT-02, LI-SPT-02, TI-SPT-03, LI-SPT-03]
 status: 확정
 version:
 date: 2026-11-02
-sources: [씨젠 상태 정보 261021 > 검사 상태, 2026-11-02 사용자 결정 (SM1)]
+sources: [씨젠 상태 정보 261119 > 검사 상태, 2026-11-02 사용자 결정 (SM1)]
 provisional: []
 alerts: []
 data: [glossary/status-values.csv]
@@ -33,7 +33,7 @@ replaced_by:
 
 ## 근거
 
-- 씨젠 상태 정보 261021 "검사 상태" (`glossary/status-values.csv` Plate 상태, Sample 상태 Failed)
+- 씨젠 상태 정보 261119 "검사 상태" (`glossary/status-values.csv` Plate 상태, Sample 상태 Failed)
 - Status 필터에서 Not Tested 제외: 2026-11-02 사용자 결정 (SM1)
 
 ## 변경 이력

@@ -14,8 +14,8 @@
 | 시스템 | Module | 검사 단계 | 파일 |
 | --- | --- | --- | --- |
 | Prep 시스템 | Sample Storage | Sample Preparation | [sample-storage.md](sample-storage.md) |
-| | Prep Consumable Storage | Sample Preparation | [prep-consumable-storage.md](prep-consumable-storage.md) |
-| | Sample Preparation | Sample Preparation | [sample-preparation.md](sample-preparation.md) |
+| | Consumable Storage | Sample Preparation | [consumable-storage.md](consumable-storage.md) |
+| | Sample Pre-treatment | Sample Preparation | [sample-pretreatment.md](sample-pretreatment.md) |
 | Dx 시스템 | High-throughput Extraction | Nucleic Acid Extraction | [ht-extraction.md](ht-extraction.md) |
 | | Flexible Extraction | Nucleic Acid Extraction | [flexible-extraction.md](flexible-extraction.md) |
 | | PCR Setup | PCR Setup | [pcr-setup.md](pcr-setup.md) |
@@ -23,7 +23,7 @@
 | | Universal PCR | PCR | [universal-pcr.md](universal-pcr.md) |
 
 - 8종을 모두 갖춘 하나의 시스템만 지원합니다. 같은 Module은 여러 대일 수 있고, 일은 Run-time 기준으로 고르게 나눕니다 (POL-COM-003, POL-EQP-005).
-- 제어 주체: Prep 시스템은 Sample Preparation Master Control System(PrepMcs), Dx 시스템은 Diagnostic Master Control System(DxMcs)이 제어합니다. 결과 판독은 D.A PC, 장비 화면은 L-IOS(장비마다 LIOS01, LIOS02 …), 원격 관제는 T-IOS입니다 (씨젠 상태 정보 261021 > Actor).
+- 제어 주체: Prep 시스템은 Sample Preparation Master Control System(PrepMcs), Dx 시스템은 Diagnostic Master Control System(DxMcs)이 제어합니다. 결과 판독은 D.A PC, 장비 화면은 L-IOS(장비마다 LIOS01, LIOS02 …), 원격 관제는 T-IOS입니다 (씨젠 상태 정보 261119 > Actor).
 - 장비 구성(Module · Unit 수와 배치)은 장비 사이 통신으로 자동 설정됨. 사람이 화면에서 장비 구성을 입력하는 메뉴는 없음 (MT-20260728-01)
 - PCR Setup과 Plate Sealing은 짝으로 설치함. 재단 예: Plate Sealing 3대(Sealer 6대), 추출은 M9600만 (MT-20260910-02)
 - Module이 Error에서 고쳐져도 물리적으로 이어진 다른 Module 때문에 Run이 다시 시작되지 않을 수 있음 (MT-20261013-01, POL-EQP-002 예외)
@@ -34,7 +34,7 @@
 LIS 오더 ─▶ Material Setup (Trolley · Tray · Socket 구성, L-IOS)
            │
            ▼
-Sample Storage ──Inbound Trolley──▶ Sample Preparation ◀── Prep Consumable Storage (Trolley)
+Sample Storage ──Inbound Trolley──▶ Sample Pre-treatment ◀── Consumable Storage (Trolley)
   (STAT Storage로 응급 Sample)         전처리 · 분주 → 96-DWP
            ▲                                  │
            └──Outbound Trolley◀── 쓴 Sample Rack │

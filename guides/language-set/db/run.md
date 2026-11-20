@@ -1,0 +1,101 @@
+# 언어셋 · Run
+
+> 원본입니다. 고치는 법과 엑셀로 뽑는 법은 `language-set/README.md`. 항목을 더하거나 바꾸거나 지우면 `language-set/db/history.md` "항목 이력"에 한 줄을 더합니다.
+
+- 언어셋 v0.05 목록 시트에서 옮김 (2026-11-17), v0.06 반영 (2026-11-19). 행 86개, 사용 77개 · 삭제 9개
+
+| Language ID | 재사용 | 상태 | 검증 상태 | 플랫폼 | Type | English | Korean | German | Portuguese | Spanish | Italian | French | 참조 시트 | 비고 | Menu | CID |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| LID-RUN-001 |  | 사용 | 법인 검토 완료 | L | title | Notifications Before Run Preparation |  | Hinweise vor der Run-Vorbereitung | Notificações Antes da Preparação da corrida | Notificaciones Antes de la Preparación del Run | Notifiche Prima della Preparazione del Run | Notifications avant la préparation du run |  | 팝업 타이틀 | Run | LI-RUN-P |
+| LID-RUN-002 |  | 사용 | 법인 검토 완료 | L | title | Please check all of the items below and run it again. |  | Bitte prüfen Sie alle folgenden Punkte und starten Sie erneut. | Verifique todos os itens abaixo e execute novamente. | Verifique todos los elementos siguientes y ejecute de nuevo. | Controlla tutti i seguenti elementi e riavvia. | Veuillez vérifier tous les éléments ci-dessous et relancer. |  | 팝업 안내 문구 | Run | LI-RUN-P |
+| LID-RUN-003 |  | 사용 | 법인 검토 완료 | L | title | Sample Data Load Failed |  | Laden der Probendaten fehlgeschlagen | Falha ao Carregar Dados da Amostra | Error al Cargar Datos de la Muestra | Caricamento Dati Campione Non Riuscito | Échec du chargement des données d'échantillon |  | 팝업 영역 타이틀 | Run | LI-RUN-P |
+| LID-RUN-004 |  | 사용 | 법인 검토 완료 | L | title | Loading Error. Check device status and try again. |  | Ladefehler. Gerätestatus prüfen und erneut versuchen. | Erro de Carregamento. Verifique o status do dispositivo e tente novamente. | Error de Carga. Verifique el estado del dispositivo e inténtelo de nuevo. | Errore di Caricamento. Controlla lo stato del dispositivo e riprova. | Erreur de chargement. Vérifiez l'état de l'appareil et réessayez. |  | 팝업 안내 문구 | Run | LI-RUN-P |
+| LID-RUN-040 |  | 사용 | AI 번역 | L | title | No Tray Detected On Trolley 1F (Consumable Trolley) |  | Kein Tray auf Trolley 1F erkannt (Verbrauchsmaterial-Trolley) | Nenhum Tray Detetado no Trolley 1F (Trolley de Consumíveis) | No se Detectó Ningún Tray en el Trolley 1F (Trolley de Consumibles) | Nessun Tray Rilevato sul Trolley 1F (Trolley Materiali di Consumo) | Aucun tray détecté sur le trolley 1F (trolley de consommables) |  | 팝업 영역 타이틀 | Run | LI-RUN-P |
+| LID-RUN-041 |  | 사용 | AI 번역 | L | txt | Please place an empty tray on trolley 1F and try again. |  | Bitte legen Sie einen leeren Tray auf Trolley 1F und versuchen Sie es erneut. | Coloque um tray vazio no trolley 1F e tente novamente. | Coloque un tray vacío en el trolley 1F e inténtelo de nuevo. | Posiziona un tray vuoto sul trolley 1F e riprova. | Placez un tray vide sur le trolley 1F et réessayez. |  | 팝업 안내 문구 | Run | LI-RUN-P |
+| LID-RUN-005 |  | 사용 | 법인 검토 완료 | L | title | Network Status |  | Netzwerkstatus | Estado da Rede | Estado de Red | Stato Rete | État du réseau |  | 팝업 영역 타이틀 | Run | LI-RUN-P |
+| LID-RUN-006 |  | 사용 | 법인 검토 완료 | L | title | Please check the network status. |  | Bitte Netzwerkstatus prüfen. | Verifique o estado da rede. | Verifique el estado de la red. | Controlla lo stato della rete. | Veuillez vérifier l'état du réseau. |  | 팝업 안내 문구 | Run | LI-RUN-P |
+| LID-EVT-005 | ref | 사용 | 법인 검토 완료 | L | txt | Instrument |  | Instrument | Instrumento | Instrumento | Strumento | Instrument | LID-COM-MEN-016 | 네트워크 유형 | Run | LI-RUN-P |
+| LID-RUN-007 |  | 사용 | 법인 검토 완료 | L | txt | T-IOS |  | - | - | - | - | - | LID-COM-MEN-046 | 네트워크 유형 | Run | LI-RUN-P |
+| LID-RUN-008 |  | 사용 | 법인 검토 완료 | L | txt | D.A PC |  | - | - | - | - | - | LID-COM-MEN-047 | 네트워크 유형 | Run | LI-RUN-P |
+| LID-RUN-009 |  | 사용 | 법인 검토 완료 | L | title | Door Status |  | Door-Status | Estado da Door | Estado de la Door | Stato Door | État de la Door. |  | 팝업 영역 타이틀 | Run | LI-RUN-P |
+| LID-RUN-010 |  | 사용 | 법인 검토 완료 | L | title | Please check the door open status of the module. |  | Bitte den Door-Öffnungsstatus des Moduls prüfen. | Verifique o estado de abertura da door do módulo. | Verifique el estado de apertura de la door del módulo. | Controlla lo stato di apertura della door del modulo. | Veuillez vérifier l'état d'ouverture de la door du module. |  | 팝업 안내 문구 | Run | LI-RUN-P |
+| LID-EVT-012 | ref | 사용 | 법인 검토 완료 | L | txt | Module |  | Modul | Módulo | Módulo | Modulo | Module |  | 모듈명 | Run | LI-RUN-P |
+| LID-RUN-011 |  | 사용 | 법인 검토 완료 | L | btn | OK |  | OK | OK | OK | OK | OK | LID-COM-BTN-010 | 확인 버튼 | Run | LI-RUN-P |
+| LID-RUN-012 |  | 사용 | 법인 검토 완료 | L | txt | Run Preparation |  | Lauf-Vorbereitung | Preparação da corrida | Preparación del Run | Preparazione Run | Préparation du run |  | 화면 타이틀 | Run | LI-RUN-01 / LI-RUN-02-01 / LI-RUN-02 / LI-RUN-03 |
+| LID-RUN-013 |  | 사용 | 법인 검토 완료 | L | txt | Check samples |  | Proben prüfen | Verificar amostras | Verificar muestras | Controlla campioni | Vérifier les échantillons |  | Step 명칭 | Run | LI-RUN-01 / LI-RUN-02-01 / LI-RUN-02 / LI-RUN-03 |
+| LID-RUN-014 |  | 사용 | 법인 검토 완료 | L | txt | Check test protocol |  | Testprotokoll prüfen | Verificar protocolo de teste | Verificar protocolo de prueba | Controlla protocollo test | Vérifier le protocole de test |  | Step 명칭 | Run | LI-RUN-01 / LI-RUN-02-01 / LI-RUN-02 / LI-RUN-03 |
+| LID-RUN-015 |  | 사용 | 법인 검토 완료 | L | txt | Check consumables |  | Verbrauchsmaterial prüfen | Verificar consumíveis | Verificar consumibles | Controlla materiali di consumo | Vérifier les consommables |  | Step 명칭 | Run | LI-RUN-01 / LI-RUN-02-01 / LI-RUN-02 / LI-RUN-03 |
+| LID-RUN-016 |  | 사용 | 법인 검토 완료 | L | txt | Check reagents |  | Reagenzien prüfen | Verificar reagentes | Verificar reactivos | Controlla reagenti | Vérifier les réactifs |  | Step 명칭 | Run | LI-RUN-01 / LI-RUN-02-01 / LI-RUN-02 / LI-RUN-03 |
+| LID-RUN-042 |  | 사용 | AI 번역 | L | txt | Check waste bin/bottle |  | Waste Bin/Bottle prüfen | Verificar waste bin/bottle | Verificar waste bin/bottle | Controlla waste bin/bottle | Vérifier le waste bin/bottle |  | Step 명칭 | Run | LI-RUN-01 / LI-RUN-02-01 / LI-RUN-02 / LI-RUN-03 |
+| LID-RUN-017 |  | 사용 | 법인 검토 완료 | L | txt | Total Samples |  | Proben Gesamt | Total de Amostras | Total de Muestras | Totale Campioni | Nombre total d'échantillons |  | 전체 검체 개수 | Run | LI-RUN-01 |
+| LID-RUN-018 |  | 사용 | 법인 검토 완료 | L | txt | STAT Samples |  | STAT-Proben | Amostras STAT | Muestras STAT | Campioni STAT | Échantillons STAT |  | 응급 검체 개수 | Run | LI-RUN-01 |
+| LID-RUN-019 |  | 사용 | 법인 검토 완료 | L | txt | Sample ID |  | Proben-ID | ID da Amostra | ID de Muestra | ID Campione | ID échantillon |  | 필터 레이블 / 플레이스홀더 / 테이블 컬럼 값 | Run | LI-RUN-01 |
+| LID-RUN-020 |  | 사용 | 법인 검토 완료 | L | txt | Order Date |  | Bestelldatum | Data do Pedido | Fecha de Solicitud | Data Ordine | Date de commande |  | 필터 레이블 / 테이블 컬럼 값 | Run | LI-RUN-01 |
+| LID-RUN-021 |  | 사용 | 법인 검토 완료 | L | txt | Select a Date |  | Datum auswählen | Selecione uma data | Seleccione una fecha | Seleziona una data | Sélectionner une date |  | 플레이스홀더 | Run | LI-RUN-01 |
+| LID-STN-006 | ref | 사용 | 법인 검토 완료 | L | txt | Items |  | Einträge | Itens | Elementos | Elementi | Éléments |  | 목록 총 개수 | Run | LI-RUN-01 / LI-RUN-02-01 |
+| LID-RUN-022 |  | 사용 | 법인 검토 완료 | L | txt | STAT Only |  | Nur STAT | Somente STAT | Solo STAT | Solo STAT | STAT uniquement |  | 필터 기능(체크박스) | Run | LI-RUN-01 |
+| LID-RUN-023 |  | 사용 | 법인 검토 완료 | L | txt | Product |  | Test | Teste | Producto | Prodotto | Test |  | 테이블 컬럼 값 | Run | LI-RUN-01 |
+| LID-STN-023 | ref | 사용 | 법인 검토 완료 | L | txt | Sample Type |  | Probentyp | Tipo de Amostra | Tipo de Muestra | Tipo di Campione | Type d'échantillon |  | 테이블 컬럼 값 | Run | LI-RUN-01 |
+| LID-RUN-024 |  | 사용 | 법인 검토 완료 | L | txt | STAT |  | - | - | - | - | - |  | 테이블 컬럼 값 | Run | LI-RUN-01 |
+| LID-EVT-022 | ref | 사용 | 법인 검토 완료 | L | btn | Reset |  | Zurücksetzen | Redefinir | Restablecer | Reimposta | Réinitialiser | LID-COM-BTN-001 | 초기화 버튼 | Run | LI-RUN-01 |
+| LID-STN-016 | ref | 사용 | 법인 검토 완료 | L | btn | Search |  | Suchen | Pesquisar | Buscar | Cerca | Rechercher | LID-COM-BTN-002 | 검색 버튼 | Run | LI-RUN-01 |
+| LID-STN-021 | ref | 사용 | 법인 검토 완료 | L | btn | Cancel |  | Abbrechen | Cancelar | Cancelar | Annulla | Annuler | LID-COM-BTN-008 | 취소 버튼 | Run | LI-RUN-01 / LI-RUN-02-01 / LI-RUN-02 / LI-RUN-03 |
+| LID-RUN-025 |  | 사용 | 법인 검토 완료 | L | btn | Next |  | Weiter | Próximo | Siguiente | Avanti | Suivant | LID-COM-BTN-006 | 다음 화면 이동 버튼 | Run | LI-RUN-01 / LI-RUN-02-01 / LI-RUN-02 |
+| LID-RUN-027 |  | 사용 | 법인 검토 완료 | L | btn | Previous |  | Zurück | Anterior | Anterior | Indietro | Précédent | LID-COM-BTN-007 | 이전 화면 이동 버튼 | Run | LI-RUN-02-01 / LI-RUN-02 / LI-RUN-03 |
+| LID-STN-002 | ref | 사용 | 법인 검토 완료 | L | title | Pre-Treatment Protocol |  | Vorbehandlungsprotokoll | Protocolo de Pré-tratamento | Protocolo de Pretratamiento | Protocollo di Pretrattamento | Protocole de prétraitement |  | 영역 타이틀 | Run | LI-RUN-02-01 |
+| LID-RUN-026 |  | 사용 | AI 번역 | L | txt | Please load any additional consumables resulting from the protocol change into the trolley. |  | Bitte laden Sie alle zusätzlichen Verbrauchsmaterialien, die sich aus der Protokolländerung ergeben, in den Trolley. | Carregue no trolley os consumíveis adicionais resultantes da alteração do protocolo. | Cargue en el trolley los consumibles adicionales derivados del cambio de protocolo. | Carica nel trolley i materiali di consumo aggiuntivi derivanti dalla modifica del protocollo. | Chargez dans le trolley les consommables supplémentaires résultant de la modification du protocole. |  | 프로토콜 변경 안내 문구 | Run | LI-RUN-02-01 |
+| LID-STN-007 | ref | 사용 | 법인 검토 완료 | L | txt | Protocol Name |  | Protokollname | Nome do Protocolo | Nombre del Protocolo | Nome Protocollo | Nom du protocole |  | 테이블 컬럼 값 | Run | LI-RUN-02-01 |
+| LID-STN-008 | ref | 사용 | 법인 검토 완료 | L | txt | Usage |  | Verwendung | Uso | Uso | Utilizzo | Utilisation |  | 테이블 컬럼 값 | Run | LI-RUN-02-01 |
+| LID-STN-009 | ref | 사용 | 법인 검토 완료 | L | txt | Modified by |  | Bearbeiter | Modificado por | Modificado por | Modificato da | Modifié par |  | 테이블 컬럼 값 | Run | LI-RUN-02-01 |
+| LID-STN-010 | ref | 사용 | 법인 검토 완료 | L | txt | Modified Date/Time |  | Änderungsdatum/-zeit | Data/Hora de Modificação | Fecha/Hora de Modificación | Data/Ora Modifica | Date/heure de modification |  | 테이블 컬럼 값 | Run | LI-RUN-02-01 |
+| LID-STN-013 | ref | 사용 | 법인 검토 완료 | L | txt | SG protocol |  | SG Protokoll | Protocolo SG | Protocolo SG | Protocollo SG | Protocole SG |  | 씨젠 프로토콜 표시 | Run | LI-RUN-02-01 |
+| LID-STN-014 | ref | 사용 | 법인 검토 완료 | L | txt | Applied |  | Angewendet | Aplicado | Aplicado | Applicato | Appliqué |  | 적용 여부 값 | Run | LI-RUN-02-01 |
+| LID-STN-003 | ref | 사용 | 법인 검토 완료 | L | title | Extraction Protocol |  | Extraktionsprotokoll | Protocolo de Extração | Protocolo de Extracción | Protocollo di Estrazione | Protocole d'extraction |  | 영역 타이틀 | Run | LI-RUN-02-01 |
+| LID-RUN-028 |  | 삭제 | 법인 검토 완료 | L | txt | Stock Status |  | Lagerbestand | Estado do stock | Estado del Inventario | Stato Scorte | État du stock |  | 같은 문구 LID-EVT-017 과 합침, 아래 ref 행 | Run | LI-RUN-02 / LI-RUN-03 |
+| LID-EVT-017 | ref | 사용 | AI 번역 | L | txt | Status |  | Status | Estado | Estado | Stato | État |  |  | Run | LI-RUN-02 / LI-RUN-03 |
+| LID-DAS-028 | ref | 사용 | AI 번역 | L | txt | Insufficient |  | Unzureichend | Insuficiente | Insuficiente | Insufficiente | Insuffisant | LID-COM-SCD-043 | 재고 상태 칩 | Run | LI-RUN-02 / LI-RUN-03 |
+| LID-DAS-029 | ref | 사용 | AI 번역 | L | txt | Low |  | Niedrig | Baixo | Bajo | Basso | Faible | LID-COM-SCD-045 | 재고 상태 칩 | Run | LI-RUN-02 / LI-RUN-03 |
+| LID-RUN-043 |  | 사용 | AI 번역 | L | txt | Sufficient |  | Ausreichend | Suficiente | Suficiente | Sufficiente | Suffisant | LID-COM-SCD-046 | 재고 상태 칩 | Run | LI-RUN-02 / LI-RUN-03 |
+| LID-RUN-029 |  | 삭제 | 법인 검토 완료 | L | txt | All Stock Stauts |  | Alle Lagerbestände | Todos os estados de stock | Todos los Estados de Inventario | Tutti gli Stati Scorte | Tous les états de stock |  | Stock Status 칩 필터로 변경 | Run | LI-RUN-02 / LI-RUN-03 |
+| LID-RUN-044 |  | 사용 | AI 번역 | L | title | Consumables |  | Verbrauchsmaterialien | Consumíveis | Consumibles | Materiali di Consumo | Consommables |  | 카드 리스트 타이틀 | Run | LI-RUN-02 |
+| LID-RUN-045 |  | 사용 | AI 번역 | L | txt | Plates |  | Platten | Placas | Placas | Piastre | Plaques |  | 소모품 카드 제목 | Run | LI-RUN-02 |
+| LID-RUN-046 |  | 사용 | AI 번역 | L | txt | Tips |  | Spitzen | Ponteiras | Puntas | Puntali | Pointes |  | 소모품 카드 제목 | Run | LI-RUN-02 |
+| LID-RUN-047 |  | 사용 | AI 번역 | L | txt | Tubes |  | - | - | - | - | - |  | 소모품 카드 제목 | Run | LI-RUN-02 |
+| LID-EVT-006 | ref | 삭제 | 법인 검토 완료 | L | txt | Consumable |  | Verbrauchsmaterial | Consumível | Consumible | Materiale di Consumo | Consommable |  | Location 컬럼으로 변경 | Run | LI-RUN-02 |
+| LID-EVT-012 | ref | 삭제 | 법인 검토 완료 | L | txt | Module |  | Modul | Módulo | Módulo | Modulo | Module |  | Location 컬럼으로 변경 | Run | LI-RUN-02 / LI-RUN-03 |
+| LID-RUN-050 |  | 사용 | AI 번역 | L | txt | Location |  | Position | Localização | Ubicación | Posizione | Emplacement |  | 테이블 컬럼 값 (Module > Storage) | Run | LI-RUN-02 / LI-RUN-03 |
+| LID-IVT-022 | ref | 사용 | AI 번역 | L | txt | Capacity |  | Kapazität | Capacidade | Capacidad | Capacità | Capacité |  | 테이블 컬럼 값 | Run | LI-RUN-02 / LI-RUN-03 |
+| LID-RUN-030 |  | 사용 | 법인 검토 완료 | L | txt | Remaining Qty |  | Restmenge | Qtd. Restante | Cant. Restante | Qtà Rimanente | Qté restante |  | 테이블 컬럼 값 | Run | LI-RUN-02 / LI-RUN-03 |
+| LID-RUN-031 |  | 사용 | 법인 검토 완료 | L | txt | Required Qty |  | Erforderliche Menge | Qtd. Necessária | Cant. Requerida | Qtà Richiesta | Qté requise |  | 테이블 컬럼 값 | Run | LI-RUN-02 / LI-RUN-03 |
+| LID-RUN-032 |  | 사용 | AI 번역 | L | txt | Displays the additional quantity required based on current inventory. |  | Zeigt die zusätzlich erforderliche Menge basierend auf dem aktuellen Bestand an. | Apresenta a quantidade adicional necessária com base no inventário atual. | Muestra la cantidad adicional requerida según el inventario actual. | Mostra la quantità aggiuntiva richiesta in base all'inventario attuale. | Affiche la quantité supplémentaire requise en fonction de l'inventaire actuel. |  | 툴팁 (Required Qty) | Run | LI-RUN-02 / LI-RUN-03 |
+| LID-RUN-052 |  | 사용 | AI 번역 | L | txt | Shown only for fixed-capacity storage. |  | Wird nur bei Speichern mit fester Kapazität angezeigt. | Apresentado apenas para armazenamento de capacidade fixa. | Se muestra solo para almacenamiento de capacidad fija. | Visualizzato solo per depositi a capacità fissa. | Affiché uniquement pour le stockage à capacité fixe. |  | 툴팁 (Capacity) | Run | LI-RUN-02 / LI-RUN-03 |
+| LID-RUN-053 |  | 사용 | AI 번역 | L | txt | Status is determined by run availability. |  | Der Status wird anhand der Laufverfügbarkeit bestimmt. | O estado é determinado pela disponibilidade para a corrida. | El estado se determina según la disponibilidad para el run. | Lo stato è determinato dalla disponibilità per il run. | Le statut est déterminé par la disponibilité pour le run. |  | 툴팁 (Status) | Run | LI-RUN-02 / LI-RUN-03 |
+| LID-RUN-054 |  | 사용 | AI 번역 | L | txt | Sufficient (enough stock) |  | Ausreichend (genügend Bestand) | Suficiente (stock suficiente) | Suficiente (stock suficiente) | Sufficiente (scorte sufficienti) | Suffisant (stock suffisant) |  | 툴팁 (Status) | Run | LI-RUN-02 / LI-RUN-03 |
+| LID-RUN-055 |  | 사용 | AI 번역 | L | txt | Low (partial shortage) |  | Niedrig (teilweiser Mangel) | Baixo (falta parcial) | Bajo (falta parcial) | Basso (carenza parziale) | Faible (manque partiel) |  | 툴팁 (Status) | Run | LI-RUN-02 / LI-RUN-03 |
+| LID-RUN-056 |  | 사용 | AI 번역 | L | txt | Insufficient (no stock) |  | Unzureichend (kein Bestand) | Insuficiente (sem stock) | Insuficiente (sin stock) | Insufficiente (nessuna scorta) | Insuffisant (aucun stock) |  | 툴팁 (Status) | Run | LI-RUN-02 / LI-RUN-03 |
+| LID-RUN-033 |  | 사용 | 법인 검토 완료 | L | btn | Refresh |  | Aktualisieren | Atualizar | Actualizar | Aggiorna | Actualiser | LID-COM-BTN-005 | 새로고침 버튼 | Run | LI-RUN-02 / LI-RUN-03 |
+| LID-SPT-015 | ref | 사용 | AI 번역 | L | btn | More |  | Mehr | Mais | Más | Altro | Plus | LID-COM-BTN-018 | 더보기 버튼 | Run | LI-RUN-02 / LI-RUN-03 |
+| LID-RUN-049 |  | 사용 | AI 번역 | L | txt | Reagents type |  | Reagenztyp | Tipo de reagentes | Tipo de reactivos | Tipo di reagenti | Type de réactifs |  | 시약 공정 필터 레이블 | Run | LI-RUN-03 |
+| LID-RUN-048 |  | 사용 | AI 번역 | L | txt | Pretreatment Reagents |  | Vorbehandlungsreagenzien | Reagentes de Pré-tratamento | Reactivos de Pretratamiento | Reagenti di Pretrattamento | Réactifs de prétraitement |  | 시약 카드 제목 | Run | LI-RUN-03 |
+| LID-RUN-034 |  | 삭제 | 법인 검토 완료 | L | txt | Expiration date Status |  | Ablaufdatum-Status | Estado da data de validade | Estado de Fecha de Caducidad | Stato Scadenza | État de péremption |  | Status 칩 필터로 변경 | Run | LI-RUN-03 |
+| LID-RUN-035 |  | 삭제 | 법인 검토 완료 | L | txt | All Expiration date Status |  | Alle Ablaufdatum-Status | Todos os estados da data de validade | Todos los Estados de Fecha de Caducidad | Tutti gli Stati di Scadenza | Tous les états de péremption |  | Status 칩 필터로 변경 | Run | LI-RUN-03 |
+| LID-RUN-036 |  | 삭제 | 법인 검토 완료 | L | txt | Kit |  | - | - | - | - | - |  | 컬럼 없음 | Run | LI-RUN-03 |
+| LID-RUN-062 |  | 사용 | AI 번역 | L | txt | Reagent |  | Reagenz | Reagente | Reactivo | Reagente | Réactif |  | 시약 구성품 | Run | LI-RUN-03 |
+| LID-EVT-013 | ref | 삭제 | 법인 검토 완료 | L | txt | Unit |  | Einheit | Unidade | Unidad | Unità | Unité |  | Location 컬럼으로 변경 | Run | LI-RUN-03 |
+| LID-RUN-037 |  | 사용 | 법인 검토 완료 | L | txt | Expiration Date |  | Ablaufdatum | Data de Validade | Fecha de Caducidad | Data di Scadenza | Date de péremption |  | 테이블 컬럼 값 (Item details 팝업, Inventory 때 확인) | Run | LI-RUN-03 |
+| LID-RUN-038 |  | 삭제 | 법인 검토 완료 | L | txt | Ready to Run |  | Startbereit | Pronto para Executar | Listo para Ejecutar | Pronto per Esecuzione | Prêt à exécuter | LID-COM-SCD-008 | 컬럼 없음 | Run | LI-RUN-03 |
+| LID-RUN-058 |  | 사용 | AI 번역 | L | txt | Expired reagents are discarded or returned unused, depending on the instrument. |  | Abgelaufene Reagenzien werden je nach Gerät verworfen oder unbenutzt zurückgegeben. | Os reagentes expirados são descartados ou devolvidos sem utilização, dependendo do instrumento. | Los reactivos caducados se desechan o se devuelven sin usar, según el instrumento. | I reagenti scaduti vengono eliminati o restituiti inutilizzati, a seconda dello strumento. | Les réactifs expirés sont éliminés ou retournés inutilisés, selon l'instrument. |  | 유효기간 만료 안내 문구 | Run | LI-RUN-03 |
+| LID-DAS-030 | ref | 사용 | AI 번역 | L | txt | Full |  | Voll | Cheio | Lleno | Pieno | Plein | LID-COM-SCD-035 | 폐기물 상태 칩 | Run | LI-RUN-04 |
+| LID-DAS-031 | ref | 사용 | AI 번역 | L | txt | Almost Full |  | Fast voll | Quase Cheio | Casi Lleno | Quasi Pieno | Presque plein | LID-COM-SCD-036 | 폐기물 상태 칩 | Run | LI-RUN-04 |
+| LID-RUN-059 |  | 사용 | AI 번역 | L | txt | Available |  | Verfügbar | Disponível | Disponible | Disponibile | Disponible | LID-COM-SCD-037 | 폐기물 상태 칩 | Run | LI-RUN-04 |
+| LID-EVT-013 | ref | 사용 | AI 번역 | L | txt | Unit |  | Einheit | Unidade | Unidad | Unità | Unité |  | 테이블 컬럼 값 | Run | LI-RUN-04 |
+| LID-RUN-060 |  | 사용 | AI 번역 | L | txt | Fill Level(%) |  | Füllstand(%) | Nível de Enchimento(%) | Nivel de Llenado(%) | Livello di Riempimento(%) | Niveau de remplissage(%) |  | 테이블 컬럼 값 | Run | LI-RUN-04 |
+| LID-IVT-031 | ref | 사용 | AI 번역 | L | txt | Last Emptied Date/Time |  | Letztes Leerungsdatum/-zeit | Data/Hora do Último Esvaziamento | Fecha/Hora del Último Vaciado | Data/Ora Ultimo Svuotamento | Date/heure de la dernière vidange |  | 테이블 컬럼 값 | Run | LI-RUN-04 |
+| LID-RUN-039 |  | 사용 | 법인 검토 완료 | L | btn | Run Start |  | Lauf starten | Iniciar Corrida | Iniciar Run | Avvia Run | Démarrer le run |  | Run 실행 버튼 | Run | LI-RUN-04 |
+
+## 변경 이력
+
+| 날짜 | 바뀐 것 | 근거 |
+| --- | --- | --- |
+| 2026-11-17 | 언어셋 v0.05 엑셀 목록 시트에서 옮겨 원본으로 만듦 | 사용자 요청 (서보경) |
+| 2026-11-19 | 언어셋 v0.06 반영 (`db/history.md` 항목 이력 v0.06 줄) | 언어셋 v0.06 (하승현), 사용자 요청 (서보경) |

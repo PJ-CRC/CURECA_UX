@@ -19,7 +19,7 @@ M9600으로 96-DWP 단위 핵산 추출을 합니다. Sample이 많을 때 씁�
 
 ## 흐름에서
 
-- **받는 것:** Sample Preparation의 96-DWP
+- **받는 것:** Sample Pre-treatment의 96-DWP
 - **내보내는 것:** 추출물이 든 96-DWP (추정) → PCR Setup
 - 할당: 정책이 Prioritize Cost Reduction이면 Sample 수가 기준(1~94) 이상일 때 이 Module, Prioritize TAT Reduction이면 이 Module 먼저 (POL-TST-004). 검사 항목마다 쓸 수 있는지는 Extraction Module Usage Setting (POL-TST-005)
 

@@ -8,7 +8,7 @@ cids: [LI-TSS-DXI-06, LI-TSS-DXI-07, LI-TSS-DXI-08, LI-TSS-DXI-09]
 status: 확정
 version:
 date: 2026-11-06
-sources: [정책서_2026.08.28 > 트롤리 도킹 & Drawer Loading > Cold Storage_PCR Rack 정책, LI-TSS-DXI-07·08·09 디스크립션, policy/alert-catalog-ms.csv, 2026-11-03 사용자 답변 (MS1-a), 팀원 POL-DCK-03, Teams 글 2026-11-06 T01·T03·T06·T09·T11]
+sources: [정책서_2026.08.28 > 트롤리 도킹 & Drawer Loading > Cold Storage_PCR Rack 정책, LI-TSS-DXI-07·08·09 디스크립션, alert/alert-catalog-ms.csv, 2026-11-03 사용자 답변 (MS1-a), 팀원 POL-DCK-03, Teams 글 2026-11-06 T01·T03·T06·T09·T11]
 provisional: []
 alerts: [MS_Confirm_018, MS_Confirm_019, MS_Confirm_020, MS_Confirm_021, MS_Confirm_022, MS_Alert_032]
 data: []
@@ -68,7 +68,7 @@ replaced_by:
 21. Prep Consumable Trolley로 입고하는 Tub도 Buffer Cartridge처럼 한 번 쓴 뒤 여분의 Cap을 넣어야 다시 씀. 재사용하려고 Trolley로 돌아오면 Cap 보충 Event Message를 띄움.
 22. Prep 시스템은 Tub를 쓰기 전에 여분의 Cap이 있는지 확인하므로, 쓰는 중에 Error가 나지 않음. 단, 지금 써야 하는데 Cap이 없어 쓸 수 없으면 Error가 남.
 23. 그래서 Prep Tub의 Cap은 Inventory 관리 항목으로 두지 않음.
-24. Prep Consumable Storage Trolley에 있는 재사용 가능 Tub를 목록으로 보여 줌. Tub는 어느 floor에 있든(1F 반환용 Tray에 돌아온 Tub 포함) 모두 나옴. 정렬은 Trolley floor 내림차순, slot 오름차순임.
+24. Consumable Storage Trolley에 있는 재사용 가능 Tub를 목록으로 보여 줌. Tub는 어느 floor에 있든(1F 반환용 Tray에 돌아온 Tub 포함) 모두 나옴. 정렬은 Trolley floor 내림차순, slot 오름차순임.
 25. 항목별 [Confirm refill]이나 [Confirm all refills]를 누르면 MS_Confirm_022를 보여 주고, OK를 고르면 그 항목의 Cap 보충을 완료로 기록하고 버튼을 비활성으로 함. 이때부터 Instrument는 그 Tub를 다시 쓸 수 있는 것으로 봄.
 26. Load Consumables and Reagents에서 데이터가 있는 Tub Frame을 다시 적재하면 Cap 보충 안내(MS_Alert_021)를 보여 줌 (POL-MAT-007 규칙 8).
 
@@ -100,7 +100,7 @@ replaced_by:
 - 정책서_2026.08.28 "Cold Storage_PCR Rack 정책" (예전 방식), 팀원 POL-DCK-03
 - LI-TSS-DXI-07 1 ~ 5, LI-TSS-DXI-08 1, LI-TSS-DXI-09 1 ~ 3 디스크립션
 - 2026-11-03 사용자 답변 (MS1-a): Tub는 모두 Cap 보충 목록에 나옴
-- `policy/alert-catalog-ms.csv` MS_Confirm_018 ~ 022
+- `alert/alert-catalog-ms.csv` MS_Confirm_018 ~ 022
 - Teams 글 2026-11-06 (`reference/teams/2026-11-06-policy-notes.md`): T01 Prep Tub, T03 Cold Storage 이동 방식, T06 Buffer Cartridge 재사용, T09 Film 카운팅, T11 Buffer Cartridge Storage
 - Buffer Cartridge 재사용은 MT-20260904-01 "1회 사용 후 폐기 확정" 뒤에 다시 바뀐 것이며, Teams 글 T06 · T11이 최종 (2026-11-06 사용자 확인)
 - 2026-11-06 사용자 설명: STARlet Rack(Socket 2 ~ 4개 분량), Socket 돌려보내는 이유, 폐기 때 Cap을 닫는 이유, 다 쓴 Socket 리셋, Cold Storage는 Socket을 막지 못함, Cap 5개 단위
@@ -114,3 +114,4 @@ replaced_by:
 | | 2026-11-06 | Cold Storage Socket 흐름을 사용자 설명으로 바로잡음(Rack 2 ~ 4개, 리셋, 막지 못함), Cap 5개 단위. 규칙 번호 다시 매김 | 사용자 설명 |
 | | 2026-11-06 | Sealer Film 120장 · Waste Bin 20장, Buffer Cartridge 재사용이 최종임을 근거에 남김 | 사용자 확인 |
 | | 2026-11-06 | Buffer Cartridge는 전체 Run 스케줄에서 더 쓸 계획이 없을 때 돌려놓음 (규칙 14) | MT-20261006-01, 사용자 확인 |
+| | 2026-11-18 | Module · Unit 이름 바꿈: Prep Consumable Storage → Consumable Storage, Sample Preparation Module → Sample Pre-treatment, Sample Pretreatment → Sample Processing, Sample Aliquot → Sample Aliquoting. 검사 단계 · Prep 시스템의 Sample Preparation은 그대로 | 사용자 결정 (서보경), `glossary/modules.csv` · `module-units.csv` |

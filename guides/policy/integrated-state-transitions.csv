@@ -1,22 +1,25 @@
-통합 상태 (전환 후),이전 통합 상태,전환 트리거·시점,모듈 상태 조건,상태 전환 및 유지 조건
-NotInitialized,해당 없음,부팅 후 장비 초기화 수행 전,모든 모듈이 NotInitialized,NotInitialized가 아닌 모듈 1개 이상 존재하는 경우 Error로 전환
-Initializing,NotInitialized,Initialize 버튼 클릭,해당 없음,Initializing으로 전환하고 장비 제어 시스템에 Initialize 명령 전송. Initialize 완료 신호 수신 전까지 상태 유지
-Ready,Initializing,Initialize 완료 신호 수신,모든 모듈이 Ready,조건 충족 시 Ready로 전환
-Ready,Running,Run 완료,모든 모듈이 Ready,Run 완료 전에는 모든 모듈이 Ready여도 Running 유지
-Ready,Stopping,Run Stop 완료 신호 수신,모든 모듈이 Ready,조건 충족 시 Ready로 전환
-Ready,Error,모듈 상태 변화,모든 모듈이 Ready,조건 충족 시 Ready로 전환
-Running,Ready,Run Start 버튼 클릭,해당 없음,Running으로 전환하고 장비 제어 시스템에 Run Start 명령 전송
-Running,PartialRunning / Paused / Error,모듈 상태 변화,모든 모듈이 Ready 또는 Running,조건 충족 시 Running으로 전환
-PartialRunning,Running,모듈 상태 변화,(Running 모듈 ≥ 1) AND (Pausing ≥ 1 OR Paused ≥ 1 OR Error ≥ 1),조건 충족 시 PartialRunning으로 전환
-Stopping,Running / PartialRunning / Paused,Run Stop 버튼 클릭,해당 없음,Stopping으로 전환하고 장비 제어 시스템에 Run Stop 명령 전송. Run Stop 완료 신호 수신 전까지 상태 유지
-Paused,Running,모듈 상태 변화,모든 모듈이 Paused,조건 충족 시 Paused로 전환
-Paused,PartialRunning,모듈 상태 변화,Paused ≥ 1 AND Running = 0 AND Pausing = 0 AND Error = 0,조건 충족 시 Paused로 전환
-Error,NotInitialized,모듈 상태 불일치,NotInitialized가 아닌 모듈 1개 이상 존재,조건 충족 시 Error로 전환
-Error,Initializing,Initialize 완료 신호 수신,Error 모듈 ≥ 1,조건 충족 시 Error로 전환
-Error,Ready,모듈 상태 변화,Error 모듈 ≥ 1,조건 충족 시 Error로 전환
-Error,Running,모듈 상태 변화,모든 모듈이 Error,조건 충족 시 Error로 전환
-Error,Running,Run 완료,Error 모듈 ≥ 1,조건 충족 시 Error로 전환
-Error,PartialRunning,모듈 상태 변화,Error 모듈 ≥ 1 AND Running = 0 AND Pausing = 0,조건 충족 시 Error로 전환
-Error,Stopping,Run Stop 완료 신호 수신,Error 모듈 ≥ 1,조건 충족 시 Error로 전환
-Error,Paused,모듈 상태 변화,Error 모듈 ≥ 1,조건 충족 시 Error로 전환
-Error,전체 상태,통신 단절 또는 프로그램 자체 오류 발생,해당 없음,즉시 Error로 전환
+번호,통합 상태 (전환 후),이전 통합 상태,전환 트리거·시점,모듈 상태 조건,비고,근거
+1,NotInitialized,해당 없음,부팅 후 장비 초기화 수행 전,모든 모듈이 NotInitialized 상태인 경우,NotInitialized 상태가 아닌 모듈이 1개 이상 존재하는 경우 Error로 전환,씨젠 상태 정보 261119 > 장비 통합 상태 처리 조건
+2,NotInitialized,Error,모듈 상태 변화,모든 모듈이 NotInitialized 상태인 경우,,씨젠 상태 정보 261119 > 장비 통합 상태 처리 조건
+3,Initializing,NotInitialized,Initialize 버튼 클릭,해당 없음,1) Initializing 상태로 전환하고 장비 제어 시스템에 Initialize 명령 전송; 2) Initialize 완료 신호 수신 전까지 Initializing 상태 유지,씨젠 상태 정보 261119 > 장비 통합 상태 처리 조건
+4,Ready,Initializing,Initialize 완료 신호 수신,모든 모듈이 Ready 상태인 경우,,씨젠 상태 정보 261119 > 장비 통합 상태 처리 조건
+5,Ready,Running,Run 완료,모든 모듈이 Ready 상태인 경우,Run 완료 전에는 모든 모듈이 Ready 상태여도 Running 상태 유지,씨젠 상태 정보 261119 > 장비 통합 상태 처리 조건
+6,Ready,Stopping,Run Stop 완료 신호 수신,모든 모듈이 Ready 상태인 경우,,씨젠 상태 정보 261119 > 장비 통합 상태 처리 조건
+7,Ready,Error,모듈 상태 변화,"아래 조건을 모두 충족하는 경우 (AND 조건); 1) 모든 모듈이 Ready 상태; 2) Error 전환 직전의 통합 상태가 Initializing, Ready, Stopping 중 하나인 경우",,씨젠 상태 정보 261119 > 장비 통합 상태 처리 조건
+8,Running,Ready,Run Start 버튼 클릭,해당 없음,"Running 상태로 전환하고, 장비 제어 시스템에 Run Start 명령 전송",씨젠 상태 정보 261119 > 장비 통합 상태 처리 조건
+9,Running,PartialRunning / Paused,모듈 상태 변화,모든 모듈이 Ready 또는 Running 또는 Pausing 상태인 경우,,씨젠 상태 정보 261119 > 장비 통합 상태 처리 조건
+10,Running,Error,모듈 상태 변화,"아래 조건을 모두 충족하는 경우 (AND 조건); 1) 모든 모듈이 Ready 또는 Running 또는 Pausing 상태; 2) Error 전환 직전의 통합 상태가 Running, PartialRunning, Paused 중 하나인 경우",,씨젠 상태 정보 261119 > 장비 통합 상태 처리 조건
+11,PartialRunning,Running / Paused,모듈 상태 변화,"아래 조건을 모두 충족하는 경우 (AND 조건); 1) Ready, Running, Pausing 중 어느 상태에도 해당하지 않는 모듈이 1개 이상 존재; 2) Running 또는 Pausing 상태인 모듈이 1개 이상 존재",,씨젠 상태 정보 261119 > 장비 통합 상태 처리 조건
+12,PartialRunning,Error,모듈 상태 변화,"아래 조건을 모두 충족하는 경우 (AND 조건); 1) Ready, Running, Pausing 중 어느 상태에도 해당하지 않는 모듈이 1개 이상 존재; 2) Running 또는 Pausing 상태인 모듈이 1개 이상 존재; 3) Error 전환 직전의 통합 상태가 Running, PartialRunning, Paused 중 하나인 경우",,씨젠 상태 정보 261119 > 장비 통합 상태 처리 조건
+13,Stopping,Running / PartialRunning / Paused,Run Stop 버튼 클릭,해당 없음,1) Stopping 상태로 전환하고 장비 제어 시스템에 Run Stop 명령 전송; 2) Run Stop 완료 신호 수신 전까지 Stopping 상태 유지,씨젠 상태 정보 261119 > 장비 통합 상태 처리 조건
+14,Paused,Running / PartialRunning,모듈 상태 변화,아래 조건을 모두 충족하는 경우 (AND 조건); 1) Paused 상태인 모듈이 1개 이상 존재; 2) 모든 모듈이 Paused 또는 Ready 상태,,씨젠 상태 정보 261119 > 장비 통합 상태 처리 조건
+15,Paused,Error,모듈 상태 변화,"아래 조건을 모두 충족하는 경우 (AND 조건); 1) Paused 상태인 모듈이 1개 이상 존재; 2) 모든 모듈이 Paused 또는 Ready 상태; 3) Error 전환 직전의 통합 상태가 Running, PartialRunning, Paused 중 하나인 경우",,씨젠 상태 정보 261119 > 장비 통합 상태 처리 조건
+16,Error,NotInitialized,모듈 상태 변화,NotInitialized 상태가 아닌 모듈이 1개 이상 존재하는 경우,,씨젠 상태 정보 261119 > 장비 통합 상태 처리 조건
+17,Error,Initializing,Initialize 완료 신호 수신,Ready 상태가 아닌 모듈이 1개 이상 존재하는 경우,,씨젠 상태 정보 261119 > 장비 통합 상태 처리 조건
+18,Error,Ready,모듈 상태 변화,Ready 상태가 아닌 모듈이 1개 이상 존재하는 경우,,씨젠 상태 정보 261119 > 장비 통합 상태 처리 조건
+19,Error,Running,모듈 상태 변화,"Running, PartialRunning, Paused 중 어느 통합 상태의 모듈 조건에도 해당하지 않는 경우",,씨젠 상태 정보 261119 > 장비 통합 상태 처리 조건
+20,Error,Running,Run 완료,Ready 상태가 아닌 모듈이 1개 이상 존재하는 경우,,씨젠 상태 정보 261119 > 장비 통합 상태 처리 조건
+21,Error,PartialRunning,모듈 상태 변화,"Running, PartialRunning, Paused 중 어느 통합 상태의 모듈 조건에도 해당하지 않는 경우",,씨젠 상태 정보 261119 > 장비 통합 상태 처리 조건
+22,Error,Stopping,Run Stop 완료 신호 수신,Ready 상태가 아닌 모듈이 1개 이상 존재하는 경우,,씨젠 상태 정보 261119 > 장비 통합 상태 처리 조건
+23,Error,Paused,모듈 상태 변화,"Running, PartialRunning, Paused 중 어느 통합 상태의 모듈 조건에도 해당하지 않는 경우",,씨젠 상태 정보 261119 > 장비 통합 상태 처리 조건
+24,Error,Error를 제외한 전체 상태,"시스템 오류 발생: Prep/Dx Master 제어 시스템 간 통신 단절, 프로그램 자체 오류 등",해당 없음,시스템 오류 복구 전까지 Error 상태 유지,씨젠 상태 정보 261119 > 장비 통합 상태 처리 조건

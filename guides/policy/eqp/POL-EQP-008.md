@@ -8,7 +8,7 @@ cids: [LI-INS-01-P, LI-INS-01-T, LI-INS-02-T, TI-INS-02-T, LI-DAS, TI-DAS]
 status: 확정
 version:
 date: 2026-11-02
-sources: [씨젠 상태 정보 261021 > 도어 잠금 해제 조건, 정책서_2026.08.28 > 장비 관리 및 정의 > Door 개폐 및 잠금 전환 규칙, LI-INS-01-P 디스크립션, 2026-10-30·11-02 사용자 확인]
+sources: [씨젠 상태 정보 261119 > 도어 잠금 해제 조건, 정책서_2026.08.28 > 장비 관리 및 정의 > Door 개폐 및 잠금 전환 규칙, LI-INS-01-P 디스크립션, 2026-10-30·11-02 사용자 확인]
 provisional: [PV-0001]
 alerts: [Confirm_008]
 data: [policy/equipment-states.md, glossary/status-values.csv]
@@ -29,11 +29,11 @@ replaced_by:
 3. 사용자가 화면에서 Door를 다시 잠그는 기능은 없음. Door를 닫으면 5초 뒤 자동으로 Locked가 됨.
 4. 장비 통합 상태가 Initializing 또는 Stopping일 때 Door 잠금 해제는 불가.
 5. 장비 통합 상태가 Running 또는 Partial Running일 때 Flexible Extraction, PCR Setup, Universal PCR의 Door 잠금 해제는 불가.
-6. 장비 통합 상태가 Running, Partial Running, Paused일 때 Sample Storage, Prep Consumable Storage, Sample Preparation, High-throughput Extraction, Plate Sealing의 Door는 조건부로 잠금 해제 가능 (`policy/equipment-states.md` 5절 표).
+6. 장비 통합 상태가 Running, Partial Running, Paused일 때 Sample Storage, Consumable Storage, Sample Pre-treatment, High-throughput Extraction, Plate Sealing의 Door는 조건부로 잠금 해제 가능 (`policy/equipment-states.md` 5절 표).
 7. 장비 모듈 상태가 Running일 때 잠금 해제를 요청하면 Module은 Pausing을 거쳐 Paused가 된 뒤 Door 잠금이 해제됨 (POL-EQP-004).
 8. 장비 통합 상태가 Ready, Error, Paused, Not Initialized일 때만 [Unlock all doors]는 활성화됨.
 9. Run Start를 하면 Unlocked인 Door는 자동으로 Locked가 되고 Run이 진행됨.
-10. Door가 2개인 Module(Sample Preparation)의 장비 모듈 도어 열림 상태 표시는 POL-EQP-001을 따름.
+10. Door가 2개인 Module(Sample Pre-treatment)의 장비 모듈 도어 열림 상태 표시는 POL-EQP-001을 따름.
 
 ## 예외
 
@@ -43,7 +43,7 @@ replaced_by:
 
 ## 근거
 
-- 씨젠 상태 정보 261021 > 도어 잠금 해제 조건 (8월 정책서의 "Running 중 Unlock 불가"는 이 기준으로 바뀜)
+- 씨젠 상태 정보 261119 > 도어 잠금 해제 조건 (8월 정책서의 "Running 중 Unlock 불가"는 이 기준으로 바뀜)
 - 정책서_2026.08.28 "Door 개폐 및 잠금 전환 규칙" (기본 Locked, 다시 잠그는 기능 없음, 5초 자동 잠금, Run 시작 시 자동 잠금)
 - [Unlock all doors] 활성 조건: 2026-10-30 확인. 다시 잠그는 기능 없음과 Run Start 자동 잠금: 2026-11-02 사용자 확인
 
@@ -52,3 +52,4 @@ replaced_by:
 | 버전 | 날짜 | 내용 | 근거 (PD, PV, CR, ADR) |
 | --- | --- | --- | --- |
 | | 2026-11-02 | 최초 작성 (이전 ID: 팀원 POL-INS-01) | PV-0001 |
+| | 2026-11-18 | Module · Unit 이름 바꿈: Prep Consumable Storage → Consumable Storage, Sample Preparation Module → Sample Pre-treatment, Sample Pretreatment → Sample Processing, Sample Aliquot → Sample Aliquoting. 검사 단계 · Prep 시스템의 Sample Preparation은 그대로 | 사용자 결정 (서보경), `glossary/modules.csv` · `module-units.csv` |

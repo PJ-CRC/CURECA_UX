@@ -19,4 +19,4 @@
 
 ## 주의
 
-- 이 MD의 알럿·컨펌 ID(Alert_027·035~046, Confirm_006·026~028 등)는 이전 체계입니다. 최신 ID는 작업방 "SH2-MS-얼럿 수정 테스트" 페이지의 MS Alert / MS Confirm 목록(`policy/alert-catalog-ms.csv`, MS_Alert_###, MS_Confirm_###)입니다.
+- 이 MD의 알럿·컨펌 ID(Alert_027·035~046, Confirm_006·026~028 등)는 이전 체계입니다. 최신 ID는 작업방 "SH2-MS-얼럿 수정 테스트" 페이지의 MS Alert / MS Confirm 목록(`alert/alert-catalog-ms.csv`, MS_Alert_###, MS_Confirm_###)입니다.

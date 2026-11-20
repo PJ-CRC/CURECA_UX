@@ -14,7 +14,6 @@
     "acc/POL-ACC-007.md",
     "acc/POL-ACC-008.md",
     "acc/POL-ACC-009.md",
-    "alert-catalog.md",
     "com/POL-COM-001.md",
     "com/POL-COM-002.md",
     "com/POL-COM-003.md",
@@ -64,8 +63,6 @@
     "modules/ht-extraction.md",
     "modules/pcr-setup.md",
     "modules/plate-sealing.md",
-    "modules/prep-consumable-storage.md",
-    "modules/sample-preparation.md",
     "modules/sample-storage.md",
     "modules/universal-pcr.md",
     "permission.md",
@@ -100,7 +97,9 @@
     "tst/POL-TST-007.md",
     "tst/POL-TST-008.md",
     "tst/POL-TST-009.md",
-    "tst/POL-TST-010.md"
+    "tst/POL-TST-010.md",
+    "modules/consumable-storage.md",
+    "modules/sample-pretreatment.md"
   ],
   "filesDir": "",
   "format": "files",
@@ -260,6 +259,6 @@
     "client-mode-matrix.csv": "L-IOS Client Mode 매트릭스 · client-mode-matrix.csv",
     "warning-light.csv": "경광등 · warning-light.csv"
   },
-  "updatedAt": "2026-11-17T06:52:42.818Z",
-  "note": "2026-11-17 CURECA_AI_20261117로 전부 교체"
+  "updatedAt": "2026-11-20T06:48:48.799Z",
+  "note": "2026-11-20 CURECA_AI_20261120_8bceea1로 맞춤"
 }

@@ -8,7 +8,7 @@ cids: [LI-TSS-PSI-LCR, LI-TSS-PSI-01, LI-TSS-PSI-LCR-01-01, LI-TSS-PSI-LCR-01-02
 status: 확정
 version:
 date: 2026-11-03
-sources: [MS 적재 정책서 (20261102) > consumables-tray·consumables-trolley·common-loading-policy 2.3-1, LI-TSS-PSI-01·LCR-01-01 ~ 02-03 디스크립션, policy/alert-catalog-ms.csv, 2026-11-03 사용자 답변 (MS1, MS1-a, MS2, MS10)]
+sources: [MS 적재 정책서 (20261102) > consumables-tray·consumables-trolley·common-loading-policy 2.3-1, LI-TSS-PSI-01·LCR-01-01 ~ 02-03 디스크립션, alert/alert-catalog-ms.csv, 2026-11-03 사용자 답변 (MS1, MS1-a, MS2, MS10)]
 provisional: []
 alerts: [MS_Alert_001, MS_Alert_003, MS_Alert_004, MS_Alert_016, MS_Alert_019, MS_Alert_020, MS_Alert_021, MS_Alert_022, MS_Alert_023, MS_Confirm_007, MS_Confirm_008, MS_Confirm_009, MS_Confirm_010, MS_Confirm_011, MS_Confirm_012]
 data: [glossary/consumables.csv]
@@ -53,7 +53,7 @@ replaced_by:
 
 - MS 적재 정책서 (20261102) common-loading-policy 2.3-1, consumables-tray 1·5장, consumables-trolley 2장
 - 2026-11-03 사용자 답변: MS1(1F 빈 Tray, 분모 6), MS1-a(Tub는 모두 Cap 보충 목록), MS2(Select Trolley 목적), MS10(Guide Popup 중 스캔)
-- `policy/alert-catalog-ms.csv`
+- `alert/alert-catalog-ms.csv`
 
 ## 변경 이력
 

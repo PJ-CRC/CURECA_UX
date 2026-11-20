@@ -1,6 +1,6 @@
 # 논의 리스트
 
-> 항목 머리말에서 다시 만드는 보기입니다. 손으로 고치지 않습니다. 마지막으로 만든 날: 2026-11-17.
+> 항목 머리말에서 다시 만드는 보기입니다. 손으로 고치지 않습니다. 마지막으로 만든 날: 2026-11-19.
 
 각 줄: ID | 제목 | 누가 정하나 | 걸린 정책 | 걸린 화면 | 생긴 날 | 상태
 
@@ -20,10 +20,7 @@
 
 ## 4. 결정 · 작업 중
 
-| ID | 제목 | 누가 정하나 | 걸린 정책 | 걸린 화면 | 생긴 날 | 상태 |
-| --- | --- | --- | --- | --- | --- | --- |
-| [DS-0004](DS-0004.md) | Door 자동 잠금을 없애고 Door Control의 [Lock] 버튼으로 잠그게 할지 (화면 v2.1.17과 POL-EQP-008이 다름) | 내부 | POL-EQP-008, POL-EQP-004, POL-EQP-001 | LI-INS-01-P, LI-INS-01-T, LI-INS-02-T, TI-INS-02-T, LI-DAS, TI-DAS | 2026-11-17 | 결정 (20261117-최고관리자-instruments) |
-| [DS-0005](DS-0005.md) | 알럿 카탈로그를 Instruments 화면에 맞춤 (Confirm_031 더함, Alert_004 · Confirm_008 사용 화면) | 내부 | POL-EQP-008 | LI-INS-01-P, LI-INS-02-T, TI-INS-01-T, LI-INS-01-T | 2026-11-17 | 결정 (20261117-최고관리자-instruments) |
+없음
 
 ## 5. 보류
 
@@ -39,3 +36,7 @@
 | --- | --- | --- | --- | --- | --- | --- |
 | [DS-0001](DS-0001.md) | Service Mode를 L-IOS Client Mode로 바꾸고 기능 표를 새 표로 고침 | 내부 (서보경) | POL-ACC-001, POL-ACC-008, POL-COM-001, POL-EVT-002, POL-EVT-003, POL-INV-005, POL-LOD-005, POL-MAT-001, POL-SYS-004, POL-TST-008, POL-TST-009 | Material Setup 30개, LI-STN-02 (이름 바꾸기는 화면 MD 187개를 함께 고침) | 2026-11-12 | 종료 |
 | [DS-0003](DS-0003.md) | 장비 통합 상태의 영문 · 화면 라벨을 CURECA Status로 정하고, 상태값 분류 이름을 Hardware Status로 바꿈 | 내부 (서보경) | POL-EQP-001 | LI-STN-02 | 2026-11-12 | 종료 |
+| [DS-0004](DS-0004.md) | Module · Unit 이름 바꿈 (Consumable Storage, Sample Pre-treatment, Sample Processing, Sample Aliquoting) | 내부 (서보경) | POL-COM-003, POL-EQP-001, POL-EQP-004, POL-EQP-005, POL-EQP-008, POL-EQP-009, POL-EQP-010, POL-INV-001, POL-INV-005, POL-INV-007, POL-LOD-001 ~ 004, POL-SMP-008 | Module · Unit 이름이 나오는 화면 36개 (Dashboard · Event History · Instruments · Inventory · Material Setup · Run · Sample Tracking · Statistical Analysis · Test Management) | 2026-11-18 | 종료 |
+| [DS-0005](DS-0005.md) | 씨젠 상태 정보 261119 반영 (Sample Pre-treatment 폐기함 Unit, 상태 전환 조건, 폐기함 상태) | 내부 (서보경) | POL-EQP-002, POL-INV-005 | - | 2026-11-19 | 종료 |
+| [DS-0006](DS-0006.md) | 헌법 개정 v1.15 (개정 이력은 git 기록으로, 4조의 "함께 고침"을 뺌) | 내부 (서보경) | - | - | 2026-11-19 | 종료 |
+| [DS-0007](DS-0007.md) | 헌법 개정 v1.16 (공통 자료는 정책서와 룰 문서, 기준 자료는 흐름 문서가 정한 때에 고침) | 내부 (서보경) | - | - | 2026-11-19 | 종료 |

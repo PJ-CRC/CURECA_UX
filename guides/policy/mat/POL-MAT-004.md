@@ -8,10 +8,10 @@ cids: [LI-TSS-CMP-01, LI-TSS-PSI-SAM-01-03, LI-TSS-PSI-SAM-02-02, LI-TSS-PSI-SAM
 status: 확정
 version:
 date: 2026-11-03
-sources: [MS 적재 정책서 (20261102) > common-loading-policy 4.3, LI-TSS-CMP-01 디스크립션·세부 정의, policy/alert-catalog-ms.csv, 2026-11-03 사용자 답변 (MS6, MS6-a)]
+sources: [MS 적재 정책서 (20261102) > common-loading-policy 4.3, LI-TSS-CMP-01 디스크립션·세부 정의, alert/alert-catalog-ms.csv, 2026-11-03 사용자 답변 (MS6, MS6-a)]
 provisional: []
 alerts: [MS_Confirm_023, MS_Alert_033]
-data: [policy/alert-catalog-ms.csv]
+data: [alert/alert-catalog-ms.csv]
 replaced_by:
 ---
 # POL-MAT-004 Remove
@@ -47,7 +47,7 @@ replaced_by:
 
 - MS 적재 정책서 (20261102) common-loading-policy 4.3
 - LI-TSS-CMP-01 디스크립션 1 ~ 3과 흐름별 세부 정의 9개 ({target}, LCR-02 1F 비활성 규칙)
-- `policy/alert-catalog-ms.csv` MS_Confirm_023, MS_Alert_033 (이전 ID Confirm_006, Alert_005)
+- `alert/alert-catalog-ms.csv` MS_Confirm_023, MS_Alert_033 (이전 ID Confirm_006, Alert_005)
 - 2026-11-03 사용자 답변 (MS6: MM Tube, MS6-a: DXI-03·05)
 
 ## 변경 이력

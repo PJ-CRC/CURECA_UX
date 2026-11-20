@@ -8,7 +8,7 @@ cids: [LI-TSS-PSI, LI-TSS-PSI-PKI-01, LI-TSS-PSI-PKI-02, LI-TSS-PSI-PKI-03, LI-T
 status: 확정
 version:
 date: 2026-11-03
-sources: [정책서_2026.08.28 > Material Setup > PCR Regents 소켓(Socket) 구성 정책, MM tube 소켓(Socket) 구성 정책, MS 적재 정책서 (20261102) > pkic-setup·pcr-setup·mm-tube, policy/alert-catalog-ms.csv, 2026-11-03 사용자 답변 (MS3, MS6, MS7), 팀원 POL-MAT-03·04]
+sources: [정책서_2026.08.28 > Material Setup > PCR Regents 소켓(Socket) 구성 정책, MM tube 소켓(Socket) 구성 정책, MS 적재 정책서 (20261102) > pkic-setup·pcr-setup·mm-tube, alert/alert-catalog-ms.csv, 2026-11-03 사용자 답변 (MS3, MS6, MS7), 팀원 POL-MAT-03·04]
 provisional: []
 alerts: [MS_Alert_001, MS_Alert_003, MS_Alert_004, MS_Alert_011, MS_Alert_014, MS_Alert_024, MS_Alert_025, MS_Confirm_013, MS_Confirm_014, MS_Confirm_015, MS_Confirm_016, MS_Confirm_017]
 data: [glossary/pcr-reagents.csv, glossary/consumables.csv]

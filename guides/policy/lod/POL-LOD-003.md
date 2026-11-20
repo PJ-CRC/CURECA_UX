@@ -18,7 +18,7 @@ replaced_by:
 
 ## 정의
 
-- STAT Storage: Sample Preparation Module의 Storage. 사용자 접근 공간과 Buffer 공간(8칸)으로 나뉨. 사용자 접근 공간은 Sample Preparation 제조사에 따라 단디메카 4칸, 로체시스템즈 3칸으로 운영할 예정임 (Teams 글 T13. 원문 "반디"는 단디메카의 오타, 2026-11-06 사용자 확인)
+- STAT Storage: Sample Pre-treatment Module의 Storage. 사용자 접근 공간과 Buffer 공간(8칸)으로 나뉨. 사용자 접근 공간은 Sample Pre-treatment 제조사에 따라 단디메카 4칸, 로체시스템즈 3칸으로 운영할 예정임 (Teams 글 T13. 원문 "반디"는 단디메카의 오타, 2026-11-06 사용자 확인)
 - STAT Sample: STAT Storage로 넣는 응급 Sample (POL-SMP-008)
 
 ## 규칙
@@ -59,3 +59,4 @@ replaced_by:
 | | 2026-11-03 | 최초 작성 (이전 ID: 팀원 POL-DCK-04) | |
 | | 2026-11-03 | STAT Storage는 Sample Socket만 (MS14) | 사용자 답변 |
 | | 2026-11-06 | 사용자 접근 공간 칸 수를 제조사별로(단디메카 4 · 로체시스템즈 3칸), Rack이 돌아올 칸은 비워 둠 (규칙 4), 화면은 칸 수 영역만 다름 (규칙 5) | Teams 글 T13, 사용자 확인 |
+| | 2026-11-18 | Module · Unit 이름 바꿈: Prep Consumable Storage → Consumable Storage, Sample Preparation Module → Sample Pre-treatment, Sample Pretreatment → Sample Processing, Sample Aliquot → Sample Aliquoting. 검사 단계 · Prep 시스템의 Sample Preparation은 그대로 | 사용자 결정 (서보경), `glossary/modules.csv` · `module-units.csv` |

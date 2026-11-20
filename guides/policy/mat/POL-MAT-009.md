@@ -8,7 +8,7 @@ cids: [LI-TSS-LTG, LI-TSS-LTG-01-01, LI-TSS-LTG-01-02, LI-TSS-LTG-02-01, LI-TSS-
 status: 확정
 version:
 date: 2026-11-03
-sources: [정책서_2026.08.28 > 시약/소모품 사용 및 폐기 > 동일 Lot 사용, PCR 시약 IC 사용 정책, LI-TSS-LTG·LTG-01-01·LTG-02-01 디스크립션, policy/alert-catalog-ms.csv, 2026-11-03 사용자 답변 (MS3), 팀원 POL-RGT-04·07]
+sources: [정책서_2026.08.28 > 시약/소모품 사용 및 폐기 > 동일 Lot 사용, PCR 시약 IC 사용 정책, LI-TSS-LTG·LTG-01-01·LTG-02-01 디스크립션, alert/alert-catalog-ms.csv, 2026-11-03 사용자 답변 (MS3), 팀원 POL-RGT-04·07]
 provisional: []
 alerts: [MS_Alert_002, MS_Alert_003, MS_Alert_004, MS_Alert_005, MS_Alert_006, MS_Alert_032]
 data: [glossary/consumables.csv, glossary/pcr-reagents.csv]
@@ -43,7 +43,7 @@ replaced_by:
 - 정책서_2026.08.28 "동일 Lot 사용" (추출 Reagent는 권고, PCR Reagent는 Lot 일치 시에만), "PCR 시약 IC 사용 정책"
 - LI-TSS-LTG 1, LI-TSS-LTG-01-01 1 ~ 3, LI-TSS-LTG-02-01 1 ~ 3 디스크립션
 - 2026-11-03 사용자 답변 (MS3): PCR Reagent는 반드시, 추출 Reagent는 권고. PK·IC는 Barcode를 읽어 짝을 데이터로 묶음
-- `policy/alert-catalog-ms.csv` MS_Alert_002 ~ 006
+- `alert/alert-catalog-ms.csv` MS_Alert_002 ~ 006
 
 ## 변경 이력
 

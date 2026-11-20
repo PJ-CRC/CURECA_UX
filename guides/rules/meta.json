@@ -25,9 +25,10 @@
     "../examples/case-samples.md",
     "../examples/description-samples.md",
     "../templates/meeting.md",
-    "../templates/menu.md",
     "../templates/policy.md",
-    "../templates/screen.md"
+    "../templates/screen.md",
+    "../templates/screen-asis.md",
+    "../templates/ui-handover.md"
   ],
   "filesDir": "",
   "format": "files",
@@ -43,6 +44,6 @@
   ],
   "summary": "CURECA_AI 저장소(2026-11-17)의 진입점(work-rules.md = 저장소 CLAUDE.md) · 헌법 · 기준 출처 · 화면설계 흐름(1 ~ 5단계) · 쓰는 법 · 작성예시 · 틀을 원본 파일 그대로 보입니다.",
   "title": "CURECA 작업규칙",
-  "updatedAt": "2026-11-17T06:52:42.818Z",
-  "note": "2026-11-17 CURECA_AI_20261117로 전부 교체(저장소 CLAUDE.md → work-rules.md)"
+  "updatedAt": "2026-11-20T06:48:48.797Z",
+  "note": "2026-11-20 CURECA_AI_20261120_8bceea1로 맞춤"
 }

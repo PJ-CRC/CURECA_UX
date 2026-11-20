@@ -34,7 +34,7 @@ replaced_by:
 3. 화면은 들어올 때의 데이터를 보여 주고 실시간으로 바꾸지 않음. [Refresh]를 누르면 최신 데이터로 다시 불러옴.
 4. 데이터를 불러오지 못하면 Alert_020을 보여 줌.
 5. Consumables·Reagents Tab의 [Item details]를 누르면 그 품목을 Barcode 단위로 보여 주는 Item details Popup이 열림 (POL-INV-004).
-6. Overview의 Module 순서는 Sample Storage, Prep Consumable Storage, High-throughput Extraction, Flexible Extraction, PCR Setup, Plate Sealing임. Module 선택의 기본값은 All이며, Module을 고르면 그 Module의 재고만 보여 줌.
+6. Overview의 Module 순서는 Sample Storage, Consumable Storage, High-throughput Extraction, Flexible Extraction, PCR Setup, Plate Sealing임. Module 선택의 기본값은 All이며, Module을 고르면 그 Module의 재고만 보여 줌.
 7. Overview의 Sample Storage는 Samples (Inbound Trolley), Samples (Test In Progress), Samples (Outbound Trolley)의 Sample 수를 `N ea (M racks)`로 보여 줌.
 
 8. Item details Popup(TI/LI-IVT-03-T-P, TI/LI-IVT-04-T-P)은 Inventory 화면이며, Run의 Check Consumables·Check Reagents 단계에서도 같은 Popup을 부름.
@@ -55,3 +55,4 @@ replaced_by:
 | --- | --- | --- | --- |
 | | 2026-11-03 | 최초 작성 | |
 | | 2026-11-03 | Item details Popup은 Inventory 화면이고 Run에서도 부름 (IV8) | 사용자 확인 |
+| | 2026-11-18 | Module · Unit 이름 바꿈: Prep Consumable Storage → Consumable Storage, Sample Preparation Module → Sample Pre-treatment, Sample Pretreatment → Sample Processing, Sample Aliquot → Sample Aliquoting. 검사 단계 · Prep 시스템의 Sample Preparation은 그대로 | 사용자 결정 (서보경), `glossary/modules.csv` · `module-units.csv` |

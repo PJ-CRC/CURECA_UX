@@ -23,7 +23,7 @@
 
 ## 3. 요약 (2026-10-30)
 
-- **모든 User Type:** Event History (Status Control, Note Writing 포함), Run의 Check Test Protocol 단계, Quick Start, Test Management, Sample Tracking, Instrument Door Control, Inventory, Information > Program
+- **모든 User Type:** Event History (Status Control, Note Writing 포함), Run의 Check Test Protocol 단계, Quick Start, Test Management, Sample Tracking, Instrument Door Control, Inventory, Information > Program, Information > Report (T-IOS만, 2026-11-02 SM7)
 - **Service와 Admin (User 제외):** Setting > Policy Setting, Protocol Setting, System Setting, Account Setting, SMTP Setting
 - **Service만:** Setting > Tube Setting, Assay Pack Setting, Policy Setting의 NC/PC Dispensing Order·Sample Dispensing Options 영역, Instrument의 Error Rate 표시, [Exit]
 - **Check Test Protocol 단계:** User Type과 관계없이 모두 쓸 수 있습니다. 다만 이 단계를 Run 준비 단계에 넣을지는 Setting에서 정하며, 사용으로 설정했을 때만 단계에 나옵니다. 이 설정은 Setting에 들어갈 수 있는 Service와 Admin만 바꿀 수 있습니다.

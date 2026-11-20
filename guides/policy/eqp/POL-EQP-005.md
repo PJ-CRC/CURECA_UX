@@ -19,7 +19,7 @@ replaced_by:
 ## 정의
 
 - Run-time: Module 또는 Device Unit의 상태가 Running인 시간의 누적 값
-- 집계 대상: Module 전체, Device Unit 중 Sample Pretreatment, Sample Aliquot, M9600, STARlet, Sealer, CFX96
+- 집계 대상: Module 전체, Device Unit 중 Sample Processing, Sample Aliquoting, M9600, STARlet, Sealer, CFX96
 
 ## 규칙
 
@@ -36,7 +36,7 @@ replaced_by:
 ## 근거
 
 - Instruments All Tab(TI-INS-02-T, LI-INS-02-T)과 Management Popup(TI-INS-02-01-P, LI-INS-02-01-P) 디스크립션 "Run-time 집계 정의"
-- Ver 2.1.01: 집계 대상 Device에 Sample Pretreatment, Sample Aliquot 추가
+- Ver 2.1.01: 집계 대상 Device에 Sample Processing, Sample Aliquoting 추가 (그때 이름은 Sample Pretreatment, Sample Aliquot)
 
 ## 변경 이력
 
@@ -44,3 +44,4 @@ replaced_by:
 | --- | --- | --- | --- |
 | | 2026-11-02 | 최초 작성 (8월 정책서에 없음, 화면 디스크립션에서 옮김) | |
 | | 2026-11-02 | 관련 CID에 Statistical Analysis 화면 추가 (POL-STA-006) | |
+| | 2026-11-18 | Module · Unit 이름 바꿈: Prep Consumable Storage → Consumable Storage, Sample Preparation Module → Sample Pre-treatment, Sample Pretreatment → Sample Processing, Sample Aliquot → Sample Aliquoting. 검사 단계 · Prep 시스템의 Sample Preparation은 그대로 | 사용자 결정 (서보경), `glossary/modules.csv` · `module-units.csv` |

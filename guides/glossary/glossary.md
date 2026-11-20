@@ -17,7 +17,7 @@
 
 **품목 표의 용도 (2026-11-03):** `consumables.csv`의 Consumable 행은 Consumable의 기준입니다. Reagent(전처리·추출·PCR)는 실제로 Assay Pack(POL-TST-008, `reference/customer/assay-pack/`)이 정한 구조와 값으로 Instrument에 들어옵니다. 그래서 Reagent 행은 기준으로 쓰지 않고 두 가지로만 씁니다: (1) Assay Pack으로 들어온 Reagent 정보를 검증하는 자료, (2) 화면설계에 넣는 실제 데이터(구성품 이름, 수량 단위, 저장 위치, Barcode 등)
 
-각 표의 출처는 근거 칸에 적습니다. 씨젠 원본에서 온 내용은 `씨젠 <문서 약칭> <버전> > <시트>` 형식으로 인용합니다(`reference/customer/README.md`).
+각 표의 출처는 근거 칸에 적습니다. 씨젠 원본에서 온 내용은 `씨젠 <문서 약칭> <버전> > <시트>` 형식으로 인용합니다(`reference/customer/README.md`). Module · Unit · 상태값 · 검사 단계 표의 한글 UI 표기는 씨젠 상태 정보 260921 · 261021에 있던 값입니다. 261119부터 씨젠 문서에 한글 칸이 없어, 새로 생긴 Unit의 한글 칸은 비워 둡니다.
 
 용어집의 표준어 중 화면 라벨로 쓰이는 것은 언어셋(`language-set/`)의 문구와 연결합니다. 연결 방식은 다국어 작업 때 정합니다.
 
@@ -45,7 +45,7 @@
 
 | 규칙 | 예 | 근거 |
 | --- | --- | --- |
-| 이름과 번호(인덱스) 사이는 띄어 씁니다 | PCR Setup (1), Sample Preparation (1), Prep Consumable Storage (1), CFX96 (1) | 2026-10-30 결정 |
+| 이름과 번호(인덱스) 사이는 띄어 씁니다 | PCR Setup (1), Sample Pre-treatment (1), Consumable Storage (1), CFX96 (1) | 2026-10-30 결정 |
 | 검사 항목명은 UI 표기 목록을 따릅니다. 씨젠 원본 UI 표기와 다르면 사용자 제공 목록이 우선 | GI-B1, GI-H1, Allplex HPV HR, Anyplex II HPV HR | [test-items.csv](test-items.csv), 2026-10-30·11-02 결정 |
 | 버튼·라벨 대소문자 | (주간 미팅에서 결정) | 협의 대기 PD-0001 |
 | Consumable 수량: `{수량} ea ({n} {단위})`. 낱개 입고는 `{수량} ea` | 96 ea (1 rack), 480 ea (5 racks), 3 ea | Common UX COMM-4-b |

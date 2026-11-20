@@ -56,7 +56,7 @@ L-IOS는 설치할 때 L-IOS Client Mode(Main Mode, Console Mode, MS Mode) 중 �
 | 7 | 정책서(2026.08.28)는 "Preset Mode(가칭)", "설치 모드"라고 씀 | 정책서 정제 때 L-IOS Client Mode로 바꿈 |
 | 8 | 2026-11-12 새 표에 Instrument > Management 행이 취소선(O / X / X)으로 있음 | 없앤 행. 이 표에는 v0.1부터 Management 행이 없어 바뀌는 칸 없음 (DS-0001) |
 | 9 | 2026-11-12 새 표의 System Setting은 All 한 행(O / O / O) | v0.1의 View(O / O / O) · Change Settings(O / X / X) 두 행을 All 한 행으로 바꿈. 세 모드 모두 설정을 바꿀 수 있음 (DS-0001) |
-| 10 | 알럿 Alert_030 원문은 "Main, Console, Material Setup 모드" | MS Mode로 읽음. 알럿 문구 정리는 `policy/alert-catalog.md` 4절 3 |
+| 10 | 알럿 Alert_030 원문은 "Main, Console, Material Setup 모드" | MS Mode로 읽음. 알럿 문구 정리는 `alert/alert-catalog.md` 4절 3 |
 
 ## 변경 이력
 

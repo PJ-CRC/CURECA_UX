@@ -8,7 +8,7 @@ cids: [TI-IVT-01-T, LI-IVT-01-T, TI-IVT-03-T, LI-IVT-03-T, TI-IVT-04-T, LI-IVT-0
 status: 확정
 version:
 date: 2026-11-03
-sources: [정책서_2026.08.28 > 시약/소모품 사용 및 폐기 > 소모품/시약 재고 상태값 정의, 씨젠 상태 정보 261021 > 재고 상태, TI-IVT-01-T 1, TI-IVT-03-T 2·2-5·2-6·3-6, TI-IVT-04-T 2-5·2-6 디스크립션, 팀원 POL-RGT-09, 2026-11-03 사용자 확인 (IV1, IV2, IV3, IV7)]
+sources: [정책서_2026.08.28 > 시약/소모품 사용 및 폐기 > 소모품/시약 재고 상태값 정의, 씨젠 상태 정보 261119 > 재고 상태, TI-IVT-01-T 1, TI-IVT-03-T 2·2-5·2-6·3-6, TI-IVT-04-T 2-5·2-6 디스크립션, 팀원 POL-RGT-09, 2026-11-03 사용자 확인 (IV1, IV2, IV3, IV7)]
 provisional: []
 alerts: []
 data: [glossary/status-values.csv]
@@ -48,7 +48,7 @@ replaced_by:
 
 ## 근거
 
-- 정책서_2026.08.28 "소모품/시약 재고 상태값 정의", 씨젠 상태 정보 261021 "재고 상태"
+- 정책서_2026.08.28 "소모품/시약 재고 상태값 정의", 씨젠 상태 정보 261119 "재고 상태"
 - 2026-11-03 사용자 확인: 화면의 "재고 0", "1개 이상 부족"은 상태값 정의의 예시이며 같은 뜻 (IV1). Consumable과 Reagent는 같은 재고 상태를 씀 (IV2). Required Qty 노출 조건 (IV3). Empty는 Insufficient로 바뀜 (IV7). Status는 Run 대비 재고 상태라 Required Qty와 같은 조건에서만 보여 주고, 아니면 Required Qty와 Status 모두 '-' (IV3-a)
 - TI-IVT-01-T 1·1-1·1-6, TI-IVT-03-T 1·2·2-5·2-6·3·3-6, TI-IVT-04-T 2-5·2-6 디스크립션
 

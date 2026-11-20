@@ -8,7 +8,7 @@ cids: [TI-DAS, LI-DAS, TI-ADS, TI-INS-01-T, LI-INS-01-T, TI-INS-02-T, LI-INS-02-
 status: 확정
 version:
 date: 2026-11-02
-sources: [씨젠 상태 정보 261021 > 장비 상태, Common UX V2.2.00 COMM-4-a(2/4)~(3/4), reference/status-values-2026-10-30.png, reference/status-values-unit-2026-10-30.png]
+sources: [씨젠 상태 정보 261119 > 장비 상태, Common UX V2.2.00 COMM-4-a(2/4)~(3/4), reference/status-values-2026-10-30.png, reference/status-values-unit-2026-10-30.png]
 provisional: []
 alerts: []
 data: [glossary/status-values.csv, policy/equipment-states.md]
@@ -35,7 +35,7 @@ replaced_by:
 2. 상태값을 화면이나 문서에 쓸 때는 어느 단계의 상태인지 함께 밝힘. 예: "장비 모듈 상태가 Paused일 때"
 3. 검사 장치 상태 Ready의 코드명은 Idle, UI 표기는 Ready임.
 4. 연결 상태는 Module과 Device Unit 둘 다 가짐.
-5. Door가 2개인 Module(Sample Preparation)의 장비 모듈 도어 열림 상태는 Door가 하나라도 열려 있으면 Open, 모두 닫혀 있으면 Closed로 표시함.
+5. Door가 2개인 Module(Sample Pre-treatment)의 장비 모듈 도어 열림 상태는 Door가 하나라도 열려 있으면 Open, 모두 닫혀 있으면 Closed로 표시함.
 
 ## 예외
 
@@ -43,7 +43,7 @@ replaced_by:
 
 ## 근거
 
-- 씨젠 상태 정보 261021 > 장비 상태 (원본 `reference/customer/system-status/`)
+- 씨젠 상태 정보 261119 > 장비 상태 (원본 `reference/customer/system-status/`)
 - 검사 장치 상태 코드명 Idle 유지, 연결 상태 Module·Device 둘 다: 2026-11-02 확인 (`policy/equipment-states.md` 6절)
 - Door 2개 Module의 표시: TI-INS-02-T, LI-INS-02-T 디스크립션 "Door 상태값 표기"
 
@@ -53,3 +53,4 @@ replaced_by:
 | --- | --- | --- | --- |
 | | 2026-11-02 | 최초 작성 (8월 정책서 "CURECA 전체 구동 상태값 정의", "모듈 상태값 정의", "디바이스 상태값 정의"를 씨젠 상태 정보 261021 기준으로 정리) | |
 | | 2026-11-12 | 상태 분류 이름 CURECA Status → Hardware Status로 바꿈 (뜻 그대로). CURECA Status는 장비 통합 상태의 영문 · 화면 라벨로 씀 | DS-0003 |
+| | 2026-11-18 | Module · Unit 이름 바꿈: Prep Consumable Storage → Consumable Storage, Sample Preparation Module → Sample Pre-treatment, Sample Pretreatment → Sample Processing, Sample Aliquot → Sample Aliquoting. 검사 단계 · Prep 시스템의 Sample Preparation은 그대로 | 사용자 결정 (서보경), `glossary/modules.csv` · `module-units.csv` |

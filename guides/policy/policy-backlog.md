@@ -39,7 +39,7 @@
 | 9 | 오타: PCR Regents, 페기물함, 상태갑싱, 유통기한 | PCR Reagents, Waste Bin, 상태값이, Expiration Date | 용어집 |
 | 10 | 큐레카(QREKA) | CURECA | 용어집 **닫힘: POL-SYS-001 (2026-11-02)** |
 | 11 | 만료 시약 검사 불가: Run 준비 단계에서 만료 Reagent가 있으면 Run Start 불가 | 제약 없앰. Instrument가 Reagent를 쓰기 직전 Barcode로 Expiration Date를 확인해 지났으면 자동 폐기 **닫힘: POL-SMP-007 규칙 3 (2026-11-02)** | 2026-11-02 사용자 전달 (SM2-a) |
-| 12 | Material Setup > PCR Reagents 소켓 구성 정책: "PCR Box 내 IC(Internal Control)는 분리되어 STAT Storage로 입고" | IC는 PCR box에서 분리해 Prep 시스템 Trolley(Prep Consumable Storage > Trolley)로 입고 **닫힘: POL-INV-007 (2026-11-03)** | 2026-11-03 사용자 확인 (8월 정책서는 이전 내역). STAT Storage 입고 대상 목록의 "PCR Reagent 내의 IC"도 LOD 정책 때 함께 확인 |
+| 12 | Material Setup > PCR Reagents 소켓 구성 정책: "PCR Box 내 IC(Internal Control)는 분리되어 STAT Storage로 입고" | IC는 PCR box에서 분리해 Prep 시스템 Trolley(Consumable Storage > Trolley)로 입고 **닫힘: POL-INV-007 (2026-11-03)** | 2026-11-03 사용자 확인 (8월 정책서는 이전 내역). STAT Storage 입고 대상 목록의 "PCR Reagent 내의 IC"도 LOD 정책 때 함께 확인 |
 | 13 | 트롤리 도킹 & Drawer Loading > STAT Storage 입고 및 회수 정책: STAT 전용 입고 대상에 Sample in socket, Trolley에 구성되는 모든 소모품·시약, PK Tube, IC. STAT에 입고된 소모품·시약을 먼저 소모 | STAT Storage는 Sample Socket만 받음. 소모품·시약 관련 문장은 지움 **닫힘: POL-LOD-003 (2026-11-03)** | 2026-11-03 사용자 확인 (MS14) |
 
 ## 13번 상세: Trolley 구성 리셋

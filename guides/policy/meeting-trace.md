@@ -8,8 +8,8 @@
 | --- | --- |
 | 8월 정책서 | `reference/policy-doc-2026-08-28.md`. 8월 초 기준이며 V2.1.01(08-07) · V2.1.04(08-21) 개정이 들어 있음. 그 뒤 회의 결정은 정책서에 없는 것이 정상 |
 | 지금 정책 | `policy/` 정책 파일 (2026-11-06 기준) |
-| 화면 | 관련 화면 MD의 `date`(Figma 화면 정보). 회의보다 뒤면 반영됐을 수 있어 내용을 확인함. **Material Setup 화면은 거의 모두 2026-06-15로 남아 있어 date로 판단할 수 없음** |
-| Common UX | 적용된 "Common UX 가이드" (g20261105-daye-J001) |
+| 화면 | 관련 화면 MD(다시 그린 화면은 `screens/tobe/`, 아니면 `screens/asis/`)의 `date`(Figma 화면 정보). 회의보다 뒤면 반영됐을 수 있어 내용을 확인함. **Material Setup 화면은 거의 모두 2026-06-15로 남아 있어 date로 판단할 수 없음** |
+| Common UX | 적용된 "Common UX 가이드 _1105" (g20261105-daye-J001) |
 | Teams 글 | `reference/teams/2026-11-06-policy-notes.md` (T01 ~ T15, 2026-08-16 이후, 대부분 9 ~ 10월) |
 | 같은 주제가 여러 번 | 마지막 결정을 따르고, 바뀐 순서를 "흐름" 칸에 남김 |
 
@@ -76,7 +76,7 @@
 | 18 | 08-05-02 | Sample Storage Door 2개, Sample Preparation Door는 업체별 1 · 2개, STAT은 업체별 1 ~ N | 장비 | 없음 | `module-units.csv`, Module 문서 | 반영 |
 | 19 | 08-13 | Logout과 Exit 따로, 엔지니어 계정은 팝업 | ACC | - | POL-ACC-004 | 반영 |
 | 20 | 08-13 | Error Rate는 누적 집계 | EQP | 있음 | POL-EQP-010 | 반영 |
-| 21 | 08-13 | 알럿 · 컨펌은 "이어서 진행" | MAT | 없음 | POL-MAT-003 · 010 규칙 6 | 반영 |
+| 21 | 08-13 | Alert · Confirm은 "이어서 진행" | MAT | 없음 | POL-MAT-003 · 010 규칙 6 | 반영 |
 | 22 | 08-19 | MB Tube 최대 입고 5개 (카트리지 단위와 맞춤, 10칸 중 5칸 막음) | Flexible Extraction | 없음 | 없음 | 반영 (11-06: POL-LOD-002 규칙 15) |
 | 23 | 08-19 | Prep은 Run이 끝나면 쓰던 소모품 · 시약을 모두 Trolley로 돌려보냄 | Prep | 없음 | POL-INV-004 규칙 5 (무엇이 돌아오는지) | 반영 |
 | 24 | 08-19 · 08-20 | Dx Storage 칸 수는 모델별로 다름(표준형 기본, 맞춤형 최대, 예: DWP 5 · 6칸). 하드웨어가 올려 주는 값을 그대로 표시 | Dx | 없음 | 없음 | 반영 (11-06: POL-LOD-002 규칙 16) |

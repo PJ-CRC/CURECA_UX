@@ -27,7 +27,7 @@ CURECA_AI/
 ├── common-ux/           Common UX
 ├── reference/           외부에서 받은 원본 자료 (고객사 제공 파일 등)
 ├── ia/                  IA
-├── screens/             화면설계서 (메뉴 단위)
+├── screens/             화면설계서 (asis/ 기존 화면, tobe/ 새로 그린 화면, 그 아래 메뉴 단위)
 ├── archive/             폐기된 화면·정책, 다 쓴 작업 문서
 ├── templates/           문서 템플릿
 ├── tools/               작업 보조 스크립트 (Figma 기존 화면 추출 등). 룰은 도구 없이도 따를 수 있게 씀

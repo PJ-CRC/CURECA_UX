@@ -8,10 +8,10 @@ cids: [LI-TSS-PSI-SAM-01-03, LI-TSS-PSI-SAM-02-02, LI-TSS-PSI-SAM-03-02, LI-TSS-
 status: 확정
 version:
 date: 2026-11-03
-sources: [MS 적재 정책서 (20261102) > common-loading-policy 4.4·4.5, policy/alert-catalog-ms.csv, 2026-11-03 사용자 답변 (MS4)]
+sources: [MS 적재 정책서 (20261102) > common-loading-policy 4.4·4.5, alert/alert-catalog-ms.csv, 2026-11-03 사용자 답변 (MS4)]
 provisional: []
 alerts: [MS_Alert_001, MS_Alert_011, MS_Alert_014, MS_Alert_016, MS_Alert_019]
-data: [policy/alert-catalog-ms.csv]
+data: [alert/alert-catalog-ms.csv]
 replaced_by:
 ---
 # POL-MAT-005 스캔 순서와 하이라이팅 적재
@@ -39,7 +39,7 @@ replaced_by:
 ## 근거
 
 - MS 적재 정책서 (20261102) common-loading-policy 4.4 하이라이팅 적재 흐름, 4.5 스캔 순서·대상 규칙, 6장 복귀
-- `policy/alert-catalog-ms.csv` MS_Alert_001·011·014·016·019 (이전 ID Alert_027·043·044·007)
+- `alert/alert-catalog-ms.csv` MS_Alert_001·011·014·016·019 (이전 ID Alert_027·043·044·007)
 - 2026-11-03 사용자 답변 (MS4): MS_Alert_001은 명시한 곳에만
 
 ## 변경 이력

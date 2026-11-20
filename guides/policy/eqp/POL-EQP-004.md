@@ -8,7 +8,7 @@ cids: [LI-INS-01-P, LI-INS-01-T, LI-INS-02-T, TI-INS-01-T, TI-INS-02-T, TI-DAS, 
 status: 확정
 version:
 date: 2026-11-02
-sources: [씨젠 상태 정보 261021 > 장비 상태, LI-INS-01-P 디스크립션, 2026-10-30 사용자 설명, 2026-11-02 사용자 확인]
+sources: [씨젠 상태 정보 261119 > 장비 상태, LI-INS-01-P 디스크립션, 2026-10-30 사용자 설명, 2026-11-02 사용자 확인]
 provisional: []
 alerts: []
 data: [policy/equipment-states.md]
@@ -24,7 +24,7 @@ replaced_by:
 ## 규칙
 
 1. Door 잠금이 해제되면 그 Module의 장비 모듈 상태는 Paused가 됨. 장비 통합 상태가 Ready, Not Initialized, Error일 때도 같음.
-2. Door가 2개 이상인 Module(Sample Storage, Sample Preparation)은 Door 하나라도 잠금이 해제되면 그 Module이 Paused가 됨. Door 구성은 `glossary/module-units.csv`를 따름.
+2. Door가 2개 이상인 Module(Sample Storage, Sample Pre-treatment)은 Door 하나라도 잠금이 해제되면 그 Module이 Paused가 됨. Door 구성은 `glossary/module-units.csv`를 따름.
 3. 장비 모듈 상태가 Running일 때 사용자가 Door Control에서 [Unlock]을 요청하면 Module은 진행 중인 작업 단위를 마칠 때까지 Pausing이 되고, 마친 뒤 Paused가 되며 Door 잠금이 해제됨.
 4. Plate Sealing의 Door 잠금 해제로 Plate Sealing이 Paused가 될 때 PCR Setup도 함께 Paused가 됨.
 5. Dx 쪽 Module의 Storage Drawer는 장비 모듈 상태가 Running일 때도 열 수 있으며, 열었다고 바로 Paused가 되지는 않음.
@@ -39,7 +39,7 @@ replaced_by:
 
 ## 근거
 
-- 씨젠 상태 정보 261021 > 장비 상태 (Pausing, Paused 정의)
+- 씨젠 상태 정보 261119 > 장비 상태 (Pausing, Paused 정의)
 - Door Control Popup [LI-INS-01-P](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/1-2.-CURECA_%EA%B8%B0%ED%9A%8D-%EB%94%94%EC%9E%90%EC%9D%B8-%EC%9E%91%EC%97%85%EB%B0%A9-Part.2-?node-id=4961-83155) 안내 문구
 - 2026-10-30 사용자 설명, 2026-11-02 Storage Drawer 조건 정정. Run 중이 아닐 때도 Door 잠금 해제 시 Paused, Door가 여러 개면 하나라도 해제 시 Paused: 2026-11-02 사용자 확인 (씨젠 정의의 "모듈 가동 중"보다 넓힘) (`policy/equipment-states.md` 5절)
 
@@ -51,3 +51,4 @@ replaced_by:
 | | 2026-11-02 | Run 중이 아닐 때의 Door 잠금 해제와 Door가 여러 개인 Module 규칙 추가 | |
 | | 2026-11-02 | Door가 잠긴 뒤 Paused 전 상태로 돌아가는 규칙 (규칙 7) | |
 | | 2026-11-06 | Error일 때 Door를 여는 경우를 고객 확인 목록에 올림 (예외, CA-0010) | MT-20260922-01 |
+| | 2026-11-18 | Module · Unit 이름 바꿈: Prep Consumable Storage → Consumable Storage, Sample Preparation Module → Sample Pre-treatment, Sample Pretreatment → Sample Processing, Sample Aliquot → Sample Aliquoting. 검사 단계 · Prep 시스템의 Sample Preparation은 그대로 | 사용자 결정 (서보경), `glossary/modules.csv` · `module-units.csv` |

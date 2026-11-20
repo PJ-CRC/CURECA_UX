@@ -14,8 +14,6 @@
     "terms.csv",
     "test-items.csv",
     "test-stages.csv",
-    "../policy/alert-catalog-ms.csv",
-    "../policy/alert-catalog.csv",
     "../policy/integrated-state-transitions.csv",
     "../policy/migration.csv",
     "../policy/permission-matrix.csv",
@@ -72,8 +70,8 @@
     "test-items.csv": "검사 항목 · test-items.csv",
     "test-stages.csv": "검사 단계 · test-stages.csv"
   },
-  "updatedAt": "2026-11-19T05:15:26.338Z",
-  "note": "2026-11-17 CURECA_AI_20261117로 전부 교체",
+  "updatedAt": "2026-11-20T06:48:48.801Z",
+  "note": "2026-11-20 CURECA_AI_20261120_8bceea1로 맞춤",
   "books": {
     "language-set": {
       "title": "언어셋",

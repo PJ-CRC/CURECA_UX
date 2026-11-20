@@ -8,10 +8,10 @@ cids: [LI-TSS-PSI-SAM-01-01, LI-TSS-PSI-SAM-01-02, LI-TSS-PSI-SAM-01-03, LI-TSS-
 status: 확정
 version:
 date: 2026-11-03
-sources: [MS 적재 정책서 (20261102) > common-loading-policy 3·4·6장, specimen-trolley·consumables-trolley·specimen-tray·consumables-tray·specimen-socket·pkic-setup·pcr-setup·mm-tube 컨펌 정의, policy/alert-catalog-ms.csv]
+sources: [MS 적재 정책서 (20261102) > common-loading-policy 3·4·6장, specimen-trolley·consumables-trolley·specimen-tray·consumables-tray·specimen-socket·pkic-setup·pcr-setup·mm-tube 컨펌 정의, alert/alert-catalog-ms.csv]
 provisional: []
 alerts: [MS_Confirm_001, MS_Confirm_002, MS_Confirm_003, MS_Confirm_004, MS_Confirm_005, MS_Confirm_006, MS_Confirm_007, MS_Confirm_008, MS_Confirm_009, MS_Confirm_010, MS_Confirm_011, MS_Confirm_012, MS_Confirm_013, MS_Confirm_014, MS_Confirm_015, MS_Confirm_016, MS_Confirm_017]
-data: [policy/alert-catalog-ms.csv]
+data: [alert/alert-catalog-ms.csv]
 replaced_by:
 ---
 # POL-MAT-003 신규 작업 컨펌 (용도 전환, 위치 교체, 새 위치로 옮김)
@@ -58,7 +58,7 @@ replaced_by:
 
 - MS 적재 정책서 (20261102) common-loading-policy 3장, 4장(4.1 C와 B의 관계, 4.2 A 추가 규칙), 6장
 - 흐름별 정책서 3.1 컨펌 적용, 6장 컨펌 정의 (`reference/team/material-setup-20261102/`)
-- `policy/alert-catalog-ms.csv` MS_Confirm_001 ~ 017 (이전 ID Confirm_026·027·028)
+- `alert/alert-catalog-ms.csv` MS_Confirm_001 ~ 017 (이전 ID Confirm_026·027·028)
 
 ## 변경 이력
 

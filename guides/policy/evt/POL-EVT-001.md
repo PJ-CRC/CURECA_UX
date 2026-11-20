@@ -8,7 +8,7 @@ cids: [TI-EVT-P, LI-EVT-P, TI-EVT-01-P, LI-EVT-01-P, TI-EVT-02-P, LI-EVT-02-P, T
 status: 확정
 version:
 date: 2026-11-02
-sources: [씨젠 상태 정보 261021 > 이벤트 정보, 정책서_2026.08.28 > Event, System, 사용자 및 권한, TI-EVT-01-P 디스크립션 (Ver 2.1.14), TI-INS-01-T 디스크립션 (Ver 2.1.06)]
+sources: [씨젠 상태 정보 261119 > 이벤트 정보, 정책서_2026.08.28 > Event, System, 사용자 및 권한, TI-EVT-01-P 디스크립션 (Ver 2.1.14), TI-INS-01-T 디스크립션 (Ver 2.1.06)]
 provisional: []
 alerts: []
 data: [glossary/status-values.csv]
@@ -45,7 +45,7 @@ replaced_by:
 
 ## 근거
 
-- 씨젠 상태 정보 261021 > 이벤트 정보 (Level, Status, Type 정의)
+- 씨젠 상태 정보 261119 > 이벤트 정보 (Level, Status, Type 정의)
 - Event Type은 화면 Ver 2.1.01에서 Instrument, Inventory, Sample, System으로 바뀜 (예전: Instrument, Consumable, Reagent, Waste Bin/bottle, System)
 - Event Code별 Description·Effect·Recommended Action 값은 고객이 Instrument 개발사와 관리하는 문서(예: 씨젠 "[SRD] CURECA Prep 및 Dx 장비 Event 정의")를 따르며 이 저장소에서 관리하지 않음 (2026-11-02 사용자 확인). Event Code와 Scenario Code 관계는 TI-EVT-01-P 디스크립션 1 (Effect)
 - Teams 글 2026-11-06 T02: Event Code 1 : Scenario Code N. Event Code는 지금처럼 한 건으로 목록에 생기고, 화면에는 Scenario Code를 보이지 않고 Effect 영역에 내용만 보여 줌 (규칙 3과 같음)

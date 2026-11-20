@@ -1,22 +1,28 @@
-# 화면설계서
+# 화면설계서 (화면 MD)
 
-메뉴 단위 폴더 아래에 CID 화면설계서를 둡니다. CID마다 파일을 따로 두고, 짝 화면은 `pair_cid`로 연결합니다(`old-rules/repository-and-id.md` 3절). 상태는 메뉴 파일 `_menu.md`에 적습니다(`old-rules/status-lifecycle.md` 5절).
+화면(CID)마다 화면 MD를 하나씩 둡니다. 짝 화면은 머리말 `pair_cid`로 연결합니다.
 
-> 상태: 폴더는 IA Lv.1 메뉴 하나에 폴더 하나 (`screens/<메뉴 이름 소문자-하이픈>/`, 예: `screens/instruments/`)로 정함 (2026-11-02 확정). 1·2차 구분은 파일의 `figma_region`으로 적습니다.
+| 폴더 | 무엇 | 틀 |
+| --- | --- | --- |
+| `asis/` | 기존 작업방(AS-IS) Figma 화면을 옮긴 화면 MD. 반영 대기 목록도 이 파일에 있음 | `templates/screen-asis.md` |
+| `tobe/` | 작업방에 새로 그린(To-Be) 화면 MD. 아직 그리지 않은 화면도 반영 대기 목록만 담은 빈 틀이나 작업 중인 화면 MD로 있을 수 있음(머리말 `figma`가 비어 있음) | `templates/screen.md` |
 
-## 기존 화면 MD (source: asis)
+- 두 폴더 모두 IA Lv.1 메뉴 하나에 메뉴 폴더 하나를 둡니다(`<메뉴 이름 소문자-하이픈>/`, 예: `tobe/instrument/`). 메뉴 이름은 `ia/ia-screens.csv`의 Lv.1입니다. 괄호는 빼고 하이픈으로 이음(예: Dashboard(All) → `dashboard-all/`).
+- 2026-11-17: 이 폴더에 있던 화면 MD 187개를 `asis/`로 옮기고, 메뉴 파일 `_menu.md`는 지웠습니다(메뉴 이름은 IA로 대신함).
 
-기존 작업방 Figma의 기존 화면을 옮긴 파일입니다. 다시 그리기 전의 기준이며, 디스크립션은 원문 그대로 둡니다. 옮기는 방법은 `old-rules/screen-spec.md` 3절입니다.
+## 기존 화면 MD (`asis/`)
+
+기존 작업방 Figma의 기존 화면을 옮긴 파일입니다(2026-11-02 ~ 03 첫 옮김). 케이스 3을 시작할 때 추출 도구(`tools/figma/extract-screen.js`)로 다시 옮깁니다(`flow/1-requirements.md` "읽기 전에 늘 다시 옮기기"). 1 · 2차 구분은 파일의 `figma_region`으로 적습니다.
 
 | 메뉴 | 폴더 | 상태 |
 | --- | --- | --- |
-| Instruments | `instruments/` | 기획 화면 7개 옮김 (2026-11-02) |
+| Instrument | `instrument/` | 기획 화면 7개 옮김 (2026-11-02) |
 | Dashboard | `dashboard/` | 기획 화면 2개 옮김 (2026-11-02, 2.1 2차) |
 | Dashboard(All) | `dashboard-all/` | 기획 화면 2개 옮김 (2026-11-02, 2.1 2차) |
 | Login | `login/` | 기획 화면 6개 옮김 (2026-11-02, 2.1 2차) |
 | Profile | `profile/` | 기획 화면 4개 옮김 (2026-11-02, 2.1 2차) |
 | Setting | `setting/` | IA의 Setting 화면 전부 (39개) 옮김 (2026-11-02). System Setting만 2.1 1차, 나머지 2.1 2차 |
-| Event History | `event-history/` | 기획 화면 6개 옮김 (2026-11-02, 목록·상세 2.1 2차, Message 2.1 1차) |
+| Event History | `event-history/` | 기획 화면 6개 옮김 (2026-11-02, 목록·상세 2.1 2차, Message 2.1 1차). 2026-11-06 테스트에서 To-Be로 덮어쓴 것을 2026-11-18 원래 AS-IS로 되돌림 |
 | Information | `information/` | 기획 화면 8개 옮김 (2026-11-02, Report 2개는 2.1 2차, Program·Popup 6개는 2.1 1차) |
 | Run | `run/` | 기획 화면 6개 옮김 (2026-11-02, 2.1 2차). Item details Popup은 Inventory에 둠 |
 | Quick Start | `quick-start/` | 기획 화면 1개 옮김 (2026-11-02, 2.1 2차) |

@@ -19,12 +19,12 @@ replaced_by:
 ## 정의
 
 - Error Rate: 유지보수에 쓰기 위한 지표. (가동 실패 횟수 ÷ 총 가동 횟수) × 100
-- 집계 대상: Module 전체, Device Unit 중 Sample Pretreatment, Sample Aliquot, M9600, STARlet, Sealer, CFX96
+- 집계 대상: Module 전체, Device Unit 중 Sample Processing, Sample Aliquoting, M9600, STARlet, Sealer, CFX96
 
 | 집계 항목 | 대상 | 집계 시점 |
 | --- | --- | --- |
-| 총 가동 횟수 | Prep 쪽 Sample Storage, Prep Consumable Storage | Module에 Trolley가 들어와 가동이 시작된 시점 |
-| 총 가동 횟수 | Sample Preparation | Sample을 꽂은 Rack이 로딩되어 가동이 시작된 시점 |
+| 총 가동 횟수 | Prep 쪽 Sample Storage, Consumable Storage | Module에 Trolley가 들어와 가동이 시작된 시점 |
+| 총 가동 횟수 | Sample Pre-treatment | Sample을 꽂은 Rack이 로딩되어 가동이 시작된 시점 |
 | 총 가동 횟수 | Dx 쪽 모든 Module과 Device Unit | Plate가 들어와 가동이 시작된 시점 |
 | 가동 실패 횟수 | 전체 | 가동이 시작된 뒤 오류로 가동이 중단된 시점 |
 
@@ -43,7 +43,7 @@ replaced_by:
 ## 근거
 
 - 정책서_2026.08.28 "Error Rate"
-- 집계 대상 Device Unit은 화면 Ver 2.1.01 기준 (8월 정책서의 4종에 Sample Pretreatment, Sample Aliquot 추가)
+- 집계 대상 Device Unit은 화면 Ver 2.1.01 기준 (8월 정책서의 4종에 Sample Processing, Sample Aliquoting 추가. 그때 이름은 Sample Pretreatment, Sample Aliquot)
 - Management Popup(TI-INS-02-01-P, LI-INS-02-01-P) 디스크립션 "데이터 저장 및 처리"
 
 ## 변경 이력
@@ -52,3 +52,4 @@ replaced_by:
 | --- | --- | --- | --- |
 | | 2026-11-02 | 최초 작성 (이전 ID: 팀원 POL-INS-03) | CA-0001 |
 | | 2026-11-02 | 관련 CID에 Statistical Analysis 화면 추가 (POL-STA-006) | |
+| | 2026-11-18 | Module · Unit 이름 바꿈: Prep Consumable Storage → Consumable Storage, Sample Preparation Module → Sample Pre-treatment, Sample Pretreatment → Sample Processing, Sample Aliquot → Sample Aliquoting. 검사 단계 · Prep 시스템의 Sample Preparation은 그대로 | 사용자 결정 (서보경), `glossary/modules.csv` · `module-units.csv` |

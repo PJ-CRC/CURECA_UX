@@ -8,7 +8,7 @@ cids: [LI-TSS-DXI, LI-TSS-DXI-01, LI-TSS-DXI-02, LI-TSS-DXI-03, LI-TSS-DXI-04, L
 status: 확정
 version:
 date: 2026-11-03
-sources: [정책서_2026.08.28 > 트롤리 도킹 & Drawer Loading > DX Storage 투입부 제어 정책, MS 적재 정책서 (20261102) > load-materials-policy, LI-TSS-DXI·DXI-01 ~ 06 디스크립션·공통 정의, policy/alert-catalog-ms.csv, 2026-11-03 사용자 답변 (MS6-a), 팀원 POL-DCK-02]
+sources: [정책서_2026.08.28 > 트롤리 도킹 & Drawer Loading > DX Storage 투입부 제어 정책, MS 적재 정책서 (20261102) > load-materials-policy, LI-TSS-DXI·DXI-01 ~ 06 디스크립션·공통 정의, alert/alert-catalog-ms.csv, 2026-11-03 사용자 답변 (MS6-a), 팀원 POL-DCK-02]
 provisional: []
 alerts: [MS_Alert_001, MS_Alert_003, MS_Alert_004, MS_Alert_015, MS_Alert_026, MS_Alert_027, MS_Alert_028, MS_Alert_029, MS_Alert_030, MS_Alert_031, MS_Alert_032]
 data: [glossary/module-units.csv]
@@ -20,7 +20,7 @@ replaced_by:
 
 | 화면 | Storage (Module) | 적재 항목 | 방식 |
 | --- | --- | --- | --- |
-| LI-TSS-DXI-01 | STAT Storage (Sample Preparation) | Sample Socket | 위치 스캔 |
+| LI-TSS-DXI-01 | STAT Storage (Sample Pre-treatment) | Sample Socket | 위치 스캔 |
 | LI-TSS-DXI-02 | DWP·Spin Tip Storage (High-throughput Extraction) | DWP, Spin Tip | 위치 스캔 |
 | LI-TSS-DXI-03 | MB Tube Storage (Flexible Extraction) | MB Tube | 바로 넣기 |
 | LI-TSS-DXI-04 | Buffer Cartridge Storage (Flexible Extraction) | Buffer Cartridge | 위치 스캔 |
@@ -66,3 +66,4 @@ replaced_by:
 | --- | --- | --- | --- |
 | | 2026-11-03 | 최초 작성 (이전 ID: 팀원 POL-DCK-02) | |
 | | 2026-11-06 | MB Tube 5개(규칙 15), Dx Storage 칸 수는 모델별 · 장비 값 그대로(규칙 16) | MT-20260819-01, MT-20260820-01 |
+| | 2026-11-18 | Module · Unit 이름 바꿈: Prep Consumable Storage → Consumable Storage, Sample Preparation Module → Sample Pre-treatment, Sample Pretreatment → Sample Processing, Sample Aliquot → Sample Aliquoting. 검사 단계 · Prep 시스템의 Sample Preparation은 그대로 | 사용자 결정 (서보경), `glossary/modules.csv` · `module-units.csv` |

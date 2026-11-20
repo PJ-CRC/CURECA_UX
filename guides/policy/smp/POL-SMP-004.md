@@ -8,7 +8,7 @@ cids: [TI-TMG-02, LI-TMG-02, TI-INF-03-01, TI-INF-03-02, TI-DAS, LI-DAS]
 status: 확정
 version:
 date: 2026-11-02
-sources: [정책서_2026.08.28 > 검체/검사 정의 > Batch Card 생성 및 초기화, 씨젠 상태 정보 261021 > 검사 배치 완료 상태, TI-TMG-02 디스크립션 (v2.1.14), TI-INF-03-01 디스크립션, 팀원 POL-SMP-11 (사용자 전달 2026-11-02), 2026-11-02 사용자 결정 (SM7)]
+sources: [정책서_2026.08.28 > 검체/검사 정의 > Batch Card 생성 및 초기화, 씨젠 상태 정보 261119 > 검사 배치 완료 상태, TI-TMG-02 디스크립션 (v2.1.14), TI-INF-03-01 디스크립션, 팀원 POL-SMP-11 (사용자 전달 2026-11-02), 2026-11-02 사용자 결정 (SM7)]
 provisional: []
 alerts: []
 data: [glossary/status-values.csv]

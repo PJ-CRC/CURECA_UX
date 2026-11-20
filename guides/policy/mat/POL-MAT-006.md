@@ -8,7 +8,7 @@ cids: [LI-TSS-PSI-SAM, LI-TSS-PSI-SAM-01-01, LI-TSS-PSI-SAM-01-02, LI-TSS-PSI-SA
 status: 확정
 version:
 date: 2026-11-03
-sources: [정책서_2026.08.28 > Material Setup > 소켓(Socket) 내 검체 장착 정책, MS 적재 정책서 (20261102) > specimen-socket·specimen-tray·specimen-trolley, LI-TSS-PSI-SAM-01-01 ~ 03-03 디스크립션, policy/alert-catalog-ms.csv, 팀원 POL-MAT-02, 팀원 POL-DCK-06]
+sources: [정책서_2026.08.28 > Material Setup > 소켓(Socket) 내 검체 장착 정책, MS 적재 정책서 (20261102) > specimen-socket·specimen-tray·specimen-trolley, LI-TSS-PSI-SAM-01-01 ~ 03-03 디스크립션, alert/alert-catalog-ms.csv, 팀원 POL-MAT-02, 팀원 POL-DCK-06]
 provisional: []
 alerts: [MS_Alert_007, MS_Alert_008, MS_Alert_009, MS_Alert_010, MS_Alert_011, MS_Alert_012, MS_Alert_013, MS_Alert_014, MS_Alert_015, MS_Alert_016, MS_Alert_017, MS_Alert_018, MS_Alert_019, MS_Confirm_001, MS_Confirm_002, MS_Confirm_003, MS_Confirm_004, MS_Confirm_005, MS_Confirm_006, MS_Confirm_007, MS_Confirm_008]
 data: [glossary/test-items.csv, glossary/sample-types.csv]
@@ -46,7 +46,7 @@ replaced_by:
 - 정책서_2026.08.28 "소켓(Socket) 내 검체 장착 정책" (같은 검사군끼리, Test Order 미접수·취소 Sample 적재 불가)
 - MS 적재 정책서 (20261102) specimen-socket, specimen-tray, specimen-trolley
 - 팀원 POL-DCK-06 Sample Storage Trolley 1층 운영 (팀원 쪽 사용자 확인 2026-10-16)
-- LI-TSS-PSI-SAM-03-02 디스크립션 2 (카운터 0/5, v2.1.11), `policy/alert-catalog-ms.csv`
+- LI-TSS-PSI-SAM-03-02 디스크립션 2 (카운터 0/5, v2.1.11), `alert/alert-catalog-ms.csv`
 
 ## 변경 이력
 

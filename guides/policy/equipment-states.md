@@ -1,7 +1,7 @@
 # 장비 상태 정의서
 
-> 상태: 초안 v0.4 (2026-11-12). v0.4에서 상태 분류 이름 CURECA Status를 Hardware Status로 바꿈(DS-0003, 뜻 그대로).
-> 출처: 씨젠 "CURECA 시스템 구성 요소 및 상태 정보" 261021 (원본 `reference/customer/system-status/`)이 1차 출처입니다. Common UX 최종본 V2.2.00의 COMM-4-a(2/4)~(4/4)는 이 문서를 옮긴 것이고, 화면 동작은 기존 작업방 화면 디스크립션과 정책서_2026.08.28에서 모았습니다.
+> 상태: 초안 v0.5 (2026-11-19). v0.4에서 상태 분류 이름 CURECA Status를 Hardware Status로 바꿈(DS-0003, 뜻 그대로). v0.5에서 씨젠 상태 정보 261119를 반영함(통합 상태 전환 조건 24개, 모듈 상태 전환 조건 새로 생김, DS-0005).
+> 출처: 씨젠 "CURECA 시스템 구성 요소 및 상태 정보" 261119 (원본 `reference/customer/system-status/`)이 1차 출처입니다. Common UX 최종본 V2.2.00의 COMM-4-a(2/4)~(4/4)는 이 문서를 옮긴 것이고, 화면 동작은 기존 작업방 화면 디스크립션과 정책서_2026.08.28에서 모았습니다.
 
 화면 흐름을 점검하는 기준 자료입니다(헌법 8조). 상태값의 이름과 표기는 [glossary/status-values.csv](../glossary/status-values.csv)에 있고, 이 문서는 상태가 바뀌는 조건과 상태별로 할 수 있는 일을 정합니다.
 
@@ -26,9 +26,9 @@
 | Initializing | 초기화 프로세스 실행 | 초기화 진행 상태를 로딩/진행바로 표시. 모든 기능 사용 제한. 완료 시 자동으로 Ready로 전환하고 완료 안내 |
 | Ready | 초기화, 중지 완료 또는 작업 종료 후 | 모든 기능 사용 가능. 작업 시작(검사 등) 버튼 활성화 |
 | Running | 작업(검사) 시작 | 중지(Stop) 기능 제공 |
-| Partial Running | Run 중에 Module 1대 이상이 Running이면서, 1대 이상이 Error 또는 Paused(Pausing 포함) | Run은 계속되지만 확인이 필요한 Module이 있다는 신호. 모두 정상으로 동작하는 것이 아니므로 사용자가 해당 Module을 확인해야 함. 중지(Stop) 기능 제공 (2026-10-30 확인) |
+| Partial Running | Run 중에 Running 또는 Pausing인 Module이 1대 이상이면서, Ready · Running · Pausing이 아닌 Module(Paused · Error 등)이 1대 이상 | Run은 계속되지만 확인이 필요한 Module이 있다는 신호. 모두 정상으로 동작하는 것이 아니므로 사용자가 해당 Module을 확인해야 함. 중지(Stop) 기능 제공 (2026-10-30 확인) |
 | Stopping | 사용자가 Stop 버튼을 누름. 일부 Module이 아니라 전체 장비가 멈춤 | 중지 진행 상태를 팝업의 로딩/진행바로 표시. 모든 기능 일시 제한. 완료 시 Ready로 자동 전환하고 안내 |
-| Paused | 가동 중 일부 Module이 Paused이고 Running Module이 없음 | 사용자가 Door 잠금을 해제했거나, 열려 있는 서랍형 Storage에 Module이 접근해야 해서 멈춘 상태. 장비 고장이 아니므로 Error가 아님 (5절 "Pausing과 Paused") |
+| Paused | 가동 중 Paused인 Module이 1대 이상이고, 나머지 Module은 모두 Paused 또는 Ready | 사용자가 Door 잠금을 해제했거나, 열려 있는 서랍형 Storage에 Module이 접근해야 해서 멈춘 상태. 장비 고장이 아니므로 Error가 아님 (5절 "Pausing과 Paused") |
 | Error | Module 상태에 따라 (4절) | 상황별로 다름 |
 
 ## 3. 구동 버튼
@@ -42,11 +42,14 @@
 
 ## 4. 장비 통합 상태 전환 조건
 
-[integrated-state-transitions.csv](integrated-state-transitions.csv)에 21개 전환을 정리했습니다(출처: 씨젠 상태 정보 261021 > 장비 통합 상태 처리 조건). 이전 통합 상태, 트리거, Module 상태 조건, 전환 후 상태가 있습니다.
+[integrated-state-transitions.csv](integrated-state-transitions.csv)에 24개 전환을 정리했습니다(출처: 씨젠 상태 정보 261119 > 장비 통합 상태 처리 조건). 번호, 전환 후 상태, 이전 통합 상태, 트리거, Module 상태 조건, 비고가 있습니다. Module 상태가 바뀌는 15개 전환은 [module-state-transitions.csv](module-state-transitions.csv)에 있습니다(출처: 씨젠 상태 정보 261119 > 장비 모듈 상태 처리 조건, 261119에 새로 생긴 시트).
+
+- **Error에서 돌아갈 때:** Module 상태 조건과 함께 Error로 바뀌기 직전의 장비 통합 상태를 봅니다. 직전이 Initializing · Ready · Stopping이면 모든 Module이 Ready일 때 Ready로, 직전이 Running · Partial Running · Paused이면 Running · Partial Running · Paused의 Module 조건대로 돌아갑니다. 모든 Module이 Not Initialized면 Not Initialized로 돌아갑니다.
+- **Module이 Error에서 돌아갈 때:** 초기화가 필요하면 Not Initialized, 가동 중이 아니었거나 가동을 다시 하지 않으면 Ready, 가동 중이었고 가동을 다시 하면 Running, Paused였고 일시 정지를 이어 가면 Paused가 됩니다.
 
 - **Run 완료 조건:** Prep와 Dx 시스템에 할당된 모든 Sample의 검사가 끝나고, 결과가 D.A PC를 통해 T-IOS로 모두 전달되면 Run이 완료된 것으로 봅니다. 최종 판단은 L-IOS가 합니다.
 - Run 완료 전에는 모든 Module이 Ready여도 장비 통합 상태는 Running을 유지합니다.
-- 통신 단절이나 프로그램 자체 오류가 나면 어느 상태에서든 즉시 Error가 됩니다.
+- 시스템 오류(Prep · Dx Master 제어 시스템 사이 통신 단절, 프로그램 자체 오류 등)가 나면 Error가 아닌 모든 상태에서 Error가 되고, 시스템 오류가 복구될 때까지 Error를 유지합니다.
 
 ## 5. Door 잠금 해제
 
@@ -70,9 +73,9 @@
 | --- | --- | --- | --- |
 | Sample Storage | Door (Left) | 투입 Trolley 교체 | |
 | Sample Storage | Door (Right) | 회수 Trolley 교체 | |
-| Prep Consumable Storage | Door | Consumable Trolley 교체 | |
-| Sample Preparation | Door (Rear) (단디메카) | Waste Bin 비우기 | |
-| Sample Preparation | Door (로체시스템즈) | Waste Bin 비우기 | |
+| Consumable Storage | Door | Consumable Trolley 교체 | |
+| Sample Pre-treatment | Door (Rear) (단디메카) | Waste Bin 비우기 | |
+| Sample Pre-treatment | Door (로체시스템즈) | Waste Bin 비우기 | |
 | High-throughput Extraction | Door | DWP Film Waste Bin 비우기 | 표준형 장비만. 맞춤형 장비(재단)는 DWP Film Waste Bin이 서랍형이라 Door를 열지 않아도 되므로 가동 중 Door 개방을 허용하지 않음 |
 | Plate Sealing | Door | Sealer Film 보충, Sealer Waste Bin 비우기 | PCR Setup과 물리적 간섭 가능성이 있어 두 Module 상태를 함께 확인(AND). 둘 중 하나라도 Running에서 개방을 요청하면 두 Module 모두 Paused로 바꾼 뒤 개방 허용 |
 
@@ -126,7 +129,7 @@
 
 ## 8. 경광등
 
-장비 통합 상태와 Event에 따라 경광등 색과 점멸이 바뀝니다. 전체 26가지 경우는 [warning-light.csv](warning-light.csv)에 있습니다(출처: 씨젠 상태 정보 261021 > 경광등 시나리오, 규격 EN 60204-1:2018).
+장비 통합 상태와 Event에 따라 경광등 색과 점멸이 바뀝니다. 전체 26가지 경우는 [warning-light.csv](warning-light.csv)에 있습니다(출처: 씨젠 상태 정보 261119 > 경광등 시나리오, 규격 EN 60204-1:2018).
 
 | 점멸 | ON | OFF |
 | --- | --- | --- |

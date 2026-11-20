@@ -8,7 +8,7 @@ cids: []
 status: 확정
 version:
 date: 2026-11-02
-sources: [씨젠 상태 정보 261021 > 경광등 시나리오]
+sources: [씨젠 상태 정보 261119 > 경광등 시나리오]
 provisional: []
 alerts: []
 data: [policy/warning-light.csv]
@@ -34,7 +34,7 @@ replaced_by:
 
 ## 근거
 
-- 씨젠 상태 정보 261021 > 경광등 시나리오
+- 씨젠 상태 정보 261119 > 경광등 시나리오
 
 ## 변경 이력
 

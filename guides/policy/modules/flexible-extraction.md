@@ -19,7 +19,7 @@ STARlet으로 Cartridge 방식 핵산 추출을 합니다. Sample이 적을 때 
 
 ## 흐름에서
 
-- **받는 것:** Sample Preparation의 96-DWP (추정)
+- **받는 것:** Sample Pre-treatment의 96-DWP (추정)
 - **내보내는 것:** 추출물 → PCR Setup (추정)
 - 할당: Prioritize Cost Reduction이고 Sample 수가 기준 미만이면 이 Module 먼저 (POL-TST-004)
 

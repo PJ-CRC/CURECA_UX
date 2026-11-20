@@ -20,7 +20,7 @@ Sample을 담은 Trolley를 받아 Prep 시스템에 넣고, 처리한 Sample을
 
 1. Run 하나에 Sample Trolley 한 대. 새 Trolley를 넣으면 [Run Start]를 다시 눌러야 그 Trolley 검사가 시작됨 (POL-LOD-001 규칙 5)
 2. [Run Start] 뒤에는 Inbound Trolley에 Sample이 남아 있으면 도킹 해제 불가. 남은 Trolley를 빼려면 Run을 멈춘 뒤 빼고, 들어가지 못한 Sample은 Ordered로 돌아감 (POL-LOD-001 규칙 6 · 7)
-3. 마지막 Sample이 Sample Preparation으로 넘어가 Inbound Trolley가 비면 Run 중에도 Inbound · Outbound를 함께 바꿀 수 있음. 처리 중이던 Rack은 새 Outbound Trolley 1F 빈 Tray로 돌아옴 (POL-LOD-001 규칙 6)
+3. 마지막 Sample이 Sample Pre-treatment로 넘어가 Inbound Trolley가 비면 Run 중에도 Inbound · Outbound를 함께 바꿀 수 있음. 처리 중이던 Rack은 새 Outbound Trolley 1F 빈 Tray로 돌아옴 (POL-LOD-001 규칙 6)
 4. 그래서 Inbound Trolley 1F에는 Tray를 두지 않고, Outbound Trolley 1F에는 빈 Tray를 둠 (POL-LOD-001 규칙 8)
 5. 가동 중 Door (Left) · (Right)는 Trolley 교체를 위해 조건부로 열 수 있음 (`policy/equipment-states.md` 5절)
 6. Sample Rack이 1개라도 남아 있으면 Tray · Trolley 값이 리셋되지 않고 사용 중으로 봄 (`policy/policy-backlog.md` 13번 상세)

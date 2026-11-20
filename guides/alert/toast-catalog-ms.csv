@@ -1,0 +1,19 @@
+ID,종류,등급,발생 조건,제목 (Main title),부제 (Sub title),사용 화면 (원문),확인할 점
+MS_Toast_001,Toast,Success,Lot 구성 완료 화면 진입,The Lot grouping is complete.,,LTG-01-02,
+MS_Toast_002,Toast,Success,IC 구성 완료 화면 진입,The IC setup is complete.,,LTG-02-02,
+MS_Toast_003,Toast,Success,항목 또는 위치를 정상으로 스캔한 경우 / ㄴ 교체한 경우는 MS_Toast_018,The scan has been completed.,Scanned [Type] - [UI 표기명] (N/M),"SAM-02-02, SAM-03-02, LCR-01-03, 01-03-01, LCR-02-02, DXI-01~06",Sub title은 LCR-01-03 항목 스캔에서만 노출 / ㄴ tray slot 스캔 시 Main만 노출 / ㄴ Sub의 N/M: 시약은 테스트 수로 표기 / ㄴ 예: 24 rxns / 192 rxns
+MS_Toast_004,Toast,Success,socket 적재 완료 화면 진입,The socket setup is complete.,,"SAM-01-04, PKI-04, LPR-04, LMM-03",
+MS_Toast_005,Toast,Info,socket보다 tray slot을 먼저 스캔한 경우,Scan the socket before scanning the tray slot.,,SAM-02-02,
+MS_Toast_006,Toast,Success,tray 적재 완료 화면 진입,The tray setup is complete.,,"SAM-02-03, LCR-01-04",
+MS_Toast_007,Toast,Info,tray보다 trolley floor를 먼저 스캔한 경우,Scan the tray before scanning the trolley floor.,,"SAM-03-02, LCR-02-02",
+MS_Toast_008,Toast,Success,trolley 적재 완료 화면 진입,The trolley setup is complete.,,"SAM-03-03, LCR-02-03",
+MS_Toast_009,Toast,Info,소모품/시약보다 tray slot을 먼저 스캔한 경우,Scan the consumable or reagent before scanning the tray slot.,,LCR-01-03,
+MS_Toast_010,Toast,Info,"Step 1 guide에서 빈 socket스캔한 뒤, Standard Tube 외 항목을 스캔한 경우",Scan a Standard Tube.,,LCR-01-03-01,
+MS_Toast_011,Toast,Info,"Step 1 guide에서 빈 frame스캔한 뒤, Tub 외 항목을 스캔한 경우",Scan a Tub.,,LCR-01-03-01,
+MS_Toast_012,Toast,Success,storage QR을 정상으로 스캔한 경우,The scanned storage unit has been opened.,,DXI,
+MS_Toast_013,Toast,Info,socket보다 storage slot을 먼저 스캔한 경우,Scan the socket before scanning the storage slot.,,"DXI-01, 06",
+MS_Toast_014,Toast,Info,소모품/시약보다 storage slot을 먼저 스캔한 경우,Scan the consumable or reagent before scanning the storage slot.,,"DXI-02, 04",
+MS_Toast_015,Toast,Success,[Done] 선택 또는 storage unit을 닫은 경우 / ㄴ 변경 사항 없으면 미노출,DX storage loading is complete.,,DXI-01~07,
+MS_Toast_016,Toast,Success,[Apply] 선택,Applied film count for {module index},Select [Done] to complete saving.,DXI-07,
+MS_Toast_017,Toast,Success,storage QR을 정상으로 스캔한 경우,The scanned storage unit has been opened.,"Empty the Waste Bin, then press [Waste Bin] to confirm.",WBM,
+MS_Toast_018,Toast,Info,위치 스캔 전에 다른 항목을 스캔해 교체된 경우,The {item} has been replaced.,Scan the {position}.,"SAM-02-02, SAM-03-02, LCR-01-03, LCR-02-02, DXI-01, 02, 04, 06",{item} : socket / tray / consumable or reagent / {position} : tray slot / trolley floor / storage slot / LCR-01-03은 Sub title을 Scanned [Type] - [UI 표기명] (N/M)로 노출

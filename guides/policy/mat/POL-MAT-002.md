@@ -8,10 +8,10 @@ cids: [LI-TSS-PSI-SAM-01-03, LI-TSS-PSI-SAM-02-02, LI-TSS-PSI-SAM-03-02, LI-TSS-
 status: 확정
 version:
 date: 2026-11-03
-sources: [정책서_2026.08.28 > Material Setup > 데이터 저장, MS 적재 정책서 (20261102) > common-loading-policy 2.5·5장, policy/alert-catalog-ms.csv, 2026-11-03 사용자 답변 (MS5), 팀원 POL-MAT-05]
+sources: [정책서_2026.08.28 > Material Setup > 데이터 저장, MS 적재 정책서 (20261102) > common-loading-policy 2.5·5장, alert/alert-catalog-ms.csv, 2026-11-03 사용자 답변 (MS5), 팀원 POL-MAT-05]
 provisional: []
 alerts: [MS_Alert_032, MS_Confirm_024]
-data: [policy/alert-catalog-ms.csv]
+data: [alert/alert-catalog-ms.csv]
 replaced_by:
 ---
 # POL-MAT-002 변경 예정 상태와 [Done] 저장
@@ -38,7 +38,7 @@ replaced_by:
 
 - 정책서_2026.08.28 "데이터 저장" ([Done] 클릭 시 저장, 저장 전 이탈하면 저장되지 않음)
 - MS 적재 정책서 (20261102) common-loading-policy 2.5, 5.1 ~ 5.4
-- `policy/alert-catalog-ms.csv` MS_Alert_032, MS_Confirm_024
+- `alert/alert-catalog-ms.csv` MS_Alert_032, MS_Confirm_024
 - 2026-11-03 사용자 답변 (MS5): 메뉴 이탈 컨펌은 모든 화면에 같게 들어감
 
 ## 변경 이력

@@ -24,7 +24,7 @@ replaced_by:
 
 1. 검사가 진행 중인 Trolley가 있을 때 STAT Storage에 Sample을 넣으면:
    - STAT Sample이 없으면: 진행 중인 Trolley의 Sample을 모두 처리한 뒤 이어서 진행함
-   - STAT Sample이 1개라도 있으면: Sample Preparation이 Inbound Trolley에서 가져와 처리하던 Socket까지만 처리하고, 그다음 STAT에 넣은 Sample을 처리함. Sample Preparation은 Socket을 하나씩 가져와 다 처리하면 다음 Socket을 가져옴 (MT-20260828-01, 2026-11-06 사용자 설명).
+   - STAT Sample이 1개라도 있으면: Sample Pre-treatment가 Inbound Trolley에서 가져와 처리하던 Socket까지만 처리하고, 그다음 STAT에 넣은 Sample을 처리함. Sample Pre-treatment는 Socket을 하나씩 가져와 다 처리하면 다음 Socket을 가져옴 (MT-20260828-01, 2026-11-06 사용자 설명).
 2. 이때 STAT Sample은 별도 Batch로 잡힘 (POL-SMP-004 규칙 3).
 3. Test Order와 Run 준비 화면은 Total Sample과 함께 STAT Sample 수를 따로 보여 줌.
 4. Inbound Trolley에서 온 Sample과 STAT Storage에서 온 Sample은 같은 96-DWP에 분주하지 않음. Inbound Trolley Sample의 96-DWP가 다 차지 않았어도 STAT Sample은 다른 96-DWP에 분주해 나눠 검사함 (MT-20260828-01, 2026-11-06 사용자 설명).
@@ -50,3 +50,4 @@ replaced_by:
 | --- | --- | --- | --- |
 | | 2026-11-02 | 최초 작성 (이전 ID: 팀원 POL-SMP-10) | |
 | | 2026-11-06 | STAT은 처리 중이던 Socket까지 마친 뒤 처리(규칙 1), 96-DWP를 나눔(규칙 4), 앞 Batch TAT는 계속 늘어남(규칙 5) | MT-20260828-01, 사용자 설명 |
+| | 2026-11-18 | Module · Unit 이름 바꿈: Prep Consumable Storage → Consumable Storage, Sample Preparation Module → Sample Pre-treatment, Sample Pretreatment → Sample Processing, Sample Aliquot → Sample Aliquoting. 검사 단계 · Prep 시스템의 Sample Preparation은 그대로 | 사용자 결정 (서보경), `glossary/modules.csv` · `module-units.csv` |

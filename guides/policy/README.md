@@ -12,6 +12,5 @@
 | L-IOS Client 시스템별 기능 분류 | L-IOS Client Mode(Main Mode / Console Mode / MS Mode)별 메뉴·기능. [client-mode.md](client-mode.md), [client-mode-matrix.csv](client-mode-matrix.csv) | 초안 v0.2 (2026-11-12, DS-0001). 고객사 제안을 우리가 검토·확정해 개발사에 전달 |
 | 권한 매트릭스 | User Type(Service / Admin / User)별 메뉴·기능 허용. [permission.md](permission.md), [permission-matrix.csv](permission-matrix.csv) | 초안 완료 (2026-10-30). 30행 모두 확정 |
 | 장비 상태 정의서 | 상태값, 전이 조건, 상태별 허용 동작과 화면 표시. [equipment-states.md](equipment-states.md), [integrated-state-transitions.csv](integrated-state-transitions.csv) | 초안 v0.1 (2026-10-30). 확인 필요 6개 |
-| 알럿·안내 카탈로그 | 알럿 ID, 발생 조건, 심각도, 문구·버튼. [alert-catalog.md](alert-catalog.md), [alert-catalog.csv](alert-catalog.csv) | 초안 v0.2 (2026-11-02). 알럿 관리 페이지 기준 73개 ID |
 | 경광등 | 장비 통합 상태·Event별 경광등 색과 점멸. [warning-light.csv](warning-light.csv) | 씨젠 원본 그대로 (2026-11-02) |
 | 정책서 반영 대기 | 확정되었지만 정책서에 아직 없거나 다른 내용. [policy-backlog.md](policy-backlog.md) | 정책서 정제 때 먼저 읽음 |

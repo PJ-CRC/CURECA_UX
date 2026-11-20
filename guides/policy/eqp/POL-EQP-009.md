@@ -26,7 +26,7 @@ replaced_by:
 1. 같은 Module이 2대 이상 설치되어 있을 때 Module마다 Enabled를 설정할 수 있음.
 2. 같은 Module이 2대 이상일 때 최소 1대는 Enabled여야 하며, 모두 Disabled로 저장하면 Alert_014를 표시함.
 3. Module이 1대일 때 그 Module은 Disabled로 바꿀 수 없음 (Alert_014).
-4. 한 Module 안에 같은 Device Unit이 2대 이상 설치되어 있을 때 Device Unit마다 Enabled를 설정할 수 있음. 예: Universal PCR의 CFX96, Plate Sealing의 Sealer, Sample Preparation에 Sample Pretreatment가 위아래로 2대 설치된 경우
+4. 한 Module 안에 같은 Device Unit이 2대 이상 설치되어 있을 때 Device Unit마다 Enabled를 설정할 수 있음. 예: Universal PCR의 CFX96, Plate Sealing의 Sealer, Sample Pre-treatment에 Sample Processing이 위아래로 2대 설치된 경우
 5. Module이 Enabled일 때 그 안의 같은 Device Unit 중 최소 1대는 Enabled여야 하며, 모두 Disabled로 저장하면 Alert_015를 표시함.
 6. Module을 Disabled로 바꾸면 그 Module의 Device Unit은 자동으로 Disabled가 되고 Enabled를 선택할 수 없음. Module을 다시 Enabled로 바꾸면 Device Unit도 Enabled가 됨.
 7. 장비 통합 상태가 Ready 또는 Not Initialized이고 장비 모듈 상태가 Ready 또는 Not Initialized일 때만 Enabled를 바꿀 수 있음. 장비 모듈 상태가 Running이면 Alert_013을 표시함.
@@ -48,3 +48,4 @@ replaced_by:
 | 버전 | 날짜 | 내용 | 근거 (PD, PV, CR, ADR) |
 | --- | --- | --- | --- |
 | | 2026-11-02 | 최초 작성 (이전 ID: 팀원 POL-INS-02) | |
+| | 2026-11-18 | Module · Unit 이름 바꿈: Prep Consumable Storage → Consumable Storage, Sample Preparation Module → Sample Pre-treatment, Sample Pretreatment → Sample Processing, Sample Aliquot → Sample Aliquoting. 검사 단계 · Prep 시스템의 Sample Preparation은 그대로 | 사용자 결정 (서보경), `glossary/modules.csv` · `module-units.csv` |
