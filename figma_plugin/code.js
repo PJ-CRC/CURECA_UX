@@ -285,6 +285,10 @@ figma.ui.onmessage = async msg => {
     }
     // ── 다음 단계로 옮기기(transfer): 읽기 · 이미지 · 만들기 (아래 XFER 함수들) ──
     if (msg.type === 'xfer-scan') { figma.ui.postMessage(Object.assign({ type: 'xfer-scan-done', reqId: msg.reqId }, await xferScan(msg.job))); return; }
+    if (msg.type === 'xfer-select') { figma.ui.postMessage(Object.assign({ type: 'xfer-select-done', reqId: msg.reqId }, await xferSelect(msg.job, !!msg.quick))); return; }
+    if (msg.type === 'xfer-paste-prep') { figma.ui.postMessage(Object.assign({ type: 'xfer-paste-prep-done', reqId: msg.reqId }, await xferPastePrep(msg.job))); return; }
+    if (msg.type === 'xfer-paste-scan') { figma.ui.postMessage(Object.assign({ type: 'xfer-paste-scan-done', reqId: msg.reqId }, await xferPasteScan(msg.job, msg.before || []))); return; }
+    if (msg.type === 'xfer-paste-place') { figma.ui.postMessage(Object.assign({ type: 'xfer-paste-place-done', reqId: msg.reqId }, await xferPastePlace(msg.job, msg.ids || [], msg.record || []))); return; }
     if (msg.type === 'xfer-check') { figma.ui.postMessage(Object.assign({ type: 'xfer-check-done', reqId: msg.reqId }, await xferCheck(msg.job))); return; }
     // 창 크기: 평소 원만(96×76), 원에 마우스를 올리면 자세히(280×112)
     if (msg.type === 'fit') { figma.ui.resize(Math.max(70, Math.min(400, Math.round(msg.w || 96))), Math.max(60, Math.min(400, Math.round(msg.h || 76)))); return; }
@@ -435,4 +439,79 @@ async function xferScan(job) {
     frames.push({ node: f[0], name: f[1], sig: await xSig(n), rec: skip.has(f[0]) ? 1 : 0 });   // 기록이 있는 ② 화면도 읽는다(①과 내용 비교)
   }
   return { frames };
+}
+
+// ════════ 복사 · 붙여넣기 옮기기(transfer mode paste, 2026-11-20) ════════
+// 플러그인은 파일끼리 복사할 수 없지만 Figma의 복사(Ctrl+C) · 붙여넣기(Ctrl+V)는 컴포넌트 연결까지 그대로 옮긴다.
+//  ① 플러그인: 옮길 화면을 골라 두고(선택 · 화면에 보이게) 화면마다 해시 · 확인값을 낸다(xferSelect)
+//  ② 플러그인: 작업 페이지를 열고 선택을 비운 뒤 지금 맨 위 노드 목록을 적어 둔다(xferPastePrep) → 서버가 키를 대신 누름(안 되면 사람이)
+//   → 새로 생긴 맨 위 노드를 찾고(xferPasteScan) → 제자리에 놓는다(xferPastePlace: 새 화면은 기존 내용 아래, 예전에 옮긴 화면은 그 자리에서 바꿔 끼움)
+async function xferSelect(job, quick) {   // quick: 다시 고르기만(해시 · 확인값은 처음 고를 때 냈음)
+  xMains = {};
+  const R = xReader(), from = job.from || {};
+  let pg = from.pageId ? await figma.getNodeByIdAsync(from.pageId) : null;
+  const nodes = [];
+  for (const id of from.nodeIds || []) { const n = await figma.getNodeByIdAsync(id); if (n && !n.removed) { nodes.push(n); if (!pg || pg.type !== 'PAGE') { let p = n; while (p && p.type !== 'PAGE') p = p.parent; pg = p; } } }
+  if (!pg || pg.type !== 'PAGE' || !nodes.length) return { frames: [] };
+  await figma.setCurrentPageAsync(pg);
+  const here = nodes.filter(n => { let p = n; while (p && p.type !== 'PAGE') p = p.parent; return p && p.id === pg.id; });
+  figma.currentPage.selection = here;
+  try { figma.viewport.scrollAndZoomIntoView(here); } catch (e) {}
+  const frames = [];
+  if (quick) return { frames: here.map(n => ({ from: n.id, name: n.name })) };
+  for (const n of here) { const o = await R.ser(n); delete o.x; delete o.y; frames.push({ from: n.id, name: n.name, hash: xfnv(JSON.stringify(o)), sig: await xSig(n) }); }
+  return { frames };
+}
+async function xferPastePrep(job) {
+  const to = job.to || {};
+  const page = await figma.getNodeByIdAsync(to.pageId);
+  if (!page || page.type !== 'PAGE') throw new Error('받는 작업 페이지를 찾지 못했습니다');
+  await page.loadAsync();
+  await figma.setCurrentPageAsync(page);
+  figma.currentPage.selection = [];   // 선택된 프레임이 있으면 그 안에 붙으므로 비운다
+  // 붙을 자리: 기존 내용 아래쪽 빈 곳이 화면 가운데 오게(붙은 뒤 xferPastePlace가 제자리로 옮긴다)
+  let minX = Infinity, maxY = -Infinity;
+  for (const c of page.children) { minX = Math.min(minX, c.x); maxY = Math.max(maxY, c.y + c.height); }
+  if (isFinite(minX)) { try { figma.viewport.center = { x: minX + 2000, y: maxY + 3000 }; } catch (e) {} }
+  return { before: page.children.map(c => c.id) };
+}
+async function xferPasteScan(job, before) {
+  const page = await figma.getNodeByIdAsync((job.to || {}).pageId);
+  if (!page || page.type !== 'PAGE') return { added: [] };
+  const had = new Set(before);
+  return { added: page.children.filter(c => !had.has(c.id)).map(c => ({ id: c.id, name: c.name })) };
+}
+async function xferPastePlace(job, ids, record) {
+  const page = await figma.getNodeByIdAsync((job.to || {}).pageId);
+  if (!page || page.type !== 'PAGE') throw new Error('받는 작업 페이지를 찾지 못했습니다');
+  await page.loadAsync();
+  const pasted = [];
+  for (const id of ids) { const n = await figma.getNodeByIdAsync(id); if (n && !n.removed && n.parent && n.parent.id === page.id) pasted.push(n); }
+  // 붙은 노드 ↔ 원본 화면: 이름이 같은 것끼리 순서대로, 남은 것은 순서대로
+  const frames = job.frames || [], used = new Set(), pair = [];
+  for (const f of frames) { const n = pasted.find(p => !used.has(p.id) && p.name === f.name); if (n) { used.add(n.id); pair.push({ f, n }); } }
+  const rest = pasted.filter(p => !used.has(p.id));
+  frames.filter(f => !pair.some(x => x.f === f)).forEach((f, i) => { if (rest[i]) { used.add(rest[i].id); pair.push({ f, n: rest[i] }); } });
+  // 예전에 옮긴 화면: 받는 쪽 기록의 노드가 이 작업 페이지에 아직 있으면 그 자리에서 바꿔 끼운다
+  const onPage = (n) => { for (let p = n; p; p = p.parent) if (p.type === 'PAGE') return p.id === page.id; return false; };
+  const recOf = {}; (record || []).forEach(r => { if (r && r.from && r.from.key === (job.from || {}).key && r.to && r.to.node) recOf[r.from.node] = r.to.node; });
+  const olds = {};
+  for (const x of pair) { const k = recOf[x.f.from]; if (!k) continue; const o = await figma.getNodeByIdAsync(k); if (o && !o.removed && onPage(o) && !used.has(o.id)) olds[x.f.from] = o; }
+  // 새 화면: 붙은 모양(서로의 배치)을 그대로 두고 통째로 기존 내용 아래(400px 띄움)로
+  const pastedSet = new Set(pasted.map(p => p.id));
+  let minX = Infinity, maxY = -Infinity, has = false;
+  for (const c of page.children) { if (pastedSet.has(c.id) || c.name === XREG) continue; has = true; minX = Math.min(minX, c.x); maxY = Math.max(maxY, c.y + c.height); }
+  const fresh = pair.filter(x => !olds[x.f.from]);
+  let sx = Infinity, sy = Infinity; fresh.forEach(x => { sx = Math.min(sx, x.n.x); sy = Math.min(sy, x.n.y); });
+  const dx = has ? minX - sx : 0, dy = has ? maxY + 400 - sy : 0;
+  const made = [];
+  for (const x of pair) {
+    const old = olds[x.f.from];
+    if (old) { const host = old.parent, at = old.x, bt = old.y; host.insertChild(host.children.indexOf(old), x.n); x.n.x = at; x.n.y = bt; old.remove(); }
+    else { x.n.x += dx; x.n.y += dy; }
+    made.push({ from: x.f.from, to: x.n.id, name: x.n.name, hash: x.f.hash, replaced: !!old });
+  }
+  figma.currentPage.selection = made.map(m => pasted.find(p => p.id === m.to)).filter(Boolean);
+  try { figma.viewport.scrollAndZoomIntoView(figma.currentPage.selection); } catch (e) {}
+  return { made, extra: pasted.length - pair.length };
 }

@@ -1045,7 +1045,7 @@ on('GET', '/api/sheet/data', async ({ q, T, res, send, sendJson }) => {
 });
 
 // 쓰기 API(2단계)
-const helpers = { azureItems, protoSnapshot, testKey, projDir, readProj, keyOf, workKey, readMinute, readNotes, noteKey, readGuides, origPath, writeOrig, keepFirst, mainName, applyKeys, appliedDocs, agentInfo, findClaudeCode, sheetCheck, setupEnv: () => { envCache = null; return setupEnv(); } };
+const helpers = { pasteKeys: (j, io) => require('./keys').pasteKeys(j, io), showTab: (key) => require('./keys').showTab(key), winState: () => require('./keys').winState(), restoreWin: (s) => require('./keys').restoreWin(s), azureItems, protoSnapshot, testKey, projDir, readProj, keyOf, workKey, readMinute, readNotes, noteKey, readGuides, origPath, writeOrig, keepFirst, mainName, applyKeys, appliedDocs, agentInfo, findClaudeCode, sheetCheck, setupEnv: () => { envCache = null; return setupEnv(); } };
 require('./figma')(on, helpers);   // Figma 토큰(REST API) — 캡처. writes.js가 요청 완료 때 helpers.figmaAfterDone을 부른다
 require('./writes')(on, helpers);
 

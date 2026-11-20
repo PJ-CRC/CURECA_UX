@@ -112,18 +112,18 @@ foreach ($dir in $places) { $lnk = Join-Path $dir 'Figma AI Run.lnk'; try { if (
       log('멈춘 요청을 대기로 되돌림: ' + done.map((x) => x.id).join(', '));
     }
     const jj = core.readJson(C.jobFile);
-    // 예전 옮기기(보내기, mode copy) 작업이 남아 있으면 「실패」로 — 플러그인이 더는 받지 않는다(2026-11-20 없앰)
-    const legacy = (x) => x && x.kind === 'transfer' && x.mode !== 'check' && ['대기', '진행 중'].includes(x.status);
+    // 예전 다시 그리는 옮기기(mode copy) 작업이 남아 있으면 「실패」로 — 플러그인이 더는 받지 않는다(2026-11-20 없앰)
+    const legacy = (x) => x && x.kind === 'transfer' && !['check', 'paste'].includes(x.mode) && ['대기', '진행 중'].includes(x.status);
     if (jj && core.arr(jj.items).some(legacy)) {
       const now = core.now();
-      for (const x of core.arr(jj.items)) if (legacy(x)) { x.status = '실패'; x.note = '다음 단계로 보내기는 없앴습니다 — Figma에서 화면을 복사해 붙여 넣고 「②와 비교」로 확인하세요'; x.updatedAt = now; }
+      for (const x of core.arr(jj.items)) if (legacy(x)) { x.status = '실패'; x.note = '다시 그리는 옮기기는 없앴습니다 — 비교 창에서 화면을 골라 「복사해 붙여넣기」로 옮기세요'; x.updatedAt = now; }
       jj.version = (parseInt(jj.version, 10) || 0) + 1; core.writeJson(C.jobFile, jj);
     }
     if (jj && core.arr(jj.items).some((x) => x && x.status === '진행 중' && old(x))) {
       const now = core.now(), done = [];
       for (const x of core.arr(jj.items)) if (x && x.status === '진행 중' && old(x)) {
         // 옮기기 「만들기」는 되돌려 다시 하면 프레임이 두 번 생긴다 → 실패로(사람이 받는 파일을 확인하고 다시 보내기, 2026-11-17)
-        if (x.kind === 'transfer' && x.phase === 'build') { x.status = '실패'; x.note = '만들다 10분 동안 소식이 없어 멈춤 — 받는 파일 작업 페이지에 일부가 만들어졌을 수 있습니다. 확인한 뒤 다시 보내세요'; }
+        if (x.kind === 'transfer' && (x.phase === 'build' || x.phase === 'pasting')) { x.status = '실패'; x.note = '만들다 10분 동안 소식이 없어 멈춤 — 받는 파일 작업 페이지에 일부가 만들어졌을 수 있습니다. 확인한 뒤 다시 보내세요'; }
         else { x.status = '대기'; x.takenBy = ''; x.note = note; }
         x.updatedAt = now; done.push(x.id);
       }

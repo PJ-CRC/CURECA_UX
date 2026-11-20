@@ -27,7 +27,7 @@
 | 할 일 | 읽을 문서 |
 |---|---|
 | Workbench 수정 요청(`PENDING` · `RESUME`, R0xx — 흐름은 그 팀 작업규칙대로), 요청 감시, 채팅으로 Figma를 고쳤을 때 이력 · 캡처 | `docs/claude/requests.md` (작업규칙에 단계 문서가 있으면 `requests-flow.md`도) |
-| 팀 프로젝트 다음 단계와 비교(플러그인 작업 `transfer` check — 옮기기 「보내기」는 2026-11-20에 없앰, 옮기기는 사람이 Figma에서 복사, 참고용) | `docs/claude/transfer.md` |
+| 팀 프로젝트 다음 단계와 비교 · 복사 옮기기(플러그인 · 서버 작업 `transfer` check · paste — Claude는 옮기지 않음, 참고용) | `docs/claude/transfer.md` |
 | 작업 대기열(`JOBS`) 공통, `catalog` 프레임 목록 · `capture` 캡처 · `text` 글 수정(플러그인) | `docs/claude/jobs.md` |
 | `guide` 새 UX 문서 · `guide-edit` 문서 수정 · `guide-check` 고칠 화면 · 연관 항목 찾기, 파일형 문서 | `docs/claude/ux-docs.md` (새 문서는 `ux-docs-new.md`, 새 문서 · 작업규칙 수정은 `docs/claude/system-basis.md`도, 지우기 · 다운로드 · Wiki · 시트 묶음 · 템플릿은 `ux-docs-more.md`) |
 | `prototype` 만들기 · `prototype-edit` 수정 · `prototype-sync` Figma 맞추기 | `docs/claude/prototype.md` |
