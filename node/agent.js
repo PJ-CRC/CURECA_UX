@@ -45,12 +45,15 @@ function now() {
   const d = new Date(), p = (n) => String(n).padStart(2, '0'), off = -d.getTimezoneOffset(), s = off >= 0 ? '+' : '-', a = Math.abs(off);
   return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}${s}${p(Math.floor(a / 60))}:${p(a % 60)}`;
 }
-const St = { status: 'idle', msg: '' }; let savedAt = 0;
+// act · tool · ids(2026-11-20): 처리 중일 때 Claude가 마지막으로 움직인 시각 · 지금 쓰는 도구 · 처리 중인 요청 · 작업 ID — Workbench 답변에 「살아 있음」을 보인다
+const St = { status: 'idle', msg: '', act: '', tool: '', ids: [] }; let savedAt = 0;
 // 이 에이전트 코드의 버전(파일 해시). 서버가 지금 agent.js와 다르면(업데이트 · 수정) 중지 → 다시 띄운다(2026-11-18)
 const VER = (() => { try { return crypto.createHash('sha1').update(fs.readFileSync(__filename)).digest('hex').slice(0, 12); } catch (e) { return ''; } })();
 function save(status, msg) {
   if (status) St.status = status; if (msg != null) St.msg = msg;
-  try { fs.writeFileSync(STATE, JSON.stringify({ at: now(), host: HOST, pid: process.pid, status: St.status, msg: St.msg, ver: VER, claude: CLAUDE }), 'utf8'); } catch (e) {}
+  if (St.status !== 'working') { St.act = ''; St.tool = ''; St.ids = []; }
+  const live = St.status === 'working' ? { act: St.act, tool: St.tool, ids: St.ids } : {};
+  try { fs.writeFileSync(STATE, JSON.stringify(Object.assign({ at: now(), host: HOST, pid: process.pid, status: St.status, msg: St.msg, ver: VER, claude: CLAUDE }, live)), 'utf8'); } catch (e) {}
   savedAt = Date.now();
 }
 function log(s) {
@@ -231,6 +234,13 @@ async function sendTurn(text) {
     if (m.type === 'system' && m.subtype === 'init') started = true;
     if (!started && !(m.type === 'result' && m.is_error)) continue;   // 로그인 오류 등은 init 없이 올 수 있다
     if (m.type === 'assistant' && m.message && m.message.usage) { const u = m.message.usage; S.ctx = (u.input_tokens || 0) + (u.cache_read_input_tokens || 0) + (u.cache_creation_input_tokens || 0); }
+    // 살아 있음: 출력이 올 때마다 움직인 시각, 도구를 부르면 결과가 올 때까지 그 이름(빈 값 = 생각 · 답 쓰는 중). 5초마다만 파일에 쓴다
+    if (m.type === 'assistant' || m.type === 'user') {
+      St.act = now();
+      if (m.type === 'assistant') { const tu = ((m.message && m.message.content) || []).filter((c) => c && c.type === 'tool_use').pop(); St.tool = tu ? String(tu.name || '') : ''; }
+      else St.tool = '';
+      if (Date.now() - savedAt >= 5000) save(null, null);
+    }
     if (m.type === 'result') {
       S.turns++; S.last = Date.now();
       if (m.modelUsage) for (const k of Object.keys(m.modelUsage)) if (m.modelUsage[k] && m.modelUsage[k].contextWindow) S.win = Number(m.modelUsage[k].contextWindow);
@@ -404,8 +414,9 @@ async function main() {
     if (S) S.keep = null;
     if (!S) startSession();
     if (!S) { save('error', 'Claude 세션을 띄우지 못했습니다. 기록: workbench/.agent.log'); await sleep(30000); continue; }
-    save('working', '처리 중: ' + out.split('\n').join(' · ') + usTxt); log((resume ? '처리 시작(같은 세션에 답 보냄): ' : '처리 시작: ') + out + usTxt);
     S.turnIds = out.match(/\b[RJ]\d{3,}\b/g) || [];
+    St.ids = S.turnIds.slice(); St.act = now(); St.tool = '';
+    save('working', '처리 중: ' + out.split('\n').join(' · ') + usTxt); log((resume ? '처리 시작(같은 세션에 답 보냄): ' : '처리 시작: ') + out + usTxt);
     const r = await sendTurn(resume ? makeResume(out) : makePrompt(out));
     log(`처리 끝 (ok ${r.ok}${r.ms ? ', ' + Math.round(r.ms / 1000) + '초' : ''})\n${r.text}`);
     if (r.ok && !r.cancelled && !r.dead) await saveRaw(S.turnIds || [], r.text);
