@@ -1,18 +1,23 @@
 {
-  "reportAt": "2026-11-20T12:40:54+09:00",
+  "reportAt": "2026-11-20T12:41:54+09:00",
   "pc": "BREXui-MacBookPro-2.local",
   "slug": "brexui-macbookpro-2-local",
   "user": "유병규",
   "os": "mac",
   "version": "0.30.2",
-  "alive": true,
-  "status": "idle",
-  "msg": "요청을 기다리는 중",
-  "statusAt": "2026-11-20T12:40:45+09:00",
+  "alive": false,
+  "status": "stopped",
+  "msg": "중지됨",
+  "statusAt": "2026-11-20T12:41:53+09:00",
   "claude": "앱 내장",
   "claudeWay": "cli",
   "autoWatch": true,
   "events": [
+    {
+      "at": "2026-11-20T12:41:53+09:00",
+      "kind": "stop",
+      "text": "감시 중지"
+    },
     {
       "at": "2026-11-19T16:10:59+09:00",
       "kind": "start",
