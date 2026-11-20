@@ -1,0 +1,12 @@
+{
+  "rev": "20261120-111102_anjongbeom-ui-macbookair-2-local",
+  "by": "Claude",
+  "at": "2026-11-20T11:11:02+09:00",
+  "note": "언어셋 › 7. Admin: 새 엑셀(v2.35_261119)로 덮어씀 — Common-txt-568 행이 두 줄로 쪼개져 있던 것을 한 행으로 바로잡음(문구는 같음)",
+  "base": "language-set/sheet10.csv",
+  "pc": "anjongbeom-ui-MacBookAir-2.local",
+  "req": "언어셋 › 표지-STAgora-언어셋: 이게 언어셋 어제 날짜 기준 최종본이야. 현재 언어셋에 등록된 문서를 덮어씌워줘.",
+  "jobId": "J069",
+  "file": "language-set/sheet10.csv",
+  "orig": true
+}
