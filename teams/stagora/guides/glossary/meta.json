@@ -55,7 +55,7 @@
   "books": {
     "language-set": {
       "title": "언어셋",
-      "source": "language-set/source/2.STAgora-언어셋-통합본_v2.31_261110.xlsx",
+      "source": "language-set/source/2.STAgora-언어셋-통합본_v2.35_261119.xlsx",
       "sheets": {
         "language-set/sheet01.csv": "표지-STAgora-언어셋",
         "language-set/sheet02.csv": "문서이력",
@@ -108,7 +108,9 @@
           72,
           72,
           72,
-          72
+          72,
+          64,
+          64
         ],
         "language-set/sheet02.csv": [
           29,
