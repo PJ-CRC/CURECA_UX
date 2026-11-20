@@ -1,18 +1,23 @@
 {
-  "reportAt": "2026-11-20T16:52:45+09:00",
+  "reportAt": "2026-11-20T16:54:46+09:00",
   "pc": "DAYE",
   "slug": "daye",
   "user": "정다예",
   "os": "windows",
   "version": "0.31.1",
-  "alive": false,
-  "status": "stopped",
-  "msg": "중지됨",
-  "statusAt": "2026-11-20T16:52:35+09:00",
+  "alive": true,
+  "status": "idle",
+  "msg": "준비 확인 중 (Claude 로그인 · Figma 연결)",
+  "statusAt": "2026-11-20T16:54:37+09:00",
   "claude": "따로 설치",
   "claudeWay": "",
   "autoWatch": true,
   "events": [
+    {
+      "at": "2026-11-20T16:54:37+09:00",
+      "kind": "start",
+      "text": "감시 시작"
+    },
     {
       "at": "2026-11-20T16:52:35+09:00",
       "kind": "stop",
