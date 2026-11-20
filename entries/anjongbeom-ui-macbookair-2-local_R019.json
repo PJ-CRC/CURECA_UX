@@ -2,8 +2,8 @@
   "id": "anjongbeom-ui-macbookair-2-local_R019",
   "kind": "request",
   "team": "stagora",
-  "status": "진행 중",
-  "at": "2026-11-20T13:19:19+09:00",
+  "status": "완료",
+  "at": "2026-11-20T13:23:42+09:00",
   "createdAt": "2026-11-20T13:18:55+09:00",
   "by": "안종범",
   "doneBy": "Claude",
@@ -17,11 +17,103 @@
   "type": "요청",
   "layout": "",
   "text": "새로 추가된 언어는 화면에서의 텍스트를 주황색으로 볼드처리해서 확 눈에 띄게 해볼래?",
-  "note": "작업규칙 STAgora 작업규칙대로 처리\n작업 기준 문서 확인 · 페이지에서 새로 추가된 언어 찾는 중",
-  "shot": "",
-  "shots": [],
+  "note": "화면 10개 수정 — R018에서 GMCS 시트에 영문을 새로 채운 39개 문구(GM-txt-455 ~ 510)를 화면에서 주황(#FF9900) · 볼드(Inter Bold)로 표시했습니다.\n- LR-PRT-03 · Case1 · Case2 · Case3 · Case5: Detection Level, What is Ct value? 설명, Ct Distribution 제목 · 안내, High/Low, Test Result Summary 문장 등\n- LR-PRT-04 · Case1: Insights Across… 부제, Comprehensive Test Statistical Analysis Results 문장(Overall · Multi-detection · Cross-detection)\n- LR-PRT-01-P · Case1 · Case2(미리보기 팝업 안 리포트): 같은 문구\n- 한 레이어에 다른 글과 섞인 경우(Report generated: 날짜, Last 3 months (기간), Same Detection Pattern (분석체) 등)는 그 문구 부분만 바꿈. 변수 값($N$ 등)이 들어간 문장은 값까지 문장 전체를 칠함\n- 디스크립션 영역은 바꾸지 않음. 표시가 새 문구 확인용이라 6-1 변경 표기([버전/내용] 빨간 글)는 따로 달지 않음\n- 확인 필요: 영문을 채우지 않은 GM-txt-456 · 490 · 491 · 495 · 496 · 498~509와 시트에 없는 문구(예: Results 문장)는 칠하지 않았습니다. 검수 뒤 원래 색으로 되돌릴 때 알려 주세요\n작업 기준: basis 2026-11-20 13:40 · 작업규칙 STAgora 작업규칙 @수정본 · 정책서 없음 · UX가이드 통합운영툴_Common UX (UX가이드_통합운영툴_Common-UX) · 기준데이터 glossary (언어셋) · 화면 정의서 UX Kit(Component) 화면 정의서",
+  "shot": "shots/anjongbeom-ui-macbookair-2-local_R019.jpg",
+  "shots": [
+    {
+      "file": "shots/anjongbeom-ui-macbookair-2-local_R019.jpg",
+      "nodeId": "465:57441",
+      "frame": "LR-PRT-03"
+    },
+    {
+      "file": "shots/anjongbeom-ui-macbookair-2-local_R019-2.jpg",
+      "nodeId": "465:55361",
+      "frame": "LR-PRT-03/Case1"
+    },
+    {
+      "file": "shots/anjongbeom-ui-macbookair-2-local_R019-3.jpg",
+      "nodeId": "465:58011",
+      "frame": "LR-PRT-03/Case2"
+    },
+    {
+      "file": "shots/anjongbeom-ui-macbookair-2-local_R019-4.jpg",
+      "nodeId": "465:56220",
+      "frame": "LR-PRT-03/Case3"
+    },
+    {
+      "file": "shots/anjongbeom-ui-macbookair-2-local_R019-5.jpg",
+      "nodeId": "465:55879",
+      "frame": "LR-PRT-03/Case5"
+    },
+    {
+      "file": "shots/anjongbeom-ui-macbookair-2-local_R019-6.jpg",
+      "nodeId": "465:55118",
+      "frame": "LR-PRT-04"
+    },
+    {
+      "file": "shots/anjongbeom-ui-macbookair-2-local_R019-7.jpg",
+      "nodeId": "465:56684",
+      "frame": "LR-PRT-04/Case1"
+    },
+    {
+      "file": "shots/anjongbeom-ui-macbookair-2-local_R019-8.jpg",
+      "nodeId": "465:47475",
+      "frame": "LR-PRT-01-P"
+    },
+    {
+      "file": "shots/anjongbeom-ui-macbookair-2-local_R019-9.jpg",
+      "nodeId": "465:50968",
+      "frame": "LR-PRT-01-P/Case1"
+    },
+    {
+      "file": "shots/anjongbeom-ui-macbookair-2-local_R019-10.jpg",
+      "nodeId": "465:53749",
+      "frame": "LR-PRT-01-P/Case2"
+    }
+  ],
   "images": [],
-  "frames": [],
+  "frames": [
+    {
+      "nodeId": "465:57441",
+      "name": "LR-PRT-03"
+    },
+    {
+      "nodeId": "465:55361",
+      "name": "LR-PRT-03/Case1"
+    },
+    {
+      "nodeId": "465:58011",
+      "name": "LR-PRT-03/Case2"
+    },
+    {
+      "nodeId": "465:56220",
+      "name": "LR-PRT-03/Case3"
+    },
+    {
+      "nodeId": "465:55879",
+      "name": "LR-PRT-03/Case5"
+    },
+    {
+      "nodeId": "465:55118",
+      "name": "LR-PRT-04"
+    },
+    {
+      "nodeId": "465:56684",
+      "name": "LR-PRT-04/Case1"
+    },
+    {
+      "nodeId": "465:47475",
+      "name": "LR-PRT-01-P"
+    },
+    {
+      "nodeId": "465:50968",
+      "name": "LR-PRT-01-P/Case1"
+    },
+    {
+      "nodeId": "465:53749",
+      "name": "LR-PRT-01-P/Case2"
+    }
+  ],
   "marks": [],
   "ask": null,
   "replies": [],
