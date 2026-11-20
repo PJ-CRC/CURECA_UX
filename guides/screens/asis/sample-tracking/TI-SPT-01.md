@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # TI-SPT-01 Samples
 
-> 기존 화면(기존 작업방 Sample Tracking 페이지, 2.1 2차 영역, Ver 2.0)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 Sample Tracking 페이지, 2.1 2차 영역, Ver 2.0)을 2026-11-02에 옮기고 2026-11-20에 다시 옮긴 것입니다(케이스 3, 작업 기록 `20261120-최고관리자-samples`). 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - T/L 차이: IA는 짝 화면 동일(Y). 디스크립션 3 [Export] 설명이 L-IOS(LI-SPT-01)와 다름 (반영 대기 목록 4)
 - 관련 정책: POL-SMP-001, POL-SMP-002, POL-SMP-003, POL-SMP-005, POL-COM-006
@@ -176,6 +176,8 @@ Description Number (12), Table (11), Tag Status (10), Table/Filled Table Cell (1
 - Case 2. Progress 상태 정보 Tooltip
 
 ## 반영 대기 목록
+
+`screens/tobe/`로 옮김 (2026-11-20)
 
 | ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |

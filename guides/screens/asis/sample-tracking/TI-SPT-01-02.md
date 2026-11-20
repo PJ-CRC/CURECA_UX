@@ -2,8 +2,8 @@
 cid: TI-SPT-01-02
 pair_cid: LI-SPT-01-02
 tl_relation: 동일
-title: Protocol Info - Pre-Treatment Protocol
-path: Sample Tracking > Samples > Protocol Info - Pre-Treatment Protocol
+title: Samples Details
+path: Sample Tracking > Samples Details > Protocol Info
 type: Popup
 version: 2.1.02
 date: 2026-08-14
@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # TI-SPT-01-02 Protocol Info - Pre-Treatment Protocol
 
-> 기존 화면(기존 작업방 Sample Tracking 페이지, 2.1 2차 영역, Ver 2.1.02)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 Sample Tracking 페이지, 2.1 2차 영역, Ver 2.1.02)을 2026-11-02에 옮기고 2026-11-20에 다시 옮긴 것입니다(케이스 3, 작업 기록 `20261120-최고관리자-samples`). 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - Protocol Info Popup의 Pre-Treatment Protocol 탭. Extraction Protocol 탭은 TI-SPT-01-03
 - 관련 정책: (정책 작성 전). 상세 항목은 Protocol Setting(POL-TST-006) 기준
@@ -85,6 +85,8 @@ figma_region: 2.1 2차
 - 클릭 시, 팝업이 닫힌 후 기존 화면 노출
 
 ## 반영 대기 목록
+
+`screens/tobe/`로 옮김 (2026-11-20)
 
 | ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
