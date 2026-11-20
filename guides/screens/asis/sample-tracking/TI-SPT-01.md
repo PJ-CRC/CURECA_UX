@@ -22,7 +22,7 @@ figma_region: 2.1 2차
 
 > 기존 화면(기존 작업방 Sample Tracking 페이지, 2.1 2차 영역, Ver 2.0)을 2026-11-02에 옮기고 2026-11-20에 다시 옮긴 것입니다(케이스 3, 작업 기록 `20261120-최고관리자-samples`). 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
-- T/L 차이: IA는 짝 화면 동일(Y). 디스크립션 3 [Export] 설명이 L-IOS(LI-SPT-01)와 다름 (반영 대기 목록 4)
+- T/L 차이: IA는 짝 화면 동일(Y). 디스크립션 3 [Export] 설명이 L-IOS(LI-SPT-01)와 다름 (반영 대기 목록 4). 2026-11-20 다시 옮길 때 원본 3이 "윈도우 탐색기 · 형식 CSV"로 바뀌어 있었음 (반영 대기 목록 4 · 9의 "지금"은 예전 원문)
 - 관련 정책: POL-SMP-001, POL-SMP-002, POL-SMP-003, POL-SMP-005, POL-COM-006
 - 호출하는 화면: Samples Details (TI-SPT-01-01, 같은 화면 오른쪽에 열림)
 - 다른 프레임: [TI-SPT-01/Case](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=1460-110521), [이름이 TI-SPT-01-01인 TI-SPT-01 프레임 (Ver 2.1, 디스크립션 없음)](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=1335-135567)
@@ -37,11 +37,16 @@ figma_region: 2.1 2차
 - Items | Export
 - Sample ID | Product | Sample Type | Order Date | Status | Progress | Start Date/Time | End Date/Time | STAT
 - AA0005001 | RP1 | Sputum | Not Tested | - | -
+- AA0005001 | RP2 | Sputum | Not Tested | - | -
+- AA0005001 | RP3 | Sputum | Not Tested | - | -
 - AA0005002 | STI-12 | Thinprep | Ready | - | -
 - AA0005003 | STI-12 | Surepath | Failed | 2026-03-05 10:22:48 | 2026-03-05 11:22:48
 - AA0005004 | STI-12 | Swab | Completed | 2026-03-05 10:22:48 | 2026-03-05 11:22:48
 - AA0005005 | PB | Saliva | Running | 2026-03-05 10:22:48 | -
-- (이하 예시 줄 생략. Progress는 단계 아이콘으로 표시)
+- AA0005006 | GI-B1 | eNAT stool | Running | 2026-03-05 10:22:48 | -
+- AA0005006 | GI-B2 | eNAT stool | Running | 2026-03-05 10:22:48 | -
+- AA0005007 | Allplex HPV28 | Surepath | Running | 2026-03-05 10:22:48 | -
+- (Order Date · STAT 칸은 예시 값 없음. Progress는 단계 아이콘으로 표시)
 
 ### 사용 컴포넌트
 
