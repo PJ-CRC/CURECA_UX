@@ -117,8 +117,8 @@ figma:         # 작업방의 이 CID 섹션 링크
 | R03 | 점검 발견 | 0 "Run Start로 통해" | Run Start를 통해 | 오타 | 작업 중 (20261120-최고관리자-samples) |
 | R04 | 기준 자료 변경 | 3 [Export]: T-IOS는 "OS 파일함, 엑셀파일, 저장 항목은 Detail의 모든 내용", L-IOS는 ".CVS 파일, COMM-5-j(4/4) 팝업". IA는 짝 화면 동일 | 파일 형식은 T-IOS·L-IOS 모두 .csv. 저장 방법만 다름: T-IOS는 OS 파일 탐색기, L-IOS는 경로 저장·USB 저장 Popup (COMM-5-j(4/4)) | POL-COM-006 규칙 1·3·4 | 작업 중 (20261120-최고관리자-samples) |
 | R05 | 점검 발견 | 2-1 "T-IOS에서 수신되는 검체 ID·검사 항목·검체 타입·응급 여부" (T-IOS 화면) | T-IOS 기준 출처로 고쳐 씀 | 디스크립션 | 대기 (확인 필요) |
-| R06 | 기준 자료 변경 | 2-1 Start Date/Time "Prep 장비에서 바코드 찍은 시간" | 어느 Module인지 표준어로 | `glossary/terms.csv` | 대기 (확인 필요) |
-| R07 | 기준 자료 변경 | 2-1 Progress "상태 값 : COMM-4-a" (Progress는 단계 진행 표시) | 단계 표시 기준을 검사 단계(`glossary/test-stages.csv`)로 | `glossary/test-stages.csv` | 대기 (확인 필요) |
+| R06 | 기준 자료 변경 | 2-1 Start Date/Time "Prep 장비에서 바코드 찍은 시간" | 디스크립션에 넣음: Prep 시스템이 Sample Barcode를 읽은 시점 | `glossary/terms.csv`, POL-SMP-002 (2단계 근거) | 작업 중 (20261120-최고관리자-samples) |
+| R07 | 기준 자료 변경 | 2-1 Progress "상태 값 : COMM-4-a" (Progress는 단계 진행 표시) | 디스크립션에 넣음: Progress는 검사 단계 5개(Sample Preparation → Nucleic Acid Extraction → PCR Setup → Plate Sealing → PCR)의 진행을 보여 줌 | `glossary/test-stages.csv`, test-stages.csv (2단계 근거) | 작업 중 (20261120-최고관리자-samples) |
 | R08 | 기준 자료 변경 | 1-2 Product 목록이 11개로 고정 | 검사 항목 목록 기준 확인 | `glossary/test-items.csv` | 대기 (확인 필요) |
 | R09 | 기준 자료 변경 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 작업 중 (20261120-최고관리자-samples) |
 

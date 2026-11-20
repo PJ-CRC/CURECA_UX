@@ -114,7 +114,7 @@ figma:         # 작업방의 이 CID 섹션 링크
 | --- | --- | --- | --- | --- | --- |
 | R01 | 점검 발견 | 3 참조 "TI-STN-03-01-02-01" (L-IOS 화면에서 T-IOS CID) | L-IOS Protocol Setting CID(LI-STN-03-01-02-01) | `screens/setting/` | 작업 중 (20261120-최고관리자-samples) |
 | R02 | 점검 발견 | 화면 이름 "Samples Details" | IA 이름 | `ia/ia-screens.csv` | 작업 중 (20261120-최고관리자-samples) |
-| R03 | 기준 자료 변경 | 2 "Run Preparation 단계에서 선택한 프로토콜", "Applied된 프로토콜", 3 "Protocol setting" | TI-SPT-01-02 반영 대기 목록 3·4와 같이 | POL-TST-006 | 대기 (확인 필요) |
+| R03 | 기준 자료 변경 | 2 "Run Preparation 단계에서 선택한 프로토콜", "Applied된 프로토콜", 3 "Protocol setting" | 디스크립션에 넣음: General Setting의 Allow Protocol Changes Before Test가 On이면 Run 준비 Check Test Protocol 단계에서 고른 Protocol, Off이거나 고르지 않았으면 Protocol Setting에서 Apply한(Applied) Protocol. 3 Protocol Setting | POL-TST-006, POL-TST-001 규칙 8, POL-TST-006 규칙 6 (2단계 근거) | 작업 중 (20261120-최고관리자-samples) |
 
 ## 변경 이력
 

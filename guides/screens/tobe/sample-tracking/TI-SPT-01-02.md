@@ -114,7 +114,7 @@ figma:         # 작업방의 이 CID 섹션 링크
 | --- | --- | --- | --- | --- | --- |
 | R01 | 점검 발견 | 화면 이름 "Samples Details", 경로 "Sample Tracking > Samples Details > Protocol Info" | IA 이름 "Protocol Info - Pre-Treatment Protocol" | `ia/ia-screens.csv` | 작업 중 (20261120-최고관리자-samples) |
 | R02 | 점검 발견 | 3 참조 "TI-STN-03-01-02-01" (지금 CID는 TI-STN-03-01-02-01-V, -M으로 나뉨) | 맞는 CID로 | `screens/setting/` | 작업 중 (20261120-최고관리자-samples) |
-| R03 | 기준 자료 변경 | 2 "Run Preparation 단계에서 선택한 프로토콜", "Applied된 프로토콜" | Run 화면(LI-RUN-02-01 Check Test Protocol)과 Protocol Setting의 Applied 표기 기준으로. Check Test Protocol 단계는 Setting에서 사용할 때만 나옴 | `policy/policy-backlog.md` 5, POL-TST-006 | 대기 (확인 필요) |
+| R03 | 기준 자료 변경 | 2 "Run Preparation 단계에서 선택한 프로토콜", "Applied된 프로토콜" | 디스크립션에 넣음: General Setting의 Allow Protocol Changes Before Test가 On이면 Run 준비 Check Test Protocol 단계에서 고른 Protocol, Off이거나 고르지 않았으면 Protocol Setting에서 Apply한(Applied) Protocol | `policy/policy-backlog.md` 5, POL-TST-006, POL-TST-001 규칙 8, POL-TST-006 규칙 6 (2단계 근거) | 작업 중 (20261120-최고관리자-samples) |
 | R04 | 점검 발견 | 3 "Protocol setting" | Protocol Setting | 표기 | 작업 중 (20261120-최고관리자-samples) |
 
 ## 변경 이력
