@@ -1,0 +1,12 @@
+{
+  "rev": "20261120-111949_anjongbeom-ui-macbookair-2-local",
+  "by": "Claude",
+  "at": "2026-11-20T11:19:49+09:00",
+  "note": "언어셋 › 2. 검사실-v1.95-261027: 새 엑셀(v2.34_261119)로 덮어씀",
+  "base": "language-set/sheet05.csv",
+  "pc": "anjongbeom-ui-MacBookAir-2.local",
+  "req": "언어셋 › 표지-STAgora-언어셋: 이 문서로 다시 덮어씌워줘.",
+  "jobId": "J111",
+  "file": "language-set/sheet05.csv",
+  "orig": true
+}
