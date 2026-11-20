@@ -958,6 +958,67 @@ Le mot de passe de votre compte GMCS expirera dans $N$ jours.
 Veuillez modifier votre mot de passe avant la date d'expiration pour protéger vos informations personnelles.","Aviso de expiração próxima da senha do GMCS
 A senha da sua conta GMCS expirará em $N$ dias.
 Por favor, altere sua senha antes da data de expiração para proteger suas informações pessoais.",비밀번호 변경 안내,GM-LOG-LP-01,
+,email-txt-213,email,txt,213,v3.34 문구 추가,GMCS 인증용 인증번호,GMCS Verification Code for Authentication,GMCS-Verifizierungscode zur Authentifizierung,Código de verificación de GMCS para autenticación,Codice di verifica GMCS per l'autenticazione,Code de vérification GMCS pour l'authentification,Código de verificação GMCS para autenticação,GMCS 로그인 인증,CL-LOG-03 / Case,
+,email-txt-214,email,txt,214,v3.34 문구 추가,"GMCS 계정 로그인을 위한 인증번호를 안내해드립니다.
+아래 인증번호를 인증 화면에 입력해주세요.
+
+※ 인증번호는 5분간 유효합니다.
+
+인증번호
+$124254$","We are providing you with a verification code to log in to your GMCS account from Seegene Inc. Please enter the verification code below on the authentication screen.
+※ Verification code is valid for 5 minutes
+
+Verification Code
+$1234254$","Wir stellen Ihnen einen Verifizierungscode zur Anmeldung bei Ihrem GMCS-Konto von Seegene Inc. zur Verfügung. Bitte geben Sie den untenstehenden Verifizierungscode auf dem Authentifizierungsbildschirm ein.
+※ Der Verifizierungscode ist 5 Minuten gültig.
+
+Verifizierungscode
+$1234254$","Le proporcionamos un código de verificación para iniciar sesión en su cuenta de GMCS de Seegene Inc. Introduzca el código de verificación a continuación en la pantalla de autenticación.
+※ El código de verificación es válido durante 5 minutos.
+
+Código de verificación
+$1234254$","Ti forniamo un codice di verifica per accedere al tuo account GMCS di Seegene Inc. Inserisci il codice di verifica qui sotto nella schermata di autenticazione.
+※ Il codice di verifica è valido per 5 minuti.
+
+Codice di verifica
+$1234254$","Nous vous fournissons un code de vérification pour vous connecter à votre compte GMCS de Seegene Inc. Veuillez saisir le code de vérification ci-dessous sur l’écran d’authentification.
+※ Le code de vérification est valable pendant 5 minutes.
+
+Code de vérification
+$1234254$","Fornecemos a você um código de verificação para fazer login na sua conta GMCS da Seegene Inc. Por favor, insira o código de verificação abaixo na tela de autenticação.
+※ O código de verificação é válido por 5 minutos.
+
+Código de verificação
+$1234254$",GMCS 로그인 인증,CL-LOG-03 / Case,
+,email-txt-215,email,txt,215,v3.34 문구 추가,"안녕하세요.
+GMCS 회원가입이 성공적으로 완료되었습니다.
+
+GMCS에 오신 것을 환영합니다!
+회원이 되신 것을 진심으로 환영하며, 원활하고 안정적인 서비스를 제공해 드릴 수 있기를 기대합니다.","Hello,
+Your account registration for the GMCS has been successfully completed.
+
+Welcome to GMCS!
+We are delighted to have you as a member and look forward to providing you with a seamless and reliable service.","Hallo,
+Ihre Kontoregistrierung für GMCS wurde erfolgreich abgeschlossen.
+
+Willkommen bei GMCS!
+Wir freuen uns sehr, Sie als Mitglied begrüßen zu dürfen, und freuen uns darauf, Ihnen einen reibungslosen und zuverlässigen Service zu bieten.","Hola:
+El registro de su cuenta en GMCS se ha completado con éxito.
+
+¡Bienvenido a GMCS!
+Estamos encantados de tenerle como miembro y esperamos brindarle un servicio fluido y fiable.","Ciao,
+La registrazione del tuo account per GMCS è stata completata con successo.
+
+Benvenuto in GMCS!
+Siamo lieti di averti come membro e non vediamo l'ora di offrirti un servizio fluido e affidabile.","Bonjour,
+L'enregistrement de votre compte pour GMCS a été effectué avec succès.
+
+Bienvenue sur GMCS !
+Nous sommes ravis de vous compter parmi nos membres et nous réjouissons de vous offrir un service fluide et fiable.","Olá,
+O registro da sua conta no GMCS foi concluído com sucesso.
+
+Bem-vindo ao GMCS!
+Temos o prazer de tê-lo como membro e esperamos oferecer um serviço contínuo e confiável.",GMCS 회원가입,GM-LOG-SU/Case1,
 ,,,,,,,,,,,,,,,
 ,0. 공통,,,,,,,,,,,,,,
 ,Common-title-1,Common,title,1,,빠른 정보 탐색,Analyte Insight,Analyt-Einblick,Información del analito,Approfondimento sull’analita,Analyse de l’analyte,Visão do analito,메뉴,LNB,
@@ -1666,7 +1727,7 @@ Se o problema persistir, entre em contato com o administrador.",로그인,,
 ,Common-txt-522,Common,txt,522,1.82 문구 추가(다국어),개인정보 보호를 위해 비밀번호를 변경해 주세요.,Please change your password to protect your personal information.,"Bitte ändern Sie Ihr Passwort, um Ihre persönlichen Daten zu schützen.","Por favor, cambie su contraseña para proteger su información personal.",Si prega di modificare la password per proteggere i propri dati personali.,Veuillez modifier votre mot de passe pour protéger vos informations personnelles.,"Por favor, altere sua senha para proteger suas informações pessoais.",비밀번호 변경 안내,CM-LOG-LP-01, 
 ,Common-title-523,Common,title,523,1.92 타입 변경,비밀번호 변경 안내,Password Change Notice,Hinweis zur Passwortänderung,Aviso de cambio de contraseña,Avviso di modifica della password,Avis de modification du mot de passe,Aviso de alteração de senha,비밀번호 변경 안내,CM-LOG-LP-01, 
 ,Common-btn-524,Common,btn,524,1.92 타입 변경,다음에 변경,Change Later,Später ändern,Cambiar más tarde,Modifica più tardi,Modifier plus tard,Alterar mais tarde,비밀번호 변경 안내,CM-LOG-LP-01, 
-,Common-txt-525,Common,txt,525,1.89 문구 수정(국문),*비밀번호 미변경 시 서비스를 이용할 수 없습니다.,"If the password is not changed, you cannot use the service.","Wenn das Passwort nicht geändert wird, können Sie den Dienst nicht nutzen.","Si no cambia la contraseña, no podrá utilizar el servicio.","Se la password non viene modificata, non sarà possibile utilizzare il servizio.","Si le mot de passe n'est pas modifié, vous ne pourrez pas utiliser le service.","Se a senha não for alterada, você não poderá usar o serviço.",비밀번호 변경 안내,CM-LOG-LP-01, 
+,Common-txt-525,Common,txt,525,v2.32 문구 수정(다국어),*비밀번호 미변경 시 서비스를 이용할 수 없습니다.,"*If the password is not changed, you cannot use the service.","*Wenn das Passwort nicht geändert wird, können Sie den Dienst nicht nutzen.","*Si no cambia la contraseña, no podrá utilizar el servicio.","*Se la password non viene modificata, non sarà possibile utilizzare il servizio.","*Si le mot de passe n'est pas modifié, vous ne pourrez pas utiliser le service.","*Se a senha não for alterada, você não poderá usar o serviço.",비밀번호 변경 안내,CM-LOG-LP-01, 
 ,Common-txt-526,Common,txt,526,"v1.90 위치이동: [5. 체험/초대/이메일], 미사용 처리
 1.82 문구 추가(다국어)",STAgora™ 비밀번호 만료 예정 안내,STAgora™ Password Expiration Notice,Hinweis zum bevorstehenden Ablauf des STAgora™-Passworts,Aviso de próxima expiración de la contraseña de STAgora™,Avviso di imminente scadenza della password STAgora™,Avis d'expiration prochaine du mot de passe STAgora™,Aviso de expiração próxima da senha do STAgora™,비밀번호 변경 안내,CM-LOG-LP-01,미사용
 ,Common-txt-527,Common,txt,527,"v1.90 위치이동: [5. 체험/초대/이메일], 미사용 처리
@@ -1764,3 +1825,5 @@ v1.831 문구 추가",GMCS 바로가기,Go to GMCS,,,,,,,,
 ,Common-txt-613,Common,txt,613,v2.31 문구 추가,새 비밀번호 확인 삭제,Clear confirm new password,Bestätigung des neuen Passworts löschen,Borrar confirmación de nueva contraseña,Cancella conferma nuova password,Effacer la confirmation du nouveau mot de passe,Limpar confirmação da nova palavra-passe,,,
 ,Common-txt-614,Common,txt,614,v2.31 문구 추가,임시비밀번호가 만료되었습니다. 관리자에게 문의하세요.,The temporary password has expired. Please contact your administrator.,Das temporäre Passwort ist abgelaufen. Bitte wenden Sie sich an Ihren Administrator.,La contraseña temporal ha caducado. Póngase en contacto con su administrador.,La password temporanea è scaduta. Contatta l'amministratore.,Le mot de passe temporaire a expiré. Veuillez contacter votre administrateur.,A palavra-passe temporária expirou. Contacte o seu administrador.,,,
 ,Common-txt-615,Common,txt,615,v2.31 문구 추가,이름,Full name,Vollständiger Name,Nombre completo,Nome completo,Nom complet,Nome completo,,,
+,Common-txt-616,Common,txt,616,v2.32 문구 추가,(필수) 이용약관에 동의합니다.,(Required) I agree to the Terms.,(Erforderlich) Ich stimme den Allgemeinen Geschäftsbedingungen zu.,(Obligatorio) Acepto los Términos y condiciones.,(Obbligatorio) Accetto i Termini e condizioni.,(Obligatoire) J’accepte les Conditions générales.,(Obrigatório) Concordo com os Termos e condições.,GMCS 회원가입,GM-LOG-SU-01,
+,Common-txt-617,Common,txt,617,v2.32 문구 추가,(필수) 개인정보 수집 및 이용에 동의합니다.,(Required) I agree to the Privacy Notice.,(Erforderlich) Ich stimme der Erhebung und Nutzung personenbezogener Daten zu.,(Obligatorio) Acepto la recopilación y uso de información personal.,(Obbligatorio) Accetto la raccolta e l’uso dei dati personali.,(Obligatoire) J’accepte la collecte et l’utilisation des informations personnelles.,(Obrigatório) Concordo com a coleta e o uso de informações pessoais.,GMCS 회원가입,GM-LOG-SU-01,
