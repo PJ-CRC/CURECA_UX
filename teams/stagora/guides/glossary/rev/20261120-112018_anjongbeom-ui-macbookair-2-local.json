@@ -1,0 +1,12 @@
+{
+  "rev": "20261120-112018_anjongbeom-ui-macbookair-2-local",
+  "by": "Claude",
+  "at": "2026-11-20T11:20:18+09:00",
+  "note": "언어셋 › 99. 임상의 리포트-보관 (수식): 새 엑셀(v2.34_261119)로 덮어씀",
+  "base": "language-set/sheet12.formulas.json",
+  "pc": "anjongbeom-ui-MacBookAir-2.local",
+  "req": "언어셋 › 표지-STAgora-언어셋: 이 문서로 다시 덮어씌워줘.",
+  "jobId": "J111",
+  "file": "language-set/sheet12.formulas.json",
+  "orig": true
+}
