@@ -23,7 +23,7 @@ web
 ## Operating Context
 
 - 로컬 Node 서버(포트 8765) + 브라우저 화면(Workbench · UX 문서 · 일정/작업 · 변경 이력 · 사용량 통계 · 프로토타입 · 계정 관리 · 시작 안내).
-- Figma 데스크톱 + 작은 Figma 플러그인(Common UX Sync: 캡처 · 목록 · 다음 단계와 비교), Figma MCP.
+- Figma 데스크톱 + 작은 Figma 플러그인(Common UX Sync: 캡처 · 목록 · 다음 단계와 비교 · 복사 옮기기), Figma MCP.
 - Claude Code: 데스크톱 앱 Code 탭이나 백그라운드 CLI 에이전트가 요청 · 작업을 처리. 사용 한도가 있다.
 - 공유 데이터(`.history`)는 깃으로 자동 동기화. 팀 프로젝트는 Figma 파일 ① → ② → ③ 순서로 옮긴다.
 - Figma 파일마다 고칠 수 있는 페이지(작업 페이지)는 하나다.

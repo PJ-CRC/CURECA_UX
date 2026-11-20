@@ -241,9 +241,10 @@ module.exports = function register(on, h) {
         // 다음 단계로 옮기기(팀 프로젝트, 2026-11-16): Claude가 아니라 Figma 플러그인이 한다 — 읽기(보내는 파일을 연 플러그인) → 만들기(받는 파일을 연 플러그인)
         let xfer = null;
         if (kind === 'transfer') {
-          // 옮기기(copy)는 2026-11-20에 없앴다 — 플러그인은 파일끼리 복사할 수 없어 다시 그리는데, 라이브러리에 없는 컴포넌트까지 새로 그려 버려서.
-          //  옮기기는 사람이 Figma에서 복사 · 붙여넣기로 하고, 이 작업은 비교의 「바뀐 것 확인」(check)만 받는다
-          if (nn(b.mode) !== 'check') throw new Error('다음 단계로 보내기(옮기기)는 없앴습니다. Figma에서 화면을 복사해 붙여 넣고, Workbench 「②와 비교」로 확인하세요.');
+          // 다시 그리는 옮기기(copy)는 2026-11-20에 없앴다 — 라이브러리에 없는 컴포넌트까지 새로 그려 버려서.
+          //  그 대신 복사 · 붙여넣기 옮기기(paste, 2026-11-20): ① 플러그인이 화면을 골라 두고 → Figma의 복사(Ctrl+C) · 붙여넣기(Ctrl+V)로 옮긴다(컴포넌트 연결이 그대로 감).
+          //  키는 이 PC 서버가 대신 누르고(keys.js), 안 되면 사람이 누른다. ② 플러그인이 붙은 화면을 찾아 제자리에 놓고 기록한다
+          if (!['check', 'paste'].includes(nn(b.mode))) throw new Error('다시 그리는 옮기기는 없앴습니다. 비교 창에서 화면을 골라 「복사해 붙여넣기」로 옮기세요.');
           const f = b.from || {}, t = b.to || {};
           if (!h.testKey(nn(f.key)) || !h.testKey(nn(t.key))) throw new Error('보내는 · 받는 파일 키가 잘못되었습니다.');
           if (nn(f.key) === nn(t.key)) throw new Error('같은 파일로는 옮길 수 없습니다.');
@@ -251,10 +252,11 @@ module.exports = function register(on, h) {
           if (!tp || !tp.editablePageId) throw new Error('받는 파일의 작업 페이지가 아직 없습니다. 그 탭에서 작업 페이지를 먼저 고르세요.');
           const ids = core.arr(f.nodeIds).filter((x) => /^\d+:\d+$/.test(nn(x))).slice(0, 200);
           if (!ids.length && !/^\d+:\d+$/.test(nn(f.pageId))) throw new Error('옮길 프레임 · 페이지가 없습니다.');
+          if (nn(b.mode) === 'paste' && !ids.length) throw new Error('옮길 화면을 골라 주세요.');
           xfer = { from: { key: nn(f.key), name: nn(f.name).slice(0, 80), page: nn(f.page).slice(0, 120), pageId: /^\d+:\d+$/.test(nn(f.pageId)) ? nn(f.pageId) : '', nodeIds: ids, names: core.arr(f.names).slice(0, 200).map((s) => nn(s).slice(0, 120)), step: parseInt(f.step, 10) || 0 },
             to: { key: nn(t.key), name: nn(t.name).slice(0, 80) || tp.name || '', page: tp.editablePageName || '', pageId: tp.editablePageId, step: parseInt(t.step, 10) || 0 },
-            // mode: check = 비교 창의 「바뀐 것 확인」(플러그인이 화면을 읽어 확인값만 보냄, 옮기지 않음). 수정본(edit)은 2026-11-17, 옮기기(copy)는 11-20에 없앰
-            mode: 'check', priority: nn(b.priority) };
+            // mode: check = 비교 창의 「바뀐 것 확인」(옮기지 않음), paste = 복사 · 붙여넣기 옮기기. 수정본(edit)은 2026-11-17, 다시 그리는 옮기기(copy)는 11-20에 없앰
+            mode: nn(b.mode) === 'paste' ? 'paste' : 'check', priority: nn(b.priority), auto: nn(b.mode) === 'paste' && b.auto !== false };
           key = xfer.from.key; nid = '';
         }
         if (kind === 'guide-check' || kind === 'guide-edit') { nid = ''; if (!GID_RE.test(nn(b.guide)) || !core.exists(path.join(T.guideRoot, nn(b.guide), 'meta.json'))) throw new Error('가이드를 찾지 못했습니다: ' + nn(b.guide)); }
@@ -302,6 +304,7 @@ module.exports = function register(on, h) {
           // ②(받는 파일)에도 플러그인이 켜져 있으면 먼저 ② 작업 페이지를 읽어 Figma에서 직접 복사해 옮긴 화면도 찾는다(2026-11-17, phase scan → check)
           const toLive = xfer && xfer.mode === 'check' && C.pluginKeys && Date.now() - (C.pluginKeys[xfer.to.key] || 0) < 180000;   // 3분: Figma 창이 뒤에 있으면 플러그인이 1분에 한 번쯤만 묻는다
           if (toLive) { Object.assign(hit, xfer, { phase: 'scan', fileKey: xfer.to.key, scanSkip: core.arr(xRecRead(xfer.to.key).items).filter((x) => x && x.to && x.to.node).map((x) => x.to.node), note: (xfer.to.name || '받는 파일') + '의 플러그인이 작업 페이지 화면을 읽은 뒤 ' + (xfer.from.name || '보내는 파일') + '에서 바뀐 것 확인(옮기지 않음)' }); if (!hit.name) hit.name = '비교 · ' + (xfer.to.name || '다음 단계'); }
+          else if (xfer && xfer.mode === 'paste') { Object.assign(hit, xfer, { phase: 'select', note: (xfer.from.name || '보내는 파일') + '을(를) Figma에서 열고 플러그인을 켜면 옮길 화면을 골라 둡니다' }); if (!hit.name) hit.name = '복사 · ' + xfer.from.nodeIds.length + '개 → ' + (xfer.to.name || '다음 단계'); }
           else if (xfer && xfer.mode === 'check') { Object.assign(hit, xfer, { phase: 'check', note: (xfer.from.name || '보내는 파일') + '을(를) Figma에서 열고 플러그인을 켜면 바뀐 것 확인 시작(옮기지 않음)' }); if (!hit.name) hit.name = '비교 · ' + (xfer.to.name || '다음 단계'); }
           else if (xfer) { Object.assign(hit, xfer, { phase: 'read', note: (xfer.from.name || '보내는 파일') + '을(를) Figma에서 열고 플러그인을 켜면 옮기기 시작' });
             if (!hit.name) hit.name = (xfer.from.nodeIds.length ? xfer.from.nodeIds.length + '개 프레임' : xfer.from.page + ' 페이지') + ' → ' + (xfer.to.name || '다음 단계'); }
@@ -347,6 +350,16 @@ module.exports = function register(on, h) {
     if (items.length > 300) { let k = 0; items = items.filter((x) => (x.kind === 'transfer' && ['대기', '진행 중'].includes(x.status)) || ++k <= 300); }
     core.writeJson(C.jobFile, { version: (parseInt(jj.version, 10) || 0) + 1, items });
     if (b.action === 'update' && hit && hit.kind === 'guide-check') saveCheckLog(hit);
+    // 복사 옮기기를 맡기면 ① 탭을 앞으로(뒤에 있는 탭의 플러그인은 거의 멈춰 있다 — keys.js showTab)
+    //  그 전에 지금 창 상태(맨 앞 창 · Figma 최소화)를 작업에 적어 두고, 끝나면 되돌린다(restoreWin)
+    if (b.action === 'add' && hit && hit.kind === 'transfer' && hit.mode === 'paste' && hit.phase === 'select' && hit.auto && h.showTab) {
+      const jid = hit.id, fromKey = hit.from.key;
+      (async () => {
+        const s = h.winState ? await h.winState() : null;
+        if (s) { const x = xJob(jid); if (x.j && !x.j.restore) { x.j.restore = s; xSave(x.jj); } }
+        await h.showTab(fromKey);
+      })().catch(() => {});
+    }
     // 프로토타입을 만들거나 고치거나 맞추면: 그때의 페이지 프레임 목록을 기준으로 남긴다(뒤에 생긴 화면만 「화면 추가됨」)
     if (b.action === 'update' && hit && /^prototype/.test(nn(hit.kind)) && nn(hit.status) === '완료' && hit.proto && h.protoSnapshot) { try { h.protoSnapshot(nn(hit.proto)); } catch (e) {} }
     return { ok: true, job: hit };
@@ -391,8 +404,46 @@ module.exports = function register(on, h) {
         j.note = `읽음: ${frames.length}개` + (skip ? ` (바뀌지 않아 건너뜀 ${skip}개)` : '') + ` — ${j.to.name || '받는 파일'}을(를) Figma에서 열고 플러그인을 켜면 만들기 시작`;
         xSave(jj); return { ok: true, job: j };
       }
+      // ── 복사 · 붙여넣기 옮기기(mode paste, 2026-11-20) ──
+      // ① 플러그인: 옮길 화면을 골라 두고(선택 · 화면에 보이게) 화면마다 해시 · 확인값을 보낸다 → ② 차례(phase paste)
+      case 'selected': {
+        if (j.mode !== 'paste' || j.phase !== 'select') throw new Error('화면을 고를 단계가 아닙니다: ' + id);
+        const fr = core.arr(b.frames).filter((x) => x && /^\d+:\d+$/.test(nn(x.from))).map((x) => ({ from: nn(x.from), name: nn(x.name).slice(0, 120), hash: nn(x.hash), sig: nn(x.sig) }));
+        if (!fr.length) { j.status = '실패'; j.note = '옮길 화면을 ①에서 찾지 못했습니다(지웠거나 다른 페이지)'; j.updatedAt = now; xSave(jj); return { ok: true, job: j }; }
+        j.frames = fr; j.phase = 'paste'; j.fileKey = j.to.key; j.status = '대기'; j.takenBy = ''; j.updatedAt = now;
+        j.note = `①에서 ${fr.length}개 골라 둠 — ${j.to.name || '받는 파일'}을(를) Figma에서 열고 플러그인을 켜면 붙여넣기 준비`;
+        xSave(jj);
+        if (j.auto && h.showTab) h.showTab(j.to.key).catch(() => {});   // ② 탭을 앞으로(② 플러그인을 깨움)
+        return { ok: true, job: j };
+      }
+      // ② 플러그인: 작업 페이지를 열고 선택을 비워 붙여넣을 준비가 됨 → 이 PC 서버가 키를 대신 누른다(① Ctrl+C → ② Ctrl+V). 안 되면 사람이 누른다
+      case 'ready': {
+        if (j.mode !== 'paste' || j.phase !== 'paste' || nn(j.status) !== '진행 중') throw new Error('붙여넣기 준비 단계가 아닙니다: ' + id);
+        j.phase = 'pasting'; j.updatedAt = now;
+        j.note = j.auto && h.pasteKeys ? '붙여넣는 중 — 이 PC가 Figma에서 복사(①) · 붙여넣기(②) 키를 누릅니다. 그동안 키보드 · 마우스를 쓰지 마세요' : `붙여넣기 기다림 — ${j.from.name || '①'}에서 Ctrl+C(골라 둔 화면), ${j.to.name || '②'}에서 Ctrl+V를 누르세요`;
+        xSave(jj);
+        // 플러그인과 주고받는 신호(keys.js): mark = 「지금 골라 · 지금 준비해」(copyReq · pasteReq), waitAck = 플러그인의 답(selAt · prepAt)을 기다림
+        const io = {
+          mark: (field) => { const x = xJob(id); const v = String(Date.now()); if (x.j) { x.j[field] = v; x.j.updatedAt = core.now(); xSave(x.jj); } return v; },
+          waitAck: async (field, v, ms) => { const t0 = Date.now(); while (Date.now() - t0 < ms) { await new Promise((r) => setTimeout(r, 400)); const x = xJob(id); if (!x.j || x.j.phase !== 'pasting') return false; if (x.j[field] === v) return true; } return false; },
+        };
+        if (j.auto && h.pasteKeys) h.pasteKeys(j, io).then((r) => {
+          const x = xJob(id); if (!x.j || x.j.phase !== 'pasting') return;
+          x.j.note = r.ok ? '붙여넣음 — ② 플러그인이 붙은 화면을 제자리에 놓는 중' : `자동 키 누르기 실패(${r.msg}) — ${j.from.name || '①'}에서 Ctrl+C(골라 둔 화면), ${j.to.name || '②'}에서 Ctrl+V를 직접 누르세요`;
+          x.j.updatedAt = core.now(); xSave(x.jj);
+        }).catch(() => {});
+        return { ok: true, job: j };
+      }
+      // 키를 누르기 직전 플러그인의 답: ①은 탭이 앞에 온 뒤 화면을 다시 골랐음(selAt), ②는 선택을 비우고 붙을 자리를 준비했음(prepAt)
+      case 'ack': {
+        if (j.mode !== 'paste' || j.phase !== 'pasting') throw new Error('붙여넣는 중인 작업이 아닙니다: ' + id);
+        if (nn(b.field) === 'selAt' && nn(b.v) === nn(j.copyReq)) j.selAt = nn(b.v);
+        else if (nn(b.field) === 'prepAt' && nn(b.v) === nn(j.pasteReq)) j.prepAt = nn(b.v);
+        else return { ok: true, job: j };
+        j.updatedAt = now; xSave(jj); return { ok: true, job: j };
+      }
       case 'done': {
-        if (j.phase !== 'build' || nn(j.status) !== '진행 중') throw new Error(`만들기 중인 작업이 아닙니다: ${id} (${nn(j.status)})`);
+        if (!((j.phase === 'build' || j.phase === 'pasting') && nn(j.status) === '진행 중')) throw new Error(`만들기 중인 작업이 아닙니다: ${id} (${nn(j.status)})`);
         const made = core.arr(b.made).filter((m) => m && /^\d+:\d+$/.test(nn(m.to)));
         // 기록: 보내는 프레임 → 받는 프레임 · 해시(다음에 바뀐 것만 옮기기)
         const rec = xRecRead(j.to.key); const ri = core.arr(rec.items).filter(Boolean);
@@ -405,9 +456,10 @@ module.exports = function register(on, h) {
         try { addCatalogFrames(j.to.key, j.to.page, made.map((m) => ({ nodeId: nn(m.to), name: nn(m.name) }))); } catch (e) {}
         j.status = '완료'; j.phase = 'done'; j.updatedAt = now; j.made = made.map((m) => ({ nodeId: nn(m.to), name: nn(m.name), replaced: !!m.replaced }));
         const nNew = made.filter((m) => !m.replaced).length, nRep = made.length - nNew;
-        j.note = `옮김: 새로 ${nNew}개` + (nRep ? ` · 바꿔 끼움 ${nRep}개` : '') + (nn(b.note) ? ' — ' + nn(b.note).slice(0, 300) : '');
+        j.note = (j.mode === 'paste' ? '복사해 옮김' : '옮김') + `: 새로 ${nNew}개` + (nRep ? ` · 바꿔 끼움 ${nRep}개` : '') + (nn(b.note) ? ' — ' + nn(b.note).slice(0, 300) : '');
         xSave(jj);
         try { fs.rmSync(path.join(xDir, id), { recursive: true, force: true }); } catch (e) {}
+        if (j.mode === 'paste' && j.restore && h.restoreWin) h.restoreWin(j.restore).catch(() => {});   // 옮기기 전 창 상태로
         return { ok: true, job: j };
       }
       // 비교 앞 단계(phase scan, 2026-11-17): ② 플러그인이 ② 작업 페이지 화면 해시를 보낸다 → ① 화면 중 기록이 없고 이름이 같은 것을 확인 대상에 더해 ①로 넘긴다
@@ -420,7 +472,7 @@ module.exports = function register(on, h) {
         const pg = core.arr(cat.pages).find((p) => p && p.id === j.from.pageId) || core.arr(cat.pages).find((p) => p && p.editable) || {};
         // 짝 후보: 기록이 없는 ① 화면 중 ②에 같은 이름이 있는 것(이름은 후보를 줄이는 데만 쓰고, 짝은 내용 확인값이 같아야 짓는다)
         const cands = core.arr(pg.frames).filter((f) => f && names.has(nn(f[1]).trim()) && !recFrom.has(f[0]) && !(f[7] && recFrom.has(f[7]))).map((f) => ({ node: f[0], name: nn(f[1]).trim() })).slice(0, 200);
-        j.scan = scan; j.cands = cands; j.from.nodeIds = [...new Set(core.arr(j.from.nodeIds).concat(cands.map((x) => x.node)))].slice(0, 400);
+        j.scan = scan; j.cands = cands; j.scanned = 1;   // ②를 읽었음(화면이 0개여도 — 「못 읽음」과 구분, 2026-11-20) j.from.nodeIds = [...new Set(core.arr(j.from.nodeIds).concat(cands.map((x) => x.node)))].slice(0, 400);
         j.phase = 'check'; j.fileKey = j.from.key; j.status = '대기'; j.takenBy = ''; j.updatedAt = now;
         j.note = `② 화면 ${scan.length}개 읽음 — ${j.from.name || '보내는 파일'}에서 확인 대기(Figma에서 열고 플러그인 켜기)`;
         xSave(jj); return { ok: true, job: j };
@@ -434,6 +486,7 @@ module.exports = function register(on, h) {
         for (const x of rec) recOf[x.from.node] = x;
         const items = core.arr(b.frames).filter((x) => x && /^\d+:\d+$/.test(nn(x.from))).map((x) => ({ from: nn(x.from), hash: nn(x.hash), sig: nn(x.sig), gone: !!x.gone, err: x.err ? nn(x.err).slice(0, 120) : '' }));   // err: 그 화면만 Figma 연결이 늦어 확인 못 함(2026-11-18)
         const scan = core.arr(j.scan), sigOf = {}; for (const x of scan) sigOf[x.node] = x.sig;
+        const direct = !!j.scanned || scan.length > 0;   // ②를 직접 읽었으면(0개여도) ② 기준으로 판정
         // 짝 짓기: 기록이 없던 ① 화면과 내용 확인값이 같은 ② 화면 → 옮긴 것으로 기록(Figma에서 직접 복사해 옮긴 화면도 「옮김」). 이름만 같으면 짓지 않는다
         let found = 0;
         if (core.arr(j.cands).length && scan.length) {
@@ -455,18 +508,27 @@ module.exports = function register(on, h) {
           const r = recOf[x.from]; if (!r) continue;
           if (x.err) x.st = 'unk';   // 확인 못 한 화면은 「확인 전」 그대로(다음 확인 때 다시)
           else if (x.gone) x.st = 'gone';
-          else if (scan.length) { const s2 = sigOf[r.to && r.to.node]; x.st = s2 == null ? 'gone2' : s2 === x.sig ? 'same' : 'changed'; x.by2 = 1; }
+          else if (direct) { const s2 = sigOf[r.to && r.to.node]; x.st = s2 == null ? 'gone2' : s2 === x.sig ? 'same' : 'changed'; x.by2 = 1; }
           else x.st = r.hash === x.hash ? 'same' : 'changed';
         }
-        delete j.scan; delete j.cands;
+        // ②를 직접 읽어 ②에 없다고 확인된 화면(gone2)은 옮긴 기록을 지운다 → 비교 창에서 「안 옮김」(2026-11-20 — 「②에서 없어짐」으로 남겨 두지 않는다).
+        //  다시 옮기면 새로 붙는다(바꿔 끼울 ② 화면이 없으므로)
+        const drop = items.filter((x) => x.st === 'gone2' && recOf[x.from]);
+        if (drop.length) {
+          const dropKey = new Set(drop.map((x) => x.from + '>' + nn(recOf[x.from].to && recOf[x.from].to.node)));
+          const keep = core.arr(xRecRead(j.to.key).items).filter((x) => !(x && x.from && x.from.key === j.from.key && dropKey.has(x.from.node + '>' + nn(x.to && x.to.node))));
+          xRecWrite(j.to.key, { items: keep });
+          for (const x of drop) delete recOf[x.from];
+        }
+        delete j.scan; delete j.cands; delete j.scanned;
         const mine = items.filter((x) => recOf[x.from]);
-        const changed = mine.filter((x) => x.st === 'changed').length, gone = mine.filter((x) => x.st === 'gone').length, gone2 = mine.filter((x) => x.st === 'gone2').length;
-        j.compare = { at: now, items: mine, changed, gone, gone2, direct: scan.length ? 1 : 0 }; j.status = '완료'; j.phase = 'done'; j.updatedAt = now;
-        j.note = `바뀐 것 확인: 옮긴 화면 ${mine.length}개 중 ${scan.length ? '②가 ①과 다름' : '옮긴 뒤 바뀜'} ${changed}개` + (found ? ` (기록에 없던 옮긴 화면 ${found}개 찾음)` : '') + (mine.some((x) => x.err) ? ` · Figma 연결이 늦어 확인 못 함 ${mine.filter((x) => x.err).length}개(다음 확인 때 다시)` : '') + (gone2 ? ` · ②에 없음 ${gone2}개` : '') + (gone ? ` · ①에서 없어짐 ${gone}개` : '');
+        const changed = mine.filter((x) => x.st === 'changed').length, gone = mine.filter((x) => x.st === 'gone').length, gone2 = drop.length;
+        j.compare = { at: now, items: mine, changed, gone, gone2, direct: direct ? 1 : 0 }; j.status = '완료'; j.phase = 'done'; j.updatedAt = now;
+        j.note = `바뀐 것 확인: 옮긴 화면 ${mine.length}개 중 ${direct ? '②가 ①과 다름' : '옮긴 뒤 바뀜'} ${changed}개` + (found ? ` (기록에 없던 옮긴 화면 ${found}개 찾음)` : '') + (mine.some((x) => x.err) ? ` · Figma 연결이 늦어 확인 못 함 ${mine.filter((x) => x.err).length}개(다음 확인 때 다시)` : '') + (gone2 ? ` · ②에 없어 「안 옮김」으로 돌림 ${gone2}개` : '') + (gone ? ` · ①에서 없어짐 ${gone}개` : '');
         xSave(jj); return { ok: true, job: j };
       }
       // 끝난 작업(완료 · 실패)은 바꾸지 않는다 — 늦게 온 실패가 「완료」를 덮지 않게(2026-11-17)
-      case 'fail': { if (!['대기', '진행 중'].includes(nn(j.status))) return { ok: true, job: j }; try { fs.rmSync(path.join(xDir, id), { recursive: true, force: true }); } catch (e) {} j.status = '실패'; j.note = nn(b.note).slice(0, 500) || '옮기지 못함'; j.updatedAt = now; xSave(jj); return { ok: true, job: j }; }
+      case 'fail': { if (!['대기', '진행 중'].includes(nn(j.status))) return { ok: true, job: j }; try { fs.rmSync(path.join(xDir, id), { recursive: true, force: true }); } catch (e) {} j.status = '실패'; j.note = nn(b.note).slice(0, 500) || '옮기지 못함'; j.updatedAt = now; xSave(jj); if (j.mode === 'paste' && j.restore && h.restoreWin) h.restoreWin(j.restore).catch(() => {}); return { ok: true, job: j }; }
       default: throw new Error('알 수 없는 action: ' + nn(b.action));
     }
   });
