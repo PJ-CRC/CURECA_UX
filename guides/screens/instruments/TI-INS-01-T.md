@@ -176,12 +176,12 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=28
 
 | ID | 타입 | 변경 전 | 변경 후 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| R01 | 알럿 | 등록되지 않은 Module Tab 진입 시 "Alert_L_004" | Alert_004 | `policy/alert-catalog.csv`, LI-INS-01-T | 작업 중 (20261117-최고관리자-instruments) |
-| R02 | 디스크립션 | "Cureca 장비의 현황" | CURECA | `glossary/terms.csv` | 작업 중 (20261117-최고관리자-instruments) |
-| R03 | 화면 정보 | 오른쪽 패널의 CID 칸이 "TI-INS-02-T" | TI-INS-01-T | Figma 프레임 이름, IA | 작업 중 (20261117-최고관리자-instruments) |
-| R04 | 디스크립션 | 3-2가 "Total / In Use / Not in Use" | 화면(v2.1.06)은 "Enabled n · Total n (Disabled n)". 디스크립션을 화면과 POL-EQP-009의 Enabled 표기에 맞춤 | Figma 버전 메모 v2.1.06 | 작업 중 (20261117-최고관리자-instruments) |
-| R05 | 표기 | Enablde, Dignosctics | Enabled, Diagnostics | 오타 | 작업 중 (20261117-최고관리자-instruments) |
-| R06 | 디스크립션 | 3-5 "우측의 Instrument Detail Info page 참고" | 상태값은 `glossary/status-values.csv`와 POL-EQP-001 참조 | POL-EQP-001 | 작업 중 (20261117-최고관리자-instruments) |
+| R01 | 알럿 | 등록되지 않은 Module Tab 진입 시 "Alert_L_004" | Alert_004 | `policy/alert-catalog.csv`, LI-INS-01-T | 대기 |
+| R02 | 디스크립션 | "Cureca 장비의 현황" | CURECA | `glossary/terms.csv` | 대기 |
+| R03 | 화면 정보 | 오른쪽 패널의 CID 칸이 "TI-INS-02-T" | TI-INS-01-T | Figma 프레임 이름, IA | 대기 |
+| R04 | 디스크립션 | 3-2가 "Total / In Use / Not in Use" | 화면(v2.1.06)은 "Enabled n · Total n (Disabled n)". 디스크립션을 화면과 POL-EQP-009의 Enabled 표기에 맞춤 | Figma 버전 메모 v2.1.06 | 대기 |
+| R05 | 표기 | Enablde, Dignosctics | Enabled, Diagnostics | 오타 | 대기 |
+| R06 | 디스크립션 | 3-5 "우측의 Instrument Detail Info page 참고" | 상태값은 `glossary/status-values.csv`와 POL-EQP-001 참조 | POL-EQP-001 | 대기 |
 
 ## 변경 이력
 

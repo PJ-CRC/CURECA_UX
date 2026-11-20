@@ -121,10 +121,10 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=28
 
 | ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| R01 | 디스크립션 | "Account Type의 Sevice일 경우만 노출" | User Type이 Service일 때만 | `glossary/terms.csv` | 작업 중 (20261117-최고관리자-instruments) |
-| R02 | 정책 반영 | 조회 전용임이 디스크립션에 분명하지 않음 | L-IOS는 모든 User Type이 조회만 (Enabled 변경 없음) | POL-EQP-009 | 작업 중 (20261117-최고관리자-instruments) |
+| R01 | 디스크립션 | "Account Type의 Sevice일 경우만 노출" | User Type이 Service일 때만 | `glossary/terms.csv` | 대기 |
+| R02 | 정책 반영 | 조회 전용임이 디스크립션에 분명하지 않음 | L-IOS는 모든 User Type이 조회만 (Enabled 변경 없음) | POL-EQP-009 | 대기 |
 | R03 | 디스크립션 | Error Rate 표시 위치 | 고객 논의 중(CA-0001) | POL-EQP-010 | 대기 (고객 논의) |
-| R04 | 디스크립션 | Datail | Detail | 오타 | 작업 중 (20261117-최고관리자-instruments) |
+| R04 | 디스크립션 | Datail | Detail | 오타 | 대기 |
 
 ## 변경 이력
 
