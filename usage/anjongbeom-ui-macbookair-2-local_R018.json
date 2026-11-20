@@ -4,7 +4,7 @@
   "reqId": "R018",
   "reqType": "요청",
   "team": "stagora",
-  "at": "2026-11-20T11:31:53+09:00",
+  "at": "2026-11-20T13:04:17+09:00",
   "from": "2026-11-20T11:23:16+09:00",
   "by": "안종범",
   "doneBy": "Claude",
@@ -16,13 +16,13 @@
   "nodeId": "",
   "text": "화면 내 모든 문구(디스크립션 영역 제외)를 비교해서 언어셋에 없는 문구는 GMCS 시트에 새로 추가해줘.\n대표 화면과 CID 컬럼의 값도 채워줘.",
   "models": {
-    "claude-opus-5-5": 41
+    "claude-opus-5-5": 65
   },
-  "calls": 41,
-  "input": 80,
-  "cacheWrite": 180404,
-  "cacheRead": 5175567,
-  "output": 52786,
-  "total": 5408837,
-  "usd": 3.5344
+  "calls": 65,
+  "input": 127,
+  "cacheWrite": 271150,
+  "cacheRead": 7397834,
+  "output": 69930,
+  "total": 7739041,
+  "usd": 5.0479
 }
