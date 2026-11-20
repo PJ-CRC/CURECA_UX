@@ -1,0 +1,28 @@
+{
+  "id": "anjongbeom-ui-macbookair-2-local_20261120-112108",
+  "kind": "work",
+  "reqId": "",
+  "reqType": "",
+  "team": "stagora",
+  "at": "2026-11-20T11:21:08+09:00",
+  "from": "2026-11-20T11:17:27+09:00",
+  "by": "안종범",
+  "doneBy": "Claude",
+  "pc": "anjongbeom-ui-MacBookAir-2.local",
+  "fileKey": "",
+  "fileName": "",
+  "page": "",
+  "frame": "",
+  "nodeId": "",
+  "text": "기준데이터: 언어셋 › 표지-STAgora-언어셋 (J111)",
+  "models": {
+    "claude-opus-5-5": 27
+  },
+  "calls": 27,
+  "input": 52,
+  "cacheWrite": 48020,
+  "cacheRead": 1828226,
+  "output": 17001,
+  "total": 1893299,
+  "usd": 1.09
+}
