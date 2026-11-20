@@ -260,35 +260,20 @@ function appliedDocs(e) {
   else if (e.guideId) d.guide = { id: String(e.guideId), by: String(e.by || ''), at: String(e.at || '') };
   return d;
 }
-// 작업 기준(이 PC만): 작업규칙 · 정책서 · 기준데이터 · 화면 정의서는 카테고리마다 하나를 [적용]하면 이 PC의 모든 Figma 파일에 같이 쓴다(아직 없는 파일은 채워 준다, filled:true).
-//  UX가이드만 Figma 파일마다 고른다(PC 화면 · 모바일 등 대상에 따라, 2026-11-12) — 다른 파일에서 채우지 않는다. 없으면 비어 있다 → Claude는 화면설계 요청을 「보류」 + 질문
+// 작업 기준(이 PC만): 카테고리마다 하나를 [적용]하면 이 PC의 모든 Figma 파일에 같이 쓴다(아직 없는 파일은 채워 준다, filled:true).
+//  UX가이드도 같다(2026-11-20 — 11-12부터 파일마다 고르던 것을 하나로). 예전에 파일마다 다르게 적용한 것은 읽을 때 가장 최근에 적용한 것으로 맞춘다
 function fillApplied(applied) {
-  let src = applied[workKey()];
-  const common = (e) => { const d = appliedDocs(e); delete d.guide; return d; };
-  if (!Object.keys(common(src)).length) { src = null; for (const k of Object.keys(applied)) { const e = applied[k]; if (Object.keys(common(e)).length && (!src || String(e.at || '') > String(src.at || ''))) src = e; } }
-  if (!src) return applied;
-  const sd = common(src);
+  const best = {};   // 카테고리마다 가장 최근에 적용한 것(같으면 작업 링크 파일 것)
+  const wk = workKey(), keys = applyKeys('').filter((k) => applied[k]);   // 지금 등록된 파일만 본다(지운 프로젝트에 남은 옛 적용이 되살아나지 않게). 작업 링크 파일이 맨 앞
+  for (const k of keys) { const d = appliedDocs(applied[k]); for (const t of Object.keys(d)) if (!best[t] || String(d[t].at || '') > String(best[t].at || '')) best[t] = d[t]; }
+  if (!Object.keys(best).length) return applied;
+  const src = applied[wk] && Object.keys(appliedDocs(applied[wk])).length ? applied[wk] : keys.map((k) => applied[k]).filter(Boolean).sort((x, y) => String(y.at || '').localeCompare(String(x.at || '')))[0] || {};
   for (const k of applyKeys('')) {
     const docs = appliedDocs(applied[k]); let n = 0;
-    for (const t of Object.keys(sd)) if (!(t in docs)) { docs[t] = sd[t]; n++; }
+    for (const t of Object.keys(best)) if (!docs[t] || docs[t].id !== best[t].id) { docs[t] = best[t]; n++; }
     if (!n && Object.prototype.hasOwnProperty.call(applied, k)) continue;
     const g = docs.guide;
     applied[k] = { fileKey: k, guideId: g ? String(g.id) : '', by: String(src.by || ''), pc: String(src.pc || ''), at: String(src.at || ''), docs, filled: true };
-  }
-  return applied;
-}
-/* 팀 프로젝트(2026-11-16): UX가이드를 따로 고르지 않은 단계는 앞 단계(1차 → 2차 → 3차)의 UX가이드를 같이 쓴다.
-   저장하지 않고 읽을 때마다 계산한다(1차를 바꾸면 따라간다). 그 단계에서 직접 고르면 그것이 우선. docs.guide.from = 가져온 단계의 파일 키 */
-function fillTeamGuide(applied, T) {
-  const steps = core.readTeamProjects(T.team).map((p) => p.key);
-  let prev = null;
-  for (const k of steps) {
-    const docs = appliedDocs(applied[k]);
-    if (docs.guide) { prev = { g: docs.guide, key: k }; continue; }
-    if (!prev) continue;
-    docs.guide = Object.assign({}, prev.g, { from: prev.key });
-    const e = applied[k] || { fileKey: k, by: '', pc: '', at: '' };
-    applied[k] = Object.assign({}, e, { fileKey: k, guideId: String(prev.g.id), docs, teamGuide: true });
   }
   return applied;
 }
@@ -384,7 +369,7 @@ function readGuides(T) {
     if (e.guideId && alias[e.guideId]) e.guideId = alias[e.guideId];
     for (const t of Object.keys(e.docs || {})) { const v = e.docs[t]; if (v && v.id && alias[v.id]) v.id = alias[v.id]; }
   }
-  const applied = fillTeamGuide(fillApplied(raw), T);
+  const applied = fillApplied(raw);   // 팀 프로젝트 단계별 UX가이드 이어 쓰기(fillTeamGuide, 11-16)는 UX가이드가 모든 파일에 하나가 되며 뺐다(2026-11-20)
   return { items: sortDescPS(list, (x) => String(x.updatedAt || '')), applied, specDoc: specDoc(T) };   // specDoc: 화면설계서 작업대기가 읽을 화면 정의서
 }
 on('GET', '/api/guides', ({ T }) => readGuides(T));

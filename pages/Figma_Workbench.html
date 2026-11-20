@@ -1419,7 +1419,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
   }
 
   /* 작업 기준(UX 문서 「적용」, 이 PC · 지금 팀): 작업규칙 · 정책서 · 기준데이터 · 화면 정의서는 이 PC의 모든 프로젝트에 같이,
-     UX가이드는 Figma 파일마다(2026-11-12). 빠진 카테고리가 있으면 Claude가 그 문서 없이 처리하므로(UX가이드가 없으면 화면설계 요청은 「보류」) 요청 칸 위에 알린다.
+     UX가이드도 같다(2026-11-20, 그 전에는 Figma 파일마다). 빠진 카테고리가 있으면 Claude가 그 문서 없이 처리하므로(UX가이드가 없으면 화면설계 요청은 「보류」) 요청 칸 위에 알린다.
      [추천 문서로 적용] = 카테고리마다 이 PC의 다른 파일에 적용한 문서(UX가이드는 가장 최근), 없으면 그 카테고리 문서가 하나뿐일 때 그것 */
   var GA = null, GA_KINDS = [['rule', '작업규칙'], ['policy', '정책서'], ['guide', 'UX가이드'], ['data', '기준데이터'], ['spec', '화면 정의서']];
   function gaDocs(ap){ var d = {}; if (!ap) return d; if (ap.docs) Object.keys(ap.docs).forEach(function(k){ if (ap.docs[k] && ap.docs[k].id) d[k] = { id: ap.docs[k].id, at: ap.docs[k].at || ap.at || '' }; }); else if (ap.guideId) d.guide = { id: ap.guideId, at: ap.at || '' }; return d; }
@@ -1442,7 +1442,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     var title = function(kind, id){ var it = (byKind[kind] || []).filter(function(x){ return x.id === id; })[0]; return it ? (it.title || id) : id; };
     var sk = Object.keys(sug), names = missing.map(function(k){ return k[1]; }).join(' · '), noGuide = missing.some(function(k){ return k[0] === 'guide'; });
     var canW = !window.WB_CAN_WRITE || window.WB_CAN_WRITE('guide');
-    el.innerHTML = '작업 기준 없음: ' + esc(names) + ' — Claude가 이 문서 없이 처리합니다' + (noGuide ? '(UX가이드가 없으면 화면설계 요청은 「보류」, UX가이드는 Figma 파일마다 고릅니다)' : '') + '.' +
+    el.innerHTML = '작업 기준 없음: ' + esc(names) + ' — Claude가 이 문서 없이 처리합니다' + (noGuide ? '(UX가이드가 없으면 화면설계 요청은 「보류」)' : '') + '.' +
       '<span class="ga-act">' + (sk.length && canW ? '<button type="button" id="gaApply" title="' + esc(sk.map(function(kind){ var n = GA_KINDS.filter(function(k){ return k[0] === kind; })[0][1]; return n + ': ' + title(kind, sug[kind]); }).join('\n')) + '">추천 문서로 적용</button>' : '') +
       '<a href="Common_UX_Guide.html" title="UX 문서 탭마다 작업 기준을 고르고 [적용] (UX가이드는 파일마다, 나머지는 이 PC의 모든 프로젝트에)">UX 문서에서 고르기 ›</a></span>';
     el.hidden = false;
