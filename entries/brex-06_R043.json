@@ -2,11 +2,11 @@
   "id": "brex-06_R043",
   "kind": "request",
   "team": "cureca",
-  "status": "보류",
-  "at": "2026-11-20T16:21:22+09:00",
+  "status": "대기",
+  "at": "2026-11-20T16:21:31+09:00",
   "createdAt": "2026-11-20T16:00:54+09:00",
   "by": "최고관리자",
-  "doneBy": "Claude",
+  "doneBy": "최고관리자",
   "pc": "BREX_06",
   "reqId": "R043",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,33 +17,25 @@
   "type": "요청",
   "layout": "",
   "text": "samples 메뉴 기존에서 신규로 다시 옮겨줘",
-  "note": "케이스 3 · 1 ~ 2단계 · 20261120-최고관리자-samples — 1단계를 답(추천대로)으로 마치고 2단계 근거 · 분석을 했습니다. 확인을 부탁드립니다 (Figma는 아직 고치지 않음)\n- 1단계: 반영 대기 묶음 1 ~ 5 (29건)를 tobe 화면 MD에서 「작업 중」으로 바꿈\n- 읽은 근거: POL-SMP-001 · 002 · 005, POL-COM-006, POL-TST-001 · 006 (설계에 씀), POL-SMP-003 · POL-TST-007 · Module 문서(읽었으나 쓰지 않음), 기준데이터 상태값 · 검사 단계 · 검체 타입 · 검사 항목 · Module/Unit · 용어\n- 기존 화면이 정책과 다름 (3단계에서 정책대로 그리고 변경 확인): Samples 1-5 Status 순서(상태값 표), 2-1 Start/End Date/Time 표현(Prep 시스템 · D.A PC), Progress = 검사 단계 5개, L [Export] .CVS · COMM-5-j(4/4) → .csv · COMM-5-m(2/4), Details 2 Start/End 시점(POL-SMP-002), Details 3 일시 표기 hh:mm:ss\n- 「확인 필요」 반영 대기 6건이 근거로 풀려 변경 후를 채우고 작업 중으로: TI-SPT-01 R06 · R07, LI-SPT-01 R04, Protocol Info R03 · R03 · R04 (POL-TST-001 규칙 8 · POL-TST-006 규칙 6)\n- 3단계 질문 대기로 넘김: [Reset] · [Search] · Items · 빈 목록 정의, Export 데이터 없을 때, Status에 Ordered 포함 여부, Product 드롭다운 범위, Trolley Name/ID, Reagent 정렬, Temp. 범위 등\n- 영향 화면 · 요건 목록에 더한 화면: 없음\n답해 주실 것: ① 정책 수정 범위 = 논의 대상 DS-0008 (규칙은 그대로, cids만 더함): POL-SMP-001 + TI/LI-SPT-01-01, POL-TST-001 · POL-TST-006 + TI/LI-SPT-01-02 · 01-03 — 이대로 결정(추천) / 논의 중으로 둠 ② Protocol Info Extraction (TI/LI-SPT-01-03) 3 상세는 기존 화면이 M9600용(TI-STN-03-02-02-M)만 가리킴. 추출 장치 STARlet(-V)용을 케이스 화면으로 나눠 그릴까요 — 그리지 않고 질문 대기로 둠(추천) / 케이스로 그림 ③ 3단계(화면 설계)로 넘어갈까요?\n작업 기준: basis 2026-11-20 16:14 · 작업규칙 CURECA 작업규칙 (rules) @원본 · 정책서 (policy) @원본 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 (glossary) @원본 · 화면 정의서 (screens) @원본",
+  "note": "",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": {
-    "q": "DS-0008 이대로 결정 · STARlet 케이스는 질문 대기로 두고 3단계로 넘어갈까요?",
-    "options": [
-      {
-        "label": "추천대로: DS-0008 결정 · STARlet 질문 대기 · 3단계 진행"
-      },
-      {
-        "label": "DS-0008 논의 중으로 두고 3단계 진행"
-      },
-      {
-        "label": "STARlet용도 케이스로 그리고 3단계 진행"
-      }
-    ],
-    "free": true
-  },
+  "ask": null,
   "replies": [
     {
       "at": "2026-11-20T16:17:55+09:00",
       "by": "최고관리자",
       "q": "Samples 8화면 · 반영 대기 묶음 1 ~ 5 반영으로 1단계를 마치고 2단계로 넘어갈까요?",
       "text": "추천대로: Samples 8화면 · 묶음 1 ~ 5 모두 반영 · 2단계 진행"
+    },
+    {
+      "at": "2026-11-20T16:21:31+09:00",
+      "by": "최고관리자",
+      "q": "DS-0008 이대로 결정 · STARlet 케이스는 질문 대기로 두고 3단계로 넘어갈까요?",
+      "text": "추천대로: DS-0008 결정 · STARlet 질문 대기 · 3단계 진행"
     }
   ],
   "raws": [
