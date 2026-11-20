@@ -779,6 +779,68 @@ module.exports = function register(on, h) {
     return { ok: true, item: h.readMinute(path.join(T.minDir, id + '.md')) };
   });
 
+  // ── POST /api/worklogs {action: 'stop' | 'resume', name, reason} — 작업 기록 멈추기 · 다시 시작(2026-11-20, 일정/작업 「작업 기록」 탭) ──
+  //  규칙 저장소 reference-rules/work-log.md 「작업을 그만두면 status: 멈춤과 이유」 · pending-changes.md 「멈추면 작업 중 항목을 모두 대기로」를 사람이 화면에서 한다.
+  //  멈추기: 머리말 status → 멈춤, `이어서 작업할 곳:` 줄 앞에 「멈춤 (날짜 · 누구): 이유」를 넣고 원래 줄은 「(멈추기 전) …」로 남김(Claude가 이어 갈 곳으로 읽지 않게),
+  //   그 팀 규칙 저장소의 반영 대기 「작업 중 ({이름})」 → 「대기」, 이 PC의 열린 요청(work = 이름) 중 대기 · 진행 중 · 보류는 사람이 멈춘 것으로(요청은 PC마다라 다른 PC 요청은
+  //   그 PC Claude가 작업 기록의 멈춤을 보고 멈춘다 — requests.md). 다시 시작: status → 진행 중, 「(멈추기 전)」을 떼어 이어 갈 곳을 되살린다. 대기로 되돌린 항목은 그대로(다시 고름)
+  on('POST', '/api/worklogs', async ({ req, body, T }) => {
+    const b = await body(), name = nn(b.name), act = nn(b.action);
+    if (!/^[^\\/:*?"<>|]{1,120}$/.test(name) || /^readme$/i.test(name)) throw new Error('잘못된 작업 기록 이름입니다.');
+    const f = path.join(T.guideRoot, 'work-logs', name + '.md');
+    if (!core.exists(f)) throw new Error('작업 기록을 찾지 못했습니다: ' + name);
+    let t = String(core.readText(f) || '');
+    const st = (/^---\r?\n[\s\S]*?^status:\s*([^\s#]+(?: [^\s#]+)?)/m.exec(t) || [])[1] || '';
+    const who = core.meName() || '사람', day = core.now().slice(0, 10), now = core.now();
+    const setSt = (v) => { t = t.replace(/^(---\r?\n[\s\S]*?^)status:[^\r\n]*/m, `$1status: ${v}`); };
+    if (act === 'stop') {
+      if (st === '끝남' || st === '멈춤') throw new Error(`「${st}」인 작업 기록은 멈출 수 없습니다.`);
+      const why = nn(b.reason).replace(/[\r\n]+/g, ' ').trim().slice(0, 300);
+      if (!why) throw new Error('멈추는 이유를 적어 주세요.');
+      setSt('멈춤');
+      const line = `멈춤 (${day} · ${who}): ${why}. 반영 대기의 \`작업 중\` 항목은 모두 \`대기\`로 되돌림. 다시 하려면 일정/작업 「작업 기록」에서 [다시 시작]`;
+      if (/^(?:이어서 작업할 곳|다음):/m.test(t)) t = t.replace(/^((?:이어서 작업할 곳|다음):)/m, `${line}\n\n(멈추기 전) $1`);
+      else if (/\r?\n## 요청/.test(t)) t = t.replace(/(\r?\n)## 요청/, `$1${line}\n$1## 요청`);
+      else t = t.replace(/\s*$/, `\n\n${line}\n`);
+      core.writeText(f, t);
+      // 반영 대기 「작업 중 (이름)」 → 「대기」: 그 팀 규칙 저장소의 문서 폴더(두 단계 아래까지). 작업 기록 · 예전(old-) · 보관 · 고친 판(rev)은 뺀다
+      const esc = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), re = new RegExp(`작업 중\\s*\\(\\s*${esc}\\s*\\)`, 'g'); let rows = 0;
+      const skip = (d) => /^(work-logs|archive|rev|_trash|\.git)$/i.test(d) || /^(old-|[_.])/i.test(d);
+      const ls = (dir) => { try { return fs.readdirSync(dir, { withFileTypes: true }); } catch (e) { return []; } };
+      const fileNames = (dir) => ls(dir).filter((d) => d.isFile()).map((d) => d.name), dirNames = (dir) => ls(dir).filter((d) => d.isDirectory()).map((d) => d.name);
+      const walk = (dir, depth) => {
+        for (const n of fileNames(dir)) { if (!/\.md$/i.test(n)) continue; const p = path.join(dir, n), s = String(core.readText(p) || ''); const m = s.match(re); if (m) { rows += m.length; core.writeText(p, s.replace(re, '대기')); } }
+        if (depth < 2) for (const d of dirNames(dir)) if (!skip(d)) walk(path.join(dir, d), depth + 1);
+      };
+      walk(T.guideRoot, 0);
+      // 이 PC의 열린 요청(이 작업 기록을 이어 가던 것)을 사람이 멈춘 것으로
+      let reqs = 0; const r = core.readJson(C.reqFile);
+      if (r && Array.isArray(r.items)) {
+        for (const it of r.items) {
+          if (!it || nn(it.work) !== name || it.stopped || !['대기', '진행 중', '보류'].includes(nn(it.status)) || core.itemTeam(it) !== T.team) continue;
+          const prev = nn(it.status); if (prev === '진행 중' && it.startedAt) h.closeRun(it, now);
+          it.status = '보류'; it.ask = null; it.stopped = { by: who, at: now, was: prev };
+          it.note = `멈춤 — ${who}가 작업 기록 「${name}」을 멈췄습니다(${why}). 다시 하려면 작업 기록을 [다시 시작]한 뒤 「다시 진행」을 누르세요.`;
+          it.updatedAt = now; it.updatedBy = who; histFromRequest(it); reqs++;
+          if (prev === '진행 중') { try { const cf = path.join(C.root, 'workbench', '.agent_cancel'); const old = String(core.readText(cf) || ''); core.writeText(cf, (old ? old + '\n' : '') + it.id); } catch (e) {} }
+        }
+        if (reqs) core.writeJson(C.reqFile, r);
+      }
+      core.syncWant();
+      return { ok: true, rows, reqs };
+    }
+    if (act === 'resume') {
+      if (st !== '멈춤') throw new Error('멈춘 작업 기록만 다시 시작할 수 있습니다.');
+      setSt('진행 중');
+      t = t.replace(/^멈춤 (\([^)]*\)):/m, `멈췄음 $1:`);
+      t = t.replace(/^(멈췄음 \([^)]*\):[^\r\n]*?)(?:\s*다시 하려면 일정\/작업 「작업 기록」에서 \[다시 시작\])?$/m, `$1 → 다시 시작 (${day} · ${who})`);
+      t = t.replace(/^\(멈추기 전\) ((?:이어서 작업할 곳|다음):)/m, '$1');
+      core.writeText(f, t); core.syncWant();
+      return { ok: true };
+    }
+    throw new Error('알 수 없는 action: ' + act);
+  });
+
   // ── POST /api/upload?name=: UX 문서 만들기 참고 파일(이 PC에만, 작업을 만들 때 옮김) ──
   const UP_EXT = ['md', 'markdown', 'txt', 'csv', 'tsv', 'json', 'html', 'htm', 'pdf', 'docx', 'xlsx', 'pptx', 'png', 'jpg', 'jpeg', 'gif', 'webp'], UP_MAX = 20 * 1024 * 1024;
   on('POST', '/api/upload', async ({ q, raw }) => {
