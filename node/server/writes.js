@@ -1383,7 +1383,13 @@ module.exports = function register(on, h) {
     }
     r.items = items; r.version = (parseInt(r.version, 10) || 0) + 1;
     core.writeJson(C.reqFile, r);
-    if (b.action === 'update' && b.status === '완료') startUsage(nn(b.id));
+    // 사용량은 「진행 중」 구간이 끝날 때마다 다시 센다(2026-11-20): 완료 때만 세면 멈춘 요청 · 보류 · 나눠서 이어 가는 요청(대기)은 끝날 때까지 안 잡혔다.
+    //  기록 이름이 {PC}_{요청 ID}라 그때까지의 구간(runs)을 모두 더한 값으로 덮어쓴다
+    if (b.action === 'update' || b.action === 'stop') {
+      const it2 = items.find((i) => i && i.id === b.id), lr = it2 ? core.arr(it2.runs).slice(-1)[0] : null;
+      if (it2 && nn(it2.status) !== '진행 중' && lr && lr.to === now) startUsage(nn(b.id));
+      else if (b.action === 'update' && b.status === '완료' && it2) startUsage(nn(b.id));
+    }
     send(res, 200, 'application/json; charset=utf-8', fs.readFileSync(C.reqFile));
   });
 };

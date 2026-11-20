@@ -1394,6 +1394,18 @@ html.embed,html.embed body{overflow:hidden}
       secs.forEach(function(s){ if (s.level === 2 && s.parent) s.parent.raw += s.raw; });
       secs = secs.filter(function(s){ if (s.level === 2 && s.parent) { delete byId[s.id]; return false; } s.kids = []; return true; });
     }
+    /* 같은 제목의 대분류가 여럿이면(예: templates/screen.md · screen-asis.md가 모두 「CID 화면 이름」, 2026-11-20) 목차에서는 그 제목 하나로 묶고
+       파일마다 아래 항목으로 보인다(문서 · 파일은 그대로 — 원본 CURECA_AI는 tobe · asis 틀을 일부러 나눠 둠). 묶음은 목차에만 있고 secs(저장)에는 없다 */
+    (function(){
+      var by = {};
+      secs.forEach(function(s){ if (s.level === 1 && !(s.kids && s.kids.length) && s.file) { var k = String(s.label).replace(/\s\([^()]*\)$/, ''); (by[k] = by[k] || []).push(s); } });
+      Object.keys(by).forEach(function(k){
+        var list = by[k]; if (list.length < 2) return;
+        var g = { id: 'grp-' + list[0].id, label: k, kids: list, level: 1, group: true };
+        list.forEach(function(s, i){ s.label = String(s.file).replace(/^.*\//, ''); s.parent = g; if (i) s.hideTop = true; });
+        list[0].dupGroup = g;
+      });
+    })();
     secs.forEach(function(s){ s.box = render(body(s)); s.text = (s.label + ' ' + s.box.textContent).toLowerCase(); });
     if (!secs.length) { fail('가이드 내용이 비어 있습니다.'); return; }
     var want = keepIdx != null ? (secs[keepIdx] || secs[0]).id : findSec(decodeURIComponent(location.hash.slice(1)));
@@ -1735,7 +1747,15 @@ html.embed,html.embed body{overflow:hidden}
     if (SC) { scTree(q); return; }
     var h = '', hit = function(s){ return !q || s.text.indexOf(q) >= 0; };
     function label(t){ var e = esc(t); if (!q) return e; var i = t.toLowerCase().indexOf(q); return i < 0 ? e : esc(t.slice(0, i)) + '<mark>' + esc(t.slice(i, i + q.length)) + '</mark>' + esc(t.slice(i + q.length)); }
-    secs.filter(function(s){ return s.level <= 1; }).forEach(function(g){
+    secs.filter(function(s){ return s.level <= 1 && !s.hideTop; }).forEach(function(g){
+      if (g.dupGroup) {   // 같은 제목 묶음(목차에만): 제목 하나 + 파일마다 아래 항목. 제목을 누르면 첫 파일을 보인다
+        var G2 = g.dupGroup, gk = G2.kids.filter(hit); if (!gk.length && !(q && G2.label.toLowerCase().indexOf(q) >= 0)) return;
+        var gOpen = q ? true : open[G2.id] !== false && (open[G2.id] || (cur && cur.parent === G2));
+        h += '<li role="treeitem" aria-expanded="' + !!gOpen + '"><button type="button" class="node grp" data-id="' + G2.kids[0].id + '" data-gopen="' + G2.id + '">' +
+          '<span class="tw' + (gOpen ? ' open' : '') + '" data-tw="' + G2.id + '">▸</span><span class="lbl">' + label(G2.label) + '</span></button>';
+        if (gOpen) h += '<ul role="group">' + (q ? gk : G2.kids).map(function(k){ return '<li role="treeitem"><button type="button" class="node' + (cur === k ? ' cur' : '') + '" data-id="' + k.id + '"><span class="tw none"></span><span class="lbl">' + label(k.label) + '</span></button></li>'; }).join('') + '</ul>';
+        h += '</li>'; return;
+      }
       var kids = (g.kids || []).filter(hit);
       if (!(hit(g) || kids.length)) return;
       var isOpen = q ? true : open[g.id] !== false && (open[g.id] || (cur && (cur === g || cur.parent === g)));
@@ -1758,7 +1778,7 @@ html.embed,html.embed body{overflow:hidden}
     cur = s; if (s.parent) open[s.parent.id] = true; else if (s.kids && s.kids.length) open[s.id] = true;
     csvSync();
     var m = $('main'); m.innerHTML = '';
-    if (s.parent) m.insertAdjacentHTML('beforeend', '<div class="crumb"><button type="button" data-go="' + s.parent.id + '">' + esc(s.parent.label) + '</button> ›</div>');
+    if (s.parent) m.insertAdjacentHTML('beforeend', '<div class="crumb"><button type="button" data-go="' + (s.parent.group ? s.parent.kids[0].id : s.parent.id) + '">' + esc(s.parent.label) + '</button> ›</div>');
     /* [직접 수정]은 제목 오른쪽(파일형은 이 파일, 아니면 문서 전체) — 누르면 이 내용 자리가 그대로 편집 칸이 된다 */
     var isBook = /^@book:/.test(s.file || '');   // 시트 묶음: 직접 수정은 표 안에서(칸 더블클릭 · 하단 「CSV로 고치기」)
     var canDm = !isBook && !!(s.file || (!FILES && GINFO));

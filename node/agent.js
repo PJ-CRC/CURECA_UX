@@ -142,7 +142,7 @@ function usageNow() {
 const hmOf = (t) => { const d = new Date(t), same = d.toDateString() === new Date().toDateString(); return (same ? '' : (d.getMonth() + 1) + '/' + d.getDate() + ' ') + d.toTimeString().slice(0, 5); };
 function usageHint() {
   const u = usageNow(); if (!u || u.pct < WARN_PCT) return '';
-  return `\n- 지금 Claude 사용량이 ${u.label} ${u.pct}%${u.resetsAt ? '(' + hmOf(u.resetsAt) + ' 초기화)' : ''}라 처리 중 한도에 걸려 끊길 수 있다. 끊겨도 한 일이 남게: 화면(프레임) · 파일 하나를 끝낼 때마다 작업 기록의 이어 갈 곳 줄(CURECA는 「이어서 작업할 곳:」)과 요청 note(update)를 먼저 고치고, 남은 화면이 많으면 docs/claude/requests.md 「끊겨도 한 일이 남게」 · 「나눠서 이어 가기」대로 화면 몇 개씩 끊어 「대기」로 돌린다.`;
+  return `\n- 지금 Claude 사용량이 ${u.label} ${u.pct}%${u.resetsAt ? '(' + hmOf(u.resetsAt) + ' 초기화)' : ''}라 처리 중 한도에 걸려 끊길 수 있다. 끊겨도 한 일이 남게: 화면(프레임) · 파일 하나를 끝낼 때마다 작업 기록의 이어 갈 곳 줄(CURECA는 「이어서 작업할 곳:」)과 요청 note(update)를 먼저 고친다. 사용량이 높다고 일부러 끊어 「대기」로 돌리지는 않는다 — 새 세션은 규칙 · 작업 기록을 처음부터 다시 읽어 오히려 더 쓴다(2026-11-20). 기록을 화면마다 고쳐 두면 한도에 걸려 끊겨도 다음 세션이 거기서 이어 간다(docs/claude/requests-flow.md 「끊겨도 한 일이 남게」).`;
 }
 // 요청이 없을 때도 5분마다: 아주 짧은 질문(가장 싼 모델 · 도구 없음)을 보내 rate_limit_event를 읽는다. CLAUDE.md를 읽지 않게 임시 폴더에서
 async function probeUsage() {
@@ -281,6 +281,13 @@ ${details(out)}
 이 대화에서 「보류」 + 질문으로 멈춘 요청에 사람이 답했다(위 replies의 마지막). 규칙 문서 · 화면 MD는 이 대화에서 이미 읽었으니 다시 읽지 말고, 작업 기록은 처음부터 읽지 말고 머리말 · 「단계」 표 · 이어서 작업할 곳 줄만 다시 읽어 내가 마지막에 쓴 것과 같은지만 본다(다르면 처음부터 — docs/claude/requests-flow.md 「같은 세션에서 이어 갈 때」). 그 답대로 하던 작업을 이어서 처리하라. 처리 방식(「진행 중」 → 처리 → 「완료」 또는 「보류」 + ask, 캡처, frames, 사용자에게 대화로 묻지 않기, 끝나면 몇 줄 요약)은 앞과 같다.${usageHint()}`;
 }
 // 차례가 끝난 뒤 그 차례의 요청 중 「보류」 + 질문(ask)으로 답을 기다리는 것(겹침 대기는 빼고)
+// 요청 · 작업의 지금 note · status(차례 앞뒤로 견줘 진척을 본다)
+function noteSnap(ids) {
+  const rq = ((readJson(path.join(WB, 'edit_requests.json')) || {}).items || []).filter(Boolean), jb = ((readJson(path.join(WB, 'jobs.json')) || {}).items || []).filter(Boolean), o = {};
+  for (const id of ids) { const x = rq.find((i) => i.id === id) || jb.find((i) => i.id === id); o[id] = x ? String(x.status || '') + '|' + String(x.note || '') + '|' + String(x.work || '') : ''; }
+  return o;
+}
+function progressed(ids, before) { const now2 = noteSnap(ids); return ids.some((id) => now2[id] !== (before || {})[id]); }
 function waitingIds(ids) {
   const items = ((readJson(path.join(WB, 'edit_requests.json')) || {}).items || []).filter(Boolean);
   return ids.filter((id) => { const r = items.find((x) => x.id === id); return r && r.status === '보류' && r.ask && !String(r.note || '').startsWith('겹침 대기'); });
@@ -415,11 +422,15 @@ async function main() {
     if (!S) startSession();
     if (!S) { save('error', 'Claude 세션을 띄우지 못했습니다. 기록: workbench/.agent.log'); await sleep(30000); continue; }
     S.turnIds = out.match(/\b[RJ]\d{3,}\b/g) || [];
+    const turnStart = noteSnap(S.turnIds);
     St.ids = S.turnIds.slice(); St.act = now(); St.tool = '';
     save('working', '처리 중: ' + out.split('\n').join(' · ') + usTxt); log((resume ? '처리 시작(같은 세션에 답 보냄): ' : '처리 시작: ') + out + usTxt);
     const r = await sendTurn(resume ? makeResume(out) : makePrompt(out));
     log(`처리 끝 (ok ${r.ok}${r.ms ? ', ' + Math.round(r.ms / 1000) + '초' : ''})\n${r.text}`);
     if (r.ok && !r.cancelled && !r.dead) await saveRaw(S.turnIds || [], r.text);
+    // 진척이 있었으면 「반복」으로 세지 않는다(2026-11-20): 「나눠서 이어 가기」(requests-flow.md)로 일을 하고 「대기」로 돌린 요청은
+    //  같은 「PENDING R0xx」로 다시 오는데, 4번째에 「같은 요청이 처리되지 않아 10분 쉼」에 걸렸다(R043). 이 차례에 요청 note가 바뀌었으면 진척으로 본다
+    if (r.ok && !r.cancelled && !r.dead && progressed(S.turnIds || [], turnStart)) { last = ''; repeat = 0; }
     // 사람이 멈춤: 세션을 끊는다. 같은 차례의 다른 요청은 서버가 10분 뒤 「대기」로 돌려 다시 처리된다
     if (r.cancelled) { await stopSession('사람이 멈춤: ' + r.cancelled.join(', ')); save('idle', '멈춤: ' + r.cancelled.join(', ') + ' — 요청을 기다리는 중'); continue; }
     // 사용 한도(5시간 · 주간)에 걸림: 풀리는 시각까지 다시 띄우지 않는다(2026-11-16 — 예전에는 3번 실패 후 10분마다 헛되이 다시 띄우며 「확인 필요」로만 보였다)
