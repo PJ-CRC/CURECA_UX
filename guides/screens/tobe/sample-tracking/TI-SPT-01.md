@@ -14,7 +14,7 @@ policies: [POL-SMP-001, POL-SMP-002, POL-SMP-005, POL-COM-006]
 basis:
 basis_versions:
 source: tobe
-figma:
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3086-53195
 ---
 # TI-SPT-01 Samples
 
@@ -191,6 +191,7 @@ figma:
 | 2-1 | Start Date/Time | 화면 | | - | |
 | 2-1 | End Date/Time | 화면 | | - | |
 | 2-1 | STAT | 화면 | | - | |
+| 2-2 | Progress Status | 케이스 | | - | |
 | 2-3 | 10 items | 화면 · 디스크립션 | | - | |
 | 3 | Export | 화면 | | - | |
 

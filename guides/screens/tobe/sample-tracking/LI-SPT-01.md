@@ -14,7 +14,7 @@ policies: [POL-SMP-001, POL-SMP-002, POL-SMP-005, POL-COM-006]
 basis:
 basis_versions:
 source: tobe
-figma:
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3092-54561
 ---
 # LI-SPT-01 Samples
 
