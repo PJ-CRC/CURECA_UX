@@ -1,0 +1,29 @@
+{
+  "id": "brex-06_R043",
+  "kind": "request",
+  "reqId": "R043",
+  "reqType": "요청",
+  "team": "cureca",
+  "at": "2026-11-20T17:22:43+09:00",
+  "from": "2026-11-20T16:01:12+09:00",
+  "by": "최고관리자",
+  "doneBy": "Claude",
+  "pc": "BREX_06",
+  "fileKey": "etCQFF3CTf1EA6C79d4BBf",
+  "fileName": "UX AI TEST",
+  "page": "Sample Tracking Ⓛ / Ⓣ",
+  "frame": "",
+  "nodeId": "",
+  "text": "samples 메뉴 기존에서 신규로 다시 옮겨줘",
+  "models": {
+    "claude-opus-5-5": 274,
+    "<synthetic>": 1
+  },
+  "calls": 275,
+  "input": 532,
+  "cacheWrite": 988186,
+  "cacheRead": 61621871,
+  "output": 272037,
+  "total": 62882626,
+  "usd": 25.6727
+}
