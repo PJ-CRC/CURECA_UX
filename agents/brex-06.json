@@ -1,5 +1,5 @@
 {
-  "reportAt": "2026-11-20T17:05:15+09:00",
+  "reportAt": "2026-11-20T17:06:15+09:00",
   "pc": "BREX_06",
   "slug": "brex-06",
   "user": "최고관리자",
@@ -8,7 +8,7 @@
   "alive": true,
   "status": "working",
   "msg": "처리 중: PENDING R043 · Claude 5시간 사용량 88%(18:40 초기화) — 중간에 끊길 수 있음",
-  "statusAt": "2026-11-20T17:05:11+09:00",
+  "statusAt": "2026-11-20T17:06:11+09:00",
   "claude": "따로 설치",
   "claudeWay": "cli",
   "autoWatch": true,
