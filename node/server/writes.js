@@ -725,14 +725,14 @@ module.exports = function register(on, h) {
       return Object.assign({ deleted: gid, trash: path.basename(dst) }, h.readGuides(T));
     }
     if (b.action !== 'apply') throw new Error('알 수 없는 action: ' + nn(b.action));
-    // 작업 기준 적용(이 PC만): 작업규칙 · 정책서 · 기준데이터 · 화면 정의서는 이 PC의 모든 프로젝트에 같이, UX가이드는 그 Figma 파일 하나에만(2026-11-12)
+    // 작업 기준 적용(이 PC만): 카테고리마다 이 PC의 모든 프로젝트에 같이(UX가이드도 — 2026-11-20, 11-12 ~ 11-19는 파일 하나에만)
     const key = nn(b.fileKey), gid = nn(b.guideId), kind = nn(b.kind) || 'guide';
     if (!h.testKey(key)) throw new Error('잘못된 파일 키입니다.');
     if (!/^[a-z]{1,20}$/.test(kind)) throw new Error('알 수 없는 문서 종류: ' + kind);
     if (gid && (!okId(gid) || !core.exists(path.join(T.guideRoot, gid, 'meta.json')))) throw new Error('문서를 찾지 못했습니다: ' + gid);
     if (gid) { const mk = nn((core.readJson(path.join(T.guideRoot, gid, 'meta.json')) || {}).kind) || 'guide'; if (mk !== kind) throw new Error(`종류가 다른 문서입니다(${mk}): ${gid}`); }
     const a = core.readJson(T.guideApply) || {};
-    for (const fk of (kind === 'guide' ? [key] : h.applyKeys(key))) {
+    for (const fk of h.applyKeys(key)) {
       const old = a[fk]; const docs = {};
       if (old && old.docs) Object.assign(docs, old.docs); else if (old && old.guideId) docs.guide = { id: nn(old.guideId), by: nn(old.by), at: nn(old.at) };
       docs[kind] = { id: gid, by: nn(b.by), at: core.now() };
