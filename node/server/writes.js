@@ -986,7 +986,24 @@ module.exports = function register(on, h) {
     fs.rmSync(path.join(C.root, 'workbench', '.agent_stop'), { force: true });
     // 2026-11-16~ Node 한 벌(node/agent.js, 감시까지 포함). 이 서버를 돌리는 Node로 띄운다(서버가 꺼져도 남는다). 파일이 없으면 예전 스크립트
     const aj = path.join(C.root, 'node', 'agent.js');
-    if (core.exists(aj)) { const p = spawn(process.execPath, [aj, '--claude', cc, '--port', String(C.port)], { cwd: C.root, stdio: 'ignore', windowsHide: true, detached: true }); p.on('error', () => {}); p.unref(); return; }
+    if (core.exists(aj)) {
+      const args = [aj, '--claude', cc, '--port', String(C.port)];
+      // 윈도우: 이 서버가 다른 프로그램(Claude 앱 Code 탭 · 터미널)의 작업 그룹(Job) 안에서 떴으면, 그냥 띄운 자식도 그 그룹에 묶여
+      //  그 프로그램이 로그아웃 · 종료할 때 함께 죽는다(2026-11-20 — Claude 앱 로그아웃마다 백그라운드 감시가 꺼지던 원인).
+      //  WMI(Win32_Process.Create)로 띄우면 그룹 밖(WmiPrvSE 아래)에서 뜬다. 창은 숨김. 안 되면 예전 방식
+      if (!C.isMac) {
+        const q = (s) => "'" + String(s).replace(/'/g, "''") + "'";
+        const cl = [process.execPath].concat(args).map((x) => '"' + String(x).replace(/"/g, '\\"') + '"').join(' ');
+        const ps = `$si = New-CimInstance -ClassName Win32_ProcessStartup -ClientOnly -Property @{ShowWindow=[uint16]0}; ` +
+          `$r = Invoke-CimMethod -ClassName Win32_Process -MethodName Create -Arguments @{CommandLine=${q(cl)}; CurrentDirectory=${q(C.root)}; ProcessStartupInformation=$si}; ` +
+          `if ($r.ReturnValue -ne 0) { exit 1 }`;
+        try {
+          const r = spawnSync('powershell', ['-NoProfile', '-NonInteractive', '-EncodedCommand', Buffer.from(ps, 'utf16le').toString('base64')], { timeout: 20000, windowsHide: true });
+          if (r.status === 0) return;
+        } catch (e) {}
+      }
+      const p = spawn(process.execPath, args, { cwd: C.root, stdio: 'ignore', windowsHide: true, detached: true }); p.on('error', () => {}); p.unref(); return;
+    }
     if (C.isMac) detach('/bin/sh', ['-c', `nohup perl '${path.join(C.root, 'workbench', 'agent.pl')}' '${cc}' >/dev/null 2>&1 &`]);
     else detach('powershell', ['-NoProfile', '-WindowStyle', 'Hidden', '-ExecutionPolicy', 'Bypass', '-File', path.join(C.root, 'workbench', 'agent.ps1'), '-Claude', cc]);
   }
