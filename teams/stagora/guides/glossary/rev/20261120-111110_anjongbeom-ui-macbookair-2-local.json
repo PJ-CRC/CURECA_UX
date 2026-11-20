@@ -1,0 +1,12 @@
+{
+  "rev": "20261120-111110_anjongbeom-ui-macbookair-2-local",
+  "by": "Claude",
+  "at": "2026-11-20T11:11:10+09:00",
+  "note": "언어셋 › 표지: 새 엑셀(v2.35_261119)로 덮어씀 — 열 13개(빈 열 2개 더함), 글은 같음",
+  "base": "language-set/sheet01.csv",
+  "pc": "anjongbeom-ui-MacBookAir-2.local",
+  "req": "언어셋 › 표지-STAgora-언어셋: 이게 언어셋 어제 날짜 기준 최종본이야. 현재 언어셋에 등록된 문서를 덮어씌워줘.",
+  "jobId": "J069",
+  "file": "language-set/sheet01.csv",
+  "orig": true
+}
