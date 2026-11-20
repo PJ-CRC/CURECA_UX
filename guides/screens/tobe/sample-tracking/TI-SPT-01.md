@@ -125,6 +125,7 @@ figma:
 - STAT
   - T-IOS에서 수신되는 검체 응급 여부 상태 정보
 - 정책 참고 : POL-SMP-001, POL-SMP-002
+- 케이스 참고 : TI-SPT-01/Case > Case 1
 
 **2-2  Progress 상태 정보(Tooltip)**
 - 공통 UX 참고 : COMM-5-v
@@ -146,8 +147,6 @@ figma:
 **4  페이지네이션**
 - 숫자형 페이지네이션
 - 공통 UX 참고 : COMM-5-l
-
-- 케이스 참고 : TI-SPT-01/Case > Case 1 (Sample 상태별 데이터 노출, 2-1 블록에서 가리킴)
 
 ## 화면 예시
 
