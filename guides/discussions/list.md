@@ -18,7 +18,7 @@
 
 | ID | 제목 | 누가 정하나 | 걸린 정책 | 걸린 화면 | 생긴 날 | 상태 |
 | --- | --- | --- | --- | --- | --- | --- |
-| [DS-0008](DS-0008.md) | Samples 메뉴 화면을 걸린 정책의 cids에 더함 (POL-SMP-001 · POL-TST-001 · POL-TST-006) | 내부 | POL-SMP-001, POL-TST-001, POL-TST-006 | TI-SPT-01-01, LI-SPT-01-01, TI-SPT-01-02, LI-SPT-01-02, TI-SPT-01-03, LI-SPT-01-03 | 2026-11-20 | 논의 중 |
+| [DS-0008](DS-0008.md) | Samples 메뉴 화면을 걸린 정책의 cids에 더함 (POL-SMP-001 · POL-TST-001 · POL-TST-006) | 내부 | POL-SMP-001, POL-TST-001, POL-TST-006 | TI-SPT-01-01, LI-SPT-01-01, TI-SPT-01-02, LI-SPT-01-02, TI-SPT-01-03, LI-SPT-01-03 | 2026-11-20 | 결정 |
 
 ## 4. 결정 · 작업 중
 
