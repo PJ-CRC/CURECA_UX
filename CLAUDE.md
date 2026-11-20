@@ -26,15 +26,15 @@
 
 | 할 일 | 읽을 문서 |
 |---|---|
-| Workbench 수정 요청(`PENDING` · `RESUME`, R0xx — 흐름은 그 팀 작업규칙대로), 요청 감시, 채팅으로 Figma를 고쳤을 때 이력 · 캡처 | `docs/claude/requests.md` |
+| Workbench 수정 요청(`PENDING` · `RESUME`, R0xx — 흐름은 그 팀 작업규칙대로), 요청 감시, 채팅으로 Figma를 고쳤을 때 이력 · 캡처 | `docs/claude/requests.md` (작업규칙에 단계 문서가 있으면 `requests-flow.md`도) |
 | 팀 프로젝트 다음 단계로 옮기기 · 비교(플러그인 작업 `transfer` — Claude는 옮기지 않음, 참고용) | `docs/claude/transfer.md` |
 | 작업 대기열(`JOBS`) 공통, `catalog` 프레임 목록 · `capture` 캡처 · `text` 글 수정(플러그인) | `docs/claude/jobs.md` |
-| `guide` 새 UX 문서 · `guide-edit` 문서 수정 · `guide-check` 고칠 화면 · 연관 항목 찾기, 파일형 문서 | `docs/claude/ux-docs.md` (새 문서 · 작업규칙 수정은 `docs/claude/system-basis.md`도) |
+| `guide` 새 UX 문서 · `guide-edit` 문서 수정 · `guide-check` 고칠 화면 · 연관 항목 찾기, 파일형 문서 | `docs/claude/ux-docs.md` (새 문서는 `ux-docs-new.md`, 새 문서 · 작업규칙 수정은 `docs/claude/system-basis.md`도, 지우기 · 다운로드 · Wiki · 시트 묶음 · 템플릿은 `ux-docs-more.md`) |
 | `prototype` 만들기 · `prototype-edit` 수정 · `prototype-sync` Figma 맞추기 | `docs/claude/prototype.md` |
 | `minutes` 회의록 요약, `plan` 논의 대상(DS) · 화면설계서 작업대기(`fixRows`) · 작업 기록, 회의록 쓰기 | `docs/claude/plan.md` |
 | 프로그램 수정 · **배포**(「배포해줘」), 계정 · 권한, 서버 · 에이전트 구조, 폴더 · API, 일정 연결(시트) | `docs/claude/dev.md` |
 
-- `JOBS J0xx`는 `GET /api/jobs`에서 그 작업의 `kind`를 보고 문서를 고른다.
+- `JOBS J0xx`는 그 작업의 `kind`를 보고 문서를 고른다(감시가 보낸 메시지에 작업 내용이 있으면 그것을, 없으면 `GET /api/jobs`).
 - 한 일이 다른 종류로 이어지면(요청 처리 중 논의 대상 등록, 완료 뒤 프로토타입 맞추기 등) 그 문서도 읽는다.
 - 배포는 사용자가 「배포해줘」라고 할 때만 한다(절차는 `dev.md` 「버전 · 배포」).
 - 규칙을 고치거나 더할 때는 그 종류의 문서를 고친다. 이 문서에는 모든 일에 필요한 것만 두고, 한 규칙은 한 문서에만 쓴다(다른 문서는 그곳을 가리킨다). `docs/claude/`는 배포에 들어가 모든 PC에 퍼진다(`.claude/`는 PC별 설정이라 규칙을 두지 않는다).

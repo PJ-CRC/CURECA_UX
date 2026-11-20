@@ -46,12 +46,30 @@ on('GET', '/api/projects', ({ T }) => {
   // 지금 팀의 팀 프로젝트는 이 PC에 없으면 바로 등록한다(작업 페이지는 링크의 노드로 처음 정하고, 그 뒤는 담당자가 고른다)
   const teamItems = core.readTeamProjects(T.team);
   for (const tp of teamItems) if (testKey(tp.key) && !readProj(tp.key) && helpers.ensureProj) { try { helpers.ensureProj(tp.key, tp.link); const pj = readProj(tp.key); if (pj && tp.name && !pj.name) { pj.name = tp.name; helpers.saveProj(pj); } } catch (e) {} }
-  // 프레임 목록이 아직 없는 팀 프로젝트: Figma 토큰이 있으면 뒤에서 바로 받는다(Workbench가 5초마다 목록을 다시 읽어 저절로 채워짐). 토큰이 없으면 플러그인 · Claude로
+  // 팀 링크 따라가기(2026-11-20): 계정 관리 › 팀 프로젝트의 링크(작업 페이지)가 이 PC에 아직 들어오지 않았으면(처음 · 팀 링크가 바뀜) 이 PC의 작업 페이지도 그 페이지로 바꾼다.
+  //  들어온 링크는 project.json teamLink에 남겨, 그 뒤 담당자가 이 PC에서 고른 작업 페이지는 팀 링크가 다시 바뀔 때까지 그대로 둔다.
+  //  예전에는 처음 등록할 때만 팀 링크를 써서, 팀 링크를 바꿔도 다른 PC는 예전 작업 페이지 · 목록으로 남았다.
+  //  프레임 목록에 그 페이지가 없으면(목록이 예전 것) needCat에 넣어 아래에서 토큰으로 목록을 다시 받고, 받은 뒤 다음 읽기에서 바꾼다(토큰이 없으면 플러그인 · Claude 목록으로)
+  const needCat = new Set();
+  const nodeOf = (u) => { const m = /[?&]node-id=(\d+)[-:](\d+)/.exec(String(u || '')); return m ? m[1] + ':' + m[2] : ''; };
+  if (!C.readonly && helpers.setEditablePage) for (const tp of teamItems) {
+    try {
+      const tn = nodeOf(tp.link), pj = testKey(tp.key) ? readProj(tp.key) : null;
+      if (!tn || !pj || nodeOf(pj.teamLink) === tn) continue;
+      if (!helpers.setEditablePage(tp.key, tp.link)) { needCat.add(tp.key); continue; }
+      const p2 = readProj(tp.key); p2.link = tp.link; p2.teamLink = tp.link; helpers.saveProj(p2);
+      const s = core.readSetup();
+      if (keyOf(s.figmaUrl) === tp.key && nodeOf(s.figmaUrl) !== tn) { s.figmaUrl = tp.link; s.updatedAt = core.now(); core.writeJson(C.setupFile, s); }
+    } catch (e) {}
+  }
+  // 프레임 목록이 아직 없거나 팀 링크의 페이지가 없는 팀 프로젝트: Figma 토큰이 있으면 뒤에서 바로 받는다(Workbench가 5초마다 목록을 다시 읽어 저절로 채워짐). 토큰이 없으면 플러그인 · Claude로
   if (!C.readonly && helpers.figmaHasToken && helpers.figmaHasToken() && helpers.figmaCatalog) {
     for (const tp of teamItems) {
-      if (!testKey(tp.key) || core.exists(path.join(projDir(tp.key), 'catalog.json')) || catBusy.has(tp.key) || (catFail[tp.key] || 0) > Date.now()) continue;
+      if (!testKey(tp.key) || (core.exists(path.join(projDir(tp.key), 'catalog.json')) && !needCat.has(tp.key)) || catBusy.has(tp.key) || (catFail[tp.key] || 0) > Date.now()) continue;
       // 실패하면(토큰으로 못 보는 파일 · 한도) 10분 동안 다시 받지 않는다(2026-11-17 — 예전에는 5초마다 Figma API를 다시 불렀다)
-      catBusy.add(tp.key); helpers.figmaCatalog(tp.key).then(() => { delete catFail[tp.key]; }, () => { catFail[tp.key] = Date.now() + 10 * 60 * 1000; }).then(() => catBusy.delete(tp.key));
+      //  팀 링크 페이지가 없어 다시 받은 것이면 받은 뒤에도 10분은 다시 받지 않는다(받은 목록에도 그 페이지가 없을 때 5초마다 받지 않게)
+      const again = needCat.has(tp.key);
+      catBusy.add(tp.key); helpers.figmaCatalog(tp.key).then(() => { if (again) catFail[tp.key] = Date.now() + 10 * 60 * 1000; else delete catFail[tp.key]; }, () => { catFail[tp.key] = Date.now() + 10 * 60 * 1000; }).then(() => catBusy.delete(tp.key));
     }
   }
   const list = [];

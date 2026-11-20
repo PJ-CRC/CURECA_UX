@@ -201,12 +201,20 @@ module.exports = function register(on, h) {
         // 바뀜 기준 = lastModified(고치면 바로 바뀜). version은 Figma가 버전 기록을 남길 때(수십 분 간격)만 바뀌어 붙여 넣은 화면을 못 알아챘다(2026-11-16)
         const j = await figma(`/files/${encodeURIComponent(key)}?depth=1`), v = nn(j && (j.lastModified || j.version));
         if (!v) continue;
+        // 서버를 켠 뒤 처음 볼 때(2026-11-20): 예전에는 버전만 적고 넘어가, 꺼져 있던 동안 바뀐 프레임 목록이 다음 수정 때까지 예전 것으로 남았다.
+        //  목록이 그 파일의 마지막 수정보다 오래됐으면 목록만 다시 받는다(캡처는 다시 받지 않는다 — 꺼져 있던 동안의 캡처는 Workbench가 구분을 열 때 자동 캡처로)
+        if (!vers[key]) {
+          const cf = path.join(h.projDir(key), 'catalog.json'), cat0 = core.readJson(cf), lm = Date.parse(nn(j && j.lastModified));
+          if (cat0 && lm && !(Date.parse(nn(cat0.savedAt)) >= lm)) { try { await buildCatalog(key); log(`목록 ${key.slice(0, 6)} 서버를 켠 뒤 처음 확인 — Figma가 더 새로워 다시 받음`); } catch (e) { if (e.status === 429) throw e; log(`목록 다시 받기 실패 ${key.slice(0, 6)}: ${e.message}`); } }
+        }
         if (vers[key] && vers[key] !== v) {
           // 프레임 목록도 새로(2026-11-13): 화면이 생기거나 없어지면 Workbench 목록 · 프로토타입 「화면 추가됨 · 없어짐」에 바로 보이게
           if (core.exists(path.join(h.projDir(key), 'catalog.json'))) { try { await buildCatalog(key); } catch (e) { if (e.status === 429) throw e; log(`목록 다시 받기 실패 ${key.slice(0, 6)}: ${e.message}`); } }
           const meta = core.readJson(path.join(h.projDir(key), 'shots_meta.json')) || {}, cat = core.readJson(path.join(h.projDir(key), 'catalog.json')) || {};
           const pg = core.arr(cat.pages).find((x) => x.id === p.editablePageId);
-          const ids = core.arr(pg && pg.frames).map((f) => nn(f && f[0])).filter((id) => meta[id]);
+          // 파일의 마지막 수정 뒤에 이미 받은 캡처는 뺀다(2026-11-20): 요청 완료 때 고친 프레임을 바로 캡처하고, 3분 뒤 여기서 같은 프레임을 또 받았다
+          const lmT = Date.parse(nn(j && j.lastModified));
+          const ids = core.arr(pg && pg.frames).map((f) => nn(f && f[0])).filter((id) => meta[id] && !(lmT && Date.parse(nn(meta[id].at)) >= lmT));
           // 같은 파일이 아직 다시 받는 중이면 새 줄을 더하지 않고 합친다(2026-11-13 점검 F8: 3분마다 바뀌면 같은 프레임을 여러 번 받았다)
           if (ids.length) { const cur = recap.find((x) => x.key === key); if (cur) { for (const id of ids) if (!cur.ids.includes(id)) cur.ids.push(id); } else recap.push({ key, ids }); log(`Figma 파일 바뀜 ${key.slice(0, 6)} → 작업 페이지 캡처 ${ids.length}개 다시 받기`); }
         }
