@@ -1,0 +1,38 @@
+{
+  "reportAt": "2026-11-20T16:52:45+09:00",
+  "pc": "DAYE",
+  "slug": "daye",
+  "user": "정다예",
+  "os": "windows",
+  "version": "0.31.1",
+  "alive": false,
+  "status": "stopped",
+  "msg": "중지됨",
+  "statusAt": "2026-11-20T16:52:35+09:00",
+  "claude": "따로 설치",
+  "claudeWay": "",
+  "autoWatch": true,
+  "events": [
+    {
+      "at": "2026-11-20T16:52:35+09:00",
+      "kind": "stop",
+      "text": "감시 중지"
+    },
+    {
+      "at": "2026-11-18T13:18:58+09:00",
+      "kind": "start",
+      "text": "감시 시작"
+    },
+    {
+      "at": "2026-11-18T13:17:25+09:00",
+      "kind": "stop",
+      "text": "감시 중지"
+    },
+    {
+      "at": "2026-11-18T13:15:22+09:00",
+      "kind": "stop",
+      "text": "감시 중지"
+    }
+  ],
+  "turns": []
+}
