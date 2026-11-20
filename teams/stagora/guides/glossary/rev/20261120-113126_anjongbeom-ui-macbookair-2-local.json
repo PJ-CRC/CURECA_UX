@@ -1,0 +1,12 @@
+{
+  "rev": "20261120-113126_anjongbeom-ui-macbookair-2-local",
+  "by": "Claude",
+  "at": "2026-11-20T11:31:26+09:00",
+  "note": "언어셋 › 문서이력 (수식): 행 밀기",
+  "base": "",
+  "pc": "anjongbeom-ui-MacBookAir-2.local",
+  "req": "R018: 화면 내 모든 문구(디스크립션 영역 제외)를 비교해서 언어셋에 없는 문구는 GMCS 시트에 새로 추가해줘. 대표 화면과 CID 컬럼의 값도 채워줘.",
+  "jobId": "R018",
+  "file": "language-set/sheet02.formulas.json",
+  "orig": true
+}
