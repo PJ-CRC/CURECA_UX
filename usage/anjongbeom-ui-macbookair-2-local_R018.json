@@ -1,0 +1,28 @@
+{
+  "id": "anjongbeom-ui-macbookair-2-local_R018",
+  "kind": "request",
+  "reqId": "R018",
+  "reqType": "요청",
+  "team": "stagora",
+  "at": "2026-11-20T11:31:53+09:00",
+  "from": "2026-11-20T11:23:16+09:00",
+  "by": "안종범",
+  "doneBy": "Claude",
+  "pc": "anjongbeom-ui-MacBookAir-2.local",
+  "fileKey": "cDjaemHjetS7RcAHRUIMY5",
+  "fileName": "STAgora AI Workspace",
+  "page": "local 언어셋 확인",
+  "frame": "",
+  "nodeId": "",
+  "text": "화면 내 모든 문구(디스크립션 영역 제외)를 비교해서 언어셋에 없는 문구는 GMCS 시트에 새로 추가해줘.\n대표 화면과 CID 컬럼의 값도 채워줘.",
+  "models": {
+    "claude-opus-5-5": 41
+  },
+  "calls": 41,
+  "input": 80,
+  "cacheWrite": 180404,
+  "cacheRead": 5175567,
+  "output": 52786,
+  "total": 5408837,
+  "usd": 3.5344
+}
