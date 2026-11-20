@@ -38,7 +38,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=SE
   - 최초 화면 진입 시 첫번째 탭을 기본 선택 상태로 노출
 - 표출 항목
   - Pre-Treatment Protocol
-  - Extraction Protocol : LI-SPT-01-03
+  - Extraction Protocol
 
 **2  Pre-Treatment Protocol 기본 정보 영역**
 - 정의
@@ -58,12 +58,10 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=SE
   - Process guide 참고 : <span style="color:red">LI-STN-03-01-02-01</span> / 세부정의
 
 **4  [Close] 버튼**
-- 동작
-  - 클릭 시, 해당 팝업 닫힘, 기존 진입 화면 유지
+- 클릭 시, 해당 팝업 닫힘, 기존 진입 화면 유지
 
 **5  [X] 버튼**
-- 동작
-  - 클릭 시, 팝업이 닫힌 후 기존 화면 노출
+- 클릭 시, 팝업이 닫힌 후 기존 화면 노출
 
 ## 화면 예시
 
