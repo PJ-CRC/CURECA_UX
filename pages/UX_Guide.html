@@ -1534,12 +1534,15 @@ html.embed,html.embed body{overflow:hidden}
     FILES.forEach(function(f, i){
       var t = String(texts[i] || '').replace(/^﻿/, '').replace(/\r\n/g, '\n'), parts = f.path.split('/');
       if (parts.length < 2) { if (/readme\.md$/i.test(f.path)) SC.overview = t; return; }
-      var k = parts[0], mn = menus[k]; if (!mn) { mn = menus[k] = { key: k, name: k, cids: [], screens: [] }; order.push(k); }
+      // CURECA_AI 2026-11-20 구조: screens/asis/{메뉴}/ · screens/tobe/{메뉴}/ (메뉴 파일 _menu.md 없음). 예전 구조 screens/{메뉴}/도 그대로 읽는다
+      var deep = parts.length >= 3 && /^(asis|tobe)$/.test(parts[0]), stage = deep ? parts[0] : '';
+      var k = deep ? parts[1] : parts[0], mn = menus[k]; if (!mn) { mn = menus[k] = { key: k, name: k, cids: [], screens: [] }; order.push(k); }
       var fr = front(t), o = fmObj(fr.fm);
       if (/_menu\.md$/.test(f.path)) { mn.name = o.menu || k; mn.cids = listOf(o.cids); mn.owner = o.owner || ''; mn.file = f.path; return; }
       if (!o.cid) return;
-      var s = { cid: o.cid, o: o, body: fr.body, file: f.path, rev: f.rev, menu: k };
-      mn.screens.push(s); SC.byCid[o.cid] = s;
+      // 같은 CID가 asis · tobe 둘 다 있을 수 있어 tobe는 「tobe:CID」로 구분한다(id). 화면에 보이는 것은 cid
+      var s = { id: (stage === 'tobe' ? 'tobe:' : '') + o.cid, cid: o.cid, stage: stage, o: o, body: fr.body, file: f.path, rev: f.rev, menu: k };
+      mn.screens.push(s); SC.byCid[s.id] = s;
     });
     var mo = meta.menuOrder || [];
     SC.menus = mo.filter(function(k){ return menus[k]; }).concat(order.filter(function(k){ return mo.indexOf(k) < 0; })).map(function(k){ return menus[k]; });
@@ -1562,7 +1565,7 @@ html.embed,html.embed body{overflow:hidden}
       s.callers = uniq(s.calls.concat(all.filter(function(t){ return t !== s && re.test(t.body); }).map(function(t){ return t.cid; })));
     });
     var want = scFind(decodeURIComponent(location.hash.slice(1)));
-    var first = SC.byCid[want] ? want : (SC.menus[0] && SC.menus[0].screens[0] ? SC.menus[0].screens[0].cid : '');
+    var first = SC.byCid[want] ? want : (SC.menus[0] && SC.menus[0].screens[0] ? SC.menus[0].screens[0].id : '');
     if (!first) { fail('화면 정의서 파일이 없습니다.'); return; }
     scShow(first, true);
   }
@@ -1580,7 +1583,7 @@ html.embed,html.embed body{overflow:hidden}
       var open = q ? true : !!scOpen[mn.key];
       h += '<li class="sc-grp"><button type="button" class="node grp" data-scg="' + esc(mn.key) + '" aria-expanded="' + open + '"><span class="tw' + (open ? ' open' : '') + '">▸</span><span class="lbl">' + esc(mn.name) + '</span><span class="sc-cnt">' + list.length + '</span></button>';
       if (open) h += '<ul class="sc-list">' + list.map(function(s){
-        return '<li><button type="button" class="sc-it' + (s.cid === scCur ? ' cur' : '') + '" data-sc="' + esc(s.cid) + '"><b>' + esc(s.o.title || s.cid) + scEnv(s.cid) + '</b><span>' + esc(s.cid) + '</span>' + (scChips(s) ? '<i>' + scChips(s) + '</i>' : '') + '</button></li>';
+        return '<li><button type="button" class="sc-it' + (s.id === scCur ? ' cur' : '') + '" data-sc="' + esc(s.id) + '"><b>' + esc(s.o.title || s.cid) + scEnv(s.cid) + (s.stage === 'tobe' ? ' <em class="sc-chip">To-Be</em>' : '') + '</b><span>' + esc(s.cid) + '</span>' + (scChips(s) ? '<i>' + scChips(s) + '</i>' : '') + '</button></li>';
       }).join('') + '</ul>';
       h += '</li>';
     });
@@ -1602,9 +1605,9 @@ html.embed,html.embed body{overflow:hidden}
     scCur = cid; scKind = ''; scOpen[s.menu] = true;
     var o = s.o, mn = SC.menus.filter(function(m){ return m.key === s.menu; })[0] || { name: s.menu };
     var row = function(k, v){ return v ? '<dt>' + esc(k) + '</dt><dd>' + v + '</dd>' : ''; };
-    var h = '<div class="sc-head"><div><h2 class="sc-title">' + esc(cid + ' ' + (o.title || '')) + scEnv(cid) + '</h2><p class="sc-sub">' + esc([o.path, o.type, o.version ? 'Ver ' + o.version : ''].filter(Boolean).join(' · ')) + '</p></div>' +
+    var h = '<div class="sc-head"><div><h2 class="sc-title">' + esc(s.cid + ' ' + (o.title || '')) + scEnv(s.cid) + (s.stage === 'tobe' ? ' <em class="sc-chip">To-Be</em>' : '') + '</h2><p class="sc-sub">' + esc([o.path, o.type, o.version ? 'Ver ' + o.version : ''].filter(Boolean).join(' · ')) + '</p></div>' +
       '<span style="display:flex;gap:8px;align-items:flex-start;flex:none">' + (s.wait ? '<span class="sc-chip warn big">반영 대기 ' + s.wait + '</span>' : '') + (s.doing ? '<span class="sc-chip big">작업 중 ' + s.doing + '</span>' : '') +
-      '<button type="button" class="dedit" data-dedit="' + esc(s.file) + '" data-dname="' + esc(cid + ' ' + (o.title || '')) + '" title="이 화면 정의서를 바로 고쳐 저장합니다">직접 수정</button></span></div>';
+      '<button type="button" class="dedit" data-dedit="' + esc(s.file) + '" data-dname="' + esc(s.cid + ' ' + (o.title || '')) + '" title="이 화면 정의서를 바로 고쳐 저장합니다">직접 수정</button></span></div>';
     h += '<dl class="sc-info">' + row('작성자', esc(o.author || '')) + row('Service Mode', esc(listOf(o.service_mode).join(', '))) + row('User Type', esc(listOf(o.user_type).join(', '))) +
       row('기준(basis)', o.basis ? esc(o.basis) : o.rules_version ? '<span class="sc-muted">예전 기록 · 공통 규칙 ' + esc(o.rules_version) + '</span>' : '<span class="sc-chip">기록 전</span>') +
       row('관련 정책', s.pols.map(idChip).join(' ')) + row('짝 화면', o.pair_cid ? idChip(o.pair_cid) + (o.tl_relation ? ' <span class="sc-muted">' + esc(o.tl_relation) + '</span>' : '') : '') +
@@ -1621,8 +1624,8 @@ html.embed,html.embed body{overflow:hidden}
     var m = $('main'); m.innerHTML = h;
     var bx = render(demote(rest, 1)); Array.prototype.forEach.call(bx.childNodes, function(x){ m.querySelector('.sc-body').appendChild(x.cloneNode(true)); });
     scFix();
-    $('editBtn').hidden = false; $('editBtn').disabled = false; $('editBtn').title = '「' + cid + '」 화면 정의서 수정 요청';
-    $('tocCur').textContent = '목차 · ' + cid; askSet();
+    $('editBtn').hidden = false; $('editBtn').disabled = false; $('editBtn').title = '「' + s.cid + '」 화면 정의서 수정 요청';
+    $('tocCur').textContent = '목차 · ' + s.cid; askSet();
     scTree($('q').value.trim().toLowerCase());
     var it = $('tree').querySelector('.sc-it.cur'); if (it && first) it.scrollIntoView({ block: 'nearest' });
     if (!first) { history.replaceState(null, '', '#' + cid); if (window.innerWidth <= 720) { $('side').classList.add('fold'); $('tocBtn').setAttribute('aria-expanded', 'false'); } toTop(); }

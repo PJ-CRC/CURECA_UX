@@ -376,7 +376,7 @@ on('GET', '/api/guides', ({ T }) => readGuides(T));
 
 // GET /api/worklogs?team=: 화면설계 작업 기록(규칙 저장소 work-logs/*.md, reference-rules/work-log.md 틀) 목록
 //  머리말(status · requester · menu · cids · test · started)과 지금 단계(「단계」 표에서 「끝낸 날」 칸이 빈 첫 줄), `이어서 작업할 곳:` 줄
-//  단계 이름은 그 기록의 「단계」 표 첫 칸을 그대로 쓴다(2026-11-17 CURECA_AI: 1 ~ 5단계, 관문 칸에 틀 글이 미리 들어 있어 「끝낸 날」로 본다)
+//  단계 이름은 그 기록의 「단계」 표 첫 칸을 그대로 쓴다(CURECA_AI: 1 ~ 5단계, 「마침 점검」 칸에 틀 글이 미리 들어 있어 「끝낸 날」로 본다)
 const STAGES = ['1. 시작 · 요건 정의', '2. 근거 · 분석', '3. 화면 설계', '4. 수정 · 확인', '5. 완료'];
 function readWorkLog(f) {
   const t = String(core.readText(f) || '').replace(/^﻿/, ''), fm = {}, m = /^---\r?\n([\s\S]*?)\r?\n---/.exec(t);
@@ -400,7 +400,7 @@ on('GET', '/api/worklogs', ({ T }) => {
   return { dir: `${T.guideRel}/work-logs`, stages: STAGES, items: items.sort((a, b) => String(b.started).localeCompare(String(a.started)) || a.name.localeCompare(b.name)) };
 });
 
-// ── 반영 대기: 화면 정의서(규칙 저장소 screens/{메뉴}/{CID}.md)마다 「## 반영 대기 목록」 중 대기 · 작업 중 항목 (reference-rules/pending-changes.md)
+// ── 반영 대기: 화면 정의서(규칙 저장소 screens/asis/{메뉴}/{CID}.md · screens/tobe/{메뉴}/…, 예전 screens/{메뉴}/…)마다 「## 반영 대기 목록」 중 대기 · 작업 중 항목 (reference-rules/pending-changes.md)
 //  Workbench가 지금 고른 프레임에 반영할 항목이 있는지 알리는 데 쓴다. 화면 ↔ 프레임은 머리말 figma: 링크(파일 키 · 노드)와 CID로 맞춘다
 function readBacklog(f, rel) {
   const t = String(core.readText(f) || '').replace(/^﻿/, ''), fm = {}, m = /^---\r?\n([\s\S]*?)\r?\n---/.exec(t);
@@ -433,7 +433,12 @@ function specDoc(T) {
 function specFiles(T, id) {
   const root = path.join(T.guideRoot, id), out = [], ok = (n) => /\.md$/i.test(n) && !/^(readme|_menu)\.md$/i.test(n) && !/^[_.]/.test(n);
   for (const n of fileNames(root)) if (ok(n)) out.push({ abs: path.join(root, n), rel: n });
-  for (const d of dirNames(root)) { if (/^(rev|_trash)$/i.test(d) || /^[_.]/.test(d)) continue; for (const n of fileNames(path.join(root, d))) if (ok(n)) out.push({ abs: path.join(root, d, n), rel: `${d}/${n}` }); }
+  for (const d of dirNames(root)) {
+    if (/^(rev|_trash)$/i.test(d) || /^[_.]/.test(d)) continue;
+    for (const n of fileNames(path.join(root, d))) if (ok(n)) out.push({ abs: path.join(root, d, n), rel: `${d}/${n}` });
+    // CURECA_AI 2026-11-20 구조: screens/asis/{메뉴}/ · screens/tobe/{메뉴}/ 는 한 단계 더 들어간다
+    if (/^(asis|tobe)$/i.test(d)) for (const s of dirNames(path.join(root, d))) { if (/^[_.]/.test(s)) continue; for (const n of fileNames(path.join(root, d, s))) if (ok(n)) out.push({ abs: path.join(root, d, s, n), rel: `${d}/${s}/${n}` }); }
+  }
   return out;
 }
 on('GET', '/api/backlog', ({ T }) => {

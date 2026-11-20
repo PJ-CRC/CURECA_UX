@@ -1025,7 +1025,9 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     }).then(function(all){
       var menus = {}, screens = [];
       all.forEach(function(x){
-        var p = fm(x.t), dir = x.f.path.split('/')[0];
+        // 메뉴 폴더: CURECA_AI 2026-11-20 구조는 asis/{메뉴}/ · tobe/{메뉴}/ (메뉴 파일 _menu.md 없음), 예전 구조는 {메뉴}/
+        var seg = x.f.path.split('/'), dir = seg.length >= 3 && /^(asis|tobe)$/.test(seg[0]) ? seg[1] : seg[0];
+        var p = fm(x.t);
         if (/_menu\.md$/i.test(x.f.path)) { menus[dir] = { name: p.meta.menu || dir, owner: p.meta.owner || '' }; return; }
         var S = secsOf(p.body), key = Object.keys(S).filter(function(k){ return /^반영 대기 목록/.test(k); })[0]; if (!key) return;
         var T = mdTable(S[key]), H = T.head.map(function(h){ return h.replace(/\s/g, ''); });
