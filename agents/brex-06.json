@@ -1,5 +1,5 @@
 {
-  "reportAt": "2026-11-20T16:43:07+09:00",
+  "reportAt": "2026-11-20T16:44:07+09:00",
   "pc": "BREX_06",
   "slug": "brex-06",
   "user": "최고관리자",
@@ -8,7 +8,7 @@
   "alive": true,
   "status": "error",
   "msg": "같은 요청이 처리되지 않아 10분 쉽니다: PENDING R043",
-  "statusAt": "2026-11-20T16:42:53+09:00",
+  "statusAt": "2026-11-20T16:43:53+09:00",
   "claude": "따로 설치",
   "claudeWay": "cli",
   "autoWatch": true,
