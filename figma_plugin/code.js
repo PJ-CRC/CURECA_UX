@@ -12,7 +12,9 @@ let autoShots = true, workPage = null, dirty = new Set(), timer = null, busyShot
 
 const topFrame = n => { while (n && n.parent && n.parent.type !== 'PAGE' && n.parent.type !== 'SECTION') n = n.parent; return n && n.parent && (n.parent.type === 'PAGE' || n.parent.type === 'SECTION') && n.type !== 'SECTION' ? n : null; };
 // 삭제처럼 대상 프레임을 알 수 없는 변경은 지금 화면에 보이는 프레임으로 대신한다(지금 페이지)
-function framesInView() {
+// dynamic-page: 페이지 children을 읽기 전에 늘 loadAsync(이미 불러온 페이지는 바로 끝난다). 2026-11-20 「in get_children: … has not been explicitly loaded」
+async function framesInView() {
+  await figma.currentPage.loadAsync();
   const v = figma.viewport.bounds, out = [];
   const take = n => { if (n.type === 'SECTION') { n.children.forEach(take); return; }
     if (n.visible && /^(FRAME|COMPONENT|COMPONENT_SET|INSTANCE)$/.test(n.type) && n.x < v.x + v.width && n.x + n.width > v.x && n.y < v.y + v.height && n.y + n.height > v.y) out.push(n); };
@@ -49,17 +51,21 @@ function workPageId() { return (typeof linkPageId === 'string' && linkPageId) ||
 let workHandler = null;
 function watchShl() {
   // 작업 링크가 다른 페이지로 바뀌었으면 예전 작업 페이지의 감시를 뗀다
-  if (workPage && workPage.id !== workPageId()) { try { workPage.off('nodechange', workHandler); } catch (e) {} workPage = null; }   // 페이지가 이미 사라졌으면(파일 · 페이지가 닫힘) off가 오류를 낸다 — 무시
+  //  작업 페이지를 떠나도 뗀다(2026-11-20): 예전에는 붙은 채로 남아, 다른 페이지에 있는 동안 작업 페이지가 바뀌면(Claude · 다른 작업자) 감시가 돌다 「불러오지 않은 페이지」 오류가 났다
+  if (workPage && (workPage.id !== workPageId() || figma.currentPage.id !== workPage.id)) { try { workPage.off('nodechange', workHandler); } catch (e) {} workPage = null; }   // 페이지가 이미 사라졌으면(파일 · 페이지가 닫힘) off가 오류를 낸다 — 무시
   if (workPage || !workPageId() || figma.currentPage.id !== workPageId()) return;
   workPage = figma.currentPage;
-  workPage.on('nodechange', workHandler = e => {
+  workPage.on('nodechange', workHandler = async e => {
     if (!autoShots) return;
-    for (const ch of e.nodeChanges) {
-      const f = ch.node && !ch.node.removed ? topFrame(ch.node) : null;
-      if (f) dirty.add(f.id);
-      else framesInView().forEach(x => dirty.add(x.id));
-    }
-    if (dirty.size) schedule();
+    try {
+      let view = null;
+      for (const ch of e.nodeChanges) {
+        const f = ch.node && !ch.node.removed ? topFrame(ch.node) : null;
+        if (f) dirty.add(f.id);
+        else { if (!view) view = await framesInView(); view.forEach(x => dirty.add(x.id)); }
+      }
+      if (dirty.size) schedule();
+    } catch (err) { console.warn('캡처 감시: ' + (err && err.message || err)); }
   });
 }
 // 자동 캡처는 늘 켜짐(2026-11-17, 끄는 칸을 없앰 — 예전에 꺼 둔 PC도 다시 켠다)
@@ -120,13 +126,18 @@ function fileMeta() {
 async function quickCatalog() {
   await resolveLinkPage();
   const cur = figma.currentPage;
+  await cur.loadAsync();
   const pages = figma.root.children.filter(pg => !DIVIDER.test(pg.name)).map(pg => pageInfo(pg, pg.id === cur.id));
   return Object.assign(fileMeta(), { pages });
 }
-function sendPageList() {
-  const pg = figma.currentPage;
-  if (DIVIDER.test(pg.name)) return;
-  figma.ui.postMessage(Object.assign({ type: 'page-frames', page: pageInfo(pg, true) }, fileMeta()));
+async function sendPageList() {
+  try {
+    const pg = figma.currentPage;
+    if (DIVIDER.test(pg.name)) return;
+    await pg.loadAsync();
+    if (pg !== figma.currentPage) return;   // 불러오는 사이 다른 페이지로 갔으면 그 페이지 차례에 보낸다
+    figma.ui.postMessage(Object.assign({ type: 'page-frames', page: pageInfo(pg, true) }, fileMeta()));
+  } catch (err) { console.warn('페이지 목록 보내기: ' + (err && err.message || err)); }
 }
 // 지금 보고 있는 페이지에서 최상위 프레임 · 섹션을 추가 · 삭제 · 이름 변경 · 이동하면 그 페이지 목록을 다시 보낸다(2초 모아서)
 //  (예전에는 플러그인을 켤 때 · 페이지를 옮길 때만 보내서, 같은 페이지에 새로 만든 섹션이 Workbench에 안 보였다)
@@ -186,6 +197,7 @@ figma.ui.onmessage = async msg => {
     if (msg.type === 'has-frame') {
       let found = false;
       const look = n => { if (found) return; if (n.id === msg.nodeId) { found = true; return; } if (n.type === 'SECTION') n.children.forEach(look); };
+      await figma.currentPage.loadAsync();
       figma.currentPage.children.forEach(look);
       figma.ui.postMessage({ type: 'has-frame-done', reqId: msg.reqId, found });
       return;
@@ -193,6 +205,7 @@ figma.ui.onmessage = async msg => {
     if (msg.type === 'capture-one') {
       let found = null;
       const look = n => { if (found) return; if (n.id === msg.nodeId) { found = n; return; } if (n.type === 'SECTION') n.children.forEach(look); };
+      await figma.currentPage.loadAsync();
       figma.currentPage.children.forEach(look);
       if (found) await exportFrame(found, msg.jobId);
       figma.ui.postMessage({ type: 'capture-one-done', reqId: msg.reqId, done: !!found });
