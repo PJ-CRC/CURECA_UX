@@ -4,7 +4,7 @@
   "reqId": "R047",
   "reqType": "요청",
   "team": "cureca",
-  "at": "2026-11-23T15:50:05+09:00",
+  "at": "2026-11-23T15:54:48+09:00",
   "from": "2026-11-23T15:39:52+09:00",
   "by": "최고관리자",
   "doneBy": "Claude",
@@ -16,13 +16,13 @@
   "nodeId": "",
   "text": "Instrument 작업 규칙에 맞춰 화면 다시 그려줘",
   "models": {
-    "claude-opus-5-5": 59
+    "claude-opus-5-5": 95
   },
-  "calls": 59,
-  "input": 114,
-  "cacheWrite": 235641,
-  "cacheRead": 10368899,
-  "output": 71744,
-  "total": 10676398,
-  "usd": 5.3942
+  "calls": 95,
+  "input": 181,
+  "cacheWrite": 345356,
+  "cacheRead": 14277881,
+  "output": 98079,
+  "total": 14721497,
+  "usd": 7.5807
 }
