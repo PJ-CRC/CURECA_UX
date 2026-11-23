@@ -81,27 +81,27 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 
 | 번호 | 화면 표기 글자 (영어) | 출처 (화면 / 디스크립션 / 케이스) | Language ID | 상태 (신규 / 변경 / 제거 / -) | 가장 긴 언어 · 번역 글자 |
 | --- | --- | --- | --- | --- | --- |
-| 0 | Protocol Info | 화면 | | - | |
-| 1 | Pre-Treatment Protocol | 화면 | | - | |
-| 1 | Extraction Protocol | 화면 | | - | |
-| 2 | Protocol Name | 화면 | | - | |
-| 2 | Modified by | 화면 | | - | |
-| 2 | Modified Date/Time | 화면 | | - | |
-| 3 | Standby state setting conditions | 화면 | | - | |
-| 3 | Operation conditions | 화면 | | - | |
-| 3 | Name | 화면 | | - | |
-| 3 | Volume(μL) | 화면 | | - | |
-| 3 | Keep Temp.(˚C) | 화면 | | - | |
-| 3 | Action | 화면 | | - | |
-| 3 | Step | 화면 | | - | |
-| 3 | Plate | 화면 | | - | |
-| 3 | Temp.(˚C) | 화면 | | - | |
-| 3 | Mixing Time(min) | 화면 | | - | |
-| 3 | Mixing Speed(rpm) | 화면 | | - | |
-| 3 | Collect Time(sec) | 화면 | | - | |
-| 3 | Vapor Time(min) | 화면 | | - | |
-| 3 | Pause | 화면 | | - | |
-| 4 | Close | 화면 | | - | |
+| 0 | Protocol Info | 화면 | LID-SPT-042 | - | FR · Informations sur le protocole |
+| 1 | Pre-Treatment Protocol | 화면 | LID-STN-002 | - | IT · Protocollo di Pretrattamento |
+| 1 | Extraction Protocol | 화면 | LID-STN-003 | - | IT · Protocollo di Estrazione |
+| 2 | Protocol Name | 화면 | LID-STN-007 | - | ES · Nombre del Protocolo |
+| 2 | Modified by | 화면 | LID-STN-009 | - | PT · Modificado por |
+| 2 | Modified Date/Time | 화면 | LID-STN-010 | - | ES · Fecha/Hora de Modificación |
+| 3 | Standby state setting conditions | 화면 | LID-STN-043 | - | DE · Einstellung des Standby-Zustands |
+| 3 | Operation conditions | 화면 | LID-STN-062 | - | FR · Conditions de fonctionnement |
+| 3 | Name | 화면 | LID-STN-046 | - | ES · Nombre |
+| 3 | Volume(μL) | 화면 | LID-STN-053 | - | DE · Volumen(µL) |
+| 3 | Keep Temp.(˚C) | 화면 | LID-STN-054 | - | IT · Temperatura di mantenimento(°C) |
+| 3 | Action | 화면 | LID-STN-055 | - | DE · Aktion |
+| 3 | Step | 화면 | LID-STN-063 | - | DE · Schritt |
+| 3 | Plate | 화면 | LID-STN-045 | - |  |
+| 3 | Temp.(˚C) | 화면 | LID-STN-064 | - | DE · Temp.(°C) |
+| 3 | Mixing Time(min) | 화면 | LID-STN-065 | - | IT · Tempo di miscelazione (min) |
+| 3 | Mixing Speed(rpm) | 화면 | LID-STN-066 | - | IT · Velocità di miscelazione (rpm) |
+| 3 | Collect Time(sec) | 화면 | LID-STN-067 | - | IT · Tempo di  raccolta (sec) |
+| 3 | Vapor Time(min) | 화면 | LID-STN-068 | - | IT · Tempo di evaporazione (min) |
+| 3 | Pause | 화면 | LID-STN-069 | - | DE · Pause |
+| 4 | Close | 화면 | LID-EVT-039 | - | DE · Schließen |
 
 ## Alert · Confirm · Toast
 

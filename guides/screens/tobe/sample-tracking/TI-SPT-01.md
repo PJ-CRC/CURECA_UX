@@ -177,38 +177,38 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 
 | 번호 | 화면 표기 글자 (영어) | 출처 (화면 / 디스크립션 / 케이스) | Language ID | 상태 (신규 / 변경 / 제거 / -) | 가장 긴 언어 · 번역 글자 |
 | --- | --- | --- | --- | --- | --- |
-| 0 | Samples | 화면 | | - | |
-| 1-1 | Sample ID | 화면 | | - | |
-| 1-2 | Product | 화면 | | - | |
-| 1-2 | All | 화면 · 디스크립션 | | - | |
-| 1-3 | Sample Type | 화면 | | - | |
-| 1-4 | Date | 화면 | | - | |
-| 1-4 | Order Date | 화면 · 디스크립션 | | - | |
-| 1-4 | Start Date | 디스크립션 | | - | |
-| 1-4 | End Date | 디스크립션 | | - | |
-| 1-5 | Status | 화면 | | - | |
-| 1-5 | Ordered | 디스크립션 | | 신규 | |
-| 1-5 | Ready | 디스크립션 | | - | |
-| 1-5 | Not Tested | 화면 · 디스크립션 | | - | |
-| 1-5 | Running | 화면 · 디스크립션 | | - | |
-| 1-5 | Completed | 화면 · 디스크립션 | | - | |
-| 1-5 | Failed | 화면 · 디스크립션 | | - | |
-| 1-6 | STAT Only | 화면 | | - | |
-| 1-7 | Reset | 화면 | | - | |
-| 1-7 | Search | 화면 | | - | |
-| 2 | Items | 화면 | | - | |
-| 2 | 10 items | 화면 | | - | |
-| 2 | No Data | 디스크립션 | | - | |
-| 2-1 | Progress | 화면 | | - | |
-| 2-1 | Start Date/Time | 화면 | | - | |
-| 2-1 | End Date/Time | 화면 | | - | |
-| 2-1 | STAT | 화면 | | - | |
-| 2-1 | Sample Preparation | 케이스 | | - | |
-| 2-1 | Nucleic Acid Extraction | 케이스 | | - | |
-| 2-1 | PCR Setup | 케이스 | | - | |
-| 2-1 | Plate Sealing | 케이스 | | - | |
-| 2-1 | PCR | 케이스 | | - | |
-| 3 | Export | 화면 | | - | |
+| 0 | Samples | 화면 | LID-SPT-001 | - | FR · Échantillons |
+| 1-1 | Sample ID | 화면 | LID-RUN-019 | - | FR · ID échantillon |
+| 1-2 | Product | 화면 | LID-RUN-023 | - | ES · Producto |
+| 1-2 | All | 화면 · 디스크립션 | LID-EVT-003 | - | PT · Todos |
+| 1-3 | Sample Type | 화면 | LID-STN-023 | - | FR · Type d'échantillon |
+| 1-4 | Date | 화면 | LID-TMG-002 | - | DE · Datum |
+| 1-4 | Order Date | 화면 · 디스크립션 | LID-RUN-020 | - | ES · Fecha de Solicitud |
+| 1-4 | Start Date | 디스크립션 | LID-SPT-037 | - | ES · Fecha de Inicio |
+| 1-4 | End Date | 디스크립션 | LID-SPT-038 | - | PT · Data de Término |
+| 1-5 | Status | 화면 | LID-SPT-002 | - | DE · Status |
+| 1-5 | Ordered | 디스크립션 | LID-TMG-036 | 신규 | PT · Solicitado |
+| 1-5 | Ready | 디스크립션 | LID-TMG-037 | - | DE · Bereit |
+| 1-5 | Not Tested | 화면 · 디스크립션 | LID-DAS-019 | - | DE · Nicht Getestet |
+| 1-5 | Running | 화면 · 디스크립션 | LID-TMG-038 | - | IT · In Esecuzione |
+| 1-5 | Completed | 화면 · 디스크립션 | LID-TMG-039 | - | DE · Abgeschlossen |
+| 1-5 | Failed | 화면 · 디스크립션 | LID-DAS-018 | - | DE · Fehlgeschlagen |
+| 1-6 | STAT Only | 화면 | LID-RUN-022 | - | FR · STAT uniquement |
+| 1-7 | Reset | 화면 | LID-EVT-022 | - | FR · Réinitialiser |
+| 1-7 | Search | 화면 | LID-STN-016 | - | FR · Rechercher |
+| 2 | Items | 화면 | LID-STN-006 | - | ES · Elementos |
+| 2 | 10 items | 화면 |  | 신규 |  |
+| 2 | No Data | 디스크립션 |  | 신규 |  |
+| 2-1 | Progress | 화면 | LID-SPT-003 | - | DE · Fortschritt |
+| 2-1 | Start Date/Time | 화면 | LID-TMG-004 | - | ES · Fecha/Hora de Inicio |
+| 2-1 | End Date/Time | 화면 | LID-TMG-005 | - | PT · Data/Hora de Término |
+| 2-1 | STAT | 화면 | LID-RUN-024 | - |  |
+| 2-1 | Sample Preparation | 케이스 | LID-SPT-024 | - |  |
+| 2-1 | Nucleic Acid Extraction | 케이스 | LID-SPT-025 | - |  |
+| 2-1 | PCR Setup | 케이스 | LID-SPT-026 | - |  |
+| 2-1 | Plate Sealing | 케이스 | LID-SPT-032 | - |  |
+| 2-1 | PCR | 케이스 | LID-SPT-033 | - |  |
+| 3 | Export | 화면 | LID-EVT-023 | - | DE · Exportieren |
 
 ## Alert · Confirm · Toast
 

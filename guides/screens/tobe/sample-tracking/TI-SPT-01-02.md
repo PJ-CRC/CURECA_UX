@@ -77,19 +77,19 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 
 | 번호 | 화면 표기 글자 (영어) | 출처 (화면 / 디스크립션 / 케이스) | Language ID | 상태 (신규 / 변경 / 제거 / -) | 가장 긴 언어 · 번역 글자 |
 | --- | --- | --- | --- | --- | --- |
-| 0 | Protocol Info | 화면 | | - | |
-| 1 | Pre-Treatment Protocol | 화면 | | - | |
-| 1 | Extraction Protocol | 화면 | | - | |
-| 2 | Protocol Name | 화면 | | - | |
-| 2 | Modified by | 화면 | | - | |
-| 2 | Modified Date/Time | 화면 | | - | |
-| 3 | Process | 화면 | | - | |
-| 3 | Vortexing | 화면 | | - | |
-| 3 | Centrifugation | 화면 | | - | |
-| 3 | Transfer Supernatant | 화면 | | - | |
-| 3 | Time (sec) | 화면 | | - | |
-| 3 | g force (RCF) | 화면 | | - | |
-| 4 | Close | 화면 | | - | |
+| 0 | Protocol Info | 화면 | LID-SPT-042 | - | FR · Informations sur le protocole |
+| 1 | Pre-Treatment Protocol | 화면 | LID-STN-002 | - | IT · Protocollo di Pretrattamento |
+| 1 | Extraction Protocol | 화면 | LID-STN-003 | - | IT · Protocollo di Estrazione |
+| 2 | Protocol Name | 화면 | LID-STN-007 | - | ES · Nombre del Protocolo |
+| 2 | Modified by | 화면 | LID-STN-009 | - | PT · Modificado por |
+| 2 | Modified Date/Time | 화면 | LID-STN-010 | - | ES · Fecha/Hora de Modificación |
+| 3 | Process | 화면 | LID-STN-026 | - | FR · Processus |
+| 3 | Vortexing | 화면 | LID-STN-027 | - |  |
+| 3 | Centrifugation | 화면 | LID-STN-030 | - |  |
+| 3 | Transfer Supernatant | 화면 | LID-STN-032 | - | DE · Überstand transferieren |
+| 3 | Time (sec) | 화면 | LID-STN-029 | - | ES · Tiempo (sec) |
+| 3 | g force (RCF) | 화면 | LID-STN-031 | - |  |
+| 4 | Close | 화면 | LID-EVT-039 | - | DE · Schließen |
 
 ## Alert · Confirm · Toast
 

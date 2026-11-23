@@ -164,42 +164,42 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 
 | 번호 | 화면 표기 글자 (영어) | 출처 (화면 / 디스크립션 / 케이스) | Language ID | 상태 (신규 / 변경 / 제거 / -) | 가장 긴 언어 · 번역 글자 |
 | --- | --- | --- | --- | --- | --- |
-| 0 | Product | 화면 (축소된 Samples 목록) | | - | |
-| 2 | Process | 화면 | | - | |
-| 2 | Module | 화면 | | - | |
-| 2 | Unit | 화면 | | - | |
-| 2 | Start Date/Time | 화면 | | - | |
-| 2 | End Date/Time | 화면 | | - | |
-| 2 | Sample Preparation | 화면 | | - | |
-| 2 | Nucleic Acid Extraction | 화면 | | - | |
-| 2 | PCR Setup | 화면 | | - | |
-| 2 | Plate Sealing | 화면 | | - | |
-| 2 | PCR | 화면 | | - | |
-| 3 | General | 화면 | | - | |
-| 3 | Sample Type | 화면 | | - | |
-| 3 | Order Date | 화면 | | - | |
-| 3 | Canceled Date | 화면 | | - | |
-| 3 | Canceled | 화면 | | - | |
-| 3 | STAT | 화면 | | - | |
-| 4 | Sample Location | 화면 | | - | |
-| 4 | Location Type | 화면 | | - | |
-| 4 | Return Status | 화면 | | - | |
-| 4 | Trolley Name → Trolley ID | 화면 | | 변경 | |
-| 4 | Tray Position | 화면 | | - | |
-| 4 | STAT Slot No. | 화면 | | - | |
-| 4 | Socket ID | 화면 | | - | |
-| 4 | Socket Position | 화면 | | - | |
-| 5 | 96-DWP Plate | 화면 | | - | |
-| 5 | ID | 화면 | | - | |
-| 5 | Well No. | 화면 | | - | |
-| 5-1 | More | 화면 | | - | |
-| 6 | PCR Plate | 화면 | | - | |
-| 7 | Reagent Info | 화면 | | - | |
-| 7 | Kit | 화면 | | - | |
-| 7 | Barcode | 화면 | | - | |
-| 8 | Protocol Info | 화면 | | - | |
-| 8 | Pre-Treatment Protocol | 화면 | | - | |
-| 8 | Extraction Protocol | 화면 | | - | |
+| 0 | Product | 화면 (축소된 Samples 목록) | LID-RUN-023 | - | ES · Producto |
+| 2 | Process | 화면 | LID-STN-026 | - | FR · Processus |
+| 2 | Module | 화면 | LID-EVT-012 | - | PT · Módulo |
+| 2 | Unit | 화면 | LID-EVT-013 | - | DE · Einheit |
+| 2 | Start Date/Time | 화면 | LID-TMG-004 | - | ES · Fecha/Hora de Inicio |
+| 2 | End Date/Time | 화면 | LID-TMG-005 | - | PT · Data/Hora de Término |
+| 2 | Sample Preparation | 화면 | LID-SPT-024 | - |  |
+| 2 | Nucleic Acid Extraction | 화면 | LID-SPT-025 | - |  |
+| 2 | PCR Setup | 화면 | LID-SPT-026 | - |  |
+| 2 | Plate Sealing | 화면 | LID-SPT-032 | - |  |
+| 2 | PCR | 화면 | LID-SPT-033 | - |  |
+| 3 | General | 화면 | LID-STN-197 | - | DE · Allgemein |
+| 3 | Sample Type | 화면 | LID-STN-023 | - | FR · Type d'échantillon |
+| 3 | Order Date | 화면 | LID-RUN-020 | - | ES · Fecha de Solicitud |
+| 3 | Canceled Date | 화면 | LID-TMG-003 | - | PT · Data de Cancelamento |
+| 3 | Canceled | 화면 | LID-TMG-006 | - | DE · Storniert |
+| 3 | STAT | 화면 | LID-RUN-024 | - |  |
+| 4 | Sample Location | 화면 | LID-SPT-007 | - | FR · Emplacement de l'échantillon |
+| 4 | Location Type | 화면 | LID-SPT-039 | - | PT · Tipo de Localização |
+| 4 | Return Status | 화면 | LID-SPT-008 | - | ES · Estado de Devolución |
+| 4 | Trolley Name → Trolley ID | 화면 |  | 변경 |  |
+| 4 | Tray Position | 화면 | LID-SPT-010 | - | ES · Posición del Tray |
+| 4 | STAT Slot No. | 화면 | LID-SPT-040 | - | FR · N° d'emplacement STAT |
+| 4 | Socket ID | 화면 | LID-SPT-041 | - | ES · ID del Socket |
+| 4 | Socket Position | 화면 | LID-SPT-011 | - | ES · Posición del Socket |
+| 5 | 96-DWP Plate | 화면 | LID-SPT-013 | - |  |
+| 5 | ID | 화면 | LID-LOG-003 | - | DE · ID |
+| 5 | Well No. | 화면 | LID-SPT-016 | - | ES · N.º de Pocillo |
+| 5-1 | More | 화면 | LID-SPT-015 | - | IT · Altro |
+| 6 | PCR Plate | 화면 | LID-SPT-031 | - |  |
+| 7 | Reagent Info | 화면 | LID-SPT-017 | - | FR · Informations sur le réactif |
+| 7 | Kit | 화면 | LID-SPT-046 | - |  |
+| 7 | Barcode | 화면 | LID-SPT-018 | - | PT · Código de Barras |
+| 8 | Protocol Info | 화면 | LID-SPT-042 | - | FR · Informations sur le protocole |
+| 8 | Pre-Treatment Protocol | 화면 | LID-STN-002 | - | IT · Protocollo di Pretrattamento |
+| 8 | Extraction Protocol | 화면 | LID-STN-003 | - | IT · Protocollo di Estrazione |
 
 ## Alert · Confirm · Toast
 
