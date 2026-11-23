@@ -59,6 +59,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/?node-id=3219-23346
   - Module 내 Device가 없을 경우 아코디언 기능 미제공
 - 동작 : 각 개별 작동, N개를 동시에 열 수 있는 구조
 - 공통 UX 참고 : COMM-5-a
+- 케이스 참고 : LI-INS-02-01-P/Case > Case 3
 
 **2  Error Rate**
 - 노출 조건
