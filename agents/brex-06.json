@@ -1,5 +1,5 @@
 {
-  "reportAt": "2026-11-23T12:49:31+09:00",
+  "reportAt": "2026-11-23T12:56:33+09:00",
   "pc": "BREX_06",
   "slug": "brex-06",
   "user": "최고관리자",
@@ -10,7 +10,7 @@
   "msg": "중지됨",
   "statusAt": "2026-11-23T11:12:40+09:00",
   "claude": "따로 설치",
-  "claudeWay": "cli",
+  "claudeWay": "app",
   "autoWatch": true,
   "events": [
     {
