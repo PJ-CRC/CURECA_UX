@@ -227,6 +227,10 @@ started: 2026-11-23
 <!-- 5단계 완료 때 Common UX 후보 목록으로 올라가는 표(지금은 올리지 않음, flow/5-done.md 절차 2번 순서 6). 요소 이름 뒤 괄호에 종류를 적습니다(예: 새로고침 (아이콘 버튼)). -->
 | 요소 이름 (종류) | 하는 일 | 쓴 곳 (CID · 디스크립션 번호) | 어디서 (후보 ID / 신규로 만듦 / 기존 화면에서 따옴) | Figma 링크 |
 | --- | --- | --- | --- | --- |
+| Prep / Dx 장비 구분 제목 띠 (영역 틀) | Prep · Dx System 구분 | TI-INS-01-T · LI-INS-01-T 2 | 기존 화면에서 따옴 | [3222:23331](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/?node-id=3222-23331) |
+| Module 카드 (카드 틀 · 제목 · 사용 여부 · 이미지) | Module Type별 요약 | TI-INS-01-T · LI-INS-01-T 3 · 3-1 · 3-2 · 3-3 | 기존 화면에서 따옴 | 같음 |
+| Module Status 표 (Connected · Status · Door Status · Event 줄, 상태 아이콘 · Tag Status) | 상태별 Module 수 | TI-INS-01-T · LI-INS-01-T 3-5 · 3-6 | 기존 화면에서 따옴 | 같음 |
+| 범례 (상태 아이콘 줄) | 상태값 범례 | TI-INS-01-T 5 · LI-INS-01-T 7 | 기존 화면에서 따옴 | 같음 |
 
 ### 근거로 풀린 것
 | 질문 | 푼 근거 |
