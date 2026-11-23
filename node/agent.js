@@ -91,6 +91,24 @@ async function saveRaw(ids, text) {
     if (!r.ok) log('원래 답변 저장 실패: ' + r.status + ' ' + (await r.text()).slice(0, 160));
   } catch (e) { log('원래 답변 저장 실패: ' + e.message); }
 }
+// 사용 한도로 끊긴 차례의 요청 · 작업을 「대기」로 돌린다(2026-11-23): 「진행 중」으로 두면 한도가 풀린 뒤 새 세션이
+//  「이미 진행 중」으로 거절당해 사람이 멈춤 → 다시 진행을 눌러야 이어졌다. 「대기」면 다음 감시 차례에 그대로 다시 받아
+//  작업 기록의 이어 갈 곳부터 이어 간다. 사람이 멈춘 것 · 질문을 남긴 「보류」 · 끝난 것은 건드리지 않는다
+async function releaseOnLimit(ids, hm) {
+  const rq = ((readJson(path.join(WB, 'edit_requests.json')) || {}).items || []).filter(Boolean), jb = ((readJson(path.join(WB, 'jobs.json')) || {}).items || []).filter(Boolean);
+  const done = [];
+  for (const id of ids) {
+    const isR = /^R\d+$/.test(id), x = (isR ? rq : jb).find((i) => i.id === id);
+    if (!x || x.status !== '진행 중') continue;
+    const was = String(x.note || '').replace(/^사용 한도로 멈춤 — [^(]*\(멈출 때: (.*)\)$/, '$1');
+    const body = { action: 'update', id, status: '대기', by: 'Claude', note: `사용 한도로 멈춤 — ${hm}에 이어 함` + (was ? ` (멈출 때: ${was.slice(0, 300)})` : '') };
+    try {
+      const r = await fetch(`http://127.0.0.1:${PORT}/api/${isR ? 'requests' : 'jobs'}`, { method: 'POST', headers: { 'Content-Type': 'application/json; charset=utf-8' }, body: JSON.stringify(body) });
+      if (r.ok) done.push(id); else log(`사용 한도 — ${id} 「대기」로 돌리기 실패: ${r.status} ${(await r.text()).slice(0, 160)}`);
+    } catch (e) { log(`사용 한도 — ${id} 「대기」로 돌리기 실패: ${e.message}`); }
+  }
+  return done;
+}
 function claudeCmd(args) {
   // .cmd · .bat(npm 설치)은 셸로 띄운다
   //  (cmd.exe는 Node의 \" 이스케이프를 모르니 줄을 직접 만들어 그대로 넘긴다: 모든 인자를 "…"로, 빈 인자도 "")
@@ -437,9 +455,11 @@ async function main() {
     //  실패한 차례만 본다(2026-11-17 — 정상 답에 「rate limit」(Figma API 한도 등)이란 말만 있어도 30분 쉬던 것)
     const lim = !r.ok && /hit your .{0,20}limit|usage limit|limit reached|rate limit/i.test(r.text) ? limitUntil(r.text) : 0;
     if (lim) {
+      const lids = (S && S.turnIds) || [];
       await stopSession('사용 한도');
       const ld = new Date(lim), same = ld.toDateString() === new Date().toDateString(), hm = (same ? '' : (ld.getMonth() + 1) + '/' + ld.getDate() + ' ') + ld.toTimeString().slice(0, 5);
-      save('limit', `Claude 사용 한도에 걸려 ${hm}에 다시 시작합니다. 그 사이 요청은 「대기」로 남습니다.`); log(`사용 한도 — ${hm}까지 쉼: ${out.split('\n')[0]}`);
+      const rel = await releaseOnLimit(lids, hm);
+      save('limit', `Claude 사용 한도에 걸려 ${hm}에 다시 시작합니다. 그 사이 요청은 「대기」로 남습니다.`); log(`사용 한도 — ${hm}까지 쉼: ${out.split('\n')[0]}` + (rel.length ? ` (「대기」로 돌림: ${rel.join(', ')})` : ''));
       last = ''; repeat = 0;
       // 5시간 한도일 때만 사용량 확인으로 일찍 끝낸다(주간 · 모델별 한도 · API 429는 두 창으로 알 수 없어 시각까지)
       const why = await pauseUntil(Math.max(lim, Date.now() + 60000), /5-hour|five.hour/i.test(r.text));
