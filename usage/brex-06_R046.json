@@ -4,7 +4,7 @@
   "reqId": "R046",
   "reqType": "요청",
   "team": "cureca",
-  "at": "2026-11-23T14:09:48+09:00",
+  "at": "2026-11-23T14:20:24+09:00",
   "from": "2026-11-23T11:10:01+09:00",
   "by": "최고관리자",
   "doneBy": "Claude",
@@ -16,13 +16,13 @@
   "nodeId": "",
   "text": "samples 메뉴 기존에서 신규로 다시 만들어줘",
   "models": {
-    "claude-opus-5-5": 214
+    "claude-opus-5-5": 247
   },
-  "calls": 214,
-  "input": 421,
-  "cacheWrite": 751829,
-  "cacheRead": 59360548,
-  "output": 192630,
-  "total": 60305428,
-  "usd": 21.741
+  "calls": 247,
+  "input": 490,
+  "cacheWrite": 879383,
+  "cacheRead": 67286763,
+  "output": 215943,
+  "total": 68382579,
+  "usd": 24.8132
 }
