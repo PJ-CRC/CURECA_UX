@@ -1,0 +1,28 @@
+{
+  "id": "brex-06_20261123-141230",
+  "kind": "work",
+  "reqId": "",
+  "reqType": "",
+  "team": "cureca",
+  "at": "2026-11-23T14:12:30+09:00",
+  "from": "2026-11-23T14:12:04+09:00",
+  "by": "최고관리자",
+  "doneBy": "Claude",
+  "pc": "BREX_06",
+  "fileKey": "",
+  "fileName": "",
+  "page": "",
+  "frame": "",
+  "nodeId": "",
+  "text": "논의 대상: DS-0009 답변 (J1265)",
+  "models": {
+    "claude-opus-5-5": 5
+  },
+  "calls": 5,
+  "input": 10,
+  "cacheWrite": 19377,
+  "cacheRead": 256986,
+  "output": 2655,
+  "total": 279028,
+  "usd": 0.2596
+}
