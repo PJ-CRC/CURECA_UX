@@ -156,6 +156,9 @@ started: 2026-11-23
 | 1 | 알럿 | Alert_004 · Alert_013 · Alert_014 · Alert_015 · Confirm_008 (`alert/alert-catalog.csv`) | 디스크립션 · 반영 대기에 나옴 | O | Overview Tab 미등록 Module Tab, Management [Save], All Tab (LI-INS-02-T) [Unlock] | 문구 · 버튼. Confirm_008 버튼 동작 칸은 복사 실수(카탈로그 "확인할 점") |
 | 1 | 알럿 | Confirm_031 | 기존 화면 v2.1.17 Door Control · All Tab | - | | 알럿 카탈로그에 없음 → DS-0011 |
 | 1 | Module 문서 | `policy/modules/` 관련 정책 | 길 ⑤ | - | | 관련 정책이 INV · LOD · MAT · SMP · TST(재고 · 로딩 · 검사)라 Instrument 화면 요소에 쓰이지 않음 |
+| 1 | 기준 자료 | `language-set/db/instruments.md` (3단계에서 추가) | 화면 표기 글자 표 세팅 때 양방향 대조 (`flow/3-design.md` 공통 1-8) | O | 7화면 화면 표기 글자 | 대조만 (Language ID · 번역은 4단계) |
+| 1 | UX가이드 | Common UX 가이드 "Figma 컴포넌트" 표 · COMM-3-a(2/2) 모드별 LNB (3단계에서 추가) | 공통 3-2 · 공통 UX 참고 번호 | O | 7화면 컴포넌트, LI-INS-01-T 6 · LI-INS-02-T 3-1 (MS Mode) | 컴포넌트 · Variant, 공통 UX 참고 코드 (COMM-5-s · 5-g · 5-h · 5-a · 5-q · 5-v · 4-a) |
+| 1 | 알럿 | `alert/alert-catalog.md` "토스트" · `toast-catalog-ms.csv` 칸 (3단계에서 추가) | 케이스 3 토스트 코드 (3-2) | O | TI-INS-02-01-P 3 | `toast-catalog.csv`를 처음 만들고 Toast_001 더함 |
 
 **관련 자료 없는 영역 · 요소**
 
