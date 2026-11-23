@@ -1,5 +1,5 @@
 {
-  "reportAt": "2026-11-23T16:03:25+09:00",
+  "reportAt": "2026-11-23T16:04:25+09:00",
   "pc": "DAYE",
   "slug": "daye",
   "user": "정다예",
@@ -8,7 +8,7 @@
   "alive": true,
   "status": "working",
   "msg": "처리 중: JOBS J147,J146,J145",
-  "statusAt": "2026-11-23T16:03:19+09:00",
+  "statusAt": "2026-11-23T16:04:20+09:00",
   "claude": "따로 설치",
   "claudeWay": "",
   "autoWatch": true,
