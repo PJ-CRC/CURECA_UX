@@ -112,11 +112,11 @@ figma:         # 작업방의 이 CID 섹션 링크
 
 | ID | 타입 | 변경 전 | 변경 후 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| R01 | 기준 자료 변경 | "Account Type의 Sevice일 경우만 노출" | User Type이 Service일 때만 | `glossary/terms.csv` | 대기 |
-| R02 | 기준 자료 변경 | 조회 전용임이 디스크립션에 분명하지 않음 | L-IOS는 모든 User Type이 조회만 (Enabled 변경 없음) | POL-EQP-009 | 대기 |
+| R01 | 기준 자료 변경 | "Account Type의 Sevice일 경우만 노출" | User Type이 Service일 때만 | `glossary/terms.csv` | 작업 중 (20261123-최고관리자-instruments) |
+| R02 | 기준 자료 변경 | 조회 전용임이 디스크립션에 분명하지 않음 | L-IOS는 모든 User Type이 조회만 (Enabled 변경 없음) | POL-EQP-009 | 작업 중 (20261123-최고관리자-instruments) |
 | R03 | 기준 자료 변경 | Error Rate 표시 위치 | 고객 논의 중(CA-0001) | POL-EQP-010 | 대기 (고객 논의) |
-| R04 | 점검 발견 | Datail | Detail | 오타 | 대기 |
-| R05 | 점검 발견 | 화면 예시 Device 행: Sample Pre-treatment (1) 아래 Sample Aliquoting (Upper) · (Lower), (2) · (3) 아래 Sample Aliquoting (Upper) · Sample Processing (Lower) | 화면 예시도 Sample Pre-treatment의 Device Unit 4개(Sample Processing (Upper) · (Lower), Sample Aliquoting (Upper) · (Lower))로 맞춤 | `glossary/module-units.csv`, TI-INS-02-01-P-R09, 2026-11-23 다시 옮김 | 대기 |
+| R04 | 점검 발견 | Datail | Detail | 오타 | 작업 중 (20261123-최고관리자-instruments) |
+| R05 | 점검 발견 | 화면 예시 Device 행: Sample Pre-treatment (1) 아래 Sample Aliquoting (Upper) · (Lower), (2) · (3) 아래 Sample Aliquoting (Upper) · Sample Processing (Lower) | 화면 예시도 Sample Pre-treatment의 Device Unit 4개(Sample Processing (Upper) · (Lower), Sample Aliquoting (Upper) · (Lower))로 맞춤 | `glossary/module-units.csv`, TI-INS-02-01-P-R09, 2026-11-23 다시 옮김 | 작업 중 (20261123-최고관리자-instruments) |
 
 ## 변경 이력
 

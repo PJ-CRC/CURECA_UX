@@ -112,14 +112,14 @@ figma:         # 작업방의 이 CID 섹션 링크
 
 | ID | 타입 | 변경 전 | 변경 후 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| R01 | 기준 자료 변경 | Section 17 메모 "통합 상태가 Ready, Paused, Error 상태일 경우, Unlock all doors 버튼 사용 가능" | 장비 통합 상태가 Ready, Error, Paused, Not Initialized일 때 활성화 (디스크립션 3은 이미 맞음) | POL-EQP-008, 2026-11-02 확인 | 대기 |
+| R01 | 기준 자료 변경 | Section 17 메모 "통합 상태가 Ready, Paused, Error 상태일 경우, Unlock all doors 버튼 사용 가능" | 장비 통합 상태가 Ready, Error, Paused, Not Initialized일 때 활성화 (디스크립션 3은 이미 맞음) | POL-EQP-008, 2026-11-02 확인 | 작업 중 (20261123-최고관리자-instruments) |
 | R02 | 기준 자료 변경 | "Locks automatically 5 seconds after the door is closed." / "The door will be automatically locked 5 seconds after it is closed." 두 가지 | 하나로 통일 | `archive/glossary/review-v0.md` 화면 정정 대상 추가 | 대기 |
-| R03 | 점검 발견 | "Cannot unlock while the module is running." / "Cannot unlock while the system is running." 두 가지 | 쓰임을 구분하거나 하나로 통일 | 같음 | 대기 |
+| R03 | 점검 발견 | "Cannot unlock while the module is running." / "Cannot unlock while the system is running." 두 가지 | 쓰임을 구분하거나 하나로 통일 | 같음 | 작업 중 (20261123-최고관리자-instruments) |
 | R04 | 기준 자료 변경 | 확인 문구 "Do you want to continue? Finishing current task, then pausing…" | 알럿 관리 페이지 Confirm_008 ("Unlock the door?")과 다름. 어느 쪽이 맞는지 확인 후 통일 | `alert/alert-catalog.md` 3절 | 대기 (확인 필요) |
-| R05 | 점검 발견 | Ruuning, Lcok | Running, Lock | 오타 | 대기 |
+| R05 | 점검 발견 | Ruuning, Lcok | Running, Lock | 오타 | 작업 중 (20261123-최고관리자-instruments) |
 | R06 | 기준 자료 변경 | Lock 버튼 없음 (다시 잠그는 기능 없음) | 디스크립션에 Door를 닫으면 5초 뒤 자동 잠금, Run Start 때 Unlocked Door 자동 잠금을 정책 ID로 참조 | POL-EQP-008 | 대기 |
-| R07 | 기준 자료 변경 | 0·3 "Unlock 1개라도 해당 되면 Module의 상태값은 Paused로 변경됨" | 뜻은 맞음 (장비 통합 상태와 관계없이 Door 잠금이 해제되면 Paused, Door가 여러 개인 Module은 하나라도 해제되면 Paused). 이 뜻이 드러나게 문장 정리 | POL-EQP-004 규칙 1·2, 2026-11-02 확인 | 대기 |
-| R08 | 기준 자료 변경 | 2-5가 장비 모듈 상태(Ready, Error, Paused) 기준, 0은 통합 상태 기준 | 장비 통합 상태별 허용과 조건부 허용 Module 기준으로 통일 | POL-EQP-008 | 대기 |
+| R07 | 기준 자료 변경 | 0·3 "Unlock 1개라도 해당 되면 Module의 상태값은 Paused로 변경됨" | 뜻은 맞음 (장비 통합 상태와 관계없이 Door 잠금이 해제되면 Paused, Door가 여러 개인 Module은 하나라도 해제되면 Paused). 이 뜻이 드러나게 문장 정리 | POL-EQP-004 규칙 1·2, 2026-11-02 확인 | 작업 중 (20261123-최고관리자-instruments) |
+| R08 | 기준 자료 변경 | 2-5가 장비 모듈 상태(Ready, Error, Paused) 기준, 0은 통합 상태 기준 | 장비 통합 상태별 허용과 조건부 허용 Module 기준으로 통일 | POL-EQP-008 | 작업 중 (20261123-최고관리자-instruments) |
 | R09 | 기준 자료 변경 | Run 중 잠금 해제 후 Door를 열지 않은 경우의 동작이 없음 | 디스크립션에 넣음: 임시 정책 PV-0001 (Run 중 잠금 해제 후 Door를 열지 않으면 Paused 유지). 화면에 "임시 정책 포함" 표시 | PV-0001 (적용한 화면), POL-EQP-008 | 대기 (임시 정책 적용 예정) |
 
 ## 변경 이력

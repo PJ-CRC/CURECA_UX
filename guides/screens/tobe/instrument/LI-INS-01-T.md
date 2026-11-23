@@ -112,12 +112,12 @@ figma:         # 작업방의 이 CID 섹션 링크
 
 | ID | 타입 | 변경 전 | 변경 후 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| R01 | 기준 자료 변경 | "Cureca 장비의 현황" | CURECA | `glossary/terms.csv` | 대기 |
-| R02 | 점검 발견 | 3-2가 "Total / In Use / Not in Use" | 화면(v2.1.06)은 "Enabled n · Total n (Disabled n)". 화면과 POL-EQP-009의 Enabled 표기에 맞춤 | Figma 버전 메모 v2.1.06 | 대기 |
-| R03 | 점검 발견 | Enablde, Dignosctics | Enabled, Diagnostics | 오타 | 대기 |
-| R04 | 기준 자료 변경 | 6 "기능 활성화 조건 - 공통 UX 참고 : COMM-3-a" | Door Control 잠금 해제 조건은 POL-EQP-008 참조 | POL-EQP-008 | 대기 |
-| R05 | 점검 발견 | Door 버튼 라벨이 화면은 "Door Control", 디스크립션은 "Unlock 버튼" | 하나로 통일 | 화면 글자와 디스크립션 6 | 대기 |
-| R06 | 점검 발견 | 1 · 화면 Tab 이름 "Ht Extraction" (카드 제목은 High-throughput Extraction) | Tab 이름 High-throughput Extraction | `glossary/modules.csv`, 2026-11-23 다시 옮김 | 대기 |
+| R01 | 기준 자료 변경 | "Cureca 장비의 현황" | CURECA | `glossary/terms.csv` | 작업 중 (20261123-최고관리자-instruments) |
+| R02 | 점검 발견 | 3-2가 "Total / In Use / Not in Use" | 화면(v2.1.06)은 "Enabled n · Total n (Disabled n)". 화면과 POL-EQP-009의 Enabled 표기에 맞춤 | Figma 버전 메모 v2.1.06 | 작업 중 (20261123-최고관리자-instruments) |
+| R03 | 점검 발견 | Enablde, Dignosctics | Enabled, Diagnostics | 오타 | 작업 중 (20261123-최고관리자-instruments) |
+| R04 | 기준 자료 변경 | 6 "기능 활성화 조건 - 공통 UX 참고 : COMM-3-a" | Door Control 잠금 해제 조건은 POL-EQP-008 참조 | POL-EQP-008 | 작업 중 (20261123-최고관리자-instruments) |
+| R05 | 점검 발견 | Door 버튼 라벨이 화면은 "Door Control", 디스크립션은 "Unlock 버튼" | 하나로 통일 | 화면 글자와 디스크립션 6 | 작업 중 (20261123-최고관리자-instruments) |
+| R06 | 점검 발견 | 1 · 화면 Tab 이름 "Ht Extraction" (카드 제목은 High-throughput Extraction) | Tab 이름 High-throughput Extraction | `glossary/modules.csv`, 2026-11-23 다시 옮김 | 작업 중 (20261123-최고관리자-instruments) |
 
 ## 변경 이력
 

@@ -112,17 +112,17 @@ figma:         # 작업방의 이 CID 섹션 링크
 
 | ID | 타입 | 변경 전 | 변경 후 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| R01 | 기준 자료 변경 | Connected 항목 상태값 "Connected / Unconnected" | Connected / Disconnected | `glossary/status-values.csv` 연결 상태 | 대기 |
+| R01 | 기준 자료 변경 | Connected 항목 상태값 "Connected / Unconnected" | Connected / Disconnected | `glossary/status-values.csv` 연결 상태 | 작업 중 (20261123-최고관리자-instruments) |
 | R02 | 기준 자료 변경 | 2-1 Error Rate가 남아 있음. 버전 메모 v2.1.01은 "Error Rate 제거(2-1)" | 취소선으로 이미 제거됨. 표시 위치는 고객 논의 중(CA-0001) | POL-EQP-010 | 제외 (2026-11-04, 취소선) |
-| R03 | 기준 자료 변경 | Module Details (Sample Pre-treatment): STAT Storage (Upper), STAT Storage (Lower) | STAT Storage | `glossary/module-units.csv`, `archive/glossary/review-v0.md` | 대기 |
+| R03 | 기준 자료 변경 | Module Details (Sample Pre-treatment): STAT Storage (Upper), STAT Storage (Lower) | STAT Storage | `glossary/module-units.csv`, `archive/glossary/review-v0.md` | 작업 중 (20261123-최고관리자-instruments) |
 | R04 | 점검 발견 | Module Details (Sample Pre-treatment): Tip Waste Bin (Upper/Lower), Film Waste Bin (Upper/Lower) | Waste Bin (Upper), Waste Bin (Lower) | 같음 | 제외 (2026-11-19, 씨젠 상태 정보 261119에서 Tip · Film Waste Bin이 로체시스템즈 장비의 Unit으로 생김. 폐기함은 설치된 제조사의 Unit으로 표기함, DS-0005) |
-| R05 | 점검 발견 | Liquid Waste Bottle(Upper), Sample Storage(2) 등 이름과 번호 붙여 씀 | Liquid Waste Bottle (Upper), Sample Storage (2) | 이름 (번호) 띄어쓰기 | 대기 |
-| R06 | 기준 자료 변경 | Waste Status | Waste Bin/Bottle Status | `glossary/terms.csv` | 대기 |
+| R05 | 점검 발견 | Liquid Waste Bottle(Upper), Sample Storage(2) 등 이름과 번호 붙여 씀 | Liquid Waste Bottle (Upper), Sample Storage (2) | 이름 (번호) 띄어쓰기 | 작업 중 (20261123-최고관리자-instruments) |
+| R06 | 기준 자료 변경 | Waste Status | Waste Bin/Bottle Status | `glossary/terms.csv` | 작업 중 (20261123-최고관리자-instruments) |
 | R07 | 점검 발견 | 4-1 [Run-time Info], 4-2 [Enable setting] 설명이 남아 있음 | 취소선으로 이미 제거됨 | Figma 취소선 | 제외 (2026-11-04, 취소선) |
 | R08 | 기준 자료 변경 | 2-2 "[Enable setting → Management] 버튼 ... 아래 조건 모두 제거 요청" 메모 | 옛 조건은 취소선으로 제거됨. [Management]를 누르면 조건 없이 Popup을 엶 | Figma 취소선, POL-EQP-009 | 제외 (2026-11-04, 취소선) |
-| R09 | 기준 자료 변경 | T-IO S, Account type | T-IOS, User Type | 오타, `glossary/terms.csv` | 대기 |
+| R09 | 기준 자료 변경 | T-IO S, Account type | T-IOS, User Type | 오타, `glossary/terms.csv` | 작업 중 (20261123-최고관리자-instruments) |
 | R10 | 점검 발견 | LNB에 Instrument가 두 번 | 확인 필요 (디자인 화면 기준) | 화면 글자 | 대기 (확인 필요) |
-| R11 | 점검 발견 | 화면 Tab 이름 "Ht Extraction" | Tab 이름 High-throughput Extraction | `glossary/modules.csv`, 2026-11-23 다시 옮김 | 대기 |
+| R11 | 점검 발견 | 화면 Tab 이름 "Ht Extraction" | Tab 이름 High-throughput Extraction | `glossary/modules.csv`, 2026-11-23 다시 옮김 | 작업 중 (20261123-최고관리자-instruments) |
 
 ## 변경 이력
 

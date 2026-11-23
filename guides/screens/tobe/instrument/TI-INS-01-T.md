@@ -112,13 +112,13 @@ figma:         # 작업방의 이 CID 섹션 링크
 
 | ID | 타입 | 변경 전 | 변경 후 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| R01 | 기준 자료 변경 | 등록되지 않은 Module Tab 진입 시 "Alert_L_004" | Alert_004 | `alert/alert-catalog.csv`, LI-INS-01-T | 대기 |
-| R02 | 기준 자료 변경 | "Cureca 장비의 현황" | CURECA | `glossary/terms.csv` | 대기 |
-| R03 | 점검 발견 | 오른쪽 패널의 CID 칸이 "TI-INS-02-T" | TI-INS-01-T | Figma 프레임 이름, IA | 대기 |
-| R04 | 점검 발견 | 3-2가 "Total / In Use / Not in Use" | 화면(v2.1.06)은 "Enabled n · Total n (Disabled n)". 디스크립션을 화면과 POL-EQP-009의 Enabled 표기에 맞춤 | Figma 버전 메모 v2.1.06 | 대기 |
-| R05 | 점검 발견 | Enablde, Dignosctics | Enabled, Diagnostics | 오타 | 대기 |
-| R06 | 기준 자료 변경 | 3-5 "우측의 Instrument Detail Info page 참고" | 상태값은 `glossary/status-values.csv`와 POL-EQP-001 참조 | POL-EQP-001 | 대기 |
-| R07 | 점검 발견 | 1 · 화면 Tab 이름 "Ht Extraction" (카드 제목은 High-throughput Extraction) | Tab 이름 High-throughput Extraction | `glossary/modules.csv`, 2026-11-23 다시 옮김 | 대기 |
+| R01 | 기준 자료 변경 | 등록되지 않은 Module Tab 진입 시 "Alert_L_004" | Alert_004 | `alert/alert-catalog.csv`, LI-INS-01-T | 작업 중 (20261123-최고관리자-instruments) |
+| R02 | 기준 자료 변경 | "Cureca 장비의 현황" | CURECA | `glossary/terms.csv` | 작업 중 (20261123-최고관리자-instruments) |
+| R03 | 점검 발견 | 오른쪽 패널의 CID 칸이 "TI-INS-02-T" | TI-INS-01-T | Figma 프레임 이름, IA | 작업 중 (20261123-최고관리자-instruments) |
+| R04 | 점검 발견 | 3-2가 "Total / In Use / Not in Use" | 화면(v2.1.06)은 "Enabled n · Total n (Disabled n)". 디스크립션을 화면과 POL-EQP-009의 Enabled 표기에 맞춤 | Figma 버전 메모 v2.1.06 | 작업 중 (20261123-최고관리자-instruments) |
+| R05 | 점검 발견 | Enablde, Dignosctics | Enabled, Diagnostics | 오타 | 작업 중 (20261123-최고관리자-instruments) |
+| R06 | 기준 자료 변경 | 3-5 "우측의 Instrument Detail Info page 참고" | 상태값은 `glossary/status-values.csv`와 POL-EQP-001 참조 | POL-EQP-001 | 작업 중 (20261123-최고관리자-instruments) |
+| R07 | 점검 발견 | 1 · 화면 Tab 이름 "Ht Extraction" (카드 제목은 High-throughput Extraction) | Tab 이름 High-throughput Extraction | `glossary/modules.csv`, 2026-11-23 다시 옮김 | 작업 중 (20261123-최고관리자-instruments) |
 
 ## 변경 이력
 

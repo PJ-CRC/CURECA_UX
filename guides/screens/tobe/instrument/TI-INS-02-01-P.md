@@ -112,15 +112,15 @@ figma:         # 작업방의 이 CID 섹션 링크
 
 | ID | 타입 | 변경 전 | 변경 후 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| R01 | 기준 자료 변경 | "Account Type의 Sevice일 경우만 노출" | User Type이 Service일 때만 | `glossary/terms.csv` | 대기 |
-| R02 | 점검 발견 | [Cancle], Datail | [Cancel], Detail | 오타 | 대기 |
-| R03 | 기준 자료 변경 | Enabled 변경 권한이 화면에 없음 | 변경은 User Type이 Service일 때만, Admin·User는 조회만 | POL-EQP-009, `policy/permission-matrix.csv` | 대기 |
-| R04 | 기준 자료 변경 | 변경 가능 조건 "CURECA 구동 상태값이 Ready 및 not initialized일 경우" | 장비 통합 상태가 Ready 또는 Not Initialized이고 장비 모듈 상태가 Ready 또는 Not Initialized일 때 | POL-EQP-009 | 대기 |
-| R05 | 기준 자료 변경 | Device Unit 설정 대상이 정해져 있지 않음 | 한 Module 안에 같은 Device Unit이 2대 이상일 때만 Device Unit별로 설정 (예: CFX96, Sealer, Sample Processing 2대) | POL-EQP-009 | 대기 |
+| R01 | 기준 자료 변경 | "Account Type의 Sevice일 경우만 노출" | User Type이 Service일 때만 | `glossary/terms.csv` | 작업 중 (20261123-최고관리자-instruments) |
+| R02 | 점검 발견 | [Cancle], Datail | [Cancel], Detail | 오타 | 작업 중 (20261123-최고관리자-instruments) |
+| R03 | 기준 자료 변경 | Enabled 변경 권한이 화면에 없음 | 변경은 User Type이 Service일 때만, Admin·User는 조회만 | POL-EQP-009, `policy/permission-matrix.csv` | 작업 중 (20261123-최고관리자-instruments) |
+| R04 | 기준 자료 변경 | 변경 가능 조건 "CURECA 구동 상태값이 Ready 및 not initialized일 경우" | 장비 통합 상태가 Ready 또는 Not Initialized이고 장비 모듈 상태가 Ready 또는 Not Initialized일 때 | POL-EQP-009 | 작업 중 (20261123-최고관리자-instruments) |
+| R05 | 기준 자료 변경 | Device Unit 설정 대상이 정해져 있지 않음 | 한 Module 안에 같은 Device Unit이 2대 이상일 때만 Device Unit별로 설정 (예: CFX96, Sealer, Sample Processing 2대) | POL-EQP-009 | 작업 중 (20261123-최고관리자-instruments) |
 | R06 | 기준 자료 변경 | Module 상태가 Running이 아닌 이유(Error, Paused 등)로 바꿀 수 없을 때의 알럿이 없음. Alert_013은 "while the module is running" | 알럿 정의 필요 | POL-EQP-009, 헌법 8조 | 대기 (정의 필요) |
 | R07 | 기준 자료 변경 | Error Rate 표시 위치 | 고객 논의 중(CA-0001) | POL-EQP-010 | 대기 (고객 논의) |
-| R08 | 점검 발견 | 표 헤더 "Enable" | Enabled (L-IOS, All Tab과 같게) | LI-INS-02-01-P | 대기 |
-| R09 | 점검 발견 | 화면 예시 Device 행: Sample Pre-treatment (1) 아래 Sample Aliquoting (Upper) · (Lower), (2) · (3) 아래 Sample Aliquoting (Upper) · Sample Processing (Lower) (Module마다 구성이 다르고 Device 4개 중 2개만) | 화면 예시도 Sample Pre-treatment의 Device Unit 4개(Sample Processing (Upper) · (Lower), Sample Aliquoting (Upper) · (Lower))로 맞춤 | `glossary/module-units.csv`, 2026-11-23 다시 옮김 | 대기 |
+| R08 | 점검 발견 | 표 헤더 "Enable" | Enabled (L-IOS, All Tab과 같게) | LI-INS-02-01-P | 작업 중 (20261123-최고관리자-instruments) |
+| R09 | 점검 발견 | 화면 예시 Device 행: Sample Pre-treatment (1) 아래 Sample Aliquoting (Upper) · (Lower), (2) · (3) 아래 Sample Aliquoting (Upper) · Sample Processing (Lower) (Module마다 구성이 다르고 Device 4개 중 2개만) | 화면 예시도 Sample Pre-treatment의 Device Unit 4개(Sample Processing (Upper) · (Lower), Sample Aliquoting (Upper) · (Lower))로 맞춤 | `glossary/module-units.csv`, 2026-11-23 다시 옮김 | 작업 중 (20261123-최고관리자-instruments) |
 
 ## 변경 이력
 
