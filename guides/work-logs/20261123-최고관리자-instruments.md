@@ -90,6 +90,9 @@ started: 2026-11-23
 
 작업이 지나가는 단계: 1 → 2 → 3 → 4 → 5
 
+- 2단계 읽은 강도: 요건 1 = 케이스 3 (다시 그리기). 경로 분기 기준은 바뀌지 않음 (2026-11-23)
+- 2단계 질문 4 (화면이 갈리는 곳): Management Popup (TI-INS-02-01-P) User Type Service (Enabled 변경 · Error Rate 표시) / Admin · User (조회만, Error Rate 없음) — 기존 케이스 2개(Error Rate 미표기 / 표기)가 있음. L-IOS Client Mode MS Mode는 Door Control X (`policy/client-mode-matrix.csv`) — Overview Tab (LI-INS-01-T) 6 [Door Control] · All Tab (LI-INS-02-T) [Unlock]
+
 ## 확인할 것
 
 | # | 무엇 (절차 4번 순서 3의 1 ~ 6) | 관련된 곳 (CID · 디스크립션 번호) | 넘기는 곳 (2단계 / 3단계 질문 대기) | 이어진 번호 (Q · C · 논의 대상 ID / 근거로 풀림) |
