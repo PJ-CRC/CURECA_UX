@@ -164,6 +164,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 
 | 번호 | 화면 표기 글자 (영어) | 출처 (화면 / 디스크립션 / 케이스) | Language ID | 상태 (신규 / 변경 / 제거 / -) | 가장 긴 언어 · 번역 글자 |
 | --- | --- | --- | --- | --- | --- |
+| 0 | Product | 화면 (축소된 Samples 목록) | | - | |
 | 2 | Process | 화면 | | - | |
 | 2 | Module | 화면 | | - | |
 | 2 | Unit | 화면 | | - | |
