@@ -1,5 +1,5 @@
 {
-  "reportAt": "2026-11-23T16:52:00+09:00",
+  "reportAt": "2026-11-23T16:53:01+09:00",
   "pc": "BREX_06",
   "slug": "brex-06",
   "user": "최고관리자",
@@ -8,7 +8,7 @@
   "alive": true,
   "status": "working",
   "msg": "처리 중: PENDING R047",
-  "statusAt": "2026-11-23T16:51:52+09:00",
+  "statusAt": "2026-11-23T16:52:59+09:00",
   "claude": "따로 설치",
   "claudeWay": "cli",
   "autoWatch": true,
@@ -335,16 +335,6 @@
     },
     {
       "at": "2026-11-16T17:07:25+09:00",
-      "kind": "error",
-      "text": "오류 응답으로 끝남 (ok false, 1초)"
-    },
-    {
-      "at": "2026-11-16T16:52:21+09:00",
-      "kind": "error",
-      "text": "반복 처리 실패 — 10분 대기: PENDING R041"
-    },
-    {
-      "at": "2026-11-16T16:52:20+09:00",
       "kind": "error",
       "text": "오류 응답으로 끝남 (ok false, 1초)"
     }
@@ -731,14 +721,6 @@
       "what": "PENDING R041",
       "resume": false,
       "end": "2026-11-16T17:07:25+09:00",
-      "ok": false,
-      "sec": 1
-    },
-    {
-      "at": "2026-11-16T16:52:18+09:00",
-      "what": "PENDING R041",
-      "resume": false,
-      "end": "2026-11-16T16:52:20+09:00",
       "ok": false,
       "sec": 1
     }
