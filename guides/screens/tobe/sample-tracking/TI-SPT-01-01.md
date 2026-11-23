@@ -108,7 +108,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
   - <span style="color:red">96-DWP Plate 정보 존재 시 활성화</span>
   - <span style="color:red">96-DWP Plate 정보 부재 시 비활성화</span>
 - 동작
-  - 클릭 시 <span style="color:red">[96-DWP]</span> 메뉴 내 해당 <span style="color:red">Sample이</span> 포함된 Plate 상세 정보 페이지로 즉시 이동 : TI-SPT-02-01
+  - 클릭 시 <span style="color:red">[96-DWP]</span> 메뉴 내 해당 <span style="color:red">Sample이</span> 포함된 Plate 상세 정보 페이지로 즉시 이동<span style="color:red"> : TI-SPT-02-01</span>
   - 이동 시 해당 Sample이 Plate 내에서 해당 검체만 활성화 된 상태로 노출
 
 **6  PCR Plate 정보 영역**
@@ -128,7 +128,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
   - <span style="color:red">PCR Plate 정보 존재 시 활성화</span>
   - <span style="color:red">PCR Plate 정보 부재 시 비활성화</span>
 - 동작
-  - 클릭 시 [PCR Plate] 메뉴 내 해당 <span style="color:red">Sample이</span> 포함된 Plate 상세 정보 페이지로 즉시 이동 : TI-SPT-03-01
+  - 클릭 시 [PCR Plate] 메뉴 내 해당 <span style="color:red">Sample이</span> 포함된 Plate 상세 정보 페이지로 즉시 이동<span style="color:red"> : TI-SPT-03-01</span>
   - 이동 시 해당 Sample이 Plate 내에서 해당 검체만 활성화 된 상태로 노출
 
 **7  Reagents 정보 영역**
