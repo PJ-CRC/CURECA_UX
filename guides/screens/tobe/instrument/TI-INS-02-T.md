@@ -9,106 +9,217 @@ version: 2.1.18
 date: 2026.11.19
 author: 이상헌
 client_mode: []
-user_type: []
-policies: []   # 정책 ID. 작업 완료 전인 결정으로 그렸으면 "POL-EQP-004 · DS-0012"처럼 논의 대상 ID를 함께 적고, 5단계(완료) 반영 뒤 뗌
+user_type: [Service, Admin, User]
+policies: [POL-EQP-001, POL-EQP-005, POL-EQP-009, POL-EVT-001]
 basis:         # 화면 기준: 시각 · history 커밋 (reference-rules/work-log.md "작업 기준")
 basis_versions: # 문서마다 basis 시각 전에 마지막으로 바뀐 때 (rules · policy · glossary · screens · ux_guide 모두 @날짜)
-source: tobe   # To-Be 화면 MD. 작업방에 그렸는지는 머리말 figma로 가름
-figma:         # 작업방의 이 CID 섹션 링크
+source: tobe
+figma:
 ---
 # TI-INS-02-T All Tab
 
-- T/L 차이:
-- 호출하는 화면: [CID] 화면 이름 (어디서 → 어디로)
-- 호출되는 곳: (공통 팝업이면 호출 위치 목록)
+- T/L 차이: L-IOS(LI-INS-02-T)에는 Door 영역에 [Unlock] · [Lock] 버튼이 더 있음. [Management]가 여는 Popup이 다름(T-IOS는 Service가 Enabled 변경, L-IOS는 조회만)
+- 호출하는 화면: [TI-INS-02-01-P] Management Popup (2-2 [Management] → 팝업), [TI-EVT-P] Event History Popup (1-3 Event 아이콘 · 7-1 [More] → 팝업)
+- 호출되는 곳: [TI-INS-01-T] Overview Tab 1 Tab (All)
 
 ## 디스크립션
 
-<!-- 원본입니다. Figma 패널에 그대로 들어갑니다. 쓰는 법은 reference-rules/description.md, 작성예시문서는 examples/description-samples.md.
-     바뀐 글 표시(빨간 글씨 · 빨간 취소선)는 reference-rules/description.md 7절 "바뀐 글 표시"의 HTML 태그로 적습니다.
-     코드(화면 · 케이스 · Alert · Confirm · Toast · 공통 UX · 정책)는 화면 MD에 색을 적지 않습니다. Figma 패널에서만 파란색으로 칠합니다(reference-rules/description.md 7절 "참고 코드 표시").
-     아래는 모양 예시입니다. 실제 내용으로 바꿔 씁니다. -->
+**0  <span style="color:red">All Tab 화면</span>**
+- <span style="color:red">정의 : 전체 장비 정보를 목록(List) 형태로 제공</span>
+- <span style="color:red">User Type : Service, Admin, User</span>
 
-**0  ○○ 화면**
-- 정의
-  - 내용
-- 동작
-  - 내용
-- User Type : 
-- L-IOS Client Mode : (L-IOS 화면에만 씀)
-
-**1  ○○ 영역**
-- 정의
-  - 내용
-- 공통 UX 참고 : 
-
-**1-1  항목 이름(Dropdown)**
-- 기능 : 
-- Default : 
-- 드롭다운 리스트 항목
-  - 내용
-- 공통 UX 참고 : 
-
-**2  ○○ 리스트**
-- 정의 : 
+**1  Module 목록(좌측 영역)**
+- 정의 : 한 페이지에 최대 10개 노출(1920*1080 기준)
 - 정렬
-  - Default : 
+  - Default : Module name 기준 오름차순
+- 동작
+  - 최초 진입 시 첫 번째 Module이 선택된 상태로 노출
 - 표출 항목
-  - 항목 이름 : 무슨 값인지 / 표기 / 값이 없을 때
-- 동작
-  - 내용
-- 공통 UX 참고 : 
+  - Connected : Module의 연결 상태 노출
+    - 상태값 : Connected / <span style="color:red">Disconnected</span>
+  - Status : Module의 작동 상태 노출
+    - 상세 정의는 Common UX 기준 따름
+  - ~~Enable~~ → Enabled : 장비의 사용 여부 값 표기
+    - Enabled = 'Y' / Disabled = 'N'
+  - Run-time : 장비가 가동된 시간 기준으로 표기
+    - 가동 시간 = 상태가 Running 중인 시간의 총합
+    - 11 시간 55분일 경우 11h으로 표기 (m단위 버림)
+- Run-time 집계 정의
+  - 집계 대상 : Module 전체, Device는 Sample Processing, Sample Aliquoting, M9600, STARlet, Sealer, CFX96
+  - 집계 기준 : Module 또는 Device 상태가 Running인 시간의 누적 값
+  - 데이터 저장 및 처리 : 제어단에서 누적 가동 시간을 집계하여 각 시스템(제어, L-IOS, T-IOS)의 데이터베이스(또는 파일)에 영구 저장 (Running 상태에서 다른 상태로 전환되는 시점에 저장)
+  - 가동 시간 데이터가 데이터베이스(혹은 파일)에 저장되는 시점에 해당 데이터를 L-IOS로 전송하여 사용자에게 정보 제공 및 유지보수 기반 정보로 활용
+  - 가동 시간에 기반하여 다수 개의 Module 또는 CFX96 6대에 대한 작업 배정 시 균등하게 배정하여 특정 Module 또는 기능 장치로의 작업 쏠림 방지
+- 공통 UX 참고 : COMM-5-g, COMM-4-a(3/4)
+- 정책 참고 : POL-EQP-001, POL-EQP-005
 
-**3  [버튼 이름] 버튼**
+**1-1  검색 필터(Dropdown)**
+- 기능 : Module Name 검색
+- 동작 : 텍스트 입력(Search) 방식으로 검색 가능
+- Default : All Modules
+- 드롭다운 리스트 항목
+  - 데이터 : 전체 Module List 기준
+  - 정렬 기준 : 오름차순
+- 공통 UX 참고 : COMM-5-h(1/2)
+
+**1-2  Module 개수 표기**
 - 정의
-  - 내용
-- 활성화 조건
-  - 내용
+  - Module List 타이틀 옆에 (n) 값 노출
+  - 현재 목록에 해당하는 Module 수 노출 (해당 페이지가 아닌 목록의 총 개수)
+
+**1-3  Event 아이콘**
+- 정의 : Module 단위 Event 현황 확인 및 접근
 - 동작
-  - 내용
-- 정책 참고 : 
+  - 아이콘 클릭 시 해당 Module Name으로 필터링된 Event History 팝업 노출 : TI-EVT-P
+  - Error와 Warning 정보는 따로 클릭되지 않고 동일 영역에서 접근 가능
+  - 필터링 조건 : 클릭한 Module Name과 일치하는 Event만 노출 (최신순)
+- 표기
+  - 박스 내 숫자 : Level별로 Status가 Open인 Event 수 (Event가 0건이어도 클릭 가능)
+  - 빨간 박스 : Error 수 / 노란 박스 : Warning 수
+- 정책 참고 : POL-EVT-001
+
+**1-4  Door 상태값 표기**
+- 표기
+  - 열림 : Open / 닫힘 : Closed
+- Module에 문이 2개일 경우(= Sample Pre-treatment)
+  - 한 개라도 열려 있을 경우 = Open
+  - 두 개 모두 닫혀 있을 경우 = Closed
+- 정책 참고 : POL-EQP-001
+
+**2  Module Details(우측 영역)**
+- 정의 : Module 내 Unit 단위 장비의 상세 정보를 확인하는 영역
+
+**2-2  [~~Enable setting~~ → Management] 버튼**
+- 동작
+  - 클릭 시 조건 없이 팝업 노출 : TI-INS-02-01-P
+  - 아래 조건 모두 제거 요청 및 관련 조건은 팝업 안에서 처리할 예정
+  - ~~장비 상태가 'Running'일 경우~~
+    - ~~Alert_013 팝업 노출~~
+  - ~~관리되는 Module이 1대일 경우~~
+    - ~~Alert_014 팝업 노출~~
+  - ~~장비 상태가 'Ready 또는 not initialized일 경우~~
+    - ~~TI-INS-02-01-P 팝업 노출~~
+- 정책 참고 : POL-EQP-009
+
+**3  Door**
+- 정의 : Module의 Door Status와 Lock Status 확인 영역
+- 표출 항목
+  - Door : Door Unit 이름
+  - Status : 장비 모듈 도어 열림 상태 (Open, Closed)
+  - Lock Status : 장비 모듈 도어 잠금 상태 (Locked, Unlocked)
+- 정책 참고 : POL-EQP-001
+
+**4  Device**
+- 정의 : Module에 속한 검사 장비 상태 확인
+- 표출 항목
+  - Unit : Device 장비명 노출
+  - Connected : Device 연결 상태 노출
+  - Status : Device 작동 상태 노출 (Ready, Running, Error)
+  - ~~Enable~~ → Enabled
+    - 현재 적용 대상 : 'TI-INS-02-01-P' 화면 참고
+    - 해당 없을 경우 '-' 표기
+    - 상태값 : 사용(Enabled) = Y, 사용 안 함(Disabled) = N으로 표기
+    - <span style="color:red">T-IOS</span>에서 사용 여부 설정 가능
+- 공통 UX 참고 : COMM-4-a(3/4)
+
+**5  Storage**
+- 정의 : 검체/소모품/시약을 저장하는 Unit의 정보를 확인하는 영역
+- 표출 항목
+  - Unit : Storage 장비명 노출
+  - Docking Status : 트롤리 단위 입고 Unit일 경우 상태 노출
+    - 검체/소모품/시약 투입 구역 Trolley 또는 서랍의 열림/닫힘 상태 노출
+  - Storage Type : 상온 저장소 여부 및 냉장 저장소 여부 노출
+  - Current Temp : Storage Type이 Refrigerator인 경우 해당 냉장 장치의 현재 온도 노출
+- 공통 UX 참고 : COMM-4-a(3/4)
+
+**6  Waste**
+- 정의 : 소모품/시약 사용 후 폐기되는 Waste Unit 현황 확인
+- 표출 항목
+  - Unit : Waste Bin/Bottle 장비명 노출
+  - Docking Status : Waste Bin 문의 열림/닫힘 상태 노출
+    - Docking Status가 없는 것은 '-'로 표기
+  - <span style="color:red">Waste Bin/Bottle Status</span> : Waste Bin 폐기물 양 상태값 노출
+- 공통 UX 참고 : COMM-4-a(3/4)
+
+**7  Event History**
+- 정의 : 선택된 장비의 Event 내역을 확인하는 영역
+- 표출 항목
+  - 발생 시간 기준 최신순으로 Status가 Open인 Event 최대 4건 노출
+- Date/Time 표기
+  - 오늘일 경우 : hh:dd:ss(시:분:초)
+  - 오늘 이전 일인 경우 : mm-dd(월-일)
+- 정책 참고 : POL-EVT-001
+
+**7-1  Event History [More] 버튼**
+- 동작
+  - 클릭 시 Event History 팝업 노출 : TI-EVT-P
+  - 필터링 조건 : 클릭한 Module Name과 일치하는 Event만 노출 (최신순)
 
 ## 화면 예시
 
-<!-- 그릴 때 화면에 넣는 예시 값. 상태값 · 단위 · 품목 · 수치는 용어집 · 정책 · glossary csv 기준. 기준이 없으면 만들지 않고 "질문 대기"에 올립니다.
-     목록 · 표는 한 페이지 최대 노출 개수만큼 행을 채웁니다. 줄였으면 이유를 적습니다. -->
-
 | 번호 | 요소 | 예시 값 | 기준 |
 | --- | --- | --- | --- |
+| Tab | Tab | Overview, All (선택), Sample Storage, Consumable Storage, Sample Pre-treatment, High-throughput Extraction, Flexible Extraction, PCR Setup, Plate Sealing, Universal PCR | `glossary/modules.csv` · 기존 화면 (기존 작업방 3249:111981) |
+| 1-2 | Module 개수 | Module List (34) | 기존 화면 |
+| 1 | Module 목록 10행 (Module · Status · Door · Enabled · Run-time(h)) | Universal PCR (2) · Running · Closed · Y · 2,621 / Sample Storage (2) · Running · Closed · Y · 2,621 / Consumable Storage (1) · - · - · N · 2,621 / Consumable Storage (2) · Running · Closed · Y · 2,621 / Sample Pre-treatment (1) · Running · Closed · Y · 2,621 / Sample Pre-treatment (2) · Running · Closed · Y · 2,621 / High-throughput Extraction (1) · Running · Closed · Y · 2,621 / High-throughput Extraction (2) · Running · Closed · Y · 2,621 / Flexible Extraction (1) · Running · Closed · Y · 2,621 / Flexible Extraction (2) · Running · Closed · Y · 2,621 | 기존 화면 (최대 10행), 이름 (번호)는 반영 대기 R05 |
+| 1 | Connected · Event | 기존 화면 그대로 (Consumable Storage (1)은 Disconnected · Event '-') | 기존 화면, `glossary/status-values.csv` |
+| 2 | Module Details 제목 | Universal PCR (2) | 기존 화면 |
+| 3 | Door | Door · Closed · Locked | `glossary/module-units.csv` (Universal PCR) · `status-values.csv` |
+| 4 | Device | CFX96 (1) ~ (6) · Running · Y (CFX96 (3)은 - · - · N) | 기존 화면, `glossary/module-units.csv` |
+| 5 | Storage | No item | 기존 화면 (Universal PCR에 Storage Unit 없음, `module-units.csv`) |
+| 6 | Waste Bin/Bottle | Waste Bin · - · Available | `glossary/module-units.csv` (Universal PCR의 Waste Bin) · `status-values.csv` |
+| 7 | Event History | 기존 화면 그대로 (최대 4건) | 기존 화면 |
 
 ## 화면 표기 글자
 
-<!-- 화면에 표기되는 영어 글자를 디스크립션 번호와 함께 적습니다. 번역 전체는 여기에 적지 않습니다(flow/4-revise-verify.md 절차 4번 "언어셋을 정리하고 UI팀에 넘길 것을 보여 줌"에서 대상 목록을 모아서 함).
-     출처: 그 글자를 찾은 곳. 화면(기획 프레임) / 디스크립션(디스크립션에 적힌 화면 표기 글자, 예: 드롭다운 리스트 항목 · 툴팁 · 안내 문구) / 케이스(케이스 화면). 여러 곳이면 한 줄에 `화면 · 케이스`처럼 적습니다. 디스크립션의 설명 글은 적지 않습니다. 3단계에서 적습니다.
-     Language ID: 언어셋 원본(language-set/db/)에 있는 글자의 ID. 번역 전체는 이 ID로 원본에서 찾습니다. 아직 언어셋과 맞춰 보지 않았으면 비워 둡니다.
-     상태: 진행 중인 작업에서 생긴 글자는 신규, 영어 글자가 바뀐 줄은 변경("화면 표기 글자 (영어)" 칸에 "변경 전 → 변경 후"), 이 화면에서 없어진 글자는 줄을 지우지 않고 제거(다른 화면은 쓸 수 있으므로 언어셋에서 삭제한다는 뜻이 아님). 바뀐 것이 없는 글자는 `-`. 5단계에서 언어셋 원본에 반영하면 다시 `-`로 돌립니다.
-     가장 긴 언어 · 번역 글자: 제공 언어 가운데 가장 긴 언어와 그 언어로 번역한 글자(예: "DE · (독일어로 번역한 글자)"). 4단계 절차 4번에서 채웁니다. 그 전에는 비워 둡니다. -->
-
 | 번호 | 화면 표기 글자 (영어) | 출처 (화면 / 디스크립션 / 케이스) | Language ID | 상태 (신규 / 변경 / 제거 / -) | 가장 긴 언어 · 번역 글자 |
 | --- | --- | --- | --- | --- | --- |
+| Tab | Overview | 화면 | | - | |
+| Tab | All | 화면 | | - | |
+| Tab | High-throughput Extraction 외 Module Type 8개 | 화면 | | - | |
+| 1-2 | Module List | 화면 | | - | |
+| 1-1 | All Modules | 화면 · 디스크립션 | | - | |
+| 1 | Module | 화면 | | - | |
+| 1 | Connected | 화면 | | - | |
+| 1 | Disconnected | 디스크립션 | | - | |
+| 1 | Status | 화면 | | - | |
+| 1 | Door | 화면 | | - | |
+| 1 | Enabled | 화면 | | - | |
+| 1 | Run-time(h) | 화면 | | - | |
+| 1 | Event | 화면 | | - | |
+| 1 | Running | 화면 | | - | |
+| 1-4 | Open | 디스크립션 | | - | |
+| 1-4 | Closed | 화면 | | - | |
+| 2-2 | Management | 화면 | | - | |
+| 3 | Lock Status | 화면 | | - | |
+| 3 | Locked | 화면 | | - | |
+| 3 | Unlocked | 디스크립션 | | - | |
+| 4 | Device | 화면 | | - | |
+| 4 | Unit | 화면 | | - | |
+| 5 | Storage | 화면 | | - | |
+| 5 | Docking Status | 화면 | | - | |
+| 5 | Storage Type | 화면 | | - | |
+| 5 | Current Temp | 화면 | | - | |
+| 5 | No item | 화면 | | - | |
+| 6 | Waste Bin/Bottle | 화면 | | - | |
+| 6 | Waste Bin/Bottle Status | 화면 | | - | |
+| 6 | Waste Bin | 화면 | | - | |
+| 6 | Available | 화면 | | - | |
+| 7 | Event History | 화면 | | - | |
+| 7-1 | More | 화면 | | - | |
 
 ## Alert · Confirm · Toast
 
-<!-- Alert · Confirm · Toast를 모두 적습니다. 코드는 카탈로그(alert/)의 ID. 카탈로그에 없으면 3단계에서 카탈로그에 새 줄을 더해 그 코드를 씁니다(flow/3-design.md 공통 1의 9, 케이스 3의 토스트는 3-2). 토스트는 버튼 동작을 `-`로 둡니다. -->
+없음 (2-2의 Alert_013 · Alert_014는 기존 작업방에서 취소선으로 제거됨)
 
 | 번호 | 종류 (알럿 / 컨펌 / 토스트) | 코드 | 언제 | 버튼 동작 |
 | --- | --- | --- | --- | --- |
 
 ## 케이스
 
-<!-- 케이스 화면의 원본입니다 (flow/3-design.md 공통 5 "케이스 화면", 작성예시문서 examples/case-samples.md).
-     근거는 셋 중 하나: 기존 원본 / 디스크립션 조건 / 요청자. 어느 것도 아니면 올리지 않고 질문 대기에 둡니다.
-     종류(디스크립션 조건일 때): 1 상태별 데이터 노출, 2 올리거나 눌렀을 때 뜨는 것, 3 유형 · 대상에 따라 표출 항목 구성이 다른 것,
-     4 개수가 기준을 넘어 요소가 생기거나 배치가 바뀌는 것, 5 처음 들어왔거나 데이터가 없을 때, 6 한 번의 조작으로 여러 단계를 거쳐 바뀌는 것.
-     Case 번호는 바꾸지 않고, 지워도 다시 쓰지 않습니다. 케이스가 없으면 "없음"이라고 적습니다. -->
-
-| Case | 제목 | 조건 | 디스크립션 번호 | 종류 | 근거 |
-| --- | --- | --- | --- | --- | --- |
+없음 (기존 원본에 케이스 프레임 없음)
 
 ## 반영 대기 목록
-
-<!-- 쓰는 법은 reference-rules/pending-changes.md. 타입: 논의 결정 / 다른 화면 파급 / 기준 자료 변경 / 외부 원본 변경 / 점검 발견.
-     상태: 대기 / 작업 중 (작업 기록 이름) / 반영 완료 (날짜) / 제외 (날짜, 이유). 줄은 지우지 않습니다. -->
 
 | ID | 타입 | 변경 전 | 변경 후 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
@@ -128,3 +239,4 @@ figma:         # 작업방의 이 CID 섹션 링크
 
 | 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 (논의 대상 · 정책 ID · 반영 대기 ID) |
 | --- | --- | --- | --- | --- |
+| 2.1.18 | 2026-11-23 | 작업방에 새로 그림 (기존 작업방 [3249:111981](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3249-111981) · Ver 2.1.18). 반영 대기 R01 · R03 · R05 · R06 · R09 · R11 반영 (작업 중). 제거된 요소 2-1 · 4-1 · 4-2 지움. 0 화면 정의 더함 | Claude (20261123-최고관리자-instruments) | R01 · R03 · R05 · R06 · R09 · R11 |
