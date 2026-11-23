@@ -1,0 +1,28 @@
+{
+  "id": "brex-06_20261123-141603",
+  "kind": "work",
+  "reqId": "",
+  "reqType": "",
+  "team": "cureca",
+  "at": "2026-11-23T14:16:03+09:00",
+  "from": "2026-11-23T14:15:01+09:00",
+  "by": "최고관리자",
+  "doneBy": "Claude",
+  "pc": "BREX_06",
+  "fileKey": "",
+  "fileName": "",
+  "page": "",
+  "frame": "",
+  "nodeId": "",
+  "text": "논의 대상: DS-0010 정리안 반영 (J1272)",
+  "models": {
+    "claude-opus-5-5": 9
+  },
+  "calls": 9,
+  "input": 16,
+  "cacheWrite": 29957,
+  "cacheRead": 566405,
+  "output": 7920,
+  "total": 604298,
+  "usd": 0.5114
+}
