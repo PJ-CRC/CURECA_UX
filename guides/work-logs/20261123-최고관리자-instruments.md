@@ -23,13 +23,13 @@ started: 2026-11-23
 
 | 단계 | 끝낸 날 | 마침 점검 | 남긴 것 |
 | --- | --- | --- | --- |
-| 1. 시작 · 요건 정의 | | | 겹치는 다른 작업: 없음 (같은 메뉴의 20261117-최고관리자-instruments는 `멈춤`이라 열린 기록으로 보지 않음). 케이스 3 화면 7개 다시 옮김(2.1 2차, 7개 모두 바뀐 곳 있음 — Ver 2.1.17 ~ 2.1.18) · tobe 화면 MD 7개 빈 틀로 만들고 반영 대기 항목 옮김 · 점검 발견 6건 |
+| 1. 시작 · 요건 정의 | 2026-11-23 | 요청자 확인 (2026-11-23) | 겹치는 다른 작업: 없음 (같은 메뉴의 20261117-최고관리자-instruments는 `멈춤`이라 열린 기록으로 보지 않음). 케이스 3 화면 7개 다시 옮김(2.1 2차, 7개 모두 바뀐 곳 있음 — Ver 2.1.17 ~ 2.1.18) · tobe 화면 MD 7개 빈 틀로 만들고 반영 대기 항목 옮김 · 점검 발견 6건 |
 | 2. 근거 · 분석 | | | |
 | 3. 화면 설계 | | | |
 | 4. 수정 · 확인 | | | |
 | 5. 완료 | | | |
 
-이어서 작업할 곳: 1단계 · 절차 5 요건 목록 확인 질문을 보냄(R047, 2026-11-23). 답을 받으면 "답을 받은 뒤"부터 이어 감
+이어서 작업할 곳: 2단계 · 절차 1 요건마다 읽는 강도를 정함 (1단계 마침 2026-11-23, 반영 대기 묶음 1 ~ 4는 화면 MD에서 `작업 중`으로 바꿈)
 
 ## 요청
 
@@ -104,22 +104,22 @@ started: 2026-11-23
 
 | 묶음 (근거) | 화면 (CID) | 항목 ID | 변경 전 | 변경 후 | 반영 / 이번엔 안 함 |
 | --- | --- | --- | --- | --- | --- |
-| 1 오타 · 용어 (오타, `glossary/terms.csv`) | Overview Tab (TI-INS-01-T) | TI-INS-01-T R02 · R05 | "Cureca", Enablde, Dignosctics | CURECA, Enabled, Diagnostics | |
-| 1 오타 · 용어 | Overview Tab (LI-INS-01-T) | LI-INS-01-T R01 · R03 | 같음 | 같음 | |
-| 1 오타 · 용어 | All Tab (TI-INS-02-T) · (LI-INS-02-T) | TI-INS-02-T R09, LI-INS-02-T R09 | T-IO S, Account type | T-IOS, User Type | |
-| 1 오타 · 용어 | Management Popup (TI-INS-02-01-P) | TI-INS-02-01-P R01 · R02 | "Account Type의 Sevice", [Cancle], Datail | User Type이 Service일 때만, [Cancel], Detail | |
-| 1 오타 · 용어 | Management Popup (LI-INS-02-01-P) | LI-INS-02-01-P R01 · R04 | "Account Type의 Sevice", Datail | User Type이 Service일 때만, Detail | |
-| 1 오타 · 용어 | Door Control Popup (LI-INS-01-P) | LI-INS-01-P R05 | Ruuning, Lcok | Running, Lock | |
-| 2 Module · Unit · 상태값 표기 (`glossary/`) | All Tab (TI-INS-02-T) · (LI-INS-02-T) | TI-INS-02-T R01 · R03 · R05 · R06 · R11, LI-INS-02-T R01 · R03 · R05 · R06 · R10 | Unconnected, STAT Storage (Upper/Lower), 이름(번호) 붙여 씀, Waste Status, Tab "Ht Extraction" | Disconnected, STAT Storage, 이름 (번호), Waste Bin/Bottle Status, High-throughput Extraction | |
-| 2 Module · Unit · 상태값 표기 | Overview Tab (TI-INS-01-T) · (LI-INS-01-T) | TI-INS-01-T R07, LI-INS-01-T R06 | Tab "Ht Extraction" | High-throughput Extraction | |
-| 2 Module · Unit · 상태값 표기 | Management Popup (TI-INS-02-01-P) · (LI-INS-02-01-P) | TI-INS-02-01-P R08 · R09, LI-INS-02-01-P R05 | 헤더 "Enable", 예시 Device 행이 섞임 | Enabled, Device Unit 4개 기준 예시 | |
-| 3 화면 정보 · 디스크립션을 화면에 맞춤 (Figma 버전 메모 · IA · 알럿 카탈로그) | Overview Tab (TI-INS-01-T) | TI-INS-01-T R01 · R03 · R04 · R06 | Alert_L_004, 패널 CID TI-INS-02-T, 3-2 Total/In Use/Not in Use, 3-5 "Instrument Detail Info page 참고" | Alert_004, TI-INS-01-T, Enabled n · Total n (Disabled n), 상태값 표 · POL-EQP-001 참조 | |
-| 3 화면 정보 · 디스크립션을 화면에 맞춤 | Overview Tab (LI-INS-01-T) | LI-INS-01-T R02 · R05 | 3-2 Total/In Use/Not in Use, 버튼 "Door Control" / 디스크립션 "Unlock 버튼" | Enabled 표기, 하나로 통일 | |
-| 4 정책 반영 (POL-EQP-008 · POL-EQP-009 · POL-EQP-004, 알럿 카탈로그) | Management Popup (TI-INS-02-01-P) | TI-INS-02-01-P R03 · R04 · R05 | 변경 권한 · 변경 가능 상태 · Device Unit 설정 대상 | Service만 변경, 통합 · 모듈 상태 Ready/Not Initialized, 같은 Device 2대 이상일 때만 (POL-EQP-009) | |
-| 4 정책 반영 | Management Popup (LI-INS-02-01-P) | LI-INS-02-01-P R02 | 조회 전용이 분명하지 않음 | 모든 User Type 조회만 | |
-| 4 정책 반영 | Overview Tab (LI-INS-01-T) · All Tab (LI-INS-02-T) | LI-INS-01-T R04, LI-INS-02-T R08 | 6 "COMM-3-a", 3-1 [Unlock] 문장 끊김 · Confirm_008 | 잠금 해제 조건은 POL-EQP-008 참조, Door Control 흐름으로 정리 | |
-| 4 정책 반영 | Door Control Popup (LI-INS-01-P) | LI-INS-01-P R01 · R03 · R07 · R08 | Unlock all doors 조건 메모, 안내 문구 두 가지, Paused 문장, 모듈 상태 · 통합 상태 기준 섞임 | 통합 상태 Ready/Error/Paused/Not Initialized, 쓰임 구분 또는 통일, 문장 정리, 통합 상태 기준 통일 (POL-EQP-008 · 004) | |
-| 5 Door 자동 잠금 (원본 v2.1.17과 다름 → 확인할 것 10) | Door Control Popup (LI-INS-01-P) | LI-INS-01-P R02 · R06 | 자동 잠금 문구 두 가지, Lock 버튼 없음 | 자동 잠금 문구 통일, 자동 잠금 정책 참조 (원본은 이미 자동 잠금 폐지 · [Lock] 버튼) | |
+| 1 오타 · 용어 (오타, `glossary/terms.csv`) | Overview Tab (TI-INS-01-T) | TI-INS-01-T R02 · R05 | "Cureca", Enablde, Dignosctics | CURECA, Enabled, Diagnostics | 반영 (2026-11-23) |
+| 1 오타 · 용어 | Overview Tab (LI-INS-01-T) | LI-INS-01-T R01 · R03 | 같음 | 같음 | 반영 (2026-11-23) |
+| 1 오타 · 용어 | All Tab (TI-INS-02-T) · (LI-INS-02-T) | TI-INS-02-T R09, LI-INS-02-T R09 | T-IO S, Account type | T-IOS, User Type | 반영 (2026-11-23) |
+| 1 오타 · 용어 | Management Popup (TI-INS-02-01-P) | TI-INS-02-01-P R01 · R02 | "Account Type의 Sevice", [Cancle], Datail | User Type이 Service일 때만, [Cancel], Detail | 반영 (2026-11-23) |
+| 1 오타 · 용어 | Management Popup (LI-INS-02-01-P) | LI-INS-02-01-P R01 · R04 | "Account Type의 Sevice", Datail | User Type이 Service일 때만, Detail | 반영 (2026-11-23) |
+| 1 오타 · 용어 | Door Control Popup (LI-INS-01-P) | LI-INS-01-P R05 | Ruuning, Lcok | Running, Lock | 반영 (2026-11-23) |
+| 2 Module · Unit · 상태값 표기 (`glossary/`) | All Tab (TI-INS-02-T) · (LI-INS-02-T) | TI-INS-02-T R01 · R03 · R05 · R06 · R11, LI-INS-02-T R01 · R03 · R05 · R06 · R10 | Unconnected, STAT Storage (Upper/Lower), 이름(번호) 붙여 씀, Waste Status, Tab "Ht Extraction" | Disconnected, STAT Storage, 이름 (번호), Waste Bin/Bottle Status, High-throughput Extraction | 반영 (2026-11-23) |
+| 2 Module · Unit · 상태값 표기 | Overview Tab (TI-INS-01-T) · (LI-INS-01-T) | TI-INS-01-T R07, LI-INS-01-T R06 | Tab "Ht Extraction" | High-throughput Extraction | 반영 (2026-11-23) |
+| 2 Module · Unit · 상태값 표기 | Management Popup (TI-INS-02-01-P) · (LI-INS-02-01-P) | TI-INS-02-01-P R08 · R09, LI-INS-02-01-P R05 | 헤더 "Enable", 예시 Device 행이 섞임 | Enabled, Device Unit 4개 기준 예시 | 반영 (2026-11-23) |
+| 3 화면 정보 · 디스크립션을 화면에 맞춤 (Figma 버전 메모 · IA · 알럿 카탈로그) | Overview Tab (TI-INS-01-T) | TI-INS-01-T R01 · R03 · R04 · R06 | Alert_L_004, 패널 CID TI-INS-02-T, 3-2 Total/In Use/Not in Use, 3-5 "Instrument Detail Info page 참고" | Alert_004, TI-INS-01-T, Enabled n · Total n (Disabled n), 상태값 표 · POL-EQP-001 참조 | 반영 (2026-11-23) |
+| 3 화면 정보 · 디스크립션을 화면에 맞춤 | Overview Tab (LI-INS-01-T) | LI-INS-01-T R02 · R05 | 3-2 Total/In Use/Not in Use, 버튼 "Door Control" / 디스크립션 "Unlock 버튼" | Enabled 표기, 하나로 통일 | 반영 (2026-11-23) |
+| 4 정책 반영 (POL-EQP-008 · POL-EQP-009 · POL-EQP-004, 알럿 카탈로그) | Management Popup (TI-INS-02-01-P) | TI-INS-02-01-P R03 · R04 · R05 | 변경 권한 · 변경 가능 상태 · Device Unit 설정 대상 | Service만 변경, 통합 · 모듈 상태 Ready/Not Initialized, 같은 Device 2대 이상일 때만 (POL-EQP-009) | 반영 (2026-11-23) |
+| 4 정책 반영 | Management Popup (LI-INS-02-01-P) | LI-INS-02-01-P R02 | 조회 전용이 분명하지 않음 | 모든 User Type 조회만 | 반영 (2026-11-23) |
+| 4 정책 반영 | Overview Tab (LI-INS-01-T) · All Tab (LI-INS-02-T) | LI-INS-01-T R04, LI-INS-02-T R08 | 6 "COMM-3-a", 3-1 [Unlock] 문장 끊김 · Confirm_008 | 잠금 해제 조건은 POL-EQP-008 참조, Door Control 흐름으로 정리 | 반영 (2026-11-23) |
+| 4 정책 반영 | Door Control Popup (LI-INS-01-P) | LI-INS-01-P R01 · R03 · R07 · R08 | Unlock all doors 조건 메모, 안내 문구 두 가지, Paused 문장, 모듈 상태 · 통합 상태 기준 섞임 | 통합 상태 Ready/Error/Paused/Not Initialized, 쓰임 구분 또는 통일, 문장 정리, 통합 상태 기준 통일 (POL-EQP-008 · 004) | 반영 (2026-11-23) |
+| 5 Door 자동 잠금 (원본 v2.1.17과 다름 → 확인할 것 10) | Door Control Popup (LI-INS-01-P) | LI-INS-01-P R02 · R06 | 자동 잠금 문구 두 가지, Lock 버튼 없음 | 자동 잠금 문구 통일, 자동 잠금 정책 참조 (원본은 이미 자동 잠금 폐지 · [Lock] 버튼) | 이번엔 안 함 (2026-11-23, 2단계에서 확인할 것 10과 함께 정함) |
 
 - `대기 (확인 필요)` · `(정의 필요)` · `(고객 논의)` · `(임시 정책 적용 예정)` 항목(LI-INS-01-P R04 · R09, TI-INS-02-01-P R06 · R07, LI-INS-02-01-P R03, TI-INS-02-T R10)은 후보에 넣지 않고 "확인할 것"으로 넘김.
 - 케이스 3 규칙과 부딪혀 제외할 항목 없음.
@@ -151,7 +151,7 @@ started: 2026-11-23
 
 | 날짜 | 단계 | 확인한 것 | 요청자 답 |
 | --- | --- | --- | --- |
-| 2026-11-23 | 1단계 | 요건 목록(7화면, 케이스 3) · 요건별 진행 경로(8, 1 → 5) · 확인할 것 10개 · 이번에 반영할 반영 대기 항목 묶음 1 ~ 5 · 2단계로 넘어갈지 (R047 질문) | |
+| 2026-11-23 | 1단계 | 요건 목록(7화면, 케이스 3) · 요건별 진행 경로(8, 1 → 5) · 확인할 것 10개 · 이번에 반영할 반영 대기 항목 묶음 1 ~ 5 · 2단계로 넘어갈지 (R047 질문) | 추천대로 진행 (묶음 1 ~ 4 반영, 5는 2단계에서) · 2단계로 넘어감 (2026-11-23 15:50) |
 
 ## 이 작업의 결정 (5단계에서 한꺼번에 반영)
 | 논의 대상 | 내용 | 후속 확인 필요 (누구 · 무엇, 없으면 비움) | 5단계 반영 |
