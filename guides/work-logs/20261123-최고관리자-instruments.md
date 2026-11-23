@@ -315,6 +315,7 @@ started: 2026-11-23
 
 | # | 생긴 날 | 단계 · 절차 | 질문 | 관련된 곳 (CID · 디스크립션 번호 · Language ID) | 답을 받을 때까지 둔 모습 | 답 (날짜) |
 | --- | --- | --- | --- | --- | --- | --- |
+| 1 | 2026-11-23 | 3단계 · 절차 2 | LI-INS-01-T 3-5 "우측의 Instrument Detail Info page 참고"도 TI-INS-01-T R06처럼 상태값 표출 항목으로 고칠지 (L에는 반영 대기 항목이 없음) | LI-INS-01-T 3-5 | 원문대로 둠 (T · L 다름) | |
 
 ## 요청자 확인
 
@@ -332,4 +333,4 @@ started: 2026-11-23
 
 - 논의 대상: DS-0011 (Door 자동 잠금 · [Lock] 버튼, 2026-11-23 결정 A)
 - 다른 화면의 반영 대기 항목:
-- 고친 카탈로그 줄:
+- 고친 카탈로그 줄: `alert/alert-catalog.csv` Confirm_031 (문 닫기 안내, DS-0011) · Confirm_032 (Running Module Unlock 확인) · Confirm_033 (Plate Sealing Unlock 확인) 더함, Alert_004 사용 화면에 TI-INS-01-T 더함. `alert/toast-catalog.csv` 처음 만들고 Toast_001 ("Changes saved.", TI-INS-02-01-P) 더함 (2026-11-23, 3단계)
