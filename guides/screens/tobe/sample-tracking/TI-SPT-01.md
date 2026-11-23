@@ -144,6 +144,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
   - <span style="color:red">리스트 0건 시 비활성화</span>
 - 동작
   - 클릭 시 윈도우 탐색기가 호출되며, 원하는 경로를 지정할 수 있음
+  - <span style="color:red">저장 완료 · 실패를 따로 안내하지 않음 (윈도우 탐색기 저장 결과로 확인)</span>
 - 대상 범위 : 목록에 노출된 전체 리스트
 - 저장 항목 : <span style="color:red">Samples 목록</span>
 - 형식 : <span style="color:red">.csv</span>
@@ -247,3 +248,4 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 | | 2026-11-23 | 멈춘 작업(20261120-최고관리자-samples)이 쓴 화면 MD 내용 · 섹션 링크를 지우고 빈 틀로 되돌림. 반영 대기 목록은 asis 화면 MD의 원래 변경 전 · 변경 후 · 상태로 되돌림(그 작업이 더한 줄은 상태만 대기로) | Claude (최고관리자 요청 R045) | 20261123-최고관리자-samples |
 | | 2026-11-23 | 멈춘 작업(20261123-최고관리자-samples)이 쓴 화면 MD 내용 · 섹션 링크를 지우고 그 작업 시작 전 빈 틀로 되돌림(R046 새 작업 20261123-최고관리자-samples-2). 반영 대기 목록도 그 작업 시작 전 상태로 | Claude | R046 |
 | 2.0 | 2026-11-23 | 작업방(Sample Tracking Ⓛ / Ⓣ_re)에 새로 그림 (기존 작업방 [1460:110169](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=1460-110169) · Ver 2.0). 3단계 초안 | Claude | R03 · R04 · R05 · R06 · R07 · R09 |
+|  | 2026-11-23 | 3 [Export] 저장 완료 · 실패 안내 없음 명시 (Q6 답) | Claude (최고관리자 요청 R046) | DS-0009 |

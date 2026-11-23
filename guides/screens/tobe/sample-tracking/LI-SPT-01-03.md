@@ -55,7 +55,10 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 - 노출 항목
   - Process guide 참고 : <span style="color:red">LI-STN-03-02-02</span> / 세부정의
   - <span style="color:red">Temp.(˚C) 범위 : 0 ~ 130</span>
+- <span style="color:red">노출 조건</span>
+  - <span style="color:red">Nucleic Acid Extraction 장치에 따라 상세 정보 구성이 다름 (M9600 : 위 항목 / STARlet : STARlet 조건)</span>
 - 정책 참고 : POL-TST-006, POL-TST-007
+- <span style="color:red">케이스 참고 : LI-SPT-01-03/Case > Case 1</span>
 
 **4  [Close] 버튼**
 - 동작
@@ -110,7 +113,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 
 | Case | 제목 | 조건 | 디스크립션 번호 | 종류 | 근거 |
 | --- | --- | --- | --- | --- | --- |
-| 없음 | | | | | |
+| 1 | 추출 장치에 따른 상세 정보 구성 | STARlet (Flexible Extraction) | 3 | 3 | 요청자 (DS-0010) |
 
 ## 반영 대기 목록
 
@@ -131,3 +134,4 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 | | 2026-11-23 | 멈춘 작업(20261120-최고관리자-samples)이 쓴 화면 MD 내용 · 섹션 링크를 지우고 빈 틀로 되돌림. 반영 대기 목록은 asis 화면 MD의 원래 변경 전 · 변경 후 · 상태로 되돌림(그 작업이 더한 줄은 상태만 대기로) | Claude (최고관리자 요청 R045) | 20261123-최고관리자-samples |
 | | 2026-11-23 | 멈춘 작업(20261123-최고관리자-samples)이 쓴 화면 MD 내용 · 섹션 링크를 지우고 그 작업 시작 전 빈 틀로 되돌림(R046 새 작업 20261123-최고관리자-samples-2). 반영 대기 목록도 그 작업 시작 전 상태로 | Claude | R046 |
 | 2.1.02 | 2026-11-23 | 작업방(Sample Tracking Ⓛ / Ⓣ_re)에 새로 그림 (기존 작업방 [1460:111307](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=1460-111307) · Ver 2.1.02). 3단계 초안 | Claude | R01 · R02 · R03 · R04 |
+|  | 2026-11-23 | 3 추출 장치별 노출 조건 · Case 1 STARlet 추가 (Q12 답, 항목은 M9600 틀 가안 · 질문 대기 Q13) | Claude (최고관리자 요청 R046) | DS-0010 |
