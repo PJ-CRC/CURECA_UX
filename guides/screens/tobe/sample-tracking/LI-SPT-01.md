@@ -85,7 +85,7 @@ figma:
 - 리스트 노출
   - Selected(선택) 시, 응급 상태의 검체만 노출
   - UnSelected(미선택) 시, 전체 검체 노출
-- <span style="color:red">공통 UX 참고 : COMM-5-q</span>
+- 공통 UX 참고 : COMM-5-q
 
 **1-7  [Reset] · [Search] 버튼**
 - <span style="color:red">동작</span>
@@ -125,10 +125,10 @@ figma:
   - <span style="color:red">검사 단계 : Sample Preparation, Nucleic Acid Extraction, PCR Setup, Plate Sealing, PCR</span>
 - Start Date/Time
   - <span style="color:red">Prep 시스템이 Sample Barcode를 읽은 시점</span>
-  - 표기 : YYYY-MM-DD hh:mm:ss / 데이터 부재 시 '-' 노출
+  - <span style="color:red">표기 : YYYY-MM-DD hh:mm:ss / 데이터 부재 시 '-' 노출</span>
 - End Date/Time
-  - L-IOS가 D.A PC(결과처리 시스템)로부터 검사 결과를 받은 시점
-  - 표기 : YYYY-MM-DD hh:mm:ss / 데이터 부재 시 '-' 노출
+  - L-IOS가 <span style="color:red">D.A PC</span>(결과처리 시스템)로부터 검사 결과를 받은 시점
+  - <span style="color:red">표기 : YYYY-MM-DD hh:mm:ss / 데이터 부재 시 '-' 노출</span>
 - STAT
   - T-IOS에서 수신되는 검체 응급 여/부 상태 정보
 - 정책 참고 : POL-SMP-001, POL-SMP-002
