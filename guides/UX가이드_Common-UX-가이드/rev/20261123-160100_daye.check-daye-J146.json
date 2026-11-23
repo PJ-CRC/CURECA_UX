@@ -2,9 +2,9 @@
   "jobId": "J146",
   "pc": "DAYE",
   "by": "정다예",
-  "at": "2026-11-23T16:05:38+09:00",
-  "status": "완료",
-  "note": "후보 약 200개(Setting 페이지 LI-/TI- 프레임) 중 33개 화면 ID(프레임 약 140개)에 수정 필요. 작업 페이지가 정해져 있지 않아 작업 링크(274:15069)가 가리키는 페이지 「Setting  Ⓛ / Ⓣ」를 봤다. 화면 ID마다 대표 프레임 하나를 넣었다. 다른 점: ① 「Assay Pack Setting」 → 「AssayPack Setting」(거의 모든 화면) ② T-IOS 예전 프레임의 「Test Policy Setting」 · 「Test Protocol Setting」 ③ L-IOS LNB에 LIS · Account · SMTP Setting이 들어 있음 ④ TI-STN-08 두 프레임에 L-IOS LNB 아래쪽 요소. ②③은 이번 수정 전 가이드에도 같은 규칙이었다. Profile(Console · TSS 미노출)은 Figma 가이드 프레임(COMM-3-a) 쪽을 고칠 건이라 넣지 않음.",
+  "at": "2026-11-23T16:07:39+09:00",
+  "status": "반영 안 함",
+  "note": "정다예가 반영하지 않기로 함",
   "scope": "",
   "fileKey": "kI8nm6HBJsfBa4fbReZwgh",
   "items": [
