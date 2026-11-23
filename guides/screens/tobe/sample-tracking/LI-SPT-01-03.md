@@ -34,7 +34,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
   - 활성 탭 변경 시, 해당 단계의 하위 데이터 세트를 동기화하여 노출
 - 기본값
   - 최초 화면 진입 시 첫번째 탭을 기본 선택 상태로 노출
-- 노출 항목
+- 표출 항목
   - Pre-Treatment Protocol
   - Extraction Protocol
 - 공통 UX 참고 : COMM-5-s
