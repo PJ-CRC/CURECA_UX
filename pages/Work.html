@@ -1164,7 +1164,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   }
   function dsItemHtml(i, sel){
     return '<button type="button" class="mitem" data-pl="' + esc(i.id) + '"' + (i.id === sel ? ' aria-current="true"' : '') + '><b>' + esc(i.title || i.id) + '</b><span>' + esc(i.id) + (i.decider ? ' · ' + esc(i.decider) : '') + (i.date ? ' · ' + esc(i.date) : '') + '</span>' +
-      '<span class="chips">' + stPill(i.status) + (i.work ? '<span class="pill review" title="작업 기록 ' + esc(i.work) + '">작업 중</span>' : '') + (i.follow ? '<span class="pill warn" title="' + esc(i.follow) + '">후속 확인</span>' : '') + jobState(i.id) + '</span></button>';
+      '<span class="chips">' + stPill(i.status) + (i.work && i.status === '결정' ? '<span class="pill review" title="작업 기록 ' + esc(i.work) + '">작업 중</span>' : '') + (i.follow ? '<span class="pill warn" title="' + esc(i.follow) + '">후속 확인</span>' : '') + jobState(i.id) + '</span></button>';
   }
   function renderPlan(){
     var el = $('body-decisions'); if (!el) return;
@@ -1398,8 +1398,10 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     }
     if (e.target.id === 'dF') {
       e.preventDefault(); var a = $('dA').value.trim(), dd = $('dD').value, bs = $('dB').value.trim(), x = (DS || []).filter(function(i){ return i.id === planSel; })[0], ap = !!(dForm && dForm.apply);
-      if (!a && !ap) { $('dMsg').textContent = '답을 적어 주세요.'; return; }
-      if (!ap && x && /고객/.test(x.decider) && !bs) { $('dMsg').textContent = '고객 답은 근거(회의록 · 메일)를 적어 주세요.'; return; }
+      // 막을 때는 버튼 옆 글씨만으로는 눈에 띄지 않아 알럿으로도 알리고 그 칸으로 커서를 옮긴다 (2026-11-23)
+      var stop = function(msg, id){ $('dMsg').textContent = msg; WB.alert(msg).then(function(){ var el = $(id); if (el) el.focus(); }); };
+      if (!a && !ap) { stop('답을 적어 주세요.', 'dA'); return; }
+      if (!ap && x && /고객/.test(x.decider) && !bs) { stop('고객이 정하는 항목이라 근거(회의록 · 메일)가 있어야 보낼 수 있습니다.\n근거 칸에 적어 주세요.', 'dB'); return; }
       addPlanJob('answer', planSel, { answer: a, date: dd, basis: bs, by: myName, kind: 'ds', apply: ap }, planSel + (ap ? ' 반영 정리안' : ' 답변')).then(loadPlanJobs)
         .then(function(){ dForm = null; renderPlan(); toast(ap ? '반영 정리안을 요청했습니다. Claude가 정리안을 만들면 여기서 확인합니다.' : '답을 보냈습니다. Claude가 정리안을 만들면 여기서 확인합니다.'); })
         .catch(function(err){ $('dMsg').textContent = err.message; });
