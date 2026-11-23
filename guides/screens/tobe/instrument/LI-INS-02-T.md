@@ -14,7 +14,7 @@ policies: [POL-EQP-001, POL-EQP-004, POL-EQP-005, POL-EQP-008 · DS-0011, POL-EQ
 basis:         # 화면 기준: 시각 · history 커밋 (reference-rules/work-log.md "작업 기준")
 basis_versions: # 문서마다 basis 시각 전에 마지막으로 바뀐 때 (rules · policy · glossary · screens · ux_guide 모두 @날짜)
 source: tobe
-figma:
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/?node-id=3219-23345
 ---
 # LI-INS-02-T All Tab
 

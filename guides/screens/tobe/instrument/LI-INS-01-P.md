@@ -14,7 +14,7 @@ policies: [POL-EQP-004 · DS-0011, POL-EQP-008 · DS-0011]
 basis:         # 화면 기준: 시각 · history 커밋 (reference-rules/work-log.md "작업 기준")
 basis_versions: # 문서마다 basis 시각 전에 마지막으로 바뀐 때 (rules · policy · glossary · screens · ux_guide 모두 @날짜)
 source: tobe
-figma:
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/?node-id=3219-23344
 ---
 # LI-INS-01-P Door Control Popup
 
