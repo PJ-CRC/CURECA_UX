@@ -58,6 +58,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/?node-id=3219-23338
   - Module 내 Device가 없을 경우 아코디언 기능 미제공
 - 동작 : 각 개별 작동, N개를 동시에 열 수 있는 구조
 - 공통 UX 참고 : COMM-5-a
+- 케이스 참고 : TI-INS-02-01-P/Case > Case 3
 
 **1-3  Radio 버튼 작동 방식**
 - <span style="color:red">설정 대상</span>
@@ -120,7 +121,8 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/?node-id=3219-23338
 | 1 | Module 행 3개 | Sample Pre-treatment (1) · (2) · (3) · A123B123C1234f123 · 9,193 | 기존 화면 |
 | 1 | Device 행 (Module마다 4개) | Sample Processing (Upper) · Sample Processing (Lower) · Sample Aliquoting (Upper) · Sample Aliquoting (Lower) · A123B123C1234f123 · 9,193 | `glossary/module-units.csv`, 반영 대기 R09 |
 | 1-3 | Radio | Enable · Disable (기존 화면의 선택 그대로) | 기존 화면 |
-| 2 | Error Rate | 기존 화면 Case 2 값 그대로 | 기존 화면 |
+| 2 | Error Rate | 기존 화면 Case 2 값 그대로 (Sample Storage (1) · (2), 8%) | 기존 화면 |
+| Case 3 | Module 행 3개 (Device Unit 없음) | Sample Storage (1) · (2) · (3) | 기존 화면 케이스, `glossary/module-units.csv` |
 | 3 | 버튼 | Cancel · Save | 기존 화면 |
 
 ## 화면 표기 글자
@@ -155,6 +157,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/?node-id=3219-23338
 | --- | --- | --- | --- | --- | --- |
 | 1 | User Type이 Admin · User일 때 Error Rate 미표기 | User Type = Admin, User | 2 | 3 | 기존 원본 |
 | 2 | User Type이 Service일 때 Error Rate 표기 | User Type = Service | 2 | 3 | 기존 원본 |
+| 3 | Module에 Device Unit이 없는 경우 | Module 내 Device Unit 없음 (예: Sample Storage) | 1-2 | 3 | 기존 원본 (원본 "모듈에 Device Unit이 없는 Case", 번호 없어 끝 번호 다음으로 붙임) |
 
 ## 반영 대기 목록
 
