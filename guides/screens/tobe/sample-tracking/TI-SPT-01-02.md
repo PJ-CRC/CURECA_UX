@@ -53,7 +53,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 - 정의
   - <span style="color:red">Protocol Setting</span> > Pre-Treatment Protocol Setting에서 설정한 정보 노출
 - 노출 항목
-  - Process guide 참고 : <span style="color:red">TI-STN-03-01-02-01-M</span> / 세부정의
+  - Process guide 참고 : <span style="color:red">TI-STN-03-01-02-01-V, TI-STN-03-01-02-01-M</span> / 세부정의
 - 정책 참고 : POL-TST-006
 
 **4  [Close] 버튼**

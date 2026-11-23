@@ -47,7 +47,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
   - 검사 항목을 다중 선택하여 데이터 조회
 - 기본값 : All
 - 드롭다운 리스트 항목
-  - All, RP1, RP2, RP3, PB, GI-V, GI-B1, GI-B2, GI-P, Allplex HPV28, STI-12
+  - <span style="color:red">All, RP1, RP2, RP3, PB, SARS2, SC2FabR, RVM, GI-V, GI-B1, GI-B2, GI-P, GI-H1, GI-B1P, GI-EB, H.ClariR, Allplex HPV28, Allplex HPV HR, Anyplex II HPV HR, STI-12, STI-EA, CA, GU, VS, CGMT, NGDR, M.AziR, M.MoxiR, BV plus, STI-EAQ, STI-7e</span>
 - 공통 UX 참고 : COMM-5-h(1/2)
 
 **1-3  Sample Type(Multi-Select Dropdown)**
@@ -76,7 +76,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
   - 검사 상태를 단일 선택하여 데이터 조회
 - 기본값 : All
 - 드롭다운 리스트 항목
-  - All, Ready, Not Tested, Running, Completed, Failed
+  - All, <span style="color:red">Ordered, </span>Ready, Not Tested, Running, Completed, Failed
 - 공통 UX 참고 : COMM-5-h(1/2)
 
 **1-6  STAT Only(Check box)**
@@ -99,6 +99,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 - 정렬
   - 기본값 : Start Date/Time 기준 최신순(내림차순)
   - 기본값 조건 동일 시, Sample ID 기준 오름차순
+  - <span style="color:red">정렬 가능 칸 : Order Date, Start Date/Time, End Date/Time</span>
 - <span style="color:red">노출 개수 : 10 items 고정</span>
 - <span style="color:red">데이터가 없을 때 : 리스트 영역에 No Data 노출, Items 0</span>
 - 동작
@@ -139,6 +140,8 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 - 케이스 참고 : <span style="color:red">LI-SPT-01/Case > Case 2</span>
 
 **3  [Export] 버튼**
+- <span style="color:red">활성화 조건</span>
+  - <span style="color:red">리스트 0건 시 비활성화</span>
 - 동작
   - 리스트에 노출된 데이터를 파일(<span style="color:red">.csv</span>) 형태로 저장
   - 버튼 선택 시, Popup 노출 : <span style="color:red">COMM-5-m(2/4)</span>
@@ -182,6 +185,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 | 1-4 | Start Date | 디스크립션 | | - | |
 | 1-4 | End Date | 디스크립션 | | - | |
 | 1-5 | Status | 화면 | | - | |
+| 1-5 | Ordered | 디스크립션 | | 신규 | |
 | 1-5 | Ready | 디스크립션 | | - | |
 | 1-5 | Not Tested | 화면 · 디스크립션 | | - | |
 | 1-5 | Running | 화면 · 디스크립션 | | - | |

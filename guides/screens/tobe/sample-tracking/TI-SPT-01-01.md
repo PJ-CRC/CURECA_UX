@@ -36,7 +36,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
   - Sample의 기본 속성 정보 영역
 - 노출 항목
   - Sample ID
-  - Product : RP1, RP2, RP3, PB, GI-V, GI-B1, GI-B2, GI-P, <span style="color:red">Allplex HPV28</span>, STI-12
+  - Product : <span style="color:red">RP1, RP2, RP3, PB, SARS2, SC2FabR, RVM, GI-V, GI-B1, GI-B2, GI-P, GI-H1, GI-B1P, GI-EB, H.ClariR, Allplex HPV28, Allplex HPV HR, Anyplex II HPV HR, STI-12, STI-EA, CA, GU, VS, CGMT, NGDR, M.AziR, M.MoxiR, BV plus, STI-EAQ, STI-7e</span>
   - Status : 공통 UX 참고(COMM-4-a(4/4))
 - 정책 참고 : POL-SMP-001
 
@@ -76,7 +76,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 - 노출 항목
   - Location Type(<span style="color:red">Sample</span> 투입구 유형) : Trolley, STAT
   - Return <span style="color:red">Status</span> : N [Sample 회수 전 : <span style="color:red">Inbound Trolley</span> 정보] / Y [Sample 회수 후 : Outbound Trolley 정보]
-  - Trolley Name : 시스템에 등록된 Trolley ID 정보 (8자리)
+  - <span style="color:red">Trolley ID</span> : 시스템에 등록된 Trolley ID 정보 (8자리)
   - Tray Position : Tray 층수(F 단위 표기) / 위치
   - STAT Slot No. : STAT 슬롯 내 Socket 순번
   - Socket ID : 육안으로 확인 가능한 Socket ID 정보
@@ -118,7 +118,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
   - 검사 단계별 사용(투입)된 Reagent 정보 오름차순 노출
 - 노출 조건
   - 검사 단계의 Reagent 데이터가 존재할 경우에만 영역 노출, 데이터 부재 시 영역 전체를 미노출 처리
-- 정렬 : 공통 UX 참고 : COMM-4-a
+- 정렬 : 공통 UX 참고 : <span style="color:red">COMM-4-b(3/5)</span>
 - 노출 항목
   - Kit : Reagent 제품명 (구성품 단위 노출 X)
   - Barcode : Barcode 체계 참고 (COMM-4-b)
@@ -184,7 +184,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 | 4 | Sample Location | 화면 | | - | |
 | 4 | Location Type | 화면 | | - | |
 | 4 | Return Status | 화면 | | - | |
-| 4 | Trolley Name | 화면 | | - | |
+| 4 | Trolley Name → Trolley ID | 화면 | | 변경 | |
 | 4 | Tray Position | 화면 | | - | |
 | 4 | STAT Slot No. | 화면 | | - | |
 | 4 | Socket ID | 화면 | | - | |
