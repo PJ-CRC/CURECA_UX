@@ -220,7 +220,7 @@ started: 2026-11-23
 | --- | --- | --- | --- |
 | Overview Tab (TI-INS-01-T · LI-INS-01-T) | [TI-INS-01-T](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/?node-id=3219-23336) · [LI-INS-01-T](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/?node-id=3219-23343) | TI-INS-01-T `3222:23331` (2252×1318) · LI-INS-01-T `3225:24203` (2252×1428) | 그림 (2026-11-23). L Case 1 `LI-INS-01-T/Case` `3226:25169` |
 | All Tab (TI-INS-02-T · LI-INS-02-T) | [TI-INS-02-T](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/?node-id=3219-23337) · [LI-INS-02-T](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/?node-id=3219-23345) | TI-INS-02-T `3232:25166` (2252×1932) · LI-INS-02-T `3236:25739` (2252×2102) | 그림 (2026-11-23). L Case 1 `LI-INS-02-T/Case` `3236:26940` |
-| Management Popup (TI-INS-02-01-P · LI-INS-02-01-P) | | | 화면 MD 끝냄, Figma 그리기 전 (T · L Case 1 · 2) |
+| Management Popup (TI-INS-02-01-P · LI-INS-02-01-P) | [TI-INS-02-01-P](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/?node-id=3219-23338) · [LI-INS-02-01-P](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/?node-id=3219-23346) | TI-INS-02-01-P `3240:26379` (2252×1606) · LI-INS-02-01-P `3245:26991` (2252×1258) | 그림 (2026-11-23). Case 1 · 2 · 3: `TI-INS-02-01-P/Case` `3242:26886` · `LI-INS-02-01-P/Case` `3245:27699` |
 | Door Control Popup (LI-INS-01-P) | | | 화면 MD 끝냄, Figma 그리기 전 (Case 1 ~ 7) |
 
 ### 컴포넌트 없이 그린 요소
