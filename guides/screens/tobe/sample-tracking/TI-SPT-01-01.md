@@ -1,109 +1,216 @@
 ---
-cid:
-pair_cid:
-tl_relation:   # 동일 | 권한 차이 | 기능 추가 | 단독
-title:
-path:
-type:          # Page | Popup | Tab
-version:       # X.Y.ZZ. 케이스 1 · 2는 4단계 UX 확정 때 요청자가 정한 값(그 전까지 케이스 1은 기존 Ver, 케이스 2는 비움), 케이스 3은 기존 화면의 Ver 그대로 (reference-rules/description.md 7절 "화면 정보에 적는 값")
-date:          # YYYY.MM.DD. 케이스 3은 기존 화면의 Date 그대로, 케이스 1 · 2는 작성일
-author:        # 케이스 3은 기존 화면 담당자 그대로, 케이스 1 · 2는 요청자
+cid: TI-SPT-01-01
+pair_cid: LI-SPT-01-01
+tl_relation: 동일
+title: Details
+path: Sample Tracking > Samples > Details
+type: Popup
+version: 2.1.11
+date: 2026.10.08
+author: 정다예
 client_mode: []
 user_type: []
-policies: []   # 정책 ID. 작업 완료 전인 결정으로 그렸으면 "POL-EQP-004 · DS-0012"처럼 논의 대상 ID를 함께 적고, 5단계(완료) 반영 뒤 뗌
-basis:         # 화면 기준: 시각 · history 커밋 (reference-rules/work-log.md "작업 기준")
-basis_versions: # 문서마다 basis 시각 전에 마지막으로 바뀐 때 (rules · policy · glossary · screens · ux_guide 모두 @날짜)
-source: tobe   # To-Be 화면 MD. 작업방에 그렸는지는 머리말 figma로 가름
-figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3158-53196
+policies: [POL-SMP-001, POL-SMP-002, POL-TST-006 · DS-0008]
+basis:
+basis_versions:
+source: tobe
+figma:
 ---
-# CID 화면 이름
+# TI-SPT-01-01 Details
 
-- T/L 차이:
-- 호출하는 화면: [CID] 화면 이름 (어디서 → 어디로)
-- 호출되는 곳: (공통 팝업이면 호출 위치 목록)
+- T/L 차이: 없음 (Sample Location 항목 이름은 질문 대기)
+- 호출하는 화면: [TI-SPT-01] Samples (리스트 행 선택 → 상세), [TI-SPT-02] 96-DWP (5-1 [More] → 이동), [TI-SPT-03] PCR Plate (6-1 [More] → 이동), [TI-SPT-01-02] Protocol Info (8-1 [More] → 팝업)
+- 호출되는 곳: TI-SPT-01 Samples 리스트 행
 
 ## 디스크립션
 
-<!-- 원본입니다. Figma 패널에 그대로 들어갑니다. 쓰는 법은 reference-rules/description.md, 작성예시문서는 examples/description-samples.md.
-     바뀐 글 표시(빨간 글씨 · 빨간 취소선)는 reference-rules/description.md 7절 "바뀐 글 표시"의 HTML 태그로 적습니다.
-     코드(화면 · 케이스 · Alert · Confirm · Toast · 공통 UX · 정책)는 화면 MD에 색을 적지 않습니다. Figma 패널에서만 파란색으로 칠합니다(reference-rules/description.md 7절 "참고 코드 표시").
-     아래는 모양 예시입니다. 실제 내용으로 바꿔 씁니다. -->
-
-**0  ○○ 화면**
+**0  <span style="color:red">Details</span> 화면**
 - 정의
-  - 내용
+  - 검사 중 또는 검사 완료된 검체의 상세 정보를 볼 수 있는 화면
+  - 기본 정보 및 단계별 정보 노출
 - 동작
-  - 내용
-- User Type : 
-- L-IOS Client Mode : (L-IOS 화면에만 씀)
+  - 리스트 영역 선택 시, 기존 리스트 영역이 좌측으로 축소되며 우측에서 상세 페이지가 밀고 나오며 노출
 
-**1  ○○ 영역**
+**1  <span style="color:red">Details</span> 타이틀 영역**
 - 정의
-  - 내용
-- 공통 UX 참고 : 
-
-**1-1  항목 이름(Dropdown)**
-- 기능 : 
-- Default : 
-- 드롭다운 리스트 항목
-  - 내용
-- 공통 UX 참고 : 
-
-**2  ○○ 리스트**
-- 정의 : 
-- 정렬
-  - Default : 
+  - 검체의 기본 속성 정보 영역
 - 표출 항목
-  - 항목 이름 : 무슨 값인지 / 표기 / 값이 없을 때
-- 동작
-  - 내용
-- 공통 UX 참고 : 
+  - Sample ID
+  - Product : RP1, RP2, RP3, PB, GI-V, GI-B1, GI-B2, GI-P, <span style="color:red">Allplex HPV28</span>, STI-12
+  - Status : 공통 UX 참고(COMM-4-a(4/4))
+- 정책 참고 : POL-SMP-001
 
-**3  [버튼 이름] 버튼**
+**2  검사 단계 정보 영역**
 - 정의
-  - 내용
-- 활성화 조건
-  - 내용
+  - 검사 프로세스 단계별 장비 및 검사 시간 정보 영역
+  - 모든 단계의 Module 및 Unit 정보는 Run Start 시점부터 노출
+  - Start 및 End Date/Time의 경우 해당 단계 진/출입 시 노출
+- 표출 항목
+  - Process : Sample Preparation, Nucleic Acid Extraction, PCR Setup, Plate Sealing, PCR
+  - Module : <span style="color:red">Module 이름 정보</span>(단, Sample Preparation 단계의 경우 Module/Unit 정보 미노출)
+  - Unit : <span style="color:red">상위 Module 내 Unit 이름 정보, 같은 Unit이 여러 대면 이름 (번호)</span>
+  - Start Date/Time : <span style="color:red">그 단계의 Module이 Plate를 넘겨받아 Plate Barcode를 읽은 시점</span>
+  - End Date/Time : <span style="color:red">그 단계 작업이 끝나 Plate가 Module에서 나온 시점</span>
+- 정책 참고 : POL-SMP-002
+
+**3  General 영역**
+- 정의
+  - 검체의 기본 속성 정보 영역
+  - 사용자가 선택한 리스트 내 표출되는 정보와 동일한 정보
+- 표출 항목
+  - Sample Type
+  - Order Date
+  - Start Date/Time : <span style="color:red">Prep 시스템이 Sample Barcode를 읽은 시점</span>
+  - End Date/Time : L-IOS가 <span style="color:red">D.A PC</span>(결과처리 시스템)로부터 검사 결과를 받은 시점
+  - Canceled Date : 데이터 존재 시 노출/부재시 '-' 노출
+  - Canceled : 데이터 존재 시 노출/부재시 '-' 노출
+  - <span style="color:red">~~Status : 정의된 검체 상태 중 해당 되는 상태 노출~~</span>
+  - STAT : 데이터 존재 시 노출/부재시 '-' 노출
+- 정책 참고 : POL-SMP-002
+
+**4  Sample Location 영역**
+- 정의
+  - <span style="color:red">Sample Storage</span> Module에서의 검체 위치 노출 영역
+  - 샘플 회수 전 : <span style="color:red">Inbound Trolley</span> 내 검체 위치 값
+  - 샘플 회수 후 : Outbound Trolley 내 검체 위치 값
+- 표출 항목
+  - Location Type(<span style="color:red">Sample</span> 투입구 유형) : Trolley, STAT
+  - Return <span style="color:red">Status</span> : N [샘플 회수 전 : <span style="color:red">Inbound Trolley</span> 정보] / Y [샘플 회수 후 : Outbound Trolley 정보]
+  - Trolley Name : 시스템에 등록된 Trolley ID 정보 (8자리)
+  - Tray Position : 트레이 층수(F 단위 표기) / 위치
+  - STAT Slot No. : STAT 슬롯 내 Socket 순번
+  - Socket ID : 육안으로 확인 가능한 Socket ID 정보
+  - Socket Position : Socket 내 Sample 위치 정보
+- 케이스 참고 : TI-SPT-01-01/Case > Case 2
+
+**5  96-DWP Plate 정보 영역**
+- 정의
+  - 검사 단계별 사용 Plate 상세 정보 영역
+  - 선택된 검사 단계에서의 Plate 상세 정보 노출
+- 표출 항목
+  - ID : Plate 고유 ID (바코드 정보)
+  - <span style="color:red">Well No.</span> : Plate 내 검체 위치 (행/열 좌표 정보)
+
+**5-1  [More] 버튼**
+- 정의
+  - 96-DWP Plate 상세 정보 이동 버튼
 - 동작
-  - 내용
-- 정책 참고 : 
+  - 클릭 시 <span style="color:red">[96-DWP]</span> 메뉴 내 해당 Sample<span style="color:red">이</span> 포함된 Plate 상세 정보 페이지로 즉시 이동
+  - 이동 시 해당 Sample이 Plate 내에서 해당 검체만 활성화 된 상태로 노출
+
+**6  PCR Plate 정보 영역**
+- 정의
+  - 검사 단계별 사용 Plate 상세 정보 영역
+  - 선택된 검사 단계에서의 Plate 상세 정보 노출
+- 표출 항목
+  - ID : Plate 고유 ID (바코드 정보)
+  - <span style="color:red">Well No.</span> : Plate 내 검체 위치 (행/열 좌표 정보)
+
+**6-1  [More] 버튼**
+- 정의
+  - PCR Plate 상세 정보 이동 버튼
+- 동작
+  - 클릭 시 [PCR Plate] 메뉴 내 해당 Sample<span style="color:red">이</span> 포함된 Plate 상세 정보 페이지로 즉시 이동
+  - 이동 시 해당 Sample이 Plate 내에서 해당 검체만 활성화 된 상태로 노출
+
+**7  Reagents 정보 영역**
+- 정의
+  - 검사 단계별 사용(투입)된 시약 정보 오름차순 노출
+- 노출 조건
+  - 검사 단계의 시약 데이터가 존재할 경우에만 영역 노출, 데이터 부재 시 영역 전체를 미노출 처리
+- 정렬 : 공통 UX 참고 : COMM-4-a
+- 표출 항목
+  - Kit : 시약 제품명 (구성품 단위 노출 X)
+  - Barcode : 바코드 체계 참고 (COMM-4-b)
+  - 단, 하위 시약은 대표 바코드 표기
+  - 1) M96 Kit : LB DWP 바코드
+  - 2) UC Kit : TUB 대표 바코드 (EB TUB 오른편에 부착된 바코드)
+
+**8  Protocol 정보 영역**
+- 정의
+  - 전처리 및 핵산추출 단계에서 적용된 프로토콜 정보
+  - Protocol Setting 메뉴에서 생성 관리
+- 표출 항목
+  - Pre-Treatment Protocol : 전처리 단계에서 적용된 프로토콜 명 노출
+  - Extraction Protocol : 핵산 추출 단계에서 적용된 프로토콜 명 노출
+- 정책 참고 : POL-TST-006
+
+**8-1  [More] 버튼**
+- 정의
+  - Protocol 상세 정보 노출 버튼
+- 동작
+  - 클릭 시, TI-SPT-01-02 팝업 노출
+  - <span style="color:red">팝업의 Pre-Treatment Protocol 탭 : TI-SPT-01-02, Extraction Protocol 탭 : TI-SPT-01-03</span>
+
+**9  [X] 버튼**
+- 동작
+  - 클릭 시, 상세 정보가 닫히고, 리스트 영역이 우측으로 확장되어 노출
 
 ## 화면 예시
 
-<!-- 그릴 때 화면에 넣는 예시 값. 상태값 · 단위 · 품목 · 수치는 용어집 · 정책 · glossary csv 기준. 기준이 없으면 만들지 않고 "질문 대기"에 올립니다.
-     목록 · 표는 한 페이지 최대 노출 개수만큼 행을 채웁니다. 줄였으면 이유를 적습니다. -->
-
 | 번호 | 요소 | 예시 값 | 기준 |
 | --- | --- | --- | --- |
+| 1 | 타이틀 | AA0005005 · PB · Running | 기존 원본 1460:109649 · `glossary/status-values.csv` |
+| 2 | 검사 단계 | Sample Preparation · - · - · 2026-03-05 10:40:30 · 2026-03-05 11:00:00 / Nucleic Acid Extraction · High-throughput Extraction · M9600 · 2026-03-05 11:10:30 · - / PCR Setup · PCR Setup · STARlet · - · - / Plate Sealing · Plate Sealing · Sealer (1) · - · - / PCR · Universal PCR · CFX96 (2) · - · - | 기존 원본 · `glossary/test-stages.csv` · `module-units.csv` |
+| 3 | General | Sputum · 2026-03-05 · 2024-07-01 09:00 · - · - · - · - | 기존 원본 (Order Date는 기존 원본에 값이 없어 Samples 예시와 같은 날짜) |
+| 4 | Sample Location | Trolley · N · - · 3F / C02 · - · SK462135 · B05 | 기존 원본 |
+| 5 | 96-DWP Plate | SDP0096B14253616467 · <span style="color:red">C01</span> | 기존 원본 (CO1 → C01) |
+| 6 | PCR Plate | SDP0096B14253616467 · <span style="color:red">A02</span> | 기존 원본 (AO2 → A02) |
+| 7 | Reagent Info | PBS Standard Tube · PR0925I01LB12354 / STARMag Universal Cartridge Kit · 260520280609EX294628G01EB144S / Allplex™ GI-Bacteria(I) Assay · 260520280809GI04XMOM | 기존 원본 |
+| (왼쪽) | 축소된 Samples 목록 | TI-SPT-01 화면 예시와 같음 | TI-SPT-01 |
 
 ## 화면 표기 글자
 
-<!-- 화면에 표기되는 영어 글자를 디스크립션 번호와 함께 적습니다. 번역 전체는 여기에 적지 않습니다(flow/4-revise-verify.md 절차 4번 "언어셋을 정리하고 UI팀에 넘길 것을 보여 줌"에서 대상 목록을 모아서 함).
-     출처: 그 글자를 찾은 곳. 화면(기획 프레임) / 디스크립션(디스크립션에 적힌 화면 표기 글자, 예: 드롭다운 리스트 항목 · 툴팁 · 안내 문구) / 케이스(케이스 화면). 여러 곳이면 한 줄에 `화면 · 케이스`처럼 적습니다. 디스크립션의 설명 글은 적지 않습니다. 3단계에서 적습니다.
-     Language ID: 언어셋 원본(language-set/db/)에 있는 글자의 ID. 번역 전체는 이 ID로 원본에서 찾습니다. 아직 언어셋과 맞춰 보지 않았으면 비워 둡니다.
-     상태: 진행 중인 작업에서 생긴 글자는 신규, 영어 글자가 바뀐 줄은 변경("화면 표기 글자 (영어)" 칸에 "변경 전 → 변경 후"), 이 화면에서 없어진 글자는 줄을 지우지 않고 제거(다른 화면은 쓸 수 있으므로 언어셋에서 삭제한다는 뜻이 아님). 바뀐 것이 없는 글자는 `-`. 5단계에서 언어셋 원본에 반영하면 다시 `-`로 돌립니다.
-     가장 긴 언어 · 번역 글자: 제공 언어 가운데 가장 긴 언어와 그 언어로 번역한 글자(예: "DE · (독일어로 번역한 글자)"). 4단계 절차 4번에서 채웁니다. 그 전에는 비워 둡니다. -->
-
 | 번호 | 화면 표기 글자 (영어) | 출처 (화면 / 디스크립션 / 케이스) | Language ID | 상태 (신규 / 변경 / 제거 / -) | 가장 긴 언어 · 번역 글자 |
 | --- | --- | --- | --- | --- | --- |
+| 2 | Process | 화면 | | - | |
+| 2 | Module | 화면 | | - | |
+| 2 | Unit | 화면 | | - | |
+| 2 | Start Date/Time | 화면 | | - | |
+| 2 | End Date/Time | 화면 | | - | |
+| 2 | Sample Preparation | 화면 | | - | |
+| 2 | Nucleic Acid Extraction | 화면 | | - | |
+| 2 | PCR Setup | 화면 | | - | |
+| 2 | Plate Sealing | 화면 | | - | |
+| 2 | PCR | 화면 | | - | |
+| 3 | General | 화면 | | - | |
+| 3 | Sample Type | 화면 | | - | |
+| 3 | Order Date | 화면 | | - | |
+| 3 | Canceled Date | 화면 | | - | |
+| 3 | Canceled | 화면 | | - | |
+| 3 | STAT | 화면 | | - | |
+| 4 | Sample Location | 화면 | | - | |
+| 4 | Location Type | 화면 | | - | |
+| 4 | Return Status | 화면 | | - | |
+| 4 | Trolley Name | 화면 | | - | |
+| 4 | Tray Position | 화면 | | - | |
+| 4 | STAT Slot No. | 화면 | | - | |
+| 4 | Socket ID | 화면 | | - | |
+| 4 | Socket Position | 화면 | | - | |
+| 5 | 96-DWP Plate | 화면 | | - | |
+| 5 | ID | 화면 | | - | |
+| 5 | Well No. | 화면 | | - | |
+| 5-1 | More | 화면 | | - | |
+| 6 | PCR Plate | 화면 | | - | |
+| 7 | Reagent Info | 화면 | | - | |
+| 7 | Kit | 화면 | | - | |
+| 7 | Barcode | 화면 | | - | |
+| 8 | Protocol Info | 화면 | | - | |
+| 8 | Pre-Treatment Protocol | 화면 | | - | |
+| 8 | Extraction Protocol | 화면 | | - | |
 
 ## Alert · Confirm · Toast
 
-<!-- Alert · Confirm · Toast를 모두 적습니다. 코드는 카탈로그(alert/)의 ID. 카탈로그에 없으면 3단계에서 카탈로그에 새 줄을 더해 그 코드를 씁니다(flow/3-design.md 공통 1의 9, 케이스 3의 토스트는 3-2). 토스트는 버튼 동작을 `-`로 둡니다. -->
-
 | 번호 | 종류 (알럿 / 컨펌 / 토스트) | 코드 | 언제 | 버튼 동작 |
 | --- | --- | --- | --- | --- |
+| 없음 | | | | |
 
 ## 케이스
 
-<!-- 케이스 화면의 원본입니다 (flow/3-design.md 공통 5 "케이스 화면", 작성예시문서 examples/case-samples.md).
-     근거는 셋 중 하나: 기존 원본 / 디스크립션 조건 / 요청자. 어느 것도 아니면 올리지 않고 질문 대기에 둡니다.
-     종류(디스크립션 조건일 때): 1 상태별 데이터 노출, 2 올리거나 눌렀을 때 뜨는 것, 3 유형 · 대상에 따라 표출 항목 구성이 다른 것,
-     4 개수가 기준을 넘어 요소가 생기거나 배치가 바뀌는 것, 5 처음 들어왔거나 데이터가 없을 때, 6 한 번의 조작으로 여러 단계를 거쳐 바뀌는 것.
-     Case 번호는 바꾸지 않고, 지워도 다시 쓰지 않습니다. 케이스가 없으면 "없음"이라고 적습니다. -->
-
 | Case | 제목 | 조건 | 디스크립션 번호 | 종류 | 근거 |
 | --- | --- | --- | --- | --- | --- |
+| 1 | 검체 상태별 데이터 노출 항목 | 검체 상태별 | 2, 3 | 1 | 기존 원본 |
+| 2 | 샘플 투입 유형별 표출 데이터 노출 예시 | Trolley / STAT | 4 | 3 | 기존 원본 |
 
 ## 반영 대기 목록
 
@@ -130,3 +237,4 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 | 2.1.11 | 2026-11-20 | 작업방에 새로 그림 (기존 작업방 [1460:109649](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=1460-109649) · Ver 2.1.11). 3단계 초안: R01 · R02 · R03 · R04 · R05 · R06 · R07 · R09 반영(작업 중), 검사 단계 · General 일시 정의와 표기(POL-SMP-002) | Claude (최고관리자 요청) | 20261120-최고관리자-samples, POL-SMP-001 · DS-0008, POL-SMP-002 |
 | | 2026-11-23 | 멈춘 작업(20261120-최고관리자-samples)이 쓴 화면 MD 내용 · 섹션 링크를 지우고 빈 틀로 되돌림. 반영 대기 목록은 asis 화면 MD의 원래 변경 전 · 변경 후 · 상태로 되돌림(그 작업이 더한 줄은 상태만 대기로) | Claude (최고관리자 요청 R045) | 20261123-최고관리자-samples |
 | | 2026-11-23 | 멈춘 작업(20261123-최고관리자-samples)이 쓴 화면 MD 내용 · 섹션 링크를 지우고 그 작업 시작 전 빈 틀로 되돌림(R046 새 작업 20261123-최고관리자-samples-2). 반영 대기 목록도 그 작업 시작 전 상태로 | Claude | R046 |
+| 2.1.11 | 2026-11-23 | 작업방(Sample Tracking Ⓛ / Ⓣ_re)에 새로 그림 (기존 작업방 [1460:109649](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=1460-109649) · Ver 2.1.11). 3단계 초안 | Claude | R01 · R02 · R03 · R04 · R05 · R06 · R07 · R09 · R10 |
