@@ -112,9 +112,9 @@ figma:         # 작업방의 이 CID 섹션 링크
 
 | ID | 타입 | 변경 전 | 변경 후 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| R01 | 점검 발견 | Figma 프레임 이름 "LI-SPT-01-02" | LI-SPT-01-03 | `ia/ia-screens.csv` | 대기 |
-| R02 | 점검 발견 | 3 참조 "TI-STN-03-02-02-M" (L-IOS 화면에서 T-IOS CID) | L-IOS Protocol Setting CID(LI-STN-03-02-02) | `screens/setting/` | 대기 |
-| R03 | 점검 발견 | 화면 이름 "Samples Details" | IA 이름 | `ia/ia-screens.csv` | 대기 |
+| R01 | 점검 발견 | Figma 프레임 이름 "LI-SPT-01-02" | LI-SPT-01-03 | `ia/ia-screens.csv` | 작업 중 (20261123-최고관리자-samples) |
+| R02 | 점검 발견 | 3 참조 "TI-STN-03-02-02-M" (L-IOS 화면에서 T-IOS CID) | L-IOS Protocol Setting CID(LI-STN-03-02-02) | `screens/setting/` | 작업 중 (20261123-최고관리자-samples) |
+| R03 | 점검 발견 | 화면 이름 "Samples Details" | IA 이름 | `ia/ia-screens.csv` | 작업 중 (20261123-최고관리자-samples) |
 | R04 | 기준 자료 변경 | Temp.(˚C) 범위 "(0~2,000)" | TI-SPT-01-03 반영 대기 목록 3과 같이 | POL-TST-007 | 대기 (확인 필요) |
 
 ## 변경 이력
