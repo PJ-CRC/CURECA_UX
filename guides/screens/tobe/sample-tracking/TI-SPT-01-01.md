@@ -153,10 +153,11 @@ figma:
 | 1 | 타이틀 | AA0005005 · PB · Running | 기존 원본 1460:109649 · `glossary/status-values.csv` |
 | 2 | 검사 단계 | Sample Preparation · - · - · 2026-03-05 10:40:30 · 2026-03-05 11:00:00 / Nucleic Acid Extraction · High-throughput Extraction · M9600 · 2026-03-05 11:10:30 · - / PCR Setup · PCR Setup · STARlet · - · - / Plate Sealing · Plate Sealing · Sealer (1) · - · - / PCR · Universal PCR · CFX96 (2) · - · - | 기존 원본 · `glossary/test-stages.csv` · `module-units.csv` |
 | 3 | General | Sputum · 2026-03-05 · 2024-07-01 09:00 · - · - · - · - | 기존 원본 (Order Date는 기존 원본에 값이 없어 Samples 예시와 같은 날짜) |
-| 4 | Sample Location | Trolley · N · - · 3F / C02 · - · SK462135 · B05 | 기존 원본 |
+| 4 | Sample Location | Trolley · N · 8462-1981 · 3F / C02 · - · SK462135 · B05 | 기존 원본 |
 | 5 | 96-DWP Plate | SDP0096B14253616467 · <span style="color:red">C01</span> | 기존 원본 (CO1 → C01) |
 | 6 | PCR Plate | SDP0096B14253616467 · <span style="color:red">A02</span> | 기존 원본 (AO2 → A02) |
 | 7 | Reagent Info | PBS Standard Tube · PR0925I01LB12354 / STARMag Universal Cartridge Kit · 260520280609EX294628G01EB144S / Allplex™ GI-Bacteria(I) Assay · 260520280809GI04XMOM | 기존 원본 |
+| 8 | Protocol Info | Test Protocol AA · Test Protocol BB | 기존 원본 케이스 (본 화면 값 없음) |
 | (왼쪽) | 축소된 Samples 목록 | TI-SPT-01 화면 예시와 같음 | TI-SPT-01 |
 
 ## 화면 표기 글자
