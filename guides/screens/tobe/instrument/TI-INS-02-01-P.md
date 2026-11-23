@@ -1,7 +1,7 @@
 ---
 cid: TI-INS-02-01-P
 pair_cid: LI-INS-02-01-P
-tl_relation: 권한 차이
+tl_relation: 기능 추가
 title: Management Popup
 path: Instrument > All Tab > Management Popup
 type: Popup
