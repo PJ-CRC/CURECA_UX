@@ -122,40 +122,47 @@ L-IOS · T-IOS 화면의 기본 프레임(GNB · LNB · Contents 영역)과 사�
 
 | 번호 | 영역 | 설명 |
 |---|---|---|
-| 1 | GNB | 네트워크 상태 · Running 구동 상태 · Event 발생 건수 · 접속 환경 기준 일시 |
-| 1 | Event 건수 | Event Level별로 Status가 Open인 개수 합. 최대 3자리(999)까지, 넘어도 999로 표기 |
+| 1 | GNB | 네트워크 상태 정보 · Running 구동 상태 정보 · Event 발생 건수 · 사용자가 접속한 환경 기준 일시 정보 |
+| 1 | Event 건수 | Event Level별로 Event Status가 Open인 개수 총합. 최대 3자리(999)까지, 넘어도 999로 표기 |
 | 2 | LNB | 2Depth 노출: 각 1Depth의 하위 메뉴 노출 |
 | 2.1 | 1Depth Menu | Dashboard, Material Setup, Test Management, Sample Tracking, Instrument, Inventory, Setting, Run, Quick Start, Information, Exit / Shut Down |
 | 3 | [더보기] 버튼 (Dot 아이콘) | 클릭 시 Profile · Logout 노출 (3 상세) |
-| 4 | 프로그램 종료 버튼 | 사용자 유형에 따라 버튼명 · 노출 항목이 다름 (Case 1 · 2) |
+| 4 | 프로그램 종료 버튼 (Shut Down 또는 Exit) | 사용자 유형에 따라 버튼명 · 클릭 시 노출 항목이 다름 (Case 1 · 2). Service 계정: `[Exit]`, 클릭 시 팝업 (4 상세) / Admin · User 계정: `[Shut Down]`, 클릭 시 팝업 `Confirm_020` |
 | 5 | Contents 영역 | 각 페이지의 Contents 노출 |
 
-**L-IOS 2Depth 메뉴 예**: Material Setup › Group Lots · Prepare Carrier · Load Materials · Empty Waste Bin / Test Management › Test Order · Test Status / Sample Tracking › Samples · 96-DWP · PCR Plate / Setting › Policy · System · Protocol · Tube · Assay Pack Setting / Information › Program · Manual
+**L-IOS GNB 표시 예**: LIOS · Running · Instrument · T-IOS · D.A PC · Event(Error 건수 · Warning 건수) · 일시(예: `2026-04-10 11:30`)
+
+**L-IOS 2Depth 메뉴 예**: Material Setup › Group Lots · Prepare Carrier · Load Materials · Empty Waste Bin / Test Management › Test Order · Test Status / Sample Tracking › Samples · 96-DWP · PCR Plate / Setting › Policy Setting · System Setting · Protocol Setting · Tube Setting · AssayPack Setting / Information › Program · Manual. LNB 아래쪽: Quick Start · Run · User Name · Shut Down(또는 Exit)
 
 **사용자 유형에 따른 종료 버튼**
 
 | Case | 사용자 | 버튼 | 동작 |
 |---|---|---|---|
 | Case 1 | Admin / User | `[Shut Down]` | 시스템 종료만 가능. 클릭 시 팝업 `Confirm_020` |
-| Case 2 | Service | `[Exit]` | 프로그램 종료 · 시스템 종료 중 선택. 클릭 시 「Exit · Choose an option.」 팝업 |
+| Case 2 | Service | `[Exit]` | 프로그램 종료 · 시스템 종료 중 택 1. 클릭 시 「Exit · Choose an option.」 팝업 (4 상세) |
 
-- Case 2 › 4 상세: 4.1 `[Exit Program]`(Service일 때만 노출, 클릭 시 `Confirm_019`) · 4.2 `[Shut Down]`(클릭 시 `Confirm_020`)
+- Case 1 · 2 모두 LNB 1Depth는 Dashboard · Material Setup · Test Management · Sample Tracking · Instrument · Inventory · Setting · Information, 아래쪽 Quick Start · Run · User Name 다음에 종료 버튼(Case 1 `Shut Down` · Case 2 `Exit`)이 온다.
+- Case 2 › 4 상세: 4.1 `[Exit Program]`(사용자가 Service일 때만 노출, 클릭 시 `Confirm_019`) · 4.2 `[Shut Down]`(클릭 시 `Confirm_020`)
 
 **T-IOS 영역 정의**
 
 | 번호 | 영역 | 설명 |
 |---|---|---|
-| 6 | GNB L-IOS 선택 | L-IOS가 여러 대면 드롭다운 노출, 한 대면 미노출 |
-| — | GNB | 네트워크 상태 · Running 구동 상태 · Event 건수 · 일시 |
-| — | LNB 1Depth | Dashboard, Test Management, Sample Tracking, Instrument, Inventory, Statistical Analysis, Setting, Information |
-| — | 2Depth 예 | Statistical Analysis › Test Analytics · Instruments · Inventory · Event · Test Forecasting / Setting › Policy · Protocol · LIS · System · Account · SMTP · Assay Pack Setting · Tube Setting / Information › Run Report · Program · Manual |
-| — | Contents 영역 | 각 페이지의 Contents 노출 |
+| 1 | GNB | (L-IOS 선택) 드롭다운: L-IOS가 여러 개면 노출, 하나면 미노출. 네트워크 상태 정보 · Running 구동 상태 정보 · Event 발생 건수 · 사용자가 접속한 환경 기준 일시 정보 |
+| 2 | LNB | 2Depth 노출: 각 1Depth의 하위 메뉴 노출 |
+| 2.1 | 1Depth Menu | Dashboard, Test Management, Sample Tracking, Instrument, Inventory, Statistical Analysis, Setting, Information |
+| 3 | [더보기] 버튼 (Dot 아이콘) | 클릭 시 Profile · Logout 노출 (3 상세) |
+| 6 | Contents 영역 | 각 페이지의 Contents 노출 |
+
+**T-IOS GNB 표시 예**: TIOS · Running · Instrument · L-IOS · D.A PC · Event(Error 건수 · Warning 건수) · 일시(예: `2026-04-10 11:30`)
+
+**T-IOS 2Depth 메뉴 예**: Test Management › Test Order · Test Status / Sample Tracking › Samples · 96-DWP · PCR Plate / Statistical Analysis › Test Analytics · Instruments · Inventory · Event · Test Forecasting / Setting › Policy Setting · Protocol Setting · LIS Setting · System Setting · Account Setting · SMTP Setting · AssayPack Setting · Tube Setting / Information › Run Report · Program · Manual. LNB 아래쪽: User Name (종료 버튼 없음)
 
 **3 상세 — [더보기] 선택 시 노출 항목 (L-IOS · T-IOS 공통)**
 
 | 번호 | 항목 | 동작 |
 |---|---|---|
-| 3.1 | Profile | L-IOS: 팝업 `LI-CPW-P`(비밀번호 · 아이디 · 이메일 변경). L-IOS Client Mode 세 모드(Main · Console · MS Mode) 모두 노출(`policy/client-mode.md`) / T-IOS: 팝업 `TI-CPW-P`(비밀번호 · 아이디 · 이메일 변경, 이벤트 알람 노출 여부) |
+| 3.1 | Profile | L-IOS: 팝업 `LI-CPW-P`(비밀번호 변경, 아이디 · 이메일 변경). L-IOS Client Mode 세 모드(Main · Console · MS Mode) 모두 노출(`policy/client-mode.md`, DS-0001 — Figma의 「Console 및 TSS 모드에서는 미노출」은 결정 전 내용) / T-IOS: 팝업 `TI-CPW-P`(비밀번호 변경, 아이디 · 이메일 변경, 이벤트 알람 노출 여부 설정) |
 | 3.2 | Logout | 팝업 `Confirm_018` |
 
 ### 3-a. Base Frame Area (2/2) · 모드별 LNB
