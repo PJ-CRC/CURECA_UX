@@ -2,10 +2,215 @@
   "jobId": "J146",
   "pc": "DAYE",
   "by": "정다예",
-  "at": "2026-11-23T16:04:54+09:00",
-  "status": "진행 중",
-  "note": "Setting 페이지 LNB 비교 중",
+  "at": "2026-11-23T16:05:38+09:00",
+  "status": "완료",
+  "note": "후보 약 200개(Setting 페이지 LI-/TI- 프레임) 중 33개 화면 ID(프레임 약 140개)에 수정 필요. 작업 페이지가 정해져 있지 않아 작업 링크(274:15069)가 가리키는 페이지 「Setting  Ⓛ / Ⓣ」를 봤다. 화면 ID마다 대표 프레임 하나를 넣었다. 다른 점: ① 「Assay Pack Setting」 → 「AssayPack Setting」(거의 모든 화면) ② T-IOS 예전 프레임의 「Test Policy Setting」 · 「Test Protocol Setting」 ③ L-IOS LNB에 LIS · Account · SMTP Setting이 들어 있음 ④ TI-STN-08 두 프레임에 L-IOS LNB 아래쪽 요소. ②③은 이번 수정 전 가이드에도 같은 규칙이었다. Profile(Console · TSS 미노출)은 Figma 가이드 프레임(COMM-3-a) 쪽을 고칠 건이라 넣지 않음.",
   "scope": "",
   "fileKey": "kI8nm6HBJsfBa4fbReZwgh",
-  "items": []
+  "items": [
+    {
+      "nodeId": "6596:300331",
+      "frame": "LI-STN-01",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "L-IOS LNB Setting 2Depth에 LIS · Account · SMTP Setting이 들어 있다. 가이드(L-IOS: Policy · System · Protocol · Tube · AssayPack Setting)대로 메뉴를 빼고 「Assay Pack Setting」은 「AssayPack Setting」으로 바꾼다. 같은 이름 프레임 2개 모두 해당."
+    },
+    {
+      "nodeId": "10184:202948",
+      "frame": "LI-STN-02",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "L-IOS LNB Setting 2Depth에 LIS · Account · SMTP Setting이 들어 있다. 가이드(L-IOS: Policy · System · Protocol · Tube · AssayPack Setting)대로 메뉴를 빼고 「Assay Pack Setting」은 「AssayPack Setting」으로 바꾼다. 같은 이름 프레임 9개 모두 해당."
+    },
+    {
+      "nodeId": "5026:367520",
+      "frame": "LI-STN-03-01",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "L-IOS LNB Setting 2Depth에 LIS · Account · SMTP Setting이 들어 있다. 가이드(L-IOS: Policy · System · Protocol · Tube · AssayPack Setting)대로 메뉴를 빼고 「Assay Pack Setting」은 「AssayPack Setting」으로 바꾼다. 같은 이름 프레임 2개 모두 해당."
+    },
+    {
+      "nodeId": "5026:367633",
+      "frame": "LI-STN-03-01-01",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "L-IOS LNB Setting 2Depth에 LIS · Account · SMTP Setting이 들어 있다. 가이드(L-IOS: Policy · System · Protocol · Tube · AssayPack Setting)대로 메뉴를 빼고 「Assay Pack Setting」은 「AssayPack Setting」으로 바꾼다."
+    },
+    {
+      "nodeId": "4871:427810",
+      "frame": "LI-STN-03-01-02",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "L-IOS LNB Setting 2Depth에 LIS · Account · SMTP Setting이 들어 있다. 가이드(L-IOS: Policy · System · Protocol · Tube · AssayPack Setting)대로 메뉴를 빼고 「Assay Pack Setting」은 「AssayPack Setting」으로 바꾼다."
+    },
+    {
+      "nodeId": "5026:367178",
+      "frame": "LI-STN-03-02",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "L-IOS LNB Setting 2Depth에 LIS · Account · SMTP Setting이 들어 있다. 가이드(L-IOS: Policy · System · Protocol · Tube · AssayPack Setting)대로 메뉴를 빼고 「Assay Pack Setting」은 「AssayPack Setting」으로 바꾼다. 같은 이름 프레임 2개 모두 해당."
+    },
+    {
+      "nodeId": "7669:181039",
+      "frame": "LI-STN-08",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "L-IOS LNB Setting 2Depth에 LIS · Account · SMTP Setting이 들어 있다. 가이드(L-IOS: Policy · System · Protocol · Tube · AssayPack Setting)대로 메뉴를 빼고 「Assay Pack Setting」은 「AssayPack Setting」으로 바꾼다."
+    },
+    {
+      "nodeId": "7669:181843",
+      "frame": "LI-STN-08-P",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "L-IOS LNB Setting 2Depth에 LIS · Account · SMTP Setting이 들어 있다. 가이드(L-IOS: Policy · System · Protocol · Tube · AssayPack Setting)대로 메뉴를 빼고 「Assay Pack Setting」은 「AssayPack Setting」으로 바꾼다. 같은 이름 프레임 2개 모두 해당."
+    },
+    {
+      "nodeId": "6596:296136",
+      "frame": "TI-STN-01",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "LNB Setting 2Depth의 「Test Policy Setting」 · 「Test Protocol Setting」을 가이드(3-a T-IOS 2Depth)대로 「Policy Setting」 · 「Protocol Setting」으로 바꾼다. 같은 이름의 다른 버전 프레임(6596:297913 등)은 「Assay Pack Setting」 → 「AssayPack Setting」만 고치면 된다. 같은 이름 프레임 6개 모두 해당."
+    },
+    {
+      "nodeId": "6596:296496",
+      "frame": "TI-STN-01-01",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "LNB Setting 2Depth의 「Test Policy Setting」 · 「Test Protocol Setting」을 가이드(3-a T-IOS 2Depth)대로 「Policy Setting」 · 「Protocol Setting」으로 바꾼다. 같은 이름의 다른 버전 프레임(6596:298160 등)은 「Assay Pack Setting」 → 「AssayPack Setting」만 고치면 된다. 같은 이름 프레임 5개 모두 해당."
+    },
+    {
+      "nodeId": "6596:297239",
+      "frame": "TI-STN-01-02",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "LNB Setting 2Depth의 「Test Policy Setting」 · 「Test Protocol Setting」을 가이드(3-a T-IOS 2Depth)대로 「Policy Setting」 · 「Protocol Setting」으로 바꾼다. 같은 이름의 다른 버전 프레임(6596:298378 등)은 「Assay Pack Setting」 → 「AssayPack Setting」만 고치면 된다. 같은 이름 프레임 4개 모두 해당."
+    },
+    {
+      "nodeId": "6596:296343",
+      "frame": "TI-STN-01-03",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "LNB Setting 2Depth의 「Test Policy Setting」 · 「Test Protocol Setting」을 가이드(3-a T-IOS 2Depth)대로 「Policy Setting」 · 「Protocol Setting」으로 바꾼다. 같은 이름의 다른 버전 프레임(6596:298574 등)은 「Assay Pack Setting」 → 「AssayPack Setting」만 고치면 된다. 같은 이름 프레임 4개 모두 해당."
+    },
+    {
+      "nodeId": "6596:296441",
+      "frame": "TI-STN-01-04",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "LNB Setting 2Depth의 「Test Policy Setting」 · 「Test Protocol Setting」을 가이드(3-a T-IOS 2Depth)대로 「Policy Setting」 · 「Protocol Setting」으로 바꾼다. 같은 이름의 다른 버전 프레임(6596:298789 등)은 「Assay Pack Setting」 → 「AssayPack Setting」만 고치면 된다. 같은 이름 프레임 4개 모두 해당."
+    },
+    {
+      "nodeId": "10172:804284",
+      "frame": "TI-STN-02",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "LNB Setting 2Depth의 「Assay Pack Setting」을 가이드 표기 「AssayPack Setting」으로 바꾼다. 같은 이름 프레임 8개 모두 해당."
+    },
+    {
+      "nodeId": "5026:359450",
+      "frame": "TI-STN-03-01",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "LNB Setting 2Depth의 「Test Policy Setting」 · 「Test Protocol Setting」을 가이드(3-a T-IOS 2Depth)대로 「Policy Setting」 · 「Protocol Setting」으로 바꾼다. 같은 이름의 다른 버전 프레임(5026:364426 등)은 「Assay Pack Setting」 → 「AssayPack Setting」만 고치면 된다. 같은 이름 프레임 4개 모두 해당."
+    },
+    {
+      "nodeId": "5026:360428",
+      "frame": "TI-STN-03-01-01",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "LNB Setting 2Depth의 「Test Policy Setting」 · 「Test Protocol Setting」을 가이드(3-a T-IOS 2Depth)대로 「Policy Setting」 · 「Protocol Setting」으로 바꾼다. 같은 이름 프레임 2개 모두 해당."
+    },
+    {
+      "nodeId": "9816:395550",
+      "frame": "TI-STN-03-01-02",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "LNB Setting 2Depth의 「Test Policy Setting」 · 「Test Protocol Setting」을 가이드(3-a T-IOS 2Depth)대로 「Policy Setting」 · 「Protocol Setting」으로 바꾼다. 같은 이름 프레임 2개 모두 해당."
+    },
+    {
+      "nodeId": "9816:395867",
+      "frame": "TI-STN-03-01-02-01-M",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "LNB Setting 2Depth의 「Test Policy Setting」 · 「Test Protocol Setting」을 가이드(3-a T-IOS 2Depth)대로 「Policy Setting」 · 「Protocol Setting」으로 바꾼다. 같은 이름 프레임 2개 모두 해당."
+    },
+    {
+      "nodeId": "9816:395689",
+      "frame": "TI-STN-03-01-02-01-V",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "LNB Setting 2Depth의 「Test Policy Setting」 · 「Test Protocol Setting」을 가이드(3-a T-IOS 2Depth)대로 「Policy Setting」 · 「Protocol Setting」으로 바꾼다. 같은 이름 프레임 2개 모두 해당."
+    },
+    {
+      "nodeId": "5026:359748",
+      "frame": "TI-STN-03-02",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "LNB Setting 2Depth의 「Test Policy Setting」 · 「Test Protocol Setting」을 가이드(3-a T-IOS 2Depth)대로 「Policy Setting」 · 「Protocol Setting」으로 바꾼다. 같은 이름 프레임 2개 모두 해당."
+    },
+    {
+      "nodeId": "5026:359633",
+      "frame": "TI-STN-03-02-01",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "LNB Setting 2Depth의 「Test Policy Setting」 · 「Test Protocol Setting」을 가이드(3-a T-IOS 2Depth)대로 「Policy Setting」 · 「Protocol Setting」으로 바꾼다. 같은 이름 프레임 2개 모두 해당."
+    },
+    {
+      "nodeId": "5026:361185",
+      "frame": "TI-STN-03-02-02-M",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "LNB Setting 2Depth의 「Test Policy Setting」 · 「Test Protocol Setting」을 가이드(3-a T-IOS 2Depth)대로 「Policy Setting」 · 「Protocol Setting」으로 바꾼다. 같은 이름 프레임 2개 모두 해당."
+    },
+    {
+      "nodeId": "5026:359932",
+      "frame": "TI-STN-03-02-02-V",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "LNB Setting 2Depth의 「Test Policy Setting」 · 「Test Protocol Setting」을 가이드(3-a T-IOS 2Depth)대로 「Policy Setting」 · 「Protocol Setting」으로 바꾼다. 같은 이름 프레임 2개 모두 해당."
+    },
+    {
+      "nodeId": "5457:472059",
+      "frame": "TI-STN-04-01-T",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "LNB Setting 2Depth의 「Test Policy Setting」 · 「Test Protocol Setting」을 가이드(3-a T-IOS 2Depth)대로 「Policy Setting」 · 「Protocol Setting」으로 바꾼다. 같은 이름의 다른 버전 프레임(5457:472157 등)은 「Assay Pack Setting」 → 「AssayPack Setting」만 고치면 된다. 같은 이름 프레임 12개 모두 해당."
+    },
+    {
+      "nodeId": "5457:471734",
+      "frame": "TI-STN-04-02-T",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "LNB Setting 2Depth의 「Test Policy Setting」 · 「Test Protocol Setting」을 가이드(3-a T-IOS 2Depth)대로 「Policy Setting」 · 「Protocol Setting」으로 바꾼다. 같은 이름의 다른 버전 프레임(5457:472456 등)은 「Assay Pack Setting」 → 「AssayPack Setting」만 고치면 된다. 같은 이름 프레임 6개 모두 해당."
+    },
+    {
+      "nodeId": "5302:257735",
+      "frame": "TI-STN-05",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "LNB Setting 2Depth의 「Assay Pack Setting」을 가이드 표기 「AssayPack Setting」으로 바꾼다. 같은 이름 프레임 12개 모두 해당."
+    },
+    {
+      "nodeId": "502:45075",
+      "frame": "TI-STN-06",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "LNB Setting 2Depth의 「Test Policy Setting」 · 「Test Protocol Setting」을 가이드(3-a T-IOS 2Depth)대로 「Policy Setting」 · 「Protocol Setting」으로 바꾼다. 같은 이름의 다른 버전 프레임(5465:369240 등)은 「Assay Pack Setting」 → 「AssayPack Setting」만 고치면 된다. 같은 이름 프레임 5개 모두 해당."
+    },
+    {
+      "nodeId": "502:45213",
+      "frame": "TI-STN-06/Case",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "LNB Setting 2Depth의 「Test Policy Setting」 · 「Test Protocol Setting」을 가이드(3-a T-IOS 2Depth)대로 「Policy Setting」 · 「Protocol Setting」으로 바꾼다."
+    },
+    {
+      "nodeId": "8038:953325",
+      "frame": "TI-STN-08",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "LNB Setting 2Depth의 「Assay Pack Setting」을 가이드 표기 「AssayPack Setting」으로 바꾼다. 같은 이름 프레임 6개 모두 해당."
+    },
+    {
+      "nodeId": "8062:183659",
+      "frame": "TI-STN-08",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "T-IOS 화면인데 LNB 아래쪽에 Quick Start · Run 등 L-IOS 요소가 있다. 가이드(T-IOS LNB 아래쪽은 User Name만, 종료 버튼 없음)대로 맞춘다. (8217:561632도 같음)"
+    },
+    {
+      "nodeId": "7669:177368",
+      "frame": "TI-STN-08-01",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "LNB Setting 2Depth의 「Assay Pack Setting」을 가이드 표기 「AssayPack Setting」으로 바꾼다."
+    },
+    {
+      "nodeId": "7900:227844",
+      "frame": "TI-STN-08-P",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "LNB Setting 2Depth의 「Assay Pack Setting」을 가이드 표기 「AssayPack Setting」으로 바꾼다. 같은 이름 프레임 3개 모두 해당."
+    },
+    {
+      "nodeId": "8376:350638",
+      "frame": "TI-SVS-01",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "LNB Setting 2Depth의 「Assay Pack Setting」을 가이드 표기 「AssayPack Setting」으로 바꾼다. 같은 이름 프레임 12개 모두 해당."
+    },
+    {
+      "nodeId": "8311:867741",
+      "frame": "TI-SVS-01-1280",
+      "page": "Setting  Ⓛ / Ⓣ",
+      "change": "LNB Setting 2Depth의 「Assay Pack Setting」을 가이드 표기 「AssayPack Setting」으로 바꾼다. 같은 이름 프레임 4개 모두 해당."
+    }
+  ]
 }
