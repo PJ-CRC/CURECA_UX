@@ -116,9 +116,9 @@ figma:         # 작업방의 이 CID 섹션 링크
 | R02 | 점검 발견 | 화면 정보 Ver 2.0인데 버전 메모에 v2.1.01이 있음 | Ver를 버전 메모와 맞춤 | Figma 버전 메모 | 제외 (2026-11-23, 케이스 3 규칙과 부딪힘: 화면 정보 Ver는 기존 화면 Ver 그대로) |
 | R03 | 점검 발견 | 0 "Run Start로 통해" | Run Start를 통해 | 오타 | 작업 중 (20261123-최고관리자-samples-2) |
 | R04 | 기준 자료 변경 | 3 [Export]: T-IOS는 "OS 파일함, 엑셀파일, 저장 항목은 Detail의 모든 내용", L-IOS는 ".CVS 파일, COMM-5-j(4/4) 팝업". IA는 짝 화면 동일 | 파일 형식은 T-IOS·L-IOS 모두 .csv. 저장 방법만 다름: T-IOS는 OS 파일 탐색기, L-IOS는 경로 저장·USB 저장 Popup (COMM-5-j(4/4)) | POL-COM-006 규칙 1·3·4 | 작업 중 (20261123-최고관리자-samples-2) |
-| R05 | 점검 발견 | 2-1 "T-IOS에서 수신되는 검체 ID·검사 항목·검체 타입·응급 여부" (T-IOS 화면) | T-IOS 기준 출처로 고쳐 씀 | 디스크립션 | 대기 (확인 필요) |
-| R06 | 기준 자료 변경 | 2-1 Start Date/Time "Prep 장비에서 바코드 찍은 시간" | 어느 Module인지 표준어로 | `glossary/terms.csv` | 대기 (확인 필요) |
-| R07 | 기준 자료 변경 | 2-1 Progress "상태 값 : COMM-4-a" (Progress는 단계 진행 표시) | 단계 표시 기준을 검사 단계(`glossary/test-stages.csv`)로 | `glossary/test-stages.csv` | 대기 (확인 필요) |
+| R05 | 점검 발견 | 2-1 "T-IOS에서 수신되는 검체 ID·검사 항목·검체 타입·응급 여부" (T-IOS 화면) | T-IOS 기준 출처로 고쳐 씀 | 디스크립션 | 작업 중 (20261123-최고관리자-samples-2) |
+| R06 | 기준 자료 변경 | 2-1 Start Date/Time "Prep 장비에서 바코드 찍은 시간" | 어느 Module인지 표준어로 | `glossary/terms.csv` | 작업 중 (20261123-최고관리자-samples-2) |
+| R07 | 기준 자료 변경 | 2-1 Progress "상태 값 : COMM-4-a" (Progress는 단계 진행 표시) | 단계 표시 기준을 검사 단계(`glossary/test-stages.csv`)로 | `glossary/test-stages.csv` | 작업 중 (20261123-최고관리자-samples-2) |
 | R08 | 기준 자료 변경 | 1-2 Product 목록이 11개로 고정 | 검사 항목 목록 기준 확인 | `glossary/test-items.csv` | 대기 (확인 필요) |
 | R09 | 기준 자료 변경 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 작업 중 (20261123-최고관리자-samples-2) |
 

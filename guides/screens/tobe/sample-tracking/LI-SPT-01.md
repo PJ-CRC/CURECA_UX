@@ -115,7 +115,7 @@ figma:         # 작업방의 이 CID 섹션 링크
 | R01 | 점검 발견 | 3 ".CVS" | .CSV | 오타 | 작업 중 (20261123-최고관리자-samples-2) |
 | R02 | 기준 자료 변경 | 3 [Export]가 T-IOS(OS 파일함, 엑셀파일)와 다름. IA는 짝 화면 동일 | 파일 형식은 T-IOS·L-IOS 모두 .csv. 저장 방법만 다름: T-IOS는 OS 파일 탐색기, L-IOS는 경로 저장·USB 저장 Popup (COMM-5-j(4/4)) | POL-COM-006 규칙 1·3·4 | 작업 중 (20261123-최고관리자-samples-2) |
 | R03 | 점검 발견 | 0 "Run Start로 통해" | Run Start를 통해 | 오타 | 작업 중 (20261123-최고관리자-samples-2) |
-| R04 | 기준 자료 변경 | 2-1 Start Date/Time "Prep 장비에서 바코드 찍은 시간", Progress "상태 값 : COMM-4-a" | TI-SPT-01 반영 대기 목록 6·7과 같이 | `glossary/terms.csv`, `glossary/test-stages.csv` | 대기 (확인 필요) |
+| R04 | 기준 자료 변경 | 2-1 Start Date/Time "Prep 장비에서 바코드 찍은 시간", Progress "상태 값 : COMM-4-a" | TI-SPT-01 반영 대기 목록 6·7과 같이 | `glossary/terms.csv`, `glossary/test-stages.csv` | 작업 중 (20261123-최고관리자-samples-2) |
 | R05 | 기준 자료 변경 | 1-2 Product 목록이 11개로 고정 | 검사 항목 목록 기준 확인 | `glossary/test-items.csv` | 대기 (확인 필요) |
 | R06 | 점검 발견 | 버전 메모 없음 (TI-SPT-01은 v2.1.01 Export 수정 메모가 있음) | T/L 버전 맞춤 | Figma 버전 메모 | 대기 (확인 필요) |
 | R07 | 기준 자료 변경 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 작업 중 (20261123-최고관리자-samples-2) |

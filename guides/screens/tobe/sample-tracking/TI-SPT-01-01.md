@@ -121,7 +121,7 @@ figma:         # 작업방의 이 CID 섹션 링크
 | R07 | 기준 자료 변경 | 5-1 "[96 DWP] 메뉴", "Sample가" | [96-DWP] 메뉴, Sample이 | `glossary/terms.csv` DWP, 오타 | 작업 중 (20261123-최고관리자-samples-2) |
 | R08 | 점검 발견 | 7 제목 "Reagents 정보 영역" (화면은 Reagent Info), 정렬 "공통 UX 참고 : COMM-4-a" (상태값 문서) | 제목 맞춤, 정렬 기준 문서 확인 | 화면 글자 | 대기 (확인 필요) |
 | R09 | 점검 발견 | 8-1 [More]는 TI-SPT-01-02만 엶. Extraction Protocol 팝업(TI-SPT-01-03)이 따로 있음 | Pre-Treatment·Extraction 각각 어느 팝업을 여는지 적음 | `ia/ia-screens.csv` | 작업 중 (20261123-최고관리자-samples-2) |
-| R10 | 기준 자료 변경 | 3 Start Date/Time "Prep 장비에서 바코드 찍은 시간", 4 "[Sample Storage] Module", "샘플 투입구" | 표준어 (Sample Storage Module, Module 이름) | `glossary/terms.csv` | 대기 (확인 필요) |
+| R10 | 기준 자료 변경 | 3 Start Date/Time "Prep 장비에서 바코드 찍은 시간", 4 "[Sample Storage] Module", "샘플 투입구" | 표준어 (Sample Storage Module, Module 이름) | `glossary/terms.csv` | 작업 중 (20261123-최고관리자-samples-2) |
 
 ## 변경 이력
 
