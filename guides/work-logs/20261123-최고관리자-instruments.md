@@ -29,7 +29,7 @@ started: 2026-11-23
 | 4. 수정 · 확인 | | | |
 | 5. 완료 | | | |
 
-이어서 작업할 곳: 3단계 · 처음부터 (2단계 마침 2026-11-23. DS-0011 A 결정: Door 자동 잠금 없음 · [Lock] · Confirm_031로 그림. 케이스 화면 모두 그림: Management Service / Admin · User, L-IOS MS Mode Door Control X. 새 세션으로 이어 감)
+이어서 작업할 곳: 3단계 · 절차 2 케이스 3 흐름 순서 4부터 (Figma 그리기). 화면 MD 7개(`screens/tobe/instrument/`) · 질문 대기 Q1 ~ Q10 · 변경 확인 C1 ~ C33 · 카탈로그 줄(Confirm_031 ~ 033, Toast_001)은 끝냄 (2026-11-23 16:40). 다음: ① 자리 잡기(메뉴 단위 표시 · CID 섹션 7개, 머리말 `figma` 적기) ② TI-INS-01-T → LI-INS-01-T → TI-INS-02-T → LI-INS-02-T → TI-INS-02-01-P → LI-INS-02-01-P → LI-INS-01-P 순서로 그리기(T 먼저, L은 T 복제). 기존 원본은 기존 작업방(kI8nm6HBJsfBa4fbReZwgh)이고 작업 페이지에 옛 사본 프레임(TI-INS-01-T 2768:93537 등)이 있음 — 옮기거나 지우지 않음. 그리며 화면 예시 "기존 화면 그대로" 칸(3-5 · 3-6 · 1 Connected · Event · 7 · Error Rate)을 원본 값으로 채우고, 언어셋에만 있는 글자(LI-INS-02-01-P "This module is not installed on the system." · "Data retrieval failed. Check connection and retry.", LI-INS-01-P "Items")가 원본에 있는지 봄
 
 ## 요청
 
