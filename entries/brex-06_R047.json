@@ -2,8 +2,8 @@
   "id": "brex-06_R047",
   "kind": "request",
   "team": "cureca",
-  "status": "진행 중",
-  "at": "2026-11-23T15:43:02+09:00",
+  "status": "보류",
+  "at": "2026-11-23T15:50:04+09:00",
   "createdAt": "2026-11-23T15:39:35+09:00",
   "by": "최고관리자",
   "doneBy": "Claude",
@@ -17,13 +17,27 @@
   "type": "요청",
   "layout": "",
   "text": "Instrument 작업 규칙에 맞춰 화면 다시 그려줘",
-  "note": "케이스 3 · 1단계 · 20261123-최고관리자-instruments — 기존 작업방에서 7화면 다시 옮기는 중(2.1 2차, Ver 2.1.18)",
+  "note": "케이스 3 · 1단계 · 20261123-최고관리자-instruments — [1단계] 요건 목록을 확인해 주세요 (지나가는 단계 1 → 2 → 3 → 4 → 5)\n- 요건 1: Instruments 7화면을 기존 작업방에서 작업방(Instrument Ⓛ / Ⓣ _re)으로 옮겨 다시 그림 — Overview Tab (TI/LI-INS-01-T), All Tab (TI/LI-INS-02-T), Management Popup (TI/LI-INS-02-01-P), Door Control Popup (LI-INS-01-P). 케이스 3, 경로 8(옮겨 다시 그림), 문구 안 바뀜 · UI 작업 대상 아님\n- 다시 옮김: 7화면 모두 2.1 2차 원본으로 asis 화면 MD를 다시 씀(Ver 2.1.17 ~ 2.1.18, 작성자 이상헌. LI 화면은 Lock 버튼 · 자동 잠금 폐지 · Confirm_031이 새로 들어옴). tobe 화면 MD 7개를 빈 틀로 만들고 반영 대기 항목을 옮김, 점검 발견 6건 더함(Tab 이름 Ht Extraction, Management 예시 Device 행)\n- 대상 아님: Test Order (TI-TMG-01, 다른 메뉴), Run-time Info Popup (TI-INS-02-02-P, IA에 없음), 1280 프레임\n- 찾았지만 대상 아님 · 영향 화면: 없음(2단계에서 정책으로 더 찾음). 겹치는 작업 없음(20261117 instruments는 멈춤)\n- 확인할 것 10개: 2단계로 6개(Management [Cancel] 확인 팝업, [Unlock all doors] 확인 팝업, Confirm_008 문구, PV-0001, 알럿 정의 · Error Rate(CA-0001), 자동 잠금 항목 R02 · R06이 원본 v2.1.17과 다름), 3단계 질문 대기로 4개(Door 안내 문구 세 가지, 화면 정보 경로 · 패널 CID, LNB Instrument 두 번, TI-INS-02-02-P 프레임)\n- 반영 대기 후보(묶음): 1 오타 · 용어 / 2 Module · Unit · 상태값 표기 / 3 화면 정보 · 디스크립션을 화면에 맞춤 / 4 정책 반영(POL-EQP-008 · 009 · 004) / 5 Door 자동 잠금 R02 · R06\n- 추천: 묶음 1 ~ 4 반영, 묶음 5는 이번엔 안 함(원본이 이미 자동 잠금을 없앴으므로 2단계에서 POL-EQP-008과 대조해 다시 정함)\n- 자세한 표는 작업 기록 「요건 목록」 · 「확인할 것」 · 「이번에 반영할 반영 대기 항목」\n작업 기준: basis 2026-11-23 15:40 · 작업규칙 CURECA 작업규칙 @원본 · 정책서 정책서 @원본 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 @원본 · 화면 정의서 화면 정의서 @원본",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "위 요건 목록과 반영 대기 묶음대로 1단계를 마치고 2단계로 넘어갈까요?",
+    "options": [
+      {
+        "label": "추천대로 진행 (묶음 1~4 반영, 5는 2단계에서)"
+      },
+      {
+        "label": "묶음 1~5 모두 반영하고 진행"
+      },
+      {
+        "label": "하나씩 정하기"
+      }
+    ],
+    "free": true
+  },
   "replies": [],
   "raws": [],
   "work": "20261123-최고관리자-instruments",
