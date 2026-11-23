@@ -1,9 +1,9 @@
 {
-  "at": 1795417194217,
+  "at": 1795418994412,
   "pc": "BREX_06",
   "by": "최고관리자",
   "data": {
-    "name": "[주간보고 UX/UI] PL-11 / All (PL-11.3)",
+    "name": "[주간보고 UX/UI] PL-11.4 / All (PL-11.3)",
     "values": [
       [
         "Part",
@@ -4678,15 +4678,15 @@
         ]
       }
     ],
-    "at": 1795417194215,
+    "at": 1795418994411,
     "readonly": true,
     "azure": true,
     "wbs": true,
     "count": 21,
     "total": 7,
     "src": {
-      "id": 18256,
-      "url": "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/18256",
+      "id": 18561,
+      "url": "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/18561",
       "sprint": "PL-11.3"
     },
     "warn": ""
