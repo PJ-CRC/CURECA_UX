@@ -1,5 +1,5 @@
 {
-  "reportAt": "2026-11-23T14:04:59+09:00",
+  "reportAt": "2026-11-23T14:06:00+09:00",
   "pc": "BREX_06",
   "slug": "brex-06",
   "user": "최고관리자",
@@ -8,7 +8,7 @@
   "alive": true,
   "status": "working",
   "msg": "처리 중: PENDING R046",
-  "statusAt": "2026-11-23T14:04:56+09:00",
+  "statusAt": "2026-11-23T14:05:59+09:00",
   "claude": "따로 설치",
   "claudeWay": "cli",
   "autoWatch": true,
@@ -326,12 +326,20 @@
   ],
   "turns": [
     {
-      "at": "2026-11-23T14:04:42+09:00",
+      "at": "2026-11-23T14:05:48+09:00",
       "what": "PENDING R046",
-      "resume": true,
+      "resume": false,
       "end": "",
       "ok": null,
       "sec": null
+    },
+    {
+      "at": "2026-11-23T14:04:42+09:00",
+      "what": "PENDING R046",
+      "resume": true,
+      "end": "2026-11-23T14:05:47+09:00",
+      "ok": true,
+      "sec": 65
     },
     {
       "at": "2026-11-23T13:01:41+09:00",
