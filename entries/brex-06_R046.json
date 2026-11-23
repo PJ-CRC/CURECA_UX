@@ -2,11 +2,11 @@
   "id": "brex-06_R046",
   "kind": "request",
   "team": "cureca",
-  "status": "보류",
-  "at": "2026-11-23T11:24:40+09:00",
+  "status": "대기",
+  "at": "2026-11-23T11:25:03+09:00",
   "createdAt": "2026-11-23T11:09:41+09:00",
   "by": "최고관리자",
-  "doneBy": "Claude",
+  "doneBy": "최고관리자",
   "pc": "BREX_06",
   "reqId": "R046",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,25 +17,21 @@
   "type": "요청",
   "layout": "",
   "text": "samples 메뉴 기존에서 신규로 다시 만들어줘",
-  "note": "케이스 3 · 2단계 · 20261123-최고관리자-samples-2 — 근거 확인 요청\n- 정책 9개 · 기준데이터 5개 · Setting 화면 2개 · DS-0008을 읽고 대조함\n- 기존 화면이 정책과 다름 10곳: Status 목록에 Ordered 없음 · Product 목록 고정(질문 대기), Progress · Start Date/Time · 단계 시각 · Export 저장 항목 · L-IOS .CVS/Popup · Protocol Name 표현(변경 확인), Extraction Protocol 장비(질문)\n- 확인 필요 반영 대기 10건이 근거로 풀려 작업 중에 더함(총 39건)\n- 정책 수정 범위 3줄(POL-SMP-001 · POL-TST-001 · POL-TST-006 cids) = DS-0008(결정, 멈춘 작업이 반영하던 것)\n- 물은 것: DS-0008을 이 작업이 이어 받을지, Extraction Protocol을 M9600만 그릴지(STARlet은 질문), 3단계로 넘어갈지",
+  "note": "",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": {
-    "q": "DS-0008을 이 작업이 이어 받고, Extraction Protocol은 M9600 기준으로 그린 뒤 3단계로 넘어갈까요?",
-    "options": [
-      {
-        "label": "추천대로 진행"
-      },
-      {
-        "label": "하나씩 정하기"
-      }
-    ],
-    "free": true
-  },
-  "replies": [],
+  "ask": null,
+  "replies": [
+    {
+      "at": "2026-11-23T11:25:03+09:00",
+      "by": "최고관리자",
+      "q": "DS-0008을 이 작업이 이어 받고, Extraction Protocol은 M9600 기준으로 그린 뒤 3단계로 넘어갈까요?",
+      "text": "추천대로 진행"
+    }
+  ],
   "raws": [],
   "work": "20261123-최고관리자-samples-2",
   "handoff": null
