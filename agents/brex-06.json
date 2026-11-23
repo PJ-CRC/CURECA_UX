@@ -1,14 +1,14 @@
 {
-  "reportAt": "2026-11-23T14:13:02+09:00",
+  "reportAt": "2026-11-23T14:14:02+09:00",
   "pc": "BREX_06",
   "slug": "brex-06",
   "user": "최고관리자",
   "os": "windows",
   "version": "0.31.5",
   "alive": true,
-  "status": "idle",
-  "msg": "마지막 처리: JOBS J1265 · 컨텍스트 7%",
-  "statusAt": "2026-11-23T14:12:55+09:00",
+  "status": "working",
+  "msg": "처리 중: JOBS J1270",
+  "statusAt": "2026-11-23T14:13:57+09:00",
   "claude": "따로 설치",
   "claudeWay": "cli",
   "autoWatch": true,
@@ -325,6 +325,14 @@
     }
   ],
   "turns": [
+    {
+      "at": "2026-11-23T14:13:45+09:00",
+      "what": "JOBS J1270",
+      "resume": false,
+      "end": "",
+      "ok": null,
+      "sec": null
+    },
     {
       "at": "2026-11-23T14:11:55+09:00",
       "what": "JOBS J1265",
