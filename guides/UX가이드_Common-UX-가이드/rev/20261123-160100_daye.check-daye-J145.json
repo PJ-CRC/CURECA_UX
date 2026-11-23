@@ -2,9 +2,9 @@
   "jobId": "J145",
   "pc": "DAYE",
   "by": "정다예",
-  "at": "2026-11-23T16:06:36+09:00",
-  "status": "완료",
-  "note": "후보 76개(작업 페이지 「Sample Tracking Ⓛ / Ⓣ」 — Figma에서는 이름이 「…_re」로 바뀌어 있음, 페이지 ID 3074:80457 같음 — 의 LI-/TI- 프레임) 중 화면 ID 4개(프레임 7개) 수정 필요. ① TI-SPT-01 · TI-SPT-01-01 일부 프레임이 L-IOS LNB(Material Setup · Quick Start · Run · Shut Down)를 쓰고 있음 ② TI-SPT-01-02 · -03의 「Assay Pack Setting」 표기. 나머지 L-IOS · T-IOS 화면의 LNB(아래쪽 User Name · L-IOS Shut Down)는 가이드와 같음. Profile(Console · TSS 미노출)은 Figma 가이드 프레임(COMM-3-a) 쪽을 고칠 건이라 넣지 않음.",
+  "at": "2026-11-23T16:07:32+09:00",
+  "status": "반영 안 함",
+  "note": "정다예가 반영하지 않기로 함",
   "scope": "",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
   "items": [
