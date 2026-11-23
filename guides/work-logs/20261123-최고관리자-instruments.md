@@ -97,14 +97,14 @@ started: 2026-11-23
 
 | # | 무엇 (절차 4번 순서 3의 1 ~ 6) | 관련된 곳 (CID · 디스크립션 번호) | 넘기는 곳 (2단계 / 3단계 질문 대기) | 이어진 번호 (Q · C · 논의 대상 ID / 근거로 풀림) |
 | --- | --- | --- | --- | --- |
-| 1 | 1. 기능 정의가 안 된 요소: Door Control 안내 문구가 원본 화면 · 케이스에 세 가지("Close the door, then press Lock to lock it." / "Close the door and press Lock. The module will resume once locked." / "Close the door and press the 'Lock' button to resume the module"), 어느 때 무엇을 보이는지 디스크립션 2-6에 없음 | LI-INS-01-P #2-6 · #2-7 | 3단계 질문 대기 | 3단계로 |
-| 2 | 2. Alert · Confirm 보완 필요 지점: Management [Cancel]로 바꾼 값이 있는 채 닫을 때 묻는지 디스크립션에 없음 | TI-INS-02-01-P #3 | 2단계 | 3단계로 (관련 자료 없음, 팝업용 확인 알럿 없음) |
-| 3 | 2. Alert · Confirm 보완 필요 지점: [Unlock all doors]를 누를 때 확인 팝업이 디스크립션에 없음 (개별 [Unlock]은 Running이면 확인 팝업) | LI-INS-01-P #3 | 2단계 | 3단계로 (알럿 카탈로그에 없음) |
-| 4 | 3. IA와 화면이 다른 곳: 화면 정보 경로 "Instrument > Overview Tab" 등(IA는 Instrument > Overview), TI-INS-01-T 패널 CID가 TI-INS-02-T(반영 대기 R03) | 7화면 화면 정보 | 3단계 질문 대기 | 3단계로 |
-| 5 | 5. 반영 대기 R04가 `대기 (확인 필요)`: Running Module Unlock 확인 문구가 Confirm_008과 다름 | Door Control Popup (LI-INS-01-P) R04 | 2단계 | 3단계로 (카탈로그 Confirm_008은 All Tab용 "Unlock the door?", Door Control 확인 문구는 카탈로그에 없음) |
-| 6 | 5. 반영 대기 R09가 `대기 (임시 정책 적용 예정)`: Run 중 잠금 해제 후 Door를 열지 않은 경우 (PV-0001) | Door Control Popup (LI-INS-01-P) R09 | 2단계 | 3단계로 (옛 PV-0001 승인 대기) |
-| 7 | 5. 반영 대기 R06이 `대기 (정의 필요)` · R07이 `대기 (고객 논의)`: Running이 아닌 이유로 바꿀 수 없을 때의 알럿, Error Rate 표시 위치(CA-0001) | Management Popup (TI-INS-02-01-P) R06 · R07, (LI-INS-02-01-P) R03 | 2단계 | 3단계로 (R06 알럿 정의 없음, R07 · R03은 옛 CA-0001 고객 논의) |
-| 8 | 5. 반영 대기 R10이 `대기 (확인 필요)`: LNB에 Instrument가 두 번 (L-IOS도 Instruments · Instrument 둘) | All Tab (TI-INS-02-T) R10, LI-INS-02-T 화면 | 3단계 질문 대기 | 3단계로 |
+| 1 | 1. 기능 정의가 안 된 요소: Door Control 안내 문구가 원본 화면 · 케이스에 세 가지("Close the door, then press Lock to lock it." / "Close the door and press Lock. The module will resume once locked." / "Close the door and press the 'Lock' button to resume the module"), 어느 때 무엇을 보이는지 디스크립션 2-6에 없음 | LI-INS-01-P #2-6 · #2-7 | 3단계 질문 대기 | Q1 |
+| 2 | 2. Alert · Confirm 보완 필요 지점: Management [Cancel]로 바꾼 값이 있는 채 닫을 때 묻는지 디스크립션에 없음 | TI-INS-02-01-P #3 | 2단계 | Q2 |
+| 3 | 2. Alert · Confirm 보완 필요 지점: [Unlock all doors]를 누를 때 확인 팝업이 디스크립션에 없음 (개별 [Unlock]은 Running이면 확인 팝업) | LI-INS-01-P #3 | 2단계 | Q3 |
+| 4 | 3. IA와 화면이 다른 곳: 화면 정보 경로 "Instrument > Overview Tab" 등(IA는 Instrument > Overview), TI-INS-01-T 패널 CID가 TI-INS-02-T(반영 대기 R03) | 7화면 화면 정보 | 3단계 질문 대기 | Q4 · C5 |
+| 5 | 5. 반영 대기 R04가 `대기 (확인 필요)`: Running Module Unlock 확인 문구가 Confirm_008과 다름 | Door Control Popup (LI-INS-01-P) R04 | 2단계 | Q5 |
+| 6 | 5. 반영 대기 R09가 `대기 (임시 정책 적용 예정)`: Run 중 잠금 해제 후 Door를 열지 않은 경우 (PV-0001) | Door Control Popup (LI-INS-01-P) R09 | 2단계 | Q6 |
+| 7 | 5. 반영 대기 R06이 `대기 (정의 필요)` · R07이 `대기 (고객 논의)`: Running이 아닌 이유로 바꿀 수 없을 때의 알럿, Error Rate 표시 위치(CA-0001) | Management Popup (TI-INS-02-01-P) R06 · R07, (LI-INS-02-01-P) R03 | 2단계 | Q7 · Q8 |
+| 8 | 5. 반영 대기 R10이 `대기 (확인 필요)`: LNB에 Instrument가 두 번 (L-IOS도 Instruments · Instrument 둘) | All Tab (TI-INS-02-T) R10, LI-INS-02-T 화면 | 3단계 질문 대기 | 근거로 풀림 (가이드 `Navigation/LNB` 컴포넌트로 그림, 작업 기록 "근거로 풀린 것") |
 | 9 | 3. IA와 화면이 다른 곳: 작업 페이지에 Run-time Info Popup (TI-INS-02-02-P) 기획 프레임이 있으나 IA에 없음 (원본 All Tab 4-1 취소선으로 제거) | TI-INS-02-02-P | 3단계 질문 대기 | 근거로 풀림 (`policy/permission-matrix.csv`: Runtime Info Popup은 IA v1.03에서 제거 → 그리지 않음) |
 | 10 | 6. 요청에서 생긴 물음 (기존 화면과 맞지 않음): 반영 대기 R02 · R06의 "지금"(자동 잠금 문구 · Lock 버튼 없음)이 원본 v2.1.17(자동 잠금 폐지 · [Lock] 버튼)과 다름. POL-EQP-008과 대조해 바꿀 것을 다시 정함 | Door Control Popup (LI-INS-01-P) R02 · R06, LI-INS-01-T 6, LI-INS-02-T 3 · 3-1 | 2단계 | DS-0011 |
 
