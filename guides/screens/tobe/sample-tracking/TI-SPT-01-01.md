@@ -14,7 +14,7 @@ policies: [POL-SMP-001, POL-SMP-002, POL-TST-006 · DS-0008]
 basis:
 basis_versions:
 source: tobe
-figma:
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3158-53196
 ---
 # TI-SPT-01-01 Details
 
