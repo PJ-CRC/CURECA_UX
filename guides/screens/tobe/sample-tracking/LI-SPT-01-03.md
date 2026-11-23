@@ -16,7 +16,7 @@ basis_versions: # 문서마다 basis 시각 전에 마지막으로 바뀐 때 (r
 source: tobe   # To-Be 화면 MD. 작업방에 그렸는지는 머리말 figma로 가름
 figma:         # 작업방의 이 CID 섹션 링크
 ---
-# LI-SPT-01-03 Protocol Info - Extraction Protocol
+# CID 화면 이름
 
 - T/L 차이:
 - 호출하는 화면: [CID] 화면 이름 (어디서 → 어디로)
@@ -112,12 +112,13 @@ figma:         # 작업방의 이 CID 섹션 링크
 
 | ID | 타입 | 변경 전 | 변경 후 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| R01 | 점검 발견 | Figma 프레임 이름 "LI-SPT-01-02" | LI-SPT-01-03 | `ia/ia-screens.csv` | 작업 중 (20261120-최고관리자-samples) |
-| R02 | 점검 발견 | 3 참조 "TI-STN-03-02-02-M" (L-IOS 화면에서 T-IOS CID) | L-IOS Protocol Setting CID(LI-STN-03-02-02) | `screens/setting/` | 작업 중 (20261120-최고관리자-samples) |
-| R03 | 점검 발견 | 화면 이름 "Samples Details" | IA 이름 | `ia/ia-screens.csv` | 작업 중 (20261120-최고관리자-samples) |
+| R01 | 점검 발견 | Figma 프레임 이름 "LI-SPT-01-02" | LI-SPT-01-03 | `ia/ia-screens.csv` | 대기 |
+| R02 | 점검 발견 | 3 참조 "TI-STN-03-02-02-M" (L-IOS 화면에서 T-IOS CID) | L-IOS Protocol Setting CID(LI-STN-03-02-02) | `screens/setting/` | 대기 |
+| R03 | 점검 발견 | 화면 이름 "Samples Details" | IA 이름 | `ia/ia-screens.csv` | 대기 |
 | R04 | 기준 자료 변경 | Temp.(˚C) 범위 "(0~2,000)" | TI-SPT-01-03 반영 대기 목록 3과 같이 | POL-TST-007 | 대기 (확인 필요) |
 
 ## 변경 이력
 
 | 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 (논의 대상 · 정책 ID · 반영 대기 ID) |
 | --- | --- | --- | --- | --- |
+| | 2026-11-23 | 멈춘 작업(20261120-최고관리자-samples)이 쓴 화면 MD 내용 · 섹션 링크를 지우고 빈 틀로 되돌림. 반영 대기 목록은 asis 화면 MD의 원래 변경 전 · 변경 후 · 상태로 되돌림(그 작업이 더한 줄은 상태만 대기로) | Claude (최고관리자 요청 R045) | 20261123-최고관리자-samples |
