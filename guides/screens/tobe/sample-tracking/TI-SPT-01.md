@@ -26,8 +26,8 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 
 **0  Samples 화면**
 - 정의
-  - Run Start<span style="color:red">를</span> 통해 검사를 시작한 검체 정보
-  - 검체별 검사 단위로 리스트 노출
+  - Run Start<span style="color:red">를</span> 통해 검사를 시작한 Sample 정보
+  - Sample별 검사 단위로 리스트 노출
 - 동작
   - 리스트 영역 선택 시, 기존 리스트 영역이 좌측으로 축소되며 우측에서 상세 페이지가 밀고 나오며 노출
 
@@ -36,7 +36,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 - 공통 UX 참고 : COMM-5-p
 
 **1-1  Sample ID(Text Input)**
-- 기능 : 검체 ID를 입력하여 데이터 조회
+- 기능 : Sample ID를 입력하여 데이터 조회
 - 동작
   - 하위 리스트 내 Sample ID 컬럼 대상으로 입력
   - 입력한 텍스트가 DB와 완전 일치하는 항목만 리스트에 노출
@@ -45,15 +45,15 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 **1-2  Product(Multi-Select Dropdown)**
 - 기능
   - 검사 항목을 다중 선택하여 데이터 조회
-- Default : All
+- 기본값 : All
 - 드롭다운 리스트 항목
   - All, RP1, RP2, RP3, PB, GI-V, GI-B1, GI-B2, GI-P, Allplex HPV28, STI-12
 - 공통 UX 참고 : COMM-5-h(1/2)
 
 **1-3  Sample Type(Multi-Select Dropdown)**
 - 기능
-  - 검체 타입을 다중 선택하여 데이터 조회
-- Default : All
+  - Sample 타입을 다중 선택하여 데이터 조회
+- 기본값 : All
 - 드롭다운 리스트 항목
   - All, Swab, Aspirate, BAL, Saliva, Sputum, Raw stool, Cary-blair, eNAT stool, Fecal swab, Thinprep, Surepath, Cellpreserv, Urine, Semen
 - 공통 UX 참고 : COMM-5-h(1/2)
@@ -64,7 +64,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
   - 일자 유형[좌] : 조회하고 싶은 일자 유형 선택
   - 특정 일자 및 기간[우] : 선택 유형에 대한 일자 및 기간 설정
   - 단, 오늘 기준 미래일자는 선택 불가
-- Default
+- 기본값
   - 일자 유형[좌] : Order Date
   - 특정 일자 및 기간[우] : 시작일-7일 전 ~ 종료일-Today
 - 드롭다운 리스트 항목
@@ -74,51 +74,51 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 **1-5  Status(Dropdown)**
 - 기능
   - 검사 상태를 단일 선택하여 데이터 조회
-- Default : All
+- 기본값 : All
 - 드롭다운 리스트 항목
   - All, Ready, Not Tested, Running, Completed, Failed
 - 공통 UX 참고 : COMM-5-h(1/2)
 
 **1-6  STAT Only(Check box)**
-- 기능 : 응급 상태의 검체 데이터 조회
-- Default : UnSelected(미선택)
+- 기능 : 응급 상태의 Sample 데이터 조회
+- 기본값 : UnSelected(미선택)
 - 리스트 노출
-  - Selected(선택) 시, 응급 상태의 검체만 노출
-  - UnSelected(미선택) 시, 전체 검체 노출
+  - Selected(선택) 시, 응급 상태의 Sample만 노출
+  - UnSelected(미선택) 시, 전체 Sample 노출
 - 공통 UX 참고 : COMM-5-q
 
 **1-7  [Reset] · [Search] 버튼**
 - <span style="color:red">동작</span>
-  - <span style="color:red">[Reset] 클릭 시, 설정한 조회 조건을 모두 Default로 초기화</span>
+  - <span style="color:red">[Reset] 클릭 시, 설정한 조회 조건을 모두 기본값으로 초기화</span>
   - <span style="color:red">[Search] 클릭 시, 모든 조회 조건을 함께 적용한 결과를 리스트에 노출</span>
 - <span style="color:red">공통 UX 참고 : COMM-5-p</span>
 
 **2  Samples 리스트**
-- 정의 : 검사 접수된 검체 중 Run을 실행한 검체 리스트
-- <span style="color:red">표출 단위 : 검사 항목(Product) 단위로 한 줄씩 노출</span>
+- 정의 : 검사 접수된 Sample 중 Run을 실행한 Sample 리스트
+- <span style="color:red">노출 단위 : 검사 항목(Product) 단위로 한 줄씩 노출</span>
 - 정렬
-  - Default : Start Date/Time 기준 최신순(내림차순)
-  - Default 조건 동일 시, Sample ID 기준 오름차순
+  - 기본값 : Start Date/Time 기준 최신순(내림차순)
+  - 기본값 조건 동일 시, Sample ID 기준 오름차순
 - <span style="color:red">노출 개수 : 10 items (10, 30, 50, 100 중 선택)</span>
 - <span style="color:red">데이터가 없을 때 : 리스트 영역에 No Data 노출, Items 0</span>
 - 동작
-  - 특정 샘플 행 클릭 시 샘플 상세 노출 : TI-SPT-01-01
+  - 특정 Sample 행 클릭 시 Sample 상세 노출 : TI-SPT-01-01
 - 공통 UX 참고 : COMM-5-g
 - 정책 참고 : POL-SMP-005
 
-**2-1  리스트 표출 항목**
+**2-1  리스트 노출 항목**
 - Sample ID
-  - <span style="color:red">LIS에서 받은 검사 오더의</span> 검체 ID 정보
+  - <span style="color:red">LIS에서 받은 검사 오더의</span> Sample ID 정보
 - Product
   - <span style="color:red">LIS에서 받은 검사 오더의</span> 검사 항목 정보
   - 하나의 검사 항목 단위 정보 노출
 - Sample Type
-  - <span style="color:red">LIS에서 받은 검사 오더의</span> 검체 타입 정보
+  - <span style="color:red">LIS에서 받은 검사 오더의</span> Sample 타입 정보
 - Order Date
   - LIS 접수 일자 정보
   - 표기 : YYYY-MM-DD
 - Status
-  - 검체의 검사 진행 상태 정보
+  - Sample의 검사 진행 상태 정보
   - 상태 값 : COMM-4-a(4/4)
 - Progress
   - 전체 검사 프로세스 대비 단계별 진행 현황 정보
@@ -130,7 +130,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
   - L-IOS가 <span style="color:red">D.A PC</span>(결과처리 시스템)로부터 검사 결과를 받은 시점
   - <span style="color:red">표기 : YYYY-MM-DD hh:mm:ss / 데이터 부재 시 '-' 노출</span>
 - STAT
-  - <span style="color:red">LIS에서 받은 검사 오더의</span> 검체 응급 여/부 상태 정보
+  - <span style="color:red">LIS에서 받은 검사 오더의</span> Sample 응급 여/부 상태 정보
 - 정책 참고 : POL-SMP-001, POL-SMP-002
 - 케이스 참고 : TI-SPT-01/Case > Case 1
 
@@ -166,7 +166,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 | 2-1 | 행 8 | AA0005006 · GI-B1 · eNAT stool · 2026-03-05 · Running · 2026-03-05 10:22:48 · - · - | 기존 원본 행 8 · `glossary/status-values.csv` · `test-items.csv` · `sample-types.csv` (Order Date는 기존 원본에 값이 없어 검색 기간 안의 날짜) |
 | 2-1 | 행 9 | AA0005006 · GI-B2 · eNAT stool · 2026-03-05 · Running · 2026-03-05 10:22:48 · - · - | 기존 원본 행 9 · `glossary/status-values.csv` · `test-items.csv` · `sample-types.csv` (Order Date는 기존 원본에 값이 없어 검색 기간 안의 날짜) |
 | 2-1 | 행 10 | AA0005007 · Allplex HPV28 · Surepath · 2026-03-05 · Running · 2026-03-05 10:22:48 · - · - | 기존 원본 행 10 · `glossary/status-values.csv` · `test-items.csv` · `sample-types.csv` (Order Date는 기존 원본에 값이 없어 검색 기간 안의 날짜) |
-| 2-1 | Progress | 상태별 단계 표시 (Not Tested · Ready: 모두 대기, Running: 진행 중 단계까지, Completed: 모두 완료, Failed: 실패 단계) | `glossary/test-stages.csv` · 기존 원본 |
+| 2-1 | Progress | 상태별 단계 노출 (Not Tested · Ready: 모두 대기, Running: 진행 중 단계까지, Completed: 모두 완료, Failed: 실패 단계) | `glossary/test-stages.csv` · 기존 원본 |
 | 4 | 페이지네이션 | 1 / 10페이지 (First) | COMM-5-l |
 
 ## 화면 표기 글자

@@ -19,22 +19,22 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 # LI-SPT-01-01 Details
 
 - T/L 차이: 없음 (Sample Location 항목 이름은 질문 대기)
-- 호출하는 화면: [LI-SPT-01] Samples (리스트 행 선택 → 상세), [LI-SPT-02] 96-DWP (5-1 [More] → 이동), [LI-SPT-03] PCR Plate (6-1 [More] → 이동), [LI-SPT-01-02] Protocol Info (8-1 [More] → 팝업)
+- 호출하는 화면: [LI-SPT-01] Samples (리스트 행 선택 → 상세), [LI-SPT-02] 96-DWP (5-1 [More] → 이동), [LI-SPT-03] PCR Plate (6-1 [More] → 이동), [LI-SPT-01-02] Protocol Info (8-1 [More] → Popup)
 - 호출되는 곳: LI-SPT-01 Samples 리스트 행
 
 ## 디스크립션
 
 **0  <span style="color:red">Details</span> 화면**
 - 정의
-  - 검사 중 또는 검사 완료된 검체의 상세 정보를 볼 수 있는 화면
+  - 검사 중 또는 검사 완료된 Sample의 상세 정보를 볼 수 있는 화면
   - 기본 정보 및 단계별 정보 노출
 - 동작
   - 리스트 영역 선택 시, 기존 리스트 영역이 좌측으로 축소되며 우측에서 상세 페이지가 밀고 나오며 노출
 
 **1  <span style="color:red">Details</span> 타이틀 영역**
 - 정의
-  - 검체의 기본 속성 정보 영역
-- 표출 항목
+  - Sample의 기본 속성 정보 영역
+- 노출 항목
   - Sample ID
   - Product : RP1, RP2, RP3, PB, GI-V, GI-B1, GI-B2, GI-P, <span style="color:red">Allplex HPV28</span>, STI-12
   - Status : 공통 UX 참고(COMM-4-a(4/4))
@@ -42,10 +42,10 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 
 **2  검사 단계 정보 영역**
 - 정의
-  - 검사 프로세스 단계별 장비 및 검사 시간 정보 영역
+  - 검사 프로세스 단계별 Module · Unit 및 검사 시간 정보 영역
   - 모든 단계의 Module 및 Unit 정보는 Run Start 시점부터 노출
   - Start 및 End Date/Time의 경우 해당 단계 진/출입 시 노출
-- 표출 항목
+- 노출 항목
   - Process : Sample Preparation, Nucleic Acid Extraction, PCR Setup, Plate Sealing, PCR
   - Module : <span style="color:red">Module 이름 정보</span>(단, Sample Preparation 단계의 경우 Module/Unit 정보 미노출)
   - Unit : <span style="color:red">상위 Module 내 Unit 이름 정보, 같은 Unit이 여러 대면 이름 (번호)</span>
@@ -55,9 +55,9 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 
 **3  General 영역**
 - 정의
-  - 검체의 기본 속성 정보 영역
-  - 사용자가 선택한 리스트 내 표출되는 정보와 동일한 정보
-- 표출 항목
+  - Sample의 기본 속성 정보 영역
+  - 사용자가 선택한 리스트 내 노출되는 정보와 동일한 정보
+- 노출 항목
   - Sample Type
   - Order Date
   - Start Date/Time : <span style="color:red">Prep 시스템이 Sample Barcode를 읽은 시점</span>
@@ -70,14 +70,14 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 
 **4  Sample Location 영역**
 - 정의
-  - <span style="color:red">Sample Storage</span> Module에서의 검체 위치 노출 영역
-  - 샘플 회수 전 : <span style="color:red">Inbound Trolley</span> 내 검체 위치 값
-  - 샘플 회수 후 : Outbound Trolley 내 검체 위치 값
-- 표출 항목
+  - <span style="color:red">Sample Storage</span> Module에서의 Sample 위치 노출 영역
+  - Sample 회수 전 : <span style="color:red">Inbound Trolley</span> 내 Sample 위치 값
+  - Sample 회수 후 : Outbound Trolley 내 Sample 위치 값
+- 노출 항목
   - Location Type(<span style="color:red">Sample</span> 투입구 유형) : Trolley, STAT
-  - Return <span style="color:red">Status</span> : N [샘플 회수 전 : <span style="color:red">Inbound Trolley</span> 정보] / Y [샘플 회수 후 : Outbound Trolley 정보]
+  - Return <span style="color:red">Status</span> : N [Sample 회수 전 : <span style="color:red">Inbound Trolley</span> 정보] / Y [Sample 회수 후 : Outbound Trolley 정보]
   - Trolley ID : 시스템에 등록된 Trolley ID 정보 (8자리)
-  - Tray Position : 트레이 층수(F 단위 표기) / 위치
+  - Tray Position : Tray 층수(F 단위 표기) / 위치
   - STAT Slot No. : STAT 슬롯 내 Socket 순번
   - Socket ID : <span style="color:red">육안으로 확인 가능한 Socket ID 정보</span>
   - Socket Position : <span style="color:red">Socket 내 Sample 위치 정보</span>
@@ -87,60 +87,60 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 - 정의
   - 검사 단계별 사용 Plate 상세 정보 영역
   - 선택된 검사 단계에서의 Plate 상세 정보 노출
-- 표출 항목
-  - ID : Plate 고유 ID (바코드 정보)
-  - <span style="color:red">Well No.</span> : Plate 내 검체 위치 (행/열 좌표 정보)
+- 노출 항목
+  - ID : Plate 고유 ID (Barcode 정보)
+  - <span style="color:red">Well No.</span> : Plate 내 Sample 위치 (행/열 좌표 정보)
 
 **5-1  [More] 버튼**
 - 정의
   - 96-DWP Plate 상세 정보 이동 버튼
 - 동작
   - 클릭 시 <span style="color:red">[96-DWP]</span> 메뉴 내 해당 Sample<span style="color:red">이</span> 포함된 Plate 상세 정보 페이지로 즉시 이동
-  - 이동 시 해당 Sample이 Plate 내에서 해당 검체만 활성화 된 상태로 노출
+  - 이동 시 해당 Sample이 Plate 내에서 해당 Sample만 활성화 된 상태로 노출
 
 **6  PCR Plate 정보 영역**
 - 정의
   - 검사 단계별 사용 Plate 상세 정보 영역
   - 선택된 검사 단계에서의 Plate 상세 정보 노출
-- 표출 항목
-  - ID : Plate 고유 ID (바코드 정보)
-  - <span style="color:red">Well No.</span> : Plate 내 검체 위치 (행/열 좌표 정보)
+- 노출 항목
+  - ID : Plate 고유 ID (Barcode 정보)
+  - <span style="color:red">Well No.</span> : Plate 내 Sample 위치 (행/열 좌표 정보)
 
 **6-1  [More] 버튼**
 - 정의
   - PCR Plate 상세 정보 이동 버튼
 - 동작
   - 클릭 시 [PCR Plate] 메뉴 내 해당 Sample<span style="color:red">이</span> 포함된 Plate 상세 정보 페이지로 즉시 이동
-  - 이동 시 해당 Sample이 Plate 내에서 해당 검체만 활성화 된 상태로 노출
+  - 이동 시 해당 Sample이 Plate 내에서 해당 Sample만 활성화 된 상태로 노출
 
 **7  Reagents 정보 영역**
 - 정의
-  - 검사 단계별 사용(투입)된 시약 정보 오름차순 노출
+  - 검사 단계별 사용(투입)된 Reagent 정보 오름차순 노출
 - 노출 조건
-  - 검사 단계의 시약 데이터가 존재할 경우에만 영역 노출, 데이터 부재 시 영역 전체를 미노출 처리
+  - 검사 단계의 Reagent 데이터가 존재할 경우에만 영역 노출, 데이터 부재 시 영역 전체를 미노출 처리
 - 정렬 : 공통 UX 참고 : COMM-4-a
-- 표출 항목
-  - Kit : 시약 제품명 (구성품 단위 노출 X)
-  - Barcode : 바코드 체계 참고 (COMM-4-b)
-  - 단, 하위 시약은 대표 바코드 표기
-  - 1) M96 Kit : LB DWP 바코드
-  - 2) UC Kit : TUB 대표 바코드 (EB TUB 오른편에 부착된 바코드)
+- 노출 항목
+  - Kit : Reagent 제품명 (구성품 단위 노출 X)
+  - Barcode : Barcode 체계 참고 (COMM-4-b)
+  - 단, 하위 Reagent은 대표 Barcode 표기
+  - 1) M96 Kit : LB DWP Barcode
+  - 2) UC Kit : TUB 대표 Barcode (EB TUB 오른편에 부착된 Barcode)
 
 **8  Protocol 정보 영역**
 - 정의
-  - 전처리 및 핵산추출 단계에서 적용된 프로토콜 정보
+  - 전처리 및 핵산 추출 단계에서 적용된 Protocol 정보
   - Protocol Setting 메뉴에서 생성 관리
-- 표출 항목
-  - Pre-Treatment Protocol : 전처리 단계에서 적용된 프로토콜 명 노출
-  - Extraction Protocol : 핵산 추출 단계에서 적용된 프로토콜 명 노출
+- 노출 항목
+  - Pre-Treatment Protocol : 전처리 단계에서 적용된 Protocol 명 노출
+  - Extraction Protocol : 핵산 추출 단계에서 적용된 Protocol 명 노출
 - 정책 참고 : POL-TST-006
 
 **8-1  [More] 버튼**
 - 정의
   - Protocol 상세 정보 노출 버튼
 - 동작
-  - 클릭 시, <span style="color:red">LI-SPT-01-02</span> 팝업 노출
-  - <span style="color:red">팝업의 Pre-Treatment Protocol 탭 : LI-SPT-01-02, Extraction Protocol 탭 : LI-SPT-01-03</span>
+  - 클릭 시, <span style="color:red">LI-SPT-01-02</span> Popup 노출
+  - <span style="color:red">Popup의 Pre-Treatment Protocol 탭 : LI-SPT-01-02, Extraction Protocol 탭 : LI-SPT-01-03</span>
 
 **9  [X] 버튼**
 - 동작
@@ -210,8 +210,8 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 
 | Case | 제목 | 조건 | 디스크립션 번호 | 종류 | 근거 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 검체 상태별 데이터 노출 항목 | 검체 상태별 | 2, 3 | 1 | 기존 원본 |
-| 2 | 샘플 투입 유형별 표출 데이터 노출 예시 | Trolley / STAT | 4 | 3 | 기존 원본 |
+| 1 | Sample 상태별 데이터 노출 항목 | Sample 상태별 | 2, 3 | 1 | 기존 원본 |
+| 2 | Sample 투입 유형별 데이터 노출 예시 | Trolley / STAT | 4 | 3 | 기존 원본 |
 
 ## 반영 대기 목록
 

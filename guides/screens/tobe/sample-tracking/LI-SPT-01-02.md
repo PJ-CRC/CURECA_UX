@@ -24,45 +24,45 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 
 ## 디스크립션
 
-**0  Protocol Info 팝업**
+**0  Protocol Info Popup**
 - 정의
-  - Pre-Treatment(전처리) 및 Extraction(핵산 추출) 단계에서 사용되는 프로토콜 정보
+  - Pre-Treatment(전처리) 및 Extraction(핵산 추출) 단계에서 사용되는 Protocol 정보
 
 **1  Protocol 유형(Tab)**
 - 정의
-  - 프로토콜 유형 탭(Tab) 구성
+  - Protocol 유형 탭(Tab) 구성
   - 활성 탭 변경 시, 해당 단계의 하위 데이터 세트를 동기화하여 노출
-- Default
+- 기본값
   - 최초 화면 진입 시 첫번째 탭을 기본 선택 상태로 노출
-- 표출 항목
+- 노출 항목
   - Pre-Treatment Protocol
   - Extraction Protocol
 - 공통 UX 참고 : COMM-5-s
 
 **2  Pre-Treatment Protocol 기본 정보 영역**
 - 정의
-  - Pre-Treatment(전처리) 단계에서 적용된 프로토콜 정보
-- 표출 항목
-  - Protocol Name : <span style="color:red">Allow Protocol Changes Before Test가 On이면 Run 준비의 Check Test Protocol 단계에서 고른 프로토콜 명</span>
-  - Protocol Name : <span style="color:red">Off이면 Protocol Setting에서 Apply한(Applied) 프로토콜 명</span>
-  - Modified by : 상위 프로토콜 정보를 최종으로 편집한 사용자 ID 정보
-  - Modified Date/Time : 상위 프로토콜 정보를 최종으로 편집 후 저장한 일시 정보
+  - Pre-Treatment(전처리) 단계에서 적용된 Protocol 정보
+- 노출 항목
+  - Protocol Name : <span style="color:red">Allow Protocol Changes Before Test가 On이면 Run 준비의 Check Test Protocol 단계에서 고른 Protocol 명</span>
+  - Protocol Name : <span style="color:red">Off이면 Protocol Setting에서 Apply한(Applied) Protocol 명</span>
+  - Modified by : 상위 Protocol 정보를 최종으로 편집한 사용자 ID 정보
+  - Modified Date/Time : 상위 Protocol 정보를 최종으로 편집 후 저장한 일시 정보
 - 정책 참고 : POL-TST-001, POL-TST-006
 
 **3  Pre-Treatment Protocol 상세 정보 영역**
 - 정의
   - <span style="color:red">Protocol Setting</span> > Pre-Treatment Protocol Setting에서 설정한 정보 노출
-- 표출 항목
+- 노출 항목
   - Process guide 참고 : <span style="color:red">LI-STN-03-01-02-01</span> / 세부정의
 - 정책 참고 : POL-TST-006
 
 **4  [Close] 버튼**
 - 동작
-  - 클릭 시, 해당 팝업 닫힘, 기존 진입 화면 유지
+  - 클릭 시, 해당 Popup 닫힘, 기존 진입 화면 유지
 
 **5  [X] 버튼**
 - 동작
-  - 클릭 시, 팝업이 닫힌 후 기존 화면 노출
+  - 클릭 시, Popup이 닫힌 후 기존 화면 노출
 - 공통 UX 참고 : COMM-5-m
 
 ## 화면 예시
