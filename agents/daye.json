@@ -1,5 +1,5 @@
 {
-  "reportAt": "2026-11-23T15:52:18+09:00",
+  "reportAt": "2026-11-23T15:53:19+09:00",
   "pc": "DAYE",
   "slug": "daye",
   "user": "정다예",
@@ -7,8 +7,8 @@
   "version": "0.31.6",
   "alive": true,
   "status": "idle",
-  "msg": "준비 확인 중 (Claude 로그인 · Figma 연결)",
-  "statusAt": "2026-11-23T15:52:09+09:00",
+  "msg": "요청을 기다리는 중",
+  "statusAt": "2026-11-23T15:53:11+09:00",
   "claude": "따로 설치",
   "claudeWay": "",
   "autoWatch": true,
