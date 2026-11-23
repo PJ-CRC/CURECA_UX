@@ -3,7 +3,7 @@ cid: LI-INS-01-P
 pair_cid:
 tl_relation: 단독
 title: Door Control Popup
-path: Instrument > Door Control Popup
+path: Instrument > Overview Tab > Door Control Popup
 type: Popup
 version: 2.1.17
 date: 2026.11.13
