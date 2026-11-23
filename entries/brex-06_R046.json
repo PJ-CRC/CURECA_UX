@@ -3,7 +3,7 @@
   "kind": "request",
   "team": "cureca",
   "status": "보류",
-  "at": "2026-11-23T13:09:13+09:00",
+  "at": "2026-11-23T14:02:39+09:00",
   "createdAt": "2026-11-23T11:09:41+09:00",
   "by": "최고관리자",
   "doneBy": "Claude",
@@ -17,7 +17,7 @@
   "type": "요청",
   "layout": "",
   "text": "samples 메뉴 기존에서 신규로 다시 만들어줘",
-  "note": "케이스 3 · 3단계 · 20261123-최고관리자-samples-2 — 3단계 용어 점검 · 마침 점검(기계 검사) 통과, 3단계를 마쳤습니다\n- 화면 MD 8개: 쓰지 않는 표현(검체 · 샘플 · 시약 · 프로토콜 · 팝업 · 바코드 · 트레이 · 표출 · Default 등) 183줄 → 표준어(Sample · Reagent · Protocol · Popup · Barcode · Tray · 노출 · 기본값)\n- Figma 8화면 · 케이스 4개 · 사용자 확인 목록: 같은 말 243곳 바꿈(빨간 취소선 · 업데이트 메모 · 기존 글자 인용은 그대로)\n- Details (TI/LI-SPT-01-01): 화면 표기 글자 표에 빠진 Product 더함\n- 작업 기록: 용어 치환 · 언어셋(언어셋에만 있음 7줄) · 찾은 것 · 단계 표 3단계 「기계 검사 통과」\n사용자 확인 목록: 질문 대기 12 · 변경 확인 32 (4단계에서 보여 드림). 모아 둔 질문: 없음\n작업 기준: basis 2026-11-23 11:10 · 작업규칙 rules @원본 · 정책서 policy · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 glossary · 화면 정의서 screens",
+  "note": "케이스 3 · 3단계 · 20261123-최고관리자-samples-2 — 3단계(화면 설계) 마침, 기계 검사 통과\n- 8화면 그림: Samples · Details · Protocol Info Pre-Treatment · Extraction (T · L), 케이스 Samples Case 1·2 · Details Case 1·2\n- 화면 MD 8개(tobe) 작성, 섹션 링크 기록\n- 사용자 확인 목록: 질문 대기 12 · 변경 확인 32 (4단계에서 보여 드림)\n- 컴포넌트 메모 새로 만듦: projects/etCQFF3CTf1EA6C79d4BBf/components.md\n- 물은 것: 4단계로 넘어가 사용자 확인 목록을 볼지",
   "shot": "",
   "shots": [],
   "images": [],
@@ -27,32 +27,16 @@
       "name": "TI-SPT-01"
     },
     {
-      "nodeId": "3162:53957",
-      "name": "TI-SPT-01/Case"
-    },
-    {
       "nodeId": "3164:54329",
       "name": "LI-SPT-01"
-    },
-    {
-      "nodeId": "3164:55612",
-      "name": "LI-SPT-01/Case"
     },
     {
       "nodeId": "3166:55338",
       "name": "TI-SPT-01-01"
     },
     {
-      "nodeId": "3168:56049",
-      "name": "TI-SPT-01-01/Case"
-    },
-    {
       "nodeId": "3170:56627",
       "name": "LI-SPT-01-01"
-    },
-    {
-      "nodeId": "3170:57589",
-      "name": "LI-SPT-01-01/Case"
     },
     {
       "nodeId": "3172:57889",
