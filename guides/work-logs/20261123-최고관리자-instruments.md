@@ -3,7 +3,7 @@ status: 진행 중
 requester: 최고관리자
 menu: Instruments
 cids: [TI-INS-01-T, LI-INS-01-T, TI-INS-02-T, LI-INS-02-T, TI-INS-02-01-P, LI-INS-02-01-P, LI-INS-01-P]
-policies: []
+policies: [POL-EQP-008, POL-EQP-004]
 cid_system:
 figma: UX AI TEST (etCQFF3CTf1EA6C79d4BBf) · Instrument Ⓛ / Ⓣ _re
 test: false
@@ -29,7 +29,7 @@ started: 2026-11-23
 | 4. 수정 · 확인 | | | |
 | 5. 완료 | | | |
 
-이어서 작업할 곳: 2단계 · 절차 1 요건마다 읽는 강도를 정함 (1단계 마침 2026-11-23, 반영 대기 묶음 1 ~ 4는 화면 MD에서 `작업 중`으로 바꿈)
+이어서 작업할 곳: 2단계 · 절차 6 근거 확인 질문을 보냄(R047, 2026-11-23: 질문 1 DS-0011 · 질문 4 케이스 화면 · 3단계로 넘어갈지). 답을 받으면 "답을 받은 뒤"부터 이어 감
 
 ## 요청
 
@@ -59,7 +59,12 @@ started: 2026-11-23
 
 ### 영향 화면
 
-없음 (1단계. 2단계에서 정책으로 찾은 것을 더함)
+| 화면 (CID) | 찾은 곳 | 영향 | 처리 |
+| --- | --- | --- | --- |
+| Dashboard (LI-DAS) | 2단계 정책 (POL-EQP-008 · POL-EQP-004, DS-0011) | 확인 필요 (Door 잠금 · Door Control 안내가 자동 잠금 기준이면 디스크립션 변경) | 완료 때 만듦 |
+| Dashboard (TI-DAS) | 2단계 정책 (POL-EQP-008 · POL-EQP-004, DS-0011) | 확인 필요 | 완료 때 만듦 |
+
+- DS-0011이 A(기존 화면대로)로 결정될 때만 영향이 생김. 같은 CID 체계(INS)로 정책에서 더 찾은 화면은 없음
 
 ## 읽은 기존 화면
 
@@ -89,16 +94,16 @@ started: 2026-11-23
 
 | # | 무엇 (절차 4번 순서 3의 1 ~ 6) | 관련된 곳 (CID · 디스크립션 번호) | 넘기는 곳 (2단계 / 3단계 질문 대기) | 이어진 번호 (Q · C · 논의 대상 ID / 근거로 풀림) |
 | --- | --- | --- | --- | --- |
-| 1 | 1. 기능 정의가 안 된 요소: Door Control 안내 문구가 원본 화면 · 케이스에 세 가지("Close the door, then press Lock to lock it." / "Close the door and press Lock. The module will resume once locked." / "Close the door and press the 'Lock' button to resume the module"), 어느 때 무엇을 보이는지 디스크립션 2-6에 없음 | LI-INS-01-P #2-6 · #2-7 | 3단계 질문 대기 | |
-| 2 | 2. Alert · Confirm 보완 필요 지점: Management [Cancel]로 바꾼 값이 있는 채 닫을 때 묻는지 디스크립션에 없음 | TI-INS-02-01-P #3 | 2단계 | |
-| 3 | 2. Alert · Confirm 보완 필요 지점: [Unlock all doors]를 누를 때 확인 팝업이 디스크립션에 없음 (개별 [Unlock]은 Running이면 확인 팝업) | LI-INS-01-P #3 | 2단계 | |
-| 4 | 3. IA와 화면이 다른 곳: 화면 정보 경로 "Instrument > Overview Tab" 등(IA는 Instrument > Overview), TI-INS-01-T 패널 CID가 TI-INS-02-T(반영 대기 R03) | 7화면 화면 정보 | 3단계 질문 대기 | |
-| 5 | 5. 반영 대기 R04가 `대기 (확인 필요)`: Running Module Unlock 확인 문구가 Confirm_008과 다름 | Door Control Popup (LI-INS-01-P) R04 | 2단계 | |
-| 6 | 5. 반영 대기 R09가 `대기 (임시 정책 적용 예정)`: Run 중 잠금 해제 후 Door를 열지 않은 경우 (PV-0001) | Door Control Popup (LI-INS-01-P) R09 | 2단계 | |
-| 7 | 5. 반영 대기 R06이 `대기 (정의 필요)` · R07이 `대기 (고객 논의)`: Running이 아닌 이유로 바꿀 수 없을 때의 알럿, Error Rate 표시 위치(CA-0001) | Management Popup (TI-INS-02-01-P) R06 · R07, (LI-INS-02-01-P) R03 | 2단계 | |
-| 8 | 5. 반영 대기 R10이 `대기 (확인 필요)`: LNB에 Instrument가 두 번 (L-IOS도 Instruments · Instrument 둘) | All Tab (TI-INS-02-T) R10, LI-INS-02-T 화면 | 3단계 질문 대기 | |
-| 9 | 3. IA와 화면이 다른 곳: 작업 페이지에 Run-time Info Popup (TI-INS-02-02-P) 기획 프레임이 있으나 IA에 없음 (원본 All Tab 4-1 취소선으로 제거) | TI-INS-02-02-P | 3단계 질문 대기 | |
-| 10 | 6. 요청에서 생긴 물음 (기존 화면과 맞지 않음): 반영 대기 R02 · R06의 "지금"(자동 잠금 문구 · Lock 버튼 없음)이 원본 v2.1.17(자동 잠금 폐지 · [Lock] 버튼)과 다름. POL-EQP-008과 대조해 바꿀 것을 다시 정함 | Door Control Popup (LI-INS-01-P) R02 · R06, LI-INS-01-T 6, LI-INS-02-T 3 · 3-1 | 2단계 | |
+| 1 | 1. 기능 정의가 안 된 요소: Door Control 안내 문구가 원본 화면 · 케이스에 세 가지("Close the door, then press Lock to lock it." / "Close the door and press Lock. The module will resume once locked." / "Close the door and press the 'Lock' button to resume the module"), 어느 때 무엇을 보이는지 디스크립션 2-6에 없음 | LI-INS-01-P #2-6 · #2-7 | 3단계 질문 대기 | 3단계로 |
+| 2 | 2. Alert · Confirm 보완 필요 지점: Management [Cancel]로 바꾼 값이 있는 채 닫을 때 묻는지 디스크립션에 없음 | TI-INS-02-01-P #3 | 2단계 | 3단계로 (관련 자료 없음, 팝업용 확인 알럿 없음) |
+| 3 | 2. Alert · Confirm 보완 필요 지점: [Unlock all doors]를 누를 때 확인 팝업이 디스크립션에 없음 (개별 [Unlock]은 Running이면 확인 팝업) | LI-INS-01-P #3 | 2단계 | 3단계로 (알럿 카탈로그에 없음) |
+| 4 | 3. IA와 화면이 다른 곳: 화면 정보 경로 "Instrument > Overview Tab" 등(IA는 Instrument > Overview), TI-INS-01-T 패널 CID가 TI-INS-02-T(반영 대기 R03) | 7화면 화면 정보 | 3단계 질문 대기 | 3단계로 |
+| 5 | 5. 반영 대기 R04가 `대기 (확인 필요)`: Running Module Unlock 확인 문구가 Confirm_008과 다름 | Door Control Popup (LI-INS-01-P) R04 | 2단계 | 3단계로 (카탈로그 Confirm_008은 All Tab용 "Unlock the door?", Door Control 확인 문구는 카탈로그에 없음) |
+| 6 | 5. 반영 대기 R09가 `대기 (임시 정책 적용 예정)`: Run 중 잠금 해제 후 Door를 열지 않은 경우 (PV-0001) | Door Control Popup (LI-INS-01-P) R09 | 2단계 | 3단계로 (옛 PV-0001 승인 대기) |
+| 7 | 5. 반영 대기 R06이 `대기 (정의 필요)` · R07이 `대기 (고객 논의)`: Running이 아닌 이유로 바꿀 수 없을 때의 알럿, Error Rate 표시 위치(CA-0001) | Management Popup (TI-INS-02-01-P) R06 · R07, (LI-INS-02-01-P) R03 | 2단계 | 3단계로 (R06 알럿 정의 없음, R07 · R03은 옛 CA-0001 고객 논의) |
+| 8 | 5. 반영 대기 R10이 `대기 (확인 필요)`: LNB에 Instrument가 두 번 (L-IOS도 Instruments · Instrument 둘) | All Tab (TI-INS-02-T) R10, LI-INS-02-T 화면 | 3단계 질문 대기 | 3단계로 |
+| 9 | 3. IA와 화면이 다른 곳: 작업 페이지에 Run-time Info Popup (TI-INS-02-02-P) 기획 프레임이 있으나 IA에 없음 (원본 All Tab 4-1 취소선으로 제거) | TI-INS-02-02-P | 3단계 질문 대기 | 근거로 풀림 (`policy/permission-matrix.csv`: Runtime Info Popup은 IA v1.03에서 제거 → 그리지 않음) |
+| 10 | 6. 요청에서 생긴 물음 (기존 화면과 맞지 않음): 반영 대기 R02 · R06의 "지금"(자동 잠금 문구 · Lock 버튼 없음)이 원본 v2.1.17(자동 잠금 폐지 · [Lock] 버튼)과 다름. POL-EQP-008과 대조해 바꿀 것을 다시 정함 | Door Control Popup (LI-INS-01-P) R02 · R06, LI-INS-01-T 6, LI-INS-02-T 3 · 3-1 | 2단계 | DS-0011 |
 
 ## 이번에 반영할 반영 대기 항목
 
@@ -126,6 +131,68 @@ started: 2026-11-23
 
 ## 근거
 
+요건 1은 경로 분기 기준 8(케이스 3)이라 "케이스 3 (다시 그리기)" 강도로 읽음: 정책 찾는 길 ① ~ ⑤, 디스크립션의 알럿 ID 줄. UX가이드 · 용어는 3단계에서 그리며 읽음. 고칠 화면에 `basis`가 없어 basis 뒤 바뀐 정책은 보지 않음. 걸린 열린 논의 대상 없음(`discussions/` DS-0001 · 0003 · 0004 · 0005는 `종료`, 반영 끝남). 옛 열린 항목 CA-0001 · CA-0010 · PV-0001은 무엇이 정해지지 않았는지 확인용으로만 읽음.
+
+**읽은 자료 목록**
+
+| 요건 | 종류 | 자료 (ID · 파일) | 연결 근거 (왜 이 요건과 관련 있나) | 설계에 씀 (O / -) | 쓰는 화면 · 요소 | 무엇에 쓰나 |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | 정책 | POL-EQP-001 | 정책 `cids`에 INS 6화면 | O | Overview Tab · All Tab 상태값, Door 2개 Module 표시, 연결 상태 (Module · Device Unit) | 상태 단계 · Door 열림 표시 규칙 5 |
+| 1 | 정책 | POL-EQP-002 | 정책 `cids`에 Overview · All Tab | O | Overview Tab 3-5 상태값 (TI-INS-01-T R06) | 장비 통합 상태 전환 참조 |
+| 1 | 정책 | POL-EQP-004 | 정책 `cids`에 LI-INS-01-P 등 | O | Door Control Popup Pausing · Paused 안내, Overview · All Tab Door | Unlock → Pausing → Paused, Plate Sealing이면 PCR Setup도 Paused |
+| 1 | 정책 | POL-EQP-005 | 정책 `cids`에 All Tab · Management | O | All Tab · Management Popup Run-time | h 단위 · 분 버림, 집계 대상 |
+| 1 | 정책 | POL-EQP-008 | 정책 `cids`에 LI-INS-01-P · LI-INS-01-T · LI-INS-02-T · TI-INS-02-T | O | Door Control Popup 전부, Overview Tab (LI-INS-01-T) 6, All Tab (LI-INS-02-T) 3 · 3-1 | 잠금 해제 허용 상태, [Unlock all doors] 활성 조건(규칙 8), 자동 잠금(규칙 3 → DS-0011) |
+| 1 | 정책 | POL-EQP-009 | 정책 `cids`에 Management · All Tab · Overview | O | Management Popup Enabled · [Save] 유효성, Overview Tab 3-2 Enabled 표기 | 규칙 1 ~ 9, Alert_013 · 014 · 015 |
+| 1 | 정책 | POL-EQP-010 | 정책 `cids`에 Management · All Tab | O | Management Popup Error Rate | Service만 표시, 표시 위치는 CA-0001 (열림) |
+| 1 | 정책 | POL-EVT-001 | 정책 `cids`에 Overview · All Tab | O | Overview · All Tab Event 개수 · Event Tooltip | Open만 셈, 가장 최근 1건 |
+| 1 | 정책 | POL-LOD-001 | 정책 `cids`에 LI-INS-01-P | - | | Door Control을 부르는 Load Materials 쪽 규칙이라 이 화면 요소에 쓰이지 않음 (규칙 10 단디메카 자동 잠금은 DS-0011 참고에 적음) |
+| 1 | 기준 자료 | `policy/equipment-states.md` 5 · 6절 | POL-EQP-001 · 002 · 004 · 008 `data` | O | Door Control Popup | 상태별 잠금 해제 허용 · 조건부 Module과 Door 표, "Cannot unlock while the system is running.", 6절 3 · 9 (화면 정정 대상) |
+| 1 | 기준 자료 | `policy/permission-matrix.csv` (Instrument 줄) | POL-EQP-009 · 010 `data` | O | Management Popup, Door Control | Error Rate · Enabled 변경 Service만, Door Control 모두 O, Run-time Info Popup은 IA v1.03에서 제거 |
+| 1 | 기준 자료 | `policy/client-mode-matrix.csv` (Instrument 줄) | 권한 · 모드 표 | O | Overview Tab (LI-INS-01-T) Door Control, All Tab (LI-INS-02-T) [Unlock] | MS Mode에서 Door Control X |
+| 1 | 기준 자료 | `glossary/status-values.csv` · `modules.csv` · `module-units.csv` | POL-EQP-001 · 005 · 009 `data`, 반영 대기 묶음 2 | O | 7화면 상태값 · Module · Unit 이름 | 3단계에서 그리며 읽음 |
+| 1 | 알럿 | Alert_004 · Alert_013 · Alert_014 · Alert_015 · Confirm_008 (`alert/alert-catalog.csv`) | 디스크립션 · 반영 대기에 나옴 | O | Overview Tab 미등록 Module Tab, Management [Save], All Tab (LI-INS-02-T) [Unlock] | 문구 · 버튼. Confirm_008 버튼 동작 칸은 복사 실수(카탈로그 "확인할 점") |
+| 1 | 알럿 | Confirm_031 | 기존 화면 v2.1.17 Door Control · All Tab | - | | 알럿 카탈로그에 없음 → DS-0011 |
+| 1 | Module 문서 | `policy/modules/` 관련 정책 | 길 ⑤ | - | | 관련 정책이 INV · LOD · MAT · SMP · TST(재고 · 로딩 · 검사)라 Instrument 화면 요소에 쓰이지 않음 |
+
+**관련 자료 없는 영역 · 요소**
+
+| 화면 · 영역 · 요소 | 근거로 삼는 것 |
+| --- | --- |
+| Management Popup [Cancel] (바꾼 값이 있을 때 닫기) | 기존 UX 화면설계서만 근거 (팝업용 저장 안 함 확인 알럿이 카탈로그에 없음, Confirm_007 · 016은 메뉴 이탈용) → 3단계 질문 대기 |
+| Door Control [Unlock all doors] 확인 팝업 | 기존 UX 화면설계서만 근거 → 3단계 질문 대기 |
+| Door Control Running Module [Unlock] 확인 문구 ("Do you want to continue? Finishing current task, then pausing…") | 기존 UX 화면설계서 (카탈로그 Confirm_008은 All Tab "Unlock the door?"로 다름, 카탈로그 확인할 점에 적힘) → 3단계 질문 대기 |
+
+**대조**
+
+| 요건 · 화면 · 요소 | 결과 | 근거 | 다음 |
+| --- | --- | --- | --- |
+| 1 · Door Control Popup (LI-INS-01-P) 자동 잠금 · [Lock] · Confirm_031, Overview Tab (LI-INS-01-T) 6, All Tab (LI-INS-02-T) 3 · 3-1 | 정책을 바꿔야 함 | 기존 화면 v2.1.17 (2026-11-13, 이상헌): 자동 잠금 없음 · [Lock]. POL-EQP-008 규칙 3 · POL-EQP-004 규칙 7 (2026-11-02): 5초 뒤 자동 잠금, 다시 잠그는 기능 없음 | 정책 수정 범위 1 (DS-0011). 결정 전이라 3단계에서 질문 대기 |
+| 1 · Door Control Popup [Unlock all doors] 활성 조건 | 기존 화면이 정책과 다름 | 화면 "Ready, Paused, Error" / POL-EQP-008 규칙 8 "Ready, Error, Paused, Not Initialized" (`equipment-states.md` 6절 3) | 정책대로 그리고 변경 확인 (반영 대기 LI-INS-01-P R01) |
+| 1 · Door Control Popup 안내 문구 두 가지 ("Cannot unlock while the module / system is running.") | 기존 화면이 정책과 다름 | `equipment-states.md` 5절 "Cannot unlock while the system is running.", 6절 9 | 정책 문구로 통일하고 변경 확인 (반영 대기 LI-INS-01-P R03) |
+| 1 · Management Popup (TI-INS-02-01-P) Enabled 변경 권한 · 변경 가능 상태 · Device Unit 설정 대상 | 기존 화면이 정책과 다름 | POL-EQP-009 규칙 4 · 7 · 8 | 정책대로 그리고 변경 확인 (반영 대기 묶음 4) |
+| 1 · Management Popup (TI-INS-02-01-P) Running이 아닌 이유(Error · Paused)로 바꿀 수 없을 때 알럿 | 정책에 없음 (알럿) | POL-EQP-009 규칙 7은 Running만 Alert_013 | 3단계 질문 대기 (반영 대기 R06 `대기 (정의 필요)`) |
+| 1 · Management Popup Error Rate 표시 위치 | 논의 대상에 이미 있음 (옛 CA-0001, 고객 논의) | POL-EQP-010 예외 | 기존 화면대로(Management Popup) 그리고 3단계 질문 대기 |
+| 1 · Door Control Popup Run 중 잠금 해제 후 Door를 열지 않은 경우 | 논의 대상에 이미 있음 (옛 PV-0001, 승인 대기 · 고객 정의 기다림) | POL-EQP-008 예외 | 3단계 질문 대기 (기존 화면에 동작 없음) |
+| 1 · Overview · All Tab · Management 상태값 · Run-time · Error Rate · Event 개수 | 정책에 있음 | POL-EQP-001 · 002 · 005 · 010 · EVT-001 | 3단계에서 디스크립션 끝에 정책 ID로 이음 |
+| 1 · Run-time Info Popup (TI-INS-02-02-P) | 정책에 있음 (없어진 화면) | `permission-matrix.csv` "Runtime Info Popup은 IA v1.03에서 제거" | 그리지 않음 (확인할 것 9) |
+
+**정책 수정 범위**
+
+| # | 바꿈 / 더함 | 정책 ID · 규칙 (또는 기준 자료) | 변경 전 | 변경 후 (안) | 논의 대상 |
+| --- | --- | --- | --- | --- | --- |
+| 1 | 바꿈 | POL-EQP-008 규칙 3, POL-EQP-004 규칙 7, `policy/equipment-states.md` 5절 규칙, 알럿 카탈로그 Confirm_031 더함 | Door를 닫으면 5초 뒤 자동 잠금, 다시 잠그는 기능 없음 | (기존 화면 v2.1.17대로) 자동 잠금 없음. [Lock]을 눌러야 Locked, Door가 Open이면 Confirm_031 "Please close the door." 표시 · Unlocked 유지. Locked가 되면 Paused였던 Module이 Paused 전 상태로 | DS-0011 |
+
+**용어 목록**
+
+| 원래 표현 | 표준어 | 어디서 | 새 용어면 처리 |
+| --- | --- | --- | --- |
+| Account Type | User Type | Management Popup 디스크립션, All Tab | |
+| Unconnected | Disconnected | All Tab Connected 항목 | |
+| CURECA 구동 상태값 | 장비 통합 상태 | Management Popup (TI-INS-02-01-P) R04 | |
+| Module 상태값 | 장비 모듈 상태 | Door Control Popup 0 · 3 | |
+| Enable | Enabled | Management Popup 표 헤더 | |
+| Waste Status | Waste Bin/Bottle Status | All Tab | |
+| Ht Extraction | High-throughput Extraction | Overview · All Tab Tab 이름 | |
 ## 설계
 
 ## 질문 대기
@@ -151,6 +218,7 @@ started: 2026-11-23
 
 | 날짜 | 단계 | 확인한 것 | 요청자 답 |
 | --- | --- | --- | --- |
+| 2026-11-23 | 2단계 | 읽은 강도(케이스 3) · 대조 · 정책 수정 범위 1(DS-0011) · 영향 화면 2 · 질문 1 · 4 · 3단계로 넘어갈지 (R047 질문) | |
 | 2026-11-23 | 1단계 | 요건 목록(7화면, 케이스 3) · 요건별 진행 경로(8, 1 → 5) · 확인할 것 10개 · 이번에 반영할 반영 대기 항목 묶음 1 ~ 5 · 2단계로 넘어갈지 (R047 질문) | 추천대로 진행 (묶음 1 ~ 4 반영, 5는 2단계에서) · 2단계로 넘어감 (2026-11-23 15:50) |
 
 ## 이 작업의 결정 (5단계에서 한꺼번에 반영)
@@ -159,6 +227,6 @@ started: 2026-11-23
 
 ## 이 작업이 남긴 것
 
-- 논의 대상:
+- 논의 대상: DS-0011 (Door 자동 잠금 · [Lock] 버튼, 논의 중)
 - 다른 화면의 반영 대기 항목:
 - 고친 카탈로그 줄:
