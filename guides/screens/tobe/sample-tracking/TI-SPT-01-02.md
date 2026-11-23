@@ -75,7 +75,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 
 ## 화면 표기 글자
 
-| 번호 | 화면 표기 글자 (영어) | 출처 (화면 / 디스크립션 / 케이스) | Language ID | 상태 (신규 / 변경 / 제거 / -) | 가장 긴 언어 · 번역 글자 |
+| 번호 | 화면 표기 글자 (영어) | 출처 (화면 / 디스크립션 / 케이스) |  | 상태 (신규 / 변경 / 제거 / -) | 가장 긴 언어 · 번역 글자 |
 | --- | --- | --- | --- | --- | --- |
 | 0 | Protocol Info | 화면 | | - | |
 | 1 | Pre-Treatment Protocol | 화면 | | - | |
@@ -110,7 +110,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 
 | ID | 타입 | 변경 전 | 변경 후 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| R01 | 점검 발견 | 화면 이름 "Samples Details", 경로 "Sample Tracking > Samples Details > Protocol Info" | IA 이름 "Protocol Info - Pre-Treatment Protocol" | `ia/ia-screens.csv` | 작업 중 (20261123-최고관리자-samples-2) |
+| R01 | 점검 발견 | 화면 이름 "Samples Details", 경로 "Sample Tracking > Samples Details > Protocol Info" |  | `ia/ia-screens.csv` | 작업 중 (20261123-최고관리자-samples-2) |
 | R02 | 점검 발견 | 3 참조 "TI-STN-03-01-02-01" (지금 CID는 TI-STN-03-01-02-01-V, -M으로 나뉨) | 맞는 CID로 | `screens/setting/` | 작업 중 (20261123-최고관리자-samples-2) |
 | R03 | 기준 자료 변경 | 2 "Run Preparation 단계에서 선택한 프로토콜", "Applied된 프로토콜" | Run 화면(LI-RUN-02-01 Check Test Protocol)과 Protocol Setting의 Applied 표기 기준으로. Check Test Protocol 단계는 Setting에서 사용할 때만 나옴 | `policy/policy-backlog.md` 5, POL-TST-006 | 작업 중 (20261123-최고관리자-samples-2) |
 | R04 | 점검 발견 | 3 "Protocol setting" | Protocol Setting | 표기 | 작업 중 (20261123-최고관리자-samples-2) |

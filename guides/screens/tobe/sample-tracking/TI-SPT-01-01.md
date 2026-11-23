@@ -162,7 +162,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 
 ## 화면 표기 글자
 
-| 번호 | 화면 표기 글자 (영어) | 출처 (화면 / 디스크립션 / 케이스) | Language ID | 상태 (신규 / 변경 / 제거 / -) | 가장 긴 언어 · 번역 글자 |
+| 번호 | 화면 표기 글자 (영어) | 출처 (화면 / 디스크립션 / 케이스) |  | 상태 (신규 / 변경 / 제거 / -) | 가장 긴 언어 · 번역 글자 |
 | --- | --- | --- | --- | --- | --- |
 | 0 | Product | 화면 (축소된 Samples 목록) | | - | |
 | 2 | Process | 화면 | | - | |
@@ -221,14 +221,14 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 
 | ID | 타입 | 변경 전 | 변경 후 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| R01 | 점검 발견 | 화면 이름 "Samples Details", 경로 "Sample Tracking > Samples Details", 디스크립션 0·1 "Sample Details" | IA 기준(Samples > Details)으로 이름 하나로 | `ia/ia-screens.csv` | 작업 중 (20261123-최고관리자-samples-2) |
+| R01 | 점검 발견 | 화면 이름 "Samples Details", 경로 "Sample Tracking > Samples Details", 디스크립션 0·1 "Sample Details" |  | `ia/ia-screens.csv` | 작업 중 (20261123-최고관리자-samples-2) |
 | R02 | 기준 자료 변경 | 1 Product "Allplex_HPV28" | Allplex HPV28 | `glossary/test-items.csv` UI 표기 | 작업 중 (20261123-최고관리자-samples-2) |
-| R03 | 기준 자료 변경 | 2 Module·Unit "고유 ID 정보"인데 화면은 Module 이름(High-throughput Extraction)과 Unit 이름(M9600, Sealer (1)) | 이름 (번호)로 표시한다고 고쳐 씀 | `glossary/terms.csv` Module, Unit | 작업 중 (20261123-최고관리자-samples-2) |
-| R04 | 점검 발견 | 3 General 표출 항목에 Status가 있는데 화면 General 영역에는 없음 (Status는 타이틀 영역에 있음) | 하나로 맞춤 | 화면 글자 | 작업 중 (20261123-최고관리자-samples-2) |
-| R05 | 점검 발견 | 4 "InboundTrolley", "Return status" (화면은 Return Status) | Inbound Trolley, Return Status | 표기 | 작업 중 (20261123-최고관리자-samples-2) |
-| R06 | 점검 발견 | 5·6 "WELL No." (화면은 Well No.), 화면 예시 "CO1", "AO2" (영문 O) | Well No., C01, A02 | 화면 글자 | 작업 중 (20261123-최고관리자-samples-2) |
+| R03 | 기준 자료 변경 | 2 Module·Unit "고유 ID 정보"인데 화면은 Module 이름(High-throughput Extraction)과 Unit 이름(M9600, Sealer (1)) |  | `glossary/terms.csv` Module, Unit | 작업 중 (20261123-최고관리자-samples-2) |
+| R04 | 점검 발견 | 3 General 표출 항목에 Status가 있는데 화면 General 영역에는 없음 (Status는 타이틀 영역에 있음) |  | 화면 글자 | 작업 중 (20261123-최고관리자-samples-2) |
+| R05 | 점검 발견 | 4 "InboundTrolley", "Return status" (화면은 Return Status) |  | 표기 | 작업 중 (20261123-최고관리자-samples-2) |
+| R06 | 점검 발견 | 5·6 "WELL No." (화면은 Well No.), 화면 예시 "CO1", "AO2" (영문 O) |  | 화면 글자 | 작업 중 (20261123-최고관리자-samples-2) |
 | R07 | 기준 자료 변경 | 5-1 "[96 DWP] 메뉴", "Sample가" | [96-DWP] 메뉴, Sample이 | `glossary/terms.csv` DWP, 오타 | 작업 중 (20261123-최고관리자-samples-2) |
-| R08 | 점검 발견 | 7 제목 "Reagents 정보 영역" (화면은 Reagent Info), 정렬 "공통 UX 참고 : COMM-4-a" (상태값 문서) | 제목 맞춤, 정렬 기준 문서 확인 | 화면 글자 | 대기 (확인 필요) |
+| R08 | 점검 발견 | 7 제목 "Reagents 정보 영역" (화면은 Reagent Info), 정렬 "공통 UX 참고 : COMM-4-a" (상태값 문서) |  | 화면 글자 | 대기 (확인 필요) |
 | R09 | 점검 발견 | 8-1 [More]는 TI-SPT-01-02만 엶. Extraction Protocol 팝업(TI-SPT-01-03)이 따로 있음 | Pre-Treatment·Extraction 각각 어느 팝업을 여는지 적음 | `ia/ia-screens.csv` | 작업 중 (20261123-최고관리자-samples-2) |
 | R10 | 기준 자료 변경 | 3 Start Date/Time "Prep 장비에서 바코드 찍은 시간", 4 "[Sample Storage] Module", "샘플 투입구" | 표준어 (Sample Storage Module, Module 이름) | `glossary/terms.csv` | 작업 중 (20261123-최고관리자-samples-2) |
 
