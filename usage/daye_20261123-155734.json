@@ -1,0 +1,28 @@
+{
+  "id": "daye_20261123-155734",
+  "kind": "work",
+  "reqId": "",
+  "reqType": "",
+  "team": "cureca",
+  "at": "2026-11-23T15:57:34+09:00",
+  "from": "2026-11-23T15:56:21+09:00",
+  "by": "정다예",
+  "doneBy": "Claude",
+  "pc": "DAYE",
+  "fileKey": "",
+  "fileName": "",
+  "page": "",
+  "frame": "",
+  "nodeId": "",
+  "text": "UX가이드: 3-a. Base Frame Area (1/2) · 기본 프레임 (J143)",
+  "models": {
+    "claude-opus-5-5": 11
+  },
+  "calls": 11,
+  "input": 23,
+  "cacheWrite": 37382,
+  "cacheRead": 667120,
+  "output": 6449,
+  "total": 710974,
+  "usd": 0.5616
+}
