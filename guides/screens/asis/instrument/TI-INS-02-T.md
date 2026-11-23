@@ -3,11 +3,11 @@ cid: TI-INS-02-T
 pair_cid: LI-INS-02-T
 tl_relation: 기능 추가
 title: All Tab
-path: Instruments > All
+path: Instrument > All Tab
 type: Tab
-version: 2.1.06
-date: 2026-09-28
-author: 서보경
+version: 2.1.18
+date: 2026-11-19
+author: 이상헌
 client_mode: []
 user_type: [Service, Admin, User]
 policies: []
@@ -16,11 +16,11 @@ provisional: []
 flags: []
 source: asis
 figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3249-111981
-figma_region: 2.1 1차
+figma_region: 2.1 2차
 ---
 # TI-INS-02-T All Tab
 
-> 기존 화면(기존 작업방 Instruments 페이지, 2.1 1차 영역, Ver 2.1.06)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 Instruments 페이지, 2.1 2차 영역, Ver 2.1.18)을 2026-11-02에 옮기고 2026-11-23에 다시 옮긴 것입니다(케이스 3, 작업 기록 `20261123-최고관리자-instruments`). 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - T/L 차이: L-IOS(LI-INS-02-T)에는 Door 영역의 [Unlock]이 더 있음
 - 관련 정책: POL-EQP-001, POL-EQP-005, POL-EQP-008, POL-EQP-009, POL-EQP-010
@@ -32,8 +32,8 @@ figma_region: 2.1 1차
 
 ### 화면 글자
 
-- (GNB) Running | Instrument | L-IOS | D.A PC | Event | Error | Warning | 2026-04-10 11:30 | TIOS
-- (LNB) Dashboard | Instrument | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis | Setting | Information | Keira Knightley
+- (GNB) Running | Instrument | L-IOS | D.A PC | Event | Error 3 | Warning 2 | 2026-04-10 11:30 | TIOS
+- (LNB) Dashboard | Instrument | Test Management | Sample Tracking 1 | Instrument | Inventory | Statistical Analysis | Setting | Information | Keira Knightley
 - Overview | All
 - Sample Storage | Consumable Storage | Sample Pre-treatment | Ht Extraction | Flexible Extraction | PCR Setup | Plate Sealing | Universal PCR
 - Module List(34) | Universal PCR(2) | Management
@@ -42,22 +42,22 @@ figma_region: 2.1 1차
 - Universal PCR(2) | Running | Closed | Y | 2,621
 - Sample Storage(2) | Running | Closed | Y | 2,621
 - Consumable Storage (1) | - | - | - | N | 2,621 | -
-- Consumable Storage(2) | Running | Closed | Y | 2,621
+- Consumable Storage (2) | Running | Closed | Y | 2,621
 - Sample Pre-treatment (1) | Running | Closed | Y | 2,621
-- Sample Pre-treatment(2) | Running | Closed | Y | 2,621
+- Sample Pre-treatment (2) | Running | Closed | Y | 2,621
 - High-throughput Extraction (1) | Running | Closed | Y | 2,621
 - High-throughput Extraction(2) | Running | Closed | Y | 2,621
 - Flexible Extraction (1) | Running | Closed | Y | 2,621
 - Flexible Extraction(2) | Running | Closed | Y | 2,621
-- (Module Details) Door: Door | Status | Lock Status → Door | Closed | Locked
-- (Module Details) Device: Unit | Connected | Status | Enabled → CFX96 (1)~(6) | Running | Y (CFX96 (3)은 - | - | N)
-- (Module Details) Storage: Unit | Docking Status | Storage Type | Current Temp → No item
-- (Module Details) Waste Bin/Bottle: Unit | Docking Status | Waste Status → No item
+- (오른쪽) Door: Door | Status | Lock Status / Door | Closed | Locked
+- Device: Unit | Connected | Status | Enabled / CFX96 (1) ~ (6) | Running | Y (CFX96 (3)은 - | - | N)
+- Storage: Unit | Docking Status | Storage Type | Current Temp / No item
+- Waste Bin/Bottle: Unit | Docking Status | Waste Status / Film Waste Bin (Upper) | - | Available
 - Event History | More
 
 ### 사용 컴포넌트
 
-Table/Filled Table Cell (26), Frame/Instrument_Status (19), Tag Status (18), Description Number (13), Item_Segment Tabs (10), Table (9), Title (7), Pagination more than 8 (1), Dropdown 48 (1), Interface/Plus (1)
+Table/Filled Table Cell (25), Frame/Instrument_Status (19), Tag Status (18), Description Number (13), ⛔️ Item_Segment Tabs (10), Table (9), Title (7), Frame 1984080916 (1), Pagination more than 8 (1), Dropdown 48 (1), Interface/Plus (1), Frame (1), Component 4 (1), Label/Status/Square (1)
 
 ### 디스크립션 (원문)
 
@@ -71,7 +71,7 @@ Table/Filled Table Cell (26), Frame/Instrument_Status (19), Tag Status (18), Des
 - 상태값: Connected / Unconnected
 - Status: 모듈의 작동 상태 표시됨
 - 상세 정의는 Common UX 기준 따름
-- Enable → Enabled: 장비의 사용 여부 값 표기
+- ~~Enable~~ → Enabled: 장비의 사용 여부 값 표기
 - Enabled = ‘Y’ / Disabled = ‘N’
 - Run-time: 장비가 가동된 시간 기준으로 표기
 - 가동 시간 = 상태가 Running 중인 시간의 총합
@@ -119,21 +119,21 @@ Table/Filled Table Cell (26), Frame/Instrument_Status (19), Tag Status (18), Des
 
 - Module 내 Unit 단위 장비의 상세 정보를 확인하는 영역
 
-#### 2-1. Error Rate
+#### 2-1. ~~Error Rate~~
 
-- Account Type에 따라 항목 노출
-- Account Type의 Sevice일 경우만 노출
+- ~~Account Type에 따라 항목 노출~~
+- ~~Account Type의 Sevice일 경우만 노출~~
 
-#### 2-2. [Enable setting → Management] 버튼
+#### 2-2. [~~Enable setting~~ → Management] 버튼
 
 - 클릭 시, 조건 없이 Management Popup(TI-INS-02-01-P) 노출
 - 아래 조건 모두 제거 요청 및 관련 조건은 팝업 안에서 처리할 예정
-- 장비 상태가 ‘Running’일 경우
-- Alert_013 팝업 노출
-- 관리되는 Module이 1대일 경우
-- Alert_014 팝업 노출
-- 장비 상태가 ‘Ready 또는 not initialized일 경우
-- TI-INS-02-01-P 팝업 노출
+- ~~장비 상태가 ‘Running’일 경우~~
+- ~~Alert_013 팝업 노출~~
+- ~~관리되는 Module이 1대일 경우~~
+- ~~Alert_014 팝업 노출~~
+- ~~장비 상태가 ‘Ready 또는 not initialized일 경우~~
+- ~~TI-INS-02-01-P 팝업 노출~~
 
 #### 3. Door
 
@@ -145,22 +145,20 @@ Table/Filled Table Cell (26), Frame/Instrument_Status (19), Tag Status (18), Des
 - Unit: Device 장비명 표시
 - Connected: Device 연결 상태 표시
 - Status: Device 작동 상태 표시(Ready, Running, Error)
-- Enable → Enabled
+- ~~Enable~~ → Enabled
 - 현재 적용 대상: ‘TI-INS-02-01-P’ 화면 참고
 - 해당 없을 경우 ‘-’ 표기
 - 상태값: 사용(Enabled)=Y, 사용안함(Disabled)=N으로 표기
 - T-IO S에서 사용 여부 설정 가능
 - 참고: 각 항목별 상태값의 상세 정의는 ‘APP,Web_Common UX’의 ‘COMM-4-a’ 참고
-
-#### 4-1. [Run-time Info] 클릭
-
-- Run-time Info_TI-INS-02-02-P 팝업 제공
-- Account type에 따라 팝업 내역이 달라짐
-- 자세한 내역은 해당 페이지 화면 참고
-
-#### 4-2. [Enable setting] 클릭 (T-IOS Only)
-
-- Enable Setting_TI-INS-02-01-P 팝업 노출
+- ~~4-1~~
+- ~~[Run-time Info] 클릭~~
+- ~~Run-time Info_TI-INS-02-02-P 팝업 제공~~
+- ~~Account type에 따라 팝업 내역이 달라짐~~
+- ~~자세한 내역은 해당 페이지 화면 참고~~
+- ~~4-2~~
+- ~~[Enable setting] 클릭 (T-IOS Only)~~
+- ~~Enable Setting_TI-INS-02-01-P 팝업 노출~~
 
 #### 5. Storage
 
@@ -177,6 +175,7 @@ Table/Filled Table Cell (26), Frame/Instrument_Status (19), Tag Status (18), Des
 - 소모품/시약 사용 후 폐기되는 Waste Unit 현황 확인
 - Unit: Waste Bin/Bottle 장비명 표시
 - Docking Status: Waste Bin 문의 열림/닫힘 상태 표시
+- Docking Status가 없는 것은 '-'로 표기함
 - Waste Status: Waste Bin 폐기물 양 상태값 표시
 - 참고: 각 항목별 상태값의 상세 정의는 ‘APP,Web_Common UX’의 ‘COMM-4-a’ 참고
 
@@ -184,6 +183,9 @@ Table/Filled Table Cell (26), Frame/Instrument_Status (19), Tag Status (18), Des
 
 - 선택된 장비의 Event 내역을 확인할 수 있는 영역
 - 발생 시간 기준 최신순으로 Status가 Open인 Event 최대 4건 표시
+- Date/Time 표기방법
+- 오늘 일 경우: hh:dd:ss(시:분:초)
+- 오늘 이전 일인 경우: mm-dd(월-일)
 
 #### 7-1. Event History More 버튼
 
@@ -191,6 +193,8 @@ Table/Filled Table Cell (26), Frame/Instrument_Status (19), Tag Status (18), Des
 - 필터링 조건: 클릭한 Module Name과 일치하는 이벤트만 필터링되어 화면 표기(최신순 노출)
 
 ## 반영 대기 목록
+
+`screens/tobe/`로 옮김 (2026-11-23)
 
 | ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
@@ -213,3 +217,4 @@ Table/Filled Table Cell (26), Frame/Instrument_Status (19), Tag Status (18), Des
 | 2.1.06 | 2026-09-28 | Detail Door 영역 UI 변경 | 서보경 | Figma 버전 메모 |
 | | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |
 | | 2026-11-18 | 연동 변경: Module · Unit 이름 바꿈(Prep Consumable Storage → Consumable Storage, Sample Preparation Module → Sample Pre-treatment, Sample Pretreatment → Sample Processing, Sample Aliquot → Sample Aliquoting). 검사 단계 · Reagent 태그 · Prep 시스템의 Sample Preparation은 그대로 | 서보경 | `glossary/modules.csv`, `glossary/module-units.csv` (2026-11-18) |
+| 2.1.18 | 2026-11-19 | 모듈 명칭 변경: Prep Consumable Storage → Consumable Storage, Sample Preparation → Sample Pre-treatment, Upper/Lower Sample Pretreatment → Sample Processing (Upper/Lower), Upper/Lower Sample Aliquot → Sample Aliquoting (Upper/Lower). Docking Status에 따른 표기 방식 추가 | 이상헌 | Figma 버전 메모 |

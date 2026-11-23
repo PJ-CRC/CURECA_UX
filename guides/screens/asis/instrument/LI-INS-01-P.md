@@ -3,11 +3,11 @@ cid: LI-INS-01-P
 pair_cid:
 tl_relation: 단독
 title: Door Control Popup
-path: Instruments > Overview > Door Control
+path: Instrument > Overview Tab > Door Control Popup
 type: Popup
-version: 2.1.06
-date: 2026-09-28
-author: 서보경
+version: 2.1.17
+date: 2026-11-13
+author: 이상헌
 client_mode: [Main Mode, Console Mode]
 user_type: [Service, Admin, User]
 policies: []
@@ -15,16 +15,16 @@ rules_version:
 provisional: [PV-0001]
 flags: []
 source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3878-152475
-figma_region: 2.1 1차
+figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=10069-368536
+figma_region: 2.1 2차
 ---
 # LI-INS-01-P Door Control Popup
 
-> 기존 화면(기존 작업방 Instruments 페이지, 2.1 1차 영역, Ver 2.1.06)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 Instruments 페이지, 2.1 2차 영역, Ver 2.1.17)을 2026-11-02에 옮기고 2026-11-23에 다시 옮긴 것입니다(케이스 3, 작업 기록 `20261123-최고관리자-instruments`). 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - 호출 위치: Instruments Overview(LI-INS-01-T), Instruments All(LI-INS-02-T), Material Setup > Load Materials, Empty Waste Bin (`ia/ia-screens.csv`)
 - 관련 정책: POL-EQP-004, POL-EQP-008 / 임시 정책 PV-0001, POL-LOD-001
-- 다른 프레임: [Door Control 케이스 화면](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=4961-83155) (장비 통합 상태별 케이스)
+- 다른 프레임: [Door Control 케이스 화면 (LI-INS-01-P)](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=10069-368639) (장비 통합 상태별 케이스, 2.1 2차)
 
 - 취소선(Figma에서 제거된 항목): 0 정책의 "기존: Module 상태값에 따른 Door Lock해제를 할 수 있음."
 
@@ -35,11 +35,11 @@ figma_region: 2.1 1차
 - Door Control
 - Sample Storage | Unlock all doors
 - Sample Pre-treatment (1) | Paused
-- Door (Left) | Open | Unlocked
-- Locks automatically 5 seconds after the door is closed.
+- Door (Left) | Open | Lock
+- Close the door, then press Lock to lock it.
 - Door (Right) | Closed | Unlock
 - 예시)안내문구 노출영역 - 자세한 내역은 하단케이스 참고필요
-- The door will be automatically locked 5 seconds after it is closed.
+- Close the door and press the 'Lock' button to resume the module
 
 ### 사용 컴포넌트
 
@@ -55,6 +55,7 @@ Description Number (10), Square (3), Frame/Instrument_Status (1), Interface/Lock
 - 기존: Module 상태값에 따른 Door Lock해제를 할 수 있음.
 - 변경: 통합 상태에 따라 Lcok 해제를 할 수 있음.
 - Unlock 1개라도 해당 되면 Module의 상태값은 Paused로 변경됨
+- 변경: 문을 닫아도 자동으로 잠기지 않음. [Lock] 버튼을 눌러야 Door가 잠김 (Door 단위, 기존: 닫고 5초 후 자동 Lock)
 
 #### 1. Module type
 
@@ -76,6 +77,7 @@ Description Number (10), Square (3), Frame/Instrument_Status (1), Interface/Lock
 - Unlock 버튼 또는 Unlock all doors 버튼 클릭 시 → Door가 Unlocked로 변경되면서 Module 상태값도 함께 갱신됨
 - Running 상태에서 Unlock을 클릭할 경우 → Module 상태가 Running에서 Pausing으로 전환됨
 - 즉, Door 제어 이벤트가 발생하면 Module 상태값도 동기화되어 업데이트됨
+- [Lock] 클릭으로 Door가 Locked가 되면 Module 상태값도 함께 갱신됨 (기존 자동 Lock 후 장비 재시작(Running) 흐름을 [Lock] 클릭 기준으로 적용)
 
 #### 2-2. Door Unit Name
 
@@ -97,7 +99,7 @@ Description Number (10), Square (3), Frame/Instrument_Status (1), Interface/Lock
 - Locked 상태 → 닫힌 자물쇠 아이콘
 - Unlocked 상태 → 열린 자물쇠 아이콘
 
-#### 2-5. [Unlock] 버튼
+#### 2-5. [Unlock] / [Lock] 버튼
 
 - Door Unlock이 즉시 가능한 케이스
 - Module 상태가 ‘Ready, Error, Paused’일 경우, Unlock을 클릭할 경우 즉시 해제가 되어 문을 열 수 있음
@@ -106,12 +108,18 @@ Description Number (10), Square (3), Frame/Instrument_Status (1), Interface/Lock
 - Unlock 클릭 → 확인 팝업 → Pausing 상태로 전환 → Paused 상태가 된 이후 Unlock 진행 → 도어 오픈 가능
 - Door Unlock이 불가능한 케이스
 - [Unlock] 버튼이 Disabled 상태로 제공됨(하단 내역 참고)
-- 상태 갱신: Module의 Door가 Unlock 상태가 되면 버튼 라벨이 “Unlocked”로 변경됨
+- 상태 갱신: Door가 Unlocked 상태가 되면 버튼이 [Lock]으로 바뀜 (기존 “Unlocked” Disabled 표기 대신)
+- [Lock] 버튼: Lock Status가 Unlocked일 때 표시
+- 클릭 시 해당 Door를 즉시 잠금(Locked) → 버튼은 [Unlock]으로 바뀜
+- [Lock] 버튼은 늘 활성(Enabled) 상태로 표시 (Unlock과 같은 Filled 스타일)
+- Door가 Open인 상태에서 [Lock] 클릭 시 문 닫기 안내 팝업 Confirm_031(“Please close the door.”) 노출, [OK] 클릭 시 닫힘 · Door는 Unlocked 유지 (하단 케이스 참고)
+- 자동 잠금 없음: 문을 닫아도 잠기지 않으며, [Lock]을 눌러야 잠김 (기존: 닫고 5초 후 자동 Lock)
 - **자세한 내역은 아래 케이스 내역을 반드시 참고 부탁드립니다.
 
 #### 2-6. 안내 문구
 
-- 사용자가 문을 닫고 5초 후 자동으로 Lock이 되는 내용을 안내하는 문구
+- 문을 닫은 뒤 [Lock] 버튼을 눌러야 잠긴다는 내용을 안내하는 문구 (기존: 닫고 5초 후 자동 Lock 안내)
+- [안내 문구 변경 됨]
 
 #### 2-7. Door Unit 영역 내 안내문구(하단 케이스 화면 페이지 참고)
 
@@ -133,7 +141,24 @@ Description Number (10), Square (3), Frame/Instrument_Status (1), Interface/Lock
 - [X] 닫기 버튼
 - 클릭 시, 해당 팝업 닫힘, 기존 진입 화면 유지
 
+### 케이스 (케이스 프레임 LI-INS-01-P, 10069:368639)
+
+- case: 통합 상태가 Running, Partial Running일 때, Door Unlock이 불가능한 케이스 (= Flexible Extraction, PCR Setup, Universal PCR)
+- case: Door control Door Unlock Open 상태값 정의
+- case: 통합 상태가 Running, Partial Running일 때 및 모듈 Running 상태일 때 Button 노출 케이스 (해당 케이스 = Sample Pre-treatment, Ht Extraction, Sample Storage, Consumable Storage)
+- case: 통합 상태가 Running이면서 모듈 상태가 Ruuning일 때, 해당 모듈과 연관된 Module도 함께 Paused 되는 케이스 / 위와 케이스만 같고 알럿 메시지만 다르게 적용 (해당 케이스 = Plate Sealing) - Plate Sealing 내 cold storage 접근이 불가하여 PCR Setup module도 함께 일시정지 됨
+- case: 통합 상태가 Running 또는 Partial Running일 경우, Unlock all doors 버튼 disabled
+- case: 통합 상태가 Ready, Paused, Error 상태일 경우, Unlock all doors 버튼 사용 가능
+- case (Lock · Door Open): Door가 Open인 상태에서 [Lock] 클릭 시, 문을 닫아달라는 안내 팝업 노출
+- 케이스 화면 글자: "Close the door, then press Lock to lock it." · "Close the door and press Lock. The module will resume once locked." · "Close the door and press the 'Lock' button to resume the module" · "Cannot unlock while the module is running." · "Cannot unlock while the system is running." · "Pausing for door unlocking. Please wait."
+- 케이스 메모: Door Lock Status가 1개라도 Unlocked 상태이면 장비 상태가 Paused로 변경됨 / Unlock이 불가한 Door는 Unlock 버튼 Disabled처리 되며, 아래에 ‘Cannot unlock while the system is running.’ 문구 표기 / 일시 정지 되는 안내 및 계속 진행것인지 묻는 알럿 / 알럿에서 Countiue 선택 시, 해당 클릭한 Door의 버튼이 Disabled 상태로 변경되며 아래에 메시지 노출 / Paused가 완료되면 해당 Door는 Unlocked가 되어 Lock 해제가 되며, 나머지 2개 도어는 이미 모듈이 Paused가 된 상태라 disabled된 버튼이 enabled 상태로 변경됨
+- Confirm (Running Module Unlock): "Do you want to continue?" / "Finishing current task, then pausing. Once paused, the lock will be released and the door can be opened manually." / [Cancel] [Continue]
+- Confirm (Plate Sealing): "Do you want to continue?" / "Finishing current task, then pausing. For safety, PCR Setup Module will also pause. Lock will release and door can be opened." / [Cancel] [Continue]
+- Confirm_031 · Close the door: "Please close the door." / "The door is open. Close the door, then press Lock again." / [OK]
+
 ## 반영 대기 목록
+
+`screens/tobe/`로 옮김 (2026-11-23)
 
 | ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
@@ -154,3 +179,4 @@ Description Number (10), Square (3), Frame/Instrument_Status (1), Interface/Lock
 | 2.1.06 | 2026-09-28 | 정책 변경에 따른 UX/UI 변경 | 서보경 | Figma 버전 메모 |
 | | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |
 | | 2026-11-18 | 연동 변경: Module · Unit 이름 바꿈(Prep Consumable Storage → Consumable Storage, Sample Preparation Module → Sample Pre-treatment, Sample Pretreatment → Sample Processing, Sample Aliquot → Sample Aliquoting). 검사 단계 · Reagent 태그 · Prep 시스템의 Sample Preparation은 그대로 | 서보경 | `glossary/modules.csv`, `glossary/module-units.csv` (2026-11-18) |
+| 2.1.17 | 2026-11-13 | Unlocked 상태 Door의 버튼을 "Unlocked"(Disabled) → [Lock]으로 변경. 하단 안내 문구: 자동 잠금 → [Lock] 버튼 안내. [Unlock] / [Lock] 버튼(2-5) · 정책(0)에 Lock 동작 추가. 자동 잠금 폐지 → [Lock]을 눌러야 잠김(0 · 2-1 · 2-6). 문 열린 채 [Lock] → 문 닫기 안내 팝업(Confirm_031) | 이상헌 | Figma 버전 메모 |

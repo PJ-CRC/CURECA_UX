@@ -3,11 +3,11 @@ cid: TI-INS-02-01-P
 pair_cid: LI-INS-02-01-P
 tl_relation: 기능 추가
 title: Management Popup
-path: Instruments > All > Management
+path: Instrument > All Tab > Management Popup
 type: Popup
-version: 2.1.01
-date: 2026-08-07
-author: 서보경
+version: 2.1.18
+date: 2026-11-19
+author: 이상헌
 client_mode: []
 user_type: [Service, Admin, User]
 policies: []
@@ -16,11 +16,11 @@ provisional: []
 flags: []
 source: asis
 figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3249-112456
-figma_region: 2.1 1차
+figma_region: 2.1 2차
 ---
 # TI-INS-02-01-P Management Popup
 
-> 기존 화면(기존 작업방 Instruments 페이지, 2.1 1차 영역, Ver 2.1.01)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 Instruments 페이지, 2.1 2차 영역, Ver 2.1.18)을 2026-11-02에 옮기고 2026-11-23에 다시 옮긴 것입니다(케이스 3, 작업 기록 `20261123-최고관리자-instruments`). 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - T/L 차이: T-IOS는 Service가 Enabled를 바꿀 수 있음. L-IOS(LI-INS-02-01-P)는 조회만
 - 관련 정책: POL-EQP-005, POL-EQP-009, POL-EQP-010 / 고객 논의 CA-0001
@@ -30,7 +30,7 @@ figma_region: 2.1 1차
 ### 화면 글자
 
 - Management
-- Sample Pre-treatment
+- Sample Pre-treatment (Module Type Dropdown)
 - Module - Device | Serial No. | Run-time(h) | Enable
 - Sample Pre-treatment (1) | A123B123C1234f123 | 9,193 | Enable | Disable
 - Sample Aliquoting (Upper) | A123B123C1234f123 | 9,193 | Enable | Disable
@@ -129,10 +129,12 @@ Radio Button (18), Description Number (5), Table (4), Arrow/Chevron_Up (3), Squa
 
 ### 케이스
 
-- Case2. Account Type=Service일 경우, Error Rate 표기
 - Case1. Account Type=User or Admin일 경우, Error Rate 미표기
+- Case2. Account Type=Service일 경우, Error Rate 표기
 
 ## 반영 대기 목록
+
+`screens/tobe/`로 옮김 (2026-11-23)
 
 | ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
@@ -152,3 +154,4 @@ Radio Button (18), Description Number (5), Table (4), Arrow/Chevron_Up (3), Squa
 | 2.1.01 | 2026-08-07 | Enable setting Popup을 Management Popup으로 변경 및 화면설계 변경. Module 및 Device에 Serial Number 추가. Device Enable 정책 변경(관리 대상 추가 및 대수 관련 정책 변경) | 서보경 | Figma 버전 메모 |
 | | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |
 | | 2026-11-18 | 연동 변경: Module · Unit 이름 바꿈(Prep Consumable Storage → Consumable Storage, Sample Preparation Module → Sample Pre-treatment, Sample Pretreatment → Sample Processing, Sample Aliquot → Sample Aliquoting). 검사 단계 · Reagent 태그 · Prep 시스템의 Sample Preparation은 그대로 | 서보경 | `glossary/modules.csv`, `glossary/module-units.csv` (2026-11-18) |
+| 2.1.18 | 2026-11-19 | 모듈 명칭 변경: Prep Consumable Storage → Consumable Storage, Sample Preparation → Sample Pre-treatment, Upper/Lower Sample Pretreatment → Sample Processing (Upper/Lower), Upper/Lower Sample Aliquot → Sample Aliquoting (Upper/Lower) | 이상헌 | Figma 버전 메모 |
