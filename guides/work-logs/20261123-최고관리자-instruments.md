@@ -244,6 +244,8 @@ started: 2026-11-23
 - TI-INS-02-T · LI-INS-02-T 반영 대기 R03(STAT Storage (Upper/Lower) → STAT Storage)은 화면 예시가 Universal PCR이고 디스크립션에도 STAT Storage가 없어 화면에서 바뀌는 곳이 없음. 상태는 `작업 중` 그대로 두고 5단계에서 반영 완료로 바꿈
 - LI-INS-01-T 3-5 "우측의 Instrument Detail Info page 참고"는 TI-INS-01-T R06과 같은 글인데 L에는 반영 대기 항목이 없어 원문대로 둠 (모아 둔 질문 1)
 - 규칙에 없어 판단한 곳: All Tab(TI · LI-INS-02-T) 기존 디스크립션에 0번이 없어 0 화면 정의를 더함(정의는 같은 메뉴 Overview Tab 1의 All 설명, C13). Door Control 케이스 7개는 기존 원본에 번호가 없어 원본 순서대로 Case 1 ~ 7을 붙임. 3단계에서 확인 팝업 · 토스트 문구를 카탈로그 코드로 바꾸며 Confirm_031 ~ 033 · Toast_001을 더함(이 작업이 남긴 것)
+- 규칙에 없어 판단한 곳 (Figma 자리 잡기, 2026-11-23): 섹션 줄 순서를 CID 문자 순서가 아니라 기존 작업방 순서(Overview Tab → Door Control Popup → All Tab → Management Popup)로 둠. T 줄에는 Door Control Popup 짝이 없어 그 자리(두 번째 칸)를 비움. 기획 진행 표시는 기존 작업방 2.1 2차 표시를 옮김(T `✅ SB-Update : 2026.08.06`, L `✅ SB-Update : 2026.09.21`, 컨펌 완료 → 검토 완료)
+- 규칙에 없어 판단한 곳 (Overview Tab 그리기): 가이드 컴포넌트로 바꾼 것 — LNB · GNB(Navigation/LNB · GNB), Tab(⛔️ Item_Segment Tabs → Tab/Outline Container Count=10, COMM-5-s), [View All](Button/Tertiary XSmall → Square Outlined S), Event 툴팁(Tooltip → Tooltip/Event Error, COMM-5-v). [Door Control]은 원본부터 Square. 원본 T(3249:111508)에 디스크립션 없는 번호 표시 6(카드 1 아래, L의 [Door Control] 자리)이 남아 있어 T에서는 그리지 않음. 작업 페이지 옛 사본에 있던 Door Status 정보 아이콘 · 번호 5는 원본 2.1.18(T · L)에 없어 지움(L은 C11)
 - 화면 정보 경로는 화면 MD 머리말(1단계 값) 그대로: Instrument > Overview Tab · All Tab · All Tab > Management Popup · Overview Tab > Door Control Popup (Q4)
 
 ### 용어 치환
