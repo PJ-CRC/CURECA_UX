@@ -4,7 +4,7 @@ title: Sample 상태와 전환
 summary: Sample은 Ordered, Ready, Running, Completed, Failed, Not Tested 6개 상태를 가지며, Run Start 때 도킹된 Ordered Sample이 모두 Ready가 됨
 domain: SMP
 menus: [Test Management, Sample Tracking, Dashboard]
-cids: [TI-TMG-01, LI-TMG-01, TI-TMG-02, LI-TMG-02, TI-SPT-01, LI-SPT-01, TI-DAS, LI-DAS]
+cids: [TI-TMG-01, LI-TMG-01, TI-TMG-02, LI-TMG-02, TI-SPT-01, LI-SPT-01, TI-DAS, LI-DAS, TI-SPT-01-01, LI-SPT-01-01]
 status: 확정
 version:
 date: 2026-11-02
@@ -46,3 +46,4 @@ replaced_by:
 | 버전 | 날짜 | 내용 | 근거 (PD, PV, CR, ADR) |
 | --- | --- | --- | --- |
 | | 2026-11-02 | 최초 작성 (이전 ID: 팀원 POL-SMP-01·02) | |
+|  | 2026-11-23 | cids에 Samples Details(TI/LI-SPT-01-01) 더함, 규칙 그대로 | DS-0008 |

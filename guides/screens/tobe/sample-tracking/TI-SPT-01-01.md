@@ -10,7 +10,7 @@ date: 2026.10.08
 author: 정다예
 client_mode: []
 user_type: []
-policies: [POL-SMP-001, POL-SMP-002, POL-TST-006 · DS-0008]
+policies: [POL-SMP-001, POL-SMP-002, POL-TST-006]
 basis: 2026-11-23 14:40 · history f4a5f93f
 basis_versions:
   rules: CURECA 작업규칙 @2026-11-20
@@ -226,22 +226,23 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 
 | ID | 타입 | 변경 전 | 변경 후 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| R01 | 점검 발견 | 화면 이름 "Samples Details", 경로 "Sample Tracking > Samples Details", 디스크립션 0·1 "Sample Details" | IA 기준(Samples > Details)으로 이름 하나로 | `ia/ia-screens.csv` | 작업 중 (20261123-최고관리자-samples-2) |
-| R02 | 기준 자료 변경 | 1 Product "Allplex_HPV28" | Allplex HPV28 | `glossary/test-items.csv` UI 표기 | 작업 중 (20261123-최고관리자-samples-2) |
-| R03 | 기준 자료 변경 | 2 Module·Unit "고유 ID 정보"인데 화면은 Module 이름(High-throughput Extraction)과 Unit 이름(M9600, Sealer (1)) | 이름 (번호)로 표시한다고 고쳐 씀 | `glossary/terms.csv` Module, Unit | 작업 중 (20261123-최고관리자-samples-2) |
-| R04 | 점검 발견 | 3 General 표출 항목에 Status가 있는데 화면 General 영역에는 없음 (Status는 타이틀 영역에 있음) | 하나로 맞춤 | 화면 글자 | 작업 중 (20261123-최고관리자-samples-2) |
-| R05 | 점검 발견 | 4 "InboundTrolley", "Return status" (화면은 Return Status) | Inbound Trolley, Return Status | 표기 | 작업 중 (20261123-최고관리자-samples-2) |
-| R06 | 점검 발견 | 5·6 "WELL No." (화면은 Well No.), 화면 예시 "CO1", "AO2" (영문 O) | Well No., C01, A02 | 화면 글자 | 작업 중 (20261123-최고관리자-samples-2) |
-| R07 | 기준 자료 변경 | 5-1 "[96 DWP] 메뉴", "Sample가" | [96-DWP] 메뉴, Sample이 | `glossary/terms.csv` DWP, 오타 | 작업 중 (20261123-최고관리자-samples-2) |
+| R01 | 점검 발견 | 화면 이름 "Samples Details", 경로 "Sample Tracking > Samples Details", 디스크립션 0·1 "Sample Details" | IA 기준(Samples > Details)으로 이름 하나로 | `ia/ia-screens.csv` | 반영 완료 (2026-11-23) |
+| R02 | 기준 자료 변경 | 1 Product "Allplex_HPV28" | Allplex HPV28 | `glossary/test-items.csv` UI 표기 | 반영 완료 (2026-11-23) |
+| R03 | 기준 자료 변경 | 2 Module·Unit "고유 ID 정보"인데 화면은 Module 이름(High-throughput Extraction)과 Unit 이름(M9600, Sealer (1)) | 이름 (번호)로 표시한다고 고쳐 씀 | `glossary/terms.csv` Module, Unit | 반영 완료 (2026-11-23) |
+| R04 | 점검 발견 | 3 General 표출 항목에 Status가 있는데 화면 General 영역에는 없음 (Status는 타이틀 영역에 있음) | 하나로 맞춤 | 화면 글자 | 반영 완료 (2026-11-23) |
+| R05 | 점검 발견 | 4 "InboundTrolley", "Return status" (화면은 Return Status) | Inbound Trolley, Return Status | 표기 | 반영 완료 (2026-11-23) |
+| R06 | 점검 발견 | 5·6 "WELL No." (화면은 Well No.), 화면 예시 "CO1", "AO2" (영문 O) | Well No., C01, A02 | 화면 글자 | 반영 완료 (2026-11-23) |
+| R07 | 기준 자료 변경 | 5-1 "[96 DWP] 메뉴", "Sample가" | [96-DWP] 메뉴, Sample이 | `glossary/terms.csv` DWP, 오타 | 반영 완료 (2026-11-23) |
 | R08 | 점검 발견 | 7 제목 "Reagents 정보 영역" (화면은 Reagent Info), 정렬 "공통 UX 참고 : COMM-4-a" (상태값 문서) | 제목 맞춤, 정렬 기준 문서 확인 | 화면 글자 | 대기 (확인 필요) |
-| R09 | 점검 발견 | 8-1 [More]는 TI-SPT-01-02만 엶. Extraction Protocol 팝업(TI-SPT-01-03)이 따로 있음 | Pre-Treatment·Extraction 각각 어느 팝업을 여는지 적음 | `ia/ia-screens.csv` | 작업 중 (20261123-최고관리자-samples-2) |
-| R10 | 기준 자료 변경 | 3 Start Date/Time "Prep 장비에서 바코드 찍은 시간", 4 "[Sample Storage] Module", "샘플 투입구" | 표준어 (Sample Storage Module, Module 이름) | `glossary/terms.csv` | 작업 중 (20261123-최고관리자-samples-2) |
+| R09 | 점검 발견 | 8-1 [More]는 TI-SPT-01-02만 엶. Extraction Protocol 팝업(TI-SPT-01-03)이 따로 있음 | Pre-Treatment·Extraction 각각 어느 팝업을 여는지 적음 | `ia/ia-screens.csv` | 반영 완료 (2026-11-23) |
+| R10 | 기준 자료 변경 | 3 Start Date/Time "Prep 장비에서 바코드 찍은 시간", 4 "[Sample Storage] Module", "샘플 투입구" | 표준어 (Sample Storage Module, Module 이름) | `glossary/terms.csv` | 반영 완료 (2026-11-23) |
 
 ## 변경 이력
 
 | 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 (논의 대상 · 정책 ID · 반영 대기 ID) |
 | --- | --- | --- | --- | --- |
-| 2.1.11 | 2026-11-20 | 작업방에 새로 그림 (기존 작업방 [1460:109649](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=1460-109649) · Ver 2.1.11). 3단계 초안: R01 · R02 · R03 · R04 · R05 · R06 · R07 · R09 반영(작업 중), 검사 단계 · General 일시 정의와 표기(POL-SMP-002) | Claude (최고관리자 요청) | 20261120-최고관리자-samples, POL-SMP-001 · DS-0008, POL-SMP-002 |
+| 2.1.11 | 2026-11-20 | 작업방에 새로 그림 (기존 작업방 [1460:109649](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=1460-109649) · Ver 2.1.11). 3단계 초안: R01 · R02 · R03 · R04 · R05 · R06 · R07 · R09 반영(작업 중), 검사 단계 · General 일시 정의와 표기(POL-SMP-002) | Claude (최고관리자 요청) | 20261120-최고관리자-samples, POL-SMP-001, POL-SMP-002 |
 | | 2026-11-23 | 멈춘 작업(20261120-최고관리자-samples)이 쓴 화면 MD 내용 · 섹션 링크를 지우고 빈 틀로 되돌림. 반영 대기 목록은 asis 화면 MD의 원래 변경 전 · 변경 후 · 상태로 되돌림(그 작업이 더한 줄은 상태만 대기로) | Claude (최고관리자 요청 R045) | 20261123-최고관리자-samples |
 | | 2026-11-23 | 멈춘 작업(20261123-최고관리자-samples)이 쓴 화면 MD 내용 · 섹션 링크를 지우고 그 작업 시작 전 빈 틀로 되돌림(R046 새 작업 20261123-최고관리자-samples-2). 반영 대기 목록도 그 작업 시작 전 상태로 | Claude | R046 |
 | 2.1.11 | 2026-11-23 | 작업방(Sample Tracking Ⓛ / Ⓣ_re)에 새로 그림 (기존 작업방 [1460:109649](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=1460-109649) · Ver 2.1.11). 3단계 초안 | Claude | R01 · R02 · R03 · R04 · R05 · R06 · R07 · R09 · R10 |
+| 2.1.11 | 2026-11-23 | 5단계 완료: 반영 대기 반영 완료 (R01 · R02 · R03 · R04 · R05 · R06 · R07 · R09 · R10), UX 확정 · 재설계 후 변경 내역 메모 | Claude | R01 · R02 · R03 · R04 · R05 · R06 · R07 · R09 · R10 |

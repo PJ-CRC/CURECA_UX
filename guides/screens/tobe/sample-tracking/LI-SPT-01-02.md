@@ -10,7 +10,7 @@ date: 2026.08.14
 author: 정다예
 client_mode: []
 user_type: []
-policies: [POL-TST-001 · DS-0008, POL-TST-006 · DS-0008]
+policies: [POL-TST-001, POL-TST-006]
 basis: 2026-11-23 14:40 · history f4a5f93f
 basis_versions:
   rules: CURECA 작업규칙 @2026-11-20
@@ -115,15 +115,16 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 
 | ID | 타입 | 변경 전 | 변경 후 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| R01 | 점검 발견 | 3 참조 "TI-STN-03-01-02-01" (L-IOS 화면에서 T-IOS CID) | L-IOS Protocol Setting CID(LI-STN-03-01-02-01) | `screens/setting/` | 작업 중 (20261123-최고관리자-samples-2) |
-| R02 | 점검 발견 | 화면 이름 "Samples Details" | IA 이름 | `ia/ia-screens.csv` | 작업 중 (20261123-최고관리자-samples-2) |
-| R03 | 기준 자료 변경 | 2 "Run Preparation 단계에서 선택한 프로토콜", "Applied된 프로토콜", 3 "Protocol setting" | TI-SPT-01-02 반영 대기 목록 3·4와 같이 | POL-TST-006 | 작업 중 (20261123-최고관리자-samples-2) |
+| R01 | 점검 발견 | 3 참조 "TI-STN-03-01-02-01" (L-IOS 화면에서 T-IOS CID) | L-IOS Protocol Setting CID(LI-STN-03-01-02-01) | `screens/setting/` | 반영 완료 (2026-11-23) |
+| R02 | 점검 발견 | 화면 이름 "Samples Details" | IA 이름 | `ia/ia-screens.csv` | 반영 완료 (2026-11-23) |
+| R03 | 기준 자료 변경 | 2 "Run Preparation 단계에서 선택한 프로토콜", "Applied된 프로토콜", 3 "Protocol setting" | TI-SPT-01-02 반영 대기 목록 3·4와 같이 | POL-TST-006 | 반영 완료 (2026-11-23) |
 
 ## 변경 이력
 
 | 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 (논의 대상 · 정책 ID · 반영 대기 ID) |
 | --- | --- | --- | --- | --- |
-| 2.1.02 | 2026-11-20 | 작업방에 새로 그림 (기존 작업방 [1460:111240](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=1460-111240) · Ver 2.1.02). 3단계 초안: R01 · R02 · R03 반영(작업 중) | Claude (최고관리자 요청) | 20261120-최고관리자-samples, POL-TST-001 · POL-TST-006 · DS-0008 |
+| 2.1.02 | 2026-11-20 | 작업방에 새로 그림 (기존 작업방 [1460:111240](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=1460-111240) · Ver 2.1.02). 3단계 초안: R01 · R02 · R03 반영(작업 중) | Claude (최고관리자 요청) | 20261120-최고관리자-samples, POL-TST-001 · POL-TST-006 |
 | | 2026-11-23 | 멈춘 작업(20261120-최고관리자-samples)이 쓴 화면 MD 내용 · 섹션 링크를 지우고 빈 틀로 되돌림. 반영 대기 목록은 asis 화면 MD의 원래 변경 전 · 변경 후 · 상태로 되돌림(그 작업이 더한 줄은 상태만 대기로) | Claude (최고관리자 요청 R045) | 20261123-최고관리자-samples |
 | | 2026-11-23 | 멈춘 작업(20261123-최고관리자-samples)이 쓴 화면 MD 내용 · 섹션 링크를 지우고 그 작업 시작 전 빈 틀로 되돌림(R046 새 작업 20261123-최고관리자-samples-2). 반영 대기 목록도 그 작업 시작 전 상태로 | Claude | R046 |
 | 2.1.02 | 2026-11-23 | 작업방(Sample Tracking Ⓛ / Ⓣ_re)에 새로 그림 (기존 작업방 [1460:111240](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=1460-111240) · Ver 2.1.02). 3단계 초안 | Claude | R01 · R02 · R03 |
+| 2.1.02 | 2026-11-23 | 5단계 완료: 반영 대기 반영 완료 (R01 · R02 · R03), UX 확정 · 재설계 후 변경 내역 메모 | Claude | R01 · R02 · R03 |

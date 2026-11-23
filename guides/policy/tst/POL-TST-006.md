@@ -4,7 +4,7 @@ title: Protocol Setting
 summary: Pre-Treatment·Extraction Protocol은 T-IOS에서 복사·수정·삭제하고 L-IOS는 조회만 하며, Seegene 기본 Protocol(SG protocol)은 바꾸거나 지울 수 없고 장비 통합 상태가 Not Initialized 또는 Ready일 때만 바꿀 수 있음
 domain: TST
 menus: [Setting]
-cids: [TI-STN-03-01, TI-STN-03-01-01, TI-STN-03-01-02, TI-STN-03-01-02-01-V, TI-STN-03-01-02-01-M, TI-STN-03-02, TI-STN-03-02-01, TI-STN-03-02-02-V, TI-STN-03-02-02-M, LI-STN-03-01, LI-STN-03-01-02, LI-STN-03-01-02-01, LI-STN-03-02, LI-STN-03-02-02]
+cids: [TI-STN-03-01, TI-STN-03-01-01, TI-STN-03-01-02, TI-STN-03-01-02-01-V, TI-STN-03-01-02-01-M, TI-STN-03-02, TI-STN-03-02-01, TI-STN-03-02-02-V, TI-STN-03-02-02-M, LI-STN-03-01, LI-STN-03-01-02, LI-STN-03-01-02-01, LI-STN-03-02, LI-STN-03-02-02, TI-SPT-01-02, LI-SPT-01-02, TI-SPT-01-03, LI-SPT-01-03]
 status: 확정
 version:
 date: 2026-11-02
@@ -19,7 +19,7 @@ replaced_by:
 ## 정의
 
 - Pre-Treatment Protocol: Sample Type별 Pre-Treatment Process 묶음
-- Extraction Protocol: Nucleic Acid Extraction(M9600) 조건 묶음 (Standby state setting conditions, Operation conditions)
+- Extraction Protocol: Nucleic Acid Extraction 조건 묶음 (Standby state setting conditions, Operation conditions). 추출 장치(M9600 · STARlet)마다 조건 묶음이 있음
 - SG protocol: Seegene이 제공하는 기본 Protocol
 
 ## 규칙
@@ -49,3 +49,4 @@ replaced_by:
 | --- | --- | --- | --- |
 | | 2026-11-02 | 최초 작성 (이전 ID: 팀원 POL-TST-05) | |
 | | 2026-11-02 | 바꿀 수 있는 장비 통합 상태를 Not Initialized·Ready로 명확히 함 (규칙 3) | |
+|  | 2026-11-23 | cids에 Protocol Info(TI/LI-SPT-01-02 · 01-03) 더함 (DS-0008). Extraction Protocol 정의를 추출 장치(M9600 · STARlet)별 조건 묶음으로 넓힘 (DS-0010) | DS-0008, DS-0010 |

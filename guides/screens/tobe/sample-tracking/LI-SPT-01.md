@@ -233,14 +233,14 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 
 | ID | 타입 | 변경 전 | 변경 후 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| R01 | 점검 발견 | 3 ".CVS" | .CSV | 오타 | 작업 중 (20261123-최고관리자-samples-2) |
-| R02 | 기준 자료 변경 | 3 [Export]가 T-IOS(OS 파일함, 엑셀파일)와 다름. IA는 짝 화면 동일 | 파일 형식은 T-IOS·L-IOS 모두 .csv. 저장 방법만 다름: T-IOS는 OS 파일 탐색기, L-IOS는 경로 저장·USB 저장 Popup (COMM-5-j(4/4)) | POL-COM-006 규칙 1·3·4 | 작업 중 (20261123-최고관리자-samples-2) |
-| R03 | 점검 발견 | 0 "Run Start로 통해" | Run Start를 통해 | 오타 | 작업 중 (20261123-최고관리자-samples-2) |
-| R04 | 기준 자료 변경 | 2-1 Start Date/Time "Prep 장비에서 바코드 찍은 시간", Progress "상태 값 : COMM-4-a" | TI-SPT-01 반영 대기 목록 6·7과 같이 | `glossary/terms.csv`, `glossary/test-stages.csv` | 작업 중 (20261123-최고관리자-samples-2) |
+| R01 | 점검 발견 | 3 ".CVS" | .CSV | 오타 | 반영 완료 (2026-11-23) |
+| R02 | 기준 자료 변경 | 3 [Export]가 T-IOS(OS 파일함, 엑셀파일)와 다름. IA는 짝 화면 동일 | 파일 형식은 T-IOS·L-IOS 모두 .csv. 저장 방법만 다름: T-IOS는 OS 파일 탐색기, L-IOS는 경로 저장·USB 저장 Popup (COMM-5-j(4/4)) | POL-COM-006 규칙 1·3·4 | 반영 완료 (2026-11-23) |
+| R03 | 점검 발견 | 0 "Run Start로 통해" | Run Start를 통해 | 오타 | 반영 완료 (2026-11-23) |
+| R04 | 기준 자료 변경 | 2-1 Start Date/Time "Prep 장비에서 바코드 찍은 시간", Progress "상태 값 : COMM-4-a" | TI-SPT-01 반영 대기 목록 6·7과 같이 | `glossary/terms.csv`, `glossary/test-stages.csv` | 반영 완료 (2026-11-23) |
 | R05 | 기준 자료 변경 | 1-2 Product 목록이 11개로 고정 | 검사 항목 목록 기준 확인 | `glossary/test-items.csv` | 대기 (확인 필요) |
 | R06 | 점검 발견 | 버전 메모 없음 (TI-SPT-01은 v2.1.01 Export 수정 메모가 있음) | T/L 버전 맞춤 | Figma 버전 메모 | 대기 (확인 필요) |
-| R07 | 기준 자료 변경 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 작업 중 (20261123-최고관리자-samples-2) |
-| R08 | 점검 발견 | 2 "특정 샘플 행 클릭 시 샘플 상세 노출 : TI-SPT-01-01", 2-2 "표출 예시 : TI-SPT-01/Case → Case 2" (L-IOS 화면에서 T-IOS CID) | 디스크립션에 넣음: 2는 LI-SPT-01-01, 2-2는 LI-SPT-01/Case → Case 2 | 케이스 3 다시 옮기기 (2026-11-20, 작업 기록 20261120-최고관리자-samples) | 작업 중 (20261123-최고관리자-samples-2) |
+| R07 | 기준 자료 변경 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 반영 완료 (2026-11-23) |
+| R08 | 점검 발견 | 2 "특정 샘플 행 클릭 시 샘플 상세 노출 : TI-SPT-01-01", 2-2 "표출 예시 : TI-SPT-01/Case → Case 2" (L-IOS 화면에서 T-IOS CID) | 디스크립션에 넣음: 2는 LI-SPT-01-01, 2-2는 LI-SPT-01/Case → Case 2 | 케이스 3 다시 옮기기 (2026-11-20, 작업 기록 20261120-최고관리자-samples) | 반영 완료 (2026-11-23) |
 
 ## 변경 이력
 
@@ -251,3 +251,4 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 | | 2026-11-23 | 멈춘 작업(20261123-최고관리자-samples)이 쓴 화면 MD 내용 · 섹션 링크를 지우고 그 작업 시작 전 빈 틀로 되돌림(R046 새 작업 20261123-최고관리자-samples-2). 반영 대기 목록도 그 작업 시작 전 상태로 | Claude | R046 |
 | 2.0 | 2026-11-23 | 작업방(Sample Tracking Ⓛ / Ⓣ_re)에 새로 그림 (기존 작업방 [1460:112005](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=1460-112005) · Ver 2.0). 3단계 초안 | Claude | R01 · R02 · R03 · R04 · R07 · R08 |
 |  | 2026-11-23 | 3 [Export] 저장 완료 · 실패 안내 없음 명시 (Q6 답) | Claude (최고관리자 요청 R046) | DS-0009 |
+| 2.0 | 2026-11-23 | 5단계 완료: 반영 대기 반영 완료 (R01 · R02 · R03 · R04 · R07 · R08), UX 확정 · 재설계 후 변경 내역 메모 | Claude | R01 · R02 · R03 · R04 · R07 · R08 |

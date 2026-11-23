@@ -10,7 +10,7 @@ date: 2026.08.14
 author: 정다예
 client_mode: []
 user_type: []
-policies: [POL-TST-001 · DS-0008, POL-TST-006 · DS-0008, POL-TST-007]
+policies: [POL-TST-001, POL-TST-006, POL-TST-007]
 basis: 2026-11-23 14:40 · history f4a5f93f
 basis_versions:
   rules: CURECA 작업규칙 @2026-11-20
@@ -127,11 +127,11 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 
 | ID | 타입 | 변경 전 | 변경 후 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| R01 | 점검 발견 | Figma 프레임 이름 "TI-SPT-01-02" (화면 정보 CID는 TI-SPT-01-03) | 프레임 이름 TI-SPT-01-03 | `ia/ia-screens.csv` | 작업 중 (20261123-최고관리자-samples-2) |
-| R02 | 점검 발견 | 화면 이름 "Samples Details", 경로 "Sample Tracking > Samples Details > Protocol Info" | IA 이름 "Protocol Info - Extraction Protocol" | `ia/ia-screens.csv` | 작업 중 (20261123-최고관리자-samples-2) |
-| R03 | 기준 자료 변경 | 범위 표기 Temp.(˚C) "(0~2,000)" (Volume과 같은 범위) | Extraction Protocol Setting 화면의 범위와 맞춤 | TI-STN-03-02-02-M, POL-TST-007 | 작업 중 (20261123-최고관리자-samples-2) |
-| R04 | 기준 자료 변경 | 2 "Run Preparation 단계에서 선택한 프로토콜", "Applied된 프로토콜" | TI-SPT-01-02 반영 대기 목록 3과 같이 | POL-TST-006 | 작업 중 (20261123-최고관리자-samples-2) |
-| R05 | 점검 발견 | 3 "Protocol setting", 3 참조가 M9600용(-M)만 있음 (STARlet용 -V 없음) | Protocol Setting, 추출 장치별 참조 | `screens/setting/TI-STN-03-02-02-V.md` | 대기 (확인 필요) |
+| R01 | 점검 발견 | Figma 프레임 이름 "TI-SPT-01-02" (화면 정보 CID는 TI-SPT-01-03) | 프레임 이름 TI-SPT-01-03 | `ia/ia-screens.csv` | 반영 완료 (2026-11-23) |
+| R02 | 점검 발견 | 화면 이름 "Samples Details", 경로 "Sample Tracking > Samples Details > Protocol Info" | IA 이름 "Protocol Info - Extraction Protocol" | `ia/ia-screens.csv` | 반영 완료 (2026-11-23) |
+| R03 | 기준 자료 변경 | 범위 표기 Temp.(˚C) "(0~2,000)" (Volume과 같은 범위) | Extraction Protocol Setting 화면의 범위와 맞춤 | TI-STN-03-02-02-M, POL-TST-007 | 반영 완료 (2026-11-23) |
+| R04 | 기준 자료 변경 | 2 "Run Preparation 단계에서 선택한 프로토콜", "Applied된 프로토콜" | TI-SPT-01-02 반영 대기 목록 3과 같이 | POL-TST-006 | 반영 완료 (2026-11-23) |
+| R05 | 점검 발견 | 3 "Protocol setting", 3 참조가 M9600용(-M)만 있음 (STARlet용 -V 없음) | Protocol Setting, 추출 장치별 참조 | `screens/setting/TI-STN-03-02-02-V.md` | 반영 완료 (2026-11-23, DS-0010 결정으로 Case 1 STARlet 추가) |
 
 ## 변경 이력
 
@@ -141,3 +141,4 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 | | 2026-11-23 | 멈춘 작업(20261123-최고관리자-samples)이 쓴 화면 MD 내용 · 섹션 링크를 지우고 그 작업 시작 전 빈 틀로 되돌림(R046 새 작업 20261123-최고관리자-samples-2). 반영 대기 목록도 그 작업 시작 전 상태로 | Claude | R046 |
 | 2.1.02 | 2026-11-23 | 작업방(Sample Tracking Ⓛ / Ⓣ_re)에 새로 그림 (기존 작업방 [1460:109471](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=1460-109471) · Ver 2.1.02). 3단계 초안 | Claude | R01 · R02 · R03 · R04 |
 |  | 2026-11-23 | 3 추출 장치별 노출 조건 · Case 1 STARlet 추가 (Q12 답, 항목은 M9600 틀 가안 · 질문 대기 Q13) | Claude (최고관리자 요청 R046) | DS-0010 |
+| 2.1.02 | 2026-11-23 | 5단계 완료: 반영 대기 반영 완료 (R01 · R02 · R03 · R04 · R05), UX 확정 · 재설계 후 변경 내역 메모 | Claude | R01 · R02 · R03 · R04 · R05 · DS-0010 |

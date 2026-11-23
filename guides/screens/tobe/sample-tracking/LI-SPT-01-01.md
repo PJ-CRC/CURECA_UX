@@ -10,7 +10,7 @@ date: 2026.10.08
 author: 정다예
 client_mode: []
 user_type: []
-policies: [POL-SMP-001, POL-SMP-002, POL-TST-006 · DS-0008]
+policies: [POL-SMP-001, POL-SMP-002, POL-TST-006]
 basis: 2026-11-23 14:40 · history f4a5f93f
 basis_versions:
   rules: CURECA 작업규칙 @2026-11-20
@@ -227,15 +227,16 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 | ID | 타입 | 변경 전 | 변경 후 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
 | R01 | 점검 발견 | 4 Sample Location 항목 "Trolley ID" (T-IOS는 Trolley Name). IA는 짝 화면 동일 | 하나로 정함 | TI-SPT-01-01 4 | 대기 (확인 필요) |
-| R02 | 점검 발견 | 4 Socket ID, Socket Position 설명 없음 | T-IOS 원문과 맞춤 | TI-SPT-01-01 4 | 작업 중 (20261123-최고관리자-samples-2) |
-| R03 | 점검 발견 | 화면 이름 "Samples Details", 디스크립션 "Sample Details" | IA 기준 이름 하나로 | `ia/ia-screens.csv` | 작업 중 (20261123-최고관리자-samples-2) |
-| R04 | 점검 발견 | TI-SPT-01-01 반영 대기 목록 2~10과 같은 표기·내용 (Allplex_HPV28, Module 고유 ID, General의 Status, WELL No., [96 DWP], Reagents 제목, 8-1 팝업 하나만 엶 등) | TI-SPT-01-01과 같이 | TI-SPT-01-01 반영 대기 목록 | 작업 중 (20261123-최고관리자-samples-2) |
+| R02 | 점검 발견 | 4 Socket ID, Socket Position 설명 없음 | T-IOS 원문과 맞춤 | TI-SPT-01-01 4 | 반영 완료 (2026-11-23) |
+| R03 | 점검 발견 | 화면 이름 "Samples Details", 디스크립션 "Sample Details" | IA 기준 이름 하나로 | `ia/ia-screens.csv` | 반영 완료 (2026-11-23) |
+| R04 | 점검 발견 | TI-SPT-01-01 반영 대기 목록 2~10과 같은 표기·내용 (Allplex_HPV28, Module 고유 ID, General의 Status, WELL No., [96 DWP], Reagents 제목, 8-1 팝업 하나만 엶 등) | TI-SPT-01-01과 같이 | TI-SPT-01-01 반영 대기 목록 | 반영 완료 (2026-11-23) |
 
 ## 변경 이력
 
 | 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 (논의 대상 · 정책 ID · 반영 대기 ID) |
 | --- | --- | --- | --- | --- |
-| 2.1.11 | 2026-11-20 | 작업방에 새로 그림 (기존 작업방 [1460:111485](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=1460-111485) · Ver 2.1.11). 3단계 초안: R02 · R03 · R04 반영(작업 중, R04는 TI-SPT-01-01 R02 ~ R07 · R09와 같게. Reagents 제목 · 정렬은 대기), 검사 단계 · General 일시 정의와 표기(POL-SMP-002) | Claude (최고관리자 요청) | 20261120-최고관리자-samples, POL-SMP-001 · DS-0008, POL-SMP-002 |
+| 2.1.11 | 2026-11-20 | 작업방에 새로 그림 (기존 작업방 [1460:111485](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=1460-111485) · Ver 2.1.11). 3단계 초안: R02 · R03 · R04 반영(작업 중, R04는 TI-SPT-01-01 R02 ~ R07 · R09와 같게. Reagents 제목 · 정렬은 대기), 검사 단계 · General 일시 정의와 표기(POL-SMP-002) | Claude (최고관리자 요청) | 20261120-최고관리자-samples, POL-SMP-001, POL-SMP-002 |
 | | 2026-11-23 | 멈춘 작업(20261120-최고관리자-samples)이 쓴 화면 MD 내용 · 섹션 링크를 지우고 빈 틀로 되돌림. 반영 대기 목록은 asis 화면 MD의 원래 변경 전 · 변경 후 · 상태로 되돌림(그 작업이 더한 줄은 상태만 대기로) | Claude (최고관리자 요청 R045) | 20261123-최고관리자-samples |
 | | 2026-11-23 | 멈춘 작업(20261123-최고관리자-samples)이 쓴 화면 MD 내용 · 섹션 링크를 지우고 그 작업 시작 전 빈 틀로 되돌림(R046 새 작업 20261123-최고관리자-samples-2). 반영 대기 목록도 그 작업 시작 전 상태로 | Claude | R046 |
 | 2.1.11 | 2026-11-23 | 작업방(Sample Tracking Ⓛ / Ⓣ_re)에 새로 그림 (기존 작업방 [1460:111485](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=1460-111485) · Ver 2.1.11). 3단계 초안 | Claude | R02 · R03 · R04 |
+| 2.1.11 | 2026-11-23 | 5단계 완료: 반영 대기 반영 완료 (R02 · R03 · R04), UX 확정 · 재설계 후 변경 내역 메모 | Claude | R02 · R03 · R04 |

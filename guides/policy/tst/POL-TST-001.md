@@ -4,7 +4,7 @@ title: Policy Setting 공통
 summary: 검사 정책은 T-IOS에서만 설정하고 L-IOS는 조회만 하며, 장비 통합 상태가 Not Initialized 또는 Ready일 때만 바꿀 수 있음
 domain: TST
 menus: [Setting]
-cids: [TI-STN-01, LI-STN-01, TI-STN-01-01, TI-STN-01-02, LI-STN-01-02, TI-STN-01-03, TI-STN-01-04, LI-STN-01-04]
+cids: [TI-STN-01, LI-STN-01, TI-STN-01-01, TI-STN-01-02, LI-STN-01-02, TI-STN-01-03, TI-STN-01-04, LI-STN-01-04, TI-SPT-01-02, LI-SPT-01-02, TI-SPT-01-03, LI-SPT-01-03]
 status: 확정
 version:
 date: 2026-11-02
@@ -47,3 +47,4 @@ replaced_by:
 | --- | --- | --- | --- |
 | | 2026-11-02 | 최초 작성 (이전 ID: 팀원 POL-TST-04) | |
 | | 2026-11-02 | PCR Protocol Setting, Allow Protocol Changes Before Test 규칙 추가 (규칙 7·8) | |
+|  | 2026-11-23 | cids에 Protocol Info(TI/LI-SPT-01-02 · 01-03) 더함, 규칙 그대로 | DS-0008 |
