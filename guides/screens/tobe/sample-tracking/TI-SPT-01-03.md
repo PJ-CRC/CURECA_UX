@@ -11,8 +11,13 @@ author: 정다예
 client_mode: []
 user_type: []
 policies: [POL-TST-001 · DS-0008, POL-TST-006 · DS-0008, POL-TST-007]
-basis:
+basis: 2026-11-23 14:40 · history f4a5f93f
 basis_versions:
+  rules: CURECA 작업규칙 @2026-11-20
+  policy: CURECA 정책서 @2026-11-03
+  glossary: 기준데이터 @2026-11-19
+  screens: 화면 정의서 @2026-11-23
+  ux_guide: Common UX 가이드 (UX가이드_Common-UX-가이드) @2026-11-17
 source: tobe
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3158-53198
 ---

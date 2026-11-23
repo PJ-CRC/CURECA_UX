@@ -11,8 +11,13 @@ author: 정다예
 client_mode: []
 user_type: []
 policies: [POL-SMP-001, POL-SMP-002, POL-SMP-003, POL-SMP-005, POL-COM-006]
-basis:
+basis: 2026-11-23 14:40 · history f4a5f93f
 basis_versions:
+  rules: CURECA 작업규칙 @2026-11-20
+  policy: CURECA 정책서 @2026-11-03
+  glossary: 기준데이터 @2026-11-19
+  screens: 화면 정의서 @2026-11-23
+  ux_guide: Common UX 가이드 (UX가이드_Common-UX-가이드) @2026-11-17
 source: tobe
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3158-53203
 ---
@@ -196,7 +201,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 | 1-7 | Reset | 화면 | LID-EVT-022 | - | FR · Réinitialiser |
 | 1-7 | Search | 화면 | LID-STN-016 | - | FR · Rechercher |
 | 2 | Items | 화면 | LID-STN-006 | - | ES · Elementos |
-| 2 | No Data | 디스크립션 |  | 신규 |  |
+| 2 | No Data | 디스크립션 | | 신규 | FR · Aucune donnée |
 | 2-1 | Progress | 화면 | LID-SPT-003 | - | DE · Fortschritt |
 | 2-1 | Start Date/Time | 화면 | LID-TMG-004 | - | ES · Fecha/Hora de Inicio |
 | 2-1 | End Date/Time | 화면 | LID-TMG-005 | - | PT · Data/Hora de Término |

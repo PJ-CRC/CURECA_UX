@@ -11,8 +11,13 @@ author: 정다예
 client_mode: []
 user_type: []
 policies: [POL-SMP-001, POL-SMP-002, POL-TST-006 · DS-0008]
-basis:
+basis: 2026-11-23 14:40 · history f4a5f93f
 basis_versions:
+  rules: CURECA 작업규칙 @2026-11-20
+  policy: CURECA 정책서 @2026-11-03
+  glossary: 기준데이터 @2026-11-19
+  screens: 화면 정의서 @2026-11-23
+  ux_guide: Common UX 가이드 (UX가이드_Common-UX-가이드) @2026-11-17
 source: tobe
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3158-53196
 ---
@@ -184,7 +189,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=31
 | 4 | Sample Location | 화면 | LID-SPT-007 | - | FR · Emplacement de l'échantillon |
 | 4 | Location Type | 화면 | LID-SPT-039 | - | PT · Tipo de Localização |
 | 4 | Return Status | 화면 | LID-SPT-008 | - | ES · Estado de Devolución |
-| 4 | Trolley Name → Trolley ID | 화면 |  | 변경 |  |
+| 4 | Trolley Name → Trolley ID | 화면 | | 변경 | PT · ID do Trolley |
 | 4 | Tray Position | 화면 | LID-SPT-010 | - | ES · Posición del Tray |
 | 4 | STAT Slot No. | 화면 | LID-SPT-040 | - | FR · N° d'emplacement STAT |
 | 4 | Socket ID | 화면 | LID-SPT-041 | - | ES · ID del Socket |
