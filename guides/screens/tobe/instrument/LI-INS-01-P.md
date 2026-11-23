@@ -136,12 +136,10 @@ figma:
 | 번호 | 요소 | 예시 값 | 기준 |
 | --- | --- | --- | --- |
 | 1 | Module type | Sample Storage | 기존 화면 (기존 작업방 10069:368536) |
-| 2 · 2-1 | Module (index) · 상태 | Sample Pre-treatment (1) · Paused (기존 화면 그대로) | 기존 화면 |
+| 2 · 2-1 | Module (index) · 상태 | Sample Storage (1) · Paused | 기존 화면 (상태 그대로). Module 이름은 Module type과 Door 구성에 맞춤 (기존 화면은 Sample Pre-treatment (1), `glossary/module-units.csv`) |
 | 2-2 · 2-3 · 2-5 | Door 행 | Door (Left) · Open · [Lock] / Door (Right) · Closed · [Unlock] | 기존 화면, `glossary/module-units.csv` (Sample Storage Door (Left) · (Right)) |
 | 2-6 | 안내 문구 | Close the door, then press Lock to lock it. | 기존 화면 |
 | 3 | 버튼 | Unlock all doors | 기존 화면 |
-
-- 기존 화면은 Module type이 Sample Storage인데 Module이 Sample Pre-treatment (1)로 그려져 있음. 4단계 전 확인 (작업 기록 "찾은 것")
 
 ## 화면 표기 글자
 
