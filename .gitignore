@@ -22,6 +22,8 @@ workbench/.installed
 workbench/.agent.log
 workbench/.agent_mcp.json
 workbench/.agent_prompt.txt
+# 백그라운드 Claude가 서버로 보내는 임시 JSON(PC마다)
+workbench/tmp/
 workbench/.agent_out.txt
 workbench/.agent_out.txt.err
 # 작업 이력(공유)은 별도 저장소(history 브랜치)로 서버가 올린다
