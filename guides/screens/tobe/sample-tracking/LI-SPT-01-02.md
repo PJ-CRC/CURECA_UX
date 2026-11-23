@@ -14,7 +14,7 @@ policies: [POL-TST-001 · DS-0008, POL-TST-006 · DS-0008]
 basis:
 basis_versions:
 source: tobe
-figma:
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3158-53205
 ---
 # LI-SPT-01-02 Protocol Info - Pre-Treatment Protocol
 
