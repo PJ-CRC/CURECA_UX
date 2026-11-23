@@ -14,7 +14,7 @@ policies: [POL-SMP-001, POL-SMP-002, POL-SMP-005, POL-COM-006]
 basis: 2026-11-23 09:35 · history 2336f0eb
 basis_versions: rules @2026-11-20 · policy @2026-11-20 · glossary @2026-11-20 · screens @2026-11-23 · ux_guide @2026-11-20
 source: tobe
-figma:
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3123-53231
 ---
 # TI-SPT-01 Samples
 

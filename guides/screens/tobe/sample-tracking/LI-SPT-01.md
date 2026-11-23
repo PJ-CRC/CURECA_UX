@@ -14,7 +14,7 @@ policies: []   # 정책 ID. 작업 완료 전인 결정으로 그렸으면 "POL-
 basis:         # 화면 기준: 시각 · history 커밋 (reference-rules/work-log.md "작업 기준")
 basis_versions: # 문서마다 basis 시각 전에 마지막으로 바뀐 때 (rules · policy · glossary · screens · ux_guide 모두 @날짜)
 source: tobe   # To-Be 화면 MD. 작업방에 그렸는지는 머리말 figma로 가름
-figma:         # 작업방의 이 CID 섹션 링크
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3123-53239
 ---
 # CID 화면 이름
 
