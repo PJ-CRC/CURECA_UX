@@ -8,107 +8,183 @@ type: Page
 version: 2.1.18
 date: 2026.11.19
 author: 이상헌
-client_mode: []
-user_type: []
-policies: []   # 정책 ID. 작업 완료 전인 결정으로 그렸으면 "POL-EQP-004 · DS-0012"처럼 논의 대상 ID를 함께 적고, 5단계(완료) 반영 뒤 뗌
+client_mode: [Main Mode, Console Mode, MS Mode]
+user_type: [Service, Admin, User]
+policies: [POL-EQP-001, POL-EQP-002, POL-EQP-008 · DS-0011, POL-EQP-009, POL-EVT-001]
 basis:         # 화면 기준: 시각 · history 커밋 (reference-rules/work-log.md "작업 기준")
 basis_versions: # 문서마다 basis 시각 전에 마지막으로 바뀐 때 (rules · policy · glossary · screens · ux_guide 모두 @날짜)
-source: tobe   # To-Be 화면 MD. 작업방에 그렸는지는 머리말 figma로 가름
-figma:         # 작업방의 이 CID 섹션 링크
+source: tobe
+figma:
 ---
 # LI-INS-01-T Overview Tab
 
-- T/L 차이:
-- 호출하는 화면: [CID] 화면 이름 (어디서 → 어디로)
-- 호출되는 곳: (공통 팝업이면 호출 위치 목록)
+- T/L 차이: T-IOS(TI-INS-01-T)에 없는 [Door Control] 버튼(6)이 Module 카드마다 있음. 기존 Door Status Tooltip(5)은 기존 작업방에서 제거됨
+- 호출하는 화면: [LI-INS-01-P] Door Control Popup (6 [Door Control] → 팝업), [LI-INS-02-T] All Tab (1 Tab → All), Module Type Tab (3-4 [View All] → 그 Module Type Tab)
+- 호출되는 곳: LNB Instrument 메뉴
 
 ## 디스크립션
 
-<!-- 원본입니다. Figma 패널에 그대로 들어갑니다. 쓰는 법은 reference-rules/description.md, 작성예시문서는 examples/description-samples.md.
-     바뀐 글 표시(빨간 글씨 · 빨간 취소선)는 reference-rules/description.md 7절 "바뀐 글 표시"의 HTML 태그로 적습니다.
-     코드(화면 · 케이스 · Alert · Confirm · Toast · 공통 UX · 정책)는 화면 MD에 색을 적지 않습니다. Figma 패널에서만 파란색으로 칠합니다(reference-rules/description.md 7절 "참고 코드 표시").
-     아래는 모양 예시입니다. 실제 내용으로 바꿔 씁니다. -->
-
-**0  ○○ 화면**
+**0  Overview Tab 화면**
 - 정의
-  - 내용
+  - <span style="color:red">CURECA</span> 장비의 현황을 확인하고 상세 내용을 조회하는 화면
+  - 장비를 Module 단위로 조회 가능
 - 동작
-  - 내용
-- User Type : 
-- L-IOS Client Mode : (L-IOS 화면에만 씀)
+  - LNB의 Instrument 메뉴 선택 시 진입
+- User Type : Service, Admin, User
+- L-IOS Client Mode : Main Mode, Console Mode, MS Mode
 
-**1  ○○ 영역**
+**1  Tab 영역**
 - 정의
-  - 내용
-- 공통 UX 참고 : 
+  - Overview : 전체 장비 현황을 이미지 기반 대시보드 형태로 제공
+  - All : 전체 장비 정보를 목록(List) 형태로 제공
+  - 그 외 Tab : Module Type 기준
+- 동작
+  - 등록되지 않은 Module Tab 진입 시 팝업 노출 : Alert_004
+- 공통 UX 참고 : COMM-5-s
 
-**1-1  항목 이름(Dropdown)**
-- 기능 : 
-- Default : 
-- 드롭다운 리스트 항목
-  - 내용
-- 공통 UX 참고 : 
+**2  Prep / Dx 장비 구분 영역**
+- Prep System
+  - 총 3개의 Module로 구성
+  - 검체 입고 후 전처리 과정을 수행하는 단계
+- Dx System
+  - 총 5개의 Module로 구성
+  - 전처리 이후의 진단 과정을 수행하는 단계
 
-**2  ○○ 리스트**
-- 정의 : 
-- 정렬
-  - Default : 
+**3  Module 영역**
+- 정의
+  - Module 단위로 구분하여 정보 제공
+  - 각 Module별 전체 장비 대수의 상태를 요약 형태로 제공
+
+**3-1  Module Type Title**
+- 정의 : 각 카드 상단에 Module Type 이름 노출
+
+**3-2  Module 사용 여부 Status**
 - 표출 항목
-  - 항목 이름 : 무슨 값인지 / 표기 / 값이 없을 때
-- 동작
-  - 내용
-- 공통 UX 참고 : 
+  - Total : 해당 Module Type의 전체 등록 수 노출
+  - <span style="color:red">~~In Use : 사용 상태의 Module 수 노출~~</span>
+  - <span style="color:red">~~Not in Use : 미사용 상태의 Module이 존재할 경우에만 노출되며, 해당 수량 노출~~</span>
+  - <span style="color:red">Enabled : 사용(Enabled) 상태의 Module 수 노출</span>
+  - <span style="color:red">Disabled : 미사용(Disabled) 상태의 Module이 있을 경우에만 노출</span>
+- <span style="color:red">표기 : Enabled n · Total n (Disabled n)</span>
+- 정책 참고 : POL-EQP-009
 
-**3  [버튼 이름] 버튼**
-- 정의
-  - 내용
-- 활성화 조건
-  - 내용
+**3-3  Module 이미지 영역**
+- 정의 : Module Type에 따라 해당 장비를 대표하는 이미지가 카드 영역에 노출
+
+**3-4  [View All] 버튼**
 - 동작
-  - 내용
-- 정책 참고 : 
+  - 클릭 시 해당 Module Type Tab으로 이동
+  - 동일 Type의 Module 목록 노출
+
+**3-5  Module Status 영역**
+- 정의
+  - 각 상태별로 해당되는 Module 수 노출
+  - 좌측 항목(Connected / Status / Door Status) 기준으로 Module 수를 구분하여 노출
+  - 자세한 상태값에 대한 내역은 우측의 Instrument Detail Info page 참고
+
+**3-6  Event History 요약 영역**
+- 정의 : 각 Module Type에서 발생한 Event 개수 합산 노출
+- 산출 방식
+  - Event Status가 Open인 Event만 합산
+  - Level을 구분하여 Error와 Warning 수를 따로 노출
+- 표기
+  - Error : 빨강
+  - Warning : 노랑
+- 정책 참고 : POL-EVT-001
+
+**4  Event 표기 영역**
+- 노출 조건 : Module에서 발생한 장비 Event가 있을 경우 노출
+- 표기
+  - 아이콘 노출
+  - Event Level에 따라 차등 표현(Error/Warning)
+
+**4-1  Event Icon(Tooltip)**
+- 노출 조건 : Event Status가 Open인 항목이 있을 경우
+- 동작
+  - 아이콘 클릭 시 툴팁 형식으로 내용 노출
+  - [X] 클릭 시 닫힘
+- 표시 기준 : Status가 Open인 Event 중 최신 1건
+- 표기 형식 : [{Module Name}]\n{Event Code}, {Event Description}
+- 공통 UX 참고 : COMM-5-v
+- 정책 참고 : POL-EVT-001
+
+**6  <span style="color:red">[Door Control]</span> 버튼**
+- 정의
+  - Module Type별 Door 잠금 해제 · 잠금을 위한 버튼
+- 활성화 조건
+  - <span style="color:red">~~공통 UX 참고 : COMM-3-a~~</span>
+  - <span style="color:red">L-IOS Client Mode가 Main Mode, Console Mode일 때 활성화</span>
+  - <span style="color:red">L-IOS Client Mode가 MS Mode일 때 비활성화</span>
+- 동작
+  - 클릭 시 팝업 노출 : LI-INS-01-P
+  - Door Control 팝업에서 Door별 Unlock(잠금 해제) · Lock(잠금) 가능
+- 케이스 참고 : LI-INS-01-T/Case > Case 1
+- 정책 참고 : <span style="color:red">POL-EQP-008</span>
+
+**7  범례 영역**
+- 정의 : 상단 상태값 표시 영역의 범례 제공
 
 ## 화면 예시
 
-<!-- 그릴 때 화면에 넣는 예시 값. 상태값 · 단위 · 품목 · 수치는 용어집 · 정책 · glossary csv 기준. 기준이 없으면 만들지 않고 "질문 대기"에 올립니다.
-     목록 · 표는 한 페이지 최대 노출 개수만큼 행을 채웁니다. 줄였으면 이유를 적습니다. -->
-
 | 번호 | 요소 | 예시 값 | 기준 |
 | --- | --- | --- | --- |
+| 1 | Tab | Overview (선택), All, Sample Storage, Consumable Storage, Sample Pre-treatment, High-throughput Extraction, Flexible Extraction, PCR Setup, Plate Sealing, Universal PCR | `glossary/modules.csv` 순서 · 기존 화면 (기존 작업방 10069:367211) |
+| 2 | 장비 구분 제목 | Sample Preparation (Prep) System / Diagnostics (Dx) System | 기존 화면 (Prep 시스템의 Sample Preparation은 그대로, `glossary/modules.csv` 2026-11-18) |
+| 3-1 | Module 카드 (Prep) | Sample Storage · Consumable Storage · Sample Pre-treatment | `glossary/modules.csv` |
+| 3-1 | Module 카드 (Dx) | High-throughput Extraction · Flexible Extraction · PCR Setup · Plate Sealing · Universal PCR | `glossary/modules.csv` |
+| 3-2 | 사용 여부 (카드 순서대로) | Enabled 1 · Total 1 / Enabled 1 · Total 1 / Enabled 3 · Total 4 (Disabled 1) / Enabled 3 · Total 3 / Enabled 3 · Total 3 / Enabled 3 · Total 4 (Disabled 1) / Enabled 2 · Total 3 (Disabled 1) / Enabled 6 · Total 6 | 기존 화면 |
+| 3-5 | Connected · Status · Door Status | 기존 화면의 카드별 Module 수 그대로 | 기존 화면, `glossary/status-values.csv` |
+| 3-6 | Event 개수 | 기존 화면 그대로 (Error 빨강 · Warning 노랑) | 기존 화면 |
+| 4-1 | Event 툴팁 | [High-throughput Extraction (3)] E0001, Plate Gripper Failure. | 기존 화면 (Module 이름은 `glossary/modules.csv`) |
+| 6 | [Door Control] | Module 카드마다 Enabled (Case 1은 MS Mode라 Disabled) | 기존 화면, `policy/client-mode-matrix.csv` |
+| 7 | 범례 | Connected, Disconnected, Running, Paused, Error, Ready | 기존 화면, `glossary/status-values.csv` |
 
 ## 화면 표기 글자
 
-<!-- 화면에 표기되는 영어 글자를 디스크립션 번호와 함께 적습니다. 번역 전체는 여기에 적지 않습니다(flow/4-revise-verify.md 절차 4번 "언어셋을 정리하고 UI팀에 넘길 것을 보여 줌"에서 대상 목록을 모아서 함).
-     출처: 그 글자를 찾은 곳. 화면(기획 프레임) / 디스크립션(디스크립션에 적힌 화면 표기 글자, 예: 드롭다운 리스트 항목 · 툴팁 · 안내 문구) / 케이스(케이스 화면). 여러 곳이면 한 줄에 `화면 · 케이스`처럼 적습니다. 디스크립션의 설명 글은 적지 않습니다. 3단계에서 적습니다.
-     Language ID: 언어셋 원본(language-set/db/)에 있는 글자의 ID. 번역 전체는 이 ID로 원본에서 찾습니다. 아직 언어셋과 맞춰 보지 않았으면 비워 둡니다.
-     상태: 진행 중인 작업에서 생긴 글자는 신규, 영어 글자가 바뀐 줄은 변경("화면 표기 글자 (영어)" 칸에 "변경 전 → 변경 후"), 이 화면에서 없어진 글자는 줄을 지우지 않고 제거(다른 화면은 쓸 수 있으므로 언어셋에서 삭제한다는 뜻이 아님). 바뀐 것이 없는 글자는 `-`. 5단계에서 언어셋 원본에 반영하면 다시 `-`로 돌립니다.
-     가장 긴 언어 · 번역 글자: 제공 언어 가운데 가장 긴 언어와 그 언어로 번역한 글자(예: "DE · (독일어로 번역한 글자)"). 4단계 절차 4번에서 채웁니다. 그 전에는 비워 둡니다. -->
-
 | 번호 | 화면 표기 글자 (영어) | 출처 (화면 / 디스크립션 / 케이스) | Language ID | 상태 (신규 / 변경 / 제거 / -) | 가장 긴 언어 · 번역 글자 |
 | --- | --- | --- | --- | --- | --- |
+| 1 | Overview | 화면 | | - | |
+| 1 | All | 화면 | | - | |
+| 1 | Sample Storage | 화면 | | - | |
+| 1 | Consumable Storage | 화면 | | - | |
+| 1 | Sample Pre-treatment | 화면 | | - | |
+| 1 | High-throughput Extraction | 화면 | | - | |
+| 1 | Flexible Extraction | 화면 | | - | |
+| 1 | PCR Setup | 화면 | | - | |
+| 1 | Plate Sealing | 화면 | | - | |
+| 1 | Universal PCR | 화면 | | - | |
+| 2 | Sample Preparation (Prep) System | 화면 | | - | |
+| 2 | Diagnostics (Dx) System | 화면 | | - | |
+| 3-2 | Enabled | 화면 | | - | |
+| 3-2 | Total | 화면 | | - | |
+| 3-2 | Disabled | 화면 | | - | |
+| 3-4 | View All | 화면 | | - | |
+| 3-5 | Connected | 화면 | | - | |
+| 3-5 | Status | 화면 | | - | |
+| 3-5 | Door Status | 화면 | | - | |
+| 3-5 | Open | 화면 | | - | |
+| 3-5 | Closed | 화면 | | - | |
+| 3-6 | Event | 화면 | | - | |
+| 6 | Door Control | 화면 · 케이스 | | - | |
+| 7 | Disconnected | 화면 | | - | |
+| 7 | Running | 화면 | | - | |
+| 7 | Paused | 화면 | | - | |
+| 7 | Error | 화면 | | - | |
+| 7 | Ready | 화면 | | - | |
 
 ## Alert · Confirm · Toast
 
-<!-- Alert · Confirm · Toast를 모두 적습니다. 코드는 카탈로그(alert/)의 ID. 카탈로그에 없으면 3단계에서 카탈로그에 새 줄을 더해 그 코드를 씁니다(flow/3-design.md 공통 1의 9, 케이스 3의 토스트는 3-2). 토스트는 버튼 동작을 `-`로 둡니다. -->
-
 | 번호 | 종류 (알럿 / 컨펌 / 토스트) | 코드 | 언제 | 버튼 동작 |
 | --- | --- | --- | --- | --- |
+| 1 | 알럿 | Alert_004 | 등록되지 않은 Module Tab 진입 시 | OK 선택 시 → 해당 팝업 닫힘, 기존 작업 화면 유지 |
 
 ## 케이스
 
-<!-- 케이스 화면의 원본입니다 (flow/3-design.md 공통 5 "케이스 화면", 작성예시문서 examples/case-samples.md).
-     근거는 셋 중 하나: 기존 원본 / 디스크립션 조건 / 요청자. 어느 것도 아니면 올리지 않고 질문 대기에 둡니다.
-     종류(디스크립션 조건일 때): 1 상태별 데이터 노출, 2 올리거나 눌렀을 때 뜨는 것, 3 유형 · 대상에 따라 표출 항목 구성이 다른 것,
-     4 개수가 기준을 넘어 요소가 생기거나 배치가 바뀌는 것, 5 처음 들어왔거나 데이터가 없을 때, 6 한 번의 조작으로 여러 단계를 거쳐 바뀌는 것.
-     Case 번호는 바꾸지 않고, 지워도 다시 쓰지 않습니다. 케이스가 없으면 "없음"이라고 적습니다. -->
-
 | Case | 제목 | 조건 | 디스크립션 번호 | 종류 | 근거 |
 | --- | --- | --- | --- | --- | --- |
+| 1 | L-IOS Client Mode에 따른 [Door Control] 버튼 상태 | Main Mode · Console Mode / MS Mode | 6 | 1 | 요청자 (2026-11-23 2단계 답 "케이스 모두 그림: L-IOS MS Mode Door Control X") |
 
 ## 반영 대기 목록
-
-<!-- 쓰는 법은 reference-rules/pending-changes.md. 타입: 논의 결정 / 다른 화면 파급 / 기준 자료 변경 / 외부 원본 변경 / 점검 발견.
-     상태: 대기 / 작업 중 (작업 기록 이름) / 반영 완료 (날짜) / 제외 (날짜, 이유). 줄은 지우지 않습니다. -->
 
 | ID | 타입 | 변경 전 | 변경 후 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
@@ -123,3 +199,4 @@ figma:         # 작업방의 이 CID 섹션 링크
 
 | 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 (논의 대상 · 정책 ID · 반영 대기 ID) |
 | --- | --- | --- | --- | --- |
+| 2.1.18 | 2026-11-23 | 작업방에 새로 그림 (기존 작업방 [10069:367211](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=10069-367211) · Ver 2.1.18). 반영 대기 R01 ~ R06 반영 (작업 중). 제거된 요소 5 Door Status Tooltip 지움. Case 1 (MS Mode) 더함 (요청자) | Claude (20261123-최고관리자-instruments) | R01 ~ R06, DS-0011 |
