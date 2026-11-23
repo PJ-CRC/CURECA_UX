@@ -2,9 +2,9 @@
   "jobId": "J147",
   "pc": "DAYE",
   "by": "정다예",
-  "at": "2026-11-23T16:02:06+09:00",
-  "status": "진행 중",
-  "note": "수정본 비교 중",
+  "at": "2026-11-23T16:04:53+09:00",
+  "status": "완료",
+  "note": "후보 0개 중 0개 수정 필요. 이 파일(신규 작업방)은 project.json에 작업 페이지가 정해져 있지 않아, 작업 링크(77:442)가 가리키는 페이지 「Instrument Ⓛ / Ⓣ _re 2」를 봤다. 최상위 2개 노드에 LNB · Setting 2Depth · 종료 버튼(Shut Down/Exit) 글이 있는 화면이 없어 고칠 화면 없음. 이번 수정은 문서를 Figma COMM-3-a에 맞춘 것이라 화면 규칙 자체는 그대로다. Profile(Console · TSS 미노출)은 Figma 가이드 프레임 쪽을 고쳐야 하는 건이라 화면 목록에는 넣지 않음.",
   "scope": "",
   "fileKey": "eCzV8BJIXt1MGdKr3S4fgI",
   "items": []

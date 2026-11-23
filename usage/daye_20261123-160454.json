@@ -1,0 +1,28 @@
+{
+  "id": "daye_20261123-160454",
+  "kind": "work",
+  "reqId": "",
+  "reqType": "",
+  "team": "cureca",
+  "at": "2026-11-23T16:04:54+09:00",
+  "from": "2026-11-23T16:02:06+09:00",
+  "by": "정다예",
+  "doneBy": "Claude",
+  "pc": "DAYE",
+  "fileKey": "",
+  "fileName": "",
+  "page": "",
+  "frame": "",
+  "nodeId": "",
+  "text": "고칠 화면 찾기: Common UX 가이드 (J147)",
+  "models": {
+    "claude-opus-5-5": 11
+  },
+  "calls": 11,
+  "input": 23,
+  "cacheWrite": 27256,
+  "cacheRead": 587957,
+  "output": 6831,
+  "total": 622067,
+  "usd": 0.4724
+}
