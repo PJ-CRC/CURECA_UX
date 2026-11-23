@@ -1,18 +1,28 @@
 {
-  "reportAt": "2026-11-23T11:10:37+09:00",
+  "reportAt": "2026-11-23T11:11:37+09:00",
   "pc": "BREX_06",
   "slug": "brex-06",
   "user": "최고관리자",
   "os": "windows",
   "version": "0.31.5",
   "alive": true,
-  "status": "working",
-  "msg": "처리 중: PENDING R046",
-  "statusAt": "2026-11-23T11:10:29+09:00",
+  "status": "idle",
+  "msg": "요청을 기다리는 중",
+  "statusAt": "2026-11-23T11:11:25+09:00",
   "claude": "따로 설치",
   "claudeWay": "cli",
   "autoWatch": true,
   "events": [
+    {
+      "at": "2026-11-23T11:11:01+09:00",
+      "kind": "stop",
+      "text": "세션 종료 (사람이 멈춤: R046)"
+    },
+    {
+      "at": "2026-11-23T11:10:51+09:00",
+      "kind": "error",
+      "text": "오류 응답으로 끝남 (ok false)"
+    },
     {
       "at": "2026-11-23T10:21:29+09:00",
       "kind": "start",
@@ -319,8 +329,8 @@
       "at": "2026-11-23T11:09:43+09:00",
       "what": "PENDING R046",
       "resume": false,
-      "end": "",
-      "ok": null,
+      "end": "2026-11-23T11:10:51+09:00",
+      "ok": false,
       "sec": null
     },
     {
