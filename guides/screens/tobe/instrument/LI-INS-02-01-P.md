@@ -93,7 +93,8 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/?node-id=3219-23346
 | 1 | 표 머리 | Module - Device · Serial No. · Run-time(h) · Enabled | 기존 화면 |
 | 1 | Module 행 3개 | Sample Pre-treatment (1) · Y / (2) · Y / (3) · N · A123B123C1234f123 · 9,193 | 기존 화면 |
 | 1 | Device 행 (Module마다 4개) | Sample Processing (Upper) · Sample Processing (Lower) · Sample Aliquoting (Upper) · Sample Aliquoting (Lower) · A123B123C1234f123 · 9,193 · Enabled는 기존 화면 그대로 (Sample Pre-treatment (3) 아래는 모두 N) | `glossary/module-units.csv`, 반영 대기 R05 |
-| 2 | Error Rate | 기존 화면 Case 2 값 그대로 | 기존 화면 |
+| 2 | Error Rate | 기존 화면 Case 2 값 그대로 (Sample Storage (1) · 8% · Y / (2) · 8% · N) | 기존 화면 |
+| Case 3 | Module 행 3개 (Device Unit 없음) | Sample Storage (1) · Y / (2) · Y / (3) · N | 기존 화면 케이스, `glossary/module-units.csv` |
 | 3 | 버튼 | OK | 기존 화면 |
 
 ## 화면 표기 글자
@@ -124,6 +125,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/?node-id=3219-23346
 | --- | --- | --- | --- | --- | --- |
 | 1 | User Type이 Admin · User일 때 Error Rate 미표기 | User Type = Admin, User | 2 | 3 | 기존 원본 |
 | 2 | User Type이 Service일 때 Error Rate 표기 | User Type = Service | 2 | 3 | 기존 원본 |
+| 3 | Module에 Device Unit이 없는 경우 | Module 내 Device Unit 없음 (예: Sample Storage) | 1-2 | 3 | 기존 원본 (원본 "모듈에 Device Unit이 없는 Case", 번호 없어 끝 번호 다음으로 붙임) |
 
 ## 반영 대기 목록
 
