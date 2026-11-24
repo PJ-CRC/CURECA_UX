@@ -1,0 +1,12 @@
+{
+  "rev": "20261124-111702_brexui-macbookpro-2-local",
+  "by": "Claude",
+  "at": "2026-11-24T11:17:02+09:00",
+  "note": "시스템 확인: 요약 줄 개수 고침(못 함 4 · 정해야 함 6 · 다름 6)",
+  "base": "20261124-111653_brexui-macbookpro-2-local",
+  "pc": "BREXui-MacBookPro-2.local",
+  "req": "10. 기획서 작성 정책: 기획서 작성 정책서를 작성했어\n검토해줘",
+  "jobId": "J008",
+  "file": "시스템 확인.md",
+  "orig": true
+}
