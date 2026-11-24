@@ -1,14 +1,14 @@
 {
-  "reportAt": "2026-11-24T11:20:14+09:00",
+  "reportAt": "2026-11-24T11:21:14+09:00",
   "pc": "BREXui-MacBookPro-2.local",
   "slug": "brexui-macbookpro-2-local",
   "user": "유병규",
   "os": "mac",
   "version": "0.32.0",
   "alive": true,
-  "status": "idle",
-  "msg": "마지막 처리: JOBS J008 · 컨텍스트 9%",
-  "statusAt": "2026-11-24T11:20:07+09:00",
+  "status": "working",
+  "msg": "처리 중: JOBS J009 · 강도 medium",
+  "statusAt": "2026-11-24T11:21:05+09:00",
   "claude": "앱 내장",
   "claudeWay": "cli",
   "autoWatch": true,
@@ -55,6 +55,14 @@
     }
   ],
   "turns": [
+    {
+      "at": "2026-11-24T11:20:42+09:00",
+      "what": "JOBS J009 · 강도 medium",
+      "resume": false,
+      "end": "",
+      "ok": null,
+      "sec": null
+    },
     {
       "at": "2026-11-24T11:15:19+09:00",
       "what": "JOBS J008 · 강도 medium",
