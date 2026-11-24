@@ -220,7 +220,9 @@ module.exports = function register(on, h) {
   // ── POST /api/jobs {action: add | take | update} — 작업 대기열(캡처 · 목록 · UX 문서 · 프로토타입 · 회의록 · 일정/작업 · 글 수정) ──
   const upTmp = path.join(C.root, 'workbench', 'job_files', '_tmp'), upDir = path.join(C.root, 'workbench', 'job_files');
   const jobMenu = (k) => (['guide', 'guide-edit', 'guide-check'].includes(k) ? 'guide' : ['minutes', 'plan'].includes(k) ? 'plan' : /^prototype/.test(k) ? 'proto' : 'workbench');
-  const KINDS = ['capture', 'catalog', 'guide', 'guide-check', 'guide-edit', 'text', 'prototype', 'prototype-edit', 'prototype-sync', 'minutes', 'plan', 'transfer'];
+  // fill(컴포넌트 채우기, 2026-11-24): Claude가 정한 행 데이터(컴포넌트 · 변형 · 글 · 글 꾸밈)를 플러그인이 인스턴스로 만들어 채운다. 모든 팀 공용 —
+  //  어떤 컴포넌트를 어디에 채울지는 데이터로 오고(팀 작업규칙이 정함), 프로그램은 특정 팀의 패널 모양을 모른다. 감시(JOBS)에는 나오지 않는다(plugin 몫)
+  const KINDS = ['capture', 'catalog', 'guide', 'guide-check', 'guide-edit', 'text', 'fill', 'prototype', 'prototype-edit', 'prototype-sync', 'minutes', 'plan', 'transfer'];
   // Claude 모델(2026-11-24): 요청 · 작업마다 고른다(입력 칸 옆 「모델」). 빈 값 = 기본(CLI 기본 모델, 지금 Opus 5.5). 백그라운드 감시는 같은 모델끼리 한 세션(--model)으로 처리한다(agent.js)
   //  fable은 사용 크레딧이 따로 있어야 해서 뺐다. 이름은 CLI 별칭(최신 판을 가리킴)
   const MODELS = ['opus', 'sonnet', 'haiku'];   // Fable은 사용 크레딧이 따로 있어야 해서 뺐다
@@ -307,6 +309,13 @@ module.exports = function register(on, h) {
           if (kind === 'prototype-edit' && !nn(b.text).trim()) throw new Error('수정 내용을 입력해 주세요.');
         }
         if (kind === 'text' && !core.arr(b.items).length) throw new Error('바꿀 글(items)이 없습니다.');
+        if (kind === 'fill') {
+          const gs = core.arr(b.groups).filter((g) => g && typeof g === 'object');
+          if (!gs.length || !gs.some((g) => core.arr(g.rows).length)) throw new Error('채울 행(groups[].rows)이 없습니다.');
+          if (!gs.every((g) => /^\d+:\d+$/.test(nn(g.parent)) || /^\d+:\d+$/.test(nn(g.near)))) throw new Error('groups마다 넣을 곳(parent) 또는 옆에 둘 노드(near)의 nodeId가 있어야 합니다.');
+          if (JSON.stringify(gs).length > 400000) throw new Error('채울 내용이 너무 큽니다(400KB까지). 나눠서 쌓아 주세요.');
+          if (!nid) nid = nn(gs[0].parent) || nn(gs[0].near);
+        }
         // 다음 단계로 옮기기(팀 프로젝트, 2026-11-16): Claude가 아니라 Figma 플러그인이 한다 — 읽기(보내는 파일을 연 플러그인) → 만들기(받는 파일을 연 플러그인)
         let xfer = null;
         if (kind === 'transfer') {
@@ -356,8 +365,8 @@ module.exports = function register(on, h) {
         }
         const specNoFile = !key && ((kind === 'guide-check' && nn(b.scope) === 'spec') || ['guide-edit', 'guide', 'minutes', 'plan'].includes(kind));
         if (!h.testKey(key) && !specNoFile) throw new Error(kind === 'guide' ? 'Figma 링크 형식이 아닙니다.' : '잘못된 파일 키입니다.');
-        if ((kind === 'capture' || kind === 'text') && !/^\d+:\d+$/.test(nid)) throw new Error('잘못된 nodeId: ' + nid);
-        if (!['guide', 'guide-check', 'guide-edit', 'text', 'transfer', 'prototype', 'prototype-edit', 'prototype-sync', 'minutes', 'plan'].includes(kind)) hit = items.find((x) => x.kind === kind && x.fileKey === key && x.nodeId === nid && ['대기', '진행 중'].includes(x.status)) || null;
+        if ((kind === 'capture' || kind === 'text' || kind === 'fill') && !/^\d+:\d+$/.test(nid)) throw new Error('잘못된 nodeId: ' + nid);
+        if (!['guide', 'guide-check', 'guide-edit', 'text', 'fill', 'transfer', 'prototype', 'prototype-edit', 'prototype-sync', 'minutes', 'plan'].includes(kind)) hit = items.find((x) => x.kind === kind && x.fileKey === key && x.nodeId === nid && ['대기', '진행 중'].includes(x.status)) || null;
         if (kind === 'prototype-sync') hit = items.find((x) => x.kind === kind && x.proto === nn(b.proto) && x.status === '대기') || null;
         // 바뀐 것 확인은 같은 ① → ② 짝에 하나만(2026-11-18 — 여러 번 눌러 같은 확인이 겹쳐 돌다 Figma 연결 오류로 실패하던 것). 이미 대기 · 진행 중이면 그것을 돌려준다
         if (kind === 'transfer' && xfer && xfer.mode === 'check') hit = items.find((x) => x && x.kind === 'transfer' && x.mode === 'check' && x.from && x.to && x.from.key === xfer.from.key && x.to.key === xfer.to.key && ['대기', '진행 중'].includes(x.status)) || null;
@@ -370,6 +379,7 @@ module.exports = function register(on, h) {
           if (kind === 'guide-edit' && nn(b.file)) hit.file = nn(b.file);
           if (kind === 'guide-edit' && srcs.length) hit.files = saveUploads(hit.id, srcs);
           if (kind === 'capture' && b.auto) hit.auto = true;
+          if (kind === 'fill') hit.groups = core.arr(b.groups).filter((g) => g && typeof g === 'object');
           if (pickModel(b.model)) hit.model = pickModel(b.model);
           if (pickEffort(b.effort)) hit.effort = pickEffort(b.effort);
           // ②(받는 파일)에도 플러그인이 켜져 있으면 먼저 ② 작업 페이지를 읽어 Figma에서 직접 복사해 옮긴 화면도 찾는다(2026-11-17, phase scan → check)
@@ -425,6 +435,7 @@ module.exports = function register(on, h) {
         if (b.guide) hit.guide = nn(b.guide);
         for (const f of ['revFrom', 'revTo', 'proto']) if (b[f]) hit[f] = f === 'proto' && typeof b[f] === 'object' ? nn(b[f].id) : nn(b[f]);   // proto는 {id}로 와도 id만
         if (b.items != null) hit.items = core.arr(b.items);
+        if (b.result && typeof b.result === 'object') hit.result = b.result;   // fill: 만든 행 수 · 넘침 · 겹침 점검(플러그인)
         hit.updatedAt = now;
         break;
       }

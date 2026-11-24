@@ -385,7 +385,7 @@ function scan() {
   }
   const q = readJson(path.join(WB, 'jobs.json'));
   if (q) {
-    let todo = (q.items || []).filter((x) => x && x.status === '대기' && x.kind !== 'text' && x.kind !== 'transfer' && (x.kind !== 'capture' || (!x.auto && Date.now() - (T(x.createdAt) || Date.now()) >= 20000)));
+    let todo = (q.items || []).filter((x) => x && x.status === '대기' && x.kind !== 'text' && x.kind !== 'fill' && x.kind !== 'transfer' && (x.kind !== 'capture' || (!x.auto && Date.now() - (T(x.createdAt) || Date.now()) >= 20000)));
     if (!pick && todo.length) pick = todo[0];
     if (pick) todo = todo.filter((x) => runOf(x) === runOf(pick));
     if (todo.length) out.push('JOBS ' + todo.map((x) => x.id).join(','));

@@ -176,8 +176,149 @@ figma.on('currentpagechange', () => {
   sendPageList();
   figma.ui.postMessage(Object.assign({ type: 'page-state' }, pageState()));
 });
+// ── 컴포넌트 채우기(fill, 2026-11-24) ──
+// Claude가 정한 행 데이터를 컴포넌트 인스턴스로 만들어 채운다(설명 패널 행 · 확인 목록 · 라벨 같은 「정해진 컴포넌트에 내용 넣기」).
+//  모든 팀 공용: 어떤 컴포넌트 · 변형 · 글을 어디에 둘지는 작업 데이터가 정하고, 여기는 특정 팀의 모양을 모른다.
+//  job.groups[]: { parent | near(+side right/left/top/bottom, offset), at{x,y}, gap, direction(vertical/horizontal), index, clear[nodeId],
+//                  rows[]: { component(노드 id 또는 키), variant{속성:값}, props{속성:값}, texts{안쪽 글 노드 이름(#n번째): 글 | {text, ranges[]} | {lines[]}}, width(숫자 | 'fill'), name } }
+//  수정 가능 페이지(작업 링크 페이지) 안에서만 만들고 지운다. 끝나면 글 넘침 · 겹침을 점검해 돌려준다
+const hexRgb = h => { const m = /^#?([0-9a-f]{6})$/i.exec(String(h || '')); if (!m) return null; const v = parseInt(m[1], 16); return { r: (v >> 16 & 255) / 255, g: (v >> 8 & 255) / 255, b: (v & 255) / 255 }; };
+const pageOf = n => { while (n && n.type !== 'PAGE') n = n.parent; return n; };
+async function fillComp(cache, ref, variant) {
+  ref = String(ref || '');
+  let c = cache[ref];
+  if (!c) {
+    if (/^\d+:\d+$/.test(ref)) c = await figma.getNodeByIdAsync(ref);
+    else if (/^[0-9a-f]{40}$/i.test(ref)) { try { c = await figma.importComponentSetByKeyAsync(ref); } catch (e) { c = await figma.importComponentByKeyAsync(ref); } }
+    if (!c || !/^(COMPONENT|COMPONENT_SET)$/.test(c.type)) throw new Error('컴포넌트를 찾지 못했습니다: ' + ref);
+    cache[ref] = c;
+  }
+  const keys = Object.keys(variant || {});
+  if (c.type === 'COMPONENT' && keys.length && c.parent && c.parent.type === 'COMPONENT_SET') c = c.parent;
+  if (c.type === 'COMPONENT_SET') {
+    const hit = c.children.find(v => v.type === 'COMPONENT' && keys.every(k => String((v.variantProperties || {})[k]) === String(variant[k])));
+    if (hit) return hit;
+    if (keys.length) throw new Error('변형을 찾지 못했습니다: ' + c.name + ' ' + JSON.stringify(variant));
+    return c.defaultVariant;
+  }
+  return c;
+}
+function fillProps(inst, props) {
+  const defs = inst.componentProperties || {}, out = {};
+  for (const k of Object.keys(props || {})) {
+    const full = defs[k] ? k : Object.keys(defs).find(d => d.split('#')[0] === k);
+    if (!full) throw new Error('컴포넌트 속성을 찾지 못했습니다: ' + k);
+    if (defs[full].type !== 'VARIANT') out[full] = props[k];
+  }
+  if (Object.keys(out).length) inst.setProperties(out);
+}
+// 글: 문자열 | {text, ranges:[{start, end, color:'#RRGGBB', strike}]} | {lines:[{text, level, bullet, color, strike}]}
+//  lines: 줄마다 글머리 목록(bullet: true · 'ORDERED')과 단계(level 1 · 2 …), 줄 전체 색 · 취소선. ranges는 lines와 함께 써도 된다(글 전체 기준 위치)
+async function fillText(t, v) {
+  const fonts = t.characters.length ? t.getRangeAllFontNames(0, t.characters.length) : [t.fontName];
+  for (const f of fonts) await figma.loadFontAsync(f);
+  if (typeof v !== 'object' || v === null) v = { text: String(v == null ? '' : v) };
+  let text = String(v.text == null ? '' : v.text); const ranges = Array.isArray(v.ranges) ? v.ranges.slice() : [];
+  let lines = null;
+  if (Array.isArray(v.lines)) {
+    lines = v.lines.map(l => (typeof l === 'object' && l ? Object.assign({}, l) : { text: String(l) }));
+    let p = 0;
+    for (const l of lines) { l.s = p; l.e = p + String(l.text || '').length; if (l.color || l.strike) ranges.push({ start: l.s, end: l.e, color: l.color, strike: l.strike }); p = l.e + 1; }
+    text = lines.map(l => String(l.text || '')).join('\n');
+  }
+  t.characters = text;
+  const n = t.characters.length;
+  if (!n) return;
+  // 글 전체를 컴포넌트 기본 모양(첫 글자)으로 되돌린 뒤 꾸밈을 얹는다
+  t.setRangeTextDecoration(0, n, 'NONE');
+  for (const r of ranges) {
+    const s = Math.max(0, r.start | 0), e = Math.min(n, r.end | 0); if (e <= s) continue;
+    if (r.color) { const c = hexRgb(r.color); if (c) t.setRangeFills(s, e, [{ type: 'SOLID', color: c }]); }
+    if (r.strike) t.setRangeTextDecoration(s, e, 'STRIKETHROUGH');
+  }
+  if (lines) {
+    for (const l of lines) {
+      const s = l.s, e = Math.min(n, Math.max(l.e, s + 1)); if (s >= n || e <= s) continue;
+      if (l.bullet) { t.setRangeListOptions(s, e, { type: l.bullet === 'ORDERED' ? 'ORDERED' : 'UNORDERED' }); t.setRangeIndentation(s, e, Math.max(1, l.level | 0 || 1)); }
+      else if (l.level) t.setRangeIndentation(s, e, l.level | 0);
+    }
+  }
+}
+const boxIn = (a, b) => a.x >= b.x - 1 && a.y >= b.y - 1 && a.x + a.width <= b.x + b.width + 1 && a.y + a.height <= b.y + b.height + 1;
+const boxHit = (a, b) => a.x < b.x + b.width - 1 && b.x < a.x + a.width - 1 && a.y < b.y + b.height - 1 && b.y < a.y + a.height - 1;
+async function fillJob(job) {
+  await resolveLinkPage();
+  const wp = workPageId(); if (!wp) throw new Error('작업 페이지(작업 링크)를 모릅니다 — 시작 안내 작업 링크의 파일을 열어 주세요');
+  const cache = {}, out = { made: 0, removed: 0, groups: [], problems: [] };
+  const onWork = n => { const pg = pageOf(n); return !!pg && pg.id === wp; };
+  // 1) 모두 만든다 — 하나라도 실패하면 이번에 만든 것을 지우고 오류(반쯤 채운 채 남기지 않는다). 2) 만들기가 다 되면 clear의 옛 노드를 지운다. 3) 점검
+  const done = [], all = [];
+  try {
+  for (const g of job.groups || []) {
+    for (const id of g.clear || []) { const n = await figma.getNodeByIdAsync(String(id)); if (n && !n.removed && !onWork(n)) throw new Error('수정 가능 페이지가 아닌 노드는 지우지 않습니다: ' + id); }
+    const near = g.near ? await figma.getNodeByIdAsync(String(g.near)) : null;
+    if (g.near && !near) throw new Error('옆에 둘 노드를 찾지 못했습니다: ' + g.near);
+    const parent = near ? near.parent : await figma.getNodeByIdAsync(String(g.parent));
+    if (!parent || !('appendChild' in parent) || parent.type === 'PAGE') throw new Error('넣을 곳을 찾지 못했습니다: ' + (g.parent || g.near));
+    if (!onWork(parent)) throw new Error('수정 가능 페이지가 아닙니다: ' + (g.parent || g.near));
+    for (let p = parent; p && p.type !== 'PAGE'; p = p.parent) if (p.type === 'INSTANCE') throw new Error('인스턴스 안에는 넣지 못합니다: ' + parent.id);
+    await pageOf(parent).loadAsync();
+    const auto = !near && parent.layoutMode && parent.layoutMode !== 'NONE';
+    const gap = g.gap != null ? +g.gap : 0, horiz = g.direction === 'horizontal', side = g.side || 'right', off = g.offset != null ? +g.offset : 8;
+    let x = g.at && g.at.x != null ? +g.at.x : 0, y = g.at && g.at.y != null ? +g.at.y : 0;
+    if (near) { x = side === 'right' ? near.x + near.width + off : side === 'left' ? near.x - off : near.x; y = side === 'bottom' ? near.y + near.height + off : side === 'top' ? near.y - off : near.y; }
+    const made = [];
+    for (const row of g.rows || []) {
+      const comp = await fillComp(cache, row.component, row.variant);
+      const inst = comp.createInstance(); all.push(inst);
+      if (auto && g.index != null) parent.insertChild(Math.min((+g.index) + made.length, parent.children.length), inst); else parent.appendChild(inst);
+      made.push(inst);
+      if (row.name) inst.name = String(row.name);
+      fillProps(inst, row.props);
+      if (row.texts) {
+        const txts = inst.findAll(n => n.type === 'TEXT');
+        for (const k of Object.keys(row.texts)) {
+          const m = /^(.*?)(?:#(\d+))?$/.exec(k), t = txts.filter(n => n.name === m[1])[((m[2] | 0) || 1) - 1];
+          if (!t) throw new Error('글 노드를 찾지 못했습니다: ' + (row.name || comp.name) + ' › ' + k);
+          await fillText(t, row.texts[k]);
+        }
+      }
+      if (row.width === 'fill' && auto) inst.layoutSizingHorizontal = 'FILL';
+      else if (+row.width > 0) inst.resize(+row.width, inst.height);
+      if (!auto) {
+        inst.x = near && side === 'left' ? x - inst.width : x; inst.y = near && side === 'top' ? y - inst.height : y;
+        if (horiz) x = near && side === 'left' ? x - inst.width - gap : x + inst.width + gap; else y = near && side === 'top' ? y - inst.height - gap : y + inst.height + gap;
+      }
+    }
+    done.push({ g, parent, auto, made });
+  }
+  } catch (e) { for (const n of all) { try { if (!n.removed) n.remove(); } catch (x) {} } throw e; }
+  for (const { g, parent, auto, made } of done) {
+    const gr = { ids: made.map(n => n.id), removed: 0 };
+    for (const id of g.clear || []) { const n = await figma.getNodeByIdAsync(String(id)); if (n && !n.removed) { n.remove(); gr.removed++; } }
+    // 점검: 글이 자기 칸(부모) 밖으로 넘침 · 만든 것끼리 · 옆 노드와 겹침(배경처럼 통째로 감싸는 노드는 뺌)
+    for (const inst of made) {
+      for (const t of inst.findAll(n => n.type === 'TEXT' && n.visible)) {
+        const tb = t.absoluteBoundingBox, pb = t.parent && t.parent.absoluteBoundingBox;
+        if (tb && pb && !boxIn(tb, pb)) out.problems.push({ kind: '넘침', row: inst.id, node: t.id, text: t.characters.slice(0, 40) });
+      }
+    }
+    if (!auto) {
+      const sibs = parent.children.filter(n => n.visible && made.indexOf(n) < 0);
+      made.forEach((a, i) => {
+        const A = a.absoluteBoundingBox; if (!A) return;
+        made.slice(i + 1).forEach(b => { const B = b.absoluteBoundingBox; if (B && boxHit(A, B)) out.problems.push({ kind: '겹침', row: a.id, node: b.id }); });
+        sibs.forEach(b => { const B = b.absoluteBoundingBox; if (B && boxHit(A, B) && !boxIn(A, B)) out.problems.push({ kind: '겹침', row: a.id, node: b.id, name: b.name.slice(0, 40) }); });
+      });
+    }
+    out.made += gr.ids.length; out.removed += gr.removed; out.groups.push(gr);
+  }
+  out.problems = out.problems.slice(0, 40);
+  return out;
+}
 figma.ui.onmessage = async msg => {
   try {
+    if (msg.type === 'fill') { figma.ui.postMessage(Object.assign({ type: 'fill-done', reqId: msg.reqId }, await fillJob(msg.job))); return; }
     if (msg.type === 'catalog') {
       if (JSON.stringify(msg.link || null) !== JSON.stringify(link)) { link = msg.link || null; linkPageId = null; }
       figma.ui.postMessage(Object.assign({ type: 'catalog-done', reqId: msg.reqId }, await quickCatalog()));

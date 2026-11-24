@@ -198,6 +198,34 @@ async function textJobs() {
 }
 setInterval(textJobs, 3000);
 
+/* Workbench 컴포넌트 채우기(fill): Claude가 정한 행 데이터(컴포넌트 · 변형 · 글)를 인스턴스로 채운다(설명 패널 행 · 확인 목록 · 라벨 등).
+   Claude가 코드를 짜지 않아도 되고 이 PC 폰트를 쓴다. 결과(만든 행 수 · 넘침 · 겹침)를 작업에 돌려준다 */
+let fillBusy = false;
+async function fillJobs() {
+  if (fillBusy || !myKey) return;
+  fillBusy = true;
+  try {
+    const d = await (await fetch(JOBS_API + '?key=' + encodeURIComponent(myKey) + '&kind=fill', { cache: 'no-store' })).json();
+    for (const j of (d.items || []).filter(x => x.status === '대기').reverse()) {
+      const post = body => jobPost(Object.assign({ action: 'update', id: j.id }, body));
+      const t = await (await jobPost({ action: 'take', id: j.id, kind: 'fill', fileKey: myKey, by: 'Figma 플러그인' })).json();
+      if (!t || !t.job) continue;
+      if (t.job.id !== j.id) { await jobPost({ action: 'update', id: t.job.id, status: '대기' }); continue; }
+      await post({ note: '플러그인이 컴포넌트를 채우는 중' });
+      log('컴포넌트 채우기 처리 중…');
+      let r;
+      try { r = await call('fill', { job: { groups: j.groups || [] } }); }
+      catch (e) { await post({ status: '실패', note: '플러그인 오류(만든 것은 지움): ' + (e.message || e) }); log('컴포넌트 채우기 실패'); continue; }
+      const pr = r.problems || [], over = pr.filter(p => p.kind === '넘침').length, hit = pr.filter(p => p.kind === '겹침').length;
+      await post({ status: '완료', result: { made: r.made, removed: r.removed, groups: r.groups, problems: pr },
+        note: r.made + '개 만듦' + (r.removed ? ' · ' + r.removed + '개 지움' : '') + ' · 넘침 ' + over + ' · 겹침 ' + hit + '(플러그인)' });
+      log('컴포넌트 채우기 ' + r.made + '개');
+    }
+  } catch (e) { /* 서버가 꺼져 있으면 다음에 다시 */ }
+  finally { fillBusy = false; }
+}
+setInterval(fillJobs, 3000);
+
 /* ── 다음 단계와 비교 · 복사 옮기기(transfer): Workbench 「②와 비교」 작업
    - check · scan: ①이면 옮긴 화면 확인값, ②이면 작업 페이지 화면 확인값을 낸다(옮기지 않음)
    - paste(2026-11-20): ①이면 옮길 화면을 골라 두고, ②이면 붙여넣을 준비 → 서버가 Ctrl+C · Ctrl+V를 누름(안 되면 사람이) → 붙은 화면을 제자리에 놓는다
