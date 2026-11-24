@@ -254,8 +254,14 @@ module.exports = function register(on, h) {
     if (need.length) {
       try {
         const nj = await figma(`/files/${encodeURIComponent(key)}/nodes?ids=${encodeURIComponent(need.slice(0, 100).join(','))}&depth=1`);
-        for (const id of need) { const d = nj && nj.nodes && nj.nodes[id] && nj.nodes[id].document; const bb = d && d.absoluteBoundingBox; nodeBox[key + '|' + id] = bb ? { x: bb.x, y: bb.y, w: bb.width, h: bb.height, name: nn(d.name) } : null; }
+        for (const id of need) { const d = nj && nj.nodes && nj.nodes[id] && nj.nodes[id].document; const bb = d && d.absoluteBoundingBox; nodeBox[key + '|' + id] = bb ? { x: bb.x, y: bb.y, w: bb.width, h: bb.height, name: nn(d.name), page: '' } : null; }
       } catch (e) { log('댓글 노드 위치 실패: ' + e.message); }
+      // 그 노드가 있는 페이지(2026-11-24): 페이지마다 좌표가 따로라, 다른 페이지 프레임과 좌표만 겹쳐도 거기에 붙던 것을 막는다.
+      //  /files?ids=하나&depth=2는 페이지를 모두 돌려주지만 자식(그 노드로 가는 길)은 그 노드가 있는 페이지에만 있다(노드 하나씩 · 한 번에 20개까지, 기억해 둠)
+      for (const id of need.filter((x) => nodeBox[key + '|' + x]).slice(0, 20)) {
+        try { const fj = await figma(`/files/${encodeURIComponent(key)}?ids=${encodeURIComponent(id)}&depth=2`); const pg = core.arr(fj && fj.document && fj.document.children).find((p) => p && core.arr(p.children).length); if (pg) nodeBox[key + '|' + id].page = nn(pg.id); }
+        catch (e) { log('댓글 노드 페이지 실패: ' + e.message); }
+      }
     }
     const items = list.map((x) => {
       const m = x.client_meta || null, o = { id: nn(x.id), parent: nn(x.parent_id), by: nn(x.user && x.user.handle), at: nn(x.created_at), resolved: nn(x.resolved_at), text: nn(x.message), frame: '', fx: 0, fy: 0 };
@@ -267,9 +273,10 @@ module.exports = function register(on, h) {
           if (bb) {
             const px = bb.x + off.x, py = bb.y + off.y;
             // 그 점을 품은 목록 프레임(겹치면 노드와 가장 많이 겹치는 것)
-            const hit = frames.filter((f) => px >= f.x && px <= f.x + f.w && py >= f.y && py <= f.y + f.h);
+            //  같은 페이지의 프레임만(페이지를 모르면 붙이지 않음 — 엉뚱한 프레임에 붙는 것보다 낫다)
+            const hit = bb.page ? frames.filter((f) => f.pageId === bb.page && px >= f.x && px <= f.x + f.w && py >= f.y && py <= f.y + f.h) : [];
             if (hit.length) { const f = hit[0]; o.frame = f.id; o.fx = Math.round(px - f.x); o.fy = Math.round(py - f.y); }
-            o.node = { id: m.node_id, name: bb.name };
+            o.node = { id: m.node_id, name: bb.name, page: bb.page };
           }
         }
         if (m.region_width) { o.rw = Math.round(m.region_width); o.rh = Math.round(m.region_height || 0); }

@@ -627,6 +627,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
 
   /* ── 일정 탭(시트 그대로 · 고치기) ── */
   var fq = '', fcat = '', showG = false, wexp = {};   // wexp: 펼친 세부 일정(작업명 key)
+  var fver = null, fpart = '';   // 주간보고 일정표(STAgora 등) 버전 · Part 거르기(2026-11-24, wbs.pick). fver null = 아직 고르지 않음 → 최신 버전
   function notConnected(){
     return '<div class="wempty"><b>일정이 아직 연결되지 않았습니다</b><p>일정은 연결한 원본(구글 시트 또는 Azure DevOps)을 그대로 보여 주고, 여기서 고치면 원본에 바로 들어갑니다.</p>' +
       '<p>원본 편집 권한이 있는 사람이 한 번만 [일정 연결]을 하면 이 팀 모든 작업자 PC에 공유됩니다.</p>' +
@@ -661,11 +662,16 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     var W = wbsItems(wbs), T = W.T, V = wbs.values, set = function(l){ var o = {}; (l || []).forEach(function(p){ o[Array.isArray(p) ? p[0] + ',' + p[1] : p] = 1; }); return o; };
     var fx = set(wbs.fx), dv = set(wbs.dv), hidR = set(wbs.hr), hidC = set(wbs.hc), BG = wbs.bg || [], FC = wbs.fc || [], FW = wbs.fw || [];
     var byRow = {}; (showG ? wbsItems(wbs, true) : W).items.forEach(function(it){ byRow[it.row] = it; });   // 숨긴 행을 보일 때는 그 행도 상태로 거를 수 있게
+    var PK = wbs.pick || null, pv = PK && PK.ver, pp = PK && PK.part, pg = PK && PK.gantt;
+    if (fver === null) { if (!pv) fver = null; else fver = (pv.list || [])[0] || ''; }   // 처음엔 최신 버전
+    if (pv && fver && (pv.list || []).indexOf(fver) < 0) fver = (pv.list || [])[0] || ''; if (pp && fpart && (pp.list || []).indexOf(fpart) < 0) fpart = '';   // 목록에 없어진 값은 풂
     var q = fq.trim().toLowerCase(), filt = !!(q || fcat), edit = canWrite() && !wbs.cached && !wbs.readonly, shown = 0;   // Azure DevOps 표는 읽기만
+    function pickSel(id, all, o, cur){ return o && (o.list || []).length ? '<select id="' + id + '" aria-label="' + all + '로 거르기"><option value="">' + all + ' 전체</option>' + o.list.map(function(x){ return '<option value="' + esc(x) + '"' + (x === cur ? ' selected' : '') + '>' + esc(x) + '</option>'; }).join('') + '</select>' : ''; }
     function val(i, j){ return String((V[i] || [])[j] == null ? '' : V[i][j]); }
     function bg(i, j){ return (BG[i] || [])[j] || ''; }
     var h = head + srcNote(wbs) + (wbs.warn ? '<p class="notice bad">' + esc(wbs.warn) + '</p>' : '') +
       '<div class="bar"><input type="search" id="sq" placeholder="업무 · 담당자 · 메뉴 찾기" value="' + esc(fq) + '" aria-label="일정 찾기">' +
+      pickSel('sv', '버전', pv, fver) + pickSel('sp', 'Part', pp, fpart) +
       '<select id="sc" aria-label="상태로 거르기"><option value="">상태 전체</option><option value="prog">진행 중</option><option value="review">리뷰 중(예정)</option><option value="done">완료</option><option value="etc">그 밖(시작 전 등)</option></select>' +
       ((wbs.hr || []).length || (wbs.hc || []).length ? '<label class="hint" style="display:inline-flex;gap:4px;align-items:center"><input type="checkbox" id="sg"' + (showG ? ' checked' : '') + '>숨긴 행 · 열 보기</label>' : '') +
       '<span class="sp"></span><span class="hint">' + esc(wbs.name || '') + ' · ' + (edit ? '칸을 누르면 고칠 수 있습니다(드롭다운 칸은 목록에서 고름 · 글 칸은 Enter 저장 · Esc 취소, 수식 칸 제외)' : wbs.azure ? '작업 항목 ' + (wbs.count || 0) + '개 · 보기 전용(고치기는 [원본 열기]에서 DevOps로)' : '보기 전용') +
@@ -675,6 +681,18 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     for (var j = 0; j < T.width; j++) {
       if (hidC[j] && !showG) continue;
       for (var i2 = T.head; i2 < V.length; i2++) if (val(i2, j).trim() || bg(i2, j)) { cols.push(j); break; }
+    }
+    // 버전을 고르면 간트 날짜 열은 그 버전 줄들의 시작일 ~ 완료일만(나머지 날짜 열은 숨김, 2026-11-24)
+    var monthAt = null;
+    if (pv && fver && pg && pg.days) {
+      var lo = '', hi = '';
+      for (var iv = T.start; iv < V.length; iv++) { if (val(iv, pv.col) !== fver) continue; var s0 = val(iv, pg.s), e0 = val(iv, pg.e) || s0; if (s0 && (!lo || s0 < lo)) lo = s0; if (e0 && (!hi || e0 > hi)) hi = e0; }
+      if (lo && hi) {
+        cols = cols.filter(function(j){ var d = j >= pg.col ? pg.days[j - pg.col] : ''; return !d || (d >= lo && d <= hi); });
+        // 월 표시(맨 위 머리 줄 「11월」)가 숨긴 열에 있으면 첫 보이는 날짜 열에 옮겨 보임
+        var j0 = cols.filter(function(j){ return j >= pg.col; })[0];
+        if (j0 != null && !val(T.head, j0).trim()) { for (var jm = j0 - 1; jm >= pg.col; jm--) if (val(T.head, jm).trim()) { monthAt = { r: T.head, c: j0, v: val(T.head, jm) }; break; } }
+      }
     }
     // 오늘 열(간트 날짜 눈금 줄에서 「11/4」)
     var tdy = md(new Date()), todayC = -1;
@@ -688,6 +706,8 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       if (subOf[i]) { if (wexp[subOf[i].key] && shownRow[subOf[i].row]) brows.push(i); continue; }
       if (hidR[i] && !showG) continue;
       if (!cols.some(function(j){ return val(i, j).trim() || bg(i, j); })) continue;
+      if (pv && fver && val(i, pv.col) !== fver) continue;
+      if (pp && fpart && val(i, pp.col) !== fpart) continue;
       if (q && (V[i] || []).join(' ').toLowerCase().indexOf(q) < 0) continue;
       if (fcat) { var it = byRow[i]; if (!it || it.cat !== fcat) continue; }
       brows.push(i); shownRow[i] = 1;
@@ -715,6 +735,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       if (tag === 'td') { if (fx[i + ',' + j]) cls.push('fx'); else if (edit && !T.gantt[j]) cls.push('ed'); }
       if (b) { st.push('background:' + b); st.push('color:' + (f || '#14171c')); } else if (f && f !== '#000000') st.push('color:' + f);
       if (w) st.push('font-weight:700');
+      if (monthAt && tag === 'th' && i === monthAt.r && j === monthAt.c) { v = monthAt.v; w = true; }
       var body = esc(v);
       if (tag === 'td' && kidOf[i] && j === W.cols.task) { var kk = kidOf[i], on = !!wexp[kk.key]; body = '<button type="button" class="wtog" data-wt="' + esc(kk.key) + '" aria-expanded="' + on + '" aria-label="세부 일정 ' + (on ? '접기' : '펼치기') + '" title="세부 일정 ' + (on ? '접기' : '펼치기') + ' (' + kk.rows.length + '건)">' + (on ? '▾' : '▸') + '</button>' + body; }
       if (tag === 'td' && dv[i + ',' + j]) { var c = chip(v); body = v ? (c ? '<span class="dd" style="background:' + c[0] + ';color:' + c[1] + '">' + esc(v) + '</span>' : '<span class="dd plain">' + esc(v) + '</span>') : ''; }
@@ -769,7 +790,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     box = $('sheetBox'); if (box) { box.scrollLeft = sl; box.scrollTop = st; }
     var nb = document.querySelector('[data-wt="' + (window.CSS && CSS.escape ? CSS.escape(k) : k) + '"]'); if (nb) nb.focus({ preventScroll: true });
   }, true);
-  document.addEventListener('change', function(e){ if (e.target.id === 'sc') { fcat = e.target.value; renderSchedule(); } else if (e.target.id === 'sg') { showG = e.target.checked; renderSchedule(); } });
+  document.addEventListener('change', function(e){ if (e.target.id === 'sc') { fcat = e.target.value; renderSchedule(); } else if (e.target.id === 'sv') { fver = e.target.value; renderSchedule(); } else if (e.target.id === 'sp') { fpart = e.target.value; renderSchedule(); } else if (e.target.id === 'sg') { showG = e.target.checked; renderSchedule(); } });
   // 칸 고치기
   document.addEventListener('click', function(e){
     var td = e.target.closest('table.sh td.ed'); if (!td || td.querySelector('textarea,select')) return;
