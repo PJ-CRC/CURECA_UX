@@ -399,9 +399,24 @@ module.exports = function register(on, h) {
         if (hit) { hit.status = '진행 중'; hit.takenBy = nn(b.by); hit.updatedAt = now; }
         break;
       }
+      // 사람이 멈추기(2026-11-24, UX 문서 수정 요청 · 연관 항목 찾기 등): 대기 · 진행 중인 작업을 「취소」로. 처리 중이면 감시 세션을 끊는다(요청 멈추기와 같은 .agent_cancel)
+      case 'stop': {
+        hit = items.find((x) => x.id === nn(b.id)); if (!hit) throw new Error('작업을 찾지 못했습니다: ' + nn(b.id));
+        if (!core.canWrite(req, [jobMenu(nn(hit.kind))])) throw new Error(core.roMsg(jobMenu(nn(hit.kind))));
+        const prev = nn(hit.status);
+        if (!['대기', '진행 중'].includes(prev)) throw new Error(`「${prev}」인 작업은 멈출 수 없습니다(대기 · 진행 중만).`);
+        const who = nn(b.by) || core.meName() || '사람', hm = now.slice(11, 16);
+        hit.status = '취소'; hit.stopped = { by: who, at: now, was: prev };
+        hit.note = `멈춤 — ${who}가 ${hm}에 멈췄습니다.` + (prev === '진행 중' ? ' 그때까지 Claude가 고친 것은 그대로 남습니다(수정 이력에서 볼 수 있음).' : '') + ' 다시 하려면 새로 요청하세요.';
+        hit.updatedAt = now;
+        if (prev === '진행 중') { try { const cf = path.join(C.root, 'workbench', '.agent_cancel'); const old = String(core.readText(cf) || ''); core.writeText(cf, (old ? old + '\n' : '') + hit.id); } catch (e) {} }
+        break;
+      }
       case 'update': {
         hit = items.find((x) => x.id === b.id); if (!hit) throw new Error('작업을 찾지 못했습니다: ' + nn(b.id));
         if (!core.canWrite(req, [jobMenu(nn(hit.kind))])) throw new Error(core.roMsg(jobMenu(nn(hit.kind))));
+        // 사람이 멈춘 작업은 Claude가 다시 바꾸지 못한다(멈춘 줄 모르고 이어 하던 세션이 덮어쓰지 않게)
+        if (nn(hit.status) === '취소' && hit.stopped && !core.isBrowser(req)) throw new Error(`사람이 멈춘 작업입니다: ${hit.id}. 처리하지 말고 멈추세요.`);
         if (nn(b.status) === '진행 중' && nn(hit.status) === '진행 중' && !b.force) throw new Error(`이미 진행 중인 작업입니다(다른 Claude 세션이 처리 중): ${hit.id}. 이 작업은 건너뛰세요.`);
         // 끝난 작업을 다시 집지 않기(F6): 「완료」 · 「실패」를 「진행 중」으로 바꾸려 하면 거절(다시 하려면 새 작업)
         if (nn(b.status) === '진행 중' && ['완료', '실패'].includes(nn(hit.status)) && !b.force) throw new Error(`이미 끝난 작업입니다(${nn(hit.status)}): ${hit.id}. 이 작업은 건너뛰세요.`);
