@@ -5,9 +5,9 @@ tl_relation: 기능 추가
 title: Overview Tab
 path: Instrument > Overview Tab
 type: Page
-version: 2.1.18
-date: 2026-11-19
-author: 이상헌
+version: 2.1.06
+date: 2026-09-28
+author: 서보경
 client_mode: []
 user_type: [Service, Admin, User]
 policies: []
@@ -15,12 +15,12 @@ rules_version:
 provisional: []
 flags: []
 source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3249-111508
-figma_region: 2.1 2차
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/?node-id=2768-93537
+figma_region: 작업 페이지
 ---
 # TI-INS-01-T Overview Tab
 
-> 기존 화면(기존 작업방 Instruments 페이지, 2.1 2차 영역, Ver 2.1.18)을 2026-11-02에 옮기고 2026-11-23에 다시 옮긴 것입니다(케이스 3, 작업 기록 `20261123-최고관리자-instruments`). 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면을 2026-11-02에 옮기고, 2026-11-24에 작업 페이지(UX AI TEST › Instrument Ⓛ / Ⓣ _re)의 기획 프레임(Ver 2.1.06)에서 다시 옮긴 것입니다(케이스 3, 작업 기록 `20261124-최고관리자-instruments`. 요청자 답: 작업 페이지 프레임 그대로, 앞 버전 기준). 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - T/L 차이: L-IOS(LI-INS-01-T)에는 Door Status Tooltip과 [Unlock](Door Control) 버튼이 더 있음
 - 관련 정책: POL-EQP-001, POL-EQP-002, POL-EQP-009
