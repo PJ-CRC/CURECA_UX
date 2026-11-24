@@ -780,6 +780,13 @@ const azDate = (v) => { if (!v) return ''; const d = new Date(v); if (isNaN(d)) 
 const WBS_DAYS = '일월화수목금토';
 function azState(s) { s = String(s || ''); if (/^(resolved|closed|done|completed)$/i.test(s)) return '완료'; if (/^(in progress|active|doing|committed|developed)$/i.test(s)) return '진행 중'; if (/^(new|to do|todo|proposed|approved)$/i.test(s)) return '대기'; return s; }
 function azWho(w) { const n = w && typeof w === 'object' ? String(w.displayName || w.uniqueName || '') : String(w || ''); return n.replace(/\s*\([^)]*\)\s*$/, ''); }
+// Part 이름: 묶음 제목 「[주간보고 UX/UI] PL-11.4 / 검사실」 · 「… PL-11.4 검사실」 → 「검사실」(2026-11-24: 「/」가 없으면 「UX/UI」의 「/」에서 잘려 「UI] PL-11.4 검사실」로 나오던 것)
+function wbsPart(g) {
+  const t = String(g || '').replace(/^\s*\[[^\]]*\]\s*/, '').replace(/^PL-\d+\.\d+\s*/i, '').replace(/^[\/\-:·\s]+/, '').trim();
+  return t || String(g || '').trim();
+}
+// Part 색(Part 칸만, 파스텔): 표에 있는 Part를 이름 차례로 늘어놓아 하나씩(겹치지 않게)
+const WBS_PART_C = ['#fde2e4', '#e2ece9', '#dfe7fd', '#fff1c1', '#e8dff5', '#d7f2f7', '#fce1c8', '#e4f4d4', '#f6dfeb', '#e0e4ea'];
 async function azureWbs(T, cx) {
   const az = cx.az, base = az.org + '/' + encodeURIComponent(az.project) + '/_apis/wit/', v = 'api-version=7.0', key = String(az.report).trim();
   const esc = (s) => s.replace(/'/g, "''");
@@ -788,28 +795,46 @@ async function azureWbs(T, cx) {
   const cand = core.arr(q && q.workItems).map((x) => x.id).slice(0, 200);
   if (!cand.length) throw new Error(`「${key} … / All」 주간보고를 찾지 못했습니다.`);
   const cb = await azureCall(cx, 'POST', base + 'workitemsbatch?' + v, { ids: cand, fields: ['System.Id', 'System.Title', 'System.Tags', 'System.CreatedDate'] });
-  const spr = (f) => { const m = /PL-(\d+)\.(\d+)/i.exec(String(f['System.Tags'] || '') + ' ' + String(f['System.Title'] || '')); return m ? +m[1] * 100 + +m[2] : 0; };
-  const reps = core.arr(cb && cb.value).filter((w) => /\/\s*All\s*$/i.test(String(w.fields['System.Title'] || '')))
+  const sprOf = (f) => /PL-(\d+)\.(\d+)/i.exec(String(f['System.Tags'] || '') + ' ' + String(f['System.Title'] || ''));
+  // 차례: 만든 해 · PL-월.주차(해가 바뀌어 1.1이 12.4보다 뒤에 오게), 같으면 나중에 만든 것
+  const spr = (f) => { const m = sprOf(f); return m ? (new Date(f['System.CreatedDate']).getFullYear() || 0) * 10000 + +m[1] * 100 + +m[2] : 0; };
+  const reps0 = core.arr(cb && cb.value).filter((w) => /\/\s*All\s*$/i.test(String(w.fields['System.Title'] || '')))
     .sort((a, b) => (spr(b.fields) - spr(a.fields)) || (Date.parse(b.fields['System.CreatedDate']) - Date.parse(a.fields['System.CreatedDate'])));
-  if (!reps.length) throw new Error(`「${key} … / All」 주간보고를 찾지 못했습니다.`);
-  const rep = await azureCall(cx, 'GET', base + 'workitems/' + reps[0].id + '?' + v);
-  const rf = rep.fields || {}, html = String(rf['Custom.WPN_Report'] || ''), sprint = (/PL-\d+\.\d+/i.exec(String(rf['System.Tags'] || '') + ' ' + rf['System.Title']) || [''])[0];
-  // ② 「주요 일정」 표: 묶음 제목(div title="[주간보고…]") 아래 User Story 줄(└ 없는 줄). 같은 묶음 제목이 다시 나오면 「상세 일정」이라 멈춘다
-  const s0 = html.indexOf('주요 일정'); if (s0 < 0) throw new Error('주간보고에 「주요 일정」이 없습니다(WorkPlanner 보고서를 다시 만들어 주세요).');
-  const part = html.slice(s0), groups = [], seenG = {}, stories = [];
-  const re = /<tr\b([\s\S]*?)<\/tr>/g; let m, g = '';
-  while ((m = re.exec(part))) {
-    const row = m[1], gt = /<div title="(\[[^"]*주간보고[^"]*)"/.exec(row);   // 묶음 제목은 표 머리 줄 안에 있다
-    if (gt) { const t = gt[1].replace(/&amp;/g, '&'); if (seenG[t]) break; seenG[t] = 1; g = t; groups.push(t); continue; }
-    const id = /_workitems\/edit\/(\d+)/.exec(row); if (!id || !g || row.includes('└')) continue;
-    if (stories.some((x) => x.id === +id[1])) break;   // 같은 User Story가 다시 나오면 「상세 일정」
-    stories.push({ id: +id[1], group: g });
+  if (!reps0.length) throw new Error(`「${key} … / All」 주간보고를 찾지 못했습니다.`);
+  // 주차(버전)마다 보고서 하나(같은 주차가 여럿이면 나중에 만든 것) — 버전별로 누적(2026-11-24). 최신 26주까지
+  const reps = [], seenV = {};
+  for (const w of reps0) { const m = sprOf(w.fields), ver = m ? +m[1] + '.' + +m[2] : ''; if (!ver || seenV[ver]) continue; seenV[ver] = 1; reps.push({ id: w.id, ver }); if (reps.length >= 26) break; }
+  if (!reps.length) reps.push({ id: reps0[0].id, ver: '' });
+  // ② 보고서마다 「주요 일정」 표: 묶음 제목(div title="[주간보고…]") 아래 User Story 줄(└ 없는 줄). 같은 묶음 제목이 다시 나오면 「상세 일정」이라 멈춘다
+  //  같은 User Story(ID)가 여러 버전에 있으면 최신 버전에만 둔다(앞 버전 줄은 보이지 않음). 줄 차례 = 최신 버전부터
+  const stories = [], seenS = {}; let rep = null, sprint = '';
+  for (const rp of reps) {
+    let w; try { w = await azureCall(cx, 'GET', base + 'workitems/' + rp.id + '?' + v); } catch (e) { if (!rep) throw e; continue; }   // 최신이 아닌 보고서는 못 읽어도 건너뜀
+    if (!rep) { rep = w; const rf0 = w.fields || {}; sprint = (/PL-\d+\.\d+/i.exec(String(rf0['System.Tags'] || '') + ' ' + rf0['System.Title']) || [''])[0]; }
+    const html = String((w.fields || {})['Custom.WPN_Report'] || ''), s0 = html.indexOf('주요 일정');
+    if (s0 < 0) { if (rep === w) throw new Error('주간보고에 「주요 일정」이 없습니다(WorkPlanner 보고서를 다시 만들어 주세요).'); continue; }
+    const part = html.slice(s0), seenG = {}, mine = {};
+    const re = /<tr\b([\s\S]*?)<\/tr>/g; let m, g = '';
+    while ((m = re.exec(part))) {
+      const row = m[1], gt = /<div title="(\[[^"]*주간보고[^"]*)"/.exec(row);   // 묶음 제목은 표 머리 줄 안에 있다
+      if (gt) { const t = gt[1].replace(/&amp;/g, '&'); if (seenG[t]) break; seenG[t] = 1; g = t; continue; }
+      const id = /_workitems\/edit\/(\d+)/.exec(row); if (!id || !g || row.includes('└')) continue;
+      if (mine[id[1]]) break;   // 같은 User Story가 다시 나오면 「상세 일정」
+      mine[id[1]] = 1;
+      if (seenS[id[1]]) continue; seenS[id[1]] = 1;   // 더 최신 버전에 이미 있음
+      stories.push({ id: +id[1], group: g, ver: rp.ver });
+    }
   }
+  if (!rep) throw new Error(`「${key} … / All」 주간보고를 읽지 못했습니다.`);
+  const rf = rep.fields || {};
   if (!stories.length) throw new Error('주간보고 「주요 일정」에서 User Story를 찾지 못했습니다.');
   // ③ User Story + 하위 작업(Hierarchy-Forward) 읽기
   const sf = az.startField || 'Microsoft.VSTS.Scheduling.StartDate', ef = az.endField || 'Microsoft.VSTS.Scheduling.TargetDate';
-  const st = await azureCall(cx, 'GET', base + 'workitems?ids=' + stories.map((x) => x.id).join(',') + '&$expand=relations&errorPolicy=omit&' + v);
-  const sById = {}; core.arr(st && st.value).forEach((w) => { if (w) sById[w.id] = w; });
+  const sById = {};
+  for (let i = 0; i < stories.length; i += 200) {   // 버전을 누적하면 200개를 넘을 수 있다(한 번에 200개까지)
+    const st = await azureCall(cx, 'GET', base + 'workitems?ids=' + stories.slice(i, i + 200).map((x) => x.id).join(',') + '&$expand=relations&errorPolicy=omit&' + v);
+    core.arr(st && st.value).forEach((w) => { if (w) sById[w.id] = w; });
+  }
   const kidIds = []; stories.forEach((s) => { const w = sById[s.id]; s.kids = core.arr(w && w.relations).filter((r) => r.rel === 'System.LinkTypes.Hierarchy-Forward').map((r) => +String(r.url).split('/').pop()).filter(Boolean); kidIds.push(...s.kids); });
   const kById = {}, OE = 'Microsoft.VSTS.Scheduling.OriginalEstimate', CW = 'Microsoft.VSTS.Scheduling.CompletedWork';
   let kf = ['System.Id', 'System.Title', 'System.State', 'System.AssignedTo', sf, ef, OE, CW];
@@ -831,7 +856,7 @@ async function azureWbs(T, cx) {
       const num = (x) => (x == null || x === '' ? null : +x);
       p[kind] = { id: k.id, title: t, who: azWho(k.fields['System.AssignedTo']), st: azState(k.fields['System.State']), raw: String(k.fields['System.State'] || ''), s: d0(k.fields[sf]), e: d0(k.fields[ef]), oe: num(k.fields[OE]), cw: num(k.fields[CW]) };
     });
-    const sl = { part: s.group.replace(/^.*\/\s*/, '').trim() || s.group, id: s.id, menu: String(f['System.Title'] || ''), s: d0(f[sf]), e: d0(f[ef]), st: azState(f['System.State']) };
+    const sl = { part: wbsPart(s.group), ver: s.ver, id: s.id, menu: String(f['System.Title'] || ''), s: d0(f[sf]), e: d0(f[ef]), st: azState(f['System.State']) };
     if (!pairs.length) lines.push(Object.assign({ name: '', UX: null, UI: null, solo: true }, sl));
     pairs.sort((a, b) => ((a.UX || a.UI).s || 0) - ((b.UX || b.UI).s || 0)).forEach((p) => lines.push(Object.assign({}, sl, p)));
   });
@@ -841,7 +866,8 @@ async function azureWbs(T, cx) {
   let lo = new Date(Math.min(...all)), hi = new Date(Math.max(...all)); lo.setDate(lo.getDate() - ((lo.getDay() + 6) % 7));
   if ((hi - lo) / 864e5 > 182) hi = new Date(lo.getTime() + 182 * 864e5);
   const days = []; for (let d = new Date(lo); d <= hi; d.setDate(d.getDate() + 1)) if (d.getDay() % 6) days.push(new Date(d));
-  const L = ['Part', 'ID', '메뉴(User Story)', '작업명', '시작일', '완료일', '시간(예상 → 실적)', 'UX 담당자', 'UI 담당자', 'UX 상태', 'UI 상태'], G0 = L.length;
+  const parts = [...new Set(lines.map((l) => l.part))].sort(), PCOL = {}; parts.forEach((p, i) => { PCOL[p] = WBS_PART_C[i % WBS_PART_C.length]; });
+  const L = ['Part', 'ID', '메뉴(User Story)', '작업명', '버전', '시작일', '완료일', '시간(예상 → 실적)', 'UX 담당자', 'UI 담당자', 'UX 상태', 'UI 상태'], G0 = L.length;
   const hrs = (xs) => { const o = xs.filter((x) => x && x.oe != null), c = xs.filter((x) => x && x.cw != null); if (!o.length && !c.length) return ''; const f = (n) => String(Math.round(n * 10) / 10); return (o.length ? f(o.reduce((a, x) => a + x.oe, 0)) : '-') + ' → ' + (c.length ? f(c.reduce((a, x) => a + x.cw, 0)) : '-'); };
   const ymd = (d) => d ? `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}` : '';
   const H0 = L.slice(), H1 = L.map(() => ''), H2 = L.map(() => '');
@@ -855,25 +881,33 @@ async function azureWbs(T, cx) {
     const r = values.length, ux = l.UX, ui = l.UI;
     const ss = [ux && ux.s, ui && ui.s].filter(Boolean), ee = [ux && ux.e, ui && ui.e].filter(Boolean);
     const sd = ss.length ? new Date(Math.min(...ss)) : l.solo ? l.s : null, ed = ee.length ? new Date(Math.max(...ee)) : l.solo ? l.e : null;
-    const row = [l.part, String(l.id), l.menu, l.name, ymd(sd), ymd(ed), hrs([ux, ui]), ux ? ux.who : '', ui ? ui.who : '', ux ? ux.st : (l.solo ? l.st : ''), ui ? ui.st : ''];
+    const row = [l.part, String(l.id), l.menu, l.name, l.ver, ymd(sd), ymd(ed), hrs([ux, ui]), ux ? ux.who : '', ui ? ui.who : '', ux ? ux.st : (l.solo ? l.st : ''), ui ? ui.st : ''];
     days.forEach(() => row.push(''));
-    values.push(row); bg.push(bar([{ t: ux, c: UXC }, { t: ui, c: UIC }])); fc.push([]); dv.push([r, SU], [r, SI]);
+    const rb = bar([{ t: ux, c: UXC }, { t: ui, c: UIC }]); rb[0] = PCOL[l.part];
+    values.push(row); bg.push(rb); fc.push([]); dv.push([r, SU], [r, SI]);
     // 세부 일정(접힘): 이 작업명의 [UX] 작업 · [UI] 작업 한 줄씩 — 주간보고 「세부 일정」의 └ 줄과 같다(ID · 담당 · 상태 · 예상 → 실적 · 기간)
     const ch = [];
     [['UX', ux, XU, SU, UXC], ['UI', ui, XI, SI, UIC]].forEach(([, t, wc, sc, col]) => {
-      if (!t) return; const cr = values.length, crow = [l.part, String(l.id), l.menu, '└ #' + t.id + ' ' + t.title, ymd(t.s), ymd(t.e), hrs([t]), '', '', '', ''];
+      if (!t) return; const cr = values.length, crow = [l.part, String(l.id), l.menu, '└ #' + t.id + ' ' + t.title, l.ver, ymd(t.s), ymd(t.e), hrs([t]), '', '', '', ''];
       crow[wc] = t.who; crow[sc] = t.st; days.forEach(() => crow.push(''));
       const f = []; for (let j = 3; j < G0; j++) f[j] = SUBC;
-      values.push(crow); bg.push(bar([{ t, c: col }, { t: null, c: col }])); fc.push(f); dv.push([cr, sc]); ch.push(cr);
+      const cb2 = bar([{ t, c: col }, { t: null, c: col }]); cb2[0] = PCOL[l.part];
+      values.push(crow); bg.push(cb2); fc.push(f); dv.push([cr, sc]); ch.push(cr);
     });
     if (ch.length) kids.push({ row: r, key: l.id + '|' + l.name, rows: ch });
   });
   // 같은 Part · 같은 User Story는 위아래 병합(엑셀 일정표처럼)
   const merge = (c, same) => { let a = 3; for (let r = 4; r <= values.length; r++) { if (r < values.length && same(r) && values[r][c]) continue; if (r - a > 1 && values[a][c]) mg.push([a, c, r - a, 1]); a = r; } };
-  merge(0, (r) => values[r][0] === values[r - 1][0]);
+  const VC = L.indexOf('버전');
+  merge(0, (r) => values[r][0] === values[r - 1][0] && values[r][VC] === values[r - 1][VC]);   // Part는 같은 버전 안에서만
   [1, 2].forEach((c) => merge(c, (r) => values[r][1] === values[r - 1][1]));
   const url = az.org + '/' + encodeURIComponent(az.project) + '/_workitems/edit/' + rep.id;
-  return { name: String(rf['System.Title'] || '') + (sprint ? ' (' + sprint + ')' : ''), values, bg, dv, fw, fc, mg, fzc: 4, kids, at: Date.now(), readonly: true, azure: true, wbs: true,   // kids: 접는 세부 줄 [{row: 작업명 줄, key, rows: [세부 줄]}]
+  // 거르기(2026-11-24): 버전(최신부터) · Part 목록과 그 열 — 일정 탭의 버전 · Part 선택
+  const vers = reps.map((x) => x.ver).filter((x) => x && lines.some((l) => l.ver === x));
+  return { name: String(rf['System.Title'] || '') + (sprint ? ' (' + sprint + ')' : '') + (vers.length > 1 ? ' 외 ' + (vers.length - 1) + '주' : ''), values, bg, dv, fw, fc, mg, fzc: 5, kids, at: Date.now(), readonly: true, azure: true, wbs: true,   // kids: 접는 세부 줄 [{row: 작업명 줄, key, rows: [세부 줄]}]
+    pick: { ver: { col: VC, list: vers }, part: { col: 0, list: parts, colors: PCOL },
+      // 간트 날짜(2026-11-24): 버전을 고르면 그 버전 줄의 시작일 ~ 완료일 밖 날짜 열을 숨긴다 — 날짜 열 시작 · 날짜들 · 시작일/완료일 열
+      gantt: { col: G0, days: days.map(ymd), s: L.indexOf('시작일'), e: L.indexOf('완료일') } },
     count: lines.length, total: stories.length, src: { id: rep.id, url, sprint }, warn: kf.length === 6 ? '작업 시간(예상 · 실적) 필드가 없어 시간 없이 가져왔습니다.' : '' };
 }
 async function azureItems(T) {

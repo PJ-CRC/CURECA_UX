@@ -220,6 +220,7 @@ module.exports = function register(on, h) {
   // ── POST /api/jobs {action: add | take | update} — 작업 대기열(캡처 · 목록 · UX 문서 · 프로토타입 · 회의록 · 일정/작업 · 글 수정) ──
   const upTmp = path.join(C.root, 'workbench', 'job_files', '_tmp'), upDir = path.join(C.root, 'workbench', 'job_files');
   const jobMenu = (k) => (['guide', 'guide-edit', 'guide-check'].includes(k) ? 'guide' : ['minutes', 'plan'].includes(k) ? 'plan' : /^prototype/.test(k) ? 'proto' : 'workbench');
+  // (플러그인이 켜졌는지는 GET /api/jobs의 plugins[fileKey] — 창이 뒤에 있으면 1분에 한 번쯤 물으므로 Claude는 180초 안이면 켜진 것으로 본다)
   // fill(컴포넌트 채우기, 2026-11-24): Claude가 정한 행 데이터(컴포넌트 · 변형 · 글 · 글 꾸밈)를 플러그인이 인스턴스로 만들어 채운다. 모든 팀 공용 —
   //  어떤 컴포넌트를 어디에 채울지는 데이터로 오고(팀 작업규칙이 정함), 프로그램은 특정 팀의 패널 모양을 모른다. 감시(JOBS)에는 나오지 않는다(plugin 몫)
   const KINDS = ['capture', 'catalog', 'guide', 'guide-check', 'guide-edit', 'text', 'fill', 'prototype', 'prototype-edit', 'prototype-sync', 'minutes', 'plan', 'transfer'];
