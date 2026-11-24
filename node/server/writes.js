@@ -1210,6 +1210,17 @@ module.exports = function register(on, h) {
   const figmaExe = C.isMac ? '/Applications/Figma.app' : path.join(LAD, 'Figma', 'Figma.exe');
   // 서버와 따로 도는 프로그램 띄우기(기다리지 않음). 윈도우에서 PowerShell을 detached로 띄우면 콘솔이 없어 바로 끝나므로 윈도우는 detached 없이(서버가 꺼져도 남는다)
   const detach = (cmd, args, o) => { const p = spawn(cmd, args, Object.assign({ stdio: 'ignore', windowsHide: true, cwd: C.root }, o || {}, { detached: W ? !!(o && o.windowsHide === false) : true })); p.on('error', () => {}); p.unref(); return p; };
+  // 윈도우에서 사람이 볼 창(터미널 · 설치 창) 띄우기(2026-11-24): 서버는 창 없이(숨김) 떠 있어서, spawn의 detached로 띄운 PowerShell은
+  //  콘솔을 받지 못해 창이 안 보였다(정다예 PC 「Claude 로그인」 버튼). cmd의 start로 띄우면 늘 새 창(또는 Windows 터미널 탭)이 열린다.
+  //  o.wait: 그 창이 닫힐 때까지 cmd가 기다린다(돌려준 프로세스로 열려 있는지 볼 수 있음, 깃허브 연결)
+  const openWin = (title, exe, args, o) => {
+    o = o || {};
+    const q = (x) => { x = String(x); return /[\s"&|<>^()]/.test(x) ? '"' + x.replace(/"/g, '\\"') + '"' : x; };
+    const line = '/d /s /c "start "' + String(title).replace(/"/g, '') + '" ' + (o.wait ? '/wait ' : '') + '/d "' + C.root + '" ' + [exe].concat(args || []).map(q).join(' ') + '"';
+    const p = spawn('cmd.exe', [line], { stdio: 'ignore', windowsHide: true, windowsVerbatimArguments: true, cwd: C.root, env: o.env || process.env, detached: !o.wait });
+    p.on('error', () => {}); if (!o.wait) p.unref();
+    return p;
+  };
   const shellOpen = (target) => (C.isMac ? detach('open', [target]) : detach('cmd', ['/c', 'start', '""', target], { windowsHide: true }));
   let loginProc = null;
   function startAgent() {
@@ -1255,7 +1266,7 @@ module.exports = function register(on, h) {
     };
     cli(['mcp', 'list'], (o) => { if (!/^(claude\.ai )?figma/mi.test(o)) cli(['mcp', 'add', '--transport', 'http', '--scope', 'user', 'figma', 'https://mcp.figma.com/mcp'], (o2) => console.log(`  [${core.now()}] Figma MCP 등록: ` + String(o2).replace(/\s+/g, ' ').slice(0, 160))); });
     if (C.isMac) spawn('osascript', ['-e', `tell application "Terminal" to do script "cd '${C.root}' && '${cc}'"`, '-e', 'tell application "Terminal" to activate'], { detached: true, stdio: 'ignore' }).unref();
-    else detach('powershell', ['-NoExit', '-Command', `& '${cc}'`], { windowsHide: false, detached: true });
+    else openWin('Claude 로그인 · Figma 연결', 'powershell', ['-NoExit', '-Command', `& '${String(cc).replace(/'/g, "''")}'`]);
     try { core.writeText(path.join(C.root, 'workbench', '.agent_renew'), new Date().toISOString()); } catch (e) {}
   }
   on('POST', /^\/api\/setup(\/launch)?$/, async ({ req, body, res, send }) => {
@@ -1298,14 +1309,14 @@ module.exports = function register(on, h) {
         const ids = { git: 'Git.Git', figma: 'Figma.Figma', claude: 'Anthropic.Claude' }, pages = { git: 'https://git-scm.com/downloads', figma: 'https://www.figma.com/downloads/', claude: 'https://claude.ai/download' };
         const w = nn(b.what); if (!ids[w]) throw new Error('알 수 없는 설치: ' + w);
         if (C.isMac) { if (w === 'git') detach('/usr/bin/xcode-select', ['--install']); else detach('open', [pages[w]]); }
-        else if (h.setupEnv().winget) detach('winget', ['install', '--id', ids[w], '-e'], { windowsHide: false }); else shellOpen(pages[w]);
+        else if (h.setupEnv().winget) openWin('설치 · ' + w, 'winget', ['install', '--id', ids[w], '-e']); else shellOpen(pages[w]);
         break;
       }
       case 'git-login': {
         if (loginProc && loginProc.exitCode == null) throw new Error('깃허브 연결 창이 이미 열려 있습니다.');
         const env = Object.assign({}, process.env, { WB_USER: nn(core.readSetup().user) });
         if (C.isMac) spawn('osascript', ['-e', `tell application "Terminal" to do script "bash '${path.join(C.root, 'workbench', 'github_login.sh')}'"`, '-e', 'tell application "Terminal" to activate'], { detached: true, stdio: 'ignore', env }).unref();
-        else { loginProc = spawn('powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', path.join(C.root, 'workbench', 'github_login.ps1')], { detached: true, stdio: 'ignore', env, windowsHide: false }); loginProc.on('error', () => {}); loginProc.unref(); }
+        else { loginProc = openWin('깃허브 연결', 'powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', path.join(C.root, 'workbench', 'github_login.ps1')], { wait: true, env }); loginProc.on('error', () => {}); loginProc.unref(); }
         break;
       }
       case 'claude-cli': openClaudeCli(); break;
