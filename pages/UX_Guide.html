@@ -2198,6 +2198,8 @@ html.embed,html.embed body{overflow:hidden}
     return { title: it.frame || it.nodeId, sub: (it.page || '') + (it.nodeId ? ' · ' + it.nodeId : '') };
   }
   function steps(n){ return '<div class="steps">' + (isDocKind(meta.kind) ? ['① ' + kindName(meta.kind) + ' 수정', '② 연관 항목 찾기', '③ 반영 여부 선택', '④ 수정 요청'] : ['① 가이드 수정', '② 고칠 화면 찾기', '③ 반영 여부 선택', '④ 수정 요청']).map(function(t, i){ return '<span class="' + (i + 1 < n ? 'ok' : i + 1 === n ? 'on' : '') + '">' + t + '</span>'; }).join('') + '</div>'; }
+  /* 멈추기(2026-11-24): 대기 · 진행 중인 수정 요청 · 찾기 요청을 사람이 멈춘다(POST /api/jobs stop → 「취소」, 처리 중이면 Claude 세션을 끊음) */
+  function stopBtn(j){ return '<div class="act"><button type="button" class="btn w-only" data-jstop="' + esc(j.id) + '" title="Claude가 이 요청을 더 처리하지 않게 멈춥니다">멈추기</button></div>'; }
   function fixes(){
     return Promise.all([
       fetch('/api/jobs', { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : { items: [] }; }).catch(function(){ return { items: [] }; }),
@@ -2222,7 +2224,7 @@ html.embed,html.embed body{overflow:hidden}
       edits.forEach(function(j){
         var what = '「' + (j.name || '') + '」 ' + (j.text || '');
         if (j.status === '대기' || j.status === '진행 중') {
-          h += '<section class="fix"><h3>' + DOC + ' 수정 요청 · ' + (j.status === '대기' ? '대기' : 'Claude가 고치는 중') + '</h3>' + steps(1) + '<p>' + esc(what) + '</p></section>';
+          h += '<section class="fix"><h3>' + DOC + ' 수정 요청 · ' + (j.status === '대기' ? '대기' : 'Claude가 고치는 중') + '</h3>' + steps(1) + '<p>' + esc(what) + '</p>' + stopBtn(j) + '</section>';
         } else if (j.status === '완료') {
           var next = spec || mine;
           h += '<section class="fix" id="fix"><h3>' + (j.direct ? DOC + ' 직접 수정을 저장했습니다' : 'Claude가 ' + DOC + ' 수정을 마쳤습니다') + (spec ? ' — 연관된 화면 · 문서도 고쳐야 할 수 있습니다' : mine ? ' — 이미 작업한 화면도 고쳐야 할 수 있습니다' : '') + '</h3>' + steps(next ? 2 : 1) +
@@ -2242,7 +2244,7 @@ html.embed,html.embed body{overflow:hidden}
         var sp = j.scope === 'spec', file = j.fileKey ? names[j.fileKey] || j.fileKey.slice(0, 6) : '';
         var where = sp ? '연관 항목' : '고칠 화면', head = (file ? file + ' · ' : '') + where;
         if (j.status === '대기' || j.status === '진행 중') {
-          h += '<section class="fix"><h3>' + esc(head) + '을 찾는 중</h3>' + steps(2) + '<p>' + esc(j.note || 'Claude가 바뀐 내용(' + (j.text || '') + ')과 ' + (sp ? '연관된 화면 · 문서 · 프로토타입' : '다른 화면') + '을 찾고 있습니다. 끝나면 여기에 목록이 나옵니다.') + '</p></section>';
+          h += '<section class="fix"><h3>' + esc(head) + '을 찾는 중</h3>' + steps(2) + '<p>' + esc(j.note || 'Claude가 바뀐 내용(' + (j.text || '') + ')과 ' + (sp ? '연관된 화면 · 문서 · 프로토타입' : '다른 화면') + '을 찾고 있습니다. 끝나면 여기에 목록이 나옵니다.') + '</p>' + stopBtn(j) + '</section>';
         } else if (j.status === '완료') {
           var items = j.items || [];
           if (!items.length) {
@@ -2279,6 +2281,14 @@ html.embed,html.embed body{overflow:hidden}
 
   $('fixes').addEventListener('click', async function(e){
     var b = e.target.closest('button'); if (!b) return;
+    /* 멈추기: 대기 · 진행 중인 수정 · 찾기 요청 */
+    if (b.dataset.jstop) {
+      var jid = b.dataset.jstop, jj = rqAll.filter(function(x){ return x.id === jid; })[0] || {}, busy = jj.status === '진행 중';
+      if (!(await WB.confirm('이 요청을 멈출까요?\n' + (busy ? 'Claude가 처리하던 것을 지금 멈춥니다. 그때까지 고친 것은 그대로 남습니다.' : '아직 시작하지 않은 요청을 취소합니다.') + '\n다시 하려면 새로 요청하세요.', { ok: '멈추기', danger: true }))) return;
+      b.disabled = true;
+      post('/api/jobs', { action: 'stop', id: jid, by: user() }).then(function(){ toast('요청을 멈췄습니다.'); return fixes(); }).catch(function(x){ b.disabled = false; WB.alert(x.message); });
+      return;
+    }
     /* 고친 결과를 확인함(이미 작업한 화면 확인은 하지 않음) */
     if (b.dataset.done) {
       post('/api/jobs', { action: 'update', id: b.dataset.done, status: '확인', note: (edits.filter(function(x){ return x.id === b.dataset.done; })[0] || {}).note || '' }).then(fixes).catch(function(x){ WB.alert(x.message); });
