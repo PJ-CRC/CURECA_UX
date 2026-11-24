@@ -14,7 +14,7 @@ policies: [POL-TST-008]
 basis: 2026-11-24 14:48 · history 81255354
 basis_versions:
 source: tobe
-figma:
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/?node-id=3304-61167
 ---
 # LI-STN-08 Assay Pack Setting
 
