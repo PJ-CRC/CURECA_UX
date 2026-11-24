@@ -1,0 +1,28 @@
+{
+  "id": "daye_20261124-111550",
+  "kind": "work",
+  "reqId": "",
+  "reqType": "",
+  "team": "cureca",
+  "at": "2026-11-24T11:15:50+09:00",
+  "from": "2026-11-24T11:14:54+09:00",
+  "by": "정다예",
+  "doneBy": "Claude",
+  "pc": "DAYE",
+  "fileKey": "",
+  "fileName": "",
+  "page": "",
+  "frame": "",
+  "nodeId": "",
+  "text": "UX가이드: 0. 문서 구성 (목차) (J148)",
+  "models": {
+    "claude-opus-5-5": 11
+  },
+  "calls": 11,
+  "input": 23,
+  "cacheWrite": 17504,
+  "cacheRead": 603803,
+  "output": 4712,
+  "total": 626042,
+  "usd": 0.3551
+}
