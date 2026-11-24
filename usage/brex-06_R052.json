@@ -4,7 +4,7 @@
   "reqId": "R052",
   "reqType": "요청",
   "team": "cureca",
-  "at": "2026-11-24T14:51:55+09:00",
+  "at": "2026-11-24T14:52:55+09:00",
   "from": "2026-11-24T14:48:40+09:00",
   "by": "최고관리자",
   "doneBy": "Claude",
@@ -16,13 +16,13 @@
   "nodeId": "",
   "text": "Setting 페이지에서 Assay Pack Setting(T-IOS + L-IOS) 기획 화면을 작업규칙대로 다시 그려줘. 작업할 원본 기획 프레임이 이미 같은 페이지에 있으니, 1단계 「다시 옮기기」는 하지 말고 그 프레임을 보고 해. 나머지 작업규칙은 그대로 따름.",
   "models": {
-    "claude-opus-5-5": 26
+    "claude-opus-5-5": 31
   },
-  "calls": 26,
-  "input": 49,
-  "cacheWrite": 91090,
-  "cacheRead": 2530721,
-  "output": 16687,
-  "total": 2638547,
-  "usd": 1.5688
+  "calls": 31,
+  "input": 58,
+  "cacheWrite": 96991,
+  "cacheRead": 3245025,
+  "output": 20608,
+  "total": 3362682,
+  "usd": 1.8373
 }
