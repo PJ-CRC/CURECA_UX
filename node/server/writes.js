@@ -47,6 +47,7 @@ module.exports = function register(on, h) {
   const nn = (v) => (v == null ? '' : String(v));
   // 요청 → 작업 이력(Hist-FromRequest): 상태가 바뀔 때마다. 완료면 고친 프레임 캡처를 붙인다
   function histFromRequest(r) {
+    if (core.preReset(r)) return;   // 초기화 앞의 요청(아직 비우기 전)은 이력으로 다시 올리지 않는다
     const name = C.pcSlug + '_' + nn(r.id);
     core.rmGlob(histShots, (x) => x.startsWith(name + '.') || x.startsWith(name + '-'));
     let shot = ''; const shots = [];
@@ -135,7 +136,7 @@ module.exports = function register(on, h) {
     const mine = items.filter((x) => x.work && nn(x.status) === '보류' && !x.stopped);
     if (!mine.length) return;
     let names = []; try { names = fs.readdirSync(C.histEntries).filter((n) => n.endsWith('.json') && !n.startsWith(C.pcSlug + '_')); } catch (e) { return; }
-    const ents = names.map((n) => core.readJson(path.join(C.histEntries, n))).filter((e) => e && e.kind === 'request' && e.work);
+    const ents = names.map((n) => core.readJson(path.join(C.histEntries, n))).filter((e) => e && !core.preReset(e) && e.kind === 'request' && e.work);
     const now = core.now(); let changed = false;
     for (const x of mine) {
       const team = core.itemTeam(x);
@@ -153,7 +154,68 @@ module.exports = function register(on, h) {
     }
     if (changed) { r.items = items; r.version = (parseInt(r.version, 10) || 0) + 1; core.writeJson(C.reqFile, r); }
   }
-  Object.assign(h, { histFromRequest, histRemove, saveHistEntry, copyHistShot, addCatalogFrames, startUsage, toJpeg, closeRun, histRefresh, handoffTick });
+  /* ── 작업 내역 초기화(2026-11-24): 공유 신호(.history/config/reset.json, core.resetInfo) ──
+     resetLocal: 이 PC의 요청 · 작업 목록에서 초기화 시각 앞의 것을 비운다(PC마다 한 번, workbench/.reset_done.json에 기록).
+     번호는 이어서 쓴다(R050 다음은 R051 — 같은 번호의 사용량 · 첨부 사본 파일을 덮어쓰지 않게). resetSweep: 초기화 앞의 변경 이력이
+     다시 올라와 있으면(예전 버전 PC가 다시 올림) 지운다 */
+  const resetDoneFile = path.join(C.root, 'workbench', '.reset_done.json');
+  function seqNext(items, k) {
+    let n = 1; for (const i of items) { const v = parseInt(nn(i && i.id).replace(/\D/g, ''), 10) || 0; if (v >= n) n = v + 1; }
+    const d = core.readJson(resetDoneFile) || {}; const fl = parseInt(d[k], 10) || 0;
+    return Math.max(n, fl + 1);
+  }
+  const maxNum = (items) => { let m = 0; for (const i of items) { const v = parseInt(nn(i && i.id).replace(/\D/g, ''), 10) || 0; if (v > m) m = v; } return m; };
+  function resetLocal(force) {
+    const info = core.resetInfo(); if (!info || !info.at) return null;
+    const done = core.readJson(resetDoneFile) || {};
+    if (!force && done.at === info.at) return null;
+    const t = core.resetAt(), before = (x) => { const v = Date.parse(nn(x && (x.createdAt || x.updatedAt))) || 0; return !v || v < t; };
+    const out = { at: info.at, requests: 0, jobs: 0 };
+    // 요청
+    const r = core.readJson(C.reqFile);
+    let R = Math.max(parseInt(done.R, 10) || 0, 0);
+    if (r && Array.isArray(r.items)) {
+      const all = r.items.filter(Boolean); R = Math.max(R, maxNum(all));
+      const gone = all.filter(before), keep = all.filter((x) => !before(x));
+      const cancel = gone.filter((x) => nn(x.status) === '진행 중').map((x) => x.id);
+      if (cancel.length) { try { const cf = path.join(C.root, 'workbench', '.agent_cancel'); const old = String(core.readText(cf) || ''); core.writeText(cf, (old ? old + '\n' : '') + cancel.join('\n')); } catch (e) {} }
+      for (const x of gone) core.rmGlob(attachDir, (f2) => f2.startsWith(nn(x.id) + '_'));
+      if (gone.length) { r.items = keep; r.version = (parseInt(r.version, 10) || 0) + 1; core.writeJson(C.reqFile, r); }
+      out.requests = gone.length;
+    }
+    // 작업
+    const jj = core.readJson(C.jobFile);
+    let J = Math.max(parseInt(done.J, 10) || 0, 0);
+    if (jj && Array.isArray(jj.items)) {
+      const all = jj.items.filter(Boolean); J = Math.max(J, maxNum(all));
+      const keep = all.filter((x) => !before(x)); out.jobs = all.length - keep.length;
+      if (out.jobs) { jj.items = keep; jj.version = (parseInt(jj.version, 10) || 0) + 1; core.writeJson(C.jobFile, jj); }
+    }
+    // 옮긴 기록도 지웠으면 이 PC의 예전 기록(projects/{key}/transfer.json, 공유 기록이 없을 때 대신 읽는 것)과 옮기는 중 임시 파일도
+    if (info.transfer) {
+      let dirs = []; try { dirs = fs.readdirSync(C.projRoot, { withFileTypes: true }).filter((d) => d.isDirectory()).map((d) => d.name); } catch (e) {}
+      for (const d of dirs) core.rmGlob(path.join(C.projRoot, d), (x) => x === 'transfer.json');
+      try { fs.rmSync(path.join(C.root, 'workbench', 'transfer'), { recursive: true, force: true }); } catch (e) {}
+    }
+    core.writeJson(resetDoneFile, { at: info.at, by: nn(info.by), doneAt: core.now(), R, J, requests: out.requests, jobs: out.jobs });
+    console.log(`작업 내역 초기화(${info.at} · ${nn(info.by)}) — 이 PC 요청 ${out.requests}건 · 작업 ${out.jobs}건을 비웠습니다. 번호는 R${R + 1} · J${J + 1}부터`);
+    return out;
+  }
+  function resetSweep() {
+    if (!core.resetAt()) return 0;
+    let n = 0;
+    for (const f2 of core.listJson(C.histEntries)) {
+      const e = core.readJson(path.join(C.histEntries, f2)); if (!e || !core.preReset(e)) continue;
+      const name = f2.replace(/\.json$/, '');
+      core.rmGlob(C.histEntries, (x) => x === f2);
+      core.rmGlob(histShots, (x) => x.startsWith(name + '.') || x.startsWith(name + '-'));
+      core.rmGlob(histAttach, (x) => x.startsWith(name + '_'));
+      n++;
+    }
+    if (n) { core.syncWant(); console.log('초기화 앞의 변경 이력 ' + n + '건을 지웠습니다(다른 PC가 다시 올린 것)'); }
+    return n;
+  }
+  Object.assign(h, { histFromRequest, histRemove, saveHistEntry, copyHistShot, addCatalogFrames, startUsage, toJpeg, closeRun, histRefresh, handoffTick, resetLocal, resetSweep });
 
   // ── POST /api/jobs {action: add | take | update} — 작업 대기열(캡처 · 목록 · UX 문서 · 프로토타입 · 회의록 · 일정/작업 · 글 수정) ──
   const upTmp = path.join(C.root, 'workbench', 'job_files', '_tmp'), upDir = path.join(C.root, 'workbench', 'job_files');
@@ -200,7 +262,7 @@ module.exports = function register(on, h) {
     if (pend >= AUTO_KEEP) return;
     const meta = core.readJson(path.join(h.projDir(key), 'shots_meta.json')) || {};
     const busy = new Set(caps.filter((x) => x.status !== '완료').map((x) => x.nodeId));   // 대기 · 진행 중 · 실패는 다시 쌓지 않는다
-    let n = 1; for (const i of items) { const v = parseInt(nn(i.id).replace(/\D/g, ''), 10) || 0; if (v >= n) n = v + 1; }
+    let n = seqNext(items, 'J');
     const list = core.arr(pl.list).slice(), add = [], now = core.now();
     while (pend < AUTO_KEEP && list.length) {
       const [nid, name] = core.arr(list.shift());
@@ -300,7 +362,7 @@ module.exports = function register(on, h) {
         // 바뀐 것 확인은 같은 ① → ② 짝에 하나만(2026-11-18 — 여러 번 눌러 같은 확인이 겹쳐 돌다 Figma 연결 오류로 실패하던 것). 이미 대기 · 진행 중이면 그것을 돌려준다
         if (kind === 'transfer' && xfer && xfer.mode === 'check') hit = items.find((x) => x && x.kind === 'transfer' && x.mode === 'check' && x.from && x.to && x.from.key === xfer.from.key && x.to.key === xfer.to.key && ['대기', '진행 중'].includes(x.status)) || null;
         if (!hit) {
-          let n = 1; for (const i of items) { const v = parseInt(nn(i.id).replace(/\D/g, ''), 10) || 0; if (v >= n) n = v + 1; }
+          let n = seqNext(items, 'J');
           hit = { id: 'J' + String(n).padStart(3, '0'), kind, team: b.team ? nn(b.team) : T.team, fileKey: key, nodeId: nid, name: nn(b.name).trim(), link: nn(b.link), text: nn(b.text).trim(),
             guide: kind === 'guide-check' || kind === 'guide-edit' ? nn(b.guide) : '', revFrom: nn(b.revFrom), revTo: nn(b.revTo), items: kind === 'text' ? core.arr(b.items) : [],
             status: '대기', note: '', by: nn(b.by), takenBy: '', createdAt: now, updatedAt: now };
@@ -744,7 +806,7 @@ module.exports = function register(on, h) {
       }
       // 작업 기록(완료) — 화면의 「수정을 마쳤습니다 · 연관 항목 찾기 요청」과 수정 요청 목록에 보이게
       const jj = core.readJson(C.jobFile) || { version: 0, items: [] }; let items = core.arr(jj.items).filter(Boolean);
-      let n = 1; for (const i of items) { const v = parseInt(nn(i.id).replace(/\D/g, ''), 10) || 0; if (v >= n) n = v + 1; }
+      let n = seqNext(items, 'J');
       const at = core.now(), job = { id: 'J' + String(n).padStart(3, '0'), kind: 'guide-edit', team: T.team, fileKey: nn(gm.fileKey), nodeId: '', name: nn(b.name).trim() || file || gid, link: '', text: '(직접 수정)', guide: gid,
         revFrom: hasRev ? nn(g.rev) : '', revTo: saved, items: [], status: '완료', note: '직접 수정 · ' + (nn(b.by) || C.pcName) + (direct ? ' · 원본 파일에 저장' : ' · 수정본 ' + saved), by: nn(b.by), takenBy: '', createdAt: at, updatedAt: at, direct: true };
       if (file) job.file = file;
@@ -852,6 +914,40 @@ module.exports = function register(on, h) {
     core.syncWant();
     return { ok: true, item: h.readMinute(path.join(T.minDir, id + '.md')) };
   });
+
+  // ── POST /api/reset {confirm:'초기화', usage, worklogs} — 작업 내역 초기화(최고관리자, 2026-11-24) ──
+  //  공유: 변경 이력(entries) · 캡처 사본(shots) · 첨부 사본(attach) · 동기화 충돌 기록(conflicts)을 지우고, usage면 사용량 통계, worklogs면 모든 팀의 작업 기록(README 빼고)도.
+  //  UX 문서 「변경이력」 탭은 이 시각부터 보이게(팀마다 guides/_log.json since). 그리고 신호(config/reset.json)를 남겨 모든 PC가 자기 요청 · 작업 목록을 한 번 비운다.
+  //  transfer면 다음 단계로 옮긴 기록(.history/transfer)도 — 각 PC의 예전 기록(projects/{key}/transfer.json)은 resetLocal이 지운다(안 지우면 그것을 대신 읽음)
+  //  남기는 것: 계정 · 팀 · 팀 프로젝트 · 시트 연결 · UX 문서(작업 기록 말고) · 회의록 · 감시 상태(agents)
+  on('POST', '/api/reset', async ({ req, body }) => {
+    if (!core.isAdmin(req)) throw new Error('최고관리자만 작업 내역을 초기화할 수 있습니다.');
+    const b = await body();
+    if (nn(b.confirm) !== '초기화') throw new Error('확인 글자가 맞지 않습니다. 「초기화」를 입력하세요.');
+    const at = core.now(), who = core.meName() || '최고관리자', out = { at, entries: 0, shots: 0, attach: 0, conflicts: 0, usage: 0, worklogs: 0, transfer: 0 };
+    const wipe = (dir, keep) => { let n = 0; let list = []; try { list = fs.readdirSync(dir, { withFileTypes: true }); } catch (e) { return 0; }
+      for (const d of list) { if (keep && keep(d.name)) continue; try { fs.rmSync(path.join(dir, d.name), { recursive: true, force: true }); n++; } catch (e) {} } return n; };
+    out.entries = wipe(C.histEntries, (x) => x === '.gitkeep');
+    out.shots = wipe(histShots, (x) => x === '.gitkeep');
+    out.attach = wipe(histAttach, (x) => x === '.gitkeep');
+    out.conflicts = wipe(path.join(C.histDir, 'conflicts'), (x) => x === '.gitkeep');
+    if (b.usage) out.usage = wipe(path.join(C.histDir, 'usage'), (x) => x === '.gitkeep');
+    // 다음 단계로 옮긴 기록(① → ② 프레임 짝 · 바뀜 확인용). 지우면 이미 옮긴 화면도 다음 보내기 · 비교에서 처음 보는 화면으로 본다
+    if (b.transfer) out.transfer = wipe(path.join(C.histDir, 'transfer'), (x) => x === '.gitkeep');
+    const teams = core.teamIds ? core.teamIds() : ['cureca'];
+    for (const t of teams) {
+      const T = core.teamCtx(t);
+      if (b.worklogs) out.worklogs += wipe(path.join(T.guideRoot, 'work-logs'), (x) => /^readme\.md$/i.test(x) || x === '.gitkeep');
+      if (core.exists(T.guideRoot)) { const lf = path.join(T.guideRoot, '_log.json'), lj = core.readJson(lf) || {}; lj.since = at; lj.note = `작업 내역 초기화(${at.slice(0, 10)}, ${who}) — 이 시각 앞의 변경이력은 보이지 않음`; core.writeJson(lf, lj); }
+    }
+    fs.mkdirSync(path.dirname(core.resetFile()), { recursive: true });
+    core.writeJson(core.resetFile(), { at, by: who, pc: C.pcName, transfer: !!b.transfer, note: '이 시각 앞의 요청 · 작업 · 변경 이력은 모든 PC에서 비운다(작업 내역 초기화)' });
+    const local = resetLocal(true) || {};
+    core.syncWant();
+    console.log(`작업 내역 초기화 — ${who} · 변경 이력 ${out.entries} · 캡처 ${out.shots} · 첨부 ${out.attach} · 충돌 기록 ${out.conflicts} · 사용량 ${out.usage} · 작업 기록 ${out.worklogs} · 옮긴 기록 ${out.transfer}`);
+    return Object.assign({ ok: true }, out, { requests: local.requests || 0, jobs: local.jobs || 0 });
+  });
+  on('GET', '/api/reset', () => { const i = core.resetInfo(); const d = core.readJson(resetDoneFile); return { reset: i || null, done: d || null }; });
 
   // ── POST /api/worklogs {action: 'stop' | 'resume', name, reason} — 작업 기록 멈추기 · 다시 시작(2026-11-20, 일정/작업 「작업 기록」 탭) ──
   //  규칙 저장소 reference-rules/work-log.md 「작업을 그만두면 status: 멈춤과 이유」 · pending-changes.md 「멈추면 작업 중 항목을 모두 대기로」를 사람이 화면에서 한다.
@@ -966,7 +1062,7 @@ module.exports = function register(on, h) {
     } else if (b.action === 'sync') { core.syncWant(); await new Promise((r) => setTimeout(r, 700)); }
     else throw new Error('알 수 없는 action: ' + nn(b.action));
     const all = q.get('all') === '1';
-    let items = core.listJson(C.histEntries).map((n) => core.readJson(path.join(C.histEntries, n))).filter((x) => x != null);
+    let items = core.listJson(C.histEntries).map((n) => core.readJson(path.join(C.histEntries, n))).filter((x) => x != null && !core.preReset(x));   // 초기화 앞의 것은 보이지 않게
     if (!all) items = items.filter((e) => core.itemTeam(e) === T.team);
     const st = core.readJson(C.syncStat);
     return { pc: C.pcName, pcSlug: C.pcSlug, team: all ? '' : T.team, syncing: !!(st && st.busy), sync: st, items };
@@ -1293,7 +1389,7 @@ module.exports = function register(on, h) {
     switch (b.action) {
       case 'add': {
         const txt = nn(b.text).trim(); if (!txt) throw new Error('수정 내용을 입력해 주세요.');
-        let n = 1; for (const i of items) { const v = parseInt(nn(i.id).replace(/\D/g, ''), 10) || 0; if (v >= n) n = v + 1; }
+        let n = seqNext(items, 'R');
         const rid = 'R' + String(n).padStart(3, '0');
         const imgs = saveAttach(rid, b.images);
         const it = { id: rid, team: b.team ? nn(b.team) : T.team, nodeId: nn(b.nodeId), frame: nn(b.frame), page: nn(b.page), fileKey: nn(b.fileKey), fileName: nn(b.fileName),

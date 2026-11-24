@@ -85,6 +85,15 @@ label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:
 .left{display:flex;flex-direction:column;gap:var(--gap);min-width:0}
 .teams{padding:16px 18px}
 .teams-h{display:flex;align-items:baseline;gap:4px 10px;margin:0 0 10px;flex-wrap:wrap}
+/* 작업 내역 초기화(2026-11-24, 최고관리자) */
+.reset{padding:16px 18px}
+.reset h2{margin:0 0 4px;font-size:15px}
+.reset p{margin:0 0 10px;font-size:13px;color:var(--ink-2);line-height:1.6}
+.reset ul{margin:0 0 12px;padding-left:18px;font-size:13px;color:var(--ink-2);line-height:1.7}
+.reset .opts{display:flex;flex-wrap:wrap;gap:6px 18px;margin:0 0 12px;font-size:13.5px}
+.reset .opts label{display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+.reset .acts{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.reset .last{font-size:12.5px;color:var(--ink-3)}
 .teams-h h2{margin:0;font-size:15px;white-space:nowrap}
 .teams-h small{font-size:12.5px;color:var(--ink-3)}
 .tlist{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
@@ -180,6 +189,21 @@ body.limited .split{grid-template-columns:minmax(0,760px)}
         <thead><tr><th>아이디</th><th>이름</th><th>팀</th><th>메뉴 권한</th><th>상태</th><th>변경</th></tr></thead>
         <tbody id="rows"><tr><td colspan="6">불러오는 중…</td></tr></tbody>
       </table></div>
+    </section>
+    <!-- 작업 내역 초기화(2026-11-24): 공유 이력을 지우고 모든 PC가 자기 요청 · 작업 목록을 한 번 비우게 하는 신호를 남긴다(POST /api/reset) -->
+    <section class="card reset admin-only" aria-labelledby="rsTitle">
+      <h2 id="rsTitle">작업 내역 초기화</h2>
+      <p>그동안의 요청 · 작업 내역을 모든 PC에서 지우고 처음부터 기록합니다. 다른 PC는 Figma AI Run을 켜면 알아서 비웁니다.</p>
+      <ul>
+        <li>지움: 변경 이력과 그 캡처 · 첨부 사본, 각 PC의 요청 · 작업 목록, 동기화 충돌 기록. UX 문서 「변경이력」 탭은 이 시각부터 보입니다.</li>
+        <li>남김: 계정 · 팀 · 팀 프로젝트 · 일정 연결 · UX 문서 · 회의록. 요청 번호는 이어서 붙습니다.</li>
+      </ul>
+      <div class="opts">
+        <label><input type="checkbox" id="rsWork" checked>작업 기록도 지우기 <small style="color:var(--ink-3)">(모든 팀, 안내 README는 남김)</small></label>
+        <label title="① → ② 화면 짝 기록입니다. 지우면 이미 옮긴 화면도 다음 보내기 · 비교에서 처음 보는 화면으로 봅니다"><input type="checkbox" id="rsXfer" checked>다음 단계로 옮긴 기록도 지우기</label>
+        <label><input type="checkbox" id="rsUsage">사용량 통계도 지우기</label>
+      </div>
+      <div class="acts"><button type="button" class="btn danger" id="rsBtn">작업 내역 초기화</button><span class="last" id="rsLast"></span></div>
     </section>
     </div>
     <form class="card form admin-only" id="form" autocomplete="off">
@@ -428,6 +452,36 @@ body.limited .split{grid-template-columns:minmax(0,760px)}
     if (el.classList.contains('tp-in-name') || el.classList.contains('tp-in-link')) { if (e.key === 'Enter') { e.preventDefault(); el.closest('.tp-row').querySelector('[data-tpa="save"]').click(); } if (e.key === 'Escape') { tpEdit = null; renderTeams(); } }
   });
   load(false);
+})();
+</script>
+<script>
+/* 작업 내역 초기화(2026-11-24): 최고관리자만. 확인 글자 「초기화」를 넣어야 보낸다 */
+(function(){
+  var $ = function(id){ return document.getElementById(id); }, WB = window.WB;
+  if (!$('rsBtn')) return;
+  function last(){
+    fetch('/api/reset').then(function(r){ return r.json(); }).then(function(d){
+      var i = d && d.reset; $('rsLast').textContent = i && i.at ? '마지막 초기화 · ' + String(i.at).slice(0, 16).replace('T', ' ') + (i.by ? ' · ' + i.by : '') : '아직 초기화한 적이 없습니다';
+    }).catch(function(){});
+  }
+  last();
+  $('rsBtn').addEventListener('click', function(){
+    var b = this, work = $('rsWork').checked, use = $('rsUsage').checked, xfer = $('rsXfer').checked;
+    var what = ['변경 이력', '각 PC의 요청 · 작업 목록'].concat(work ? ['작업 기록'] : [], xfer ? ['옮긴 기록'] : [], use ? ['사용량 통계'] : []).join(' · ');
+    WB.prompt('작업 내역을 초기화할까요?\n' + what + '을(를) 모든 PC에서 지웁니다.\n지우면 다시 볼 수 없습니다.\n확인하려면 「초기화」를 입력하세요.', '', { ok: '초기화', danger: true }).then(function(v){
+      if (v == null) return;
+      if (String(v).trim() !== '초기화') { WB.alert('확인 글자가 맞지 않아 초기화하지 않았습니다.\n「초기화」를 그대로 입력하세요.'); return; }
+      b.disabled = true;
+      fetch('/api/reset', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ confirm: '초기화', worklogs: work, usage: use, transfer: xfer }) })
+        .then(function(r){ return r.json().then(function(j){ if (!r.ok || j.error) throw new Error(j.error || ('HTTP ' + r.status)); return j; }); })
+        .then(function(j){
+          last();
+          WB.alert('작업 내역을 초기화했습니다.\n변경 이력 ' + j.entries + '건, 이 PC 요청 ' + j.requests + '건 · 작업 ' + j.jobs + '건' + (work ? ', 작업 기록 ' + j.worklogs + '개' : '') + (xfer ? ', 옮긴 기록 ' + j.transfer + '개' : '') + (use ? ', 사용량 ' + j.usage + '건' : '') + '을 지웠습니다.\n다른 PC는 Figma AI Run을 켜면 알아서 비웁니다.');
+        })
+        .catch(function(e){ WB.alert('초기화하지 못했습니다.\n' + e.message); })
+        .then(function(){ b.disabled = false; });
+    });
+  });
 })();
 </script>
 <script src="appnav.js" defer></script>

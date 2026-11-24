@@ -210,7 +210,22 @@ function meInfo() {
     dev: exists(path.join(C.root, 'workbench', 'dev.flag')) };   // 개발 PC만 「감시 상태」 메뉴(2026-11-19)
 }
 
-module.exports = { C, init, readText, readJson, exists, listJson, now, arr, writeText, writeJson, rmGlob, syncWant, writeLogin, setPw, saveAccount, saveTeams, setMyTeam, meName, readSetup, readAccounts, readAccount, pwHash, testPw, hasAccounts, histReady,
+// ── 작업 내역 초기화(2026-11-24, v1.0.0 전) ──
+//  공유 이력의 .history/config/reset.json {at, by, pc}이 「이 시각 앞의 작업 내역은 없는 것」이라는 신호다.
+//  - 모든 PC 서버가 한 번씩 자기 요청 · 작업 목록에서 그 시각 앞의 것을 비운다(background.js resetTick → writes.js resetLocal)
+//  - 그 시각 앞의 변경 이력(entries)은 보이지 않게 거르고, 다른 PC(예전 버전)가 다시 올려도 새 버전 서버가 지운다
+let resetCache = { m: -1, at: 0, info: null };
+function resetFile() { return path.join(C.histDir, 'config', 'reset.json'); }
+function resetInfo() {
+  let m = 0; try { m = fs.statSync(resetFile()).mtimeMs; } catch (e) { m = 0; }
+  if (m !== resetCache.m) { const j = m ? readJson(resetFile()) : null; resetCache = { m, info: j, at: j && j.at ? (Date.parse(j.at) || 0) : 0 }; }
+  return resetCache.info;
+}
+function resetAt() { resetInfo(); return resetCache.at; }
+// 변경 이력 하나가 초기화 앞의 것인지(만든 시각, 없으면 마지막 시각)
+function preReset(e) { const t = resetAt(); if (!t || !e) return false; const x = Date.parse(e.createdAt || e.at || '') || 0; return x > 0 && x < t; }
+
+module.exports = { C, init, readText, resetInfo, resetAt, preReset, resetFile, readJson, exists, listJson, now, arr, writeText, writeJson, rmGlob, syncWant, writeLogin, setPw, saveAccount, saveTeams, setMyTeam, meName, readSetup, readAccounts, readAccount, pwHash, testPw, hasAccounts, histReady,
   authRequired, needSync, currentUser, MENUS, MENU_KEYS, ALWAYS_KEYS, WRITE_KEYS, TEAM_MENUS, APPROVALS, APPROVE_KEYS, userWrites, userApproves, userMenus,
   isBrowser, canWrite, canApprove, roMsg, readTeams, fillTeamColors, teamIds, userTeams, myTeams, currentTeam, teamList, teamCtx, itemTeam, meInfo,
   MANAGES, MANAGE_KEYS, userManages, canManage, isAdmin, readTeamProjects, saveTeamProjects };
