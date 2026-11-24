@@ -68,7 +68,7 @@ figma_region: 2.1 2차
 
 | ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
 | --- | --- | --- | --- | --- | --- |
-| R01 | 화면 정보 | 화면 이름 "Assay Pack Setting", Ver 0.4.0 | Assay Pack File Details (IA "Details"), 2.1.ZZ 체계 | IA | 대기 |
+| R01 | 화면 정보 | 화면 이름 "Assay Pack Setting", Ver 0.4.0 | Assay Pack File Details (IA "Details"), 2.1.ZZ 체계 | IA | 작업 중 (20261124-최고관리자-setting-2) |
 
 ## 변경 이력
 
