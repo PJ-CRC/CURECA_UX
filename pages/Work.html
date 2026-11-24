@@ -78,6 +78,15 @@ table.t td.nw{white-space:nowrap}
 .chip{display:inline-block;margin:2px 4px 2px 0;padding:0 7px;border-radius:6px;background:var(--accent-soft);color:var(--accent);font:600 12.5px/1.8 "JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:nowrap}
 /* 주 이동 */
 .wkbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.connbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 14px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2);font-size:13px;color:var(--ink-2)}
+.connbar > svg{color:var(--ink-3);flex:none}
+.connbar .cb-src b{font-weight:600;color:var(--ink)}
+.connbar .cb-open{display:inline-flex;align-items:center;gap:3px;color:var(--accent);text-decoration:none;font-weight:600}
+.connbar .cb-open:hover{text-decoration:underline}
+.connbar .sp{flex:1}
+.connbar .cb-set{display:inline-flex;align-items:center;gap:4px;height:26px;padding:0 8px;border:0;border-radius:7px;background:transparent;color:var(--ink-3);font:inherit;font-size:12.5px;cursor:pointer}
+.connbar .cb-set:hover{background:var(--surface);color:var(--ink)}
+.connbar .cb-open:focus-visible,.connbar .cb-set:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .icon{width:40px;height:40px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-size:18px;line-height:1}
 .icon:hover{border-color:var(--accent)}
 .wk-range{font-size:20px;font-weight:800;font-variant-numeric:tabular-nums}
@@ -322,10 +331,8 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     <p class="one-line">업무 현황과 우리가 작업할 내역을 봅니다. 일정은 연결한 원본(구글 시트 · Azure DevOps)에서 가져오고, 여기서 고치면 원본에 바로 들어갑니다</p>
   </div>
   <div class="app-head-act">
-    <!-- 권한에 따라 숨는 버튼(w-only)은 맨 왼쪽에: 숨어도 나머지 버튼 자리가 움직이지 않는다 -->
-    <button class="btn w-only" id="connBtn" type="button" title="일정을 가져올 곳(구글 시트 · Azure DevOps)을 연결합니다">일정 연결</button>
-    <button class="btn" id="reload" type="button">새로고침</button>
-    <a class="btn" id="openSheet" href="#" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;text-decoration:none;color:inherit">원본 열기</a>
+    <!-- 머리에는 페이지 전체에 해당하는 「새로고침」만(2026-11-24). 일정 연결 · 원본 열기는 일정 · 주간 진행 현황 탭 안 연결 줄(connBar)로 -->
+    <button class="btn" id="reload" type="button" style="display:inline-flex;align-items:center;gap:6px"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 8a5.5 5.5 0 1 1-1.6-3.9"/><path d="M13.5 2.5v3.2h-3.2"/></svg>새로고침</button>
   </div>
 </header>
 
@@ -575,8 +582,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   function canWrite(){ return !!(conf && conf.canWrite) && !document.documentElement.classList.contains('perm-ro'); }
 
   function loadConf(){
-    return api('/api/sheet').then(function(j){ conf = j; }).catch(function(e){ conf = { configured: false, error: e.message }; })
-      .then(function(){ $('openSheet').href = isAzure() ? azUrl() : sheetUrl(); $('openSheet').textContent = '원본 열기'; $('openSheet').title = isAzure() ? 'Azure DevOps에서 열기' : '구글 시트에서 열기'; });
+    return api('/api/sheet').then(function(j){ conf = j; }).catch(function(e){ conf = { configured: false, error: e.message }; });
   }
   function loadSheet(q){ return api('/api/sheet/data?' + q).then(function(j){ if (j.cached) { var d = j.data || {}; d.cached = true; d.error = j.error; return d; } return j; }); }
   // 시트는 읽는 데 수십 초 걸린다: 서버가 마지막으로 받은 사본(cache=1)을 먼저 그리고, 뒤에서 새로 받아 바꾼다
@@ -592,7 +598,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
   function loadWbs(){
     if (!conf || !conf.configured || (isAzure() && !conf.azurePat && !conf.azureShared)) { wbs = null; return Promise.resolve(); }   // 토큰이 없어도 팀 공유 사본이 있으면 그것을 본다
     loading.wbs = true; sheetFresh.wbs = false; renderSchedule();
-    return cacheFirst(isAzure() ? 'azure=1' : 'style=1&gid=' + encodeURIComponent(gidOf()), function(d){ wbs = d; if (isAzure() && $('openSheet')) $('openSheet').href = azUrl(); }, 'wbs', function(){ renderSchedule(); if (cur === 'weekly') renderWeekly(); })
+    return cacheFirst(isAzure() ? 'azure=1' : 'style=1&gid=' + encodeURIComponent(gidOf()), function(d){ wbs = d; }, 'wbs', function(){ renderSchedule(); if (cur === 'weekly') renderWeekly(); })
       .then(function(){ loading.wbs = false; });
   }
   function loadMins(){
@@ -632,10 +638,22 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     if (d.error) return '<p class="notice bad"><b>일정을 읽지 못했습니다</b> · ' + esc(d.error) + '</p>';
     return '';
   }
+  /* 연결 줄(2026-11-24): 일정 · 주간 진행 현황 탭 맨 위 — 어디에 연결됐는지, [원본 열기 ↗], 쓰기 권한이면 [연결 바꾸기].
+     예전에는 페이지 머리에 「일정 연결 · 새로고침 · 원본 열기」가 함께 있어 회의록 · 논의 대상 탭에서도 보였다 */
+  function connBar(){
+    if (!conf || !conf.configured) return '';
+    var az = conf.azure || {}, url = isAzure() ? azUrl() : sheetUrl();
+    var src = isAzure() ? 'Azure DevOps · <b>' + esc([az.project, az.scope].filter(Boolean).join(' › ') || az.org || '') + '</b>' : '구글 시트 · <b>' + esc((wbs && wbs.name) || '일정') + '</b>';
+    return '<div class="connbar"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="2" y="2.5" width="12" height="11" rx="1.5"/><path d="M2 6h12M6 6v7.5"/></svg>' +
+      '<span class="cb-src">' + src + '</span>' +
+      '<a class="cb-open" href="' + esc(url) + '" target="_blank" rel="noopener" title="' + (isAzure() ? 'Azure DevOps에서 열기' : '구글 시트에서 열기') + '">원본 열기 <svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 3h4v4M13 3 7.5 8.5M12 9.5V13H3V4h3.5"/></svg></a>' +
+      '<span class="sp"></span>' + (canWrite() ? '<button type="button" class="cb-set w-only" data-act="conn" title="일정을 가져올 곳(구글 시트 · Azure DevOps)을 바꿉니다"><svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="8" cy="8" r="2.2"/><path d="M8 1.8v1.6M8 12.6v1.6M1.8 8h1.6M12.6 8h1.6M3.6 3.6l1.1 1.1M11.3 11.3l1.1 1.1M3.6 12.4l1.1-1.1M11.3 4.7l1.1-1.1"/></svg>연결 바꾸기</button>' : '') + '</div>';
+  }
   function renderSchedule(){
     var el = $('body-schedule'); if (!el) return;
     var head = '<h2>일정</h2>' + (TABS[0].about ? '<p class="intro">' + esc(TABS[0].about) + '</p>' : '');
     if (!conf) { el.innerHTML = head + '<p class="muted">불러오는 중…</p>'; return; }
+    if (conf.configured) head += connBar();
     if (isAzure() && conf.configured && !conf.azurePat && !conf.azureShared) { var az = conf.azure || {}; el.innerHTML = head + '<div class="wempty"><b>Azure DevOps로 연결되어 있습니다</b><p>' + esc(az.org || '') + ' › ' + esc(az.project || '') + (az.scope ? ' · 범위 ' + esc(az.scope) : '') + '</p><p>이 PC에는 아직 토큰이 없습니다. [일정 연결]에서 각자 개인 액세스 토큰(PAT)을 넣으면 작업 항목을 가져옵니다.</p>' + (canWrite() ? '<button class="btn primary" type="button" data-act="conn">일정 연결</button>' : '') + '</div>'; return; }
     if (!conf.configured) { el.innerHTML = head + notConnected(); return; }
     if (loading.wbs && !wbs) { el.innerHTML = head + '<p class="muted">일정을 읽는 중…</p>'; return; }
@@ -854,7 +872,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     var W = wbs && wbs.values ? wbsItems(wbs) : null, items = W ? W.items : [];
     var due = items.filter(function(it){ return inWeek(it.end, mon); }).sort(function(a, b){ return a.end - b.end; });
     var n = { prog: 0, review: 0, done: 0 }; due.forEach(function(it){ if (n[it.cat] != null) n[it.cat]++; });
-    var h = '<div class="wkbar"><button class="icon" type="button" data-wk="-1" aria-label="지난주">‹</button>' +
+    var h = connBar() + '<div class="wkbar"><button class="icon" type="button" data-wk="-1" aria-label="지난주">‹</button>' +
       '<span class="wk-range">' + ymd(mon) + ' – ' + ymd(sun) + '</span><button class="icon" type="button" data-wk="1" aria-label="다음주">›</button>' +
       (thisWeek ? '<span class="wk-now">이번 주</span>' : '<button class="btn sm" type="button" data-wk="0">이번 주로</button>') +
       '<span class="wk-sp"></span>' + (wbs && wbs.at ? '<span class="wk-at">일정 ' + esc(new Date(wbs.at).toLocaleString()) + ' 기준</span>' : '') + '</div>';
@@ -1435,7 +1453,6 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     $('dlgSave').textContent = p === 'azure' ? '저장' : '저장 · 연결 확인';
   }
   document.querySelectorAll('input[name="prov"]').forEach(function(r){ r.addEventListener('change', function(){ setProv(provNow()); }); });
-  $('connBtn').addEventListener('click', openDlg);
 
   /* ── 회의록(md, .history/minutes, 깃 공유) ── */
   var msel = new URLSearchParams(location.search).get('m') || '', medit = null, mbusy = false;

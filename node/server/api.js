@@ -117,7 +117,7 @@ on('GET', '/api/changes', ({ q, T }) => {
 });
 on('GET', '/api/history', ({ q, T }) => {
   const all = q.get('all') === '1';
-  let items = readDirJson(C.histEntries); if (!all) items = items.filter((e) => core.itemTeam(e) === T.team);
+  let items = readDirJson(C.histEntries).filter((e) => !core.preReset(e)); if (!all) items = items.filter((e) => core.itemTeam(e) === T.team);
   const st = core.readJson(C.syncStat);
   return { pc: C.pcName, pcSlug: C.pcSlug, team: all ? '' : T.team, syncing: !!(st && st.busy) || !!(helpers.isLoginOpen && helpers.isLoginOpen()), sync: st, items };
 });
@@ -176,7 +176,7 @@ function protoPageDiff(dir, m, stale) {
 on('GET', '/api/prototypes', () => {
   const list = []; let dirs = [];
   try { dirs = fs.readdirSync(C.protoRoot, { withFileTypes: true }).filter((d) => d.isDirectory() && !d.name.startsWith('_')).map((d) => d.name); } catch (e) { return { items: [] }; }
-  const hist = readDirJson(C.histEntries).filter((e) => e.kind === 'request' && e.status === '완료');
+  const hist = readDirJson(C.histEntries).filter((e) => !core.preReset(e) && e.kind === 'request' && e.status === '완료');
   const shotMeta = {};
   for (const d of dirs) {
     const m = core.readJson(path.join(C.protoRoot, d, 'meta.json')); if (!m) continue;

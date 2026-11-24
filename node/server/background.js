@@ -26,6 +26,8 @@ module.exports = function start(h) {
     }
   } catch (e) { errLog('새 설치 확인', e); }
 
+  // ── 작업 내역 초기화(2026-11-24): 공유 신호(.history/config/reset.json)가 있으면 이 PC 요청 · 작업 목록을 한 번 비우고, 초기화 앞의 변경 이력을 지운다(1분마다도) ──
+  try { h.resetLocal(); h.resetSweep(); } catch (e) { errLog('작업 내역 초기화', e); }
   // ── 이력 채우기(Hist-Backfill): 이 PC의 요청 중 이력이 없거나 상태 · 시각이 다른 것을 다시 남긴다 ──
   try {
     const r = core.readJson(C.reqFile);
@@ -159,7 +161,7 @@ foreach ($dir in $places) { $lnk = Join-Path $dir 'Figma AI Run.lnk'; try { if (
     try { syncTick(); } catch (e) { errLog('이력 동기화', e); }
     if (Date.now() >= watchAt) { watchAt = Date.now() + 120000; const f = watchFirst; watchFirst = false; try { autoWatch(f); } catch (e) { errLog('감시 자동 시작', e); } }
     try { idleCheck(); } catch (e) { errLog('탭 확인', e); }
-    if (Date.now() >= handAt) { handAt = Date.now() + 60000; try { if (h.handoffTick) h.handoffTick(); } catch (e) { errLog('이어 받기 확인', e); } }   // 다른 PC가 내 작업을 이어 받았는지(2026-11-18)
+    if (Date.now() >= handAt) { handAt = Date.now() + 60000; try { h.resetLocal(); h.resetSweep(); } catch (e) { errLog('작업 내역 초기화', e); } try { if (h.handoffTick) h.handoffTick(); } catch (e) { errLog('이어 받기 확인', e); } }   // 다른 PC가 내 작업을 이어 받았는지(2026-11-18)
     // Azure 일정(2026-11-19): 이 PC에 토큰이 있는 팀은 30분마다 새로 받아 팀 공유 사본을 갱신 — 토큰 없는 팀원도 화면을 열지 않아도 최신에 가깝게 본다
     if (Date.now() >= azAt && !azBusy) {
       azAt = Date.now() + 30 * 60000; azBusy = true;
