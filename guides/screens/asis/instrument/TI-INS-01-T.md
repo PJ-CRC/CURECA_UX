@@ -5,9 +5,9 @@ tl_relation: 기능 추가
 title: Overview Tab
 path: Instrument > Overview Tab
 type: Page
-version: 2.1.06
-date: 2026-09-28
-author: 서보경
+version: 2.1.18
+date: 2026-11-19
+author: 이상헌
 client_mode: []
 user_type: [Service, Admin, User]
 policies: []
@@ -15,12 +15,12 @@ rules_version:
 provisional: []
 flags: []
 source: asis
-figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/?node-id=2768-93537
-figma_region: 작업 페이지
+figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3249-111508
+figma_region: 2.1 2차
 ---
 # TI-INS-01-T Overview Tab
 
-> 기존 화면을 2026-11-02에 옮기고, 2026-11-24에 작업 페이지(UX AI TEST › Instrument Ⓛ / Ⓣ _re)의 기획 프레임(Ver 2.1.06)에서 다시 옮긴 것입니다(케이스 3, 작업 기록 `20261124-최고관리자-instruments`. 요청자 답: 작업 페이지 프레임 그대로, 앞 버전 기준). 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 Instruments 페이지, 2.1 2차 영역, Ver 2.1.18)을 2026-11-02에 옮기고 2026-11-23에 다시 옮긴 것입니다(케이스 3, 작업 기록 `20261123-최고관리자-instruments`). 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - T/L 차이: L-IOS(LI-INS-01-T)에는 Door Status Tooltip과 [Unlock](Door Control) 버튼이 더 있음
 - 관련 정책: POL-EQP-001, POL-EQP-002, POL-EQP-009
@@ -31,9 +31,9 @@ figma_region: 작업 페이지
 
 - (GNB) Running | Instrument | L-IOS | D.A PC | Event | Error 3 | Warning 2 | 2026-04-10 11:30 | TIOS | Instrument
 - (LNB) Dashboard 1 | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis | Setting | Information | Keira Knightley
-- Overview | All | Sample Storage | Prep Consumable Storage | Sample Preparation | Ht Extraction | Flexible Extraction | PCR Setup | Plate Sealing | Universal PCR
+- Overview | All | Sample Storage | Consumable Storage | Sample Pre-treatment | Ht Extraction | Flexible Extraction | PCR Setup | Plate Sealing | Universal PCR
 - Sample Preparation (Prep) System | Dignosctics (Dx) System
-- Sample Storage | Prep Consumable Storage | Sample Preparation | High-throughput Extraction | Flexible Extraction | PCR Setup | Plate Sealing | Universal PCR
+- Sample Storage | Consumable Storage | Sample Pre-treatment | High-throughput Extraction | Flexible Extraction | PCR Setup | Plate Sealing | Universal PCR
 - Enabled 1 · Total 1 | Enabled 1 · Total 1 | Enablde 3 · Total 4 (Disabled 1) | Enabled 3 · Total 3 | Enabled 3 · Total 3 | Enabled 3 · Total 4 (Disabled 1) | Enabled 2 · Total 3 (Disabled 1) | Enabled 6 · Total 6
 - [HT Extraction(3)] E0001, Plate Gripper Failure. (Event 툴팁)
 - View All (Module Type마다)
@@ -43,7 +43,7 @@ figma_region: 작업 페이지
 
 ### 사용 컴포넌트
 
-Frame/Instrument_Status (54), Table/Filled Table Cell (25), Tag Status (16), Description Number (14), ⛔️ Item_Segment Tabs (10), Button/Tertiary XSmall (8), Title (4), Icon/Alert Error (2), Tooltip (1), Component 4 (1), Frame (1), Interface/Info_Circle_Outlined (1)
+Frame/Instrument_Status (54), Table/Filled Table Cell (25), Tag Status (16), Description Number (13), ⛔️ Item_Segment Tabs (10), Button/Tertiary XSmall (8), Title (4), Icon/Alert Error (2), Tooltip (1), Component 4 (1), Frame (1)
 
 ### 디스크립션 (원문)
 
@@ -145,4 +145,4 @@ Frame/Instrument_Status (54), Table/Filled Table Cell (25), Tag Status (16), Des
 | 2.1.06 | 2026-09-28 | Module 상태값에 Paused 추가. 단어 변경 Enable → Enabled | 서보경 | Figma 버전 메모 |
 | | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |
 | | 2026-11-18 | 연동 변경: Module · Unit 이름 바꿈(Prep Consumable Storage → Consumable Storage, Sample Preparation Module → Sample Pre-treatment, Sample Pretreatment → Sample Processing, Sample Aliquot → Sample Aliquoting). 검사 단계 · Reagent 태그 · Prep 시스템의 Sample Preparation은 그대로 | 서보경 | `glossary/modules.csv`, `glossary/module-units.csv` (2026-11-18) |
-| | 2026-11-24 | 작업 페이지 기획 프레임(Ver 2.1.06)으로 다시 옮김. 기존 작업방 원본 2.1.18의 모듈 명칭 변경(Prep Consumable Storage → Consumable Storage, Sample Preparation → Sample Pre-treatment)은 이 프레임에 없음 | Claude | 작업 기록 `20261124-최고관리자-instruments` 모아 둔 질문 1 |
+| 2.1.18 | 2026-11-19 | 모듈 명칭 변경: Prep Consumable Storage → Consumable Storage, Sample Preparation → Sample Pre-treatment, Upper/Lower Sample Pretreatment → Sample Processing (Upper/Lower), Upper/Lower Sample Aliquot → Sample Aliquoting (Upper/Lower) | 이상헌 | Figma 버전 메모 |
