@@ -16,9 +16,7 @@
 
 ## 3. 논의 중 · 내부
 
-| ID | 제목 | 누가 정하나 | 걸린 정책 | 걸린 화면 | 생긴 날 | 상태 |
-| --- | --- | --- | --- | --- | --- | --- |
-| [DS-0012](DS-0012.md) | Assay Pack Setting 화면을 걸린 정책의 cids에 더하고, Import file 팝업(TI-STN-08-01)을 IA에 넣을지 | 내부 | POL-TST-008, POL-TST-010 | TI-STN-08-01, LI-STN-08-P | 2026-11-24 | 논의 중 |
+없음
 
 ## 4. 결정 · 작업 중
 
@@ -28,6 +26,7 @@
 | [DS-0009](DS-0009.md) | Samples [Export] 저장 완료 · 실패 안내 | 고객 | POL-COM-006 | TI-SPT-01, LI-SPT-01 | 2026-11-23 | 종료 |
 | [DS-0010](DS-0010.md) | Protocol Info Extraction Protocol의 STARlet 화면 | 고객 | POL-TST-006 | TI-SPT-01-03, LI-SPT-01-03 | 2026-11-23 | 종료 |
 | [DS-0011](DS-0011.md) | Door 자동 잠금을 없애고 [Lock] 버튼으로 잠글지 (Instrument 화면 v2.1.17과 POL-EQP-008이 다름) | 내부 | POL-EQP-008, POL-EQP-004 | LI-INS-01-P, LI-INS-01-T, LI-INS-02-T, LI-DAS, TI-DAS | 2026-11-23 | 결정 |
+| [DS-0012](DS-0012.md) | Assay Pack Setting 화면을 걸린 정책의 cids에 더하고, Import file 팝업(TI-STN-08-01)을 IA에 넣을지 | 내부 | POL-TST-008, POL-TST-010 | TI-STN-08-01, LI-STN-08-P | 2026-11-24 | 결정 |
 
 ## 5. 보류
 
