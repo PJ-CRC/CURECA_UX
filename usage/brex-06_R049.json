@@ -4,7 +4,7 @@
   "reqId": "R049",
   "reqType": "요청",
   "team": "cureca",
-  "at": "2026-11-24T10:09:28+09:00",
+  "at": "2026-11-24T10:10:57+09:00",
   "from": "2026-11-24T10:05:16+09:00",
   "by": "최고관리자",
   "doneBy": "Claude",
@@ -16,13 +16,13 @@
   "nodeId": "",
   "text": "https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=2768-90248&t=GdYCaPho44GgAu5i-1\n기존 UX문서 규칙을 따라서 작업하는데 위 링크를 기준으로 작업\n기준과 작업이 같은 페이지에서 진행됨",
   "models": {
-    "claude-opus-5-5": 33
+    "claude-opus-5-5": 35
   },
-  "calls": 33,
-  "input": 63,
-  "cacheWrite": 117796,
-  "cacheRead": 3413529,
-  "output": 20778,
-  "total": 3552166,
-  "usd": 2.0409
+  "calls": 35,
+  "input": 66,
+  "cacheWrite": 120771,
+  "cacheRead": 3747123,
+  "output": 23106,
+  "total": 3891066,
+  "usd": 2.178
 }
