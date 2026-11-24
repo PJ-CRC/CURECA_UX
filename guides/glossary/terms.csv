@@ -111,3 +111,20 @@ UI 요소,Text Input,Text Input,글자를 입력하는 칸 (Box Input / Password
 팀 내부,검토 완료,,기획 진행 표시 값. 4단계에서 요청자가 UX 확정을 말했을 때 Claude가 바꿈,,컨펌 완료,검토 중,2026-11-19 DY 결정,확정,팀 내부
 팀 내부,메뉴 단위 표시,,"작업방 페이지의 T-IOS 줄 · L-IOS 줄 위에 각각 두는 표시 묶음. 위에서 아래로 시스템 구분 표시 → 기획 진행 표시 → 섹션 줄 순서로 두고, 너비는 섹션 줄 너비에 맞춤 (`flow/3-design.md` 공통 4)",,페이지 위 딱지,시스템 구분 표시; 기획 진행 표시,2026-11-16 이름 바꿈 (DY),확정,팀 내부
 팀 내부,시스템 구분 표시,,"메뉴 단위 표시의 맨 위 표시. 그 줄이 T-IOS인지 L-IOS인지와 릴리즈 버전을 보여 줌. `시스템 구분` 컴포넌트(System = T-IOS · L-IOS), 예: `T-IOS - 2.1` (`flow/3-design.md` 공통 4)",,시스템 딱지,기획 진행 표시; 메뉴 단위 표시,2026-11-16 이름 바꿈 (DY),확정,팀 내부
+업무 대상,Assay Pack,Assay Pack,"검사 항목, Sample Type, Reagent 구성품, Barcode 규칙 등 검사에 필요한 정보를 담은 JSON 파일 묶음 (POL-TST-008). Service가 T-IOS Assay Pack Setting에서 등록",,,Reagent,2026-11-24 요청자 결정 (R052 · 20261124-최고관리자-setting-2: 기존 라벨 그대로 올림); POL-TST-008,확정,화면
+업무 대상,File type,File type,Assay Pack 파일의 종류,Master / Pretreatment / Extraction / PCR,,"Sample Preparation · Nucleic Acid Extraction(Reagent 유형 태그. 데이터 fileType 값이 Pretreatment · Extraction)",2026-11-24 요청자 결정 (R052 · 20261124-최고관리자-setting-2: 기존 라벨 그대로 올림); POL-TST-008,확정,화면
+상태값,파일 적용 상태,Active,Assay Pack 파일이 지금 적용 중인지. File type과 Product Name이 같은 파일 중 하나만 Active (POL-TST-008 규칙 5 · 6),Active / Inactive,,User 상태(Active · Inactive 계정 상태와 다른 개념),2026-11-24 요청자 결정 (R052 · 20261124-최고관리자-setting-2: 기존 라벨 그대로 올림); POL-TST-008,확정,화면
+UI 요소,File name,File name,Assay Pack 파일 이름 (확장자 제외),,,,2026-11-24 요청자 결정 (R052 · 20261124-최고관리자-setting-2: 기존 라벨 그대로 올림); TI-STN-08 화면 라벨,확정,화면
+UI 요소,File Version,File Version,Assay Pack 파일의 버전 (목록 컬럼 라벨은 Version),,,,2026-11-24 요청자 결정 (R052 · 20261124-최고관리자-setting-2: 기존 라벨 그대로 올림); TI-STN-08-P 화면 라벨,확정,화면
+UI 요소,Registered Date/Time,Registered Date/Time,Assay Pack 파일을 T-IOS에 등록(Import)한 일시. YYYY-MM-DD hh:mm:ss,,,Created Date/Time,2026-11-24 요청자 결정 (R052 · 20261124-최고관리자-setting-2: 기존 라벨 그대로 올림); TI-STN-08 화면 라벨,확정,화면
+UI 요소,Created Date/Time,Created Date/Time,Assay Pack 파일이 만들어진 일시 (파일 정보). YYYY-MM-DD hh:mm:ss,,,Registered Date/Time,2026-11-24 요청자 결정 (R052 · 20261124-최고관리자-setting-2: 기존 라벨 그대로 올림); TI-STN-08 화면 라벨,확정,화면
+UI 요소,User ID,User ID,Assay Pack 파일을 등록한 계정의 ID,,,User Type,2026-11-24 요청자 결정 (R052 · 20261124-최고관리자-setting-2: 기존 라벨 그대로 올림); TI-STN-08 화면 라벨,확정,화면
+UI 요소,File details,File details,Assay Pack 파일 한 개의 정보를 보여 주는 패널 (TI/LI-STN-08-P). 목록의 [Details]로 엶. 안에 File Info · Import Info · Reagent 정보,,,,2026-11-24 요청자 결정 (R052 · 20261124-최고관리자-setting-2: 기존 라벨 그대로 올림); TI-STN-08-P 화면 라벨,확정,화면
+UI 요소,File Info,File Info,File details 패널에서 파일 자체의 정보 묶음 (File name · File type · File Version · Created Date/Time · Active),,,Import Info,2026-11-24 요청자 결정 (R052 · 20261124-최고관리자-setting-2: 기존 라벨 그대로 올림); TI-STN-08-P 화면 라벨,확정,화면
+UI 요소,Import Info,Import Info,File details 패널에서 등록 정보 묶음 (Registered Date/Time · User ID),,,File Info,2026-11-24 요청자 결정 (R052 · 20261124-최고관리자-setting-2: 기존 라벨 그대로 올림); TI-STN-08-P 화면 라벨,확정,화면
+UI 요소,Import file,Import file,Assay Pack JSON 파일을 골라 등록하는 팝업 (TI-STN-08-01),,,,2026-11-24 요청자 결정 (R052 · 20261124-최고관리자-setting-2: 기존 라벨 그대로 올림); TI-STN-08-01 화면 라벨,확정,화면
+업무 대상,Test Group,Test Group,검사군. Assay Pack에 담긴 검사 항목 묶음 (예: RP · GI). ID 값과 함께 표시 (POL-TST-010),,검사군(화면 라벨을 뜻할 때),,2026-11-24 요청자 결정 (R052 · 20261124-최고관리자-setting-2: 기존 라벨 그대로 올림); POL-TST-010; Assay Pack 명세 R06,확정,화면
+업무 대상,Sample Type,Sample Type,검체 타입. Assay Pack에 담긴 검체 종류 (glossary/sample-types.csv),,검체 타입(화면 라벨을 뜻할 때),,2026-11-24 요청자 결정 (R052 · 20261124-최고관리자-setting-2: 기존 라벨 그대로 올림); POL-TST-010; Assay Pack 명세 R06,확정,화면
+기능,Barcode Schema,Barcode Schema,Barcode를 읽는 규칙 (Segment 구성). Assay Pack Master 파일에 담김,,,Barcode,2026-11-24 요청자 결정 (R052 · 20261124-최고관리자-setting-2: 기존 라벨 그대로 올림); Assay Pack 명세 R06,확정,화면
+업무 대상,Item Group,Item Group,Assay Pack Master 파일에 담긴 품목 묶음 ID,,,,2026-11-24 요청자 결정 (R052 · 20261124-최고관리자-setting-2: 기존 라벨 그대로 올림); Assay Pack 명세 R06,확정,화면
+기능,Segment,Segment,Barcode Schema를 이루는 구간 하나. 파일에 들어온 개수만큼 순서대로 표시 (Segment Info),,,Barcode Schema,2026-11-24 요청자 결정 (R052 · 20261124-최고관리자-setting-2: 기존 라벨 그대로 올림); Assay Pack 명세 R06,확정,화면
