@@ -1,0 +1,28 @@
+{
+  "id": "brex-06_R050",
+  "kind": "request",
+  "reqId": "R050",
+  "reqType": "요청",
+  "team": "cureca",
+  "at": "2026-11-24T10:22:59+09:00",
+  "from": "2026-11-24T10:14:55+09:00",
+  "by": "최고관리자",
+  "doneBy": "Claude",
+  "pc": "BREX_06",
+  "fileKey": "etCQFF3CTf1EA6C79d4BBf",
+  "fileName": "UX AI TEST",
+  "page": "Instrument Ⓛ / Ⓣ _re",
+  "frame": "",
+  "nodeId": "",
+  "text": "테스트로 진행해줘(반영하지 말고 — 토큰 소모량 비교용).\nhttps://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=2768-90248&t=GdYCaPho44GgAu5i-1\n기존 UX문서 규칙을 따라서 작업하는데 위 링크를 기준으로 작업\n기준과 작업이 같은 페이지에서 진행됨\n기준: 작업 페이지(이 링크)의 기획 프레임 그대로(앞 버전 기준)로 다시 옮겨서 작업 (R049에서 답한 것과 같음)",
+  "models": {
+    "claude-opus-5-5": 51
+  },
+  "calls": 51,
+  "input": 112,
+  "cacheWrite": 171289,
+  "cacheRead": 14479963,
+  "output": 68781,
+  "total": 14720145,
+  "usd": 5.6424
+}
