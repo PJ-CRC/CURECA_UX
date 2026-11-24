@@ -31,9 +31,9 @@ figma_region: 작업 페이지
 
 - (GNB) Running | Instrument | L-IOS | D.A PC | Event | Error 3 | Warning 2 | 2026-04-10 11:30 | TIOS | Instrument
 - (LNB) Dashboard 1 | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis | Setting | Information | Keira Knightley
-- Overview | All | Sample Storage | Consumable Storage | Sample Pre-treatment | Ht Extraction | Flexible Extraction | PCR Setup | Plate Sealing | Universal PCR
+- Overview | All | Sample Storage | Prep Consumable Storage | Sample Preparation | Ht Extraction | Flexible Extraction | PCR Setup | Plate Sealing | Universal PCR
 - Sample Preparation (Prep) System | Dignosctics (Dx) System
-- Sample Storage | Consumable Storage | Sample Pre-treatment | High-throughput Extraction | Flexible Extraction | PCR Setup | Plate Sealing | Universal PCR
+- Sample Storage | Prep Consumable Storage | Sample Preparation | High-throughput Extraction | Flexible Extraction | PCR Setup | Plate Sealing | Universal PCR
 - Enabled 1 · Total 1 | Enabled 1 · Total 1 | Enablde 3 · Total 4 (Disabled 1) | Enabled 3 · Total 3 | Enabled 3 · Total 3 | Enabled 3 · Total 4 (Disabled 1) | Enabled 2 · Total 3 (Disabled 1) | Enabled 6 · Total 6
 - [HT Extraction(3)] E0001, Plate Gripper Failure. (Event 툴팁)
 - View All (Module Type마다)
@@ -43,7 +43,7 @@ figma_region: 작업 페이지
 
 ### 사용 컴포넌트
 
-Frame/Instrument_Status (54), Table/Filled Table Cell (25), Tag Status (16), Description Number (13), ⛔️ Item_Segment Tabs (10), Button/Tertiary XSmall (8), Title (4), Icon/Alert Error (2), Tooltip (1), Component 4 (1), Frame (1)
+Frame/Instrument_Status (54), Table/Filled Table Cell (25), Tag Status (16), Description Number (14), ⛔️ Item_Segment Tabs (10), Button/Tertiary XSmall (8), Title (4), Icon/Alert Error (2), Tooltip (1), Component 4 (1), Frame (1), Interface/Info_Circle_Outlined (1)
 
 ### 디스크립션 (원문)
 
