@@ -140,6 +140,7 @@ a.pcard:hover{border-color:var(--accent)}
     <label class="f" style="margin-bottom:12px">흐름 설명 (선택 — 비우면 Claude가 화면 디스크립션 · 작업 기준 문서로 짭니다)<textarea id="pFlow" placeholder="꼭 넣고 싶은 동작만 적어도 됩니다. 예)&#10;- 목록에서 행 클릭 → 상세 패널 열림&#10;- [Import] → 업로드 팝업 → 완료 시 토스트 후 목록 갱신"></textarea></label>
     <p class="hint">「화면」은 화면마다 HTML로, 「상태 · 케이스 · 흐름」은 그 화면의 상태 · 팝업과 흐름을 짤 때 참고로 씁니다. TI(T-IOS) · LI(L-IOS) 화면이 함께 있으면 둘 다 만들고 화면 밖 패널에서 바꿔 봅니다(한쪽만 원하면 다른 쪽을 빼세요). 화면이 많을수록 오래 걸리고, 사용량은 사용량 통계에 「프로토타입」으로 남습니다.</p>
     <div class="acts">
+      <span data-wbm></span>
       <button class="btn primary" id="pSubmit">만들기 요청</button>
       <button class="btn" id="pCancel" type="button">닫기</button>
       <span class="msg" id="pMsg"></span>

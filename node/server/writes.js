@@ -159,6 +159,13 @@ module.exports = function register(on, h) {
   const upTmp = path.join(C.root, 'workbench', 'job_files', '_tmp'), upDir = path.join(C.root, 'workbench', 'job_files');
   const jobMenu = (k) => (['guide', 'guide-edit', 'guide-check'].includes(k) ? 'guide' : ['minutes', 'plan'].includes(k) ? 'plan' : /^prototype/.test(k) ? 'proto' : 'workbench');
   const KINDS = ['capture', 'catalog', 'guide', 'guide-check', 'guide-edit', 'text', 'prototype', 'prototype-edit', 'prototype-sync', 'minutes', 'plan', 'transfer'];
+  // Claude 모델(2026-11-24): 요청 · 작업마다 고른다(입력 칸 옆 「모델」). 빈 값 = 기본(CLI 기본 모델, 지금 Opus 5.5). 백그라운드 감시는 같은 모델끼리 한 세션(--model)으로 처리한다(agent.js)
+  //  fable은 사용 크레딧이 따로 있어야 해서 뺐다. 이름은 CLI 별칭(최신 판을 가리킴)
+  const MODELS = ['opus', 'sonnet', 'haiku'];   // Fable은 사용 크레딧이 따로 있어야 해서 뺐다
+  const pickModel = (v) => (MODELS.includes(nn(v)) ? nn(v) : '');
+  // 노력(강도, 2026-11-24, CLI --effort): 빈 값 = 기본(CLI 기본). 화면은 Claude 앱처럼 「노력」, 처음 값은 중간
+  const EFFORTS = ['low', 'medium', 'high', 'xhigh', 'max'];
+  const pickEffort = (v) => (EFFORTS.includes(nn(v)) ? nn(v) : '');
   // 참고 파일(Save-Uploads): _tmp에 올린 것을 job_files/{작업 ID}/ 원래 이름으로
   function saveUploads(jid, list) {
     const out = [], dir = path.join(upDir, jid); let n = 0;
@@ -301,6 +308,8 @@ module.exports = function register(on, h) {
           if (kind === 'guide-edit' && nn(b.file)) hit.file = nn(b.file);
           if (kind === 'guide-edit' && srcs.length) hit.files = saveUploads(hit.id, srcs);
           if (kind === 'capture' && b.auto) hit.auto = true;
+          if (pickModel(b.model)) hit.model = pickModel(b.model);
+          if (pickEffort(b.effort)) hit.effort = pickEffort(b.effort);
           // ②(받는 파일)에도 플러그인이 켜져 있으면 먼저 ② 작업 페이지를 읽어 Figma에서 직접 복사해 옮긴 화면도 찾는다(2026-11-17, phase scan → check)
           const toLive = xfer && xfer.mode === 'check' && C.pluginKeys && Date.now() - (C.pluginKeys[xfer.to.key] || 0) < 180000;   // 3분: Figma 창이 뒤에 있으면 플러그인이 1분에 한 번쯤만 묻는다
           if (toLive) { Object.assign(hit, xfer, { phase: 'scan', fileKey: xfer.to.key, scanSkip: core.arr(xRecRead(xfer.to.key).items).filter((x) => x && x.to && x.to.node).map((x) => x.to.node), note: (xfer.to.name || '받는 파일') + '의 플러그인이 작업 페이지 화면을 읽은 뒤 ' + (xfer.from.name || '보내는 파일') + '에서 바뀐 것 확인(옮기지 않음)' }); if (!hit.name) hit.name = '비교 · ' + (xfer.to.name || '다음 단계'); }
@@ -1290,6 +1299,8 @@ module.exports = function register(on, h) {
         const it = { id: rid, team: b.team ? nn(b.team) : T.team, nodeId: nn(b.nodeId), frame: nn(b.frame), page: nn(b.page), fileKey: nn(b.fileKey), fileName: nn(b.fileName),
           editable: !!b.editable, type: nn(b.type), priority: nn(b.priority), layout: nn(b.layout), text: txt, status: '대기', note: '', author: nn(b.by), updatedBy: nn(b.by), createdAt: now, updatedAt: now };
         if (imgs.length) it.images = imgs;
+        if (pickModel(b.model)) it.model = pickModel(b.model);
+        if (pickEffort(b.effort)) it.effort = pickEffort(b.effort);
         // 화면설계 케이스(1 부분 수정 · 2 신규 · 3 다시 그리기, 규칙 저장소 flow/)와 이어 갈 작업 기록(work-logs/{work}.md, 비면 0단계부터 새 작업)
         if (['1', '2', '3'].includes(nn(b.case))) { it.case = nn(b.case); it.work = /^[^\\/:*?"<>|]{1,120}$/.test(nn(b.work)) ? nn(b.work) : ''; if (b.stage != null && b.stage !== '') it.stage = parseInt(b.stage, 10); }
         // 수정할 부분 표시(Workbench에서 캡처 위에 그린 사각형): Figma 프레임 좌표 {n, x, y, w, h}, att = 그 부분을 잘라 낸 첨부의 순번(images, 1부터), shotAt = 그때 캡처 시각

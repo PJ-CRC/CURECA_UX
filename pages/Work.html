@@ -1103,7 +1103,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
         '<span class="sp"></span>' + ['<button type="button" class="pill' + (blKind ? '' : ' on') + '" data-blk="">전체 ' + shown.length + '</button>'].concat(Object.keys(kinds).map(function(k){ return '<button type="button" class="pill' + (blKind === k ? ' on' : '') + '" data-blk="' + esc(k) + '">' + esc(k) + ' ' + kinds[k] + '</button>'; })).join('') + '</div>' +
         // 대기 항목을 골라 화면설계 작업(케이스 1 부분 수정)으로 요청(이미 요청한 항목은 요청 번호 · 상태를 보여 주고 고를 수 없다)
         (W && s.wait.length ? '<div class="blreq"><span class="muted" id="blPickN">고른 항목 0</span>' + (fig ? '' : '<span class="pill warn">이 화면에 Figma 링크(figma:)가 없어 요청을 만들 수 없습니다</span>') +
-          '<button class="btn sm primary" type="button" data-blreq' + (fig ? '' : ' disabled') + ' title="Case 1(부분 수정) 새 작업으로 Workbench에 요청합니다. 1단계에서 이 항목들을 「이번에 반영」으로 고릅니다">고른 항목으로 화면설계 작업(Case 1) 요청</button></div>' : '') +
+          '<span data-wbm="bare"></span><button class="btn sm primary" type="button" data-blreq' + (fig ? '' : ' disabled') + ' title="Case 1(부분 수정) 새 작업으로 Workbench에 요청합니다. 1단계에서 이 항목들을 「이번에 반영」으로 고릅니다">고른 항목으로 화면설계 작업(Case 1) 요청</button></div>' : '') +
         '<div class="tbl-wrap"><table class="t"><thead><tr>' + (W ? '<th style="width:34px"><input type="checkbox" id="blPickAll" aria-label="요청 안 한 대기 항목 모두 고르기"></th>' : '') + '<th class="num">ID</th><th>타입</th><th>변경 전</th><th>변경 후</th><th>근거</th><th>상태</th></tr></thead><tbody>' +
         (rows.length ? rows.map(function(r){
           var rq = fixReq[fixKey(s, r)], can = W && /^대기/.test(r.st) && !(rq && /^(대기|진행 중|보류)$/.test(rq.status));
@@ -1204,12 +1204,12 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
           (x.oldIds.length ? '<dt>옛 ID</dt><dd>' + esc(x.oldIds.join(', ')) + '</dd>' : '') +
           (x.follow ? '<dt>후속 확인</dt><dd>' + esc(x.follow) + '</dd>' : '') + '</dl>';
         if (confirmWait) right += '<section class="propose"><h4>Claude 정리안 · 확인해 주세요</h4><p class="muted" style="margin:0 0 8px;font-size:13px">확인하면 이 항목의 결정 · 반영 칸과 정책서 · 영향 화면의 반영 대기 목록을 이대로 고칩니다(reference-rules/discussions.md).</p>' + md(j.note || '') +
-          (W ? '<div class="macts"><button class="btn" type="button" data-dre>다시 답하기</button><button class="btn primary" type="button" data-dok>확인 · 반영</button></div>' : '') + '</section>';
+          (W ? '<div class="macts"><span data-wbm></span><button class="btn" type="button" data-dre>다시 답하기</button><button class="btn primary" type="button" data-dok>확인 · 반영</button></div>' : '') + '</section>';
         if (dForm) right += '<form class="mform" id="dF" style="margin-top:16px"><h3>' + (dForm.apply ? '반영 정리안' : '답변하기') + '</h3>' +
           '<label>' + (dForm.apply ? '덧붙일 말(없으면 비워 두세요)' : '답') + '<textarea id="dA" rows="6"' + (dForm.apply ? '' : ' required') + ' placeholder="' + (dForm.apply ? '5절 맨 아래 결정대로 정리합니다.' : '정한 내용을 적어 주세요. Claude가 결정 문장 · 영향 범위 · 바뀌는 것으로 정리해 보여 주고, 확인하면 반영합니다.') + '">' + esc(dForm.text) + '</textarea></label>' +
           '<div class="mrow"><label>답한 날짜<input type="date" id="dD" value="' + esc(dForm.date) + '"></label><label class="grow">근거' + (/고객/.test(x.decider) ? '(고객 답: 회의록 · 메일)' : '') + '<input id="dB" value="' + esc(dForm.basis) + '" placeholder="예: 2026-11-04 회의록, 메일"></label></div>' +
           (mlist && mlist.length ? '<p class="muted" style="font-size:12.5px;margin:-4px 0 8px">최근 회의록: ' + mlist.slice(0, 4).map(function(m){ return '<button type="button" class="chip" data-dmin="' + esc(m.date.slice(0, 10) + ' 회의록 ' + m.id) + '" title="근거에 이 회의록을 넣습니다">' + esc(m.date.slice(5, 10) + ' ' + m.title) + '</button>'; }).join(' ') + '</p>' : '') +
-          '<div class="macts"><span class="muted" id="dMsg" role="status"></span><button class="btn" type="button" data-dcancel>취소</button><button class="btn primary" type="submit">Claude에게 보내기</button></div></form>';
+          '<div class="macts"><span class="muted" id="dMsg" role="status"></span><span data-wbm></span><button class="btn" type="button" data-dcancel>취소</button><button class="btn primary" type="submit">Claude에게 보내기</button></div></form>';
         right += '<div class="dbody">' + md(x.body.replace(/^#\s+.*\n/, '')) + '</div>';
       }
     }
@@ -1225,7 +1225,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       '<label>생긴 곳<select id="nFr" class="minp">' + ['회의', '고객 · 개발사', '정책 정리', '화면설계 작업', '주기 점검'].map(function(v){ return '<option' + (f.from === v ? ' selected' : '') + '>' + v + '</option>'; }).join('') + '</select></label></div>' +
       '<div class="mrow"><label class="grow">걸린 정책<input id="nP" value="' + esc(f.policies) + '" placeholder="예: POL-EQP-004"></label><label class="grow">걸린 화면(CID)<input id="nC" value="' + esc(f.cids) + '" placeholder="예: LI-INS-01-P"></label></div>' +
       '<label>근거 · 지금 상태<textarea id="nB" rows="3" placeholder="예: 2026-11-04 회의록, 지금 정책 문장 · 화면 모습">' + esc(f.basis) + '</textarea></label>' +
-      '<div class="macts"><span class="muted" id="nMsg" role="status"></span><button class="btn" type="button" data-dscancel>취소</button><button class="btn primary" type="submit">Claude에게 등록 요청</button></div></form>';
+      '<div class="macts"><span class="muted" id="nMsg" role="status"></span><span data-wbm></span><button class="btn" type="button" data-dscancel>취소</button><button class="btn primary" type="submit">Claude에게 등록 요청</button></div></form>';
   }
   function nFormRead(){ return { title: $('nT').value, question: $('nQ').value, decider: $('nD').value, from: $('nFr').value, policies: $('nP').value, cids: $('nC').value, basis: $('nB').value }; }
 
@@ -1556,7 +1556,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     var st = busy ? '<span class="pill prog">Claude가 뽑는 중' + (j.status === '대기' ? '(대기)' : '') + '</span>' :
       j && (j.status === '실패' || j.status === '보류') ? '<span class="pill warn" title="' + esc(j.note || '') + '">뽑기 ' + esc(j.status) + '</span>' : '';
     var h = '<div class="mrel"><div class="msec"><h4>이 회의에서 나온 논의 대상 <span class="muted">' + R.length + '</span></h4>' + st +
-      (W ? '<button class="btn sm" type="button" data-mext' + (busy || !has ? ' disabled' : '') + ' title="' + (has ? '정리본에서 정해야 할 것 · 결정된 것을 찾아 논의 대상에 올립니다' : '회의록 내용이 없습니다') + '">정책 · 논의 뽑기</button>' : '') + '</div>';
+      (W ? '<span data-wbm="bare"></span><button class="btn sm" type="button" data-mext' + (busy || !has ? ' disabled' : '') + ' title="' + (has ? '정리본에서 정해야 할 것 · 결정된 것을 찾아 논의 대상에 올립니다' : '회의록 내용이 없습니다') + '">정책 · 논의 뽑기</button>' : '') + '</div>';
     if (j && j.status === '완료' && j.note) h += '<p class="msum">뽑기 결과 · ' + esc(String(j.updatedAt || '').slice(0, 16).replace('T', ' ')) + ' · ' + esc(j.note) + '</p>';
     h += R.length ? '<ul>' + R.map(function(r){ return '<li>' + idLink(r.id) + '<span class="t">' + esc(r.title) + '</span>' + stPill(r.status) + '</li>'; }).join('') + '</ul>' :
       '<p class="muted" style="margin:6px 0 0">' + (DS ? '아직 없습니다.' + (W && has ? ' [정책 · 논의 뽑기]를 누르면 Claude가 정리본에서 찾아 논의 대상으로 올립니다.' : '') : '논의 대상을 읽는 중…') + '</p>';
@@ -1590,7 +1590,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     var j = mjobs[m.id], busy = j && (j.status === '대기' || j.status === '진행 중'), n = (m.notes || []).length;
     var st = busy ? '<span class="pill prog">Claude가 요약 중' + (j.status === '대기' ? '(대기)' : '') + '</span>' :
       j && j.status === '실패' ? '<span class="pill warn" title="' + esc(j.note || '') + '">요약 실패</span>' : '';
-    return st + (W ? '<button class="btn sm primary" type="button" data-msum' + (busy || !n ? ' disabled' : '') + ' title="' + (n ? '각자 작성한 ' + n + '건을 합쳐 정리본을 씁니다' : '각자 작성한 내용이 없습니다') + '">' + (m.body ? '다시 요약 정리' : '요약 정리') + '</button>' : '');
+    return st + (W ? '<span data-wbm="bare"></span><button class="btn sm primary" type="button" data-msum' + (busy || !n ? ' disabled' : '') + ' title="' + (n ? '각자 작성한 ' + n + '건을 합쳐 정리본을 씁니다' : '각자 작성한 내용이 없습니다') + '">' + (m.body ? '다시 요약 정리' : '요약 정리') + '</button>' : '');
   }
   var mjobs = {}, mxjobs = {}, mjTimer = null;   // 회의록 ID → 가장 최근 요약 작업 / 뽑기 작업(mode extract)
   function loadMjobs(){

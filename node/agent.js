@@ -94,6 +94,20 @@ async function saveRaw(ids, text) {
 // 사용 한도로 끊긴 차례의 요청 · 작업을 「대기」로 돌린다(2026-11-23): 「진행 중」으로 두면 한도가 풀린 뒤 새 세션이
 //  「이미 진행 중」으로 거절당해 사람이 멈춤 → 다시 진행을 눌러야 이어졌다. 「대기」면 다음 감시 차례에 그대로 다시 받아
 //  작업 기록의 이어 갈 곳부터 이어 간다. 사람이 멈춘 것 · 질문을 남긴 「보류」 · 끝난 것은 건드리지 않는다
+// 고른 모델을 쓸 수 없음(2026-11-24, 예: Fable은 사용 크레딧이 있어야 함): 그 차례의 요청은 「보류」, 작업은 「실패」로 — 같은 요청을 다시 띄워 헛돌지 않게.
+//  사람은 다른 모델을 골라 다시 요청한다
+async function holdOnModel(ids, model, why) {
+  const done = [];
+  for (const id of ids) {
+    const isR = /^R\d+$/.test(id);
+    const body = { action: 'update', id, status: isR ? '보류' : '실패', by: 'Claude', note: `모델 ${model || '기본'}을 쓸 수 없어 처리하지 못했습니다 — ${why}. 다른 모델을 골라 다시 요청하세요.` };
+    try {
+      const r = await fetch(`http://127.0.0.1:${PORT}/api/${isR ? 'requests' : 'jobs'}`, { method: 'POST', headers: { 'Content-Type': 'application/json; charset=utf-8' }, body: JSON.stringify(body) });
+      if (r.ok) done.push(id); else log(`모델 사용 불가 — ${id} 바꾸기 실패: ${r.status} ${(await r.text()).slice(0, 160)}`);
+    } catch (e) { log(`모델 사용 불가 — ${id} 바꾸기 실패: ${e.message}`); }
+  }
+  return done;
+}
 async function releaseOnLimit(ids, hm) {
   const rq = ((readJson(path.join(WB, 'edit_requests.json')) || {}).items || []).filter(Boolean), jb = ((readJson(path.join(WB, 'jobs.json')) || {}).items || []).filter(Boolean);
   const done = [];
@@ -199,19 +213,19 @@ function mcpArgs() {
     return ['--strict-mcp-config', '--mcp-config', f];
   } catch (e) { return []; }
 }
-function startSession() {
-  const c = claudeCmd(['-p', '--input-format', 'stream-json', '--output-format', 'stream-json', '--verbose', '--permission-mode', 'acceptEdits',
-    '--allowedTools', 'Bash,PowerShell,Read,Write,Edit,Glob,Grep,TodoWrite,WebFetch,Skill,Agent,Task,mcp__figma,mcp__claude_ai_Figma'].concat(mcpArgs()));
+function startSession(model, effort) {
+  const c = claudeCmd((model ? ['--model', model] : []).concat(effort ? ['--effort', effort] : [], ['-p', '--input-format', 'stream-json', '--output-format', 'stream-json', '--verbose', '--permission-mode', 'acceptEdits',
+    '--allowedTools', 'Bash,PowerShell,Read,Write,Edit,Glob,Grep,TodoWrite,WebFetch,Skill,Agent,Task,mcp__figma,mcp__claude_ai_Figma']).concat(mcpArgs()));
   let p;
   try { p = spawn(c.cmd, c.args, spawnOpt(c, { cwd: ROOT, env: Object.assign({}, process.env, { CLAUDE_AUTOCOMPACT_PCT_OVERRIDE: String(COMPACT) }) })); }
   catch (e) { log('세션 시작 실패: ' + e.message); return false; }
-  const s = { p, turns: 0, last: Date.now(), ctx: 0, win: 200000, lines: [], waiters: [], ended: false, err: '' };
+  const s = { model: model || '', effort: effort || '', p, turns: 0, last: Date.now(), ctx: 0, win: 200000, lines: [], waiters: [], ended: false, err: '' };
   let buf = '';
   p.stdout.on('data', (d) => { buf += d.toString('utf8'); let i; while ((i = buf.indexOf('\n')) >= 0) { const l = buf.slice(0, i).replace(/\r$/, ''); buf = buf.slice(i + 1); s.lines.push(l); const w = s.waiters.shift(); if (w) w(); } });
   p.stderr.on('data', (d) => { s.err = (s.err + d.toString('utf8')).slice(-4000); });
   const fin = () => { s.ended = true; while (s.waiters.length) s.waiters.shift()(); };
   p.on('close', fin); p.on('error', (e) => { s.err += e.message; fin(); });
-  S = s; log(`세션 시작 (claude pid ${p.pid})`); return true;
+  S = s; log(`세션 시작 (claude pid ${p.pid}${model ? ', 모델 ' + model : ''}${effort ? ', 강도 ' + effort : ''})`); return true;
 }
 let Ready = null, nextCheck = 0;
 async function stopSession(why, keepReady) {
@@ -344,13 +358,24 @@ function overlap(r, os) {
   return os.filter((x) => String(r.nodeId || '') && String(x.fileKey || '') === String(r.fileKey || '') && x.nodeId === r.nodeId && (x.status === '진행 중' || ((T(x.createdAt || x.at) || Infinity) < rc)));
 }
 const order = (l) => l.slice().sort((a, b) => ((a.priority === '높음' ? 0 : 1) - (b.priority === '높음' ? 0 : 1)) || ((T(a.createdAt) || 8.64e15) - (T(b.createdAt) || 8.64e15)) || ((parseInt(String(a.id).replace(/\D/g, ''), 10) || 0) - (parseInt(String(b.id).replace(/\D/g, ''), 10) || 0)));
+// Claude 모델(2026-11-24): 요청 · 작업마다 `model`(빈 값 = 기본, opus · sonnet · haiku). 한 차례에는 같은 모델의 것만 담는다 —
+//  맨 앞(우선순위 · 등록 순) 요청(없으면 작업)의 모델을 고르고 나머지 모델은 다음 차례로. 고른 모델은 scanModel에(세션을 --model로 띄움)
+let scanModel = '';
+const modelOf = (x) => (['opus', 'sonnet', 'haiku'].includes(String((x && x.model) || '')) ? String(x.model) : '');
+// 강도(2026-11-24, --effort): 빈 값 = 기본. 한 차례는 모델 · 강도가 같은 것끼리(runOf)
+let scanEffort = '';
+const effortOf = (x) => (['low', 'medium', 'high', 'xhigh', 'max'].includes(String((x && x.effort) || '')) ? String(x.effort) : '');
+const runOf = (x) => modelOf(x) + '|' + effortOf(x);
 function scan() {
-  const out = [];
+  const out = []; let pick = null;
   const j = readJson(path.join(WB, 'edit_requests.json'));
   if (j) {
     const items = (j.items || []).filter(Boolean);
-    const wait = order(items.filter((x) => x.status === '대기')), held = order(items.filter((x) => x.status === '보류' && String(x.note || '').startsWith('겹침 대기')));
+    let wait = order(items.filter((x) => x.status === '대기')), held = order(items.filter((x) => x.status === '보류' && String(x.note || '').startsWith('겹침 대기')));
     const os = wait.length || held.length ? others() : [];
+    const free0 = held.filter((x) => !overlap(x, os).length);
+    pick = wait[0] || free0[0] || null;
+    if (pick) { const m = runOf(pick); wait = wait.filter((x) => runOf(x) === m); held = held.filter((x) => runOf(x) === m); }
     if (wait.length) {
       out.push('PENDING ' + wait.map((x) => x.id).join(','));
       for (const r of wait) for (const c of overlap(r, os)) out.push(`CONFLICT ${r.id} ${c.id} ${c.status === '진행 중' ? 'in-progress' : 'waiting'}`);
@@ -360,9 +385,12 @@ function scan() {
   }
   const q = readJson(path.join(WB, 'jobs.json'));
   if (q) {
-    const todo = (q.items || []).filter((x) => x && x.status === '대기' && x.kind !== 'text' && x.kind !== 'transfer' && (x.kind !== 'capture' || (!x.auto && Date.now() - (T(x.createdAt) || Date.now()) >= 20000)));
+    let todo = (q.items || []).filter((x) => x && x.status === '대기' && x.kind !== 'text' && x.kind !== 'transfer' && (x.kind !== 'capture' || (!x.auto && Date.now() - (T(x.createdAt) || Date.now()) >= 20000)));
+    if (!pick && todo.length) pick = todo[0];
+    if (pick) todo = todo.filter((x) => runOf(x) === runOf(pick));
     if (todo.length) out.push('JOBS ' + todo.map((x) => x.id).join(','));
   }
+  scanModel = modelOf(pick); scanEffort = effortOf(pick);
   return out.join('\n');
 }
 async function watch(maxMs) {
@@ -435,14 +463,17 @@ async function main() {
     const us = usageNow(), usTxt = us && us.pct >= WARN_PCT ? ` · Claude ${us.label} 사용량 ${us.pct}%${us.resetsAt ? '(' + hmOf(us.resetsAt) + ' 초기화)' : ''} — 중간에 끊길 수 있음` : '';
     // 질문을 남기고 기다리던 세션: 그 요청의 답만 왔으면 이어 쓰고, 다른 요청 · 작업이 섞였으면 닫고 새로(앞 대화와 섞지 않게)
     let resume = false;
-    if (S && S.keep) { if (onlyAnswers(out, S.keep)) resume = true; else await stopSession('다른 요청이 와서 새 세션'); }
+    const model = scanModel, effort = scanEffort;
+    if (S && S.keep) { if (onlyAnswers(out, S.keep) && S.model === model && S.effort === effort) resume = true; else await stopSession('다른 요청이 와서 새 세션'); }
+    if (S && (S.model !== model || S.effort !== effort)) await stopSession('모델 · 강도가 달라 새 세션');
     if (S) S.keep = null;
-    if (!S) startSession();
+    if (!S) startSession(model, effort);
     if (!S) { save('error', 'Claude 세션을 띄우지 못했습니다. 기록: workbench/.agent.log'); await sleep(30000); continue; }
     S.turnIds = out.match(/\b[RJ]\d{3,}\b/g) || [];
     const turnStart = noteSnap(S.turnIds);
     St.ids = S.turnIds.slice(); St.act = now(); St.tool = '';
-    save('working', '처리 중: ' + out.split('\n').join(' · ') + usTxt); log((resume ? '처리 시작(같은 세션에 답 보냄): ' : '처리 시작: ') + out + usTxt);
+    const mTxt = (model ? ' · 모델 ' + model : '') + (effort ? ' · 강도 ' + effort : '');
+    save('working', '처리 중: ' + out.split('\n').join(' · ') + mTxt + usTxt); log((resume ? '처리 시작(같은 세션에 답 보냄): ' : '처리 시작: ') + out + mTxt + usTxt);
     const r = await sendTurn(resume ? makeResume(out) : makePrompt(out));
     log(`처리 끝 (ok ${r.ok}${r.ms ? ', ' + Math.round(r.ms / 1000) + '초' : ''})\n${r.text}`);
     if (r.ok && !r.cancelled && !r.dead) await saveRaw(S.turnIds || [], r.text);
@@ -450,6 +481,14 @@ async function main() {
     //  같은 「PENDING R0xx」로 다시 오는데, 4번째에 「같은 요청이 처리되지 않아 10분 쉼」에 걸렸다(R043). 이 차례에 요청 note가 바뀌었으면 진척으로 본다
     if (r.ok && !r.cancelled && !r.dead && progressed(S.turnIds || [], turnStart)) { last = ''; repeat = 0; }
     // 사람이 멈춤: 세션을 끊는다. 같은 차례의 다른 요청은 서버가 10분 뒤 「대기」로 돌려 다시 처리된다
+    // 고른 모델을 쓸 수 없음(사용 크레딧 필요 등): 「보류」 · 「실패」로 바꾸고 다음으로
+    if (!r.ok && /requires usage credits|Switch to another model|model .{0,40}(not available|not found|does not exist)/i.test(r.text)) {
+      const mids = (S && S.turnIds) || [], why = (/[^\n]*(requires usage credits|not available|not found|does not exist)[^\n]*/i.exec(r.text) || [r.text.slice(0, 120)])[0].trim();
+      await stopSession('모델 사용 불가: ' + (model || '기본'));
+      const held = await holdOnModel(mids, model, why);
+      save('idle', `모델 ${model || '기본'}을 쓸 수 없어 ${held.join(', ') || '요청'}을(를) 멈췄습니다 — ${why}`); log(`모델 사용 불가 (${model}): ${why} — ${held.join(', ')}`);
+      last = ''; repeat = 0; continue;
+    }
     if (r.cancelled) { await stopSession('사람이 멈춤: ' + r.cancelled.join(', ')); save('idle', '멈춤: ' + r.cancelled.join(', ') + ' — 요청을 기다리는 중'); continue; }
     // 사용 한도(5시간 · 주간)에 걸림: 풀리는 시각까지 다시 띄우지 않는다(2026-11-16 — 예전에는 3번 실패 후 10분마다 헛되이 다시 띄우며 「확인 필요」로만 보였다)
     //  실패한 차례만 본다(2026-11-17 — 정상 답에 「rate limit」(Figma API 한도 등)이란 말만 있어도 30분 쉬던 것)

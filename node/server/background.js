@@ -73,6 +73,8 @@ foreach ($dir in $places) { $lnk = Join-Path $dir 'Figma AI Run.lnk'; try { if (
     const a = h.agentInfo();
     if (a.alive) {
       if (agentStale(a)) { agentRestart = true; core.writeText(path.join(C.root, 'workbench', '.agent_stop'), new Date().toISOString()); log('백그라운드 감시가 예전 코드 · 다른 Claude Code 경로라 새로 띄웁니다.'); }
+      // 다시 띄우는 중이면 2분을 기다리지 않고 5초마다 보다가, 예전 것이 꺼지면 바로 띄운다(2026-11-24 — 꺼지고 다음 확인까지 최대 4분 감시가 비었다)
+      if (agentRestart) watchAt = Date.now() + 5000;
       return;
     }
     if (agentRestart) { agentRestart = false; try { h.startAgent(); log('백그라운드 감시를 새 코드로 다시 시작했습니다.'); } catch (e) { log('백그라운드 감시 다시 시작 못 함: ' + e.message); } return; }

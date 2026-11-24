@@ -240,6 +240,7 @@ a.tbtn{color:var(--ink-2);text-decoration:none}
 .cmp-box textarea{order:-1;flex:1 0 100%;min-width:0;min-height:calc(4 * 1.45em + 16px);max-height:calc(12 * 1.45em + 16px);overflow-y:auto;padding:8px 4px;border:0;background:none;resize:none;font-size:14px;line-height:1.45;outline:none}
 .cmp-box textarea:focus{outline:none}
 .cmp-send{margin-left:auto}
+.cmp-model{margin-left:auto;display:inline-flex}.cmp-model+.cmp-send{margin-left:0}
 .cmp-ico,.cmp-send{flex:none;width:36px;height:36px;padding:0;border:0;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
 .cmp-ico{background:none;color:var(--ink-2)}
 .cmp-ico:hover{background:var(--surface-2);color:var(--ink)}
@@ -629,6 +630,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
           <button type="button" class="cmp-mark" id="markBtn" aria-pressed="false" title="수정할 부분 표시: 켜고 캡처 위를 드래그해 사각형을 그립니다(여러 개 · 상자는 끌어서 옮기고 모서리로 크기 조절 · Esc로 끄기)"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="1.5" stroke-dasharray="3 2"/></svg><span>영역 선택</span></button>
           <input type="file" id="attFile" accept="image/png,image/jpeg,image/gif,image/webp,application/pdf,.pdf,.txt,.md,.markdown,.csv,text/plain,text/markdown,text/csv" multiple hidden>
           <textarea id="rtext" rows="1" aria-label="수정 요청 내용"></textarea>
+          <span class="cmp-model" data-wbm="bare"></span>
           <button type="button" class="cmp-send" id="add" title="요청 등록 (Ctrl + Enter)" aria-label="요청 등록"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10 15V5M5.5 9.5 10 5l4.5 4.5"/></svg></button>
         </div>
         <!-- 아래 줄: 등록 안내 · 결과(왼쪽), 이미지 첨부 안내(오른쪽) -->
