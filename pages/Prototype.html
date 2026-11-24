@@ -123,7 +123,7 @@ textarea:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:
       <section class="sec w-only">
         <h2>수정 요청</h2>
         <textarea id="editText" placeholder="프로토타입에서 고칠 것을 적어 주세요. 예) 저장 후 토스트 문구를 「저장했습니다」로, 목록 행 클릭 시 상세 패널 열기"></textarea>
-        <div class="row"><button class="btn primary" id="editBtn">수정 요청</button><span class="msg" id="editMsg"></span></div>
+        <div class="row"><span data-wbm></span><button class="btn primary" id="editBtn">수정 요청</button><span class="msg" id="editMsg"></span></div>
       </section>
       <section class="sec" id="jobSec" hidden><h2>이 프로토타입 작업</h2><ul class="jobs" id="jobs"></ul></section>
       <section class="sec"><div class="row"><a class="btn" id="figBtn" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;text-decoration:none">Figma ↗</a><button class="btn danger w-only" id="delBtn">목록에서 지우기</button></div></section>
@@ -207,7 +207,7 @@ textarea:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:
     /* 5초마다 다시 그려도 내용이 같으면 그대로 둔다(누르는 중인 버튼이 바뀌어 클릭이 사라지지 않게) */
     /* 항목마다 체크: 고쳐짐 · 없어짐은 기본 체크, 화면 추가됨은 같은 페이지의 관계없는 프레임일 수 있어 기본 체크 안 함 */
     var sh = st && !busy ? '<b>Figma에서 바뀐 화면이 있습니다</b><ul>' + P.stale.map(function(s, i){ return '<li><label><input type="checkbox" class="w-only" data-i="' + i + '"' + (s.add ? '' : ' checked') + '><span>' + esc(s.name) + ' — ' + esc(s.why) + (s.at ? ' (' + esc(fmt(s.at)) + ')' : '') + '</span></label></li>'; }).join('') +
-      '</ul><div class="acts"><button class="btn warn w-only" id="syncBtn">선택한 것만 반영</button><button class="btn w-only" id="ignoreBtn">선택한 것 무시</button></div><p class="hint">무시한 화면은 목록에서 빠집니다. 그 화면이 Figma에서 다시 바뀌면 다시 보입니다.</p>' : '';
+      '</ul><div class="acts"><span data-wbm></span><button class="btn warn w-only" id="syncBtn">선택한 것만 반영</button><button class="btn w-only" id="ignoreBtn">선택한 것 무시</button></div><p class="hint">무시한 화면은 목록에서 빠집니다. 그 화면이 Figma에서 다시 바뀌면 다시 보입니다.</p>' : '';
     if (render.sh !== sh) { render.sh = sh; $('stale').innerHTML = sh; }
     $('flowSec').hidden = !P.text; $('flow').textContent = P.text || '';
     $('figBtn').href = 'https://www.figma.com/design/' + P.fileKey + '/file' + (P.start ? '?node-id=' + P.start.replace(':', '-') : '');

@@ -154,4 +154,151 @@
   WB.confirm = function(msg, o){ return dlgOpen('confirm', msg, o); };
   WB.alert = function(msg, o){ return dlgOpen('alert', msg, o); };
   WB.prompt = function(msg, value, o){ o = Object.assign({}, o || {}); o.value = value; return dlgOpen('prompt', msg, o); };
+
+  /* ── Claude 모델 · 노력 고르기(2026-11-24, Claude 앱 모델 메뉴와 같은 모양) ──
+     요청을 입력하는 곳마다 버튼 하나(<span data-wbm></span> → 「Opus 5.5 · 중간 ⌄」). 누르면 위(자리 없으면 아래)로 메뉴: 모델 목록(고른 것 ✓, 나머지는 숫자 — 숫자 키로도 고름),
+     「노력 ›」을 누르면 옆에 노력 목록(낮음 · 중간 추천 · 높음 · 엑스트라 · 최대). 고른 값은 이 브라우저에 하나씩 기억하고(모든 버튼이 같이 바뀜),
+     Claude가 처리하는 요청 · 작업을 새로 만들 때(POST /api/requests · /api/jobs, action 'add') 본문에 model · effort로 붙는다(아래 fetch 감싸기).
+     model 빈 값 = 기본(Opus). Fable은 사용 크레딧이 따로 있어야 해서 뺐다. 백그라운드 감시가 그 모델 · 노력(CLI --model · --effort)으로 처리한다(agent.js).
+     이름(버전)은 여기 한 곳에서만 고친다 — 모델 값은 CLI 별칭이라 새 판이 나오면 별칭이 그 판을 가리킨다 */
+  WB.MODELS = [{ v: '', n: 'Opus 5.5' }, { v: 'sonnet', n: 'Sonnet 5.5' }, { v: 'haiku', n: 'Haiku 5.5' }];
+  WB.EFFORTS = [{ v: 'low', n: '낮음' }, { v: 'medium', n: '중간', tag: '추천' }, { v: 'high', n: '높음' }, { v: 'xhigh', n: '엑스트라' }, { v: 'max', n: '최대', tag: '3.5× 이상 사용량', tagKind: 'warn' }];
+  var PICK = { model: { key: 'wb.model', list: WB.MODELS, def: '' }, effort: { key: 'wb.effort', list: WB.EFFORTS, def: 'medium' } };
+  function pickVal(k, v){
+    var p = PICK[k];
+    if (v === undefined) { var s = WB.store(p.key); s = s == null ? p.def : s; return p.list.some(function(m){ return m.v === s; }) ? s : p.def; }
+    WB.store(p.key, v || '');
+    Array.prototype.forEach.call(document.querySelectorAll('.wbm-btn'), function(b){ b.innerHTML = btnHtml(); });
+  }
+  WB.model = function(v){ return pickVal('model', v); };
+  WB.effort = function(v){ return pickVal('effort', v); };
+  function nameOf(list, v){ var m = list.filter(function(x){ return x.v === (v || ''); })[0]; return m ? m.n : list[0].n; }
+  WB.modelName = function(v){ return nameOf(WB.MODELS, v); };
+  WB.effortName = function(v){ return nameOf(WB.EFFORTS, v || 'medium'); };
+  var IC = {
+    chev: '<svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg>',
+    right: '<svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg>',
+    check: '<svg viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg>',
+    info: '<svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="8" cy="8" r="6.2"/><path d="M8 7.2v4M8 4.8v.2"/></svg>',
+    warn: '<svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 2.2 14.5 13.5h-13z"/><path d="M8 6.5v3.2M8 11.4v.2"/></svg>'
+  };
+  function btnHtml(){ return '<span class="wbm-n">' + WB.esc(WB.modelName(WB.model())) + '</span><span class="wbm-e">' + WB.esc(WB.effortName(WB.effort())) + '</span>' + IC.chev; }
+  var CSS = '.wbm-btn.wbm-btn.wbm-btn{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 10px;border:1px solid transparent;border-radius:9px;background:transparent;color:var(--ink,#14171c);font:inherit;font-size:13px;cursor:pointer;white-space:nowrap}' +
+    '.wbm-btn.wbm-btn.wbm-btn:hover,.wbm-btn.wbm-btn.wbm-btn[aria-expanded="true"]{background:var(--surface-2,#f2f3f5)}' +
+    '.wbm-btn:focus-visible{outline:2px solid var(--accent,#2747d8);outline-offset:1px}' +
+    // 페이지의 넓은 규칙(예: UX 문서 `.ask-act span{overflow:hidden;text-overflow:ellipsis}`)이 버튼 안 글자를 자르지 않게 — 선택자를 겹쳐 더 세게
+    '[data-wbm][data-wbm]{display:inline-flex;align-items:center;overflow:visible;text-overflow:clip;min-height:0;line-height:normal;white-space:nowrap;flex:none;max-width:none;width:auto}' +
+    '.wbm-btn.wbm-btn span{flex:none;overflow:visible;text-overflow:clip;min-height:0;max-width:none;width:auto;line-height:normal;font-size:inherit;color:inherit;text-align:left;white-space:nowrap}' +
+    '.wbm-btn.wbm-btn .wbm-e{color:var(--muted,#5b6270)}' +
+    '.wbm-btn .wbm-e::before{content:"·";margin-right:6px}' +
+    '.wbm-menu{position:fixed;z-index:2147483000;min-width:270px;padding:6px;border:1px solid var(--line,#e3e5e8);border-radius:16px;background:var(--surface,#fff);color:var(--ink,#14171c);box-shadow:0 10px 30px rgba(16,24,40,.14);font-size:15px}' +
+    '.wbm-it{display:flex;align-items:center;gap:8px;width:100%;min-height:42px;padding:0 12px;border:0;border-radius:10px;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer}' +
+    '.wbm-it:hover,.wbm-it:focus-visible,.wbm-it.open{background:var(--surface-2,#f2f3f5);outline:0}' +
+    '.wbm-it .t{flex:none}.wbm-it .sp{flex:1}' +
+    '.wbm-it .k{color:var(--muted,#5b6270);font-size:14px;min-width:18px;text-align:center}' +
+    '.wbm-it .ck{color:var(--accent,#2f7df6);display:inline-flex}' +
+    '.wbm-it .sub{color:var(--muted,#5b6270);font-size:14px}' +
+    '.wbm-it .rt{color:var(--muted,#5b6270);display:inline-flex}' +
+    '.wbm-tag{display:inline-flex;align-items:center;gap:4px;height:22px;padding:0 8px;border-radius:999px;font-size:12px;background:var(--surface-2,#f0f1f3);color:var(--muted,#5b6270)}' +
+    '.wbm-tag.warn{background:#fdf1d8;color:#8a5a00}' +
+    ':root[data-theme="dark"] .wbm-tag.warn{background:#3d2f12;color:#f2c46b}' +
+    '@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .wbm-tag.warn{background:#3d2f12;color:#f2c46b}}' +
+    '.wbm-sep{height:1px;margin:6px 4px;background:var(--line,#e3e5e8)}';
+  function css(){ if (document.getElementById('wbm-css')) return; var st = document.createElement('style'); st.id = 'wbm-css'; st.textContent = CSS; document.head.appendChild(st); }
+  WB.modelPick = function(){ css(); return '<button type="button" class="wbm-btn" aria-haspopup="menu" aria-expanded="false" title="Claude 모델 · 노력(백그라운드 감시 · CLI에서 적용). 고른 값은 다음 요청에도 그대로 씁니다">' + btnHtml() + '</button>'; };
+
+  var menu = null, sub = null, opener = null;
+  function tag(m){ return m.tag ? '<span class="wbm-tag' + (m.tagKind === 'warn' ? ' warn' : '') + '">' + (m.tagKind ? IC[m.tagKind] : '') + WB.esc(m.tag) + '</span>' : ''; }
+  function closeSub(){ if (sub) sub.remove(); sub = null; var r = menu && menu.querySelector('[data-efrow]'); if (r) { r.classList.remove('open'); r.setAttribute('aria-expanded', 'false'); } return r; }
+  function closeMenus(focusBack){
+    if (menu) menu.remove(); if (sub) sub.remove(); menu = sub = null;
+    if (opener) { opener.setAttribute('aria-expanded', 'false'); if (focusBack) try { opener.focus(); } catch (e) {} }
+    opener = null; document.removeEventListener('keydown', menuKey, true);
+  }
+  function place(el, r, side){
+    // 'up': 버튼 위(자리 없으면 아래). 'right': 기준(r) 오른쪽(자리 없으면 왼쪽), 아래 끝을 맞춤
+    var w = el.offsetWidth, h = el.offsetHeight, vw = innerWidth, vh = innerHeight, x, y;
+    if (side === 'right') { x = r.right + 6; if (x + w > vw - 8) x = Math.max(8, r.left - w - 6); y = Math.min(Math.max(8, r.bottom - h), vh - h - 8); }
+    else { x = Math.min(Math.max(8, r.left), vw - w - 8); y = r.top - h - 6; if (y < 8) y = Math.min(r.bottom + 6, vh - h - 8); }
+    el.style.left = x + 'px'; el.style.top = Math.max(8, y) + 'px';
+  }
+  function openSub(row){
+    if (sub) sub.remove(); row.classList.add('open'); row.setAttribute('aria-expanded', 'true');
+    var cur = WB.effort();
+    sub = document.createElement('div'); sub.className = 'wbm-menu'; sub.setAttribute('role', 'menu'); sub.setAttribute('aria-label', '노력');
+    sub.innerHTML = WB.EFFORTS.map(function(m){ return '<button type="button" class="wbm-it" role="menuitemradio" aria-checked="' + (m.v === cur) + '" data-ef="' + m.v + '"><span class="t">' + WB.esc(m.n) + '</span>' + tag(m) + '<span class="sp"></span>' + (m.v === cur ? '<span class="ck">' + IC.check + '</span>' : '') + '</button>'; }).join('');
+    document.body.appendChild(sub); place(sub, menu.getBoundingClientRect(), 'right');
+    return sub;
+  }
+  function openMenu(btn){
+    closeMenus(); css(); opener = btn; btn.setAttribute('aria-expanded', 'true');
+    var cur = WB.model();
+    menu = document.createElement('div'); menu.className = 'wbm-menu'; menu.setAttribute('role', 'menu'); menu.setAttribute('aria-label', 'Claude 모델');
+    menu.innerHTML = WB.MODELS.map(function(m, i){ return '<button type="button" class="wbm-it" role="menuitemradio" aria-checked="' + (m.v === cur) + '" data-md="' + m.v + '"><span class="t">' + WB.esc(m.n) + '</span>' + tag(m) + '<span class="sp"></span>' + (m.v === cur ? '<span class="ck">' + IC.check + '</span>' : '<span class="k">' + (i + 1) + '</span>') + '</button>'; }).join('') +
+      '<div class="wbm-sep" role="separator"></div><button type="button" class="wbm-it" role="menuitem" aria-haspopup="menu" aria-expanded="false" data-efrow><span class="t">노력</span><span class="sp"></span><span class="sub">' + WB.esc(WB.effortName(WB.effort())) + '</span><span class="rt">' + IC.right + '</span></button>';
+    document.body.appendChild(menu); place(menu, btn.getBoundingClientRect(), 'up');
+    var first = menu.querySelector('[aria-checked="true"]') || menu.querySelector('.wbm-it'); if (first) first.focus();
+    document.addEventListener('keydown', menuKey, true);
+  }
+  function items(el){ return Array.prototype.slice.call(el.querySelectorAll('.wbm-it')); }
+  function menuKey(e){
+    if (!menu) return;
+    var inSub = !!(sub && sub.contains(document.activeElement)), host = inSub ? sub : menu, list = items(host), i = list.indexOf(document.activeElement), n = list.length;
+    if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); if (inSub) closeSub().focus(); else closeMenus(true); return; }
+    if (e.key === 'ArrowDown') { e.preventDefault(); list[(i + 1) % n].focus(); return; }
+    if (e.key === 'ArrowUp') { e.preventDefault(); list[(i < 0 ? n - 1 : (i + n - 1) % n)].focus(); return; }
+    var ae = document.activeElement;
+    if (e.key === 'ArrowRight' && !inSub && ae && ae.hasAttribute('data-efrow')) { e.preventDefault(); var s = openSub(ae); (s.querySelector('[aria-checked="true"]') || s.querySelector('.wbm-it')).focus(); return; }
+    if (e.key === 'ArrowLeft' && inSub) { e.preventDefault(); closeSub().focus(); return; }
+    if (!inSub && /^[1-9]$/.test(e.key)) { var m = WB.MODELS[parseInt(e.key, 10) - 1]; if (m) { e.preventDefault(); WB.model(m.v); closeMenus(true); } return; }
+    if (e.key === 'Tab') closeMenus(false);
+  }
+  document.addEventListener('click', function(e){
+    var t = e.target; if (!t || !t.closest) return;
+    var btn = t.closest('.wbm-btn');
+    if (btn) { e.preventDefault(); e.stopPropagation(); if (opener === btn) closeMenus(true); else openMenu(btn); return; }
+    if (!menu) return;
+    var md = t.closest('[data-md]'), ef = t.closest('[data-ef]'), row = t.closest('[data-efrow]');
+    if (md && menu.contains(md)) { e.stopPropagation(); WB.model(md.getAttribute('data-md')); closeMenus(true); return; }
+    if (ef && sub && sub.contains(ef)) { e.stopPropagation(); WB.effort(ef.getAttribute('data-ef')); closeMenus(true); return; }
+    if (row && menu.contains(row)) { e.stopPropagation(); if (sub) closeSub(); else { var s = openSub(row); (s.querySelector('[aria-checked="true"]') || s.querySelector('.wbm-it')).focus(); } return; }
+    if (!menu.contains(t) && !(sub && sub.contains(t))) closeMenus(false);
+  }, true);
+  // 「노력」 줄에 마우스를 올리면 옆 메뉴를 연다(앱 메뉴처럼)
+  document.addEventListener('mouseover', function(e){
+    if (!menu || !e.target.closest) return;
+    var row = e.target.closest('[data-efrow]'), md = e.target.closest('[data-md]');
+    if (row && menu.contains(row) && !sub) openSub(row);
+    else if (md && menu.contains(md) && sub) closeSub();
+  });
+  window.addEventListener('resize', function(){ closeMenus(false); });
+  window.addEventListener('scroll', function(e){ if (menu && !(menu.contains(e.target) || (sub && sub.contains(e.target)))) closeMenus(false); }, true);
+  // 화면에 <span data-wbm></span>만 두면 버튼이 들어간다 — 나중에 그린 곳도(MutationObserver)
+  function fillPicks(root){ Array.prototype.forEach.call((root || document).querySelectorAll('[data-wbm]'), function(el){ if (!el.querySelector('.wbm-btn')) el.innerHTML = WB.modelPick(); }); }
+  WB.fillModelPicks = fillPicks;
+  function watchPicks(){ fillPicks(); try { new MutationObserver(function(ms){ for (var i = 0; i < ms.length; i++) if (ms[i].addedNodes.length) { fillPicks(); return; } }).observe(document.body, { childList: true, subtree: true }); } catch (e) {} }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', watchPicks); else watchPicks();
+  // 다른 탭에서 바꾸면 이 탭의 칸도 맞춘다
+  window.addEventListener('storage', function(e){ if (e.key === PICK.model.key || e.key === PICK.effort.key) Array.prototype.forEach.call(document.querySelectorAll('.wbm-btn'), function(b){ b.innerHTML = btnHtml(); }); });
+  // 요청 · 작업을 새로 만들 때 모델 · 노력(강도)을 붙인다. Claude가 처리하지 않는 작업(캡처 · 목록 · 글 바꾸기 · 옮기기)과 이미 값이 있는 본문은 그대로
+  var NO_MODEL = ['capture', 'catalog', 'text', 'transfer'];
+  if (window.fetch && !window.fetch.__wbModel) {
+    var f0 = window.fetch;
+    window.fetch = function(url, opt){
+      try {
+        var u = typeof url === 'string' ? url : (url && url.url) || '';
+        if (opt && /^POST$/i.test(opt.method || '') && typeof opt.body === 'string' && /^\/api\/(jobs|requests)(\?|$)/.test(u.indexOf(location.origin) === 0 ? u.slice(location.origin.length) : u)) {
+          var b = JSON.parse(opt.body), ch = false;
+          if (b && b.action === 'add' && NO_MODEL.indexOf(b.kind) < 0) {
+            var m = WB.model(), ef = WB.effort();
+            if (b.model === undefined && m) { b.model = m; ch = true; }
+            if (b.effort === undefined && ef) { b.effort = ef; ch = true; }
+            if (ch) opt = Object.assign({}, opt, { body: JSON.stringify(b) });
+          }
+        }
+      } catch (e) {}
+      return f0.call(this, url, opt);
+    };
+    window.fetch.__wbModel = true;
+  }
 })();

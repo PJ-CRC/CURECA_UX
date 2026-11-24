@@ -530,7 +530,7 @@ html.embed,html.embed body{overflow:hidden}
     <form class="ask" id="ask" aria-label="수정 요청">
       <div class="ask-t"><span>대상</span><b id="askTarget">—</b></div>
       <div class="ask-in"><textarea id="askText" rows="4" placeholder="이 항목에서 무엇을 어떻게 고칠지 적어 주세요."></textarea><div class="att" id="askAtt"></div></div>
-      <div class="ask-act"><span id="askMsg" role="status"></span><button type="submit" class="btn pri" id="askSend">Claude에게 수정 요청</button></div>
+      <div class="ask-act"><span id="askMsg" role="status"></span><span data-wbm></span><button type="submit" class="btn pri" id="askSend">Claude에게 수정 요청</button></div>
     </form>
   </section>
 </div>
@@ -1708,7 +1708,7 @@ html.embed,html.embed body{overflow:hidden}
     var m = $('main'), ed = document.createElement('section');
     ed.className = 'edit-pane'; ed.setAttribute('aria-label', '수정 요청');
     ed.innerHTML = '<h3>' + title + '</h3><div class="editor">' + body + '<div class="att" id="edAtt"></div>' +
-      '<div class="act"><button type="button" class="btn" id="edCancel">취소</button><button type="button" class="btn pri" id="edSave">Claude에게 수정 요청</button></div></div>';
+      '<div class="act"><span data-wbm style="margin-right:auto"></span><button type="button" class="btn" id="edCancel">취소</button><button type="button" class="btn pri" id="edSave">Claude에게 수정 요청</button></div></div>';
     ed._att = attach(ed.querySelector('#edAtt'), ed.querySelector('#edText'));
     m.insertBefore(ed, m.querySelector('.pager') || null);
     ed.scrollIntoView({ block: 'nearest', behavior: WB.sb() });
@@ -2229,10 +2229,10 @@ html.embed,html.embed body{overflow:hidden}
             '<p>요청: ' + esc(what) + '</p>' + (j.note ? '<p>고친 내용: ' + esc(j.note) + '</p>' : '') +
             (spec
               ? '<p>Claude가 바뀐 내용과 연관된 곳을 찾아 목록을 만듭니다: ' + (meta.fileKey ? '<b>' + esc(names[meta.fileKey] || meta.fileName || meta.fileKey.slice(0, 6)) + '</b> 수정 가능 페이지의 화면 · ' : '') + '같은 내용을 쓰는 다른 UX 문서 항목 · 프로토타입. 무엇을 어떻게 고칠지 보고 반영할 것만 고르면 됩니다(아직 아무것도 고치지 않습니다).</p>' +
-                '<div class="act"><button type="button" class="btn pri" data-check="' + j.id + '">연관 항목 찾기 요청</button><button type="button" class="btn" data-done="' + j.id + '">나중에</button></div>'
+                '<div class="act"><span data-wbm></span><button type="button" class="btn pri" data-check="' + j.id + '">연관 항목 찾기 요청</button><button type="button" class="btn" data-done="' + j.id + '">나중에</button></div>'
               : mine
               ? '<p>이 가이드는 내 <b>' + esc(appliedKeys().map(function(k){ return names[k] || k.slice(0, 6); }).join(', ')) + '</b> 파일 작업 기준입니다. Claude가 그 파일의 수정 가능 페이지에서 바뀐 내용과 다른 화면을 찾아 목록을 만듭니다(Figma는 아직 고치지 않습니다).</p>' +
-                '<div class="act"><button type="button" class="btn pri" data-check="' + j.id + '">고칠 화면 찾기 요청</button><button type="button" class="btn" data-done="' + j.id + '">나중에</button></div>'
+                '<div class="act"><span data-wbm></span><button type="button" class="btn pri" data-check="' + j.id + '">고칠 화면 찾기 요청</button><button type="button" class="btn" data-done="' + j.id + '">나중에</button></div>'
               : '<div class="act"><button type="button" class="btn" data-done="' + j.id + '">확인</button></div>') + '</section>';
         } else {
           h += '<section class="fix"><h3>가이드 수정 요청 · ' + esc(j.status) + '</h3><p>요청: ' + esc(what) + '</p><p>' + esc(j.note || '') + '</p><div class="act"><button type="button" class="btn" data-done="' + j.id + '">닫기</button></div></section>';
@@ -2257,7 +2257,7 @@ html.embed,html.embed body{overflow:hidden}
               return '<li><input type="checkbox" id="fx' + j.id + i + '" data-i="' + i + '"' + (ro ? ' disabled' : ' checked') + '><label for="fx' + j.id + i + '"><b>' + (sp ? '<span class="kd kd-' + t + '">' + KIND[t] + '</span> ' : '') + esc(hd.title) + '</b>' +
                 '<small>' + esc(hd.sub + (ro ? ' · 보기 전용 페이지라 반영할 수 없음' : '')) + '</small>' + esc(it.change || '') + '</label></li>';
             }).join('') + '</ul>' +
-            '<div class="act"><button type="button" class="btn pri" data-apply="' + j.id + '">선택한 ' + (sp ? '항목' : '화면') + ' 수정 요청</button><button type="button" class="btn" data-skip="' + j.id + '">반영하지 않음</button></div></section>';
+            '<div class="act"><span data-wbm></span><button type="button" class="btn pri" data-apply="' + j.id + '">선택한 ' + (sp ? '항목' : '화면') + ' 수정 요청</button><button type="button" class="btn" data-skip="' + j.id + '">반영하지 않음</button></div></section>';
         } else {
           h += '<section class="fix"><h3>' + esc(head) + ' 찾기 ' + esc(j.status) + '</h3><p>' + esc(j.note || '') + '</p><div class="act"><button type="button" class="btn" data-skip="' + j.id + '">닫기</button></div></section>';
         }
