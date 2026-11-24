@@ -4,7 +4,7 @@
   "reqId": "R048",
   "reqType": "요청",
   "team": "cureca",
-  "at": "2026-11-24T10:00:47+09:00",
+  "at": "2026-11-24T10:02:49+09:00",
   "from": "2026-11-24T10:00:01+09:00",
   "by": "최고관리자",
   "doneBy": "Claude",
@@ -16,13 +16,13 @@
   "nodeId": "",
   "text": "https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=2768-90248&t=GdYCaPho44GgAu5i-1\n\n여기 있는 결과물을 기반으로\ninstrument를 다시 그려줘",
   "models": {
-    "claude-opus-5-5": 8
+    "claude-opus-5-5": 16
   },
-  "calls": 8,
-  "input": 15,
-  "cacheWrite": 13084,
-  "cacheRead": 403144,
-  "output": 3535,
-  "total": 419778,
-  "usd": 0.2561
+  "calls": 16,
+  "input": 30,
+  "cacheWrite": 40744,
+  "cacheRead": 1030067,
+  "output": 8482,
+  "total": 1079323,
+  "usd": 0.7017
 }
