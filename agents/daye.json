@@ -1,14 +1,14 @@
 {
-  "reportAt": "2026-11-24T11:15:20+09:00",
+  "reportAt": "2026-11-24T11:16:20+09:00",
   "pc": "DAYE",
   "slug": "daye",
   "user": "정다예",
   "os": "windows",
   "version": "0.32.1",
   "alive": true,
-  "status": "working",
-  "msg": "처리 중: JOBS J148 · 강도 medium",
-  "statusAt": "2026-11-24T11:15:19+09:00",
+  "status": "idle",
+  "msg": "마지막 처리: JOBS J148 · 컨텍스트 7%",
+  "statusAt": "2026-11-24T11:16:19+09:00",
   "claude": "따로 설치",
   "claudeWay": "cli",
   "autoWatch": true,
@@ -179,9 +179,9 @@
       "at": "2026-11-24T11:14:45+09:00",
       "what": "JOBS J148 · 강도 medium",
       "resume": false,
-      "end": "",
-      "ok": null,
-      "sec": null
+      "end": "2026-11-24T11:15:56+09:00",
+      "ok": true,
+      "sec": 70
     },
     {
       "at": "2026-11-23T16:01:49+09:00",
