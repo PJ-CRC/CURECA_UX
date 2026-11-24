@@ -1,0 +1,28 @@
+{
+  "id": "brexui-macbookpro-2-local_20261124-135905",
+  "kind": "work",
+  "reqId": "",
+  "reqType": "",
+  "team": "stagora",
+  "at": "2026-11-24T13:59:05+09:00",
+  "from": "2026-11-24T13:58:31+09:00",
+  "by": "유병규",
+  "doneBy": "Claude",
+  "pc": "BREXui-MacBookPro-2.local",
+  "fileKey": "",
+  "fileName": "",
+  "page": "",
+  "frame": "",
+  "nodeId": "",
+  "text": "작업규칙: 10. 기획서 작성 정책 (J010)",
+  "models": {
+    "claude-opus-5-5": 7
+  },
+  "calls": 7,
+  "input": 14,
+  "cacheWrite": 19662,
+  "cacheRead": 310153,
+  "output": 3211,
+  "total": 333040,
+  "usd": 0.2836
+}
