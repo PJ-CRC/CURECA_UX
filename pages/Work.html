@@ -666,8 +666,8 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     var fx = set(wbs.fx), dv = set(wbs.dv), hidR = set(wbs.hr), hidC = set(wbs.hc), BG = wbs.bg || [], FC = wbs.fc || [], FW = wbs.fw || [];
     var byRow = {}; (showG ? wbsItems(wbs, true) : W).items.forEach(function(it){ byRow[it.row] = it; });   // 숨긴 행을 보일 때는 그 행도 상태로 거를 수 있게
     var PK = wbs.pick || null, pv = PK && PK.ver, pp = PK && PK.part, pg = PK && PK.gantt;
-    if (fver === null) { if (!pv) fver = null; else fver = (pv.list || [])[0] || ''; }   // 처음엔 최신 버전
-    if (pv && fver && (pv.list || []).indexOf(fver) < 0) fver = (pv.list || [])[0] || ''; if (pp && fpart && (pp.list || []).indexOf(fpart) < 0) fpart = '';   // 목록에 없어진 값은 풂
+    if (fver === null) fver = '';   // 처음엔 버전 전체(2026-11-25)
+    if (pv && fver && (pv.list || []).indexOf(fver) < 0) fver = ''; if (pp && fpart && (pp.list || []).indexOf(fpart) < 0) fpart = '';   // 목록에 없어진 값은 풂
     var q = fq.trim().toLowerCase(), filt = !!(q || fcat), edit = canWrite() && !wbs.cached && !wbs.readonly, shown = 0;   // Azure DevOps 표는 읽기만
     function pickSel(id, all, o, cur){ return o && (o.list || []).length ? '<select id="' + id + '" aria-label="' + all + '로 거르기"><option value="">' + all + ' 전체</option>' + o.list.map(function(x){ return '<option value="' + esc(x) + '"' + (x === cur ? ' selected' : '') + '>' + esc(x) + '</option>'; }).join('') + '</select>' : ''; }
     function val(i, j){ return String((V[i] || [])[j] == null ? '' : V[i][j]); }
