@@ -1394,6 +1394,16 @@ html.embed,html.embed body{overflow:hidden}
       secs.forEach(function(s){ if (s.level === 2 && s.parent) s.parent.raw += s.raw; });
       secs = secs.filter(function(s){ if (s.level === 2 && s.parent) { delete byId[s.id]; return false; } s.kids = []; return true; });
     }
+    /* 하위 문서(2026-11-25, 목차에서만): 「{이름}-case{n}.md」 대분류는 같은 폴더 「{이름}.md」 대분류 아래 항목으로 보인다
+       (예: CURECA flow/3-design-case1 ~ 3 → 목차 「3. 화면 설계」 아래). 화면 · 파일 · 저장은 그대로(각자 한 화면) */
+    (function(){
+      var top = {}; secs.forEach(function(s){ if (s.level === 1 && s.file && !top[s.file]) top[s.file] = s; });
+      secs.forEach(function(s){
+        if (s.level !== 1 || !s.file) return; var mm = /^(.*)-case\d+\.md$/i.exec(s.file); if (!mm) return;
+        var p = top[mm[1] + '.md']; if (!p || p === s) return;
+        s.navParent = p; (p.navKids = p.navKids || []).push(s);
+      });
+    })();
     /* 같은 제목의 대분류가 여럿이면(예: templates/screen.md · screen-asis.md가 모두 「CID 화면 이름」, 2026-11-20) 목차에서는 그 제목 하나로 묶고
        파일마다 아래 항목으로 보인다(문서 · 파일은 그대로 — 원본 CURECA_AI는 tobe · asis 틀을 일부러 나눠 둠). 묶음은 목차에만 있고 secs(저장)에는 없다 */
     (function(){
@@ -1756,14 +1766,17 @@ html.embed,html.embed body{overflow:hidden}
         if (gOpen) h += '<ul role="group">' + (q ? gk : G2.kids).map(function(k){ return '<li role="treeitem"><button type="button" class="node' + (cur === k ? ' cur' : '') + '" data-id="' + k.id + '"><span class="tw none"></span><span class="lbl">' + label(k.label) + '</span></button></li>'; }).join('') + '</ul>';
         h += '</li>'; return;
       }
-      var kids = (g.kids || []).filter(hit);
+      if (g.navParent) return;   // 목차에서 다른 대분류 아래에 보이는 하위 문서(케이스 문서 등)는 그 아래에서 그린다
+      var all = (g.kids || []).concat(g.navKids || []), kids = all.filter(hit);
       if (!(hit(g) || kids.length)) return;
-      var isOpen = q ? true : open[g.id] !== false && (open[g.id] || (cur && (cur === g || cur.parent === g)));
-      h += '<li role="treeitem" aria-expanded="' + (g.kids.length ? !!isOpen : 'false') + '">' +
+      var isOpen = q ? true : open[g.id] !== false && (open[g.id] || (cur && (cur === g || cur.parent === g || cur.navParent === g)));
+      h += '<li role="treeitem" aria-expanded="' + (all.length ? !!isOpen : 'false') + '">' +
         '<button type="button" class="node' + (g.level ? ' grp' : '') + (cur === g ? ' cur' : '') + '" data-id="' + g.id + '">' +
-        '<span class="tw' + (g.kids.length ? (isOpen ? ' open' : '') : ' none') + '" data-tw="' + g.id + '">▸</span><span class="lbl">' + label(g.label) + sysBadge(g) + '</span></button>';
-      if (g.kids.length && isOpen) h += '<ul role="group">' + (q ? kids : g.kids).map(function(k){
-        return '<li role="treeitem"><button type="button" class="node' + (cur === k ? ' cur' : '') + '" data-id="' + k.id + '"><span class="tw none"></span><span class="lbl">' + label(k.label) + '</span></button></li>';
+        '<span class="tw' + (all.length ? (isOpen ? ' open' : '') : ' none') + '" data-tw="' + g.id + '">▸</span><span class="lbl">' + label(g.label) + sysBadge(g) + '</span></button>';
+      if (all.length && isOpen) h += '<ul role="group">' + (q ? kids : all).map(function(k){
+        // 하위 문서는 이름 앞의 위 대분류 이름(「3. 화면 설계 — 」)을 빼고 보인다(목차에서만)
+        var kl = String(k.label); if (k.navParent && kl.indexOf(g.label) === 0) kl = kl.slice(g.label.length).replace(/^\s*[—–\-:·]\s*/, '') || kl;
+        return '<li role="treeitem"><button type="button" class="node' + (cur === k ? ' cur' : '') + '" data-id="' + k.id + '"><span class="tw none"></span><span class="lbl">' + label(kl) + '</span></button></li>';
       }).join('') + '</ul>';
       h += '</li>';
     });
