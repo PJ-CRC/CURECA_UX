@@ -4,7 +4,7 @@
   "reqId": "R002",
   "reqType": "요청",
   "team": "cureca",
-  "at": "2026-11-25T17:09:06+09:00",
+  "at": "2026-11-26T08:29:16+09:00",
   "from": "2026-11-25T16:46:49+09:00",
   "by": "최고관리자",
   "doneBy": "Claude",
@@ -16,14 +16,14 @@
   "nodeId": "",
   "text": "작업 진행해 R001",
   "models": {
-    "claude-opus-5-5": 111,
-    "<synthetic>": 1
+    "claude-opus-5-5": 137,
+    "<synthetic>": 2
   },
-  "calls": 112,
-  "input": 218,
-  "cacheWrite": 876995,
-  "cacheRead": 22866098,
-  "output": 129147,
-  "total": 23872458,
-  "usd": 14.173
+  "calls": 139,
+  "input": 266,
+  "cacheWrite": 1091878,
+  "cacheRead": 25075039,
+  "output": 140352,
+  "total": 26307535,
+  "usd": 16.5581
 }
