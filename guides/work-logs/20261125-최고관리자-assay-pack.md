@@ -192,7 +192,7 @@ started: 2026-11-25
 <!-- 절차 1번 순서 2에서 그릴 T · L 한 쌍마다 줄을 만들어 따른 케이스 · 요건 번호를 채우고, 그 쌍을 다 그리면 공통 3-10에서 섹션 · 기획 프레임 · 상태 · 케이스 프레임 링크를 채웁니다. -->
 | T · L 한 쌍 | 따른 케이스 | 요건 번호 | 섹션 | 기획 프레임 | 상태 · 케이스 프레임 |
 | --- | --- | --- | --- | --- | --- |
-| TI-STN-08 / LI-STN-08 | 3 | 1 | [TI-STN-08](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3492-18) · [LI-STN-08](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3492-25) | [TI-STN-08](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3499-6) · LI-STN-08 (그릴 차례) | 케이스 프레임 없음 (기존 원본에 없음) |
+| TI-STN-08 / LI-STN-08 | 3 | 1 | [TI-STN-08](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3492-18) · [LI-STN-08](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3492-25) | [TI-STN-08](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3499-6) · [LI-STN-08](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3503-1997) (사용자 확인 목록 [`3506:12990`](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3506-12990)) | 그림 (T · L 마무리 확인 2026-11-25) · 케이스 프레임 없음 (기존 원본에 없음) |
 | TI-STN-08-01 / (짝 없음) | 3 | 1 | 자리 잡음: [TI-STN-08-01](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3492-19) | | |
 | TI-STN-08-P / LI-STN-08-P | 3 | 1 | 자리 잡음: [TI-STN-08-P](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3492-20) · [LI-STN-08-P](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3492-26) | | |
 
