@@ -9,7 +9,7 @@ version: 2.0
 date: 2026.06.15
 author: 정다예
 client_mode: []
-user_type: []
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-167258
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: 디스크립션은 3 [Export]만 다름(T는 윈도우 탐색기, L은 COMM-5-j(4/4) 팝업). 화면 글자는 GNB · LNB만 다름
 - 호출하는 화면: [TI-SPT-01-01] Samples Details (2 행 클릭)
 - 호출되는 곳: LNB > Sample Tracking > Samples
+- 관련 정책: POL-SMP-001, POL-SMP-002, POL-SMP-003, POL-SMP-005, POL-COM-006
 
 ## 기존 화면
 
