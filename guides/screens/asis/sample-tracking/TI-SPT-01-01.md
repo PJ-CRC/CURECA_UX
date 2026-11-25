@@ -29,22 +29,41 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 
 ### 화면 글자
 
-- (GNB) Running | Instrument | L-IOS | D.A PC | Event | Error 3 | Warning 2 | 2026-04-10 11:30
-- (LNB) TIOS | Dashboard | Test Management | Sample Tracking | Samples | 96-DWP | PCR Plate | Instrument | Inventory | Statistical Analysis | Setting | Information | Keira Knightley
-- 왼쪽(축소된 Samples 목록): Samples | 검색 영역(TI-SPT-01과 같음) | Items 638 | Export | 목록 10행(TI-SPT-01과 같음) | 1 ~ 10
-- 오른쪽 상세
-  - AA0005005 | PB | Running
-  - Process | Module | Unit | Start Date/Time | End Date/Time
-    - 1 | Sample Preparation | - | - | 2026-03-05 10:40:30 | 2026-03-05 11:00:00
-    - 2 | Nucleic Acid Extraction | High-throughput Extraction | M9600 | 2026-03-05 11:10:30 | -
-    - 3 | PCR Setup | PCR Setup | STARlet | - | -
-    - 4 | Plate Sealing | Plate Sealing | Sealer (1) | - | -
-    - 5 | PCR | Universal PCR | CFX96 (2) | - | -
-  - General: Sample Type Sputum | Order Date 2024-07-01 | Start Date/Time 2024-07-01 09:00 | End Date/Time - | Canceled Date - | Canceled - | STAT -
-  - Sample Location: Location Type Trolley | Return Status N | Trolley Name 8462-1981 | Tray Position 3F / C02 | STAT Slot No. - | Socket ID SK462135 | Socket Position B05
-  - 96-DWP Plate | More: ID SDP0096B14253616467 | Well No. CO1 — PCR Plate | More: ID SDP0096B14253616467 | Well No. AO2
-  - Reagent Info (Kit | Barcode): PBS Standard Tube PR0925I01LB12354 / STARMag Universal Cartridge Kit 260520280609EX294628G01EB144S / Allplex™ GI-Bacteria(I) Assay 260520280809GI04XMOM
-  - Protocol Info | More: Pre-Treatment Protocol Test Protocol AA | Extraction Protocol Test Protocol BB
+- (GNB) TIOS | Running | Instrument | L-IOS | D.A PC | Event | Error | 3 | Warning | 2 | 2026-04-10 11:30
+- (LNB) Samples | Dashboard | Test Management | Sample Tracking | Samples | 96-DWP | PCR Plate | Instrument | Inventory | Statistical Analysis | Setting | Information | Keira Knightley
+- Sample ID | Product | All | Sample Type | All | Date | Order Date | 2026-03-05 ~ 2026-03-11 | Status | All | STAT Only | Reset | Search
+- Items | 638 | Export | AA0005005 | PB | Running
+- Sample ID | Product | Sample Type | Order Date | Status | Progress | Start Date/Time | End Date/Time | STAT
+- Process | Module | Unit | Start Date/Time | End Date/Time
+- AA0005001 | RP1 | Sputum | 2026-03-05 | Not Tested | 1 | Sample Preparation | - | - | - | - | 2026-03-05 10:40:30 | 2026-03-05 11:00:00
+- 2 | Nucleic Acid Extraction | High-throughput Extraction | M9600 | 2026-03-05 11:10:30 | -
+- AA0005001 | RP2 | Sputum | 2026-03-05 | Not Tested | - | -
+- 3 | PCR Setup | PCR Setup | STARlet | - | -
+- AA0005001 | RP3 | Sputum | 2026-03-05 | Not Tested | 4 | Plate Sealing | - | Plate Sealing | Sealer (1) | - | - | -
+- 5 | PCR | Universal PCR | CFX96 (2) | - | -
+- AA0005002 | STI-12 | Thinprep | 2026-03-05 | Ready | - | -
+- General | Sample Location
+- AA0005003 | STI-12 | Surepath | 2026-03-05 | Failed | 2026-03-05 10:22:48 | 2026-03-05 11:22:48
+- Sample Type | Sputum | Location Type | Trolley
+- Order Date | 2024-07-01 | Return Status | N
+- AA0005004 | STI-12 | Swab | 2026-03-05 | Completed | 2026-03-05 10:22:48 | 2026-03-05 11:22:48
+- Start Date/Time | 2024-07-01 09:00 | Trolley Name | 8462-1981
+- End Date/Time | - | Tray Position | 3F / C02
+- AA0005005 | PB | Saliva | 2026-03-05 | Running | 2026-03-05 10:22:48 | -
+- Canceled Date | - | STAT Slot No. | -
+- Canceled | - | Socket ID | SK462135
+- AA0005006 | GI-B1 | eNAT stool | 2026-03-05 | Running | 2026-03-05 10:22:48 | -
+- STAT | - | Socket Position | B05
+- AA0005006 | GI-B2 | eNAT stool | 2026-03-05 | Running | 2026-03-05 10:22:48 | -
+- 96-DWP Plate | More | PCR Plate | More
+- AA0005007 | Allplex HPV28 | Surepath | 2026-03-05 | Running | ID | 2026-03-05 10:22:48 | Well No. | ID | - | Well No.
+- SDP0096B14253616467 | CO1 | SDP0096B14253616467 | AO2
+- 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | Reagent Info
+- Kit | Barcode
+- PBS Standard Tube | PR0925I01LB12354
+- STARMag Universal Cartridge Kit | 260520280609EX294628G01EB144S
+- Allplex™ GI-Bacteria(I) Assay | 260520280809GI04XMOM
+- Protocol Info | More
 
 ### 사용 컴포넌트
 

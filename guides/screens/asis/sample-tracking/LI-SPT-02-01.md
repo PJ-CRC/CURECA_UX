@@ -29,21 +29,34 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 
 ### 화면 글자
 
-- (GNB) Network Status | Instrument | T-IOS | D.A PC | Running | Event | Error 3 | Warning 2 | 2026-04-10 11:30
-- (LNB) LIOS | Dashboard | Material Setup | Test Management | Sample Tracking | Samples | 96-DWP | PCR Plate | Instrument | Inventory | Setting | Information | Quick Start | Run | Keira Knightley | Shut Down
-- 왼쪽(축소된 96-DWP 목록): 96-DWP | 검색 영역(LI-SPT-02와 같음) | Items 486 | Export | 목록 10행(LI-SPT-02와 같음) | 1 ~ 10
-- 오른쪽 상세: Plate Details
-  - 탭 Plate Info | Progress — ID PL0005001 | Total Samples 96 | STAT Samples 13 | Reagent STARMag M96 Kit | Barcode EX2923G01LB
-  - Plate(96 Well): 열 1 ~ 12 | 행 A ~ H | Reset
-  - Well No. | Sample ID | Product | Sample Type | STAT
-    - C08 | AA0005008 | RP1 · PB | Saliva
-    - C09 | AA0005038 | RP1 · RP2 · RP3 | Aspirate
-    - D05 | AA0005583 | RP1 | Sputum
-    - D08 | AA0005203 | RP2 · RP3 | Saliva
-    - E09 | AA0005830 | RP2 · PB | Aspirate
-    - F05 | AA0004839 | RP1 | Sputum
-    - F09 | AA0001739 | RP1 · RP2 · RP3 · PB | Aspirate
-    - H02 | AA0003959 | RP3 | Saliva
+- (GNB) LIOS | Network Status | Instrument | T-IOS | D.A PC | Running | Event | Error | 3 | Warning | 2 | 2026-04-10 11:30
+- (LNB) 96-DWP | Dashboard | Material Setup | Test Management | Sample Tracking | Samples | 96-DWP | PCR Plate | Instrument | Inventory | Setting | Information | Quick Start | Run | Keira Knightley | Shut Down
+- Plate ID | Status | All | Date | Start Date | 2026-03-05 ~ 2026-03-11 | Reset | Search
+- Items | 486 | Export | Plate Details
+- Plate ID | Sample | Progress | Status | Plate Info | Start Date/Time | Progress | End Date/Time | Reset
+- Total | STAT | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
+- ID | PL0005001
+- PL0005001 | 87 | 21 | Running | Total Samples | 2026-03-05 10:22:48 | 96 | A | -
+- STAT Samples | 13 | B
+- PL0005002 | 96 | 11 | Completed | Reagent | 2026-03-05 10:22:48 | STARMag M96 Kit | C | 2026-03-05 11:22:48
+- Barcode | EX2923G01LB | D
+- E
+- PL0005003 | 73 | 12 | Completed | 2026-03-05 10:22:48 | 2026-03-05 11:22:48
+- F
+- G
+- PL0005004 | 68 | 15 | Completed | 2026-03-05 10:22:48 | 2026-03-05 11:22:48
+- H
+- PL0005005 | 85 | 42 | Running | 2026-03-05 10:22:48 | -
+- Well No. | Sample ID | Product | Sample Type | STAT
+- PL0005006 | 96 | 35 | Failed | C08 | AA0005008 | 2026-03-05 10:22:48 | RP1 | PB | 2026-03-05 11:22:48 | Saliva
+- PL0005007 | 96 | 24 | Failed | C09 | AA0005038 | 2026-03-05 10:22:48 | RP1 | RP2 | RP3 | 2026-03-05 11:22:48 | Aspirate
+- D05 | AA0005583 | RP1 | Sputum
+- PL0005008 | 96 | 26 | Running | 2026-03-05 10:22:48 | -
+- D08 | AA0005203 | RP2 | RP3 | Saliva
+- PL0005009 | 96 | 33 | Running | E09 | AA0005830 | 2026-03-05 10:22:48 | RP2 | PB | - | Aspirate
+- PL0005020 | 87 | 12 | Running | F05 | AA0004839 | 2026-03-05 10:22:48 | RP1 | - | Sputum
+- F09 | AA0001739 | RP1 | RP2 | RP3 | PB | Aspirate
+- 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | H02 | AA0003959 | RP3 | Saliva
 
 ### 사용 컴포넌트
 
