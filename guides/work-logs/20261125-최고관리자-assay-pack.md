@@ -86,7 +86,7 @@ started: 2026-11-25
 | 1 | 1. 기능 정의가 안 된 요소: 디스크립션이 정의를 다른 프레임([TI-STN-08 / 세부정의] · [팝업 정의] · [Import 정의] · [정책], [TI/LI-STN-08-P 유형별 정의])으로 넘김. 그 프레임 내용은 화면 MD에 옮기지 않았음 | TI-STN-08 #1-4 · #3 · #4-1, TI-STN-08-P #3 · #4, LI-STN-08 #1-4, LI-STN-08-P #3 | 2단계 (정책 · Alert과 대조) | |
 | 2 | 1. 기능 정의가 안 된 요소: TI-STN-08 #3 [Delete] 「삭제 & Toast」의 Toast 문구가 없음 (TI-STN-08-P #4에는 「The file has been deleted.」) | TI-STN-08 #3 | 3단계 질문 대기 | |
 | 3 | 4. 요청과 기존 화면이 맞지 않는 곳: LI-STN-08 #4 「체크박스 없음」인데 화면에 Check Box/Square 인스턴스 1개가 있음 | LI-STN-08 #4 | 2단계 | |
-| 4 | 4. 요청과 기존 화면이 맞지 않는 곳: TI-STN-08-P #4 [Save]는 「T-IOS만, L-IOS 미노출」인데 T-IOS 화면에 Active 변경 버튼 노출 조건(Master 비활성)과 목록 4-1 「상세에 변경 버튼 미노출」이 서로 다름 | TI-STN-08 #4-1 · TI-STN-08-P #3 | 2단계 | |
+| 4 | 4. 요청과 기존 화면이 맞지 않는 곳: Master 파일의 Active 변경 버튼이 TI-STN-08 #4-1은 「상세에 변경 버튼 미노출」, TI-STN-08-P #3은 「[Active] · [Inactive] 버튼 비활성」으로 서로 다름 | TI-STN-08 #4-1 · TI-STN-08-P #3 | 2단계 | |
 
 ## 대상 화면의 반영 대기 항목
 
