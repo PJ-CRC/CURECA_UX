@@ -161,6 +161,7 @@ table.sh thead .fz{z-index:4;background:var(--surface-2)}
 table.sh .fz-end{box-shadow:inset -2px 0 0 var(--line)}
 table.sh .dd{display:block;padding:0 10px;border-radius:999px;text-align:center;font-size:12px;font-weight:600;white-space:nowrap;line-height:1.7}
 table.sh .dd.bd{border:1px solid;border-radius:3px;font-weight:500}   /* DevOps 상태: 테두리 있는 네모 칩(주간보고와 같은 모양) */
+table.sh mark.hl{background:#ffe27a;color:#1c1d1f;padding:0 1px;border-radius:2px}   /* 찾는 글 하이라이트 */
 table.sh .stc{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}   /* DevOps 상태: 색 점 + 이름 */
 table.sh .stc i{width:9px;height:9px;border-radius:50%;flex:none}
 table.sh .stc b{font-weight:600}
@@ -658,7 +659,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       '<a class="cb-open" href="' + esc(url) + '" target="_blank" rel="noopener" title="' + (isAzure() ? 'Azure DevOps에서 열기' : '구글 시트에서 열기') + '">원본 열기 <svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 3h4v4M13 3 7.5 8.5M12 9.5V13H3V4h3.5"/></svg></a>' +
       '<span class="sp"></span>' + (canWrite() ? '<button type="button" class="cb-set w-only" data-act="conn" title="일정을 가져올 곳(구글 시트 · Azure DevOps)을 바꿉니다"><svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="8" cy="8" r="2.2"/><path d="M8 1.8v1.6M8 12.6v1.6M1.8 8h1.6M12.6 8h1.6M3.6 3.6l1.1 1.1M11.3 11.3l1.1 1.1M3.6 12.4l1.1-1.1M11.3 4.7l1.1-1.1"/></svg>연결 바꾸기</button>' : '') + '</div>';
   }
-  function renderSchedule(){
+  function renderSchedule(bodyOnly){
     var el = $('body-schedule'); if (!el) return;
     var head = '<h2>일정</h2>' + (TABS[0].about ? '<p class="intro">' + esc(TABS[0].about) + '</p>' : '');
     if (!conf) { el.innerHTML = head + '<p class="muted">불러오는 중…</p>'; return; }
@@ -712,13 +713,17 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     // 세부 일정(주간보고 일정표): 작업명 줄 아래 접힌 줄 — ▸를 누른 작업명만 펼친다. 세부 줄은 펼친 작업명 줄이 보일 때만
     var kidOf = {}, subOf = {}; (wbs.kids || []).forEach(function(k){ kidOf[k.row] = k; (k.rows || []).forEach(function(r){ subOf[r] = k; }); });
     var brows = [], shownRow = {};
+    function rowHas(r, s){ return (V[r] || []).join(' ').toLowerCase().indexOf(s) >= 0; }
+    // 찾는 글 하이라이트(2026-11-25): 글자를 찾는 글 앞뒤로 나눠 각각 이스케이프하고 맞는 곳만 <mark>로(대소문자 무시)
+    function hlEsc(t){ t = String(t == null ? '' : t); if (!q) return esc(t); var lo = t.toLowerCase(), out = '', k = 0, p; while ((p = lo.indexOf(q, k)) >= 0) { out += esc(t.slice(k, p)) + '<mark class="hl">' + esc(t.slice(p, p + q.length)) + '</mark>'; k = p + q.length; } return out + esc(t.slice(k)); }
     for (var i = T.start; i < V.length; i++) {
-      if (subOf[i]) { if (wexp[subOf[i].key] && shownRow[subOf[i].row]) brows.push(i); continue; }
+      // 세부 줄: 펼친 작업명 아래, 또는 찾는 글이 그 세부 줄에 있으면 펼치지 않아도 보임(2026-11-25 — 세부 줄의 담당자 등으로 찾기)
+      if (subOf[i]) { if (shownRow[subOf[i].row] && (wexp[subOf[i].key] || (q && rowHas(i, q)))) brows.push(i); continue; }
       if (hidR[i] && !showG) continue;
       if (!cols.some(function(j){ return val(i, j).trim() || bg(i, j); })) continue;
       if (pv && fver && val(i, pv.col) !== fver) continue;
       if (pp && fpart && val(i, pp.col) !== fpart) continue;
-      if (q && (V[i] || []).join(' ').toLowerCase().indexOf(q) < 0) continue;
+      if (q && !rowHas(i, q) && !(kidOf[i] && kidOf[i].rows.some(function(r){ return rowHas(r, q); }))) continue;   // 작업명 줄은 자기 또는 세부 줄에 찾는 글이 있으면
       if (fcat) { var it = byRow[i]; if (!it || it.cat !== fcat) continue; }
       brows.push(i); shownRow[i] = 1;
     }
@@ -755,24 +760,29 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       if (b) { st.push('background:' + b); st.push('color:' + (f || '#14171c')); } else if (f && f !== '#000000') st.push('color:' + f);
       if (w) st.push('font-weight:700');
       if (monthAt && tag === 'th' && i === monthAt.r && j === monthAt.c) { v = monthAt.v; w = true; }
-      var body = esc(v);
+      var hx = tag === 'td' && q ? hlEsc : esc, body = hx(v);   // 찾는 글 하이라이트(내용 칸만)
       if (tag === 'td' && kidOf[i] && j === W.cols.task) { var kk = kidOf[i], on = !!wexp[kk.key]; body = '<button type="button" class="wtog" data-wt="' + esc(kk.key) + '" aria-expanded="' + on + '" aria-label="세부 일정 ' + (on ? '접기' : '펼치기') + '" title="세부 일정 ' + (on ? '접기' : '펼치기') + ' (' + kk.rows.length + '건)">' + (on ? '▾' : '▸') + '</button>' + body; }
-      if (tag === 'td' && v && lnk[src[0] + ',' + src[1]]) body = '<a class="ln" href="' + esc(lnk[src[0] + ',' + src[1]]) + '" target="_blank" rel="noopener" title="Azure DevOps에서 열기">' + esc(v) + '</a>';
+      if (tag === 'td' && v && lnk[src[0] + ',' + src[1]]) body = '<a class="ln" href="' + esc(lnk[src[0] + ',' + src[1]]) + '" target="_blank" rel="noopener" title="Azure DevOps에서 열기">' + hx(v) + '</a>';
       // DevOps 상태 색(주간보고 일정표, 2026-11-25): DevOps가 정한 상태 색으로 「● 상태」. 아주 밝은 색(To Do 노랑 등)은 글자만 진하게 해 읽히게
-      if (tag === 'td' && dv[i + ',' + j] && v && SC[v]) { body = '<span class="stc"><i style="background:' + SC[v] + '"></i><b style="color:' + inkOf(SC[v]) + '">' + esc(v) + '</b></span>'; }
-      else if (tag === 'td' && dv[i + ',' + j]) { var c = chip(v); body = v ? (c ? '<span class="dd' + (c[2] ? ' bd' : '') + '" style="background:' + c[0] + ';color:' + c[1] + (c[2] ? ';border-color:' + c[2] : '') + '">' + esc(v) + '</span>' : '<span class="dd plain">' + esc(v) + '</span>') : ''; }
+      if (tag === 'td' && dv[i + ',' + j] && v && SC[v]) { body = '<span class="stc"><i style="background:' + SC[v] + '"></i><b style="color:' + inkOf(SC[v]) + '">' + hx(v) + '</b></span>'; }
+      else if (tag === 'td' && dv[i + ',' + j]) { var c = chip(v); body = v ? (c ? '<span class="dd' + (c[2] ? ' bd' : '') + '" style="background:' + c[0] + ';color:' + c[1] + (c[2] ? ';border-color:' + c[2] : '') + '">' + hx(v) + '</span>' : '<span class="dd plain">' + hx(v) + '</span>') : ''; }
       return '<' + tag + (s && s.r > 1 ? ' rowspan="' + s.r + '"' : '') + (s && s.c > 1 ? ' colspan="' + s.c + '"' : '') + ' data-r="' + i + '" data-c="' + j + '"' +
         (cls.length ? ' class="' + cls.join(' ') + '"' : '') + (st.length ? ' style="' + st.join(';') + '"' : '') + (fx[i + ',' + j] ? ' title="수식 칸(시트에서 고치세요)"' : '') + '>' + body + '</' + tag + '>';
     }
     var hs = spans(hrows), bs = spans(brows);
     var th = hrows.map(function(ri){ return '<tr><th class="rn">' + (ri + 1) + '</th>' + cols.map(function(j){ return cell('th', ri, j, hs); }).join('') + '</tr>'; }).join('');
     var tb = brows.map(function(i){ return '<tr><td class="rn">' + (i + 1) + '</td>' + cols.map(function(j){ return cell('td', i, j, bs); }).join('') + '</tr>'; }).join('');
-    h += '<div class="sheet" id="sheetBox"><table class="sh"><thead>' + th + '</thead><tbody>' + (tb || '<tr><td class="rn"></td><td colspan="' + cols.length + '" class="muted">맞는 줄이 없습니다.</td></tr>') + '</tbody></table></div>' +
+    var body = '<div class="sheet" id="sheetBox"><table class="sh"><thead>' + th + '</thead><tbody>' + (tb || '<tr><td class="rn"></td><td colspan="' + cols.length + '" class="muted">맞는 줄이 없습니다.</td></tr>') + '</tbody></table></div>' +
       '<p class="rule">' + shown.toLocaleString() + '줄' + ((wbs.hr || []).length && !showG ? ' · 시트에서 숨긴 줄 ' + wbs.hr.length + '개 빠짐' : '') + (todayC >= 0 ? ' · 빨간 선 = 오늘' : '') + '</p>';
-    var keep = document.activeElement && document.activeElement.id === 'sq', sel = keep ? document.activeElement.selectionStart : 0;
+    h += '<div id="schBody">' + body + '</div>';
     var box0 = $('sheetBox'), sl = box0 ? box0.scrollLeft : null, stp = box0 ? box0.scrollTop : 0;
-    el.innerHTML = h; $('sc').value = fcat;
-    if (keep) { $('sq').focus(); try { $('sq').setSelectionRange(sel, sel); } catch(x){} }
+    // 찾기로 다시 그릴 때는 표만 바꾼다(2026-11-25): 찾기 칸까지 새로 만들면 그 사이 친 글자 · 한글 조합이 사라진 칸으로 가서 빠졌다
+    if (bodyOnly && $('schBody') && $('sq')) $('schBody').innerHTML = body;
+    else {
+      var keep = document.activeElement && document.activeElement.id === 'sq', sel = keep ? document.activeElement.selectionStart : 0;
+      el.innerHTML = h; $('sc').value = fcat;
+      if (keep) { $('sq').focus(); try { $('sq').setSelectionRange(sel, sel); } catch(x){} }
+    }
     // 고정 열: 시트의 고정 열, 모르면 간트 날짜 열 앞까지
     var g0 = Object.keys(T.gantt).map(Number).sort(function(a, b){ return a - b; })[0] || 0;
     stickSheet(wbs.fzc || g0, todayC, sl, stp);
@@ -806,8 +816,11 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     else if (todayC >= 0) { var t = box.querySelector('[data-c="' + todayC + '"]'); if (t) box.scrollLeft = Math.max(0, t.offsetLeft - fzw - 24 * 3); }
   }
   // 찾기: 한글 등 조합 입력 중에는 다시 그리지 않는다(다시 그리면 입력 칸이 새로 만들어져 조합이 깨짐, 2026-11-25). 조합이 끝나면 그린다
-  document.addEventListener('input', function(e){ if (e.target.id === 'sq') { fq = e.target.value; if (e.isComposing) return; renderSchedule(); } });
-  document.addEventListener('compositionend', function(e){ if (e.target.id === 'sq') { fq = e.target.value; renderSchedule(); } });
+  //  찾기 칸은 그대로 두고 표만 다시 그리며(renderSchedule(true)), 빨리 칠 때는 멈춘 뒤 한 번만(0.15초)
+  var sqT = 0;
+  function sqRender(){ clearTimeout(sqT); sqT = setTimeout(function(){ renderSchedule(true); }, 150); }
+  document.addEventListener('input', function(e){ if (e.target.id === 'sq') { fq = e.target.value; if (e.isComposing) return; sqRender(); } });
+  document.addEventListener('compositionend', function(e){ if (e.target.id === 'sq') { fq = e.target.value; sqRender(); } });
   // 세부 일정 ▸/▾: 그 작업명의 UX · UI 작업 줄을 펼치고 접는다(스크롤 위치는 그대로)
   document.addEventListener('click', function(e){
     var b = e.target.closest && e.target.closest('[data-wt]'); if (!b) return;
