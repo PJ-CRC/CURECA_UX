@@ -2,48 +2,61 @@
 cid: TI-STA-01-02
 pair_cid:
 tl_relation: 단독
-title: Test Count - Table
-path: Statistical Analysis > Test Analytics > Test Count - Table
-type: Page
+title: Test Analytics _ Test Count
+path: Statistical Analysis > Test Analytics
+type: Tab
 version: 2.0
-date: 2026-06-15
+date: 2026.06.15
 author: 정다예
 client_mode: []
-user_type: [Service, Admin, User]
+user_type: []
 policies: []
-rules_version:
-provisional: []
-flags: []
 source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=2138-1075776
-figma_region: 2.1 2차
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-412863
 ---
-# TI-STA-01-02 Test Count - Table
+# TI-STA-01-02 Test Analytics _ Test Count
 
-> 기존 화면(기존 작업방 Statistical Analysis 페이지, 2.1 2차 영역, Ver 2.0)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 `SA_Test Analytics_asis` 페이지, Ver 2.0)을 2026-11-25에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
 
-- T-IOS 전용 메뉴. Figma 화면 이름은 "Test Analytics _ Test Count". TI-STA-01-01의 View를 Table로 바꾼 화면
-- 관련 정책: POL-STA-001, POL-STA-002, POL-STA-003, POL-STA-004, POL-COM-006
-- 호출하는 화면: Test Count - Chart (TI-STA-01-01)
-- 다른 프레임: [TI-STA-01/Case](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=2138-1077425)
+- T/L 차이: T-IOS 단독 (IA에 L 짝 없음)
+- 호출하는 화면: [TI-STA-01-01] Test Count Chart (View Chart, 1 참고 화면)
+- 호출되는 곳: [TI-STA-01-01] 6-3 View Table
 
 ## 기존 화면
 
+<!-- `{메뉴}_asis` 페이지에 있는 그대로 옮깁니다. 고치거나 정리하지 않습니다. 틀린 곳 · 정책과 다른 곳도 그대로 옮깁니다. 그 화면의 To-Be 작업 1단계에서 읽으며 찾아 그 작업에서 고칩니다(`flow/1-requirements.md` 절차 4번 순서 3 "뒤 단계로 넘김"의 5). -->
+
 ### 화면 글자
 
-- (GNB)(LNB) TI-STA-01-01과 같음
+- (GNB) Network Status | Instrument | L-IOS | D.A PC | Running | Event | Error 3 | Warning 2 | 2026-04-10 11:30
+- (LNB) TIOS | Dashboard | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis | Test Analytics | Test Forecasting | Setting | Information | Manual | Keira Knightley
+- Test Analytics
 - Test Count | Export
-- Key Metrics: Test Count | Test Ratio | Test TAT | Test Cost
-- (합계 표) Total | RP1 ~ STI-12, 368,950 | 40,250 | …
-- (Unit : count)
-- (표) Product | 날짜 열 7개
-- RP1 | 4,900 | 7,100 | 3,500 | … (RP2 ~ STI-12 행 같은 형식)
-- Total | 54,400 | 55,150 | 43,700 | 52,750 | 60,950 | 48,400 | 53,600
-- Filter Options: Date Range (Daily | Monthly), Legend (Product | Sample Type, Select All, 칩), View (Chart | Table)
+- 합계 표: Total | RP1 | RP2 | RP3 | PB | GI-V | GI-B1 | GI-B2 | GI-P | Allplex HPV28 | STI-12
+  - 368,950 | 40,250 | 33,700 | 33,900 | 44,950 | 37,400 | 37,400 | 31,250 | 37,950 | 34,450 | 34,450
+- 추이 표: (Unit : count)
+  - Product | 01-01 | 01-02 | 01-03 | 01-04 | 01-05 | 01-06 | 01-07
+  - RP1 | 4,900 | 7,100 | 3,500 | 6,200 | 6,400 | 6,650 | 5,500
+  - RP2 | 4,250 | 6,300 | 5,100 | 4,750 | 4,900 | 5,150 | 3,250
+  - RP3 | 5,500 | 5,550 | 4,800 | 4,750 | 4,900 | 5,150 | 3,250
+  - PB | 7,550 | 4,200 | 7,200 | 3,850 | 7,700 | 6,450 | 8,000
+  - GI-V | 7,100 | 4,900 | 4,800 | 3,850 | 5,550 | 6,300 | 4,900
+  - GI-B1 | 7,000 | 4,900 | 4,800 | 3,900 | 6,100 | 5,100 | 5,600
+  - GI-B2 | 4,400 | 5,200 | 3,250 | 4,750 | 3,900 | 4,100 | 5,650
+  - GI-P | 5,700 | 6,000 | 3,400 | 6,100 | 7,500 | 3,250 | 6,000
+  - Allplex HPV28 | 3,800 | 6,100 | 3,250 | 7,300 | 7,500 | 3,250 | 3,250
+  - STI-12 | 4,200 | 4,900 | 3,600 | 7,300 | 6,100 | 3,950 | 4,400
+  - Total | 54,400 | 55,150 | 43,700 | 52,750 | 60,950 | 48,400 | 53,600
+- 오른쪽 조회 영역
+  - Key Metrics: Test Count | Test Ratio | Test TAT | Test Cost
+  - Filter Options
+  - Date Range: Daily | Monthly / 2026-01-01 | 2026-01-07
+  - Legend: Product | Sample Type / Select All / RP1 | RP2 | RP3 | PB | GI-V | GI-B1 | GI-B2 | GI-P | Allplex HPV28 | STI-12
+  - View: Chart | Table
 
 ### 사용 컴포넌트
 
-Table (107), Square (22), Description (12), Table/Filled Table Cell (11), 1 Depth (7), Description Number (5), Dropdown Outlined (2)
+Table (107), Square (22), Description (12), Table/Filled Table  Cell (11), 1 Depth (7), Description Number (5), Dropdown Outlined (2), profile (1), Layout/Align_Right_05_Solid (1), Frame (1)
 
 ### 디스크립션 (원문)
 
@@ -92,3 +105,16 @@ Table (107), Square (22), Description (12), Table/Filled Table Cell (11), 1 Dept
 - 고정 표출
 - 단, 데이터가 없을 경우 ‘-’로 표기
 - 참고 : TI-STA-01/Case > Case 3
+
+### 케이스
+
+<!-- `{메뉴}_asis` 페이지의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
+
+케이스 프레임은 TI-STA-01-01과 같은 `TI-STA-01/Case`([3543:414512](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-414512))입니다. Case 1 ~ 4의 내용은 [TI-STA-01-01] 케이스 절에 적었습니다. Table 모드가 그려진 것은 Case 3의 3-2(Legend 전체 해제 시, Table 모드)입니다.
+
+| Case | 제목 | 조건 | 프레임 |
+| --- | --- | --- | --- |
+| 1 | Chart 상세 데이터 Tooltip | 차트 내 특정 시점에 마우스 호버 | `TI-STA-01/Case` (0, 0) |
+| 2 | 데이터 로딩 중 Case | 데이터 로딩 중 | `TI-STA-01/Case` (0, 773) |
+| 3 | Legend 전체 해제 시 (3-1. Chart 모드일 경우 / 3-2. Table 모드일 경우) | Legend 전체 해제 | `TI-STA-01/Case` (0, 1546) |
+| 4 | Legend 유형별 노출 데이터 (4-1. Product 선택 시 / 4-2. Sample Type 선택 시) | Legend 탭 선택 | `TI-STA-01/Case` (0, 2336) |

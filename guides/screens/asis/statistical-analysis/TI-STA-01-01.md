@@ -203,6 +203,6 @@ Square (22), Description Number (12), Table (11), Table/Filled Table  Cell (11),
   - 1-1 시점 및 총합 정보 — 표출 항목: 호버된 해당 일자 또는 월 정보 표출 / 선택된 검사 항목들의 해당 시점 기준 총 검사 건수 합산 값을 Total : 총 건수 형태로 표출
   - 1-2 개별 항목 리스트 정보 — 표출 항목: 해당 시점에 발생한 항목별 누적 검사 건수 수치 표출
   - 툴팁 예시: 01-04 | Total : 52,750 / RP1 6,200 | RP2 4,750 | RP3 4,750 | PB 3,850 | GI-V 3,850 | GI-B1 3,900 | GI-B2 4,750 | GI-P 6,100 | Allplex HPV28 7,300 | STI-12 7,300
-- Case 2: 왼쪽 데이터 영역은 비고 오른쪽 조회 영역(Key Metrics · Filter Options · Date Range · Legend · View)만 그려져 있음. 패널 디스크립션 `0` / `-`
+- Case 2: 글자는 화면 제목 `Test Analytics` · GNB와 오른쪽 조회 영역(Key Metrics · Filter Options · Date Range · Legend · View)만 있음. 패널 디스크립션 `0` / `-`
 - Case 3: Chart · Table 모드 모두 `Please select one or more legends.` 안내. Chart 모드는 Y축 0만, Table 모드는 Product 열 머리 · 01-01 ~ 01-07과 `Total | - | - | - | - | - | - | -` 행
 - Case 4: Product 탭 — RP1 | RP2 | RP3 | PB | GI-V | GI-B1 | GI-B2 | GI-P | Allplex HPV28 | STI-12 / Sample Type 탭 — Swab | Aspirate | BAL | Saliva | Sputum | Raw stool | Cary-blair | eNAT stool | Fecal swab | Thinprep | Surepath | Cellpreserv | Urine | Semen
