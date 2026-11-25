@@ -8,8 +8,8 @@ type: Popup
 version: 2.1.17
 date: 2026.11.13
 author: 정다예
-client_mode: []
-user_type: []
+client_mode: [Main Mode, Console Mode]
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-79280
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: L-IOS 단독 화면 (IA에 T 짝 없음)
 - 호출하는 화면: (원문에 없음. 7 [확인] · 8 [X]는 팝업 닫고 기존 화면 유지)
 - 호출되는 곳: LNB > RUN, Dashboard > RUN (패널 경로)
+- 관련 정책: POL-EQP-003 (Run, Quick Start 버튼), POL-SMP-007, POL-LOD-001
 
 ## 기존 화면
 
