@@ -1,0 +1,28 @@
+{
+  "id": "anjongbeom-ui-macbookair-2-local_R001",
+  "kind": "request",
+  "reqId": "R001",
+  "reqType": "요청",
+  "team": "stagora",
+  "at": "2026-11-25T15:31:10+09:00",
+  "from": "2026-11-25T15:23:36+09:00",
+  "by": "안종범",
+  "doneBy": "Claude",
+  "pc": "anjongbeom-ui-MacBookAir-2.local",
+  "fileKey": "cDjaemHjetS7RcAHRUIMY5",
+  "fileName": "STAgora AI Workspace",
+  "page": "Test-안종범",
+  "frame": "",
+  "nodeId": "",
+  "text": "{1125-GMCS 언어셋 추가} 섹션에서 언어셋에 추가되지 않은 문구가 있으면 추가해줘. 언어셋은 3.GMCS~ 시트를 반영하고 추가해.",
+  "models": {
+    "claude-opus-5-5": 44
+  },
+  "calls": 44,
+  "input": 83,
+  "cacheWrite": 153703,
+  "cacheRead": 5808267,
+  "output": 40283,
+  "total": 6002336,
+  "usd": 3.1973
+}
