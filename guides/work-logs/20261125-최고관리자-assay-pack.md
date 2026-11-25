@@ -186,6 +186,42 @@ started: 2026-11-25
 
 ## 설계
 
+### 화면별 작업
+<!-- 절차 1번 순서 2에서 그릴 T · L 한 쌍마다 줄을 만들어 따른 케이스 · 요건 번호를 채우고, 그 쌍을 다 그리면 공통 3-10에서 섹션 · 기획 프레임 · 상태 · 케이스 프레임 링크를 채웁니다. -->
+| T · L 한 쌍 | 따른 케이스 | 요건 번호 | 섹션 | 기획 프레임 | 상태 · 케이스 프레임 |
+| --- | --- | --- | --- | --- | --- |
+| TI-STN-08 / LI-STN-08 | 3 | 1 | 자리 잡음: [TI-STN-08](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3492-18) · [LI-STN-08](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3492-25) | | |
+| TI-STN-08-01 / (짝 없음) | 3 | 1 | 자리 잡음: [TI-STN-08-01](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3492-19) | | |
+| TI-STN-08-P / LI-STN-08-P | 3 | 1 | 자리 잡음: [TI-STN-08-P](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3492-20) · [LI-STN-08-P](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3492-26) | | |
+
+- 원본(읽기만): UX AI TEST 「Setting  Ⓛ / Ⓣ_As Is」 기획 프레임 TI-STN-08 `3288:235198` · TI-STN-08-P `3288:235494` · TI-STN-08-01 `3288:237146` · LI-STN-08 `3288:238191` · LI-STN-08-P `3288:238487` (모두 너비 2252, 높이 1031 → 기획 프레임 너비 2252), 정의 프레임 [세부정의] `3288:240828` · [Import 정의] `3288:240943` · [TI-STN-08-P 유형별 정의] `3288:237480`
+- 메뉴 단위 표시(2026-11-25 자리 잡음): T-IOS 시스템 구분 `3492:14` (T-IOS - 2.1) · 기획 진행 표시 `3492:16`, L-IOS `3492:21` · `3492:23`. 기획 진행 표시는 기존 작업방 「✅ SB-Update : 2026.10.26 (컨펌 완료)」를 옮김 → 검토 완료 · 2026.10.26 (케이스 3). 너비 8761 (섹션 줄 너비, 최소 8000 넘음)
+- 섹션 줄 순서(CID 순): TI-STN-08 · TI-STN-08-01 · TI-STN-08-P / LI-STN-08 · (비움) · LI-STN-08-P. 섹션 높이는 우선 1231(100 + 1031 + 100), 그린 뒤 맞춤
+
+### 컴포넌트 없이 그린 요소
+<!-- 5단계 완료 때 Common UX 후보 목록으로 올라가는 표(지금은 올리지 않음, flow/5-done.md 절차 2번 순서 6). 요소 이름 뒤 괄호에 종류를 적습니다(예: 새로고침 (아이콘 버튼)). -->
+| 요소 이름 (종류) | 하는 일 | 쓴 곳 (CID · 디스크립션 번호) | 어디서 (후보 ID / 신규로 만듦 / 기존 화면에서 따옴) | 원본 요약 (기존 화면에서 따옴만: 크기 · 모서리 · 줄 × 칸 · 도형 · 글자 · 인스턴스) | Figma 링크 |
+| --- | --- | --- | --- | --- | --- |
+
+### 근거로 풀린 것
+| 질문 | 푼 근거 |
+| --- | --- |
+| TI-STN-08 #3 [Delete] 「삭제 & Toast」 Toast 문구 (뒤 단계용 확인 항목 2) | Alert 카탈로그 Confirm_026 버튼 동작 → Toast 카탈로그 Toast_001 "The selected files have been deleted." |
+| [Search] 결과 없음 · 등록 파일 없음 모습 ([세부정의]) | 기존 원본 [TI-STN-08 / 세부정의] `3288:240828`: 「No files found. / Click Import to add a file.」 · 「No results found.」 → 디스크립션 4 "데이터가 없을 때" (C4) |
+| TI-STN-08-P · LI-STN-08-P 시약 정보 항목 ([유형별 정의]) | 기존 원본 [TI-STN-08-P 유형별 정의] `3288:237480`의 File type별 정보 묶음 제목 → 디스크립션 3 (C4) |
+
+### 찾은 것
+- 규칙에 없어 판단한 곳: 기존 디스크립션에 0번 블록이 없어 `templates/screen.md` 틀대로 0번(정의 · User Type · L-IOS Client Mode, 노출 경로가 있던 화면은 "화면 노출 경로" 줄을 0번 동작으로)을 둠. 기존 패널에서 한 블록 안에 있던 1-1 ~ 1-4 · 4-1 · 4-2 · 2-1 · 3-1을 번호마다 블록으로 나눔(번호는 그대로)
+- 기존 디스크립션의 다른 정의 프레임 가리킴([TI-STN-08 / 팝업 정의] · [Import 정의] · [정책] · [텍스트 정렬 범례])은 지움 — 가리키던 내용은 Alert · Confirm 코드와 `정책 참고 : POL-TST-008`(규칙 2 ~ 7을 동작 줄에 풀어 씀)로 대신함 (모양만 바꿈)
+- 기존 디스크립션 제목의 Common UX 번호를 새 번호로 바꿈(케이스 3 3-3, 변경 확인 없음): COMM-5-s → COMM-5-p, COMM-5-m(목록) → COMM-5-g, COMM-5-l(Checkbox) → COMM-5-q, COMM-5-i → COMM-5-l, COMM-5-d 그대로. 새로 적은 공통 UX 참고: 버튼 COMM-5-c, Active 태그 COMM-5-j, 패널 정보 COMM-5-e · 스크롤 COMM-5-o, Import file COMM-5-m(1/4) — 그릴 때 컴포넌트가 맞지 않으면 고침
+- 목록 정렬: 기존 원본 목록 헤더에 정렬 아이콘 없음 → Default 정렬만 적음
+- LI-STN-08-P 화면 이름: 기존 패널 「Assay Pack Setting」, IA는 Details — 이 CID에는 반영 대기 항목이 없어(TI-STN-08-P-R01은 T만) 기존 그대로 둠
+- Q1 (Master Active 버튼): TI-STN-08 #4-1을 TI-STN-08-P 원본대로 「상세에서 [Active] · [Inactive] 버튼 비활성 (변경 불가)」로 씀
+
+### 용어 치환
+| 원래 표현 | 표준어 | 위치 |
+| --- | --- | --- |
+
 ## 질문 대기
 
 | 번호 (Q) | 질문 | 관련된 곳 (CID · 디스크립션 번호) | 논의 대상 | T · L 같음 | 풀린 날 · 어떻게 |
