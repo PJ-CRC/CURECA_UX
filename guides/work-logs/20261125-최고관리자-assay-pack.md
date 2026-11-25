@@ -83,7 +83,7 @@ started: 2026-11-25
 
 | # | 무엇 (절차 4번 순서 3 "뒤 단계로 넘김"의 1 ~ 4) | 관련된 곳 (CID · 디스크립션 번호) | 넘기는 곳 (2단계 / 3단계 질문 대기) | 이어진 번호 (Q · C · 논의 대상 ID / 근거로 풀림) |
 | --- | --- | --- | --- | --- |
-| 1 | 1. 기능 정의가 안 된 요소: 디스크립션이 정의를 다른 프레임([TI-STN-08 / 세부정의] · [팝업 정의] · [Import 정의] · [정책], [TI/LI-STN-08-P 유형별 정의])으로 넘김. 그 프레임 내용은 화면 MD에 옮기지 않았음 | TI-STN-08 #1-4 · #3 · #4-1, TI-STN-08-P #3 · #4, LI-STN-08 #1-4, LI-STN-08-P #3 | 2단계 (정책 · Alert과 대조) | 근거로 풀림 ([팝업 정의] · [Import 정의] → Alert 카탈로그 Alert_039 ~ 042 · Confirm_026 · 028 · 029 · 030 줄, [정책] → POL-TST-008 규칙 2 ~ 7, [유형별 정의]의 시약 정보 항목 → `reference/customer/assay-pack/README.md` 구조 요약) · Confirm_029 · 030 발생 조건이 정책과 다름 → DS-0012 · [세부정의] 검색 결과 없음 모습은 저장소에 근거 없음 → 3단계로 (Common UX 목록 빈 상태 정의로 그림, 기존 원본 프레임 7811:247618) |
+| 1 | 1. 기능 정의가 안 된 요소: 디스크립션이 정의를 다른 프레임([TI-STN-08 / 세부정의] · [팝업 정의] · [Import 정의] · [정책], [TI/LI-STN-08-P 유형별 정의])으로 넘김. 그 프레임 내용은 화면 MD에 옮기지 않았음 | TI-STN-08 #1-4 · #3 · #4-1, TI-STN-08-P #3 · #4, LI-STN-08 #1-4, LI-STN-08-P #3 | 2단계 (정책 · Alert과 대조) | 근거로 풀림 ([팝업 정의] · [Import 정의] → Alert 카탈로그 Alert_039 ~ 042 · Confirm_026 · 028 · 029 · 030 줄, [정책] → POL-TST-008 규칙 2 ~ 7, [유형별 정의]의 시약 정보 항목 → `reference/customer/assay-pack/README.md` 구조 요약) · Confirm_029 · 030 발생 조건이 정책과 다름 → DS-0012 · [세부정의] 검색 결과 없음 모습은 저장소에 근거 없음 → 3단계로 (Common UX 목록 빈 상태 정의로 그림, 기존 원본 프레임 7811:247618) → 3단계에서 기존 원본 [세부정의] 문구로 디스크립션 4에 옮김 (변경 확인 C4, L-IOS 문구는 Q4) |
 | 2 | 1. 기능 정의가 안 된 요소: TI-STN-08 #3 [Delete] 「삭제 & Toast」의 Toast 문구가 없음 (TI-STN-08-P #4에는 「The file has been deleted.」) | TI-STN-08 #3 | 3단계 질문 대기 | 근거로 풀림 (Alert 카탈로그 Confirm_026 버튼 동작 "Toast 노출 (The selected files have been deleted.)"). TI-STN-08-P #4 문구는 C2 |
 | 3 | 4. 요청과 기존 화면이 맞지 않는 곳: LI-STN-08 #4 「체크박스 없음」인데 화면에 Check Box/Square 인스턴스 1개가 있음 | LI-STN-08 #4 | 2단계 | 근거로 풀림 (그 1개는 검색 영역 #1-3 「Active only」 체크. 목록 체크박스 없음은 POL-TST-008 규칙 1 "L-IOS는 Main Mode에서 조회만"과 같음) |
 | 4 | 4. 요청과 기존 화면이 맞지 않는 곳: Master 파일의 Active 변경 버튼이 TI-STN-08 #4-1은 「상세에 변경 버튼 미노출」, TI-STN-08-P #3은 「[Active] · [Inactive] 버튼 비활성」으로 서로 다름 | TI-STN-08 #4-1 · TI-STN-08-P #3 | 2단계 | Q1 (POL-TST-008 규칙 6은 "바꿀 수 없음"만 정함) |
@@ -256,7 +256,7 @@ started: 2026-11-25
 | Q2 | Active로 바꾼 뒤(Confirm_029 [Activate]) Toast 문구 (Alert 카탈로그 동작에 "& Toast"만 있고 문구 없음. Confirm_030은 "{version} has been deactivated.") | TI-STN-08-P #4 | DS-0012 (같은 Confirm 줄) | T만 | |
 | Q3 | L-IOS 목록의 노출 개수 Dropdown을 둘지 (Common UX Basic Table: L-IOS는 노출 개수 고정. 기존 화면에는 10 items Dropdown이 있어 기존대로 그림) | LI-STN-08 #2 · LI-STN-08-P (뒤 목록) | | L만 | |
 | Q4 | L-IOS 목록 데이터 없음 문구 (기존 [LI-STN-08 / 세부정의] 프레임이 없어 같은 메뉴 TI-STN-08 문구 "No files found. Click Import to add a file."로 씀. L-IOS에는 [Import] 없음) | LI-STN-08 #4 | | L만 | |
-| Q5 | Status Base(COMM-5-j)에 맞는 Variant가 없어 Active는 Navy · Inactive는 Gray로 그림 (기존 Active 태그 검정, Color에 검정 없음) | TI-STN-08 #4-1 · TI-STN-08-P #3 · LI-STN-08-P #3 | | T · L 같음 | |
+| Q5 | Status Base(COMM-5-j)에 맞는 Variant가 없어 Active는 Navy · Inactive는 Gray로 그림 (기존 Active 태그 검정, Color에 검정 없음) | TI-STN-08 #4-1 · TI-STN-08-P #3 · LI-STN-08 #4-1 · LI-STN-08-P #3 | | T · L 같음 | |
 
 ## 변경 확인
 
