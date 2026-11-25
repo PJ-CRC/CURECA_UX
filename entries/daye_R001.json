@@ -2,8 +2,8 @@
   "id": "daye_R001",
   "kind": "request",
   "team": "cureca",
-  "status": "진행 중",
-  "at": "2026-11-25T17:14:13+09:00",
+  "status": "보류",
+  "at": "2026-11-25T17:14:27+09:00",
   "createdAt": "2026-11-25T17:12:10+09:00",
   "by": "정다예",
   "doneBy": "Claude",
@@ -17,13 +17,21 @@
   "type": "요청",
   "layout": "",
   "text": "R02 이어서 해줘",
-  "note": "작업 기준 확인 중",
+  "note": "작업규칙이 아직 적용되지 않아 보류합니다.\n- 답(「작업규칙 적용함」)을 받았지만, 이 PC 작업 기준(UX AI TEST · CURECA)에는 지금도 UX가이드(Common UX 가이드)만 있고 작업규칙은 비어 있습니다(guide_apply.json 마지막 변경 2026-11-10).\n- Figma는 고치지 않았습니다.\n- 확인 필요: UX 문서에서 「CURECA 작업규칙」(rules)을 [적용]했는지, 적용 뒤 저장됐는지 확인해 주세요.\n작업 기준: basis 2026-11-25 17:14 · 작업규칙 없음 · 정책서 없음 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 없음 · 화면 정의서 없음",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "작업 기준에 CURECA 작업규칙이 아직 없습니다. UX 문서에서 「CURECA 작업규칙」의 [적용]을 누른 뒤 이어서 진행할까요?",
+    "options": [
+      {
+        "label": "다시 적용함, 이어서 진행"
+      }
+    ],
+    "free": true
+  },
   "replies": [
     {
       "at": "2026-11-25T17:13:46+09:00",
