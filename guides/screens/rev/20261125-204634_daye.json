@@ -1,0 +1,12 @@
+{
+  "rev": "20261125-204634_daye",
+  "by": "정다예",
+  "at": "2026-11-25T20:46:34+09:00",
+  "note": "Test Order asis 화면 MD를 작업방 Test Order_asis 페이지 기준으로 새로 씀 (정다예)",
+  "base": "asis/test-management/LI-TMG-01.md",
+  "pc": "DAYE",
+  "req": "Test Order asis 화면 MD 다시 쓰기: 작업방 Test Order_asis 페이지에서 단순 추출해 지금 파일을 덮어씀(TI-TMG-01-P는 새로 만듦), 정다예가 새로 쓴 것으로 남김 (2026-11-25, Claude Code 대화로 추출)",
+  "jobId": "",
+  "file": "asis/test-management/LI-TMG-01.md",
+  "orig": true
+}
