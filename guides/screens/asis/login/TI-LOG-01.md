@@ -9,7 +9,7 @@ version: 2.0
 date: 2026.06.15
 author: 정다예
 client_mode: []
-user_type: []
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3538-12055
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: 5번이 T-IOS는 ~~[Exit] 버튼~~(제거됨), L-IOS는 [Shut Down] 버튼. Figma 프레임 이름 · 패널 CID는 `TI-LOG`(IA CID `TI-LOG-01`)
 - 호출하는 화면: [TI-LOG-P] 초기 비밀번호 재설정 (4 [Sign In] → 원문 표기 그대로)
 - 호출되는 곳: (원문에 없음)
+- 관련 정책: POL-ACC-003, POL-ACC-004, POL-ACC-005, POL-ACC-006, POL-ACC-007
 
 ## 기존 화면
 

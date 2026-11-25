@@ -9,7 +9,7 @@ version: 2.1.01
 date: 2026.08.07
 author: 정다예
 client_mode: []
-user_type: []
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3538-12202
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: 없음 (LI-LOG-02-P와 화면 글자 · 디스크립션이 같음)
 - 호출하는 화면: 로그인 화면 (2 [X] · 3 [Close] → 팝업이 닫힌 후 노출)
 - 호출되는 곳: 로그인 인증 실패 누적 10회 (1 노출 조건)
+- 관련 정책: POL-ACC-007
 
 ## 기존 화면
 

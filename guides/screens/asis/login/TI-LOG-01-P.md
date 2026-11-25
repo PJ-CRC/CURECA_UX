@@ -9,7 +9,7 @@ version: 2.1.11
 date: 2026.10.08
 author: 정다예
 client_mode: []
-user_type: []
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3538-11954
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: LI-LOG-01-P와 디스크립션이 다른 곳: 1-1 Placeholder(T `8-64 characters: Letters, numbers, and special characters` / L `Please enter a valid password.`), 1-1 정책 「각 문자 유형을 최소 1자 이상 포함」(T에만), 1-1 · 1-3 예시의 케이스 코드(T `TI-LOG-P/Case` / L `LI-PRF-01/Case`)
 - 호출하는 화면: [TI-LOG] 로그인 화면 (2 [Save] → 유효성 검증 완료 후 이동)
 - 호출되는 곳: [TI-LOG] Sign in 4 [Sign In] (원문 표기 `TI-LOG-P`)
+- 관련 정책: POL-ACC-003, POL-ACC-004, POL-ACC-005, POL-ACC-006, POL-ACC-007
 
 ## 기존 화면
 
