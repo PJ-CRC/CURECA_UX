@@ -29,7 +29,7 @@ started: 2026-11-25
 | 4. 수정 · 확인 | | | |
 | 5. 완료 | | | |
 
-이어서 작업할 곳: 3단계 · 화면 MD 5개(tobe) 씀 · 자리 잡음 (CID 5개, 섹션 · 메뉴 단위 표시), TI-STN-08부터 그릴 차례 (다시 읽을 곳: 3단계 flow/3-design-case3.md 흐름 · 3-4 · 공통 3 · 공통 4 / 작업 기록 "요건 목록" 요건 1 · "설계" 화면별 작업 · 원본 줄 · "질문 대기" · "변경 확인" / 화면 MD screens/tobe/setting/TI-STN-08.md · LI-STN-08.md). 그리기 전에 project.json editablePageName이 「Setting  Ⓛ / Ⓣ_To Be」인지 확인 (R002 · 2026-11-25 Claude, R001 작업 이어 받음)
+이어서 작업할 곳: 3단계 · TI-STN-08 그림 (기획 프레임 `3499:6`, 패널 · 사용자 확인 목록 `3500:699` · 라벨까지), LI-STN-08 그릴 차례 — 흐름 6: TI-STN-08을 복제해 LI-STN-08 섹션 `3492:25`에 두고 L 화면 MD대로 다른 점만 바꿈 (다시 읽을 곳: 3단계 flow/3-design-case3.md 흐름 · 공통 3-5 L 복제 · 3-10 / flow/3-design.md 공통 3-5 · 3-10 / 작업 기록 "설계" 화면별 작업 · 컴포넌트 없이 그린 요소 · "질문 대기" · "변경 확인" / 화면 MD screens/tobe/setting/LI-STN-08.md). 그리기 전에 project.json editablePageName이 「Setting  Ⓛ / Ⓣ_To Be」인지 확인 (R002 · 2026-11-25 Claude, R001 작업 이어 받음)
 
 ## 요청
 
