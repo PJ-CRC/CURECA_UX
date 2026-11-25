@@ -1,5 +1,5 @@
 {
-  "reportAt": "2026-11-25T21:24:54+09:00",
+  "reportAt": "2026-11-25T21:25:43+09:00",
   "pc": "BREX_01",
   "slug": "brex-01",
   "user": "서보경",
@@ -8,7 +8,7 @@
   "alive": true,
   "status": "login",
   "msg": "Claude Code CLI에 로그인되어 있지 않습니다. 시작 안내 5단계(CLI) 「Claude 로그인 · Figma 연결」 창에서 /login을 하세요.",
-  "statusAt": "2026-11-25T21:24:52+09:00",
+  "statusAt": "2026-11-25T21:25:37+09:00",
   "claude": "따로 설치",
   "claudeWay": "app",
   "autoWatch": false,
