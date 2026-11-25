@@ -190,11 +190,16 @@ started: 2026-11-25
 
 | 번호 (Q) | 질문 | 관련된 곳 (CID · 디스크립션 번호) | 논의 대상 | T · L 같음 | 풀린 날 · 어떻게 |
 | --- | --- | --- | --- | --- | --- |
+| Q1 | Master 파일의 Active 변경 버튼 모습 (TI-STN-08-P #3은 [Active] · [Inactive] 비활성, TI-STN-08 #4-1은 상세에 미노출. POL-TST-008 규칙 6은 "바꿀 수 없음"만 정함 — 버튼이 있는 화면인 TI-STN-08-P 원본대로 비활성으로 그리고 TI-STN-08 #4-1도 같게 씀) | TI-STN-08 #4-1 · TI-STN-08-P #3 | | T만 (L-IOS는 버튼 없음) | |
+| Q2 | Active로 바꾼 뒤(Confirm_029 [Activate]) Toast 문구 (Alert 카탈로그 동작에 "& Toast"만 있고 문구 없음. Confirm_030은 "{version} has been deactivated.") | TI-STN-08-P #4 | DS-0012 (같은 Confirm 줄) | T만 | |
 
 ## 변경 확인
 
 | 번호 (C) | 기존 화면 | 바꿔 그린 것 | 관련된 곳 (CID · 디스크립션 번호) | 근거 | T · L 같음 | 업데이트 메모 (O / -) | 확인한 날 · 답 (맞음 / 되돌림) |
 | --- | --- | --- | --- | --- | --- | --- | --- |
+| C1 | 패널 [Delete] Confirm 제목 "Delete the selected file?" | Confirm_026 제목을 카탈로그대로 "Delete the selected files?" | TI-STN-08-P #4 | (Alert 카탈로그 Confirm_026) | T만 | O | |
+| C2 | 패널 [Delete] 뒤 Toast "The file has been deleted." | Toast 문구를 카탈로그대로 "The selected files have been deleted." | TI-STN-08-P #4 | (Alert 카탈로그 Confirm_026 버튼 동작) | T만 | O | |
+| C3 | [Save] → Confirm_029 · 030 확인 시 반영 (Toast 없음) | 반영 뒤 Toast 노출 (Deactivate: "{version} has been deactivated.", Activate 문구는 Q2) | TI-STN-08-P #4 | (Alert 카탈로그 Confirm_029 · 030 버튼 동작) | T만 | O | |
 
 ## 검토 질의
 
