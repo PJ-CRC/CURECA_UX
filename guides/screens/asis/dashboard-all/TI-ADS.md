@@ -9,7 +9,7 @@ version: 2.1.14
 date: 2026.10.30
 author: 서보경
 client_mode: []
-user_type: []
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-39820
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: T-IOS 단독 화면 (IA에 L 짝 없음)
 - 호출하는 화면: [TI-ADS-P] Edit Display Name Popup (3 수정 아이콘), [TI-DAS] Dashboard (4 [Enter])
 - 호출되는 곳: LNB `Dashboard(All)`
+- 관련 정책: POL-COM-005 (여러 대 CURECA, 2대 이상 고객만), POL-EQP-001 (Instrument Status), POL-EQP-009 (Instrument Info의 Enabled Module 수), POL-SMP-009
 
 ## 기존 화면
 

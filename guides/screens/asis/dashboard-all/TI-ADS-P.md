@@ -9,7 +9,7 @@ version: 2.1.14
 date: 2026.10.30
 author: 서보경
 client_mode: []
-user_type: []
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-39234
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: T-IOS 단독 화면 (IA에 L 짝 없음)
 - 호출하는 화면: (원문에 없음)
 - 호출되는 곳: [TI-ADS] Dashboard(All) 3 Display Name 수정 아이콘
+- 관련 정책: 없음
 
 ## 기존 화면
 
