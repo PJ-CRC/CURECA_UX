@@ -3,47 +3,51 @@ cid: TI-INF-03-01
 pair_cid:
 tl_relation: 단독
 title: Run Report
-path: Information > Report
+path: Information > Run Report
 type: Page
 version: 2.1.14
-date: 2026-10-30
+date: 2026.10.30
 author: 정다예
 client_mode: []
-user_type: [Service, Admin, User]
+user_type: []
 policies: []
-rules_version:
-provisional: []
-flags: []
 source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=6071-650739
-figma_region: 2.1 2차
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-503700
 ---
 # TI-INF-03-01 Run Report
 
-> 기존 화면(기존 작업방 Profile/Information 페이지, 2.1 2차 영역, Ver 2.1.14)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 `Run Report_asis` 페이지, Ver 2.1.14)을 2026-11-26에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
 
-- T-IOS 전용 화면. IA 화면 이름은 "Report", Figma 화면 이름과 경로는 "Run Report" (Information > Run Report)
-- User Type: `policy/permission-matrix.csv`에 Information > Report 줄이 없음 (Program만 있음)
-- 관련 정책: POL-SMP-004
-- 호출하는 화면: Run Report Detail (TI-INF-03-02, 새 탭 PDF 뷰어)
+- T/L 차이: T-IOS 단독 (IA에 L 짝 없음)
+- 호출하는 화면: [TI-INF-03-02] Run Report Detail (2-2 View, 브라우저 새 탭 PDF 뷰어)
+- 호출되는 곳: LNB > Information > Run Report
 
 ## 기존 화면
 
+<!-- `{메뉴}_asis` 페이지에 있는 그대로 옮깁니다. 고치거나 정리하지 않습니다. 틀린 곳 · 정책과 다른 곳도 그대로 옮깁니다. 그 화면의 To-Be 작업 1단계에서 읽으며 찾아 그 작업에서 고칩니다(`flow/1-requirements.md` 절차 4번 순서 3 "뒤 단계로 넘김"의 5). -->
+
 ### 화면 글자
 
-- (GNB) Running | Instrument | L-IOS | D.A PC | Event | Error 3 | Warning 2 | 2026-04-10 11:30 | TIOS
-- (LNB) Dashboard | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis | Setting | Information (Run Report | Program | Manual) | Keira Knightley
-- Run Report
-- Report ID, Batch ID, Run By | End Status: All | Generated Date: 2026-03-05 ~ 2026-03-11 | Reset | Search
-- Items 10 items | Download
-- □ | Report ID | Batch ID | Run By | End Status | Generated Date/Time
-- RPT-2026-0901-005 | BAT-2026-0901-024 | seegene123 | Failed | 2026-09-01 10:22:48 | View
-- RPT-2026-0901-004 | BAT-2026-0901-023 | seegene126 | Completed | 2026-09-01 14:22:48 | View
-- (같은 형식의 행 8개 더, End Status는 Completed 또는 Failed)
+- (GNB) Running | Instrument | L-IOS | D.A PC | Event | Error 3 | Warning 2 | 2026-04-10 11:30
+- (LNB) TIOS | Run Report | Dashboard | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis | Setting | Information (Run Report | Program Info) | User Manual | Keira Knightley
+- 검색: `Report ID, Batch ID, Run By` | End Status All | Generated Date 2026-03-05 ~ 2026-03-11 | Reset | Search
+- Items 638 | 10 items | Download
+- 목록: □ | Report ID | Batch ID | Run By | End Status | Generated Date/Time | (View)
+  - RPT-2026-0901-005 | BAT-2026-0901-024 | seegene123 | Failed | 2026-09-01 10:22:48 | View
+  - RPT-2026-0901-004 | BAT-2026-0901-023 | seegene126 | Completed | 2026-09-01 14:22:48 | View
+  - RPT-2026-0901-003 | BAT-2026-0901-022 | seegene126 | Completed | 2026-09-01 16:22:48 | View
+  - RPT-2026-0901-002 | BAT-2026-0901-021 | seegene123 | Completed | 2026-09-01 18:22:48 | View
+  - RPT-2026-0901-001 | BAT-2026-0901-020 | seegene123 | Failed | 2026-09-01 22:22:48 | View
+  - RPT-2026-0831-004 | BAT-2026-0901-019 | seegene123 | Completed | 2026-08-31 10:22:48 | View
+  - RPT-2026-0831-003 | BAT-2026-0901-018 | seegene126 | Failed | 2026-08-31 12:22:48 | View
+  - RPT-2026-0831-002 | BAT-2026-0901-017 | seegene126 | Completed | 2026-08-31 14:22:48 | View
+  - RPT-2026-0831-001 | BAT-2026-0901-016 | seegene123 | Completed | 2026-08-31 18:22:48 | View
+  - RPT-2026-0830-007 | BAT-2026-0901-015 | seegene123 | Completed | 2026-08-30 18:22:48 | View
+- 페이지: 1 ~ 10
 
 ### 사용 컴포넌트
 
-Square (13), Table (11), Form/CheckBox (10), Table/Filled Table Cell (10), Description Number (9), 1 Depth (8), Title (6), Dropdown Outlined (3), Form/Input Text Box (1), Page number (1)
+Table (24), Square (13), Form/CheckBox (10), Table/Filled Table  Cell (10), Description Number (9), 1 Depth (8), Icon (6), Title (6), Dropdown Outlined (3), Profile (1), Interface/Dots (1), Frame (1) (표 칸 Frame 인스턴스 3종 각 10개 제외)
 
 ### 디스크립션 (원문)
 
@@ -133,3 +137,12 @@ Square (13), Table (11), Form/CheckBox (10), Table/Filled Table Cell (10), Descr
 #### 3. 페이지네이션
 
 - 공통 UX 참고 : COMM-5-i
+
+### 케이스
+
+<!-- `{메뉴}_asis` 페이지의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
+
+케이스 프레임이 없습니다.
+
+| Case | 제목 | 조건 | 프레임 |
+| --- | --- | --- | --- |
