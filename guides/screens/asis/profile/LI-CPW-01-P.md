@@ -8,8 +8,8 @@ type: Popup
 version: 2.1.03
 date: 2026.08.21
 author: 정다예
-client_mode: []
-user_type: []
+client_mode: [Main Mode, Console Mode, MS Mode]
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-495464
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: L-IOS에는 Language · Event notifications가 없음(T-IOS TI-CPW-01-P의 1-4 · 1-5). 1-3 Email 입력 조건에 「필수 값 아님 (Null 허용) / 1자 이상 입력 시 유효성 검증」이 L에만 있음
 - 호출하는 화면: [LI-CPW-02-P] Change Password (1 Tab), Confirm_007 (2 Cancel), Confirm_010 (3 Save)
 - 호출되는 곳: LNB 내 Profile 영역 선택 (0)
+- 관련 정책: POL-ACC-006, POL-ACC-009
 - 버전 메모(프레임 오른쪽 위): V2.1.01 update / X 버튼 --> Cancel 버튼으로 변경 · v2.1.03 update / 이름 및 이메일 수정 기능 추가
 
 ## 기존 화면

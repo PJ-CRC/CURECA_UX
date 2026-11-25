@@ -9,7 +9,7 @@ version: 2.1.03
 date: 2026.08.21
 author: 정다예
 client_mode: []
-user_type: []
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-495389
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: LI-CPW-02-P와 화면 · 디스크립션이 같음(케이스 참고 줄의 CID만 다름)
 - 호출하는 화면: [TI-CPW-01-P] General (1 Tab), Confirm_007 (2 Cancel), Confirm_010 (3 Save)
 - 호출되는 곳: [TI-CPW-01-P] 1 Tab Change Password
+- 관련 정책: POL-ACC-006, POL-ACC-009
 
 ## 기존 화면
 
