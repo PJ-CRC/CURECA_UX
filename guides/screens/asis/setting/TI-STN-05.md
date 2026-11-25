@@ -6,34 +6,50 @@ title: Account Setting
 path: Setting > Account Setting
 type: Page
 version: 2.1.03
-date: 2026-08-21
+date: 2026.08.21
 author: 정다예
 client_mode: []
-user_type: [Service, Admin]
+user_type: []
 policies: []
-rules_version:
-provisional: [PV-0002]
-flags: []
 source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=568-57371
-figma_region: 2.1 2차
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-579110
 ---
 # TI-STN-05 Account Setting
 
-> 기존 화면(기존 작업방 Setting 페이지, 2.1 2차 영역, Ver 2.1.03)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 `Account Setting_asis` 페이지, Ver 2.1.03)을 2026-11-26에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
 
-- T-IOS 전용 메뉴. 여기서 만든 계정을 T-IOS와 L-IOS에서 함께 씀
-- 관련 정책: POL-ACC-001, POL-ACC-002, POL-ACC-005, POL-ACC-006 / 임시 정책 PV-0002
-- 호출하는 화면: Create New User (TI-STN-05-01-P), User Details (TI-STN-05-03-P)
+- T/L 차이: T-IOS 단독 (T-IOS와 L-IOS의 사용자 계정을 함께 관리)
+- 호출하는 화면: [TI-STN-05-02-P] 계정 상세 팝업 (2 행 클릭, 원문 그대로. 같은 페이지의 User Details 프레임은 TI-STN-05-03-P), Confirm_015 (3 Delete), [TI-STN-05-01-P] Create New User (4 Add User)
+- 호출되는 곳: LNB > Setting > Account Setting
+- 버전 메모(프레임 오른쪽 위 `ver`): v2.1.03 update / 이름, 이메일 정보 추가
+- 기획 프레임 밖에는 섹션 `이메일 연동 Flow`([3543:578983](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-578983))가 있습니다(옮기지 않음).
 
 ## 기존 화면
 
+<!-- `{메뉴}_asis` 페이지에 있는 그대로 옮깁니다. 고치거나 정리하지 않습니다. 틀린 곳 · 정책과 다른 곳도 그대로 옮깁니다. 그 화면의 To-Be 작업 1단계에서 읽으며 찾아 그 작업에서 고칩니다(`flow/1-requirements.md` 절차 4번 순서 3 "뒤 단계로 넘김"의 5). -->
+
 ### 화면 글자
 
-- 검색: User ID, User Name, Email | User Type (All) | Search
-- Items | Delete | Add User
-- 목록 헤더: □ | User ID | User Type | User Name | Email | Registration Date | Last Login Date | Modified Date/Time
-- 목록 예: User 1 | Admin | James Smith | john.doe@seegene.com | 2026-04-24 11:10:20 … User 10 | User | - | - | 2026-04-24 11:10:20
+- (GNB) Running | Instrument | L-IOS | D.A PC | Event | Error 3 | Warning 2 | 2026-04-10 11:30
+- (LNB) TIOS | Account Setting | Dashboard | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis | Setting | Policy Setting | Protocol Setting | LIS Setting | System Setting | Account Setting | Information | Manual | Keira Knightley
+- 검색: `User ID, User Name, Email` | User Type All | Search
+- Items 638 | Delete | Add User
+- 목록: □ | User ID | User Type | User Name | Email | Registration Date | Last Login Date | Modified Date/Time
+  - User 1 | Admin | James Smith | john.doe@seegene.com | 2026-03-05 | 2026-03-07 | 2026-04-24 11:10:20
+  - User 2 | Admin | Michael Brown | david.jones@seegene.com | (같은 날짜)
+  - User 3 | Admin | Sarah Williams | -
+  - User 4 | Admin | David Jones | -
+  - User 5 | User | - | emily.j@seegene.com
+  - User 6 | User | - | sarah.williams@seegene.com
+  - User 7 | User | - | jessica.m@seegene.com
+  - User 8 | User | Jessica Miller | daniel.davis@seegene.com
+  - User 9 | User | - | -
+  - User 10 | User | - | -
+- 페이지: 1 ~ 10
+
+### 사용 컴포넌트
+
+Table (11), Form/CheckBox (10), Arrow/Chevron_Right (10), Title (8), Description Number (8), 1 Depth (6), 2 Depth (5), Square (4), Form/Input Text Box (1), Dropdown Outlined (1), Page number (1), Arrow/Chevron_Up (1), Interface/Setting_Outlined (1), Layout/Align_Right_05_Solid (1), Frame (1) (표 칸 Frame 인스턴스 6종 각 10개 제외)
 
 ### 디스크립션 (원문)
 
@@ -76,20 +92,33 @@ figma_region: 2.1 2차
 
 #### 2-1. 리스트 표출 항목
 
-- User ID: User 생성 시 ID 필드에 입력한 정보. 생성 시 중복 여부 체크 필요
-- User Type: User 생성 시 설정한 유형 정보. 표출 항목 : Admin, User
-- User Name: User 생성 시 Name 필드에 입력한 정보. Null 값일 경우 ‘-’로 노출
-- Email: User 생성 시 Email 필드에 입력한 정보. Null 값일 경우 ‘-’로 노출
-- Registration Date: 최초 계정 생성 일자 정보
-- Last Login Date: 해당 계정이 L-IOS 또는 T-IOS에 마지막으로 로그인한 일자 정보
-- Modified Date/Time: 계정을 최종으로 수정한 일시 정보. 팝업 내 [Save] 버튼 클릭 완료 시점
+- User ID
+- User 생성 시 ID 필드에 입력한 정보
+- 생성 시 중복 여부 체크 필요
+- User Type
+- User 생성 시 설정한 유형 정보
+- 표출 항목 : Admin, User
+- User Name
+- User 생성 시 Name 필드에 입력한 정보
+- Null 값일 경우 ‘-’로 노출
+- Email
+- User 생성 시 Email 필드에 입력한 정보
+- Null 값일 경우 ‘-’로 노출
+- Registration Date
+- 최초 계정 생성 일자 정보
+- Last Login Date
+- 해당 계정이 L-IOS 또는 T-IOS에 마지막으로 로그인한 일자 정보
+- Modified Date/Time
+- 계정을 최종으로 수정한 일시 정보
+- 팝업 내 [Save] 버튼 클릭 완료 시점
 
 #### 3. [Delete] 버튼
 
 - 정의 : User List를 단일 또는 다중 선택하여 삭제하는 기능
 - 동작
 - Default : Disabled 상태
-- 리스트 내 체크박스에서 1개 이상의 항목이 선택되는 즉시 [Delete] 버튼이 Enabled 상태로 전환
+- 리스트 내 체크박스에서 1개 이상의 항목이 선택되는 즉시
+  - [Delete] 버튼이 Enabled 상태로 전환
 - [Delete] 버튼 클릭 시 팝업 노출 : Confirm_015
 
 #### 4. [Add User] 버튼
@@ -101,3 +130,12 @@ figma_region: 2.1 2차
 #### 5. 페이지네이션
 
 - 공통 UX 참고 : COMM-5-i
+
+### 케이스
+
+<!-- `{메뉴}_asis` 페이지의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
+
+이 화면만의 케이스 프레임은 없습니다.
+
+| Case | 제목 | 조건 | 프레임 |
+| --- | --- | --- | --- |
