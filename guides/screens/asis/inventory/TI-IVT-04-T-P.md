@@ -118,24 +118,3 @@ figma_region: 2.1 2차
 #### 6. [X] 버튼
 
 - 클릭 시, 팝업이 닫힌 후 기존 화면 노출
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 화면 정보 | 프레임 이름과 화면 정보 CID "TI-IVT-04-T" | TI-IVT-04-T-P | `ia/ia-screens.csv` | 대기 |
-| R02 | 디스크립션 | "유효기한", "유효기한이 지난" | Expiration Date, Expired | `glossary/terms.csv` Expiration Date, 시약 만료 상태 | 대기 |
-| R03 | 디스크립션 | 2-1 Used Counts "흡입한 회수" | 흡입한 횟수 | 오타 | 대기 |
-| R04 | 디스크립션 | 2-1 Remaining Rxns "남은 반응 수 rxns 표기"와 "표기 방식 : 반응 수T"가 함께 있음 ("T"의 뜻이 없음) | 단위 하나로 (rxns) | 디스크립션, COMM-4-b | 대기 (확인 필요) |
-| R05 | 디스크립션 | 2-1 Location in storage "해당 소모품의 위치 값" (Reagent 화면) | 해당 Reagent의 위치 값 | Consumables Popup에서 복사 | 대기 |
-| R06 | 디스크립션 | 2-1 "DX 서랍식 입고", "시약", "바코드", "튜브" | Dx 시스템 Storage의 Drawer, Reagent, Barcode, Tube | `glossary/terms.csv` | 대기 |
-| R07 | 화면 글자 | "2,010rxns  (22 tubes)" | 2,010 rxns (22 tubes) | 띄어쓰기 | 대기 |
-| R08 | 화면 글자 | 예시 줄에 Inbound Date, Expiration Date 값이 없음 | 날짜 예시를 넣음 | 화면 글자 | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.1.04 | 2026-08-28 | (버전 메모 없음) | 서보경 | Figma 화면 정보 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |
-| | 2026-11-18 | 연동 변경: Module · Unit 이름 바꿈(Prep Consumable Storage → Consumable Storage, Sample Preparation Module → Sample Pre-treatment, Sample Pretreatment → Sample Processing, Sample Aliquot → Sample Aliquoting). 검사 단계 · Reagent 태그 · Prep 시스템의 Sample Preparation은 그대로 | 서보경 | `glossary/modules.csv`, `glossary/module-units.csv` (2026-11-18) |

@@ -125,24 +125,3 @@ Frame/Instrument_Status (32), Tag Status (16), Description (15), Description Num
 #### 7-1. [+More] 클릭
 
 - Inventory 메뉴의 Summary tab으로 이동 및 ‘Waste Bin/Bottle’ 섹션으로 포커싱되어 이동됨
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 표기 | Inventory Status 탭 "Empty | Low" | Insufficient / Low (디스크립션 6과 LI-DAS는 Insufficient) | `glossary/status-values.csv` 재고 상태 | 대기 |
-| R02 | 표기 | "270 rxns (3 sockets)" (LI-DAS는 "3 sets") | Reagent 수량 표기 규칙으로 하나로 통일 | `glossary/glossary.md` 표기 규칙, Common UX COMM-4-b | 대기 (확인 필요) |
-| R03 | 디스크립션 | 4 "CURECA 전체 구동 상태", "전체 Cureca 구동 상태 값" | 장비 통합 상태 (POL-EQP-001·002 참조) | `glossary/terms.csv` | 대기 |
-| R04 | 디스크립션 | "Cureca", "Lis" | CURECA, LIS | `glossary/terms.csv` | 대기 |
-| R05 | 디스크립션 | 번호 2가 없음 (1 다음 3) | 번호 정리 | 디스크립션 | 대기 |
-| R06 | 디스크립션 | "Dashboard Info 페이지"를 참고하라고만 적음 | 정의는 정책 ID로 참조 (Today’s Orders 집계 기준은 SMP·TST 정책, 노출 조건은 INV 정책을 쓸 때 옮김) | 헌법 3조 | 대기 |
-| R07 | 표기 | Module 이름과 번호 붙여 씀: High-throughput Extraction(1), PCR Setup(1) | High-throughput Extraction (1) | 이름 (번호) 띄어쓰기 | 대기 |
-| R08 | 문구 | Event 툴팁 예시 "ER-0112, 유닛의 상태를 확인해주세요." (한국어) | 영어 화면 문구로 | `old-rules/language-set.md` | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.1.14 | 2026-10-30 | 명칭 변경: Requirements for Run Completion → Inventory status | 서보경 | Figma 버전 메모 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |
-| | 2026-11-18 | 연동 변경: Module · Unit 이름 바꿈(Prep Consumable Storage → Consumable Storage, Sample Preparation Module → Sample Pre-treatment, Sample Pretreatment → Sample Processing, Sample Aliquot → Sample Aliquoting). 검사 단계 · Reagent 태그 · Prep 시스템의 Sample Preparation은 그대로 | 서보경 | `glossary/modules.csv`, `glossary/module-units.csv` (2026-11-18) |

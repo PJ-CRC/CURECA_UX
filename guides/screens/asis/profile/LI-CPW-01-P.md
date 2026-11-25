@@ -60,17 +60,3 @@ figma_region: 2.1 2차
 #### 2 ~ 3
 
 - 원문은 TI-CPW-01-P 2 ~ 3과 같음 (Cancel → Confirm_007, Save → Confirm_010)
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 정책 반영 | Email "필수 값 아님" (TI-CPW-01-P에는 없음) | T/L 같게 (ACC 정책) | TI-CPW-01-P | 대기 (확인 필요) |
-| R02 | 화면 글자 | ID 칸 예시 값이 "John Doe" | ID 예시 값으로 | ID 조건 | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.1.03 | 2026-08-21 | (버전 메모 없음) | 정다예 | Figma 화면 정보 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

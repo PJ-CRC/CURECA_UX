@@ -1,0 +1,36 @@
+{
+  "jobId": "J145",
+  "pc": "DAYE",
+  "by": "정다예",
+  "at": "2026-11-23T16:07:32+09:00",
+  "status": "반영 안 함",
+  "note": "정다예가 반영하지 않기로 함",
+  "scope": "",
+  "fileKey": "etCQFF3CTf1EA6C79d4BBf",
+  "items": [
+    {
+      "nodeId": "3074:93924",
+      "frame": "TI-SPT-01",
+      "page": "Sample Tracking Ⓛ / Ⓣ",
+      "change": "T-IOS 화면인데 LNB가 L-IOS 구성(1Depth에 Material Setup, 아래쪽 Quick Start · Run · Shut Down)이다. 가이드 3-a T-IOS대로 1Depth를 Dashboard · Test Management · Sample Tracking · Instrument · Inventory · Statistical Analysis · Setting · Information으로, 아래쪽은 User Name만(종료 버튼 없음) 두도록 바꾼다. 같은 이름 프레임 3074:98440 · 3074:98760도 같다."
+    },
+    {
+      "nodeId": "3074:94241",
+      "frame": "TI-SPT-01-01",
+      "page": "Sample Tracking Ⓛ / Ⓣ",
+      "change": "T-IOS 화면인데 LNB가 L-IOS 구성(1Depth에 Material Setup, 아래쪽 Quick Start · Run · Shut Down)이다. 가이드 3-a T-IOS대로 1Depth를 Dashboard · Test Management · Sample Tracking · Instrument · Inventory · Statistical Analysis · Setting · Information으로, 아래쪽은 User Name만(종료 버튼 없음) 두도록 바꾼다."
+    },
+    {
+      "nodeId": "3074:89757",
+      "frame": "TI-SPT-01-02",
+      "page": "Sample Tracking Ⓛ / Ⓣ",
+      "change": "LNB Setting 2Depth의 「Assay Pack Setting」을 가이드 표기 「AssayPack Setting」으로 바꾼다. 같은 이름 프레임 3074:89901도 같다."
+    },
+    {
+      "nodeId": "3074:90132",
+      "frame": "TI-SPT-01-03",
+      "page": "Sample Tracking Ⓛ / Ⓣ",
+      "change": "LNB Setting 2Depth의 「Assay Pack Setting」을 가이드 표기 「AssayPack Setting」으로 바꾼다. 같은 이름 프레임 3074:90403도 같다."
+    }
+  ]
+}

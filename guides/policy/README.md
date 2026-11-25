@@ -1,6 +1,6 @@
 # 정책
 
-정책서와, 우리가 고객사와 정해 관리하는 기준 자료를 둡니다. 모두 공통 자료라 협의 대기 → 주간 미팅 합의를 거쳐 바뀝니다(`old-rules/change-flow.md`).
+정책서와, 우리가 고객사와 정해 관리하는 기준 자료를 둡니다. 모두 공통 자료라 논의 대상으로 올려 결정된 것만 반영합니다(헌법 4조, `reference-rules/discussions.md`).
 
 > 상태: 정책 ID는 `POL-영역-###` (2026-11-02 결정, `old-rules/policy-writing.md`). 정책 파일은 `policy/<영역 코드 소문자>/`에 둡니다. EQP부터 작성 중이며 진행 상황은 `archive/background/policy-refinement.md`.
 

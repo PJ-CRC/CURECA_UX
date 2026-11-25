@@ -1,0 +1,27 @@
+# 끝난 반영 대기 항목
+
+> 반영을 마쳤거나(`반영 완료`) 제외한(`제외`) 항목입니다. 따로 요청할 때만 읽습니다. 쓰는 법은 [reference-rules/pending-changes.md](../reference-rules/pending-changes.md)입니다.
+
+| ID | 메뉴 | 화면 (CID) | 타입 | 변경 전 | 변경 후 | 근거 | 상태 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| LI-EVT-01-P-R01 | Event History | Event History Detail (LI-EVT-01-P) | 기준 자료 변경 | Notes "최대 500자 → 300자" | 300자 (500자는 취소선으로 제거됨) | Figma 취소선, POL-EVT-002 | 제외 (2026-11-04, 취소선) |
+| LI-EVT-P-R01 | Event History | Event History (LI-EVT-P) | 점검 발견 | 1·3에 Event Type 옛 값과 새 값이 함께 있음 | 옛 값은 취소선으로 이미 제거됨 | Figma 취소선 | 제외 (2026-11-04, 취소선) |
+| TI-EVT-01-P-R04 | Event History | Event History Detail (TI-EVT-01-P) | 기준 자료 변경 | Effect의 참고 문서 "[SRD] CURECA Prep 및 Dx 장비 Event 정의"가 기준 출처 목록에 없음 | 값은 고객·개발사가 관리하는 문서를 따름. 저장소에 넣지 않음 | POL-EVT-001 규칙 7 | 제외 (2026-11-04, 바꿀 것 칸 참고) |
+| TI-EVT-P-R01 | Event History | Event History (TI-EVT-P) | 기준 자료 변경 | 5-1 "Confirm_L_003", "Alert_L_003". Alert_003은 알럿 관리 페이지에서 삭제됨 | 취소선으로 이미 제거됨. T-IOS는 Status 변경과 일괄 Closed가 없음 | Figma 취소선, POL-EVT-002 | 제외 (2026-11-04, 취소선) |
+| TI-EVT-P-R02 | Event History | Event History (TI-EVT-P) | 기준 자료 변경 | 5 체크박스 + [Mark as Closed]. 화면 글자에는 버튼이 없음. L-IOS는 [Mark all as Closed] | 취소선으로 이미 제거됨. T-IOS는 Status 변경과 일괄 Closed가 없음 | Figma 취소선, POL-EVT-002 | 제외 (2026-11-04, 취소선) |
+| LI-INS-02-T-R02 | Instruments | All Tab (LI-INS-02-T) | 기준 자료 변경 | 2-1 Error Rate가 남아 있음. 버전 메모 v2.1.01은 "Error Rate 제거(2-1)" | 취소선으로 이미 제거됨. 표시 위치는 고객 논의 중(CA-0001) | POL-EQP-010 | 제외 (2026-11-04, 취소선) |
+| LI-INS-02-T-R04 | Instruments | All Tab (LI-INS-02-T) | 점검 발견 | Module Details (Sample Pre-treatment): Tip Waste Bin (Upper/Lower), Film Waste Bin (Upper/Lower) | Waste Bin (Upper), Waste Bin (Lower) | 같음 | 제외 (2026-11-19, 씨젠 상태 정보 261119에서 Tip · Film Waste Bin이 로체시스템즈 장비의 Unit으로 생김. 폐기함은 설치된 제조사의 Unit으로 표기함, DS-0005) |
+| LI-INS-02-T-R07 | Instruments | All Tab (LI-INS-02-T) | 점검 발견 | 4-1 [Run-time Info] 설명이 남아 있음 | 취소선으로 이미 제거됨 | Figma 취소선 | 제외 (2026-11-04, 취소선) |
+| TI-INS-02-T-R02 | Instruments | All Tab (TI-INS-02-T) | 기준 자료 변경 | 2-1 Error Rate가 남아 있음. 버전 메모 v2.1.01은 "Error Rate 제거(2-1)" | 취소선으로 이미 제거됨. 표시 위치는 고객 논의 중(CA-0001) | POL-EQP-010 | 제외 (2026-11-04, 취소선) |
+| TI-INS-02-T-R04 | Instruments | All Tab (TI-INS-02-T) | 점검 발견 | Module Details (Sample Pre-treatment): Tip Waste Bin (Upper/Lower), Film Waste Bin (Upper/Lower) | Waste Bin (Upper), Waste Bin (Lower) | 같음 | 제외 (2026-11-19, 씨젠 상태 정보 261119에서 Tip · Film Waste Bin이 로체시스템즈 장비의 Unit으로 생김. 폐기함은 설치된 제조사의 Unit으로 표기함, DS-0005) |
+| TI-INS-02-T-R07 | Instruments | All Tab (TI-INS-02-T) | 점검 발견 | 4-1 [Run-time Info], 4-2 [Enable setting] 설명이 남아 있음 | 취소선으로 이미 제거됨 | Figma 취소선 | 제외 (2026-11-04, 취소선) |
+| TI-INS-02-T-R08 | Instruments | All Tab (TI-INS-02-T) | 기준 자료 변경 | 2-2 "[Enable setting → Management] 버튼 ... 아래 조건 모두 제거 요청" 메모 | 옛 조건은 취소선으로 제거됨. [Management]를 누르면 조건 없이 Popup을 엶 | Figma 취소선, POL-EQP-009 | 제외 (2026-11-04, 취소선) |
+| LI-LOG-01-R03 | Login | Sign in (LI-LOG-01) | 기준 자료 변경 | 로그인 전 [Shut Down]은 모든 사용자에게 보임 | 맞음. 누구나 쓸 수 있음 | POL-ACC-004 규칙 5 | 제외 (2026-11-04, 바꿀 것 칸 참고) |
+| TI-LOG-01-R02 | Login | Sign in (TI-LOG-01) | 기준 자료 변경 | 5 [Exit] 버튼 설명 | Figma에서 취소선으로 제거된 항목. 다시 그릴 때 넣지 않음 | 2026-11-02 사용자 확인, POL-ACC-004 규칙 6 | 제외 (2026-11-04, 바꿀 것 칸 참고) |
+| LI-TSS-RGE-01-R06 | Material Setup | View Trolley Info (LI-TSS-RGE-01) | 기준 자료 변경 | L-IOS Client Mode 미정 (Material Setup 다른 메뉴는 TSS 또는 Console) | 확인 | `policy/client-mode-matrix.csv` | 반영 완료 (2026-11-12, 연동 변경 · DS-0001) |
+| LI-STN-02-R04 | Setting | System Setting (LI-STN-02) | 기준 자료 변경 | 계정 잠금 해제 시간 설정 항목 없음 | 설정 항목 두지 않음 (잠금 시간 5분 고정) | POL-ACC-007 | 제외 (2026-11-04, 바꿀 것 칸 참고) |
+| LI-STN-02-R08 | Setting | System Setting (LI-STN-02) | 기준 자료 변경 | 1 Language "현재 기준, English만 제공" | 6개 언어(영어, 한국어, 포르투갈어, 스페인어, 이탈리아어, 프랑스어) 중 선택, 기본 English | POL-COM-004 | 제외 (2026-11-04, R10으로 대체) |
+| TI-STN-02-R05 | Setting | System Setting (TI-STN-02) | 기준 자료 변경 | 계정 잠금 해제 시간 설정 항목이 화면에 없음 (Account Locked 화면은 "관리자가 설정한 제한 시간") | 설정 항목 두지 않음 (잠금 시간 5분 고정) | POL-ACC-007 | 제외 (2026-11-04, 바꿀 것 칸 참고) |
+| TI-STN-02-R08 | Setting | System Setting (TI-STN-02) | 기준 자료 변경 | 1 Language "현재 기준, English만 제공" | 6개 언어(영어, 한국어, 포르투갈어, 스페인어, 이탈리아어, 프랑스어) 중 선택, 기본 English | POL-COM-004 | 제외 (2026-11-04, R10으로 대체) |
+| TI-STN-05-R02 | Setting | Account Setting (TI-STN-05) | 논의 결정 | 목록 범위 "Admin이 생성한 모든 계정", User Type 필터 All/Admin/User. Service 계정이 목록에 나오는지, Service가 만든 계정은 어떻게 되는지 없음 | 임시 정책 PV-0002 반영 (Admin에게 Service 계정 숨김, Service 계정 최소 1개, 자기 계정 삭제 불가 Alert_047) | PV-0002, CA-0003 | 제외 (2026-11-05, PV-0002 승인으로 R04 · R05 · R06로 대체) |
+| TI-STN-05-R03 | Setting | Account Setting (TI-STN-05) | 논의 결정 | 삭제 제한 없음 (자기 계정, 로그인 중인 계정, 마지막 Admin 삭제) | 임시 정책 PV-0002 반영 (Admin에게 Service 계정 숨김, Service 계정 최소 1개, 자기 계정 삭제 불가 Alert_047) | PV-0002, CA-0003 | 제외 (2026-11-05, PV-0002 승인으로 R04 · R05 · R06로 대체) |

@@ -2,8 +2,8 @@
 cid: TI-SPT-01-03
 pair_cid: LI-SPT-01-03
 tl_relation: 동일
-title: Samples Details
-path: Sample Tracking > Samples Details > Protocol Info
+title: Protocol Info - Extraction Protocol
+path: Sample Tracking > Samples > Protocol Info - Extraction Protocol
 type: Popup
 version: 2.1.02
 date: 2026-08-14
@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # TI-SPT-01-03 Protocol Info - Extraction Protocol
 
-> 기존 화면(기존 작업방 Sample Tracking 페이지, 2.1 2차 영역, Ver 2.1.02)을 2026-11-02에 옮기고 2026-11-20 · 2026-11-23에 다시 옮긴 것입니다(케이스 3, 작업 기록 `20261120-최고관리자-samples` · `20261123-최고관리자-samples`. 2026-11-23은 바뀐 곳 없음). 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 Sample Tracking 페이지, 2.1 2차 영역, Ver 2.1.02)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - Protocol Info Popup의 Extraction Protocol 탭. Pre-Treatment Protocol 탭은 TI-SPT-01-02
 - Figma 프레임 이름이 "TI-SPT-01-02" (화면 정보 CID는 TI-SPT-01-03)
@@ -71,22 +71,3 @@ figma_region: 2.1 2차
 #### 4~5
 
 - 원문은 TI-SPT-01-02 4, 5와 같음 ([Close], [X])
-
-## 반영 대기 목록
-
-`screens/tobe/`로 옮김 (2026-11-20)
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 화면 정보 | Figma 프레임 이름 "TI-SPT-01-02" (화면 정보 CID는 TI-SPT-01-03) | 프레임 이름 TI-SPT-01-03 | `ia/ia-screens.csv` | 대기 |
-| R02 | 화면 정보 | 화면 이름 "Samples Details", 경로 "Sample Tracking > Samples Details > Protocol Info" | IA 이름 "Protocol Info - Extraction Protocol" | `ia/ia-screens.csv` | 대기 |
-| R03 | 화면 글자 | 범위 표기 Temp.(˚C) "(0~2,000)" (Volume과 같은 범위) | Extraction Protocol Setting 화면의 범위와 맞춤 | TI-STN-03-02-02-M, POL-TST-007 | 대기 (확인 필요) |
-| R04 | 디스크립션 | 2 "Run Preparation 단계에서 선택한 프로토콜", "Applied된 프로토콜" | TI-SPT-01-02 반영 대기 목록 3과 같이 | POL-TST-006 | 대기 (확인 필요) |
-| R05 | 디스크립션 | 3 "Protocol setting", 3 참조가 M9600용(-M)만 있음 (STARlet용 -V 없음) | Protocol Setting, 추출 장치별 참조 | `screens/setting/TI-STN-03-02-02-V.md` | 대기 (확인 필요) |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.1.02 | 2026-08-14 | Protocol Info 팝업 추가 | 정다예 | Figma 버전 메모 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

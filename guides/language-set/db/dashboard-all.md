@@ -6,9 +6,9 @@
 
 | Language ID | 재사용 | 상태 | 검증 상태 | 플랫폼 | Type | English | Korean | German | Portuguese | Spanish | Italian | French | 참조 시트 | 비고 | Menu | CID |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| LID-DAS-032 |  | 사용 | AI 번역 | T | title | Edit Display Name |  | Anzeigenamen bearbeiten | Editar Nome de Apresentação | Editar Nombre Visible | Modifica Nome Visualizzato | Modifier le nom d'affichage |  | 팝업 타이틀 | Dashboard (All) | TI-ADS-P |
+| LID-DAS-032 |  | 사용 | AI 번역 | T | title | Edit Display Name |  | Anzeigenamen bearbeiten | Editar Nome de Apresentação | Editar Nombre Visible | Modifica Nome Visualizzato | Modifier le nom d'affichage |  | Popup 타이틀 | Dashboard (All) | TI-ADS-P |
 | LID-DAS-033 |  | 사용 | AI 번역 | T | txt | Display Name |  | Anzeigename | Nome de Apresentação | Nombre Visible | Nome Visualizzato | Nom d'affichage |  | 필드 레이블 | Dashboard (All) | TI-ADS-P |
-| LID-DAS-034 |  | 사용 | AI 번역 | T | txt | Change how this instrument appears on your dashboard. |  | Ändern Sie, wie dieses Gerät auf Ihrem Dashboard angezeigt wird. | Altere a forma como este instrumento aparece no seu painel. | Cambie cómo aparece este instrumento en su panel de control. | Modifica il modo in cui questo strumento appare nella dashboard. | Modifiez l'affichage de cet instrument sur votre tableau de bord. |  | 팝업 안내 문구 | Dashboard (All) | TI-ADS-P |
+| LID-DAS-034 |  | 사용 | AI 번역 | T | txt | Change how this instrument appears on your dashboard. |  | Ändern Sie, wie dieses Gerät auf Ihrem Dashboard angezeigt wird. | Altere a forma como este instrumento aparece no seu painel. | Cambie cómo aparece este instrumento en su panel de control. | Modifica il modo in cui questo strumento appare nella dashboard. | Modifiez l'affichage de cet instrument sur votre tableau de bord. |  | Popup 안내 문구 | Dashboard (All) | TI-ADS-P |
 | LID-STN-021 | ref | 사용 | AI 번역 | T | btn | Cancel |  | Abbrechen | Cancelar | Cancelar | Annulla | Annuler | LID-COM-BTN-008 | 취소 버튼 | Dashboard (All) | TI-ADS-P |
 | LID-STN-022 | ref | 사용 | AI 번역 | T | btn | Save |  | Speichern | Guardar | Guardar | Salva | Enregistrer | LID-COM-BTN-013 | 저장 버튼 | Dashboard (All) | TI-ADS-P |
 | LID-DAS-035 |  | 사용 | AI 번역 | T | btn | Enter |  | Öffnen | Entrar | Entrar | Entra | Entrer |  | 장비 Dashboard 이동 버튼 | Dashboard (All) | TI-ADS |

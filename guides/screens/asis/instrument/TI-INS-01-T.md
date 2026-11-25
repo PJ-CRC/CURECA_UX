@@ -123,22 +123,3 @@ Frame/Instrument_Status (54), Table/Filled Table Cell (25), Tag Status (16), Des
 #### 5. 범례 영역
 
 - 상단 상태값 표시 영역의 범례 제공함
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 알럿 | 등록되지 않은 Module Tab 진입 시 "Alert_L_004" | Alert_004 | `alert/alert-catalog.csv`, LI-INS-01-T | 대기 |
-| R02 | 디스크립션 | "Cureca 장비의 현황" | CURECA | `glossary/terms.csv` | 대기 |
-| R03 | 화면 정보 | 오른쪽 패널의 CID 칸이 "TI-INS-02-T" | TI-INS-01-T | Figma 프레임 이름, IA | 대기 |
-| R04 | 디스크립션 | 3-2가 "Total / In Use / Not in Use" | 화면(v2.1.06)은 "Enabled n · Total n (Disabled n)". 디스크립션을 화면과 POL-EQP-009의 Enabled 표기에 맞춤 | Figma 버전 메모 v2.1.06 | 대기 |
-| R05 | 표기 | Enablde, Dignosctics | Enabled, Diagnostics | 오타 | 대기 |
-| R06 | 디스크립션 | 3-5 "우측의 Instrument Detail Info page 참고" | 상태값은 `glossary/status-values.csv`와 POL-EQP-001 참조 | POL-EQP-001 | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.1.06 | 2026-09-28 | Module 상태값에 Paused 추가. 단어 변경 Enable → Enabled | 서보경 | Figma 버전 메모 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |
-| | 2026-11-18 | 연동 변경: Module · Unit 이름 바꿈(Prep Consumable Storage → Consumable Storage, Sample Preparation Module → Sample Pre-treatment, Sample Pretreatment → Sample Processing, Sample Aliquot → Sample Aliquoting). 검사 단계 · Reagent 태그 · Prep 시스템의 Sample Preparation은 그대로 | 서보경 | `glossary/modules.csv`, `glossary/module-units.csv` (2026-11-18) |

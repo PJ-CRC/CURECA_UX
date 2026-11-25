@@ -111,28 +111,3 @@ Marterial Setup/Trolley (6), Check/Line (5), layout/spacing (3), Description Num
 ### 버전 메모
 
 - v2.1.05 update / 선택 Remove 팝업 추가 / - 기존 Remove(reset) 기능 + 선택 Remove 기능 추가
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 화면 정보 | 화면 이름 "Select positions to remove", 경로 "작성 예정 > Select positions to remove" | IA 이름 "Select positions to delete"와 통일 (Remove로 쓸지 IA를 고칠지) | `ia/ia-screens.csv` | 대기 (확인 필요) |
-| R02 | 알럿 | 세부 정의 9개 프레임이 "Confirm_006 노출" | MS_Confirm_023 | `alert/alert-catalog-ms.csv` MS_Confirm_023 (이전 ID Confirm_006) | 대기 |
-| R03 | 알럿 | 세부 정의 Confirm 예시 버튼이 Close/OK와 Close/Remove 두 벌로 겹쳐 있음 | MS_Confirm_023 버튼: Remove / Close | MS_Confirm_023 | 대기 |
-| R04 | 알럿 | Remove 완료 알럿이 디스크립션에 없음 | MS_Confirm_023 [Remove] 뒤 MS_Alert_033 노출, 반영은 [Done] 시점 | MS_Confirm_023, MS_Alert_033 | 대기 |
-| R05 | 디스크립션 | 3 안에 [Remove] 버튼이 번호 없이 들어 있음 | 4로 나눔 | 디스크립션 | 대기 |
-| R06 | 디스크립션 | Trolley 1F Disabled 규칙이 LCR-02 프레임에만 있음. Sample Trolley(SAM-03) 프레임에는 없음 | Sample Trolley 1F는 적재 불가(MS_Alert_018)이므로 흐름별 규칙을 따로 적음 | 8011:132946, 8011:133612, MS_Alert_018 | 대기 (확인 필요) |
-| R07 | 디스크립션 | 범례가 화면 "Disabled / Unselected / Selected"와 세부 정의 "Completed / Selected / Default / Disable" 두 벌 | 하나로 통일 | 세부 정의 8011:132110, 8073:399311 | 대기 (확인 필요) |
-| R08 | 디스크립션 | DXI-03(MB Tube), DXI-05(Tip/PCR Plate)는 Remove 삭제("위치 스캔이 없어"), DXI-07은 취소선 | 부르는 화면 목록에서 뺌. DXI-03·05 화면의 [Remove] 버튼도 지움 | LI-TSS-DXI-03 2, LI-TSS-DXI-05 3 | 대기 |
-| R09 | 디스크립션 | LMM(Load MM Tubes)에는 Remove가 없음 | 의도인지 확인 | LI-TSS-PSI-LMM-02 | 대기 (확인 필요) |
-| R10 | 표기 | "팝업", "Disabled'으로" | Popup, Disabled로 | `glossary/terms.csv` | 대기 |
-| R11 | 컴포넌트 | 컴포넌트 이름 "Marterial Setup/…" | Material Setup | 오타 | 대기 |
-| R12 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `alert/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 (CR, PD, PV, 정책 ID) |
-| --- | --- | --- | --- | --- |
-| 2.1.03 | 2026-08-21 | 화면 정보 기준 | BREX | Figma 화면 정보 |
-| 2.1.05 | | 선택 Remove 팝업 추가 (기존 Remove(reset) 기능 + 선택 Remove 기능) | BREX | Figma 버전 메모 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`). 노출 모드 값을 새 기능 표대로 고침 | 서보경 | DS-0001 |

@@ -82,23 +82,3 @@ Circle Radio Button (5), Description Number (4), Table (3), Button/Secondary_1Bu
 ### 버전 메모
 
 - v2.1.05 update / 디스크립션 수정 항목 / - 빨간 텍스트 & 취소선 참고 (세 프레임 같음)
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | IA | (3-1) Loading Popup "Please wait / This may take a few minutes. / OK"가 이 디스크립션 안에만 있음. IA LI-TSS-PSI-01-01(Loading)의 기획 화면 프레임 없음 (1280 프레임 `LI-TSS-PSI-01-1280_Loading`만 있음) | LI-TSS-PSI-01-01 화면을 따로 그릴지, 이 CID 안에 둘지 | `ia/ia-screens.csv`, 기존 작업방 2차 페이지 5341:445958 | 대기 (확인 필요) |
-| R02 | 디스크립션 | (3-1) Loading Popup에 [OK] 버튼이 있는데 "완료 시, 자동 이동" | 버튼을 둘지 확인 | 디스크립션 3 | 대기 (확인 필요) |
-| R03 | 디스크립션 | 목록이 비었을 때(Sample 구성을 마친 Trolley가 없을 때) 정의 없음 | 빈 상태와 [Select] 비활성 정의 | 디스크립션 1 | 대기 (확인 필요) |
-| R04 | 디스크립션 | "검체 구성이 완료된 trolley & ‘Run start’ 전" | Sample 구성이 완료된 Trolley & Run 시작 전. 한 Trolley를 여러 흐름(LCR·PKI·LPR)에서 각각 고르는지 확인 | `glossary/terms.csv` | 대기 (확인 필요) |
-| R05 | 디스크립션 | LPR 프레임만 출력에 "No." 있음 (화면에는 없음) | 통일 | 8073:398051 | 대기 |
-| R06 | 표기 | "검체", "소모품/시약", "trolley", "팝업" | Sample, Consumable/Reagent, Trolley, Popup | `glossary/terms.csv` | 대기 |
-| R07 | 정책 반영 | Select Trolley의 목적이 없음 | 디스크립션에 넣음: Consumable Tray를 구성할 때 기준을 주려고 Sample Trolley를 고름. 고른 Trolley의 Sample 기준 필요 개수를 보여 줌 | 2026-11-03 사용자 답변 (MS2) | 대기 |
-| R08 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `alert/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 (CR, PD, PV, 정책 ID) |
-| --- | --- | --- | --- | --- |
-| 2.1.05 | | 디스크립션 수정 (빨간 텍스트 & 취소선). 흐름별 이동 대상 변경 | BREX | Figma 버전 메모 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`). 노출 모드 값을 새 기능 표대로 고침 | 서보경 | DS-0001 |

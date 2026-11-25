@@ -2,8 +2,8 @@
 cid: TI-SPT-01-02
 pair_cid: LI-SPT-01-02
 tl_relation: 동일
-title: Samples Details
-path: Sample Tracking > Samples Details > Protocol Info
+title: Protocol Info - Pre-Treatment Protocol
+path: Sample Tracking > Samples > Protocol Info - Pre-Treatment Protocol
 type: Popup
 version: 2.1.02
 date: 2026-08-14
@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # TI-SPT-01-02 Protocol Info - Pre-Treatment Protocol
 
-> 기존 화면(기존 작업방 Sample Tracking 페이지, 2.1 2차 영역, Ver 2.1.02)을 2026-11-02에 옮기고 2026-11-20 · 2026-11-23에 다시 옮긴 것입니다(케이스 3, 작업 기록 `20261120-최고관리자-samples` · `20261123-최고관리자-samples`. 2026-11-23은 바뀐 곳 없음). 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 Sample Tracking 페이지, 2.1 2차 영역, Ver 2.1.02)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - Protocol Info Popup의 Pre-Treatment Protocol 탭. Extraction Protocol 탭은 TI-SPT-01-03
 - 관련 정책: (정책 작성 전). 상세 항목은 Protocol Setting(POL-TST-006) 기준
@@ -83,21 +83,3 @@ figma_region: 2.1 2차
 #### 5. [X] 버튼
 
 - 클릭 시, 팝업이 닫힌 후 기존 화면 노출
-
-## 반영 대기 목록
-
-`screens/tobe/`로 옮김 (2026-11-20)
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 화면 정보 | 화면 이름 "Samples Details", 경로 "Sample Tracking > Samples Details > Protocol Info" | IA 이름 "Protocol Info - Pre-Treatment Protocol" | `ia/ia-screens.csv` | 대기 |
-| R02 | 화면 정보 | 3 참조 "TI-STN-03-01-02-01" (지금 CID는 TI-STN-03-01-02-01-V, -M으로 나뉨) | 맞는 CID로 | `screens/setting/` | 대기 |
-| R03 | 디스크립션 | 2 "Run Preparation 단계에서 선택한 프로토콜", "Applied된 프로토콜" | Run 화면(LI-RUN-02-01 Check Test Protocol)과 Protocol Setting의 Applied 표기 기준으로. Check Test Protocol 단계는 Setting에서 사용할 때만 나옴 | `policy/policy-backlog.md` 5, POL-TST-006 | 대기 (확인 필요) |
-| R04 | 디스크립션 | 3 "Protocol setting" | Protocol Setting | 표기 | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.1.02 | 2026-08-14 | Protocol Info 팝업 추가 | 정다예 | Figma 버전 메모 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

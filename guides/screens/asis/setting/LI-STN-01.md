@@ -56,17 +56,3 @@ figma_region: 2.1 2차
 
 - 노출 조건 : Service 계정으로 로그인 시, 해당 영역 노출. 그 외 계정으로 로그인 시, 해당 영역 미노출
 - 디폴트 : 96-DWP
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 디스크립션 | 3 Analyze Breakpoint → "LI-STN-01-03" | LI-STN-01-04 (IA) | `ia/ia-screens.csv` | 대기 |
-| R02 | 정책 반영 | Cost Setting 항목이 L-IOS 화면에도 보임 | Cost Setting은 T-IOS만 (POL-TST-001) | 8월 정책서 Policy 공통 정책 | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.0 | 2026-06-15 | (버전 메모 없음) | BREX | Figma 화면 정보 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

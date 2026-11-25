@@ -3,7 +3,7 @@ cid: TI-SPT-01-01
 pair_cid: LI-SPT-01-01
 tl_relation: 동일
 title: Samples Details
-path: Sample Tracking > Samples Details
+path: Sample Tracking > Samples > Details
 type: Popup
 version: 2.1.11
 date: 2026-10-08
@@ -20,7 +20,7 @@ figma_region: 2.1 2차
 ---
 # TI-SPT-01-01 Samples Details
 
-> 기존 화면(기존 작업방 Sample Tracking 페이지, 2.1 2차 영역, Ver 2.1.11)을 2026-11-02에 옮기고 2026-11-20 · 2026-11-23에 다시 옮긴 것입니다(케이스 3, 작업 기록 `20261120-최고관리자-samples` · `20261123-최고관리자-samples`. 2026-11-23은 바뀐 곳 없음). 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(기존 작업방 Sample Tracking 페이지, 2.1 2차 영역, Ver 2.1.11)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
 
 - IA 화면 이름은 "Details", Type은 Popup. 화면은 Samples 목록 오른쪽에서 밀려 나오는 상세 영역
 - 관련 정책: POL-SMP-002
@@ -194,28 +194,3 @@ Description Number (12), Table (11), Tag Status (11), Table/Filled Table Cell (1
 
 - Case 1. 검체 상태별 데이터 노출 항목
 - Case 2. 샘플 투입 유형별 표출 데이터 노출 예시
-
-## 반영 대기 목록
-
-`screens/tobe/`로 옮김 (2026-11-20)
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 화면 정보 | 화면 이름 "Samples Details", 경로 "Sample Tracking > Samples Details", 디스크립션 0·1 "Sample Details" | IA 기준(Samples > Details)으로 이름 하나로 | `ia/ia-screens.csv` | 대기 |
-| R02 | 표기 | 1 Product "Allplex_HPV28" | Allplex HPV28 | `glossary/test-items.csv` UI 표기 | 대기 |
-| R03 | 디스크립션 | 2 Module·Unit "고유 ID 정보"인데 화면은 Module 이름(High-throughput Extraction)과 Unit 이름(M9600, Sealer (1)) | 이름 (번호)로 표시한다고 고쳐 씀 | `glossary/terms.csv` Module, Unit | 대기 |
-| R04 | 디스크립션 | 3 General 표출 항목에 Status가 있는데 화면 General 영역에는 없음 (Status는 타이틀 영역에 있음) | 하나로 맞춤 | 화면 글자 | 대기 |
-| R05 | 디스크립션 | 4 "InboundTrolley", "Return status" (화면은 Return Status) | Inbound Trolley, Return Status | 표기 | 대기 |
-| R06 | 디스크립션 | 5·6 "WELL No." (화면은 Well No.), 화면 예시 "CO1", "AO2" (영문 O) | Well No., C01, A02 | 화면 글자 | 대기 |
-| R07 | 디스크립션 | 5-1 "[96 DWP] 메뉴", "Sample가" | [96-DWP] 메뉴, Sample이 | `glossary/terms.csv` DWP, 오타 | 대기 |
-| R08 | 디스크립션 | 7 제목 "Reagents 정보 영역" (화면은 Reagent Info), 정렬 "공통 UX 참고 : COMM-4-a" (상태값 문서) | 제목 맞춤, 정렬 기준 문서 확인 | 화면 글자 | 대기 (확인 필요) |
-| R09 | 디스크립션 | 8-1 [More]는 TI-SPT-01-02만 엶. Extraction Protocol 팝업(TI-SPT-01-03)이 따로 있음 | Pre-Treatment·Extraction 각각 어느 팝업을 여는지 적음 | `ia/ia-screens.csv` | 대기 |
-| R10 | 디스크립션 | 3 Start Date/Time "Prep 장비에서 바코드 찍은 시간", 4 "[Sample Storage] Module", "샘플 투입구" | 표준어 (Sample Storage Module, Module 이름) | `glossary/terms.csv` | 대기 (확인 필요) |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.1.02 | | Sample Detail 화면 보완: 정보 그룹핑 기준 수정, Sample Location 정보 항목 추가, Protocol Info 정보 추가 | 정다예 | Figma 버전 메모 |
-| 2.1.11 | 2026-10-08 | 워딩 수정 (언어셋 반영): Tray Floor / Position → Tray Position | 정다예 | Figma 버전 메모 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

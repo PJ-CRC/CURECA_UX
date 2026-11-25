@@ -6,7 +6,7 @@
 
 | Language ID | 재사용 | 상태 | 검증 상태 | 플랫폼 | Type | English | Korean | German | Portuguese | Spanish | Italian | French | 참조 시트 | 비고 | Menu | CID |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| LID-EVT-001 |  | 사용 | 법인 검토 완료 | T/L | title | Event History |  | Ereignisverlauf | Histórico de Eventos | Historial de Eventos | Cronologia Eventi | Historique des événements |  | 팝업 타이틀 | Event History | TI-EVT-P / LI-EVT-P / TI-EVT-01-P / LI-EVT-01-P |
+| LID-EVT-001 |  | 사용 | 법인 검토 완료 | T/L | title | Event History |  | Ereignisverlauf | Histórico de Eventos | Historial de Eventos | Cronologia Eventi | Historique des événements |  | Popup 타이틀 | Event History | TI-EVT-P / LI-EVT-P / TI-EVT-01-P / LI-EVT-01-P |
 | LID-EVT-002 |  | 사용 | 법인 검토 완료 | T/L | txt | Event ID, Code |  | Event-ID, Code | ID do Evento, Código | ID del Evento, Código | ID Evento, Codice | ID événement, code |  | 필터 레이블 / 플레이스홀더 | Event History | TI-EVT-P / LI-EVT-P |
 | LID-EVT-003 |  | 사용 | 법인 검토 완료 | T/L | txt | All |  | Alle | Todos | Todos | Tutti | Tous |  | 옵션 선택 값 | Event History | TI-EVT-P / LI-EVT-P |
 | LID-EVT-004 |  | 사용 | 법인 검토 완료 | T/L | txt | Type |  | Typ | Tipo | Tipo | Tipo | Type |  | 필터 레이블 / 테이블 컬럼 값 | Event History | TI-EVT-P / LI-EVT-P / TI-EVT-01-P / LI-EVT-01-P / TI-EVT-02-P / LI-EVT-02-P |
@@ -53,19 +53,19 @@
 | LID-EVT-026 |  | 사용 | 법인 검토 완료 | T/L | btn | Back to list |  | Zurück zur Liste | Voltar à Lista | Volver a la Lista | Torna all'Elenco | Retour à la liste |  | 목록 이동 버튼 | Event History | TI-EVT-01-P / LI-EVT-01-P |
 | LID-EVT-027 |  | 사용 | 법인 검토 완료 | T/L | txt | Updated Date/Time |  | Aktualisierungsdatum/-zeit | Data/Hora de Atualização | Fecha/Hora de Actualización | Data/Ora Aggiornamento | Date/heure de mise à jour |  | 테이블 구분 값 | Event History | TI-EVT-01-P / LI-EVT-01-P |
 | LID-EVT-028 |  | 사용 | 법인 검토 완료 | T/L | txt | Updated by |  | Aktualisiert von | Atualizado por | Actualizado por | Aggiornato da | Mis à jour par |  | 테이블 구분 값 | Event History | TI-EVT-01-P / LI-EVT-01-P |
-| LID-EVT-029 |  | 사용 | 법인 검토 완료 | T/L | title | Event Info |  | Ereignisinformationen | Informações do Evento | Información del Evento | Informazioni Evento | Informations sur l'événement |  | 팝업 영역 타이틀 | Event History | TI-EVT-01-P / LI-EVT-01-P |
+| LID-EVT-029 |  | 사용 | 법인 검토 완료 | T/L | title | Event Info |  | Ereignisinformationen | Informações do Evento | Información del Evento | Informazioni Evento | Informations sur l'événement |  | Popup 영역 타이틀 | Event History | TI-EVT-01-P / LI-EVT-01-P |
 | LID-EVT-030 |  | 사용 | 법인 검토 완료 | T/L | txt | Event ID |  | Event-ID | ID do Evento | ID de Evento | ID Evento | ID événement |  | 테이블 구분 값 | Event History | TI-EVT-01-P / LI-EVT-01-P |
 | LID-EVT-045 |  | 사용 | AI 번역 | T/L | txt | Effect |  | Auswirkung | Efeito | Efecto | Effetto | Effet |  | 테이블 구분 값 | Event History | TI-EVT-01-P / LI-EVT-01-P / TI-EVT-02-P / LI-EVT-02-P |
 | LID-EVT-031 |  | 사용 | 법인 검토 완료 | T/L | txt | Recommended Action |  | Empfohlene Maßnahme | Ação Recomendada | Acción Recomendada | Azione Consigliata | Action recommandée |  | 테이블 구분 값 | Event History | TI-EVT-01-P / LI-EVT-01-P / TI-EVT-02-P / LI-EVT-02-P |
-| LID-EVT-032 |  | 사용 | 법인 검토 완료 | T/L | title | Instrument Info |  | Geräteinformationen | Informações do Instrumento | Información del Instrumento | Informazioni Strumento | Informations sur l'instrument |  | 팝업 영역 타이틀 | Event History | TI-EVT-01-P / LI-EVT-01-P |
+| LID-EVT-032 |  | 사용 | 법인 검토 완료 | T/L | title | Instrument Info |  | Geräteinformationen | Informações do Instrumento | Información del Instrumento | Informazioni Strumento | Informations sur l'instrument |  | Popup 영역 타이틀 | Event History | TI-EVT-01-P / LI-EVT-01-P |
 | LID-STN-026 | ref | 사용 | 법인 검토 완료 | T/L | txt | Process |  | Prozess | Processo | Proceso | Processo | Processus |  | 테이블 구분 값 | Event History | TI-EVT-01-P / LI-EVT-01-P |
-| LID-EVT-033 |  | 사용 | 법인 검토 완료 | T/L | title | Notes |  | Anmerkungen | Notas | Notas | Note | Notes |  | 팝업 영역 타이틀 | Event History | TI-EVT-01-P / LI-EVT-01-P |
+| LID-EVT-033 |  | 사용 | 법인 검토 완료 | T/L | title | Notes |  | Anmerkungen | Notas | Notas | Note | Notes |  | Popup 영역 타이틀 | Event History | TI-EVT-01-P / LI-EVT-01-P |
 | LID-EVT-034 |  | 사용 | 법인 검토 완료 | L | txt | Enter action details. |  | Maßnahmendetails eingeben | Detalhes da ação | Introduzca los detalles de la acción | Dettagli azione | Détails de l'action |  | 플레이스홀더 | Event History | LI-EVT-01-P |
 | LID-EVT-035 |  | 사용 | AI 번역 | L | txt | {n}/{max} Characters |  | {n}/{max} Zeichen | {n}/{max} Caracteres | {n}/{max} Caracteres | {n}/{max} Caratteri | {n}/{max} caractères |  | 최대 글자 수 표기 | Event History | LI-EVT-01-P |
 | LID-EVT-036 |  | 사용 | 법인 검토 완료 | T/L | btn | List |  | Liste | Lista | Lista | Elenco | Liste |  | 목록 이동 버튼 | Event History | TI-EVT-01-P / LI-EVT-01-P |
 | LID-STN-021 | ref | 사용 | 법인 검토 완료 | L | btn | Cancel |  | Abbrechen | Cancelar | Cancelar | Annulla | Annuler | LID-COM-BTN-008 | 메모 취소 버튼 | Event History | LI-EVT-01-P |
 | LID-STN-022 | ref | 사용 | 법인 검토 완료 | L | btn | Save |  | Speichern | Guardar | Guardar | Salva | Enregistrer | LID-COM-BTN-013 | 메모 저장 버튼 | Event History | LI-EVT-01-P |
-| LID-INS-018 | ref | 사용 | AI 번역 | T/L | title | Event |  | Ereignis | Evento | Evento | Evento | Événement |  | 팝업 타이틀 | Event History | TI-EVT-02-P / LI-EVT-02-P |
+| LID-INS-018 | ref | 사용 | AI 번역 | T/L | title | Event |  | Ereignis | Evento | Evento | Evento | Événement |  | Popup 타이틀 | Event History | TI-EVT-02-P / LI-EVT-02-P |
 | LID-EVT-039 |  | 사용 | 법인 검토 완료 | T/L | btn | Close |  | Schließen | Fechar | Cerrar | Chiudi | Fermer | LID-COM-BTN-009 | 닫기 버튼 | Event History | TI-EVT-02-P / LI-EVT-02-P |
 | LID-EVT-040 |  | 사용 | 법인 검토 완료 | T/L | btn | View Details |  | Details anzeigen | Ver Detalhes | Ver Detalles | Visualizza Dettagli | Voir les détails |  | 상세 보기 버튼 | Event History | TI-EVT-02-P / LI-EVT-02-P |
 | LID-EVT-046 |  | 사용 | AI 번역 | T/L | btn | Close All |  | Alle schließen | Fechar Tudo | Cerrar Todo | Chiudi Tutto | Tout fermer |  | 전체 닫기 버튼 | Event History | TI-EVT-02-P / LI-EVT-02-P |

@@ -60,7 +60,7 @@ replaced_by:
 19. Buffer Cartridge Storage에 적재할 때 (Tub와 위치 스캔):
    - Tray만 있으면 빼고 새 Reagent를 적재함.
    - Tray에 Tub는 있는데 여분의 Cap이 없으면 Cap을 보충함.
-   - 빈 위치를 스캔했는데 그 자리가 Buffer 공간에서 쓰이는 중인 Reagent의 자리면 적재하지 않고 알럿을 보여 줌. 쓰지 않는 자리면 적재함.
+   - 빈 위치를 스캔했는데 그 자리가 Buffer 공간에서 쓰이는 중인 Reagent의 자리면 적재하지 않고 Alert을 보여 줌. 쓰지 않는 자리면 적재함.
 20. Inventory의 STARMag Universal Cartridge Kit에 Buffer Cartridge Cap 항목을 둠 (Teams 글 T06).
 
 ### Prep Tub (DXI-09) (Teams 글 T01)
@@ -90,7 +90,7 @@ replaced_by:
 2. ~~Cap만 꽂힌 Socket을 빼면 화면이 막는지~~ → 막지 못함. Instrument가 가지러 가서 없을 때 Event Message (규칙 6, 2026-11-06 답)
 3. ~~STARlet Rack에 올리는 수~~ → Socket 2 ~ 4개 분량 (규칙 1, 2026-11-06 답)
 4. ~~Spare Cap 5개의 뜻~~ → Tub 5개가 한 세트, Cap도 5개 단위 (규칙 13, 2026-11-06 답)
-5. (규칙 19) Buffer 공간에서 쓰이는 중인 자리를 스캔했을 때 띄울 알럿 ID
+5. (규칙 19) Buffer 공간에서 쓰이는 중인 자리를 스캔했을 때 띄울 Alert ID
 6. (규칙 20) Buffer Cartridge Cap을 `glossary/consumables.csv`에 품목으로 더할지 (수량 단위 5 ea (1 set), Barcode 유무)
 7. (규칙 14 · 21, 규칙 6) Cap 보충 Event, Socket이 없을 때 Event의 Event Code · Level
 8. (규칙 8) Film을 120장까지 넣는데 입력 최대값이 100임. 입력 최대값을 120으로 바꿀지 (화면 LI-TSS-DXI-07, `glossary/consumables.csv` Sealing Film 기본값 100 ea)

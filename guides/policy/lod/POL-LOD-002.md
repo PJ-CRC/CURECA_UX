@@ -36,7 +36,7 @@ replaced_by:
 2. Storage 안에서 Consumable·Reagent가 옮겨지는 중이면 MS_Alert_026을 보여 주고 열지 않음. 판단 기준은 Instrument 내부 로직을 따름.
 3. 한 번에 하나의 Storage만 열 수 있음. Storage가 열린 상태에서 다른 Storage 코드를 스캔하면 MS_Alert_027을 보여 줌.
 4. 화면 제목은 `Module > Storage`, 같은 Module이 여러 대면 `Module (Index) > Storage`임.
-5. Dx Storage는 Trolley·Tray와 달리 신규 작업 컨펌(A·B·C)을 쓰지 않음. 다른 Storage·Tray·Trolley에 연결된 항목(다른 Module Storage 포함)이나 이 Storage에 이미 적재된 항목을 스캔하면 MS_Alert_029를 보여 줌. 옮기려면 원래 위치에서 [Remove] 뒤 [Done]하고 다시 적재함.
+5. Dx Storage는 Trolley·Tray와 달리 신규 작업 Confirm(A·B·C)을 쓰지 않음. 다른 Storage·Tray·Trolley에 연결된 항목(다른 Module Storage 포함)이나 이 Storage에 이미 적재된 항목을 스캔하면 MS_Alert_029를 보여 줌. 옮기려면 원래 위치에서 [Remove] 뒤 [Done]하고 다시 적재함.
 6. 이미 항목이 있는 slot을 스캔하면 MS_Alert_028, Storage가 가득 찬 상태에서 새 항목을 스캔하면 MS_Alert_030을 보여 줌.
 7. 만료된 Reagent는 MS_Alert_003, 폐기된 항목은 MS_Alert_004를 보여 줌. Consumable(Tip, PCR Plate)과 Sample Socket에는 Expiration Date 확인이 없음.
 8. STAT Storage에는 Sample Socket만 적재함. Sample이 없는 Socket은 MS_Alert_015, Reagent Socket은 MS_Alert_001을 보여 줌 (POL-LOD-003).

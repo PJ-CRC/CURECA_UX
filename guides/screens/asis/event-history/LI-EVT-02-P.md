@@ -41,19 +41,3 @@ figma_region: 2.1 1차
 #### 1 ~ 11
 
 - 원문은 TI-EVT-02-P 1 ~ 11과 같음
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 정책 반영 | 0 "Main PC, 콘솔용 PC" | L-IOS Client Mode로 표기: Main Mode, Console Mode (MS Mode 제외) | POL-EVT-003, `policy/client-mode.md` | 대기 |
-| R02 | 디스크립션 | 3 Type "Instrument, Consumable, Reagent" | Instrument, Inventory, Sample, System | `glossary/status-values.csv` | 대기 |
-| R03 | 표기 | Eorrer, warning | Error, Warning | 오타 | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.1.01 | 2026-08-07 | 다중 메시지 노출 정책 및 기능 추가 | 서보경 | Figma 버전 메모 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |
-| | 2026-11-18 | 2026-11-06 케이스 1 테스트(`dedeae0`)에서 To-Be로 덮어쓴 것을 원래 AS-IS(`dedeae0^`)로 되돌림. 11-06 뒤의 연동 변경(L-IOS Client Mode 이름, `archive/glossary/review-v0.md` · `old-rules/screen-spec.md` 경로)은 다시 적용 | DY | - |

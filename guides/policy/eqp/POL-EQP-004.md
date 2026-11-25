@@ -23,7 +23,7 @@ replaced_by:
 
 ## 규칙
 
-1. Door 잠금이 해제되면 그 Module의 장비 모듈 상태는 Paused가 됨. 장비 통합 상태가 Ready, Not Initialized, Error일 때도 같음.
+1. Door 잠금이 해제되면 그 Module의 장비 모듈 상태는 Paused가 됨. 장비 통합 상태가 Ready, Not Initialized일 때도 같음. 장비 모듈 상태가 Error인 Module은 잠금이 해제돼도 Error를 유지하고, 오류 복구가 끝나면 POL-EQP-002 규칙 4-1대로 바뀜 (DS-0009).
 2. Door가 2개 이상인 Module(Sample Storage, Sample Pre-treatment)은 Door 하나라도 잠금이 해제되면 그 Module이 Paused가 됨. Door 구성은 `glossary/module-units.csv`를 따름.
 3. 장비 모듈 상태가 Running일 때 사용자가 Door Control에서 [Unlock]을 요청하면 Module은 진행 중인 작업 단위를 마칠 때까지 Pausing이 되고, 마친 뒤 Paused가 되며 Door 잠금이 해제됨.
 4. Plate Sealing의 Door 잠금 해제로 Plate Sealing이 Paused가 될 때 PCR Setup도 함께 Paused가 됨.
@@ -35,7 +35,6 @@ replaced_by:
 ## 예외
 
 - 지금까지 Pausing이 생기는 경우는 Door Control의 [Unlock]이 유일함.
-- 규칙 1의 "Error일 때도 Paused"는 MT-20260922-01 "Error면 Door를 열어도 Error 유지"와 다름. 고객 확인 중 (CA-0010). 확인 전까지 규칙 1을 그대로 둠.
 
 ## 근거
 
@@ -52,3 +51,4 @@ replaced_by:
 | | 2026-11-02 | Door가 잠긴 뒤 Paused 전 상태로 돌아가는 규칙 (규칙 7) | |
 | | 2026-11-06 | Error일 때 Door를 여는 경우를 고객 확인 목록에 올림 (예외, CA-0010) | MT-20260922-01 |
 | | 2026-11-18 | Module · Unit 이름 바꿈: Prep Consumable Storage → Consumable Storage, Sample Preparation Module → Sample Pre-treatment, Sample Pretreatment → Sample Processing, Sample Aliquot → Sample Aliquoting. 검사 단계 · Prep 시스템의 Sample Preparation은 그대로 | 사용자 결정 (서보경), `glossary/modules.csv` · `module-units.csv` |
+| | 2026-11-25 | 규칙 1: Error인 Module은 Door 잠금이 해제돼도 Error 유지 (씨젠 261119 장비 모듈 상태 처리 조건, MT-20260922-01) | DS-0009 |

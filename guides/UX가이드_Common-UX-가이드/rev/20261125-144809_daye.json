@@ -1,0 +1,12 @@
+{
+  "rev": "20261125-144809_daye",
+  "by": "Claude",
+  "at": "2026-11-25T14:48:09+09:00",
+  "note": "5절 COMM-5-a ~ w 제목 아래에 Figma 프레임 캡처 그림 27개를 연결하고, 머리말에 그림 관리 줄 추가(COMM-5-e Card는 지금 Figma로 다시 받음)",
+  "base": "20261125-134200_brex-01",
+  "pc": "DAYE",
+  "req": "채팅 요청(정다예): UX가이드 쪽에 현재 피그마 Common UX 페이지에 있는 컴포넌트별 스크린샷을 관리",
+  "jobId": "",
+  "file": "../common-ux/comm-index.md",
+  "orig": true
+}

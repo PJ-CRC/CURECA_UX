@@ -31,7 +31,7 @@
 | LID-DAS-031 | ref | 사용 | AI 번역 | T/L | txt | Almost Full |  | Fast voll | Quase Cheio | Casi Lleno | Quasi Pieno | Presque plein | LID-COM-SCD-036 | 폐기물 상태 | Instrument | TI-INS-02-T / LI-INS-02-T |
 | LID-RUN-059 | ref | 사용 | AI 번역 | T/L | txt | Available |  | Verfügbar | Disponível | Disponible | Disponibile | Disponible | LID-COM-SCD-037 | 폐기물 상태 | Instrument | TI-INS-02-T / LI-INS-02-T |
 | LID-EVT-038 | ref | 사용 | AI 번역 | T/L | txt | Warning |  | Warnung | Aviso | Advertencia | Avviso | Avertissement | LID-COM-SCD-038 | 이벤트 레벨 | Instrument | TI-INS-02-T / LI-INS-02-T |
-| LID-INS-007 |  | 사용 | 법인 검토 완료 | L | title | Door Control |  | Door-Steuerung | Controlo da Door | Control de Door | Controllo Door | Contrôle de la Door |  | Door Control 팝업 타이틀 | Instrument | LI-INS-01-P |
+| LID-INS-007 |  | 사용 | 법인 검토 완료 | L | title | Door Control |  | Door-Steuerung | Controlo da Door | Control de Door | Controllo Door | Contrôle de la Door |  | Door Control Popup 타이틀 | Instrument | LI-INS-01-P |
 | LID-STN-006 | ref | 사용 | 법인 검토 완료 | L | txt | Items |  | Einträge | Itens | Elementos | Elementi | Éléments |  | 목록 총 개수 | Instrument | LI-INS-01-P |
 | LID-INS-011 |  | 사용 | 법인 검토 완료 | T/L | btn | Door |  | - | - | - | - | - | LID-COM-TRM-015 | Door 버튼 / 디바이스 Door | Instrument | TI-INS-01-T / LI-INS-01-T / LI-INS-01-P / TI-INS-02-T / LI-INS-02-T |
 | LID-INS-009 |  | 삭제 | 법인 검토 완료 | L | txt | Upper |  | - | - | - | - | - |  | Door (Upper)로 붙여 표시 | Instrument | LI-INS-01-P / TI-INS-02-T / LI-INS-02-T |
@@ -72,7 +72,7 @@
 | LID-SPT-015 | ref | 사용 | 법인 검토 완료 | T/L | btn | More |  | Mehr | Mais | Más | Altro | Plus | LID-COM-BTN-018 | 더보기 버튼 | Instrument | TI-INS-02-T / LI-INS-02-T |
 | LID-INS-027 |  | 삭제 | 법인 검토 완료 | T | btn | Run-time Info |  | Laufzeit-Info | Info de Tempo de Execução | Info de Tiempo de Ejecución | Info Tempo di Esecuzione | Infos temps de fonctionnement |  | 화면에 없음 | Instrument | TI-INS-02-T / LI-INS-02-T |
 | LID-INS-028 |  | 삭제 | 법인 검토 완료 | T | btn | Enable Settings |  | Einstellungen aktivieren | Ativar Configurações | Habilitar Configuración | Attiva Impostazioni | Activer les paramètres |  | Management로 변경 | Instrument | TI-INS-02-T / LI-INS-02-T / TI-INS-02-01-P / LI-INS-02-01-P |
-| LID-INS-043 |  | 사용 | AI 번역 | T/L | btn | Management |  | Verwaltung | Gestão | Gestión | Gestione | Gestion |  | 설정 버튼 / 팝업 타이틀 | Instrument | TI-INS-02-T / LI-INS-02-T / TI-INS-02-01-P / LI-INS-02-01-P |
+| LID-INS-043 |  | 사용 | AI 번역 | T/L | btn | Management |  | Verwaltung | Gestão | Gestión | Gestione | Gestion |  | 설정 버튼 / Popup 타이틀 | Instrument | TI-INS-02-T / LI-INS-02-T / TI-INS-02-01-P / LI-INS-02-01-P |
 | LID-INS-044 |  | 사용 | AI 번역 | T/L | txt | Module - Device |  | Modul - Gerät | Módulo - Dispositivo | Módulo - Dispositivo | Modulo - Dispositivo | Module - Appareil |  | 테이블 컬럼 값 | Instrument | TI-INS-02-01-P / LI-INS-02-01-P |
 | LID-INS-045 |  | 사용 | AI 번역 | T/L | txt | Serial No. |  | Seriennr. | N.º de Série | N.º de Serie | N. di Serie | N° de série |  | 테이블 컬럼 값 | Instrument | TI-INS-02-01-P / LI-INS-02-01-P |
 | LID-INS-003 | ref | 삭제 | 법인 검토 완료 | T | txt | Enabled |  | Aktiviert | Ativado | Habilitado | Abilitato | Activé |  | Enable로 변경 | Instrument | TI-INS-02-01-P / LI-INS-02-01-P |
@@ -83,7 +83,7 @@
 | LID-STN-020 | ref | 삭제 | 법인 검토 완료 | T | btn | Apply |  | Übernehmen | Aplicar | Aplicar | Applica | Appliquer | LID-COM-BTN-012 | Save로 변경 | Instrument | TI-INS-02-01-P |
 | LID-STN-022 | ref | 사용 | AI 번역 | T | btn | Save |  | Speichern | Guardar | Guardar | Salva | Enregistrer | LID-COM-BTN-013 | 저장 버튼 | Instrument | TI-INS-02-01-P |
 | LID-RUN-011 | ref | 사용 | 법인 검토 완료 | T/L | btn | OK |  | OK | OK | OK | OK | OK | LID-COM-BTN-010 | 확인 버튼 | Instrument | TI-INS-02-01-P / LI-INS-02-01-P |
-| LID-INS-048 |  | 사용 | AI 번역 | T | txt | Changes saved. |  | Änderungen gespeichert. | Alterações guardadas. | Cambios guardados. | Modifiche salvate. | Modifications enregistrées. |  | 저장 완료 토스트 | Instrument | TI-INS-02-01-P |
+| LID-INS-048 |  | 사용 | AI 번역 | T | txt | Changes saved. |  | Änderungen gespeichert. | Alterações guardadas. | Cambios guardados. | Modifiche salvate. | Modifications enregistrées. |  | 저장 완료 Toast | Instrument | TI-INS-02-01-P |
 | LID-INS-049 |  | 사용 | AI 번역 | L | txt | This module is not installed on the system. |  | Dieses Modul ist im System nicht installiert. | Este módulo não está instalado no sistema. | Este módulo no está instalado en el sistema. | Questo modulo non è installato nel sistema. | Ce module n'est pas installé sur le système. |  | 미설치 모듈 안내 | Instrument | LI-INS-02-01-P |
 | LID-INS-050 |  | 사용 | AI 번역 | L | txt | Data retrieval failed. Check connection and retry. |  | Datenabruf fehlgeschlagen. Verbindung prüfen und erneut versuchen. | Falha na obtenção dos dados. Verifique a ligação e tente novamente. | Error al obtener los datos. Compruebe la conexión e inténtelo de nuevo. | Recupero dati non riuscito. Controlla la connessione e riprova. | Échec de la récupération des données. Vérifiez la connexion et réessayez. |  | 조회 실패 안내 | Instrument | LI-INS-02-01-P |
 

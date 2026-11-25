@@ -17,9 +17,9 @@
 | | | Case 3. Batch 카드 3개 이상 생성 시 | 4 | 기준 개수를 넘으면 바로가기 탭이 새로 나타남 |
 | | | Case 4. 모든 Batch 완료 후 초기화 전 | 1 | 화면 전체가 달라져 전체를 그림 |
 | LI-INS-01-P (Door Control) | `9203:275703` | Module × 통합 상태별 Unlock 가능 / 불가 정의 표 | — | 조건이 많으면 표로 먼저 정리 |
-| | | Running 중 [Unlock] → 알럿 → Pausing → Paused | 6 | 네 장면을 옆으로 나란히, 아래에 `1. … 2. … 3. … 4. …` 설명 |
-| | | Unlock이 불가능한 Module, Unlock all doors 비활성 · 활성 | 1 | 팝업 단위로 그림. 버튼은 지우지 않고 Disabled, 안내 문구 노출 |
-| | | Door가 Open인 상태에서 [Lock] 클릭 시 안내 팝업 | 2 | 팝업 하나 |
+| | | Running 중 [Unlock] → Alert → Pausing → Paused | 6 | 네 장면을 옆으로 나란히, 아래에 `1. … 2. … 3. … 4. …` 설명 |
+| | | Unlock이 불가능한 Module, Unlock all doors 비활성 · 활성 | 1 | Popup 단위로 그림. 버튼은 지우지 않고 Disabled, 안내 문구 노출 |
+| | | Door가 Open인 상태에서 [Lock] 클릭 시 안내 Popup | 2 | Popup 하나 |
 | LI-IVT-05-T (Waste Bin/Bottle Module별) | `5572:1300784` | Module을 고르면 오른쪽 상세의 항목 구성이 달라짐 (6장) | 3 | Module 종류마다 화면 전체를 한 장씩 |
 | TI-STN-04-01-T (LIS Setting) | `3412:172905` | Order Reception Mode에서 Query를 고르면 Port 비활성화 | 3 | 조각에 번호 표시(3-1, 3-2)를 붙이고 설명은 본 화면 패널의 그 번호에 둠 |
 

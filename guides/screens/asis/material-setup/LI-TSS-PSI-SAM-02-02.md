@@ -98,22 +98,3 @@ Description Number (4), Device&Electronic/Repeat (1), Frame (1), Button/Secondar
 ### 버전 메모
 
 - v2.1.05 update / 디스크립션 수정 항목 / - 빨간 텍스트 & 취소선 참고
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 화면 정보 | Ver 2.0 (2026-06-15) | 버전 메모(v2.1.05)를 반영한 Ver로 | 버전 메모 | 대기 (확인 필요) |
-| R02 | 화면 | 카운터 "02/12"와 "00/10"이 겹쳐 있음 | 0/10 하나만 | 디스크립션 2 디폴트 0/10 | 대기 |
-| R03 | 문구 | "If you proceed to the next screen while a tray remains empty, / click the [Done] button below." | 문장이 끊겨 있음. "빈 slot이 남아도 [Done]으로 넘어갈 수 있다"는 뜻인지 확인 후 다시 씀 | 화면 글자 | 대기 (확인 필요) |
-| R04 | 알럿 | Socket·Tray slot이 아닌 코드 스캔 케이스 없음 | 디스크립션에 넣음: 적재 가이드에서 Trolley·Tray 전체 Barcode를 스캔하면 MS_Alert_001 (MS 목록에 명시된 경우). 그 밖의 코드에는 넣지 않음 | `alert/alert-catalog-ms.csv` MS_Alert_001, 2026-11-03 사용자 답변 (MS4) | 대기 |
-| R05 | 디스크립션 | 정상 Case 1·2(Confirm)가 "정상)" 아래에 있음 | Confirm Case 묶음을 따로 둠 | 디스크립션 1 | 대기 |
-| R06 | 표기 | "검체", "socket", "tray", "Toast 팝업" | Sample, Socket, Tray, Toast | `glossary/terms.csv` | 대기 |
-| R07 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `alert/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 (CR, PD, PV, 정책 ID) |
-| --- | --- | --- | --- | --- |
-| 2.1.05 | | 디스크립션 수정 (빨간 텍스트 & 취소선) | BREX | Figma 버전 메모 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

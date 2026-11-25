@@ -66,21 +66,3 @@ Description Number (3), Button/Secondary_1Button_44 (2), Frame (1)
 ### 버전 메모
 
 - v2.1.05 update / 디스크립션 수정 항목 / - 빨간 텍스트 & 취소선 참고
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 화면 정보 | 화면 이름 "Confirm the trolley", Ver 2.0 | IA "Confirm the trolley scan"과 통일. 버전 메모(v2.1.05)를 반영한 Ver로 | `ia/ia-screens.csv`, 버전 메모 | 대기 |
-| R02 | 디스크립션 | 2 [Add New] "스캔 시 →" | 선택 시 → | 디스크립션 | 대기 |
-| R03 | 화면 | 버튼 "Add new" | [Add New]와 대소문자 통일 | 디스크립션 2 | 대기 |
-| R04 | 문구 | "go to the Carrier manual screen" | [Finish]는 LI-TSS-PSI-SAM으로 감. 화면 이름과 맞게 | 디스크립션 3 | 대기 |
-| R05 | 표기 | "소모품/시약", "trolley", "팝업" | Consumable/Reagent, Trolley, Popup | `glossary/terms.csv` | 대기 |
-| R06 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `alert/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 (CR, PD, PV, 정책 ID) |
-| --- | --- | --- | --- | --- |
-| 2.1.05 | | 디스크립션 수정 (빨간 텍스트 & 취소선) | BREX | Figma 버전 메모 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

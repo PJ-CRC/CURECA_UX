@@ -34,7 +34,7 @@ replaced_by:
 9. 사용자는 Inventory > Overview의 Sample Storage 현황(Samples (Inbound Trolley), Samples (Test In Progress), Samples (Outbound Trolley))을 보고 바꿀 때를 정함 (POL-INV-001 규칙 7).
 10. 도킹 방식은 Sample Pre-treatment 제조사마다 다름. 단디메카는 센서로 정상 도킹을 확인하고, 사용자가 유리문을 닫으면 Door가 자동으로 잠기고 Trolley가 도킹됨. 진행하던 Run이 있으면 이어서 진행함. 로체시스템즈는 Trolley를 넣고 QR을 스캔해 확인한 뒤, 유리문을 닫고 Door의 걸쇠를 걸면 도킹됨 (MT-20260828-01).
 11. 도킹을 풀기 위한 장치는 따로 없음. Instrument가 Door 상태가 바뀌는 것을 보고 도킹 · 도킹 해제를 처리함. Trolley를 빼려면 Door Control에서 [Unlock]하면 Instrument가 도킹을 풀고 Door 잠금을 해제함 (MT-20260828-01).
-12. 도킹된 Trolley를 Material Setup에서 스캔하면 쓸 수 없다는 알럿을 보여 줌 (MT-20261105-01, 추가 예정. 알럿 ID는 질문 1).
+12. 도킹된 Trolley를 Material Setup에서 스캔하면 쓸 수 없다는 Alert을 보여 줌 (MT-20261105-01, 추가 예정. Alert ID는 질문 1).
 
 ## 참고: 관련 Event
 
@@ -44,7 +44,7 @@ Event Message는 Instrument와 개발사가 만들고, CURECA 화면은 받은 �
 
 ## 질문
 
-1. (규칙 12) 도킹된 Trolley 스캔 알럿 ID와 문구, Trolley 흐름(Sample · Consumable) 중 어디서 띄우는지
+1. (규칙 12) 도킹된 Trolley 스캔 Alert ID와 문구, Trolley 흐름(Sample · Consumable) 중 어디서 띄우는지
 
 ## 이유
 
@@ -60,7 +60,7 @@ Event Message는 Instrument와 개발사가 만들고, CURECA 화면은 받은 �
 - 팀원 POL-DCK-01·05, POL-DCK-06 Sample Storage Trolley 1층 운영 (팀원 쪽 사용자 확인 2026-10-16)
 - 2026-11-03 사용자 답변 (MS1): Consumable Trolley 1F 빈 Tray는 반환 자리
 - MT-20261026-01 "검체 트롤리(투입)는 Run Start 이후 도킹 해제할 수 없음", 2026-11-06 사용자 확인 (규칙 6 · 7)
-- MT-20260828-01 업체별 도킹 방식 · 회수 시나리오 (규칙 10 · 11), MT-20261021-01 회수 트롤리 Event, MT-20261105-01 도킹된 트롤리 스캔 알럿 (규칙 12)
+- MT-20260828-01 업체별 도킹 방식 · 회수 시나리오 (규칙 10 · 11), MT-20261021-01 회수 트롤리 Event, MT-20261105-01 도킹된 트롤리 스캔 Alert (규칙 12)
 
 ## 변경 이력
 

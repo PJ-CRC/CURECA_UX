@@ -2,22 +2,30 @@
   "id": "UX가이드_Common-UX-가이드",
   "kind": "guide",
   "title": "Common UX 가이드",
-  "summary": "UX AI TEST 파일 Common UX 페이지(2.2) 기준으로 입력 액션 · GNB/LNB · 기본 프레임 · 상태값 · 소모품/시약 표기와 컴포넌트 23개(5-a ~ 5-w) 규칙, PC 컴포넌트 · MO 목차를 정리했습니다.",
+  "summary": "CURECA 작업규칙의 Common UX 원본(common-ux/comm-index.md, 2026-11-24 결정)을 그대로 보여 줍니다. COMM마다 이름 · 하는 일 · 예전 ID · 쓰인 컴포넌트(키) · Figma 링크, 5절 Component는 Type마다 정의 · 형태 · 조건 · 컴포넌트.",
   "link": "https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=355-53300&t=iH5mZGF7YeEAjhGh-1",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
   "fileName": "UX AI TEST",
   "scope": "Common UX 페이지",
   "frames": 43,
-  "sources": [],
+  "sources": [
+    "CURECA_AI_20261125_23a001c"
+  ],
   "by": "정다예",
   "request": "CURECA UX 가이드 규칙을 따라서 기준 피그마 링크에 있는 내용들을 MD화 해줘",
   "jobId": "J001",
   "createdAt": "2026-11-05T14:03:21+09:00",
-  "updatedAt": "2026-11-17T06:55:37.981Z",
+  "updatedAt": "2026-11-25T02:11:00.531Z",
   "main": "Common UX 가이드.md",
   "aliases": [
     "UX가이드_Common-UX-가이드-_1105",
     "g20261105-daye-J001"
   ],
-  "note": "2026-11-17 이름 바꿈(Common UX 가이드 _1105 → Common UX 가이드)"
+  "note": "2026-11-25 원본 파일형으로 바꿈 — 작업규칙(sources.md)이 Common UX 원본을 common-ux/comm-index.md로 정해, 이 문서도 그 파일을 그대로 씀(예전 본문 Common UX 가이드.md는 이력으로만 남김). 이전: 2026-11-17 이름 바꿈(Common UX 가이드 _1105 → Common UX 가이드)",
+  "format": "files",
+  "filesDir": "",
+  "files": [
+    "../common-ux/comm-index.md",
+    "컴포넌트 스크린샷.md"
+  ]
 }

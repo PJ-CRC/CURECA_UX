@@ -1,16 +1,16 @@
-# 알럿·안내 카탈로그
+# Alert·안내 카탈로그
 
-> 상태: 초안 v0.3 (2026-11-02). 출처: 알럿 관리 페이지 [2-1. CURECA 기획팀 공유용 Part.2 > Alert / Confirm](https://www.figma.com/design/YJGJKb3YUu0iwGdMq0myjS/2-1.-CURECA_%EA%B8%B0%ED%9A%8D%ED%8C%80-%EA%B3%B5%EC%9C%A0%EC%9A%A9-Part.2-?node-id=317-95954) (Revision V2.1.14, 2026-10-30). 데이터: [alert-catalog.csv](alert-catalog.csv)
+> 상태: 초안 v0.3 (2026-11-02). 출처: Alert 관리 페이지 [2-1. CURECA 기획팀 공유용 Part.2 > Alert / Confirm](https://www.figma.com/design/YJGJKb3YUu0iwGdMq0myjS/2-1.-CURECA_%EA%B8%B0%ED%9A%8D%ED%8C%80-%EA%B3%B5%EC%9C%A0%EC%9A%A9-Part.2-?node-id=317-95954) (Revision V2.1.14, 2026-10-30). 데이터: [alert-catalog.csv](alert-catalog.csv)
 
-사용자가 실수할 수 있는 지점에 정책에 정의된 안내와 알럿이 있는지 점검하는 기준 자료입니다(헌법 8조). 문구의 원본은 알럿 관리 페이지이며, 이 카탈로그는 그 내용을 옮기고 기존 작업방 화면과 맞춰 본 결과입니다.
+사용자가 실수할 수 있는 지점에 정책에 정의된 안내와 Alert이 있는지 점검하는 기준 자료입니다(헌법 8조). 문구의 원본은 Alert 관리 페이지이며, 이 카탈로그는 그 내용을 옮기고 기존 작업방 화면과 맞춰 본 결과입니다.
 
-> 알럿 체계 재정리 예정 (`background/todo.md` 작업 9, 2026-11-02): 전체 알럿 케이스를 모아 공통 케이스로 묶고 빠진 알럿을 추가함. 그 전까지 화면 MD의 알럿 정보는 지우지 않고 남기며, 이 카탈로그의 "삭제 (관리 페이지 반영 필요)", "추가 (관리 페이지 반영 필요)" 표시도 그 작업에서 함께 다시 봄.
+> Alert 체계 재정리 예정 (`background/todo.md` 작업 9, 2026-11-02): 전체 Alert 케이스를 모아 공통 케이스로 묶고 빠진 Alert을 추가함. 그 전까지 화면 MD의 Alert 정보는 지우지 않고 남기며, 이 카탈로그의 "삭제 (관리 페이지 반영 필요)", "추가 (관리 페이지 반영 필요)" 표시도 그 작업에서 함께 다시 봄.
 
-> 알럿 체계 분리 (2026-11-03 결정): Material Setup은 나중에 별도 프로그램으로 쓰일 수 있어 알럿을 일반 메뉴와 나눔. Material Setup 알럿은 MS_Alert_###, MS_Confirm_### 체계로 [alert-catalog-ms.csv](alert-catalog-ms.csv)에 두고, 이 카탈로그는 일반 메뉴만 다룸. 담당자 정책서 MD의 예전 ID(Alert_027·035~047, Confirm_006·026~028)는 이 카탈로그의 같은 번호와 겹치지만, Material Setup이 새 체계를 쓰므로 충돌하지 않음. 이 카탈로그에서 Material Setup 화면(LI-TSS-*)을 쓰는 항목은 작업 9에서 MS 체계로 옮김.
+> Alert 체계 분리 (2026-11-03 결정): Material Setup은 나중에 별도 프로그램으로 쓰일 수 있어 Alert을 일반 메뉴와 나눔. Material Setup Alert은 MS_Alert_###, MS_Confirm_### 체계로 [alert-catalog-ms.csv](alert-catalog-ms.csv)에 두고, 이 카탈로그는 일반 메뉴만 다룸. 담당자 정책서 MD의 예전 ID(Alert_027·035~047, Confirm_006·026~028)는 이 카탈로그의 같은 번호와 겹치지만, Material Setup이 새 체계를 쓰므로 충돌하지 않음. 이 카탈로그에서 Material Setup 화면(LI-TSS-*)을 쓰는 항목은 작업 9에서 MS 체계로 옮김.
 
-> 토스트 (2026-11-19): 토스트는 따로 둠. Material Setup은 `MS_Toast_###` 체계로 [toast-catalog-ms.csv](toast-catalog-ms.csv), 일반 메뉴는 `toast-catalog.csv`(아직 없음). 칸은 알럿 카탈로그와 같은 이름이고 버튼 칸이 없음.
+> Toast (2026-11-19): Toast는 따로 둠. Material Setup은 `MS_Toast_###` 체계로 [toast-catalog-ms.csv](toast-catalog-ms.csv), 일반 메뉴는 `toast-catalog.csv`(아직 없음). 칸은 Alert 카탈로그와 같은 이름이고 버튼 칸이 없음.
 
-> 토스트 Property(등급) 기준 (2026-11-19 DY, MS_Toast_001 ~ 018에서 읽어 냄): **Success** = 하던 일이 정상으로 끝났거나 처리됨을 알림(구성 · 적재 완료, 정상 스캔, 저장 · 적용). **Info** = 순서가 어긋났거나 다른 것을 스캔해 다음에 할 일을 안내함(○○보다 △△를 먼저 스캔, ○○ 외 항목 스캔, 교체됨).
+> Toast Property(등급) 기준 (2026-11-19, MS_Toast_001 ~ 018에서 읽어 냄): **Success** = 하던 일이 정상으로 끝났거나 처리됨을 알림(구성 · 적재 완료, 정상 스캔, 저장 · 적용). **Info** = 순서가 어긋났거나 다른 것을 스캔해 다음에 할 일을 안내함(○○보다 △△를 먼저 스캔, ○○ 외 항목 스캔, 교체됨).
 
 ## 1. 구성
 

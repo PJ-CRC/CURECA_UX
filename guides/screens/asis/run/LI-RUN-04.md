@@ -187,24 +187,3 @@ Interface/triangle-exclamation_Solid (14), Description Number (12), Description 
 #### 7. [Run Start] 버튼
 
 - 선택 시 팝업 노출 : Confirm_002
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 디스크립션 | 0 "[Step 4/4] Run 실행을 위한 시약 정보 확인 화면" (LI-RUN-03에서 복사) | Waste Bin/Bottle 상태 확인 화면 | 화면 글자 | 대기 |
-| R02 | 디스크립션 | 3-3 예외 케이스 "[3-6]" (3-6 없음) | 지움 또는 맞는 번호 | 디스크립션 | 대기 |
-| R03 | 표기 | "PlateSealing (1)" | Plate Sealing (1) | `glossary/modules.csv` | 대기 |
-| R04 | 표기 | 단계 이름 "Check waste bin/bottle", 디스크립션 "폐기함", "폐기물함", "폐기물 함", "Waste Bin" (Liquid Waste Bottle 포함 여부 불분명) | Waste Bin/Bottle로 통일 | `glossary/terms.csv` Waste Bin (폐기물함은 쓰지 않는 표현), 폐기함/폐액통 상태 | 대기 |
-| R05 | 상태값 | 3-3 "Almost Full 상태 (Warning)", "Full 상태 (Error)" | 상태값과 Event 등급을 구분해 적음 (Waste Bin/Bottle Status는 Available / Almost Full / Full) | `glossary/status-values.csv` | 대기 (확인 필요) |
-| R06 | 디스크립션 | 2-2 "최대 수량 대비 현재 폐기 수량", 3-4 "Available·Almost Full은 카운팅, Full은 센서" | 상태값 표의 기준(적재율 70% 미만 / 70% 이상 / 100%)과 같이 적음 | `glossary/status-values.csv` 폐기함/폐액통 상태 | 대기 |
-| R07 | 디스크립션 | 1 Chip "Default : 모든 탭이 미선택", "구동 준비" | 모든 Chip이 미선택, Run Preparation | 디스크립션, `glossary/terms.csv` | 대기 |
-| R08 | 디스크립션 | Full 또는 Almost Full이 있을 때 [Run Start]를 막는지 설명 없음 | 디스크립션에 넣음: Waste Bin/Bottle 상태와 관계없이 [Run Start]를 할 수 있음. Full이면 그 Waste Bin/Bottle을 쓰는 단계에 이르렀을 때 Error가 됨 | POL-SMP-007 규칙 4 | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.1.11 | 2026-10-08 | 폐기물 상태 정보 확인 단계 신규 추가 | 정다예 | Figma 버전 메모 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |
-| | 2026-11-18 | 연동 변경: Module · Unit 이름 바꿈(Prep Consumable Storage → Consumable Storage, Sample Preparation Module → Sample Pre-treatment, Sample Pretreatment → Sample Processing, Sample Aliquot → Sample Aliquoting). 검사 단계 · Reagent 태그 · Prep 시스템의 Sample Preparation은 그대로 | 서보경 | `glossary/modules.csv`, `glossary/module-units.csv` (2026-11-18) |

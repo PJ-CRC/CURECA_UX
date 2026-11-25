@@ -92,19 +92,3 @@ figma_region: 2.1 2차
 ### 케이스
 
 - Case. Order Reception Mode에서 ‘Query’를 선택 했을 경우, T-IOS Network 영역의 Port 텍스트 필드 disabled 처리
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 디스크립션 | 0에 "Default: All / 데이터: All, Error, Warning" (다른 화면에서 복사된 것으로 보임) | 지움 | 디스크립션 | 대기 |
-| R02 | 디스크립션 | 번호 4가 두 번 (T-IOS Network, LIS Network), 3-1 없음 | 번호 정리 | 디스크립션 | 대기 |
-| R03 | 화면 글자 | 화면 예시는 Push Mode 선택, 디스크립션 기본값은 Query Mode | 기본 상태 화면을 기본값과 맞춤 | 디스크립션 3 | 대기 |
-| R04 | 정책 반영 | CURECA가 여러 대일 때(TI-ADS) LIS 설정이 장비마다인지 화면에 없음 | 디스크립션에 넣음: LIS 설정은 상단에서 고른 CURECA마다 | POL-SYS-001 규칙 7, POL-COM-005 | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.1.01 | 2026-07-21 | (버전 메모 없음) | 서보경 | Figma 화면 정보 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

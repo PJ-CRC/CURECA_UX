@@ -65,17 +65,3 @@ figma_region: 2.1 2차
 #### 5. Pagination
 
 - 공통 UX > COMM-5-i 정의 참고 (10개 단위)
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 화면 정보 | Ver 0.3.0 (화면 Ver 체계 X.Y.ZZ가 아님) | 2.1.ZZ 체계로 | `old-rules/repository-and-id.md` 6절 | 대기 |
-| R02 | 화면 정보 | Import file 팝업 TI-STN-08-01이 IA에 없음 | IA에 추가할지 확인 | `ia/ia-screens.csv` | 대기 (확인 필요) |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 0.3.0 | 2026-10-22 | (버전 메모 없음) | 이상헌 | Figma 화면 정보 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

@@ -136,24 +136,3 @@ Table (12), Table/Filled Table Cell (10), Arrow/Chevron_Right (10), Description 
 ### 케이스
 
 - TI-SPT-02/Case1: Progress 상태 정보 Tooltip (프레임에 Case 제목 글자 없음)
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 상태값 | 1-2 Status 목록에 Not Tested (Plate 상태값은 Running, Completed, Failed) | Status 목록에서 Not Tested를 뺌: All, Running, Completed, Failed. Status는 Plate 상태 (POL-SMP-010) | `glossary/status-values.csv` Plate 상태, POL-SMP-010 | 대기 |
-| R02 | 디스크립션 | 2-1 Status "검체의 검사 진행 상태 정보" (Plate 목록) | Plate 상태 (Running, Completed, Failed) (POL-SMP-010) | `glossary/status-values.csv`, POL-SMP-010 | 대기 |
-| R03 | 디스크립션 | 1-3 Default 일자 유형 "Start Date/Time", 목록은 "Start Date, End Date" | 표기 하나로 | 디스크립션 | 대기 |
-| R04 | T/L 차이 | 3 [Export]: T-IOS는 "OS 파일함, 엑셀파일", L-IOS는 ".CVS, COMM-5-j(4/4)". IA는 짝 화면 동일 | 파일 형식은 T-IOS·L-IOS 모두 .csv. 저장 방법만 다름: T-IOS는 OS 파일 탐색기, L-IOS는 경로 저장·USB 저장 Popup (COMM-5-j(4/4)) | POL-COM-006 규칙 1·3·4 | 대기 |
-| R05 | 화면 정보 | IA 경로 "96 DWP", 화면 "96-DWP" | 96-DWP | `glossary/terms.csv` DWP | 대기 |
-| R06 | 디스크립션 | 2-1 "Sample Pre-treatment 모듈", "PCR Setup 모듈", Progress "상태 값 : COMM-4-a" | Module 표준어, 단계 표시는 검사 단계 기준 | `glossary/terms.csv`, `glossary/test-stages.csv` | 대기 |
-| R07 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.1.01 | | [3] Export 선택 시 노출 내용 수정 | 정다예 | Figma 버전 메모 |
-| 2.1.11 | 2026-10-08 | 테이블 데이터 수정: 검사 단계별 모듈 명 열 삭제, 검사 시작 및 종료 일시 추가 | 정다예 | Figma 버전 메모 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |
-| | 2026-11-18 | 연동 변경: Module · Unit 이름 바꿈(Prep Consumable Storage → Consumable Storage, Sample Preparation Module → Sample Pre-treatment, Sample Pretreatment → Sample Processing, Sample Aliquot → Sample Aliquoting). 검사 단계 · Reagent 태그 · Prep 시스템의 Sample Preparation은 그대로 | 서보경 | `glossary/modules.csv`, `glossary/module-units.csv` (2026-11-18) |

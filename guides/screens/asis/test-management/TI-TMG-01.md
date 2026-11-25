@@ -192,25 +192,3 @@ Description (14), Description Number (13), Title (10), Table (10), Tag Status (1
 ### 케이스
 
 - Case 1. Sample 상태별 데이터 노출 예시 (TI-TMG-01/Case)
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 디스크립션 | 0 "T-IOS를 통해 접수 받은 검체 정보", 2-1 "T-IOS에서 수신되는 검체 ID·검사 항목·검체 타입·응급 여부" (T-IOS 화면인데 출처가 T-IOS로 적힘. L-IOS 원문을 그대로 쓴 것으로 보임) | T-IOS 기준 출처(LIS 등)로 고쳐 씀 | 디스크립션 | 대기 (확인 필요) |
-| R02 | 디스크립션 | 2 "Test order 리스트" | Test Order 리스트 | 화면 글자 | 대기 |
-| R03 | 디스크립션 | 2-1 Start Date/Time "Prep 장비에서 바코드 찍은 시간" | 어느 Module(Sample Pre-treatment Module 등)인지 표준어로 | `glossary/terms.csv` Prep 시스템, Module | 대기 (확인 필요) |
-| R04 | T/L 차이 | 4 [Import]·[Export]: T-IOS는 "OS 파일함, 엑셀파일", L-IOS는 ".CVS 파일, COMM-5-j(4/4) 팝업". IA는 짝 화면 동일 | Export 파일 형식은 .csv, 저장 방법은 T-IOS OS 파일 탐색기 / L-IOS 경로·USB Popup (POL-COM-006). Import는 .csv와 엑셀을 모두 받음 (고객 논의 CA-0008) | POL-COM-006 규칙 5 | 대기 |
-| R05 | 디스크립션 | 1-2 Product 목록이 11개 (RP1~STI-12)로 고정 | 검사 항목 목록(30개) 전체인지, Assay Pack에 등록된 것만인지 정함 | `glossary/test-items.csv` | 대기 (확인 필요) |
-| R06 | 디스크립션 | 2 정의 "응급 서랍을 통해 도킹" | 표준어(STAT Storage, Drawer)로 | `glossary/terms.csv` Drawer, `glossary/module-units.csv` | 대기 |
-| R07 | 디스크립션 | 2 정의는 "도킹된 상태의 검체 리스트"인데 Status 필터·예시에 Ordered(검사 시작 전)가 있음 | 목록 대상(접수 전체인지, 도킹된 것만인지) 확인 | `glossary/status-values.csv` Sample 상태 | 대기 (확인 필요) |
-| R08 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.1.01 | | [4] Export 선택 시 노출 내용 수정. [4] Import 선택 시 노출 내용 수정 | 정다예 | Figma 버전 메모 |
-| 2.1.11 | 2026-10-08 | 테이블 내 데이터 정렬 순서 변경 | 정다예 | Figma 버전 메모 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |
-| | 2026-11-18 | 연동 변경: Module · Unit 이름 바꿈(Prep Consumable Storage → Consumable Storage, Sample Preparation Module → Sample Pre-treatment, Sample Pretreatment → Sample Processing, Sample Aliquot → Sample Aliquoting). 검사 단계 · Reagent 태그 · Prep 시스템의 Sample Preparation은 그대로 | 서보경 | `glossary/modules.csv`, `glossary/module-units.csv` (2026-11-18) |

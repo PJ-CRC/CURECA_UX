@@ -63,16 +63,3 @@ figma_region: 2.1 2차
 
 - [Delete]: 적용 중(Active) 파일 → 삭제 불가 알림 (Alert_042), 패널 유지. 그 외 → 삭제 확인 팝업 (Confirm_026, Delete the selected file?). [Delete] → 패널 닫힘 & Toast 노출 (The file has been deleted.). [Cancel] → 팝업 닫힘, 패널 유지. 삭제한 파일은 적용 중이 아니므로 장비 반영 데이터에 영향 없음
 - [Save] (우측): 디폴트 : 비활성, Active · Inactive를 바꾸면 활성 (T-IOS만, L-IOS 미노출). 선택 시 → Active로 바꿨으면 Confirm_029, Inactive로 바꿨으면 Confirm_030 → 확인 시 반영 & Toast
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 화면 정보 | 화면 이름 "Assay Pack Setting", Ver 0.4.0 | Assay Pack File Details (IA "Details"), 2.1.ZZ 체계 | IA | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 0.4.0 | 2026-10-22 | (버전 메모 없음) | 이상헌 | Figma 화면 정보 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

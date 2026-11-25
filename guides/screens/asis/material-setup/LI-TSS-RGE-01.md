@@ -67,22 +67,3 @@ Arrow/Chevron_Right (6), layout/spacing (4), Table (3), Description Number (2), 
 ### 버전 메모
 
 - v2.1.14 update / View Trolley Info 화면 추가
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 화면 정보 | IA 미등록 (CID LI-TSS-RGE-01, 이름 View Trolley Info) | 다음 IA 버전에 CID·이름·Type·L-IOS Client Mode 등록 | `background/todo.md`, `ia/ia-screens.csv` | 대기 (확인 필요) |
-| R02 | 알럿 | "Alert_027" (기존 카탈로그, MS_Alert_001과 같은 문구 "Invalid code for the current workflow.") | MS_Alert_001로. MS 목록 사용 화면에 RGE 추가 | `alert/alert-catalog-ms.csv` MS_Alert_001 (이전 ID Alert_027) | 대기 |
-| R03 | 화면 | 목록 열 "Remaining slots", 값 "10 case" | 열 이름과 단위 통일 (RGE-02는 "N Cases" = Selectable 수) | LI-TSS-RGE-02 2-1 | 대기 (확인 필요) |
-| R04 | 화면 | 상단 "Prep consumable trolley", "Consumable and reagent reuse guide"가 Tab인지 제목인지 디스크립션에 없음 | 정의 | 화면 글자 | 대기 (확인 필요) |
-| R05 | 디스크립션 | 목록 정렬, 빈 목록 정의 없음 | 정의 | 디스크립션 2 | 대기 (확인 필요) |
-| R06 | 화면 정보 | L-IOS Client Mode 미정 (Material Setup 다른 메뉴는 TSS 또는 Console) | 확인 | `policy/client-mode-matrix.csv` | 반영 완료 (2026-11-12, 연동 변경 · DS-0001) |
-| R07 | 표기 | "Empty Waste bin" (LNB), "검체", "소모품 Trolley", "트롤리", "팝업" | Empty Waste Bin, Sample, Consumable Trolley, Trolley, Popup | `glossary/terms.csv` | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 (CR, PD, PV, 정책 ID) |
-| --- | --- | --- | --- | --- |
-| 2.1.14 | | View Trolley Info 화면 추가 | BREX | Figma 버전 메모 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`). 노출 모드 값을 새 기능 표대로 고침 | 서보경 | DS-0001 |

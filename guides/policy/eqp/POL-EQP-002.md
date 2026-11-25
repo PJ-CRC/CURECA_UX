@@ -35,7 +35,7 @@ replaced_by:
 
 ## 예외
 
-- Module이 Error에서 고쳐져도, 물리적으로 이어진 다른 Module 때문에 Run이 다시 시작되지 않을 수 있음 (MT-20261013-01). 어떤 Module끼리 이어져 있는지는 Module 문서(`policy/modules/`)에 모음. Error에서 돌아가는 조건은 씨젠 상태 정보 261119에 생김(규칙 4-1). 이것이 CA-0002 · CA-0010의 답인지는 확인 필요
+- Module이 Error에서 고쳐져도, 물리적으로 이어진 다른 Module 때문에 Run이 다시 시작되지 않을 수 있음 (MT-20261013-01). 어떤 Module끼리 이어져 있는지는 Module 문서(`policy/modules/`)에 모음. Error에서 돌아가는 조건은 씨젠 상태 정보 261119에 생김(규칙 4-1). 이것이 Error 복구와 Error일 때 Door를 여는 경우의 답으로 정해짐 (DS-0009, POL-EQP-004 규칙 1)
 
 ## 근거
 
@@ -51,3 +51,4 @@ replaced_by:
 | | 2026-11-02 | Running → Paused 조건을 씨젠 전환표대로 "모든 Module이 Paused"로 고침, Run 중이 아닐 때 규칙 5 추가 | |
 | | 2026-11-06 | 고쳐진 Module이 이어진 Module 때문에 다시 시작되지 않을 수 있음 (예외) | MT-20261013-01 |
 | | 2026-11-19 | 씨젠 상태 정보 261119 반영: Partial Running · Paused · Running 복귀 조건(규칙 2 ~ 4), Error에서 돌아가는 조건(규칙 4-1), 시스템 오류 뒤 복구까지 Error 유지(규칙 8) | DS-0005 |
+| | 2026-11-25 | 규칙 4-1이 Error 복구의 답으로 정해짐 (참고 고침) | DS-0009 |

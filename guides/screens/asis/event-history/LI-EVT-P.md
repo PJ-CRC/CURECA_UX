@@ -66,22 +66,3 @@ figma_region: 2.1 2차
 #### 7. 닫기
 
 - 클릭 시, 팝업이 닫힘
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 디스크립션 | 1·3에 Event Type 옛 값과 새 값이 함께 있음 | 옛 값은 취소선으로 이미 제거됨 | Figma 취소선 | 제외 (2026-11-04, 취소선) |
-| R02 | 정책 반영 | 5 [Mark all as Closed] 범위 "상태값이 Open인 모든 Events" | 디스크립션에 넣음: 지금 검색 조건으로 불러온 목록의 모든 페이지에서 Open인 Event 전체 | POL-EVT-002 규칙 4 | 대기 |
-| R03 | 정책 반영 | 4 "공통 UX 참고 : COMM-3-a" | Status 변경 가능 조건은 POL-EVT-002 참조 | POL-EVT-002 | 대기 |
-| R04 | 표기 | OPEN, Statue, Cureca | Open, Status, CURECA | `glossary/status-values.csv`, 오타 | 대기 |
-| R05 | 표기 | Expiration date Status, Under 30 Day | 대소문자 통일, Under 30 days | `archive/glossary/review-v0.md` | 대기 (최신 영역 화면에서 확인) |
-| R06 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.1.01 | 2026-08-07 | Event Type 항목 변경, 목록의 체크박스 제거, Mark as Closed 버튼명·정책 변경(5), Export 방식 변경(6) | 서보경 | Figma 버전 메모 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |
-| | 2026-11-18 | 2026-11-06 케이스 1 테스트(`dedeae0`)에서 To-Be로 덮어쓴 것을 원래 AS-IS(`dedeae0^`)로 되돌림. 11-06 뒤의 연동 변경(L-IOS Client Mode 이름, `archive/glossary/review-v0.md` · `old-rules/screen-spec.md` 경로)은 다시 적용 | DY | - |

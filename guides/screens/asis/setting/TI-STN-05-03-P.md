@@ -65,18 +65,3 @@ figma_region: 2.1 2차
 #### 3. [X] 버튼
 
 - 클릭 시, 팝업 닫힘 및 TI-STN-05 페이지 노출
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 정책 반영 | 편집 모드에서 Password를 다시 정했을 때의 동작이 없음 | 디스크립션에 넣음: 그 사용자는 다음 로그인 때 Reset Initial Password Popup으로 비밀번호를 바꿈, SMTP가 연동되어 있고 Email이 있으면 새 비밀번호를 메일로 보냄. Admin은 다른 Admin 계정도 수정 가능(PV-0002) | POL-ACC-003 규칙 6·7, PV-0002 | 대기 |
-| R02 | 디스크립션 | 편집 모드 저장([Save]) 설명이 없음. 목록의 Modified Date/Time은 "팝업 내 [Save]" 시점 | 편집 모드 프레임 내용까지 옮겨 정리 | TI-STN-05 2-1 | 대기 |
-| R03 | 정책 반영 | 수정할 수 있는 계정 범위가 없음. 1 User Type 표출 항목이 User · Admin뿐 | 디스크립션에 넣음: 0 노출 조건 → Admin은 다른 Admin 계정과 User 계정을 열어 수정할 수 있음(Service 계정은 Admin의 목록에 보이지 않음, TI-STN-05-R04). Admin 수정 범위는 R01과 같은 내용. 확인 필요: Service 계정 상세의 User Type 표시(Service), 편집 모드에서 Service 계정의 User Type을 바꿔 Service 계정이 하나도 남지 않게 되는 수정을 막는지(PV-0002 바꾸는 내용 3) | PV-0002 바꾸는 내용 2 · 3 · 4 (2026-11-05 승인), CA-0003, TI-STN-05-03-P-R01 | 대기 (확인 필요) |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.1.03 | 2026-08-21 | (버전 메모 없음) | 정다예 | Figma 화면 정보 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

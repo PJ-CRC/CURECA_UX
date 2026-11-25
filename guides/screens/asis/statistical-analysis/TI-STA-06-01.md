@@ -121,27 +121,3 @@ Description Number (10), Square (6), 1 Depth (6), 2 Depth (5), Form/CheckBox (5)
 ### 케이스
 
 - TI-STA-06-01/Case: Case 1. Chart 상세 데이터 Tooltip / Case 2. Legend 전체 해제 시
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 정책 반영 | 권한표에서 Statistical Analysis는 User Type 모두 O, Error Rate 표시는 Service만 (Instrument 행에만 있음). 이 화면은 디스크립션 1에서 Service만 노출 | 디스크립션 그대로: Error Rate Trend Tab은 User Type이 Service일 때만 보여 줌. 권한표에 Error Rate Trend 행 추가함 | `policy/permission-matrix.csv`, POL-STA-001 규칙 2 | 대기 |
-| R02 | 표기 | "Account Type이 Sevice" | User Type이 Service | `glossary/terms.csv`, 오타 | 대기 |
-| R03 | 정책 반영 | 산출식 "(에러 횟수 / 전체 구동 횟수) * 100", 구동 횟수는 "DWP 입고 기준", 에러 횟수는 씨젠 정의 예정. POL-EQP-010은 Consumable 부족·Waste Bin Full 중단을 제외 | 디스크립션에 넣음: 총 가동 횟수와 가동 실패 횟수는 POL-EQP-010의 Module별 기준으로 셈. "DWP 입고 기준 +1" 문구는 지움 | POL-STA-006 규칙 6, POL-EQP-010 | 대기 |
-| R04 | 디스크립션 | 3 "가동 시간 단위 정보 : (Unit : %)" | 에러율 단위 정보 | 디스크립션 | 대기 |
-| R05 | 디스크립션 | 3-3 참고 "TI-STA-06-02/Case 1" (없는 프레임) | TI-STA-06-01/Case > Case 1 | 케이스 | 대기 |
-| R06 | 화면 정보 | 케이스 프레임 이름은 TI-STA-06-01/Case, 패널 CID는 "TI-STA-05-01/Case" | TI-STA-06-01/Case | Figma 화면 정보 | 대기 |
-| R07 | 화면 정보 | TI-STA-05(Test Forecasting)와 CID 계층이 겹침 ("TI-STA-05_Skeleton" 참조 포함), Figma 경로와 IA 경로가 다름 | TI-STA-05-01 반영 대기 목록 1, 2와 같음 | `ia/change-requests.md` 1·2 | 대기 |
-| R08 | 표기 | 차트 범례 "Consumable / Storage(1)" (줄바꿈), "Consumable Storage(1)" | Consumable Storage (1) | `glossary/terms.csv` Module | 대기 |
-| R09 | 디스크립션 | "장비 별", "에러율" | Module / Unit, Error Rate | `glossary/terms.csv`, `glossary/glossary.md` "문서 언어" | 대기 |
-| R10 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.1.03 | 2026-08-21 | (버전 메모 없음) | 정다예 | Figma 화면 정보 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |
-| | 2026-11-17 | 연동 변경: 예전 `old-screen-fixes/`를 지우며 그곳을 가리키던 반영 대기 근거 · 관련 줄을 고침(화면 · 디스크립션은 그대로) | 서보경 | todo 1-8c ④ |
-| | 2026-11-18 | 연동 변경: Module · Unit 이름 바꿈(Prep Consumable Storage → Consumable Storage, Sample Preparation Module → Sample Pre-treatment, Sample Pretreatment → Sample Processing, Sample Aliquot → Sample Aliquoting). 검사 단계 · Reagent 태그 · Prep 시스템의 Sample Preparation은 그대로 | 서보경 | `glossary/modules.csv`, `glossary/module-units.csv` (2026-11-18) |

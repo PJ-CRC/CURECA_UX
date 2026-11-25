@@ -62,16 +62,3 @@ figma_region: 2.1 2차
 #### 5. [Modify] 버튼
 
 - 선택 시 → Modify 화면으로 전환
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 알럿 | [Delete] → Confirm_009 | Confirm_009는 "Local Storage Detected"(로컬 드라이브 경고)라 삭제 확인에 맞지 않음. 삭제 확인 알럿 ID로 바꿈 | `alert/alert-catalog.csv` | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.1.01 | 2026-08-07 | (버전 메모 없음) | BREX | Figma 화면 정보 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

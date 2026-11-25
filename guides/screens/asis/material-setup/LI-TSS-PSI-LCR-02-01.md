@@ -66,20 +66,3 @@ Description Number (2), Frame (1), Button/Secondary_1Button_44 (1)
 ### 버전 메모
 
 - v2.1.05 update / 디스크립션 수정 항목 / - 누락 or 추가 항목 반영 (빨간 텍스트 & 취소선 참고)
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 화면 정보 | Ver 2.0, 경로 "Load consumables and reagents > Scan the trolley" | 버전 메모 반영 Ver. 경로는 IA대로 (Load Tray into Trolley > Scan the trolley) | 버전 메모, `ia/ia-screens.csv` | 대기 |
-| R02 | 문구 | "Scan the QR code on the empty trolley." | 이미 Consumable Tray가 있는 Trolley도 쓸 수 있는지에 따라 정함 | LI-TSS-PSI-LCR-02-03 1 | 대기 (확인 필요) |
-| R03 | 디스크립션 | 2 [Next], 2-1 Scan 내용 없음 | LI-TSS-PSI-SAM-01-01 반영 대기 목록 3과 같이 | 디스크립션 | 대기 (확인 필요) |
-| R04 | 표기 | "검체", "trolley", "팝업" | Sample, Trolley, Popup | `glossary/terms.csv` | 대기 |
-| R05 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `alert/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 (CR, PD, PV, 정책 ID) |
-| --- | --- | --- | --- | --- |
-| 2.1.05 | | 디스크립션 수정 (누락·추가 항목, 빨간 텍스트 & 취소선) | BREX | Figma 버전 메모 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`). 노출 모드 값을 새 기능 표대로 고침 | 서보경 | DS-0001 |

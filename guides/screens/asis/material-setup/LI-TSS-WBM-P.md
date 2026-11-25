@@ -98,25 +98,3 @@ Button/Tertiary_1Button_36 (10), Tool Tip/Default (8), Interface/Setting_fill (4
 ### 버전 메모
 
 - v2.1.06 update / Empty Waste Bin 메뉴 추가 (세 프레임 같음)
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 알럿 | "Confirm_021" (기존 카탈로그 Confirm Empty, LI-IVT-05-T와 공용). MS 목록의 MS_Confirm_021은 Buffer Cartridge cap refill이라 번호가 겹침 | MS 목록에 Confirm Empty를 둘지, 일반 카탈로그 ID를 쓸지 정함 | `alert/alert-catalog-ms.csv` MS_Confirm_021, `alert/alert-catalog.csv` Confirm_021 | 대기 (확인 필요) |
-| R02 | 화면 정보 | 프레임 5050:422892, 5127:123497은 이름이 LI-TSS-WBM-P인데 Door Control Popup 내용 | 디스크립션에 넣음: Waste Bin이 서랍형이 아니라 유리 Door 안에 있는 경우를 위해 Door Control Popup을 둠. Instrument의 Door Control(LI-INS-01-P)과 같은 UI를 쓰되, Waste Bin이 있는 Door만 골라 보여 줌. 별도 CID 여부는 IA 확인 | 2026-11-03 사용자 답변 (MS9 일부) | 대기 |
-| R03 | 디스크립션 | 1 드롭다운 목록에 Consumable Storage, Sample Storage 없음. Plate Sealing은 Sealer Waste Bin (1)·(2) | Waste Bin Unit이 있는 Module만 나열하는지 확인 | `glossary/module-units.csv` | 대기 (확인 필요) |
-| R04 | 디스크립션 | 1 "Sample preparation", "Universal Pcr" | Sample Pre-treatment, Universal PCR | `glossary/modules.csv` | 대기 |
-| R05 | 디스크립션 | 2·4 "페기함" | Waste Bin (폐기함/폐액통). 리셋 대상 = 적재율 0% | 오타, `glossary/terms.csv` Waste Bin | 대기 |
-| R06 | 디스크립션 | 2 Confirm All Empty "활성화된 모든 Confirm Empty 버튼 비활성화" — 버튼 활성 조건(적재율 > 0%?) 정의 없음 | 활성 조건 정의 | 디스크립션 2·4 | 대기 (확인 필요) |
-| R07 | 화면 정보 | Ver 2.0 (LI-TSS-WBM은 2.1) | 버전 확인 | 화면 정보 | 대기 (확인 필요) |
-| R08 | 표기 | 다른 프레임 "로체", "단디메카", "도어", "분주 장비" | 고객 사양 이름은 용어집에 없음. Door, Sample Aliquoting | `glossary/terms.csv`, `glossary/module-units.csv` | 대기 (확인 필요) |
-| R09 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `alert/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 (CR, PD, PV, 정책 ID) |
-| --- | --- | --- | --- | --- |
-| 2.1.06 | | Empty Waste Bin 메뉴 추가 | BREX | Figma 버전 메모 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |
-| | 2026-11-18 | 연동 변경: Module · Unit 이름 바꿈(Prep Consumable Storage → Consumable Storage, Sample Preparation Module → Sample Pre-treatment, Sample Pretreatment → Sample Processing, Sample Aliquot → Sample Aliquoting). 검사 단계 · Reagent 태그 · Prep 시스템의 Sample Preparation은 그대로 | 서보경 | `glossary/modules.csv`, `glossary/module-units.csv` (2026-11-18) |

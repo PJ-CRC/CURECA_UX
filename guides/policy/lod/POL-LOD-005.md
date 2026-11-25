@@ -30,8 +30,7 @@ replaced_by:
 
 ## 예외
 
-- Main Mode에서도 Empty Waste Bin을 제공할지는 고객 논의 (CA-0007)
-- 이 화면의 Alert·컨펌 ID(예전 Confirm_021 Confirm Empty, Alert_034 이동 중)를 MS 목록에 넣을지는 사용자가 다시 확인하기로 함 (MS9)
+- 이 화면의 Alert·Confirm ID(예전 Confirm_021 Confirm Empty, Alert_034 이동 중)를 MS 목록에 넣을지는 사용자가 다시 확인하기로 함 (MS9)
 
 ## 근거
 
@@ -44,3 +43,4 @@ replaced_by:
 | --- | --- | --- | --- |
 | | 2026-11-03 | 최초 작성 | |
 | | 2026-11-12 | 용어 Service Mode → L-IOS Client Mode, TSS Mode → MS Mode, 데이터 경로 `policy/client-mode-matrix.csv` · `policy/client-mode.md` (규칙 뜻은 그대로) | DS-0001 (2026-11-12, 서보경) |
+| | 2026-11-25 | 참고에서 Main Mode 제공 여부 논의 줄을 지움 (Console Mode만으로 정함) | DS-0011 |

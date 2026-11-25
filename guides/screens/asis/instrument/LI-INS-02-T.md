@@ -83,26 +83,3 @@ Table/Filled Table Cell (26), Frame/Instrument_Status (19), Tag Status (18), Des
 #### 5 ~ 7-1
 
 - 원문은 TI-INS-02-T 5 ~ 7-1과 같음
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 표기 | Connected 항목 상태값 "Connected / Unconnected" | Connected / Disconnected | `glossary/status-values.csv` 연결 상태 | 대기 |
-| R02 | 디스크립션 | 2-1 Error Rate가 남아 있음. 버전 메모 v2.1.01은 "Error Rate 제거(2-1)" | 취소선으로 이미 제거됨. 표시 위치는 고객 논의 중(CA-0001) | POL-EQP-010 | 제외 (2026-11-04, 취소선) |
-| R03 | 표기 | Module Details (Sample Pre-treatment): STAT Storage (Upper), STAT Storage (Lower) | STAT Storage | `glossary/module-units.csv`, `archive/glossary/review-v0.md` | 대기 |
-| R04 | 표기 | Module Details (Sample Pre-treatment): Tip Waste Bin (Upper/Lower), Film Waste Bin (Upper/Lower) | Waste Bin (Upper), Waste Bin (Lower) | 같음 | 제외 (2026-11-19, 씨젠 상태 정보 261119에서 Tip · Film Waste Bin이 로체시스템즈 장비의 Unit으로 생김. 폐기함은 설치된 제조사의 Unit으로 표기함, DS-0005) |
-| R05 | 표기 | Liquid Waste Bottle(Upper), Sample Storage(2) 등 이름과 번호 붙여 씀 | Liquid Waste Bottle (Upper), Sample Storage (2) | 이름 (번호) 띄어쓰기 | 대기 |
-| R06 | 표기 | Waste Status | Waste Bin/Bottle Status | `glossary/terms.csv` | 대기 |
-| R07 | 디스크립션 | 4-1 [Run-time Info] 설명이 남아 있음 | 취소선으로 이미 제거됨 | Figma 취소선 | 제외 (2026-11-04, 취소선) |
-| R08 | 디스크립션 | 3 "Unlock을 클릭 시,", 3-1 "클릭 시," 문장이 끊김 | [Unlock]을 누르면 Door Control 흐름(POL-EQP-008)으로 정리. Confirm_008 문구 확인 필요 | POL-EQP-008, `alert/alert-catalog.md` 3절 | 대기 |
-| R09 | 표기 | T-IO S, Account type | T-IOS, User Type | 오타, `glossary/terms.csv` | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.1.01 | | Error Rate 제거(2-1). Run-time Info 버튼 제거(4-1). Management 버튼 추가(2-2). 좌측 목록과 Device 영역 항목명 Enable → Enabled. Run-time 집계 대상에 Sample Pretreatment, Sample Aliquot 추가 | 서보경 | Figma 버전 메모 |
-| 2.1.06 | 2026-09-28 | Detail Door 영역 UI 변경 | 서보경 | Figma 버전 메모 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |
-| | 2026-11-18 | 연동 변경: Module · Unit 이름 바꿈(Prep Consumable Storage → Consumable Storage, Sample Preparation Module → Sample Pre-treatment, Sample Pretreatment → Sample Processing, Sample Aliquot → Sample Aliquoting). 검사 단계 · Reagent 태그 · Prep 시스템의 Sample Preparation은 그대로 | 서보경 | `glossary/modules.csv`, `glossary/module-units.csv` (2026-11-18) |

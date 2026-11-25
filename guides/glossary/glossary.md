@@ -5,7 +5,7 @@
 | 파일 | 내용 |
 | --- | --- |
 | [terms.csv](terms.csv) | 용어 |
-| [status-values.csv](status-values.csv) | 상태값. 분류 칸으로 Hardware Status(장비 자체의 상태)와 System Status(소프트웨어가 관리하는 상태)를 나눔. 구동 상태값 3단계 (장비 통합 상태 / 장비 모듈 상태 / 검사 장치 상태)와 Unit Type별 상태값 (도어 잠금, 도어 열림, 저장 장치 도킹, 폐기함/폐액통, 연결 상태, Storage Type), Sample·Plate·검사 배치 상태, 시약 만료, 재고, 이벤트 상태·등급·종류 |
+| [status-values.csv](status-values.csv) | 상태값. 분류 칸으로 Hardware Status(장비 자체의 상태)와 System Status(소프트웨어가 관리하는 상태)를 나눔. 구동 상태값 3단계 (장비 통합 상태 / 장비 모듈 상태 / 검사 장치 상태)와 Unit Type별 상태값 (도어 잠금, 도어 열림, 저장 장치 도킹, 폐기함/폐액통, 연결 상태, Storage Type), Sample·Plate·검사 배치 상태, 시약 만료, 재고, 이벤트 상태·등급·종류. "컴포넌트" · "Color" 칸은 화면에 그릴 Common UX 상태 컴포넌트와 그 Variant의 색(UX-AI-TEST P-Components (PC) `1801:15821` Group/Status · Badge, `-`면 상태 컴포넌트 없음) |
 | [test-items.csv](test-items.csv) | 검사 항목 30개 (UI 표기, 코드, 시약 제품, 검사군, Target Masking, 추출 장치 사용 가능 여부) |
 | [sample-types.csv](sample-types.csv) | 검체 타입 14개와 검사군별 사용 가능 여부 |
 | [modules.csv](modules.csv) | Module 8종 (코드명, 영문·한글 UI 표기, 검사 단계) |

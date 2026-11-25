@@ -72,20 +72,3 @@ figma_region: 2.1 1차
 #### 5. Program Purpose
 
 - 프로그램 소개 영역으로 현재 화면기준으로 문구 적용
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 표기 | 0 "Cureca 프로그램" | CURECA | `glossary/terms.csv` | 대기 |
-| R02 | 화면 정보 | 화면 이름 "Information", IA 화면 이름 "Program" | 하나로 맞춤 | `ia/ia-screens.csv` | 대기 (확인 필요) |
-| R03 | 디스크립션 | 0 진입 방법 "LNB의 ‘Information’" | Information 아래에 Run Report, Program, Manual이 있으므로 "LNB의 Information > Program" | 화면 글자 (LNB) | 대기 |
-| R04 | 표기 | 버튼 "Release Notes", IA "Release Note" | 하나로 통일 | `ia/ia-screens.csv` | 대기 |
-| R05 | 화면 글자 | LNB Information 아래 "Manual" | IA에 Manual 화면 없음. 메뉴 유지 여부 확인 | `ia/ia-screens.csv` | 대기 (확인 필요) |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.0 | 2026-06-15 | (버전 메모 없음) | 서보경 | Figma 화면 정보 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

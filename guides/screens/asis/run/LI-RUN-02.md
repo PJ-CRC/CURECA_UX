@@ -238,28 +238,3 @@ Description Number (16), Status (9), Description (7), Square (4), Chip (3), Inte
 ### 케이스
 
 - Case 1. Capacity Tooltip ([LI-RUN-02/Case1](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=6902-44953))
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 화면 정보 | 3-7 [Item details] → "LI-RUN-03-P" | LI-IVT-03-T-P (IA에서 Run > Check Consumables의 Item details) | `ia/ia-screens.csv` | 대기 |
-| R02 | 표기 | 1 "sufficient" | Sufficient | `glossary/status-values.csv` 재고 상태 | 대기 |
-| R03 | 문구 | 5 Tooltip Status "Low(partial shortage), Insufficient(no stock)" | 재고 상태 정의와 맞춤: Low = 필요 수량 미만이나 장비 가동 가능, Insufficient = 부족하여 가동 중단 | `glossary/status-values.csv` 재고 상태 | 대기 (확인 필요) |
-| R04 | 디스크립션 | 7 [Previous] → LI-RUN-01 | Check Test Protocol 단계가 보일 때는 LI-RUN-02-01 | LI-RUN-02-01 노출 조건 | 대기 |
-| R05 | 디스크립션 | 2-2·3-5 "차감되지 않는며", "단,장비" | 차감되지 않으며, 단, 장비 | 오타 | 대기 |
-| R06 | 디스크립션 | 2-2 "소모품/시약 표기 방식"과 2-3 "소모품 표기 방식", "RUN" | 소모품 표기 방식으로 통일, Run | `glossary/terms.csv` Run | 대기 |
-| R07 | 표기 | "11 rack", "300 μL Tip Storage(1)" | 11 racks, 300 μL Tip Storage (1) | 복수형, 이름 (번호) 띄어쓰기 | 대기 |
-| R08 | 디스크립션 | "소모품", "구동 준비" | Consumable, Run Preparation | `glossary/terms.csv` | 대기 |
-| R09 | 디스크립션 | 1 Chip "Default : 모든 탭이 미선택" | 모든 Chip이 미선택 | 디스크립션 (Chip을 탭이라 부름) | 대기 |
-| R10 | 정책 반영 | Consumable이 Insufficient·Low일 때 [Run Start]가 되는지 설명 없음 | 디스크립션에 넣음: 재고 상태와 관계없이 다음 단계로 넘어가 [Run Start]를 할 수 있음. 없는 Consumable은 그것을 쓰는 단계에 이르렀을 때 Error가 됨 | POL-SMP-007 규칙 4 | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.1.04 | | 소모품 데이터 표출 방안 수정 (테이블 형태 → 카드 형태, 소모품 유형별 그룹핑) | 정다예 | Figma 버전 메모 |
-| 2.1.11 | | Item details 버튼 추가 (기존 유효기한 만료 시약 안내 문구 내 more 버튼 삭제). 카드 및 하위 항목 노출 조건 수정 | 정다예 | Figma 버전 메모 |
-| 2.1.13 | 2026-10-23 | 정렬 기준 변경(재정의) | 정다예 | Figma 버전 메모 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |
-| | 2026-11-18 | 연동 변경: Module · Unit 이름 바꿈(Prep Consumable Storage → Consumable Storage, Sample Preparation Module → Sample Pre-treatment, Sample Pretreatment → Sample Processing, Sample Aliquot → Sample Aliquoting). 검사 단계 · Reagent 태그 · Prep 시스템의 Sample Preparation은 그대로 | 서보경 | `glossary/modules.csv`, `glossary/module-units.csv` (2026-11-18) |

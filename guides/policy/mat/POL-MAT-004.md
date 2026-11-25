@@ -30,7 +30,7 @@ replaced_by:
 2. Remove Popup에서는 적재된 위치만 고를 수 있고, 적재되지 않은 위치는 비활성임. [Select All]로 모두 고를 수 있음.
 3. 위치를 고르고 [Remove]를 누르면 MS_Confirm_023 "Do you want to remove the {#N} selected {target}?"를 보여 줌. Remove를 고르면 고른 위치를 제거 예정으로 기록하고 적재 개수를 새로 고친 뒤 MS_Alert_033 "The removal is complete."를 보여 줌.
 4. 제거는 변경 예정으로만 기록되고 [Done]에서 반영됨. [Done] 전에 메뉴를 벗어나면 버림 (POL-MAT-002).
-5. 제거한 위치는 빈 위치로, 제거한 항목은 상위 연결이 없는 것으로 봄. 같은 작업에서 그 위치나 항목을 다시 스캔해도 위치 교체·새 위치 컨펌을 보여 주지 않음 (POL-MAT-003 규칙 10).
+5. 제거한 위치는 빈 위치로, 제거한 항목은 상위 연결이 없는 것으로 봄. 같은 작업에서 그 위치나 항목을 다시 스캔해도 위치 교체·새 위치 Confirm을 보여 주지 않음 (POL-MAT-003 규칙 10).
 6. 하이라이팅 적재(Socket)에서 slot을 비우는 방법은 [Remove]뿐임. 같은 Socket 안에서 slot을 옮기려면 [Remove] 뒤 다시 스캔함.
 7. Consumable Trolley의 1F는 빈 Tray가 적재되어 있어도 고를 수 있음. 적재 데이터가 없을 때만 비활성임.
 8. 다음 적재에는 [Remove]를 두지 않음.

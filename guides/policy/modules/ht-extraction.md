@@ -26,7 +26,7 @@ M9600으로 96-DWP 단위 핵산 추출을 합니다. Sample이 많을 때 씁�
 ## 특성 · 제약
 
 1. M9600 Plate 배치 고정: 1 LB, 2 WB1, 3 WB2, 4 MB, 5 Not Used, 6 EB, 7 Not Used, 8 Spin Tip. Heating은 1 · 2 · 3 · 6번만 (POL-TST-007)
-2. Spare Storage는 지금 쓰지 않음. 스캔하면 알럿 (POL-EQP-006, POL-LOD-002 규칙 9)
+2. Spare Storage는 지금 쓰지 않음. 스캔하면 Alert (POL-EQP-006, POL-LOD-002 규칙 9)
 3. DWP Film Waste Bin: 재단(High-Throughput) 장비는 서랍형, 표준형은 장비 안(Door를 열어야 함). 표준형만 가동 중 Door 조건부 허용 (`policy/equipment-states.md` 5절)
 4. Dx 시스템은 만료 Reagent를 자동 폐기 (POL-SMP-007 규칙 3)
 5. Dx용 Reagent는 Assay Pack Segment 코드로 구분해 Prep용과 섞이지 않음 (POL-LOD-002 규칙 10)
