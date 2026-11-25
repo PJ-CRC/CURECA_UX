@@ -1,0 +1,12 @@
+{
+  "rev": "20261125-212105_daye",
+  "by": "Claude",
+  "at": "2026-11-25T21:21:05+09:00",
+  "note": "메뉴 이름 바꿈: Program → Program Info, Manual → User Manual (2026-11-25 정다예 결정)",
+  "base": "../policy/permission-matrix.csv",
+  "pc": "DAYE",
+  "req": "",
+  "jobId": "",
+  "file": "../policy/permission-matrix.csv",
+  "orig": true
+}

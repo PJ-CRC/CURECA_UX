@@ -19,7 +19,7 @@ Inventory,,All,O,O,O,,2026-10-30 결정,확정
 Material Setup,,All,O,O,O,,2026-10-30 결정,확정
 Statistical Analysis,,All,O,O,O,T-IOS만,2026-10-30 결정,확정
 Statistical Analysis,,Error Rate Trend,O,X,X,T-IOS만,2026-11-02 (POL-EQP-010 규칙 5; POL-STA-001),확정
-Information,Program,All,O,O,O,,2026-10-30 결정,확정
+Information,Program Info,All,O,O,O,,2026-10-30 결정,확정
 Information,Report,All,O,O,O,T-IOS만,2026-11-02 결정 (SM7; POL-SMP-004),확정
 Setting,Policy Setting,All,O,O,X,T-IOS에서 설정·변경 / L-IOS는 View,2026-10-30 결정,확정
 Setting,Policy Setting,NC/PC Dispensing Order 영역,O,X,X,,TI/LI-STN-01; 정책서 Test Policy,확정

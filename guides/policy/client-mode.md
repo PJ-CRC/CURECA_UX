@@ -35,7 +35,7 @@ L-IOS는 설치할 때 L-IOS Client Mode(Main Mode, Console Mode, MS Mode) 중 �
 | Instrument | Instrument | Instrument |
 | Inventory | Inventory | Inventory |
 | Setting (Policy, System, Protocol, Tube, Assay Pack Setting) | Setting (Policy, System, Protocol, Tube Setting) | Setting (Policy, System, Protocol, Tube Setting) |
-| Information (Program) | Information (Program) | Information (Program) |
+| Information (Program Info) | Information (Program Info) | Information (Program Info) |
 | Quick Start, Run | Quick Start, Run | |
 | User Name (Profile, Logout), Shut Down | User Name (Profile, Logout), Shut Down | User Name (Profile, Logout), Shut Down |
 
