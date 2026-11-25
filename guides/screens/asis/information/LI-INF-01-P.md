@@ -30,8 +30,8 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 
 ### 화면 글자
 
-- Release Notes (X)
-- V1.01.005 ~ V1.01.001 버전별 내용 — [TI-INF-01-P] 화면 글자와 같음
+- Release Notes
+- V1.01.005 /  Improved system stability during start/stop operations under specific timing conditions. Resolved an issue where the system could remain in a pending state after a stop command in high-load environments. Enhanced internal process synchronization to prevent race conditions during state transitions. / V1.01.004 /  Fixed an issue where CSV import/export operations could fail when using network paths with high latency. Improved handling of network timeouts and added retry logic to ensure data consistency during file transfer operations. / V1.01.003 /  Corrected abnormal behavior in system initialization sequence that could cause partial startup failure under certain hardware conditions. Improved initialization logging to support better diagnostics during failure analysis. / V1.01.002 /  Enhanced system shutdown procedure to ensure all running processes are properly terminated before reset. Resolved an issue where background services were not fully released during stop operation, leading to delayed restart. / V1.01.001 /  Initial system stabilization release. Addressed multiple issues related to core process execution, device communication reliability, and UI responsiveness during system start and stop operations. Improved overall system robustness in controlled operational environments.
 - OK
 
 ### 사용 컴포넌트

@@ -29,18 +29,33 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 
 ### 화면 글자
 
-- (GNB) Running | Instrument | L-IOS | D.A PC | Event | Error 3 | Warning 2 | 2026-04-10 11:30
-- (LNB) TIOS | Dashboard | Test Management | Sample Tracking | Samples | 96-DWP | PCR Plate | Instrument | Inventory | Statistical Analysis | Setting | Information | Keira Knightley
-- 왼쪽(축소된 PCR Plate 목록): PCR Plate | 검색 영역(TI-SPT-03과 같음) | Items 486 | Export | 목록 10행(TI-SPT-03과 같음) | 1 ~ 10
-- 오른쪽 상세: Plate Details
-  - 탭 Plate Info | Progress — ID PL0005001 | Total Products 96 | STAT Products 13
-  - 범례 Negative | Positive | Reset
-  - Plate(96 Well): 열 1 ~ 12 | 행 A ~ H
-  - 검사 항목 범례: RP1 | RP2 | RP3 | PB
-  - Well No. | Sample ID | Product | Sample Type | Kit | STAT
-    - A01 | AA0005001 | RP1 | Aspirate | Allplex™ Respiratory Panel 1
-    - G05 | Negative control | RP2 | - | Allplex™ Respiratory Panel 2
-    - H05 | Positive control | RP2 | - | Allplex™ Respiratory Panel 2
+- (GNB) TIOS | Running | Instrument | L-IOS | D.A PC | Event | Error | 3 | Warning | 2 | 2026-04-10 11:30
+- (LNB) PCR Plate | Dashboard | Test Management | Sample Tracking | Samples | 96-DWP | PCR Plate | Instrument | Inventory | Statistical Analysis | Setting | Information | Keira Knightley
+- Plate ID | Status | All | Date | Start Date | 2026-03-05 ~ 2026-03-11 | Reset | Search
+- Items | 486 | Export | Plate Details
+- Plate ID | Sample | Progress | Status | Plate Info | Start Date/Time | Progress | End Date/Time | Negative | Positive | Reset
+- Total | STAT | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
+- ID | PL0005001
+- PL0005001 | 87 | 21 | Running | Total Products | 2026-03-05 10:22:48 | 96 | A | -
+- STAT Products | 13 | B
+- PL0005002 | 96 | 11 | Completed | 2026-03-05 10:22:48 | C | 2026-03-05 11:22:48
+- D
+- E
+- PL0005003 | 73 | 12 | Completed | 2026-03-05 10:22:48 | 2026-03-05 11:22:48
+- F
+- G
+- PL0005004 | 68 | 15 | Completed | 2026-03-05 10:22:48 | 2026-03-05 11:22:48
+- H
+- PL0005005 | 85 | 42 | Running | 2026-03-05 10:22:48 | - | RP1 | RP2 | RP3 | PB
+- PL0005006 | 96 | 35 | Failed | Well No. | Sample ID | 2026-03-05 10:22:48 | Product | Sample Type | Kit | 2026-03-05 11:22:48 | STAT
+- A01 | AA0005001 | RP1 | Aspirate | Allplex™ Respiratory Panel 1
+- PL0005007 | 96 | 24 | Failed | 2026-03-05 10:22:48 | 2026-03-05 11:22:48
+- G05 | Negative control | RP2 | - | Allplex™ Respiratory Panel 2
+- PL0005008 | 96 | 26 | Running | 2026-03-05 10:22:48 | -
+- H05 | Positive control | RP2 | - | Allplex™ Respiratory Panel 2
+- PL0005009 | 96 | 33 | Running | 2026-03-05 10:22:48 | -
+- PL0005020 | 87 | 12 | Running | 2026-03-05 10:22:48 | -
+- 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
 
 ### 사용 컴포넌트
 

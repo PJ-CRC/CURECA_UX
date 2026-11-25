@@ -29,14 +29,33 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 
 ### 화면 글자
 
-- (바닥 화면 GNB · LNB · 검색 · 목록은 LI-SVS-01과 같음. 이 프레임에는 Items 100 옆에 `Add`가 그려져 있음)
-- 오른쪽 Sample tube details (X)
-  - Code Info: System Code * SYS-001 | LIS Tube Code LIS-001
-  - Tube Info: Name * Tube 3 | Manufacturer - | Model - | Catalog No. -
-  - Height * (mm) 100.000 | Cap Size * (mm) 13.000 | Body Size * (mm) 13.000 | Bottom Type Flat
-  - Socket Type G14 — Group * Socket G10 | No. * 4
-  - Sample Type — Type * Swab
-  - Note — Typing test (0 / 200 Characters)
+- (GNB) LIOS | Tube Setting | Running | Instrument | L-IOS | D.A PC | Event | Error | 3 | Warning | 2 | 2026-04-10 11:30
+- (LNB) Dashboard | Material Setup | Test Management | Sample Tracking | Instrument | Inventory | Setting | Policy Setting | System Setting | Protocol Setting | Tube Setting | Run | Quick Start | Information | | | Manual | Keira Knightley
+- LIS Code | Enter LIS Code | System Code | Enter System Code | Reset | Search
+- Items | 100 | Add | Sample tube details
+- Tube name | LIS Code | System Code | Socket Type | Height (mm) | Code Info | Cap size (mm) | Body Size (mm) | Modified Date/Time | Details
+- System Code * | LIS Tube Code
+- Tube 1 | LIS-001 | SYS-001 | Socket 11 | 100.000 | 13.000 | 13.000 | 2026-03-24 10:24:56
+- SYS-001 | LIS-001
+- Tube 2 | LIS-002 | SYS-002 | Socket 14 | 90.000 | Tube Info | 11.000 | 10.000 | 2026-03-24 10:24:56
+- Name * | Manufacturer | Model | Catalog No.
+- Tube 3 | LIS-003 | SYS-003 | Socket 15 | 85.000 | 12.000 | 11.000 | 2026-03-24 10:24:56
+- Tube 3 | - | - | -
+- Tube 4 | LIS-004 | SYS-004 | Socket 15 | 85.000 | Height * (mm) | 12.000 | Cap Size * (mm) | 11.000 | Body Size * (mm) | 2026-03-24 10:24:56 | Bottom Type
+- 100.000 | 13.000 | 13.000 | Flat
+- Tube 5 | LIS-005 | SYS-005 | Socket 15 | 85.000 | Socket Type | G14 | 12.000 | 11.000 | 2026-03-24 10:24:56
+- Group * | No. *
+- Tube 6 | LIS-006 | SYS-006 | Socket 15 | 85.000 | 12.000 | 11.000 | 2026-03-24 10:24:56
+- Socket G10 | 4
+- Tube 7 | LIS-007 | SYS-007 | Socket 15 | 85.000 | Sample Type | 12.000 | 11.000 | 2026-03-24 10:24:56
+- Type *
+- Tube 8 | LIS-008 | SYS-008 | Socket 15 | 85.000 | 12.000 | 11.000 | 2026-03-24 10:24:56
+- Swab
+- Tube 9 | LIS-009 | SYS-009 | Socket 15 | 85.000 | Note | 12.000 | 11.000 | 2026-03-24 10:24:56
+- Typing test
+- Tube 10 | LIS-010 | SYS-0010 | Socket 15 | 85.000 | 12.000 | 11.000 | 2026-03-24 10:24:56
+- 0 | / 200 Characters
+- 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
 
 ### 사용 컴포넌트
 
