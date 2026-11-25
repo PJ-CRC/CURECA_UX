@@ -887,7 +887,7 @@ async function azureWbs(T, cx) {
   const values = [H0, H1, H2], bg = [[], [], []], dv = [], fw = [[], [], []], fc = [[], [], []], mg = [], kids = [];
   L.forEach((_, j) => { fw[0][j] = true; });
   const UXC = '#d9ead3', UIC = '#cfe2f3', BOTH = '#b7dcc8', SUBC = '#5f6368';
-  const XW = L.indexOf('담당자'), XS = L.indexOf('상태'), IDC = L.indexOf('ID'), TKC = L.indexOf('작업명'), ln = [];   // ln: DevOps 링크 [줄, 칸, 주소] — ID 칸 = User Story, 작업명 칸 = 그 작업([UX] 먼저, 2026-11-25)
+  const XW = L.indexOf('담당자'), XS = L.indexOf('상태'), IDC = L.indexOf('ID'), TKC = L.indexOf('작업명'), ln = [];   // ln: DevOps 링크 [줄, 칸, 주소] — ID · 작업명 줄의 작업명 = User Story, 세부 줄의 작업명 = 그 작업(2026-11-25)
   const itemUrl = (id) => az.org + '/' + encodeURIComponent(az.project) + '/_workitems/edit/' + id;
   const bar = (ranges) => { const b = []; days.forEach((d, k) => { const hit = ranges.map((x) => !!(x.t && x.t.s && x.t.e && d >= x.t.s && d <= x.t.e)); if (hit[0] || hit[1]) b[G0 + k] = hit[0] && hit[1] ? BOTH : hit[0] ? ranges[0].c : ranges[1].c; }); return b; };
   lines.forEach((l) => {
@@ -899,7 +899,7 @@ async function azureWbs(T, cx) {
     const row = [l.part, String(l.id), l.menu, l.name, l.ver, ymd(sd), ymd(ed), hrs([ux, ui]), who, st];
     days.forEach(() => row.push(''));
     const rb = bar([{ t: ux, c: UXC }, { t: ui, c: UIC }]); rb[0] = PCOL[l.part];
-    values.push(row); bg.push(rb); fc.push([]); dv.push([r, XS]); ln.push([r, IDC, itemUrl(l.id)]); if (ux || ui) ln.push([r, TKC, itemUrl((ux || ui).id)]);
+    values.push(row); bg.push(rb); fc.push([]); dv.push([r, XS]); ln.push([r, IDC, itemUrl(l.id)]); if (l.name) ln.push([r, TKC, itemUrl(l.id)]);   // 작업명 줄 → User Story(하위 작업이 아님), 세부 줄 → 그 작업
     // 세부 일정(접힘): 이 작업명의 [UX] 작업 · [UI] 작업 한 줄씩 — 주간보고 「세부 일정」의 └ 줄과 같다(ID · 담당 · 상태 · 예상 → 실적 · 기간)
     const ch = [];
     [['UX', ux, UXC], ['UI', ui, UIC]].forEach(([, t, col]) => {
