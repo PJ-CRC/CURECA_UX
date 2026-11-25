@@ -209,6 +209,15 @@ started: 2026-11-25
 | 검색 조건 구분선 (Divider) | 검색 조건 묶음 사이 구분 | TI-STN-08 #1 · LI-STN-08 #1 | 기존 화면에서 따옴 | 사각형 1×24, 색 #DEE2E7, 2개 (`3288:235450` 안) | 같음 |
 | Items 줄 바탕 (영역 틀) | Items 개수 · 노출 개수 · [Delete] · [Import]를 담는 틀 | TI-STN-08 #2 · #3 · LI-STN-08 #2 | 기존 화면에서 따옴 | 프레임 1639×56, 모서리 0, 흰색, 테두리 1 #E3EBF2. Items · 개수 글자 2개(Inter Regular · Bold 14) (`3288:235472`) | 같음 |
 | 목록 바탕 (영역 틀) | 목록 · Pagination을 담는 틀 | TI-STN-08 #4 · #5 · LI-STN-08 #4 · #5 | 기존 화면에서 따옴 | 프레임 1639×730, 모서리 0, 흰색, 테두리 없음. 안의 행 · Pagination은 Common UX 컴포넌트로 그림 (`3288:235201`) | 같음 |
+| 콘텐츠 영역 바탕 · 검색 영역 바탕 · 검색 조건 구분선 (영역 틀) | 위 세 줄과 같음 | TI-STN-08-P · LI-STN-08-P (#1 뒤 화면) | 기존 화면에서 따옴 | 위 세 줄과 같음 (상세 원본 `3288:235495` · `3288:235745`도 같은 값) | [TI-STN-08-P](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3515-1564) · [LI-STN-08-P](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3519-2202) |
+| Items 줄 바탕, 패널 열림 (영역 틀) | 패널 왼쪽에 Items 개수 · 노출 개수 · [Delete] · [Import]를 담는 틀 | TI-STN-08-P #1 · LI-STN-08-P | 기존 화면에서 따옴 | 프레임 828×56, 모서리 0, 흰색, 테두리 1 #E3EBF2. [Delete] · [Import] 자리 x 665 · 743 (`3288:235769`) | 같음 |
+| 목록 바탕, 패널 열림 (영역 틀) | 목록 · Pagination을 담는 틀 (Items 줄 바로 아래) | TI-STN-08-P #2 · LI-STN-08-P #2 | 기존 화면에서 따옴 | 프레임 1639×746 (y 247), 모서리 0, 흰색. Pagination 자리 x 158 · y 658 (`3288:235497`) | 같음 |
+| 패널 바탕 (영역 틀) | File details 패널 바탕 | TI-STN-08-P #3 · LI-STN-08-P #3 | 기존 화면에서 따옴 | 사각형 811×802, 모서리 0, 흰색, Drop shadow 1 (`3288:235780`) | 같음 |
+| 패널 머리 (영역 틀) | 패널 제목 · [닫기] | TI-STN-08-P #3 · #3-1 · LI-STN-08-P #3 · #3-1 | 기존 화면에서 따옴 | 프레임 811×48, 흰색, 테두리 #DDDDDD, 가로 정렬 padding 8 · 16. 글자 1 (File details Bold 18 #1A1F23), 인스턴스 1 Interface/Close 24 — Common UX Interface/Close로 넣음 (`3288:235781`) | 같음 |
+| File details 정보 묶음 (정보 표시) | File Info · Import Info · Reagent Basic Info 항목명 · 값 | TI-STN-08-P #3 · LI-STN-08-P #3 | 기존 화면에서 따옴 (Card/List로 바꿀 여지: 항목명 · 값 줄. File Info의 Active 값(태그 · 버튼)은 Card/List 줄에 담을 수 없음) | 세로 묶음 760 폭 간격 16, 묶음 3 · 구분선 2(760×1 #EEF1F5). 제목 Bold 16 #1F2329, 칸 항목명 Bold 12 #5F666E · 값 Regular 14 #1F2329 (간격 6), 칸 줄바꿈 가로 간격 16. File Info 칸 5(2열) · Import Info 2 · Reagent Basic Info 7(4열). Active 값은 Status Base · Square(Common UX)로 넣음 (`3288:235786` 안 앞 5개) | 같음 |
+| Test Target 칩 (값 표시) | Test Target Names 값 | TI-STN-08-P #3 · LI-STN-08-P #3 | 기존 화면에서 따옴 | 칩 7개 높이 24, 모서리 14, 테두리 1 #DEE2E7, 글자 Regular 13, 간격 8. 머리 「Test Target Names (7)」 Bold 13 (`3288:235786` 안 chips) | 같음 |
+| Sample Type Mapping 표 (표) | Sample Type ID · Code 대응 | TI-STN-08-P #3 · LI-STN-08-P #3 | 기존 화면에서 따옴 (Card/Table로 바꿀 여지: 열 2 · 줄 4) | 760×190, 모서리 4, 테두리 1 #DEE3E8, 머리 줄 36 #F7F8FA(Bold 12) + 줄 38 × 4(Regular 14), 칸 2 (`3288:235786` 안 table) | 같음 |
+| 스크롤 막대 (스크롤) | 패널 내용 스크롤 위치 | TI-STN-08-P #3 · LI-STN-08-P #3 | 기존 화면에서 따옴 (COMM-5-o는 컴포넌트 없음) | 트랙 4×673 #EEF1F5 · 손잡이 4×278 #ADB5BD, 모서리 2 (`3288:235994` · `3288:235995`). L은 원본대로 스크롤 영역 · 트랙 728, 손잡이 325 (`3288:238984` · `3288:238985`) | 같음 |
 
 ### 근거로 풀린 것
 | 질문 | 푼 근거 |
@@ -239,7 +248,7 @@ started: 2026-11-25
 | Q2 | Active로 바꾼 뒤(Confirm_029 [Activate]) Toast 문구 (Alert 카탈로그 동작에 "& Toast"만 있고 문구 없음. Confirm_030은 "{version} has been deactivated.") | TI-STN-08-P #4 | DS-0012 (같은 Confirm 줄) | T만 | |
 | Q3 | L-IOS 목록의 노출 개수 Dropdown을 둘지 (Common UX Basic Table: L-IOS는 노출 개수 고정. 기존 화면에는 10 items Dropdown이 있어 기존대로 그림) | LI-STN-08 #2 · LI-STN-08-P (뒤 목록) | | L만 | |
 | Q4 | L-IOS 목록 데이터 없음 문구 (기존 [LI-STN-08 / 세부정의] 프레임이 없어 같은 메뉴 TI-STN-08 문구 "No files found. Click Import to add a file."로 씀. L-IOS에는 [Import] 없음) | LI-STN-08 #4 | | L만 | |
-| Q5 | Status Base(COMM-5-j)에 맞는 Variant가 없어 Active는 Navy · Inactive는 Gray로 그림 (기존 Active 태그 검정, Color에 검정 없음) | TI-STN-08 #4-1 | | T · L 같음 | |
+| Q5 | Status Base(COMM-5-j)에 맞는 Variant가 없어 Active는 Navy · Inactive는 Gray로 그림 (기존 Active 태그 검정, Color에 검정 없음) | TI-STN-08 #4-1 · TI-STN-08-P #3 · LI-STN-08-P #3 | | T · L 같음 | |
 
 ## 변경 확인
 
