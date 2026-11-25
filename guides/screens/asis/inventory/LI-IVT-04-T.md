@@ -55,11 +55,10 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
     - MB Tube 192 rxns (2 tubes) | 96 rxns (1 tube)
     - PK Tube 288 rxns (3 tubes) | 96 rxns (1 tube)
     - Buffer Cartridge Cap 15 ea (3 sets)
+  - Allplex™ GI-Bacteria(II) Assay (PCR): 5X GI-B(II) MOM, EM2, GI-B(II) PC, RNase-free Water 300 rxns (3 sets) | - / GI-BP IC 100 rxns (1 tube) | -
+  - Allplex™ GI-Parasite Assay (PCR): 5X GI-P MOM, EM2, GI-P PC, RNase-free Water 300 rxns (3 sets) | - / GI-BP IC 100 rxns (1 tube) | 200 rxns (2 tubes)
   - Allplex™ GI-Virus Assay (PCR): 5X GI-V MOM, 5X Real-time One-step Buffer, GI-V PC, Real-time One-step Enzyme, RNase-free Water 0 | 300 rxns (3 sets) / GI-V IC 100 rxns (1 tube) | 200 rxns (2 tubes)
-  - Allplex™ Respiratory Panel 1 (PCR): 5X RP1 MOM, Real-time One-step Enzyme, 5X Real-time One-step Buffer, RNase-free Water, RP1 PC 100 rxns (1 set) | 300 rxns (3 sets) / RP-V IC 100 rxns (1 tube) | 200 rxns (2 tubes)
-  - Allplex™ GI-Parasite Assay (PCR): 5X GI-P MOM, EM2, RNase-free Water, GI-P PC 300 rxns (3 sets) | - / GI-BP IC 100 rxns (1 tube) | 200 rxns (2 tubes)
-  - Allplex™ GI-Virus Assay (PCR): 5X GI-V MOM, Real-time One-step Enzyme, 5X Real-time One-step Buffer, RNase-free Water, GI-V PC 0 | 300 rxns (3 sets) / GI-V IC 100 rxns (1 tube) | 200 rxns (2 tubes)
-  - Allplex™ GI-Bacteria(II) Assay (PCR): 5X GI-B(II) MOM, EM2, RNase-free Water, GI-B(II) PC 300 rxns (3 sets) | - / GI-BP IC 100 rxns (1 tube) | -
+  - Allplex™ Respiratory Panel 1 (PCR): 5X Real-time One-step Buffer, 5X RP1 MOM, Real-time One-step Enzyme, RNase-free Water, RP1 PC 100 rxns (1 set) | 300 rxns (3 sets) / RP-V IC 100 rxns (1 tube) | 200 rxns (2 tubes)
 - 오른쪽 상세: Pretreatment Reagents (열: Location | Capacity | Remaining Qty | Required Qty)
   - LB Tub (Prep) [Item details]
     - Info Box: Expired reagents are discarded or returned unused, depending on the instrument.
