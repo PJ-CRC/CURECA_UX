@@ -1,0 +1,12 @@
+{
+  "rev": "20261126-031120_desktop-shje23r",
+  "by": "Claude",
+  "at": "2026-11-26T03:11:20+09:00",
+  "note": "머리말 provisional: [PV-0002]를 다시 쓰기 전 asis MD 값으로 되살림",
+  "base": "20261126-030353_desktop-shje23r",
+  "pc": "DESKTOP-SHJE23R",
+  "req": "asis 화면 MD 머리말 provisional 되살림: 다시 쓰면서 요청 없이 지운 provisional: [PV-0002]를 다시 쓰기 전 값 그대로 되살림 (정다예, 2026-11-26, Claude Code 대화)",
+  "jobId": "",
+  "file": "asis/setting/TI-STN-05.md",
+  "orig": true
+}

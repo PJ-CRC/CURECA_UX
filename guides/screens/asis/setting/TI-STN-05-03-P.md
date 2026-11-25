@@ -11,6 +11,7 @@ author: 정다예
 client_mode: []
 user_type: [Service, Admin]
 policies: []
+provisional: [PV-0002]
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-579535
 ---
