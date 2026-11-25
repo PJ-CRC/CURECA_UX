@@ -38,7 +38,9 @@
     "language-set/sheet11.csv",
     "language-set/sheet11.formulas.json",
     "language-set/sheet12.csv",
+    "language-set/sheet13.csv",
     "language-set/sheet12.formulas.json",
+    "language-set/sheet13.formulas.json",
     "language-set/sheet01.styles.json",
     "language-set/sheet02.styles.json",
     "language-set/sheet03.styles.json",
@@ -50,25 +52,27 @@
     "language-set/sheet09.styles.json",
     "language-set/sheet10.styles.json",
     "language-set/sheet11.styles.json",
-    "language-set/sheet12.styles.json"
+    "language-set/sheet12.styles.json",
+    "language-set/sheet13.styles.json"
   ],
   "books": {
     "language-set": {
       "title": "언어셋",
-      "source": "language-set/source/2.STAgora-언어셋-통합본_v2.34_261119.xlsx",
+      "source": "language-set/source/2.STAgora-언어셋-통합본_v2.37_261124.xlsx",
       "sheets": {
         "language-set/sheet01.csv": "표지-STAgora-언어셋",
         "language-set/sheet02.csv": "문서이력",
         "language-set/sheet03.csv": "0.공통문구얼럿버튼범례 등-v2.32-261113",
         "language-set/sheet04.csv": "1. 임상의-v1.97-261030",
         "language-set/sheet05.csv": "2. 검사실-v1.95-261027",
-        "language-set/sheet06.csv": "3. GMCS-v2.35-261120",
+        "language-set/sheet06.csv": "3. GMCS-v2.36-261123",
         "language-set/sheet07.csv": "4. 고객센터-v1.95-261027",
-        "language-set/sheet08.csv": "5. 체험초대이메일-v3.34-261119",
+        "language-set/sheet08.csv": "5. 체험초대이메일-v2.34-261119",
         "language-set/sheet09.csv": "6. 임상의 리포트-v1.43-260715",
-        "language-set/sheet10.csv": "7. Admin-v2.33-261116",
+        "language-set/sheet10.csv": "7. Admin-v2.35-261120",
         "language-set/sheet11.csv": "8. SecureUploader-v1.96-261028",
-        "language-set/sheet12.csv": "99. 임상의 리포트-보관"
+        "language-set/sheet12.csv": "9. Local Report Viewer-v2.37-26",
+        "language-set/sheet13.csv": "99. 임상의 리포트-보관"
       },
       "formulas": {
         "language-set/sheet01.csv": "language-set/sheet01.formulas.json",
@@ -82,7 +86,8 @@
         "language-set/sheet09.csv": "language-set/sheet09.formulas.json",
         "language-set/sheet10.csv": "language-set/sheet10.formulas.json",
         "language-set/sheet11.csv": "language-set/sheet11.formulas.json",
-        "language-set/sheet12.csv": "language-set/sheet12.formulas.json"
+        "language-set/sheet12.csv": "language-set/sheet12.formulas.json",
+        "language-set/sheet13.csv": "language-set/sheet13.formulas.json"
       },
       "freeze": {
         "language-set/sheet03.csv": 5,
@@ -94,7 +99,8 @@
         "language-set/sheet09.csv": 5,
         "language-set/sheet10.csv": 5,
         "language-set/sheet11.csv": 5,
-        "language-set/sheet12.csv": 5
+        "language-set/sheet12.csv": 5,
+        "language-set/sheet13.csv": 5
       },
       "widths": {
         "language-set/sheet01.csv": [
@@ -287,6 +293,24 @@
           126,
           76,
           79,
+          58,
+          107,
+          282,
+          289,
+          257,
+          252,
+          226,
+          241,
+          266,
+          153,
+          129,
+          96
+        ],
+        "language-set/sheet13.csv": [
+          23,
+          126,
+          76,
+          79,
           48,
           259,
           282,
@@ -313,26 +337,28 @@
         "language-set/sheet09.csv": "language-set/sheet09.styles.json",
         "language-set/sheet10.csv": "language-set/sheet10.styles.json",
         "language-set/sheet11.csv": "language-set/sheet11.styles.json",
-        "language-set/sheet12.csv": "language-set/sheet12.styles.json"
+        "language-set/sheet12.csv": "language-set/sheet12.styles.json",
+        "language-set/sheet13.csv": "language-set/sheet13.styles.json"
       },
       "filters": {
-        "language-set/sheet02.csv": "$A$3:$AA$283",
+        "language-set/sheet02.csv": "$A$3:$AA$286",
         "language-set/sheet03.csv": "$B$5:$O$479",
-        "language-set/sheet04.csv": "$A$5:$O$820",
+        "language-set/sheet04.csv": "$A$5:$O$824",
         "language-set/sheet05.csv": "$A$5:$P$383",
         "language-set/sheet06.csv": "$A$5:$P$294",
-        "language-set/sheet07.csv": "$A$5:$O$699",
-        "language-set/sheet08.csv": "$A$5:$O$867",
-        "language-set/sheet09.csv": "$A$5:$O$697",
-        "language-set/sheet10.csv": "$A$5:$P$2440",
+        "language-set/sheet07.csv": "$A$5:$O$703",
+        "language-set/sheet08.csv": "$A$5:$O$871",
+        "language-set/sheet09.csv": "$A$5:$O$701",
+        "language-set/sheet10.csv": "$A$5:$P$2453",
         "language-set/sheet11.csv": "$A$5:$P$1492",
-        "language-set/sheet12.csv": "$A$5:$O$821"
+        "language-set/sheet12.csv": "$A$5:$P$356",
+        "language-set/sheet13.csv": "$A$5:$O$825"
       },
       "lists": {
         "language-set/sheet02.csv": [
           {
             "ranges": [
-              "C224:C226"
+              "C227:C229"
             ],
             "values": [
               "0.공통",
@@ -345,24 +371,8 @@
           },
           {
             "ranges": [
-              "C4:C98"
-            ],
-            "values": [
-              "0.공통",
-              "1.임상의",
-              "2.검사실",
-              "3.GMCS",
-              "4.공통-고객센터",
-              "5.체험판/초대/이메일",
-              "6. 임상의 리포트",
-              "7. Admin",
-              "8. Secure Uploader"
-            ]
-          },
-          {
-            "ranges": [
-              "C99:C170",
-              "C172:C223"
+              "C102:C173",
+              "C175:C226"
             ],
             "values": [
               "0.공통",
@@ -377,7 +387,7 @@
           },
           {
             "ranges": [
-              "C227:C241"
+              "C230:C244"
             ],
             "values": [
               "0.공통",
@@ -389,7 +399,24 @@
           },
           {
             "ranges": [
-              "C242:C283"
+              "C4:C101"
+            ],
+            "values": [
+              "0.공통",
+              "1.임상의",
+              "2.검사실",
+              "3.GMCS",
+              "4.공통-고객센터",
+              "5.체험판/초대/이메일",
+              "6. 임상의 리포트",
+              "7. Admin",
+              "8. Secure Uploader",
+              "9.Local Report Viewer"
+            ]
+          },
+          {
+            "ranges": [
+              "C245:C286"
             ],
             "values": [
               "0.공통",
@@ -446,8 +473,8 @@
         "language-set/sheet06.csv": [
           {
             "ranges": [
-              "D6:D576",
-              "D579:D1959"
+              "D6:D724",
+              "D727:D2107"
             ],
             "values": [
               "txt",
@@ -502,11 +529,10 @@
         "language-set/sheet10.csv": [
           {
             "ranges": [
-              "D6:D1245",
-              "D1248:D1875",
-              "D1877:D1887",
-              "D1889:D1929",
-              "D1935:D2440"
+              "D6:D1277",
+              "D1280:D1902",
+              "D1904:D1942",
+              "D1948:D2453"
             ],
             "values": [
               "txt",
@@ -533,6 +559,20 @@
         "language-set/sheet12.csv": [
           {
             "ranges": [
+              "D6:D356",
+              "D359:D1739"
+            ],
+            "values": [
+              "txt",
+              "title",
+              "alt-txt",
+              "btn"
+            ]
+          }
+        ],
+        "language-set/sheet13.csv": [
+          {
+            "ranges": [
               "D6:D201",
               "D204:D1545"
             ],
@@ -543,536 +583,6 @@
               "btn"
             ]
           }
-        ]
-      },
-      "merges": {
-        "language-set/sheet01.csv": [
-          "B2:M2"
-        ],
-        "language-set/sheet02.csv": [
-          "B148:B149",
-          "B151:B153",
-          "B154:B155",
-          "B156:B157",
-          "B160:B162",
-          "B165:B166",
-          "B167:B169",
-          "B170:B171",
-          "B174:B176",
-          "B177:B178",
-          "B179:B181",
-          "B182:B183",
-          "B184:B185",
-          "B186:B187",
-          "B189:B191",
-          "B193:B195",
-          "B196:B197",
-          "B201:B203",
-          "B207:B209",
-          "B215:B217",
-          "B219:B221",
-          "B222:B223",
-          "B226:B227",
-          "B228:B229",
-          "B232:B235",
-          "B236:B238",
-          "B240:B241",
-          "B242:B243",
-          "B280:B281",
-          "B282:B283",
-          "B244:B247",
-          "B248:B250",
-          "B251:B254",
-          "B255:B259",
-          "B264:B268",
-          "B272:B273",
-          "D272:D273",
-          "B2:C2",
-          "B6:B7",
-          "B9:B11",
-          "B12:B14",
-          "B20:B21",
-          "B22:B25",
-          "B26:B29",
-          "B58:B59",
-          "B61:B62",
-          "B63:B65",
-          "B67:B68",
-          "B69:B70",
-          "F69:F70",
-          "B72:B73",
-          "B32:B34",
-          "B35:B37",
-          "B38:B41",
-          "B44:B45",
-          "B48:B50",
-          "B51:B54",
-          "B56:B57",
-          "F95:F96",
-          "F97:F98",
-          "F101:F102",
-          "F103:F104",
-          "F119:F120",
-          "F122:F123",
-          "F125:F128",
-          "B77:B78",
-          "B79:B81",
-          "B84:B86",
-          "B87:B89",
-          "B90:B91",
-          "F90:F91",
-          "F92:F94",
-          "B92:B94",
-          "B95:B98",
-          "B99:B102",
-          "B103:B105",
-          "B108:B112",
-          "B115:B117",
-          "B118:B120",
-          "B122:B123",
-          "B125:B128",
-          "B129:B132",
-          "B137:B138",
-          "B139:B141",
-          "B142:B143",
-          "B144:B147"
-        ],
-        "language-set/sheet03.csv": [
-          "B4:E4",
-          "G4:M4",
-          "N4:O4"
-        ],
-        "language-set/sheet04.csv": [
-          "B4:E4",
-          "G4:M4",
-          "N4:O4"
-        ],
-        "language-set/sheet05.csv": [
-          "B4:E4",
-          "G4:M4",
-          "N4:O4"
-        ],
-        "language-set/sheet06.csv": [
-          "B4:E4",
-          "G4:M4",
-          "N4:O4"
-        ],
-        "language-set/sheet07.csv": [
-          "B4:E4",
-          "G4:M4",
-          "N4:O4"
-        ],
-        "language-set/sheet08.csv": [
-          "B4:E4",
-          "G4:M4",
-          "N4:O4"
-        ],
-        "language-set/sheet09.csv": [
-          "B4:E4",
-          "G4:M4",
-          "N4:O4"
-        ],
-        "language-set/sheet10.csv": [
-          "B4:E4",
-          "G4:M4",
-          "N4:O4"
-        ],
-        "language-set/sheet11.csv": [
-          "B4:E4",
-          "G4:M4",
-          "N4:O4"
-        ],
-        "language-set/sheet12.csv": [
-          "B4:E4",
-          "G4:M4",
-          "N4:O4"
-        ]
-      },
-      "heights": {
-        "language-set/sheet01.csv": {
-          "0": 21,
-          "2": 50,
-          "3": 29,
-          "4": 29,
-          "5": 29,
-          "6": 29,
-          "7": 29,
-          "8": 29,
-          "9": 29,
-          "10": 29,
-          "11": 29,
-          "12": 29,
-          "13": 50
-        },
-        "language-set/sheet02.csv": {
-          "0": 21
-        },
-        "language-set/sheet03.csv": {
-          "0": 21,
-          "1": 50,
-          "2": 36,
-          "3": 40,
-          "37": 20,
-          "47": 26,
-          "48": 26,
-          "153": 22,
-          "155": 22,
-          "266": 20,
-          "289": 40,
-          "327": 26
-        },
-        "language-set/sheet04.csv": {
-          "0": 21,
-          "1": 50,
-          "2": 36,
-          "3": 40,
-          "232": 20,
-          "233": 20,
-          "234": 20,
-          "242": 26,
-          "243": 26,
-          "244": 26,
-          "245": 26,
-          "348": 22,
-          "349": 22,
-          "350": 22,
-          "351": 22,
-          "352": 22,
-          "356": 22,
-          "357": 22,
-          "358": 22,
-          "463": 20,
-          "486": 40,
-          "524": 26
-        },
-        "language-set/sheet05.csv": {
-          "0": 21,
-          "1": 50,
-          "2": 36,
-          "3": 40,
-          "414": 20,
-          "416": 20,
-          "424": 26,
-          "425": 26,
-          "426": 26,
-          "427": 26,
-          "530": 22,
-          "532": 22,
-          "534": 22,
-          "538": 22,
-          "540": 22,
-          "644": 20,
-          "645": 20,
-          "665": 26,
-          "667": 40,
-          "668": 40,
-          "705": 26,
-          "706": 26
-        },
-        "language-set/sheet06.csv": {
-          "0": 21,
-          "1": 50,
-          "2": 36,
-          "3": 40,
-          "426": 36,
-          "458": 64,
-          "459": 64,
-          "460": 64,
-          "461": 64,
-          "462": 64,
-          "463": 64,
-          "464": 64,
-          "465": 64,
-          "466": 64,
-          "467": 64,
-          "468": 64,
-          "469": 64,
-          "470": 64,
-          "471": 64,
-          "472": 64,
-          "473": 64,
-          "474": 64,
-          "475": 64,
-          "476": 64,
-          "477": 64,
-          "478": 64,
-          "479": 64,
-          "480": 64,
-          "481": 64,
-          "482": 64,
-          "483": 64,
-          "484": 64,
-          "485": 64,
-          "486": 64,
-          "487": 64,
-          "488": 64,
-          "489": 64,
-          "490": 64,
-          "491": 64,
-          "492": 64,
-          "493": 64,
-          "494": 64,
-          "495": 64,
-          "496": 64,
-          "497": 64,
-          "498": 64,
-          "499": 64,
-          "500": 64,
-          "501": 64,
-          "502": 64,
-          "503": 64,
-          "504": 64,
-          "505": 64,
-          "506": 64,
-          "507": 64,
-          "508": 64,
-          "509": 64,
-          "510": 64,
-          "511": 64,
-          "512": 64,
-          "513": 64,
-          "514": 64,
-          "515": 64,
-          "516": 64,
-          "517": 64,
-          "518": 64,
-          "519": 64,
-          "520": 64,
-          "521": 64,
-          "522": 64,
-          "523": 64,
-          "524": 64,
-          "525": 64,
-          "526": 64,
-          "527": 64,
-          "528": 64,
-          "529": 64,
-          "530": 64,
-          "531": 64,
-          "532": 64,
-          "533": 64,
-          "534": 64,
-          "535": 64,
-          "536": 64,
-          "537": 64,
-          "538": 64,
-          "539": 64,
-          "540": 64,
-          "541": 64,
-          "542": 64,
-          "543": 64,
-          "544": 64,
-          "545": 64,
-          "546": 64,
-          "547": 64,
-          "548": 64,
-          "549": 64,
-          "550": 64,
-          "551": 64,
-          "552": 64,
-          "553": 64,
-          "554": 64,
-          "555": 64,
-          "556": 64,
-          "557": 64,
-          "558": 64,
-          "559": 64,
-          "560": 64,
-          "561": 64,
-          "562": 64,
-          "563": 64,
-          "564": 64,
-          "565": 64,
-          "566": 64,
-          "567": 64,
-          "568": 64,
-          "569": 64,
-          "570": 64,
-          "571": 64,
-          "572": 64,
-          "573": 64,
-          "574": 64,
-          "575": 64,
-          "576": 64,
-          "610": 20,
-          "618": 26,
-          "619": 26,
-          "620": 26,
-          "621": 26,
-          "724": 22,
-          "726": 22,
-          "728": 22,
-          "732": 22,
-          "734": 22,
-          "836": 20,
-          "838": 20,
-          "839": 20,
-          "859": 26,
-          "861": 40,
-          "862": 40,
-          "899": 26,
-          "900": 26
-        },
-        "language-set/sheet07.csv": {
-          "0": 21,
-          "1": 50,
-          "2": 36,
-          "3": 40,
-          "111": 20,
-          "113": 20,
-          "121": 26,
-          "122": 26,
-          "123": 26,
-          "124": 26,
-          "227": 22,
-          "229": 22,
-          "231": 22,
-          "235": 22,
-          "237": 22,
-          "339": 20,
-          "341": 20,
-          "342": 20,
-          "362": 26,
-          "364": 40,
-          "365": 40,
-          "402": 26,
-          "403": 26
-        },
-        "language-set/sheet08.csv": {
-          "0": 21,
-          "1": 50,
-          "2": 36,
-          "3": 40,
-          "131": 38,
-          "279": 20,
-          "281": 20,
-          "289": 26,
-          "290": 26,
-          "291": 26,
-          "292": 26,
-          "396": 22,
-          "397": 22,
-          "398": 22,
-          "399": 22,
-          "400": 22,
-          "405": 22,
-          "508": 20,
-          "509": 20,
-          "510": 20,
-          "531": 26,
-          "532": 40,
-          "533": 40,
-          "570": 26,
-          "571": 26
-        },
-        "language-set/sheet09.csv": {
-          "0": 21,
-          "1": 50,
-          "2": 36,
-          "3": 40,
-          "109": 20,
-          "111": 20,
-          "119": 26,
-          "120": 26,
-          "121": 26,
-          "122": 26,
-          "227": 22,
-          "229": 22,
-          "235": 22,
-          "337": 20,
-          "339": 20,
-          "340": 20,
-          "362": 40,
-          "363": 40,
-          "400": 26,
-          "401": 26
-        },
-        "language-set/sheet10.csv": {
-          "0": 21,
-          "1": 50,
-          "2": 36,
-          "3": 40,
-          "16": 20,
-          "36": 26,
-          "75": 26,
-          "1129": 22,
-          "1279": 20,
-          "1289": 26,
-          "1290": 26,
-          "1395": 22,
-          "1397": 22,
-          "1403": 22,
-          "1507": 20,
-          "1508": 20,
-          "1530": 40,
-          "1531": 40,
-          "1568": 26,
-          "1569": 26
-        },
-        "language-set/sheet11.csv": {
-          "0": 21,
-          "1": 50,
-          "2": 36,
-          "3": 40,
-          "18": 20,
-          "19": 20,
-          "170": 22,
-          "172": 22,
-          "176": 22,
-          "177": 22,
-          "178": 22,
-          "179": 22,
-          "180": 22,
-          "181": 22,
-          "182": 22,
-          "183": 22,
-          "184": 22,
-          "185": 22,
-          "186": 22,
-          "187": 22,
-          "188": 22,
-          "223": 20,
-          "233": 26,
-          "234": 26,
-          "339": 22,
-          "341": 22,
-          "347": 22,
-          "451": 20,
-          "452": 20,
-          "474": 40,
-          "475": 40,
-          "512": 26,
-          "513": 26
-        },
-        "language-set/sheet12.csv": {
-          "0": 21,
-          "1": 50,
-          "2": 36,
-          "3": 40,
-          "233": 20,
-          "235": 20,
-          "243": 26,
-          "244": 26,
-          "245": 26,
-          "246": 26,
-          "351": 22,
-          "353": 22,
-          "359": 22,
-          "461": 20,
-          "463": 20,
-          "464": 20,
-          "486": 40,
-          "487": 40,
-          "524": 26,
-          "525": 26
-        }
-      },
-      "hrows": {
-        "language-set/sheet06.csv": [
-          1,
-          2,
-          3,
-          4
         ]
       },
       "font": {
