@@ -779,7 +779,8 @@ const azDate = (v) => { if (!v) return ''; const d = new Date(v); if (isNaN(d)) 
 //  CURECA 일정표(구글 시트)와 같은 모양의 표로 만든다 — 열: Part · ID · 메뉴(User Story) · 작업명 · 시작일 · 완료일 · UX/UI 담당자 · UX/UI 상태 + 평일 간트(UX 초록 · UI 파랑)
 const WBS_DAYS = '일월화수목금토';
 function azState(s) { s = String(s || ''); if (/^(resolved|closed|done|completed)$/i.test(s)) return '완료'; if (/^(in progress|active|doing|committed|developed)$/i.test(s)) return '진행 중'; if (/^(new|to do|todo|proposed|approved)$/i.test(s)) return '대기'; return s; }
-function azWho(w) { const n = w && typeof w === 'object' ? String(w.displayName || w.uniqueName || '') : String(w || ''); return n.replace(/\s*\([^)]*\)\s*$/, ''); }
+// 담당자 이름: 괄호 안 영어(「최부윤 (Booyoon Sydney Choi) 차장」 → 「최부윤 차장」, 「김목화 (BREX)」 → 「김목화」, 2026-11-25)와 끝 괄호를 뺀다
+function azWho(w) { const n = w && typeof w === 'object' ? String(w.displayName || w.uniqueName || '') : String(w || ''); return n.replace(/\s*\([^)]*[A-Za-z][^)]*\)/g, '').replace(/\s*\([^)]*\)\s*$/, '').replace(/\s{2,}/g, ' ').trim(); }
 // Part 이름: 묶음 제목 「[주간보고 UX/UI] PL-11.4 / 검사실」 · 「… PL-11.4 검사실」 → 「검사실」(2026-11-24: 「/」가 없으면 「UX/UI」의 「/」에서 잘려 「UI] PL-11.4 검사실」로 나오던 것)
 function wbsPart(g) {
   const t = String(g || '').replace(/^\s*\[[^\]]*\]\s*/, '').replace(/^PL-\d+\.\d+\s*/i, '').replace(/^[\/\-:·\s]+/, '').trim();
@@ -816,23 +817,6 @@ async function azureWbs(T, cx) {
   const reps = [], seenV = {};
   for (const w of reps0) { const m = sprOf(w.fields), ver = m ? +m[1] + '.' + +m[2] : ''; if (!ver || seenV[ver]) continue; seenV[ver] = 1; reps.push({ id: w.id, ver }); if (reps.length >= 26) break; }
   if (!reps.length) reps.push({ id: reps0[0].id, ver: '' });
-  // 담당자(2026-11-25): 주간보고 항목의 Assigned To. 주차 · Part마다 있는 항목(「[주간보고 UX/UI] PL-11.2 GMCS」)이 있으면 그것,
-  //  그 Part의 항목이 없으면 그 주차 「/ All」 항목의 담당자. 주차는 제목의 PL-월.주차를 먼저 본다(태그가 제목과 다른 항목이 있음)
-  const partOwner = {}, allOwner = {};   // '{버전}|{Part}' → 이름, '{버전}' → 이름
-  try {
-    const q2 = await azureCall(cx, 'POST', base + 'wiql?' + v + '&$top=600', { query: `SELECT [System.Id] FROM WorkItems WHERE [System.TeamProject] = @project AND [System.Title] CONTAINS '${esc(key)}' ORDER BY [System.CreatedDate] DESC` });
-    const ids2 = core.arr(q2 && q2.workItems).map((x) => x.id).slice(0, 600);
-    for (let i = 0; i < ids2.length; i += 200) {
-      const b2 = await azureCall(cx, 'POST', base + 'workitemsbatch?' + v, { ids: ids2.slice(i, i + 200), fields: ['System.Id', 'System.Title', 'System.Tags', 'System.AssignedTo', 'System.CreatedDate'], errorPolicy: 'omit' });
-      for (const w of core.arr(b2 && b2.value)) {
-        const t = String((w && w.fields && w.fields['System.Title']) || ''); if (!t) continue;
-        const m = /PL-(\d+)\.(\d+)/i.exec(t) || sprOf(w.fields); if (!m) continue; const ver = +m[1] + '.' + +m[2], who = azWho(w.fields['System.AssignedTo']);
-        if (/\/\s*All\s*$/i.test(t)) { if (!(ver in allOwner)) allOwner[ver] = who; continue; }
-        const k = ver + '|' + wbsPart(t);
-        if (!(k in partOwner)) partOwner[k] = who;   // 같은 주차 · Part가 여럿이면 나중에 만든 것(차례가 최신부터)
-      }
-    }
-  } catch (e) {}
   // ② 보고서마다 「주요 일정」 표: 묶음 제목(div title="[주간보고…]") 아래 User Story 줄(└ 없는 줄). 같은 묶음 제목이 다시 나오면 「상세 일정」이라 멈춘다
   //  같은 User Story(ID)가 여러 버전에 있으면 최신 버전에만 둔다(앞 버전 줄은 보이지 않음). 줄 차례 = 최신 버전부터
   const stories = [], seenS = {}; let rep = null, sprint = '';
@@ -910,7 +894,8 @@ async function azureWbs(T, cx) {
     const r = values.length, ux = l.UX, ui = l.UI;
     const ss = [ux && ux.s, ui && ui.s].filter(Boolean), ee = [ux && ux.e, ui && ui.e].filter(Boolean);
     const sd = ss.length ? new Date(Math.min(...ss)) : l.solo ? l.s : null, ed = ee.length ? new Date(Math.max(...ee)) : l.solo ? l.e : null;
-    const who = partOwner[l.ver + '|' + l.part] || allOwner[l.ver] || (l.solo ? l.who : [...new Set([ux && ux.who, ui && ui.who].filter(Boolean))].join(' · ')), st = l.raw || azMergeState([ux && ux.raw, ui && ui.raw]);   // 작업명 줄 상태 = User Story의 State(주간보고와 같게, 2026-11-25). 세부 줄은 각 작업의 State
+    const who = l.who || [...new Set([ux && ux.who, ui && ui.who].filter(Boolean))].join(' · '), st = l.raw || azMergeState([ux && ux.raw, ui && ui.raw]);
+    // ↑ 작업명 줄: 담당자 = User Story의 Assigned To(비어 있으면 그 작업들의 담당), 상태 = User Story의 State(2026-11-25). 세부 줄은 각 작업의 것
     const row = [l.part, String(l.id), l.menu, l.name, l.ver, ymd(sd), ymd(ed), hrs([ux, ui]), who, st];
     days.forEach(() => row.push(''));
     const rb = bar([{ t: ux, c: UXC }, { t: ui, c: UIC }]); rb[0] = PCOL[l.part];
