@@ -9,7 +9,7 @@ version: 2.1.18
 date: 2026.11.19
 author: 이상헌
 client_mode: []
-user_type: []
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-317747
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: L-IOS(LI-INS-02-T)는 3 Door에 Lock Status · [Unlock]/[Lock] 버튼과 3-1이 더 있고, 2-2 [Management]가 L용 팝업(LI-INS-02-01-P, 보기 전용)을 엶. T는 2-2에 예전 Enable setting 조건이 취소선으로 남아 있고 4-2가 더 있음(취소선). 디스크립션에 0번 블록이 없음(1번부터)
 - 호출하는 화면: [TI-INS-02-01-P] Management Popup (2-2), Event History 팝업 (1-3 Event 아이콘, 7-1 More)
 - 호출되는 곳: [TI-INS-01-T] Overview Tab · Tab 구성 (All)
+- 관련 정책: POL-EQP-001, POL-EQP-005, POL-EQP-008, POL-EQP-009, POL-EQP-010
 
 ## 기존 화면
 

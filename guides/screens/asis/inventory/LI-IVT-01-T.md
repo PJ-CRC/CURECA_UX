@@ -8,8 +8,8 @@ type: Tab
 version: 2.1.18
 date: 2026.11.19
 author: 이상헌
-client_mode: []
-user_type: []
+client_mode: [Main Mode, Console Mode, MS Mode]
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-361772
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: 기능 같음. LNB 메뉴만 다름. T-IOS(TI-IVT-01-T)는 1-3에 Capacity 줄이 취소선으로 남아 있고(L에는 없음), L은 1-7 툴팁 첫 줄이 취소선(T는 취소선 없음)
 - 호출하는 화면: 없음 (1-7 · 3-5 툴팁, 4 [Refresh]만)
 - 호출되는 곳: LNB > Inventory > Summary Tab (0 진입 방법). Inventory Tab 구성: Summary | [LI-IVT-02-T] Overview | [LI-IVT-03-T] Consumables | [LI-IVT-04-T] Reagents | [LI-IVT-05-T] Waste Bin/Bottle | [LI-IVT-06-T] Usage History
+- 관련 정책: POL-INV-001, POL-INV-002, POL-INV-003, POL-INV-005, POL-EQP-009
 
 ## 기존 화면
 

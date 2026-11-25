@@ -9,7 +9,7 @@ version: 2.1.18
 date: 2026.11.19
 author: 이상헌
 client_mode: []
-user_type: []
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-318226
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: T-IOS는 사용 여부를 바꾸는 설정 팝업(Enable / Disable 라디오, 1-3, 3 [Save] · [Cancle]), L-IOS(LI-INS-02-01-P)는 보기 전용(Enabled Y/N, [OK]). 0 정의 문장도 다름
 - 호출하는 화면: Alert_013 · Alert_014 · Alert_015 (3 [Save] 유효성 · 장비 상태), Toast `Changes saved.` (3)
 - 호출되는 곳: [TI-INS-02-T] All Tab 2-2 [Management]
+- 관련 정책: POL-EQP-005, POL-EQP-009, POL-EQP-010 / 고객 논의 CA-0001
 - 참조 프레임: 같은 페이지의 [「모듈별 예시 노출 예시」 프레임](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-319005) (프레임 이름 `TI-INS-02-01-P`, 1132px, 아래 「케이스」에 글자를 옮김)
 
 ## 기존 화면
