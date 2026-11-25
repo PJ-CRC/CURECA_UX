@@ -1,0 +1,12 @@
+{
+  "rev": "20261125-153036_anjongbeom-ui-macbookair-2-local",
+  "by": "Claude",
+  "at": "2026-11-25T15:30:36+09:00",
+  "note": "R001: 3.GMCS v2.38 문구 추가(다국어) — 1125-GMCS 언어셋 추가 섹션 미등록 문구 57개, 이전 노란색 원복, 문서이력 · 표지 날짜",
+  "base": "",
+  "pc": "anjongbeom-ui-MacBookAir-2.local",
+  "req": "R001 {1125-GMCS 언어셋 추가} 섹션에서 언어셋에 추가되지 않은 문구 추가",
+  "jobId": "",
+  "file": "language-set/sheet01.csv",
+  "orig": true
+}
