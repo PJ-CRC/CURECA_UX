@@ -8,8 +8,8 @@ type: Popup
 version: 2.0
 date: 2026.06.15
 author: 서보경
-client_mode: []
-user_type: []
+client_mode: [Main Mode, Console Mode, MS Mode]
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-500004
@@ -22,6 +22,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - 패널 CID는 원문 그대로 `LI-INF-01-P`입니다(프레임 이름 `LI-INF-02-P`).
 - 호출하는 화면: 없음
 - 호출되는 곳: [LI-INF] 4 Installation information
+- 관련 정책: (정책 작성 전)
 
 ## 기존 화면
 

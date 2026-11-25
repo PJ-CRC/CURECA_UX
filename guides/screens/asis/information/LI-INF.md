@@ -8,8 +8,8 @@ type: Page
 version: 1.0
 date: 2026.06.15
 author: 서보경
-client_mode: []
-user_type: []
+client_mode: [Main Mode, Console Mode, MS Mode]
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-499930
@@ -22,6 +22,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - 패널 CID는 원문 그대로 `LI-STN-02`입니다(프레임 이름 `LI-INF`, Ver 1.0).
 - 호출하는 화면: [LI-INF-01-P] Release Notes (3), [LI-INF-02-P] Installation information (4)
 - 호출되는 곳: LNB > Information
+- 관련 정책: (정책 작성 전)
 
 ## 기존 화면
 
