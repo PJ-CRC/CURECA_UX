@@ -1,0 +1,28 @@
+{
+  "id": "daye_20261125-135529",
+  "kind": "work",
+  "reqId": "",
+  "reqType": "",
+  "team": "cureca",
+  "at": "2026-11-25T13:55:29+09:00",
+  "from": "2026-11-25T13:51:27+09:00",
+  "by": "정다예",
+  "doneBy": "Claude",
+  "pc": "DAYE",
+  "fileKey": "",
+  "fileName": "",
+  "page": "",
+  "frame": "",
+  "nodeId": "",
+  "text": "작업규칙: Claude 작업 지침 (진입점) (J001)",
+  "models": {
+    "claude-opus-5-5": 30
+  },
+  "calls": 30,
+  "input": 62,
+  "cacheWrite": 105699,
+  "cacheRead": 2593434,
+  "output": 15307,
+  "total": 2714502,
+  "usd": 1.6707
+}
