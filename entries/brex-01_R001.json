@@ -2,8 +2,8 @@
   "id": "brex-01_R001",
   "kind": "request",
   "team": "cureca",
-  "status": "진행 중",
-  "at": "2026-11-25T21:52:13+09:00",
+  "status": "보류",
+  "at": "2026-11-25T21:54:27+09:00",
   "createdAt": "2026-11-25T21:16:32+09:00",
   "by": "서보경",
   "doneBy": "Claude",
@@ -17,13 +17,21 @@
   "type": "요청",
   "layout": "",
   "text": "Event History 화면 옮겨줘\n\n기존 화면: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-45275&t=8ZUolJfFqEx5iunS-1\n옮길 페이지: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3577-18413&t=8ZUolJfFqEx5iunS-1",
-  "note": "케이스 3 · 1단계 — 작업 기록을 21:45 버전으로 되살리는 중 (요청자 답: 되살리고 진행)",
+  "note": "케이스 3 · 1단계 · 20261125-서보경-event-history — 1단계 마침, 2단계는 멈춤 (요청자 요청)\n- 요건 1: Event History 화면 6개 옮겨 다시 그림 · 경로 8 · 지나가는 단계 1→2→3→4→5 · UI 작업 대상 아님\n- 받은 답: A 화면 이름 IA대로(Event Detail · Event Message) / B IA 그대로(같은 화면, 기능 차이) / 반영 대기 ①~⑤ 반영(② T-IOS는 Status 변경 없이 상태값만) · ⑥ 제외\n- 반영 대기: 작업 중 20개, 제외 3개(TI-EVT-P-R03 · R04, LI-EVT-P-R05 → closed.md)\n- 작업 기록: 21:50 · 21:52에 Claude 스크립트 실수(변수 이름)로 파일이 비워졌던 것을 21:45 버전으로 되살리고 답을 다시 적음\n- 다음: 2단계 근거 · 분석 (다시 진행하라고 하시면 시작)\n규칙 점검: 1단계 「하지 않는 것」 · 마침 점검 지킴 (미정 0, 반영 대기 칸 모두 채움, 요청자 확인 답 모두 받음)\n작업 기준: basis 2026-11-25 21:17 · 작업규칙 CURECA 작업규칙 @20261125-212108_daye · 정책서 정책서 @20261125-212107_daye · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 @20261125-212105_daye · 화면 정의서 화면 정의서 @20261125-211638_daye",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "2단계(근거 · 분석)를 시작할까요?",
+    "free": true,
+    "options": [
+      {
+        "label": "2단계 진행"
+      }
+    ]
+  },
   "replies": [
     {
       "at": "2026-11-25T21:20:57+09:00",
