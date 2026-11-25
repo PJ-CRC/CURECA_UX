@@ -8,8 +8,8 @@ type: Popup
 version: 2.1.18
 date: 2026.11.19
 author: 이상헌
-client_mode: []
-user_type: []
+client_mode: [Main Mode, Console Mode, MS Mode]
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-337184
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: L-IOS는 보기 전용(Enabled Y/N, 3 [OK]), T-IOS(TI-INS-02-01-P)는 사용 여부를 바꾸는 설정 팝업(Enable / Disable 라디오, 1-3, 3 [Save] · [Cancle]). 0 정의 문장과 1의 첫 줄(아코디언 열린 상태 진입, T에만)이 다름. 화면에 번호 표시 `1-3`이 있으나 L 디스크립션에는 1-3 블록이 없음
 - 호출하는 화면: (원문에 없음. 3 [OK]는 팝업 닫고 기존 화면 유지)
 - 호출되는 곳: [LI-INS-02-T] All Tab 2-2 [Management]
+- 관련 정책: POL-EQP-005, POL-EQP-009, POL-EQP-010 / 고객 논의 CA-0001
 
 ## 기존 화면
 

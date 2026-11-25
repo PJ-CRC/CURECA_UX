@@ -9,7 +9,7 @@ version: 2.1.18
 date: 2026.11.19
 author: 이상헌
 client_mode: []
-user_type: []
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-317244
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: L-IOS(LI-INS-01-T)에는 6 Unlock 버튼(Module마다 `Door Control`)과 취소선 처리된 5 Door Status Tooltip이 더 있어 범례가 L에서는 7. 1의 Alert 코드가 T `Alert_L_004`, L `Alert_004`. 패널 CID는 원문에 `TI-INS-02-T`로 적혀 있음
 - 호출하는 화면: [TI-INS-02-T] All Tab · Module Type Tab (1 Tab, 3-4 View All), Alert_L_004 (1 등록되지 않은 모듈 Tab)
 - 호출되는 곳: LNB > Instrument (0 진입 방법)
+- 관련 정책: POL-EQP-001, POL-EQP-002, POL-EQP-009
 
 ## 기존 화면
 
