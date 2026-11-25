@@ -1,0 +1,12 @@
+{
+  "rev": "20261125-212108_daye",
+  "by": "Claude",
+  "at": "2026-11-25T21:21:08+09:00",
+  "note": "Statistical Analysis 하위 메뉴 페이지 이름에 SA_ 붙임 (2026-11-25 정다예 결정)",
+  "base": "20261125-210342_brex-01",
+  "pc": "DAYE",
+  "req": "",
+  "jobId": "",
+  "file": "../flow/3-design.md",
+  "orig": true
+}
