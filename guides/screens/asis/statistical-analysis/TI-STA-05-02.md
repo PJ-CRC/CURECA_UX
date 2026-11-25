@@ -2,52 +2,63 @@
 cid: TI-STA-05-02
 pair_cid:
 tl_relation: 단독
-title: Instrument Run-time - Table
-path: Statistical Analysis > Test Analytics > Instrument Run-time - Table
-type: Page
+title: Instrument _ Run-time Trend
+path: Statistical Analysis > Instrument
+type: Tab
 version: 2.1.03
-date: 2026-08-21
+date: 2026.08.21
 author: 정다예
 client_mode: []
-user_type: [Service, Admin, User]
+user_type: []
 policies: []
-rules_version:
-provisional: []
-flags: []
 source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3271-173792
-figma_region: 2.1 2차
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-441350
 ---
-# TI-STA-05-02 Instrument Run-time - Table
+# TI-STA-05-02 Instrument _ Run-time Trend
 
-> 기존 화면(기존 작업방 Statistical Analysis 페이지, 2.1 2차 영역, Ver 2.1.03)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 `SA_Instrument_asis` 페이지, Ver 2.1.03)을 2026-11-26에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
 
-- T-IOS 전용 메뉴. TI-STA-05-01의 Segmented Control을 Table로 바꾼 화면. Figma 경로는 "Statistical Analysis > Instrument"
-- 관련 정책: POL-STA-001, POL-STA-002, POL-STA-003, POL-STA-006, POL-EQP-005, POL-COM-006
-- 호출하는 화면: Instrument Run-time - Chart (TI-STA-05-01)
-- 다른 프레임: Legend 선택 예시 [Consumable Storage 선택](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3271-173591), [High-throughput Extraction 선택](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3271-173961), [Sample Pre-treatment 선택](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3271-174162)
+- T/L 차이: T-IOS 단독 (IA에 L 짝 없음)
+- 호출하는 화면: [TI-STA-05-01] Run-time Trend Chart (View Chart), [TI-STA-06-02] Error Rate Trend (Tab)
+- 호출되는 곳: [TI-STA-05-01] 2 Table
+- 같은 페이지에 Module Type별 모양을 보이는 같은 CID 프레임이 3개 더 있습니다(아래 케이스 절).
 
 ## 기존 화면
 
+<!-- `{메뉴}_asis` 페이지에 있는 그대로 옮깁니다. 고치거나 정리하지 않습니다. 틀린 곳 · 정책과 다른 곳도 그대로 옮깁니다. 그 화면의 To-Be 작업 1단계에서 읽으며 찾아 그 작업에서 고칩니다(`flow/1-requirements.md` 절차 4번 순서 3 "뒤 단계로 넘김"의 5). -->
+
 ### 화면 글자
 
-- (GNB)(LNB) TI-STA-01-01과 같음
-- (Tab) Run-time Trend | Error Rate Trend, (Segmented Control) Chart | Table, Export
+- (GNB) Running | Instrument | L-IOS | D.A PC | Event | Error 3 | Warning 2 | 2026-04-10 11:30
+- (LNB) TIOS | Instrument | Dashboard | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis | Test Analytics | Instrument | Inventory | Event | Test Forecasting | Setting | Information | Keira Knightley | Logout
+- 탭: Run-time Trend | Error Rate Trend
+- Chart | Table | Export
 - Run-time Trend
-- (합계 표) Total | Sample Storage …
+- 합계 표: Total | Sample Storage
+  - 107 | 107
 - (Unit : hour)
-- (표) Module | 날짜 열 → Sample Storage 행들, Total 행
-- Filter Options: Date Range (Daily | Monthly), Legend (Module | Unit, Module 드롭다운, Select All, 체크박스)
+- 표: Module | 01-01 | 01-02 | 01-03 | 01-04 | 01-05 | 01-06 | 01-07
+  - Sample Storage | 14 | 15 | 16 | 17 | 14 | 14 | 17
+  - Total | 14 | 15 | 16 | 17 | 14 | 14 | 17
+- 오른쪽 조회 영역
+  - Date Range: Daily | Monthly / 2026-01-01 | 2026-01-07
+  - Legend: Module | Unit / Sample Storage (Dropdown) / Sample Storage
 
 ### 사용 컴포넌트
 
-Table (26), Square (6), 1 Depth (6), 2 Depth (5), Description Number (5), Dropdown Outlined (3), Table/Filled Table Cell (2), Form/CheckBox (1)
+Table (26), Square (6), 1 Depth (6), 2 Depth (5), Description Number (5), Dropdown Outlined (3), Table/Filled Table  Cell (2), Form/CheckBox (1), Frame (1), Arrow/Chevron_Up (1), Interface/Setting_Outlined (1), ViewMode/Barchart (1), ViewMode/Data_List (1)
 
 ### 디스크립션 (원문)
 
 #### 0. Instrument _ Run-time Trend 화면
 
-- 원문은 TI-STA-05-01 0과 같음
+- 정의
+- 사용자가 조회한 기간 내 장비 별 가동 시간 정보 제공
+- 동작
+- 최초 진입 후, 데이터 로딩 시 스켈레톤 화면 노출
+- 참고 : TI-STA-05_Skeleton
+- 데이터 산출식
+- 가동 시간 = 상태가 Running 중인 시간의 총합
 
 #### 1. 장비별 가동 시간 합계 정보(Table 형태)
 
@@ -98,3 +109,22 @@ Table (26), Square (6), 1 Depth (6), 2 Depth (5), Description Number (5), Dropdo
 - 해당 일자(또는 월)별로 선택된 모든 항목의 가동 시간 총 합산 값
 - 고정 표출
 - 단, 데이터가 없을 경우 ‘-’로 표기
+
+### 케이스
+
+<!-- `{메뉴}_asis` 페이지의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
+
+이 화면만의 케이스 프레임은 없습니다. 디스크립션 2-2가 가리키는 것은 `TI-STA-05-01/Case`([3543:438672](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-438672))의 Case 2입니다(내용은 [TI-STA-05-01] 케이스 절).
+
+| Case | 제목 (원문) | 조건 | 프레임 |
+| --- | --- | --- | --- |
+| 2 | Legend 전체 해제 시 | Legend 전체 해제 | `TI-STA-05-01/Case` (0, 761) |
+
+같은 CID의 Module Type별 프레임 (기획 프레임 아래, 라벨은 TI-STA-05-01 프레임 위 라벨과 같은 줄, 패널 디스크립션 `0` / `- / -`):
+
+| 라벨 (원문) | 프레임 | 다른 점 |
+| --- | --- | --- |
+| Module Type별 1대인 경우 | 기획 프레임 [3543:441350](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-441350) | Sample Storage 1대 |
+| Module Type별 N대인 경우 | [3543:441149](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-441149) | Consumable Storage (1) ~ (4). 합계 Total 301 · 53 · 96 · 70 · 82. 표 (1) 6 · 7 · 8 · 9 · 7 · 7 · 9 / (2) 13 · 14 · 14 · 13 · 14 · 14 · 14 / (3) 8 · 9 · 9 · 11 · 13 · 9 · 11 / (4) 12 · 10 · 12 · 8 · 16 · 12 · 12 / Total 39 · 40 · 43 · 41 · 50 · 42 · 46 |
+| 하위 Unit(Device)이 1대 설치가 가능한 Module인 경우 | [3543:441519](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-441519) | 표 행 High-throughput Extraction(1) ~ (4) / M9600 (값은 N대와 같음). 합계 표 머리는 Consumable Storage (1) ~ (4) 그대로 |
+| 하위 Unit(Device)이 2대 이상 설치가 가능한 Module인 경우 | [3543:441720](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-441720) | 합계 Total 280 · Sample Pre-treatment (1) 53 · Sample Aliquoting (Upper) 49 · Sample Processing (Lower) 96 · Sample Pre-treatment (2) 70 (나머지 열 머리 Sample Aliquoting (Upper) · (Lower)). 표 행 Sample Pre-treatment (1) / Sample Aliquoting (Upper) 6 · 7 · 7 · 9 · 7 · 9 · 14, Sample Pre-treatment (1) / Sample Processing (Lower) 6 · 6 · 6 · 8 · 7 · 8 · 9, Sample Pre-treatment (2) / Sample Aliquoting (Upper) 12 · 12 · 12 · 8 · 16 · 12 · 12, Sample Pre-treatment (2) / Sample Aliquoting (Lower) 8 · 9 · 9 · 11 · 13 · 11 · 12, Total 55 · 54 · 60 · 60 · 67 · 61 · 65 |
