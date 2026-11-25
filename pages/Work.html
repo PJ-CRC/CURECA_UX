@@ -761,8 +761,9 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       if (w) st.push('font-weight:700');
       if (monthAt && tag === 'th' && i === monthAt.r && j === monthAt.c) { v = monthAt.v; w = true; }
       var hx = tag === 'td' && q ? hlEsc : esc, body = hx(v);   // 찾는 글 하이라이트(내용 칸만)
+      // DevOps 링크(ID · 작업명 칸): 글자만 링크로 — 작업명 앞 펼침 버튼(▸)은 링크 밖에 둔다
+      if (tag === 'td' && v && lnk[src[0] + ',' + src[1]]) body = '<a class="ln" href="' + esc(lnk[src[0] + ',' + src[1]]) + '" target="_blank" rel="noopener" title="Azure DevOps에서 열기">' + body + '</a>';
       if (tag === 'td' && kidOf[i] && j === W.cols.task) { var kk = kidOf[i], on = !!wexp[kk.key]; body = '<button type="button" class="wtog" data-wt="' + esc(kk.key) + '" aria-expanded="' + on + '" aria-label="세부 일정 ' + (on ? '접기' : '펼치기') + '" title="세부 일정 ' + (on ? '접기' : '펼치기') + ' (' + kk.rows.length + '건)">' + (on ? '▾' : '▸') + '</button>' + body; }
-      if (tag === 'td' && v && lnk[src[0] + ',' + src[1]]) body = '<a class="ln" href="' + esc(lnk[src[0] + ',' + src[1]]) + '" target="_blank" rel="noopener" title="Azure DevOps에서 열기">' + hx(v) + '</a>';
       // DevOps 상태 색(주간보고 일정표, 2026-11-25): DevOps가 정한 상태 색으로 「● 상태」. 아주 밝은 색(To Do 노랑 등)은 글자만 진하게 해 읽히게
       if (tag === 'td' && dv[i + ',' + j] && v && SC[v]) { body = '<span class="stc"><i style="background:' + SC[v] + '"></i><b style="color:' + inkOf(SC[v]) + '">' + hx(v) + '</b></span>'; }
       else if (tag === 'td' && dv[i + ',' + j]) { var c = chip(v); body = v ? (c ? '<span class="dd' + (c[2] ? ' bd' : '') + '" style="background:' + c[0] + ';color:' + c[1] + (c[2] ? ';border-color:' + c[2] : '') + '">' + hx(v) + '</span>' : '<span class="dd plain">' + hx(v) + '</span>') : ''; }
