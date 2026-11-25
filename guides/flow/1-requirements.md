@@ -368,7 +368,7 @@
 
 | 화면 (CID) | 읽은 것 (화면 MD / 기획 프레임 / 케이스 프레임 / 호출 화면) | Figma 링크 |
 | --- | --- | --- |
-| Scan the sample tube (LI-TSS-PSI-SAM-01-01) | 화면 MD (다시 옮김 · 바뀐 곳 없음, 2.1 2차), 케이스 프레임 | (링크) |
+| Scan the sample tube (LI-TSS-PSI-SAM-01-01) | 화면 MD (asis, 케이스 · 참조 섹션 절 포함) | (기획 프레임 링크) |
 
 - Figma 고유 번호만 나열하지 않고 화면 이름과 링크로 적습니다.
 
