@@ -166,4 +166,3 @@ Form/Radio BTN (18), Frame 42 (18), Table (16), Description (16), Frame 50 (15),
 - `Policy Setting 메뉴 선택` → `페이지 진입`
 - 분기 `ON` (`*Default`) → `Run 구동 준비 시 / Protocol 선택 단계 노출`
 - 분기 `OFF` → `Run 구동 준비 시 / Protocol 선택 단계 미노출`
-- (분기 대상 설정은 [TI-STN-01] 6-2 Allow Protocol Changes Before Test)
