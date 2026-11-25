@@ -2,11 +2,11 @@
   "id": "brex-01_R001",
   "kind": "request",
   "team": "cureca",
-  "status": "보류",
-  "at": "2026-11-25T21:45:28+09:00",
+  "status": "대기",
+  "at": "2026-11-25T21:49:12+09:00",
   "createdAt": "2026-11-25T21:16:32+09:00",
   "by": "서보경",
-  "doneBy": "Claude",
+  "doneBy": "서보경",
   "pc": "BREX_01",
   "reqId": "R001",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,21 +17,13 @@
   "type": "요청",
   "layout": "",
   "text": "Event History 화면 옮겨줘\n\n기존 화면: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-45275&t=8ZUolJfFqEx5iunS-1\n옮길 페이지: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3577-18413&t=8ZUolJfFqEx5iunS-1",
-  "note": "케이스 3 · 1단계 · 20261125-서보경-event-history — B · ② · ⑥ 설명입니다\n- 받은 답: A 화면 이름 = IA 이름대로 (Event Detail · Event Message로 그림). ①③④⑤는 비워 두셔서 추천대로 「반영」으로 둡니다(다르면 알려 주세요).\n\nB. 짝 화면 관계란\n- IA 표에는 T-IOS 화면과 L-IOS 화면이 같은지 표시하는 칸(「짝 화면 동일」)이 있고, Event History · Event Detail은 Y(같음)로 되어 있습니다.\n- 실제 화면은 L-IOS에만 Status 바꾸기(Toggle) · [Mark all as Closed] · Notes 입력이 있어 T-IOS와 다릅니다.\n- 정할 것: IA 표의 그 칸을 「같지 않음」으로 고칠지. 화면은 T · L을 따로 그리므로 그리는 데는 영향이 없고, IA 표의 표시만 바뀝니다(5단계에서 고침).\n- 추천: IA를 「같지 않음」으로 맞춤\n\n② Status 변경 (정책 POL-EVT-002, 확정) 4개\n- 정책 내용: Status 변경과 Notes 쓰기는 L-IOS(Main Mode)에서만, T-IOS는 보기만 함. [Mark all as Closed]는 지금 검색 조건으로 불러온 목록의 모든 페이지에서 Open인 Event를 한 번에 Closed로 바꿈.\n- 바뀌는 것: 화면 동작은 그대로이고 디스크립션 문장만 정책에 맞춤\n  · LI-EVT-P-R02: [Mark all as Closed] 범위를 위 정책대로 적음\n  · LI-EVT-P-R03 · LI-EVT-01-P-R03: 활성 조건을 「공통 UX 참고 COMM-3-a」 대신 「POL-EVT-002 참조」로\n  · TI-EVT-01-P-R03: T-IOS 상세에서 Status를 바꿀 수 없다는 것을 적음\n- 추천: 반영\n\n⑥ 시약 만료 표기 3개 (TI-EVT-P-R03 · R04, LI-EVT-P-R05)\n- 「Expiration date Status」 · 「Under 30 Day」를 고치라는 항목인데, 이번에 옮길 Event History 화면 6개(asis 최신 화면)에는 이 글자가 없습니다.\n- 또 기준데이터에서 시약 만료 상태는 2026-11-25에 「시스템에서 쓰지 않는 값」으로 정해졌습니다.\n- 고를 것: 이번엔 안 함(반영 대기 목록에 그대로 남김) / 제외(바꿀 것이 없어 목록에서 닫음)\n- 추천: 제외 — 화면에 없는 글자이고 값도 쓰지 않음 (앞서 「이번엔 안 함」으로 추천했는데, 기준데이터 결정을 확인해 바꿨습니다)\n\n7. 위대로 정하면 2단계로 넘어갑니다.\n규칙 점검: 1단계 「하지 않는 것」 · 절차 지킴 (마침 점검은 답을 받은 뒤)\n작업 기준: basis 2026-11-25 21:17 · 작업규칙 CURECA 작업규칙 @20261125-212108_daye · 정책서 정책서 @20261125-212107_daye · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 @20261125-212105_daye · 화면 정의서 화면 정의서 @20261125-211638_daye",
+  "note": "",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": {
-    "q": "B · ② · ⑥을 어떻게 할까요? (진행하면 2단계로)",
-    "free": true,
-    "options": [
-      {
-        "label": "추천대로 진행 (B 맞춤 · ② 반영 · ⑥ 제외)"
-      }
-    ]
-  },
+  "ask": null,
   "replies": [
     {
       "at": "2026-11-25T21:20:57+09:00",
@@ -56,6 +48,12 @@
       "by": "서보경",
       "q": "묶음 ①~⑥ · A · B · 7의 답을 위 모양대로 적어 주세요",
       "text": "A - IA 이름대로 / B는 무슨 말이야? / 2번과 6번 정보도 더 설명해줘"
+    },
+    {
+      "at": "2026-11-25T21:49:12+09:00",
+      "by": "서보경",
+      "q": "B · ② · ⑥을 어떻게 할까요? (진행하면 2단계로)",
+      "text": "B는  IA를 같다고 봐야해. 다른것 아냐. 6은 제외가 맞고, 2번은 t는 status 변경 기능이 없고 목록에 상태값만 표기되는 것이야. rmeofh gownj"
     }
   ],
   "raws": [
