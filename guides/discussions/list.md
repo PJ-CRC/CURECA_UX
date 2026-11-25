@@ -43,3 +43,6 @@
 | [DS-0006](DS-0006.md) | 헌법 개정 v1.15 (개정 이력은 git 기록으로, 4조의 "함께 고침"을 뺌) | 내부 (서보경) | - | - | 2026-11-19 | 종료 |
 | [DS-0007](DS-0007.md) | 헌법 개정 v1.16 (공통 자료는 정책서와 룰 문서, 기준 자료는 흐름 문서가 정한 때에 고침) | 내부 (서보경) | - | - | 2026-11-19 | 종료 |
 | [DS-0008](DS-0008.md) | 디스크립션 · 규칙 문서에서 "팝업 · 알럿 · 컨펌 · 토스트" 대신 Popup · Alert · Confirm · Toast (용어집 표준어) | 내부 (서보경) | - | - | 2026-11-20 | 종료 |
+| [DS-0009](DS-0009.md) | Error인 Module은 Door를 열어도 Error를 유지하고, 오류 복구가 끝날 때까지 Error로 둠 | 내부 | POL-EQP-004, POL-EQP-002 | LI-INS-01-P, LI-INS-01-T, LI-INS-02-T, TI-INS-01-T, TI-INS-02-T, TI-DAS, LI-DAS | 2026-11-25 | 종료 |
+| [DS-0010](DS-0010.md) | Run 중 Door 잠금을 해제한 뒤 Door를 열지 않아도 Paused를 유지함 | 내부 | POL-EQP-008, POL-EQP-004 | LI-INS-01-P | 2026-11-25 | 종료 |
+| [DS-0011](DS-0011.md) | Empty Waste Bin은 Console Mode에서만 제공함 | 내부 | POL-INV-005, POL-LOD-005 | LI-IVT-05-T | 2026-11-25 | 종료 |
