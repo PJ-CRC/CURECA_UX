@@ -4,7 +4,7 @@
   "reqId": "R001",
   "reqType": "요청",
   "team": "cureca",
-  "at": "2026-11-25T16:32:07+09:00",
+  "at": "2026-11-25T16:35:07+09:00",
   "from": "2026-11-25T16:21:21+09:00",
   "by": "최고관리자",
   "doneBy": "Claude",
@@ -16,13 +16,13 @@
   "nodeId": "",
   "text": "https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3481-216078&t=GdYCaPho44GgAu5i-1\nAssay Pack 메뉴 옮겨줘",
   "models": {
-    "claude-opus-5-5": 53
+    "claude-opus-5-5": 58
   },
-  "calls": 53,
-  "input": 105,
-  "cacheWrite": 231436,
-  "cacheRead": 6693636,
-  "output": 52288,
-  "total": 6977465,
-  "usd": 4.2364
+  "calls": 58,
+  "input": 115,
+  "cacheWrite": 242362,
+  "cacheRead": 7784321,
+  "output": 61047,
+  "total": 8087845,
+  "usd": 4.7172
 }
