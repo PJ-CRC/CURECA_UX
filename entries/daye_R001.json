@@ -2,8 +2,8 @@
   "id": "daye_R001",
   "kind": "request",
   "team": "cureca",
-  "status": "진행 중",
-  "at": "2026-11-25T19:21:18+09:00",
+  "status": "보류",
+  "at": "2026-11-25T19:22:40+09:00",
   "createdAt": "2026-11-25T17:12:10+09:00",
   "by": "정다예",
   "doneBy": "Claude",
@@ -17,13 +17,24 @@
   "type": "요청",
   "layout": "",
   "text": "R02 이어서 해줘",
-  "note": "케이스 3 · 3단계 · 20261125-최고관리자-assay-pack — 이어서 진행(마침 점검)",
+  "note": "케이스 3 · 3 ~ 4단계 · 20261125-최고관리자-assay-pack — 3단계는 마침 점검(기계 검사)까지 통과해 끝났고, 4단계 절차 1 사용자 확인 목록의 답을 기다립니다(작업 기록 · 화면 MD 5 · Figma 프레임 5 모두 기록과 맞음).\n[질문 대기 — 답을 정해 주실 것]\n- Q1 TI-STN-08 #4-1 · TI-STN-08-P #3: Master 파일의 Active 변경 버튼 모습 — 비활성으로 표시 / 미노출 (추천: 비활성, 버튼이 있는 TI-STN-08-P 원본대로 그림)\n- Q2 TI-STN-08-P #4 (DS-0012): Confirm_029 [Activate] 뒤 Toast 문구 — 문구를 정해 주세요 / 고객에게 물음\n- Q3 LI-STN-08 #2 · LI-STN-08-P: L-IOS 목록 노출 개수 Dropdown — 둠(기존 화면대로 그림) / 뺌(Common UX: L-IOS는 고정)\n- Q4 LI-STN-08 #4: L-IOS 데이터 없음 문구 — 지금(TI 문구 「No files found. Click Import to add a file.」) 그대로 / 고칠 문구 (L-IOS에는 [Import] 없음)\n- Q5 TI-STN-08 #4-1 · TI-STN-08-P #3 · LI-STN-08 #4-1 · LI-STN-08-P #3: Active 태그 색 — Status Base에 검정이 없어 Active Navy · Inactive Gray로 그림, 이대로 / 다른 색\n[변경 확인 — 맞는지만 봐 주실 것 (맞음 / 되돌림)]\n- C1 TI-STN-08-P #4: Confirm 제목 \"Delete the selected file?\" → 카탈로그 Confirm_026 \"Delete the selected files?\"\n- C2 TI-STN-08-P #4: 삭제 Toast \"The file has been deleted.\" → \"The selected files have been deleted.\" (Confirm_026)\n- C3 TI-STN-08-P #4: [Save] → Confirm_029 · 030 뒤 Toast 노출을 더함 (Deactivate \"{version} has been deactivated.\", Activate는 Q2)\n- C4 TI-STN-08 · LI-STN-08 #4 · TI-STN-08-P · LI-STN-08-P #3: 다른 정의 프레임을 가리키던 데이터 없음 문구 · File type별 정보 묶음을 디스크립션에 옮겨 씀\n- C5 TI-STN-08-01 #0: Import file 뒤 목록 없이 Dim만 깔고 Popup을 그림 (3단계 공통 3-9)\n- C6 TI-STN-08-P #0: 화면 이름 \"Assay Pack Setting\" → \"Assay Pack File Details\" (반영 대기 TI-STN-08-P-R01)\n번호로 답해 주세요(예: 「Q1 비활성, Q2 고객에게 물음, C1 ~ C6 맞음」). 답을 받으면 4단계 절차 1 순서 3부터 화면 MD → Figma를 고칩니다.\n규칙 점검: 이번에 한 단계(4단계 절차 1 순서 1 · 2)의 「하지 않는 것」 · 마침 점검 지킴\n작업 기준: basis 2026-11-25 19:21 · 작업규칙 CURECA 작업규칙 (rules) @원본 · 정책서 policy · UX가이드 UX가이드_Common-UX-가이드 · 기준데이터 glossary · 화면 정의서 screens",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "사용자 확인 목록(질문 대기 Q1 ~ Q5 · 변경 확인 C1 ~ C6)을 어떻게 할까요?",
+    "options": [
+      {
+        "label": "Q1 ~ Q5 그린 대로 · C1 ~ C6 모두 맞음"
+      },
+      {
+        "label": "Q2는 고객에게 물음, 나머지 그린 대로 · C 모두 맞음"
+      }
+    ],
+    "free": true
+  },
   "replies": [
     {
       "at": "2026-11-25T17:13:46+09:00",
