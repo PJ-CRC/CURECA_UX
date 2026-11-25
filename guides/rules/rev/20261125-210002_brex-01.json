@@ -1,0 +1,12 @@
+{
+  "rev": "20261125-210002_brex-01",
+  "by": "Claude",
+  "at": "2026-11-25T21:00:02+09:00",
+  "note": "새 파일: flow/1-requirements.md에서 옮긴 경로 분기 기준마다의 예와 요건 목록 예시 요건 넷",
+  "base": "requirements-samples.md",
+  "pc": "BREX_01",
+  "req": "flow 1 문서 정리: 케이스 3 내용을 한 덩어리로 모으고, 예시 · 예 칸을 examples로 옮기고, 겹치는 설명 · 긴 표현을 줄임 (규칙은 바꾸지 않음)",
+  "jobId": "",
+  "file": "../examples/requirements-samples.md",
+  "orig": true
+}
