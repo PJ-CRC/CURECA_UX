@@ -163,10 +163,13 @@ table.sh .dd{display:block;padding:0 10px;border-radius:999px;text-align:center;
 table.sh .dd.plain{background:none;text-align:left;padding:0;border-radius:0;font-weight:400}
 table.sh .dd.plain::after{content:"";display:inline-block;margin-left:6px;border:4px solid transparent;border-top-color:var(--ink-3);vertical-align:-1px}
 table.sh thead th{position:sticky;min-width:56px;text-align:center !important;vertical-align:bottom;background:var(--surface-2);font-weight:700;color:var(--ink-2);text-align:left;z-index:2}
-table.sh th.rn,table.sh td.rn{position:sticky;left:0;background:var(--surface-2);color:var(--ink-3);text-align:right;font-weight:500;min-width:44px;z-index:1}
+table.sh th.rn,table.sh td.rn{position:sticky;left:0;background:var(--surface-2);color:var(--ink-3);text-align:center !important;font-weight:500;min-width:44px;z-index:1}
 table.sh td.empty,table.sh th.empty{min-width:24px}
 table.sh thead th.rn{z-index:3}
 table.sh td.ed{cursor:text}
+table.sh .c{text-align:center}
+table.sh td.pb{border-bottom:1.5px solid color-mix(in srgb, var(--ink-3) 50%, var(--line))}   /* 주간보고 일정표: Part가 바뀌는 줄 아래(2026-11-25) */
+table.sh td.vb{border-bottom:5px double var(--ink)}   /* 「버전 전체」에서 버전이 바뀌는 줄 아래 */
 table.sh td.ed:hover{box-shadow:inset 0 0 0 2px var(--accent-soft)}
 table.sh td.fx{color:var(--ink-3)}
 table.sh td.saving{opacity:.5}
@@ -713,10 +716,17 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       brows.push(i); shownRow[i] = 1;
     }
     shown = brows.length;
-    // 병합: 찾기 · 거르기 중이 아니면 보이는 줄 · 열만큼 rowspan · colspan (머리말 · 내용 구역 안에서만)
+    // Part 구분(2026-11-25): Part(또는 버전)가 바뀌기 전 마지막 줄 아래 굵은 선 · 버전 · 시작일 · 완료일은 가운데 정렬
+    var pend = {}, bi = {}, cen = {};
+    brows.forEach(function(r, k){ bi[r] = k; });
+    //  「버전 전체」로 볼 때 버전이 바뀌는 곳은 다른 선(vend, 진한 색 3px)으로
+    var vend = {};
+    if (pp) brows.forEach(function(r, k){ var n = brows[k + 1]; if (pv && !fver && n != null && val(r, pv.col) !== val(n, pv.col)) { vend[r] = 1; return; } if (n == null || val(r, pp.col) !== val(n, pp.col) || (pv && val(r, pv.col) !== val(n, pv.col))) pend[r] = 1; });
+    if (pv) cen[pv.col] = 1; if (pg) { if (pg.s >= 0) cen[pg.s] = 1; if (pg.e >= 0) cen[pg.e] = 1; }
+    if (pp) { cen[pp.col] = 1; ['ID', 'UX 담당자', 'UI 담당자'].forEach(function(n){ var k = T.labels.indexOf(n); if (k >= 0) cen[k] = 1; }); }   // Part · ID · 담당자도 가운데
+    // 병합: 보이는 줄 · 열만큼 rowspan · colspan (머리말 · 내용 구역 안에서만). 찾기 · 상태 거르기 중에도 남은 줄끼리 병합(2026-11-25 — 예전엔 거르면 병합을 다 풀었음)
     function spans(rows){
       var out = {}, ri = {}, ci = {}; rows.forEach(function(r, k){ ri[r] = k; }); cols.forEach(function(c, k){ ci[c] = k; });
-      if (filt) return out;
       (wbs.mg || []).forEach(function(m){
         var vr = rows.filter(function(r){ return r >= m[0] && r < m[0] + m[2]; }), vc = cols.filter(function(c){ return c >= m[1] && c < m[1] + m[3]; });
         if (!vr.length || !vc.length || (vr.length === 1 && vc.length === 1)) return;
@@ -732,6 +742,8 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       var src = s && s.src ? s.src.split(',') : [i, j], v = val(+src[0], +src[1]), b = bg(+src[0], +src[1]), f = (FC[src[0]] || [])[src[1]] || '', w = (FW[src[0]] || [])[src[1]];
       var cls = [], st = [];
       if (T.gantt[j]) cls.push('g'); if (j === todayC) cls.push('today');
+      if (cen[j]) cls.push('c');
+      if (tag === 'td') { var last = s && s.r > 1 ? brows[bi[i] + s.r - 1] : i; if (vend[last]) cls.push('vb'); else if (pend[last]) cls.push('pb'); }
       if (tag === 'td') { if (fx[i + ',' + j]) cls.push('fx'); else if (edit && !T.gantt[j]) cls.push('ed'); }
       if (b) { st.push('background:' + b); st.push('color:' + (f || '#14171c')); } else if (f && f !== '#000000') st.push('color:' + f);
       if (w) st.push('font-weight:700');
