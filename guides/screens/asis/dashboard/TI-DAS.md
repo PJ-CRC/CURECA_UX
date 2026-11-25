@@ -9,7 +9,7 @@ version: 2.1.14
 date: 2026.10.30
 author: 서보경
 client_mode: []
-user_type: []
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-7110
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: L-IOS(LI-DAS)에는 4-1 CURECA 구동 컨트롤러([Initialize] · [Stop])와 5-2 [Unlock] 버튼(화면 글자는 `Door control`)이 더 있어 5-2 Event 표기 영역이 L에서는 5-3. 화면 글자도 다른 곳이 있음: Inventory Status 탭 `Empty`(T) / `Insufficient`(L), 시약 줄 `270 rxns (3 sockets)`(T) / `(3 sets)`(L), Event 툴팁 예시 글, GNB 시스템 표시, LNB 메뉴
 - 호출하는 화면: [TI-TMG-02] Test Status (3-1 [+More]), Instrument Overview Tab (5-1 [+More]), Inventory Summary Tab (6-1 · 7-1 [+More])
 - 호출되는 곳: LNB `Dashboard` (0 진입 방법)
+- 관련 정책: POL-EQP-001, POL-EQP-002, POL-EQP-004, POL-SMP-001, POL-SMP-004, POL-SMP-009
 - 참조 프레임: 같은 페이지의 [SB_Dashboard Info](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-8244) (디스크립션 1 · 4가 「Dashboard Info」를 참고하라고 함. 2026-11-26에 아래 케이스 절로 옮김)
 
 ## 기존 화면

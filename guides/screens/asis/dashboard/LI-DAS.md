@@ -8,8 +8,8 @@ type: Page
 version: 2.1.14
 date: 2026.10.30
 author: 서보경
-client_mode: []
-user_type: []
+client_mode: [Main Mode, Console Mode, MS Mode]
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-7731
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: L-IOS에만 4-1 CURECA 구동 컨트롤러([Initialize] · [Stop])와 5-2 [Unlock] 버튼(화면 글자는 `Door control`)이 있어 T의 5-2 Event 표기 영역이 L에서는 5-3. 화면 글자도 다른 곳이 있음: Inventory Status 탭 `Insufficient`(L) / `Empty`(T), 시약 줄 `270 rxns (3 sets)`(L) / `(3 sockets)`(T), Event 툴팁 예시 글, GNB 시스템 표시, LNB 메뉴
 - 호출하는 화면: [TI-TMG-02] Test Status (3-1 [+More]), Instrument Overview Tab (5-1 [+More]), [LI-INS-01-P] Door Control 팝업 (5-2 [Unlock]), Inventory Summary Tab (6-1 · 7-1 [+More])
 - 호출되는 곳: LNB `Dashboard` (0 진입 방법)
+- 관련 정책: POL-EQP-001, POL-EQP-002, POL-EQP-003, POL-EQP-004, POL-EQP-008, POL-SMP-001, POL-SMP-004, POL-SMP-009
 - 참조 프레임: 같은 페이지의 [SB_Dashboard Info](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-8378) · [구동 프로세스](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-7603) 섹션 (디스크립션 1 · 4 · 4-1이 「Dashboard Info」 · 「구동 프로세스」를 참고하라고 함. 2026-11-26에 케이스는 케이스 절로, 구동 컨트롤러 표 · 구동 프로세스는 참조 섹션 (원문) 절로 옮김)
 
 ## 기존 화면

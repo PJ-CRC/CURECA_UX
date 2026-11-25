@@ -8,8 +8,8 @@ type: Popup
 version: 2.1.14
 date: 2026.10.26
 author: 서보경
-client_mode: []
-user_type: []
+client_mode: [Main Mode, Console Mode]
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-47634
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: 화면 글자 · 디스크립션 1 ~ 12는 TI-EVT-02-P와 같음. 0 화면 정의만 다름(L은 노출 PC Type, T는 Profile `Event notifications` 설정에 따라 노출). Date가 L 2026.10.26 / T 2026.10.30. 기획 프레임 너비 1960(화면 1628 + 패널 332)
 - 호출하는 화면: [LI-EVT-01-P] Event Detail Popup (9 [View Details])
 - 호출되는 곳: Event 발생 시 (0 화면 정의)
+- 관련 정책: POL-EVT-001, POL-EVT-003
 
 ## 기존 화면
 

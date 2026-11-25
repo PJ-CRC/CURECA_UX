@@ -8,8 +8,8 @@ type: Popup
 version: 2.1.14
 date: 2026.10.30
 author: 서보경
-client_mode: []
-user_type: []
+client_mode: [Main Mode, Console Mode, MS Mode]
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-46640
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: L-IOS에만 1 Status [1-2] Toggle(상태 변경)과 3 Notes의 Resolution Notes 입력(인라인 편집)이 있음. 1 Event Info 안 Effect · Recommended Action 줄 순서가 T와 다름. 디스크립션 6 · 7이 둘 다 「닫기」(화면 번호 표시는 6까지)
 - 호출하는 화면: [LI-EVT-P] Event History 목록 (5 List 버튼)
 - 호출되는 곳: [LI-EVT-P] Event History 목록에서 Event 클릭 (0 진입 방법), [LI-EVT-02-P] Event Message의 [View Details]
+- 관련 정책: POL-EVT-001, POL-EVT-002
 
 ## 기존 화면
 
