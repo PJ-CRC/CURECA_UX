@@ -29,7 +29,7 @@ started: 2026-11-25
 | 4. 수정 · 확인 | | | |
 | 5. 완료 | | | |
 
-이어서 작업할 곳: 3단계 · TI-STN-08 / LI-STN-08 그림 (LI-STN-08 `3503:1997` · 사용자 확인 목록 `3506:12990`), TI-STN-08-P 그림(기획 프레임 `3515:1564` · 사용자 확인 목록 `3517:2205`, 마무리 확인 전), LI-STN-08-P(TI-STN-08-P를 복제해 L로 바꿈)부터 그릴 차례, 그다음 TI-STN-08-01(Popup, 짝 없음) (다시 읽을 곳: 3단계 flow/3-design-case3.md 흐름 · 3-4 · 공통 3 / flow/3-design.md 공통 3 · 3-9 Popup · 3-10 / 작업 기록 "요건 목록" 요건 1 · "설계" 화면별 작업 · 컴포넌트 없이 그린 요소 · "질문 대기" · "변경 확인" / 화면 MD screens/tobe/setting/TI-STN-08-P.md · LI-STN-08-P.md). 그리기 전에 project.json editablePageName이 「Setting  Ⓛ / Ⓣ_To Be」인지 확인 (R001 · 2026-11-25 Claude, 정다예가 최고관리자의 작업 이어 받음)
+이어서 작업할 곳: 3단계 · TI-STN-08 / LI-STN-08 그림 (LI-STN-08 `3503:1997` · 사용자 확인 목록 `3506:12990`), TI-STN-08-P / LI-STN-08-P 그림(`3515:1564` · `3519:2202`, 마무리 확인 2026-11-25), TI-STN-08-01(Popup, 짝 없음)부터 그릴 차례 — 다 그리면 3단계 절차 3번(용어 점검) (다시 읽을 곳: 3단계 flow/3-design-case3.md 흐름 · 3-4 · 공통 3 / flow/3-design.md 공통 3 · 3-9 Popup · 3-10 / 작업 기록 "요건 목록" 요건 1 · "설계" 화면별 작업 · 컴포넌트 없이 그린 요소 · "질문 대기" · "변경 확인"(C5) / 화면 MD screens/tobe/setting/TI-STN-08-01.md). 그리기 전에 project.json editablePageName이 「Setting  Ⓛ / Ⓣ_To Be」인지 확인 (R001 · 2026-11-25 Claude, 정다예가 최고관리자의 작업 이어 받음)
 
 ## 요청
 
