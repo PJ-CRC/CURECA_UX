@@ -3,44 +3,59 @@ cid: TI-IVT-05-T
 pair_cid: LI-IVT-05-T
 tl_relation: 동일
 title: Waste Bin/Bottle
-path: Inventory > Waste bin
+path: Inventory > Waste Bin/Bottle Tab
 type: Tab
 version: 2.1.11
-date: 2026-10-08
+date: 2026.10.08
 author: 정다예
 client_mode: []
-user_type: [Service, Admin, User]
+user_type: []
 policies: []
-rules_version:
-provisional: []
-flags: []
 source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=5572-1302256
-figma_region: 2.1 2차
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-371112
 ---
 # TI-IVT-05-T Waste Bin/Bottle
 
-> 기존 화면(기존 작업방 Inventory 페이지, 2.1 2차 영역, Ver 2.1.11)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 `Inventory_asis` 페이지, Ver 2.1.11)을 2026-11-25에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
 
-- IA 화면 이름은 "Waste bin", Figma 화면 정보 경로는 "Inventory > Waste Bin/Bottle Tab"
-- T/L 차이: 없음 (LI-IVT-05-T와 같음)
-- 관련 정책: POL-INV-001, POL-INV-005, POL-EQP-009, POL-LOD-005
-- 호출하는 화면: 없음. 비움 처리(Confirm Empty)는 Material Setup > Empty Waste Bin으로 옮겨짐 (v2.1.11)
+- T/L 차이: 화면 · 디스크립션 같음. LNB 메뉴만 다름
+- 호출하는 화면: 없음 (4 [Refresh]만. 비움 처리는 Material Setup > Empty Waste Bin의 Confirm Empty, 3-3 · 3-5)
+- 호출되는 곳: Inventory Tab 구성 ([TI-IVT-01-T] 등)
 
 ## 기존 화면
 
+<!-- `{메뉴}_asis` 페이지에 있는 그대로 옮깁니다. 고치거나 정리하지 않습니다. 틀린 곳 · 정책과 다른 곳도 그대로 옮깁니다. 그 화면의 To-Be 작업 1단계에서 읽으며 찾아 그 작업에서 고칩니다(`flow/1-requirements.md` 절차 4번 순서 3 "뒤 단계로 넘김"의 5). -->
+
 ### 화면 글자
 
-- (GNB·LNB는 T-IOS 공통)
-- Summary | Overview | Consumables | Reagents | Waste Bin/Bottle | Usage History
-- (Chip) Status | Full 3 | Almost Full 4 | Available 3 | Refresh
-- (좌측 카드, 각 Status 아이콘) Sample Pre-treatment: Sample Pre-treatment (1)~(3) | High-throughput Extraction: (1)~(2) | Flexible Extraction | PCR Setup: (1)~(2) | Plate Sealing: PlateSealing (2) | Universal PCR
-- (우측 모듈 카드) Sample Pre-treatment (1)~(3) → Unit | Fill Level(%) | Status | Last Emptied Date/Time
-- Waste Bin (Upper) | 100% | 2025-09-29 15:57:20 / Liquid Waste Bottle (Upper) | 100% / Waste Bin (Lower) | 100% / Liquid Waste Bottle (Lower) | 100% (Sample Pre-treatment (2)는 99%, 71%, 78% 등)
+- (GNB) Running | Instrument | L-IOS | D.A PC | Event | Error 3 | Warning 2 | 2026-04-10 11:30
+- (LNB) TIOS | Dashboard | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis | Setting | Information | Keira Knightley
+- Inventory
+- Tab: Summary | Overview | Consumables | Reagents | Waste Bin/Bottle | Usage History
+- Status | Full 3 | Almost Full 4 | Available 3 | Refresh
+- 왼쪽 카드 목록 (카드 제목 | Status, 아래 모듈 목록)
+  - Sample Pre-treatment: Sample Pre-treatment (1) | Sample Pre-treatment (2) | Sample Pre-treatment (3)
+  - High-throughput Extraction: High-throughput Extraction (1) | High-throughput Extraction (2)
+  - Flexible Extraction: Flexible Extraction
+  - PCR Setup: PCR Setup (1) | PCR Setup (2)
+  - Plate Sealing: PlateSealing (1) | PlateSealing (2)
+  - Universal PCR: Universal PCR
+- 오른쪽 상세: Sample Pre-treatment (열: Unit | Fill Level(%) | Status | Last Emptied Date/Time)
+  - Sample Pre-treatment (1)
+    - Waste Bin (Upper) | 100% | 2025-09-29 15:57:20
+    - Liquid Waste Bottle (Upper) | 100% | 2025-09-29 15:57:20
+    - Waste Bin (Lower) | 100% | 2025-09-29 15:57:20
+    - Liquid Waste Bottle (Lower) | 100% | 2025-09-29 15:57:20
+  - Sample Pre-treatment (2)
+    - Waste Bin (Upper) | 99% | 2025-09-29 15:57:20
+    - Liquid Waste Bottle (Upper) | 71% | 2025-09-29 15:57:20
+  - Sample Pre-treatment (3)
+    - Waste Bin (Lower) | 78% | 2025-09-29 15:57:20
+    - Liquid Waste Bottle (Lower) | 69% | 2025-09-29 15:57:20
 
 ### 사용 컴포넌트
 
-Interface/triangle-exclamation_Solid (14), Description Number (12), Item_Segment Tabs (6), Chip (3), Frame (1), Square (1), Component 4 (1)
+Interface/triangle-exclamation_Solid (14), Description Number (12), ⛔️ Item_Segment Tabs (6), Chip (3), Frame (1), Square (1), Component 4 (1)
 
 ### 디스크립션 (원문)
 
@@ -172,3 +187,9 @@ Interface/triangle-exclamation_Solid (14), Description Number (12), Item_Segment
 #### 4. [Refresh] 버튼
 
 - 버튼 클릭 시 목록의 데이터가 최신 상태로 갱신되어 표시
+
+### 케이스
+
+<!-- `{메뉴}_asis` 페이지의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
+
+없음 (`Inventory_asis` 페이지에 TI-IVT-05-T 케이스 프레임 없음)
