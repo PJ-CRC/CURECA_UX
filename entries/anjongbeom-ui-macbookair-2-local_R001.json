@@ -25,7 +25,13 @@
   "marks": [],
   "ask": null,
   "replies": [],
-  "raws": [],
+  "raws": [
+    {
+      "at": "2026-11-25T15:31:23+09:00",
+      "text": "R001을 「완료」로 바꿨습니다. 「1125-GMCS 언어셋 추가」 섹션 화면에 나오는 문구 중 3.GMCS 시트에 없던 57개를 7개 언어로 번역해 시트에 넣었습니다. Figma는 고치지 않았습니다.\n\n**언어셋에 바꾼 것**\n- **3.GMCS 시트**: GM-title-634 ~ GM-txt-690(시트 639~695행)을 추가했습니다.\n  - 비고는 「v2.38 문구 추가(다국어)」, Menu는 「종합검사 현황 대시보드」, Figma CID는 GM-CTD-WKL-T · TMD-01/02/03-T입니다.\n- **노란색**: 새 행 57개는 A~P열 전체를 노란색으로 칠했습니다. 이전 버전에 칠해 둔 GM 행 154개는 원래대로 돌렸고, 공통 문구 행 5개의 노란색은 그대로 두었습니다.\n  - 처음 저장 때 새 행에 노란색이 빠져 있어서 바로 다시 칠해 저장했습니다. 다시 읽어 보니 노란색은 새 57행과 공통 문구 행에만 있습니다.\n- **시트 이름**: `3. GMCS-v2.36-261123` → `3. GMCS-v2.38-261125`\n- **문서이력**: 4행에 `v2.38 · 3.GMCS · 2026.11.25 · 문구 추가(다국어) · 안종범`을 넣었습니다.\n- **표지 K13**: 26.11.24 → 26.11.25\n\n**추가한 문구 (일부)**\n\n| ko-KR | en-US | de-DE | es-ES | it-IT | fr-FR | pt-PT |\n|---|---|---|---|---|---|---|\n| 종합검사 현황 대시보드 | Comprehensive Test Status Dashboard | Dashboard zum Status umfassender Tests | Panel de estado de pruebas integrales | Dashboard dello stato dei test completi | Tableau de bord de l'état des tests complets | Painel de estado dos testes abrangentes |\n| 지역 본부 | Regional HQ | Regionalzentrale | Sede regional | Sede regionale | Siège régional | Sede regional |\n| 참여 거래처 | Participating Clients | Teilnehmende Kunden | Clientes participantes | Clienti partecipanti | Clients participants | Clientes participantes |\n| Excel 내보내기 | Export to Excel | Nach Excel exportieren | Exportar a Excel | Esporta in Excel | Exporter vers Excel | Exportar para Excel |\n| 동시 감염 | Co-infection | Koinfektion | Coinfección | Coinfezione | Co-infection | Coinfeção |\n| 5개+ 검출 | 5+ infection | 5+ Infektionen | 5+ infecciones | 5+ infezioni | 5+ infections | 5+ infeções |\n\n나머지 51개는 탭 · 카드 · 컬럼 · 범례 · 케이스 표 문구이고, 전체 번역은 3.GMCS 시트 639~695행에 있습니다.\n\n**이미 시트에 있어서 추가하지 않은 문구**: 조회 기간, 주/월/분기/년, All, 종합 검사, 감염 분류, 건, 누적 검사, Hospital, HPV, STI, Top 5, 데이터 없음 · API 오류 메시지, 왼쪽 메뉴 항목 등입니다.\n\n**넣지 않은 것**\n- 예시로 넣은 값: 병원 · 지역 · 분석체 이름, 숫자, 날짜\n- 화면 공통 틀의 「병원 정보 관리」 · 「검사센터 문의」 · 「한국어」 (이 섹션 화면의 문구가 아니어서 제외했고, 필요하면 따로 요청해 주세요)\n- 아직 정해지지 않은 툴팁 문구\n\n**검수가 필요한 곳 (처리 결과에도 적어 두었습니다)**\n- 분석체 Top 5 화면(TMD-03)의 도넛 가운데 라벨이 화면에는 「positives」, 설명에는 「positive」로 되어 있어 「positive」로 등록했습니다.\n- 「1 infection ~ 4 infection」은 화면 표기 그대로 「$N$ infection」으로 등록했습니다(영어 복수형 아님).\n- 용어는 거래처=Client, 지역 본부=Regional HQ, 지점=Branch, 기존 검사=Conventional Test로 옮겼습니다.\n- 원본 엑셀과 Wiki에는 반영하지 않았으니 사람이 올려야 합니다.",
+      "cut": false
+    }
+  ],
   "work": "",
   "handoff": null
 }
