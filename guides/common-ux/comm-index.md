@@ -356,6 +356,7 @@ Figma 각 프레임 본문 왼쪽의 Type 제목과 라벨 줄(정의 · 형태 
 - **컴포넌트** (MD에만)
   - Table/Header Cell · Table/Cell (Group/List · Card · Accordion · Table · Tab)
   - 노출 개수는 Basic Dropdown, 페이지는 Number Pagination, 말줄임은 Ellipsis Tooltip을 씀
+  - 노출 개수 드롭다운(T-IOS)은 Items 바로 오른쪽, 같은 줄에 둠(Figma COMM-5-g 예시)
 - **가르는 법** (MD에만)
   - Table Card ↔ Basic Table: 한 대상에 속한 세부 항목이면 Table Card, 화면의 조회 결과면 Basic Table. 놓인 자리 · 줄 수로 가르지 않음
 
@@ -464,6 +465,8 @@ Figma 각 프레임 본문 왼쪽의 Type 제목과 라벨 줄(정의 · 형태 
 
 - **정의**
   - 상태를 점으로 표시
+- **가르는 법** (MD에만)
+  - 아래 컴포넌트는 장비 상태 점에만 씀(Status 값이 장비 상태). STAT처럼 장비 상태가 아닌 점은 Common UX에 컴포넌트가 없는 요소로 보고 기존 화면의 점을 색 그대로 따옴(케이스 3은 `flow/3-design-case3.md` 공통 3-3 표 ②). 장비 상태 값 하나를 골라 대신 쓰지 않음
 - **컴포넌트** (MD에만)
   - Frame/Instrument_Status Circle Icon (Group/Imported), 속성 Status(Idle / Preparing / Running / Pause / Completing / Error / Initializing / Stopping / Testing / Disconnected / Connected)
 

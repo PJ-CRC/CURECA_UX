@@ -1,0 +1,12 @@
+{
+  "rev": "20261125-155714_daye",
+  "by": "Claude",
+  "at": "2026-11-25T15:57:14+09:00",
+  "note": "COMM-5-g Type 1: 노출 개수 드롭다운은 Items 바로 오른쪽 · Type 4 Dot Label 가르는 법: 장비 상태 점에만, STAT 등은 기존 화면 점을 색 그대로 따옴",
+  "base": "20261125-145017_daye",
+  "pc": "DAYE",
+  "req": "채팅 요청(정다예): samples_tobe 테스트 결과 — 1. 노출 개수 Dropdown을 Items 옆에 · 3. STAT 열 초록색 · 4. 케이스 설명 글머리 없음 · 5. 케이스 조각 번호 표시",
+  "jobId": "",
+  "file": "../common-ux/comm-index.md",
+  "orig": true
+}
