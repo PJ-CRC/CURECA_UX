@@ -9,7 +9,7 @@ version: 2.1.02
 date: 2026.08.14
 author: 정다예
 client_mode: []
-user_type: []
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-166446
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: 화면 글자 · 디스크립션이 LI-SPT-01-02와 같음
 - 호출하는 화면: (원문에 없음. 4 [Close] · 5 [X]는 팝업 닫고 기존 화면 유지)
 - 호출되는 곳: [TI-SPT-01-01] Samples Details 8-1 [More]
+- 관련 정책: (정책 작성 전). 상세 항목은 Protocol Setting(POL-TST-006) 기준
 
 ## 기존 화면
 

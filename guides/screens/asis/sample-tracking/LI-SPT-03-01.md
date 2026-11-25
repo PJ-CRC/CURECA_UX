@@ -8,8 +8,8 @@ type: Popup
 version: 2.0
 date: 2026.06.15
 author: 정다예
-client_mode: []
-user_type: []
+client_mode: [Main Mode, Console Mode, MS Mode]
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-270673
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: 디스크립션은 화면 코드만 다름(T `TI-…`, L `LI-…`). 화면 글자는 GNB · LNB와 Plate Info 라벨이 다름(L `Product Total` · `Product STAT`, T `Total Products` · `STAT Products`)
 - 호출하는 화면: [Samples] 메뉴의 해당 검체 (3 리스트 클릭)
 - 호출되는 곳: [LI-SPT-03] PCR Plate 리스트 행 클릭 (2), [LI-SPT-01-01] 6-1 [More]
+- 관련 정책: (정책 작성 전)
 
 ## 기존 화면
 

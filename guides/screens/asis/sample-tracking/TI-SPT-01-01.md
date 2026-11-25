@@ -9,7 +9,7 @@ version: 2.1.11
 date: 2026.10.08
 author: 정다예
 client_mode: []
-user_type: []
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-166714
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: 4 Sample Location만 다름(T `샘플 투입구 유형` · `Trolley Name` · Socket ID/Position 설명 있음, L `검체 투입구 유형` · `Trolley ID` · Socket ID/Position 설명 없음). 화면 글자는 GNB · LNB, General의 End Date/Time 값(T `-`, L `2024-07-01 10:30`), Sample Location 라벨(T `Trolley Name`, L `Trolley ID`)이 다름
 - 호출하는 화면: [TI-SPT-01-02] Protocol Info (8-1 [More]), 96 DWP · PCR Plate 메뉴의 Plate 상세 (5-1 · 6-1 [More])
 - 호출되는 곳: [TI-SPT-01] Samples 리스트 행 클릭 (2)
+- 관련 정책: POL-SMP-002
 
 ## 기존 화면
 
