@@ -8,8 +8,8 @@ type: Page
 version: 2.1.11
 date: 2026.10.08
 author: 정다예
-client_mode: []
-user_type: []
+client_mode: [Main Mode, Console Mode, MS Mode]
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-97274
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: T-IOS(TI-TMG-01)에만 LIS Transmission 필터 · `Send Results (LIS)` 열 · [Resend Results] 버튼이 있어 L의 1-6 · 1-7이 T에서는 1-7 · 1-8. 4 [Import] · [Export]가 L은 COMM-5-j(4/4) 팝업, T는 윈도우 탐색기
 - 호출하는 화면: COMM-5-j(4/4) 팝업 (4 [Import] · [Export]), Alert_031 (4 [Import] 파일 형식 오류)
 - 호출되는 곳: LNB > Test Management > Test Order
+- 관련 정책: POL-SMP-001, POL-SMP-002, POL-SMP-003, POL-SMP-005, POL-SMP-006, POL-SMP-008, POL-COM-006
 
 ## 기존 화면
 
