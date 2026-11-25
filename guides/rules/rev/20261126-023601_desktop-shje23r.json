@@ -1,0 +1,12 @@
+{
+  "rev": "20261126-023601_desktop-shje23r",
+  "by": "Claude",
+  "at": "2026-11-26T02:36:01+09:00",
+  "note": "케이스 절 주석에 별도 케이스 · 세부정의 프레임 포함, 참조 섹션 (원문) 절 추가",
+  "base": "20261125-203915_brex-01",
+  "pc": "DESKTOP-SHJE23R",
+  "req": "templates/screen-asis.md: 케이스 절이 1단계 유일한 근거가 되게, 디스크립션이 가리키는 밖 섹션을 참조 섹션으로 (정다예 요청, 2026-11-26 채팅)",
+  "jobId": "",
+  "file": "../templates/screen-asis.md",
+  "orig": true
+}
