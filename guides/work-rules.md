@@ -12,7 +12,7 @@
 
 | 요청 | 읽을 문서 |
 | --- | --- |
-| **화면설계** (화면이나 화면에 미치는 정책을 바꾸는 요청. 화면 부분 수정(고도화) · 신규 · 기존 화면 다시 그리기) | [flow/README.md](flow/README.md) → [flow/1-requirements.md](flow/1-requirements.md)부터 단계 순서대로. 한 작업은 한 대화에서 단계를 이어 가고, 단계를 넘어갈 때마다 다음 단계 문서를 처음부터 다시 읽음. 작업 기록은 새 대화로 이어 갈 때 처음부터 읽음(`flow/README.md` "단계 전환") |
+| **화면설계** (화면이나 화면에 미치는 정책을 바꾸는 요청. 화면 부분 수정(고도화) · 신규 · 기존 화면 다시 그리기) | [flow/README.md](flow/README.md) → [flow/1-requirements.md](flow/1-requirements.md)부터 단계 순서대로. 한 작업은 한 대화에서 단계를 이어 가고, 단계를 넘어갈 때마다 다음 단계 문서를 처음부터 다시 읽음. 작업 기록은 처음부터 읽지 않고, 새 대화로 이어 갈 때 끊긴 곳(`이어서 작업할 곳:` 줄)부터 읽음(`flow/README.md` "단계 전환") |
 | 끊긴 화면설계 작업 이어 가기, "열린 작업 리스트 보여 줘" | [reference-rules/work-log.md](reference-rules/work-log.md) "끊긴 작업 이어 가기" |
 | 논의 대상: 올리기 · "논의 리스트 보여 줘" · 결정 반영 · 후속 확인 답 · 같은 질문 합치기 | [reference-rules/discussions.md](reference-rules/discussions.md) |
 | 반영 대기: "○○ 반영 대기 보여 줘" · "주기 점검 해 줘" | [reference-rules/pending-changes.md](reference-rules/pending-changes.md) |
