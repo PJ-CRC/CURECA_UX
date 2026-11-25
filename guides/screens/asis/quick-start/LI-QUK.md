@@ -8,8 +8,8 @@ type: Popup
 version: 2.1.11
 date: 2026.10.08
 author: 정다예
-client_mode: []
-user_type: []
+client_mode: [Main Mode, Console Mode]
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-95245
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: L-IOS 단독 화면 (IA에 T 짝 없음)
 - 호출하는 화면: Confirm_001 (7 [Cancel]), Confirm_002 (8 [Quick Start]), [LI-RUN-P] (0 Run 실행 조건 불만족 시 이 팝업 대신 노출)
 - 호출되는 곳: LNB > Quick Start, Test Status > Quick Start (패널 경로)
+- 관련 정책: POL-EQP-003 (Quick Start 버튼 활성 조건), POL-SMP-005, POL-SMP-007, POL-INV-002, POL-INV-003, POL-INV-005
 
 ## 기존 화면
 

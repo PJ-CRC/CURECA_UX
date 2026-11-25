@@ -8,8 +8,8 @@ type: Page
 version: 2.0
 date: 2026.06.15
 author: 정다예
-client_mode: []
-user_type: []
+client_mode: [Main Mode, Console Mode]
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-76459
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: L-IOS 단독 화면 (IA에 T 짝 없음). Run Preparation Step 1 (Check samples)
 - 호출하는 화면: [LI-RUN-02] (7 [Next]), Confirm_001 (0 페이지 이탈 · 6 [Cancel]), Alert_001 (0 Sample 정보 로드 불가)
 - 호출되는 곳: LNB > [RUN], Dashboard > [RUN], Run Status > [RUN] (0 진입 방법)
+- 관련 정책: POL-EQP-003 (Run 버튼), POL-SMP-005, POL-SMP-007, POL-SMP-008, POL-LOD-001, POL-LOD-003
 
 ## 기존 화면
 

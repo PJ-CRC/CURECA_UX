@@ -8,8 +8,8 @@ type: Page
 version: 2.1.13
 date: 2026.10.23
 author: 정다예
-client_mode: []
-user_type: []
+client_mode: [Main Mode, Console Mode]
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-76660
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: L-IOS 단독 화면 (IA에 T 짝 없음). Run Preparation Step 2 (Check consumables, Check test protocol 단계가 있으면 Step 3)
 - 호출하는 화면: [LI-RUN-01] (7 [Previous]), [LI-RUN-03] (8 [Next]), LI-RUN-03-P Item details (3-7), Confirm_001 (0 · 6 [Cancel]), Alert_001 (0)
 - 호출되는 곳: [LI-RUN-01] 7 [Next]
+- 관련 정책: POL-SMP-007, POL-INV-002, POL-INV-003
 - 기획 프레임 높이 2617. 아래 「화면 글자」는 카드 영역별로 적음
 
 ## 기존 화면

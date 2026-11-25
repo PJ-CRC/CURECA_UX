@@ -8,8 +8,8 @@ type: Page
 version: 2.0
 date: 2026.06.15
 author: 정다예
-client_mode: []
-user_type: []
+client_mode: [Main Mode, Console Mode]
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-78975
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: L-IOS 단독 화면 (IA에 T 짝 없음). Run Preparation Step 2/5 (Check test protocol, Policy Setting 「Allow Protocol Changes Before Test」가 ON일 때만 노출)
 - 호출하는 화면: [LI-RUN-01] (5 [Previous]), [LI-RUN-02] (6 [Next]), Confirm_001 (0 · 4 [Cancel]), Alert_001 (0)
 - 호출되는 곳: (원문에 없음)
+- 관련 정책: POL-SMP-007. Protocol 목록·Applied는 POL-TST-006 (Protocol Setting) 참고
 - 참조 프레임: 같은 페이지의 [Run Preparation - Check Test Protocol 단계 노출 여부](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-79245) 섹션 (2026-11-26에 아래 참조 섹션 (원문) 절로 옮김)
 
 ## 기존 화면
