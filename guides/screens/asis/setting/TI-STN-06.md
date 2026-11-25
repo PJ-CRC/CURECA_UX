@@ -9,7 +9,7 @@ version: 2.1.11
 date: 2026.10.08
 author: 정다예
 client_mode: []
-user_type: []
+user_type: [Service, Admin]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-595093
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: T-IOS 단독 (디스크립션 0 `T-IOS 시스템 전용 메뉴`)
 - 호출하는 화면: Confirm_010 (5 Save)
 - 호출되는 곳: LNB > Setting > SMTP Setting. 계정 생성 · 수정 시 안내 메일 발송에 쓰임([TI-STN-05-01-P] 6-1, [TI-STN-05-02-P])
+- 관련 정책: POL-SYS-003, POL-ACC-002 (임시 비밀번호 메일)
 
 ## 기존 화면
 

@@ -9,7 +9,7 @@ version: 2.1.03
 date: 2026.08.21
 author: 정다예
 client_mode: []
-user_type: []
+user_type: [Service, Admin]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-579110
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: T-IOS 단독 (T-IOS와 L-IOS의 사용자 계정을 함께 관리)
 - 호출하는 화면: [TI-STN-05-02-P] 계정 상세 팝업 (2 행 클릭, 원문 그대로. 같은 페이지의 User Details 프레임은 TI-STN-05-03-P), Confirm_015 (3 Delete), [TI-STN-05-01-P] Create New User (4 Add User)
 - 호출되는 곳: LNB > Setting > Account Setting
+- 관련 정책: POL-ACC-001, POL-ACC-002, POL-ACC-005, POL-ACC-006 / 임시 정책 PV-0002
 - 버전 메모(프레임 오른쪽 위 `ver`): v2.1.03 update / 이름, 이메일 정보 추가
 - 기획 프레임 밖에는 섹션 `이메일 연동 Flow`([3543:578983](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-578983))가 있습니다(옮기지 않음).
 

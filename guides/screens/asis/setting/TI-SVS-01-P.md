@@ -9,7 +9,7 @@ version: 2.1.01
 date: 2026.08.07
 author: BREX
 client_mode: []
-user_type: []
+user_type: [Service]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-618372
@@ -22,6 +22,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - 같은 CID 프레임이 2개입니다: 보기 [3543:618372](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-618372)(디스크립션 1 ~ 5)와 Modify [3543:618663](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-618663)(디스크립션 1 ~ 6). 두 프레임을 차례로 적습니다.
 - 호출하는 화면: Confirm_009 (보기 4 Delete), Confirm_012 (Modify 1 · 5 이탈 · Cancel), Confirm_010 (Modify 6 Save)
 - 호출되는 곳: [TI-SVS-01] 3 [Add] · 4-1 [상세 보기]
+- 관련 정책: POL-TST-009
 - 버전 메모(프레임 오른쪽 위 `ver`): v2.1.11 update / Sample Type 항목 추가 / Tube Info, Tube spec > Tube Info 병합 / 명칭 변경 : LIS Code → LIS Tube Code / 순서 변경 : SYS Code ←> LIs Tube Code
 
 ## 기존 화면

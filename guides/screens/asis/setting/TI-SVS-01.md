@@ -9,7 +9,7 @@ version: 2.1.01
 date: 2026.08.07
 author: BREX
 client_mode: []
-user_type: []
+user_type: [Service]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-618167
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: T-IOS에만 [Add](3)가 있음. 목록 열 순서가 다름(T `System Code | LIS Code`, L(LI-SVS-01) `LIS Code | System Code`). L은 번호가 당겨짐(T 4 목록 = L 3)
 - 호출하는 화면: [TI-SVS-01-P] Sample tube details (3 Add, 4-1 상세 보기)
 - 호출되는 곳: LNB > Setting > Tube Setting
+- 관련 정책: POL-TST-009
 - 페이지의 Revision History(T-IOS): v2.1.00 | 26/07/22 | All | 초안 설계 | - | 하승현
 
 ## 기존 화면
