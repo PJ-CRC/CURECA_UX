@@ -9,7 +9,7 @@ version: 2.1.12
 date: 2026.10.16
 author: 서보경
 client_mode: []
-user_type: []
+user_type: [Service, Admin]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-567498
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: T-IOS 단독 (디스크립션 0 `T-IOS only`)
 - 호출하는 화면: [TI-STN-04-01-T] Interface Configuration (탭), Confirm_010 (5 Save), Confirm_016 (5 저장하지 않고 이동)
 - 호출되는 곳: [TI-STN-04-01-T] Code Mapping 탭
+- 관련 정책: POL-SYS-002
 - 버전 메모(프레임 오른쪽 위 `ver` 2개): v2.1.11 update / 메뉴명 변경 / LIS Settings →LIS Setting · v2.1.12 update / Code Mapping ‘데이터 관련 정의’ 추가 / 기존 고정관리 항목에서 동적 추가 방식으로 변경 / 2depth 구조 UI 추가(Target Code case)
 
 ## 기존 화면

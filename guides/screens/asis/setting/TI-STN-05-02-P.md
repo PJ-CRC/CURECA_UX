@@ -9,7 +9,7 @@ version: 2.1.03
 date: 2026.08.21
 author: 정다예
 client_mode: []
-user_type: []
+user_type: [Service, Admin]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-580928
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: T-IOS 단독
 - 호출하는 화면: 없음 (닫힌 뒤 [TI-STN-05])
 - 호출되는 곳: [TI-STN-05-01-P] 8 [Create]
+- 관련 정책: POL-ACC-001, POL-ACC-002, POL-ACC-005, POL-ACC-006 / 임시 정책 PV-0002
 - 버전 메모(프레임 오른쪽 위 `ver`): v2.1.03 update / 계정 비밀번호 자동 전송 팝업 추가
 - 같은 이름의 프레임이 하나 더 있습니다: 임시 비밀번호 안내 메일 화면([3543:579680](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-579680), 패널 CID `TI-STN-05`, Ver 1.1, Date 2026.06.25, 디스크립션 `0` / 빈칸). 아래 케이스 절에 적었습니다.
 

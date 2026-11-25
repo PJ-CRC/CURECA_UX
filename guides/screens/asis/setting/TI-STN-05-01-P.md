@@ -9,7 +9,7 @@ version: 2.1.03
 date: 2026.08.21
 author: 정다예
 client_mode: []
-user_type: []
+user_type: [Service, Admin]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-579427
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: T-IOS 단독 (T-IOS와 L-IOS의 통합 사용자 계정 추가)
 - 호출하는 화면: Confirm_007 (7 Cancel), [TI-STN-05-02-P] 계정 생성 완료 팝업 (8 Create)
 - 호출되는 곳: [TI-STN-05] 4 [Add User]
+- 관련 정책: POL-ACC-001, POL-ACC-002, POL-ACC-005, POL-ACC-006 / 임시 정책 PV-0002
 - 버전 메모(프레임 오른쪽 위 `ver`): v2.1.03 update / 이름, 이메일 정보 추가
 
 ## 기존 화면

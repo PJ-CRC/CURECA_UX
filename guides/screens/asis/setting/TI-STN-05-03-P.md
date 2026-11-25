@@ -9,7 +9,7 @@ version: 2.1.03
 date: 2026.08.21
 author: 정다예
 client_mode: []
-user_type: []
+user_type: [Service, Admin]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-579535
@@ -22,6 +22,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - 같은 CID 프레임이 2개입니다: 보기(읽기 모드) [3543:579535](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-579535)(디스크립션 0 ~ 3)와 편집 [3543:579605](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-579605)(디스크립션 0 ~ 7). 두 프레임을 차례로 적습니다.
 - 호출하는 화면: Confirm_007 (편집 6 Cancel), 저장 팝업 (편집 7 Save → TI-STN-05-03-P/Case 2)
 - 호출되는 곳: [TI-STN-05] 목록 행 클릭 (TI-STN-05 원문은 `TI-STN-05-02-P`를 가리킴)
+- 관련 정책: POL-ACC-001, POL-ACC-002, POL-ACC-005, POL-ACC-006 / 임시 정책 PV-0002
 
 ## 기존 화면
 
