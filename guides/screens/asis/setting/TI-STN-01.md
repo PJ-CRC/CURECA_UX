@@ -9,7 +9,7 @@ version: 2.0
 date: 2026.06.15
 author: BREX
 client_mode: []
-user_type: []
+user_type: [Service, Admin]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-522708
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: T-IOS에서만 설정(Cost Setting · Extraction Module Usage Setting · Compare · Setting count · PCR Protocol · General Setting · [Save]). L-IOS(LI-STN-01)는 View 화면이고 Extraction Module Usage Setting [View] · Analyze Breakpoint · NC/PC Dispensing Order · Sample Dispensing Options만 디스크립션이 있음
 - 호출하는 화면: [TI-STN-01-01] Cost Setting (2), [TI-STN-01-02] Extraction Module Usage Setting (3), [TI-STN-01-03] Comparison Simulation (4-1 Compare), [TI-STN-01-04] Analyze Breakpoint (4-3), Alert_046 (4-3 Cost Setting 미설정), Confirm_010 (9 Save)
 - 호출되는 곳: LNB > Setting > Policy Setting
+- 관련 정책: POL-TST-001, POL-TST-002, POL-TST-003, POL-TST-004, POL-TST-005
 
 ## 기존 화면
 

@@ -9,7 +9,7 @@ version: 2.1.17
 date: 2026.11.13
 author: 서보경
 client_mode: []
-user_type: []
+user_type: [Service, Admin]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-573493
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: T-IOS에는 Language(1, 취소선) · Export / Import Location(3)이 없음. L-IOS(LI-STN-02)에만 1 Language · 3 Export / Import Location · 7-2 Confirm_032 · 7-3 Alert_049가 있음. 6-2 [Export]는 T 원문이 `L only, 클릭 시, 경로 저장 또는 USB 저장 선택하는 팝업 제공`과 윈도우 탐색기 호출을 함께 적음
 - 호출하는 화면: Alert_016 (2 세션 종료), Confirm_016 (7-1 저장하지 않고 이동), Save Toast `Settings have been saved.` (7)
 - 호출되는 곳: LNB > Setting > System Setting (User Type Service, Admin만)
+- 관련 정책: POL-ACC-008, Log Management는 SYS 정책
 - 버전 메모(프레임 오른쪽 위 `ver`): v2.1.17 update / Language 설정 기능 제거
 - 원본 디스크립션 번호는 0 · 1 · 2 · 2-1 · 6 · 6-1 · 6-2 · 7 · 7-1입니다(3 ~ 5 없음).
 
