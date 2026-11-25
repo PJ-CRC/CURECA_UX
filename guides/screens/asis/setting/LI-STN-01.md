@@ -8,8 +8,8 @@ type: Page
 version: 2.0
 date: 2026.06.15
 author: BREX
-client_mode: []
-user_type: []
+client_mode: [Main Mode, Console Mode, MS Mode]
+user_type: [Service, Admin]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-522491
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: L-IOS는 View 화면(세부 항목 설정은 T-IOS에서만). L에는 Cost Setting · Compare · [Save]가 없고 Extraction Module Usage Setting 버튼이 [View]. T-IOS(TI-STN-01)는 9개 블록으로 설정 동작 · 기본값 · 입력 범위를 정의
 - 호출하는 화면: [LI-STN-01-02] Extraction Module Usage Setting (2 View), Analyze Breakpoint 팝업 (3, 원문 `[LI-STN-01-03]`. IA의 Analyze Breakpoint는 [LI-STN-01-04])
 - 호출되는 곳: LNB > Setting > Policy Setting
+- 관련 정책: POL-TST-001
 
 ## 기존 화면
 

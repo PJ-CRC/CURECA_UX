@@ -8,8 +8,8 @@ type: Popup
 version: 2.0
 date: 2026.06.15
 author: BREX
-client_mode: []
-user_type: []
+client_mode: [Main Mode, Console Mode, MS Mode]
+user_type: [Service, Admin]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-522279
@@ -22,6 +22,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: 팝업 내용 같음. 버튼이 L [Close], T [OK]이고, L은 디스크립션 1에 View 화면 정의가 더 있음
 - 호출하는 화면: 없음 (2 [Close] 닫기)
 - 호출되는 곳: [LI-STN-01] Policy Setting 3 Analyze Breakpoint (원문은 `[LI-STN-01-03]` 팝업으로 적음)
+- 관련 정책: POL-TST-004
 
 ## 기존 화면
 

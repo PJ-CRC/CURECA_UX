@@ -8,8 +8,8 @@ type: Popup
 version: 2.0
 date: 2026.06.15
 author: BREX
-client_mode: []
-user_type: []
+client_mode: [Main Mode, Console Mode, MS Mode]
+user_type: [Service, Admin]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-522358
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: L-IOS는 View 화면(세부 항목 설정은 T-IOS에서만)이고 [Close]만 있음. T-IOS(TI-STN-01-02)는 체크박스 설정 · 얼럿 배너 · [Apply]를 정의. 검사 항목 예시 이름 표기가 다름(L `RP1A` · `Allplex_HPV28`, T `RP1` · `Allplex HPV28`)
 - 호출하는 화면: 없음 (2 [Close] 닫기)
 - 호출되는 곳: [LI-STN-01] Policy Setting 2 Extraction Module Usage Setting [View]
+- 관련 정책: POL-TST-005
 
 ## 기존 화면
 
