@@ -841,7 +841,6 @@
 | LI-STN-03-01-02-R01 | Setting | Pre-Treatment Protocol Setting (LI-STN-03-01-02) | 기준 자료 변경 | 오른쪽 패널 CID 칸 "LI-STN-03-01-01", 상세 이동 "[LI-STN-03-01-02]" | LI-STN-03-01-02, 상세는 LI-STN-03-01-02-01 | IA | 대기 |
 | LI-STN-03-01-R01 | Setting | Pre-Treatment Protocol (LI-STN-03-01) | 기준 자료 변경 | 상세 이동 "[LI-STN-03-01-01]", 5-2 Usage "[TI-STN-03-01-01] 화면에서" | LI-STN-03-01-02 (IA), T-IOS에서 설정한 값 | IA | 대기 |
 | LI-STN-03-02-02-R01 | Setting | Extraction Protocol Setting (LI-STN-03-02-02) | 기준 자료 변경 | 오른쪽 패널 CID 칸 "LI-STN-03-02-01", 1 "[TI-STN-03-01]" | LI-STN-03-02-02, LI-STN-03-02 | IA | 대기 |
-| LI-STN-08-R01 | Setting | Assay Pack Setting (LI-STN-08) | 점검 발견 | 번호 3이 없음 (2 다음 4) | 번호 정리 | 디스크립션 | 대기 |
 | TI-STN-01-01-R01 | Setting | Cost Setting (TI-STN-01-01) | 기준 자료 변경 | 300 ㎕ Tip, 1,000 ㎕ Tip | 300 μL Tip, 1000 μL Tip | `glossary/glossary.md` Tip 용량 표기 | 대기 |
 | TI-STN-01-01-R02 | Setting | Cost Setting (TI-STN-01-01) | 기준 자료 변경 | Quantity "24 ea/rack" 등 | Consumable 수량 표기 규칙 `{수량} ea ({n} {단위})` | Common UX COMM-4-b | 대기 |
 | TI-STN-01-01-R03 | Setting | Cost Setting (TI-STN-01-01) | 점검 발견 | Reagents 탭 설명이 없음 (버전 메모 v2.1.14 "시약 목록 Assay pack에 따른 정렬") | Reagents 탭 정의 추가 | Figma 버전 메모 | 대기 |

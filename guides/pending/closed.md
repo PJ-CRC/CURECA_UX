@@ -25,3 +25,4 @@
 | TI-STN-02-R08 | Setting | System Setting (TI-STN-02) | 기준 자료 변경 | 1 Language "현재 기준, English만 제공" | 6개 언어(영어, 한국어, 포르투갈어, 스페인어, 이탈리아어, 프랑스어) 중 선택, 기본 English | POL-COM-004 | 제외 (2026-11-04, R10으로 대체) |
 | TI-STN-05-R02 | Setting | Account Setting (TI-STN-05) | 논의 결정 | 목록 범위 "Admin이 생성한 모든 계정", User Type 필터 All/Admin/User. Service 계정이 목록에 나오는지, Service가 만든 계정은 어떻게 되는지 없음 | 임시 정책 PV-0002 반영 (Admin에게 Service 계정 숨김, Service 계정 최소 1개, 자기 계정 삭제 불가 Alert_047) | PV-0002, CA-0003 | 제외 (2026-11-05, PV-0002 승인으로 R04 · R05 · R06로 대체) |
 | TI-STN-05-R03 | Setting | Account Setting (TI-STN-05) | 논의 결정 | 삭제 제한 없음 (자기 계정, 로그인 중인 계정, 마지막 Admin 삭제) | 임시 정책 PV-0002 반영 (Admin에게 Service 계정 숨김, Service 계정 최소 1개, 자기 계정 삭제 불가 Alert_047) | PV-0002, CA-0003 | 제외 (2026-11-05, PV-0002 승인으로 R04 · R05 · R06로 대체) |
+| LI-STN-08-R01 | Setting | Assay Pack Setting (LI-STN-08) | 점검 발견 | 번호 3이 없음 (2 다음 4) | 번호 정리 | 디스크립션 | 제외 (2026-11-25, 케이스 3 규칙과 부딪힘: 빈 번호를 그대로 둠) |
