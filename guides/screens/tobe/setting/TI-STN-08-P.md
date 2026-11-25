@@ -149,4 +149,6 @@ figma:
 | Sample Type ID | 화면 3 | |
 | Sample Type Code | 화면 3 | |
 | Segment Info | 디스크립션 3 | |
+| Test Group Info · Sample Type Info · Barcode Schema Info · Item Group Info · PCR Reagent Socket Component Info | 디스크립션 3 (Master) | |
+| Barcode Info · Quantity Info · Storage Location Info · Component Info · Extraction Device Availability | 디스크립션 3 (Pretreatment · Extraction · PCR) | |
 | Save | 화면 4 | |
