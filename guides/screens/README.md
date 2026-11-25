@@ -14,25 +14,30 @@
 
 기존 화면을 옮긴 파일입니다. 처음(2026-11-02 ~ 03)에는 기존 작업방(Part.2) Figma에서 옮겼고, 이때 1 · 2차 구분을 `figma_region`으로 적었습니다. 2026-11-25부터는 요청자가 최신 화면만 옮겨 둔 작업방 `{메뉴}_asis` 페이지에서 To-Be 작업 전에 추출 도구(`tools/figma/extract-screen.js`)로 한 번 추출하고(`figma_region` 없음), 그 뒤로는 다시 옮기지 않습니다(`flow/1-requirements.md` "케이스 3에서 더 하는 것").
 
-**지금 형식 (2026-11-26 기준)**: 메뉴마다 asis 화면 MD가 새 규칙(`{메뉴}_asis` 페이지 기준으로 다시 추출)인지 예전 방식(기존 작업방에서 처음 옮긴 그대로)인지 적습니다. 예전 방식 파일은 머리말 `figma` 링크에 예전 파일 키(`kI8n…`)가 있습니다.
+**지금 파일**: 아래 메뉴의 asis 화면 MD는 작업방 `{메뉴}_asis` 페이지를 기준으로 2026-11-25 ~ 26에 다시 쓴 것입니다(머리말 `figma`가 `_asis` 페이지 기획 프레임 링크). 예외는 표 아래 두 곳뿐입니다.
 
-| 메뉴 | 폴더 | 파일 수 | 형식 | 비고 |
-| --- | --- | --- | --- | --- |
-| Dashboard | `dashboard/` | 2 | 새 규칙 | |
-| Dashboard(All) | `dashboard-all/` | 2 | 새 규칙 | |
-| Login | `login/` | 6 | 새 규칙 | |
-| Profile | `profile/` | 4 | 새 규칙 | |
-| Quick Start | `quick-start/` | 1 | 새 규칙 | |
-| Run | `run/` | 6 | 새 규칙 | Item details Popup은 Inventory에 둠 |
-| Test Management | `test-management/` | 5 | 새 규칙 | |
-| Sample Tracking | `sample-tracking/` | 16 | 새 규칙 | |
-| Instrument | `instrument/` | 7 | 새 규칙 | |
-| Inventory | `inventory/` | 16 | 새 규칙 | |
-| Information | `information/` | 8 | 새 규칙 | |
-| Event History | `event-history/` | 6 | 새 규칙 | To-Be 작업(20261125-서보경-event-history)이 있음 |
-| Statistical Analysis | `statistical-analysis/` | 17 | 새 규칙 | |
-| Setting | `setting/` | 40 | 새 규칙 35개 · 예전 방식 5개 | 예전 방식은 Assay Pack(STN-08) 5개(`LI-STN-08` · `LI-STN-08-P` · `TI-STN-08` · `TI-STN-08-01` · `TI-STN-08-P`). R001(assay-pack)이 근거로 써서 일부러 그대로 둠. R001이 끝나면 다시 추출 |
-| Material Setup | `material-setup/` | 53 | 예전 방식 | `Material Setup_asis` 페이지가 아직 없어 다시 추출 못 함. 페이지가 생기면 다시 추출 |
+| 메뉴 | 폴더 | 파일 수 |
+| --- | --- | --- |
+| Dashboard | `dashboard/` | 2 |
+| Dashboard(All) | `dashboard-all/` | 2 |
+| Login | `login/` | 6 |
+| Profile | `profile/` | 4 |
+| Quick Start | `quick-start/` | 1 |
+| Run | `run/` | 6 |
+| Test Management | `test-management/` | 5 |
+| Sample Tracking | `sample-tracking/` | 16 |
+| Instrument | `instrument/` | 7 |
+| Inventory | `inventory/` | 16 |
+| Information | `information/` | 8 |
+| Event History | `event-history/` | 6 |
+| Statistical Analysis | `statistical-analysis/` | 17 |
+| Setting | `setting/` | 40 |
+| Material Setup | `material-setup/` | 53 |
+
+**예전에 옮긴 그대로인 파일 (다시 쓰지 않음)**: 머리말 `figma`에 예전 파일 키(`kI8n…`)가 있습니다.
+
+- Material Setup 53개: `Material Setup_asis` 페이지가 아직 없어서입니다. 페이지가 생기면 다시 추출합니다.
+- Setting의 Assay Pack(STN-08) 5개(`LI-STN-08` · `LI-STN-08-P` · `TI-STN-08` · `TI-STN-08-01` · `TI-STN-08-P`): R001(assay-pack)이 근거로 써서 일부러 그대로 둡니다. R001이 끝나면 다시 추출합니다.
 
 **처음 옮길 때 기록 (2026-11-02 ~ 03, 이력)**: 아래는 기존 작업방(Part.2)에서 처음 옮길 때의 개수 · 원본 구분입니다. 지금 파일 수 · 형식은 위 표를 봅니다.
 
