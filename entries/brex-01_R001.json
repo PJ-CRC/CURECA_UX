@@ -2,11 +2,11 @@
   "id": "brex-01_R001",
   "kind": "request",
   "team": "cureca",
-  "status": "보류",
-  "at": "2026-11-25T21:39:53+09:00",
+  "status": "대기",
+  "at": "2026-11-25T21:41:59+09:00",
   "createdAt": "2026-11-25T21:16:32+09:00",
   "by": "서보경",
-  "doneBy": "Claude",
+  "doneBy": "서보경",
   "pc": "BREX_01",
   "reqId": "R001",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,24 +17,13 @@
   "type": "요청",
   "layout": "",
   "text": "Event History 화면 옮겨줘\n\n기존 화면: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-45275&t=8ZUolJfFqEx5iunS-1\n옮길 페이지: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3577-18413&t=8ZUolJfFqEx5iunS-1",
-  "note": "케이스 3 · 1단계 · 20261125-서보경-event-history — [1단계] 요건 목록을 확인해 주세요\n- 요건 1: Event History 화면 6개(TI/LI-EVT-P · -01-P · -02-P)를 Event History_tobe에 옮겨 다시 그림 · 경로 8 옮겨 다시 그림 · 지나가는 단계 1→2→3→4→5 · UI 작업 대상 아님\n- 찾았지만 대상 아님: Profile (TI-CPW-01-P) — Event Message Popup을 예시로 가리키기만 함\n- 영향 화면: 없음 (같은 글자 · Common UX 번호 · 호출 관계로 찾음)\n- 한 일: asis 화면 MD 6개 · 케이스 프레임 3개 읽음(화면 MD와 같음), To-Be 화면 MD 빈 틀 6개 만듦\n답해 주실 것\n6. 반영 대기 항목 23개 (묶음마다 반영 / 이번엔 안 함)\n  ① 기준데이터 표기 · 오타 9개 (Statue→Status, OPEN→Open, FlexibleExtraction→Flexible Extraction (1), Type 값, Eorrer→Error 등)\n  ② Status 변경 POL-EVT-002 4개  ③ Event Message 노출 조건 POL-EVT-003 2개  ④ Export 형식 .csv POL-COM-006 2개\n  ⑤ 화면 글자 · 디스크립션 정리 3개 (Created Date↔Occurred Date/Time, 닫기 중복, View Details 대상 CID)\n  ⑥ 시약 만료 표기 3개 (Expiration date Status · Under 30 Day — 이 화면 6개에 없는 글자)\n  → 추천: ①~⑤ 반영, ⑥ 이번엔 안 함\n모아 둔 질문\nA. 화면 이름: IA는 Event Detail · Event Message, 화면은 Event History Detail · Event Message Popup → 추천: 화면 이름대로 그리고 IA는 5단계에서 화면에 맞춤\nB. 짝 화면 관계: IA T-IOS 줄은 「짝 화면 동일 Y」인데 L-IOS에만 Status Toggle · Mark all as Closed · Notes 입력이 있음 → 추천: IA를 「동일 아님」으로 맞춤(5단계)\n7. 위 요건 목록과 흐름대로 진행할까요? (진행하면 2단계로 넘어갑니다)\n규칙 점검: 1단계 「하지 않는 것」 · 절차 지킴 (마침 점검은 답을 받은 뒤)\n작업 기준: basis 2026-11-25 21:17 · 작업규칙 CURECA 작업규칙 @20261125-212108_daye · 정책서 정책서 @20261125-212107_daye · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 @20261125-212105_daye · 화면 정의서 화면 정의서 @20261125-211638_daye",
+  "note": "",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": {
-    "q": "1단계 요건 목록 · 반영 대기 · 질문 A · B를 추천대로 진행할까요?",
-    "free": true,
-    "options": [
-      {
-        "label": "추천대로 진행"
-      },
-      {
-        "label": "하나씩 정하기"
-      }
-    ]
-  },
+  "ask": null,
   "replies": [
     {
       "at": "2026-11-25T21:20:57+09:00",
@@ -47,6 +36,12 @@
       "by": "서보경",
       "q": "Figma MCP 계정이 이 파일에 접근하지 못합니다. 파일 공유 또는 계정 다시 연결 뒤 알려 주세요.",
       "text": "공유 · 다시 연결함, 이어서 진행"
+    },
+    {
+      "at": "2026-11-25T21:41:59+09:00",
+      "by": "서보경",
+      "q": "1단계 요건 목록 · 반영 대기 · 질문 A · B를 추천대로 진행할까요?",
+      "text": "하나씩 정하기"
     }
   ],
   "raws": [
