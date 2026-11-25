@@ -6,38 +6,44 @@ title: Dashboard(All)
 path: Dashboard(All)
 type: Page
 version: 2.1.14
-date: 2026-10-30
+date: 2026.10.30
 author: 서보경
 client_mode: []
-user_type: [Service, Admin, User]
+user_type: []
 policies: []
-rules_version:
-provisional: []
-flags: []
 source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=8135-111743
-figma_region: 2.1 2차
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-39820
 ---
 # TI-ADS Dashboard(All)
 
-> 기존 화면(기존 작업방 Dashboard 페이지, 2.1 2차 영역, Ver 2.1.14)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 `Dashboard-all_asis` 페이지, Ver 2.1.14)을 2026-11-25에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
 
-- 관련 정책: POL-COM-005 (여러 대 CURECA, 2대 이상 고객만), POL-EQP-001 (Instrument Status), POL-EQP-009 (Instrument Info의 Enabled Module 수), POL-SMP-009
-- 호출하는 화면: Edit Display Name Popup (TI-ADS-P), 각 CURECA의 Dashboard (TI-DAS)
+- T/L 차이: T-IOS 단독 화면 (IA에 L 짝 없음)
+- 호출하는 화면: [TI-ADS-P] Edit Display Name Popup (3 수정 아이콘), [TI-DAS] Dashboard (4 [Enter])
+- 호출되는 곳: LNB `Dashboard(All)`
 
 ## 기존 화면
 
+<!-- `{메뉴}_asis` 페이지에 있는 그대로 옮깁니다. 고치거나 정리하지 않습니다. 틀린 곳 · 정책과 다른 곳은 반영 대기 목록(`pending/open.md`)에 "점검 발견"으로 남깁니다. -->
+
 ### 화면 글자
 
-- (GNB) CURECA(1) 장비 선택 | Running | Instrument | L-IOS | D.A PC | Event | Error 3 | Warning 2 | 2026-07-10 11:30 | TIOS
-- (LNB) Dashboard(All) | Dashboard | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis | Setting | Information | Keira Knightley
-- 총 Today’s Orders: Orders | Pending | In Progress | Completed
-- 장비 카드 3개: "CURECA 1, Main building 2F" [Enter], "CURECA 2, R&D building 5F" [Enter], "CURECA #3" [Enter]
-- 카드마다: Today’s Orders (Orders | Pending | In Progress | Completed), Test Status (Running, Total Batches 5, Remaining Time 07:04, %, Elapsed 7 h 51 m, Estimated Total 14 h 55 m, Processed, Completed 1,532, Failed, Total 3,721, Not tested, STAT), Inventory Status (Insufficient, Low), Waste Bin/Bottle Status (Full, Almost Full), Instrument Status (Ready, Running, Paused, Error), Instrument Info (Unit: ea)
+- (GNB) CURECA(1) | Running | Instrument | L-IOS | D.A PC | Event | Error 3 | Warning 2 | 2026-07-10 11:30
+- (LNB) TIOS | Dashboard(All) | Dashboard | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis | Setting | Information | Keira Knightley
+- Today’s Orders (전체): Orders 16,560 | Pending 16,560 | In Progress 16,560 | Completed 16,560
+- 장비 카드 3개 (왼쪽부터). 카드마다 같은 구성
+  - 머리: `CURECA 1, Main building 2F` | `0 | 1` | Enter — `CURECA 2, R&D building 5F` | `0 | 1` | Enter — `CURECA #3` | `0 | 1` | Enter
+  - Today’s Orders: Orders 16,560 | Pending 16,560 | In Progress 16,560 | Completed 16,560 (세 카드 같음)
+  - Test Status | Running | Total Batches 5 | 57 % | Remaining Time 07:04 | Elapsed 7 h 51 m | Estimated Total 14 h 55 m | Processed 2,011 | Completed 1,532 | Failed 42 | Total 3,721 | STAT 96 | Not tested 437 (세 카드 같음)
+  - Inventory Status: Insufficient 3 | Low 3 (세 카드 같음)
+  - Waste Bin/Bottle Status: Full 3 | Almost Full 3 (세 카드 같음)
+  - Instrument Status: Ready | Running | Paused | Error — 카드 1 `- 7 1 1`, 카드 2 `1 3 - -`, 카드 3 `1 3 - -`
+  - Instrument Info (Unit: ea): Sample Storage | Consumable Storage | Sample Pre-treatment | High-throughput Extraction | Flexible Extraction | PCR Setup | Plate Sealing | Universal PCR — 카드 1 `1 1 2 3 - 1 1 6`, 카드 2 `1 1 1 1 1 1 1 1`, 카드 3 `1 1 3 2 2 2 1 7`
+- 화면 높이: 기획 프레임 1347, 장비 카드의 Instrument Info가 1080 아래(1040 ~ 1225)까지 이어짐
 
 ### 사용 컴포넌트
 
-Description (18), Description Number (10), Status (9), Divider (9), Interface/Pencil_Outlined (3), layout/spacing (3)
+Description (18), Description Number (10), Status (9), Divider (9), Interface/Pencil_Outlined (3), layout/spacing (3), Frame (1), Component 4 (1)
 
 ### 디스크립션 (원문)
 
@@ -99,3 +105,9 @@ Description (18), Description Number (10), Status (9), Divider (9), Interface/Pe
 
 - 클릭 시 콘텐츠 영역이 전체 화면으로 확대되어 표시됨 (상세 UI는 하단 이미지 참조)
 - 전체 화면 모드에서는 우측 상단의 [X] 버튼을 통해 기존 화면으로 복귀 가능
+
+### 케이스
+
+<!-- `{메뉴}_asis` 페이지의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
+
+없음 (`Dashboard-all_asis` 페이지에 TI-ADS 케이스 프레임 없음)
