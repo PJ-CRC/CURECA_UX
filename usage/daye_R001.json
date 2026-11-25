@@ -4,7 +4,7 @@
   "reqId": "R001",
   "reqType": "요청",
   "team": "cureca",
-  "at": "2026-11-25T17:31:41+09:00",
+  "at": "2026-11-25T17:38:59+09:00",
   "from": "2026-11-25T17:13:19+09:00",
   "by": "정다예",
   "doneBy": "Claude",
@@ -16,13 +16,13 @@
   "nodeId": "",
   "text": "R02 이어서 해줘",
   "models": {
-    "claude-opus-5-5": 73
+    "claude-opus-5-5": 112
   },
-  "calls": 73,
-  "input": 142,
-  "cacheWrite": 367264,
-  "cacheRead": 10337249,
-  "output": 90728,
-  "total": 10795383,
-  "usd": 6.8207
+  "calls": 112,
+  "input": 216,
+  "cacheWrite": 522443,
+  "cacheRead": 15262003,
+  "output": 130518,
+  "total": 15915180,
+  "usd": 9.8432
 }
