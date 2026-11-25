@@ -2,7 +2,7 @@
 status: 진행 중            # 진행 중 | 끝남 | 멈춤
 requester: 최고관리자
 menu: Setting · Assay Pack Setting (STN)
-cids: [TI-STN-08, LI-STN-08, TI-STN-08-P, LI-STN-08-P]
+cids: [TI-STN-08, LI-STN-08, TI-STN-08-P, LI-STN-08-P, TI-STN-08-01]
 policies: []
 cid_system:
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3481-216078 (UX AI TEST 「Setting  Ⓛ / Ⓣ_To Be」 페이지)
@@ -23,13 +23,13 @@ started: 2026-11-25
 
 | 단계 | 끝낸 날 | 마침 점검 | 남긴 것 |
 | --- | --- | --- | --- |
-| 1. 시작 · 요건 정의 | | | 겹치는 다른 작업: 없음 |
+| 1. 시작 · 요건 정의 | 2026-11-25 | 요청자 확인 (2026-11-25) | 겹치는 다른 작업: 없음 |
 | 2. 근거 · 분석 | | | |
 | 3. 화면 설계 | | | |
 | 4. 수정 · 확인 | | | |
 | 5. 완료 | | | |
 
-이어서 작업할 곳: 1단계 · 요건 목록 확인 질문 보냄, 답 기다림 (다시 읽을 곳: 1단계 절차 5 "답을 받은 뒤" / 작업 기록 "요건 목록" · "대상 화면의 반영 대기 항목" · "요청자 확인" 2 ~ 4). Workbench 작업 페이지가 3단계 그리기 전에 To Be로 바뀌었는지 확인 (요청자 확인 1)
+이어서 작업할 곳: 2단계 · 시작 (1단계 마침, 요청자 답 반영 2026-11-25). Workbench 작업 페이지가 3단계 그리기 전에 To Be로 바뀌었는지 확인 (요청자 확인 1)
 
 ## 요청
 
@@ -52,7 +52,7 @@ started: 2026-11-25
 | Assay Pack Setting (LI-STN-08) | 3 | O | 짝 화면 · 함께 고침 (요청 글: 메뉴를 옮김, 메뉴 페이지 「Setting Ⓛ / Ⓣ」에 T · L 함께 있음) |
 | Assay Pack File Details (TI-STN-08-P) | 3 | O | 같은 메뉴 화면 (요청 글: 메뉴를 옮김, IA Assay Pack Setting > Details) |
 | Assay Pack File Details (LI-STN-08-P) | 3 | O | 짝 화면 · 함께 고침 (요청 글: 메뉴를 옮김) |
-| **Import file 팝업 (TI-STN-08-01, IA에 없음)** | 3 | **미정** | → 아래 요청자 확인 2 (IA와 화면이 다름) |
+| Import file 팝업 (TI-STN-08-01, IA에 없음) | 3 | O | TI-STN-08 [Import]가 여는 팝업 · 넣음 (요청자 답, 2026-11-25). IA에는 5단계에 더함 |
 
 ### 찾았지만 대상 아님
 
@@ -72,7 +72,7 @@ started: 2026-11-25
 | Assay Pack Setting (LI-STN-08) | 화면 MD (다시 옮김 · 바뀐 곳 있음: 예전 MD는 요약뿐이라 화면 글자 · 디스크립션 원문 전체를 씀, path 「(L-IOS · 조회 전용)」, 2.1 2차), 케이스 프레임 없음 | https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=7669-181039 |
 | Assay Pack File Details (TI-STN-08-P) | 화면 MD (다시 옮김 · 바뀐 곳 있음: 원본 패널 화면 「Assay Pack Setting」 · 경로 「… > File details」, 4에 정의 프레임 참조, [Save] 뒤 「& Toast」는 원본에 없어 뺌, 2.1 2차), 케이스 프레임 없음 | https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=7669-175713 |
 | Assay Pack File Details (LI-STN-08-P) | 화면 MD (다시 옮김 · 바뀐 곳 있음: 예전 MD는 요약뿐이라 원문 전체를 씀, 원본 패널 화면 · 경로 반영, 2.1 2차), 케이스 프레임 없음 | https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=7669-181335 |
-| Import file 팝업 (TI-STN-08-01) | 호출 화면: TI-STN-08 [Import]에서 열림(디스크립션 3). IA에 없어 화면 MD는 옮기지 않음 (요청자 확인 2) | https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=7669-177368 |
+| Import file 팝업 (TI-STN-08-01) | 화면 MD (새로 옮김 `screens/asis/setting/TI-STN-08-01.md`, 2.1 2차, 요청자 확인 2의 답 뒤), 케이스 프레임 없음. To-Be 빈 틀 `screens/tobe/setting/TI-STN-08-01.md` 만듦 | https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=7669-177368 |
 
 - 반영 대기 목록(`pending/open.md`)에서 네 CID의 줄을 읽음 (아래 "대상 화면의 반영 대기 항목")
 - 최신 영역: 네 CID 모두 기획 프레임(너비 2252)이 한 곳에만 있음(Setting 페이지 2.1 2차 영역). 1280 프레임 · 기획 프레임 밖 1920 프레임은 열지 않음
@@ -87,13 +87,14 @@ started: 2026-11-25
 | 2 | 1. 기능 정의가 안 된 요소: TI-STN-08 #3 [Delete] 「삭제 & Toast」의 Toast 문구가 없음 (TI-STN-08-P #4에는 「The file has been deleted.」) | TI-STN-08 #3 | 3단계 질문 대기 | |
 | 3 | 4. 요청과 기존 화면이 맞지 않는 곳: LI-STN-08 #4 「체크박스 없음」인데 화면에 Check Box/Square 인스턴스 1개가 있음 | LI-STN-08 #4 | 2단계 | |
 | 4 | 4. 요청과 기존 화면이 맞지 않는 곳: Master 파일의 Active 변경 버튼이 TI-STN-08 #4-1은 「상세에 변경 버튼 미노출」, TI-STN-08-P #3은 「[Active] · [Inactive] 버튼 비활성」으로 서로 다름 | TI-STN-08 #4-1 · TI-STN-08-P #3 | 2단계 | |
+| 5 | 3. 이번에 넣기로 한 `대기 (확인 필요)` 항목: TI-STN-08-R02 Import file 팝업 IA 추가 | TI-STN-08-01 · TI-STN-08-R02 | 2단계 | 근거로 풀림 (요청자 답 2026-11-25: 넣음, IA는 5단계에 더함) |
 
 ## 대상 화면의 반영 대기 항목
 
 | 묶음 (근거) | 화면 (CID) | 항목 ID | 변경 전 | 변경 후 | 반영 / 이번엔 안 함 |
 | --- | --- | --- | --- | --- | --- |
-| 1 화면 이름 (IA) | Assay Pack File Details (TI-STN-08-P) | TI-STN-08-P-R01 | 화면 이름 "Assay Pack Setting", Ver 0.4.0 | Assay Pack File Details (IA "Details"), 2.1.ZZ 체계 | |
-| 2 무엇으로 바꿀지 아직 정해지지 않은 항목 (`ia/ia-screens.csv`) | Assay Pack Setting (TI-STN-08) | TI-STN-08-R02 | Import file 팝업 TI-STN-08-01이 IA에 없음 | IA에 추가할지 확인 | |
+| 1 화면 이름 (IA) | Assay Pack File Details (TI-STN-08-P) | TI-STN-08-P-R01 | 화면 이름 "Assay Pack Setting", Ver 0.4.0 | Assay Pack File Details (IA "Details"), 2.1.ZZ 체계 | 반영 (2026-11-25, 화면 이름만. Ver은 케이스 3이라 그대로) |
+| 2 무엇으로 바꿀지 아직 정해지지 않은 항목 (`ia/ia-screens.csv`) | Assay Pack Setting (TI-STN-08) | TI-STN-08-R02 | Import file 팝업 TI-STN-08-01이 IA에 없음 | IA에 추가할지 확인 | 반영 (2026-11-25, 요청자 확인 2: 넣음) |
 
 - LI-STN-08-R01(번호 정리) · TI-STN-08-R01(Ver 2.1.ZZ 체계로)은 케이스 3 규칙(빈 번호 · 기존 Ver 그대로)과 부딪혀 `제외 (2026-11-25)`로 바꿔 `pending/closed.md`로 옮김. TI-STN-08-P-R01의 Ver 부분도 같은 까닭으로 반영하지 않음(화면 이름만 해당)
 
@@ -120,9 +121,9 @@ started: 2026-11-25
 | # | 생긴 날 | 단계 · 절차 (질문 번호 또는 `예외`) | 물은 것 | 관련된 곳 (CID · 디스크립션 번호 · Language ID) | 답을 받을 때까지 둔 모습 (예외 질문만) | 답 (날짜) |
 | --- | --- | --- | --- | --- | --- | --- |
 | 1 | 2026-11-25 | 1단계 시작 전 (Workbench) | 그릴 곳: 어느 페이지에 그릴까요 | 요청 링크 3481-216078 (To Be) / 작업 페이지 As Is | | To Be 페이지에 그림 (2026-11-25 최고관리자, 세 번 답함). 단, Workbench 작업 페이지는 16:24 기준 아직 As Is로 저장돼 있어 3단계 그리기 전에 다시 확인 |
-| 2 | 2026-11-25 | 1단계 · 절차 4 순서 3 (IA와 화면이 다름) | Import file 팝업 (TI-STN-08-01)이 기존 작업방에는 있고 IA에 없음. 이번 작업 대상에 넣을까요 (넣으면 5단계에 IA에 더함, TI-STN-08-R02도 함께 반영) | TI-STN-08 #3 · TI-STN-08-01 · TI-STN-08-R02 | | |
-| 3 | 2026-11-25 | 1단계 · 절차 5 질문 6 | 반영 대기 묶음 1 (TI-STN-08-P-R01 화면 이름) 반영 / 이번엔 안 함 | TI-STN-08-P-R01 | | |
-| 4 | 2026-11-25 | 1단계 · 절차 5 질문 7 | 요건 목록과 흐름(1 → 2 → 3 → 4 → 5)대로 진행하고 2단계로 넘어갈까요 | 요건 1 | | |
+| 2 | 2026-11-25 | 1단계 · 절차 4 순서 3 (IA와 화면이 다름) | Import file 팝업 (TI-STN-08-01)이 기존 작업방에는 있고 IA에 없음. 이번 작업 대상에 넣을까요 (넣으면 5단계에 IA에 더함, TI-STN-08-R02도 함께 반영) | TI-STN-08 #3 · TI-STN-08-01 · TI-STN-08-R02 | | 넣음 (2026-11-25 최고관리자, 추천대로 진행) |
+| 3 | 2026-11-25 | 1단계 · 절차 5 질문 6 | 반영 대기 묶음 1 (TI-STN-08-P-R01 화면 이름) 반영 / 이번엔 안 함 | TI-STN-08-P-R01 | | 반영 (2026-11-25 최고관리자, 추천대로 진행) |
+| 4 | 2026-11-25 | 1단계 · 절차 5 질문 7 | 요건 목록과 흐름(1 → 2 → 3 → 4 → 5)대로 진행하고 2단계로 넘어갈까요 | 요건 1 | | 이대로 진행, 2단계로 넘어감 (2026-11-25 최고관리자) |
 
 ## 이 작업의 논의 대상
 
