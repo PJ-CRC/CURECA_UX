@@ -1,5 +1,5 @@
 {
-  "reportAt": "2026-11-26T01:18:10+09:00",
+  "reportAt": "2026-11-26T01:19:10+09:00",
   "pc": "DESKTOP-SHJE23R",
   "slug": "desktop-shje23r",
   "user": "정다예",
@@ -8,11 +8,16 @@
   "alive": true,
   "status": "login",
   "msg": "Claude Code CLI에 로그인되어 있지 않습니다. 시작 안내 5단계(CLI) 「Claude 로그인 · Figma 연결」 창에서 /login을 하세요.",
-  "statusAt": "2026-11-26T01:18:06+09:00",
+  "statusAt": "2026-11-26T01:19:06+09:00",
   "claude": "앱 내장",
   "claudeWay": "app",
   "autoWatch": true,
   "events": [
+    {
+      "at": "2026-11-26T01:19:06+09:00",
+      "kind": "error",
+      "text": "준비 확인: CLI 로그인 안 됨"
+    },
     {
       "at": "2026-11-26T01:17:06+09:00",
       "kind": "error",
