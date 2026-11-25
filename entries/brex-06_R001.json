@@ -2,8 +2,8 @@
   "id": "brex-06_R001",
   "kind": "request",
   "team": "cureca",
-  "status": "진행 중",
-  "at": "2026-11-25T16:36:51+09:00",
+  "status": "보류",
+  "at": "2026-11-25T16:41:43+09:00",
   "createdAt": "2026-11-25T16:21:05+09:00",
   "by": "최고관리자",
   "doneBy": "Claude",
@@ -17,13 +17,27 @@
   "type": "요청",
   "layout": "",
   "text": "https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3481-216078&t=GdYCaPho44GgAu5i-1\nAssay Pack 메뉴 옮겨줘",
-  "note": "케이스 3 · 2단계 진행 중 · 20261125-최고관리자-assay-pack - 절차 2 근거 읽는 중 (POL-TST-008 · 010 · ACC-001 · Alert 카탈로그 · 권한 · 모드 표 읽음, 용어 대조 차례)",
+  "note": "케이스 3 · 2단계 · 20261125-최고관리자-assay-pack - [2단계] 근거를 확인해 주세요 (절차 1 ~ 5 마침, 정책 수정 범위 1건이라 절차 6 확인을 받음)\n1. 요건마다 읽은 강도: 요건 1 · 경로 분기 기준 8 (케이스 3, 다시 그리기) · 정책 찾는 길 ① ~ ⑤ - POL-TST-008 · 010 · ACC-001, 권한 · 모드 표, Alert 카탈로그, Assay Pack 명세 R06, test-items · sample-types 읽음\n2. 대조 - 기존 화면이 정책과 다름 (변경 확인 줄로 그림):\n- Assay Pack File Details (TI-STN-08-P) #4: Confirm_026 제목 \"Delete the selected file?\" → 카탈로그대로 \"Delete the selected files?\" (C1)\n- 같은 곳: 삭제 뒤 Toast \"The file has been deleted.\" → \"The selected files have been deleted.\" (C2)\n- 같은 곳: [Save] 뒤 Toast 없음 → Confirm_029 · 030 동작대로 Toast 노출 (C3, Activate 문구는 카탈로그에 없어 질문 대기 Q2)\n- 그 밖: User Type(Service만) · L-IOS Client Mode(Main Mode만) · Import · Delete · Active 규칙 · 시약 예시 값은 정책 · 기준데이터와 같음. 「정책에 없음」은 없음\n3. 정책 수정 범위 (정책 문장은 그대로, 기준 자료만):\n- 1 바꿈 · Alert 카탈로그 Confirm_029 · 030 발생 조건: 변경 전 \"목록에서 Active 토글을 켠 / 끈 경우\" → 변경 후(안) \"Assay Pack File Details에서 [Active] / [Inactive]로 바꾸고 [Save]를 선택한 경우 (POL-TST-008 규칙 6)\", Confirm_029의 \"Master는 Alert_045\"는 뺌 → DS-0012 (논의 중)\n4. 영향 화면 - 없음 (POL-TST-008 화면은 모두 이번 작업 대상, DS-0012는 TI-STN-08-P에만 걸림)\n5. 2단계에서 요건 목록에 더한 화면 - 없음\n답해 주실 것: 1) 정책 수정 범위 1을 이대로 결정할까요, 논의 중으로 둘까요 (추천: 이대로 결정 - 정책 · 기존 화면과 같게 맞추는 것). 2) 3단계로 넘어갈까요\n- 확인 필요: Workbench 작업 페이지(작업 링크)가 아직 「Setting  Ⓛ / Ⓣ_As Is」로 저장돼 있습니다. 3단계에서 To Be 페이지에 그리기 전에 바뀌어 있어야 합니다\n규칙 점검: 이번에 한 단계의 「하지 않는 것」 · 마침 점검 지킴 (2단계 마침 점검은 답을 받은 뒤 적음, 그리지 않음)\n작업 기준: basis 2026-11-25 16:24 · 작업규칙 CURECA 작업규칙 @원본 · 정책서 policy · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 glossary · 화면 정의서 screens",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "정책 수정 범위 1(Confirm_029 · 030 발생 조건을 POL-TST-008 규칙 6에 맞춤)을 어떻게 하고 3단계로 넘어갈까요?",
+    "options": [
+      {
+        "label": "이대로 결정하고 3단계로"
+      },
+      {
+        "label": "논의 중으로 두고 3단계로"
+      },
+      {
+        "label": "3단계로 넘어가지 않음"
+      }
+    ],
+    "free": true
+  },
   "replies": [
     {
       "at": "2026-11-25T16:22:48+09:00",
