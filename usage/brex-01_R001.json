@@ -1,0 +1,28 @@
+{
+  "id": "brex-01_R001",
+  "kind": "request",
+  "reqId": "R001",
+  "reqType": "요청",
+  "team": "cureca",
+  "at": "2026-11-25T21:19:14+09:00",
+  "from": "2026-11-25T21:16:48+09:00",
+  "by": "서보경",
+  "doneBy": "Claude",
+  "pc": "BREX_01",
+  "fileKey": "etCQFF3CTf1EA6C79d4BBf",
+  "fileName": "UX AI TEST",
+  "page": "Event History_tobe",
+  "frame": "",
+  "nodeId": "",
+  "text": "Event History 화면 옮겨줘\n\n기존 화면: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-45275&t=8ZUolJfFqEx5iunS-1\n옮길 페이지: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3577-18413&t=8ZUolJfFqEx5iunS-1",
+  "models": {
+    "claude-opus-5-5": 19
+  },
+  "calls": 19,
+  "input": 39,
+  "cacheWrite": 124844,
+  "cacheRead": 2148560,
+  "output": 12571,
+  "total": 2286014,
+  "usd": 1.68
+}
