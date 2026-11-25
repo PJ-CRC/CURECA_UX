@@ -50,6 +50,11 @@
       "at": "2026-11-25T17:13:47+09:00",
       "text": "I put R001 (\"R02 이어서 해줘\", continue R02) on hold without changing anything in Figma.\n\n- **Target page:** the request's page, `Setting  Ⓛ / Ⓣ_To Be`, is the file's current work page, so that wasn't the problem.\n- **Why it's on hold:** this PC's CURECA work standards for UX AI TEST have only the UX guide (Common UX 가이드) applied. The work rules document (작업규칙) is empty. Continuing R02's work record and steps follows the stages that document defines, and the rules say to hold the request when it isn't applied.\n- **Question left on the request:** asking for the CURECA work rules to be applied in UX docs, with a \"작업규칙 적용함, 이어서 진행\" (applied, continue) button. Once someone answers or presses 「다시 진행」 (resume), it goes back to waiting and I'll pick it up from there.\n- **Not done:** no screens were changed, so there are no captures and no prototype sync. The server records request usage on its own.",
       "cut": false
+    },
+    {
+      "at": "2026-11-25T17:14:32+09:00",
+      "text": "R001은 다시 「보류」로 두었습니다. Figma는 고치지 않았습니다.\n\n- **보류한 이유:** 답은 「작업규칙 적용함」이었지만, 이 PC의 작업 기준(UX AI TEST · CURECA)에는 지금도 UX가이드(Common UX 가이드)만 있고 작업규칙은 비어 있습니다. 작업 기준을 저장하는 파일(`workbench/guide_apply.json`)도 2026-11-10 뒤로 바뀌지 않았습니다. 「R02 이어서 해줘」는 작업규칙의 단계대로 진행하는 일이라 작업규칙 없이는 시작할 수 없습니다.\n- **요청에 남긴 질문:** UX 문서에서 「CURECA 작업규칙」의 [적용]을 다시 눌러 달라고 남겼고, 「다시 적용함, 이어서 진행」 버튼을 달았습니다. 답이 오면 이어서 처리합니다.\n- **페이지:** 요청한 페이지(「Setting  Ⓛ / Ⓣ_To Be」)는 지금 작업 페이지가 맞아서 문제가 없었습니다.\n- **하지 않은 것:** 고친 화면이 없어서 캡처와 프로토타입 맞추기는 하지 않았습니다. 요청 사용량은 서버가 알아서 남깁니다.",
+      "cut": false
     }
   ],
   "work": "",
