@@ -59,10 +59,10 @@ figma:
 - Import Info : Registered Date/Time(YYYY-MM-DD hh:mm:ss), User ID(service)
 - Reagent 정보 : 파일 종류별 JSON 순서대로 노출 (파일당 Reagent 1개)
   - ID 값(Test Group · Sample Type · Barcode Schema · Item Group · Component ID)은 JSON 그대로 함께 노출
-  - Master : Test Group · Sample Type · Barcode Schema · Item Group · PCR Reagent Socket Component Info
-  - Pretreatment : File Info · Reagent Basic Info · Barcode Info · Quantity Info · Storage Location
-  - Extraction : File Info · Reagent Basic Info · 구성품 목록
-  - PCR : Reagent Basic Info(Product Name · Product Code, Test Item Name · Code, Test Group ID · Code, Test Target Selectable, Test Target Names) · Sample Type Mapping Info · 구성품 목록
+  - Master : Test Group Info · Sample Type Info · Barcode Schema Info · Item Group Info · PCR Reagent Socket Component Info
+  - Pretreatment : Reagent Basic Info · Barcode Info · Quantity Info · Storage Location Info
+  - Extraction : Reagent Basic Info · Barcode Info · Component Info
+  - PCR : Reagent Basic Info · Barcode Info · Extraction Device Availability · Component Info
   - 구성품(Extraction · PCR) : 구성품 탭 전환
   - Barcode Info : Segments 개수 없이 「Segment Info」 라벨 아래 Segment 노출
     - 파일에 들어온 개수만큼 Segment 순서대로 노출 (개수 제한 없음), Segment 이름이 있으면 함께 노출
