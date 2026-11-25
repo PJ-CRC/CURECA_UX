@@ -2,11 +2,11 @@
   "id": "daye_R001",
   "kind": "request",
   "team": "cureca",
-  "status": "보류",
-  "at": "2026-11-25T17:13:39+09:00",
+  "status": "대기",
+  "at": "2026-11-25T17:13:46+09:00",
   "createdAt": "2026-11-25T17:12:10+09:00",
   "by": "정다예",
-  "doneBy": "Claude",
+  "doneBy": "정다예",
   "pc": "DAYE",
   "reqId": "R001",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,26 +17,30 @@
   "type": "요청",
   "layout": "",
   "text": "R02 이어서 해줘",
-  "note": "작업규칙이 적용되지 않아 「R02 이어서」를 진행할 수 없습니다.\n- 이 PC의 CURECA 작업 기준(UX AI TEST)에 적용된 문서는 UX가이드만 있고 작업규칙이 비어 있습니다. R02 작업 기록 · 단계는 작업규칙(단계 문서)대로 이어 가야 합니다.\n- 확인 필요: UX 문서에서 CURECA 작업규칙을 [적용]한 뒤 「다시 진행」해 주세요.\n작업 기준: basis 2026-11-25 17:13 · 작업규칙 없음 · 정책서 없음 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 없음 · 화면 정의서 없음",
+  "note": "",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": {
-    "q": "UX 문서에서 CURECA 작업규칙을 적용해 주세요. 적용한 뒤 이어서 진행할까요?",
-    "options": [
-      {
-        "label": "작업규칙 적용함, 이어서 진행"
-      }
-    ],
-    "free": true
-  },
-  "replies": [],
+  "ask": null,
+  "replies": [
+    {
+      "at": "2026-11-25T17:13:46+09:00",
+      "by": "정다예",
+      "q": "UX 문서에서 CURECA 작업규칙을 적용해 주세요. 적용한 뒤 이어서 진행할까요?",
+      "text": "작업규칙 적용함, 이어서 진행"
+    }
+  ],
   "raws": [
     {
       "at": "2026-11-25T17:12:32+09:00",
       "text": "R001은 처리하지 않고 「보류」로 바꿨습니다.\n\n- **이유:** 요청한 페이지는 「Setting  Ⓛ / Ⓣ_To Be」인데, 이 파일(UX AI TEST)의 지금 작업 페이지는 「Sample Tracking Ⓛ / Ⓣ_re」입니다. 규칙상 작업 페이지가 아닌 곳은 읽기만 해야 해서 Figma는 고치지 않았습니다.\n- **남긴 note:** 「Setting  Ⓛ / Ⓣ_To Be 페이지는 보기 전용입니다. 담당자 확인 필요」와 지금 작업 페이지 이름을 적었습니다.\n- **이어 가려면:** Workbench에서 작업 페이지를 「Setting  Ⓛ / Ⓣ_To Be」로 바꾼 뒤 「다시 진행」을 누르면 다시 처리합니다.\n- **확인이 필요한 점:** 요청 글 「R02 이어서 해줘」가 어떤 작업을 가리키는지는 아직 확인하지 않았습니다.",
+      "cut": false
+    },
+    {
+      "at": "2026-11-25T17:13:47+09:00",
+      "text": "I put R001 (\"R02 이어서 해줘\", continue R02) on hold without changing anything in Figma.\n\n- **Target page:** the request's page, `Setting  Ⓛ / Ⓣ_To Be`, is the file's current work page, so that wasn't the problem.\n- **Why it's on hold:** this PC's CURECA work standards for UX AI TEST have only the UX guide (Common UX 가이드) applied. The work rules document (작업규칙) is empty. Continuing R02's work record and steps follows the stages that document defines, and the rules say to hold the request when it isn't applied.\n- **Question left on the request:** asking for the CURECA work rules to be applied in UX docs, with a \"작업규칙 적용함, 이어서 진행\" (applied, continue) button. Once someone answers or presses 「다시 진행」 (resume), it goes back to waiting and I'll pick it up from there.\n- **Not done:** no screens were changed, so there are no captures and no prototype sync. The server records request usage on its own.",
       "cut": false
     }
   ],
