@@ -2,8 +2,8 @@
   "id": "brex-06_R001",
   "kind": "request",
   "team": "cureca",
-  "status": "대기",
-  "at": "2026-11-25T16:45:08+09:00",
+  "status": "보류",
+  "at": "2026-11-25T16:45:46+09:00",
   "createdAt": "2026-11-25T16:21:05+09:00",
   "by": "최고관리자",
   "doneBy": "Claude",
@@ -17,13 +17,21 @@
   "type": "요청",
   "layout": "",
   "text": "https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3481-216078&t=GdYCaPho44GgAu5i-1\nAssay Pack 메뉴 옮겨줘",
-  "note": "케이스 3 · 3단계 시작 전 · 20261125-최고관리자-assay-pack - 요청자 답(To Be 링크에 그림)대로 작업 페이지를 To Be로 바꿈, 3단계부터 새 세션에서 이어서 진행\n- Workbench 작업 페이지: 「Setting  Ⓛ / Ⓣ_As Is」(3288:235028) → 「Setting  Ⓛ / Ⓣ_To Be」(3481:216078) (Workbench 「이 페이지를 작업 페이지로」와 같은 API, project.json 확인)\n- 작업 기록: 요청자 확인 1에 답 반영, 이어서 작업할 곳 = 3단계 시작\n- 0단계 판단 참고: 요청의 page 칸은 등록 때 값(As Is)이 남아 있지만, 요청 링크(node-id=3481-216078)와 요청자 답(4번)이 가리키는 그릴 페이지는 To Be이고 지금 작업 페이지도 To Be라 반영 가능\n규칙 점검: 이번에 한 단계의 「하지 않는 것」 · 마침 점검 지킴 (3단계는 아직 시작하지 않음)\n작업 기준: basis 2026-11-25 16:24 · 작업규칙 CURECA 작업규칙 @원본 · 정책서 policy · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 glossary · 화면 정의서 screens",
+  "note": "케이스 3 · 3단계 시작 전 · 20261125-최고관리자-assay-pack - 작업 페이지가 다시 As Is로 바뀌어 있어 To Be에 그리지 못하고 보류\n- Workbench 작업 페이지(project.json · 작업 링크): 「Setting  Ⓛ / Ⓣ_As Is」(3288:235028), 16:44:54에 바뀜(앞 차례에서 To Be로 바꾼 뒤)\n- 그릴 페이지(요청 링크 node-id=3481-216078 · 요청자 답): 「Setting  Ⓛ / Ⓣ_To Be」 - 지금은 보기 전용이라 반영하지 않음\n- 확인 필요: Workbench에서 To Be 페이지를 작업 페이지로 바꾼 뒤 답해 주세요(작업 링크가 As Is로 저장돼 있으면 다시 되돌아갈 수 있어 작업 링크도 To Be 링크로 저장 권장)\n규칙 점검: 이번에 한 단계의 「하지 않는 것」 · 마침 점검 지킴 (3단계는 아직 시작하지 않음)\n작업 기준: basis 2026-11-25 16:24 · 작업규칙 CURECA 작업규칙 @원본 · 정책서 policy · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 glossary · 화면 정의서 screens",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "작업 페이지가 다시 As Is로 되어 있습니다. To Be 페이지를 작업 페이지로 바꾸셨나요?",
+    "options": [
+      {
+        "label": "To Be를 작업 페이지로 바꿈 - 3단계 진행"
+      }
+    ],
+    "free": true
+  },
   "replies": [
     {
       "at": "2026-11-25T16:22:48+09:00",
