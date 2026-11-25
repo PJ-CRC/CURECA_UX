@@ -8,8 +8,8 @@ type: Page
 version: 2.0
 date: 2026.06.15
 author: BREX
-client_mode: []
-user_type: []
+client_mode: [Main Mode, Console Mode, MS Mode]
+user_type: [Service, Admin]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-540815
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: L-IOS에는 [Edit] · [Copy]가 없음(T-IOS TI-STN-03-01의 4 · 5-5). 번호가 하나씩 당겨짐(L 4 목록 = T 5)
 - 호출하는 화면: [LI-STN-03-02] Extraction Protocol (1 Tab), 상세 화면 (4-5, 원문 `[LI-STN-03-01-01]`. 같은 페이지의 Setting 프레임 이름은 LI-STN-03-01-02)
 - 호출되는 곳: LNB > Setting > Protocol Setting (기본 탭)
+- 관련 정책: POL-TST-006
 
 ## 기존 화면
 

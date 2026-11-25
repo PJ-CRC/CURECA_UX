@@ -8,8 +8,8 @@ type: Page
 version: 2.1.17
 date: 2026.11.13
 author: 서보경
-client_mode: []
-user_type: []
+client_mode: [Main Mode, Console Mode, MS Mode]
+user_type: [Service, Admin]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-573554
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: L-IOS에만 1 Language(이 PC의 L-IOS 프로그램에만 적용) · 3 Export / Import Location · 7-2 Confirm_032 · 7-3 Alert_049가 있음. T-IOS(TI-STN-02)는 Language를 취소선으로 지움(v2.1.17, Profile 팝업으로 이관 — TI-CPW-01-P 1-4)
 - 호출하는 화면: Alert_016 (2 세션 종료), Confirm_009 (3-2 로컬 드라이브 경로), Confirm_016 (7-1), Confirm_032 (7-2 재시작 여부), Alert_049 (7-3 저장 불가), Save Toast `Settings have been saved.` (7), 경로 저장 · USB 저장 선택 팝업 (6-2, Common UX COMM-5-j(4/4))
 - 호출되는 곳: LNB > Setting > System Setting (User Type Service, Admin만)
+- 관련 정책: POL-ACC-008, Export / Import Location·Log Management는 SYS 정책
 - 버전 메모(프레임 오른쪽 위 `ver`, 케이스 프레임에도 같은 메모): v2.1.17 update / Language 정책 추가 및 flow 추가
 - 원본 디스크립션 번호는 0 ~ 3-2 · 6 ~ 7-3입니다(4 · 5 없음).
 
