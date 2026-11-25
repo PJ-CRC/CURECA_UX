@@ -9,7 +9,7 @@ version: 2.1.03
 date: 2026.08.21
 author: 정다예
 client_mode: []
-user_type: []
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-464433
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: T-IOS 단독 (IA에 L 짝 없음)
 - 호출하는 화면: [TI-STA-07-01] Usage & Cost Trend Chart (View Chart). 데이터 산출식 참고 [LI-IVT-06-T] (0)
 - 호출되는 곳: [TI-STA-07-01] 2 Table
+- 관련 정책: POL-STA-001, POL-STA-002, POL-STA-003, POL-STA-006, POL-TST-003, POL-INV-006, POL-COM-006
 
 ## 기존 화면
 

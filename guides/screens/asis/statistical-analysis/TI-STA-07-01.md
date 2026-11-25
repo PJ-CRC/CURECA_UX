@@ -9,7 +9,7 @@ version: 2.1.14
 date: 2026.10.30
 author: 정다예
 client_mode: []
-user_type: []
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-464163
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: T-IOS 단독 (IA에 L 짝 없음)
 - 호출하는 화면: [TI-STA-07-02] Usage & Cost Trend Table (2 Table). 데이터 산출식 참고 [LI-IVT-06-T] (0)
 - 호출되는 곳: LNB > Statistical Analysis > Inventory (탭은 Usage & Cost Trend 하나)
+- 관련 정책: POL-STA-001, POL-STA-002, POL-STA-003, POL-STA-006, POL-TST-003, POL-INV-006, POL-COM-006
 - 버전 메모(프레임 오른쪽 위 `ver`): v2.1.14 update / Policy Setting : Cost Setting 입력 값에 따른 데이터 노출 조건
 - 기획 프레임 밖에는 섹션 `통계 지표 관련 정책`([3543:464646](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-464646))이 있습니다(옮기지 않음).
 
