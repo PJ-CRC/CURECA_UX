@@ -1,0 +1,12 @@
+{
+  "rev": "20261125-150819_anjongbeom-ui-macbookair-2-local",
+  "by": "Claude",
+  "at": "2026-11-25T15:08:19+09:00",
+  "note": "언어셋 › 99. 임상의 리포트-보관 (서식): 새 엑셀(v2.37_261124)로 덮어씀",
+  "base": "language-set/sheet13.styles.json",
+  "pc": "anjongbeom-ui-MacBookAir-2.local",
+  "req": "4. 서비스별 화면 언어 · 디스크립션 언어: 이게 현재 최신 언어셋이야. 깃에 올라간 언어셋 정보를 이 문서와 동일하게 변경해줘.",
+  "jobId": "J001",
+  "file": "language-set/sheet13.styles.json",
+  "orig": true
+}

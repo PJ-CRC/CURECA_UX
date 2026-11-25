@@ -1,0 +1,28 @@
+{
+  "id": "anjongbeom-ui-macbookair-2-local_20261125-150843",
+  "kind": "work",
+  "reqId": "",
+  "reqType": "",
+  "team": "stagora",
+  "at": "2026-11-25T15:08:43+09:00",
+  "from": "2026-11-25T15:06:28+09:00",
+  "by": "안종범",
+  "doneBy": "Claude",
+  "pc": "anjongbeom-ui-MacBookAir-2.local",
+  "fileKey": "",
+  "fileName": "",
+  "page": "",
+  "frame": "",
+  "nodeId": "",
+  "text": "기준데이터: 언어셋 v2.37 덮어쓰기 (J001)",
+  "models": {
+    "claude-opus-5-5": 12
+  },
+  "calls": 12,
+  "input": 25,
+  "cacheWrite": 22881,
+  "cacheRead": 837380,
+  "output": 5629,
+  "total": 865915,
+  "usd": 0.4632
+}
