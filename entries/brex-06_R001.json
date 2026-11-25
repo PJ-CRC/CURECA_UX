@@ -23,15 +23,7 @@
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": {
-    "q": "작업 페이지가 다시 As Is로 되어 있습니다. To Be 페이지를 작업 페이지로 바꾸셨나요?",
-    "options": [
-      {
-        "label": "To Be를 작업 페이지로 바꿈 - 3단계 진행"
-      }
-    ],
-    "free": true
-  },
+  "ask": null,
   "replies": [
     {
       "at": "2026-11-25T16:22:48+09:00",
@@ -98,5 +90,11 @@
     }
   ],
   "work": "20261125-최고관리자-assay-pack",
-  "handoff": null
+  "handoff": {
+    "by": "정다예",
+    "pc": "DAYE",
+    "req": "R001",
+    "status": "진행 중",
+    "at": "2026-11-25T17:16:27+09:00"
+  }
 }
