@@ -1,0 +1,12 @@
+{
+  "rev": "20261125-200745_daye",
+  "by": "Claude",
+  "at": "2026-11-25T20:07:45+09:00",
+  "note": "케이스 3 원본 줄에서 글 · 모양 기준 요약 문장 뺌 (1-requirements.md)",
+  "base": "20261125-140937_brex-01",
+  "pc": "DAYE",
+  "req": "케이스 3 원본 변경 때 덧붙인 요약(글은 asis 화면 MD, 모양은 {메뉴}_asis 페이지) 빼기: 각 규칙에 이미 있는 내용이라 중복 (정다예, 2026-11-25, Claude Code 대화)",
+  "jobId": "",
+  "file": "../flow/1-requirements.md",
+  "orig": true
+}
