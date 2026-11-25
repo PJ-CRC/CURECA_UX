@@ -9,7 +9,7 @@ version: 2.1.01
 date: 2026.07.21
 author: 서보경
 client_mode: []
-user_type: []
+user_type: [Service, Admin]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-568738
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: T-IOS 단독 (IA에 L 짝 없음)
 - 호출하는 화면: [TI-STN-04-02-T] Code Mapping (탭), Confirm_010 (5 Save), Confirm_016 (5-1 저장하지 않고 이동)
 - 호출되는 곳: LNB > Setting > LIS Setting (기본 탭)
+- 관련 정책: POL-SYS-001
 - 원본 디스크립션에 `4.` 번호가 두 번 있고(T-IOS Network · LIS Network), `3-1`은 없습니다.
 
 ## 기존 화면

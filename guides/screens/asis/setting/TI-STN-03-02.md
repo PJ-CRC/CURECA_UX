@@ -9,7 +9,7 @@ version: 2.0
 date: 2026.06.15
 author: BREX
 client_mode: []
-user_type: []
+user_type: [Service, Admin]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-538991
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: T-IOS에만 검색 [Reset](2-2), [Edit](4), 목록 [Copy]가 있음. L-IOS(LI-STN-03-02)는 2-2가 [Search]이고 번호가 당겨짐(T 5 목록 = L 4)
 - 호출하는 화면: [TI-STN-03-01] Pre-Treatment Protocol (1 Tab), Modify 팝업 (4 Edit, 원문 `[TI-STN-03-01-01]`. 같은 페이지의 Extraction Protocol Modify 프레임은 [TI-STN-03-02-01]), 목록 정의는 [TI-STN-03-01] 참고 (5)
 - 호출되는 곳: [TI-STN-03-01] 1 Extraction Protocol 탭
+- 관련 정책: POL-TST-006
 
 ## 기존 화면
 
