@@ -3,49 +3,90 @@ cid: TI-IVT-04-T
 pair_cid: LI-IVT-04-T
 tl_relation: 동일
 title: Inventory Reagent
-path: Inventory > Reagents
+path: Inventory > Reagents Tab
 type: Tab
-version: 2.1.13
-date: 2026-10-23
-author: 서보경
+version: 2.1.18
+date: 2026.11.19
+author: 이상헌
 client_mode: []
-user_type: [Service, Admin, User]
+user_type: []
 policies: []
-rules_version:
-provisional: []
-flags: []
 source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=7336-427513
-figma_region: 2.1 2차
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-383847
 ---
 # TI-IVT-04-T Inventory Reagent
 
-> 기존 화면(기존 작업방 Inventory 페이지, 2.1 2차 영역, Ver 2.1.13)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 `Inventory_asis` 페이지, Ver 2.1.18)을 2026-11-25에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
 
-- T/L 차이: 없음 (LI-IVT-04-T와 같음)
-- 관련 정책: POL-INV-001, POL-INV-002, POL-INV-003, POL-INV-004, POL-EQP-009, POL-INV-007
-- 호출하는 화면: Reagent Item details Popup (TI-IVT-04-T-P)
-
-- 취소선(Figma에서 제거된 항목): 0의 "시약 개수 표기 방식" ("낱개 수량(입고 단위 수량)" 형식, 100개당 1 Rack이면 올림 처리, 예: 101 → 2 Rack). 지금은 Common UX COMM-4-b를 따름
+- T/L 차이: 디스크립션 같음. LNB 메뉴와 왼쪽 카드 목록의 PCR 카드 예시만 다름(T는 GI-Virus · Respiratory Panel 1 · GI-Parasite · GI-Virus · GI-Bacteria(II) 5장, L은 GI-Bacteria(II) · GI-Parasite · GI-Virus · Respiratory Panel 1 4장이고 시약 이름이 알파벳 순)
+- 호출하는 화면: [TI-IVT-04-T-P] Reagent Item details Popup (3-7 [Item details])
+- 호출되는 곳: LNB > Inventory > Reagents Tab (0 진입 방법), [TI-IVT-01-T] 등 Inventory Tab 구성
 
 ## 기존 화면
 
+<!-- `{메뉴}_asis` 페이지에 있는 그대로 옮깁니다. 고치거나 정리하지 않습니다. 틀린 곳 · 정책과 다른 곳도 그대로 옮깁니다. 그 화면의 To-Be 작업 1단계에서 읽으며 찾아 그 작업에서 고칩니다(`flow/1-requirements.md` 절차 4번 순서 3 "뒤 단계로 넘김"의 5). -->
+
 ### 화면 글자
 
-- (GNB·LNB는 T-IOS 공통)
-- Summary | Overview | Consumables | Reagents | Waste Bin/Bottle | Usage History
-- (Chip) Insufficient 12 | Low 7 | Sufficient 2 | Reagents type: # Sample Preparation | #Nucleic Acid Extraction | #PCR | Refresh
-- (좌측 카드) Pretreatment Reagents / Sample Preparation: LB Tub (Prep), PBS Tub, Saline Tub, ASL Standard Tube, PBS Standard Tube, Prelyser Standard Tube, Saline Standard Tube (예: 200 rxns (2 racks) | 300 rxns (3 racks))
-- (좌측 카드) STARMag M96 Kit / Nucleic Acid Extraction: EB DWP, LB DWP, MB DWP, WB1 DWP, Spin Tip (96~288 rxns (1~3 DWPs))
-- (좌측 카드) STARMag Universal Cartridge Kit / Nucleic Acid Extraction: BB Tub, EB Tub, WB1 Tub, WB2 Tub, WB3 Tub 384 rxns (4 sets), LB Tub, MB Tube, PK Tube, Buffer Cartridge Cap 15 ea (3 sets)
-- (좌측 카드) Allplex™ GI-Virus Assay: 5X GI-V MOM, 5X Real-time One-step Buffer, GI-V PC, Real-time One-step Enzyme, RNase-free Water 300 rxns (3 sets) | GI-V IC 100 rxns (1 tube) / 200 rxns (2 tubes)
-- (우측 상세) LB Tub (Prep) | Item details → Expired reagents are discarded or returned unused, depending on the instrument. → Location | Capacity | Remaining Qty | Required Qty: Consumable Storage (1)~(2) > Trolley | 6 DWPs | 100 rxns (1 rack) | 200 rxns (2 racks)
-- (우측 상세) PBS Tub, Saline Tub, ASL Standard Tube | Item details → Consumable Storage (1)~(2) > Trolley | 5 sets | 100 rxns (1 rack)
-- (예시 값) #Trolley, 200T (2 racks), 100T (1 rack)
+- (GNB) Running | Instrument | L-IOS | D.A PC | Event | Error 3 | Warning 2 | 2026-04-10 11:30
+- (LNB) TIOS | Dashboard | Test Management | Sample Tracking | Status | Instrument | Inventory | Statistical Analysis | Setting | Information | Keira Knightley
+- Inventory
+- Tab: Summary | Overview | Consumables | Reagents | Waste Bin/Bottle | Usage History
+- Chip: Insufficient 12 | Low 7 | Sufficient 2 | Reagents type: # Sample Preparation | #Nucleic Acid Extraction | #PCR | Refresh
+- 왼쪽 카드 목록 (열: Remaining Qty | Required Qty | Status)
+  - Pretreatment Reagents (Sample Preparation)
+    - LB Tub (Prep) 200 rxns (2 racks) | 300 rxns (3 racks)
+    - PBS Tub 0 | 200 rxns (2 racks)
+    - Saline Tub 100 rxns (1 rack) | 100 rxns (1 rack)
+    - ASL Standard Tube 0 | 96 rxns (2 racks)
+    - PBS Standard Tube 0 | 144 rxns (3 racks)
+    - Prelyser Standard Tube 96 rxns (2 racks) | 48 rxns (1 rack)
+    - Saline Standard Tube 48 rxns (1 rack) | 96 rxns (2 racks)
+  - STARMag M96 Kit (Nucleic Acid Extraction)
+    - EB DWP 0 | 288 rxns (3 DWPs)
+    - LB DWP 192 rxns (2 DWPs) | 96 rxns (1 DWP)
+    - MB DWP 96 rxns (1 DWP) | 96 rxns (1 DWP)
+    - WB1 DWP 192 rxns (2 DWPs) | 192 rxns (2 DWPs)
+    - WB2 DWP 0 | 192 rxns (2 DWPs)
+    - Spin Tip 192 rxns (2 DWPs) | -
+  - STARMag Universal Cartridge Kit (Nucleic Acid Extraction)
+    - BB Tub, EB Tub, WB1 Tub, WB2 Tub, WB3 Tub 0 | 384 rxns (4 sets)
+    - LB Tub 192 rxns (2 racks) | 96 rxns (1 rack)
+    - MB Tube 192 rxns (2 tubes) | 96 rxns (1 tube)
+    - PK Tube 288 rxns (3 tubes) | 96 rxns (1 tube)
+    - Buffer Cartridge Cap 15 ea (3 sets)
+  - Allplex™ GI-Virus Assay (PCR): 5X GI-V MOM, 5X Real-time One-step Buffer, GI-V PC, Real-time One-step Enzyme, RNase-free Water 0 | 300 rxns (3 sets) / GI-V IC 100 rxns (1 tube) | 200 rxns (2 tubes)
+  - Allplex™ Respiratory Panel 1 (PCR): 5X RP1 MOM, Real-time One-step Enzyme, 5X Real-time One-step Buffer, RNase-free Water, RP1 PC 100 rxns (1 set) | 300 rxns (3 sets) / RP-V IC 100 rxns (1 tube) | 200 rxns (2 tubes)
+  - Allplex™ GI-Parasite Assay (PCR): 5X GI-P MOM, EM2, RNase-free Water, GI-P PC 300 rxns (3 sets) | - / GI-BP IC 100 rxns (1 tube) | 200 rxns (2 tubes)
+  - Allplex™ GI-Virus Assay (PCR): 5X GI-V MOM, Real-time One-step Enzyme, 5X Real-time One-step Buffer, RNase-free Water, GI-V PC 0 | 300 rxns (3 sets) / GI-V IC 100 rxns (1 tube) | 200 rxns (2 tubes)
+  - Allplex™ GI-Bacteria(II) Assay (PCR): 5X GI-B(II) MOM, EM2, RNase-free Water, GI-B(II) PC 300 rxns (3 sets) | - / GI-BP IC 100 rxns (1 tube) | -
+  - 카드 영역에 두 겹으로 겹쳐 있는 글자: Tub / Sample Preparation | Remaining Qty | Required Qty | Status / PBS Tub #Trolley - 200T (2 racks) / Saline Tub #Trolley 100T (1 rack) 100T (1 rack) / LB Tub (Prep) #Trolley - 200T (2 racks)
+- 오른쪽 상세: Pretreatment Reagents (열: Location | Capacity | Remaining Qty | Required Qty)
+  - LB Tub (Prep) [Item details]
+    - Info Box: Expired reagents are discarded or returned unused, depending on the instrument.
+    - Consumable Storage (1) > Trolley | 6 DWPs | 100 rxns (1 rack) | 200 rxns (2 racks)
+    - Consumable Storage (2) > Trolley | 6 DWPs | 100 rxns (1 rack) | 100 rxns (1 rack)
+  - PBS Tub [Item details]
+    - Consumable Storage (1) > Trolley | 5 sets | 0 | 100 rxns (1 rack)
+    - Consumable Storage (2) > Trolley | 5 sets | 0 | 100 rxns (1 rack)
+  - Saline Tub [Item details]
+    - Consumable Storage (1) > Trolley | 5 sets | 100 rxns (1 rack) | -
+    - Consumable Storage (2) > Trolley | 5 sets | 0 | 100 rxns (1 rack)
+  - ASL Standard Tube [Item details] (열: Location | Remaining Qty | Required Qty)
+    - Consumable Storage (1) > Trolley | 0 | 96 rxns (2 racks)
+  - PBS Standard Tube [Item details]
+    - Consumable Storage (1) > Trolley | 5 sets | 0 | 96 rxns (2 racks)
+    - Consumable Storage (2) > Trolley | 5 sets | 0 | 48 rxns (1 rack)
+  - Prelyser Standard Tube [Item details]
+    - Consumable Storage (1) > Trolley | 5 sets | 48 rxns (1 rack) | 48 rxns (1 rack)
+    - Consumable Storage (2) > Trolley | 5 sets | 48 rxns (1 rack) | -
+  - Saline Standard Tube [Item details]
+    - Consumable Storage (1) > Trolley | 5 sets | 48 rxns (1 rack) | 48 rxns (1 rack)
+    - Consumable Storage (2) > Trolley | 5 sets | 0 | 48 rxns (1 rack)
 
 ### 사용 컴포넌트
 
-Description Number (17), Status (12), Item_Segment Tabs (6), Chip (6), Square (5), Frame (1), Info Box (1), Interface/Info_Circle_Outlined (1), Component 4 (1)
+Description Number (17), Status (12), ⛔️ Item_Segment Tabs (6), Chip (6), Square (5), Frame (1), Info Box (1), Interface/Info_Circle_Outlined (1), Component 4 (1)
 
 ### 디스크립션 (원문)
 
@@ -119,14 +160,14 @@ Description Number (17), Status (12), Item_Segment Tabs (6), Chip (6), Square (5
 - 표기 방식: 소모품/시약 표기 방식에 따름(0번 디스크립션 참고)
 - 정책 안내
 - 1) 소모품/시약 잔여량 집계 기준
-- 잔여량은 저장 장치 및 장비 내 적재된 소모품을 포함하여 관리한다.
-- 저장 장치에 소모품 입고 시 해당 수량을 증가한다.
-- 장비에서 소모품 사용 후 저장 장치로 반환 시 실제 사용 수량만큼 차감한다.
-- 장비에서 소모품 사용 후 폐기 시 실제 사용 수량만큼 차감한다.
-- 저장 장치에서 소모품 제거 시 해당 수량을 차감한다.
+  - 잔여량은 저장 장치 및 장비 내 적재된 소모품을 포함하여 관리한다.
+  - 저장 장치에 소모품 입고 시 해당 수량을 증가한다.
+  - 장비에서 소모품 사용 후 저장 장치로 반환 시 실제 사용 수량만큼 차감한다.
+  - 장비에서 소모품 사용 후 폐기 시 실제 사용 수량만큼 차감한다.
+  - 저장 장치에서 소모품 제거 시 해당 수량을 차감한다.
 - 2) 소모품/시약 사용량 집계 기준
-- 장비에서 소모품 사용 후 저장 장치로 반환 시 실제 사용 수량을 이력에 기록한다.
-- 장비에서 소모품 사용 후 폐기 시 실제 사용 수량을 이력에 기록한다.
+  - 장비에서 소모품 사용 후 저장 장치로 반환 시 실제 사용 수량을 이력에 기록한다.
+  - 장비에서 소모품 사용 후 폐기 시 실제 사용 수량을 이력에 기록한다.
 
 #### 2-5. Required Qty(좌측 영역)
 
@@ -214,3 +255,9 @@ Description Number (17), Status (12), Item_Segment Tabs (6), Chip (6), Square (5
 - Capacity: Shown only for fixed-capacity storage.
 - Required Qty: Displays the additional quantity required based on current inventory.
 - Status: Status is determined by run availability: Sufficient(enough stock), Low(partial shortage), Insufficient(no stock)
+
+### 케이스
+
+<!-- `{메뉴}_asis` 페이지의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
+
+없음 (`Inventory_asis` 페이지에 TI-IVT-04-T 케이스 프레임 없음)
