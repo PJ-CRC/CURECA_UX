@@ -1,0 +1,120 @@
+분류,표준어,영문·화면 라벨,정의,값,쓰지 않는 표현,구분해야 하는 말,근거,상태,쓰는 곳
+계정·권한,User Type,User Type,계정에 부여된 사용자 구분,Service / Admin / User,유저타입; 유저 타입; 사용자 타입; 계정 유형; 사용자 유형; Account Type; 등급; 사용자 권한(유형을 뜻할 때); 유형을 뜻하는 "권한"; Service 계정 → Service User Type; 소문자 user / admin / service,권한: User Type이 할 수 있는 일(메뉴 접근·버튼 사용),채팅 검토 결정; archive/glossary/review-v0.md 1-1,확정,화면
+팀 내부,언어셋,language-set,7개 언어 문구를 관리하는 문서 (2026-11-04부터 저장소에서 관리),,랭기지 셋; 랭귀지셋; 다국어 문서; i18n,,2026-10-29 결정,확정,팀 내부
+팀 내부,임시 정책,provisional policy (ID: PV),"공통 자료에 아직 없지만 작업에 먼저 쓰는 정책. 기존 정책을 바꿔야 하거나 고객 답 전에 진행할 때 누구든 등록하고, 함께 확인해 [승인]하면 공통 자료에 반영함",,미확정 정책; 미결 정책,협의 대기: 아직 효력이 없는 내부 변경 제안,2026-10-29 결정; 2026-11-03 헌법 4조 v1.4 (old-rules/provisional-policy.md),확정,팀 내부
+팀 내부,승인 담당자,approver,"쓰지 않음 (2026-11-04 헌법 4조 v1.6). 공통 자료를 혼자 고치는 한 사람을 따로 두지 않고, 모두가 임시 정책을 함께 확인해 [승인]함. 승인한 사람은 임시 정책 결정 칸의 결정자로 남음",,규칙 담당자; 검토자,작성자: 화면설계서를 책임지는 사람,2026-11-03 헌법 4조 v1.4; 2026-11-04 헌법 4조 v1.6,폐기,팀 내부
+팀 내부,주간 진행 현황,weekly status,"한 주(월~금)의 마감 필요 업무, 정책 변동 사항, 회의 내역, 다음 주 마감 예정을 모은 화면",,이번 주 진행 현황; 주간 보고,,2026-11-04 결정 (old-rules/weekly-status.md),확정,팀 내부
+팀 내부,반영 대기 목록,pending fix list,"화면에 아직 반영하지 않은 변경을 모든 화면에 걸쳐 한 곳에 모은 목록(`pending/open.md`). 줄마다 메뉴 · 화면(CID)을 적음. 다른 화면 수정, 회의 · 논의 결과, 정책 · 기준 자료 변경에서 생긴 변경이 영향 화면마다 줄로 생기고, 다음에 그 화면을 그릴 때 반영함. ID는 CID-R01. 상태는 대기 · 작업 중 · 반영 완료 · 제외이고, 반영 완료 · 제외는 `pending/closed.md`로 옮김 (reference-rules/pending-changes.md)",,정정 메모; 정정메모,화면 변경 이력: 이미 바꾼 것의 기록(screen-history.md),2026-11-04 결정 (old-rules/screen-spec.md 4절); 2026-11-23 DY: To-Be는 화면 변경 목록으로 옮김; 2026-11-24 화면마다 두지 않고 pending/ 한 곳으로 모음 (서보경),확정,팀 내부
+장비,L-IOS Client Mode,L-IOS Client Mode,L-IOS 설치 시 정해지는 모드. 모드에 따라 보이는 메뉴와 쓸 수 있는 기능이 달라짐. 모드별 메뉴·기능을 정한 공식 문서명은 L-IOS Client 시스템별 기능 분류 (policy/client-mode.md),Main Mode / Console Mode / MS Mode,Service Mode; 서비스 모드; Preset Mode; 설치 모드; L-IOS 모드; TSS Mode(이전 이름. 지금은 MS Mode); Main / Console / MS / TSS 단독 표기(모드를 뜻할 때),CID의 TSS(LI-TSS-...)는 화면 ID의 일부라 바꾸지 않음. MS Mode(모드)와 Material Setup(메뉴)은 다른 말,2026-10-30 결정 (review-v0 Q2); 2026-11-12 Service Mode → L-IOS Client Mode · TSS Mode → MS Mode (서보경 · DS-0001),확정,화면
+장비,장비 통합 상태,CURECA Status,CURECA 전체의 상태. 상태값은 3단계(장비 통합 상태 / 장비 모듈 상태 / 검사 장치 상태) 중 가장 위,Not Initialized / Initializing / Ready / Running / Partial Running / Stopping / Paused / Error (status-values.csv),CURECA 전체 구동 상태; 전체 Cureca 구동 상태; 전체 구동 상태,장비 모듈 상태; 검사 장치 상태; Sample 상태(같은 라벨 Ready·Running),2026-10-30 결정 (review-v0 Q3; reference/status-values-2026-10-30.png); 영문 · 화면 라벨 2026-11-12 결정 (DS-0003),확정,화면
+장비,장비 모듈 상태,(화면 라벨 확인 필요),Module 하나의 상태,Not Initialized / Initializing / Ready / Running / Stopping / Pausing / Paused / Error (status-values.csv),Idle (고객 결정으로 Ready로 바뀜 2026-10-30),장비 통합 상태; 검사 장치 상태,reference/status-values-2026-10-30.png,확정,문서
+장비,검사 장치 상태,(화면 라벨 확인 필요),Unit Type이 Device인 Unit(Device Unit)의 상태,Ready / Running / Error (status-values.csv),,장비 모듈 상태,reference/status-values-2026-10-30.png,확정,문서
+기능,Run,Run,검사를 실행하는 것. 메뉴 Run과 버튼 Run Start를 포함,,가동; 구동; 장비 가동; RUN,Quick Start,2026-10-30 결정 (review-v0 Q4),확정,화면
+업무 대상,Sample,Sample,검사 대상 검체,,검체; 샘플,,2026-10-30 결정 (review-v0 Q1),확정,화면
+업무 대상,Reagent,Reagent,검사에 쓰는 시약,,시약; Regents,Consumable,2026-10-30 결정 (review-v0 Q1),확정,화면
+업무 대상,Consumable,Consumable,"검사에 쓰는 소모품. 대화에서 '소모품'은 Consumable과 Reagent를 함께 뜻할 때가 있음. 문서에서 둘을 함께 말할 때는 Consumable·Reagent로 씀",,소모품; Comsumable,Reagent,2026-10-30 결정 (review-v0 Q1); 2026-11-03 사용자 확인,확정,화면
+업무 대상,Instrument,Instrument,CURECA 장비 또는 그 메뉴,,장비(장비 통합 상태 제외),Module; Device,2026-10-30 결정 (review-v0 Q1),확정,화면
+장비,Module,Module,Instrument를 구성하는 단위 장비 (8종: module-units.csv). 이름 (번호)로 표기 (예: PCR Setup (1)),,모듈,Unit; Device,2026-10-30 결정 (review-v0 2절),확정,화면
+장비,Unit,Unit,Module 안의 하위 단위. Unit Type은 Device / Storage / Waste Bin/Bottle / Door (module-units.csv),,유닛,Module,2026-10-30 결정 (review-v0 2절),확정,화면
+장비,Device,Device,Unit Type 값 중 하나. 검사 장치 (Sample Processing; Sample Aliquoting; M9600; STARlet; Sealer; CFX96),,디바이스,Module,review-v0 2절,확정,화면
+장비,Storage,Storage,보관 공간. 이름 (번호)로 표기 (예: Consumable Storage (1)),,스토리지; 저장소,,2026-10-30 결정 (review-v0 2절),확정,화면
+장비,Door,Door,Unit Type이 Door인 Unit. Module 상단(일부 하단)의 유리문,잠금: Locked / Unlocked; 열림: Open / Closed (status-values.csv),도어; 문(Door를 뜻할 때); 상태값 Lock / Unlock / Close (버튼 이름 Unlock은 그대로),Event Status의 Open / Closed,2026-10-30 결정 (review-v0 2절),확정,화면
+장비,Drawer,Drawer,Storage의 서랍,,서랍; 드로어,,2026-10-30 결정 (review-v0 2절),확정,화면
+장비,Waste Bin,Waste Bin,폐기물함,Available / Almost Full / Full,폐기물함; 페기물함; AlmostFull,Liquid Waste Bottle,2026-10-30 결정 (review-v0 2절),확정,화면
+기물,Carrier,Carrier,Sample·Reagent·Consumable을 싣는 기물 (Socket; Tray; Trolley 등),,기물; 캐리어,,2026-10-30 결정 (review-v0 2절),확정,화면
+기물,Trolley,Trolley,Instrument에 도킹하는 운반 기물,,트롤리,,2026-10-30 결정 (review-v0 2절),확정,화면
+기물,Tray,Tray,Socket을 싣는 기물,,트레이,,2026-10-30 결정 (review-v0 2절),확정,화면
+기물,Socket,Socket,Tube를 꽂는 기물,,소켓,,2026-10-30 결정 (review-v0 2절),확정,화면
+기물,Rack,Rack,Tip·Tube 등을 담는 거치대,,랙,,2026-10-30 결정 (review-v0 2절),확정,화면
+기물,Tube,Tube,,,튜브,,2026-10-30 결정 (review-v0 2절),확정,화면
+기물,Tip,Tip,,,팁,,2026-10-30 결정 (review-v0 2절),확정,화면
+기능,Barcode,Barcode,,,바코드,,2026-10-30 결정 (review-v0 2절),확정,화면
+기능,Event,Event,Instrument·Inventory·Sample·System의 경고 또는 오류 기록,이벤트 상태 Open / Closed; 이벤트 등급 Warning / Error; 이벤트 종류 Instrument / Inventory / Sample / System (status-values.csv),이벤트,Door 열림 상태의 Open / Closed; 장비 상태값 Error와 이벤트 등급 Error,2026-10-30 결정 (review-v0 2절),확정,화면
+기능,Protocol,Protocol,,,프로토콜,,2026-10-30 결정 (review-v0 2절),확정,화면
+UI 요소,Popup,Popup,Common UX Popup 컴포넌트 (Basic Popup / Stacked Popup / Import/Export Popup). 디스크립션에서 뜨는 것을 말할 때도 컴포넌트 이름으로 씀(Popup 노출 · Alert 노출 · Confirm 노출),,팝업,Alert; Confirm,Common UX COMM-5-m (Common UX - PC); 2026-10-30 결정 (review-v0 Q5); DS-0008,확정,화면
+UI 요소,Alert,Alert,Common UX 결과 안내 컴포넌트,,알럿; 알림(Alert을 뜻할 때),Toast,Common UX; 2026-10-30 결정 (review-v0 Q5); 2026-11-23 DY: 문서에서도 영문으로 씀 (DS-0008),확정,화면
+UI 요소,Confirm,Confirm,Common UX 확인 요청 컴포넌트,,컨펌,Alert,Common UX; 2026-10-30 결정 (review-v0 Q5); 2026-11-23 DY: 문서에서도 영문으로 씀 (DS-0008),확정,화면
+UI 요소,Toast,Toast,Common UX 짧은 안내 컴포넌트,,토스트,Alert,Common UX COMM-5-u (Common UX - PC); 2026-11-23 DY: 문서에서도 영문으로 씀 (DS-0008),확정,화면
+UI 요소,Tooltip,Tooltip,Common UX 툴팁 컴포넌트 (Info / Event / Ellipsis / Table Tooltip),,툴팁; Tool Tip,,Common UX COMM-5-v (Common UX - PC. Figma 이름은 Tool Tip),확정,화면
+상태값,Not Tested,Not Tested,Sample 상태값. 검사 시작 후 Ready 상태였던 검체가 Prep 장비에서 검사가 진행되지 못한 채 회수된 상태 (원인: 바코드 훼손 또는 등록 바코드와 불일치),Sample 상태: Ordered / Ready / Not Tested / Running / Completed / Failed,Not tested; NotTested,,2026-10-30 결정 (review-v0 Q8); 정의 2026-11-02 결정,확정,화면
+상태값,Partial Running,Partial Running,장비 통합 상태값. 검사 진행 중 일부 Module이 Paused 또는 Error이고 일부 Module이 Running인 경우,,Patial Running; PartialRunning,,reference/status-values-2026-10-30.png,확정,화면
+장비,CURECA,CURECA,장비 이름. 항상 대문자,,Cureca; 큐레카; QREKA; 대소문자를 섞은 모든 표기,,2026-10-30 결정,확정,화면
+장비,D.A PC,D.A PC,검사 결과 처리 시스템 PC (Actor 코드 DAPC),,D.A.PC,,2026-10-30 결정; 씨젠 상태 정보 261119 > Actor,확정,화면
+기능,Expiration Date,Expiration Date,Reagent·Consumable의 사용 가능 기한 (만료일),,유효기간; 유통기한; 만료일; Expiration date,시약 만료 상태,화면 라벨 (Expiration Date 31회); 2026-10-30,확정,화면
+상태값,시약 만료 상태,(화면 라벨 확인 필요),Reagent의 Expiration Date까지 남은 기간에 따른 상태,Valid / Under 30 days / Expired (코드: Valid / Warning / Expired; status-values.csv),Under 30 Day; 만료 상태(대상 없이 쓸 때),Expiration Date,2026-10-30 사용자 제공 표,확정,문서
+제품군,T-IOS / L-IOS,T-IOS / L-IOS,웹 관제 플랫폼 / 장비 제어 앱. Actor 코드는 TIOS / LIOS## (사이트에 장비가 여러 대면 LIOS01 / LIOS02),,TIOS; LIOS (문서 표기로 쓸 때),,2026-10-30 결정; 씨젠 상태 정보 261119 > Actor,확정,화면
+장비,Device Unit,Device Unit,Unit Type이 Device인 Unit (= 검사 장치). 상태값은 검사 장치 상태,,,Storage Unit; Module,reference/module-units-2026-10-30.png,확정,화면
+장비,Storage Unit,Storage Unit,Unit Type이 Storage인 Unit. 위치 표기는 Module (Index) > Storage Unit,,,Device Unit,reference/module-units-2026-10-30.png,확정,화면
+업무 대상,Product Name,Product Name,Reagent의 제품 이름 (예: Allplex™ GI-Virus Assay; STARMag M96 Kit),,,componentName: Reagent 구성품 이름 (예: 5X GI-V MOM),Common UX COMM-4-b,확정,화면
+업무 대상,Sample Preparation,Sample Preparation,Reagent 유형 태그. 데이터 fileType은 Pretreatment,,전처리(태그를 뜻할 때),Module Sample Pre-treatment (1),Common UX COMM-4-b,확정,화면
+업무 대상,Nucleic Acid Extraction,Nucleic Acid Extraction,Reagent 유형 태그. 데이터 fileType은 Extraction,,핵산 추출(태그를 뜻할 때),,Common UX COMM-4-b,확정,화면
+기물,DWP,DWP,Deep Well Plate. Plates 그룹에 포함 (예: 96-DWP),,,PCR Plate,Common UX COMM-4-b,확정,화면
+기능,Dashboard(All),Dashboard(All),"CURECA를 2대 이상 설치한 고객에게만 보이는 T-IOS 메뉴. 설치한 CURECA를 한 화면에 모아 요약해 보여 줌 (POL-COM-005)",,Dashboard (All); All Dashboard; Dashboard All,Dashboard: 상단에서 고른 CURECA 한 대의 대시보드,2026-11-04 결정,확정,화면
+UI 요소,Instrument Status,Instrument Status,Dashboard 등에서 Module의 구동 상태와 Door 상태 등 여러 상태값을 묶어 보여주는 영역의 제목. 하나의 상태값 이름이 아님,,,장비 통합 상태; 장비 모듈 상태; 검사 장치 상태,2026-10-30 사용자 설명,확정,화면
+상태값,폐기함/폐액통 상태,Waste Bin/Bottle Status,Waste Bin/Bottle Unit의 적재 상태,Available / Almost Full / Full (status-values.csv),폐기함 적재 상태; Waste Status,,2026-10-30 결정,확정,화면
+상태값,연결 상태,Connected,Module과 Device Unit이 시스템과 연결되어 있는지 나타내는 상태 (둘 다 있음),Connected / Disconnected (status-values.csv),Device 연결 상태(Module까지 뜻할 때),검사 장치 상태; 장비 모듈 상태,Common UX COMM-4-a(3/4); 2026-11-02 확인,확정,화면
+상태값,재고 상태,(화면 라벨 확인 필요),Consumable·Reagent의 잔여 수량과 Run에 필요한 수량 비교에 따른 상태 (Consumable과 Reagent에 같은 값을 씀),Sufficient / Low / Insufficient (status-values.csv),Empty (Insufficient로 바뀜),시약 만료 상태,2026-10-30 사용자 제공 표; 2026-11-03 사용자 확인 (IV2·IV7),확정,문서
+기능,Assay Pack Setting,Assay Pack Setting,Setting 하위 메뉴. Main Mode에서만 제공,,AssayPack Setting,,화면 다수 표기 (Assay Pack Setting 159회); 2026-10-30,확정,화면
+UI 요소,Tab,Tab,Common UX 탭 컴포넌트 (Underline Tab / Outline Tab / Container Tab: Outline Container · Filled Container). 같은 데이터의 보기 방식 전환은 Container Tab을 씀,,탭,Segment Control,Common UX COMM-5-s (Common UX - PC). 2026-11-04 사용자 결정: Tab 종류와 보기 방식 전환은 Common UX 기준 (예전 정의 Line Tab / Square Tab / Count Tab · Segment Control을 바꿈),확정,화면
+시스템,Prep 시스템,PrepMcs,Sample Preparation Master Control System. 검체 전처리 쪽 장비를 제어하는 시스템,,Prep 장비(시스템을 뜻할 때),Dx 시스템,씨젠 상태 정보 261119 > Actor,후보,화면
+시스템,Dx 시스템,DxMcs,Diagnostic Master Control System. 핵산 추출부터 PCR까지 진단 쪽 장비를 제어하는 시스템,,DX 장비(시스템을 뜻할 때),Prep 시스템,씨젠 상태 정보 261119 > Actor,후보,화면
+장비,검사 단계,(화면 라벨 확인 필요),검사가 진행되는 단계. 단계마다 담당 Module이 있음 (test-stages.csv),Sample Preparation / Nucleic Acid Extraction / PCR Setup / Plate Sealing / PCR,,"Sample Preparation은 검사 단계 이름이자 Reagent 태그. 같은 단계의 Module 이름은 Sample Pre-treatment(2026-11-18 바뀜, 예전 Module 이름 Sample Preparation)",씨젠 상태 정보 261119 > 검사 단계,확정,문서
+디스크립션 표현,노출,,화면에 요소를 보여 줌. 안 보이면 미노출. 디스크립션 문장 패턴 1 (old-rules/screen-spec.md 8절),,표출; 표시(보여 준다는 뜻일 때); 보여 준다는 뜻의 제공,,2026-11-04 결정(표시) → 2026-11-06 사용자 결정(기존 디스크립션과 같이 노출),확정,문서
+디스크립션 표현,클릭 시,,버튼 · 아이콘 · 링크 · 탭 · 줄을 눌렀을 때. 디스크립션 문장 패턴 2 (old-rules/screen-spec.md 8절),,누르면; 버튼에 쓴 선택 시,선택 시(목록 · 옵션),2026-11-04 결정(누르면) → 2026-11-06 사용자 결정(기존 디스크립션과 같이 클릭 시),확정,문서
+디스크립션 표현,선택 시,,목록 · 옵션 · 라디오 · 체크박스 · 드롭다운 값을 골랐을 때. 디스크립션 문장 패턴 2 (old-rules/screen-spec.md 8절),,고르면,클릭 시(버튼),2026-11-04 결정(고르면) → 2026-11-06 사용자 결정(기존 디스크립션과 같이 선택 시),확정,문서
+디스크립션 표현,Default,,처음 화면을 열었을 때 정해져 있는 값 · 고른 것 · 버튼의 활성 상태. 디스크립션 라벨 `Default :` (`reference-rules/description.md` 2절 라벨 표 · `templates/screen.md` · 작성예시문서와 같음),,기본값(디스크립션에서 쓸 때); 디폴트; 최초 진입(Default를 뜻할 때),,2026-11-04 결정; 2026-11-06 사용자 확인(드롭다운 기본값: · 리스트 항목:); 2026-11-25 서보경 결정(표준어를 기본값에서 Default로 바꿈. 라벨 표 · 틀 · 작성예시문서와 맞춤),확정,문서
+UI 요소,Checkbox,Checkbox,0개 이상 항목을 고르는 선택 컨트롤 (Common UX COMM-5-q Selection Controls),,체크박스; Check Box,Radio Button,2026-11-04 사용자 결정 (용어집 기준). Common UX 수정 요청 14번 (common-ux/comm-index.md에 반영),확정,화면
+UI 요소,Text Input,Text Input,글자를 입력하는 칸 (Box Input / Password Input / Inline Input. Common UX COMM-5-t),,Text Field; 텍스트 필드; 입력창,,2026-11-04 사용자 결정 (용어집 기준). Common UX 수정 요청 15번 (common-ux/comm-index.md에 반영),확정,화면
+상태값,Hardware Status,Hardware Status,상태값 표(status-values.csv)의 분류 이름. 장비 자체의 상태(장비 통합 상태 · 장비 모듈 상태 · 검사 장치 상태 · Unit Type별 상태)를 묶음. 소프트웨어가 관리하는 상태는 System Status,,CURECA Status(분류 이름으로 쓰지 않음. 2026-11-12부터 장비 통합 상태의 영문 · 화면 라벨),System Status; 장비 통합 상태(CURECA Status),2026-11-12 결정 (DS-0003),확정,화면
+팀 내부,작업방,,"화면을 그리는 Figma 파일 eCzV8BJIXt1MGdKr3S4fgI (2026-11-03 만듦). 케이스 1 · 2와 케이스 3으로 옮겨 그린 화면이 모두 여기 있음 (sources.md ""화면 (작업방)"")",,신규 작업방; 신규 작업장; 새 작업방,기존 작업방: 옮겨 읽는 옛 Figma 파일,2026-11-13 사용자 결정 (서보경),확정,팀 내부
+팀 내부,기존 작업방,,"케이스 3에서 옮겨 읽는 옛 Figma 파일 ""1-2. CURECA 기획 디자인 작업방 Part.2"" (kI8nm6HBJsfBa4fbReZwgh). 기존 메뉴를 작업방으로 다 옮기면 기록으로만 남음",,작업방(옛 파일을 뜻할 때); 기존 화면설계 파일,작업방: 앞으로 화면을 그리는 파일,2026-11-13 사용자 결정 (서보경),확정,팀 내부
+팀 내부,케이스,case,"요건 목록 한 줄(요건 하나 × 대상 화면 하나)을 그리는 방법. 대상 화면을 보고 정함: 작업방에 그려진 기존 CID = 1, 새 CID = 2, 기존 작업방에만 있는 화면 = 3. 작업 기록 머리말에 두지 않고 요건 목록의 줄마다 붙임 (flow/README.md ""케이스"")",1 화면 부분 수정(고도화) / 2 신규 / 3 기존 화면 다시 그리기,작업 유형; 유형,작업: 요청 한 건의 진행,2026-11-13 사용자 결정; 2026-11-14 줄마다 붙임으로 바꿈 (서보경),확정,팀 내부
+팀 내부,작업,work,"작업 기록 하나로 1 ~ 5단계를 진행하는 것. 범위는 메뉴 하나(같은 CID 체계). 여러 메뉴에 걸친 같은 변경은 일괄 변경(메뉴 전반)으로 하나를 엶",,태스크; 건,작업 기록: 작업의 진행을 적는 파일,2026-11-13 사용자 결정; 2026-11-14 일괄 변경(메뉴 전반) 더함 (서보경),확정,팀 내부
+팀 내부,작업 기록,work log (work-logs/),"작업 하나의 케이스 · 대상 · 단계 · 질문 대기를 적는 파일. 1단계에 만들고 5단계에 닫음 (reference-rules/work-log.md)",진행 중 / 끝남 / 멈춤,작업 로그; 워크로그,작업,2026-11-10 사용자 결정 (서보경),확정,팀 내부
+팀 내부,이어서 작업할 곳,(작업 기록의 한 줄),"작업 기록 ""단계"" 표 아래에 다음에 할 일을 적는 한 줄. 대화가 끊기거나 다른 사람이 이어받으면 이 줄에서 이어 감 (reference-rules/work-log.md)",,다음: 줄; 다음에 할 일,,2026-11-14 사용자 (서보경): 우선 이 이름으로,후보,팀 내부
+팀 내부,요청자,requester,작업을 요청한 사람,,,작성자: 화면설계서를 책임지는 사람,2026-11-10 예전 0단계 문서(지금 flow/1-requirements.md),확정,팀 내부
+팀 내부,대상 CID,target CID,이번 작업에서 그리거나 고치는 화면의 CID,,작업 대상 화면(CID를 뜻할 때),짝 CID,2026-11-10 예전 0단계 문서(지금 flow/1-requirements.md),확정,팀 내부
+팀 내부,짝 CID,pair CID,"같은 화면의 T-IOS · L-IOS CID 한 쌍 (IA ia-screens.csv의 ""짝 CID"" 칸)",,페어 CID,대상 CID; T · L 한 쌍: 짝인 두 화면을 함께 부르는 말,ia/ia-screens.csv,확정,팀 내부
+팀 내부,작업 기준,basis,작업이 언제의 최신 공통 기준(흐름 · 규칙 · 정책서 · 기준데이터 · 화면 정의서 · Common UX)과 맞춰 봤는지 남기는 기준점,,기준 버전; rules_version,,2026-11-10 사용자 결정 (서보경),확정,팀 내부
+팀 내부,겹침,overlap,열려 있는 다른 작업과 같은 CID나 같은 정책 ID를 고치는 것,,충돌(작업이 겹칠 때),,2026-11-10 예전 0단계 문서(지금 flow/1-requirements.md),확정,팀 내부
+팀 내부,작성예시문서,,"디스크립션 · 케이스 화면을 쓸 때 그 결을 따르는 예시 문서 (`examples/`의 description-samples.md · case-samples.md). 작성예시문서 1 · 2 · 3처럼 번호로 가리킴",,본보기,,2026-11-12 사용자 결정 (본보기 → 작성예시문서),확정,팀 내부
+팀 내부,T · L 한 쌍,,"서로 짝인 T-IOS 화면과 L-IOS 화면 한 쌍 (예: TI-SPT-01 · LI-SPT-01). `flow/3-design.md` 공통 3-1 · 3-10 참고",,CID 묶음,짝 CID: IA에서 서로 짝인 CID (T · L 한 쌍을 이루는 CID),2026-11-12 사용자 결정 (CID 묶음 → T · L 한 쌍),확정,팀 내부
+팀 내부,복제본,,"케이스 1(화면 부분 수정)에서 원본을 고치기 직전에 만들어 두는 원본의 사본. `flow/3-design-case1.md` 1-4 참고",,시안,,2026-11-12 사용자 결정 (시안 → 복제본),확정,팀 내부
+팀 내부,CID 체계,,"CID의 가운데 세 글자(메뉴 코드)로 묶이는 CID의 규칙. 가운데 세 글자가 같으면 같은 CID 체계 (예: `TI-SPT-…` · `LI-SPT-…`는 같은 체계). 신규 메뉴는 1단계에서 새 CID 체계(메뉴 코드와 T-IOS · L-IOS 접두어)를 정함. 같은 CID 체계의 고칠 화면(케이스 1)과 새 화면(케이스 2)만 한 작업으로 묶음",,CID 계열,T · L 한 쌍: 짝인 두 화면; 메뉴: 한 메뉴에 CID 체계가 둘일 수 있음(예: Setting의 STN · SVS),2026-11-13 사용자 결정 (서보경),확정,팀 내부
+팀 내부,요청 글,,"요청자가 일을 시킬 때 적은 글. 요청과 함께 받은 파일 · 링크 등은 공유 파일",,요청서(프로그램 변경 요청서를 가리킬 때만 씀); 요청 원문,공유 파일: 요청할 때 함께 받은 파일 · 링크,2026-11-13 사용자 결정 (요청서 → 요청 글); 2026-11-14 요청 자료와 나눔 (서보경); 2026-11-24 요청 자료 → 공유 파일 (서보경),확정,팀 내부
+팀 내부,공유 파일,,"요청할 때 함께 받은 파일 · 링크 · 캡처 · 회의록 등. 작업 기록 ""요청"" 절에 이름 · 링크를 기입함",,요청 자료; 첨부; 첨부 자료,요청 글: 요청자가 적은 글,2026-11-14 사용자 결정 (서보경); 2026-11-24 요청 자료 → 공유 파일 (서보경),확정,팀 내부
+팀 내부,일괄 변경(메뉴 전반),,"같은 상태값 · 버튼명 · 문구 · 공통 요소가 여러 메뉴(CID 체계 둘 이상)에 걸쳐 똑같이 바뀌는 일. 메뉴 대신 이 이름과 바뀌는 것으로 작업 기록 하나를 엶 (작업 기록 `menu`: 일괄 변경(메뉴 전반) · 바뀌는 것)",,일괄; 여러 메뉴; 메뉴 공통; 원인 하나로 여는 작업,작업: 작업 기록 하나 = 메뉴 하나(같은 CID 체계),2026-11-14 사용자 결정 (서보경),확정,팀 내부
+팀 내부,절차,,"단계 문서 안에서 차례대로 하는 큰 일 (예: 1단계 절차 1 ~ 5). 절차 안의 세부 걸음은 ""순서""로 부름 (예: 1단계 절차 4번 순서 7)",,할 일(단계 문서 안의 일을 가리킬 때); 진행 순서,단계: 1 ~ 5단계 / 순서: 절차 안의 세부 걸음,2026-11-14 사용자 결정 (서보경),확정,팀 내부
+팀 내부,작업 대상,,"요건 목록의 한 줄(요건 하나 × 대상 화면 하나)을 이번 작업에서 고치거나 그리는지. O = 고침 · 그림 / X = 고치지 않음 / 미정 = 아직 정하지 않음 (flow/1-requirements.md 요건 목록 틀)",O / X / 미정,,요청 상태: 그 요건이 처음부터 있었는지 · 도중에 바뀌었는지,2026-11-14 사용자 결정 (서보경),확정,팀 내부
+팀 내부,요청 상태,,"요건 목록에서 그 요건이 처음부터 있었는지, 도중에 바뀌었는지. 줄은 지우지 않고 값만 바꿈 (flow/1-requirements.md 요건 목록 틀)",최초 / 추가 / 변경 / 제거,처음 요건,작업 대상: 그 화면 줄을 이번 작업에서 고치는지,2026-11-14 사용자 결정 (서보경. 최초는 우선 이 말로),후보,팀 내부
+팀 내부,요건별 진행 경로,,"요건마다 가른 경로 분기 기준 · 읽는 강도 · 지나가는 단계 · UI 작업. 따로 절을 두지 않고 작업 기록 ""요건 목록""의 요건 묶음 머리 아래에 적음 (flow/1-requirements.md 절차 4번 순서 6, ""요건 목록 틀"")",,요건별 갈래,지나가는 단계: 그 요건이 거치는 1 ~ 5단계,2026-11-14 사용자 결정 (서보경); 2026-11-24 요건 목록에 합침 · 문구 칸 뺌 (서보경),확정,팀 내부
+팀 내부,경로 분기 기준,,"요건이 무엇을 바꾸는 일인지를 여덟 가운데 하나로 가른 것(글자 · 표기만 / 화면 구성이 바뀜 / 동작 · 조건 · 값 · 순서가 바뀜 / 장비 · Alert · 권한 · 상태값에 닿음 / 공통 기준을 화면에 맞춤 / 화면이 생기거나 없어짐 / 정책만 바뀜 / 옮겨 다시 그림(케이스 3)). 이 값으로 2단계에서 읽는 강도와 그 요건이 지나가는 단계가 정해짐 (flow/2-evidence.md "경로 분기 기준마다 읽는 것") (flow/1-requirements.md 절차 4번 순서 6)",,모양,요건별 진행 경로: 경로 분기 기준과 지나가는 단계를 적는 절,2026-11-14 사용자 결정 (서보경),확정,팀 내부
+팀 내부,업데이트 메모,update memo,"요청자가 확인한 변경 확인을 4단계 UX 확정 때 모아 기획 프레임 오른쪽(패널 오른쪽 5px, 사용자 확인 목록 위)에 두는 메모. `ver` 컴포넌트 인스턴스. 제목 `v{Ver} update`(Ver은 UX 확정 때 요청자가 정한 그 화면의 Ver), 직전 버전 메모와 다른 색 · 같은 버전은 같은 색. 케이스 3은 기존 작업방의 메모를 그대로 옮기고, 다시 그리며 바뀐 것은 회색 `재설계 후 변경 내역` 메모로 따로 남김 (reference-rules/description.md 5절, 2026-11-19 서보경)",,변경 내역 상자; update 상자,사용자 확인 목록: 아직 확인받지 않은 질문 대기 · 변경 확인 목록,2026-11-16 사용자 결정 (DY),확정,팀 내부
+팀 내부,사용자 확인 목록,,"질문 대기와 변경 확인을 합쳐 부르는 이름. 어느 문서에서나 이 뜻으로 씀. 원본은 작업 기록의 ""질문 대기"" · ""변경 확인"" 표(화면 MD에는 두지 않음). Figma에는 사용자 확인 라벨과 패널 오른쪽 목록으로 옮겨 두고(Figma에서 하는 일을 적을 때는 ""Figma의 사용자 확인 목록""), 채팅 보고에서는 ""답해 주실 것""에 미해결 항목을 보여 줌 (reference-rules/description.md 5절)",,,미해결 항목: 사용자 확인 목록과 4단계 ""검토 질의"" 절에서 아직 해결되지 않은 항목,2026-11-17 사용자 결정 (서보경),확정,팀 내부
+팀 내부,사용자 확인 라벨,,"질문 대기 · 변경 확인마다 Figma 화면에서 그 번호 표시 옆에 붙이는 ID 라벨(`Q1` · `C3`). `Label/Status/With Icon` 컴포넌트 (reference-rules/description.md 5절)",,화면 라벨(이 뜻일 때),사용자 확인 목록; 영문·화면 라벨(화면에 보이는 글자),2026-11-19 DY 결정,확정,팀 내부
+팀 내부,답해 주실 것,,"단계 보고(채팅) 맨 아래에 요청자가 답할 질문을 모은 묶음. 1 ~ 4단계 보고 모두 같은 이름. 3 · 4단계 보고에서는 사용자 확인 목록의 미해결 항목을 여기에 보여 주고 답을 받음 (reference-rules/work-log.md ""요청자에게 보여 주는 법"" 5번)",,,사용자 확인 목록: 질문 대기와 변경 확인을 합쳐 부르는 이름. 답해 주실 것은 그 미해결 항목을 채팅에 보여 주는 자리,"2026-11-16 사용자 결정 (DY), 2026-11-17 뜻을 바로잡음 (서보경)",확정,팀 내부
+팀 내부,바뀐 글 표시,,"이번 버전에 바뀐 디스크립션 글을 Figma 패널에서 빨간색으로 보여 주는 것. 고치거나 더한 글자는 빨간색, 제거된 요소와 제거된 문구는 빨간 취소선. 케이스 1은 직전 버전 기준, 케이스 3은 기존 작업방 기준(변경 확인 · 질문 대기 답으로 달라진 글자), 케이스 2는 쓰지 않음. 다음 작업의 3단계에서 복제본을 만든 직후 검정으로 되돌림 (reference-rules/description.md 7절)",,,업데이트 메모: 바뀐 것을 요약한 메모; 예전 빨간 글씨 · 빨간 줄: 질문 대기 · 변경 확인을 디스크립션에 적던 표시(지금은 쓰지 않음),2026-11-17 사용자 결정 (DY),확정,팀 내부
+팀 내부,제거된 요소,,"이 작업에서 화면에서 빼는 요소. 화면에서는 요소와 번호 표시를 떼고, 디스크립션은 그 번호의 블록(번호 줄과 내용)을 지우지 않고 취소선을 긋습니다. 그 번호는 새 요소에 다시 쓰지 않습니다 (flow/3-design-case1.md, reference-rules/description.md 5절 · 7절)",,뺀 요소; 뺀 기능; 뺌,제거된 문구: 화면에 남는 요소의 디스크립션에서 일부 문구만 지운 것,2026-11-17 사용자 결정 (DY),확정,팀 내부
+팀 내부,제거된 문구,,"화면에 남는 요소의 디스크립션에서 지우는 문구(정책이 바뀌는 등으로 일부 문장 · 값만 지움). 요소와 번호 표시는 그대로 두고, 지운 부분에만 취소선을 긋습니다 (reference-rules/description.md 7절)",,없앤 글,제거된 요소: 요소 전체를 화면에서 뺀 것,2026-11-17 사용자 결정 (DY),확정,팀 내부
+팀 내부,UX 확정,UX confirmed,"고객이 UX 화면설계를 확정한 것(고객 UX 검토를 마침). 사용자 확인 목록과 ""검토 질의"" 절이 모두 풀린 뒤 요청자가 확정한다고 답한 날을 4단계 안의 날짜로 기입함. 이때 화면 기준 basis · Ver(케이스 1 · 2) · 업데이트 메모를 정하고, 언어셋은 이 뒤에 정리함 (flow/4-revise-verify.md 절차 3번)",,고객 컨펌; UX 컨펌,UI 확정; 작업 완료,2026-11-19 사용자 결정 (서보경),확정,팀 내부
+팀 내부,UI 확정,UI confirmed,"고객이 UI 화면을 확정한 것(고객 UI 검토를 마침). 요청자가 알린 날을 4단계 안의 날짜로 기입하고, 5단계로 넘어가는 트리거가 됨. UI 작업이 없거나 케이스 3이면 해당 없음 (flow/4-revise-verify.md 절차 5번)",,고객 컨펌; 최종 확정(대화에서는 써도 됨),UX 확정,2026-11-19 사용자 결정 (서보경),확정,팀 내부
+팀 내부,작업 완료,work done,"5단계. UX 확정 · UI 확정 뒤에 이 작업에서 결정된 논의 대상을 정책서 · 다른 화면에 반영하고 문서를 업데이트해, 이번 요청의 모든 과정이 정상으로 끝난 것. 반영 대기 항목의 작업 중이 반영 완료가 되는 때 (헌법 4조, flow/5-done.md)",,화면 컨펌,UX 확정,2026-11-19 사용자 결정 (서보경),확정,팀 내부
+팀 내부,고객 검토,customer review,"고객이 화면을 보고 질의(고칠 것 · 물을 것)를 주는 일. 고객 UX 검토(4단계 절차 2번)와 고객 UI 검토(4단계 절차 5번)가 있음. 끝나면 고객 검토 완료라고 하고, 그것이 UX 확정 · UI 확정이 됨. 승인 등 다른 말을 쓰지 않음",,고객 리뷰; 리뷰; 고객 컨펌; 승인,UX 확정; UI 확정,2026-11-19 사용자 결정 (서보경),확정,팀 내부
+팀 내부,기획방,,"고객사와 공유하는 Figma. 반영 순서 저장소 → 작업방 → 기획방 → 통합방의 셋째 (헌법 6조). 어느 파일인지는 팀 프로그램이 지정 · 관리하며 흐름 문서에는 적지 않음. 흐름 안에서 작업방의 화면을 기획방으로 옮기지 않음",,고객 컨펌 페이지,작업방; 통합방,2026-11-19 사용자 결정 (서보경),확정,팀 내부
+팀 내부,통합방,,"개발사와 공유하는 Figma. 반영 순서 저장소 → 작업방 → 기획방 → 통합방의 마지막 (헌법 6조). 어느 파일인지는 팀 프로그램이 지정 · 관리하며 흐름 문서에는 적지 않음. 흐름 안에서 통합방으로 옮기지 않음",,개발사 공유 페이지,기획방,2026-11-19 사용자 결정 (서보경),확정,팀 내부
+팀 내부,내부 검토 반영,internal review,"고객 검토 없이 우리 쪽에서 검토한 뒤 바로 반영해 확정한 것. UX 확정 줄에 `UX 확정 (날짜) · 내부 검토 반영 (근거)`로 적음 (예: 요청 글에 고객 검토 없이 반영해 달라는 말이 있음)",,고객 컨펌 없음; 고객 리뷰 없음,고객 검토,2026-11-19 사용자 결정 (서보경),확정,팀 내부
+팀 내부,기획 진행 표시,진행상태-기획,"작업방 페이지의 T-IOS 줄 · L-IOS 줄 위에 다는, 그 메뉴 기획이 어디까지 왔는지 보이는 표시. `진행상태-기획` 컴포넌트, 글자 `SB-Update : 날짜 (값)`. 값과 바꾸는 때: 작업 중 = 3단계에서 작업방에 그리기 시작할 때 · 검토 중 = 4단계에서 질문 대기 · 변경 확인을 모두 반영했을 때 · 검토 완료 = 4단계에서 UX 확정을 기입할 때. 날짜는 바꾼 날(검토 완료는 UX 확정 날짜). 케이스 3은 기존 작업방 표시의 값을 새 이름으로 옮긴 그대로 둠 (flow/3-design.md 공통 4)",작업 중; 검토 중; 검토 완료,진행 상태 딱지; 작업중; 컨펌 중; 컨펌 완료,UX 확정; 고객 검토; 시스템 구분 표시; 메뉴 단위 표시,2026-11-19 사용자 결정 (서보경 · DY),확정,팀 내부
+팀 내부,케이스 초록 띠,,"케이스 프레임에서 케이스 하나의 제목(`Case 1. 제목`)을 적는 띠. 색 `#C3F286`, 높이 60px, 너비는 케이스 프레임과 같음 (`flow/3-design.md` 공통 5)",,초록 띠,케이스 노란 띠,2026-11-19 DY 결정,확정,팀 내부
+팀 내부,케이스 노란 띠,,"케이스 안의 조건 하나(`1-1. 조건`)를 적는 띠. 색 `#F2E786`, 높이 50px, 너비는 아래 화면 조각에 맞춤 (`flow/3-design.md` 공통 5)",,노란 띠,케이스 초록 띠,2026-11-19 DY 결정,확정,팀 내부
+팀 내부,작업 중,,기획 진행 표시 값. 3단계에서 Figma를 그리기 시작할 때 Claude가 담,,작업중,검토 중,2026-11-19 DY 결정,확정,팀 내부
+팀 내부,검토 중,,기획 진행 표시 값. 4단계에서 질문 대기 · 변경 확인을 모두 반영했을 때 Claude가 바꿈,,컨펌 중,작업 중; 검토 완료,2026-11-19 DY 결정,확정,팀 내부
+팀 내부,검토 완료,,기획 진행 표시 값. 4단계에서 요청자가 UX 확정을 말했을 때 Claude가 바꿈,,컨펌 완료,검토 중,2026-11-19 DY 결정,확정,팀 내부
+팀 내부,메뉴 단위 표시,,"작업방 페이지의 T-IOS 줄 · L-IOS 줄 위에 각각 두는 표시 묶음. 위에서 아래로 시스템 구분 표시 → 기획 진행 표시 → 섹션 줄 순서로 두고, 너비는 섹션 줄 너비에 맞춤 (`flow/3-design.md` 공통 4)",,페이지 위 딱지,시스템 구분 표시; 기획 진행 표시,2026-11-16 이름 바꿈 (DY),확정,팀 내부
+팀 내부,시스템 구분 표시,,"메뉴 단위 표시의 맨 위 표시. 그 줄이 T-IOS인지 L-IOS인지와 릴리즈 버전을 보여 줌. `시스템 구분` 컴포넌트(System = T-IOS · L-IOS), 예: `T-IOS - 2.1` (`flow/3-design.md` 공통 4)",,시스템 딱지,기획 진행 표시; 메뉴 단위 표시,2026-11-16 이름 바꿈 (DY),확정,팀 내부
+팀 내부,화면 변경 목록,,"쓰지 않음 (2026-11-24). To-Be 화면 MD 옆에 두던 짝 파일 `{CID}.changes.md`(반영 대기 목록 · 변경 이력). 반영 대기 항목은 반영 대기 목록(`pending/open.md`) 한 곳으로, 변경 이력은 화면 변경 이력(`screen-history.md`) 한 파일로 옮김",,,반영 대기 목록: pending/ 한 곳의 목록; 화면 변경 이력: screen-history.md,2026-11-23 DY 결정; 2026-11-24 없앰 (서보경 · DY),폐기,팀 내부
+팀 내부,변경 상태,,"작업 기록 ""언어셋"" 절에서 이번 작업으로 화면의 그 글자가 어떻게 됐는지. 4단계가 지금 화면 표기 글자 표를 언어셋 DB(케이스 3은 asis 화면 MD)와 Language ID로 짝지어 정함. DB 맞춤은 화면은 그대로이고 언어셋 DB만 맞추는 줄 (flow/4-revise-verify.md 절차 4번)",신규 / 변경 / 제거 / DB 맞춤 (추가) / DB 맞춤 (CID 추가) / DB 맞춤 (제거),,언어셋 DB 대조,2026-11-23 서보경; 2026-11-24 언어셋 DB와 대어 봄 · 언어셋 DB만 맞추는 값 (서보경),확정,문서
+팀 내부,언어셋 DB 대조,,"작업 기록 ""언어셋"" 절에서 그 글자가 언어셋 원본(language-set/db/)에 이미 있는지 대어 본 결과. ""언어셋"" 절의 모든 줄(제거 줄 포함)에 적음. 있으면 Language ID만 적고 번역은 옮기지 않음. 없으면 ""새로 넣을 줄"" 표에 적음(번역하는 글자는 번역까지, 영어 그대로인 글자는 언어 칸 -) (flow/4-revise-verify.md 절차 4번)",있음 / 공통에 있음 (공통 ID) / 없음,채우는 법; 가져옴; 번역함,변경 상태,2026-11-23 서보경; 2026-11-24 모든 줄 대조 · 새로 넣을 줄 (서보경),확정,문서
+팀 내부,검토 질의,review query,"4단계에서 요청자 · 고객 UX 검토 · 고객 UI 검토로 받은 것(고쳐 달라는 것, 요건을 더하거나 빼는 것, 질문 대기의 답, 정책을 정해야 하는 것)과 그 처리를 적는 작업 기록의 절 (flow/4-revise-verify.md 절차 2번, ""검토 질의 틀"")",,의견; 검토 의견; 리뷰,요청자 확인: 우리가 요청자에게 물은 것,2026-11-24 서보경,확정,팀 내부
+팀 내부,화면 예시 글자,,"Figma에 그릴 때 화면에 넣는 예시 값(상태값 · Module · Unit · 품목 · 수량 · 목록 행 값 등)과 그 기준. 화면 MD 표에 요소마다 적고 ""기준"" 칸에 출처(기준데이터 · 정책, 케이스 3은 원본에서 읽은 위치)를 적음. Figma에는 이 표의 값만 씀 (flow/3-design.md 공통 1의 5 · 공통 3의 4)",,화면 예시(표 이름일 때); 예시 데이터(표 이름일 때); 화면 예시 데이터(2026-11-23 이름 바꿈),기준데이터: 값의 원본(glossary/*.csv),2026-11-23 DY 결정; 같은 날 "화면 예시 데이터"에서 이름 바꿈 (DY),확정,팀 내부
+팀 내부,화면 변경 이력,,"새로 그린 화면(`screens/tobe/{메뉴}/{CID}.md`)의 바뀐 것을 모두 모은 파일 `screen-history.md`. 줄은 5단계 완료 때(연동 변경은 결정 반영 때) 만들고, T · L 짝은 한 줄 (screen-history.md 1 · 2절). 반영 대기 항목은 여기 두지 않고 반영 대기 목록(`pending/open.md`)에 둠. 화면 MD에는 현행 정보만 둠. asis 화면 MD에는 변경 이력을 두지 않음",,,작업 기록: 작업 단위 기록(work-logs); 반영 대기 목록: 아직 반영하지 않은 변경(pending/),2026-11-23 DY 결정; 2026-11-24 screen-history.md 한 파일로 (DY),확정,팀 내부
+팀 내부,Common UX,Common UX,"화면 요소의 공통 규칙과 컴포넌트. 원본은 `common-ux/comm-index.md`이고 COMM 번호로 가리킴. 3단계가 그릴 때 그리는 Type의 정의 · 조건 · 컴포넌트 줄을 읽음(경로 분기 기준 5만 2단계에서 읽음)",,"공통 UX; UX가이드; 가이드(Common UX를 뜻할 때). 디스크립션 참고 줄 `공통 UX 참고 : COMM-…`은 Figma 표기 형식이라 그대로 씀",레이아웃 구조 가이드: 화면 틀 9종을 고르는 다른 자료,2026-11-25 서보경 (원본은 2026-11-24 DY 결정 comm-index.md),확정,팀 내부

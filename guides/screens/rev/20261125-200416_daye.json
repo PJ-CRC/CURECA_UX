@@ -1,0 +1,12 @@
+{
+  "rev": "20261125-200416_daye",
+  "by": "Claude",
+  "at": "2026-11-25T20:04:16+09:00",
+  "note": "asis 화면 MD: 2026-11-25부터 {메뉴}_asis 페이지에서 To-Be 작업 전에 한 번 추출 (README.md)",
+  "base": "README.md",
+  "pc": "DAYE",
+  "req": "케이스 3 원본을 작업방 {메뉴}_asis 페이지로: 작업방 = UX-AI-TEST, 요청자가 메뉴마다 {메뉴}_asis(최신 화면 · 업데이트 메모 · 기획 진행 표시)를 옮겨 두고 Claude는 {메뉴}_tobe에 그림, 세로 바 영역 고르기 없앰, asis 화면 MD는 To-Be 작업 전에 단순 추출해 두고 1단계 다시 옮기기 없앰, 이미 그린 메뉴도 처음부터 다시 그림 (정다예, 2026-11-25, Claude Code 대화)",
+  "jobId": "",
+  "file": "README.md",
+  "orig": true
+}
