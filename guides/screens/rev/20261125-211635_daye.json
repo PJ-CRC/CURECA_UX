@@ -1,0 +1,12 @@
+{
+  "rev": "20261125-211635_daye",
+  "by": "정다예",
+  "at": "2026-11-25T21:16:35+09:00",
+  "note": "Instrument asis 화면 MD를 작업방 Instrument_asis 페이지 기준으로 새로 씀 (정다예)",
+  "base": "asis/instrument/TI-INS-02-01-P.md",
+  "pc": "DAYE",
+  "req": "Instrument asis 화면 MD 다시 쓰기: 작업방 Instrument_asis 페이지에서 단순 추출해 지금 파일을 덮어씀, 정다예가 새로 쓴 것으로 남김 (2026-11-25, Claude Code 대화로 추출)",
+  "jobId": "",
+  "file": "asis/instrument/TI-INS-02-01-P.md",
+  "orig": true
+}
