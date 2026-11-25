@@ -1,0 +1,28 @@
+{
+  "id": "daye_R001",
+  "kind": "request",
+  "reqId": "R001",
+  "reqType": "요청",
+  "team": "cureca",
+  "at": "2026-11-25T17:13:40+09:00",
+  "from": "2026-11-25T17:13:19+09:00",
+  "by": "정다예",
+  "doneBy": "Claude",
+  "pc": "DAYE",
+  "fileKey": "etCQFF3CTf1EA6C79d4BBf",
+  "fileName": "UX AI TEST",
+  "page": "Setting  Ⓛ / Ⓣ_To Be",
+  "frame": "",
+  "nodeId": "",
+  "text": "R02 이어서 해줘",
+  "models": {
+    "claude-opus-5-5": 5
+  },
+  "calls": 5,
+  "input": 10,
+  "cacheWrite": 2310,
+  "cacheRead": 238158,
+  "output": 1614,
+  "total": 242092,
+  "usd": 0.0984
+}
