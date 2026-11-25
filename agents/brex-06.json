@@ -1,18 +1,23 @@
 {
-  "reportAt": "2026-11-25T19:00:19+09:00",
+  "reportAt": "2026-11-25T19:01:19+09:00",
   "pc": "BREX_06",
   "slug": "brex-06",
   "user": "최고관리자",
   "os": "windows",
   "version": "0.32.19",
   "alive": true,
-  "status": "limit",
-  "msg": "Claude 사용 한도(5시간)가 차 있어 19:00에 다시 시작합니다. 그 사이 요청은 「대기」로 남습니다.",
-  "statusAt": "2026-11-25T19:00:16+09:00",
+  "status": "working",
+  "msg": "처리 중: PENDING R002 · 강도 medium",
+  "statusAt": "2026-11-25T19:01:16+09:00",
   "claude": "따로 설치",
   "claudeWay": "cli",
   "autoWatch": true,
   "events": [
+    {
+      "at": "2026-11-25T19:01:00+09:00",
+      "kind": "limit",
+      "text": "사용 한도 풀림 — 다시 받음"
+    },
     {
       "at": "2026-11-25T17:43:11+09:00",
       "kind": "limit",
@@ -345,6 +350,14 @@
     }
   ],
   "turns": [
+    {
+      "at": "2026-11-25T19:01:00+09:00",
+      "what": "PENDING R002 · 강도 medium",
+      "resume": false,
+      "end": "",
+      "ok": null,
+      "sec": null
+    },
     {
       "at": "2026-11-25T17:13:38+09:00",
       "what": "PENDING R002 · 강도 medium · Claude 5시간 사용량 100%(19:00 초기화) — 중간에 끊길 수 있음",
