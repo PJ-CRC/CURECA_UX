@@ -2,8 +2,8 @@
   "id": "brex-01_R001",
   "kind": "request",
   "team": "cureca",
-  "status": "진행 중",
-  "at": "2026-11-25T21:21:05+09:00",
+  "status": "보류",
+  "at": "2026-11-25T21:21:33+09:00",
   "createdAt": "2026-11-25T21:16:32+09:00",
   "by": "서보경",
   "doneBy": "Claude",
@@ -17,13 +17,21 @@
   "type": "요청",
   "layout": "",
   "text": "Event History 화면 옮겨줘\n\n기존 화면: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-45275&t=8ZUolJfFqEx5iunS-1\n옮길 페이지: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3577-18413&t=8ZUolJfFqEx5iunS-1",
-  "note": "케이스 3 · 1단계 · 20261125-서보경-event-history\n답(연결 확인함)대로 1단계 절차 3부터 이어 가는 중",
+  "note": "케이스 3 · 1단계 · 20261125-서보경-event-history — 연결 확인 답을 받고 다시 해 봤으나 Figma 파일에 여전히 접근할 수 없어 멈춤\n- 시도: create_session(21:21) → 'Figma could not access the requested file'\n- 지금 Figma MCP에 연결된 계정: BOKYUNG SEO (팀: BOKYUNG SEO's team · yuja · BOKYUNG's Starter team). 이 파일(UX AI TEST)은 이 팀들 밖에 있거나 이 계정에 공유되지 않은 것으로 보임\n- 할 일: 파일을 이 계정에 편집 권한으로 공유하거나, 파일에 권한이 있는 계정으로 Figma MCP를 다시 연결(/mcp 또는 앱 커넥터 설정)\n- 멈춘 곳: 1단계 절차 3 — 케이스 프레임 읽기(작업 기록 「이어서 작업할 곳:」 그대로)\n규칙 점검: 1단계 「마침 점검」 전에 멈춤(건너뛴 것 없음)\n작업 기준: basis 2026-11-25 21:17 · 작업규칙 rules @원본 · 정책서 policy · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 glossary · 화면 정의서 screens",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "Figma MCP 계정이 이 파일에 접근하지 못합니다. 파일 공유 또는 계정 다시 연결 뒤 알려 주세요.",
+    "free": true,
+    "options": [
+      {
+        "label": "공유 · 다시 연결함, 이어서 진행"
+      }
+    ]
+  },
   "replies": [
     {
       "at": "2026-11-25T21:20:57+09:00",
