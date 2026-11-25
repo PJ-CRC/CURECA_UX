@@ -1404,18 +1404,19 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
     if (e.target.id === 'blPickAll') { document.querySelectorAll('.blpick').forEach(function(c){ c.checked = e.target.checked; }); blPickCount(); }
     if (e.target.classList && e.target.classList.contains('blpick')) blPickCount();
   });
-  // 고른 반영 대기 항목 → Workbench 화면설계 작업 요청(케이스 1 부분 수정 · 새 작업). fixRows를 담아 1단계에서 「이번에 반영」으로 고르게 한다
+  // 고른 반영 대기 항목 → Workbench 화면설계 작업 요청(새 작업). fixRows를 담아 1단계에서 「이번에 반영」으로 고르게 한다
+  //  케이스는 팀 작업규칙이 1단계에서 정한다(2026-11-25 — 예전엔 case:'1'을 붙였음. 시스템이 팀 흐름을 정하지 않게)
   document.addEventListener('click', async function(e){
     var b = e.target.closest('[data-blreq]'); if (!b) return;
     var s = BL && BL.screens.filter(function(x){ return x.cid === blSel; })[0], fig = s && figOf(s.figma); if (!s || !fig) return;
     var picks = Array.prototype.map.call(document.querySelectorAll('.blpick:checked'), function(c){ return c.value; });
     if (!picks.length) { WB.alert('반영할 항목을 골라 주세요.'); return; }
     var rows = s.rows.filter(function(r){ return picks.indexOf(r.n) >= 0; });
-    var text = '화면설계서 작업대기 · ' + s.cid + ' ' + (s.title || '') + '의 반영 대기 ' + rows.length + '항목을 반영하는 화면 부분 수정입니다. 1단계에서 이 항목들을 「이번에 반영」으로 골라 주세요.\n' +
+    var text = '화면설계서 작업대기 · ' + s.cid + ' ' + (s.title || '') + '의 반영 대기 ' + rows.length + '항목을 반영하는 화면설계 작업입니다. 1단계에서 이 항목들을 「이번에 반영」으로 골라 주세요.\n' +
       rows.map(function(r){ return '- ' + r.n + ' [' + r.kind + '] 변경 전: ' + r.now + ' → 변경 후: ' + r.to + (r.why ? ' (근거: ' + r.why + ')' : ''); }).join('\n');
-    if (!(await WB.confirm('화면설계 작업을 요청할까요?\n' + s.cid + ' 화면의 ' + rows.length + '항목으로 Case 1 · 새 작업을 등록합니다.', { ok: '요청' }))) return;
+    if (!(await WB.confirm('화면설계 작업을 요청할까요?\n' + s.cid + ' 화면의 ' + rows.length + '항목으로 새 작업을 등록합니다.', { ok: '요청' }))) return;
     b.disabled = true;
-    api('/api/requests', { action: 'add', fileKey: fig.key, fileName: '', nodeId: fig.node, frame: s.cid + (s.title ? ' ' + s.title : ''), page: '', editable: true, type: 'Case 1 · 부분 수정 · 1단계 시작', case: '1', work: '', stage: 0, priority: '보통', layout: '', text: text, by: myName,
+    api('/api/requests', { action: 'add', fileKey: fig.key, fileName: '', nodeId: fig.node, frame: s.cid + (s.title ? ' ' + s.title : ''), page: '', editable: true, type: '화면설계 작업 · 1단계 시작', work: '', stage: 0, priority: '보통', layout: '', text: text, by: myName,
       fixRows: rows.map(function(r){ return { doc: BLDOC, file: s.path, n: r.n, cid: s.cid }; }) })
       .then(function(j){ return loadFixReqs().then(function(){ renderBacklog(); var id = j && j.items && j.items[0] && j.items[0].id; toast((id ? id + ' ' : '') + '화면설계 작업을 요청했습니다. Workbench · 변경 이력에서 진행을 볼 수 있습니다.'); }); })
       .catch(function(err){ b.disabled = false; WB.alert('요청을 만들지 못했습니다.\n' + err.message); });
