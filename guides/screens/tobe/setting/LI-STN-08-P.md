@@ -57,7 +57,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=34
   - Quantity Info : Quantity · Base Unit · Packaging Unit (Display 없음)
 - 내용이 길면 패널 안에서 스크롤
 - [Delete] 버튼 없음
-- 공통 UX 참고 : COMM-5-e
+- 공통 UX 참고 : COMM-5-j
 - 공통 UX 참고 : COMM-5-o
 - 정책 참고 : POL-TST-008
 - 정책 참고 : POL-TST-010

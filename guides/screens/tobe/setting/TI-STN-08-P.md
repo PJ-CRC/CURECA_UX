@@ -68,7 +68,8 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=34
     - 파일에 들어온 개수만큼 Segment 순서대로 노출 (개수 제한 없음), Segment 이름이 있으면 함께 노출
   - Quantity Info : Quantity · Base Unit · Packaging Unit 각각 노출 (Display 없음)
 - 내용이 길면 패널 안에서 스크롤
-- 공통 UX 참고 : COMM-5-e
+- 공통 UX 참고 : COMM-5-c
+- 공통 UX 참고 : COMM-5-j
 - 공통 UX 참고 : COMM-5-o
 - 정책 참고 : POL-TST-008
 - 정책 참고 : POL-TST-010
