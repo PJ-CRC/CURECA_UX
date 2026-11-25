@@ -1,0 +1,17 @@
+{
+  "reportAt": "2026-11-25T13:07:22+09:00",
+  "pc": "BREX_01",
+  "slug": "brex-01",
+  "user": "서보경",
+  "os": "windows",
+  "version": "0.32.8",
+  "alive": false,
+  "status": "dead",
+  "msg": "같은 요청이 처리되지 않아 10분 쉽니다: PENDING R007",
+  "statusAt": "2026-11-17T17:57:58+09:00",
+  "claude": "",
+  "claudeWay": "cli",
+  "autoWatch": false,
+  "events": [],
+  "turns": []
+}
