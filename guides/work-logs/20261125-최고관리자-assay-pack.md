@@ -25,7 +25,7 @@ started: 2026-11-25
 | --- | --- | --- | --- |
 | 1. 시작 · 요건 정의 | 2026-11-25 | 요청자 확인 (2026-11-25) | 겹치는 다른 작업: 없음 |
 | 2. 근거 · 분석 | 2026-11-25 | 요청자 확인 (2026-11-25) | 논의 대상 DS-0012 (결정), 질문 대기 Q1 · Q2, 변경 확인 C1 ~ C3 |
-| 3. 화면 설계 | | | |
+| 3. 화면 설계 | 2026-11-25 | 기계 검사 통과 (2026-11-25) | 화면 MD 5 · Figma 섹션 5, 질문 대기 Q1 ~ Q5, 변경 확인 C1 ~ C6 |
 | 4. 수정 · 확인 | | | |
 | 5. 완료 | | | |
 
@@ -241,6 +241,7 @@ started: 2026-11-25
 - TI-STN-08-P / LI-STN-08-P 그리기(2026-11-25, R001 · 정다예): 뒤 화면(LNB · GNB · 검색 영역 · Items 줄 · 목록 행 · Pagination)은 화면 MD "TI-STN-08과 같음"대로 TI-STN-08과 같은 Common UX 컴포넌트 · 속성으로 그리고, 영역 틀 · 자리는 상세 원본(`3288:235494` · L `3288:238487`) 값으로 둠(Items 줄 828, 목록 바탕 y 247 · 746, Pagination x 158). 상세 원본에서 숨겨져 있던 1번 번호 표시는 디스크립션 1이 있어 원본 자리(861, 209)에 보이게 둠. 목록 4행(ap_pcr_gi-b1_v5)을 선택 Row로(Table/Cell State Selected), 행 Checkbox는 원본대로 선택 없음. 패널 아래 [Delete] · [Save]는 Common UX Square(Outlined · Filled Disabled, 150×44)로, Active 값은 Status Base(Active Navy) · Square [Inactive]로 그림. 패널 정보 묶음은 Card/List · Card/Table에 Active 값(태그 · 버튼)을 담을 수 없어 기존 화면에서 따옴 → 화면 MD 3의 `공통 UX 참고 : COMM-5-e`를 그린 컴포넌트대로 COMM-5-c · COMM-5-j(L은 COMM-5-j)로 고침(케이스 3 3-3, 변경 확인 없음). 패널 내용은 화면 예시 글자에 있는 File Info · Import Info · Reagent Basic Info(칩 · Sample Type 표)까지만 그리고 스크롤 영역에서 잘림(원본과 같음). TI-STN-08-P 패널이 길어 기획 프레임 높이 1186 · 섹션 1386. L 원본에 맞춰 [Delete] · [Import] · Checkbox · 1 · 4번 번호 표시 · 패널 아래 버튼 · [Inactive]를 빼고 스크롤 영역 728. Q3(L 노출 개수 Dropdown)는 LI-STN-08-P에 그 번호 표시가 없어 사용자 확인 목록 0번 블록에만 둠. 기존 원본 T · L 상세에는 업데이트 메모가 없어 두지 않음
 - TI-STN-08 그리기(2026-11-25, R002): LNB Setting 하위 메뉴는 IA Lv.2 순서 8개(Policy · System · Protocol · LIS · Account · SMTP · Assay Pack · Tube)로 둠(기존 원본 LNB는 7개, 공통 영역). LNB 컴포넌트 너비(218) 안에서 「Assay Pack Setting」이 말줄임으로 보임 — LNB 컴포넌트가 정한 모습이라 그대로 둠. 기존 원본 목록에 Active 머리 옆 삼각형 두 개(`3288:235487`, 정렬 아이콘 모양)가 있으나 디스크립션에 정렬 정의가 없어 그리지 않음(화면 MD 정렬 Default만). 목록 2행(5 · 6행) 선택 · [Delete] 활성은 기존 원본 그대로. 검색 영역 Active only는 Common UX Search Area 대로 Checkbox(Circle)로 그림(원본은 Square)
 - TI-STN-08-01 그리기(2026-11-25, R001 · 정다예): 기존 원본(`3288:237146`)의 Dim · Popup만 원본 값 그대로 다시 그리고 뒤 목록 · LNB · GNB는 깔지 않음(C5, 공통 3-9). Dim은 원본 크기 · 자리(x 218부터 1702×1031) 그대로라 왼쪽 218은 흰 바탕으로 남음. Popup 자리 · 크기(809, 271 · 520×490)와 번호 표시 1 · 2 · 3 자리는 원본과 같음(원본의 숨긴 번호 표시는 옮기지 않음). 닫기는 Interface/Close를 원본 ✕ 크기에 맞춰 19×19로 둠. 원본 요약과 그린 요소 요약이 같음(Popup 520×490 · Header 58 · Body 363 · Footer 69, 프레임 14). 사용자 확인 목록은 변경 확인 C5 하나(0번 블록, 사용자 확인 라벨 없음). 기존 원본에 업데이트 메모가 없어 두지 않음. 화면 MD는 고칠 곳 없음(공통 UX 참고 COMM-5-m(1/4) · COMM-5-c 그대로)
+- 3단계 마침 점검(2026-11-25, R001 · Claude): LI-STN-08 패널 참고 코드 5곳(COMM-5-g ×2 · COMM-5-j · POL-TST-008 · LI-STN-08-P)의 색이 `#3342FF`라 `reference-rules/description.md` "참고 코드 표시"의 `#3242FF`로 맞춤(글자는 그대로). 질문 대기 Q5 "관련된 곳"에 LI-STN-08 #4-1을 더함(LI-STN-08 4-1 자리에 Q5 사용자 확인 라벨 · 목록이 이미 있음). 뒤 단계용 확인 항목 1의 [세부정의] 줄에 이어진 번호 C4를 적음. TI-STN-08-P 4의 빨간 글자(Toast 줄)는 화면 MD `<span style="color:red">`와 같음
 
 ### 용어 치환
 | 원래 표현 | 표준어 | 위치 |
