@@ -46,11 +46,6 @@
   ],
   "raws": [
     {
-      "at": "2026-11-25T17:12:32+09:00",
-      "text": "R001은 처리하지 않고 「보류」로 바꿨습니다.\n\n- **이유:** 요청한 페이지는 「Setting  Ⓛ / Ⓣ_To Be」인데, 이 파일(UX AI TEST)의 지금 작업 페이지는 「Sample Tracking Ⓛ / Ⓣ_re」입니다. 규칙상 작업 페이지가 아닌 곳은 읽기만 해야 해서 Figma는 고치지 않았습니다.\n- **남긴 note:** 「Setting  Ⓛ / Ⓣ_To Be 페이지는 보기 전용입니다. 담당자 확인 필요」와 지금 작업 페이지 이름을 적었습니다.\n- **이어 가려면:** Workbench에서 작업 페이지를 「Setting  Ⓛ / Ⓣ_To Be」로 바꾼 뒤 「다시 진행」을 누르면 다시 처리합니다.\n- **확인이 필요한 점:** 요청 글 「R02 이어서 해줘」가 어떤 작업을 가리키는지는 아직 확인하지 않았습니다.",
-      "cut": false
-    },
-    {
       "at": "2026-11-25T17:13:47+09:00",
       "text": "I put R001 (\"R02 이어서 해줘\", continue R02) on hold without changing anything in Figma.\n\n- **Target page:** the request's page, `Setting  Ⓛ / Ⓣ_To Be`, is the file's current work page, so that wasn't the problem.\n- **Why it's on hold:** this PC's CURECA work standards for UX AI TEST have only the UX guide (Common UX 가이드) applied. The work rules document (작업규칙) is empty. Continuing R02's work record and steps follows the stages that document defines, and the rules say to hold the request when it isn't applied.\n- **Question left on the request:** asking for the CURECA work rules to be applied in UX docs, with a \"작업규칙 적용함, 이어서 진행\" (applied, continue) button. Once someone answers or presses 「다시 진행」 (resume), it goes back to waiting and I'll pick it up from there.\n- **Not done:** no screens were changed, so there are no captures and no prototype sync. The server records request usage on its own.",
       "cut": false
@@ -68,6 +63,11 @@
     {
       "at": "2026-11-25T17:20:13+09:00",
       "text": "R001은 작업규칙이 적용된 것을 확인한 뒤 R02 작업(작업 기록 `20261125-최고관리자-assay-pack`, 케이스 3 · 3단계)을 이어서 진행했습니다. T · L 한 쌍(TI-STN-08 / LI-STN-08)을 끝냈고, 요청은 다음 화면을 새 세션이 이어 그리도록 「대기」로 돌려 두었습니다.\n\n- **L 섹션에서 찾은 것:** TI-STN-08을 복제한 LI-STN-08 프레임이 이미 있었는데, 작업 기록에는 적혀 있지 않았습니다. LNB · GNB, [Delete] · [Import] 빼기, 라벨은 L로 바뀌어 있었지만 패널 디스크립션은 T 내용 그대로였습니다.\n- **이번에 고친 것(LI-STN-08):**\n  - 패널 디스크립션 0 · 2 · 4 · 4-1 · 4-2와 경로를 L 화면 MD대로 바꾸고, L에 없는 3번 블록([Delete] · [Import])을 지웠습니다.\n  - 사용자 확인 목록을 새로 두었습니다(질문 대기 Q3 · Q4 · Q5, 변경 확인 C4).\n  - 기획 프레임 높이를 패널에 맞추고(1074), 섹션 높이도 맞췄습니다(1274).\n- **확인한 것:** 목록 10행은 기존 원본 LI-STN-08과 같고, 넘치는 글자는 없습니다. 기존 원본 L에는 업데이트 메모가 없어서 두지 않았습니다.\n- **작업 기록:** 「화면별 작업」 줄, 「컴포넌트 없이 그린 요소」의 쓴 곳, 「찾은 것」에 이번 내용을 적었습니다. 「이어서 작업할 곳」 줄은 다음 차례로 고쳤습니다. 정다예 님이 최고관리자의 작업을 이어 받았다는 것도 함께 남겼습니다.\n- **다음 차례:** TI-STN-08-P / LI-STN-08-P(상세), 그다음 TI-STN-08-01(Popup, 짝 없음)입니다. 상세가 목록 다음이라 이 순서로 정했는데, 작업 기록 표에는 TI-STN-08-01이 먼저 적혀 있습니다. 백그라운드 감시가 새 세션으로 작업 기록에서 이어 갑니다.\n- **하지 않은 것:** 요청을 「완료」로 바꾸지 않았기 때문에 고친 화면 목록(frames)은 보내지 않았고, 캡처도 붙지 않았습니다. 3단계 화면이 아직 남아 있어 프로토타입 맞추기도 하지 않았습니다.",
+      "cut": false
+    },
+    {
+      "at": "2026-11-25T17:31:53+09:00",
+      "text": "R001은 이번 차례에 상세 화면 한 쌍(TI-STN-08-P / LI-STN-08-P)까지 그리고 「대기」로 돌려 두었습니다. 3단계에 그릴 화면이 하나 더 남아 있어서 「완료」로 바꾸지 않았습니다. 백그라운드 감시가 새 세션으로 작업 기록에서 이어 갑니다.\n\n- **작업규칙 확인:** 서버에서 CURECA 작업규칙이 적용된 것을 확인했고, 요청 페이지 「Setting  Ⓛ / Ⓣ_To Be」도 지금 작업 페이지가 맞았습니다.\n- **TI-STN-08-P (`3515:1564`):**\n  - 상세 원본을 복제하지 않고 화면 MD대로 새로 그렸습니다. 뒤의 목록 화면은 TI-STN-08과 같은 Common UX 컴포넌트로 그렸고, 영역 틀과 자리는 상세 원본 값을 따랐습니다.\n  - File details 패널 내용은 원본에서 따왔습니다. Card/List · Card/Table에는 Active 값(태그와 버튼)을 담을 수 없어서입니다. 「컴포넌트 없이 그린 요소」 표에 원본 요약과 함께 「Card/List · Card/Table로 바꿀 여지」를 적었습니다.\n  - 패널 디스크립션 0 ~ 4, 사용자 확인 라벨, 사용자 확인 목록(질문 대기 Q1 · Q2 · Q5, 변경 확인 C1 ~ C4 · C6)을 두었습니다. 패널이 길어 기획 프레임 높이를 1186으로 늘렸습니다.\n- **LI-STN-08-P (`3519:2202`):** 다 그린 T를 복제해 L 원본과 다른 점만 바꿨습니다. [Delete] · [Import] · Checkbox · 패널 아래 버튼 · [Inactive]를 뺐고, 스크롤 영역은 원본대로 728로 맞췄습니다. 사용자 확인 목록에는 Q3 · Q5와 C4를 두었습니다.\n- **점검:** 두 화면 모두 칸을 넘는 글자는 없었고, 스크린샷으로도 확인했습니다.\n- **화면 MD 두 개를 고친 것:** 3번 블록의 `공통 UX 참고 : COMM-5-e`를 실제로 그린 컴포넌트에 맞춰 바꿨습니다. T는 COMM-5-c · COMM-5-j, L은 COMM-5-j이고 COMM-5-o는 그대로 두었습니다.\n- **판단으로 정한 곳:**\n  - 상세 원본에서는 숨겨져 있던 1번 번호 표시를 원본 자리에 보이게 두었습니다. 디스크립션에 1번 블록이 있기 때문입니다.\n  - Q3(L-IOS 노출 개수 Dropdown)은 LI-STN-08-P에 그 번호 표시가 없어서 라벨 없이 사용자 확인 목록의 0번 블록에만 넣었습니다.\n  \n  둘 다 작업 기록 「찾은 것」에 적었습니다.\n- **작업 기록:** 「화면별 작업」 줄, 「컴포넌트 없이 그린 요소」 표(줄 8개 추가), Q5의 관련 화면, 「찾은 것」을 채웠습니다. 「이어서 작업할 곳」 줄과 요청 note에는 다음 차례를 적었습니다.\n- **컴포넌트 메모:** 다음 처리에서 Figma를 다시 알아보지 않도록 `projects/etCQFF3CTf1EA6C79d4BBf/components.md`를 새로 만들었습니다.\n- **다음 차례:** TI-STN-08-01(Import file Popup, 짝 없음)을 그리고, 그다음 3단계 절차 3번(용어 점검)으로 갑니다.",
       "cut": false
     }
   ],
