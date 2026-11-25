@@ -2,8 +2,8 @@
   "id": "brex-01_R001",
   "kind": "request",
   "team": "cureca",
-  "status": "보류",
-  "at": "2026-11-25T21:51:22+09:00",
+  "status": "진행 중",
+  "at": "2026-11-25T21:52:13+09:00",
   "createdAt": "2026-11-25T21:16:32+09:00",
   "by": "서보경",
   "doneBy": "Claude",
@@ -17,24 +17,13 @@
   "type": "요청",
   "layout": "",
   "text": "Event History 화면 옮겨줘\n\n기존 화면: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-45275&t=8ZUolJfFqEx5iunS-1\n옮길 페이지: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3577-18413&t=8ZUolJfFqEx5iunS-1",
-  "note": "케이스 3 · 1단계 · 20261125-서보경-event-history — 작업 기록 파일이 비워져 멈춤\n- 받은 답(B IA 같음 · ② 반영 · ⑥ 제외 · 진행)대로 반영 대기 목록은 바꿨습니다: 작업 중 20개, 제외 3개(closed.md로 옮김).\n- 그런데 작업 기록 20261125-서보경-event-history.md가 21:50에 내용 없이(--- 한 줄) 비워졌습니다. 이 요청 처리나 R002 삭제가 한 일은 아닙니다.\n- 바로 전 버전(21:45, 167줄, 답 A까지 들어 있음)이 history 깃 기록에 있어 되살릴 수 있습니다. 확인 뒤 이어 갑니다.",
+  "note": "케이스 3 · 1단계 — 작업 기록을 21:45 버전으로 되살리는 중 (요청자 답: 되살리고 진행)",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": {
-    "q": "작업 기록을 21:45 버전으로 되살리고 이어 갈까요?",
-    "free": true,
-    "options": [
-      {
-        "label": "되살리고 이어서 진행"
-      },
-      {
-        "label": "내가 확인할게"
-      }
-    ]
-  },
+  "ask": null,
   "replies": [
     {
       "at": "2026-11-25T21:20:57+09:00",
