@@ -3,47 +3,53 @@ cid: TI-INS-01-T
 pair_cid: LI-INS-01-T
 tl_relation: 기능 추가
 title: Overview Tab
-path: Instruments > Overview
+path: Instrument > Overview Tab
 type: Page
-version: 2.1.06
-date: 2026-09-28
-author: 서보경
+version: 2.1.18
+date: 2026.11.19
+author: 이상헌
 client_mode: []
-user_type: [Service, Admin, User]
+user_type: []
 policies: []
-rules_version:
-provisional: []
-flags: []
 source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3249-111508
-figma_region: 2.1 1차
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-317244
 ---
 # TI-INS-01-T Overview Tab
 
-> 기존 화면(기존 작업방 Instruments 페이지, 2.1 1차 영역, Ver 2.1.06)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 `Instrument_asis` 페이지, Ver 2.1.18)을 2026-11-25에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
 
-- T/L 차이: L-IOS(LI-INS-01-T)에는 Door Status Tooltip과 [Unlock](Door Control) 버튼이 더 있음
-- 관련 정책: POL-EQP-001, POL-EQP-002, POL-EQP-009
+- T/L 차이: L-IOS(LI-INS-01-T)에는 6 Unlock 버튼(Module마다 `Door Control`)과 취소선 처리된 5 Door Status Tooltip이 더 있어 범례가 L에서는 7. 1의 Alert 코드가 T `Alert_L_004`, L `Alert_004`. 패널 CID는 원문에 `TI-INS-02-T`로 적혀 있음
+- 호출하는 화면: [TI-INS-02-T] All Tab · Module Type Tab (1 Tab, 3-4 View All), Alert_L_004 (1 등록되지 않은 모듈 Tab)
+- 호출되는 곳: LNB > Instrument (0 진입 방법)
 
 ## 기존 화면
 
+<!-- `{메뉴}_asis` 페이지에 있는 그대로 옮깁니다. 고치거나 정리하지 않습니다. 틀린 곳 · 정책과 다른 곳은 반영 대기 목록(`pending/open.md`)에 "점검 발견"으로 남깁니다. -->
+
 ### 화면 글자
 
-- (GNB) Running | Instrument | L-IOS | D.A PC | Event | Error | Warning | 2026-04-10 11:30
-- (LNB) TIOS | Dashboard | Instrument | Test Management | Sample Tracking | Inventory | Statistical Analysis | Setting | Information | Keira Knightley
-- Overview | All | Sample Storage | Consumable Storage | Sample Pre-treatment | Ht Extraction | Flexible Extraction | PCR Setup | Plate Sealing | Universal PCR
+- (GNB) Running | Instrument | L-IOS | D.A PC | Event | Error 3 | Warning 2 | 2026-04-10 11:30
+- (LNB) TIOS | Dashboard | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis | Setting | Information | Keira Knightley
+- Instrument
+- Tab: Overview | All | Sample Storage | Sample Pre-treatment | Ht Extraction | Flexible Extraction | PCR Setup | Plate Sealing | Universal PCR | Consumable Storage
 - Sample Preparation (Prep) System | Dignosctics (Dx) System
-- Sample Storage | Consumable Storage | Sample Pre-treatment | High-throughput Extraction | Flexible Extraction | PCR Setup | Plate Sealing | Universal PCR
-- Enabled 1 · Total 1 | Enabled 1 · Total 1 | Enablde 3 · Total 4 (Disabled 1) | Enabled 3 · Total 3 | Enabled 3 · Total 3 | Enabled 3 · Total 4 (Disabled 1) | Enabled 2 · Total 3 (Disabled 1) | Enabled 6 · Total 6
-- [HT Extraction(3)] E0001, Plate Gripper Failure. (Event 툴팁)
-- View All (Module Type마다)
-- Connected / Status / Door Status: Module Type마다 상태별 Module 수 (Open, Closed 등)
-- Event
-- (범례) Disconnected | Connected | Running | Paused | Error | Ready
+- Module 카드 (제목 | 사용 수 | View All)
+  - Sample Storage | Enabled 1 | Total 1
+  - Consumable Storage | Enabled 1 | Total 1
+  - Sample Pre-treatment | Enablde 3 | Total 4 (Disabled 1)
+  - High-throughput Extraction | Enabled 3 | Total 3
+  - Flexible Extraction | Enabled 3 | Total 3
+  - PCR Setup | Enabled 3 | Total 4 (Disabled 1)
+  - Plate Sealing | Enabled 2 | Total 3 (Disabled 1)
+  - Universal PCR | Enabled 6 | Total 6
+- Event 툴팁: [HT Extraction(3)] / E0001, Plate Gripper Failure.
+- Module Status 행 이름: Connected | Status | Door Status | Event
+  - 카드마다 값(왼쪽부터, 원문 읽은 순서): `1 | - | - | 1 | - | - | Open | - | Closed | 1 | 0 | 0` / `2 | - | - | - | 1 | 1 | Open | 1 | Closed | - | 0 | 0` / `3 | - | - | 2 | 1 | - | Open | 1 | Closed | 2 | 0 | 0` / `3 | - | - | 2 | - | 1 | Open | - | Closed | 3 | 0 | 0` / `2 | 1 | 1 | - | 1 | - | Open | - | Closed | 3 | 0 | 0` / `3 | - | 1 | 2 | - | - | Open | 2 | Closed | 3 | 0 | 0` / `2 | - | 1 | - | - | Open | - | Closed | 2 | 0 | 0` / `6 | - | - | 9 | - | - | Open | - | Closed | 6 | 0 | 0`
+- 범례: Connected | Disconnected | Running | Paused | Error | Ready
 
 ### 사용 컴포넌트
 
-Frame/Instrument_Status (54), Table/Filled Table Cell (25), Tag Status (16), Description Number (14), Item_Segment Tabs (10), Button/Tertiary XSmall (8), Title (4), Icon/Alert Error (2), Tooltip (1), Interface/Info_Circle_Outlined (1)
+Frame/Instrument_Status (54), Table/Filled Table  Cell (25), Tag Status (16), Description Number (13), ⛔️ Item_Segment Tabs (10), Button/Tertiary XSmall (8), Title (4), Icon/Alert Error (2), Tooltip (1), Component 4 (1), Frame (1)
 
 ### 디스크립션 (원문)
 
@@ -118,8 +124,15 @@ Frame/Instrument_Status (54), Table/Filled Table Cell (25), Tag Status (16), Des
 - 노출 방식: 아이콘 클릭 시 툴팁형식으로 내용이 노출되며, X 클릭 시 닫히는 방식
 - 노출 조건: Event 상태가 ‘Open’인 항목이 존재할 경우
 - 표시 기준: ‘Open’ 상태 Event 중 최신 1건 표시됨
-- 표기 형식: [{Module Name}]\n{Event Code}, {Event Description}
+- 표기 형식:
+- [{Module Name}]\n{Event Code}, {Event Description}
 
 #### 5. 범례 영역
 
 - 상단 상태값 표시 영역의 범례 제공함
+
+### 케이스
+
+<!-- `{메뉴}_asis` 페이지의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
+
+없음 (`Instrument_asis` 페이지에 TI-INS-01-T 케이스 프레임 없음)
