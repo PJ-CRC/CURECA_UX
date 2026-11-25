@@ -3,47 +3,62 @@ cid: TI-IVT-03-T
 pair_cid: LI-IVT-03-T
 tl_relation: 동일
 title: Inventory Consumables
-path: Inventory > Consumables
+path: Inventory > Consumables Tab
 type: Tab
-version: 2.1.13
-date: 2026-10-23
-author: 서보경
+version: 2.1.18
+date: 2026.11.19
+author: 이상헌
 client_mode: []
-user_type: [Service, Admin, User]
+user_type: []
 policies: []
-rules_version:
-provisional: []
-flags: []
 source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=7336-428391
-figma_region: 2.1 2차
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-384725
 ---
 # TI-IVT-03-T Inventory Consumables
 
-> 기존 화면(기존 작업방 Inventory 페이지, 2.1 2차 영역, Ver 2.1.13)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 `Inventory_asis` 페이지, Ver 2.1.18)을 2026-11-25에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
 
-- T/L 차이: 없음 (LI-IVT-03-T와 같음)
-- 관련 정책: POL-INV-001, POL-INV-002, POL-INV-003, POL-EQP-009
-- 호출하는 화면: Consumables Item details popup (TI-IVT-03-T-P)
-
-- 취소선(Figma에서 제거된 항목): 0의 "시약 개수 표기 방식" ("낱개 수량(입고 단위 수량)" 형식, 100개당 1 Rack이면 올림 처리, 예: 101 → 2 Rack). 지금은 Common UX COMM-4-b를 따름
+- T/L 차이: 화면 · 디스크립션 같음. LNB 메뉴만 다름
+- 호출하는 화면: [TI-IVT-03-T-P] Consumables Item details popup (3-7 [Item details])
+- 호출되는 곳: LNB > Inventory > Consumables Tab (0 진입 방법), [TI-IVT-01-T] 등 Inventory Tab 구성
 
 ## 기존 화면
 
+<!-- `{메뉴}_asis` 페이지에 있는 그대로 옮깁니다. 고치거나 정리하지 않습니다. 틀린 곳 · 정책과 다른 곳도 그대로 옮깁니다. 그 화면의 To-Be 작업 1단계에서 읽으며 찾아 그 작업에서 고칩니다(`flow/1-requirements.md` 절차 4번 순서 3 "뒤 단계로 넘김"의 5). -->
+
 ### 화면 글자
 
-- (GNB·LNB는 T-IOS 공통)
-- Summary | Overview | Consumables | Reagents | Waste Bin/Bottle | Usage History
-- (Chip) Insufficient 12 | Low 7 | Sufficient 2 | Refresh
-- (좌측 카드) Plates: 96-DWP 1 ea / 2 ea, PCR Plate 3 ea | Tips: 1000 μL Tip 480 ea (5 racks), 300 μL Tip 96 ea (1 rack) / 384 ea (4 racks), Wide Bore Tip 192 ea (2 racks) | Tubes: Empty Standard Tube 48 ea (1 rack) / 144 ea (3 racks), MM Tube 14 ea (1 socket) / 28 ea (2 sockets) | Tub (Sample Preparation): PBS Tub, Saline Tub, LB Tub (Prep) 100T~200T (1~2 racks) | Sealing Film 200 ea | Stool Swab 72 ea (3 racks) — 각 카드 Remaining Qty | Required Qty | Status
-- (우측 상세) 1000 μL Tip | Item details → Location | Capacity | Remaining Qty | Required Qty: Consumable Storage (1)~(3) > Trolley | 6 DWPs | 96 ea (1 rack)
-- (우측 상세) 300 μL Tip | Item details → PCR Setup (1) > 1000 μL Tip Storage | 11 rack | 96 ea (1 rack), PCR Setup (1) > 300 μL Tip Storage(1), (2)
-- (우측 상세) Wide Bore Tip | Item details → Location | Capacity | Remaining Qty | Required Qty
-- (예시 값) #Trolley, 5 sets
+- (GNB) Running | Instrument | L-IOS | D.A PC | Event | Error 3 | Warning 2 | 2026-04-10 11:30
+- (LNB) TIOS | Dashboard | Test Management | Sample Tracking | Status | Instrument | Inventory | Statistical Analysis | Setting | Information | Keira Knightley
+- Inventory
+- Tab: Summary | Overview | Consumables | Reagents | Waste Bin/Bottle | Usage History
+- Chip: Insufficient 12 | Low 7 | Sufficient 2 | Refresh
+- 왼쪽 카드 목록 (열: Remaining Qty | Required Qty | Status)
+  - Plates: 96-DWP 1 ea | 2 ea / PCR Plate 0 | 3 ea
+  - Tips: 1000 μL Tip 0 | 480 ea (5 racks) / 300 μL Tip 96 ea (1 rack) | 384 ea (4 racks) / Wide Bore Tip 192 ea (2 racks) | 96 ea (1 rack)
+  - Tubes: Empty Standard Tube 48 ea (1 rack) | 144 ea (3 racks) / MM Tube 14 ea (1 socket) | 28 ea (2 sockets)
+  - Sealing Film 200 ea | -
+  - Stool Swab 72 ea (3 racks) | -
+  - 카드 영역에 두 겹으로 겹쳐 있는 글자: Tub / Sample Preparation | Remaining Qty | Required Qty | Status / PBS Tub #Trolley - 200T (2 racks) / Saline Tub #Trolley 100T (1 rack) 100T (1 rack) / LB Tub (Prep) #Trolley - 200T (2 racks)
+- 오른쪽 상세 (열: Location | Capacity | Remaining Qty | Required Qty)
+  - 1000 μL Tip [Item details]
+    - Consumable Storage (1) > Trolley | 6 DWPs | 0 | 96 ea (1 rack)
+    - Consumable Storage (2) > Trolley | 6 DWPs | 0 | 96 ea (1 rack)
+    - Consumable Storage (3) > Trolley | 6 DWPs | 0 | 96 ea (1 rack)
+    - (구분선) PCR Setup (1) > 1000 μL Tip Storage | 11 rack | 0 | 96 ea (1 rack)
+    - PCR Setup (2) > 1000 μL Tip Storage | 11 rack | 0 | 96 ea (1 rack)
+  - 300 μL Tip [Item details]
+    - Consumable Storage (1) > Trolley | 6 DWPs | 0 | 96 ea (1 rack)
+    - Consumable Storage (3) > Trolley | 6 DWPs | 0 | 96 ea (1 rack)
+    - (구분선) PCR Setup (1) > 300 μL Tip Storage(1) | 11 rack | 0 | 96 ea (1 rack)
+    - PCR Setup (1) > 300 μL Tip Storage(2) | 11 rack | 96 ea (1 rack) | 96 ea (1 rack)
+  - Wide Bore Tip [Item details]
+    - Consumable Storage (1) > Trolley | 5 sets | 96 ea (1 rack) | 96 ea (1 rack)
+    - Consumable Storage (2) > Trolley | 5 sets | 96 ea (1 rack) | -
 
 ### 사용 컴포넌트
 
-Description Number (18), Status (9), Item_Segment Tabs (6), Square (4), Chip (3), Interface/Info_Circle_Outlined (1), Frame (1), Component 4 (1)
+Description Number (18), Status (9), ⛔️ Item_Segment Tabs (6), Square (4), Chip (3), Interface/Info_Circle_Outlined (1), Frame (1), Component 4 (1)
 
 ### 디스크립션 (원문)
 
@@ -107,14 +122,14 @@ Description Number (18), Status (9), Item_Segment Tabs (6), Square (4), Chip (3)
 - 표기 방식: Common UX - COMM-4-b 참고
 - 정책 안내
 - 1) 소모품/시약 잔여량 집계 기준
-- 잔여량은 저장 장치 및 장비 내 적재된 소모품을 포함하여 관리한다.
-- 저장 장치에 소모품 입고 시 해당 수량을 증가한다.
-- 장비에서 소모품 사용 후 저장 장치로 반환 시 실제 사용 수량만큼 차감한다.
-- 장비에서 소모품 사용 후 폐기 시 실제 사용 수량만큼 차감한다.
-- 저장 장치에서 소모품 제거 시 해당 수량을 차감한다.
+  - 잔여량은 저장 장치 및 장비 내 적재된 소모품을 포함하여 관리한다.
+  - 저장 장치에 소모품 입고 시 해당 수량을 증가한다.
+  - 장비에서 소모품 사용 후 저장 장치로 반환 시 실제 사용 수량만큼 차감한다.
+  - 장비에서 소모품 사용 후 폐기 시 실제 사용 수량만큼 차감한다.
+  - 저장 장치에서 소모품 제거 시 해당 수량을 차감한다.
 - 2) 소모품/시약 사용량 집계 기준
-- 장비에서 소모품 사용 후 저장 장치로 반환 시 실제 사용 수량을 이력에 기록한다.
-- 장비에서 소모품 사용 후 폐기 시 실제 사용 수량을 이력에 기록한다.
+  - 장비에서 소모품 사용 후 저장 장치로 반환 시 실제 사용 수량을 이력에 기록한다.
+  - 장비에서 소모품 사용 후 폐기 시 실제 사용 수량을 이력에 기록한다.
 
 #### 2-5. Required Qty(좌측 영역)
 
@@ -204,3 +219,9 @@ Description Number (18), Status (9), Item_Segment Tabs (6), Square (4), Chip (3)
 - Capacity: Shown only for fixed-capacity storage.
 - Required Qty: Displays the additional quantity required based on current inventory.
 - Status: Status is determined by run availability: Sufficient(enough stock), Low(partial shortage), Insufficient(no stock)
+
+### 케이스
+
+<!-- `{메뉴}_asis` 페이지의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
+
+없음 (`Inventory_asis` 페이지에 TI-IVT-03-T 케이스 프레임 없음)
