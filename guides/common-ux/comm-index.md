@@ -98,7 +98,7 @@ Figma 각 프레임 본문 왼쪽의 Type 제목과 라벨 줄(정의 · 형태 
 - 화면의 조회 결과 목록을 보여 줌 → Basic Table (5-g), 데이터가 없으면 No Data
 - 내용을 접고 펼 수 있어야 함 → Card Accordion(카드) · Line Accordion(표 안 그룹 행) (5-a)
 - 상태 · 개수를 짧게 표시함 → Number Label(개수) · Text Label(상태 글자) · Icon Label(상태 아이콘) · Dot Label(점) (5-j)
-  - 상태값은 화면 예시 글자의 값과 같은 이름의 Variant로 고름(`glossary/status-values.csv`). 숫자 · 날짜로 정해지는 상태(재고 · 시약 만료 등)는 화면 예시 글자의 값으로 csv 조건에 맞춰 계산함
+  - 상태값은 `glossary/status-values.csv`의 그 줄 "컴포넌트" 칸의 컴포넌트(`Status/Sample` 등)를 쓰고, 화면 예시 글자의 값과 같은 이름의 Variant로 고름. 색은 Variant에 들어 있음("Color" 칸). "컴포넌트" 칸이 `-`인 상태값만 Status Base를 씀. 숫자 · 날짜로 정해지는 상태(재고 등)는 화면 예시 글자의 값으로 csv 조건에 맞춰 계산함
 - 화면 안에 안내 문구를 늘 보여 줌 → Info Box (5-i)
 - 마우스를 올리거나 아이콘을 누를 때만 부가 정보를 보여 줌 → Ellipsis · Info · Event · Table Tooltip (5-v)
 
@@ -443,9 +443,11 @@ Figma 각 프레임 본문 왼쪽의 Type 제목과 라벨 줄(정의 · 형태 
 - **정의**
   - 텍스트로 정보의 상태를 표현 (축약어 사용 가능)
 - **컴포넌트** (MD에만)
-  - Status Base (Group/Status · Badge), 속성 Color(Red / Orange / Green / Blue / Gray / Navy)
+  - 상태값 묶음 컴포넌트 (Group/Status · Badge): Status/CURECA · Status/Module · Status/Device · Status/Sample · Status/Plate · Status/Batch · Status/Waste Bin · Status/Inventory · Status/Connection · Status/Door · Status/Lock · Status/Docking · Status/Event Level. 속성 Status(상태 이름)
+  - Status Base (Group/Status · Badge), 속성 Color(Red / Orange / Green / Blue / Gray / Navy). 묶음 컴포넌트가 없는 상태값에만 씀
 - **속성 쓰는 법** (MD에만)
-  - Color: 색은 UI 정의에서 정하므로 기본값 그대로 둠
+  - Status: 화면 예시 글자의 상태값과 같은 이름의 Variant. 어느 묶음 컴포넌트인지와 그 색은 `glossary/status-values.csv`의 "컴포넌트" · "Color" 칸
+  - Color (Status Base): 묶음 컴포넌트가 없는 상태값(csv "컴포넌트" 칸 `-`: 이벤트 상태)은 색이 정해지지 않았으므로 기본값 그대로 둠. 시약 만료 상태는 시스템에서 쓰지 않는 개념 값이라 화면에 그리지 않음
 
 #### Type 3 Icon Label
 
@@ -952,6 +954,19 @@ MD를 먼저 고치고 아직 Figma에 맞추지 않은 곳입니다. 보충을 
 | Square | `d3dd288afeecd522d6b16cd97be5c8573a1a4b11` |
 | Square Checkbox | `ed5d500f80c5663697db56dede8b4a96e58cccc2` |
 | Status Base | `6e7f9b81de8b1d3b1c568ae011285fa1db663fc3` |
+| Status/Batch | `5641ad266eeb14f10c8946974de64ce0364fec77` |
+| Status/Connection | `c099c34e4ba5d638e0597b9062d76119d909667c` |
+| Status/CURECA | `8e454e74bd5a2c58ddafc7fbad541dc32732d24c` |
+| Status/Device | `9a0c898c60b2130719a6495bc2dfe5e52241398d` |
+| Status/Docking | `9ab4c463b806be62c8f1149fcb1aff5844dff095` |
+| Status/Door | `874cac123bcd28e197916720d220d0af112e6d5e` |
+| Status/Event Level | `58f00f1b1c10e79a6345ff791527fa3c4d8a2557` |
+| Status/Inventory | `844ab5042bc0cbca448ce257d11bcfd3929b9b78` |
+| Status/Lock | `a250800f9e0447d8e43f381865a88bf5063c4878` |
+| Status/Module | `5a3d56f0629b29c93c849825e59f174d0d3c08fb` |
+| Status/Plate | `2d59bf78a178c5542228c2dfe4e9dd4da6196986` |
+| Status/Sample | `1351159f43f6ab2b50dba8a5108b25ceff435460` |
+| Status/Waste Bin | `7ab18e0c770022302f05ccb662a1a70c017e6c16` |
 | Status Icon Base | `78f6f7c70bfa071f7007c86f6f8cc5cb76d29110` |
 | Tab/Filled Container | `35a3f90e5d489dabfd24443179b6644638ac3884` |
 | Tab/Outline | `4f60022888f91f0f2189c9c6dfa1f8f9944f3448` |
