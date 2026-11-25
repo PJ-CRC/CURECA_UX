@@ -29,7 +29,7 @@ started: 2026-11-25
 | 4. 수정 · 확인 | | | |
 | 5. 완료 | | | |
 
-이어서 작업할 곳: 3단계 · TI-STN-08 그림 (기획 프레임 `3499:6`, 패널 · 사용자 확인 목록 `3500:699` · 라벨까지), LI-STN-08 그릴 차례 — 흐름 6: TI-STN-08을 복제해 LI-STN-08 섹션 `3492:25`에 두고 L 화면 MD대로 다른 점만 바꿈 (다시 읽을 곳: 3단계 flow/3-design-case3.md 흐름 · 공통 3-5 L 복제 · 3-10 / flow/3-design.md 공통 3-5 · 3-10 / 작업 기록 "설계" 화면별 작업 · 컴포넌트 없이 그린 요소 · "질문 대기" · "변경 확인" / 화면 MD screens/tobe/setting/LI-STN-08.md). 그리기 전에 project.json editablePageName이 「Setting  Ⓛ / Ⓣ_To Be」인지 확인 (R002 · 2026-11-25 Claude, R001 작업 이어 받음)
+이어서 작업할 곳: 3단계 · TI-STN-08 / LI-STN-08 그림 (LI-STN-08 `3503:1997` · 사용자 확인 목록 `3506:12990`), TI-STN-08-P / LI-STN-08-P(상세)부터 그릴 차례, 그다음 TI-STN-08-01(Popup, 짝 없음) (다시 읽을 곳: 3단계 flow/3-design-case3.md 흐름 · 3-4 · 공통 3 / flow/3-design.md 공통 3 · 3-9 Popup · 3-10 / 작업 기록 "요건 목록" 요건 1 · "설계" 화면별 작업 · 컴포넌트 없이 그린 요소 · "질문 대기" · "변경 확인" / 화면 MD screens/tobe/setting/TI-STN-08-P.md · LI-STN-08-P.md). 그리기 전에 project.json editablePageName이 「Setting  Ⓛ / Ⓣ_To Be」인지 확인 (R001 · 2026-11-25 Claude, 정다예가 최고관리자의 작업 이어 받음)
 
 ## 요청
 
@@ -224,6 +224,7 @@ started: 2026-11-25
 - 목록 정렬: 기존 원본 목록 헤더에 정렬 아이콘 없음 → Default 정렬만 적음
 - LI-STN-08-P 화면 이름: 기존 패널 「Assay Pack Setting」, IA는 Details — 이 CID에는 반영 대기 항목이 없어(TI-STN-08-P-R01은 T만) 기존 그대로 둠
 - Q1 (Master Active 버튼): TI-STN-08 #4-1을 TI-STN-08-P 원본대로 「상세에서 [Active] · [Inactive] 버튼 비활성 (변경 불가)」로 씀
+- LI-STN-08 그리기(2026-11-25, R001 · 정다예 요청으로 최고관리자의 작업 이어 받음): L 섹션에 TI-STN-08 복제본 `3503:1997`이 이미 있었음(작업 기록에 없던 일 — LNB · GNB L-IOS, [Delete] · [Import] · Checkbox · 3번 번호 표시 없앰, 라벨 Q3 · Q4 · C4 · Q5, 패널 화면 정보까지는 바뀌어 있고 디스크립션은 T 그대로였음). 이어서 패널 0 · 2 · 4 · 4-1 · 4-2와 경로를 L 화면 MD대로 고치고 3번 블록을 지움, 사용자 확인 목록(질문 대기 Q3 · Q4 · Q5, 변경 확인 C4)을 둠, 기획 프레임 높이를 패널에 맞춤(1074), 섹션 높이 1274. 목록 10행은 기존 원본 LI-STN-08과 같음. 기존 원본 L에는 업데이트 메모가 없어 두지 않음(T에서 복제한 메모도 없음). 영역 틀(콘텐츠 영역 바탕 · 검색 영역 · Items 줄 · 목록 바탕 · 구분선)은 T에서 복제해 크기 · 색이 원본 요약과 같음
 - TI-STN-08 그리기(2026-11-25, R002): LNB Setting 하위 메뉴는 IA Lv.2 순서 8개(Policy · System · Protocol · LIS · Account · SMTP · Assay Pack · Tube)로 둠(기존 원본 LNB는 7개, 공통 영역). LNB 컴포넌트 너비(218) 안에서 「Assay Pack Setting」이 말줄임으로 보임 — LNB 컴포넌트가 정한 모습이라 그대로 둠. 기존 원본 목록에 Active 머리 옆 삼각형 두 개(`3288:235487`, 정렬 아이콘 모양)가 있으나 디스크립션에 정렬 정의가 없어 그리지 않음(화면 MD 정렬 Default만). 목록 2행(5 · 6행) 선택 · [Delete] 활성은 기존 원본 그대로. 검색 영역 Active only는 Common UX Search Area 대로 Checkbox(Circle)로 그림(원본은 Square)
 
 ### 용어 치환
