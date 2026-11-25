@@ -9,7 +9,7 @@ version: 2.1.18
 date: 2026.11.19
 author: 이상헌
 client_mode: []
-user_type: []
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-361230
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: 화면 같음(LNB 메뉴만 다름). 디스크립션은 0 데이터 기준 · 2 Date/Time · 3 [Export]가 다름 — L은 "폐기하는 시점" · `Barcode + Usage+Date/Time` Row, Date/Time에 "Storage에서 내부 장치로 이동되는 시점 기준", [Export]에 L-IOS · T-IOS 저장 방식과 대상 범위 · 저장 항목 · 형식이 있음
 - 호출하는 화면: 없음 (3 [Export]는 로컬 PC에 파일 저장)
 - 호출되는 곳: LNB > Inventory > Usage Tab (0 진입 방법), [TI-IVT-01-T] 등 Inventory Tab 구성
+- 관련 정책: POL-INV-001, POL-INV-006, POL-EQP-009, POL-COM-006
 
 ## 기존 화면
 
