@@ -910,7 +910,7 @@ async function azureWbs(T, cx) {
     const r = values.length, ux = l.UX, ui = l.UI;
     const ss = [ux && ux.s, ui && ui.s].filter(Boolean), ee = [ux && ux.e, ui && ui.e].filter(Boolean);
     const sd = ss.length ? new Date(Math.min(...ss)) : l.solo ? l.s : null, ed = ee.length ? new Date(Math.max(...ee)) : l.solo ? l.e : null;
-    const who = partOwner[l.ver + '|' + l.part] || allOwner[l.ver] || (l.solo ? l.who : [...new Set([ux && ux.who, ui && ui.who].filter(Boolean))].join(' · ')), st = l.solo ? l.raw : azMergeState([ux && ux.raw, ui && ui.raw]);
+    const who = partOwner[l.ver + '|' + l.part] || allOwner[l.ver] || (l.solo ? l.who : [...new Set([ux && ux.who, ui && ui.who].filter(Boolean))].join(' · ')), st = l.raw || azMergeState([ux && ux.raw, ui && ui.raw]);   // 작업명 줄 상태 = User Story의 State(주간보고와 같게, 2026-11-25). 세부 줄은 각 작업의 State
     const row = [l.part, String(l.id), l.menu, l.name, l.ver, ymd(sd), ymd(ed), hrs([ux, ui]), who, st];
     days.forEach(() => row.push(''));
     const rb = bar([{ t: ux, c: UXC }, { t: ui, c: UIC }]); rb[0] = PCOL[l.part];
