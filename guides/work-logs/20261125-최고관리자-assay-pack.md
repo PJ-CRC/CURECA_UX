@@ -228,6 +228,8 @@ started: 2026-11-25
 | --- | --- | --- | --- | --- | --- |
 | Q1 | Master 파일의 Active 변경 버튼 모습 (TI-STN-08-P #3은 [Active] · [Inactive] 비활성, TI-STN-08 #4-1은 상세에 미노출. POL-TST-008 규칙 6은 "바꿀 수 없음"만 정함 — 버튼이 있는 화면인 TI-STN-08-P 원본대로 비활성으로 그리고 TI-STN-08 #4-1도 같게 씀) | TI-STN-08 #4-1 · TI-STN-08-P #3 | | T만 (L-IOS는 버튼 없음) | |
 | Q2 | Active로 바꾼 뒤(Confirm_029 [Activate]) Toast 문구 (Alert 카탈로그 동작에 "& Toast"만 있고 문구 없음. Confirm_030은 "{version} has been deactivated.") | TI-STN-08-P #4 | DS-0012 (같은 Confirm 줄) | T만 | |
+| Q3 | L-IOS 목록의 노출 개수 Dropdown을 둘지 (Common UX Basic Table: L-IOS는 노출 개수 고정. 기존 화면에는 10 items Dropdown이 있어 기존대로 그림) | LI-STN-08 #2 · LI-STN-08-P (뒤 목록) | | L만 | |
+| Q4 | L-IOS 목록 데이터 없음 문구 (기존 [LI-STN-08 / 세부정의] 프레임이 없어 같은 메뉴 TI-STN-08 문구 "No files found. Click Import to add a file."로 씀. L-IOS에는 [Import] 없음) | LI-STN-08 #4 | | L만 | |
 
 ## 변경 확인
 
@@ -236,6 +238,9 @@ started: 2026-11-25
 | C1 | 패널 [Delete] Confirm 제목 "Delete the selected file?" | Confirm_026 제목을 카탈로그대로 "Delete the selected files?" | TI-STN-08-P #4 | (Alert 카탈로그 Confirm_026) | T만 | O | |
 | C2 | 패널 [Delete] 뒤 Toast "The file has been deleted." | Toast 문구를 카탈로그대로 "The selected files have been deleted." | TI-STN-08-P #4 | (Alert 카탈로그 Confirm_026 버튼 동작) | T만 | O | |
 | C3 | [Save] → Confirm_029 · 030 확인 시 반영 (Toast 없음) | 반영 뒤 Toast 노출 (Deactivate: "{version} has been deactivated.", Activate 문구는 Q2) | TI-STN-08-P #4 | (Alert 카탈로그 Confirm_029 · 030 버튼 동작) | T만 | O | |
+| C4 | 디스크립션이 다른 정의 프레임([세부정의] · [유형별 정의])을 가리킴 | 데이터 없음 문구 · File type별 정보 묶음을 디스크립션에 옮겨 씀 | TI-STN-08 #4 · LI-STN-08 #4 · TI-STN-08-P #3 · LI-STN-08-P #3 | 기존 원본 정의 프레임 `3288:240828` · `3288:237480` (Common UX Data Table 데이터 없음 문구는 화면이 정함) | T · L 같음 | - | |
+| C5 | Import file 뒤에 TI-STN-08 목록을 깔고 Dim | 목록 없이 Dim만 깔고 Popup을 그림 | TI-STN-08-01 #0 | `flow/3-design.md` 공통 3-9 Popup | T만 | - | |
+| C6 | 화면 이름 "Assay Pack Setting" | "Assay Pack File Details" (IA Details) | TI-STN-08-P #0 (패널 화면 정보) | 반영 대기 TI-STN-08-P-R01 | T만 | - | |
 
 ## 검토 질의
 
