@@ -123,6 +123,14 @@ async function releaseOnLimit(ids, hm) {
   }
   return done;
 }
+// 지금 대화 크기(2026-11-25): 처리 중인 Claude가 「나눠서 이어 가기」를 정할 때 읽는다(requests-flow.md). Claude는 자기 대화 크기를 모르므로
+//  응답마다 받은 사용량(입력 + 캐시)을 workbench/.agent_ctx.json에 적어 둔다(5초에 한 번까지). 예전에는 기준 없이 단계 경계마다 끊어
+//  대화가 7 ~ 13%일 때도 새 세션을 띄웠다(R001, 세션마다 시작 비용 약 13만 ~ 21만 토큰)
+let ctxSavedAt = 0;
+function saveCtx() {
+  if (!S || Date.now() - ctxSavedAt < 5000) return; ctxSavedAt = Date.now();
+  try { fs.writeFileSync(path.join(WB, '.agent_ctx.json'), JSON.stringify({ at: now(), ids: S.turnIds || [], ctx: S.ctx || 0, win: S.win || 0 }), 'utf8'); } catch (e) {}
+}
 function claudeCmd(args) {
   // .cmd · .bat(npm 설치)은 셸로 띄운다
   //  (cmd.exe는 Node의 \" 이스케이프를 모르니 줄을 직접 만들어 그대로 넘긴다: 모든 인자를 "…"로, 빈 인자도 "")
@@ -265,7 +273,7 @@ async function sendTurn(text) {
     if (m.type === 'rate_limit_event') saveUsage(m.rate_limit_info);
     if (m.type === 'system' && m.subtype === 'init') started = true;
     if (!started && !(m.type === 'result' && m.is_error)) continue;   // 로그인 오류 등은 init 없이 올 수 있다
-    if (m.type === 'assistant' && m.message && m.message.usage) { const u = m.message.usage; S.ctx = (u.input_tokens || 0) + (u.cache_read_input_tokens || 0) + (u.cache_creation_input_tokens || 0); }
+    if (m.type === 'assistant' && m.message && m.message.usage) { const u = m.message.usage; S.ctx = (u.input_tokens || 0) + (u.cache_read_input_tokens || 0) + (u.cache_creation_input_tokens || 0); saveCtx(); }
     // 살아 있음: 출력이 올 때마다 움직인 시각, 도구를 부르면 결과가 올 때까지 그 이름(빈 값 = 생각 · 답 쓰는 중). 5초마다만 파일에 쓴다
     if (m.type === 'assistant' || m.type === 'user') {
       St.act = now();
@@ -310,7 +318,7 @@ function makeResume(out) {
   return `[Workbench 요청 감시 결과 — 이 대화에서 질문을 남긴 요청에 답이 왔다]
 ${out}
 ${details(out)}
-이 대화에서 「보류」 + 질문으로 멈춘 요청에 사람이 답했다(위 replies의 마지막). 이 대화에서 이미 읽은 규칙 문서 · 화면 MD는 바뀌지 않았으면 다시 읽지 말되, 답대로 **다음 단계로 넘어가면 그 단계 문서는 작업규칙대로 처음부터 읽는다**(아직 읽지 않은 문서다 — 작업규칙이 읽으라고 정한 문서 · 범위는 줄이지 않는다). 작업 기록이 있으면 처음부터 읽지 말고 머리말 · 단계 표 · 이어 갈 곳 줄만 다시 읽어 내가 마지막에 쓴 것과 같은지만 본다(다르면 처음부터 — docs/claude/requests-flow.md 「같은 세션에서 이어 갈 때」). 그 답대로 하던 작업을 이어서 처리하라. 지금 이 대화는 약 ${Math.round((S && S.ctx || 0) / 10000)}만 토큰이다 — 답대로 다음 단계 · 다음 대상으로 넘어가는 자리이고 앞 일이 많이 쌓였으면 requests-flow.md 「나눠서 이어 가기」대로 답을 작업 기록에 반영한 뒤 「대기」로 돌려 새 세션에 넘긴다. 처리 방식(「진행 중」 → 처리 → 「완료」 또는 「보류」 + ask, 캡처, frames, 사용자에게 대화로 묻지 않기, 끝나면 몇 줄 요약)은 앞과 같다.${usageHint()}`;
+이 대화에서 「보류」 + 질문으로 멈춘 요청에 사람이 답했다(위 replies의 마지막). 이 대화에서 이미 읽은 규칙 문서 · 화면 MD는 바뀌지 않았으면 다시 읽지 말되, 답대로 **다음 단계로 넘어가면 그 단계 문서는 작업규칙대로 처음부터 읽는다**(아직 읽지 않은 문서다 — 작업규칙이 읽으라고 정한 문서 · 범위는 줄이지 않는다). 작업 기록이 있으면 처음부터 읽지 말고 머리말 · 단계 표 · 이어 갈 곳 줄만 다시 읽어 내가 마지막에 쓴 것과 같은지만 본다(다르면 처음부터 — docs/claude/requests-flow.md 「같은 세션에서 이어 갈 때」). 그 답대로 하던 작업을 이어서 처리하라. 지금 이 대화는 약 ${Math.round((S && S.ctx || 0) / 10000)}만 토큰이다 — 새 세션으로 넘기는 것은 requests-flow.md 「나눠서 이어 가기」의 숫자 기준을 넘었을 때만이다(단계가 바뀐다는 이유만으로 넘기지 않는다. 대화 크기는 workbench/.agent_ctx.json의 ctx). 처리 방식(「진행 중」 → 처리 → 「완료」 또는 「보류」 + ask, 캡처, frames, 사용자에게 대화로 묻지 않기, 끝나면 몇 줄 요약)은 앞과 같다.${usageHint()}`;
 }
 // 차례가 끝난 뒤 그 차례의 요청 중 「보류」 + 질문(ask)으로 답을 기다리는 것(겹침 대기는 빼고)
 // 요청 · 작업의 지금 note · status(차례 앞뒤로 견줘 진척을 본다)
@@ -458,6 +466,19 @@ async function main() {
     if (exists(CANCEL)) { try { fs.rmSync(CANCEL, { force: true }); } catch (e) {} }
     const out = await watch(60000);
     if (!out) continue;
+    // 이미 한도가 찼으면 띄우지 않는다(2026-11-25): 감시를 다시 켠 직후 등, 마지막으로 읽은 사용량이 100%이고 초기화 전이면
+    //  세션을 띄워 바로 한도에 걸리지 않고(요청이 잠깐 「진행 중」으로 보였다 — 17:13 R002) 초기화 시각까지 쉰다
+    {
+      const u0 = usageNow();
+      if (u0 && u0.pct >= 100 && u0.resetsAt && u0.resetsAt > Date.now()) {
+        const ld = new Date(u0.resetsAt), hm = ld.toTimeString().slice(0, 5);
+        save('limit', `Claude 사용 한도(${u0.label})가 차 있어 ${hm}에 다시 시작합니다. 그 사이 요청은 「대기」로 남습니다.`); log(`사용 한도가 이미 참 — ${hm}까지 쉼: ${out.split('\n')[0]}`);
+        const why = await pauseUntil(u0.resetsAt + 60000, u0.label === '5시간');
+        if (why === 'stop' || why === 'renew') continue;
+        nextUsage = Date.now() + USAGE_MIN * 60000; save('idle', '사용 한도가 풀려 요청을 기다리는 중'); log('사용 한도 풀림 — 다시 받음' + (why === 'over' ? ' (사용량 확인)' : ''));
+        continue;
+      }
+    }
     if (out === last) repeat++; else { last = out; repeat = 1; }
     if (repeat > 3) { save('error', '같은 요청이 처리되지 않아 10분 쉽니다: ' + out.split('\n')[0]); log('반복 처리 실패 — 10분 대기: ' + out); await pause(40); repeat = 0; continue; }
     // 사용량이 높으면 알림만(처리는 그대로): 처리 중 상태 글과 기록에 붙인다

@@ -25,6 +25,24 @@ on('GET', '/api/requests', ({ res, send }) => {
   send(res, 200, 'application/json; charset=utf-8', t != null ? t : '{"version":1,"items":[]}');
 });
 
+// GET /api/jobs/wait?key=&kinds=fill,text&sec=25: 그 파일에 그 종류의 「대기」 작업이 생길 때까지 응답을 미뤘다가 {ready:true}, 없으면 sec초 뒤 {ready:false}(2026-11-25).
+//  Figma 창이 뒤에 있으면 플러그인의 3초 타이머가 1분에 한 번쯤으로 늦춰져 작업을 1 ~ 2분 늦게 받았다(R002 J207 1분 45초).
+//  플러그인은 이 요청을 열어 두고, 답이 오면 바로 그 종류를 가져간다(열어 둔 요청의 답은 타이머처럼 늦춰지지 않게)
+on('GET', '/api/jobs/wait', async ({ q, req }) => {
+  const key = q.get('key') || '', kinds = String(q.get('kinds') || '').split(',').filter(Boolean), sec = Math.min(55, Math.max(1, parseInt(q.get('sec'), 10) || 25));
+  if (!testKey(key) || !kinds.length) throw new Error('key · kinds가 필요합니다.');
+  if (String(req.headers.origin) === 'null') { C.pluginSeen = Date.now(); C.pluginKeys = C.pluginKeys || {}; C.pluginKeys[key] = Date.now(); }
+  const has = () => core.arr((core.readJson(C.jobFile) || {}).items).some((x) => x && x.fileKey === key && x.status === '대기' && kinds.includes(x.kind));
+  const end = Date.now() + sec * 1000;
+  let gone = false; req.on('close', () => { gone = true; });
+  while (!gone && Date.now() < end) {
+    if (has()) return { ready: true };
+    if (String(req.headers.origin) === 'null') { C.pluginSeen = Date.now(); C.pluginKeys[key] = Date.now(); }   // 기다리는 동안도 「켜져 있음」
+    await new Promise((r) => setTimeout(r, 400));
+  }
+  return { ready: false };
+});
+
 // GET /api/jobs?key=&kind=&status=: 작업 대기열(거르기). pluginSec = 플러그인이 마지막으로 닿은 지 몇 초(아직 옮기지 않아 null)
 on('GET', '/api/jobs', ({ q, req }) => {
   // 플러그인이 캡처 작업을 물으면 자동 캡처 목록에서 대기열을 먼저 채운다(writes.js autoFill)

@@ -475,7 +475,10 @@ a{color:var(--accent)}
     document.querySelectorAll('[data-pane]').forEach(function(p){ var a = p.dataset.pane.split('-'); p.hidden = way[a[0]] !== a[1]; });
     document.querySelectorAll('[data-check]').forEach(function(b){ b.checked = !!c[b.dataset.check]; });
     if (document.activeElement !== $('userName') && !$('userName').value) $('userName').value = S.state.user || store('cux.user') || '';
-    if (document.activeElement !== $('figUrl') && !$('figUrl').value) $('figUrl').value = S.state.figmaUrl || '';
+    /* 작업 링크 칸(2026-11-25): 사람이 고치지 않은 칸은 지금 값을 따라간다. 예전에는 처음 연 때의 값이 그대로 남아,
+       Workbench에서 작업 페이지를 바꾼 뒤 이 칸에서 「확인」을 누르면 옛 링크(옛 작업 페이지)로 되돌아갔다(R001 As Is ↔ To Be) */
+    var fu = $('figUrl');
+    if (document.activeElement !== fu && (!fu.value || fu.value === S.figShown)) { fu.value = S.state.figmaUrl || ''; S.figShown = fu.value; }
     $('manifestPath').textContent = e.manifest || '…';
     $('rootPath').textContent = e.root || '…';
     /* 맥: Finder · 파일 선택 창에서 ⌘⇧G로 경로 붙여넣기 */
@@ -601,7 +604,9 @@ a{color:var(--accent)}
   $('figSave').onclick = function(){
     var v = $('figUrl').value.trim();
     if (!parseFig(v)) { S.state.figmaUrl = v; renderFig(); $('figUrl').focus(); return; }
-    save({ figmaUrl: v }).then(function(){ toast('링크를 저장했습니다.'); });
+    /* figmaUrlWas: 이 화면이 알던 지금 링크 — 그사이 다른 곳(Workbench 작업 페이지 바꾸기 · Claude)에서 바뀌었으면 서버가 거절한다 */
+    var was = S.figShown != null ? S.figShown : (S.state.figmaUrl || '');
+    save({ figmaUrl: v, figmaUrlWas: was }).then(function(){ S.figShown = v; toast('링크를 저장했습니다.'); }, function(x){ WB.alert(x.message); $('figUrl').value = ''; S.figShown = null; load(); });
   };
   $('figUrl').addEventListener('keydown', function(e){ if (e.key === 'Enter') $('figSave').click(); });
   $('finish').onclick = function(){ save({ done: true }).then(function(){ location.href = 'Figma_Workbench.html'; }, function(){ location.href = 'Figma_Workbench.html'; }); };
