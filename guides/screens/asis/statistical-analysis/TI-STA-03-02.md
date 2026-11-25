@@ -35,7 +35,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - 합계 표: Total Test TAT(Turnaround Time) | Total Test Counts
   - 5.8 hour | 345,200
 - 추이 표: (Unit : hour, count)
-  - (머리 빈칸) | 01-01 | 01-02 | 01-03 | 01-04 | 01-05 | 01-06 | 01-07
+  - 01-01 | 01-02 | 01-03 | 01-04 | 01-05 | 01-06 | 01-07
   - Test TAT | 8 | 7 | 8.5 | 4 | 7 | 5.2 | 5
   - Test Count | 3,080 | 5,500 | 6,100 | 3,000 | 4,200 | 8,200 | 5,900
 - 오른쪽 조회 영역

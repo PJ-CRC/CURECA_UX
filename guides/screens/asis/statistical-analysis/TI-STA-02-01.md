@@ -201,5 +201,5 @@ Square (22), Description Number (12), Table (11), Table/Filled Table  Cell (11),
   - 1-1 시점 및 총합 정보 — 표출 항목: 호버된 해당 일자 또는 월 정보 표출 / 선택된 검사 항목들의 해당 시점 기준 총 검사 건수 합산 값을 Total : 100%(총 건수) 형태로 표출
   - 1-2 개별 항목 리스트 정보 — 표출 항목: 전체 총합 건수 대비 해당 항목이 차지하는 점유 비율과 누적 건수를 비율%(개별 건수) 형태로 표출
   - 툴팁 예시: 2026-04 | Total : 100%(52,750) / RP1 5.1%(300) | RP2 2.6%(150) | RP3 22.2%(1,300) | PB 26.5%(1,550) | GI-V 26.5%(1,550) | GI-B1 5.1%(300) | GI-B2 4.8%(280) | GI-P 26.8%(1,570) | Allplex HPV28 6.0%(350) | STI-12 0.0%(0)
-  - 이 케이스 화면의 제목은 `Test Ratio (%)`
+  - 케이스 화면 제목: Test Ratio (%) | Export
 - Case 2: Product 탭 — RP1 | RP2 | RP3 | PB | GI-V | GI-B1 | GI-B2 | GI-P | Allplex HPV28 | STI-12 / Sample Type 탭 — Swab | Aspirate | BAL | Saliva | Sputum | Raw stool | Cary-blair | eNAT stool | Fecal swab | Thinprep | Surepath | Cellpreserv | Urine | Semen

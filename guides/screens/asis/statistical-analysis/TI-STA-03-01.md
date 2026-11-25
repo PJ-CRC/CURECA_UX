@@ -191,4 +191,4 @@ Description Number (12), Square (9), 1 Depth (7), Table (2), Table/Filled Table 
   - 1-1 시점 정보 — 표출 항목: 호버된 해당 일자 또는 월 정보 표출
   - 1-2 지표별 상세 정보 — 표출 항목: Test TAT 행 ㄴ 해당 시점의 총 검사 소요 시간 합계 수치 뒤에 hour 단위를 결합하여 표출 / Test Count 행 ㄴ 해당 시점의 총 검사 건수 수치 표출
   - 툴팁 예시: 01-05 / Test TAT 6.5 hour / Test Count 4,100
-  - 이 케이스 화면의 합계 표 머리는 `Total Test TAT(Turnaround Time) | Total Test Count`이고, 오른쪽 조회 영역에 Legend(Select All / RP1 ~ STI-12)도 그려져 있음
+  - 케이스 화면 글자: Test TAT(Turnaround Time) | Export / 합계 표 Total Test TAT(Turnaround Time) | Total Test Count · 5.8 hour | 345,200 / 오른쪽 조회 영역 Key Metrics · Filter Options · Date Range(Daily | Monthly, 2026-01-01 | 2026-01-07) · View · Legend(Select All, RP1 | RP2 | RP3 | PB | GI-V | GI-B1 | GI-B2 | GI-P | Allplex HPV28 | STI-12) · View
