@@ -1,0 +1,12 @@
+{
+  "rev": "20261125-134200_brex-01",
+  "by": "Claude",
+  "at": "2026-11-25T13:42:00+09:00",
+  "note": "상태값 색 연결: 컴포넌트 고르는 법 상태값 줄 · COMM-5-j Type 2 Text Label 컴포넌트/속성 쓰는 법 · 컴포넌트 키 표에 Status 묶음 컴포넌트 13개 키 추가",
+  "base": "comm-index.md",
+  "pc": "BREX_01",
+  "req": "Claude 작업 지침 (진입점): 상태값 색 연결 — 개인 작업장(CURECA_AI) 상태색-연결-복사본.md의 4개 파일 변경(status-values.csv 컴포넌트·Color 칸, comm-index 3곳, glossary.md 1곳, background/todo.md 5-11 ⑥)을 대표 저장소에 그대로 반영",
+  "jobId": "J001",
+  "file": "../common-ux/comm-index.md",
+  "orig": true
+}
