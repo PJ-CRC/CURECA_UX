@@ -30,19 +30,29 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 
 ### 화면 글자
 
-- (GNB) Running | Instrument | L-IOS | D.A PC | Event | Error 3 | Warning 2 | 2026-04-10 11:30 | LIS Setting
-- (LNB) TIOS | Dashboard | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis | Setting | Setting | Test Policy Setting | Information | Test Protocol Setting | LIS Setting | System Setting | Account Setting | Keira Knightley
-- 탭: Interface Configuration | Code Mapping
-- 왼쪽 Code Type: Sample Type Code 14 | Target Code 10 | Test Code 30
-- 오른쪽 Sample Type Code
-  - 검색 `Search by sample type or LIS code` | Items 14
-  - 목록: No. | Sample Type Name | LIS Sample Type Code
-  - 01 Aspirate | Asp | Edit
-  - 02 BAL | BAL | Edit
-  - 03 Cary-blair | Cary-blair | Edit
-  - 04 Cellpreserv | Cellpreserv | Done | × (편집 중)
-  - 05 eNAT_stool ~ 14 Urine (Fecal_swab · Raw_stool · Saliva · Semen · Sputum · Surepath · Swab · Thinprep · Urine) | 같은 값 | Edit
-- Save (화면 아래 고정)
+- (GNB) TIOS | LIS Setting | Running | Instrument | L-IOS | D.A PC | Event | Error | 3 | Warning | 2 | 2026-04-10 11:30
+- (LNB) Dashboard | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis | Setting | Setting | Test Policy Setting | Information | Test Protocol Setting | LIS Setting | System Setting | Account Setting | Keira Knightley
+- Interface Configuration | Code Mapping
+- Code Type | Sample Type Code
+- Sample Type Code | 14
+- Search by sample type or LIS code
+- Target Code | 10 | Items | 14
+- No. | Sample Type Name | LIS Sample Type Code
+- Test Code | 30
+- 01 | Aspirate | Asp | Edit
+- 02 | BAL | BAL | Edit
+- 03 | Cary-blair | Cary-blair | Edit
+- 04 | Cellpreserv | Cellpreserv | Done | ×
+- 05 | eNAT_stool | eNAT_stool | Edit
+- 06 | Fecal_swab | Fecal_swab | Edit
+- 07 | Raw_stool | Raw_stool | Edit
+- 08 | Saliva | Saliva | Edit
+- 09 | Semen | Semen | Edit
+- 10 | Sputum | Sputum | Edit
+- 11 | Surepath | Surepath | Edit
+- 12 | Swab | Swab | Edit
+- 13 | Thinprep | Thinprep | Edit
+- 14 | Urine | Urine | Edit
 
 ### 사용 컴포넌트
 

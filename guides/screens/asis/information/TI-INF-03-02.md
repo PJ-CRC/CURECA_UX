@@ -31,34 +31,82 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 
 ### 화면 글자
 
-- 기본 정보 (y 206 ~)
-  - REPORT ID RPT-2026-0901-001 | Generated Date/Time 2026-09-01 08:31:04
-  - End Status Failed | T-IOS v3.2.1 | L-IOS v3.2.1 | CFX96 v3.2.1 | SG Viewer v3.2.1
-  - CURECA (Module Count by Type): Sample Storage 1 | Consumable Storage 1 | Sample Pre-treatment 2 | High-throughput Extraction 1 | Flexible Extraction 1 | PCR Setup 1 | Plate Sealing 1 | Universal PCR 1
-- Run Summary (y 535 ~)
-  - Batch ID BAT-2026-0901-001 | Run By seegene1234
-  - Start Date/Time 2026-04-24 11:10:20 | End Date/Time 2026-04-24 14:25:45
-  - Samples (Total / Processed) 823 / 700 (STAT 32 / STAT 21) | Products (Total / Processed) 1,902 / 928 (STAT 165 / STAT 86) | Total TAT (Turnaround Time) 5h 48m
-  - Completed 1,803 | Failed 51 | Not tested 24
-  - ❖ Tests by Product Group — 도넛 Total 1,902 / 표 Group | Product | Count | Ratio: GI | GI-V, GI-B1, GI-B2, GI-P | 746 | 39% · HPV | Allplex HPV28 | 214 | 11% · RP | RP1, RP2, RP3, PB | 812 | 43% · RTI | STI-12 | 130 | 7%
-  - ❖ Tests by Process — No | Process | Product Status Completed | Failed: 01 Sample Preparation 1,847 | 31 · 02 Nucleic Acid Extraction 1,816 | 0 · 03 PCR Setup 1,816 | 13 · 04 Plate Sealing 1,803 | 0 · 05 PCR 1,803 | 7
-- Run Events Summary (y 1360 ~)
-  - ❖ Events by Type — 막대(Y 0 ~ 12, 위 라벨 6 · 7 · 8 · 11) / 표 Type | Error | Warning: Instrument 2 | 4 · Inventory 1 | 6 · Sample 3 | 5 · System 4 | 7
-  - ❖ Events by Module Type — Error | Warning: Sample Storage 0 | 0 · Consumable Storage 1 | 3 · Sample Pre-treatment 3 | 4 · High-throughput Extraction 1 | 2 · Flexible Extraction 1 | 2 · PCR Setup 1 | 3 · Plate Sealing 2 | 4 · Universal PCR 1 | 4 (X축 0 ~ 10)
-  - ❖ Event History (Instrument Type Only) — Code | Description | Module | Unit | Occurred Date/Time
-    - ER-5231 | Pick Up Fail | Sample Storage | Inbound Trolley | 2025-09-29 15:57:00
-    - ER-1234 | Open the door | Consumable Storage (1) | Trolley | 2025-09-29 15:57:00
-    - ER-1234 | Open the door | High-throughoutput Extraction | Spin Tip Storage | 2025-09-29 15:57:00
-    - ER-1234 | Open the door | Universal PCR(1) | Outbound Trolley | 2025-09-29 15:57:00
-- Module / Unit Operation Summary (y 2239 ~)
-  - 머리: Module / Unit | Run-time(h) Current Run · Cumulative | Instrument Events ( Error / Warning ) Current Run · Cumulative
-  - Sample Pre-treatment (1) · Sample Processing (Upper) · Sample Processing (Lower) · Sample Aliquoting (Upper) · Sample Aliquoting (Lower) · Sample Pre-treatment (2) · Sample Processing (Upper) · Sample Processing (Lower) | 48 h | 32,850 h
-  - High-throughput Extraction | 38 h | 45,990 h · M9600 | 29 h 15 m | 45,990 h
-  - Flexible Extraction | 29 h 15 m | 21,900 h · Flexible Extraction | 38 h | 21,900 h
-  - PCR Setup (1) · STARlet · PCR Setup (2) · STARlet | 19 h | 19,710 h
-  - Plate Sealing · Sealer (1) · Sealer (2) | 8 h | 9,710 h
-  - Universal PCR · CFX96 (1) ~ CFX96 (6) | 21 h | 35,040 h
-  - 이벤트 칸은 모든 행이 `1 / 1` · `1 / 1`
+- REPORT ID | Generated Date/Time
+- RPT-2026-0901-001 | 2026-09-01 08:31:04
+- End Status | Failed | T-IOS | v3.2.1 | L-IOS | v3.2.1 | CFX96 | v3.2.1 | SG Viewer | v3.2.1
+- CURECA (Module Count by Type)
+- Sample Storage | 1 | Consumable Storage | 1 | Sample Pre-treatment | 2 | High-throughput Extraction | 1
+- Flexible Extraction | 1 | PCR Setup | 1 | Plate Sealing | 1 | Universal PCR | 1
+- Run Summary
+- Batch ID | BAT-2026-0901-001 | Run By | seegene1234
+- Start Date/Time | 2026-04-24 11:10:20 | End Date/Time | 2026-04-24 14:25:45
+- Samples (Total / Processed) | Products (Total / Processed) | Total TAT (Turnaround Time)
+- 823 | STAT 32 | 700 | STAT 21 | 1,902 | STAT 165 | 928 | STAT 86 | 5h 48m
+- Completed | 1,803 | Failed | 51 | Not tested | 24
+- ❖ | Tests by Product Group | ❖ | Tests by Process
+- Product Status
+- No | Process
+- Completed | Failed
+- Total
+- 1,902 | 01 | Sample Preparation | 1,847 | 31
+- 02 | Nucleic Acid Extraction | 1,816 | 0
+- Group | Product | Count | Ratio | 03 | PCR Setup | 1,816 | 13
+- GI | GI-V, GI-B1, GI-B2, GI-P | 746 | 39%
+- HPV | Allplex HPV28 | 214 | 11% | 04 | Plate Sealing | 1,803 | 0
+- RP | RP1, RP2, RP3, PB | 812 | 43%
+- RTI | STI-12 | 130 | 7% | 05 | PCR | 1,803 | 7
+- Run Events Summary
+- ❖ | Events by Type | ❖ | Events by Module Type
+- 12 | 11 | Error | Warning
+- 10
+- 8 | 7 | 8 | Sample Storage | 0 | 0
+- 6
+- 6 | Consumable Storage | 1 | 3
+- 4
+- 2 | Sample Pre-treatment | 3 | 4
+- 0 | High-throughput Extraction | 1 | 2
+- Type | Error | Warning | Flexible Extraction | 1 | 2
+- Instrument | 2 | 4 | PCR Setup | 1 | 3
+- Inventory | 1 | 6 | Plate Sealing | 2 | 4
+- Sample | 3 | 5
+- Universal PCR | 1 | 4
+- System | 4 | 7 | 0 | 2 | 4 | 6 | 8 | 10
+- ❖ | Event History (Instrument Type Only)
+- Code | Description | Module | Unit | Occurred Date/Time
+- ER-5231 | Pick Up Fail | Sample Storage | Inbound Trolley | 2025-09-29 15:57:00
+- ER-1234 | Open the door | Consumable Storage (1) | Trolley | 2025-09-29 15:57:00
+- ER-1234 | Open the door | High-throughoutput Extraction | Spin Tip Storage | 2025-09-29 15:57:00
+- ER-1234 | Open the door | Universal PCR(1) | Outbound Trolley | 2025-09-29 15:57:00
+- Module / Unit Operation Summary
+- Run-time(h) | Instrument Events ( Error / Warning )
+- Module / Unit
+- Current Run | Cumulative | Current Run | Cumulative
+- Sample Pre-treatment (1) | 48 h | 32,850 h | 1 | / | 1 | 1 | / | 1
+- Sample Processing (Upper) | 48 h | 32,850 h | 1 | / | 1 | 1 | / | 1
+- Sample Processing (Lower) | 48 h | 32,850 h | 1 | / | 1 | 1 | / | 1
+- Sample Aliquoting (Upper) | 48 h | 32,850 h | 1 | / | 1 | 1 | / | 1
+- Sample Aliquoting (Lower) | 48 h | 32,850 h | 1 | / | 1 | 1 | / | 1
+- Sample Pre-treatment (2) | 48 h | 32,850 h | 1 | / | 1 | 1 | / | 1
+- Sample Processing (Upper) | 48 h | 32,850 h | 1 | / | 1 | 1 | / | 1
+- Sample Processing (Lower) | 48 h | 32,850 h | 1 | / | 1 | 1 | / | 1
+- High-throughput Extraction | 38 h | 45,990 h | 1 | / | 1 | 1 | / | 1
+- M9600 | 29 h 15 m | 45,990 h | 1 | / | 1 | 1 | / | 1
+- Flexible Extraction | 29 h 15 m | 21,900 h | 1 | / | 1 | 1 | / | 1
+- Flexible Extraction | 38 h | 21,900 h | 1 | / | 1 | 1 | / | 1
+- PCR Setup (1) | 19 h | 19,710 h | 1 | / | 1 | 1 | / | 1
+- STARlet | 19 h | 19,710 h | 1 | / | 1 | 1 | / | 1
+- PCR Setup (2) | 19 h | 19,710 h | 1 | / | 1 | 1 | / | 1
+- STARlet | 19 h | 19,710 h | 1 | / | 1 | 1 | / | 1
+- Plate Sealing | 8 h | 9,710 h | 1 | / | 1 | 1 | / | 1
+- Sealer (1) | 8 h | 9,710 h | 1 | / | 1 | 1 | / | 1
+- Sealer (2) | 8 h | 9,710 h | 1 | / | 1 | 1 | / | 1
+- Universal PCR | 21 h | 35,040 h | 1 | / | 1 | 1 | / | 1
+- CFX96 (1) | 21 h | 35,040 h | 1 | / | 1 | 1 | / | 1
+- CFX96 (2) | 21 h | 35,040 h | 1 | / | 1 | 1 | / | 1
+- CFX96 (3) | 21 h | 35,040 h | 1 | / | 1 | 1 | / | 1
+- CFX96 (4) | 21 h | 35,040 h | 1 | / | 1 | 1 | / | 1
+- CFX96 (5) | 21 h | 35,040 h | 1 | / | 1 | 1 | / | 1
+- CFX96 (6) | 21 h | 35,040 h | 1 | / | 1 | 1 | / | 1
 
 ### 사용 컴포넌트
 

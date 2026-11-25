@@ -29,22 +29,22 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 
 ### 화면 글자
 
-- (GNB) Running | Instrument | L-IOS | D.A PC | Event | Error 3 | Warning 2 | 2026-04-10 11:30
-- (LNB) TIOS | Run Report | Dashboard | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis | Setting | Information (Run Report | Program Info) | User Manual | Keira Knightley
-- 검색: `Report ID, Batch ID, Run By` | End Status All | Generated Date 2026-03-05 ~ 2026-03-11 | Reset | Search
-- Items 638 | 10 items | Download
-- 목록: □ | Report ID | Batch ID | Run By | End Status | Generated Date/Time | (View)
-  - RPT-2026-0901-005 | BAT-2026-0901-024 | seegene123 | Failed | 2026-09-01 10:22:48 | View
-  - RPT-2026-0901-004 | BAT-2026-0901-023 | seegene126 | Completed | 2026-09-01 14:22:48 | View
-  - RPT-2026-0901-003 | BAT-2026-0901-022 | seegene126 | Completed | 2026-09-01 16:22:48 | View
-  - RPT-2026-0901-002 | BAT-2026-0901-021 | seegene123 | Completed | 2026-09-01 18:22:48 | View
-  - RPT-2026-0901-001 | BAT-2026-0901-020 | seegene123 | Failed | 2026-09-01 22:22:48 | View
-  - RPT-2026-0831-004 | BAT-2026-0901-019 | seegene123 | Completed | 2026-08-31 10:22:48 | View
-  - RPT-2026-0831-003 | BAT-2026-0901-018 | seegene126 | Failed | 2026-08-31 12:22:48 | View
-  - RPT-2026-0831-002 | BAT-2026-0901-017 | seegene126 | Completed | 2026-08-31 14:22:48 | View
-  - RPT-2026-0831-001 | BAT-2026-0901-016 | seegene123 | Completed | 2026-08-31 18:22:48 | View
-  - RPT-2026-0830-007 | BAT-2026-0901-015 | seegene123 | Completed | 2026-08-30 18:22:48 | View
-- 페이지: 1 ~ 10
+- (GNB) TIOS | Running | Instrument | L-IOS | D.A PC | Event | Error | 3 | Warning | 2 | 2026-04-10 11:30
+- (LNB) Run Report | Dashboard | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis | Setting | Information | Run Report | Program Info | User Manual | Keira Knightley
+- Report ID, Batch ID, Run By | End Status | All | Generated Date | 2026-03-05 ~ 2026-03-11 | Reset | Search
+- Items | 638 | 10 items | Download
+- □ | Report ID | Batch ID | Run By | End Status | Generated Date/Time
+- RPT-2026-0901-005 | BAT-2026-0901-024 | seegene123 | Failed | 2026-09-01 10:22:48 | View
+- RPT-2026-0901-004 | BAT-2026-0901-023 | seegene126 | Completed | 2026-09-01 14:22:48 | View
+- RPT-2026-0901-003 | BAT-2026-0901-022 | seegene126 | Completed | 2026-09-01 16:22:48 | View
+- RPT-2026-0901-002 | BAT-2026-0901-021 | seegene123 | Completed | 2026-09-01 18:22:48 | View
+- RPT-2026-0901-001 | BAT-2026-0901-020 | seegene123 | Failed | 2026-09-01 22:22:48 | View
+- RPT-2026-0831-004 | BAT-2026-0901-019 | seegene123 | Completed | 2026-08-31 10:22:48 | View
+- RPT-2026-0831-003 | BAT-2026-0901-018 | seegene126 | Failed | 2026-08-31 12:22:48 | View
+- RPT-2026-0831-002 | BAT-2026-0901-017 | seegene126 | Completed | 2026-08-31 14:22:48 | View
+- RPT-2026-0831-001 | BAT-2026-0901-016 | seegene123 | Completed | 2026-08-31 18:22:48 | View
+- RPT-2026-0830-007 | BAT-2026-0901-015 | seegene123 | Completed | 2026-08-30 18:22:48 | View
+- 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
 
 ### 사용 컴포넌트
 

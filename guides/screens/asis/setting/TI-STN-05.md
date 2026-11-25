@@ -32,22 +32,22 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 
 ### 화면 글자
 
-- (GNB) Running | Instrument | L-IOS | D.A PC | Event | Error 3 | Warning 2 | 2026-04-10 11:30
-- (LNB) TIOS | Account Setting | Dashboard | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis | Setting | Policy Setting | Protocol Setting | LIS Setting | System Setting | Account Setting | Information | Manual | Keira Knightley
-- 검색: `User ID, User Name, Email` | User Type All | Search
-- Items 638 | Delete | Add User
-- 목록: □ | User ID | User Type | User Name | Email | Registration Date | Last Login Date | Modified Date/Time
-  - User 1 | Admin | James Smith | john.doe@seegene.com | 2026-03-05 | 2026-03-07 | 2026-04-24 11:10:20
-  - User 2 | Admin | Michael Brown | david.jones@seegene.com | (같은 날짜)
-  - User 3 | Admin | Sarah Williams | -
-  - User 4 | Admin | David Jones | -
-  - User 5 | User | - | emily.j@seegene.com
-  - User 6 | User | - | sarah.williams@seegene.com
-  - User 7 | User | - | jessica.m@seegene.com
-  - User 8 | User | Jessica Miller | daniel.davis@seegene.com
-  - User 9 | User | - | -
-  - User 10 | User | - | -
-- 페이지: 1 ~ 10
+- (GNB) TIOS | Running | Instrument | L-IOS | D.A PC | Event | Error | 3 | Warning | 2 | 2026-04-10 11:30
+- (LNB) Account Setting | Dashboard | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis | Setting | Policy Setting | Protocol Setting | LIS Setting | System Setting | Account Setting | Keira Knightley | Information | Manual
+- User ID, User Name, Email | User Type | All | Search
+- Items | 638 | Delete | Add User
+- □ | User ID | User Type | User Name | Email | Registration Date | Last Login Date | Modified Date/Time
+- User 1 | Admin | James Smith | john.doe@seegene.com | 2026-03-05 | 2026-03-07 | 2026-04-24 11:10:20
+- User 2 | Admin | Michael Brown | david.jones@seegene.com | 2026-03-05 | 2026-03-07 | 2026-04-24 11:10:20
+- User 3 | Admin | Sarah Williams | - | 2026-03-05 | 2026-03-07 | 2026-04-24 11:10:20
+- User 4 | Admin | David Jones | - | 2026-03-05 | 2026-03-07 | 2026-04-24 11:10:20
+- User 5 | User | - | emily.j@seegene.com | 2026-03-05 | 2026-03-07 | 2026-04-24 11:10:20
+- User 6 | User | - | sarah.williams@seegene.com | 2026-03-05 | 2026-03-07 | 2026-04-24 11:10:20
+- User 7 | User | - | jessica.m@seegene.com | 2026-03-05 | 2026-03-07 | 2026-04-24 11:10:20
+- User 8 | User | Jessica Miller | daniel.davis@seegene.com | 2026-03-05 | 2026-03-07 | 2026-04-24 11:10:20
+- User 9 | User | - | - | 2026-03-05 | 2026-03-07 | 2026-04-24 11:10:20
+- User 10 | User | - | - | 2026-03-05 | 2026-03-07 | 2026-04-24 11:10:20
+- 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
 
 ### 사용 컴포넌트
 
