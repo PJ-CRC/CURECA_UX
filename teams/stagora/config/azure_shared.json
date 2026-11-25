@@ -1,5 +1,5 @@
 {
-  "at": 1795579345789,
+  "at": 1795579502764,
   "pc": "BREX_06",
   "by": "최고관리자",
   "data": {
@@ -8872,11 +8872,23 @@
         ]
       }
     ],
-    "at": 1795579345784,
+    "at": 1795579502761,
     "readonly": true,
     "azure": true,
     "wbs": true,
     "pick": {
+      "stateColors": {
+        "New": "#b2b2b2",
+        "Spec Review": "#51399f",
+        "To Do": "#fbfd52",
+        "Resolved": "#007acc",
+        "In Progress": "#007acc",
+        "Pending": "#ff9d00",
+        "Done": "#4e9d5d",
+        "Close": "#222222",
+        "Developed": "#c9e7e7",
+        "Cancel": "#aaaaaa"
+      },
       "ver": {
         "col": 4,
         "list": [
