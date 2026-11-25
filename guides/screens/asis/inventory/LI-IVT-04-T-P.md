@@ -8,8 +8,8 @@ type: Popup
 version: 2.1.18
 date: 2026.11.19
 author: 이상헌
-client_mode: []
-user_type: []
+client_mode: [Main Mode, Console Mode, MS Mode]
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-362427
@@ -22,6 +22,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: 팝업 · 디스크립션 같음. 뒤 화면의 LNB 메뉴만 다름
 - 호출하는 화면: 없음 (5 [Close] · 6 [X] 닫기)
 - 호출되는 곳: [LI-IVT-04-T] Reagents Tab 3-7 [Item details]
+- 관련 정책: POL-INV-001, POL-INV-004, POL-EQP-009, POL-INV-007
 
 ## 기존 화면
 
