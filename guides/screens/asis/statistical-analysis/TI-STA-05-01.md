@@ -9,7 +9,7 @@ version: 2.1.03
 date: 2026.08.21
 author: 정다예
 client_mode: []
-user_type: []
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-440042
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: T-IOS 단독 (IA에 L 짝 없음)
 - 호출하는 화면: [TI-STA-05-02] Run-time Trend Table (2 Table), [TI-STA-06-01] Error Rate Trend (1 Tab)
 - 호출되는 곳: LNB > Statistical Analysis > Instrument (1 Default : 첫번째 탭 Run-time Trend)
+- 관련 정책: POL-STA-001, POL-STA-002, POL-STA-003, POL-STA-006, POL-EQP-005, POL-COM-006
 - 같은 페이지에 Module Type별 모양을 보이는 같은 CID 프레임이 3개 더 있습니다(아래 케이스 절). 기획 프레임 밖에는 섹션 `통계 지표 관련 정책`([3543:441949](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-441949))이 있습니다(옮기지 않음).
 
 ## 기존 화면

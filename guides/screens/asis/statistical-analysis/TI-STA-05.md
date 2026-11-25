@@ -9,7 +9,7 @@ version: 2.0
 date: 2026.06.15
 author: 정다예
 client_mode: []
-user_type: []
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-478882
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: T-IOS 단독 (IA에 L 짝 없음)
 - 호출하는 화면: 없음 (툴팁 · 케이스만)
 - 호출되는 곳: LNB > Statistical Analysis > Test Forecasting
+- 관련 정책: POL-STA-001, POL-STA-005
 - CID: IA 변경 요청 2번(`ia/change-requests.md`)에 Instrument Run-time(TI-STA-05-01 · 05-02)과 계층이 겹쳐 TI-STA-09로 바꾸자는 안이 있습니다(요청 전). 원본 CID 그대로 둡니다.
 - 기획 프레임 밖에는 섹션 `통계 예측 관련 정책`([3543:479674](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-479674))이 있습니다(옮기지 않음).
 
