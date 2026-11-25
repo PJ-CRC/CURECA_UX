@@ -8,8 +8,8 @@ type: Tab
 version: 2.1.11
 date: 2026.10.08
 author: 정다예
-client_mode: []
-user_type: []
+client_mode: [Main Mode, Console Mode, MS Mode]
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-369301
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: 화면 · 디스크립션 같음. LNB 메뉴만 다름
 - 호출하는 화면: 없음 (4 [Refresh]만. 비움 처리는 Material Setup > Empty Waste Bin의 Confirm Empty, 3-3 · 3-5)
 - 호출되는 곳: Inventory Tab 구성 ([LI-IVT-01-T] 등)
+- 관련 정책: POL-INV-001, POL-INV-005, POL-EQP-009, POL-LOD-005
 
 ## 기존 화면
 
