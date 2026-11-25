@@ -9,3 +9,4 @@
 | --- | --- |
 | `description-samples.md` | 디스크립션 작성예시문서 세 화면 (2026-11-10). 디스크립션은 이 결로 씀 |
 | `case-samples.md` | 케이스 화면 작성예시문서 여섯 화면 (2026-11-10). 케이스 화면은 이 결로 그림 |
+| `requirements-samples.md` | 1단계 경로 분기 기준마다의 예와 요건 목록 예시 요건 넷 (2026-11-25, `flow/1-requirements.md`에서 옮김) |
