@@ -3,50 +3,47 @@ cid: TI-IVT-02-T
 pair_cid: LI-IVT-02-T
 tl_relation: 동일
 title: Inventory Overview
-path: Inventory > Overview
+path: Inventory > Overview Tab
 type: Tab
-version: 2.1.13
-date: 2026-10-23
-author: 서보경
+version: 2.1.18
+date: 2026.11.19
+author: 이상헌
 client_mode: []
-user_type: [Service, Admin, User]
+user_type: []
 policies: []
-rules_version:
-provisional: []
-flags: []
 source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=7336-428897
-figma_region: 2.1 2차
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-385231
 ---
 # TI-IVT-02-T Inventory Overview
 
-> 기존 화면(기존 작업방 Inventory 페이지, 2.1 2차 영역, Ver 2.1.13)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 `Inventory_asis` 페이지, Ver 2.1.18)을 2026-11-25에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
 
-- T/L 차이: LI-IVT-02-T와 화면 글자·디스크립션이 같음 (IA "짝 화면 동일"은 비어 있음)
-- 관련 정책: POL-INV-001, POL-INV-002, POL-EQP-009, POL-LOD-001
-- 호출하는 화면: Alert_020 (데이터 로드 실패)
-- 다른 프레임: [SB_Inventory_Overview_Detail Info](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=7336-429125) (1 "케이스별 노출 기준"이 가리키는 예시 프레임, CID 없음)
-
-- 취소선(Figma에서 제거된 항목): 1-3의 옛 "2-3 최대 적재 용량이 있을 경우" 표기 방식 전체(게이지 바와 잔여 재고 비율(%), "잔여 수량/ 총 적재 가능 수량(입고 단위 수량)" 형식)
+- T/L 차이: 기능 · 디스크립션 같음. LNB 메뉴만 다름
+- 호출하는 화면: Alert_020 (3 데이터 로드 실패)
+- 호출되는 곳: LNB > Inventory > Overview Tab (0 진입 방법), [TI-IVT-01-T] 등 Inventory Tab 구성
 
 ## 기존 화면
 
+<!-- `{메뉴}_asis` 페이지에 있는 그대로 옮깁니다. 고치거나 정리하지 않습니다. 틀린 곳 · 정책과 다른 곳도 그대로 옮깁니다. 그 화면의 To-Be 작업 1단계에서 읽으며 찾아 그 작업에서 고칩니다(`flow/1-requirements.md` 절차 4번 순서 3 "뒤 단계로 넘김"의 5). -->
+
 ### 화면 글자
 
-- (GNB·LNB는 T-IOS 공통)
-- Summary | Overview | Consumables | Reagent | Waste Bin/Bottle | Usage History
+- (GNB) Running | Instrument | L-IOS | D.A PC | Event | Error 3 | Warning 2 | 2026-04-10 11:30
+- (LNB) TIOS | Dashboard | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis | Setting | Information | Keira Knightley
+- Inventory
+- Tab: Summary | Overview | Consumables | Reagent | Waste Bin/Bottle | Usage History
 - Overview by Module | Refresh
-- (Module 열) Sample Storage | Consumable Storage | High-throughput Extraction | Flexible Extraction | PCR Setup | Plate Sealing, 각 열 Dropdown All
-- Sample Storage: Samples (Inbound Trolley) 0 ea (0 racks) | Samples (Test In Progress) 48 ea (1 racks) | Samples (Outbound Trolley) 912 ea (19 racks)
-- Consumable Storage: 1000 μL Tip 288 ea (3 racks) | 300 μL Tip 196 ea (2 racks) | Wide Bore Tip | Empty Standard Tube 144 ea (3 racks) | Stool Swab 72 ea (3 racks) | LB Tub | LB Tub (Prep) | PBS Tub | Saline Tub 300 rxns (3 racks) 등
-- High-throughput Extraction: 96-DWP 3 ea | MB DWP | WB1 DWP | WB2 DWP | LB DWP 288 rxns (3 DWPs) | Spin Tip 96 rxns (1 DWP) | GI-BP IC, GI-V IC, PB IC, RP-V IC, STI-12 IC 200 rxns (2 tubes)
-- Flexible Extraction: EB DWP 288 rxns (3 DWPs) | 1000 μL Tip | BB Tub, EB Tub, WB1 Tub, WB2 Tub, WB3 Tub 384 rxns (4 sets) | Buffer Cartridge Cap 10 ea (2 sets)
-- PCR Setup: MB Tube 96 rxns (1 tube) | 300 μL Tip (1), 300 μL Tip (2) 288 ea (3 racks) | Allplex™ GI-Bacteria(I) Assay ~ Anyplex™II STI-12 Detection 300 rxns (3 sets)
-- Plate Sealing: PCR Plate 10 ea | MM Tube 14 ea (1 socket) | Sealing Film (1) 100 ea | Sealing Film (2) 120 ea
+- Module 열 (각 열 위 드롭박스 All)
+  - Sample Storage: Samples (Inbound Trolley) 0 ea (0 racks) | Samples (Test In Progress) 48 ea (1 racks) | Samples (Outbound Trolley) 912 ea (19 racks)
+  - Consumable Storage: 96-DWP 3 ea | 1000 μL Tip 288 ea (3 racks) | 300 μL Tip 196 ea (2 racks) | Wide Bore Tip 288 ea (3 racks) | Empty Standard Tube 144 ea (3 racks) | Stool Swab 72 ea (3 racks) | LB DWP 288 rxns (3 DWPs) | GI-BP IC 200 rxns (2 tubes) | GI-V IC 200 rxns (2 tubes) | PB IC 200 rxns (2 tubes) | RP-V IC 200 rxns (2 tubes) | STI-12 IC 200 rxns (2 tubes) | LB Tub 96 rxns (1 rack) | LB Tub (Prep) 300 rxns (3 racks) | PBS Tub 300 rxns (3 racks) | Saline Tub 300 rxns (3 racks) | ASL Standard Tube 144 rxns (3 racks) | PBS Standard Tube 144 rxns (3 racks) | PK Tube 96 rxns (1 tube) | Prelyser Standard Tube 144 rxns (3 racks) | Saline Standard Tube 144 rxns (3 racks)
+  - High-throughput Extraction: EB DWP 288 rxns (3 DWPs) | MB DWP 288 rxns (3 DWPs) | WB1 DWP 288 rxns (3 DWPs) | WB2 DWP 288 rxns (3 DWPs) | Spin Tip 96 rxns (1 DWP)
+  - Flexible Extraction: MB Tube 96 rxns (1 tube) | BB Tub, EB Tub, WB1 Tub, WB2 Tub, WB3 Tub 384 rxns (4 sets) | Buffer Cartridge Cap 10 ea (2 sets)
+  - PCR Setup: PCR Plate 10 ea | 1000 μL Tip 288 ea (3 racks) | 300 μL Tip (1) 288 ea (3 racks) | 300 μL Tip (2) 288 ea (3 racks)
+  - Plate Sealing: MM Tube 14 ea (1 socket) | Sealing Film (1) 100 ea | Sealing Film (2) 120 ea | Allplex™ GI-Bacteria(I) Assay 300 rxns (3 sets) | Allplex™ GI-Bacteria(II) Assay 300 rxns (3 sets) | Allplex™ GI-Virus Assay 300 rxns (3 sets) | Allplex™ HPV28 Detection 300 rxns (3 sets) | Allplex™ PneumoBacter Assay 300 rxns (3 sets) | Allplex™ Respiratory Panel 1 300 rxns (3 sets) | Allplex™ Respiratory Panel 2 300 rxns (3 sets) | Allplex™ Respiratory Panel 3 300 rxns (3 sets) | Anyplex™II STI-12 Detection 300 rxns (3 sets)
 
 ### 사용 컴포넌트
 
-Item_Segment Tabs (6), Form/Dropdown Box (6), Description Number (6), Interface/Info_Circle_Outlined (1), Square (1), Frame (1), Component 4 (1)
+⛔️ Item_Segment Tabs (6), Form/Dropdown Box (6), Description Number (6), Interface/Info_Circle_Outlined (1), Square (1), Frame (1), Component 4 (1)
 
 ### 디스크립션 (원문)
 
@@ -119,3 +116,20 @@ Item_Segment Tabs (6), Form/Dropdown Box (6), Description Number (6), Interface/
 - 버튼 클릭 시 데이터가 최신 상태로 갱신되어 표시
 - 데이터 로드 실패
 - 데이터 불러오기를 실패할 경우, Alert_020 팝업 노출
+
+### 케이스
+
+<!-- `{메뉴}_asis` 페이지의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
+
+케이스는 기획 프레임 바로 아래의 별도 프레임 `SB_Inventory_Overview_Detail Info`([3543:385460](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-385460), 2252×1201)에 있습니다. 1 "케이스별 노출 기준"이 가리키는 "Inventory Overview Detail Info"입니다. 원본에 Case 번호가 없습니다(프레임 오른쪽 패널은 빈 틀: Ver 2.1.12, Date 2026.10.16, CID `text`).
+
+| Case | 제목 (원문) | 조건 | 프레임 |
+| --- | --- | --- | --- |
+| - | 장착된 트롤리가 없을 경우 | Consumable Storage에 도킹된 트롤리 없음 | 위 프레임 |
+| - | 등록된 모듈이 없을 경우 | 그 Module 열에 등록된 모듈 없음 | 위 프레임 |
+| - | 입고 종류에 따라 가변형으로 변하는 Storage(대상:Consumable Storage, Plate Sealing) | 트롤리 · 냉장저장소에 입고된 것만 표출 | 위 프레임 |
+
+- 장착된 트롤리가 없을 경우: Consumable Storage | All | `No docked trolleys`
+- 등록된 모듈이 없을 경우: Consumable Storage | All | `No registered modules available`
+- 가변형 Storage — Consumable Storage: 설명 `트롤리에 소모품을 구성하여 넣는 케이스 트롤리에 입고된 소모품 리스트만 표출됨 해당 페이지 진입 시, 진입 기준으로 재고 조회하여 이미 다 소진된 아이템은 제외하여 표시` / Consumable Storage (1) 선택: 96-DWP 3 ea | 1000 μL Tip 288 ea (3 racks) | 300 μL Tip 196 ea (2 racks) | Wide Bore Tip 288 ea (3 racks) | LB DWP 288T (3 DWPs)
+- 가변형 Storage — Plate Sealing: 설명 `PCR 시약을 넣는 냉장저장소일 경우, 24칸에 검사에 필요한 시약을 구성하여 넣기 때문에 정확히 어떤 시약이 입고될지 알 수 없음. (단, MM Tube는 파악 가능) 입고된 시약 기준으로 노출 필요 입고된 시약의 Kit명으로 노출(시약명 오름차순)` `~~Sealing Film과 MM Tube는 Capacity가 있어 상단에 표기~~` / All: Allplex™ HPV28 Detection 300T (3 sets) | Allplex™ PneumoBacter Assay 300T (3 sets) | Allplex™ Respiratory Panel 1 300T (3 sets) | Allplex™ Respiratory Panel 2 300T (3 sets)
