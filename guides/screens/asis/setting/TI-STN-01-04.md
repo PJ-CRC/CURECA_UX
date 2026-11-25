@@ -9,7 +9,7 @@ version: 2.0
 date: 2026.06.15
 author: BREX
 client_mode: []
-user_type: []
+user_type: [Service, Admin]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-523014
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: 팝업 내용 같음. 버튼이 T [OK], L [Close]이고, L-IOS(LI-STN-01-04)는 디스크립션 1에 View 화면 정의가 더 있음
 - 호출하는 화면: 없음 (1 [OK] 닫기)
 - 호출되는 곳: [TI-STN-01] Policy Setting 4-3 Analyze Breakpoint
+- 관련 정책: POL-TST-003, POL-TST-004
 
 ## 기존 화면
 

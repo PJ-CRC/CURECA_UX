@@ -9,7 +9,7 @@ version: 2.0
 date: 2026.06.15
 author: BREX
 client_mode: []
-user_type: []
+user_type: [Service, Admin]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-523611
@@ -22,6 +22,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: T-IOS는 체크박스로 설정하고 [Close] | [Apply]. L-IOS(LI-STN-01-02)는 View 화면이고 [Close]만 있음. 검사 항목 예시 이름 표기가 다름(T `RP1` · `Allplex HPV28`, L `RP1A` · `Allplex_HPV28`)
 - 호출하는 화면: Confirm_010 (2 [Apply])
 - 호출되는 곳: [TI-STN-01] Policy Setting 3 Extraction Module Usage Setting
+- 관련 정책: POL-TST-005
 
 ## 기존 화면
 

@@ -9,7 +9,7 @@ version: 2.0
 date: 2026.06.15
 author: BREX
 client_mode: []
-user_type: []
+user_type: [Service, Admin]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-522915
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: T-IOS 단독 팝업 (IA에 L 짝 없음)
 - 호출하는 화면: 없음 (1-1 Calendar는 공통 UX 5-d, 4 [OK] 닫기)
 - 호출되는 곳: [TI-STN-01] Policy Setting 4-1 [Compare]
+- 관련 정책: POL-TST-004
 
 ## 기존 화면
 
