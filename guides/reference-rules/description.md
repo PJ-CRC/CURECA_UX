@@ -64,8 +64,8 @@ Common UX는 동작만 정하고 아래 값은 화면마다 정하게 했습니�
 | 요소 | 디스크립션에 꼭 적을 것 |
 | --- | --- |
 | 표 (Data Table) | 칸 구성(노출 항목), 데이터가 없을 때 문구, 줄 수가 기본과 다르면 그 줄 수 |
-| 정렬 (Sorting) | 기본 정렬 기준, 정렬되는 칸 |
-| 페이지 (Pagination) | 어느 유형을 쓰는지 |
+| 정렬 (Sorting) | Default 정렬 기준(예: Date 내림차순), 정렬 가능한 컬럼 항목 |
+| 페이지 (Pagination) | Pagination 유형 (Type 1 Number · Type 2 Indicator) |
 | 검색 영역 (Search Bar) | 조건 칸, 입력 규칙, Default |
 | 입력 · 검증 (Text Input) | 글자 수 제한, 최댓값, 오류 문구, 검증 뒤 다시 누르면 초기화하는지 |
 | 드롭다운 · 선택 (Dropdown · Checkbox · Chips) | 옵션 값, Default |

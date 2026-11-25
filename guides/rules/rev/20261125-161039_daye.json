@@ -1,0 +1,12 @@
+{
+  "rev": "20261125-161039_daye",
+  "by": "Claude",
+  "at": "2026-11-25T16:10:39+09:00",
+  "note": "3절 「Common UX가 화면에 맡긴 것」: 정렬 → Default 정렬 기준 · 정렬 가능한 컬럼 항목, 페이지 → Pagination 유형 (Type 1 Number · Type 2 Indicator) (Common UX COMM-5-r · 5-l 용어에 맞춤)",
+  "base": "20261125-160841_daye",
+  "pc": "DAYE",
+  "req": "채팅 요청(정다예): 「정렬되는 칸」 · 「어느 유형」 용어가 애매함 — Common UX 용어와 드롭다운 리스트 항목 결에 맞춰 정리",
+  "jobId": "",
+  "file": "../reference-rules/description.md",
+  "orig": true
+}
