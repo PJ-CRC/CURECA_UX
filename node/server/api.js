@@ -787,6 +787,17 @@ function wbsPart(g) {
 }
 // Part 색(Part 칸만, 파스텔): 표에 있는 Part를 이름 차례로 늘어놓아 하나씩(겹치지 않게)
 const WBS_PART_C = ['#fde2e4', '#e2ece9', '#dfe7fd', '#fff1c1', '#e8dff5', '#d7f2f7', '#fce1c8', '#e4f4d4', '#f6dfeb', '#e0e4ea'];
+// 담당자 · 상태 한 칸(2026-11-25): 작업명 줄은 [UX] · [UI] 작업을 합쳐 보인다. 상태는 DevOps 원래 이름(In Progress · Resolved · New · To Do …)
+//  여럿이면: 모두 같으면 그것, 진행 중인 것이 있으면 그것, 모두 끝났으면 끝난 것, 끝남과 시작 전이 섞이면 In Progress
+function azKind(s) { s = String(s || ''); if (/^(resolved|closed|done|completed)$/i.test(s)) return 'done'; if (/^(in progress|active|doing|committed|developed)$/i.test(s)) return 'prog'; if (/^(new|to do|todo|proposed|approved)$/i.test(s)) return 'todo'; return 'etc'; }
+function azMergeState(list) {
+  const xs = list.filter(Boolean); if (!xs.length) return ''; if (xs.every((x) => x === xs[0])) return xs[0];
+  const k = xs.map(azKind), pi = k.indexOf('prog'); if (pi >= 0) return xs[pi];
+  if (k.every((x) => x === 'done')) return xs[0];
+  if (k.includes('done') && k.includes('todo')) return 'In Progress';
+  return xs[0];
+}
+const AZ_STATE_C = {};
 async function azureWbs(T, cx) {
   const az = cx.az, base = az.org + '/' + encodeURIComponent(az.project) + '/_apis/wit/', v = 'api-version=7.0', key = String(az.report).trim();
   const esc = (s) => s.replace(/'/g, "''");
@@ -805,6 +816,23 @@ async function azureWbs(T, cx) {
   const reps = [], seenV = {};
   for (const w of reps0) { const m = sprOf(w.fields), ver = m ? +m[1] + '.' + +m[2] : ''; if (!ver || seenV[ver]) continue; seenV[ver] = 1; reps.push({ id: w.id, ver }); if (reps.length >= 26) break; }
   if (!reps.length) reps.push({ id: reps0[0].id, ver: '' });
+  // 담당자(2026-11-25): 주간보고 항목의 Assigned To. 주차 · Part마다 있는 항목(「[주간보고 UX/UI] PL-11.2 GMCS」)이 있으면 그것,
+  //  그 Part의 항목이 없으면 그 주차 「/ All」 항목의 담당자. 주차는 제목의 PL-월.주차를 먼저 본다(태그가 제목과 다른 항목이 있음)
+  const partOwner = {}, allOwner = {};   // '{버전}|{Part}' → 이름, '{버전}' → 이름
+  try {
+    const q2 = await azureCall(cx, 'POST', base + 'wiql?' + v + '&$top=600', { query: `SELECT [System.Id] FROM WorkItems WHERE [System.TeamProject] = @project AND [System.Title] CONTAINS '${esc(key)}' ORDER BY [System.CreatedDate] DESC` });
+    const ids2 = core.arr(q2 && q2.workItems).map((x) => x.id).slice(0, 600);
+    for (let i = 0; i < ids2.length; i += 200) {
+      const b2 = await azureCall(cx, 'POST', base + 'workitemsbatch?' + v, { ids: ids2.slice(i, i + 200), fields: ['System.Id', 'System.Title', 'System.Tags', 'System.AssignedTo', 'System.CreatedDate'], errorPolicy: 'omit' });
+      for (const w of core.arr(b2 && b2.value)) {
+        const t = String((w && w.fields && w.fields['System.Title']) || ''); if (!t) continue;
+        const m = /PL-(\d+)\.(\d+)/i.exec(t) || sprOf(w.fields); if (!m) continue; const ver = +m[1] + '.' + +m[2], who = azWho(w.fields['System.AssignedTo']);
+        if (/\/\s*All\s*$/i.test(t)) { if (!(ver in allOwner)) allOwner[ver] = who; continue; }
+        const k = ver + '|' + wbsPart(t);
+        if (!(k in partOwner)) partOwner[k] = who;   // 같은 주차 · Part가 여럿이면 나중에 만든 것(차례가 최신부터)
+      }
+    }
+  } catch (e) {}
   // ② 보고서마다 「주요 일정」 표: 묶음 제목(div title="[주간보고…]") 아래 User Story 줄(└ 없는 줄). 같은 묶음 제목이 다시 나오면 「상세 일정」이라 멈춘다
   //  같은 User Story(ID)가 여러 버전에 있으면 최신 버전에만 둔다(앞 버전 줄은 보이지 않음). 줄 차례 = 최신 버전부터
   const stories = [], seenS = {}; let rep = null, sprint = '';
@@ -837,11 +865,11 @@ async function azureWbs(T, cx) {
   }
   const kidIds = []; stories.forEach((s) => { const w = sById[s.id]; s.kids = core.arr(w && w.relations).filter((r) => r.rel === 'System.LinkTypes.Hierarchy-Forward').map((r) => +String(r.url).split('/').pop()).filter(Boolean); kidIds.push(...s.kids); });
   const kById = {}, OE = 'Microsoft.VSTS.Scheduling.OriginalEstimate', CW = 'Microsoft.VSTS.Scheduling.CompletedWork';
-  let kf = ['System.Id', 'System.Title', 'System.State', 'System.AssignedTo', sf, ef, OE, CW];
+  let kf = ['System.Id', 'System.Title', 'System.State', 'System.AssignedTo', 'System.WorkItemType', sf, ef, OE, CW];
   for (let i = 0; i < kidIds.length; i += 200) {
     let r;
     try { r = await azureCall(cx, 'POST', base + 'workitemsbatch?' + v, { ids: kidIds.slice(i, i + 200), fields: kf, errorPolicy: 'omit' }); }
-    catch (e) { if (!/TF51535|field|필드/i.test(e.message) || kf.length === 6) throw e; kf = kf.slice(0, 6); r = await azureCall(cx, 'POST', base + 'workitemsbatch?' + v, { ids: kidIds.slice(i, i + 200), fields: kf, errorPolicy: 'omit' }); }   // 시간 필드가 없는 프로세스면 시간 없이
+    catch (e) { if (!/TF51535|field|필드/i.test(e.message) || kf.length === 7) throw e; kf = kf.slice(0, 7); r = await azureCall(cx, 'POST', base + 'workitemsbatch?' + v, { ids: kidIds.slice(i, i + 200), fields: kf, errorPolicy: 'omit' }); }   // 시간 필드가 없는 프로세스면 시간 없이
     core.arr(r && r.value).forEach((w) => { if (w) kById[w.id] = w; });
   }
   // ④ 줄 만들기: User Story마다 [UX] · [UI] 작업을 같은 이름끼리 한 줄로(UX 담당 · 상태 / UI 담당 · 상태)
@@ -856,7 +884,7 @@ async function azureWbs(T, cx) {
       const num = (x) => (x == null || x === '' ? null : +x);
       p[kind] = { id: k.id, title: t, who: azWho(k.fields['System.AssignedTo']), st: azState(k.fields['System.State']), raw: String(k.fields['System.State'] || ''), s: d0(k.fields[sf]), e: d0(k.fields[ef]), oe: num(k.fields[OE]), cw: num(k.fields[CW]) };
     });
-    const sl = { part: wbsPart(s.group), ver: s.ver, id: s.id, menu: String(f['System.Title'] || ''), s: d0(f[sf]), e: d0(f[ef]), st: azState(f['System.State']) };
+    const sl = { part: wbsPart(s.group), ver: s.ver, id: s.id, menu: String(f['System.Title'] || ''), s: d0(f[sf]), e: d0(f[ef]), st: azState(f['System.State']), raw: String(f['System.State'] || ''), who: azWho(f['System.AssignedTo']) };
     if (!pairs.length) lines.push(Object.assign({ name: '', UX: null, UI: null, solo: true }, sl));
     pairs.sort((a, b) => ((a.UX || a.UI).s || 0) - ((b.UX || b.UI).s || 0)).forEach((p) => lines.push(Object.assign({}, sl, p)));
   });
@@ -867,7 +895,7 @@ async function azureWbs(T, cx) {
   if ((hi - lo) / 864e5 > 182) hi = new Date(lo.getTime() + 182 * 864e5);
   const days = []; for (let d = new Date(lo); d <= hi; d.setDate(d.getDate() + 1)) if (d.getDay() % 6) days.push(new Date(d));
   const parts = [...new Set(lines.map((l) => l.part))].sort(), PCOL = {}; parts.forEach((p, i) => { PCOL[p] = WBS_PART_C[i % WBS_PART_C.length]; });
-  const L = ['Part', 'ID', '메뉴(User Story)', '작업명', '버전', '시작일', '완료일', '시간(예상 → 실적)', 'UX 담당자', 'UI 담당자', 'UX 상태', 'UI 상태'], G0 = L.length;
+  const L = ['Part', 'ID', '메뉴(User Story)', '작업명', '버전', '시작일', '완료일', '시간(예상 → 실적)', '담당자', '상태'], G0 = L.length;
   const hrs = (xs) => { const o = xs.filter((x) => x && x.oe != null), c = xs.filter((x) => x && x.cw != null); if (!o.length && !c.length) return ''; const f = (n) => String(Math.round(n * 10) / 10); return (o.length ? f(o.reduce((a, x) => a + x.oe, 0)) : '-') + ' → ' + (c.length ? f(c.reduce((a, x) => a + x.cw, 0)) : '-'); };
   const ymd = (d) => d ? `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}` : '';
   const H0 = L.slice(), H1 = L.map(() => ''), H2 = L.map(() => '');
@@ -875,24 +903,26 @@ async function azureWbs(T, cx) {
   const values = [H0, H1, H2], bg = [[], [], []], dv = [], fw = [[], [], []], fc = [[], [], []], mg = [], kids = [];
   L.forEach((_, j) => { fw[0][j] = true; });
   const UXC = '#d9ead3', UIC = '#cfe2f3', BOTH = '#b7dcc8', SUBC = '#5f6368';
-  const XU = L.indexOf('UX 담당자'), XI = L.indexOf('UI 담당자'), SU = L.indexOf('UX 상태'), SI = L.indexOf('UI 상태');
+  const XW = L.indexOf('담당자'), XS = L.indexOf('상태'), IDC = L.indexOf('ID'), ln = [];   // ln: ID 칸 DevOps 링크 [줄, 칸, 주소]
+  const itemUrl = (id) => az.org + '/' + encodeURIComponent(az.project) + '/_workitems/edit/' + id;
   const bar = (ranges) => { const b = []; days.forEach((d, k) => { const hit = ranges.map((x) => !!(x.t && x.t.s && x.t.e && d >= x.t.s && d <= x.t.e)); if (hit[0] || hit[1]) b[G0 + k] = hit[0] && hit[1] ? BOTH : hit[0] ? ranges[0].c : ranges[1].c; }); return b; };
   lines.forEach((l) => {
     const r = values.length, ux = l.UX, ui = l.UI;
     const ss = [ux && ux.s, ui && ui.s].filter(Boolean), ee = [ux && ux.e, ui && ui.e].filter(Boolean);
     const sd = ss.length ? new Date(Math.min(...ss)) : l.solo ? l.s : null, ed = ee.length ? new Date(Math.max(...ee)) : l.solo ? l.e : null;
-    const row = [l.part, String(l.id), l.menu, l.name, l.ver, ymd(sd), ymd(ed), hrs([ux, ui]), ux ? ux.who : '', ui ? ui.who : '', ux ? ux.st : (l.solo ? l.st : ''), ui ? ui.st : ''];
+    const who = partOwner[l.ver + '|' + l.part] || allOwner[l.ver] || (l.solo ? l.who : [...new Set([ux && ux.who, ui && ui.who].filter(Boolean))].join(' · ')), st = l.solo ? l.raw : azMergeState([ux && ux.raw, ui && ui.raw]);
+    const row = [l.part, String(l.id), l.menu, l.name, l.ver, ymd(sd), ymd(ed), hrs([ux, ui]), who, st];
     days.forEach(() => row.push(''));
     const rb = bar([{ t: ux, c: UXC }, { t: ui, c: UIC }]); rb[0] = PCOL[l.part];
-    values.push(row); bg.push(rb); fc.push([]); dv.push([r, SU], [r, SI]);
+    values.push(row); bg.push(rb); fc.push([]); dv.push([r, XS]); ln.push([r, IDC, itemUrl(l.id)]);
     // 세부 일정(접힘): 이 작업명의 [UX] 작업 · [UI] 작업 한 줄씩 — 주간보고 「세부 일정」의 └ 줄과 같다(ID · 담당 · 상태 · 예상 → 실적 · 기간)
     const ch = [];
-    [['UX', ux, XU, SU, UXC], ['UI', ui, XI, SI, UIC]].forEach(([, t, wc, sc, col]) => {
-      if (!t) return; const cr = values.length, crow = [l.part, String(l.id), l.menu, '└ #' + t.id + ' ' + t.title, l.ver, ymd(t.s), ymd(t.e), hrs([t]), '', '', '', ''];
-      crow[wc] = t.who; crow[sc] = t.st; days.forEach(() => crow.push(''));
+    [['UX', ux, UXC], ['UI', ui, UIC]].forEach(([, t, col]) => {
+      if (!t) return; const cr = values.length, crow = [l.part, String(l.id), l.menu, '└ #' + t.id + ' ' + t.title, l.ver, ymd(t.s), ymd(t.e), hrs([t]), t.who, t.raw];
+      days.forEach(() => crow.push(''));
       const f = []; for (let j = 3; j < G0; j++) f[j] = SUBC;
       const cb2 = bar([{ t, c: col }, { t: null, c: col }]); cb2[0] = PCOL[l.part];
-      values.push(crow); bg.push(cb2); fc.push(f); dv.push([cr, sc]); ch.push(cr);
+      values.push(crow); bg.push(cb2); fc.push(f); dv.push([cr, XS]); ln.push([cr, IDC, itemUrl(t.id)]); ch.push(cr);
     });
     if (ch.length) kids.push({ row: r, key: l.id + '|' + l.name, rows: ch });
   });
@@ -902,13 +932,21 @@ async function azureWbs(T, cx) {
   merge(0, (r) => values[r][0] === values[r - 1][0] && values[r][VC] === values[r - 1][VC]);   // Part는 같은 버전 안에서만
   [1, 2].forEach((c) => merge(c, (r) => values[r][1] === values[r - 1][1]));
   const url = az.org + '/' + encodeURIComponent(az.project) + '/_workitems/edit/' + rep.id;
+  // 상태 색(2026-11-25): DevOps 작업 유형마다 정한 상태 색(Task · User Story 등, 이름이 같으면 먼저 읽은 것). 한 시간 기억
+  const types = new Set(); Object.values(sById).forEach((w) => { const t = w && w.fields && w.fields['System.WorkItemType']; if (t) types.add(String(t)); }); Object.values(kById).forEach((w) => { const t = w && w.fields && w.fields['System.WorkItemType']; if (t) types.add(String(t)); });
+  const stateColors = {};
+  for (const t of types) {
+    const ck = az.org + '|' + az.project + '|' + t; let list = AZ_STATE_C[ck] && Date.now() - AZ_STATE_C[ck].t < 3600000 ? AZ_STATE_C[ck].v : null;
+    if (!list) { try { const sj = await azureCall(cx, 'GET', base + 'workitemtypes/' + encodeURIComponent(t) + '/states?' + v); list = core.arr(sj && sj.value).map((x) => ({ name: String(x.name || ''), color: String(x.color || '') })); AZ_STATE_C[ck] = { t: Date.now(), v: list }; } catch (e) { list = []; } }
+    for (const x of list) if (x.name && /^[0-9a-f]{6}$/i.test(x.color) && !stateColors[x.name]) stateColors[x.name] = '#' + x.color.toLowerCase();
+  }
   // 거르기(2026-11-24): 버전(최신부터) · Part 목록과 그 열 — 일정 탭의 버전 · Part 선택
   const vers = reps.map((x) => x.ver).filter((x) => x && lines.some((l) => l.ver === x));
-  return { name: String(rf['System.Title'] || '') + (sprint ? ' (' + sprint + ')' : '') + (vers.length > 1 ? ' 외 ' + (vers.length - 1) + '주' : ''), values, bg, dv, fw, fc, mg, fzc: 5, kids, at: Date.now(), readonly: true, azure: true, wbs: true,   // kids: 접는 세부 줄 [{row: 작업명 줄, key, rows: [세부 줄]}]
-    pick: { ver: { col: VC, list: vers }, part: { col: 0, list: parts, colors: PCOL },
+  return { name: String(rf['System.Title'] || '') + (sprint ? ' (' + sprint + ')' : '') + (vers.length > 1 ? ' 외 ' + (vers.length - 1) + '주' : ''), values, bg, dv, fw, fc, mg, ln, fzc: 5, kids, at: Date.now(), readonly: true, azure: true, wbs: true,   // kids: 접는 세부 줄 [{row: 작업명 줄, key, rows: [세부 줄]}]
+    pick: { stateColors, ver: { col: VC, list: vers }, part: { col: 0, list: parts, colors: PCOL },
       // 간트 날짜(2026-11-24): 버전을 고르면 그 버전 줄의 시작일 ~ 완료일 밖 날짜 열을 숨긴다 — 날짜 열 시작 · 날짜들 · 시작일/완료일 열
       gantt: { col: G0, days: days.map(ymd), s: L.indexOf('시작일'), e: L.indexOf('완료일') } },
-    count: lines.length, total: stories.length, src: { id: rep.id, url, sprint }, warn: kf.length === 6 ? '작업 시간(예상 · 실적) 필드가 없어 시간 없이 가져왔습니다.' : '' };
+    count: lines.length, total: stories.length, src: { id: rep.id, url, sprint }, warn: kf.length === 7 ? '작업 시간(예상 · 실적) 필드가 없어 시간 없이 가져왔습니다.' : '' };
 }
 async function azureItems(T) {
   const cx = azureConf(T), { az } = cx, base = az.org + '/' + encodeURIComponent(az.project) + '/_apis/wit/', v = 'api-version=7.0';
