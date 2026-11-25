@@ -13,7 +13,7 @@ user_type: []
 policies: []   # 기존 화면에 걸린 것으로 보이는 정책 ID (2단계에서 다시 확인)
 source: asis   # 작업방 `{메뉴}_asis` 페이지의 기존 화면을 옮겨 적은 것(screens/asis/). To-Be 작업 전에 한 번 추출하고 바꾸지 않음. `{메뉴}_tobe`에 다시 그리면 screens/tobe/에 templates/screen.md 틀로 새로 씀
 figma:         # `{메뉴}_asis` 페이지의 기획 화면 프레임 링크
-# 추출할 때(flow/1-requirements.md "케이스 3에서 더 하는 것")는 원본에서 읽을 수 있는 칸을 모두 원본대로 채웁니다. client_mode · user_type · policies는 비워 두고 2단계에서 확인합니다.
+# 추출할 때(flow/1-requirements.md "케이스 3에서 더 하는 것")는 원본에서 읽을 수 있는 칸을 모두 원본대로 채웁니다. client_mode · user_type · policies만 이미 있던 asis 화면 MD의 값을 그대로 둡니다.
 ---
 # CID 화면 이름
 

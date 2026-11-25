@@ -1,0 +1,12 @@
+{
+  "rev": "20261126-030057_desktop-shje23r",
+  "by": "Claude",
+  "at": "2026-11-26T03:00:57+09:00",
+  "note": "머리말 주석: client_mode · user_type · policies는 이미 있던 값을 그대로 둠 (요청에 없던 「비워 두고」 되돌림)",
+  "base": "20261126-023601_desktop-shje23r",
+  "pc": "DESKTOP-SHJE23R",
+  "req": "client_mode · user_type · policies 「비워 둡니다」 되돌림: 2026-11-25 20:04 케이스 3 원본 변경 요청(정다예)에 없던 내용을 Claude가 넣은 것이라, 처음 판의 「그대로 둡니다」로 되돌림 (정다예, 2026-11-26, Claude Code 대화)",
+  "jobId": "",
+  "file": "../templates/screen-asis.md",
+  "orig": true
+}
