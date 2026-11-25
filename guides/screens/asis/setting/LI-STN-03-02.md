@@ -29,15 +29,23 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 
 ### 화면 글자
 
-- (GNB) Network Status | Instrument | T-IOS | D.A PC | Running | Event | Error 3 | Warning 2 | 2026-04-10 11:30 | Protocol Setting
-- (LNB) LIOS | Dashboard | Material Setup | Test Management | Sample Tracking | Instrument | Inventory | Setting | Policy Setting | System Setting | Protocol Setting | Run | Quick Start | Information | Manual | Keira Knightley
-- 탭: Pre-Treatment Protocol | Extraction Protocol
-- 검색: Protocol Name `Enter protocol Name` | Modified by `Enter modified by` | Search
-- Items 25
-- 목록: Protocol Name | Usage | Modified by | Modified Date/Time
-  - SG-RESPI (SG protocol) | Applied | - | -
-  - Test Protocol AA ~ II | - | Admin01 ~ Admin09 | 2026-03-24 10:24:56
-- 페이지: 1 | 2 | 3
+- (GNB) LIOS | Network Status | Protocol Setting | Instrument | T-IOS | D.A PC | Running | Event | Error | 3 | Warning | 2 | 2026-04-10 11:30
+- (LNB) Dashboard | Material Setup | Test Management | Sample Tracking | Instrument | Inventory | Setting | Policy Setting | System Setting | Protocol Setting | Run | Quick Start | Information | | | Manual | Keira Knightley
+- Pre-Treatment Protocol | Extraction Protocol
+- Protocol Name | Enter protocol Name | Modified by | Enter modified by | Search
+- Items | 25
+- Protocol Name | Usage | Modified by | Modified Date/Time
+- SG-RESPI | SG protocol | Applied | - | -
+- Test Protocol AA | - | Admin01 | 2026-03-24 10:24:56
+- Test Protocol BB | - | Admin02 | 2026-03-24 10:24:56
+- Test Protocol CC | - | Admin03 | 2026-03-24 10:24:56
+- Test Protocol DD | - | Admin04 | 2026-03-24 10:24:56
+- Test Protocol EE | - | Admin05 | 2026-03-24 10:24:56
+- Test Protocol FF | - | Admin06 | 2026-03-24 10:24:56
+- Test Protocol GG | - | Admin07 | 2026-03-24 10:24:56
+- Test Protocol HH | - | Admin08 | 2026-03-24 10:24:56
+- Test Protocol II | - | Admin09 | 2026-03-24 10:24:56
+- 1 | 2 | 3
 
 ### 사용 컴포넌트
 
