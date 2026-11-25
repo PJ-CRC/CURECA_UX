@@ -4,7 +4,7 @@
   "reqId": "R001",
   "reqType": "요청",
   "team": "cureca",
-  "at": "2026-11-25T21:45:30+09:00",
+  "at": "2026-11-25T21:51:23+09:00",
   "from": "2026-11-25T21:16:48+09:00",
   "by": "서보경",
   "doneBy": "Claude",
@@ -16,13 +16,13 @@
   "nodeId": "",
   "text": "Event History 화면 옮겨줘\n\n기존 화면: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-45275&t=8ZUolJfFqEx5iunS-1\n옮길 페이지: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3577-18413&t=8ZUolJfFqEx5iunS-1",
   "models": {
-    "claude-opus-5-5": 43
+    "claude-opus-5-5": 51
   },
-  "calls": 43,
-  "input": 91,
-  "cacheWrite": 231845,
-  "cacheRead": 13134653,
-  "output": 42031,
-  "total": 13408620,
-  "usd": 5.3227
+  "calls": 51,
+  "input": 109,
+  "cacheWrite": 243726,
+  "cacheRead": 17984894,
+  "output": 48960,
+  "total": 18277689,
+  "usd": 6.5264
 }
