@@ -3,37 +3,37 @@ cid: TI-LOG-01-P
 pair_cid: LI-LOG-01-P
 tl_relation: 동일
 title: Reset Initial Password
-path: Login > New Password
+path: -
 type: Popup
 version: 2.1.11
-date: 2026-10-08
+date: 2026.10.08
 author: 정다예
 client_mode: []
-user_type: [Service, Admin, User]
+user_type: []
 policies: []
-rules_version:
-provisional: []
-flags: []
 source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=1890-366934
-figma_region: 2.1 2차
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3538-11954
 ---
 # TI-LOG-01-P Reset Initial Password
 
-> 기존 화면(기존 작업방 Login 페이지, 2.1 2차 영역, Ver 2.1.11)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 `Login_asis` 페이지, Ver 2.1.11)을 2026-11-25에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
 
-- IA 화면 이름은 "New Password"
-- 관련 정책: POL-ACC-003, POL-ACC-004, POL-ACC-005, POL-ACC-006, POL-ACC-007
-- 다른 프레임: [TI-LOG-01-P/Case](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=1890-367090)
+- T/L 차이: LI-LOG-01-P와 디스크립션이 다른 곳: 1-1 Placeholder(T `8-64 characters: Letters, numbers, and special characters` / L `Please enter a valid password.`), 1-1 정책 「각 문자 유형을 최소 1자 이상 포함」(T에만), 1-1 · 1-3 예시의 케이스 코드(T `TI-LOG-P/Case` / L `LI-PRF-01/Case`)
+- 호출하는 화면: [TI-LOG] 로그인 화면 (2 [Save] → 유효성 검증 완료 후 이동)
+- 호출되는 곳: [TI-LOG] Sign in 4 [Sign In] (원문 표기 `TI-LOG-P`)
 
 ## 기존 화면
+
+<!-- `{메뉴}_asis` 페이지에 있는 그대로 옮깁니다. 고치거나 정리하지 않습니다. 틀린 곳 · 정책과 다른 곳은 반영 대기 목록(`pending/open.md`)에 "점검 발견"으로 남깁니다. -->
 
 ### 화면 글자
 
 - Reset Initial Password
 - For your account security, please update your initial password.
-- New Password | Please enter a valid password
-- Confirm New Password | Repeat the password
+- New Password
+- Please enter a valid password
+- Confirm New Password
+- Repeat the password
 - Cancel | Save
 
 ### 사용 컴포넌트
@@ -98,3 +98,19 @@ Description Number (6), Popup/Popup Middle Text (2), Interface/Eye_Slash_Outline
 #### 3. [Cancle] 버튼
 
 - 클릭 시, 팝업이 닫힘
+
+### 케이스
+
+<!-- `{메뉴}_asis` 페이지의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
+
+| Case | 제목 | 조건 | 프레임 |
+| --- | --- | --- | --- |
+| 1 | 새 비밀번호 유효성 체크 실패 시 | 새 비밀번호 유효성 검사 실패 시 (케이스 패널 화면 이름) | [TI-LOG-01-P/Case](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3538-12108) |
+| 2 | 새 비밀번호 불일치 시 | 새 비밀번호 불일치 시 (케이스 패널 화면 이름) | 같은 프레임 |
+| 3 | 비밀번호 Tooltip | 비밀번호 Tooltip (케이스 패널 화면 이름) | 같은 프레임 |
+
+- 케이스 패널: Case마다 화면 정보만 있고 디스크립션 번호 · 내용 없음(번호 칸 `0`)
+- 케이스 화면 글자
+  - Case 1: New Password 아래 `Only 8-64 characters with English letters, numbers, and special characters (!@#$%^&*()_-+={}[]:;"'<>,.?/) are allowed.`
+  - Case 2: Confirm New Password 아래 `Passwords do not match.`
+  - Case 3: 툴팁 `Password rules` / `8–64 characters are allowed` / `Letters (A-Z, a-z), numbers (0-9), and special characters are allowed` / `Case-sensitive`
