@@ -9,7 +9,7 @@ version: 2.1.14
 date: 2026.10.30
 author: 정다예
 client_mode: []
-user_type: []
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-120734
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: 디스크립션은 LI-TMG-02와 같음. 화면 글자는 GNB · LNB와 Batch 카드 ID 순서만 다름(T는 위에서부터 BAT-2026-0901-001 · 002 · 003, L은 003 · 002 · 001)
 - 호출하는 화면: (원문에 없음)
 - 호출되는 곳: LNB > Test Management > Test Status
+- 관련 정책: POL-SMP-001, POL-SMP-002, POL-SMP-004, POL-SMP-005, POL-SMP-008, POL-SMP-009. 검사 배치 완료 상태는 Test Status 화면에 우선 넣지 않음 (POL-SMP-004 규칙 4)
 
 ## 기존 화면
 
