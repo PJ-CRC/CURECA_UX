@@ -196,12 +196,13 @@ body.limited .split{grid-template-columns:minmax(0,760px)}
       <p>그동안의 요청 · 작업 내역을 모든 PC에서 지우고 처음부터 기록합니다. 다른 PC는 Figma AI Run을 켜면 알아서 비웁니다.</p>
       <ul>
         <li>지움: 변경 이력과 그 캡처 · 첨부 사본, 각 PC의 요청 · 작업 목록, 동기화 충돌 기록. UX 문서 「변경이력」 탭은 이 시각부터 보입니다.</li>
-        <li>남김: 계정 · 팀 · 팀 프로젝트 · 일정 연결 · UX 문서 · 회의록. 요청 번호는 이어서 붙습니다.</li>
+        <li>남김: 계정 · 팀 · 팀 프로젝트 · 일정 연결 · UX 문서 · 회의록. 요청 · 작업 번호는 이어서 붙습니다(아래 「번호도 처음부터」를 고르면 R001 · J001부터).</li>
       </ul>
       <div class="opts">
         <label><input type="checkbox" id="rsWork" checked>작업 기록도 지우기 <small style="color:var(--ink-3)">(모든 팀, 안내 README는 남김)</small></label>
         <label title="① → ② 화면 짝 기록입니다. 지우면 이미 옮긴 화면도 다음 보내기 · 비교에서 처음 보는 화면으로 봅니다"><input type="checkbox" id="rsXfer" checked>다음 단계로 옮긴 기록도 지우기</label>
         <label><input type="checkbox" id="rsUsage">사용량 통계도 지우기</label>
+        <label title="사용량 기록이 요청 번호로 저장되어, 사용량 통계도 지울 때만 고를 수 있습니다"><input type="checkbox" id="rsNum" disabled>요청 · 작업 번호도 처음부터(R001 · J001) <small style="color:var(--ink-3)">(사용량 통계도 지울 때만)</small></label>
       </div>
       <div class="acts"><button type="button" class="btn danger" id="rsBtn">작업 내역 초기화</button><span class="last" id="rsLast"></span></div>
     </section>
@@ -465,18 +466,21 @@ body.limited .split{grid-template-columns:minmax(0,760px)}
     }).catch(function(){});
   }
   last();
+  // 번호 처음부터는 사용량 통계도 지울 때만
+  function numOk(){ var u = $('rsUsage').checked; $('rsNum').disabled = !u; if (!u) $('rsNum').checked = false; }
+  $('rsUsage').addEventListener('change', numOk); numOk();
   $('rsBtn').addEventListener('click', function(){
-    var b = this, work = $('rsWork').checked, use = $('rsUsage').checked, xfer = $('rsXfer').checked;
+    var b = this, work = $('rsWork').checked, use = $('rsUsage').checked, xfer = $('rsXfer').checked, num = use && $('rsNum').checked;
     var what = ['변경 이력', '각 PC의 요청 · 작업 목록'].concat(work ? ['작업 기록'] : [], xfer ? ['옮긴 기록'] : [], use ? ['사용량 통계'] : []).join(' · ');
     WB.prompt('작업 내역을 초기화할까요?\n' + what + '을(를) 모든 PC에서 지웁니다.\n지우면 다시 볼 수 없습니다.\n확인하려면 「초기화」를 입력하세요.', '', { ok: '초기화', danger: true }).then(function(v){
       if (v == null) return;
       if (String(v).trim() !== '초기화') { WB.alert('확인 글자가 맞지 않아 초기화하지 않았습니다.\n「초기화」를 그대로 입력하세요.'); return; }
       b.disabled = true;
-      fetch('/api/reset', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ confirm: '초기화', worklogs: work, usage: use, transfer: xfer }) })
+      fetch('/api/reset', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ confirm: '초기화', worklogs: work, usage: use, transfer: xfer, num: num }) })
         .then(function(r){ return r.json().then(function(j){ if (!r.ok || j.error) throw new Error(j.error || ('HTTP ' + r.status)); return j; }); })
         .then(function(j){
           last();
-          WB.alert('작업 내역을 초기화했습니다.\n변경 이력 ' + j.entries + '건, 이 PC 요청 ' + j.requests + '건 · 작업 ' + j.jobs + '건' + (work ? ', 작업 기록 ' + j.worklogs + '개' : '') + (xfer ? ', 옮긴 기록 ' + j.transfer + '개' : '') + (use ? ', 사용량 ' + j.usage + '건' : '') + '을 지웠습니다.\n다른 PC는 Figma AI Run을 켜면 알아서 비웁니다.');
+          WB.alert('작업 내역을 초기화했습니다.\n변경 이력 ' + j.entries + '건, 이 PC 요청 ' + j.requests + '건 · 작업 ' + j.jobs + '건' + (work ? ', 작업 기록 ' + j.worklogs + '개' : '') + (xfer ? ', 옮긴 기록 ' + j.transfer + '개' : '') + (use ? ', 사용량 ' + j.usage + '건' : '') + '을 지웠습니다.' + (j.num ? '\n요청 · 작업 번호는 R001 · J001부터 다시 붙습니다.' : '') + '\n다른 PC는 Figma AI Run을 켜면 알아서 비웁니다.');
         })
         .catch(function(e){ WB.alert('초기화하지 못했습니다.\n' + e.message); })
         .then(function(){ b.disabled = false; });
