@@ -5,48 +5,52 @@ tl_relation: 동일
 title: Test Order
 path: Test Management > Test Order
 type: Page
-version: 2.1.11
-date: 2026-10-08
+version: 2.1.17
+date: 2026.11.13
 author: 정다예
 client_mode: []
-user_type: [Service, Admin, User]
+user_type: []
 policies: []
-rules_version:
-provisional: []
-flags: []
 source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=1897-436470
-figma_region: 2.1 2차
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-101618
 ---
 # TI-TMG-01 Test Order
 
-> 기존 화면(기존 작업방 Test Management 페이지, 2.1 2차 영역, Ver 2.1.11)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 `Test Order_asis` 페이지, Ver 2.1.17)을 2026-11-25에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
 
-- T/L 차이: IA는 짝 화면 동일(Y). 디스크립션 4 [Import]·[Export] 설명이 L-IOS(LI-TMG-01)와 다름 (반영 대기 목록 4)
-- 관련 정책: POL-SMP-001, POL-SMP-002, POL-SMP-003, POL-SMP-005, POL-SMP-006, POL-SMP-008, POL-COM-006
-- 호출하는 화면: Alert_031 (Import 파일 형식 오류)
-- 다른 프레임: [TI-TMG-01/Case](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=1897-436883)
+- T/L 차이: T-IOS에만 1-6 LIS Transmission 필터, 목록 `Send Results (LIS)` 열, 4 [Resend Results] 버튼이 있어 T의 1-7 · 1-8이 L에서는 1-6 · 1-7. 4 [Import] · [Export] 설명이 L과 다름(T는 윈도우 탐색기, L은 COMM-5-j(4/4) 팝업)
+- 호출하는 화면: [TI-TMG-01-P] Resend Results to LIS (4 [Resend Results]), Alert_031 (4 [Import] 파일 형식 오류)
+- 호출되는 곳: LNB > Test Management > Test Order
 
 ## 기존 화면
 
+<!-- `{메뉴}_asis` 페이지에 있는 그대로 옮깁니다. 고치거나 정리하지 않습니다. 틀린 곳 · 정책과 다른 곳은 반영 대기 목록(`pending/open.md`)에 "점검 발견"으로 남깁니다. -->
+
 ### 화면 글자
 
-- (GNB) Network Status | Instrument | L-IOS | D.A PC | Running | Event | Error 3 | Warning 2 | 2026-04-10 11:30 | TIOS
-- (LNB) Dashboard | Test Management (Test Order, Test Status) | Sample Tracking | Instrument | Inventory | Statistical Analysis | Setting | Information | Manual | Keira Knightley
-- Test Order
-- Sample ID | Product: All | Sample Type: All | Date: Order Date, 2026-03-05 ~ 2026-03-11 | Status: All | Canceled Only | STAT Only | Reset | Search
-- Items | Total Samples | STAT | Total Products | Refresh | Import | Export
-- Sample ID | Product | Sample Type | Order Date | Status | Start Date/Time | End Date/Time | Canceled Date | Canceled | STAT
-- AA0005001 | RP1 | Swab | Ordered | - | - | - | -
-- AA0005001 | RP3 | Swab | Running | 2026-03-05 10:22:48 | - | - | -
-- AA0005002 | PB | Swab | Failed | 2026-03-05 10:22:48 | 2026-03-05 11:22:48 | - | -
-- AA0005003 | RP1 | Saliva | Completed | 2026-03-05 10:22:48 | 2026-03-05 11:22:48 | - | -
-- AA0005006 | GI-B1 | eNAT stool | Not Tested | - | - | - | -
-- (이하 예시 줄 생략. Status 예시: Ordered, Ready, Running, Failed, Completed, Not Tested)
+- (GNB) Network Status | Instrument | L-IOS | D.A PC | Running | Event | Error 3 | Warning 2 | 2026-04-10 11:30
+- (LNB) TIOS | Test Order | Dashboard | Test Management | Test Order | Test Status | Sample Tracking | Instrument | Inventory | Statistical Analysis | Setting | Information | Manual | Keira Knightley
+- Sample ID | Product | All | Sample Type | All | Date | Order Date | 2026-03-05 ~ 2026-03-11 | Status | All
+- Reset | Search
+- LIS Transmission | All | Canceled Only | STAT Only
+- Items | 638 | Total Samples | 200 | STAT | 3 | Total Products | 638 | Refresh | Import | Export | Resend Results
+- Sample ID | Product | Sample Type | Order Date | Status | Start Date/Time | End Date/Time | Canceled Date | Canceled | Send Results (LIS) | STAT
+- AA0005001 | RP1 | Swab | 2025-03-05 | Ordered | - | - | - | - | -
+- AA0005001 | RP2 | Swab | 2025-03-05 | Ready | - | - | - | - | -
+- AA0005001 | RP3 | Swab | 2025-03-05 | Running | 2026-03-05 10:22:48 | - | - | - | -
+- AA0005002 | PB | Swab | 2025-03-05 | Failed | 2026-03-05 10:22:48 | 2026-03-05 11:22:48 | - | - | -
+- AA0005003 | RP1 | Saliva | 2025-03-05 | Completed | 2026-03-05 10:22:48 | 2026-03-05 11:22:48 | - | - | Failed
+- AA0005003 | RP2 | Saliva | 2025-03-05 | Running | 2026-03-05 10:22:48 | - | - | - | -
+- AA0005004 | STI-12 | Cellpreserv | 2025-03-05 | Running | 2026-03-05 10:22:48 | - | 2025-03-05 | -
+- AA0005005 | STI-12 | Surepath | 2025-03-05 | Completed | 2026-03-05 10:22:48 | 2026-03-05 11:22:48 | 2025-03-05 | Success
+- AA0005006 | GI-B1 | eNAT stool | 2025-03-05 | Not Tested | - | - | - | - | -
+- AA0005006 | GI-B2 | eNAT stool | 2025-03-05 | Not Tested | - | - | - | - | -
+- 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
+- 기획 프레임 높이 2040 (1080 아래에 화면 글자 없음)
 
 ### 사용 컴포넌트
 
-Description (14), Description Number (13), Title (10), Table (10), Tag Status (10), Table/Filled Table Cell (10), Frame/Instrument_Status (10), 1 Depth (7), Dropdown Outlined (5), Square (5), Checkbox (2), Form/Input Text Box (1)
+Frame 58 (18), Description (14), Description Number (14), Table/Filled Table  Cell (12), Title (11), Table (10), Tag Status (10), Frame 50 (10), Frame 42 (10), Frame 56 (10), Frame/Instrument_Status (10), Frame 57 (9), Frame 1984080524 (8), 1 Depth (7), Dropdown Outlined (6), Square (6), Checkbox (2), Interface/Check_Circle_Outlined (2), Form/Input Text Box (1), Frame 1984080525 (1), Page number (1), profile (1), Layout/Align_Right_05_Solid (1), Frame (1)
 
 ### 디스크립션 (원문)
 
@@ -76,7 +80,7 @@ Description (14), Description Number (13), Title (10), Table (10), Tag Status (1
 - 공통 UX 참고 : COMM-5-f(2/2)
 - Default : All
 - 드롭다운 리스트 항목
-- All, RP1, RP2, RP3, PB, GI-V, GI-B1, GI-B2, GI-P, Allplex HPV28, STI-12
+- All, RP1, RP2, RP3, PB, GI-V, GI-B1, GI-B2, GI-P Allplex HPV28, STI-12
 
 #### 1-3. Sample Type(Multi-Select Dropdown)
 
@@ -85,7 +89,7 @@ Description (14), Description Number (13), Title (10), Table (10), Tag Status (1
 - 공통 UX 참고 : COMM-5-f(2/2)
 - Default : All
 - 드롭다운 리스트 항목
-- All, Swab, Aspirate, BAL, Saliva, Sputum, Raw stool, Cary-blair, eNAT stool, Fecal swab, Thinprep, Surepath, Cellpreserv, Urine, Semen
+- All, Swab, Aspirate, BAL, Saliva, Sputum, Raw stool, Cary-blair, eNAT stool, Fecal swab, Thinprep Surepath, Cellpreserv, Urine, Semen
 
 #### 1-4. Date(Cascading Dropdown)
 
@@ -110,7 +114,16 @@ Description (14), Description Number (13), Title (10), Table (10), Tag Status (1
 - 드롭다운 리스트 항목
 - All, Ordered, Ready, Not Tested, Running, Completed, Failed
 
-#### 1-6. Canceled Only(Check box)
+#### 1-6. LIS Transmission(Dropdown)
+
+- 기능
+- LIS 검사 결과 전송 성공 여부를 단일 선택하여 데이터 조회
+- 공통 UX 참고 : COMM-5-f(1/2)
+- Default : All
+- 드롭다운 리스트 항목
+- All, Success, Failed
+
+#### 1-7. Canceled Only(Check box)
 
 - 기능 : 취소 상태의 검체 데이터 조회
 - Default : UnSelected(미선택)
@@ -118,7 +131,7 @@ Description (14), Description Number (13), Title (10), Table (10), Tag Status (1
 - Selected(선택) 시, 취소 상태의 검체만 노출
 - UnSelected(미선택) 시, 전체 검체 노출
 
-#### 1-7. STAT Only(Check box)
+#### 1-8. STAT Only(Check box)
 
 - 기능 : 응급 상태의 검체 데이터 조회
 - Default : UnSelected(미선택)
@@ -137,30 +150,34 @@ Description (14), Description Number (13), Title (10), Table (10), Tag Status (1
 #### 2-1. 리스트 표출 항목
 
 - Sample ID
-  - T-IOS에서 수신되는 검체 ID 정보
+- T-IOS에서 수신되는 검체 ID 정보
 - Product
-  - T-IOS에서 수신되는 검사 항목 정보
-  - 하나의 검사 항목 단위 정보 노출
+- T-IOS에서 수신되는 검사 항목 정보
+- 하나의 검사 항목 단위 정보 노출
 - Sample Type
-  - T-IOS에서 수신되는 검체 타입 정보
+- T-IOS에서 수신되는 검체 타입 정보
 - Order Date
-  - LIS 접수 일자 정보
-  - 표기 : YYYY-MM-DD
+- LIS 접수 일자 정보
+- 표기 : YYYY-MM-DD
 - Status
-  - 검체의 검사 진행 상태 정보
-  - 상태 값 : COMM-4-a
+- 검체의 검사 진행 상태 정보
+- 상태 값 : COMM-4-a
 - Start Date/Time
-  - Prep 장비에서 바코드 찍은 시간 시점
+- Prep 장비에서 바코드 찍은 시간 시점
 - End Date/Time
-  - L-IOS가 D.A.PC(결과처리 시스템)로부터 검사 결과를 받은 시점
+- L-IOS가 D.A.PC(결과처리 시스템)로부터 검사 결과를 받은 시점
 - Canceled Date
-  - LIS 취소 접수 일자 정보
-  - 검사 접수 취소 건에 한하여 노출
-  - 표기 : YYYY-MM-DD
+- LIS 취소 접수 일자 정보
+- 검사 접수 취소 건에 한하여 노출
+- 표기 : YYYY-MM-DD
 - Canceled
-  - LIS에서 수신되는 검체 오더 취소 여/부 정보
+- LIS에서 수신되는 검체 오더 취소 여/부 정보
 - STAT
-  - T-IOS에서 수신되는 검체 응급 여/부 상태 정보
+- T-IOS에서 수신되는 검체 응급 여/부 상태 정보
+- Sen Results (LIS)
+- LIS 검사 결과 전송 성공 여부 정보
+- 표출 값 : Success, Failed (칩 형태 노출)
+- 결과 전송 대상이 아닌 경우(Completed 외 상태) '-' 노출
 
 #### 3. 검사 오더 정보 요약
 
@@ -174,16 +191,20 @@ Description (14), Description Number (13), Title (10), Table (10), Tag Status (1
 #### 4. 리스트 제어 버튼
 
 - [Refresh] 버튼
-  - 설정된 조회 조건 유지, 리스트 데이터를 최신 상태로 업데이트
+- 설정된 조회 조건 유지, 리스트 데이터를 최신 상태로 업데이트
 - [Import] 버튼
-  - 버튼 선택 시, OS에서 제공하는 파일함이 팝업으로 제공되어 경로를 선택한 후 가져오기 할 수 있음
-  - 형식: 엑셀파일
-  - 단, 파일 형식이 올바르지 않는 경우 Alert_031 팝업 노출
+- 버튼 선택 시, OS에서 제공하는 파일함이 팝업으로 제공되어 경로를 선택한 후 가져오기 할 수 있음
+- 형식: CSV
+- 단, 파일 형식이 올바르지 않는 경우 Alert_031 팝업 노출
 - [Export] 버튼
-  - 버튼 선택 시, OS에서 제공하는 파일함이 팝업으로 제공되어 저장경로를 설정 후 내보내기 할 수 있음
-  - 대상 범위: 목록에 노출된 전체 리스트
-  - 저장 항목: 목록에서 제공되는 모든 내용
-  - 형식: 엑셀파일
+- 윈도우 탐색기가 호출되며, 원하는 경로를 지정할 수 있음
+- 대상 범위 : 목록에 노출된 전체 리스트
+- 저장 항목 : Detail이 있을 경우 Detail에서 제공되는 모든 내용
+- 형식 : CSV
+- [Resend Results] 버튼
+- 클릭 시, 재전송 대상 선택 팝업 노출 : TI-TMG-01-P
+- 팝업 리스트 대상 : 현재 조회 조건 AND Status Completed AND LIS Transmission Failed
+- Default : 활성화
 
 #### 5. 페이지네이션
 
@@ -191,4 +212,16 @@ Description (14), Description Number (13), Title (10), Table (10), Tag Status (1
 
 ### 케이스
 
-- Case 1. Sample 상태별 데이터 노출 예시 (TI-TMG-01/Case)
+<!-- `{메뉴}_asis` 페이지의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
+
+| Case | 제목 | 조건 | 프레임 |
+| --- | --- | --- | --- |
+| 1 | Sample 상태별 데이터 노출 예시 | 노란 띠 1-1 · 1-2 · 1-3 (아래) | [TI-TMG-01/Case](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-101398) |
+
+- 케이스 조각 (노란 띠 · 설명 글 · 예시 행, 원문 그대로)
+  - 1-1. 검사 시작 후 Prep 장비에서 검사가 진행되지 못한 채 회수된 검체 — Run Start를 해서 상태 값은 변했지만 Prep에서 바코드 인식을 실패하여 Start Date/Time 및 End Date/Time 값은 미노출 — 예시: AA0005006 | GI-B1 | eNAT stool | 2025-03-05 | Not Tested | - | - | - | -, AA0005006 | GI-B2 | eNAT stool | 2025-03-05 | Not Tested | - | - | - | -
+  - 1-2. 검사 시작 후 오더 추가된 검체 — 같은 일자에 같은 검체에 오더가 추가될 경우 Sample ID, Sample Type, Order Date가 동일하게 노출 — 예시: AA0005001 | RP1 | Swab | 2025-03-05 | Ordered | - | - | - | -, AA0005001 | RP2 | Swab | 2025-03-05 | Ready | - | - | - | -, AA0005001 | RP3 | Swab | 2025-03-05 | Running | 2026-03-05 10:22:48 | - | - | - (번호 표시 1 · 2 달림)
+  - 1-3. 검사 시작 후 오더 취소된 검체 — Run Start 한 이력이 있어 Start Date/Time 노출 / 검사 중 취소된 오더는 취소 여부와 상관 없이 검사 진행 / 취소 여부 및 취소 일자 노출 — 예시: AA0005005 | STI-12 | Surepath | 2025-03-05 | Completed | 2026-03-05 10:22:48 | 2026-03-05 11:22:48 | 2025-03-05
+- 케이스 패널 (원문)
+  - 1. 최초 오더 검사 시작 이후 추가된 오더 / Run 시작 전 Start Date/Time, End Date/Time 미노출 / Run 시작 전으로 Status는 Ordered로 노출
+  - 2. Run이 실행되고 있는 최초 오더 / Prep에서 바코드가 찍힌 검체 / - Status는 Running로 노출, Start Date/Time 노출 / Trolley에 대기중인 검체 / - Status는 Running로 노출, Start Date/Time 미노출
