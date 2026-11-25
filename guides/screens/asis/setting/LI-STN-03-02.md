@@ -8,8 +8,8 @@ type: Tab
 version: 2.0
 date: 2026.06.15
 author: BREX
-client_mode: []
-user_type: []
+client_mode: [Main Mode, Console Mode, MS Mode]
+user_type: [Service, Admin]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-540983
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: L-IOS에는 검색 [Reset] · [Edit] · [Copy]가 없음(T-IOS TI-STN-03-02의 2-2 · 4 · 목록 Copy). 번호가 당겨짐(L 4 목록 = T 5)
 - 호출하는 화면: [LI-STN-03-01] Pre-Treatment Protocol (1 Tab), 목록 정의는 [LI-STN-03-01] 참고 (4)
 - 호출되는 곳: [LI-STN-03-01] 1 Extraction Protocol 탭
+- 관련 정책: POL-TST-006
 
 ## 기존 화면
 

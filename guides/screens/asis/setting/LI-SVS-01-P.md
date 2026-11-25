@@ -8,8 +8,8 @@ type: Popup
 version: 2.1.01
 date: 2026.08.07
 author: BREX
-client_mode: []
-user_type: []
+client_mode: [Main Mode, Console Mode, MS Mode]
+user_type: [Service]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-619556
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: L-IOS는 보기만(1 Row 선택 · 2 닫기). [Add] · [Delete] · [Modify]와 Modify 화면은 T-IOS(TI-SVS-01-P)에만 있음. 화면은 코드 칸 이름이 `LIS Tube Code`이고 Height · Cap Size · Body Size · Type에 필수 표시(*)가 있음
 - 호출하는 화면: 없음
 - 호출되는 곳: [LI-SVS-01] 3-1 [상세 보기]
+- 관련 정책: POL-TST-009
 
 ## 기존 화면
 
