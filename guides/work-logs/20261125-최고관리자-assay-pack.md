@@ -237,8 +237,8 @@ started: 2026-11-25
 | Q1 | Master 파일의 Active 변경 버튼 모습 (TI-STN-08-P #3은 [Active] · [Inactive] 비활성, TI-STN-08 #4-1은 상세에 미노출. POL-TST-008 규칙 6은 "바꿀 수 없음"만 정함 — 버튼이 있는 화면인 TI-STN-08-P 원본대로 비활성으로 그리고 TI-STN-08 #4-1도 같게 씀) | TI-STN-08 #4-1 · TI-STN-08-P #3 | | T만 (L-IOS는 버튼 없음) | |
 | Q2 | Active로 바꾼 뒤(Confirm_029 [Activate]) Toast 문구 (Alert 카탈로그 동작에 "& Toast"만 있고 문구 없음. Confirm_030은 "{version} has been deactivated.") | TI-STN-08-P #4 | DS-0012 (같은 Confirm 줄) | T만 | |
 | Q3 | L-IOS 목록의 노출 개수 Dropdown을 둘지 (Common UX Basic Table: L-IOS는 노출 개수 고정. 기존 화면에는 10 items Dropdown이 있어 기존대로 그림) | LI-STN-08 #2 · LI-STN-08-P (뒤 목록) | | L만 | |
-| Q5 | Status Base(COMM-5-j)에 맞는 Variant가 없어 Active는 Navy · Inactive는 Gray로 그림 (기존 Active 태그 검정, Color에 검정 없음) | TI-STN-08 #4-1 | | T · L 같음 | |
 | Q4 | L-IOS 목록 데이터 없음 문구 (기존 [LI-STN-08 / 세부정의] 프레임이 없어 같은 메뉴 TI-STN-08 문구 "No files found. Click Import to add a file."로 씀. L-IOS에는 [Import] 없음) | LI-STN-08 #4 | | L만 | |
+| Q5 | Status Base(COMM-5-j)에 맞는 Variant가 없어 Active는 Navy · Inactive는 Gray로 그림 (기존 Active 태그 검정, Color에 검정 없음) | TI-STN-08 #4-1 | | T · L 같음 | |
 
 ## 변경 확인
 
