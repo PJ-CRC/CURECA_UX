@@ -904,7 +904,6 @@
 | TI-STN-06-R02 | Setting | SMTP Setting (TI-STN-06) | 점검 발견 | 5 Use SMTP Feature를 Enable에서 Disable로 바꿔 저장하는 경우 [Save]가 비활성화되어 끌 수 없음 | 팀 논의 후 정함 | PD-0002 | 대기 (팀 논의) |
 | TI-STN-06-R03 | Setting | SMTP Setting (TI-STN-06) | 기준 자료 변경 | 2 "입력 조건 없음" (Port Number 형식) | 숫자만 등 조건 확인 | 헌법 8조 | 대기 (확인 필요) |
 | TI-STN-08-P-R01 | Setting | Assay Pack File Details (TI-STN-08-P) | 기준 자료 변경 | 화면 이름 "Assay Pack Setting", Ver 0.4.0 | Assay Pack File Details (IA "Details"), 2.1.ZZ 체계 | IA | 대기 |
-| TI-STN-08-R01 | Setting | Assay Pack Setting (TI-STN-08) | 점검 발견 | Ver 0.3.0 (화면 Ver 체계 X.Y.ZZ가 아님) | 2.1.ZZ 체계로 | `old-rules/repository-and-id.md` 6절 | 대기 |
 | TI-STN-08-R02 | Setting | Assay Pack Setting (TI-STN-08) | 기준 자료 변경 | Import file 팝업 TI-STN-08-01이 IA에 없음 | IA에 추가할지 확인 | `ia/ia-screens.csv` | 대기 (확인 필요) |
 | TI-SVS-01-P-R01 | Setting | Sample Tube Details (TI-SVS-01-P) | 기준 자료 변경 | [Delete] → Confirm_009 | Confirm_009는 "Local Storage Detected"(로컬 드라이브 경고)라 삭제 확인에 맞지 않음. 삭제 확인 알럿 ID로 바꿈 | `alert/alert-catalog.csv` | 대기 |
 | TI-SVS-01-R01 | Setting | Sample Tube Setting (TI-SVS-01) | 기준 자료 변경 | 화면 이름 "Sample tube Setting", IA "Tube Setting" | 하나로 통일 | IA | 대기 |
