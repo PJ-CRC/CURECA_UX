@@ -224,6 +224,7 @@ started: 2026-11-25
 - 목록 정렬: 기존 원본 목록 헤더에 정렬 아이콘 없음 → Default 정렬만 적음
 - LI-STN-08-P 화면 이름: 기존 패널 「Assay Pack Setting」, IA는 Details — 이 CID에는 반영 대기 항목이 없어(TI-STN-08-P-R01은 T만) 기존 그대로 둠
 - Q1 (Master Active 버튼): TI-STN-08 #4-1을 TI-STN-08-P 원본대로 「상세에서 [Active] · [Inactive] 버튼 비활성 (변경 불가)」로 씀
+- TI-STN-08 그리기(2026-11-25, R002): LNB Setting 하위 메뉴는 IA Lv.2 순서 8개(Policy · System · Protocol · LIS · Account · SMTP · Assay Pack · Tube)로 둠(기존 원본 LNB는 7개, 공통 영역). LNB 컴포넌트 너비(218) 안에서 「Assay Pack Setting」이 말줄임으로 보임 — LNB 컴포넌트가 정한 모습이라 그대로 둠. 기존 원본 목록에 Active 머리 옆 삼각형 두 개(`3288:235487`, 정렬 아이콘 모양)가 있으나 디스크립션에 정렬 정의가 없어 그리지 않음(화면 MD 정렬 Default만). 목록 2행(5 · 6행) 선택 · [Delete] 활성은 기존 원본 그대로. 검색 영역 Active only는 Common UX Search Area 대로 Checkbox(Circle)로 그림(원본은 Square)
 
 ### 용어 치환
 | 원래 표현 | 표준어 | 위치 |
@@ -236,6 +237,7 @@ started: 2026-11-25
 | Q1 | Master 파일의 Active 변경 버튼 모습 (TI-STN-08-P #3은 [Active] · [Inactive] 비활성, TI-STN-08 #4-1은 상세에 미노출. POL-TST-008 규칙 6은 "바꿀 수 없음"만 정함 — 버튼이 있는 화면인 TI-STN-08-P 원본대로 비활성으로 그리고 TI-STN-08 #4-1도 같게 씀) | TI-STN-08 #4-1 · TI-STN-08-P #3 | | T만 (L-IOS는 버튼 없음) | |
 | Q2 | Active로 바꾼 뒤(Confirm_029 [Activate]) Toast 문구 (Alert 카탈로그 동작에 "& Toast"만 있고 문구 없음. Confirm_030은 "{version} has been deactivated.") | TI-STN-08-P #4 | DS-0012 (같은 Confirm 줄) | T만 | |
 | Q3 | L-IOS 목록의 노출 개수 Dropdown을 둘지 (Common UX Basic Table: L-IOS는 노출 개수 고정. 기존 화면에는 10 items Dropdown이 있어 기존대로 그림) | LI-STN-08 #2 · LI-STN-08-P (뒤 목록) | | L만 | |
+| Q5 | Status Base(COMM-5-j)에 맞는 Variant가 없어 Active는 Navy · Inactive는 Gray로 그림 (기존 Active 태그 검정, Color에 검정 없음) | TI-STN-08 #4-1 | | T · L 같음 | |
 | Q4 | L-IOS 목록 데이터 없음 문구 (기존 [LI-STN-08 / 세부정의] 프레임이 없어 같은 메뉴 TI-STN-08 문구 "No files found. Click Import to add a file."로 씀. L-IOS에는 [Import] 없음) | LI-STN-08 #4 | | L만 | |
 
 ## 변경 확인
