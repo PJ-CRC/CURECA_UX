@@ -46,11 +46,6 @@
   ],
   "raws": [
     {
-      "at": "2026-11-25T17:13:47+09:00",
-      "text": "I put R001 (\"R02 이어서 해줘\", continue R02) on hold without changing anything in Figma.\n\n- **Target page:** the request's page, `Setting  Ⓛ / Ⓣ_To Be`, is the file's current work page, so that wasn't the problem.\n- **Why it's on hold:** this PC's CURECA work standards for UX AI TEST have only the UX guide (Common UX 가이드) applied. The work rules document (작업규칙) is empty. Continuing R02's work record and steps follows the stages that document defines, and the rules say to hold the request when it isn't applied.\n- **Question left on the request:** asking for the CURECA work rules to be applied in UX docs, with a \"작업규칙 적용함, 이어서 진행\" (applied, continue) button. Once someone answers or presses 「다시 진행」 (resume), it goes back to waiting and I'll pick it up from there.\n- **Not done:** no screens were changed, so there are no captures and no prototype sync. The server records request usage on its own.",
-      "cut": false
-    },
-    {
       "at": "2026-11-25T17:14:32+09:00",
       "text": "R001은 다시 「보류」로 두었습니다. Figma는 고치지 않았습니다.\n\n- **보류한 이유:** 답은 「작업규칙 적용함」이었지만, 이 PC의 작업 기준(UX AI TEST · CURECA)에는 지금도 UX가이드(Common UX 가이드)만 있고 작업규칙은 비어 있습니다. 작업 기준을 저장하는 파일(`workbench/guide_apply.json`)도 2026-11-10 뒤로 바뀌지 않았습니다. 「R02 이어서 해줘」는 작업규칙의 단계대로 진행하는 일이라 작업규칙 없이는 시작할 수 없습니다.\n- **요청에 남긴 질문:** UX 문서에서 「CURECA 작업규칙」의 [적용]을 다시 눌러 달라고 남겼고, 「다시 적용함, 이어서 진행」 버튼을 달았습니다. 답이 오면 이어서 처리합니다.\n- **페이지:** 요청한 페이지(「Setting  Ⓛ / Ⓣ_To Be」)는 지금 작업 페이지가 맞아서 문제가 없었습니다.\n- **하지 않은 것:** 고친 화면이 없어서 캡처와 프로토타입 맞추기는 하지 않았습니다. 요청 사용량은 서버가 알아서 남깁니다.",
       "cut": false
@@ -68,6 +63,11 @@
     {
       "at": "2026-11-25T17:31:53+09:00",
       "text": "R001은 이번 차례에 상세 화면 한 쌍(TI-STN-08-P / LI-STN-08-P)까지 그리고 「대기」로 돌려 두었습니다. 3단계에 그릴 화면이 하나 더 남아 있어서 「완료」로 바꾸지 않았습니다. 백그라운드 감시가 새 세션으로 작업 기록에서 이어 갑니다.\n\n- **작업규칙 확인:** 서버에서 CURECA 작업규칙이 적용된 것을 확인했고, 요청 페이지 「Setting  Ⓛ / Ⓣ_To Be」도 지금 작업 페이지가 맞았습니다.\n- **TI-STN-08-P (`3515:1564`):**\n  - 상세 원본을 복제하지 않고 화면 MD대로 새로 그렸습니다. 뒤의 목록 화면은 TI-STN-08과 같은 Common UX 컴포넌트로 그렸고, 영역 틀과 자리는 상세 원본 값을 따랐습니다.\n  - File details 패널 내용은 원본에서 따왔습니다. Card/List · Card/Table에는 Active 값(태그와 버튼)을 담을 수 없어서입니다. 「컴포넌트 없이 그린 요소」 표에 원본 요약과 함께 「Card/List · Card/Table로 바꿀 여지」를 적었습니다.\n  - 패널 디스크립션 0 ~ 4, 사용자 확인 라벨, 사용자 확인 목록(질문 대기 Q1 · Q2 · Q5, 변경 확인 C1 ~ C4 · C6)을 두었습니다. 패널이 길어 기획 프레임 높이를 1186으로 늘렸습니다.\n- **LI-STN-08-P (`3519:2202`):** 다 그린 T를 복제해 L 원본과 다른 점만 바꿨습니다. [Delete] · [Import] · Checkbox · 패널 아래 버튼 · [Inactive]를 뺐고, 스크롤 영역은 원본대로 728로 맞췄습니다. 사용자 확인 목록에는 Q3 · Q5와 C4를 두었습니다.\n- **점검:** 두 화면 모두 칸을 넘는 글자는 없었고, 스크린샷으로도 확인했습니다.\n- **화면 MD 두 개를 고친 것:** 3번 블록의 `공통 UX 참고 : COMM-5-e`를 실제로 그린 컴포넌트에 맞춰 바꿨습니다. T는 COMM-5-c · COMM-5-j, L은 COMM-5-j이고 COMM-5-o는 그대로 두었습니다.\n- **판단으로 정한 곳:**\n  - 상세 원본에서는 숨겨져 있던 1번 번호 표시를 원본 자리에 보이게 두었습니다. 디스크립션에 1번 블록이 있기 때문입니다.\n  - Q3(L-IOS 노출 개수 Dropdown)은 LI-STN-08-P에 그 번호 표시가 없어서 라벨 없이 사용자 확인 목록의 0번 블록에만 넣었습니다.\n  \n  둘 다 작업 기록 「찾은 것」에 적었습니다.\n- **작업 기록:** 「화면별 작업」 줄, 「컴포넌트 없이 그린 요소」 표(줄 8개 추가), Q5의 관련 화면, 「찾은 것」을 채웠습니다. 「이어서 작업할 곳」 줄과 요청 note에는 다음 차례를 적었습니다.\n- **컴포넌트 메모:** 다음 처리에서 Figma를 다시 알아보지 않도록 `projects/etCQFF3CTf1EA6C79d4BBf/components.md`를 새로 만들었습니다.\n- **다음 차례:** TI-STN-08-01(Import file Popup, 짝 없음)을 그리고, 그다음 3단계 절차 3번(용어 점검)으로 갑니다.",
+      "cut": false
+    },
+    {
+      "at": "2026-11-25T17:39:08+09:00",
+      "text": "R001을 「대기」로 돌려 두었습니다. 백그라운드 감시가 새 세션을 띄워 다음 단계를 이어 갑니다.\n\n**이번에 한 일** (CURECA 작업규칙 3단계 · 케이스 3 · 작업 기록 `20261125-최고관리자-assay-pack`)\n- **TI-STN-08-01 (Import file 팝업)을 Figma에 그렸습니다.** 작업 페이지 「Setting Ⓛ / Ⓣ_To Be」의 TI-STN-08-01 섹션, 프레임 `3525:2744`입니다.\n  - 뒤에 화면을 깔지 않고 Dim만 깔았습니다(변경 확인 C5).\n  - 팝업 틀, 파일 영역, 선택한 파일 줄 3개는 원본(`3288:237146`)에서 읽은 값 그대로 새로 그렸습니다. 원본 프레임은 복제하지 않았습니다.\n  - 닫기는 Interface/Close로, [Select files] · [Cancel] · [Import]는 Square로 넣었습니다(Common UX 컴포넌트).\n  - 패널에는 화면 정보와 디스크립션 0 ~ 3번을 화면 MD 그대로 옮겼습니다. 사용자 확인 목록에는 C5 하나를 두었습니다.\n- **점검:** 글자가 칸을 넘는 곳은 없습니다. 팝업의 크기 · 자리 · 구조가 원본 요약과 같습니다(520×490, 프레임 14개). 원본에 업데이트 메모가 없어 두지 않았습니다.\n- **작업 기록:** 화면별 작업, 컴포넌트 없이 그린 요소(Dim · 팝업 틀 · 파일 영역 · 선택한 파일 줄), 찾은 것, 「이어서 작업할 곳」을 고쳤습니다. 컴포넌트 메모(`projects/.../components.md`)도 더했습니다.\n\n**확인이 필요한 곳**\n- Dim을 원본 크기와 자리(x 218부터) 그대로 두어서 프레임 왼쪽 218px이 흰 바탕으로 남습니다. 작업 기록 「찾은 것」에 적어 두었습니다.\n\n**규칙과 다르게 한 곳**\n- 플러그인이 켜져 있었지만 패널 행을 플러그인 채우기(fill)로 맡기지 않고 직접 그렸습니다. 이 작업 형식으로는 제목 줄 굵게와 코드 글자 색 지정을 넘길 수 없다고 판단했습니다. 이 점은 요청 note의 규칙 점검 줄에 적지 않았습니다.\n\n**다음 차례:** 3단계 절차 3번 용어 점검 → 마침 점검 → 3단계 보고(4단계 절차 1번으로 이어짐)입니다. 「대기」로 돌렸기 때문에 아직 캡처와 프로토타입 맞추기는 하지 않았습니다. 요청이 「완료」될 때 합니다.",
       "cut": false
     }
   ],
