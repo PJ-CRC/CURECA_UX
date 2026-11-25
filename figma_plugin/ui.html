@@ -226,6 +226,22 @@ async function fillJobs() {
 }
 setInterval(fillJobs, 3000);
 
+/* 작업 기다리기(2026-11-25): Figma 창이 뒤에 있으면 위 3초 타이머가 1분에 한 번쯤으로 늦춰진다. 그래서 서버에 「글 수정 · 채우기 작업이 생기면 알려 줘」
+   요청을 열어 두고(GET /api/jobs/wait, 최대 25초), 답이 오면 타이머를 기다리지 않고 바로 가져간다. 타이머는 그대로 둔다(서버가 예전 판이면 이것만으로 돈다) */
+async function waitLoop() {
+  for (;;) {
+    if (!myKey) { await new Promise(r => setTimeout(r, 3000)); continue; }
+    let ready = false, ok = true;
+    try {
+      const r = await fetch(JOBS_API + '/wait?key=' + encodeURIComponent(myKey) + '&kinds=fill,text&sec=25', { cache: 'no-store' });
+      if (r.status === 404 || r.status === 501) ok = false; else ready = !!(await r.json()).ready;
+    } catch (e) { ok = false; }
+    if (!ok) { await new Promise(r => setTimeout(r, 30000)); continue; }   // 서버가 꺼졌거나 예전 판: 잠깐 쉬고 다시
+    if (ready) { await Promise.all([fillJobs(), textJobs()]); await new Promise(r => setTimeout(r, 1500)); }   // 받지 못한 작업(다른 PC가 가져감 등)이 남아도 쉬지 않고 묻지 않게
+  }
+}
+waitLoop();
+
 /* ── 다음 단계와 비교 · 복사 옮기기(transfer): Workbench 「②와 비교」 작업
    - check · scan: ①이면 옮긴 화면 확인값, ②이면 작업 페이지 화면 확인값을 낸다(옮기지 않음)
    - paste(2026-11-20): ①이면 옮길 화면을 골라 두고, ②이면 붙여넣을 준비 → 서버가 Ctrl+C · Ctrl+V를 누름(안 되면 사람이) → 붙은 화면을 제자리에 놓는다

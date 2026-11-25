@@ -314,10 +314,11 @@ module.exports = function register(on, h) {
         if (kind === 'text' && !core.arr(b.items).length) throw new Error('바꿀 글(items)이 없습니다.');
         if (kind === 'fill') {
           const gs = core.arr(b.groups).filter((g) => g && typeof g === 'object');
-          if (!gs.length || !gs.some((g) => core.arr(g.rows).length)) throw new Error('채울 행(groups[].rows)이 없습니다.');
-          if (!gs.every((g) => /^\d+:\d+$/.test(nn(g.parent)) || /^\d+:\d+$/.test(nn(g.near)))) throw new Error('groups마다 넣을 곳(parent) 또는 옆에 둘 노드(near)의 nodeId가 있어야 합니다.');
+          if (!gs.length || !gs.some((g) => core.arr(g.rows).length || g.clone || core.arr(g.set).length || core.arr(g.fit).length)) throw new Error('채울 행(groups[].rows) · 틀 복제(clone) · 고칠 것(set)이 없습니다.');
+          const ref = (v) => /^\d+:\d+$/.test(nn(v)) || /^@\d+(\s*>.*)?$/.test(nn(v));   // 노드 id 또는 「@앞 그룹 번호 > 이름 > 이름」
+          if (!gs.every((g) => ref(g.parent) || ref(g.near))) throw new Error('groups마다 넣을 곳(parent) 또는 옆에 둘 노드(near)가 있어야 합니다(노드 id 또는 @그룹 번호/경로).');
           if (JSON.stringify(gs).length > 400000) throw new Error('채울 내용이 너무 큽니다(400KB까지). 나눠서 쌓아 주세요.');
-          if (!nid) nid = nn(gs[0].parent) || nn(gs[0].near);
+          if (!/^\d+:\d+$/.test(nid)) nid = [gs[0].parent, gs[0].near].map(nn).find((v) => /^\d+:\d+$/.test(v)) || '';
         }
         // 다음 단계로 옮기기(팀 프로젝트, 2026-11-16): Claude가 아니라 Figma 플러그인이 한다 — 읽기(보내는 파일을 연 플러그인) → 만들기(받는 파일을 연 플러그인)
         let xfer = null;
@@ -1305,6 +1306,8 @@ module.exports = function register(on, h) {
     const b = await body(); const p = new URL(req.url, 'http://x').pathname;
     if (p === '/api/setup') {
       const s = core.readSetup();
+      // 옛 링크로 되돌리지 않기(2026-11-25): 화면이 알던 링크(figmaUrlWas)와 지금 링크가 다르면 그사이 Workbench 작업 페이지 바꾸기 등으로 바뀐 것 — 거절하고 다시 보게 한다
+      if (b.figmaUrl != null && b.figmaUrlWas != null && nn(b.figmaUrlWas) !== nn(s.figmaUrl) && nn(b.figmaUrl) !== nn(s.figmaUrl)) throw new Error(`작업 링크가 그사이 다른 곳에서 바뀌었습니다(지금: ${nn(s.figmaUrl) || '없음'}). 칸을 지금 값으로 다시 채웠으니 확인한 뒤 바꿀 때만 다시 누르세요.`);
       for (const k of ['done', 'user', 'figmaUrl', 'autoAt', 'autoWatch']) if (b[k] != null) s[k] = b[k];
       // 시작 안내에서 고른 방법(2026-11-13): Figma 연결 = plugin | token, Claude 연결 = app | cli
       if (['plugin', 'token'].includes(nn(b.figmaWay))) s.figmaWay = nn(b.figmaWay);
