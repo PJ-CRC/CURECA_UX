@@ -9,7 +9,7 @@ version: 2.1.14
 date: 2026.10.30
 author: 정다예
 client_mode: []
-user_type: []
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-503700
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: T-IOS 단독 (IA에 L 짝 없음)
 - 호출하는 화면: [TI-INF-03-02] Run Report Detail (2-2 View, 브라우저 새 탭 PDF 뷰어)
 - 호출되는 곳: LNB > Information > Run Report
+- 관련 정책: POL-SMP-004
 
 ## 기존 화면
 

@@ -8,8 +8,8 @@ type: Popup
 version: 2.1.17
 date: 2026.11.13
 author: 이상헌
-client_mode: []
-user_type: []
+client_mode: [Main Mode, Console Mode]
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-337511
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: L-IOS 단독 팝업 (IA에 T 짝 없음)
 - 호출하는 화면: 확인 팝업 (2-5 Running 상태에서 Unlock), Confirm_031 (2-5 문이 열린 채 [Lock])
 - 호출되는 곳: [LI-INS-01-T] Overview Tab 6 Unlock 버튼, Dashboard [LI-DAS] 5-2 [Unlock]
+- 관련 정책: POL-EQP-004, POL-EQP-008, POL-LOD-001
 
 ## 기존 화면
 

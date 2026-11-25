@@ -9,7 +9,7 @@ version: 2.1.14
 date: 2026.10.30
 author: 정다예
 client_mode: []
-user_type: []
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-503969
@@ -22,6 +22,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - 패널 화면 이름은 `Run Report`이고, 기획 프레임 높이가 4116이라 리포트 전체가 화면 아래로 이어집니다.
 - 호출하는 화면: 없음
 - 호출되는 곳: [TI-INF-03-01] 2-2 [View] (브라우저 새 탭 PDF 뷰어)
+- 관련 정책: POL-SMP-002, POL-SMP-004
 - 원본 디스크립션 번호는 0 ~ 4 · 4-3입니다(4-1 · 4-2 없음).
 
 ## 기존 화면
