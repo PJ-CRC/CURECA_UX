@@ -2,11 +2,11 @@
   "id": "brex-01_R001",
   "kind": "request",
   "team": "cureca",
-  "status": "보류",
-  "at": "2026-11-25T21:19:13+09:00",
+  "status": "대기",
+  "at": "2026-11-25T21:20:57+09:00",
   "createdAt": "2026-11-25T21:16:32+09:00",
   "by": "서보경",
-  "doneBy": "Claude",
+  "doneBy": "서보경",
   "pc": "BREX_01",
   "reqId": "R001",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,22 +17,21 @@
   "type": "요청",
   "layout": "",
   "text": "Event History 화면 옮겨줘\n\n기존 화면: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-45275&t=8ZUolJfFqEx5iunS-1\n옮길 페이지: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3577-18413&t=8ZUolJfFqEx5iunS-1",
-  "note": "케이스 3 · 1단계 · 20261125-서보경-event-history — Figma 파일에 접근할 수 없어 멈춤\n- 작업 기록 만듦, 요건 1(Event History 메뉴 6개 화면 TI/LI-EVT-P · 01-P · 02-P를 tobe 페이지로 옮겨 다시 그림, 케이스 3) 정리, asis 화면 MD 6개 읽음\n- 멈춘 곳: 1단계 절차 3 — Event History_asis 페이지의 케이스 프레임 읽기(Figma)\n- 원인: Figma MCP가 이 파일(etCQFF3CTf1EA6C79d4BBf)에 'could not access the requested file'을 돌려줌. 이 PC의 Figma 연결 계정에 파일 편집 권한이 있는지 확인해 주세요\n규칙 점검: 1단계 「마침 점검」 전에 멈춤(건너뛴 것 없음)\n작업 기준: basis 2026-11-25 21:17 · 작업규칙 rules @원본 · 정책서 policy · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 glossary · 화면 정의서 screens",
+  "note": "",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": {
-    "q": "Figma 연결(계정 권한)을 확인한 뒤 이어서 진행할까요?",
-    "free": true,
-    "options": [
-      {
-        "label": "연결 확인함, 이어서 진행"
-      }
-    ]
-  },
-  "replies": [],
+  "ask": null,
+  "replies": [
+    {
+      "at": "2026-11-25T21:20:57+09:00",
+      "by": "서보경",
+      "q": "Figma 연결(계정 권한)을 확인한 뒤 이어서 진행할까요?",
+      "text": "연결 확인함, 이어서 진행"
+    }
+  ],
   "raws": [
     {
       "at": "2026-11-25T21:19:22+09:00",
