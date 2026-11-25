@@ -14,7 +14,7 @@ policies: [POL-TST-008, POL-TST-010, POL-ACC-001]
 basis:
 basis_versions:
 source: tobe
-figma:
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3492-26
 ---
 # LI-STN-08-P Assay Pack File Details
 

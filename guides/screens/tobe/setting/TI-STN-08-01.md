@@ -14,7 +14,7 @@ policies: [POL-TST-008, POL-ACC-001]
 basis:
 basis_versions:
 source: tobe
-figma:
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3492-19
 ---
 # TI-STN-08-01 Import file
 
