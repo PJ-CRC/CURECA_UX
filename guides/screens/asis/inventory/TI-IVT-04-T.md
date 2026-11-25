@@ -60,7 +60,6 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
   - Allplex™ GI-Parasite Assay (PCR): 5X GI-P MOM, EM2, RNase-free Water, GI-P PC 300 rxns (3 sets) | - / GI-BP IC 100 rxns (1 tube) | 200 rxns (2 tubes)
   - Allplex™ GI-Virus Assay (PCR): 5X GI-V MOM, Real-time One-step Enzyme, 5X Real-time One-step Buffer, RNase-free Water, GI-V PC 0 | 300 rxns (3 sets) / GI-V IC 100 rxns (1 tube) | 200 rxns (2 tubes)
   - Allplex™ GI-Bacteria(II) Assay (PCR): 5X GI-B(II) MOM, EM2, RNase-free Water, GI-B(II) PC 300 rxns (3 sets) | - / GI-BP IC 100 rxns (1 tube) | -
-  - 카드 영역에 두 겹으로 겹쳐 있는 글자: Tub / Sample Preparation | Remaining Qty | Required Qty | Status / PBS Tub #Trolley - 200T (2 racks) / Saline Tub #Trolley 100T (1 rack) 100T (1 rack) / LB Tub (Prep) #Trolley - 200T (2 racks)
 - 오른쪽 상세: Pretreatment Reagents (열: Location | Capacity | Remaining Qty | Required Qty)
   - LB Tub (Prep) [Item details]
     - Info Box: Expired reagents are discarded or returned unused, depending on the instrument.

@@ -39,7 +39,6 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
   - Tubes: Empty Standard Tube 48 ea (1 rack) | 144 ea (3 racks) / MM Tube 14 ea (1 socket) | 28 ea (2 sockets)
   - Sealing Film 200 ea | -
   - Stool Swab 72 ea (3 racks) | -
-  - 카드 영역에 두 겹으로 겹쳐 있는 글자: Tub / Sample Preparation | Remaining Qty | Required Qty | Status / PBS Tub #Trolley - 200T (2 racks) / Saline Tub #Trolley 100T (1 rack) 100T (1 rack) / LB Tub (Prep) #Trolley - 200T (2 racks)
 - 오른쪽 상세 (열: Location | Capacity | Remaining Qty | Required Qty)
   - 1000 μL Tip [Item details]
     - Consumable Storage (1) > Trolley | 6 DWPs | 0 | 96 ea (1 rack)
