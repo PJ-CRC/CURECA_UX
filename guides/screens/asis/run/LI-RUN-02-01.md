@@ -21,7 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: L-IOS 단독 화면 (IA에 T 짝 없음). Run Preparation Step 2/5 (Check test protocol, Policy Setting 「Allow Protocol Changes Before Test」가 ON일 때만 노출)
 - 호출하는 화면: [LI-RUN-01] (5 [Previous]), [LI-RUN-02] (6 [Next]), Confirm_001 (0 · 4 [Cancel]), Alert_001 (0)
 - 호출되는 곳: (원문에 없음)
-- 참조 프레임: 같은 페이지의 [Run Preparation - Check Test Protocol 단계 노출 여부](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-79245) 섹션 (기획 프레임 밖이라 옮기지 않음)
+- 참조 프레임: 같은 페이지의 [Run Preparation - Check Test Protocol 단계 노출 여부](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-79245) 섹션 (2026-11-26에 아래 참조 섹션 (원문) 절로 옮김)
 
 ## 기존 화면
 
@@ -152,3 +152,18 @@ Form/Radio BTN (18), Frame 42 (18), Table (16), Description (16), Frame 50 (15),
 <!-- `{메뉴}_asis` 페이지의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
 
 없음 (`Run_asis` 페이지에 LI-RUN-02-01 케이스 프레임 없음)
+
+### 참조 섹션 (원문)
+
+<!-- 디스크립션이 참고하라고 가리키는 기획 프레임 밖 섹션 · 프레임의 글을 원본대로 옮깁니다. 고치거나 정리하지 않습니다. To-Be 작업에서는 정책 · 기준데이터로 옮길 내용인지 2단계에서 가립니다. -->
+
+#### `Run Preparation - Check Test Protocol 단계 노출 여부` 섹션 ([3543:79245](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-79245), 2107×950)
+
+흐름도의 글자를 순서대로 옮깁니다(화살표 · 도형은 글로 옮기지 않음). 위에 `T-IOS` | `L-IOS` 구역 이름이 있고, 흐름 글자는 T-IOS 쪽에만 있습니다.
+
+- `프로그램 실행` → `T-IOS 시스템 실행`
+- `계정 로그인` → `ID / PW 입력` (`*Service 또는 Admin 권한`)
+- `Policy Setting 메뉴 선택` → `페이지 진입`
+- 분기 `ON` (`*Default`) → `Run 구동 준비 시 / Protocol 선택 단계 노출`
+- 분기 `OFF` → `Run 구동 준비 시 / Protocol 선택 단계 미노출`
+- (분기 대상 설정은 [TI-STN-01] 6-2 Allow Protocol Changes Before Test)

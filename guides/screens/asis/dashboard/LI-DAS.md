@@ -21,7 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: L-IOS에만 4-1 CURECA 구동 컨트롤러([Initialize] · [Stop])와 5-2 [Unlock] 버튼(화면 글자는 `Door control`)이 있어 T의 5-2 Event 표기 영역이 L에서는 5-3. 화면 글자도 다른 곳이 있음: Inventory Status 탭 `Insufficient`(L) / `Empty`(T), 시약 줄 `270 rxns (3 sets)`(L) / `(3 sockets)`(T), Event 툴팁 예시 글, GNB 시스템 표시, LNB 메뉴
 - 호출하는 화면: [TI-TMG-02] Test Status (3-1 [+More]), Instrument Overview Tab (5-1 [+More]), [LI-INS-01-P] Door Control 팝업 (5-2 [Unlock]), Inventory Summary Tab (6-1 · 7-1 [+More])
 - 호출되는 곳: LNB `Dashboard` (0 진입 방법)
-- 참조 프레임: 같은 페이지의 [SB_Dashboard Info](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-8378) · [구동 프로세스](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-7603) 섹션 (디스크립션 1 · 4 · 4-1이 「Dashboard Info」 · 「구동 프로세스」를 참고하라고 함. 기획 프레임 밖이라 옮기지 않음)
+- 참조 프레임: 같은 페이지의 [SB_Dashboard Info](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-8378) · [구동 프로세스](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-7603) 섹션 (디스크립션 1 · 4 · 4-1이 「Dashboard Info」 · 「구동 프로세스」를 참고하라고 함. 2026-11-26에 케이스는 케이스 절로, 구동 컨트롤러 표 · 구동 프로세스는 참조 섹션 (원문) 절로 옮김)
 
 ## 기존 화면
 
@@ -159,4 +159,46 @@ Frame/Instrument_Status (32), Tag Status (16), Description (15), Description Num
 
 <!-- `{메뉴}_asis` 페이지의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
 
-없음 (`Dashboard_asis` 페이지에 LI-DAS 케이스 프레임 없음)
+`LI-DAS/Case` 이름의 프레임은 없고, 디스크립션 1 · 4 · 4-1이 참고하라고 한 별도 프레임 `SB_Dashboard Info`([3543:8378](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-8378), 2150×1695, 기획 프레임 밖)에 케이스 하나와 구동 컨트롤러 정의 표가 함께 있습니다. 케이스는 여기에, 정의 표는 아래 「참조 섹션 (원문)」에 적습니다. 오른쪽 패널은 빈 틀입니다(Ver 0.1, Date 2026.00.00, CID `text`, 작성자 `이름`, 디스크립션 0 · 1 · 2 `내용`). 원본에 Case 번호가 없습니다. 디스크립션 1이 가리키는 [전체 Cureca 구동 상태 값]은 이 프레임에 없습니다.
+
+| Case | 제목 (원문) | 조건 | 프레임 |
+| --- | --- | --- | --- |
+| - | Inventory status 영역 및 Waste Bin/Bottle Status 영역 노출 케이스 | 표시할 항목이 있을 때 / 없을 때 | 위 프레임 y 438 |
+
+- 왼쪽(항목 있음)
+  - Inventory Status | More — Insufficient 1 | Low - / MB DWP — Required Qty 380 rxns (4 DWPs), High-throughput Extraction(1) / MB Storage
+  - Waste Bin/Bottle Status | More — Full 2 | Almost Full - / High-throughput Extraction(1) Waste Bin Full · PCR Setup(1) Waste Bin Full
+- 오른쪽(항목 없음)
+  - Inventory Status | More — Insufficient - | Low - / `Shown only if system running or Inbound Trolley docked`
+  - Waste Bin/Bottle Status | More — Full - | Almost Full - / `No actions required`
+
+### 참조 섹션 (원문)
+
+<!-- 디스크립션이 참고하라고 가리키는 기획 프레임 밖 섹션 · 프레임의 글을 원본대로 옮깁니다. 고치거나 정리하지 않습니다. To-Be 작업에서는 정책 · 기준데이터로 옮길 내용인지 2단계에서 가립니다. -->
+
+#### `SB_Dashboard Info` — CURECA 구동 컨트롤러 (3543:8378, y 115)
+
+| 버튼명 | 내용 | 클릭 조건(버튼 활성화) | UX action |
+| --- | --- | --- | --- |
+| Initialize | 장비를 초기화 하는 버튼으로 클릭 시, 장비 초기화가 진행됨 | 전원 인가 후 초기화가 완료되지 않은 경우(Not Initialized 상태) | 초기화 진행 상태를 로딩/진행바로 표시 / 모든 기능 사용 제한 / 완료 시 ‘준비 완료’ 상태로 전환 및 완료 안내 표시 |
+| Stop | 진행 중인 검사를 중단하는 기능으로 클릭 시, 진행 중인 검사를 중단(폐기)하고 Initializing을 거쳐 Ready 상태로 전환됨 | 장비가 구동 중인 상태일 때(Running, Patial Running) / 그 외 상태값일 때는 버튼 비활성화 | 장비 중지 진행 상태 표시 및 팝업으로 중지 중 로딩/진행바로 표시 / 모든 기능 일시 제한 / 완료 시 ‘준비 완료’ 상태로 자동 전환 및 안내 표시 |
+
+#### `구동 프로세스` 섹션 ([3543:7603](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-7603), 3824×5639)
+
+흐름도의 글자를 위에서 아래 순서로 옮깁니다(화살표 · 도형은 글로 옮기지 않음).
+
+- 초기화 분기: `초기화 미필요(이미 Ready 상태일 경우)` / `초기화 필요(Not Initialized상태일 경우)`
+- `초기화 전 일 경우, Dashboard에 진입할 때마다 초기화 진행 필요 팝업 노출`
+- 초기화 진행 필요 팝업 - Confirm_013: `System Initialization` / `The system must be initialized before running a test.` / [Cancel] | [Initialize]
+  - `[Cancel] 클릭` / `[Initialize] 클릭`
+- 초기화 진행 중 팝업: `Initialization in Progress` / `Please wait while the system is being initialized.`
+  - `Modal 팝업: 초기화 진행 중에 모든 메뉴 진입 및 동작 제한`
+- 초기화 완료 팝업 - Alert_021: `Initialization Complete.` / [OK]
+- Run 완료 확인 팝업 - Alert_022: `All tests have been completed.` / [OK]
+- 중단 진행 여부 팝업 - Confirm_014: `Stop the Run?` / `All tests in progress will be discarded.` / [Cancel] | [Stop]
+  - `[Stop] 클릭`
+  - 메모: `런 구동중일 아닐 때는 1개라도 error면 error를 표기 / ㄴ error 상태일 때, 구동 불가 (팝업 추가) / 전체 에러에서 ready 상태로 변경하는 정책 추가 예정 / 부분 에러일 경우, 모듈 단위 ready로 변경하는 정책 추가 예정`
+- 중단 진행 중 팝업: `Run(Test) is being stopped` / `System is stopping. Please wait.`
+  - `Modal 팝업: 중단 진행 중에 모든 메뉴 진입 및 동작 제한`
+- 중단 완료 팝업 - Alert_023: `System stopped successfully.` / [OK]
+  - `Y (Ready로 변경)`

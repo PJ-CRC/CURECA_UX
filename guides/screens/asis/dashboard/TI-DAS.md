@@ -21,7 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: L-IOS(LI-DAS)에는 4-1 CURECA 구동 컨트롤러([Initialize] · [Stop])와 5-2 [Unlock] 버튼(화면 글자는 `Door control`)이 더 있어 5-2 Event 표기 영역이 L에서는 5-3. 화면 글자도 다른 곳이 있음: Inventory Status 탭 `Empty`(T) / `Insufficient`(L), 시약 줄 `270 rxns (3 sockets)`(T) / `(3 sets)`(L), Event 툴팁 예시 글, GNB 시스템 표시, LNB 메뉴
 - 호출하는 화면: [TI-TMG-02] Test Status (3-1 [+More]), Instrument Overview Tab (5-1 [+More]), Inventory Summary Tab (6-1 · 7-1 [+More])
 - 호출되는 곳: LNB `Dashboard` (0 진입 방법)
-- 참조 프레임: 같은 페이지의 [SB_Dashboard Info](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-8244) (디스크립션 1 · 4가 「Dashboard Info」를 참고하라고 함. 기획 프레임 밖이라 옮기지 않음)
+- 참조 프레임: 같은 페이지의 [SB_Dashboard Info](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-8244) (디스크립션 1 · 4가 「Dashboard Info」를 참고하라고 함. 2026-11-26에 아래 케이스 절로 옮김)
 
 ## 기존 화면
 
@@ -144,4 +144,15 @@ Frame/Instrument_Status (32), Tag Status (16), Description (15), Description Num
 
 <!-- `{메뉴}_asis` 페이지의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
 
-없음 (`Dashboard_asis` 페이지에 TI-DAS 케이스 프레임 없음)
+`TI-DAS/Case` 이름의 프레임은 없고, 디스크립션 1 · 4가 참고하라고 한 별도 프레임 `SB_Dashboard Info`([3543:8244](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-8244), 2150×1695, 기획 프레임 밖)에 케이스 하나가 있습니다. 오른쪽 패널은 빈 틀입니다(Ver 0.1, Date 2026.00.00, CID `text`, 작성자 `이름`, 화면 `화면이름`, 경로 `경로 > 경로2`, 디스크립션 0 · 1 · 2 `내용`). 원본에 Case 번호가 없습니다. 디스크립션 1이 함께 가리키는 [전체 Cureca 구동 상태 값] · [구동 프로세스]는 이 프레임에 없습니다(구동 프로세스는 같은 페이지의 L-IOS 쪽 섹션, LI-DAS 참조 섹션 절).
+
+| Case | 제목 (원문) | 조건 | 프레임 |
+| --- | --- | --- | --- |
+| - | Inventory Status 영역 및 Waste Bin/Bottle Status 영역 노출 케이스 | 표시할 항목이 있을 때 / 없을 때 | 위 프레임 y 141 |
+
+- 왼쪽(항목 있음)
+  - Inventory Status | More — Insufficient 1 | Low - / MB DWP — Required Qty 380 rxns (4 DWPs), High-throughput Extraction(1) / MB Storage
+  - Waste Bin/Bottle Status | More — Full 2 | Almost Full - / High-throughput Extraction(1) Waste Bin Full · PCR Setup(1) Waste Bin Full
+- 오른쪽(항목 없음)
+  - Inventory Status | More — Insufficient - | Low - / `Shown only if system running or Inbound Trolley docked`
+  - Waste Bin/Bottle Status | More — Full - | Almost Full - / `No actions required`
