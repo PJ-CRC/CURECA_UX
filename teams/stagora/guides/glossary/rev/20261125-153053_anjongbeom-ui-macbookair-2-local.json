@@ -1,0 +1,12 @@
+{
+  "rev": "20261125-153053_anjongbeom-ui-macbookair-2-local",
+  "by": "Claude",
+  "at": "2026-11-25T15:30:53+09:00",
+  "note": "R001: 3.GMCS v2.38 추가 행(639~695, A~P열) 노란색",
+  "base": "",
+  "pc": "anjongbeom-ui-MacBookAir-2.local",
+  "req": "R001 {1125-GMCS 언어셋 추가} 섹션에서 언어셋에 추가되지 않은 문구 추가",
+  "jobId": "",
+  "file": "language-set/sheet06.styles.json",
+  "orig": true
+}
