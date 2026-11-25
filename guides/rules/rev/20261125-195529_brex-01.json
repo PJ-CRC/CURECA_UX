@@ -1,0 +1,12 @@
+{
+  "rev": "20261125-195529_brex-01",
+  "by": "Claude",
+  "at": "2026-11-25T19:55:29+09:00",
+  "note": "F3: Common UX · 기존 화면대로 더한 설명은 바로 맞음, 근거 없는 것만 질문 대기 (work-log.md)",
+  "base": "20261125-194051_brex-01",
+  "pc": "BREX_01",
+  "req": "F3 기존 디스크립션에 없던 설명: Common UX가 정한 동작 · 기존 화면에 보이는 것을 글로 옮긴 곳은 질문 대기 없이 맞음 (Common UX / 기존 화면)으로 바로 확인, 근거가 없는 것만 질문 대기 (서보경, 2026-11-25, Claude Code 대화)",
+  "jobId": "",
+  "file": "../reference-rules/work-log.md",
+  "orig": true
+}
