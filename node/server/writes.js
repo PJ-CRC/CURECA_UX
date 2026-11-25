@@ -156,7 +156,8 @@ module.exports = function register(on, h) {
   }
   /* ── 작업 내역 초기화(2026-11-24): 공유 신호(.history/config/reset.json, core.resetInfo) ──
      resetLocal: 이 PC의 요청 · 작업 목록에서 초기화 시각 앞의 것을 비운다(PC마다 한 번, workbench/.reset_done.json에 기록).
-     번호는 이어서 쓴다(R050 다음은 R051 — 같은 번호의 사용량 · 첨부 사본 파일을 덮어쓰지 않게). resetSweep: 초기화 앞의 변경 이력이
+     번호는 이어서 쓴다(R050 다음은 R051 — 같은 번호의 사용량 · 첨부 사본 파일을 덮어쓰지 않게). 단 신호에 num이 있으면(사용량도 지운 초기화, 2026-11-25)
+     번호를 처음부터(R001 · J001) — 이 PC에 남은(초기화 뒤에 만든) 요청 · 작업이 있으면 그 다음부터. resetSweep: 초기화 앞의 변경 이력이
      다시 올라와 있으면(예전 버전 PC가 다시 올림) 지운다 */
   const resetDoneFile = path.join(C.root, 'workbench', '.reset_done.json');
   function seqNext(items, k) {
@@ -173,9 +174,10 @@ module.exports = function register(on, h) {
     const out = { at: info.at, requests: 0, jobs: 0 };
     // 요청
     const r = core.readJson(C.reqFile);
-    let R = Math.max(parseInt(done.R, 10) || 0, 0);
+    const fresh = !!info.num;   // 번호도 처음부터
+    let R = fresh ? 0 : Math.max(parseInt(done.R, 10) || 0, 0);
     if (r && Array.isArray(r.items)) {
-      const all = r.items.filter(Boolean); R = Math.max(R, maxNum(all));
+      const all = r.items.filter(Boolean); R = fresh ? maxNum(all.filter((x) => !before(x))) : Math.max(R, maxNum(all));
       const gone = all.filter(before), keep = all.filter((x) => !before(x));
       const cancel = gone.filter((x) => nn(x.status) === '진행 중').map((x) => x.id);
       if (cancel.length) { try { const cf = path.join(C.root, 'workbench', '.agent_cancel'); const old = String(core.readText(cf) || ''); core.writeText(cf, (old ? old + '\n' : '') + cancel.join('\n')); } catch (e) {} }
@@ -185,9 +187,9 @@ module.exports = function register(on, h) {
     }
     // 작업
     const jj = core.readJson(C.jobFile);
-    let J = Math.max(parseInt(done.J, 10) || 0, 0);
+    let J = fresh ? 0 : Math.max(parseInt(done.J, 10) || 0, 0);
     if (jj && Array.isArray(jj.items)) {
-      const all = jj.items.filter(Boolean); J = Math.max(J, maxNum(all));
+      const all = jj.items.filter(Boolean); J = fresh ? maxNum(all.filter((x) => !before(x))) : Math.max(J, maxNum(all));
       const keep = all.filter((x) => !before(x)); out.jobs = all.length - keep.length;
       if (out.jobs) { jj.items = keep; jj.version = (parseInt(jj.version, 10) || 0) + 1; core.writeJson(C.jobFile, jj); }
     }
@@ -942,15 +944,17 @@ module.exports = function register(on, h) {
     return { ok: true, item: h.readMinute(path.join(T.minDir, id + '.md')) };
   });
 
-  // ── POST /api/reset {confirm:'초기화', usage, worklogs} — 작업 내역 초기화(최고관리자, 2026-11-24) ──
+  // ── POST /api/reset {confirm:'초기화', usage, worklogs, transfer, num} — 작업 내역 초기화(최고관리자, 2026-11-24) ──
   //  공유: 변경 이력(entries) · 캡처 사본(shots) · 첨부 사본(attach) · 동기화 충돌 기록(conflicts)을 지우고, usage면 사용량 통계, worklogs면 모든 팀의 작업 기록(README 빼고)도.
   //  UX 문서 「변경이력」 탭은 이 시각부터 보이게(팀마다 guides/_log.json since). 그리고 신호(config/reset.json)를 남겨 모든 PC가 자기 요청 · 작업 목록을 한 번 비운다.
   //  transfer면 다음 단계로 옮긴 기록(.history/transfer)도 — 각 PC의 예전 기록(projects/{key}/transfer.json)은 resetLocal이 지운다(안 지우면 그것을 대신 읽음)
+  //  num이면 요청 · 작업 번호도 처음부터(R001 · J001, 2026-11-25) — 사용량 기록 파일 이름이 {PC}_{요청 번호}라 사용량을 함께 지울 때만 받는다(안 지우면 새 번호가 옛 기록을 덮어씀)
   //  남기는 것: 계정 · 팀 · 팀 프로젝트 · 시트 연결 · UX 문서(작업 기록 말고) · 회의록 · 감시 상태(agents)
   on('POST', '/api/reset', async ({ req, body }) => {
     if (!core.isAdmin(req)) throw new Error('최고관리자만 작업 내역을 초기화할 수 있습니다.');
     const b = await body();
     if (nn(b.confirm) !== '초기화') throw new Error('확인 글자가 맞지 않습니다. 「초기화」를 입력하세요.');
+    if (b.num && !b.usage) throw new Error('번호를 처음부터 하려면 사용량 통계도 함께 지워야 합니다(같은 번호의 사용량 기록을 덮어쓰지 않게).');
     const at = core.now(), who = core.meName() || '최고관리자', out = { at, entries: 0, shots: 0, attach: 0, conflicts: 0, usage: 0, worklogs: 0, transfer: 0 };
     const wipe = (dir, keep) => { let n = 0; let list = []; try { list = fs.readdirSync(dir, { withFileTypes: true }); } catch (e) { return 0; }
       for (const d of list) { if (keep && keep(d.name)) continue; try { fs.rmSync(path.join(dir, d.name), { recursive: true, force: true }); n++; } catch (e) {} } return n; };
@@ -968,11 +972,11 @@ module.exports = function register(on, h) {
       if (core.exists(T.guideRoot)) { const lf = path.join(T.guideRoot, '_log.json'), lj = core.readJson(lf) || {}; lj.since = at; lj.note = `작업 내역 초기화(${at.slice(0, 10)}, ${who}) — 이 시각 앞의 변경이력은 보이지 않음`; core.writeJson(lf, lj); }
     }
     fs.mkdirSync(path.dirname(core.resetFile()), { recursive: true });
-    core.writeJson(core.resetFile(), { at, by: who, pc: C.pcName, transfer: !!b.transfer, note: '이 시각 앞의 요청 · 작업 · 변경 이력은 모든 PC에서 비운다(작업 내역 초기화)' });
+    core.writeJson(core.resetFile(), { at, by: who, pc: C.pcName, transfer: !!b.transfer, num: !!b.num, note: '이 시각 앞의 요청 · 작업 · 변경 이력은 모든 PC에서 비운다(작업 내역 초기화)' });
     const local = resetLocal(true) || {};
     core.syncWant();
     console.log(`작업 내역 초기화 — ${who} · 변경 이력 ${out.entries} · 캡처 ${out.shots} · 첨부 ${out.attach} · 충돌 기록 ${out.conflicts} · 사용량 ${out.usage} · 작업 기록 ${out.worklogs} · 옮긴 기록 ${out.transfer}`);
-    return Object.assign({ ok: true }, out, { requests: local.requests || 0, jobs: local.jobs || 0 });
+    return Object.assign({ ok: true }, out, { requests: local.requests || 0, jobs: local.jobs || 0, num: !!b.num });
   });
   on('GET', '/api/reset', () => { const i = core.resetInfo(); const d = core.readJson(resetDoneFile); return { reset: i || null, done: d || null }; });
 
