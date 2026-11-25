@@ -3,46 +3,54 @@ cid: LI-RUN-01
 pair_cid:
 tl_relation: 단독
 title: Run Preparation
-path: Run > Check Run Samples
+path: LNB > Run
 type: Page
 version: 2.0
-date: 2026-06-15
+date: 2026.06.15
 author: 정다예
-client_mode: [Main Mode, Console Mode]
-user_type: [Service, Admin, User]
+client_mode: []
+user_type: []
 policies: []
-rules_version:
-provisional: []
-flags: []
 source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=6902-42317
-figma_region: 2.1 2차
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-76459
 ---
-# LI-RUN-01 Run Preparation (Check Run Samples)
+# LI-RUN-01 Run Preparation
 
-> 기존 화면(기존 작업방 Run/Quick Start 페이지, 2.1 2차 영역, Ver 2.0)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 `Run_asis` 페이지, Ver 2.0)을 2026-11-25에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
 
-- L-IOS 전용. Run Preparation Step 1. IA 화면 이름은 "Check Run Samples"
-- 관련 정책: POL-EQP-003 (Run 버튼), POL-SMP-005, POL-SMP-007, POL-SMP-008, POL-LOD-001, POL-LOD-003
-- 호출하는 화면: Confirm_001, Alert_001, 다음 단계 LI-RUN-02 (Check Test Protocol을 쓰면 LI-RUN-02-01)
+- T/L 차이: L-IOS 단독 화면 (IA에 T 짝 없음). Run Preparation Step 1 (Check samples)
+- 호출하는 화면: [LI-RUN-02] (7 [Next]), Confirm_001 (0 페이지 이탈 · 6 [Cancel]), Alert_001 (0 Sample 정보 로드 불가)
+- 호출되는 곳: LNB > [RUN], Dashboard > [RUN], Run Status > [RUN] (0 진입 방법)
 
 ## 기존 화면
 
+<!-- `{메뉴}_asis` 페이지에 있는 그대로 옮깁니다. 고치거나 정리하지 않습니다. 틀린 곳 · 정책과 다른 곳은 반영 대기 목록(`pending/open.md`)에 "점검 발견"으로 남깁니다. -->
+
 ### 화면 글자
 
-- STEP 1 Check samples | STEP 2 Check consumables | STEP 3 Check reagents | STEP 4 Check waste bin/bottle
-- Total Samples | STAT Samples
-- Sample ID | Order Date (Select a Date) | STAT Only | Reset | Search
-- Items
+- (GNB) Running | Instrument | T-IOS | D.A PC | Event | Error 3 | Warning 2 | 2026-04-10 11:30
+- (LNB) LIOS | Dashboard | Material Setup | Test Management | Sample Tracking | Instrument | Inventory | Setting | Information | Quick Start | Run | Keira Knightley | Shut Down
+- Run Preparation
+- STEP 1 | Check samples | STEP 2 | Check consumables | STEP 3 | Check reagents | STEP 4 | Check waste bin/bottle
+- Total Samples 500 | STAT Samples 200
+- Sample ID | Order Date | Select a Date | STAT Only | Reset | Search
+- Items | 500
 - Sample ID | Product | Sample Type | Order Date | STAT
-- AA0005001 | RP1, RP2, RP3 | Swab
-- AA0005002 | STI-12 | Surepath
-- (같은 형식의 행 7개 더: GI-B1, GI-B2 / GI-V, GI-P / Allplex HPV28 등, Sample Type Urine, eNAT stool, Cellpreserv, Fecal swab)
+- AA0005001 | RP1 | RP2 | RP3 | Swab | 2026-03-05
+- AA0005002 | STI-12 | Surepath | 2026-03-06
+- AA0005003 | STI-12 | Urine | 2026-03-07
+- AA0005004 | GI-B1 | GI-B2 | eNAT stool | 2026-03-06
+- AA0005005 | STI-12 | Cellpreserv | 2026-03-06
+- AA0005006 | STI-12 | Urine | 2026-03-06
+- AA0005007 | GI-V | GI-P | Fecal swab | 2026-03-06
+- AA0005008 | Allplex HPV28 | Cellpreserv | 2026-03-07
+- AA0005009 | Allplex HPV28 | Surepath | 2026-03-07
+- 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
 - Cancel | Next
 
 ### 사용 컴포넌트
 
-Description (17), Description Number (13), Tag Status (13), Table (9), Title (5), Frame/Instrument_Status (3), Square (2), Form/Input Text Box (1), Dropdown Outlined (1), Checkbox (1), Page number (1)
+Description (17), Description Number (13), Tag Status (13), Table (9), Frame 50 (9), Frame 42 (9), Title (5), Frame/Instrument_Status (3), Square (2), Arrow/Chevron_Right (1), Form/Input Text Box (1), Dropdown Outlined (1), Checkbox (1), Page number (1), Component 4 (1), Frame (1)
 
 ### 디스크립션 (원문)
 
@@ -141,3 +149,9 @@ Description (17), Description Number (13), Tag Status (13), Table (9), Title (5)
 #### 7. [Next] 버튼
 
 - 클릭 시 LI-RUN-02(다음 단계)으로 이동
+
+### 케이스
+
+<!-- `{메뉴}_asis` 페이지의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
+
+없음 (`Run_asis` 페이지에 LI-RUN-01 케이스 프레임 없음)
