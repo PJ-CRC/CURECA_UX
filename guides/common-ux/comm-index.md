@@ -108,7 +108,7 @@ Figma 각 프레임 본문 왼쪽의 Type 제목과 라벨 줄(정의 · 형태 
 - 글자로 된 버튼 · 링크 → Text Button Basic · Underline (5-c)
 - 화면 우측 하단에 떠서 맨 위로 가거나 전체 화면으로 키움 → Floating Button - Top Button · Expand Button (5-c)
 - 상위 계층으로 가는 경로 → Breadcrumb (5-b)
-- 목록의 페이지를 넘김 → Number Pagination · Indicator Pagination (5-l), 형은 디스크립션에 적힌 대로(`reference-rules/description.md` "Common UX가 화면에 맡긴 것")
+- 목록의 페이지를 넘김 → Number Pagination · Indicator Pagination (5-l), 유형은 디스크립션에 적힌 대로(`reference-rules/description.md` "Common UX가 화면에 맡긴 것")
 - 같은 화면 안에서 영역을 바꿈 → Tab (5-s), COMM-5-s 머리의 가르는 법
 - 목록 안의 카드 위치로 이동함 → Anchor Chip (5-f)
 - Square Button ↔ Text Button: 버튼이 하나뿐이면 Square Button Filled. 다른 곳으로 가는 링크는 Text Button Underline
@@ -128,7 +128,7 @@ Figma 각 프레임 본문 왼쪽의 Type 제목과 라벨 줄(정의 · 형태 
 
 - 여러 단계 화면 상단에 현재 단계를 표시함 → Horizontal Step (5-n)
 - 순서가 있는 과정을 세로로 나열함 → Vertical Step (5-n)
-- 처리 중 · 불러오는 중을 표시함 → Spinner · Skeleton (5-k), 형은 디스크립션에 적힌 대로(`reference-rules/description.md` "Common UX가 화면에 맡긴 것")
+- 처리 중 · 불러오는 중을 표시함 → Spinner · Skeleton (5-k), 유형은 디스크립션에 적힌 대로(`reference-rules/description.md` "Common UX가 화면에 맡긴 것")
 - 스크롤할 때 위 · 아래 영역을 고정함 → Scroll Bar 세 경우 (5-o), 경우는 디스크립션에 적힌 대로(`reference-rules/description.md` "Common UX가 화면에 맡긴 것")
 
 ### COMM-5-a Accordion

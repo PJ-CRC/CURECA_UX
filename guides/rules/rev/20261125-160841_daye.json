@@ -1,0 +1,12 @@
+{
+  "rev": "20261125-160841_daye",
+  "by": "Claude",
+  "at": "2026-11-25T16:08:41+09:00",
+  "note": "3절 「Common UX가 화면에 맡긴 것」: 「형」 → 「유형」(Pagination · Popup · 로딩)",
+  "base": "description.md",
+  "pc": "DAYE",
+  "req": "채팅 요청(정다예): 앞으로 「형」이라는 단어는 쓰지 않음 — 「유형」으로",
+  "jobId": "",
+  "file": "../reference-rules/description.md",
+  "orig": true
+}
