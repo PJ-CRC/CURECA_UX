@@ -9,7 +9,7 @@ version: 2.1.18
 date: 2026.11.19
 author: 이상헌
 client_mode: []
-user_type: []
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-383847
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: 디스크립션 같음. LNB 메뉴와 왼쪽 카드 목록의 PCR 카드 예시만 다름(T는 GI-Virus · Respiratory Panel 1 · GI-Parasite · GI-Virus · GI-Bacteria(II) 5장, L은 GI-Bacteria(II) · GI-Parasite · GI-Virus · Respiratory Panel 1 4장이고 시약 이름이 알파벳 순)
 - 호출하는 화면: [TI-IVT-04-T-P] Reagent Item details Popup (3-7 [Item details])
 - 호출되는 곳: LNB > Inventory > Reagents Tab (0 진입 방법), [TI-IVT-01-T] 등 Inventory Tab 구성
+- 관련 정책: POL-INV-001, POL-INV-002, POL-INV-003, POL-INV-004, POL-EQP-009, POL-INV-007
 
 ## 기존 화면
 

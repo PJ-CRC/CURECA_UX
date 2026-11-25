@@ -9,7 +9,7 @@ version: 2.1.18
 date: 2026.11.19
 author: 이상헌
 client_mode: []
-user_type: []
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-384725
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: 화면 · 디스크립션 같음. LNB 메뉴만 다름
 - 호출하는 화면: [TI-IVT-03-T-P] Consumables Item details popup (3-7 [Item details])
 - 호출되는 곳: LNB > Inventory > Consumables Tab (0 진입 방법), [TI-IVT-01-T] 등 Inventory Tab 구성
+- 관련 정책: POL-INV-001, POL-INV-002, POL-INV-003, POL-EQP-009
 
 ## 기존 화면
 
