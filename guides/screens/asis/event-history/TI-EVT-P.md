@@ -6,37 +6,47 @@ title: Event History
 path: Event History
 type: Popup
 version: 2.1.01
-date: 2026-08-07
+date: 2026.08.07
 author: 서보경
 client_mode: []
-user_type: [Service, Admin, User]
+user_type: []
 policies: []
-rules_version:
-provisional: []
-flags: []
 source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=1875-43955
-figma_region: 2.1 2차
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-47110
 ---
 # TI-EVT-P Event History
 
-> 기존 화면(작업방 Event History 페이지, 2.1 2차 영역, Ver 2.1.01)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 `Event History_asis` 페이지, Ver 2.1.01)을 2026-11-25에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
 
-- T/L 차이: T-IOS는 Status 변경과 일괄 Closed가 없음(취소선으로 제거). L-IOS(LI-EVT-P)는 Status 변경과 [Mark all as Closed]가 있음
-- 관련 정책: POL-EVT-001, POL-EVT-002, POL-COM-006
-- 호출하는 화면: Event History Detail (TI-EVT-01-P, 같은 팝업 안에서 전환)
-
-- 취소선(Figma에서 제거된 항목): 4 Status 변경(Open ↔ Closed), 5 Mark as Closed, 5-1 [Mark as Closed] 버튼. T-IOS에서는 Status를 바꾸지 않음
+- T/L 차이: L-IOS(LI-EVT-P)는 4 Status가 Toggle(상태 변경 가능), 5 [Mark all as Closed] 버튼, 6 [Export]에 L-IOS 저장 방식이 더 있음. T-IOS는 4의 상태 변경 · 5 Mark as Closed · 5-1이 제거됨(취소선)
+- 호출하는 화면: [TI-EVT-01-P] Event History Detail (목록에서 Event 클릭, TI-EVT-01-P 0 진입 방법)
+- 호출되는 곳: 상단 Bar `Event` 아이콘, 각 화면의 Event 아이콘 (0 진입 방법)
 
 ## 기존 화면
 
+<!-- `{메뉴}_asis` 페이지에 있는 그대로 옮깁니다. 고치거나 정리하지 않습니다. 틀린 곳 · 정책과 다른 곳은 반영 대기 목록(`pending/open.md`)에 "점검 발견"으로 남깁니다. -->
+
 ### 화면 글자
 
-- 검색: Type (All) | Module (All) | Level (All) | Status (All) | 2026-03-11 ~ 2026-03-17 | Reset | Search
-- Export
-- OPEN (목록 요약)
-- 목록 헤더: Code | Description | Module | Unit | Level | Occurred Date/Time | Status
-- 목록 예: ER-5231 | Pick Up Fail | Sample Storage | Inbound Trolley | Error | 2025-09-29 15:57:00 | Open, ER-5423 | Consumables are low. Please check and refill. | PCR Setup | 300 μL Tip Storage (1) | Warning | … | Open, ER-5423 | … | Universal PCR | CFX96-1 | Warning | … | Closed
+- Event History
+- Event Id, Code | Type | All | Module | All | Level | All | Status | All | 2026-03-11 ~ 2026-03-17 | Reset | Search
+- Items | 1,112 | OPEN | 20 | Export
+- Type | Code | Description | Module | Unit | Level | Occurred Date/Time | Status
+- Instrument | ER-5231 | Pick Up Fail | Sample Storage | Inbound Trolley | Error | 2025-09-29 15:57:00 | Open
+- Instrument | ER-1234 | Open the door | Consumable Storage | Trolley | Error | 2025-09-29 15:57:00 | Open
+- Inventory | ER-5423 | Consumables are low. Please check and refill. Consumables... | Sample Pre-treatment | Sample Processing | Warning | 2025-09-29 15:57:00 | Open
+- Instrument | ER-1234 | Open the door | High-throughput Extraction | Spin Tip Storage | Error | 2025-09-29 15:57:00 | Closed
+- Instrument | ER-1234 | Open the door | Flexible Extraction | Buffer Cartridge Storage | Error | 2025-09-29 15:57:00 | Open
+- Inventory | ER-5423 | Consumables are low. Please check and refill. | PCR Setup | 300 μL Tip Storage (1) | Warning | 2025-09-29 15:57:00 | Open
+- Inventory | ER-5423 | Consumables are low. Please check and refill. | Universal PCR | CFX96-1 | Warning | 2025-09-29 15:57:00 | Closed
+- Instrument | ER-1234 | Open the door | Sample Storage | Outbound Trolley | Error | 2025-09-29 15:57:00 | Closed
+- Instrument | ER-1234 | Open the door | Consumable Storage | Trolley | Error | 2025-09-29 15:57:00 | Closed
+- Instrument | ER-5231 | Pick Up Fail | Flexible Extraction | MB Tube Storage | Error | 2025-09-29 15:57:00 | Closed
+- 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
+
+### 사용 컴포넌트
+
+Description Number (6), Form/Dropdown Box (4), Square (3), Page number (1), Form/Input Text Box (1)
 
 ### 디스크립션 (원문)
 
@@ -50,12 +60,23 @@ figma_region: 2.1 2차
 
 - 입력 및 선택 후 ‘search’ 버튼을 클릭 시, 해당되는 값이 노출되는 방식
 - Event ID, Code: 정확히 일치하는 값만 노출
-- Type (Event Type): Default: all / 데이터: All, Instrument, Inventory, Sample, System. 정렬 기준: 위의 적힌 순서대로 표기
-- Module: 모듈의 타입으로 검색하는 필터. Default: All / 데이터: All, Sample Storage, Consumable Storage, Sample Pre-treatment, High-throughput Extraction, Flexible Extraction, PCR Setup, Plate Sealing, Universal PCR. 정렬 기준: 위의 기입된 순서대로 표기
-- Level: Default: All / 데이터: All, Error, Warning
-- Statue: Default: All / 데이터: All, Open, Closed
-- 기간 검색: Default: 시작일-7일 전 ~ 종료일-Today. 오늘 기준 미래일자는 선택 불가. 기간 선택 정책: 최대 1년
-- Reset 버튼: 클릭 시, 모두 Default 값으로 초기화
+- Type (Event Type)
+- Default: all / 데이터: All, Instrument, Inventory, Sample, System
+- 정렬 기준: 위의 적힌 순서대로 표기
+- Module
+- 모듈의 타입으로 검색하는 필터
+- Default: All / 데이터: All, Sample Storage, Consumable Storage, Sample Pre-treatment, High-throughput Extraction, Flexible Extraction, PCR Setup, Plate Sealing, Universal PCR
+- 정렬 기준: 위의 기입된 순서대로 표기
+- Level
+- Default: All / 데이터: All, Error, Warning
+- Statue
+- Default: All / 데이터: All, Open, Closed
+- 기간 검색
+- Default: 시작일-7일 전 ~ 종료일-Today
+- 오늘 기준 미래일자는 선택 불가
+- 기간 선택 정책: 최대 1년
+- Reset 버튼
+- 클릭 시, 모두 Default 값으로 초기화
 
 #### 2. 목록 요약
 
@@ -73,18 +94,20 @@ figma_region: 2.1 2차
 #### 4. Status - Open/Closed
 
 - Open 또는 Closed 값이 표기됨
-- Event의 Status의 상태값을 변경하는 기능
-- Event 최초 생성 시, Open으로 등록되며 클릭 시 Closed로 상태값이 변경 됨.
-- 재클릭 시, Closed에서 Open으로 변경 가능
+- ~~Event의 Status의 상태값을 변경하는 기능~~
+- ~~Event 최초 생성 시, Open으로 등록되며 클릭 시 Closed로 상태값이 변경 됨.~~
+- ~~재클릭 시, Closed에서 Open으로 변경 가능~~
 
-#### 5. Mark as Closed
+#### 5. ~~Mark as Closed~~
 
-- [5-1] 의 체크박스 선택 후 해당 버튼을 클릭 시, 일괄 Event의 Status를 Closed로 변경할 수 있는 기능
+- ~~[5-1] 의 체크박스 선택 후 해당 버튼을 클릭 시, 일괄 Event의 Status를 Closed로 변경할 수 있는 기능~~
 
-#### 5-1. [Mark as Closed] 버튼 클릭
+#### 5-1. ~~[Mark as Closed] 버튼 클릭~~
 
-- 체크박스 선택 후 클릭: Confirm_L_003 팝업 노출
-- 체크박스 미선택 후 클릭: Alert_L_003 팝업 노출
+- ~~체크박스 선택 후 클릭~~
+- ~~Confirm_L_003 팝업 노출~~
+- ~~체크박스 미선택 후 클릭~~
+- ~~Alert_L_003 팝업 노출~~
 
 #### 6. [Export] 버튼
 
@@ -99,4 +122,10 @@ figma_region: 2.1 2차
 
 ### 케이스
 
-- Case. 목록의 텍스트 영역의 ‘...’ 줄임된 경우, 마우스 hover시, 툴팁박스로 전체 내용 제공
+<!-- `{메뉴}_asis` 페이지의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
+
+| Case | 제목 | 조건 | 프레임 |
+| --- | --- | --- | --- |
+| - (원본에 번호 없음) | 목록의 텍스트 영역의 ‘...’ 줄임된 경우, 마우스 hover시, 툴팁박스로 전체 내용 제공 | 목록 텍스트가 ‘...’로 줄임된 경우 마우스 hover | 기획 프레임 안 `case` ([3543:47370](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-47370)) |
+
+- 케이스 화면 글자: 툴팁 `Consumables are low. Please check and refill. Consumables are low. Please check and refill.Consumables are low. Please check and refill.`
