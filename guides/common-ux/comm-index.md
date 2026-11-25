@@ -7,6 +7,7 @@
 - **하는 일:** Figma 프레임 머리의 설명을 글자 그대로 옮겼습니다.
 - **예전 ID:** 기존 작업방 [APP,Web_Common UX](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=1-65) 페이지(`1:65`)의 같은 요소 프레임 이름입니다. 이름 · 하는 일로 짝을 맞췄습니다. 기존 작업방에 같은 요소가 없으면 `-`. 케이스 3에서 기존 디스크립션의 `공통 UX 참고` 번호를 새 번호로 바꿀 때 씁니다(`flow/3-design-case3.md` 3-3).
 - **쓰인 컴포넌트:** 그 프레임 Body에 가장 바깥 인스턴스로 놓인 컴포넌트(세트) 이름입니다. 예시 화면을 보이려고 놓은 것(예: COMM-5-o의 GNB · LNB)도 섞여 있습니다. 키는 아래 "컴포넌트 키" 표에 있습니다.
+- **그림:** 5절 COMM마다 Figma Common UX 프레임 캡처를 그 COMM 제목 아래에 둡니다(`UX가이드_Common-UX-가이드/images/comm-5-{id}.png`, (n/m)은 `-n`, 2880 폭). Figma 프레임이 바뀌면 그 COMM 그림을 다시 받습니다.
 - **이 MD에만 두는 것:** 예전 ID, 쓰인 컴포넌트, 컴포넌트 키, "컴포넌트 고르는 법", Type마다 "컴포넌트" · "속성 쓰는 법" · "가르는 법" 줄.
 - 1 ~ 4(Overview · Navigation · Layout · Writing)의 본문은 아직 옮기지 않았습니다.
 - 같은 페이지의 SB-Components (기획 공통) 프레임(패널 · 번호 표시 · 업데이트 메모 · 사용자 확인 라벨 · 목록 · 시스템 구분 · 기획 진행 표시)은 화면 요소가 아니라 이 문서에 두지 않습니다. `flow/3-design.md` 공통 3-2 "기획 공통 컴포넌트"를 봅니다.
@@ -133,6 +134,9 @@ Figma 각 프레임 본문 왼쪽의 Type 제목과 라벨 줄(정의 · 형태 
 
 ### COMM-5-a Accordion
 
+![COMM-5-a Accordion](images/comm-5-a.png)
+*COMM-5-a Accordion · Figma Common UX 프레임 캡처*
+
 #### Type 1 Card Accordion
 
 - 라벨 줄 없음 (동작 표만 있음)
@@ -148,6 +152,9 @@ Figma 각 프레임 본문 왼쪽의 Type 제목과 라벨 줄(정의 · 형태 
 
 ### COMM-5-b Breadcrumb
 
+![COMM-5-b Breadcrumb](images/comm-5-b.png)
+*COMM-5-b Breadcrumb · Figma Common UX 프레임 캡처*
+
 #### Type 1 Breadcrumb
 
 - **정의**
@@ -162,6 +169,9 @@ Figma 각 프레임 본문 왼쪽의 Type 제목과 라벨 줄(정의 · 형태 
   - Breadcrumb (Group/Navigation), 속성 Class(2 / 3 / 4 / 5 Depth). 항목 하나는 Breadcrumb/Item
 
 ### COMM-5-c Button
+
+![COMM-5-c Button](images/comm-5-c.png)
+*COMM-5-c Button · Figma Common UX 프레임 캡처*
 
 #### Type 1 Square Button
 
@@ -215,6 +225,9 @@ Figma 각 프레임 본문 왼쪽의 Type 제목과 라벨 줄(정의 · 형태 
 
 ### COMM-5-d Calendar
 
+![COMM-5-d Calendar](images/comm-5-d.png)
+*COMM-5-d Calendar · Figma Common UX 프레임 캡처*
+
 #### Type 1 Date Calendar
 
 - **정의**
@@ -238,6 +251,9 @@ Figma 각 프레임 본문 왼쪽의 Type 제목과 라벨 줄(정의 · 형태 
   - Calendar/Picker (Group/Input · Selection), 속성 Type=Month. 안의 월은 Calendar/Month
 
 ### COMM-5-e Card
+
+![COMM-5-e Card](images/comm-5-e.png)
+*COMM-5-e Card · Figma Common UX 프레임 캡처*
 
 #### Type 1 List Card
 
@@ -306,6 +322,9 @@ Figma 각 프레임 본문 왼쪽의 Type 제목과 라벨 줄(정의 · 형태 
 
 ### COMM-5-f Chips
 
+![COMM-5-f Chips](images/comm-5-f.png)
+*COMM-5-f Chips · Figma Common UX 프레임 캡처*
+
 #### Type 1 Filter Chip
 
 - **정의**
@@ -332,6 +351,9 @@ Figma 각 프레임 본문 왼쪽의 Type 제목과 라벨 줄(정의 · 형태 
   - Filter Chip ↔ Anchor Chip: 고른 칩의 콘텐츠만 걸러 보여 주면 Filter Chip, 목록 안의 카드 위치로 이동하면 Anchor Chip
 
 ### COMM-5-g Data Table
+
+![COMM-5-g Data Table](images/comm-5-g.png)
+*COMM-5-g Data Table · Figma Common UX 프레임 캡처*
 
 #### Type 1 Basic Table
 
@@ -369,6 +391,12 @@ Figma 각 프레임 본문 왼쪽의 Type 제목과 라벨 줄(정의 · 형태 
   - Table/Header Cell만 두고 목록 영역에 안내 문구(글자)를 둠
 
 ### COMM-5-h Dropdown
+
+![COMM-5-h(1/2) Dropdown(1/2)](images/comm-5-h-1.png)
+*COMM-5-h(1/2) Dropdown(1/2) · Figma Common UX 프레임 캡처*
+
+![COMM-5-h(2/2) Dropdown(2/2)](images/comm-5-h-2.png)
+*COMM-5-h(2/2) Dropdown(2/2) · Figma Common UX 프레임 캡처*
 
 #### Type 1 Basic Dropdown (5-h(1/2))
 
@@ -417,6 +445,9 @@ Figma 각 프레임 본문 왼쪽의 Type 제목과 라벨 줄(정의 · 형태 
 
 ### COMM-5-i Info Box
 
+![COMM-5-i Info Box](images/comm-5-i.png)
+*COMM-5-i Info Box · Figma Common UX 프레임 캡처*
+
 #### Type 1 Info Box
 
 - **정의**
@@ -428,6 +459,9 @@ Figma 각 프레임 본문 왼쪽의 Type 제목과 라벨 줄(정의 · 형태 
   - Info Box (Group/Feedback · Progress), 속성 Icon · Button. 오른쪽 버튼은 Text Button Underline
 
 ### COMM-5-j Label
+
+![COMM-5-j Label](images/comm-5-j.png)
+*COMM-5-j Label · Figma Common UX 프레임 캡처*
 
 #### Type 1 Number Label
 
@@ -469,6 +503,9 @@ Figma 각 프레임 본문 왼쪽의 Type 제목과 라벨 줄(정의 · 형태 
 
 ### COMM-5-k Loading
 
+![COMM-5-k Loading](images/comm-5-k.png)
+*COMM-5-k Loading · Figma Common UX 프레임 캡처*
+
 #### Type 1 Spinner
 
 - **정의**
@@ -493,6 +530,9 @@ Figma 각 프레임 본문 왼쪽의 Type 제목과 라벨 줄(정의 · 형태 
 
 ### COMM-5-l Pagination
 
+![COMM-5-l Pagination](images/comm-5-l.png)
+*COMM-5-l Pagination · Figma Common UX 프레임 캡처*
+
 #### Type 1 Number Pagination
 
 - **정의**
@@ -511,6 +551,18 @@ Figma 각 프레임 본문 왼쪽의 Type 제목과 라벨 줄(정의 · 형태 
   - Pagination/Indicator (Group/Feedback · Progress), 속성 State(First / Middle / Last Page). Prev · Next는 Pagination/Text Button
 
 ### COMM-5-m Popup
+
+![COMM-5-m(1/4) Popup(1/4)](images/comm-5-m-1.png)
+*COMM-5-m(1/4) Popup(1/4) · Figma Common UX 프레임 캡처*
+
+![COMM-5-m(2/4) Popup(2/4)](images/comm-5-m-2.png)
+*COMM-5-m(2/4) Popup(2/4) · Figma Common UX 프레임 캡처*
+
+![COMM-5-m(3/4) Popup(3/4)](images/comm-5-m-3.png)
+*COMM-5-m(3/4) Popup(3/4) · Figma Common UX 프레임 캡처*
+
+![COMM-5-m(4/4) Popup(4/4)](images/comm-5-m-4.png)
+*COMM-5-m(4/4) Popup(4/4) · Figma Common UX 프레임 캡처*
 
 #### Type 1 Basic Popup (5-m(1/4))
 
@@ -586,6 +638,9 @@ Figma 각 프레임 본문 왼쪽의 Type 제목과 라벨 줄(정의 · 형태 
 
 ### COMM-5-n Progress Bar
 
+![COMM-5-n Progress Bar](images/comm-5-n.png)
+*COMM-5-n Progress Bar · Figma Common UX 프레임 캡처*
+
 #### Type 1 Horizontal Step
 
 - **정의**
@@ -607,6 +662,9 @@ Figma 각 프레임 본문 왼쪽의 Type 제목과 라벨 줄(정의 · 형태 
   - Progress Step/Vertical Item (Group/Feedback · Progress), 속성 State(Done / Current / Upcoming) · Line(On / Off)
 
 ### COMM-5-o Scroll Bar
+
+![COMM-5-o Scroll Bar](images/comm-5-o.png)
+*COMM-5-o Scroll Bar · Figma Common UX 프레임 캡처*
 
 #### Title 영역 고정 (Type 번호 없음)
 
@@ -638,6 +696,9 @@ Figma 각 프레임 본문 왼쪽의 Type 제목과 라벨 줄(정의 · 형태 
 
 ### COMM-5-p Search Bar
 
+![COMM-5-p Search Bar](images/comm-5-p.png)
+*COMM-5-p Search Bar · Figma Common UX 프레임 캡처*
+
 #### Type 1 Search Area
 
 - **정의**
@@ -650,6 +711,9 @@ Figma 각 프레임 본문 왼쪽의 Type 제목과 라벨 줄(정의 · 형태 
   - 영역 틀: 컴포넌트 없음. 조회 조건은 Box Input(Text Input) · Basic Dropdown(Dropdown) · Check Box(Checkbox, Type=Circle Checkbox), 버튼은 Square(Reset Gray · Search Filled)
 
 ### COMM-5-q Selection Controls
+
+![COMM-5-q Selection Controls](images/comm-5-q.png)
+*COMM-5-q Selection Controls · Figma Common UX 프레임 캡처*
 
 #### Type 1 Check Box
 
@@ -686,6 +750,9 @@ Figma 각 프레임 본문 왼쪽의 Type 제목과 라벨 줄(정의 · 형태 
 
 ### COMM-5-r Sorting
 
+![COMM-5-r Sorting](images/comm-5-r.png)
+*COMM-5-r Sorting · Figma Common UX 프레임 캡처*
+
 #### Type 1 Table Sorting
 
 - **정의**
@@ -699,6 +766,9 @@ Figma 각 프레임 본문 왼쪽의 Type 제목과 라벨 줄(정의 · 형태 
   - Table/Header Cell (Group/List · Card · Accordion · Table · Tab)
 
 ### COMM-5-s Tab
+
+![COMM-5-s Tab](images/comm-5-s.png)
+*COMM-5-s Tab · Figma Common UX 프레임 캡처*
 
 - **가르는 법** (MD에만, 네 Type 함께)
   - 같은 화면 안에서 서로 다른 콘텐츠 영역으로 바꾸면 Underline Tab(가로)이나 Outline Tab(세로로 나열, 탭 오른쪽에 항목 건수 · 화살표). 같은 데이터의 보기 방식을 바꾸면 Container Tab(Type 1 조건)
@@ -746,6 +816,9 @@ Figma 각 프레임 본문 왼쪽의 Type 제목과 라벨 줄(정의 · 형태 
   - Tab/Filled Container (Group/List · Card · Accordion · Table · Tab), 속성 Count(2 ~ 10) · Size(M / S)
 
 ### COMM-5-t Text Field
+
+![COMM-5-t Text Field](images/comm-5-t.png)
+*COMM-5-t Text Field · Figma Common UX 프레임 캡처*
 
 #### Type 1 Box Input
 
@@ -806,6 +879,9 @@ Figma 각 프레임 본문 왼쪽의 Type 제목과 라벨 줄(정의 · 형태 
 
 ### COMM-5-u Toast
 
+![COMM-5-u Toast](images/comm-5-u.png)
+*COMM-5-u Toast · Figma Common UX 프레임 캡처*
+
 #### Type 1 Toast
 
 - **정의**
@@ -819,6 +895,9 @@ Figma 각 프레임 본문 왼쪽의 Type 제목과 라벨 줄(정의 · 형태 
   - Toast (Group/Overlay · Popup), 속성 Type(Single / Double) · Icon
 
 ### COMM-5-v Tool Tip
+
+![COMM-5-v Tool Tip](images/comm-5-v.png)
+*COMM-5-v Tool Tip · Figma Common UX 프레임 캡처*
 
 #### Type 1 Ellipsis Tooltip
 
@@ -870,6 +949,9 @@ Figma 각 프레임 본문 왼쪽의 Type 제목과 라벨 줄(정의 · 형태 
   - Info Tooltip ↔ Table Tooltip: Info 아이콘으로 여는 설명은 내용이 여러 줄이어도 Info Tooltip. 데이터 위에 올려 그 데이터의 값들을 표로 보여 주면 Table Tooltip
 
 ### COMM-5-w Validation Check
+
+![COMM-5-w Validation Check](images/comm-5-w.png)
+*COMM-5-w Validation Check · Figma Common UX 프레임 캡처*
 
 #### Type 1 Input Validation
 
