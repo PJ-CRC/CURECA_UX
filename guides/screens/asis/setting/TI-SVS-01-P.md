@@ -31,24 +31,67 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 
 ### 화면 글자
 
-- (바닥 화면 GNB · LNB · 검색 · 목록은 TI-SVS-01과 같음, Items 100 | Add)
-- 보기 (3543:618372) — 오른쪽 Sample tube details (X)
-  - Code Info: System Code * SYS-001 | LIS Code LIS-001
-  - Tube Info: Name * Tube 3 | Manufacturer - | Model - | Catalog No. -
-  - Height (mm) 100.000 | Cap Size (mm) 13.000 | Body Size (mm) 13.000 | Bottom Type Flat
-  - Socket Type G14 — Group * Socket G10 | No. * 4
-  - Sample Type — Type Swab
-  - Note — Typing test (0 / 200 Characters)
-  - Delete | Modify
-- Modify (3543:618663) — 오른쪽 Sample tube details (X)
-  - Code Info: System Code * `Enter System Code` | LIS Code `Enter LIS Code`
-  - Tube Info: Name * `Enter Name` | Manufacturer `Enter Manufacturer` | Model `Enter Model` | Catalog No. `Enter Catalog No.`
-  - Height (mm) `Enter Height` | Cap Size (mm) `Enter Cap Size` | Body Size (mm) `Enter Body Size` | Bottom Type None
-  - Socket Type G10 — Group * Socket G10 | No. * None
-  - Sample Type — Type Swab
-  - Note — `Enter notes` (0 / 200 Characters)
-  - Cancel | Save
-  - 목록 3번째 행이 `Tube 2 | SYS-002 | LIS-3 | Socket 14 | 90.000 | 11.000 | 10.000` (원문 그대로)
+보기 프레임 (3543:618372)
+
+- (GNB) TIOS | Tube Setting | Running | Instrument | L-IOS | D.A PC | Event | Error | 3 | Warning | 2 | 2026-04-10 11:30
+- (LNB) Dashboard | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis | Setting | Setting | Policy Setting | Information | Protocol Setting | LIS Setting | System Setting | Account Setting | Tube Setting | Keira Knightley
+- LIS Code | Enter LIS Code | System Code | Enter System Code | Reset | Search
+- Items | 100 | Add | Sample tube details
+- Tube name | System Code | LIS Code | Socket Type | Height (mm) | Code Info | Cap size (mm) | Body Size (mm) | Modified Date/Time | Details
+- System Code * | LIS Code
+- Tube 1 | SYS-001 | LIS-001 | Socket 11 | 100.000 | 13.000 | 13.000 | 2026-03-24 10:24:56
+- SYS-001 | LIS-001
+- Tube 2 | SYS-002 | LIS-002 | Socket 14 | 90.000 | Tube Info | 11.000 | 10.000 | 2026-03-24 10:24:56
+- Name * | Manufacturer | Model | Catalog No.
+- Tube 3 | SYS-003 | LIS-003 | Socket 15 | 85.000 | 12.000 | 11.000 | 2026-03-24 10:24:56
+- Tube 3 | - | - | -
+- Tube 4 | SYS-004 | LIS-004 | Socket 15 | 85.000 | Height (mm) | 12.000 | Cap Size (mm) | 11.000 | Body Size (mm) | 2026-03-24 10:24:56 | Bottom Type
+- 100.000 | 13.000 | 13.000 | Flat
+- Tube 5 | SYS-005 | LIS-005 | Socket 15 | 85.000 | Socket Type | G14 | 12.000 | 11.000 | 2026-03-24 10:24:56
+- Group * | No. *
+- Tube 6 | SYS-006 | LIS-006 | Socket 15 | 85.000 | 12.000 | 11.000 | 2026-03-24 10:24:56
+- Socket G10 | 4
+- Tube 7 | SYS-007 | LIS-007 | Socket 15 | 85.000 | Sample Type | 12.000 | 11.000 | 2026-03-24 10:24:56
+- Type
+- Tube 8 | SYS-008 | LIS-008 | Socket 15 | 85.000 | 12.000 | 11.000 | 2026-03-24 10:24:56
+- Swab
+- Tube 9 | SYS-009 | LIS-009 | Socket 15 | 85.000 | Note | 12.000 | 11.000 | 2026-03-24 10:24:56
+- Typing test
+- Tube 10 | SYS-0010 | LIS-010 | Socket 15 | 85.000 | 12.000 | 11.000 | 2026-03-24 10:24:56
+- 0 | / 200 Characters
+- 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
+- Delete | Modify
+
+Modify 프레임 (3543:618663)
+
+- (GNB) TIOS | Tube Setting | Running | Instrument | L-IOS | D.A PC | Event | Error | 3 | Warning | 2 | 2026-04-10 11:30
+- (LNB) Dashboard | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis | Setting | Setting | Policy Setting | Information | Protocol Setting | LIS Setting | System Setting | Account Setting | Tube Setting | Keira Knightley
+- LIS Code | Enter LIS Code | System Code | Enter System Code | Reset | Search
+- Items | 100 | Add | Sample tube details
+- Tube name | System Code | LIS Code | Socket Type | Height (mm) | Code Info | Cap size (mm) | Body Size (mm) | Modified Date/Time | Details
+- System Code * | LIS Code
+- Tube 1 | SYS-001 | LIS-001 | Socket 11 | 100.000 | 13.000 | 13.000 | 2026-03-24 10:24:56
+- Enter System Code | Enter LIS Code
+- Tube 2 | SYS-002 | LIS-002 | Socket 14 | 90.000 | Tube Info | 11.000 | 10.000 | 2026-03-24 10:24:56
+- Name * | Manufacturer | Model | Catalog No.
+- Tube 2 | SYS-002 | LIS-3 | Socket 14 | 90.000 | 11.000 | 10.000 | 2026-03-24 10:24:56
+- Enter Name | Enter Manufacturer | Enter Model | Enter Catalog No.
+- Tube 4 | SYS-004 | LIS-004 | Socket 15 | 85.000 | Height (mm) | 12.000 | Cap Size (mm) | 11.000 | Body Size (mm) | 2026-03-24 10:24:56 | Bottom Type
+- Enter Height | Enter Cap Size | Enter Body Size | None
+- Tube 5 | SYS-005 | LIS-005 | Socket 15 | 85.000 | 12.000 | 11.000 | 2026-03-24 10:24:56
+- Socket Type | G10
+- Tube 6 | SYS-006 | LIS-006 | Socket 15 | 85.000 | Group * | 12.000 | 11.000 | No. * | 2026-03-24 10:24:56
+- Socket G10 | None
+- Tube 7 | SYS-007 | LIS-007 | Socket 15 | 85.000 | Sample Type | 12.000 | 11.000 | 2026-03-24 10:24:56
+- Type
+- Tube 8 | SYS-008 | LIS-008 | Socket 15 | 85.000 | Swab | 12.000 | 11.000 | 2026-03-24 10:24:56
+- Note
+- Tube 9 | SYS-009 | LIS-009 | Socket 15 | 85.000 | 12.000 | 11.000 | 2026-03-24 10:24:56
+- Enter notes
+- Tube 10 | SYS-0010 | LIS-010 | Socket 15 | 85.000 | 12.000 | 11.000 | 2026-03-24 10:24:56
+- 0 | / 200 Characters
+- 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
+- Cancel | Save
 
 ### 사용 컴포넌트
 

@@ -30,15 +30,22 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 
 ### 화면 글자
 
-- (GNB) Running | Instrument | L-IOS | D.A PC | Event | Error 3 | Warning 2 | 2026-04-10 11:30 | Tube Setting
-- (LNB) TIOS | Dashboard | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis | Setting | Setting | Policy Setting | Information | Protocol Setting | LIS Setting | System Setting | Account Setting | Tube Setting | Keira Knightley
-- 검색: LIS Code `Enter LIS code` | System Code `Enter system code` | Reset | Search
-- Items 100 | Add
-- 목록: Tube name | System Code | LIS Code | Socket Type | Height (mm) | Cap size (mm) | Body Size (mm) | Modified Date/Time | Details
-  - Tube 1 | SYS-001 | LIS-001 | Socket 11 | 100.000 | 13.000 | 13.000 | 2026-03-24 10:24:56
-  - Tube 2 | SYS-002 | LIS-002 | Socket 14 | 90.000 | 11.000 | 10.000 | 2026-03-24 10:24:56
-  - Tube 3 ~ 10 | SYS-003 ~ SYS-0010 | LIS-003 ~ LIS-010 | Socket 15 | 85.000 | 12.000 | 11.000 | 2026-03-24 10:24:56
-- 페이지: 1 ~ 10
+- (GNB) TIOS | Tube Setting | Running | Instrument | L-IOS | D.A PC | Event | Error | 3 | Warning | 2 | 2026-04-10 11:30
+- (LNB) Dashboard | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis | Setting | Setting | Policy Setting | Information | Protocol Setting | LIS Setting | System Setting | Account Setting | Tube Setting | Keira Knightley
+- LIS Code | Enter LIS code | System Code | Enter system code | Reset | Search
+- Items | 100 | Add
+- Tube name | System Code | LIS Code | Socket Type | Height (mm) | Cap size (mm) | Body Size (mm) | Modified Date/Time | Details
+- Tube 1 | SYS-001 | LIS-001 | Socket 11 | 100.000 | 13.000 | 13.000 | 2026-03-24 10:24:56
+- Tube 2 | SYS-002 | LIS-002 | Socket 14 | 90.000 | 11.000 | 10.000 | 2026-03-24 10:24:56
+- Tube 3 | SYS-003 | LIS-003 | Socket 15 | 85.000 | 12.000 | 11.000 | 2026-03-24 10:24:56
+- Tube 4 | SYS-004 | LIS-004 | Socket 15 | 85.000 | 12.000 | 11.000 | 2026-03-24 10:24:56
+- Tube 5 | SYS-005 | LIS-005 | Socket 15 | 85.000 | 12.000 | 11.000 | 2026-03-24 10:24:56
+- Tube 6 | SYS-006 | LIS-006 | Socket 15 | 85.000 | 12.000 | 11.000 | 2026-03-24 10:24:56
+- Tube 7 | SYS-007 | LIS-007 | Socket 15 | 85.000 | 12.000 | 11.000 | 2026-03-24 10:24:56
+- Tube 8 | SYS-008 | LIS-008 | Socket 15 | 85.000 | 12.000 | 11.000 | 2026-03-24 10:24:56
+- Tube 9 | SYS-009 | LIS-009 | Socket 15 | 85.000 | 12.000 | 11.000 | 2026-03-24 10:24:56
+- Tube 10 | SYS-0010 | LIS-010 | Socket 15 | 85.000 | 12.000 | 11.000 | 2026-03-24 10:24:56
+- 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
 
 ### 사용 컴포넌트
 
