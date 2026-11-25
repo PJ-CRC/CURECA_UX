@@ -29,7 +29,7 @@ started: 2026-11-25
 | 4. 수정 · 확인 | | | |
 | 5. 완료 | | | |
 
-이어서 작업할 곳: 3단계 · 시작 (2단계 마침, 요청자 확인 5 답 반영 2026-11-25 — DS-0012 결정). Workbench 작업 페이지 = To Be(3481:216078)로 바꿈 (요청자 확인 1, 2026-11-25 16:4x) — 3단계 그리기 전에 project.json editablePageName이 그대로인지만 확인
+이어서 작업할 곳: 3단계 · 화면 MD 5개(tobe) 씀 · 자리 잡음 (CID 5개, 섹션 · 메뉴 단위 표시), TI-STN-08부터 그릴 차례 (다시 읽을 곳: 3단계 flow/3-design-case3.md 흐름 · 3-4 · 공통 3 · 공통 4 / 작업 기록 "요건 목록" 요건 1 · "설계" 화면별 작업 · 원본 줄 · "질문 대기" · "변경 확인" / 화면 MD screens/tobe/setting/TI-STN-08.md · LI-STN-08.md). 그리기 전에 project.json editablePageName이 「Setting  Ⓛ / Ⓣ_To Be」인지 확인 (R002 · 2026-11-25 Claude, R001 작업 이어 받음)
 
 ## 요청
 
@@ -265,4 +265,4 @@ started: 2026-11-25
 ## 이 작업이 남긴 것
 
 - 다른 화면의 반영 대기 항목:
-- 고친 카탈로그 줄:
+- 고친 카탈로그 줄: `alert/toast-catalog.csv` 새로 만듦(`toast-catalog-ms.csv`와 같은 칸, 2026-11-25) — Toast_001 "The selected files have been deleted." (TI-STN-08 · TI-STN-08-P, Confirm_026 [Delete] 뒤) · Toast_002 "{version} has been deactivated." (TI-STN-08-P, Confirm_030 [Deactivate] 뒤). Alert_039 ~ 042 · Confirm_026 · 028 · 029 · 030은 사용 화면에 이미 이 CID들이 있어 고치지 않음
