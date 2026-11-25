@@ -132,6 +132,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=34
 | 2 | Items · 노출 개수 | Items 24 · 10 items | 기존 원본 그대로 |
 | 4 | 목록 | 기존 원본 10행 그대로 | 기존 원본 TI-STN-08 목록 (As Is 3288:235198) |
 | 5 | Pagination | 1 ~ 10 | 기존 원본 그대로 |
+| - | 영역 틀 (콘텐츠 영역 바탕 · 검색 영역 · Items 줄 · 목록 바탕 · 구분선) | 기존 원본 크기 · 색 그대로 | 기존 원본 TI-STN-08 (As Is 3288:235199 · 3288:235448 · 3288:235472 · 3288:235201) |
 
 ## 화면 표기 글자
 
