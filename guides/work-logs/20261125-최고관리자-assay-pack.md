@@ -128,6 +128,8 @@ started: 2026-11-25
 | 1 | 논의 대상 | DS-0001 (종료) | `policies`에 POL-TST-008 | - | | (Service Mode → L-IOS Client Mode 용어 바꿈, 반영 끝남. Assay Pack Setting 행 Main Mode만 O 유지 — 위 client-mode-matrix와 같음) |
 | 1 | 논의 대상 | DS-0008 (종료) | 디스크립션의 "팝업 · 알럿 · 컨펌 · 토스트" 표기 | O | 다섯 화면 디스크립션 | 디스크립션에서는 Popup · Alert · Confirm · Toast (용어집 표준어) — 아래 용어 목록 |
 | 1 | 화면 | `ia/ia-screens.csv` STN-08 네 줄 | 케이스 3 권한 · 모드 표 줄 찾기 | O | 다섯 화면 경로 | Setting > Assay Pack Setting (Page), > Details (Popup). TI-STN-08-01은 IA에 없음 (TI-STN-08-R02, 5단계에 더함) |
+| 1 | 화면 | 기존 원본 정의 프레임 [TI-STN-08 / 세부정의] `3288:240828` · [TI-STN-08-P 유형별 정의] `3288:237480` (3단계에서 추가) | 기존 디스크립션이 가리킴 | O | TI-STN-08 · LI-STN-08 #4, TI-STN-08-P · LI-STN-08-P #3 | 데이터 없음 문구 「No files found. / Click Import to add a file.」 · 「No results found.」, File type별 정보 묶음 제목 (C4) |
+| 1 | Toast | `alert/toast-catalog.csv` (3단계에서 추가, 새로 만듦) | 케이스 3 Toast 코드 (flow/3-design-case3.md 3-2) | O | TI-STN-08 #3 · TI-STN-08-P #4 | Toast_001 · Toast_002 |
 
 - ⑤ 장비: 다섯 화면에 Module 이름이 나오지 않아 Module 문서는 읽지 않음
 - 예전 목록(`old-pending/` · `old-provisional/` · `old-customer-agenda/`)에 Assay Pack · STN-08 · POL-TST-008 줄 없음
