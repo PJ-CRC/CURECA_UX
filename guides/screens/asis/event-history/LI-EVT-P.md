@@ -8,8 +8,8 @@ type: Popup
 version: 2.1.01
 date: 2026.08.07
 author: 서보경
-client_mode: []
-user_type: []
+client_mode: [Main Mode, Console Mode, MS Mode]
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-46804
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: L-IOS에만 4 Status Toggle(상태 변경), 5 [Mark all as Closed] 버튼, 6 [Export]의 L-IOS 저장 방식이 있음. 화면 목록의 Module 이름에 `(1)`이 붙음(T는 없음)
 - 호출하는 화면: [LI-EVT-01-P] Event History Detail (목록에서 Event 클릭, LI-EVT-01-P 0 진입 방법), Confirm_003 (5 [Mark all as Closed]), Common UX COMM-5-j(4/4) 저장 팝업 (6 [Export])
 - 호출되는 곳: 상단 Bar `Event` 아이콘, 각 화면의 Event 아이콘 (0 진입 방법)
+- 관련 정책: POL-EVT-001, POL-EVT-002, POL-COM-006
 
 ## 기존 화면
 

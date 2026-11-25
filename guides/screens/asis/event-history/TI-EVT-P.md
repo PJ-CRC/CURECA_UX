@@ -9,7 +9,7 @@ version: 2.1.01
 date: 2026.08.07
 author: 서보경
 client_mode: []
-user_type: []
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-47110
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: L-IOS(LI-EVT-P)는 4 Status가 Toggle(상태 변경 가능), 5 [Mark all as Closed] 버튼, 6 [Export]에 L-IOS 저장 방식이 더 있음. T-IOS는 4의 상태 변경 · 5 Mark as Closed · 5-1이 제거됨(취소선)
 - 호출하는 화면: [TI-EVT-01-P] Event History Detail (목록에서 Event 클릭, TI-EVT-01-P 0 진입 방법)
 - 호출되는 곳: 상단 Bar `Event` 아이콘, 각 화면의 Event 아이콘 (0 진입 방법)
+- 관련 정책: POL-EVT-001, POL-EVT-002, POL-COM-006
 
 ## 기존 화면
 

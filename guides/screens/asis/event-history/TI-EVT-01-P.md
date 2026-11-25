@@ -9,7 +9,7 @@ version: 2.1.14
 date: 2026.10.30
 author: 서보경
 client_mode: []
-user_type: []
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-47409
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: L-IOS(LI-EVT-01-P)는 1 Status를 [1-2] Toggle로 바꿀 수 있고, 3 Notes에 Resolution Notes 입력(인라인 편집)이 있음. T-IOS 3 Notes는 Read only. 화면 위 번호 표시 `1-2`는 T에도 있으나 T 디스크립션에는 1-2 블록이 없음
 - 호출하는 화면: [TI-EVT-P] Event History 목록 (5 List 버튼)
 - 호출되는 곳: [TI-EVT-P] Event History 목록에서 Event 클릭 (0 진입 방법), [TI-EVT-02-P] Event Message의 [View Details] (원문은 `LI-EVT-01-P`로 적음)
+- 관련 정책: POL-EVT-001, POL-EVT-002
 
 ## 기존 화면
 
