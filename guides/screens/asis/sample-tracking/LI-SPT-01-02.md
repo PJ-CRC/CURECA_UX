@@ -8,8 +8,8 @@ type: Popup
 version: 2.1.02
 date: 2026.08.14
 author: 정다예
-client_mode: []
-user_type: []
+client_mode: [Main Mode, Console Mode, MS Mode]
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-167936
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: 화면 글자 · 디스크립션이 TI-SPT-01-02와 같음. L 화면에는 번호 표시가 없음
 - 호출하는 화면: (원문에 없음. 4 [Close] · 5 [X]는 팝업 닫고 기존 화면 유지)
 - 호출되는 곳: [LI-SPT-01-01] Samples Details 8-1 [More] (원문은 TI-SPT-01-02 팝업이라고 적음)
+- 관련 정책: (정책 작성 전)
 
 ## 기존 화면
 

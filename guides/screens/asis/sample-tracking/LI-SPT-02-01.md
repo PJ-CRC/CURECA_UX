@@ -8,8 +8,8 @@ type: Popup
 version: 2.0
 date: 2026.06.15
 author: 정다예
-client_mode: []
-user_type: []
+client_mode: [Main Mode, Console Mode, MS Mode]
+user_type: [Service, Admin, User]
 policies: []
 source: asis
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-193596
@@ -21,6 +21,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=35
 - T/L 차이: 디스크립션은 1-1에 T(TI-SPT-02-01)만 바코드 2개 표출 설명 2줄이 더 있음. 케이스 Case 1-1(시약 N개) 패널 설명 · 예시 시약 이름이 다름. 화면 글자는 GNB · LNB만 다름
 - 호출하는 화면: [Samples] 메뉴의 해당 검체 (3 리스트 클릭)
 - 호출되는 곳: [LI-SPT-02] 96-DWP 리스트 행 클릭 (2), [LI-SPT-01-01] 5-1 [More]
+- 관련 정책: (정책 작성 전)
 
 ## 기존 화면
 
