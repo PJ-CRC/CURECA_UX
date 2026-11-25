@@ -119,4 +119,4 @@ Table (52), Square (6), 1 Depth (6), 2 Depth (5), Form/CheckBox (5), Description
 
 | Case | 제목 (원문) | 조건 | 프레임 |
 | --- | --- | --- | --- |
-| 2 | Legend 전체 해제 시 | Legend 전체 해제 | `TI-STA-06-01/Case` (0, 761) |
+| 2 | Legend 전체 해제 시 | Legend 전체 해제 | `TI-STA-06-01/Case` y 777 |

@@ -184,12 +184,12 @@ Description Number (10), Square (6), 1 Depth (6), 2 Depth (5), Form/CheckBox (5)
 
 <!-- `{메뉴}_asis` 페이지의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
 
-케이스는 같은 페이지의 별도 프레임 `TI-STA-06-01/Case`([3543:439482](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-439482), 2252×1490)에 있습니다. 케이스마다 오른쪽 패널이 있고, 패널 CID는 원문 그대로 `TI-STA-05-01/Case`입니다(작성자 정다예, Ver 2.1.03, Date 2026.08.21, 디스크립션 `0` / `- / -`). 디스크립션 3-3은 `TI-STA-06-02/Case 1`을 가리키지만 그 이름의 프레임은 없습니다(원문 그대로). 디스크립션 5는 `TI-STA-05-01/Case`의 Case 2 · 3 · 4를 가리킵니다(내용은 [TI-STA-05-01] 케이스 절).
+케이스는 같은 페이지의 별도 프레임 `TI-STA-06-01/Case`([3543:439482](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-439482), 2252×1490)에 있습니다. 케이스마다 오른쪽 패널이 있고, 패널 CID는 원문 그대로 `TI-STA-05-01/Case`입니다(작성자 정다예, Ver 2.1.03, Date 2026.08.21, 디스크립션 `0` / `- / -`, 프레임 칸의 y는 케이스 제목 글자 자리). 디스크립션 3-3은 `TI-STA-06-02/Case 1`을 가리키지만 그 이름의 프레임은 없습니다(원문 그대로). 디스크립션 5는 `TI-STA-05-01/Case`의 Case 2 · 3 · 4를 가리킵니다(내용은 [TI-STA-05-01] 케이스 절).
 
 | Case | 제목 (원문) | 조건 | 프레임 |
 | --- | --- | --- | --- |
-| 1 | Chart 상세 데이터 Tooltip | 차트 내 특정 시점에 마우스 오버 | 위 프레임 (0, 0) |
-| 2 | Legend 전체 해제 시 | Legend 전체 해제 | 위 프레임 (0, 761) |
+| 1 | Chart 상세 데이터 Tooltip | 차트 내 특정 시점에 마우스 오버 | 위 프레임 y 16 |
+| 2 | Legend 전체 해제 시 | Legend 전체 해제 | 위 프레임 y 777 |
 
 - Case 1: 툴팁 예시 `01-04 | Total : 13%` / Consumable Storage (1) 12% | Consumable Storage (2) 13% | Consumable Storage (3) 11% | Consumable Storage (4) 15% (같은 툴팁이 두 자리에 있음). 차트 제목 Error Rate Trend (Cumulative), Y축 30% ~ 0%, X축 2026-01 ~ 2026-07
 - Case 2: 차트 자리에 `Please select one or more legends.` 안내. 오른쪽 Date Range 2026-01-01 | 2026-01-07, Legend Consumable Storage · Select All · Consumable Storage (1) ~ (4)

@@ -118,7 +118,7 @@ Table (26), Square (6), 1 Depth (6), 2 Depth (5), Description Number (5), Dropdo
 
 | Case | 제목 (원문) | 조건 | 프레임 |
 | --- | --- | --- | --- |
-| 2 | Legend 전체 해제 시 | Legend 전체 해제 | `TI-STA-05-01/Case` (0, 761) |
+| 2 | Legend 전체 해제 시 | Legend 전체 해제 | `TI-STA-05-01/Case` y 777 |
 
 같은 CID의 Module Type별 프레임 (기획 프레임 아래, 라벨은 TI-STA-05-01 프레임 위 라벨과 같은 줄, 패널 디스크립션 `0` / `- / -`):
 

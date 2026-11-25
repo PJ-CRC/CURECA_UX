@@ -184,15 +184,15 @@ Description Number (10), Square (6), 1 Depth (6), 2 Depth (5), Dropdown Outlined
 
 <!-- `{메뉴}_asis` 페이지의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
 
-케이스는 같은 페이지의 별도 프레임 `TI-STA-05-01/Case`([3543:438672](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-438672), 2252×4394)에 있습니다. 케이스마다 오른쪽 패널이 있습니다(CID `TI-STA-05-01/Case`, 작성자 정다예, Ver 2.1.03, Date 2026.08.21). 패널 디스크립션은 모두 `0` / `- / -`입니다. 원본에 `Case 3.`이 두 번 있습니다(번호 원본 그대로). 디스크립션 5가 가리키는 "Case 3 · Case 4"는 위에서 셋째 · 넷째 블록입니다.
+케이스는 같은 페이지의 별도 프레임 `TI-STA-05-01/Case`([3543:438672](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-438672), 2252×4394)에 있습니다. 케이스마다 오른쪽 패널이 있습니다(CID `TI-STA-05-01/Case`, 작성자 정다예, Ver 2.1.03, Date 2026.08.21). 패널 디스크립션은 모두 `0` / `- / -`입니다. 프레임 칸의 y는 케이스 제목 글자 자리입니다. 원본에 `Case 3.`이 두 번 있습니다(번호 원본 그대로). 디스크립션 5가 가리키는 "Case 3 · Case 4"는 위에서 셋째 · 넷째 블록입니다.
 
 | Case | 제목 (원문) | 조건 | 프레임 |
 | --- | --- | --- | --- |
-| 1 | Chart 상세 데이터 Tooltip | 차트 내 특정 시점에 마우스 오버 | 위 프레임 (0, 0) |
-| 2 | Legend 전체 해제 시 | Legend 전체 해제 | 위 프레임 (0, 761) |
-| 3 | Legend 유형별 Dropdown 노출 데이터 (1-1. Module 선택 시 / 1-2. Unit 선택 시) | Legend Module · Unit 탭 선택 | 위 프레임 (0, 1492) |
-| 3 | Module 단위 선택 시 노출 데이터 | Legend Module에서 Module Type 선택 | 위 프레임 (0, 2436) |
-| 4 | Unit 단위 선택 시 노출 데이터 (3-1. 하위 Unit(Device)이 1대 설치가 가능한 Module인 경우 / 3-2. 하위 Unit(Device)이 2대 이상 설치가 가능한 Module인 경우) | Legend Unit에서 Module Type 선택 | 위 프레임 (0, 3434) |
+| 1 | Chart 상세 데이터 Tooltip | 차트 내 특정 시점에 마우스 오버 | 위 프레임 y 16 |
+| 2 | Legend 전체 해제 시 | Legend 전체 해제 | 위 프레임 y 777 |
+| 3 | Legend 유형별 Dropdown 노출 데이터 (1-1. Module 선택 시 / 1-2. Unit 선택 시) | Legend Module · Unit 탭 선택 | 위 프레임 y 1508 |
+| 3 | Module 단위 선택 시 노출 데이터 | Legend Module에서 Module Type 선택 | 위 프레임 y 2452 |
+| 4 | Unit 단위 선택 시 노출 데이터 (3-1. 하위 Unit(Device)이 1대 설치가 가능한 Module인 경우 / 3-2. 하위 Unit(Device)이 2대 이상 설치가 가능한 Module인 경우) | Legend Unit에서 Module Type 선택 | 위 프레임 y 3450 |
 
 - Case 1: 툴팁 예시 `01-04 | Total : 41` / Consumable Storage (1) 9 | Consumable Storage (2) 13 | Consumable Storage (3) 11 | Consumable Storage (4) 8 (같은 툴팁이 두 자리에 있음). 차트 합계 Total 301 · 53 · 96 · 70 · 82, 범례 Consumable / Storage (1) ~ (4), 오른쪽 Legend Consumable Storage · Select All · Consumable Storage (1) ~ (4)
 - Case 2: 차트 자리에 `Please select one or more legends.` 안내. 오른쪽 Legend Consumable Storage · Select All · Consumable Storage (1) ~ (4)
