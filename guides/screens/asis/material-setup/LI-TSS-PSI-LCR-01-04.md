@@ -68,22 +68,3 @@ Description Number (3), Button/Secondary_1Button_44 (2), Frame (1), layout/spaci
 ### 버전 메모
 
 - v2.1.05 update / 정책 변경으로 인한 수정 항목 / - Prep Consumable 투입 항목 추가 (PK/IC 정책 변경) / - 시약 부분 스크롤 기능 추가
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | IA | IA 이름 "Confirm the socket", 화면 "Confirm the tray" (경로는 아직 "Confirm the socket") | IA와 경로를 Confirm the tray로 | `ia/ia-screens.csv` | 대기 (확인 필요) |
-| R02 | 화면 데이터 | Required Quantity 예시에 PK/IC 줄이 없음 (LCR-01-03에는 있음) | 같은 예시로 | LI-TSS-PSI-LCR-01-03 | 대기 |
-| R03 | 화면 데이터 | "Saline Standard Tub" | Saline Standard Tube | 오타 | 대기 |
-| R04 | 문구 | "go to the consumables and reagents manual screen" | [Finish]는 LI-TSS-PSI-LCR로 감. 화면 이름과 맞게 | 디스크립션 3 | 대기 |
-| R05 | 화면 | 버튼 "Add new" | [Add New] | 디스크립션 2 | 대기 |
-| R06 | 표기 | "검체", "tray", "팝업" | Sample, Tray, Popup | `glossary/terms.csv` | 대기 |
-| R07 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `alert/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 (CR, PD, PV, 정책 ID) |
-| --- | --- | --- | --- | --- |
-| 2.1.05 | | 정책 변경: Prep Consumable 투입 항목 추가 (PK/IC 정책 변경), Reagent 영역 스크롤 추가 | BREX | Figma 버전 메모 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`). 노출 모드 값을 새 기능 표대로 고침 | 서보경 | DS-0001 |

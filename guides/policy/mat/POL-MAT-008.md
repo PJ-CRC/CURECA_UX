@@ -36,7 +36,7 @@ replaced_by:
 8. PCR Socket 하나에는 PCR box를 최대 2개(A·B slot) 담고, 몇 개를 담을지는 사용자가 정함. Allplex™ HPV28 Detection은 구성 Tube가 많아 Socket 하나에 1개만 담으며, 담으면 가득 찬 것으로 봄. 다른 box가 있는 Socket에 HPV28을 스캔해도 MS_Alert_011임.
 9. MM Tube 용 Socket을 PCR box 단계에서 스캔하면 MS_Confirm_015, PCR box가 담긴 Socket을 MM Tube 단계에서 스캔하면 MS_Confirm_017을 보여 줌.
 10. MM Tube는 Barcode가 없고 모두 같은 Tube임. 하나씩 읽지 않고 PCR Socket을 MM Tube 용으로 정하며, Socket 하나에 14개를 꽉 채워 넣는 것이 정책임. 위치값이 필요 없어 [Remove]를 두지 않음.
-11. 고른 Sample Trolley가 있으면 Load PK/IC Tubes·Load PCR Reagents도 필요 수량을 보여 줌. 고르기나 Skip은 컨펌·Alert 판단에 영향을 주지 않음.
+11. 고른 Sample Trolley가 있으면 Load PK/IC Tubes·Load PCR Reagents도 필요 수량을 보여 줌. 고르기나 Skip은 Confirm·Alert 판단에 영향을 주지 않음.
 
 ## 예외
 

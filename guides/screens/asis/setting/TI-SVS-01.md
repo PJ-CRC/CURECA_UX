@@ -59,17 +59,3 @@ figma_region: 2.1 2차
 #### 5. Pagenation
 
 - 공통 UX > COMM-5-i 정의 참고
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 화면 정보 | 화면 이름 "Sample tube Setting", IA "Tube Setting" | 하나로 통일 | IA | 대기 |
-| R02 | 정책 반영 | 입력 값 조건(코드 형식, 치수 범위, 중복 여부)이 목록 화면에 없음 | 세부정의·Modify 화면 확인 후 POL-TST-009에 넣음 | 헌법 8조 | 대기 (확인 필요) |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.1.01 | 2026-08-07 | (버전 메모 없음) | BREX | Figma 화면 정보 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

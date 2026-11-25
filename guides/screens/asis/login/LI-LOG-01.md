@@ -57,18 +57,3 @@ Description Number (6), Square (1), Interface/Eye_Slash_Outlined (1)
 
 - 로그인 페이지에서만 노출
 - 표출 텍스트 : © Seegene Inc. All rights reserved.
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 화면 정보 | Figma 프레임 이름·CID 칸 "LI-LOG", 디스크립션의 "LI-LOG-P" | LI-LOG-01, LI-LOG-01-P | `ia/ia-screens.csv` | 대기 |
-| R02 | 디스크립션 | ID·비밀번호 조건을 화면에 다시 적음 (최대 길이 없음) | 정책 ID로 참조 | 헌법 3조 | 대기 |
-| R03 | 정책 반영 | 로그인 전 [Shut Down]은 모든 사용자에게 보임 | 맞음. 누구나 쓸 수 있음 | POL-ACC-004 규칙 5 | 제외 (2026-11-04, 바꿀 것 칸 참고) |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.1.03 | 2026-08-21 | (버전 메모 없음) | 정다예 | Figma 화면 정보 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

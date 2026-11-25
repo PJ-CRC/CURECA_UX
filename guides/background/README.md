@@ -1,12 +1,8 @@
 # 작업 배경 자료
 
-규칙을 새로 쓰는 동안 근거로 쓰는 자료입니다. 할 일은 [todo.md](todo.md) 한 곳에 모읍니다. 다 쓴 작업 문서는 `archive/background/`로 옮깁니다(판정: [cleanup-plan.md](cleanup-plan.md) 4절 "작업 문서").
+규칙을 새로 쓰는 동안 쓰는 자료입니다. 화면설계 작업의 근거로 쓰지 않습니다. 할 일은 [todo.md](todo.md) 한 곳에 모읍니다. 다 쓴 문서는 지웁니다(git 기록에 남음).
 
-| 파일 | 내용 | 닫는 때 |
-| --- | --- | --- |
-| [todo.md](todo.md) | 할 일 한 곳 | 계속 씀 |
-| [cleanup-plan.md](cleanup-plan.md) | 기존 문서 정리 계획 (방향 A · B, 문서별 판정, 다시 꺼낼 주제) | 옮김이 끝나면 보관 |
-| [migration-map.md](migration-map.md) | 기존 규칙 → 새 구조 옮김 대조표 | 모든 줄 "옮김 확인"이 차면 보관 |
-| [program-hurdles.md](program-hurdles.md) | 팀 프로그램(v0.17.1)과 6단계 흐름의 허들 | 요청서를 다시 쓰면 보관 |
-| [program-change-request.md](program-change-request.md) | 팀 프로그램 변경 요청서 | 2026-11-17 비움. 다음에 다시 씀 (todo 2-1) |
-| [ux-docs-mockup.html](ux-docs-mockup.html) | 요청서용 예시 화면 | 요청서를 다시 쓸 때 정함 |
+| 파일 | 내용 |
+| --- | --- |
+| [todo.md](todo.md) | 할 일 한 곳 |
+| [handoff.md](handoff.md) | 계정을 옮길 때 이어 가는 곳 (지금 하던 곳 · 저장소 상태) |

@@ -37,19 +37,3 @@ figma_region: 2.1 2차
 ### 디스크립션 (원문)
 
 - 원문은 TI-IVT-04-T 0~5와 같음. 3-7의 팝업 CID도 "[TI-IVT-04-T-P]"로 같음
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 화면 정보 | 3-7 "클릭 시, [TI-IVT-04-T-P] 팝업 호출" (L-IOS 화면) | LI-IVT-04-T-P | `ia/ia-screens.csv` | 대기 |
-| R02 | 화면 글자 | PCR Kit 구성 시약 나열 순서가 T-IOS와 다름 | 한 가지 정렬 기준으로 통일 (COMM-4-b) | TI-IVT-04-T 화면 글자 | 대기 (확인 필요) |
-| R03 | 상태값 | Reagent에 재고 상태(Sufficient / Low / Insufficient)를 씀 | TI-IVT-04-T 반영 대기 목록 1·2와 같음 | `glossary/status-values.csv 재고 상태`, POL-INV-003 | 대기 |
-| R04 | 디스크립션 | 번호 중복, 단위 혼용(rxns, T), "유효기간", "유효기가", 2-5 첫 문장 | TI-IVT-04-T 반영 대기 목록 3~7과 같음 | TI-IVT-04-T | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.1.13 | 2026-10-23 | 표기 및 정렬 기준 변경 반영. UI 변경 (표기 단위 변경에 따른 간격 재조정). Pretreatment Reagents 카드 내 구분선 제거 | 서보경 | Figma 버전 메모 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

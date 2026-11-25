@@ -33,17 +33,3 @@ figma_region: 2.1 1차
 ### 디스크립션 (원문)
 
 - 원문은 TI-INF-02-P와 같음
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 화면 정보 | 화면 정보 CID "LI-INF-01-P" | LI-INF-02-P | Figma 프레임 이름, `ia/ia-screens.csv` | 대기 |
-| R02 | 디스크립션 | [OK], [X] 버튼 동작 설명 없음, Language·Data reset 기준 시점 | TI-INF-02-P 반영 대기 목록 1~3과 같이 | TI-INF-02-P | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.0 | 2026-06-15 | (버전 메모 없음) | 서보경 | Figma 화면 정보 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

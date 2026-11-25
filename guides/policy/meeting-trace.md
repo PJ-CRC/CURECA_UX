@@ -21,7 +21,7 @@
 | --- | --- |
 | 반영 | 57 (11-06 답과 바로잡음으로 넣음) |
 | 제외 | 3 (#29 · #33 · #63, 11-06 사용자 결정) |
-| 고객 확인 | 3 (#2 · #48 · #49, CA-0002 · CA-0010) |
+| 고객 확인 | 3 (#2 · #48 · #49, DS-0009 (예전 CA-0002 · CA-0010)) |
 | 내부 논의 | 1 (#43, PD-0009) |
 | 확인 | 8 (#27 · 47 · 54 · 56 · 64 · 66 · 70 · 71, 회의 뒤 결과를 모르는 것) |
 
@@ -42,7 +42,7 @@
 | Fill Level 표시 | 09-16 센서가 울리지 않으면 100% 넘어도 "100% 표기 유지, Almost Full" → 화면 TI-IVT-05-T(10-08) "최대 99%" → Common UX 4-a "최대 개수 초과 후 센서 미작동 시 Almost Full" | 99% (POL-INV-005 규칙 2) | 반영 (11-06 답: 99%가 최신) |
 | 수량 표기 T / rxns | 08-11 'rxns' → 'T' → 10-06 'T'를 뺀 단위는 띄어씀 → 10-30 결정 · Teams T05 'T' → 'rxns' | rxns (용어집) | 반영 |
 | 백업 · 복원 | 08-11 기능 제거 · 이력 조회 추가 → 08-13 기능 유지, 자동 백업 · 시간 · 범위 등 (재정의 예정) → 08-14 UI 기능 제거, 서버로 이관 → Teams T15 | 서버 작업 (POL-SYS-004 규칙 5) | 반영 |
-| Door와 Paused | 8월 정책서 Running 중 Unlock 불가(Not Initialized / Ready / Error만) → 08-28 Ready · Error만(유지), Dx Storage는 모든 상태에서 열림 → 09-01 Paused 상태 추가 → 09-16 Running 중에도 Pause로 열 수 있음, Ready에서도 열면 Paused → 09-22 **Error면 열어도 Error 유지** | Error일 때도 Paused (POL-EQP-004 규칙 1) | **고객 확인** CA-0010 |
+| Door와 Paused | 8월 정책서 Running 중 Unlock 불가(Not Initialized / Ready / Error만) → 08-28 Ready · Error만(유지), Dx Storage는 모든 상태에서 열림 → 09-01 Paused 상태 추가 → 09-16 Running 중에도 Pause로 열 수 있음, Ready에서도 열면 Paused → 09-22 **Error면 열어도 Error 유지** | Error일 때도 Paused (POL-EQP-004 규칙 1) | **결정** DS-0009 (예전 CA-0010) |
 | [Unlock all doors] 활성 | 09-17 Running이면 비활성, Ready · Error일 때만 → 10-30 확인 Ready · Error · Paused · Not Initialized | Ready · Error · Paused · Not Initialized (POL-EQP-008 규칙 8) | 반영 (뒤 결정) |
 | Run 준비 필요 수량 | 08-19 Step 2 "구동 중인 것까지 모두 합산" → 08-25 전체 Run 기준 → Teams T07 · 11-06 사용자 확인 | 진행 중 Run 포함 (POL-SMP-007 규칙 10, POL-INV-003) | 반영 |
 | Usage History 기록 시점 | 8월 정책서 폐기 때 → 08-21 개념 변경 필요 → 09-29 **폐기 및 리턴 시점에 표기** → 11-03 사용자 확인 폐기 때만 (IV5) | 폐기 때만 (POL-INV-006 규칙 1) | 반영 (11-06 답) |
@@ -57,7 +57,7 @@
 | # | 회의 | 문장 (줄임) | 대상 | 8월 정책서 | 지금 정책 | 판정 |
 | --- | --- | --- | --- | --- | --- | --- |
 | 1 | 06-16 | 다중 관제: L-IOS 하나를 골라 보거나 여러 L을 통합 대시보드로, 권한별 차등 없음 | T-IOS | 없음 | POL-COM-005 | 반영 |
-| 2 | 06-22 | Error 처리 후 재가동 트리거를 장비 회사에 확인, 소모품 Error는 입고 후 자동 인지 | 전체 Module | 없음 | `policy-backlog.md` 추가 12 (복구 후 정상 아니면 동작 미정) | **고객 확인** CA-0002 · CA-0010 (09-22 #49와 같은 주제) |
+| 2 | 06-22 | Error 처리 후 재가동 트리거를 장비 회사에 확인, 소모품 Error는 입고 후 자동 인지 | 전체 Module | 없음 | `policy-backlog.md` 추가 12 (복구 후 정상 아니면 동작 미정) | **결정** DS-0009 (예전 CA-0002 · CA-0010) (09-22 #49와 같은 주제) |
 | 3 | 06-30 | 프로그램 종료는 Service만, 시스템 종료는 전체 | L-IOS | 있음(로그인/로그아웃) | POL-ACC-004 | 반영 |
 | 4 | 06-30 | L-IOS Client Mode별 메뉴 숨김, 기능은 보이되 안내 팝업 | L-IOS | Preset Mode(가칭) | `policy/client-mode.md` | 반영 |
 | 5 | 07-13 | Inventory: Dx Module이 N대면 어느 Module로 보낼지 미리 정해 필요 개수 표시 | Dx | 없음 | POL-INV-001 · 003 (Module Index별) | 반영 |
@@ -103,8 +103,8 @@
 | 45 | 09-16 | Drawer 적재 가이드 화면에서 문을 닫으면 자동으로 저장하고 화면 전환 (Sealer 예외). 09-17 Storage를 물리적으로 닫으면 [Done]과 같음 | LOD | 없음 | POL-LOD-002 규칙 13 | 반영 (Sealer 예외는 POL-LOD-004 규칙 11과 맞는지 확인) |
 | 46 | 09-17 | Run Start 뒤 스캔되지 않고 Trolley에 있다가 중지되면 Ordered로 | SMP | 있음 | POL-SMP-001 규칙 6 | 반영 |
 | 47 | 09-17 | 평가 기간에는 Sample Type 하나에 Sample Tube Type 하나로 고정 | TST | 없음 | POL-TST-009 | 확인 (10-06 재단 재확인) |
-| 48 | 09-22 | **Error 상태면 Door를 열어도 Error 유지** | EQP | 없음 | POL-EQP-004 규칙 1 (Error에서도 Paused) | **고객 확인** CA-0010 |
-| 49 | 09-22 | 사용자가 풀 수 있는 Error(소모품 부족 등)는 문을 닫으면 자동으로 Ready | EQP | 없음 | `policy-backlog.md` 추가 12 | **고객 확인** CA-0010 (Error와 Door와 함께) |
+| 48 | 09-22 | **Error 상태면 Door를 열어도 Error 유지** | EQP | 없음 | POL-EQP-004 규칙 1 (Error에서도 Paused) | **결정** DS-0009 (예전 CA-0010) |
+| 49 | 09-22 | 사용자가 풀 수 있는 Error(소모품 부족 등)는 문을 닫으면 자동으로 Ready | EQP | 없음 | `policy-backlog.md` 추가 12 | **결정** DS-0009 (예전 CA-0010) (Error와 Door와 함께) |
 | 50 | 09-22 | Tube Setting: 튜브 하나에 Sample Type N개, LIS Code 선택 · 중복 불가, System Code 필수 | TST | 없음 | POL-TST-009 규칙 4 ~ 6 (11-06 고침) | 반영 (11-06 답: Sample Type 선택 입력) |
 | 51 | 09-22 | Profile 수정은 L-IOS Client Mode와 관계없이 같음 | ACC | 없음 | POL-ACC-009 | 반영 여부 확인 |
 | 52 | 09-23 | Trolley를 도킹하면 Run Start 전에도 Inventory 상태 · 부족 수량을 보여 줌. Event 알람은 Run Start 뒤 | INV | 없음 | POL-INV-003 규칙 2 | 반영 (POL-INV-003 규칙 3-1) |
@@ -136,7 +136,7 @@
 | 1 | Buffer Cartridge: 09-04 "1회 사용 후 폐기 확정"과 Teams T06 · T11 "재사용" 중 최종 | 재사용으로 다시 바뀜. Teams 글이 최종 | POL-LOD-004 근거 |
 | 2 | Sealer Waste Bin: 09-16 "만재 80장"과 Teams T08 "20개" | Film 입고 120장, Waste Bin 만재 20장 | POL-LOD-004 정의 · 질문 8 (입력 최대 100), POL-INV-005 정의, Plate Sealing 문서 |
 | 3 | Fill Level: 09-16 "100% 유지"와 화면 "최대 99%" | 99%가 최신. 만재 센서가 울려야 100% | POL-INV-005 이유 |
-| 4 | Error와 Door: 09-22 "Error 유지"와 POL-EQP-004 "Paused" | 사용자도 확인할 예정. 고객 확인 목록에 올림 | CA-0010, POL-EQP-004 예외 |
+| 4 | Error와 Door: 09-22 "Error 유지"와 POL-EQP-004 "Paused" | 사용자도 확인할 예정. 고객 확인 목록에 올림 | DS-0009 (예전 CA-0010), POL-EQP-004 예외 |
 | 5 | Usage History: 09-29 "폐기 및 리턴"과 11-03 "폐기 때만" | 폐기 때만 | POL-INV-006 이유 |
 | 6 | 시약 사용 횟수: 08-25 "decapping"과 정책 "흡입" | Decapping이 최신 | POL-INV-004 규칙 2 · 이유 · 질문 1, Plate Sealing 문서 |
 | 7 | 투입 Trolley: 10-26 "Run Start 이후 도킹 해제 불가"와 POL-LOD-001 | 마지막 Sample이 전처리로 넘어가 Inbound Trolley가 비면 Run 중에도 해제 가능 | POL-LOD-001 규칙 6 · 7 · 이유, Sample Storage 문서 |
@@ -145,7 +145,7 @@
 ## 5. 다음에 할 것
 
 1. ~~4절 답을 받아 충돌 · 확인 줄을 정합니다.~~ (2026-11-06)
-2. ~~**빠짐** 25줄을 정책 파일에 넣습니다.~~ (2026-11-06, 3줄은 제외, 1줄은 PD-0009, 1줄은 CA-0010, 1줄은 고객 · 개발사 검토 중)
+2. ~~**빠짐** 25줄을 정책 파일에 넣습니다.~~ (2026-11-06, 3줄은 제외, 1줄은 PD-0009, 1줄은 DS-0009 (예전 CA-0010), 1줄은 고객 · 개발사 검토 중)
 3. ~~Module 문서에 장비 사실(#9 · 10 · 22 · 24 · 26 · 34 · 35 · 40 · 41 · 42 · 61)을 더합니다.~~ (2026-11-06)
 4. 확인 8줄(#27 · 47 · 54 · 56 · 64 · 66 · 70 · 71)은 다음 회의나 Teams 답을 받으면 정함
 5. 화면은 새로 그릴 때 정책을 기준으로 다시 쓰므로, 이 표로 반영 대기 줄은 만들지 않습니다.

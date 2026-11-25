@@ -22,12 +22,12 @@
 
 | 상태 | 언제 | 화면 동작 |
 | --- | --- | --- |
-| Not Initialized | 전원 인가 후 초기화가 완료되지 않음 | 초기화 필요 안내 팝업. 초기화 관련 메뉴만 접근 가능(그 외 메뉴 비활성화). 초기화 완료 후 정상 이용 |
+| Not Initialized | 전원 인가 후 초기화가 완료되지 않음 | 초기화 필요 안내 Popup. 초기화 관련 메뉴만 접근 가능(그 외 메뉴 비활성화). 초기화 완료 후 정상 이용 |
 | Initializing | 초기화 프로세스 실행 | 초기화 진행 상태를 로딩/진행바로 표시. 모든 기능 사용 제한. 완료 시 자동으로 Ready로 전환하고 완료 안내 |
 | Ready | 초기화, 중지 완료 또는 작업 종료 후 | 모든 기능 사용 가능. 작업 시작(검사 등) 버튼 활성화 |
 | Running | 작업(검사) 시작 | 중지(Stop) 기능 제공 |
 | Partial Running | Run 중에 Running 또는 Pausing인 Module이 1대 이상이면서, Ready · Running · Pausing이 아닌 Module(Paused · Error 등)이 1대 이상 | Run은 계속되지만 확인이 필요한 Module이 있다는 신호. 모두 정상으로 동작하는 것이 아니므로 사용자가 해당 Module을 확인해야 함. 중지(Stop) 기능 제공 (2026-10-30 확인) |
-| Stopping | 사용자가 Stop 버튼을 누름. 일부 Module이 아니라 전체 장비가 멈춤 | 중지 진행 상태를 팝업의 로딩/진행바로 표시. 모든 기능 일시 제한. 완료 시 Ready로 자동 전환하고 안내 |
+| Stopping | 사용자가 Stop 버튼을 누름. 일부 Module이 아니라 전체 장비가 멈춤 | 중지 진행 상태를 Popup의 로딩/진행바로 표시. 모든 기능 일시 제한. 완료 시 Ready로 자동 전환하고 안내 |
 | Paused | 가동 중 Paused인 Module이 1대 이상이고, 나머지 Module은 모두 Paused 또는 Ready | 사용자가 Door 잠금을 해제했거나, 열려 있는 서랍형 Storage에 Module이 접근해야 해서 멈춘 상태. 장비 고장이 아니므로 Error가 아님 (5절 "Pausing과 Paused") |
 | Error | Module 상태에 따라 (4절) | 상황별로 다름 |
 
@@ -36,9 +36,9 @@
 | 버튼 | 하는 일 | 활성 조건 | 화면 동작 |
 | --- | --- | --- | --- |
 | Initialize | 장비 초기화 | Not Initialized | 초기화 진행바 표시, 모든 기능 사용 제한, 완료 시 Ready로 전환하고 안내 |
-| Stop | 진행 중인 검사를 중단(폐기)하고 Initializing을 거쳐 Ready로 전환 | Running, Partial Running. 그 외 비활성 | 중지 진행바 팝업, 모든 기능 일시 제한, 완료 시 Ready로 자동 전환하고 안내 |
+| Stop | 진행 중인 검사를 중단(폐기)하고 Initializing을 거쳐 Ready로 전환 | Running, Partial Running. 그 외 비활성 | 중지 진행바 Popup, 모든 기능 일시 제한, 완료 시 Ready로 자동 전환하고 안내 |
 | Run | 검사 실행 | Ready, Running, Partial Running | Run Preparation 페이지로 이동 |
-| Quick Start | Run Preparation 3~4단계 대신 요약 팝업 하나만 확인하고 검사 실행 | Ready, Running, Partial Running | Quick Start 팝업 |
+| Quick Start | Run Preparation 3~4단계 대신 요약 Popup 하나만 확인하고 검사 실행 | Ready, Running, Partial Running | Quick Start Popup |
 
 ## 4. 장비 통합 상태 전환 조건
 
@@ -83,7 +83,7 @@
 
 ### 규칙
 
-- Door 잠금 해제는 사용자가 L-IOS의 [Unlock] 버튼으로 요청합니다(Door Control 팝업, LI-INS-01-P).
+- Door 잠금 해제는 사용자가 L-IOS의 [Unlock] 버튼으로 요청합니다(Door Control Popup, LI-INS-01-P).
 - [Unlock all doors]는 장비 통합 상태가 Ready, Error, Paused, Not Initialized일 때만 활성화됩니다(2026-10-30 확인).
 - Module이 Running일 때 잠금 해제를 요청하면, 진행 중인 작업 단위를 마친 뒤 해제합니다. 그동안 Module 상태는 Pausing입니다.
 - Door 잠금이 해제되면 그 Module은 Paused가 됩니다. 검사 진행 중이 아닐 때도 같고, Door가 여러 개인 Module은 하나라도 해제되면 Paused입니다 (2026-11-02 확인, POL-EQP-004).
@@ -100,21 +100,21 @@
 | DX 장비의 서랍형 Storage가 열려 있는데 Module이 그 Storage에 접근해야 할 때 | Running 중에도 서랍형 Storage는 언제든 열 수 있고, 연다고 바로 Paused가 되지는 않음. Module 안의 Device가 Consumable을 다 쓰고 다시 채우려고 로봇팔이 그 Storage에 접근했을 때 서랍이 열려 있으면 그때 Paused가 됨. 서랍이 닫히면 이어서 진행 |
 
 - 지금까지 Pausing이 생기는 경우는 Door Control의 Unlock이 유일합니다.
-- 출처: Instrument 화면 Door Control 팝업 [LI-INS-01-P](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/1-2.-CURECA_%EA%B8%B0%ED%9A%8D-%EB%94%94%EC%9E%90%EC%9D%B8-%EC%9E%91%EC%97%85%EB%B0%A9-Part.2-?node-id=4961-83155), 2026-10-30 사용자 설명
+- 출처: Instrument 화면 Door Control Popup [LI-INS-01-P](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/1-2.-CURECA_%EA%B8%B0%ED%9A%8D-%EB%94%94%EC%9E%90%EC%9D%B8-%EC%9E%91%EC%97%85%EB%B0%A9-Part.2-?node-id=4961-83155), 2026-10-30 사용자 설명
 
 ## 6. 출처끼리 맞지 않거나 비어 있는 것
 
 | # | 내용 | 처리 |
 | --- | --- | --- |
-| 1 | COMM-4-a의 Partial Running "UX action"이 Stopping과 같은 문장임 | 2026-11-02 확인: 복사 실수. 2절대로 Run 중 확인이 필요한 Module이 있다는 신호. Common UX 수정 요청 (`old-common-ux/feedback.md`) |
+| 1 | COMM-4-a의 Partial Running "UX action"이 Stopping과 같은 문장임 | 2026-11-02 확인: 복사 실수. 2절대로 Run 중 확인이 필요한 Module이 있다는 신호. Common UX 수정 요청 (예전 수정 요청 목록, `common-ux/comm-index.md`에 반영) |
 | 2 | COMM-4-a의 Paused "발생 Case", "UX action"이 비어 있음 ("-") | 2026-11-02 확인: 5절 "Pausing과 Paused". Common UX 수정 요청 |
-| 3 | [Unlock all doors] 활성 조건: Instrument 화면 한 곳은 "Ready, Error, Paused, Not Initialized", Door Control 팝업(LI-INS-01-P)은 "Ready, Paused, Error" | 2026-11-02 확인: Ready, Error, Paused, Not Initialized. LI-INS-01-P 문구는 화면 정정 대상 |
+| 3 | [Unlock all doors] 활성 조건: Instrument 화면 한 곳은 "Ready, Error, Paused, Not Initialized", Door Control Popup(LI-INS-01-P)은 "Ready, Paused, Error" | 2026-11-02 확인: Ready, Error, Paused, Not Initialized. LI-INS-01-P 문구는 화면 정정 대상 |
 | 4 | 검사 장치 상태 Ready의 코드명: COMM-4-a(3/4)는 `Idle`, 사용자 제공 표는 `Ready` | 2026-11-02 확인: 코드명은 Common UX처럼 `Idle`을 유지하고, UI 표기만 Ready |
 | 5 | Connected / Disconnected: COMM-4-a(3/4)는 Module 단위, Instrument 화면 Device 영역은 Device 단위 | 2026-11-02 확인: Module과 Device Unit 둘 다 연결 상태가 있음 |
 | 6 | Dashboard v2.1.06 변경 이력에 "Door의 Closed 상태값 제거" | 2026-11-02 확인: 상태값은 그대로. Dashboard는 공간이 부족해 Closed인 Door의 개수만 표시하지 않음 |
 | 7 | 정책서의 Session Timeout은 "Idle(Ready), Not Initialized일 때만 적용" | Idle은 Ready로 읽음 (2026-10-30 결정) |
 | 8 | 정책서의 종료 옵션: "Running 또는 Error일 때 프로그램 종료·시스템 종료 불가". Common UX에는 상태 조건이 없음 | 2026-11-02 확인: 정책서가 맞음. 정책서 정제 때 반영 (`policy/policy-backlog.md`) |
-| 9 | Door Control 팝업(LI-INS-01-P)의 같은 뜻 문구가 두 가지: "Locks automatically 5 seconds after the door is closed." / "The door will be automatically locked 5 seconds after it is closed.", "Cannot unlock while the module is running." / "Cannot unlock while the system is running." | 화면 정정 대상 (알럿 카탈로그 정리 때 하나로) |
+| 9 | Door Control Popup(LI-INS-01-P)의 같은 뜻 문구가 두 가지: "Locks automatically 5 seconds after the door is closed." / "The door will be automatically locked 5 seconds after it is closed.", "Cannot unlock while the module is running." / "Cannot unlock while the system is running." | 화면 정정 대상 (Alert 카탈로그 정리 때 하나로) |
 
 ## 7. 상태별 제한 (화면 디스크립션에서 모음)
 

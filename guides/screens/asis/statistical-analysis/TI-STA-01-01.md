@@ -189,21 +189,3 @@ Square (22), Description Number (12), Table (11), Table/Filled Table Cell (11), 
 ### 케이스
 
 - TI-STA-01/Case: Case 1. Chart 상세 데이터 Tooltip / Case 2. 데이터 로딩 중 Case / Case 3. Legend 전체 해제 시 / Case 4. Legend 유형별 노출 데이터
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 화면 정보 | Figma 화면 이름 "Test Analytics _ Test Count", IA 이름 "Test Count - Chart" | 하나로 통일 | `ia/ia-screens.csv` | 대기 (확인 필요) |
-| R02 | 디스크립션 | 6-2 Product 칩이 10개(RP1 ~ STI-12)로 고정 표기. 검사 항목 목록은 30개 | 디스크립션에 넣음: Product 칩은 Assay Pack으로 등록된 검사 항목 기준이며, 그 사이트가 검사하는 항목이 모두 나옴(30개 모두일 수도 있음). 화면 예시도 등록된 검사 항목으로 보여 줌 | POL-STA-003 규칙 9 | 대기 |
-| R03 | 디스크립션 | 2 "마스터 코드 순서", 6-2 정렬 "COMM-4-a"로 정렬 기준이 두 곳에 다르게 적힘 | 디스크립션에 넣음: 정렬은 Common UX 정렬 규칙을 따르고, 규칙이 없는 항목은 오름차순. "마스터 코드 순서" 문구는 지움 | POL-STA-003 규칙 10 | 대기 |
-| R04 | 디스크립션 | 3-3 제목 "데이터 뷰 영역(차트 or 테이블)"인데 Chart 화면 설명만 있음 | 제목 정리 | 디스크립션 | 대기 |
-| R05 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
-| R06 | 정책 반영 | 검사 건수 집계 기준이 없음 | 디스크립션에 넣음: 검사 건수는 오더 기준으로 세며 Completed, Failed와 관계없이 모두 셈 | POL-STA-004 정의 | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.1.01 | 2026-08-07 | [5] Export 선택 시 노출 내용 수정 | 정다예 | Figma 버전 메모 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

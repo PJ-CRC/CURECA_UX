@@ -19,15 +19,15 @@ replaced_by:
 ## 정의
 
 - 위치 스캔 적재: 항목을 스캔한 뒤 넣을 위치(Trolley floor, Tray slot)를 스캔해 한 건을 적재함. Sample·Consumable Tray, Sample·Consumable Trolley
-- 하이라이팅 적재: 항목을 스캔하면 시스템이 넣을 slot을 하이라이팅하고, 사용자는 위치를 스캔하지 않음. Sample Tube → Sample Socket, PK/IC Tube → PK/IC Socket, PCR box → PCR Socket. 위치 교체 컨펌(B)이 없음
+- 하이라이팅 적재: 항목을 스캔하면 시스템이 넣을 slot을 하이라이팅하고, 사용자는 위치를 스캔하지 않음. Sample Tube → Sample Socket, PK/IC Tube → PK/IC Socket, PCR box → PCR Socket. 위치 교체 Confirm(B)이 없음
 
 ## 규칙
 
-1. 위치 스캔 적재에서 항목을 스캔한 뒤 위치를 스캔하기 전에 다른 항목을 스캔하면, Alert 없이 마지막 항목으로 바꾸고 스캔 완료 Toast를 보여 줌. 컨펌 판단은 새 항목 기준으로 함.
+1. 위치 스캔 적재에서 항목을 스캔한 뒤 위치를 스캔하기 전에 다른 항목을 스캔하면, Alert 없이 마지막 항목으로 바꾸고 스캔 완료 Toast를 보여 줌. Confirm 판단은 새 항목 기준으로 함.
 2. 위치 스캔 적재에서 항목보다 위치를 먼저 스캔하면 Toast로 순서를 안내함: Consumable Tray "Scan the consumable/reagent before scanning the tray slot.", Sample Tray "Scan the socket before scanning the tray slot.", Sample·Consumable Trolley "Scan the tray before scanning the trolley floor."
 3. 작업 중인 Tray가 아닌 다른 Tray의 slot을 스캔하면 MS_Alert_016, 작업 중인 Trolley가 아닌 다른 Trolley의 floor를 스캔하면 MS_Alert_019를 보여 줌.
 4. 하이라이팅 적재에서 slot은 순서대로 채움. [Remove]로 앞 slot을 비웠으면 마지막 slot까지 채운 뒤 비운 slot을 하이라이팅함 (세부 규칙은 개발 정의).
-5. 하이라이팅 적재에서 상위(Socket)의 모든 slot이 차 있는데 새 항목을 스캔하면 MS_Alert_011 "All slots in this socket are full."을 보여 줌. 가득 참은 변경 예정 상태 기준이며, [Remove]나 용도 전환 컨펌(A)으로 비운 slot은 빈 slot으로 봄.
+5. 하이라이팅 적재에서 상위(Socket)의 모든 slot이 차 있는데 새 항목을 스캔하면 MS_Alert_011 "All slots in this socket are full."을 보여 줌. 가득 참은 변경 예정 상태 기준이며, [Remove]나 용도 전환 Confirm(A)으로 비운 slot은 빈 slot으로 봄.
 6. 하이라이팅 적재에서 지금 Socket에 이미 적재된 항목(저장된 연결과 변경 예정 연결 모두)을 다시 스캔하면 MS_Alert_014 "This is already loaded in [위치]."로 위치를 알려 줌.
 7. "스캔할 수 없는 코드" MS_Alert_001은 MS 목록과 디스크립션에 명시한 경우에만 보여 줌: 하이라이팅 화면과 MM Tube 화면에서 하위 항목이 아닌 코드, 적재 가이드에서 Trolley·Tray 전체 Barcode, Consumable Tray에서 필요 목록 외 항목(Trolley를 고른 경우), Dx Storage에서 빈 PCR Socket 등. 각 흐름의 첫 스캔 화면에는 넣지 않음.
 8. Alert을 닫으면 적재 가이드로 돌아가 그 흐름의 하위 항목 스캔부터 다시 함. 데이터는 바뀌지 않음.

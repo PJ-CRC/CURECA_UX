@@ -38,19 +38,3 @@ figma_region: 2.1 1차
 
 - 원문은 TI-INF와 같음. 다른 점:
   - 3 "CID: LI-INF-01-P", 4 "CID: LI-INF-02-P"
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 화면 정보 | 화면 정보 CID "LI-STN-02", 경로 "Information", Ver 1.0 (TI-INF는 2.0) | LI-INF, Information > Program, 버전 확인 | `ia/ia-screens.csv`, Figma 프레임 이름 | 대기 |
-| R02 | 표기 | 0 "Cureca 프로그램" | CURECA | `glossary/terms.csv` | 대기 |
-| R03 | 디스크립션 | 0 진입 방법 "LNB의 ‘Information’" | LNB의 Information > Program | 화면 글자 (LNB) | 대기 |
-| R04 | 화면 글자 | LNB Information 아래 "Manual" | IA에 Manual 화면 없음. 메뉴 유지 여부 확인 | `ia/ia-screens.csv` | 대기 (확인 필요) |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 1.0 | 2026-06-15 | (버전 메모 없음) | 서보경 | Figma 화면 정보 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

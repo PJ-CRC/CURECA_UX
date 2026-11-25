@@ -122,26 +122,3 @@ Description Number (9), Table (4), Icon/instrument (3), Table/Filled Table Cell 
 #### 7. [X] 버튼
 
 - 클릭 시, 팝업이 닫힌 후 기존 화면 노출
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 화면 정보 | 화면 이름 "Run Preparation Popup", IA "Run Notification" | 하나로 맞춤 | `ia/ia-screens.csv` | 대기 (확인 필요) |
-| R02 | 화면 정보 | 경로 "LNB > RUN / Dashboard > RUN" | Run (대문자 RUN은 쓰지 않음) | `glossary/terms.csv` Run | 대기 |
-| R03 | 디스크립션 | 0 표출 항목에 3(Tray 없음 알림)이 빠짐 | 표출 항목에 Tray 없음 알림 추가 | 디스크립션 3 | 대기 |
-| R04 | 문구 | 4 내용 "Loading Error. Check device status and try again." (2와 같은 문장), 화면은 "Please check the network status." | 화면 문구로 통일 | 화면 글자 | 대기 |
-| R05 | 디스크립션 | 6 [확인] 버튼 | [OK] (화면 글자) | 화면 글자, `glossary/glossary.md` "문서 언어"(화면 항목 이름은 영어) | 대기 |
-| R06 | 디스크립션 | 4 연결 상태 "온라인 / 오프라인" | 연결 상태 값 Connected / Disconnected와 같은 말로 쓸지 정함 | `glossary/status-values.csv` 연결 상태 | 대기 (확인 필요) |
-| R07 | 디스크립션 | 5 "문 열림", "장비 도어 개방", "문상태가 Open" | Door, Door 열림 상태 Open / Closed | `glossary/terms.csv` Door (도어·문은 쓰지 않는 표현) | 대기 |
-| R08 | 표기 | "Flexible Extraction(3)", "Waste bin" | Flexible Extraction (3), Waste Bin | 이름 (번호) 띄어쓰기, `glossary/terms.csv` | 대기 |
-| R09 | 표기 | "Consumables Trolley", "트롤리", "트레이" | Consumable Trolley(화면 글자와 같게), Trolley, Tray | `glossary/terms.csv` | 대기 |
-| R10 | 디스크립션 | 2와 Alert_001(같은 제목·문구)의 관계가 없음. Alert_001은 Run 구동 준비 중 도킹 해제 때 | 시작 전 확인(이 Popup)과 진행 중 Alert_001을 구분해 적음 | `alert/alert-catalog.csv` Alert_001 | 대기 (확인 필요) |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.1.05 | 2026-09-04 | (버전 메모 없음) | 정다예 | Figma 화면 정보 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |
-| | 2026-11-17 | 연동 변경: 예전 `old-screen-fixes/`를 지우며 그곳을 가리키던 반영 대기 근거 · 관련 줄을 고침(화면 · 디스크립션은 그대로) | 서보경 | todo 1-8c ④ |

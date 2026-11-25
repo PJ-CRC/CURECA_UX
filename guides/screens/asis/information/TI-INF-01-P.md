@@ -52,18 +52,3 @@ Description Number (2), Popup/Popup Middle Text (1), Interface/Close (1), Square
 #### 2. 스크롤
 
 - 타이틀 영역과 하단의 버튼 영역은 고정이며, 안에 내용 영역이 스크롤되는 구조
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 화면 정보 | 경로 "Information > Installation information Popup" | Information > Program > Release Notes | `ia/ia-screens.csv` | 대기 |
-| R02 | 표기 | "Release Notes"(화면), "Release Note"(IA) | 하나로 통일 | `ia/ia-screens.csv` | 대기 |
-| R03 | 디스크립션 | [OK], [X] 버튼 동작 설명 없음 | 버튼 동작 추가 (팝업 닫힘) | 화면 글자 | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.0 | 2026-06-15 | (버전 메모 없음) | 서보경 | Figma 화면 정보 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

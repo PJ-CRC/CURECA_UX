@@ -16,15 +16,19 @@ CURECA_AI/
 ├── CLAUDE.md            Claude 작업 진입점: 무엇을 어떤 순서로 읽는지
 ├── constitution.md      헌법
 ├── sources.md           기준 출처 목록 (Claude가 근거로 쓰는 자료)
-├── flow/                화면설계 흐름 (0 ~ 6단계 문서, 팀 공유 가이드)
+├── screen-history.md    화면 변경 이력 (새로 그린 화면의 바뀐 것, 한 파일)
+├── flow/                화면설계 흐름 (1 ~ 5단계 문서)
 ├── reference-rules/     쓰는 법 (디스크립션 · 논의 대상 · 반영 대기 · 작업 기록 등)
 ├── examples/            작성예시문서 (디스크립션 · 케이스 화면)
 ├── discussions/         논의 대상 (항목 하나 = 파일 하나)
+├── pending/             반영 대기 목록 (open.md · closed.md)
+├── meetings/            회의록
 ├── work-logs/           화면설계 작업 기록
 ├── glossary/            용어집
 ├── language-set/        언어셋 (7개 언어 문구)
-├── policy/              정책서와 우리가 관리하는 기준 자료 (L-IOS Client Mode, 권한, 장비 상태, 알럿)
-├── common-ux/           Common UX
+├── policy/              정책서와 우리가 관리하는 기준 자료 (L-IOS Client Mode, 권한, 장비 상태, Alert)
+├── common-ux/           Common UX (원본 comm-index.md)
+├── alert/               Alert · Confirm · Toast 카탈로그
 ├── reference/           외부에서 받은 원본 자료 (고객사 제공 파일 등)
 ├── ia/                  IA
 ├── screens/             화면설계서 (asis/ 기존 화면, tobe/ 새로 그린 화면, 그 아래 메뉴 단위)
@@ -37,8 +41,7 @@ CURECA_AI/
 ├── old-rules/           예전 규칙 문서. flow/ · reference-rules/가 대신함
 ├── old-pending/         예전 협의 대기 항목. discussions/가 대신함 (열린 항목 옮기는 중)
 ├── old-provisional/     예전 임시 정책. discussions/가 대신함
-├── old-customer-agenda/ 예전 고객 논의 대상 목록. discussions/가 대신함
-└── old-common-ux/       예전 Common UX 문서. 수정 요청 19건 · 그리는 재료 안이 남아 있음 (common-ux/README.md)
+└── old-customer-agenda/ 예전 고객 논의 대상 목록. discussions/가 대신함
 ```
 
 각 폴더의 README에 용도와 현재 상태를 적었습니다. 2026-11-10에 새 흐름으로 전환하면서 예전 문서에 `old-`를 붙였습니다.

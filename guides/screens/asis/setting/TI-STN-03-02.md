@@ -64,16 +64,3 @@ figma_region: 2.1 2차
 #### 6. Pagenation
 
 - 공통 UX > COMM-5-i 정의 참고
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 디스크립션 | 4 [Edit] → "[TI-STN-03-01-01]" | TI-STN-03-02-01 | IA | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.0 | 2026-06-15 | (버전 메모 없음) | BREX | Figma 화면 정보 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

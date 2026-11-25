@@ -119,7 +119,7 @@ L-IOS,Dashboard,,,,,,Page,,,,LI-DAS,TI-DAS,
 L-IOS,,Door Control,,,,,Popup,,,,LI-INS-01-P,,
 L-IOS,Material Setup,Group Lots,,,,,Page,,,,LI-TSS-LTG,,
 L-IOS,,,Group Universal Cartridge Kit,Scan for Lot grouping,,,Page,,,,LI-TSS-LTG-01-01,,
-L-IOS,,,,,Select positions to delete,,Popup,,,,LI-TSS-CMP-01,,Material Setup > Reset 화면 공통 사용 팝업
+L-IOS,,,,,Select positions to delete,,Popup,,,,LI-TSS-CMP-01,,Material Setup > Reset 화면 공통 사용 Popup
 L-IOS,,,,Confirm the Lot grouping,,,Page,,,,LI-TSS-LTG-01-02,,
 L-IOS,,,Group PCR Reagent Kit,Scan the IC tube,,,Page,,,,LI-TSS-LTG-02-01,,
 L-IOS,,,,Confirm the IC setup,,,Page,,,,LI-TSS-LTG-02-02,,

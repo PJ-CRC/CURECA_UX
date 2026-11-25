@@ -181,29 +181,3 @@ Description Number (5), Button/Secondary_1Button_44 (2), Frame (1), Button/Terti
 ### 버전 메모
 
 - v2.1.05 update / 정책 변경으로 인한 수정 항목 / - Prep Consumable 투입 항목 추가 (PK/IC 정책 변경) / - 시약 부분 스크롤 기능 추가
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | IA | IA 이름 "Scan loaded socket", 화면 "Scan loaded consumables/reagents" (취소선으로 바꿈) | IA를 화면 이름으로 | `ia/ia-screens.csv` | 대기 (확인 필요) |
-| R02 | 화면 정보 | Ver 2.0 (2026-06-15) | 버전 메모(v2.1.05)를 반영한 Ver로 | 버전 메모 | 대기 (확인 필요) |
-| R03 | 디스크립션 | 1 Case 3 "데이터가 있는 Tub frame" → MS_Alert_021인데 "정상)" 아래에 있고, 같은 줄에 MS_Alert_020 | MS_Alert_021(Progress)과 MS_Alert_020(Error) 판단 순서 정리 | `alert/alert-catalog-ms.csv` MS_Alert_020·021 | 대기 (확인 필요) |
-| R04 | 디스크립션 | [Skip]일 때 "Trolley 선택 & 필요 목록 외 항목"(MS_Alert_001)·"필요 수량 충족"(MS_Alert_020)이 생기지 않음을 적지 않음 | Skip이면 필요 목록·수량 제한 없음 명시 | LI-TSS-PSI-01 2 | 대기 |
-| R05 | 디스크립션 | 3 [Done] "Tray & 하위 Socket 데이터 저장" | Tray & 하위 Consumable/Reagent (Socket·Frame·Rack) 데이터 저장 | 디스크립션 1 | 대기 |
-| R06 | 디스크립션 | 세부 정의 1-1 "적재한 Socket 개수 0/10" | [Skip]이면 Tray slot 개수. "Socket"을 slot으로 | 세부 정의 | 대기 |
-| R07 | 화면 데이터 | "Saline Standard Tub", "PK/IC(GI-BP) Tube"·"PK/IC(GI-V) Tube" | Saline Standard Tube. PK Tube와 IC Tube는 품목이 다르므로 세부 정의처럼 PK Tube, GI-BP IC 따로 (IC 이름은 `glossary/pcr-reagents.csv` 구성품 "GI-BP IC", "GI-V IC") | `glossary/consumables.csv`, `glossary/pcr-reagents.csv` | 대기 (확인 필요) |
-| R08 | 화면 데이터 | 세부 정의 IC 이름 "IC(GI-BP) Tube", "IC(STI-12) Tube" | 구성품 이름 GI-BP IC, GI-V IC, RP-V IC, PB IC (STI-12 IC는 품목 표에서 확인) | `glossary/pcr-reagents.csv` | 대기 (확인 필요) |
-| R09 | 화면 데이터 | 세부 정의 "ASL Standard Tube" | 품목 표에 없음 | `glossary/consumables.csv` | 대기 (확인 필요) |
-| R10 | 정책 반영 | PK/IC Tube를 이 화면(Prep Consumable Trolley)과 Load PK/IC Tubes(LI-TSS-PSI-PKI) 양쪽에서 적재 | 두 경로의 관계 확인 (v2.1.05 "PK/IC 정책 변경") | 버전 메모, LI-TSS-PSI-PKI-03 | 대기 (확인 필요) |
-| R11 | 문구 | 화면 "with the barcode facing right", 세부 정의 "QR code" | Barcode와 QR code 중 실제 표시에 맞게 | 화면 글자 | 대기 (확인 필요) |
-| R12 | 표기 | "소모품/시약", "유효기간", "검체", "tray", "Toast 팝업" | Consumable/Reagent, Expiration Date, Sample, Tray, Toast | `glossary/terms.csv` | 대기 |
-| R13 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `alert/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 (CR, PD, PV, 정책 ID) |
-| --- | --- | --- | --- | --- |
-| 2.1.05 | | 정책 변경: Prep Consumable 투입 항목 추가 (PK/IC 정책 변경), Reagent 영역 스크롤 추가 | BREX | Figma 버전 메모 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`). 노출 모드 값을 새 기능 표대로 고침 | 서보경 | DS-0001 |
-| | 2026-11-18 | 연동 변경: Module · Unit 이름 바꿈(Prep Consumable Storage → Consumable Storage, Sample Preparation Module → Sample Pre-treatment, Sample Pretreatment → Sample Processing, Sample Aliquot → Sample Aliquoting). 검사 단계 · Reagent 태그 · Prep 시스템의 Sample Preparation은 그대로 | 서보경 | `glossary/modules.csv`, `glossary/module-units.csv` (2026-11-18) |

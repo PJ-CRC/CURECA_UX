@@ -1,6 +1,6 @@
 8월 정책서 영역,8월 정책명,이전 ID,새 정책 ID,처리,날짜,비고
 장비 관리 및 정의,CURECA 전체 구동 상태값 정의,POL-INS-05,"POL-EQP-001, POL-EQP-002",씨젠 상태 정보 261021 기준으로 고쳐 옮김,2026-11-02,Ready 조건 Idle → Ready / Partial Running·Paused 조건 씨젠 기준
-장비 관리 및 정의,모듈 상태값 정의,POL-INS-06,POL-EQP-001,옮김,2026-11-02,Error 모듈 복구는 고객 논의 CA-0002
+장비 관리 및 정의,모듈 상태값 정의,POL-INS-06,POL-EQP-001,옮김,2026-11-02,Error 모듈 복구는 고객 논의 DS-0009 (예전 CA-0002)
 장비 관리 및 정의,디바이스 상태값 정의,POL-INS-07,POL-EQP-001,옮김,2026-11-02,코드명 Idle / UI 표기 Ready
 장비 관리 및 정의,Spare storage 정의,POL-INS-04,POL-EQP-006,옮김,2026-11-02,
 장비 관리 및 정의,Door 개폐 및 잠금 전환 규칙,POL-INS-01,POL-EQP-008,옮김 (씨젠 기준과 사용자 확인 반영),2026-11-02,Running 중 Unlock 불가는 씨젠 기준(조건부 허용)으로 바뀜

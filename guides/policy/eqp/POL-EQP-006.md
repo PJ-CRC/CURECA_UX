@@ -8,7 +8,7 @@ cids: [LI-TSS-DXI-02]
 status: 확정
 version:
 date: 2026-11-02
-sources: [정책서_2026.08.28 > 장비 관리 및 정의 > Spare storage 정의, 알럿 관리 페이지 Alert_028]
+sources: [정책서_2026.08.28 > 장비 관리 및 정의 > Spare storage 정의, Alert 관리 페이지 Alert_028]
 provisional: []
 alerts: [Alert_028]
 data: [glossary/module-units.csv]
@@ -32,7 +32,7 @@ replaced_by:
 ## 근거
 
 - 정책서_2026.08.28 "Spare storage 정의"
-- 알럿 관리 페이지 Alert_028 ("This slot is reserved for future system updates.")
+- Alert 관리 페이지 Alert_028 ("This slot is reserved for future system updates.")
 
 ## 변경 이력
 

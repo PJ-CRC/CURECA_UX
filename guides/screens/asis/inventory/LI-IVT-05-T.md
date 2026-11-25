@@ -35,18 +35,3 @@ figma_region: 2.1 2차
 ### 디스크립션 (원문)
 
 - 원문은 TI-IVT-05-T 0~4와 같음
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 화면 정보 | IA 화면 이름 "Waste bin", 화면 "Waste Bin/Bottle" | IA를 Waste Bin/Bottle로 | `ia/ia-screens.csv` | 대기 (확인 필요) |
-| R02 | 디스크립션 | "Waste Status", "Moule(index)", "[3-6]", Waste Bin만 기준으로 한 노출 조건, 한국어 혼용 | TI-IVT-05-T 반영 대기 목록 2~5·8과 같음 | TI-IVT-05-T | 대기 |
-| R03 | 디스크립션 | 3-3·3-5 Confirm Empty 위치 "Material Setup > Empty Waste Bin" | 비움 처리는 L-IOS Material Setup > Empty Waste Bin에서 함. T-IOS는 관제용이라 비움 기능 없음. 지금은 Console Mode에서만 제공 (Main Mode 제공 여부는 고객 논의 CA-0007) | POL-INV-005 규칙 5·6, `policy/client-mode-matrix.csv` | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.1.11 | 2026-10-08 | 기존 화면 UX/UI 개선. Confirm Empty 기능 이관 (MS 참고) | 정다예 | Figma 버전 메모 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

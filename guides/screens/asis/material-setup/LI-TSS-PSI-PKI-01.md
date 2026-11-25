@@ -65,20 +65,3 @@ Table (2), Description Number (2), Frame (1), Button/Secondary_1Button_44 (1)
 ### 버전 메모
 
 - 없음
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 화면 정보 | 화면 이름 "Check the PK/IC Tube" | IA "Check the PK/IC tube"와 대소문자 통일 | `ia/ia-screens.csv` | 대기 |
-| R02 | 화면 데이터 | "(48/tube)" | 품목 표 단위로: PK Tube 96 rxns/tube, IC(RP-V IC·PB IC·GI-BP IC) 100 rxns/tube | `glossary/consumables.csv`, `glossary/pcr-reagents.csv` | 대기 (확인 필요) |
-| R03 | 정책 반영 | 필요 수량 계산 기준(선택한 Trolley의 Sample 검사에 필요한 PK/IC)이 디스크립션에 없음 | POL-INV-007과 Required Qty 산출 기준 확인 | POL-INV-007 | 대기 (확인 필요) |
-| R04 | 표기 | "trolley", "tube" | Trolley, Tube | `glossary/terms.csv` | 대기 |
-| R05 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `alert/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 (CR, PD, PV, 정책 ID) |
-| --- | --- | --- | --- | --- |
-| 2.0 | 2026-06-15 | 화면 정보 기준 | BREX | Figma 화면 정보 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`). 노출 모드 값을 새 기능 표대로 고침 | 서보경 | DS-0001 |

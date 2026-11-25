@@ -100,24 +100,3 @@ figma_region: 2.1 2차
 ### 케이스
 
 - Case. 목록의 텍스트 영역의 ‘...’ 줄임된 경우, 마우스 hover시, 툴팁박스로 전체 내용 제공
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 알럿 | 5-1 "Confirm_L_003", "Alert_L_003". Alert_003은 알럿 관리 페이지에서 삭제됨 | 취소선으로 이미 제거됨. T-IOS는 Status 변경과 일괄 Closed가 없음 | Figma 취소선, POL-EVT-002 | 제외 (2026-11-04, 취소선) |
-| R02 | 정책 반영 | 5 체크박스 + [Mark as Closed]. 화면 글자에는 버튼이 없음. L-IOS는 [Mark all as Closed] | 취소선으로 이미 제거됨. T-IOS는 Status 변경과 일괄 Closed가 없음 | Figma 취소선, POL-EVT-002 | 제외 (2026-11-04, 취소선) |
-| R03 | 표기 | Expiration date Status | 대소문자 통일 (PD-0001 결정 후) | `archive/glossary/review-v0.md` | 대기 (최신 영역 화면에서 확인) |
-| R04 | 표기 | Under 30 Day | Under 30 days | `glossary/status-values.csv` 시약 만료 상태 | 대기 (최신 영역 화면에서 확인) |
-| R05 | 디스크립션 | Statue, Cureca, 1 "Event ID, Code" 검색 (화면에 입력 칸 없음) | Status, CURECA, 검색 항목을 화면과 맞춤 | 오타, 화면 글자 | 대기 |
-| R06 | 표기 | 목록 요약 "OPEN", Unit "CFX96-1" | Open, CFX96 (1) | `glossary/status-values.csv`, 이름 (번호) | 대기 |
-| R07 | 정책 반영 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.1.01 | 2026-08-07 | Event Type 항목 변경: Instrument, Consumable, Reagent, Waste Bin/bottle, System → Instrument, Inventory, Sample, System | 서보경 | Figma 버전 메모 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |
-| | 2026-11-18 | 2026-11-06 케이스 1 테스트(`dedeae0`)에서 To-Be로 덮어쓴 것을 원래 AS-IS(`dedeae0^`)로 되돌림. 11-06 뒤의 연동 변경(L-IOS Client Mode 이름, `archive/glossary/review-v0.md` · `old-rules/screen-spec.md` 경로)은 다시 적용 | DY | - |
-| | 2026-11-18 | 연동 변경: Module 이름 바꿈(Prep Consumable Storage → Consumable Storage, Sample Preparation Module → Sample Pre-treatment). 되살린 원문의 Module 필터 데이터 항목. 검사 단계 · Reagent 태그 · Prep 시스템의 Sample Preparation은 그대로 | 서보경 | `glossary/modules.csv` (2026-11-18), DS-0004 |

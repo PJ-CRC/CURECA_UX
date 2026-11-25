@@ -68,19 +68,3 @@ figma_region: 2.1 2차
 #### 6. Pagenation
 
 - 공통 UX > COMM-5-i 정의 참고
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 정책 반영 | Protocol을 바꿀 수 있는 상태 조건이 디스크립션에 없음 | 디스크립션에 넣음: 장비 통합 상태가 Not Initialized 또는 Ready일 때만 추가·복사·수정·삭제 가능, 그 밖의 상태에서는 [Edit]·[Copy]·[Modify] 비활성 | POL-TST-006 규칙 3 | 대기 |
-| R02 | 디스크립션 | Items 최대 개수가 없음 (Extraction Protocol은 최대 25개) | 최대 개수 확인 | TI-STN-03-02 3 | 대기 (확인 필요) |
-| R03 | 표기 | 출력 형식 "yyyy-mm-dd hh-mm-ss" | YYYY-MM-DD hh:mm:ss (다른 화면과 같게) | 디스크립션 | 대기 |
-| R04 | 표기 | Tap, Pagenation | Tab, Pagination | 오타 | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.0 | 2026-06-15 | (버전 메모 없음) | BREX | Figma 화면 정보 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |

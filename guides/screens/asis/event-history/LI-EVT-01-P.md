@@ -56,20 +56,3 @@ figma_region: 2.1 2차
 ### 케이스
 
 - Case. Resolution Notes - Inline edit
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 디스크립션 | Notes "최대 500자 → 300자" | 300자 (500자는 취소선으로 제거됨) | Figma 취소선, POL-EVT-002 | 제외 (2026-11-04, 취소선) |
-| R02 | 디스크립션 | 6, 7 "닫기" 중복 | 하나로 | 디스크립션 | 대기 |
-| R03 | 정책 반영 | Status·Notes "공통 UX 참고 : COMM-3-a" | POL-EVT-002 참조 | POL-EVT-002 | 대기 |
-| R04 | 표기 | Module "FlexibleExtraction", Unit "Starlet" | Flexible Extraction (1), STARlet | `glossary/modules.csv` | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.1.14 | 2026-10-30 | Effect 항목 추가 | 서보경 | Figma 버전 메모 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |
-| | 2026-11-18 | 2026-11-06 케이스 1 테스트(`dedeae0`)에서 To-Be로 덮어쓴 것을 원래 AS-IS(`dedeae0^`)로 되돌림. 11-06 뒤의 연동 변경(L-IOS Client Mode 이름, `archive/glossary/review-v0.md` · `old-rules/screen-spec.md` 경로)은 다시 적용 | DY | - |

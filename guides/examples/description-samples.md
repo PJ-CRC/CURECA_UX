@@ -7,7 +7,7 @@
 | 작성예시문서 | 화면 | 볼 것 | 원본 |
 | --- | --- | --- | --- |
 | 1 | TI-SPT-01 Samples (목록) | 검색 영역 · 드롭다운 · 체크박스 · 리스트 · 버튼 · 페이지네이션 | Part.2 `1460:110169` |
-| 2 | TI-SPT-01-01 Samples Details (상세) | 정보 영역 · 표출 항목 · 노출 조건 · [More] 버튼 | Part.2 `1460:109649` |
+| 2 | TI-SPT-01-01 Samples Details (상세) | 정보 영역 · 노출 항목 · 노출 조건 · [More] 버튼 | Part.2 `1460:109649` |
 | 3 | TI-STA-01-01 Test Analytics (통계) | 차트 · 기간 설정 · 범례 · 케이스 참고 | Part.2 `2138:1075431` |
 | 참고 | TI-IVT-04-T Inventory Reagent | 말투는 따르지 않음. **산출 방식 · 예시를 적는 모양**만 가져옴 | Part.2 `7336:427513` |
 
@@ -79,7 +79,7 @@
 - 동작
   - 특정 샘플 행 클릭 시 샘플 상세 노출 : TI-SPT-01-01
 
-**2-1  리스트 표출 항목**
+**2-1  리스트 노출 항목**
 - Sample ID
   - T-IOS에서 수신되는 검체 ID 정보
 - Product
@@ -122,7 +122,7 @@
 **1  Sample Details 타이틀 영역**
 - 정의
   - 검체의 기본 속성 정보 영역
-- 표출 항목
+- 노출 항목
   - Sample ID
   - Product : RP1, RP2, RP3, PB, GI-V, GI-B1, GI-B2, GI-P,\
     Allplex_HPV28, STI-12
@@ -133,7 +133,7 @@
   - 검사 프로세스 단계별 장비 및 검사 시간 정보 영역
   - 모든 단계의 Module 및 Unit 정보는 Run Start 시점부터 노출
   - Start 및 End Date/Time의 경우 해당 단계 진/출입 시 노출
-- 표출 항목
+- 노출 항목
   - Process : Sample Preparation, Nucleic Acid Extraction,\
     PCR Setup, Plate Sealing, PCR
   - Module : Module 고유 ID 정보(단, Sample Preparation 단계\
@@ -147,7 +147,7 @@
 - 정의
   - 검체의 기본 속성 정보 영역
   - 사용자가 선택한 리스트 내 표출되는 정보와 동일한 정보
-- 표출 항목
+- 노출 항목
   - Sample Type
   - Order Date
   - Start Date/Time : Prep 장비에서 바코드 찍은 시간 시점
@@ -163,7 +163,7 @@
   - 샘플 회수 후 : Outbound Trolley 내 검체 위치 값
   - 샘플 투입 유형별 표출 데이터 노출 예시\
     : TI-SPT-01/Case > Case 2
-- 표출 항목
+- 노출 항목
   - Location Type(샘플 투입구 유형) : Trolley, STAT
   - Trolley Name : 시스템에 등록된 Trolley ID 정보 (8자리)
   - Tray Position : 트레이 층수(F 단위 표기) / 위치
@@ -185,7 +185,7 @@
     데이터 부재 시 영역 전체를 미노출 처리
 - 정렬
   - 공통 UX 참고 : COMM-4-a
-- 표출 항목
+- 노출 항목
   - Kit : 시약 제품명 (구성품 단위 노출 X)
   - Barcode : 바코드 체계 참고 (COMM-4-b)
 
@@ -207,7 +207,7 @@
   - 전체 테이블 너비 100% 고정
   - 노출 열 개수에 따라 너비 자동 균등 분할
   - 선택 항목 변경 시 데이터 실시간 가변 연동
-- 테이블 표출 항목
+- 테이블 노출 항목
   - Total (첫 번째 열 고정)\
     ㄴ 선택된 검사 항목 기준, 조회 기간 내 누적 검사 건수 총합 표출
   - 검사 항목별 열 (RP1 ~ STI-12 등)\

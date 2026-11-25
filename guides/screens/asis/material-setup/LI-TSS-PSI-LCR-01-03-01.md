@@ -75,20 +75,3 @@ layout/spacing (3), Popup/Data Popup (2), Description Number (2), Arrow/Chevron_
 ### 버전 메모
 
 - 없음
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 디스크립션 | 2 [>] "비활성화 조건 : ② 버튼 선택 시, 활성화" | 비활성화 조건 : [>] 선택(Tub Guide 노출) 시 비활성화 | 오타·모순 | 대기 |
-| R02 | 디스크립션 | [OK] 버튼 정의 없음. 자동 노출(데이터 없는 Socket/Frame 스캔) 때 어느 Guide를 먼저 보여 주는지 없음 | [OK] 닫힘, 스캔한 종류(Socket→Standard tube, Frame→Tub)에 맞는 Guide 먼저 노출 여부 확인 | LI-TSS-PSI-LCR-01-03 4 | 대기 (확인 필요) |
-| R03 | 알럿 | MS 목록은 MS_Alert_003·004·020의 사용 화면에 이 Popup을 두는데 디스크립션에 알럿이 없음 | 디스크립션에 넣음: Guide Popup이 떠 있는 동안에도 스캔을 받음. 만료(MS_Alert_003)·폐기(MS_Alert_004)·필요 수량 충족(MS_Alert_020) 알럿이 그대로 적용됨 | 2026-11-03 사용자 답변 (MS10) | 대기 |
-| R04 | 문구 | "pop-up", "standard tube" | Popup 표기와 Standard Tube 대소문자 | `glossary/terms.csv` | 대기 (확인 필요) |
-| R05 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `alert/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 (CR, PD, PV, 정책 ID) |
-| --- | --- | --- | --- | --- |
-| 2.0 | 2026-06-15 | 화면 정보 기준 | BREX | Figma 화면 정보 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`). 노출 모드 값을 새 기능 표대로 고침 | 서보경 | DS-0001 |

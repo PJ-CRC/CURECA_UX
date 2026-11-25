@@ -36,6 +36,6 @@ POL-LOD-001, POL-MAT-006, POL-MAT-010, POL-SMP-001, POL-INV-001, POL-EQP-008
 ## 모르는 것
 
 1. "Run을 멈춘 뒤 뺌"의 멈춤은 [Stop](전체 중단)인지, Door Unlock으로 생기는 Paused인지
-2. 도킹된 Trolley 스캔 불가 알럿(MT-20261105-01, 추가 예정)의 알럿 ID (POL-LOD-001 질문 1)
+2. 도킹된 Trolley 스캔 불가 Alert(MT-20261105-01, 추가 예정)의 Alert ID (POL-LOD-001 질문 1)
 3. Outbound Trolley가 가득 차면 어떻게 되는지 (Paused / Error / 알림)
 4. Inbound Trolley에 Sample이 남았을 때 Door를 열면(도킹 해제 불가, POL-LOD-001 규칙 6) 화면에 무엇을 보여 주는지

@@ -6,9 +6,9 @@
 
 | Language ID | 재사용 | 상태 | 검증 상태 | 플랫폼 | Type | English | Korean | German | Portuguese | Spanish | Italian | French | 참조 시트 | 비고 | Menu | CID |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| LID-CPW-005 |  | 사용 | AI 번역 | T/L | title | Profile |  | Profil | Perfil | Perfil | Profilo | Profil |  | 팝업 타이틀 Profile로 바뀜 | Profile | TI-CPW-01-P / LI-CPW-01-P / TI-CPW-02-P / LI-CPW-02-P |
+| LID-CPW-005 |  | 사용 | AI 번역 | T/L | title | Profile |  | Profil | Perfil | Perfil | Profilo | Profil |  | Popup 타이틀 Profile로 바뀜 | Profile | TI-CPW-01-P / LI-CPW-01-P / TI-CPW-02-P / LI-CPW-02-P |
 | LID-STN-197 | ref | 사용 | AI 번역 | T/L | title | General |  | Allgemein | Geral | General | Generale | Général |  | 탭 명 | Profile | TI-CPW-01-P / LI-CPW-01-P / TI-CPW-02-P / LI-CPW-02-P |
-| LID-CPW-001 |  | 사용 | 법인 검토 완료 | T/L | title | Change Password |  | Passwort ändern | Alterar Senha | Cambiar Contraseña | Cambia Password | Changer le mot de passe |  | 탭 명 팝업 타이틀에서 탭으로 바뀜 | Profile | TI-CPW-01-P / LI-CPW-01-P / TI-CPW-02-P / LI-CPW-02-P |
+| LID-CPW-001 |  | 사용 | 법인 검토 완료 | T/L | title | Change Password |  | Passwort ändern | Alterar Senha | Cambiar Contraseña | Cambia Password | Changer le mot de passe |  | 탭 명 Popup 타이틀에서 탭으로 바뀜 | Profile | TI-CPW-01-P / LI-CPW-01-P / TI-CPW-02-P / LI-CPW-02-P |
 | LID-LOG-003 | ref | 사용 | AI 번역 | T/L | txt | ID |  | ID | - | - | - | - |  | 필드 레이블 읽기 전용 | Profile | TI-CPW-01-P / LI-CPW-01-P |
 | LID-STN-076 | ref | 사용 | AI 번역 | T/L | txt | Admin |  | - | - | - | - | - | LID-COM-SCD-050 | General 탭 계정 종류 배지 | Profile | TI-CPW-01-P / LI-CPW-01-P |
 | LID-STN-075 | ref | 사용 | AI 번역 | T/L | txt | User |  | Benutzer | Utilizador | Usuario | Utente | Utilisateur | LID-COM-SCD-051 | General 탭 계정 종류 배지 | Profile | TI-CPW-01-P / LI-CPW-01-P |

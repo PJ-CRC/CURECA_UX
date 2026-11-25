@@ -102,21 +102,3 @@ Description Number (7), Item_Segment Tabs (6), Frame (1), Component 4 (1), Page 
 #### 6. [X] 버튼
 
 - 클릭 시, 팝업이 닫힌 후 기존 화면 노출
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 화면 글자 | 합계 "2,021 (22 rack)" (단위 없음). Run 화면 프레임은 "2,021 ea (22 rack)" | 2,021 ea (22 racks) | 3 표기 방식, LI-IVT-03-T-P Run 프레임 | 대기 |
-| R02 | 화면 글자 | 예시 줄에 Inbound Date 값이 없음 (열은 5개, 값은 4개) | 날짜 예시를 넣음 | 화면 글자 | 대기 |
-| R03 | 디스크립션 | 2-1 "DX 서랍식 입고" | Dx 시스템 Storage의 Drawer | `glossary/terms.csv` Drawer, Dx 시스템 | 대기 |
-| R04 | 디스크립션 | "소모품", "바코드" 한국어 혼용 | Consumable, Barcode | `glossary/terms.csv` | 대기 |
-| R05 | 디스크립션 | 5 [Close]와 6 [X]의 동작이 같은 말을 다르게 씀 | 하나의 문장으로 통일 | 디스크립션 | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 |
-| --- | --- | --- | --- | --- |
-| 2.1.04 | 2026-08-28 | (버전 메모 없음) | 서보경 | Figma 화면 정보 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`) | 서보경 | DS-0001 |
-| | 2026-11-18 | 연동 변경: Module · Unit 이름 바꿈(Prep Consumable Storage → Consumable Storage, Sample Preparation Module → Sample Pre-treatment, Sample Pretreatment → Sample Processing, Sample Aliquot → Sample Aliquoting). 검사 단계 · Reagent 태그 · Prep 시스템의 Sample Preparation은 그대로 | 서보경 | `glossary/modules.csv`, `glossary/module-units.csv` (2026-11-18) |

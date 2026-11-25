@@ -102,25 +102,3 @@ Description Number (4), Frame (1), Device&Electronic/Repeat (1), Button/Secondar
 ### 버전 메모
 
 - v2.1.05 update / 소모품 트롤리 정책 변경 / - 트롤리 1F > 투입항목 반환 전용 floor로 수정 / ㄴ텍스트 가이드 ‘Note’ 추가 / Alert / Confirm 업데이트 / - Alert_035 팝업 추가
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | 화면 정보 | 화면 이름 "Prepare Carrier(2/3)", 경로 "Load consumables and reagents > Prepare Carrier(2/3)" | IA "Scan loaded tray" | `ia/ia-screens.csv` | 대기 |
-| R02 | 화면 정보 | Ver 2.0 (2026-06-15) | 버전 메모(v2.1.05)를 반영한 Ver로 | 버전 메모 | 대기 (확인 필요) |
-| R03 | 화면 | 카운터 "02/12"와 "00/06"이 겹쳐 있음 | 0/6 하나만 | 디스크립션 2 | 대기 |
-| R04 | 문구 | "Scan the QR code on the tray loaded with the socket" | Consumable Tray는 Socket만 담지 않음 (Rack·DWP·Frame). "loaded with consumables/reagents" | LI-TSS-PSI-LCR-01-03 세부 정의 | 대기 |
-| R05 | 정책 반영 | 1F는 빈 Tray 전용(반환 전용 floor): "Only empty trays can be loaded on trolley 1F", MS_Alert_022·023. 카운터 분모 6은 1F 포함 | 디스크립션에 넣음: Consumable Trolley 1F에는 반드시 빈 Tray를 넣음. Prep 시스템에서 쓰던 품목을 반환할 자리가 필요하기 때문 (2~6F가 차 있으면 돌려놓을 곳이 없음). 카운터 분모 6은 1F 빈 Tray를 포함함. 화면 예시도 0/6 | MAT 정책 (작성 중), 2026-11-03 사용자 답변 (MS1) | 대기 |
-| R06 | 알럿 | 버전 메모 "Alert_035 팝업 추가" (기존 ID) | 지금은 MS_Alert_023. 변경 이력에만 남김 | `alert/alert-catalog-ms.csv` | 대기 |
-| R07 | 디스크립션 | 3 제목 "[Done] 버튼 선택 시 → 아래 항목 반영" (본문과 겹침) | [Done] 버튼 | 디스크립션 | 대기 |
-| R08 | 표기 | "선반", "shelf", "floor" 섞임 | Trolley floor로 통일 | LI-TSS-PSI-SAM-03-02 반영 대기 목록 5 | 대기 (확인 필요) |
-| R09 | 표기 | "소모품 Trolley", "트롤리", "tray", "Toast 팝업" | Consumable Trolley, Trolley, Tray, Toast | `glossary/terms.csv` | 대기 |
-| R10 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `alert/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 (CR, PD, PV, 정책 ID) |
-| --- | --- | --- | --- | --- |
-| 2.1.05 | | Consumable Trolley 정책 변경: 1F를 반환 전용 floor로, 'Note' 안내 추가, Alert_035 추가 | BREX | Figma 버전 메모 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`). 노출 모드 값을 새 기능 표대로 고침 | 서보경 | DS-0001 |

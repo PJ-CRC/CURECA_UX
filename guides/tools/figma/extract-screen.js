@@ -37,7 +37,9 @@ for (const cfg of CONFIG.frames) {
     try { return n.getStyledTextSegments(['textDecoration']).map(g => g.textDecoration === 'STRIKETHROUGH' && g.characters.trim() ? '~~' + g.characters + '~~' : g.characters).join(''); }
     catch (e) { return n.characters; }
   };
-  const toT = n => { const [x, y] = absXY(n); return { x: x - fx, y: y - fy, s: clean(strike(n)).trim() }; };
+  // 번호 표시(Description Number 컴포넌트) 안의 글자인지. 화면 글자에서는 이것만 거름 (글자 모양으로 거르면 숫자 · 날짜도 빠짐, todo T19 · T32)
+  const inMark = n => { for (let p = n.parent; p && p !== F; p = p.parent) if (p.type === 'INSTANCE' && p.name === 'Description Number') return true; return false; };
+  const toT = n => { const [x, y] = absXY(n); return { x: x - fx, y: y - fy, h: n.height, mark: inMark(n), s: clean(strike(n)).trim() }; };
   const texts = F.findAll(n => n.type === 'TEXT' && n.visible !== false).map(toT).filter(t => t.s !== '');
 
   // 화면 정보와 디스크립션 (오른쪽 패널: 프레임 바로 아래 자식 중 x >= 1915인 것)
@@ -54,16 +56,19 @@ for (const cfg of CONFIG.frames) {
   }
 
   // 화면 글자 (기본 화면 영역만, 줄 단위)
-  const all = sortRead(texts.filter(t => t.x < SCREEN_W - 5 && t.y < SCREEN_H));
+  const all = sortRead(texts.filter(t => !t.mark && t.x < SCREEN_W - 5 && t.y < SCREEN_H));
   // 공통 영역: GNB(위 72px), LNB(왼쪽 250px)는 한 줄로 묶음
   const gnb = all.filter(t => t.y < 72), lnb = all.filter(t => t.y >= 72 && t.x < 250);
-  const scr = all.filter(t => t.y >= 72 && t.x >= 250);
-  const rows = []; let lastY = null;
+  const scr = all.filter(t => t.y >= 72 && t.x >= 250).sort((a, b) => a.y - b.y || a.x - b.x);
+  // 행: 세로 범위가 지금 행과 절반 이상 겹치면 같은 행 (8px 반올림은 높이가 조금 다른 글자를 다른 행으로 떼어 냄)
+  const rows = [];
   for (const t of scr) {
-    if (MARK.test(t.s)) continue;
-    const s = t.s.replace(/\n+/g, ' / ');
-    if (lastY !== null && Math.round(t.y / 8) === lastY) rows[rows.length - 1].push(s); else { rows.push([s]); lastY = Math.round(t.y / 8); }
+    const top = t.y, bot = t.y + t.h, r = rows[rows.length - 1];
+    const ov = r ? Math.min(bot, r.bot) - Math.max(top, r.top) : -1;
+    if (r && ov >= Math.min(t.h, r.bot - r.top) / 2) { r.items.push(t); r.top = Math.min(r.top, top); r.bot = Math.max(r.bot, bot); }
+    else rows.push({ top, bot, items: [t] });
   }
+  for (const r of rows) r.items = r.items.sort((a, b) => a.x - b.x).map(t => t.s.replace(/\n+/g, ' / '));
   const cases = texts.filter(t => t.x < SCREEN_W - 5 && t.y >= SCREEN_H && /^case/i.test(t.s)).map(t => t.s.replace(/\n+/g, ' '));
 
   // 사용 컴포넌트 (기본 화면 영역의 가장 바깥 인스턴스)
@@ -92,7 +97,7 @@ for (const cfg of CONFIG.frames) {
   md.push('\n### 화면 글자\n');
   if (gnb.length) md.push('- (GNB) ' + gnb.map(t => t.s.replace(/\n+/g, ' ')).join(' | '));
   if (lnb.length) md.push('- (LNB) ' + lnb.map(t => t.s.replace(/\n+/g, ' ')).join(' | '));
-  md.push(rows.slice(0, 120).map(r => '- ' + r.join(' | ')).join('\n') + (rows.length > 120 ? '\n- (이하 ' + (rows.length - 120) + '줄 생략)' : ''));
+  md.push(rows.slice(0, 120).map(r => '- ' + r.items.join(' | ')).join('\n') + (rows.length > 120 ? '\n- (이하 ' + (rows.length - 120) + '줄 생략)' : ''));
   md.push('\n### 사용 컴포넌트\n');
   md.push(Object.entries(comp).sort((a, b) => b[1] - a[1]).slice(0, 40).map(([k, v]) => k + ' (' + v + ')').join(', ') || '없음');
   md.push('\n### 디스크립션 (원문)\n');

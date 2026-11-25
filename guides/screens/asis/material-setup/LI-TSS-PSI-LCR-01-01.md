@@ -67,23 +67,3 @@ Icon Button (7), Table (4), Description Number (3), Frame (1)
 ### 버전 메모
 
 - 없음
-
-## 반영 대기 목록
-
-| ID | 구분 | 지금 | 바꿀 것 | 근거 | 상태 |
-| --- | --- | --- | --- | --- | --- |
-| R01 | IA | IA 이름 "Check the Consumable & reagent", 화면 "Check the consumables/reagents" | 하나로 통일 (IA 고칠지) | `ia/ia-screens.csv` | 대기 (확인 필요) |
-| R02 | 화면 데이터 | 수량 표기 "(5/box)", "(3/box)" | 실제 단위로: 1000 μL Tip 96 ea/rack, Empty Standard Tube 48 ea/rack, Stool Swab 24 ea/rack, PBS·Saline·Prelyser Standard Tube 48 rxns/rack. 필요 수량 표기 형식(낱개 수 + 입고 단위)도 정함 | `glossary/consumables.csv` | 대기 (확인 필요) |
-| R03 | 화면 데이터 | "ASL Standard Tube" | `glossary/consumables.csv`에 없는 품목. 품목 표에 넣을지 화면에서 뺄지 | `glossary/consumables.csv` | 대기 (확인 필요) |
-| R04 | 화면 데이터 | 필요 수량 목록에 Wide Bore Tip, 300 μL Tip, 96-DWP, Tub류, LB DWP, PK/IC Tube가 없음 (LCR-01-02·03 목록에는 있음) | 세 화면의 예시 목록 통일 | LI-TSS-PSI-LCR-01-02, LI-TSS-PSI-LCR-01-03 | 대기 |
-| R05 | 문구 | "consumable & reagent" | consumables/reagents (Step 이름과 통일) | 화면 글자 | 대기 |
-| R06 | 표기 | "소모품 및 시약", "trolley" | Consumable 및 Reagent, Trolley | `glossary/terms.csv` | 대기 |
-| R07 | 정책 반영 | Select Trolley를 고른 뒤 노출되는 이유가 없음 | 디스크립션에 넣음: Load Consumables and Reagents에 들어가면 Select Trolley Popup(LI-TSS-PSI-01)이 먼저 뜸. Sample Trolley를 고르면 그 Sample 기준으로 필요한 Consumable·Reagent 개수를 계산해 보여 주고, 사용자는 그 개수를 보고 Tray를 구성함. 고르기는 안내용이며 데이터 연결은 생기지 않음 | 2026-11-03 사용자 답변 (MS2) | 대기 |
-| R08 | 공통 | 메뉴 이탈 컨펌이 디스크립션에 없음 (공통이라 빠짐) | 디스크립션에 넣음: [Done] 전에 메뉴를 벗어나면 MS_Confirm_024 "Leave without saving?"를 보여 줌. Leave를 고르면 변경 예정 사항을 모두 버리고 나감. 화면을 그릴 때 기본으로 넣음 | `alert/alert-catalog-ms.csv` MS_Confirm_024, 2026-11-03 사용자 답변 (MS5) | 대기 |
-
-## 변경 이력
-
-| 버전 | 날짜 | 바뀐 내용 | 바꾼 사람 | 근거 (CR, PD, PV, 정책 ID) |
-| --- | --- | --- | --- | --- |
-| 2.0 | 2026-06-15 | 화면 정보 기준 | BREX | Figma 화면 정보 |
-| | 2026-11-12 | 연동 변경: L-IOS Client Mode 이름 바꿈 (머리말 키 `client_mode`, 표기 L-IOS Client Mode · MS Mode, 경로 `policy/client-mode-matrix.csv`). 노출 모드 값을 새 기능 표대로 고침 | 서보경 | DS-0001 |
