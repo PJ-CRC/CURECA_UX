@@ -58,6 +58,7 @@ table.t th{background:var(--surface-2);color:var(--ink-2);font-weight:700;text-a
 table.t td{padding:9px 12px;border-top:1px solid var(--line);vertical-align:top}
 table.t tr:first-child td{border-top:0}
 table.t td.num,table.t th.num{text-align:right;font-variant-numeric:tabular-nums}
+table.t td.bid,table.t th.bid{text-align:left;white-space:nowrap}   /* 작업대기 항목 ID(예: LI-TSS-PSI-LCR-01-03-R01) — 예전 번호(#) 칸의 오른쪽 정렬을 쓰지 않음, 줄바꿈 없이 */
 table.t td.ctr,table.t th.ctr{text-align:center}
 table.t td.nw{white-space:nowrap}
 .muted{color:var(--ink-3)}
@@ -1091,10 +1092,14 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
      칸: ID · 타입 · 변경 전 · 변경 후 · 근거 · 상태(대기 · 작업 중 (작업 기록) · 반영 완료 (날짜) · 제외 (날짜, 이유)).
      예전 칸(# · 구분 · 지금 · 바꿀 것)으로 적힌 표도 같은 자리에 읽는다(pending-changes.md 6절). 메뉴 담당자 = _menu.md owner */
   /* 왼쪽 목록 묶음(details.mgrp)의 접힘: 항목을 눌러 목록을 다시 그려도 접은 묶음은 접힌 채로(2026-11-18) — 키 = 탭|묶음 이름, 이 페이지를 연 동안 */
-  var SHUT = {};
-  function grpAttr(key){ return ' data-g="' + esc(key) + '"' + (SHUT[key] ? '' : ' open'); }
-  document.addEventListener('toggle', function(e){ var d = e.target; if (d && d.classList && d.classList.contains('mgrp') && d.dataset.g) { if (d.open) delete SHUT[d.dataset.g]; else SHUT[d.dataset.g] = 1; } }, true);
-  var BL = null, blSel = (function(){ try { return new URL(location.href).searchParams.get('s') || ''; } catch(x){ return ''; } })(), blAll = false, blKind = '', blQ = '';
+  //  화면설계서 작업대기(bl|) · 회의록 달(mt|, 이번 달 · 기간으로 찾을 때만 펼침)은 기본이 접힘(2026-11-26): 펼친 묶음만 OPEN에 기억하고, 고른 화면이 있는 묶음은 펼친다(grpAttr의 open 인자)
+  var SHUT = {}, OPEN = {};
+  function grpAttr(key, open){
+    var on = /^(bl|mt)\|/.test(key) ? (OPEN[key] || (!!open && !SHUT[key])) : !SHUT[key];   // 사람이 접은 것은 접힌 채로
+    return ' data-g="' + esc(key) + '"' + (on ? ' open' : '');
+  }
+  document.addEventListener('toggle', function(e){ var d = e.target; if (d && d.classList && d.classList.contains('mgrp') && d.dataset.g) { var k = d.dataset.g; if (d.open) { delete SHUT[k]; OPEN[k] = 1; } else { SHUT[k] = 1; delete OPEN[k]; } } }, true);
+  var BL = null, blUrl = (function(){ try { return new URL(location.href).searchParams.get('s') || ''; } catch(x){ return ''; } })(), blSel = (function(){ try { return new URL(location.href).searchParams.get('s') || ''; } catch(x){ return ''; } })(), blAll = false, blKind = '', blQ = '';
   function loadBacklog(){
     // 반영 대기 목록이 규칙 저장소 pending/open.md 한 파일이면(2026-11-24 CURECA부터) 서버 /api/backlog가 화면(CID)마다 묶어 준 것을 쓴다(src 있음).
     //  없으면 예전처럼 화면 정의서 파일마다 「## 반영 대기 목록」 절을 읽는다
@@ -1175,7 +1180,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       groups.map(function(g){
         var list = g.vis; if (!list.length) return '';
         var gw = 0, gd = 0; list.forEach(function(s){ gw += s.wait.length; gd += s.doing.length; });
-        return '<details class="mgrp"' + grpAttr('bl|' + g.name) + '><summary><span>' + esc(g.name) + '</span><span class="muted" title="대기 ' + gw + ' · 작업 중 ' + gd + '">' + (gw + gd) + '</span></summary>' +
+        return '<details class="mgrp"' + grpAttr('bl|' + g.name, (blQ.trim() !== '') || (!!blUrl && list.some(function(s){ return s.cid === blUrl; }))) + '><summary><span>' + esc(g.name) + '</span><span class="muted" title="대기 ' + gw + ' · 작업 중 ' + gd + '">' + (gw + gd) + '</span></summary>' +
           list.map(function(s){ return '<button type="button" class="mitem" data-bl="' + esc(s.cid) + '"' + (s.cid === blSel ? ' aria-current="true"' : '') + '><b>' + esc(s.cid) + '</b><span>' + esc(s.title || '') + '</span><span class="chips">' + (s.wait.length ? '<span class="pill warn">대기 ' + s.wait.length + '</span>' : '') + (s.doing.length ? '<span class="pill prog">작업 중 ' + s.doing.length + '</span>' : '') + (s.author ? '<span class="pill">' + esc(s.author) + '</span>' : '') + '</span></button>'; }).join('') + '</details>';
       }).join('') + (!act.length ? '<p class="muted" style="margin:8px">반영 대기 항목이 없습니다.</p>' : !shownScr.length ? '<p class="muted" style="margin:8px">「' + esc(blQ.trim()) + '」에 맞는 화면이 없습니다.</p>' : '');
     var s = S.filter(function(x){ return x.cid === blSel; })[0], right;
@@ -1195,11 +1200,11 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
         // 대기 항목을 골라 화면설계 작업(케이스 1 부분 수정)으로 요청(이미 요청한 항목은 요청 번호 · 상태를 보여 주고 고를 수 없다)
         (W && s.wait.length ? '<div class="blreq"><span class="muted" id="blPickN">고른 항목 0</span>' + (fig ? '' : '<span class="pill warn">이 화면에 Figma 링크(figma:)가 없어 요청을 만들 수 없습니다</span>') +
           '<span data-wbm="bare"></span><button class="btn sm primary" type="button" data-blreq' + (fig ? '' : ' disabled') + ' title="Case 1(부분 수정) 새 작업으로 Workbench에 요청합니다. 1단계에서 이 항목들을 「이번에 반영」으로 고릅니다">고른 항목으로 화면설계 작업(Case 1) 요청</button></div>' : '') +
-        '<div class="tbl-wrap"><table class="t"><thead><tr>' + (W ? '<th style="width:34px"><input type="checkbox" id="blPickAll" aria-label="요청 안 한 대기 항목 모두 고르기"></th>' : '') + '<th class="num">ID</th><th>타입</th><th>변경 전</th><th>변경 후</th><th>근거</th><th>상태</th></tr></thead><tbody>' +
+        '<div class="tbl-wrap"><table class="t"><thead><tr>' + (W ? '<th style="width:34px"><input type="checkbox" id="blPickAll" aria-label="요청 안 한 대기 항목 모두 고르기"></th>' : '') + '<th class="bid">ID</th><th>타입</th><th>변경 전</th><th>변경 후</th><th>근거</th><th>상태</th></tr></thead><tbody>' +
         (rows.length ? rows.map(function(r){
           var rq = fixReq[fixKey(s, r)], can = W && /^대기/.test(r.st) && !(rq && /^(대기|진행 중|보류)$/.test(rq.status));
           return '<tr>' + (W ? '<td>' + (can ? '<input type="checkbox" class="blpick" value="' + esc(r.n) + '" aria-label="' + esc(r.n) + ' 고르기">' : '') + '</td>' : '') +
-            '<td class="num">' + esc(r.n) + '</td><td class="nw">' + esc(r.kind) + '</td><td>' + esc(r.now) + '</td><td>' + esc(r.to) + '</td><td>' + esc(r.why) + '</td><td class="nw">' + stPill(r.st) +
+            '<td class="bid">' + esc(r.n) + '</td><td class="nw">' + esc(r.kind) + '</td><td>' + esc(r.now) + '</td><td>' + esc(r.to) + '</td><td>' + esc(r.why) + '</td><td class="nw">' + stPill(r.st) +
             (rq ? '<br><a class="pill ' + (rq.status === '완료' ? 'done' : rq.status === '보류' ? 'warn' : 'prog') + '" href="Figma_Workbench.html?p=' + encodeURIComponent(rq.fileKey || '') + '" title="Workbench 수정 요청">' + esc(rq.id) + ' ' + esc(rq.status) + '</a>' : '') + '</td></tr>';
         }).join('') : '<tr><td colspan="7" class="muted">맞는 항목이 없습니다.</td></tr>') +
         '</tbody></table></div>';
@@ -1585,7 +1590,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       (W && rest.length ? '<button class="btn sm mimport" type="button" data-mimport>시트 회의록 가져오기 (' + rest.length + '건)</button>' : '') +
       (L.length ? groups.map(function(k){
         var y = k.slice(0, 4), mo = +k.slice(5, 7);
-        return '<details class="mgrp"' + grpAttr('mt|' + k) + '><summary><span>' + (y === thisY ? '' : y + '년 ') + mo + '월</span><span class="muted">' + gm[k].length + '</span></summary>' +
+        return '<details class="mgrp"' + grpAttr('mt|' + k, ranged || k === (function(d){ return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'); })(new Date())) + '><summary><span>' + (y === thisY ? '' : y + '년 ') + mo + '월</span><span class="muted">' + gm[k].length + '</span></summary>' +
           gm[k].map(function(m){
             return '<button type="button" class="mitem" data-mid="' + esc(m.id) + '"' + (m.id === msel && !(medit && !medit.id) ? ' aria-current="true"' : '') + '><b>' + fmtWhen(m.date) + ' · ' + esc(m.title) + '</b><span>' + esc(msub(m)) + '</span></button>';
           }).join('') + '</details>';
