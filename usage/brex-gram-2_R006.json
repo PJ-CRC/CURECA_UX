@@ -1,0 +1,28 @@
+{
+  "id": "brex-gram-2_R006",
+  "kind": "request",
+  "reqId": "R006",
+  "reqType": "요청",
+  "team": "cureca",
+  "at": "2026-11-26T16:35:53+09:00",
+  "from": "2026-11-26T16:35:35+09:00",
+  "by": "하승현",
+  "doneBy": "Claude",
+  "pc": "BREX_GRAM_2",
+  "fileKey": "etCQFF3CTf1EA6C79d4BBf",
+  "fileName": "UX AI TEST",
+  "page": "Policy Setting_tobe",
+  "frame": "",
+  "nodeId": "",
+  "text": "파일, 피그마 고치지 않았다는 건 무슨 말이야?\n그냥 DB만 업데이트하고 다음 업무에서 해당 db를 토대로 작업을 하고 싶은거야.",
+  "models": {
+    "claude-opus-5-5": 3
+  },
+  "calls": 3,
+  "input": 6,
+  "cacheWrite": 2275,
+  "cacheRead": 170287,
+  "output": 1899,
+  "total": 174467,
+  "usd": 0.0903
+}
