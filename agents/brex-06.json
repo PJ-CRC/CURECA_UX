@@ -1,18 +1,23 @@
 {
-  "reportAt": "2026-11-26T13:10:45+09:00",
+  "reportAt": "2026-11-26T13:11:46+09:00",
   "pc": "BREX_06",
   "slug": "brex-06",
   "user": "최고관리자",
   "os": "windows",
   "version": "0.32.21",
-  "alive": false,
-  "status": "stopped",
-  "msg": "중지됨",
-  "statusAt": "2026-11-26T13:10:40+09:00",
+  "alive": true,
+  "status": "idle",
+  "msg": "요청을 기다리는 중",
+  "statusAt": "2026-11-26T13:11:32+09:00",
   "claude": "따로 설치",
   "claudeWay": "cli",
   "autoWatch": true,
   "events": [
+    {
+      "at": "2026-11-26T13:10:45+09:00",
+      "kind": "start",
+      "text": "감시 시작"
+    },
     {
       "at": "2026-11-26T13:10:40+09:00",
       "kind": "stop",
