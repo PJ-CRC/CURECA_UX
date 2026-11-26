@@ -1,0 +1,12 @@
+{
+  "rev": "20261126-173644_anjongbeom-ui-macbookair-2-local",
+  "by": "Claude",
+  "at": "2026-11-26T17:36:44+09:00",
+  "note": "R002: 노란색 행 바로잡음 — GM-title-669·670(행 674·675)에 노란색, 행 669·670(GM-title-664·665) 원복",
+  "base": "",
+  "pc": "anjongbeom-ui-MacBookAir-2.local",
+  "req": "R002 언어셋 UX Writing 검토",
+  "jobId": "",
+  "file": "language-set/sheet06.styles.json",
+  "orig": true
+}
