@@ -2048,7 +2048,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     var L = (r.raws || []).filter(function(x){ return x && x.text; }); if (!L.length) return '';
     var op = !!RAW_OPEN[r.id];
     return '<details class="raw" data-raw="' + esc(r.id) + '"' + (op ? ' open' : '') + '><summary>자세히<span class="rn">Claude 원래 답변' + (L.length > 1 ? ' ' + L.length + '개' : '') + '</span></summary>' +
-      L.slice().reverse().map(function(x){ return '<div class="rb"><div class="rt">' + esc(fmt(x.at)) + (x.cut ? ' · 앞부분 2만 자' : '') + '</div><div class="rx">' + rawMd(x.text) + '</div></div>'; }).join('') + '</details>';
+      L.slice().reverse().map(function(x){ return '<div class="rb"><div class="rt">' + esc(fmt(x.at)) + (x.cut ? ' · 앞부분 2만 자' : '') + '</div><div class="rx">' + mdView(x.text) + '</div></div>'; }).join('') + '</details>';
   }
   document.addEventListener('toggle', function(e){ var d = e.target; if (d && d.matches && d.matches('details.raw[data-raw]')) { if (d.open) RAW_OPEN[d.dataset.raw] = 1; else delete RAW_OPEN[d.dataset.raw]; } }, true);
   /* Claude 답변 서식(2026-11-26): 요약(note) · 질문(ask) · 원래 답변(자세히)에 같은 모양 — **굵게** · `코드` · 제목(#) · 글머리표(들여쓰기 2단) · 번호 목록 · 표 · 줄 바꿈 · 빈 줄 = 문단 */
