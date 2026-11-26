@@ -329,6 +329,18 @@ function folderFiles(dir, listed) {
   const keep = core.arr(listed).map(String).filter((p) => here.includes(p));
   return keep.concat(natSort(here.filter((n) => !keep.includes(n))));
 }
+/* CURECA 화면 정의서(view 'screens', 2026-11-26): asis/{메뉴}/ · tobe/{메뉴}/ 아래 md를 늘 목록에 넣는다.
+   meta.files(옮겨 올 때 적은 asis 목록)에 없는 파일, 특히 작업 중 만든 tobe 화면 MD가 빠져 보이지 않던 것. meta.files 순서는 그대로, 새 파일은 이름순으로 뒤에 */
+function stageFiles(dir, listed) {
+  const found = [];
+  for (const st of ['asis', 'tobe']) for (const mn of natSort(dirNames(path.join(dir, st)))) {
+    if (/^[_.]/.test(mn)) continue;
+    for (const n of natSort(fileNames(path.join(dir, st, mn)).filter((x) => /\.md$/i.test(x) && !/^[_.]/.test(x)))) found.push(`${st}/${mn}/${n}`);
+  }
+  const keep = core.arr(listed).map(String).filter((p) => found.includes(p) || core.exists(path.join(dir, ...p.split('/'))));
+  return keep.concat(found.filter((p) => !keep.includes(p)));
+}
+const isStageDoc = (T, m) => T.team === 'cureca' && m && m.view === 'screens' && m.format === 'files';
 function readGuides(T) {
   const list = []; let promoted = 0;
   for (const name of dirNames(T.guideRoot)) {
@@ -361,6 +373,7 @@ function readGuides(T) {
     if (isFiles) {
       const fdir = Object.prototype.hasOwnProperty.call(m, 'filesDir') ? String(m.filesDir == null ? '' : m.filesDir) : 'files';
       if (m.folderList) m.files = folderFiles(path.join(dd, ...(fdir ? fdir.split('/') : [])), m.files);
+      else if (isStageDoc(T, m)) m.files = stageFiles(path.join(dd, ...(fdir ? fdir.split('/') : [])), m.files);
       m.fileList = core.arr(m.files).map((p) => {
         let cr = '', lr = null;
         for (const r of revs) if (r.file === p) { cr = r.rev; lr = r; }
@@ -1125,7 +1138,7 @@ on('GET', '/api/sheet/data', async ({ q, T, res, send, sendJson }) => {
 });
 
 // 쓰기 API(2단계)
-const helpers = { pasteKeys: (j, io) => require('./keys').pasteKeys(j, io), showTab: (key) => require('./keys').showTab(key), winState: () => require('./keys').winState(), restoreWin: (s) => require('./keys').restoreWin(s), azureItems, protoSnapshot, testKey, projDir, readProj, keyOf, workKey, readMinute, readNotes, noteKey, readGuides, origPath, writeOrig, keepFirst, mainName, applyKeys, appliedDocs, agentInfo, findClaudeCode, sheetCheck, setupEnv: () => { envCache = null; return setupEnv(); } };
+const helpers = { pasteKeys: (j, io) => require('./keys').pasteKeys(j, io), showTab: (key) => require('./keys').showTab(key), winState: () => require('./keys').winState(), restoreWin: (s) => require('./keys').restoreWin(s), azureItems, protoSnapshot, testKey, projDir, readProj, keyOf, workKey, readMinute, readNotes, noteKey, readGuides, origPath, writeOrig, keepFirst, mainName, applyKeys, appliedDocs, agentInfo, findClaudeCode, sheetCheck, isStageDoc, setupEnv: () => { envCache = null; return setupEnv(); } };
 require('./figma')(on, helpers);   // Figma 토큰(REST API) — 캡처. writes.js가 요청 완료 때 helpers.figmaAfterDone을 부른다
 require('./writes')(on, helpers);
 

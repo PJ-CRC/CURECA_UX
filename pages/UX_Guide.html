@@ -261,6 +261,16 @@ html.embed.fitted,html.embed.fitted body{overflow:hidden}
 
 
 .sc-grp>.node .sc-cnt{margin-left:auto;color:var(--ink-3);font-size:12.5px;font-weight:600}
+/* AS IS · To Be 탭(2026-11-26, CURECA 화면 정의서): 목록에 그 단계의 메뉴만 */
+.sc-tabs{display:flex;gap:4px;margin-top:10px;padding:3px;border-radius:9px;background:var(--surface-2)}
+.sc-tabs[hidden]{display:none}
+.sc-tabs button{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:7px 8px;border:0;border-radius:7px;background:none;color:var(--ink-2);font:inherit;font-size:13.5px;font-weight:700;cursor:pointer}
+.sc-tabs button:hover{color:var(--ink)}
+.sc-tabs button[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.sc-tabs button span{color:var(--ink-3);font-size:12.5px;font-weight:600}
+.sc-tabs button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.sc-stg{display:inline-block;margin-left:6px;padding:0 7px;border-radius:5px;font-style:normal;font-size:12px;font-weight:700;line-height:20px;vertical-align:3px;white-space:nowrap;background:var(--surface-2);color:var(--ink-2)}
+.sc-stg.tobe{background:var(--accent-soft);color:var(--accent)}
 .tree ul.sc-list{border-left:0;margin:2px 0 6px;padding:0}
 .sc-it{display:flex;flex-direction:column;align-items:flex-start;gap:2px;width:100%;text-align:left;border:0;background:none;border-radius:9px;padding:9px 12px;color:var(--ink);cursor:pointer}
 .sc-it:hover{background:var(--surface-2)}
@@ -516,6 +526,7 @@ html.embed,html.embed body{overflow:hidden}
     <div class="side-head">
       <button type="button" class="toc-btn" id="tocBtn" aria-expanded="false"><span id="tocCur">목차</span><span>▾</span></button>
       <input id="q" type="search" placeholder="목차 · 내용 검색" aria-label="가이드 검색">
+      <div class="sc-tabs" id="scTabs" role="tablist" aria-label="AS IS · To Be" hidden></div>
     </div>
     <ul class="tree" id="tree" role="tree"><li class="side-empty">불러오는 중…</li></ul>
   </aside>
@@ -1552,13 +1563,14 @@ html.embed,html.embed body{overflow:hidden}
     return ls.slice(2).map(function(l){ var c = fit(cells(l)), g = function(i){ return i >= 0 ? (c[i] || '') : ''; }; return { no: g(I.no), kind: g(I.kind), now: g(I.now), to: g(I.to), why: g(I.why), st: g(I.st) }; });
   }
   function scBuild(texts){
-    SC = { menus: [], byCid: {}, overview: '' }; var menus = {}, order = [];
+    SC = { menus: [], byCid: {}, overview: '' }; var menus = {}, order = [], split = !otherTeam();   // AS IS · To Be 나눔은 CURECA만(2026-11-26)
     FILES.forEach(function(f, i){
       var t = String(texts[i] || '').replace(/^﻿/, '').replace(/\r\n/g, '\n'), parts = f.path.split('/');
       if (parts.length < 2) { if (/readme\.md$/i.test(f.path)) SC.overview = t; return; }
       // CURECA_AI 2026-11-20 구조: screens/asis/{메뉴}/ · screens/tobe/{메뉴}/ (메뉴 파일 _menu.md 없음). 예전 구조 screens/{메뉴}/도 그대로 읽는다
       var deep = parts.length >= 3 && /^(asis|tobe)$/.test(parts[0]), stage = deep ? parts[0] : '';
-      var k = deep ? parts[1] : parts[0], mn = menus[k]; if (!mn) { mn = menus[k] = { key: k, name: k, cids: [], screens: [] }; order.push(k); }
+      // asis · tobe는 같은 메뉴 이름이어도 따로 묶는다(2026-11-26 목록을 AS IS · To Be로 나눔) — 키 「tobe/setting」, 이름은 메뉴 폴더
+      var mk = deep ? parts[1] : parts[0], k = (stage && split ? stage + '/' : '') + mk, mn = menus[k]; if (!mn) { mn = menus[k] = { key: k, base: mk, stage: split ? stage : '', name: mk, cids: [], screens: [] }; order.push(k); }
       var fr = front(t), o = fmObj(fr.fm);
       if (/_menu\.md$/.test(f.path)) { mn.name = o.menu || k; mn.cids = listOf(o.cids); mn.owner = o.owner || ''; mn.file = f.path; return; }
       if (!o.cid) return;
@@ -1566,8 +1578,8 @@ html.embed,html.embed body{overflow:hidden}
       var s = { id: (stage === 'tobe' ? 'tobe:' : '') + o.cid, cid: o.cid, stage: stage, o: o, body: fr.body, file: f.path, rev: f.rev, menu: k };
       mn.screens.push(s); SC.byCid[s.id] = s;
     });
-    var mo = meta.menuOrder || [];
-    SC.menus = mo.filter(function(k){ return menus[k]; }).concat(order.filter(function(k){ return mo.indexOf(k) < 0; })).map(function(k){ return menus[k]; });
+    var mo = meta.menuOrder || [], mi = function(m){ var i = mo.indexOf(m.base); return i < 0 ? 999 : i; }, so = { '': 0, asis: 1, tobe: 2 };
+    SC.menus = order.map(function(k){ return menus[k]; }).sort(function(a, b){ return so[a.stage] - so[b.stage] || mi(a) - mi(b) || order.indexOf(a.key) - order.indexOf(b.key); });
     SC.menus.forEach(function(mn){
       mn.screens.sort(function(a, b){ var ia = mn.cids.indexOf(a.cid), ib = mn.cids.indexOf(b.cid); ia = ia < 0 ? 999 : ia; ib = ib < 0 ? 999 : ib; return ia - ib || a.cid.localeCompare(b.cid); });
     });
@@ -1597,15 +1609,28 @@ html.embed,html.embed body{overflow:hidden}
   /* T-IOS · L-IOS 표시(2026-11-17): TI · LI 화면은 이름이 같아(「Overview Tab」이 둘) 목록 · 제목에서 구분되게 */
   function scEnvOf(cid){ var m = /^(?:M-)?(TI|LI)-/.exec(String(cid || '')); return m ? (m[1] === 'TI' ? 'T-IOS' : 'L-IOS') : ''; }
   function scEnv(cid){ var e = scEnvOf(cid); return e ? ' <em class="sc-env ' + (e === 'T-IOS' ? 't' : 'l') + '">' + e + '</em>' : ''; }
+  var SC_STAGE = { asis: 'AS IS', tobe: 'To Be' }, scStage = '';
+  function scHit(s, mn, q){ return !q || (s.cid + ' ' + (s.o.title || '') + ' ' + mn.name).toLowerCase().indexOf(q) >= 0 || s.body.toLowerCase().indexOf(q) >= 0; }
   function scTree(q){
-    var h = '';
+    var h = '', stages = ['asis', 'tobe'].filter(function(st){ return SC.menus.some(function(m){ return m.stage === st; }); });
+    /* AS IS · To Be 탭(CURECA asis/ · tobe/ 구조일 때만 — 다른 팀 사본은 stage가 비어 탭 없음). 탭 옆 수 = 검색에 맞는 화면 수 */
+    var tb = $('scTabs');
+    if (stages.length) {
+      if (stages.indexOf(scStage) < 0) scStage = stages[0];
+      tb.innerHTML = stages.map(function(st){
+        var n = 0; SC.menus.forEach(function(m){ if (m.stage === st) n += m.screens.filter(function(s){ return scHit(s, m, q); }).length; });
+        return '<button type="button" role="tab" data-sct="' + st + '" aria-selected="' + (st === scStage) + '">' + SC_STAGE[st] + '<span>' + n + '</span></button>';
+      }).join('');
+      tb.hidden = false;
+    } else tb.hidden = true;
     SC.menus.forEach(function(mn){
-      var list = mn.screens.filter(function(s){ return !q || (s.cid + ' ' + (s.o.title || '') + ' ' + mn.name).toLowerCase().indexOf(q) >= 0 || s.body.toLowerCase().indexOf(q) >= 0; });
+      if (stages.length && mn.stage !== scStage) return;
+      var list = mn.screens.filter(function(s){ return scHit(s, mn, q); });
       if (q && !list.length) return;
       var open = q ? true : !!scOpen[mn.key];
       h += '<li class="sc-grp"><button type="button" class="node grp" data-scg="' + esc(mn.key) + '" aria-expanded="' + open + '"><span class="tw' + (open ? ' open' : '') + '">▸</span><span class="lbl">' + esc(mn.name) + '</span><span class="sc-cnt">' + list.length + '</span></button>';
       if (open) h += '<ul class="sc-list">' + list.map(function(s){
-        return '<li><button type="button" class="sc-it' + (s.id === scCur ? ' cur' : '') + '" data-sc="' + esc(s.id) + '"><b>' + esc(s.o.title || s.cid) + scEnv(s.cid) + (s.stage === 'tobe' ? ' <em class="sc-chip">To-Be</em>' : '') + '</b><span>' + esc(s.cid) + '</span>' + (scChips(s) ? '<i>' + scChips(s) + '</i>' : '') + '</button></li>';
+        return '<li><button type="button" class="sc-it' + (s.id === scCur ? ' cur' : '') + '" data-sc="' + esc(s.id) + '"><b>' + esc(s.o.title || s.cid) + scEnv(s.cid) + (s.stage === 'tobe' && !stages.length ? ' <em class="sc-chip">To-Be</em>' : '') + '</b><span>' + esc(s.cid) + '</span>' + (scChips(s) ? '<i>' + scChips(s) + '</i>' : '') + '</button></li>';
       }).join('') + '</ul>';
       h += '</li>';
     });
@@ -1626,8 +1651,9 @@ html.embed,html.embed body{overflow:hidden}
     var s = SC.byCid[cid]; if (!s) return;
     scCur = cid; scKind = ''; scOpen[s.menu] = true;
     var o = s.o, mn = SC.menus.filter(function(m){ return m.key === s.menu; })[0] || { name: s.menu };
+    if (mn.stage) scStage = mn.stage;   // 다른 탭의 화면을 열면(링크 · 주소) 그 탭으로
     var row = function(k, v){ return v ? '<dt>' + esc(k) + '</dt><dd>' + v + '</dd>' : ''; };
-    var h = '<div class="sc-head"><div><h2 class="sc-title">' + esc(s.cid + ' ' + (o.title || '')) + scEnv(s.cid) + (s.stage === 'tobe' ? ' <em class="sc-chip">To-Be</em>' : '') + '</h2><p class="sc-sub">' + esc([o.path, o.type, o.version ? 'Ver ' + o.version : ''].filter(Boolean).join(' · ')) + '</p></div>' +
+    var h = '<div class="sc-head"><div><h2 class="sc-title">' + esc(s.cid + ' ' + (o.title || '')) + scEnv(s.cid) + (s.stage && !otherTeam() ? ' <em class="sc-stg ' + s.stage + '">' + SC_STAGE[s.stage] + '</em>' : s.stage === 'tobe' ? ' <em class="sc-chip">To-Be</em>' : '') + '</h2><p class="sc-sub">' + esc([o.path, o.type, o.version ? 'Ver ' + o.version : ''].filter(Boolean).join(' · ')) + '</p></div>' +
       '<span style="display:flex;gap:8px;align-items:flex-start;flex:none">' + (s.wait ? '<span class="sc-chip warn big">반영 대기 ' + s.wait + '</span>' : '') + (s.doing ? '<span class="sc-chip big">작업 중 ' + s.doing + '</span>' : '') +
       '<button type="button" class="dedit" data-dedit="' + esc(s.file) + '" data-dname="' + esc(s.cid + ' ' + (o.title || '')) + '" title="이 화면 정의서를 바로 고쳐 저장합니다">직접 수정</button></span></div>';
     h += '<dl class="sc-info">' + row('작성자', esc(o.author || '')) + row('Service Mode', esc(listOf(o.service_mode).join(', '))) + row('User Type', esc(listOf(o.user_type).join(', '))) +
@@ -2357,6 +2383,18 @@ html.embed,html.embed body{overflow:hidden}
     }
   });
 
+  // AS IS · To Be 탭: 목록을 바꾸고, 지금 화면이 그 탭에 없으면 그 탭의 첫 화면(검색 중이면 맞는 첫 화면)을 연다
+  $('scTabs').addEventListener('click', function(e){
+    var sct = e.target.closest('[data-sct]');
+    if (sct && SC) {
+      scStage = sct.dataset.sct; var q = $('q').value.trim().toLowerCase(), cur = SC.byCid[scCur], cm = cur && SC.menus.filter(function(m){ return m.key === cur.menu; })[0];
+      if (!cm || cm.stage !== scStage) {
+        var fs = null; SC.menus.some(function(m){ if (m.stage !== scStage) return false; fs = m.screens.filter(function(s){ return scHit(s, m, q); })[0] || null; return !!fs; });
+        if (fs) { scOpen[fs.menu] = true; scShow(fs.id); return; }
+      }
+      scTree(q);
+    }
+  });
   $('tree').addEventListener('click', function(e){
     var sg = e.target.closest('[data-scg]'); if (sg) { scOpen[sg.dataset.scg] = !scOpen[sg.dataset.scg]; scTree($('q').value.trim().toLowerCase()); return; }
     var si = e.target.closest('[data-sc]'); if (si) { scShow(si.dataset.sc); return; }

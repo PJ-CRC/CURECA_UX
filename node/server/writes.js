@@ -858,7 +858,9 @@ module.exports = function register(on, h) {
         file = nn(b.file).replace(/\\/g, '/');
         // 폴더가 곧 목록인 문서(folderList)는 새 md 파일도 받는다(폴더 바로 아래 「이름.md」만) — 저장하면 목록에 바로 생긴다
         const newOk = gm.folderList && /^[^\/\\_.][^\/\\]*\.md$/i.test(file) && !/\.\./.test(file);
-        if (!file || !(core.arr(gm.files).includes(file) || newOk)) throw new Error(`고칠 파일을 정해 주세요(file: ${core.arr(gm.files).join(', ')}).`);
+        // CURECA 화면 정의서는 asis/ · tobe/ 아래 화면 MD를 meta.files에 없어도 목록에 넣으니(api.js stageFiles) 그 파일도 받는다
+        const stageOk = h.isStageDoc(T, gm) && /^(asis|tobe)\/[^\/\\_.][^\/\\]*\/[^\/\\_.][^\/\\]*\.md$/i.test(file) && !/\.\./.test(file);
+        if (!file || !(core.arr(gm.files).includes(file) || newOk || stageOk)) throw new Error(`고칠 파일을 정해 주세요(file: ${core.arr(gm.files).join(', ')}).`);
         core.writeText(path.join(rd, rev, ...file.replace(/\.\.\//g, '_up/').split('/')), md.replace(/\r\n/g, '\n'));
       } else core.writeText(path.join(rd, rev + '.md'), md.replace(/\r\n/g, '\n'));
       h.keepFirst(path.join(T.guideRoot, gid), gm, file);   // 처음 내용을 남긴 뒤
