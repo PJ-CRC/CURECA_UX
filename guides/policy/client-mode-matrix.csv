@@ -7,6 +7,7 @@ Quick Start,,,,All,O,O,X
 Event History,,,,View,O,O,O
 Event History,,,,Status Control,O,X,X
 Event History,,,,Note Writing,O,X,X
+Event History,Event Message,,,View,O,O,X
 Information,Program Info,,,All,O,O,O
 Dashboard,,,,View,O,O,O
 Dashboard,,,,Initialize,O,O,X

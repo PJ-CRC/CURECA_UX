@@ -9,6 +9,26 @@
 | TI-EVT-01-P-R04 | Event History | Event History Detail (TI-EVT-01-P) | 기준 자료 변경 | Effect의 참고 문서 "[SRD] CURECA Prep 및 Dx 장비 Event 정의"가 기준 출처 목록에 없음 | 값은 고객·개발사가 관리하는 문서를 따름. 저장소에 넣지 않음 | POL-EVT-001 규칙 7 | 제외 (2026-11-04, 바꿀 것 칸 참고) |
 | TI-EVT-P-R01 | Event History | Event History (TI-EVT-P) | 기준 자료 변경 | 5-1 "Confirm_L_003", "Alert_L_003". Alert_003은 알럿 관리 페이지에서 삭제됨 | 취소선으로 이미 제거됨. T-IOS는 Status 변경과 일괄 Closed가 없음 | Figma 취소선, POL-EVT-002 | 제외 (2026-11-04, 취소선) |
 | TI-EVT-P-R02 | Event History | Event History (TI-EVT-P) | 기준 자료 변경 | 5 체크박스 + [Mark as Closed]. 화면 글자에는 버튼이 없음. L-IOS는 [Mark all as Closed] | 취소선으로 이미 제거됨. T-IOS는 Status 변경과 일괄 Closed가 없음 | Figma 취소선, POL-EVT-002 | 제외 (2026-11-04, 취소선) |
+| LI-EVT-01-P-R02 | Event History | Event History Detail (LI-EVT-01-P) | 점검 발견 | 6, 7 "닫기" 중복 | 하나로 | 디스크립션 | 반영 완료 (2026-11-26) |
+| LI-EVT-01-P-R03 | Event History | Event History Detail (LI-EVT-01-P) | 기준 자료 변경 | Status·Notes "공통 UX 참고 : COMM-3-a" | POL-EVT-002 참조 | POL-EVT-002 | 반영 완료 (2026-11-26) |
+| LI-EVT-01-P-R04 | Event History | Event History Detail (LI-EVT-01-P) | 기준 자료 변경 | Module "FlexibleExtraction", Unit "Starlet" | Flexible Extraction (1), STARlet | `glossary/modules.csv` | 반영 완료 (2026-11-26) |
+| LI-EVT-02-P-R01 | Event History | Event Message Popup (LI-EVT-02-P) | 기준 자료 변경 | 0 "Main PC, 콘솔용 PC" | L-IOS Client Mode로 표기: Main Mode, Console Mode (MS Mode 제외) | POL-EVT-003, `policy/client-mode.md` | 반영 완료 (2026-11-26) |
+| LI-EVT-02-P-R02 | Event History | Event Message Popup (LI-EVT-02-P) | 기준 자료 변경 | 3 Type "Instrument, Consumable, Reagent" | Instrument, Inventory, Sample, System | `glossary/status-values.csv` | 반영 완료 (2026-11-26) |
+| LI-EVT-02-P-R03 | Event History | Event Message Popup (LI-EVT-02-P) | 점검 발견 | Eorrer, warning | Error, Warning | 오타 | 반영 완료 (2026-11-26) |
+| LI-EVT-P-R02 | Event History | Event History (LI-EVT-P) | 기준 자료 변경 | 5 [Mark all as Closed] 범위 "상태값이 Open인 모든 Events" | 디스크립션에 넣음: 지금 검색 조건으로 불러온 목록의 모든 페이지에서 Open인 Event 전체 | POL-EVT-002 규칙 4 | 반영 완료 (2026-11-26) |
+| LI-EVT-P-R03 | Event History | Event History (LI-EVT-P) | 기준 자료 변경 | 4 "공통 UX 참고 : COMM-3-a" | Status 변경 가능 조건은 POL-EVT-002 참조 | POL-EVT-002 | 반영 완료 (2026-11-26) |
+| LI-EVT-P-R04 | Event History | Event History (LI-EVT-P) | 기준 자료 변경 | OPEN, Statue, Cureca | Open, Status, CURECA | `glossary/status-values.csv`, 오타 | 반영 완료 (2026-11-26) |
+| LI-EVT-P-R06 | Event History | Event History (LI-EVT-P) | 기준 자료 변경 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 반영 완료 (2026-11-26) |
+| TI-EVT-01-P-R01 | Event History | Event History Detail (TI-EVT-01-P) | 기준 자료 변경 | Module "FlexibleExtraction", Unit "Starlet" (코드명·소문자) | Flexible Extraction (1), STARlet | `glossary/modules.csv`, `module-units.csv` | 반영 완료 (2026-11-26) |
+| TI-EVT-01-P-R02 | Event History | Event History Detail (TI-EVT-01-P) | 점검 발견 | 1 "Created Date", 화면 "Occurred Date/Time" | 하나로 통일 | 화면 글자 | 반영 완료 (2026-11-26) |
+| TI-EVT-01-P-R03 | Event History | Event History Detail (TI-EVT-01-P) | 기준 자료 변경 | T-IOS에서 Status를 바꿀 수 있는지 상세 화면에 없음 (목록 TI-EVT-P 4는 바꿀 수 있음) | POL-EVT-002 참조 | POL-EVT-002 | 반영 완료 (2026-11-26) |
+| TI-EVT-02-P-R01 | Event History | Event Message Popup (TI-EVT-02-P) | 기준 자료 변경 | 0 "Profile에 추가 예정, 지금은 모두 노출" | Profile > General의 Event notifications(On이면 노출, 기본 On)로 정리 | POL-EVT-003, TI-CPW-01-P (v2.1.11) | 반영 완료 (2026-11-26) |
+| TI-EVT-02-P-R02 | Event History | Event Message Popup (TI-EVT-02-P) | 기준 자료 변경 | 3 Type "Instrument, Consumable, Reagent" | Instrument, Inventory, Sample, System | `glossary/status-values.csv` | 반영 완료 (2026-11-26) |
+| TI-EVT-02-P-R03 | Event History | Event Message Popup (TI-EVT-02-P) | 기준 자료 변경 | 8 "Event Detail Popup(LI-EVT-01-P)" | TI-EVT-01-P | IA | 반영 완료 (2026-11-26) |
+| TI-EVT-02-P-R04 | Event History | Event Message Popup (TI-EVT-02-P) | 점검 발견 | Eorrer, warning, High-throughput Extraction(1) | Error, Warning, High-throughput Extraction (1) | 오타, 이름 (번호) | 반영 완료 (2026-11-26) |
+| TI-EVT-P-R05 | Event History | Event History (TI-EVT-P) | 점검 발견 | Statue, Cureca, 1 "Event ID, Code" 검색 (화면에 입력 칸 없음) | Status, CURECA, 검색 항목을 화면과 맞춤 | 오타, 화면 글자 | 반영 완료 (2026-11-26) |
+| TI-EVT-P-R06 | Event History | Event History (TI-EVT-P) | 기준 자료 변경 | 목록 요약 "OPEN", Unit "CFX96-1" | Open, CFX96 (1) | `glossary/status-values.csv`, 이름 (번호) | 반영 완료 (2026-11-26) |
+| TI-EVT-P-R07 | Event History | Event History (TI-EVT-P) | 기준 자료 변경 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 반영 완료 (2026-11-26) |
 | LI-INS-02-T-R02 | Instruments | All Tab (LI-INS-02-T) | 기준 자료 변경 | 2-1 Error Rate가 남아 있음. 버전 메모 v2.1.01은 "Error Rate 제거(2-1)" | 취소선으로 이미 제거됨. 표시 위치는 고객 논의 중(CA-0001) | POL-EQP-010 | 제외 (2026-11-04, 취소선) |
 | LI-INS-02-T-R04 | Instruments | All Tab (LI-INS-02-T) | 점검 발견 | Module Details (Sample Pre-treatment): Tip Waste Bin (Upper/Lower), Film Waste Bin (Upper/Lower) | Waste Bin (Upper), Waste Bin (Lower) | 같음 | 제외 (2026-11-19, 씨젠 상태 정보 261119에서 Tip · Film Waste Bin이 로체시스템즈 장비의 Unit으로 생김. 폐기함은 설치된 제조사의 Unit으로 표기함, DS-0005) |
 | LI-INS-02-T-R07 | Instruments | All Tab (LI-INS-02-T) | 점검 발견 | 4-1 [Run-time Info] 설명이 남아 있음 | 취소선으로 이미 제거됨 | Figma 취소선 | 제외 (2026-11-04, 취소선) |
