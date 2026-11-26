@@ -1,5 +1,5 @@
 {
-  "reportAt": "2026-11-26T17:21:23+09:00",
+  "reportAt": "2026-11-26T17:22:23+09:00",
   "pc": "anjongbeom-ui-MacBookAir-2.local",
   "slug": "anjongbeom-ui-macbookair-2-local",
   "user": "안종범",
@@ -8,7 +8,7 @@
   "alive": true,
   "status": "idle",
   "msg": "요청을 기다리는 중",
-  "statusAt": "2026-11-26T17:21:12+09:00",
+  "statusAt": "2026-11-26T17:22:17+09:00",
   "claude": "따로 설치",
   "claudeWay": "cli",
   "autoWatch": true,
