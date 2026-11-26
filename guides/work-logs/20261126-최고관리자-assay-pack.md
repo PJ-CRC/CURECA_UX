@@ -191,6 +191,10 @@ started: 2026-11-26
 | File details 머리 줄 (영역 틀) | 패널 제목 · [닫기] | TI-STN-08-P · LI-STN-08-P #3 · #3-1 | 기존 화면에서 따옴 | 811×48, #FFFFFF, 글자 1 「File details」, 인스턴스 1 `Interface/Close` (As Is 3288:235781) | 같음 |
 | 패널 스크롤 막대 (사각형 2) | 패널 안 스크롤 위치 | TI-STN-08-P · LI-STN-08-P #3 | 기존 화면에서 따옴 | 트랙 4×673(L 4×728) #EEF1F5 모서리 2 · 손잡이 4×278(L 4×325) #ADB5BD 모서리 2 (As Is 3288:235994 · 235995 / 3288:238984 · 238985) | 같음 |
 | Case 조각 바탕 · 안내 문구 (영역 틀 · 글자) | 데이터 없음 조각 | TI-STN-08/Case 1-1 · 1-2 | 기존 화면에서 따옴 | 1657×326 #E9EDF4, 안내 문구 Inter Regular 14 가운데 (「No files found.⏎Click Import to add a file.」 · 「No results found.」), 원본에 번호 표시 없음 | [3672:1148](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3672-1148) |
+| Import file Popup 틀 (영역 틀) | Popup 바탕 · Header · Body · Footer | TI-STN-08-01 0 · #3 (Case 1-1 · 1-2 같음) | 기존 화면에서 따옴 (Common UX Basic Popup은 PC 컴포넌트 없음, 프레임으로 그림) | 520×490(파일 3개, 선택 전 325), 모서리 6, #FFFFFF, Header 520×58 (제목 「Import file」 Inter Bold 18 #1F2329 · ✕) · Body 520×363 (간격 16, 여백 0 · 24 · 20 · 24) · Footer 520×69 (위 선 #EEF1F5, 버튼 2) (As Is 3288:237441). ✕ · 버튼은 Interface/Close · Square로 그림(C11) | [3702:4879](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3702-4879) |
+| 파일 영역 (영역 틀) | 끌어놓기 · 파일 선택 | TI-STN-08-01 #1 | 기존 화면에서 따옴 | 472×178, 모서리 6, #F6F7F9, 점선 #C5CCD5 1, 도형 1(아이콘 원 36×36 #E7F7F6 모서리 18), 글자 3 (「↑」 Inter Bold 18 #0B8580 · 「Drag and drop files here, or」 Inter Medium 14 · 「json · Multiple files」 Inter Regular 12 #838C96), 버튼 1 (원본 직접 그린 버튼 → Square Outlined M, C11) (As Is 3288:237446) | 같음 |
+| 선택한 파일 줄 (목록 줄) | 고른 파일 · [✕] 빼기 | TI-STN-08-01 #2 (Case 1-2 같음) | 기존 화면에서 따옴 (Interface/Close로 바꿀 여지: 줄 끝 [✕]) | 472×39 × 3줄, 모서리 4, 선 #DEE2E7 1, 글자 4 (「▤」 Inter Regular 14 #0B8580 · 파일명 Inter Medium 14 · 용량 Inter Regular 12 #838C96 · 「✕」 Inter Regular 13 #5F666E), 인스턴스 0 (As Is 3288:237453 · 237459 · 237465) | 같음 |
+| Case 조각 바탕 (영역 틀) | Case Popup 조각 바탕 | TI-STN-08-01/Case 1-1 · 1-2 | 기존 화면에서 따옴 | #E9EBF0, 모서리 0, Popup 하나씩 담음 (원본은 두 Popup을 한 바탕 1657×610에 담음, 화면 MD 1-1 · 1-2로 나눠 조각마다 600×(Popup+80)), 원본에 번호 표시 없음 (As Is 3288:240946) | [3703:4893](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3703-4893) |
 
 ### 근거로 풀린 것
 | 질문 | 푼 근거 |
@@ -232,6 +236,7 @@ started: 2026-11-26
 | C8 | PCR 구성품 Barcode Info 머리 「Barcode Scheme Name」, LI-STN-08-P Extraction 머리 「Schema Name」 | 「Barcode Schema Name」 (뒤 단계용 8) | TI-STN-08-P · LI-STN-08-P Case | 2단계 용어 목록 | 같음 | - | 맞음 (오타, 2026-11-26) |
 | C9 | Active only 체크박스 Square 모양 | Circle Checkbox (Common UX Search Area 조회 조건 체크박스) | TI-STN-08 #1-3 · LI-STN-08 #1-3 | COMM-5-p | 같음 | O | |
 | C10 | File details 정보 묶음 (기존 원본 글 · 표 묶음) | Common UX List Card · Table Card · Outline Container Tab으로 다시 그림 | TI-STN-08-P #3 · LI-STN-08-P #3 (Case 1-1 ~ 4-1 같음) | COMM-5-e · COMM-5-s | 같음 | O | |
+| C11 | Popup 닫기 「✕」 글자, [Select files] · [Cancel] · [Import] 직접 그린 버튼 (Import 청록 #12B5AE) | Interface/Close · Square (Outlined M · Filled M, 높이 36은 원본대로) | TI-STN-08-01 0 · #1 · #3 (Case 1-1 · 1-2 같음) | COMM-5-m (Basic Popup: 닫기 Interface/Close, 하단 버튼 Square) | T만 | O | |
 | C3 | Confirm_029 · 030 발생 조건 (Alert 카탈로그 기존 조건) | DS-0012 결정대로 File Details에서 Active · Inactive를 바꾸고 [Save]를 누를 때 Confirm_029 · 030을 띄움 (다른 작업의 결정을 따름, 멈춘 20261125-최고관리자-assay-pack에서 이어받음, 이 작업 5단계 완료 때 카탈로그 반영 전) | TI-STN-08-P #4 | DS-0012 | T만 | O | |
 
 ## 검토 질의
