@@ -2,11 +2,11 @@
   "id": "brex-01_R001",
   "kind": "request",
   "team": "cureca",
-  "status": "보류",
-  "at": "2026-11-26T09:47:48+09:00",
+  "status": "대기",
+  "at": "2026-11-26T09:53:13+09:00",
   "createdAt": "2026-11-25T21:16:32+09:00",
   "by": "서보경",
-  "doneBy": "Claude",
+  "doneBy": "서보경",
   "pc": "BREX_01",
   "reqId": "R001",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,24 +17,13 @@
   "type": "요청",
   "layout": "",
   "text": "Event History 화면 옮겨줘\n\n기존 화면: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-45275&t=8ZUolJfFqEx5iunS-1\n옮길 페이지: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3577-18413&t=8ZUolJfFqEx5iunS-1",
-  "note": "Figma를 다시 연결하셨지만 지금 이 백그라운드 Claude 실행에서는 아직 Figma를 쓸 수 없어 2단계(근거 · 분석)를 시작하지 못했습니다.\n- 이 실행은 시작할 때의 연결 상태를 그대로 쓰므로, 나중에 다시 연결해도 반영되지 않습니다(Figma MCP 인증 필요 상태 그대로). 규칙 · 작업 기록 · Figma는 고치지 않았습니다.\n확인 필요: Figma AI Run을 껐다 다시 켜서 백그라운드 Claude가 새로 시작하게 해 주세요(또는 Claude 앱 대화 창에서 이 요청을 처리). 새 실행에서 Figma가 연결돼 있으면 2단계부터 이어서 진행합니다.",
+  "note": "",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": {
-    "q": "백그라운드 Claude를 새로 시작한 뒤 2단계를 이어서 진행할까요?",
-    "options": [
-      {
-        "label": "Figma AI Run 다시 켬, 이어서 진행"
-      },
-      {
-        "label": "앱 대화 창에서 처리할게"
-      }
-    ],
-    "free": true
-  },
+  "ask": null,
   "replies": [
     {
       "at": "2026-11-25T21:20:57+09:00",
@@ -77,6 +66,12 @@
       "by": "서보경",
       "q": "Figma 연결 뒤 2단계(근거 · 분석)를 이어서 진행할까요?",
       "text": "다시 연결함, 이어서 진행"
+    },
+    {
+      "at": "2026-11-26T09:53:13+09:00",
+      "by": "서보경",
+      "q": "백그라운드 Claude를 새로 시작한 뒤 2단계를 이어서 진행할까요?",
+      "text": "Figma AI Run 다시 켬, 이어서 진행"
     }
   ],
   "raws": [
