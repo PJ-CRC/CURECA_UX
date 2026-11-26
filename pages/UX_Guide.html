@@ -407,6 +407,7 @@ html.doc-ro .dedit{display:none!important}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:60;background:#14171c;color:#fff;padding:10px 16px;border-radius:10px;font-size:13.5px;box-shadow:0 6px 20px rgba(0,0,0,.25);max-width:calc(100vw - 32px)}
 .revs{list-style:none;margin:8px 0 0;padding:0;font-size:13px}
 .revs li{padding:4px 0;border-bottom:1px solid var(--line);color:var(--ink-2)}
+.revs.scroll{overflow-y:scroll;overscroll-behavior:contain;padding-right:6px}   /* 막대 자리를 늘 두어 재는 높이와 보이는 높이가 같게 */
 .toc-btn{display:none}
 /* 끼워 넣기(embed=1): Common UX 가이드 페이지 안에서 보여 줄 때. 상단 메뉴 · 돌아가기 링크를 빼고 여백을 줄인다 */
 html.embed body{background:transparent}
@@ -866,6 +867,7 @@ html.embed,html.embed body{overflow:hidden}
     $('revBtn').hidden = !revs.length; $('revBtn').textContent = '수정 이력' + (revs.length ? ' ' + revs.length : '');
     if (!revs.length) panel('revBox', false);
     $('revList').innerHTML = revs.slice().reverse().map(function(r){ return '<li>' + esc(when(r.at)) + ' · ' + esc(r.by || '—') + (r.note ? ' · ' + esc(r.note) : '') + '</li>'; }).join('');
+    if ($('revBox').open && !$('revBox').hidden) revFit();
   }
 
   /* 원문을 항목으로 자른다: 맨 위 # 제목(머리말과 겹쳐 빼고 저장 때 그대로 둠) · 「개요」(## 앞 글) · ## 대분류 · ### 항목.
@@ -1889,7 +1891,16 @@ html.embed,html.embed body{overflow:hidden}
   function panel(pid, on){
     var d = $(pid), b = $('revBtn');
     d.hidden = !on; d.open = on; b.setAttribute('aria-expanded', String(on));
+    if (on) revFit();
   }
+  /* 수정 이력은 20개 높이까지만 보이고 나머지는 목록 안에서 스크롤(2026-11-26). 줄마다 높이가 달라(메모 길이) 열 때 20번째 줄까지 재서 정한다 */
+  function revFit(){
+    var ul = $('revList'), li = ul ? ul.children : [];
+    if (!ul) return;
+    ul.style.maxHeight = ''; ul.classList.toggle('scroll', li.length > 20);
+    if (li.length > 20) { ul.scrollTop = 0; ul.style.maxHeight = Math.ceil(li[19].getBoundingClientRect().bottom - ul.getBoundingClientRect().top) + 'px'; }
+  }
+  $('revBox').addEventListener('toggle', function(){ if (this.open) revFit(); });
 
   /* ── 직접 수정: [직접 수정] → 지금 글(파일형은 그 파일, 아니면 문서 전체)을 편집 칸으로 열고 저장(POST /api/guides {action:'direct'}) ──
      연 뒤 그사이 다른 사람 · Claude가 고쳤으면 서버가 저장하지 않는다(base 비교). 저장하면 「연관 항목 찾기 요청」 안내가 이어진다 */
