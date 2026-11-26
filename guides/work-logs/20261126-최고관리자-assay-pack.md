@@ -29,7 +29,7 @@ started: 2026-11-26
 | 4. 수정 · 확인 | | | |
 | 5. 완료 | | | |
 
-이어서 작업할 곳: 1단계 · 요건 목록 확인 질문 보냄(R003 보류), 요청자가 "하나씩 정하기"로 답해(2026-11-26 09:14) 요청자 확인 2 · 3 · 4 답 받음(넣음 / asis 다시 추출 / 기존 작업 멈춤 · 반영 대기 옮김 · To-Be 화면 MD 빈 틀 만듦), 요청자 확인 5 물음, 답 기다림 → 답대로 요건 목록 · 머리말 고치고, 요청자 확인 4 답에 따라 To-Be 화면 MD 빈 틀 만들기, 요청자 확인 3 답에 따라 asis 다시 추출 (다시 읽을 곳: 1단계 절차 5 "답을 받은 뒤" · "케이스 3 (이행 기간)" 3 · 4 / 작업 기록 "요청자 확인" · "요건 목록" · "읽은 화면")
+이어서 작업할 곳: 1단계 · 요건 목록 확인 질문 보냄(R003 보류), 요청자가 "하나씩 정하기"로 답해(2026-11-26 09:14) 요청자 확인 2 · 3 · 4 답 받음(넣음 / asis 다시 추출 / 기존 작업 멈춤 · 반영 대기 옮김 · To-Be 화면 MD 빈 틀 만듦), 요청자 확인 5 답 받음(이대로 진행), asis 다시 추출 · 1단계 읽기 다시 함(2026-11-26), 요청자 확인 6 물음, 답 기다림 → 답대로 요건 목록 · 머리말 고치고, 요청자 확인 4 답에 따라 To-Be 화면 MD 빈 틀 만들기, 요청자 확인 3 답에 따라 asis 다시 추출 (다시 읽을 곳: 1단계 절차 5 "답을 받은 뒤" · "케이스 3 (이행 기간)" 3 · 4 / 작업 기록 "요청자 확인" · "요건 목록" · "읽은 화면")
 
 ## 요청
 
@@ -70,18 +70,17 @@ started: 2026-11-26
 
 | 화면 (CID) | 읽은 것 (화면 MD / 기획 프레임 / 케이스 프레임 / 호출 화면) | Figma 링크 |
 | --- | --- | --- |
-| Assay Pack Setting (TI-STN-08) | 화면 MD (asis, 2026-11-25 옮김, 케이스 프레임 없음, 참조 섹션 절 없음) | https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=7669-175417 (asis MD 머리말, 기존 작업방 파일) |
-| Assay Pack Setting (LI-STN-08) | 화면 MD (asis, 같음) | https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=7669-181039 |
-| Assay Pack File Details (TI-STN-08-P) | 화면 MD (asis, 같음) | https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=7669-175713 |
-| Assay Pack File Details (LI-STN-08-P) | 화면 MD (asis, 같음) | https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=7669-181335 |
-| Import file 팝업 (TI-STN-08-01) | 화면 MD (asis, 같음) | https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=7669-177368 |
+| Assay Pack Setting (TI-STN-08) | 화면 MD (asis, 2026-11-26 「Setting  Ⓛ / Ⓣ_As Is」에서 다시 옮김, 케이스 절: 세부정의 1-1 등록된 파일 없음 · 1-2 검색 결과 없음, 참조 섹션: Import 정의) | https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3288-235198 |
+| Assay Pack Setting (LI-STN-08) | 화면 MD (asis, 같음, 케이스 없음) | https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3288-238191 |
+| Assay Pack File Details (TI-STN-08-P) | 화면 MD (asis, 같음, 케이스 절: 파일 종류별 패널 Master · Pretreatment · Extraction · PCR, 참조 섹션: 유형별 정의) | https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3288-235494 |
+| Assay Pack File Details (LI-STN-08-P) | 화면 MD (asis, 같음, 케이스 절 · 참조 섹션 T-IOS와 같은 구성, 조회 전용) | https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3288-238487 |
+| Import file 팝업 (TI-STN-08-01) | 화면 MD (asis, 같음, 두 모양은 TI-STN-08 참조 섹션 Import 정의 ① · ②) | https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3288-237146 |
 
-- 1단계라 Figma `Setting  Ⓛ / Ⓣ_As Is` 페이지는 열지 않음(케이스 3 (이행 기간) 1)
-- asis 화면 MD 다섯 개 모두 기존 작업방 파일(kI8nm6…)에서 2026-11-25에 옮긴 것이고, 요청 글이 원본으로 준 같은 파일 「Setting  Ⓛ / Ⓣ_As Is」 페이지(3288:235028)에서 추출한 것이 아님 → 요청자 확인 3
-- 디스크립션이 가리키는 프레임([TI-STN-08 / 세부정의] · [팝업 정의] · [Import 정의] · [정책], [TI-STN-08-P 유형별 정의] · [LI-STN-08-P 유형별 정의], [LI-STN-08 / 세부정의])의 내용이 화면 MD에 없음("참조 섹션 (원문)" 절 없음) → asis 추출 빠짐, 요청자 확인 3
-- Module · Unit 이름이 나오지 않는 화면이라 `glossary/modules.csv` 대조는 해당 없음
+- 1단계 읽기는 asis 화면 MD로만 함. asis 화면 MD는 요청자 확인 3 답대로 「Setting  Ⓛ / Ⓣ_As Is」 페이지(3288:235028)에서 2026-11-26에 다시 추출함(케이스 3 (이행 기간) 3, 도구 `tools/figma/extract-screen.js`를 이 파일 · 페이지로 바꿔 실행). 디스크립션 · 화면 글자는 2026-11-25 추출본과 같고, 머리말 figma · 케이스 · 참조 섹션 · TI-STN-08-01 배경 목록이 바뀜
+- 디스크립션이 가리키는데 As Is 페이지에 없는 프레임: [TI-STN-08 / 팝업 정의] · [TI-STN-08 / 정책] · [LI-STN-08 / 세부정의], [TI-STN-08 / Import 정의]의 5 · 7번 → 요청자 확인 6
+- 기획 프레임 밖 1920 프레임(TI-STN-08 다섯 · TI-STN-08-01 둘 · TI-STN-08-P 하나)은 UI 화면일 수 있어 열지 않음
+- Module · Unit 이름: 케이스 패널의 Storage Location Info(ConsumableStorage · Trolley, PlateSealing · ColdStorage)는 시약 파일 값 예시라 `glossary/modules.csv` 대조는 2단계 기준데이터 대조로 넘김(뒤 단계용 6)
 - To-Be 화면 MD 빈 틀: 요청자 확인 4 답 뒤 `screens/tobe/setting/{TI-STN-08 · LI-STN-08 · TI-STN-08-P · LI-STN-08-P · TI-STN-08-01}.md`를 `templates/screen.md` 빈 틀로 다시 씀 (2026-11-26, 지난 내용은 git 기록)
-
 ## 뒤 단계용 확인 항목(claude)
 
 | # | 무엇 (절차 4번 순서 3 "뒤 단계로 넘김"의 1 ~ 5) | 관련된 곳 (CID · 디스크립션 번호) | 넘기는 곳 (2단계 / 3단계) | 이어진 번호 (Q · C · 논의 대상 ID / 근거로 풀림) |
@@ -91,6 +90,9 @@ started: 2026-11-26
 | 3 | 2. Alert · Confirm 보완 필요 지점: Active · Inactive를 바꾸고 [Save] 없이 [닫기] · 다른 Row [Details]를 누를 때 다시 묻는지 디스크립션에 없음 | TI-STN-08-P #2-1 · #3-1 | 2단계 | |
 | 4 | 4. 요청과 기존 화면이 맞지 않는 곳: Master 파일의 Active 변경 버튼이 TI-STN-08 #4-1은 「상세에 변경 버튼 미노출」, TI-STN-08-P #3은 「[Active] · [Inactive] 버튼 비활성」으로 서로 다름 | TI-STN-08 #4-1 · TI-STN-08-P #3 | 2단계 | |
 | 5 | 5. 대상 화면에서 찾은 고칠 점: 패널 화면 정보 title `Assay Pack Setting` → `Assay Pack File Details` (IA "Details", 화면 MD 제목과 다름) | TI-STN-08-P · LI-STN-08-P | 3단계 | |
+| 6 | 5. 대상 화면에서 찾은 고칠 점: 케이스 패널의 Storage Location Info Module · Unit 값(ConsumableStorage · Trolley, PlateSealing · ColdStorage)이 `glossary/modules.csv` · `module-units.csv` 이름인지 확인 | TI-STN-08-P · LI-STN-08-P 케이스 | 2단계 | |
+| 7 | 5. 대상 화면에서 찾은 고칠 점: TI-STN-08-01 배경 목록의 Master 줄 Product Name 「-」 · Active 모두 Inactive가 TI-STN-08 목록(「Master Info」 · Active 4줄)과 다름 | TI-STN-08-01 배경 · TI-STN-08 #4 | 3단계 | |
+| 8 | 5. 대상 화면에서 찾은 고칠 점: LI-STN-08-P 케이스 Extraction Barcode Info 머리 「Schema Name」 · PCR 구성품 「Barcode Scheme Name」이 다른 곳(「Barcode Schema Name」)과 다름 | TI-STN-08-P · LI-STN-08-P 케이스 | 3단계 | |
 
 ## 대상 화면의 반영 대기 항목
 
@@ -127,7 +129,8 @@ started: 2026-11-26
 | 2 | 2026-11-26 | 1단계 · 절차 5 질문 5 | Import file 팝업 (TI-STN-08-01, IA에 없음)도 이번 작업에 넣을지 (TI-STN-08 #3 [Import]가 엶. 넣으면 IA에는 5단계에 더함) | TI-STN-08 #3 · TI-STN-08-01 | | 넣음 (2026-11-26) |
 | 3 | 2026-11-26 | 1단계 · 절차 4 (asis 추출 빠짐) | asis 화면 MD가 요청 글의 원본(같은 파일 「Setting  Ⓛ / Ⓣ_As Is」 페이지)이 아니라 기존 작업방 파일에서 옮긴 것이고, 디스크립션이 가리키는 세부정의 · 팝업 정의 · Import 정의 · 정책 · 유형별 정의 프레임 내용(참조 섹션)이 없음. As Is 페이지에서 다시 추출한 뒤 진행할지 | TI-STN-08 #1-4 · #3 · #4-1, LI-STN-08 #1-4, TI-STN-08-P #3 · #4, LI-STN-08-P #3, TI-STN-08-01 #1 · #3 | | As Is 페이지에서 다시 추출한 뒤 진행 (2026-11-26) |
 | 4 | 2026-11-26 | 1단계 · 절차 2 순서 6 (겹침) | 진행 중인 20261125-최고관리자-assay-pack을 멈춤으로 두고, 그 작업이 만든 To-Be 화면 MD 다섯 개 · To Be 페이지 섹션을 이번에 처음부터 다시 쓸지, 그 작업의 반영 대기 TI-STN-08-P-R01 · TI-STN-08-R02를 이 작업으로 옮길지 | TI-STN-08 · LI-STN-08 · TI-STN-08-P · LI-STN-08-P · TI-STN-08-01, TI-STN-08-P-R01 · TI-STN-08-R02 | | 멈춤으로 두고 결과물(To-Be 화면 MD · To Be 페이지 섹션)을 처음부터 다시 씀, 반영 대기 두 항목은 이 작업으로 (2026-11-26) |
-| 5 | 2026-11-26 | 1단계 · 절차 5 질문 7 | 위 요건 목록(요건 1 · 경로 분기 기준 8 · 케이스 3)과 흐름(1 → 2 → 3 → 4 → 5)대로 진행할지 | 요건 1 | | |
+| 5 | 2026-11-26 | 1단계 · 절차 5 질문 7 | 위 요건 목록(요건 1 · 경로 분기 기준 8 · 케이스 3)과 흐름(1 → 2 → 3 → 4 → 5)대로 진행할지 | 요건 1 | | 이대로 진행 (2026-11-26) |
+| 6 | 2026-11-26 | 1단계 · 절차 4 (asis 추출 빠짐) | 디스크립션이 가리키는 [TI-STN-08 / 팝업 정의] · [TI-STN-08 / 정책] · [LI-STN-08 / 세부정의] 프레임과 [TI-STN-08 / Import 정의] 5 · 7번이 As Is 페이지에 없음. 2단계에서 Alert 카탈로그 · POL-TST-008 · [TI-STN-08 / 세부정의]로 대신 확인하고 넘어갈지, 원본 프레임을 As Is 페이지에 옮겨 둔 뒤 다시 추출할지 | TI-STN-08 #1-4 · #3 · #4-1, LI-STN-08 #1-4, TI-STN-08-P #4, TI-STN-08-01 #1 · #3 | | |
 
 ## 이 작업의 논의 대상
 
