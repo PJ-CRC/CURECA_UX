@@ -4,7 +4,7 @@
   "reqId": "R007",
   "reqType": "요청",
   "team": "cureca",
-  "at": "2026-11-26T17:30:14+09:00",
+  "at": "2026-11-26T17:51:49+09:00",
   "from": "2026-11-26T17:08:00+09:00",
   "by": "하승현",
   "doneBy": "Claude",
@@ -16,13 +16,14 @@
   "nodeId": "",
   "text": "Case 3 테스트로 작업 지시를 해볼거야.\n작업할 Tobe 페이지에 작업해주고 관련 내용 기록은 하지 않아도 돼.\n정상적인 프로세스로 작업이 진행되는 지 확인하고 싶어서 그래.\n\nasis 링크 주소 주면 돼?",
   "models": {
-    "claude-opus-5-5": 50
+    "claude-opus-5-5": 114,
+    "<synthetic>": 1
   },
-  "calls": 50,
-  "input": 95,
-  "cacheWrite": 226936,
-  "cacheRead": 6435060,
-  "output": 51436,
-  "total": 6713527,
-  "usd": 4.1316
+  "calls": 115,
+  "input": 215,
+  "cacheWrite": 515781,
+  "cacheRead": 33224595,
+  "output": 165843,
+  "total": 33906434,
+  "usd": 14.0889
 }
