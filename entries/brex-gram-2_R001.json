@@ -25,7 +25,13 @@
   "marks": [],
   "ask": null,
   "replies": [],
-  "raws": [],
+  "raws": [
+    {
+      "at": "2026-11-26T15:43:50+09:00",
+      "text": "R001은 질문에 답만 하는 요청이라 Figma는 고치지 않고 「완료」로 바꿨습니다.\n\n- **답변**: Language DB는 `.history/guides/language-set/db/` 폴더에 있습니다. 메뉴마다 화면 글자와 번역을 담은 파일이 22개이고, 공통 번역 기준 `common.md`와 버전 이력 `history.md`가 함께 있습니다. Policy Setting 화면의 번역은 `db/setting-policy.md`에 있습니다.\n- **기준 데이터와의 차이**: 「UX 문서 > 기준 데이터」의 언어셋은 `glossary/language-set/sheet01~07.csv`로, 엑셀 시트를 그대로 옮긴 표입니다. `language-set/README.md`에 따르면 언어셋은 `db/` 폴더에서 고치고, 엑셀은 필요할 때 여기서 뽑습니다.\n- **처리 과정**: 시작 전에 Figma 파일이 열리는지와 작업 페이지가 「Policy Setting_tobe」로 맞는지 확인했습니다.\n- **규칙 문서**: 이 PC에 적용된 작업규칙·정책서 등 UX 문서 내용은 읽지 않았습니다. 질문 답변이라 필요 없다고 판단했지만, 「요청마다」 2단계는 읽고 처리하라고 정하고 있습니다. 완료 note 끝의 작업 기준 줄에도 적용된 문서 이름만 적었습니다.",
+      "cut": false
+    }
+  ],
   "work": "",
   "handoff": null
 }
