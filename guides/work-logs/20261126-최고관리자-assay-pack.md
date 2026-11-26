@@ -29,7 +29,7 @@ started: 2026-11-26
 | 4. 수정 · 확인 | | | |
 | 5. 완료 | | | |
 
-이어서 작업할 곳: 2단계 · 근거 · 분석 시작 (뒤 단계용 확인 항목 2 · 3 · 4 · 6과 요청자 확인 6 답: 팝업 정의 · 정책 · LI 세부정의는 Alert 카탈로그 · POL-TST-008 · TI-STN-08 세부정의로 대신 확인)
+이어서 작업할 곳: 2단계 · 절차 1 ~ 5 끝냄(근거 · 대조 · 용어 목록, Q1 ~ Q5 · C1 · C2), 절차 6 질문 2(DS-0012가 멈춘 작업 기록의 결정) 물음, 답 기다림 (다시 읽을 곳: 2단계 절차 6 "답을 받은 뒤" / 작업 기록 "근거" 대조 · "요청자 확인")
 
 ## 요청
 
@@ -85,12 +85,12 @@ started: 2026-11-26
 
 | # | 무엇 (절차 4번 순서 3 "뒤 단계로 넘김"의 1 ~ 5) | 관련된 곳 (CID · 디스크립션 번호) | 넘기는 곳 (2단계 / 3단계) | 이어진 번호 (Q · C · 논의 대상 ID / 근거로 풀림) |
 | --- | --- | --- | --- | --- |
-| 1 | 1. 기능 정의가 안 된 요소: [Delete] 「삭제 & Toast」의 Toast 문구가 없음 (TI-STN-08-P #4에는 「The file has been deleted.」) | TI-STN-08 #3 | 3단계 | |
-| 2 | 2. Alert · Confirm 보완 필요 지점: 파일을 고른 채 [X] · ESC · [Cancel]로 닫을 때 다시 묻는지 디스크립션에 없음 | TI-STN-08-01 화면 노출 경로 · #3 | 2단계 | |
-| 3 | 2. Alert · Confirm 보완 필요 지점: Active · Inactive를 바꾸고 [Save] 없이 [닫기] · 다른 Row [Details]를 누를 때 다시 묻는지 디스크립션에 없음 | TI-STN-08-P #2-1 · #3-1 | 2단계 | |
-| 4 | 4. 요청과 기존 화면이 맞지 않는 곳: Master 파일의 Active 변경 버튼이 TI-STN-08 #4-1은 「상세에 변경 버튼 미노출」, TI-STN-08-P #3은 「[Active] · [Inactive] 버튼 비활성」으로 서로 다름 | TI-STN-08 #4-1 · TI-STN-08-P #3 | 2단계 | |
+| 1 | 1. 기능 정의가 안 된 요소: [Delete] 「삭제 & Toast」의 Toast 문구가 없음 (TI-STN-08-P #4에는 「The file has been deleted.」) | TI-STN-08 #3 | 3단계 | 근거로 풀림 (Confirm_026 버튼 동작 · Toast_001 「The selected files have been deleted.」) |
+| 2 | 2. Alert · Confirm 보완 필요 지점: 파일을 고른 채 [X] · ESC · [Cancel]로 닫을 때 다시 묻는지 디스크립션에 없음 | TI-STN-08-01 화면 노출 경로 · #3 | 2단계 | Q3 |
+| 3 | 2. Alert · Confirm 보완 필요 지점: Active · Inactive를 바꾸고 [Save] 없이 [닫기] · 다른 Row [Details]를 누를 때 다시 묻는지 디스크립션에 없음 | TI-STN-08-P #2-1 · #3-1 | 2단계 | Q4 |
+| 4 | 4. 요청과 기존 화면이 맞지 않는 곳: Master 파일의 Active 변경 버튼이 TI-STN-08 #4-1은 「상세에 변경 버튼 미노출」, TI-STN-08-P #3은 「[Active] · [Inactive] 버튼 비활성」으로 서로 다름 | TI-STN-08 #4-1 · TI-STN-08-P #3 | 2단계 | Q1 |
 | 5 | 5. 대상 화면에서 찾은 고칠 점: 패널 화면 정보 title `Assay Pack Setting` → `Assay Pack File Details` (IA "Details", 화면 MD 제목과 다름) | TI-STN-08-P · LI-STN-08-P | 3단계 | |
-| 6 | 5. 대상 화면에서 찾은 고칠 점: 케이스 패널의 Storage Location Info Module · Unit 값(ConsumableStorage · Trolley, PlateSealing · ColdStorage)이 `glossary/modules.csv` · `module-units.csv` 이름인지 확인 | TI-STN-08-P · LI-STN-08-P 케이스 | 2단계 | |
+| 6 | 5. 대상 화면에서 찾은 고칠 점: 케이스 패널의 Storage Location Info Module · Unit 값(ConsumableStorage · Trolley, PlateSealing · ColdStorage)이 `glossary/modules.csv` · `module-units.csv` 이름인지 확인 | TI-STN-08-P · LI-STN-08-P 케이스 | 2단계 | 근거로 풀림 (modules.csv ConsumableStorage · PlateSealing, module-units.csv Trolley · ColdStorage 코드명) |
 | 7 | 5. 대상 화면에서 찾은 고칠 점: TI-STN-08-01 배경 목록의 Master 줄 Product Name 「-」 · Active 모두 Inactive가 TI-STN-08 목록(「Master Info」 · Active 4줄)과 다름 | TI-STN-08-01 배경 · TI-STN-08 #4 | 3단계 | |
 | 8 | 5. 대상 화면에서 찾은 고칠 점: LI-STN-08-P 케이스 Extraction Barcode Info 머리 「Schema Name」 · PCR 구성품 「Barcode Scheme Name」이 다른 곳(「Barcode Schema Name」)과 다름 | TI-STN-08-P · LI-STN-08-P 케이스 | 3단계 | |
 
@@ -105,17 +105,88 @@ started: 2026-11-26
 
 ## 근거
 
+2단계 (2026-11-26). 요건 1 · 경로 분기 기준 8 · 강도 "케이스 3 (다시 그리기)"로 읽음(정책 찾는 길 ① ~ ⑤, Alert · Toast 카탈로그 줄, 권한 · 모드 표). 대상 화면에 `basis` 없음(To-Be 화면 MD 빈 틀). `basis_start` 뒤로 바뀐 정책 · 기준데이터 없음. 요청자 확인 6 답대로 As Is 페이지에 없는 [팝업 정의] · [정책] · [LI-STN-08 / 세부정의]는 Alert 카탈로그 · POL-TST-008 · [TI-STN-08 / 세부정의]로 대신 확인함.
+
+**읽은 자료 목록**
+
+| 요건 | 종류 | 자료 (ID · 파일) | 연결 근거 (왜 이 요건과 관련 있나) | 설계에 씀 (O / -) | 쓰는 화면 · 요소 | 설계에 쓸 규칙 (번호 · 문장, `-`면 쓰지 않는 이유) |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | 정책 | POL-TST-008 Assay Pack 관리 | ① 정책 `cids`에 TI-STN-08 · TI-STN-08-P · LI-STN-08 · LI-STN-08-P, ③ asis 화면 MD "관련 정책" | O | 다섯 화면 전체 (0번 · #3 · #4 · TI-STN-08-01 #1 · #3) | 규칙 1 "Service일 때만 쓰며, L-IOS는 Main Mode에서 조회만" / 2 "JSON 파일로 … 여러 파일 … JSON이 아니면 Alert_041, 양식이 맞지 않으면 Alert_040 … 아무것도 등록하지 않음" / 3 "같은 File type, Product Name, 버전 … Confirm_028" / 4 "최신 버전이 자동으로 Active … Alert_039" / 5 "File type과 Product Name이 같은 파일 중 하나만 Active" / 6 "Master는 항상 최신 버전이 Active이며 바꿀 수 없음. Pretreatment, Extraction, PCR은 File details에서 Active·Inactive를 바꾸고 [Save] (Confirm_029, Confirm_030)" / 7 "Active 파일은 지울 수 없음 (Alert_042). Inactive 파일은 Confirm_026을 거쳐 지우며, Instrument에 적용된 데이터에는 영향이 없음" |
+| 1 | 정책 | POL-TST-010 검사 항목과 조합 검사 | ① 정책 `cids`에 TI-STN-08-P | O | TI-STN-08-P · LI-STN-08-P 패널 · 케이스 예시 값 | 규칙 1 "화면설계서의 예시 값도 이 실제 값(`glossary/test-items.csv`, `glossary/sample-types.csv`)을 씀" |
+| 1 | 정책 | POL-ACC-001 User Type과 권한 | ④ POL-TST-008 규칙 1이 가리킴 | - | | (메뉴 · 기능 노출 규칙. 이 메뉴 값은 권한 · 모드 표로 확인) |
+| 1 | 기준 자료 | `policy/permission-matrix.csv` Setting · Assay Pack Setting · All | ④ POL-TST-008 `data`, 0번 User Type 확인 | O | 다섯 화면 0번 User Type | Service O · Admin X · User X (2026-10-30 결정, 확정) |
+| 1 | 기준 자료 | `policy/client-mode-matrix.csv` Setting · Assay Pack Setting · All | ④ POL-TST-008 `data`, L-IOS 0번 확인 | O | LI-STN-08 · LI-STN-08-P 0번 L-IOS Client Mode | Main Mode O · Console Mode X · MS Mode X |
+| 1 | 기준 자료 | `reference/customer/assay-pack/README.md` (씨젠 Assay Pack 명세 R06) | ④ POL-TST-008 · 010 `data` | O | TI-STN-08-P · LI-STN-08-P 패널 항목 · 케이스 | 구조 요약 표(파일 종류별 JSON 키), 예시 값 "100 rxns / set, 96 rxns / tub, 1 ea / rack" |
+| 1 | Alert | `alert/alert-catalog.csv` Alert_039 · 040 · 041 · 042 · Confirm_026 · 028 · 029 · 030 | ③ 디스크립션에 나오는 Alert ID, POL-TST-008 `alerts` | O | TI-STN-08 #3, TI-STN-08-P #4, TI-STN-08-01 #1 · #3 | 각 줄의 제목 · 부제 · 버튼 · 버튼 동작 (예: Confirm_026 "Delete the selected files?" / "Deleted file records cannot be restored." / Delete · Cancel → 삭제 & Toast "The selected files have been deleted.") |
+| 1 | Alert | `alert/alert-catalog.csv` Alert_045 | POL-TST-008 · 카탈로그 Master 토글 줄 | - | | (사용 화면 없음. Master는 버튼으로 바꿀 수 없어 띄울 곳 없음, DS-0012) |
+| 1 | Toast | `alert/toast-catalog.csv` Toast_001 · Toast_002 | 디스크립션 [Delete] Toast, Confirm_026 · 030 버튼 동작 | O | TI-STN-08 #3, TI-STN-08-P #4 | Toast_001 "The selected files have been deleted." (Confirm_026 [Delete]) / Toast_002 "{version} has been deactivated." (Confirm_030 [Deactivate]) |
+| 1 | 논의 대상 | DS-0012 (결정, `work` 20261125-최고관리자-assay-pack) | POL-TST-008 · cids TI-STN-08 · TI-STN-08-P | O | TI-STN-08-P #4 [Save] | 결정 "Confirm_029 · Confirm_030 발생 조건을 File Details에서 [Active] / [Inactive]로 바꾸고 [Save]를 선택한 경우로 고치고, Confirm_029 버튼 동작의 'Master는 Alert_045'를 뺌" (다른 작업 기록이 반영하기로 한 결정 → 절차 6 질문 2) |
+| 1 | 기준데이터 | `glossary/test-items.csv` GI-B1 | POL-TST-010 규칙 1 | O | TI-STN-08-P · LI-STN-08-P 패널 PCR 예시 | GI-B1 · Allplex™ GI-Bacteria(I) Assay · Allplex_GI-B1_Assay · GI · Target Masking Y · Sh/EI, Cam, Yer, Vib, CdB, Aer, Sal · M9600 O · STARlet O |
+| 1 | 기준데이터 | `glossary/sample-types.csv` | POL-TST-010 규칙 1 | O | 패널 Sample Type 예시 | UI 표기 Raw stool · eNAT stool · Fecal swab, 코드 Raw_stool · eNAT_stool · Fecal_swab (코드 칸에는 코드, 이름 칸에는 UI 표기) |
+| 1 | 기준데이터 | `glossary/modules.csv` · `module-units.csv` | ⑤ 케이스 패널 Storage Location Info | O | TI-STN-08-P · LI-STN-08-P 케이스 Storage Location Info | Module Code ConsumableStorage · PlateSealing, Unit Code Trolley (ConsumableStorage) · ColdStorage (PlateSealing) 모두 있는 코드명 |
+| 1 | 기준데이터 | `glossary/terms.csv` · `glossary.md` | 절차 5 용어 대조 | O | 다섯 화면 디스크립션 | 아래 "용어 목록" |
+
+**관련 자료 없는 영역 · 요소**
+
+| 화면 · 영역 · 요소 | 근거로 삼는 것 |
+| --- | --- |
+| TI-STN-08 · LI-STN-08 #1 검색 영역 · #2 노출 개수 · #5 Pagination, #4 목록 컬럼 · 정렬 | 기존 UX 화면설계서만 근거 (Common UX는 3단계에서 그리며 읽음) |
+| TI-STN-08-01 #2 선택한 파일 목록 | 기존 UX 화면설계서만 근거 ([TI-STN-08 / Import 정의] ① · ②) |
+| TI-STN-08-P · LI-STN-08-P #2 선택 Row · 화면 노출 경로 | 기존 UX 화면설계서만 근거 |
+
+**대조**
+
+| 요건 · 화면 · 요소 | 결과 | 근거 | 다음 |
+| --- | --- | --- | --- |
+| 1 · 다섯 화면 · 0번 User Type | 정책에 있음 | permission-matrix Service만 = asis `user_type: [Service]` | 디스크립션 0번에 POL-TST-008로 이음 |
+| 1 · LI-STN-08 · LI-STN-08-P · 0번 L-IOS Client Mode | 정책에 있음 | client-mode-matrix Main Mode만 = asis `client_mode: [Main Mode]` | 같음 |
+| 1 · TI-STN-08 #3 · TI-STN-08-01 #1 · #3 Import · Alert | 정책에 있음 | POL-TST-008 규칙 2 ~ 4, Alert_039 · 040 · 041 · Confirm_028 | 정책 ID로 이음 |
+| 1 · TI-STN-08 #3 [Delete] Toast 문구 | 정책에 있음 | Confirm_026 버튼 동작 · Toast_001 "The selected files have been deleted." | 뒤 단계용 1 근거로 풀림 |
+| 1 · TI-STN-08-P #4 [Delete] Confirm 제목 | 기존 화면이 정책과 다름 | 화면 「Delete the selected file?」 ↔ Confirm_026 「Delete the selected files?」 | C1 |
+| 1 · TI-STN-08-P #4 [Delete] Toast 문구 | 기존 화면이 정책과 다름 | 화면 「The file has been deleted.」 ↔ Toast_001 「The selected files have been deleted.」 | C2 |
+| 1 · TI-STN-08-P #4 [Save] Confirm_029 · 030 발생 조건 | 논의 대상에 이미 있음 | DS-0012 결정 (다른 작업 기록 `work`) | 절차 6 질문 2 |
+| 1 · TI-STN-08-P #4 [Save] → Confirm_029 [Activate] 뒤 Toast | 정책에 없음 | Confirm_029 버튼 동작 "& Toast"인데 Toast 카탈로그에 활성 Toast 없음, 화면 #4는 "확인 시 반영"만 | Q2 |
+| 1 · TI-STN-08 #4-1 · TI-STN-08-P #3 Master Active 변경 버튼 | 기존 화면끼리 다름 (정책은 "바꿀 수 없음"만) | POL-TST-008 규칙 6 | Q1 |
+| 1 · TI-STN-08-P · LI-STN-08-P 패널 · 케이스 예시 값 | 정책에 있음 | POL-TST-010 규칙 1, test-items · sample-types · modules 값과 같음 | 그대로 그림 |
+
+**정책 수정 범위**
+
+없음 (DS-0012는 이미 결정. 정책 문장은 고치지 않고 Alert 카탈로그만 고침)
+
+**용어 목록**
+
+| 원래 표현 | 표준어 | 어디서 | 새 용어면 처리 |
+| --- | --- | --- | --- |
+| 디폴트 | Default | TI-STN-08 #1-1 · #1-2 · #1-3 · #2 · #3, LI-STN-08 #1-1 · #1-2 · #1-3 · #2, TI-STN-08-P #4 | |
+| 팝업 | Popup | TI-STN-08 #1-2 · #3 · #4-1, LI-STN-08 #1-2, TI-STN-08-P #4, TI-STN-08-01 화면 노출 경로 · #1 · #3 | |
+| 체크박스 | Checkbox | TI-STN-08 #4, LI-STN-08 #4 | |
+| 공통 UX | Common UX | TI-STN-08 #5, LI-STN-08 #5 | |
+| 시약 | Reagent | TI-STN-08-P #3, LI-STN-08-P #3, 참조 섹션 유형별 정의 | |
+| 바코드 | Barcode | TI-STN-08-P · LI-STN-08-P 참조 섹션 유형별 정의 | |
+| 소켓 | Socket | TI-STN-08-P · LI-STN-08-P 참조 섹션 유형별 정의 | |
+| 유효기간 | Expiration Date | TI-STN-08-P · LI-STN-08-P 참조 섹션 유형별 정의 | |
+| 알림 | Alert | TI-STN-08-P #4 ("삭제 불가 알림") | |
+| 장비 | Instrument | TI-STN-08-P #4 ("장비 반영 데이터") | |
+| Barcode Scheme Name · Schema Name | Barcode Schema Name | TI-STN-08-P · LI-STN-08-P 케이스 PCR 구성품 Barcode Info, LI-STN-08-P 케이스 Extraction (뒤 단계용 8) | |
+
 ## 설계
 
 ## 질문 대기
 
 | 번호 (Q) | 질문 | 관련된 곳 (CID · 디스크립션 번호) | 논의 대상 | T · L 같음 | 풀린 날 · 어떻게 |
 | --- | --- | --- | --- | --- | --- |
+| Q1 | Master 파일 Active 변경 버튼 모습 (TI-STN-08 #4-1 「상세에 변경 버튼 미노출」 ↔ TI-STN-08-P #3 「[Active] · [Inactive] 버튼 비활성」, POL-TST-008 규칙 6은 바꿀 수 없음만) | TI-STN-08 #4-1 · TI-STN-08-P #3 | | T만 (L-IOS는 보기만) | |
+| Q2 | Confirm_029 [Activate] 뒤 Toast 노출 여부 · 문구 (카탈로그 버튼 동작 「& Toast」, Toast 카탈로그에 없음) | TI-STN-08-P #4 | | T만 | |
+| Q3 | 파일을 고른 채 Import file Popup을 [X] · ESC · [Cancel]로 닫을 때 다시 묻는지 (Alert 카탈로그에 없음) | TI-STN-08-01 화면 노출 경로 · #3 | | T만 | |
+| Q4 | Active · Inactive를 바꾸고 [Save] 없이 [닫기] · 다른 Row [Details]를 누를 때 다시 묻는지 (Alert 카탈로그에 없음) | TI-STN-08-P #2-1 · #3-1 | | T만 | |
+| Q5 | L-IOS 등록된 파일 없음 · 검색 결과 없음 문구 ([LI-STN-08 / 세부정의]가 As Is 페이지에 없음, T-IOS 「Click Import to add a file.」은 [Import]가 없는 L-IOS에 맞지 않음) | LI-STN-08 #1-4 | | 다름 | |
 
 ## 변경 확인
 
 | 번호 (C) | 기존 화면 | 바꿔 그린 것 | 관련된 곳 (CID · 디스크립션 번호) | 근거 | T · L 같음 | 업데이트 메모 (O / -) | 확인한 날 · 답 (맞음 / 되돌림) |
 | --- | --- | --- | --- | --- | --- | --- | --- |
+| C1 | [Delete] 확인 Confirm 제목 「Delete the selected file?」 | Confirm_026 제목 「Delete the selected files?」로 | TI-STN-08-P #4 | (alert-catalog.csv Confirm_026) | T만 | O | |
+| C2 | [Delete] 뒤 Toast 「The file has been deleted.」 | Toast_001 「The selected files have been deleted.」로 | TI-STN-08-P #4 | (toast-catalog.csv Toast_001, Confirm_026 버튼 동작) | T만 | O | |
 
 ## 검토 질의
 
@@ -131,6 +202,7 @@ started: 2026-11-26
 | 4 | 2026-11-26 | 1단계 · 절차 2 순서 6 (겹침) | 진행 중인 20261125-최고관리자-assay-pack을 멈춤으로 두고, 그 작업이 만든 To-Be 화면 MD 다섯 개 · To Be 페이지 섹션을 이번에 처음부터 다시 쓸지, 그 작업의 반영 대기 TI-STN-08-P-R01 · TI-STN-08-R02를 이 작업으로 옮길지 | TI-STN-08 · LI-STN-08 · TI-STN-08-P · LI-STN-08-P · TI-STN-08-01, TI-STN-08-P-R01 · TI-STN-08-R02 | | 멈춤으로 두고 결과물(To-Be 화면 MD · To Be 페이지 섹션)을 처음부터 다시 씀, 반영 대기 두 항목은 이 작업으로 (2026-11-26) |
 | 5 | 2026-11-26 | 1단계 · 절차 5 질문 7 | 위 요건 목록(요건 1 · 경로 분기 기준 8 · 케이스 3)과 흐름(1 → 2 → 3 → 4 → 5)대로 진행할지 | 요건 1 | | 이대로 진행 (2026-11-26) |
 | 6 | 2026-11-26 | 1단계 · 절차 4 (asis 추출 빠짐) | 디스크립션이 가리키는 [TI-STN-08 / 팝업 정의] · [TI-STN-08 / 정책] · [LI-STN-08 / 세부정의] 프레임과 [TI-STN-08 / Import 정의] 5 · 7번이 As Is 페이지에 없음. 2단계에서 Alert 카탈로그 · POL-TST-008 · [TI-STN-08 / 세부정의]로 대신 확인하고 넘어갈지, 원본 프레임을 As Is 페이지에 옮겨 둔 뒤 다시 추출할지 | TI-STN-08 #1-4 · #3 · #4-1, LI-STN-08 #1-4, TI-STN-08-P #4, TI-STN-08-01 #1 · #3 | | 2단계에서 Alert 카탈로그 · POL-TST-008로 대신 확인, 2단계로 넘어감 (2026-11-26) |
+| 7 | 2026-11-26 | 2단계 · 절차 6 질문 2 | DS-0012(Confirm_029 · 030 발생 조건을 File Details [Save]로) 결정을 멈춘 작업 기록 20261125-최고관리자-assay-pack이 반영하기로 되어 있음. 이 작업이 이어받아 새 결정대로 그리고 5단계에 반영할지, 기다릴지 | TI-STN-08-P #4 · DS-0012 | | |
 
 ## 이 작업의 논의 대상
 
