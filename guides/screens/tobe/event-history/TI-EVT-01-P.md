@@ -136,6 +136,6 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 | Nucleic Acid Extraction | 화면 2 | LID-SPT-025 |
 | Notes | 화면 3 | LID-EVT-033 |
 | Resolution Notes | 화면 3 | |
-| Updated Date/Time. {date} | 화면 4 (date = 2026-09-29 16:01) || LID-EVT-027 |
-| Updated by. {id} | 화면 4 (id = ID123423) || LID-EVT-028 |
+| Updated Date/Time. {date} | 화면 4 (date = 2026-09-29 16:01) | LID-EVT-027 |
+| Updated by. {id} | 화면 4 (id = ID123423) | LID-EVT-028 |
 | List | 화면 5 | LID-EVT-036 |
