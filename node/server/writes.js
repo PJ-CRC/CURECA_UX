@@ -891,7 +891,9 @@ module.exports = function register(on, h) {
         const newOk = gm.folderList && /^[^\/\\_.][^\/\\]*\.md$/i.test(file) && !/\.\./.test(file);
         // CURECA 화면 정의서는 asis/ · tobe/ 아래 화면 MD를 meta.files에 없어도 목록에 넣으니(api.js stageFiles) 그 파일도 받는다
         const stageOk = h.isStageDoc(T, gm) && /^(asis|tobe)\/[^\/\\_.][^\/\\]*\/[^\/\\_.][^\/\\]*\.md$/i.test(file) && !/\.\./.test(file);
-        if (!file || !(core.arr(gm.files).includes(file) || newOk || stageOk)) throw new Error(`고칠 파일을 정해 주세요(file: ${core.arr(gm.files).join(', ')}).`);
+        // 본문 파일(meta.main — 예: UX가이드 「Common UX 가이드.md」)도 받는다(2026-11-26 — 화면에는 보이는데 files에 없어 고칠 수 없던 것)
+        const mainOk = !!gm.main && file === nn(gm.main) && !/\.\./.test(file);
+        if (!file || !(core.arr(gm.files).includes(file) || newOk || stageOk || mainOk)) throw new Error(`고칠 파일을 정해 주세요(file: ${core.arr(gm.files).concat(gm.main ? [gm.main] : []).join(', ')}).`);
         core.writeText(path.join(rd, rev, ...file.replace(/\.\.\//g, '_up/').split('/')), md.replace(/\r\n/g, '\n'));
       } else core.writeText(path.join(rd, rev + '.md'), md.replace(/\r\n/g, '\n'));
       h.keepFirst(path.join(T.guideRoot, gid), gm, file);   // 처음 내용을 남긴 뒤
