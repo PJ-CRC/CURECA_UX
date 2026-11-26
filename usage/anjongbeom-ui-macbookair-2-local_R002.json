@@ -4,7 +4,7 @@
   "reqId": "R002",
   "reqType": "요청",
   "team": "stagora",
-  "at": "2026-11-25T15:56:49+09:00",
+  "at": "2026-11-26T17:37:12+09:00",
   "from": "2026-11-25T15:51:44+09:00",
   "by": "안종범",
   "doneBy": "Claude",
@@ -16,13 +16,13 @@
   "nodeId": "",
   "text": "언어셋에 추가한 문구는 다른 언어셋과 비교해서 UX Writing을 했어? 엑셀 내보내기가 버튼 명에 쓰이는데 'Export to Excel'가 맞아? 그리고 지점도 실제로 branch로 쓰이는게 맞는지 확인해봐. 단순히 번역만 하는게 아니라, 화면과 맥락을 파악해서 추가해야해.",
   "models": {
-    "claude-opus-5-5": 25
+    "claude-opus-5-5": 51
   },
-  "calls": 25,
-  "input": 50,
-  "cacheWrite": 79540,
-  "cacheRead": 2427504,
-  "output": 23714,
-  "total": 2530808,
-  "usd": 1.5963
+  "calls": 51,
+  "input": 99,
+  "cacheWrite": 165020,
+  "cacheRead": 5227909,
+  "output": 47099,
+  "total": 5440127,
+  "usd": 3.3081
 }
