@@ -367,6 +367,7 @@ started: 2026-11-25
 | 2 | 2026-11-25 | 1단계 절차 4 순서 3 (IA와 화면이 다른 곳) | 짝 화면 관계: IA T-IOS 줄은 `짝 화면 동일 Y`인데, 화면은 L-IOS에만 Status Toggle · [Mark all as Closed] · Resolution Notes 입력이 있어 다름(화면 MD `tl_relation: 기능 추가`). IA를 화면에 맞출지 | TI-EVT-P · TI-EVT-01-P (짝 LI-EVT-P · LI-EVT-01-P) | | IA 그대로 — T · L은 같은 화면이고 기능 차이일 뿐 (2026-11-25, 서보경) |
 | 3 | 2026-11-25 | 1단계 절차 5 질문 6 | 대상 화면의 반영 대기 항목 23개(묶음 1 ~ 6)를 묶음마다 반영할지 | "대상 화면의 반영 대기 항목" 묶음 1 ~ 6 | | 묶음 1 ~ 5 반영 (1 · 3 · 4 · 5는 추천대로, 2는 「T-IOS는 Status 변경 기능 없이 목록에 상태값만 표기」로 반영), 묶음 6 제외 (바꾸지 않음) (2026-11-25, 서보경) |
 | 5 | 2026-11-26 | 4단계 절차 1 (C33 답 대신 되물음) | 「데이터 없음」 문구는 다른 화면에서 어디에 쓰나, 보통 무엇을 쓰나 → 저장소 사용처를 보여 줌(No results found. LID-STN-015: Protocol · Tube · Assay Pack Setting / No {대상} found.: Tube · Assay Pack 등록 없음 / There are no tests in progress. / No registered modules available / No item). 추천 No results found. 그대로, 다른 안 No events found. | TI-EVT-P · LI-EVT-P #3 | 'No results found.'로 둔 채 기다림 | No results found. 그대로, 통일 (2026-11-26, 서보경) |
+| 6 | 2026-11-26 | 4단계 절차 2 (예외, 질의 7 결과 보고) | TI-EVT-P · LI-EVT-P 기획 프레임에서 Dim 아래(디스크립션 상자 쪽 세로)가 흰 바탕으로 남음. 세로로도 Dim을 채울지 | TI-EVT-P · LI-EVT-P 0 | 너비 · 세로 가운데만 맞춘 채 둠 | 세로는 그대로 둠 (2026-11-26, 서보경), 고침 없음 |
 | 4 | 2026-11-25 | 1단계 절차 5 질문 7 | 위 요건 목록과 흐름대로 진행할지 (2단계로 넘어갈지) | 요건 1 | | 그대로 진행 (2026-11-25, 서보경). 이어서 「1단계까지만 하고 2단계는 멈춤」 (2026-11-25, 서보경) |
 
 ## 이 작업의 논의 대상
