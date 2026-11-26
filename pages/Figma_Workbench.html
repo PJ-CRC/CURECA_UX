@@ -514,7 +514,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
 .req .raw .rb{margin-top:6px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2)}
 .req.live .raw .rb{background:var(--surface)}
 .req .raw .rt{font-size:12px;color:var(--ink-3);margin-bottom:4px}
-.req .raw .rx{font-size:13px;line-height:1.6;color:var(--ink-2);white-space:pre-wrap;word-break:break-word;max-height:420px;overflow:auto}
+.req .raw .rx{font-size:13px;line-height:1.6;color:var(--ink-2);word-break:break-word;max-height:420px;overflow:auto}
 .req .a p{margin:0}
 .req .a p+p,.req .a p+ul,.req .a ul+p{margin-top:6px}
 .req .a ul{margin:4px 0 0;padding-left:18px;white-space:normal}
@@ -531,7 +531,22 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
 .req .qa i{font-style:normal;color:var(--ink-3);margin-left:6px;font-size:12px}
 .req .ask{margin-top:8px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2)}
 .req.live .ask{background:var(--surface)}
-.req .ask .aq{margin:0 0 8px;font-size:13px;font-weight:500;color:var(--ink);white-space:pre-wrap}
+.req .ask .aq{margin:0 0 8px;font-size:13px;font-weight:500;color:var(--ink)}
+/* Claude 답변 서식(mdView): 요약 · 질문 · 자세히 */
+.md{white-space:normal}
+.md p{margin:0}
+.md>*+*{margin-top:6px}
+.md .mh{margin-top:10px;color:var(--ink)}
+.md>.mh:first-child{margin-top:0}
+.md ul,.md ol{margin:4px 0 0;padding-left:18px}
+.md ul ul,.md ol ul,.md ul ol{margin-top:2px}
+.md li{margin:2px 0}
+.md b{font-weight:600;color:var(--ink)}
+.md code{font-size:12px;padding:0 3px;border-radius:3px;background:var(--surface-2)}
+.md .mt{overflow-x:auto}
+.md table{border-collapse:collapse;font-size:12px;margin-top:2px}
+.md th,.md td{border:1px solid var(--line);padding:3px 6px;text-align:left;vertical-align:top}
+.md th{font-weight:600;background:var(--surface-2)}
 .req .ask .opts{display:flex;flex-wrap:wrap;gap:6px}
 .req .ask .opt{min-height:30px;padding:0 12px;border:1px solid var(--line-2);border-radius:8px;background:var(--surface);color:var(--ink-2);font-size:13px;font-weight:600;cursor:pointer}
 .req .ask .opt:hover{border-color:var(--ink-3);color:var(--ink)}
@@ -2028,7 +2043,6 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
   /* 「자세히」(2026-11-18): note는 Claude가 Workbench용으로 쓴 요약본, 이것은 그 차례의 원래 답변 전체(요청의 raws, 최근 것이 위).
      목록을 몇 초마다 다시 그려도 펼친 것은 펼친 채(RAW_OPEN) */
   var RAW_OPEN = {};
-  function rawMd(s){ return esc(s).replace(/\*\*([^*\n]+)\*\*/g, '<b>$1</b>').replace(/`([^`\n]+)`/g, '<code>$1</code>'); }   // 원래 답변의 **굵게** · `코드`만 모양으로(나머지는 글 그대로)
 
   function rawHtml(r){
     var L = (r.raws || []).filter(function(x){ return x && x.text; }); if (!L.length) return '';
@@ -2037,9 +2051,50 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       L.slice().reverse().map(function(x){ return '<div class="rb"><div class="rt">' + esc(fmt(x.at)) + (x.cut ? ' · 앞부분 2만 자' : '') + '</div><div class="rx">' + rawMd(x.text) + '</div></div>'; }).join('') + '</details>';
   }
   document.addEventListener('toggle', function(e){ var d = e.target; if (d && d.matches && d.matches('details.raw[data-raw]')) { if (d.open) RAW_OPEN[d.dataset.raw] = 1; else delete RAW_OPEN[d.dataset.raw]; } }, true);
+  /* Claude 답변 서식(2026-11-26): 요약(note) · 질문(ask) · 원래 답변(자세히)에 같은 모양 — **굵게** · `코드` · 제목(#) · 글머리표(들여쓰기 2단) · 번호 목록 · 표 · 줄 바꿈 · 빈 줄 = 문단 */
+  function mdInline(s){ return esc(s).replace(/\*\*([^*\n]+)\*\*/g, '<b>$1</b>').replace(/`([^`\n]+)`/g, '<code>$1</code>'); }
+  function mdView(src){
+    var L = String(src || '').replace(/\r/g, '').split('\n'), html = '', para = [], lists = [], i = 0;
+    function endPara(){ if (para.length) { html += '<p>' + para.map(mdInline).join('<br>') + '</p>'; para = []; } }
+    function endLists(d){ while (lists.length > d) { html += '</li></' + lists.pop().t + '>'; } }
+    function endAll(){ endPara(); endLists(0); }
+    for (; i < L.length; i++) {
+      var l = L[i], t = l.trim();
+      if (!t) { endAll(); continue; }
+      var hm = /^(#{1,4})\s+(.+)$/.exec(t);
+      if (hm) { endAll(); html += '<p class="mh"><b>' + mdInline(hm[2].replace(/\*\*/g, '')) + '</b></p>'; continue; }
+      if (/^\|.*\|$/.test(t)) {   // 표: 연속한 | 줄
+        endAll(); var rows = [];
+        for (; i < L.length && /^\|.*\|$/.test(L[i].trim()); i++) rows.push(L[i].trim());
+        i--;
+        var cells = function(r){ return r.replace(/^\||\|$/g, '').split('|').map(function(c){ return c.trim(); }); };
+        var body = rows.filter(function(r){ return !/^\|[\s:|-]+\|$/.test(r); });
+        html += '<div class="mt"><table>' + body.map(function(r, k){ var tg = k === 0 && rows.length > 1 && /^\|[\s:|-]+\|$/.test(rows[1]) ? 'th' : 'td'; return '<tr>' + cells(r).map(function(c){ return '<' + tg + '>' + mdInline(c) + '</' + tg + '>'; }).join('') + '</tr>'; }).join('') + '</table></div>';
+        continue;
+      }
+      var lm = /^(\s*)([-*•·]|\d+[.)])\s+(.*)$/.exec(l);
+      if (lm) {
+        endPara();
+        var d = Math.min(2, Math.floor(lm[1].replace(/\t/g, '  ').length / 2) + 1), tag = /\d/.test(lm[2]) ? 'ol' : 'ul';
+        if (d > lists.length + 1) d = lists.length + 1;
+        endLists(d);
+        if (lists.length === d && lists[d - 1].t !== tag) endLists(d - 1);
+        if (lists.length === d) html += '</li><li>';
+        else { html += '<' + tag + '><li>'; lists.push({ t: tag }); }
+        html += mdInline(lm[3]);
+        continue;
+      }
+      if (lists.length && /^\s{2,}/.test(l)) { html += '<br>' + mdInline(t); continue; }   // 글머리표 아래 이어지는 줄
+      endLists(0); para.push(t);
+    }
+    endAll();
+    return '<div class="md">' + html + '</div>';
+  }
   function noteHtml(s){
-    var paras = String(s).replace(/\r/g, '').split('\n');
-    if (paras.length === 1) paras = s.split(/(?<=[.。])\s+(?=\S)|;\s+/);
+    // 여러 줄이거나 마크다운 표시가 있으면 서식대로. 한 줄짜리 예전 note만 아래처럼 문장 · 「 / 」로 나눠 보인다
+    if (/\n/.test(String(s)) || /\*\*|`/.test(String(s))) return mdView(s);
+    var paras = [String(s)];
+    paras = String(s).split(/(?<=[.。])\s+(?=\S)|;\s+/);
     var html = '', list = [];
     function flush(){ if (list.length) { html += '<ul>' + list.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>'; list = []; } }
     paras.forEach(function(p){
@@ -2070,7 +2125,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       return '<button type="button" class="opt' + (o.action === 'delete' ? ' del' : '') + '" data-ask="' + esc(r.id) + '" data-i="' + i + '">' + esc(o.label) + '</button>';
     }).join('');
     var free = r.ask.free !== false;
-    return h + '<div class="ask" data-ask-id="' + esc(r.id) + '"><p class="aq">' + esc(r.ask.q) + '</p>' + (opts ? '<div class="opts w-only">' + opts + '</div>' : '') +
+    return h + '<div class="ask" data-ask-id="' + esc(r.id) + '"><div class="aq">' + mdView(r.ask.q) + '</div>' + (opts ? '<div class="opts w-only">' + opts + '</div>' : '') +
       (free ? '<div class="af w-only"><input type="text" placeholder="직접 답하기 (Enter로 보내기)" aria-label="' + esc(r.id) + ' 질문에 답하기" data-draft="' + esc(r.id) + '" value="' + esc(drafts[r.id] || '') + '"><button type="button" data-send="' + esc(r.id) + '">보내기</button></div>' : '') + '</div>';
   }
   function answer(id, text, resolve, btn){

@@ -34,7 +34,9 @@ const COMPACT = 80, IDLE_MIN = 30, TURN_MIN = 20, USAGE_MIN = 5;
 //  답이 와서 같은 요청만 다시 「대기」가 되면 그 세션에 답만 보낸다. 예전에는 답이 1분 만에 와도 새 세션이 규칙 · 작업 기록 · 화면 MD를
 //  처음부터 다시 읽었다(R037 · R038 · R039 모두 두 번씩, 한 번에 7만 ~ 17만 토큰). 55분 = 대화 캐시(1시간) 안.
 //  대화가 KEEP_MAX 토큰보다 크면 두지 않는다(큰 대화를 이어 보내는 값이 다시 읽기보다 커진다)
-const KEEP_MIN = 55, KEEP_MAX = 250000;
+// KEEP_MAX(2026-11-26): 이 대화 크기까지는 끊지 않고 같은 세션으로 간다(질문 답 기다림 · 이어서 계속). 넘으면 새 세션(안전선 — 자동 요약 COMPACT 80% 전에)
+//  예전 25만은 「끊는 기준 35만 · 45만」보다 낮아 질문을 남긴 세션이 닫혔다(R003 09:24, 29만 → 답 뒤 새 세션 18분)
+const KEEP_MIN = 55, KEEP_MAX = 700000;
 // 사용 한도가 거의 찼을 때(2026-11-18): 처리는 막지 않고 알리기만 한다. WARN_PCT 이상이면 Claude에게 「끊길 수 있으니 화면마다 중간 저장」을 알리고,
 //  처리 중 상태 글(시작 안내)과 기록에 사용량을 붙인다 — 중간에 한도에 걸려도 한 일이 남게(R041: 14분 일하고 결과 없이 끝남)
 const WARN_PCT = 80;
@@ -126,10 +128,16 @@ async function releaseOnLimit(ids, hm) {
 // 지금 대화 크기(2026-11-25): 처리 중인 Claude가 「나눠서 이어 가기」를 정할 때 읽는다(requests-flow.md). Claude는 자기 대화 크기를 모르므로
 //  응답마다 받은 사용량(입력 + 캐시)을 workbench/.agent_ctx.json에 적어 둔다(5초에 한 번까지). 예전에는 기준 없이 단계 경계마다 끊어
 //  대화가 7 ~ 13%일 때도 새 세션을 띄웠다(R001, 세션마다 시작 비용 약 13만 ~ 21만 토큰)
+// 창 크기(2026-11-26): 세션의 창은 차례가 끝날 때(result)에야 알려진다. 예전에는 그 전까지 기본값 20만을 적어, 처리 중인 Claude가
+//  「창이 거의 찼다」며 19만에서 스스로 끊었다(R003 11:06 · 11:15 · 11:19 — 실제 창 100만). 알게 된 값을 기억해 두고, 모르면 0(모름)
+const WINF = path.join(WB, '.agent_win.json');
+let WIN = Number((readJson(WINF) || {}).win) || 0;
+function ctxHint() { return `
+- 대화 크기: 지금 약 ${Math.round(((S && S.ctx) || 0) / 10000)}만 토큰, 창 크기 ${WIN ? Math.round(WIN / 10000) + '만' : '모름'}. 끊는 기준은 docs/claude/requests-flow.md 「끊지 않고 이어 가기」뿐이다(창 크기로 따로 끊지 않는다).`; }
 let ctxSavedAt = 0;
 function saveCtx() {
   if (!S || Date.now() - ctxSavedAt < 5000) return; ctxSavedAt = Date.now();
-  try { fs.writeFileSync(path.join(WB, '.agent_ctx.json'), JSON.stringify({ at: now(), ids: S.turnIds || [], ctx: S.ctx || 0, win: S.win || 0 }), 'utf8'); } catch (e) {}
+  try { fs.writeFileSync(path.join(WB, '.agent_ctx.json'), JSON.stringify({ at: now(), ids: S.turnIds || [], ctx: S.ctx || 0, win: S.win || WIN || 0 }), 'utf8'); } catch (e) {}
 }
 function claudeCmd(args) {
   // .cmd · .bat(npm 설치)은 셸로 띄운다
@@ -182,7 +190,7 @@ function usageNow() {
 const hmOf = (t) => { const d = new Date(t), same = d.toDateString() === new Date().toDateString(); return (same ? '' : (d.getMonth() + 1) + '/' + d.getDate() + ' ') + d.toTimeString().slice(0, 5); };
 function usageHint() {
   const u = usageNow(); if (!u || u.pct < WARN_PCT) return '';
-  return `\n- 지금 Claude 사용량이 ${u.label} ${u.pct}%${u.resetsAt ? '(' + hmOf(u.resetsAt) + ' 초기화)' : ''}라 처리 중 한도에 걸려 끊길 수 있다. 끊겨도 한 일이 남게: 화면(프레임) · 파일 하나를 끝낼 때마다 작업 기록의 이어 갈 곳 줄(CURECA는 「이어서 작업할 곳:」)과 요청 note(update)를 먼저 고친다. 사용량이 높다는 이유로 대상 중간에 끊지 않는다(끊는 곳은 docs/claude/requests-flow.md 「나눠서 이어 가기」). 기록을 화면마다 고쳐 두면 한도에 걸려 끊겨도 다음 세션이 거기서 이어 간다(docs/claude/requests-flow.md 「끊겨도 한 일이 남게」).`;
+  return `\n- 지금 Claude 사용량이 ${u.label} ${u.pct}%${u.resetsAt ? '(' + hmOf(u.resetsAt) + ' 초기화)' : ''}라 처리 중 한도에 걸려 끊길 수 있다. 끊겨도 한 일이 남게: 화면(프레임) · 파일 하나를 끝낼 때마다 작업 기록의 이어 갈 곳 줄(CURECA는 「이어서 작업할 곳:」)과 요청 note(update)를 먼저 고친다. 사용량이 높다는 이유로 대상 중간에 끊지 않는다(끊는 곳은 docs/claude/requests-flow.md 「끊지 않고 이어 가기」). 기록을 화면마다 고쳐 두면 한도에 걸려 끊겨도 다음 세션이 거기서 이어 간다(docs/claude/requests-flow.md 「끊겨도 한 일이 남게」).`;
 }
 // 요청이 없을 때도 5분마다: 아주 짧은 질문(가장 싼 모델 · 도구 없음)을 보내 rate_limit_event를 읽는다. CLAUDE.md를 읽지 않게 임시 폴더에서
 async function probeUsage() {
@@ -227,7 +235,7 @@ function startSession(model, effort) {
   let p;
   try { p = spawn(c.cmd, c.args, spawnOpt(c, { cwd: ROOT, env: Object.assign({}, process.env, { CLAUDE_AUTOCOMPACT_PCT_OVERRIDE: String(COMPACT) }) })); }
   catch (e) { log('세션 시작 실패: ' + e.message); return false; }
-  const s = { model: model || '', effort: effort || '', p, turns: 0, last: Date.now(), ctx: 0, win: 200000, lines: [], waiters: [], ended: false, err: '' };
+  const s = { model: model || '', effort: effort || '', p, turns: 0, last: Date.now(), ctx: 0, win: WIN, conts: 0, lines: [], waiters: [], ended: false, err: '' };
   let buf = '';
   p.stdout.on('data', (d) => { buf += d.toString('utf8'); let i; while ((i = buf.indexOf('\n')) >= 0) { const l = buf.slice(0, i).replace(/\r$/, ''); buf = buf.slice(i + 1); s.lines.push(l); const w = s.waiters.shift(); if (w) w(); } });
   p.stderr.on('data', (d) => { s.err = (s.err + d.toString('utf8')).slice(-4000); });
@@ -284,9 +292,24 @@ async function sendTurn(text) {
     if (m.type === 'result') {
       S.turns++; S.last = Date.now();
       if (m.modelUsage) for (const k of Object.keys(m.modelUsage)) if (m.modelUsage[k] && m.modelUsage[k].contextWindow) S.win = Number(m.modelUsage[k].contextWindow);
+      if (S.win && S.win !== WIN) { WIN = S.win; try { fs.writeFileSync(WINF, JSON.stringify({ win: WIN, at: now() }), 'utf8'); } catch (e) {} }
       return { ok: !m.is_error, dead: false, text: String(m.result == null ? '' : m.result), ms: m.duration_ms };
     }
   }
+}
+// 플러그인 상태(2026-11-26): 차례를 시작할 때 요청 파일의 Figma 플러그인이 켜져 있는지 감시가 직접 확인해 지시에 넣는다.
+//  예전에는 Claude가 GET /api/jobs?kind=fill로 확인해야 했는데 한 번도 확인하지 않고 use_figma 코드로만 그렸다(R003 — 플러그인은 켜져 있었음)
+async function pluginHint(out) {
+  const ids = out.match(/\bR\d{3,}\b/g) || []; if (!ids.length) return '';
+  const items = ((readJson(path.join(WB, 'edit_requests.json')) || {}).items || []).filter(Boolean);
+  const keys = [...new Set(ids.map((id) => (items.find((x) => x.id === id) || {}).fileKey).filter(Boolean))]; if (!keys.length) return '';
+  let pl = {};
+  try { const r = await fetch(`http://127.0.0.1:${PORT}/api/jobs?kind=fill`); if (r.ok) pl = (await r.json()).plugins || {}; } catch (e) { return ''; }
+  const on = keys.filter((k) => pl[k] != null && pl[k] <= 180), off = keys.filter((k) => !on.includes(k));
+  let s = '';
+  if (on.length) s += `\n- **Figma 플러그인 켜짐**(${on.join(', ')}, 차례 시작 때 감시가 확인): 패널 행 · 확인 목록 · 라벨처럼 정해진 컴포넌트에 내용을 넣는 일은 use_figma 코드로 그리지 말고 **컴포넌트 채우기 작업(kind:'fill')**으로 한다(docs/claude/jobs.md 「fill」). 작업규칙이 정한 「무엇을 그릴지」는 그대로이고 넣는 도구만 다르다 — 작업규칙과 다른 방법(지름길)이 아니다. 프레임 배치 · 복제 등 fill로 안 되는 것만 use_figma. fill 작업이 「플러그인 응답 없음」으로 끝나면 그때부터 use_figma.`;
+  if (off.length) s += `\n- Figma 플러그인 꺼짐(${off.join(', ')}): 그리기는 use_figma로 한다(플러그인 확인 호출은 하지 않는다).`;
+  return s;
 }
 // 감시 결과에 적힌 요청 · 작업의 내용을 메시지에 함께 넣는다(2026-11-17): Claude가 처리를 시작할 때 다시 조회하느라(curl · python 시도 등) 10 ~ 20초를 쓰던 것을 없앤다.
 //  긴 글 · 첨부는 줄여 넣고(첨부는 이름 · 파일 경로만), 지금 상태를 바꿀 때는 Claude가 서버에서 다시 확인한다
@@ -318,7 +341,15 @@ function makeResume(out) {
   return `[Workbench 요청 감시 결과 — 이 대화에서 질문을 남긴 요청에 답이 왔다]
 ${out}
 ${details(out)}
-이 대화에서 「보류」 + 질문으로 멈춘 요청에 사람이 답했다(위 replies의 마지막). 이 대화에서 이미 읽은 규칙 문서 · 화면 MD는 바뀌지 않았으면 다시 읽지 말되, 답대로 **다음 단계로 넘어가면 그 단계 문서는 작업규칙대로 처음부터 읽는다**(아직 읽지 않은 문서다 — 작업규칙이 읽으라고 정한 문서 · 범위는 줄이지 않는다). 작업 기록이 있으면 처음부터 읽지 말고 머리말 · 단계 표 · 이어 갈 곳 줄만 다시 읽어 내가 마지막에 쓴 것과 같은지만 본다(다르면 처음부터가 아니라 작업규칙의 「끊긴 작업 이어 가기」대로 — docs/claude/requests-flow.md 「같은 세션에서 이어 갈 때」). 그 답대로 하던 작업을 이어서 처리하라. 지금 이 대화는 약 ${Math.round((S && S.ctx || 0) / 10000)}만 토큰이다 — 새 세션으로 넘기는 것은 requests-flow.md 「나눠서 이어 가기」의 숫자 기준을 넘었을 때만이다(단계가 바뀐다는 이유만으로 넘기지 않는다. 대화 크기는 workbench/.agent_ctx.json의 ctx). 처리 방식(「진행 중」 → 처리 → 「완료」 또는 「보류」 + ask, 캡처, frames, 사용자에게 대화로 묻지 않기, 끝나면 몇 줄 요약)은 앞과 같다.${usageHint()}`;
+이 대화에서 「보류」 + 질문으로 멈춘 요청에 사람이 답했다(위 replies의 마지막). 이 대화에서 이미 읽은 규칙 문서 · 화면 MD는 바뀌지 않았으면 다시 읽지 말되, 답대로 **다음 단계로 넘어가면 그 단계 문서는 작업규칙대로 처음부터 읽는다**(아직 읽지 않은 문서다 — 작업규칙이 읽으라고 정한 문서 · 범위는 줄이지 않는다). 작업 기록이 있으면 처음부터 읽지 말고 머리말 · 단계 표 · 이어 갈 곳 줄만 다시 읽어 내가 마지막에 쓴 것과 같은지만 본다(다르면 처음부터가 아니라 작업규칙의 「끊긴 작업 이어 가기」대로 — docs/claude/requests-flow.md 「같은 세션에서 이어 갈 때」). 그 답대로 하던 작업을 이어서 처리하라. **답을 받은 차례는 빠르게**(requests-flow.md 「답을 받은 차례」): 다음 질문이 있으면 그 질문(「보류」 + ask)부터 먼저 올리고, 답 기록 · 작업 기록 쓰기는 그 뒤에 한 번에 몰아서 한다. 처리 방식(「진행 중」 → 처리 → 「완료」 또는 「보류」 + ask, 캡처, frames, 사용자에게 대화로 묻지 않기, 끝나면 몇 줄 요약)은 앞과 같다.${ctxHint()}${usageHint()}`;
+}
+// 이어서 계속(2026-11-26): Claude가 사람에게 묻지 않고 요청을 「대기」로 돌려 차례를 끝냈는데 대화가 KEEP_MAX 아래면, 새 세션을 띄우지 않고 같은 대화에 이어 보낸다
+function makeCont(out) {
+  return `[Workbench 요청 감시 — 이어서 계속]
+${out}
+${details(out)}
+(질문을 먼저 올리고 기록하던 사이 사람이 답했으면 위 replies의 마지막이 새 답이다 — 그 답대로 이어 간다.)
+방금 이 대화에서 「대기」로 돌려 둔 요청을 같은 대화에서 이어 간다. 새 세션이 아니니 규칙 문서 · 작업 기록 · 화면 MD를 다시 읽지 말고, 「진행 중」으로 바꾼 뒤 멈춘 곳부터 바로 이어라. 작업규칙이 사람에게 묻는 곳(「보류」 + ask)이나 끝까지 멈추지 않는다(requests-flow.md 「끊지 않고 이어 가기」). 처리 방식은 앞과 같다.${ctxHint()}${usageHint()}`;
 }
 // 차례가 끝난 뒤 그 차례의 요청 중 「보류」 + 질문(ask)으로 답을 기다리는 것(겹침 대기는 빼고)
 // 요청 · 작업의 지금 note · status(차례 앞뒤로 견줘 진척을 본다)
@@ -331,6 +362,11 @@ function progressed(ids, before) { const now2 = noteSnap(ids); return ids.some((
 function waitingIds(ids) {
   const items = ((readJson(path.join(WB, 'edit_requests.json')) || {}).items || []).filter(Boolean);
   return ids.filter((id) => { const r = items.find((x) => x.id === id); return r && r.status === '보류' && r.ask && !String(r.note || '').startsWith('겹침 대기'); });
+}
+// 차례가 끝난 뒤 「대기」로 돌아가 있는 요청(사람이 멈춘 것은 빼고)
+function selfSplitIds(ids) {
+  const items = ((readJson(path.join(WB, 'edit_requests.json')) || {}).items || []).filter(Boolean);
+  return ids.filter((id) => { const r = items.find((x) => x.id === id); return r && r.status === '대기' && !r.stopped; });
 }
 // 감시 결과가 기다리던 요청의 답뿐인지(PENDING · RESUME만, 모든 ID가 기다리던 것)
 function onlyAnswers(out, keep) {
@@ -349,7 +385,7 @@ ${details(out)}
 - 감시는 하지 마라(백그라운드 에이전트가 처리 뒤 다시 감시한다).
 - 사용 한도 표시(get_usage · .plan_usage.json)는 건너뛴다(이 실행에는 그 도구가 없다).
 - 요청 · 작업의 team(없으면 cureca)대로 일한다: CLAUDE.md 「팀」처럼 서버 API에 ?team={team}, 다른 팀이면 .history/teams/{team}/… 폴더, 사용량 기록(POST /api/usage)에도 team, Workbench 요청의 작업 기준은 GET /api/guides?team={team}.
-- 사용자에게 대화로 묻지 마라. 해석이 모호하면 「보류」로 바꾸고 note에 이유, 고를 답이 있으면 \`ask\`(질문 · 선택지, CLAUDE.md)를 함께 남긴다. Figma에 접근할 수 없으면 「보류」(작업은 「실패」)와 note에 이유. 요청에 \`replies\`(사람의 답)가 있으면 마지막 답대로 이어서 처리한다.
+- 사용자에게 대화로 묻지 마라. 해석이 모호하면 「보류」로 바꾸고 note에 이유, 고를 답이 있으면 \`ask\`(질문 · 선택지, CLAUDE.md)를 함께 남긴다. Figma에 접근할 수 없으면 「보류」(작업은 「실패」)와 note에 이유. 요청에 \`replies\`(사람의 답)가 있으면 마지막 답대로 이어서 처리한다.${ctxHint()}
 - 요청은 감시 결과에 적힌 순서대로(우선순위 높음 먼저 · 먼저 등록한 것부터) 한 개씩 「진행 중」 → 처리 → 「완료」 순서로 한다. 「진행 중」으로 바꿀 때 서버가 「이미 진행 중」이라고 거절하면 다른 Claude 세션이 처리 중이니 그 항목은 건너뛴다. 요청 프레임이 아닌 다른 화면 · 새 프레임을 고쳤으면 그 프레임들을 모두 캡처하고 「완료」 update에 frames:[{nodeId, name}]를 함께 보낸다. 모두 끝나면 처리 내용을 몇 줄로 요약하고 이번 차례를 끝낸다.${usageHint()}`;
 }
 
@@ -488,20 +524,21 @@ async function main() {
     const model = scanModel, effort = scanEffort;
     if (S && S.keep) { if (onlyAnswers(out, S.keep) && S.model === model && S.effort === effort) resume = true; else await stopSession('다른 요청이 와서 새 세션'); }
     if (S && (S.model !== model || S.effort !== effort)) await stopSession('모델 · 강도가 달라 새 세션');
-    if (S) S.keep = null;
+    const cont = resume && S && S.cont; if (S) { S.keep = null; S.cont = false; }
     if (!S) startSession(model, effort);
     if (!S) { save('error', 'Claude 세션을 띄우지 못했습니다. 기록: workbench/.agent.log'); await sleep(30000); continue; }
     S.turnIds = out.match(/\b[RJ]\d{3,}\b/g) || [];
     const turnStart = noteSnap(S.turnIds);
     St.ids = S.turnIds.slice(); St.act = now(); St.tool = '';
     const mTxt = (model ? ' · 모델 ' + model : '') + (effort ? ' · 강도 ' + effort : '');
-    save('working', '처리 중: ' + out.split('\n').join(' · ') + mTxt + usTxt); log((resume ? '처리 시작(같은 세션에 답 보냄): ' : '처리 시작: ') + out + mTxt + usTxt);
-    const r = await sendTurn(resume ? makeResume(out) : makePrompt(out));
+    save('working', '처리 중: ' + out.split('\n').join(' · ') + mTxt + usTxt); log((cont ? '처리 시작(같은 세션에 이어서 계속): ' : resume ? '처리 시작(같은 세션에 답 보냄): ' : '처리 시작: ') + out + mTxt + usTxt);
+    const r = await sendTurn((cont ? makeCont(out) : resume ? makeResume(out) : makePrompt(out)) + await pluginHint(out));
     log(`처리 끝 (ok ${r.ok}${r.ms ? ', ' + Math.round(r.ms / 1000) + '초' : ''})\n${r.text}`);
     if (r.ok && !r.cancelled && !r.dead) await saveRaw(S.turnIds || [], r.text);
     // 진척이 있었으면 「반복」으로 세지 않는다(2026-11-20): 「나눠서 이어 가기」(requests-flow.md)로 일을 하고 「대기」로 돌린 요청은
     //  같은 「PENDING R0xx」로 다시 오는데, 4번째에 「같은 요청이 처리되지 않아 10분 쉼」에 걸렸다(R043). 이 차례에 요청 note가 바뀌었으면 진척으로 본다
-    if (r.ok && !r.cancelled && !r.dead && progressed(S.turnIds || [], turnStart)) { last = ''; repeat = 0; }
+    const prog = r.ok && !r.cancelled && !r.dead && progressed(S.turnIds || [], turnStart);
+    if (prog) { last = ''; repeat = 0; }
     // 사람이 멈춤: 세션을 끊는다. 같은 차례의 다른 요청은 서버가 10분 뒤 「대기」로 돌려 다시 처리된다
     // 고른 모델을 쓸 수 없음(사용 크레딧 필요 등): 「보류」 · 「실패」로 바꾸고 다음으로
     if (!r.ok && /requires usage credits|Switch to another model|model .{0,40}(not available|not found|does not exist)/i.test(r.text)) {
@@ -536,6 +573,14 @@ async function main() {
       const hm = new Date(S.keepUntil).toTimeString().slice(0, 5);
       log(`세션 유지 — ${wait.join(', ')} 질문 답 기다림 (${hm}까지, 컨텍스트 ${pct}%, ${ctx} 토큰)`);
       save('idle', `${wait.join(', ')} 질문 답을 기다리는 중(${hm}까지 이어서 처리) · 컨텍스트 ${pct}%`);
+      continue;
+    }
+    // 사람에게 묻지 않고 「대기」로 돌려 끝낸 요청(나눠서 이어 가기): 진척이 있었고 KEEP_MAX 아래면 같은 세션에 「이어서 계속」(한 세션 12번까지)
+    const self = prog && ctx < KEEP_MAX && S.conts < 12 ? selfSplitIds(S.turnIds.filter((x) => /^R/.test(x))) : [];
+    if (self.length) {
+      S.conts++; S.keep = self; S.cont = true; S.keepUntil = Date.now() + KEEP_MIN * 60000;
+      log(`세션 유지 — ${self.join(', ')} 같은 세션에서 이어서 계속 (컨텍스트 ${pct}%, ${ctx} 토큰)`);
+      save('idle', `${self.join(', ')} 같은 세션에서 이어서 계속 · 컨텍스트 ${pct}%`);
       continue;
     }
     await stopSession(`처리 끝 — 다음 요청은 새 세션 (컨텍스트 ${pct}%, ${ctx} 토큰)`, true);   // 토큰 절약: 처리를 마치면 세션을 닫는다
