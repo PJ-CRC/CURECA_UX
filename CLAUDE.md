@@ -14,11 +14,9 @@
 - **Pretendard 글**: 먼저 `use_figma`에서 `loadFontAsync`로 불러와 직접 고친다. 안 되면 `docs/claude/jobs.md` 「text」대로(플러그인에 맡기거나 Noto Sans KR).
 - 커밋 · 푸시는 사용자가 요청할 때만 한다.
 
-## 준비 (세션마다)
+## 준비
 
-1. 로컬 서버가 떠 있는지 확인한다: `http://localhost:8765/api/requests`가 응답하면 된다. 없으면 사용자에게 `Figma AI Run` 실행을 안내한다(윈도우 `Figma AI Run.bat`, 맥 `Figma AI Run.app`. Claude가 직접 띄울 때는 윈도우 `.claude/launch.json`의 `guide-sync`(Node 서버), 맥 `bash node/run_mac.sh --port 8765`).
-   - 윈도우의 Claude 앱(스토어 설치판)이 띄운 프로그램은 `%LOCALAPPDATA%`를 따로 된 사본으로 본다. 그래서 Claude가 띄운 서버는 PC별 시작 안내 상태(`setup.json`: 작업자 이름 · 작업 링크)를 옛 값으로 읽을 수 있다. 되도록 사용자가 `Figma AI Run`으로 띄우게 안내하고, Claude도 그 파일을 직접 읽지 말고 `GET /api/setup`으로 확인한다.
-2. Figma MCP(`use_figma`, `get_screenshot`)가 연결돼 있는지 확인한다. 안 돼 있으면 사용자에게 Figma 연결(`/mcp` 또는 앱의 커넥터 설정)을 안내한다. 사용자 본인 Figma 계정에 작업 파일 **편집 권한**이 있어야 한다.
+대화 세션에서만: 로컬 서버(`http://localhost:8765/api/requests`)와 Figma 연결을 확인한다. 안 되면 `docs/claude/dev.md` 「준비 (대화 세션)」. 감시가 띄운 세션은 감시가 확인했으니 건너뛴다.
 
 ## 작업별 문서 (먼저 읽고 처리한다)
 
