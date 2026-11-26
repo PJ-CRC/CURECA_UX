@@ -99,7 +99,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 | --- | --- | --- | --- |
 | - | 제목 | Event History | 기존 원본 `3543:47431` |
 | 1 | Event Info 표 | 기존 원본 그대로 (Event ID 235123 · Type Instrument · Occurred Date/Time 2025-09-29 15:57 · Code F180T001 · Level Error · Status Open · Description Pick Up Fail · Effect 2줄 · Recommended Action) | 기존 원본 `3543:47436` |
-| 2 | Module · Unit · Process | Flexible Extraction (1) · STARlet · Nucleic Acid Extraction | 기존 원본 `3543:47488`, 반영 대기 TI-EVT-01-P-R01 (`glossary/modules.csv` · `module-units.csv`) |
+| 2 | Module · Unit · Process | Flexible Extraction · STARlet · Nucleic Acid Extraction | 기존 원본 `3543:47488`, 반영 대기 TI-EVT-01-P-R01 (`glossary/modules.csv` · `module-units.csv`), Q4 답 (Module 1대면 번호 표기 안 함) |
 | 3 | Resolution Notes | (빈 칸) | 기존 원본 `3543:47506` |
 | 4 | Updated Date/Time · Updated by | 2026-09-29 16:01 · ID123423 | 기존 원본 `3543:47483` |
 | 5 | 버튼 | List | 기존 원본 `3543:47519` |
@@ -126,7 +126,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 | Module | 화면 2 | |
 | Unit | 화면 2 | |
 | Process | 화면 2 | |
-| Flexible Extraction (1) | 화면 2 | |
+| Flexible Extraction | 화면 2 | |
 | STARlet | 화면 2 | |
 | Nucleic Acid Extraction | 화면 2 | |
 | Notes | 화면 3 | |

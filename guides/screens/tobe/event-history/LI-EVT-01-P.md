@@ -141,7 +141,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 | - | 제목 | Event History | 기존 원본 (LI-EVT-01-P 기획 프레임 `3543:46640`) |
 | 1 | Event Info 표 | 기존 원본 그대로 (Event ID 235123 · Type Instrument · Code F180T001 · Level Error · Description Pick Up Fail · Effect 2줄 · Recommended Action) / Occurred Date/Time `2025-09-29 15:57` | 기존 원본 `3543:46640`, COMM-4-a(1/4) 일시 표기 |
 | 1-2 | Status Toggle | Open | 기존 원본 `3543:46640` |
-| 2 | Module · Unit · Process | Flexible Extraction (1) · STARlet · Nucleic Acid Extraction | 기존 원본, 반영 대기 LI-EVT-01-P-R04 (`glossary/modules.csv` · `module-units.csv`) |
+| 2 | Module · Unit · Process | Flexible Extraction · STARlet · Nucleic Acid Extraction | 기존 원본, 반영 대기 LI-EVT-01-P-R04 (`glossary/modules.csv` · `module-units.csv`), Q4 답 (Module 1대면 번호 표기 안 함) |
 | 3 | Resolution Notes | Enter action details. (placeholder) | 기존 원본 |
 | 4 | Updated Date/Time · Updated by | 2026-09-29 16:01 · ID123423 | 기존 원본, COMM-4-a(1/4) 일시 표기 |
 | 5 | 버튼 | List | 기존 원본 |
