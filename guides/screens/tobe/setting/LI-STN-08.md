@@ -171,3 +171,5 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 | Inactive | 화면 4-1 | |
 | Details | 화면 4 · 화면 4-2 | |
 | Master Info | 화면 4 | |
+| No results found. | 디스크립션 1-4 | |
+| No files found. | 디스크립션 4 | |
