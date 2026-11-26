@@ -29,7 +29,7 @@ started: 2026-11-26
 | 4. 수정 · 확인 | | | |
 | 5. 완료 | | | |
 
-이어서 작업할 곳: 3단계 · 흐름 2 화면 MD TI-STN-08 · LI-STN-08 씀(C4 ~ C6 더함), TI-STN-08-P · LI-STN-08-P · TI-STN-08-01 화면 MD 쓸 차례 (다시 읽을 곳: 3단계 flow/3-design.md 절차 1 "읽을 것" · 공통 1 · flow/3-design-case3.md 3-2 / 작업 기록 "읽을 것" 1의 절)
+이어서 작업할 곳: 3단계 · 흐름 2 화면 MD 다섯 개 씀(C4 ~ C8 더함), Figma 자리 잡기(절차 2 순서 1)부터 할 차례 (다시 읽을 곳: 3단계 flow/3-design.md 절차 1 "읽을 것" · 공통 1 · flow/3-design-case3.md 3-2 / 작업 기록 "읽을 것" 1의 절)
 
 ## 요청
 
@@ -92,7 +92,7 @@ started: 2026-11-26
 | 5 | 5. 대상 화면에서 찾은 고칠 점: 패널 화면 정보 title `Assay Pack Setting` → `Assay Pack File Details` (IA "Details", 화면 MD 제목과 다름) | TI-STN-08-P · LI-STN-08-P | 3단계 | C7 |
 | 6 | 5. 대상 화면에서 찾은 고칠 점: 케이스 패널의 Storage Location Info Module · Unit 값(ConsumableStorage · Trolley, PlateSealing · ColdStorage)이 `glossary/modules.csv` · `module-units.csv` 이름인지 확인 | TI-STN-08-P · LI-STN-08-P 케이스 | 2단계 | 근거로 풀림 (modules.csv ConsumableStorage · PlateSealing, module-units.csv Trolley · ColdStorage 코드명) |
 | 7 | 5. 대상 화면에서 찾은 고칠 점: TI-STN-08-01 배경 목록의 Master 줄 Product Name 「-」 · Active 모두 Inactive가 TI-STN-08 목록(「Master Info」 · Active 4줄)과 다름 | TI-STN-08-01 배경 · TI-STN-08 #4 | 3단계 | 근거로 풀림 (`flow/3-design.md` 공통 3-9: Popup은 Dim만 깔고 배경 화면을 그리지 않음) |
-| 8 | 5. 대상 화면에서 찾은 고칠 점: LI-STN-08-P 케이스 Extraction Barcode Info 머리 「Schema Name」 · PCR 구성품 「Barcode Scheme Name」이 다른 곳(「Barcode Schema Name」)과 다름 | TI-STN-08-P · LI-STN-08-P 케이스 | 3단계 | |
+| 8 | 5. 대상 화면에서 찾은 고칠 점: LI-STN-08-P 케이스 Extraction Barcode Info 머리 「Schema Name」 · PCR 구성품 「Barcode Scheme Name」이 다른 곳(「Barcode Schema Name」)과 다름 | TI-STN-08-P · LI-STN-08-P 케이스 | 3단계 | C8 |
 
 ## 대상 화면의 반영 대기 항목
 
