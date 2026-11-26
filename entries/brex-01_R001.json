@@ -2,8 +2,8 @@
   "id": "brex-01_R001",
   "kind": "request",
   "team": "cureca",
-  "status": "진행 중",
-  "at": "2026-11-26T19:50:16+09:00",
+  "status": "보류",
+  "at": "2026-11-26T19:53:28+09:00",
   "createdAt": "2026-11-25T21:16:32+09:00",
   "by": "서보경",
   "doneBy": "Claude",
@@ -17,13 +17,49 @@
   "type": "요청",
   "layout": "",
   "text": "Event History 화면 옮겨줘\n\n기존 화면: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-45275&t=8ZUolJfFqEx5iunS-1\n옮길 페이지: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3577-18413&t=8ZUolJfFqEx5iunS-1",
-  "note": "답 반영 시작: 취소선 줄 지움 · 참고 줄 색 점검 · 기계 검사 뒤 UX 확정",
+  "note": "취소선 줄 지움 · 참고 ID 색 맞춤 · 기계 검사 통과 · 케이스 3 · 4단계 절차 3 · 20261125-서보경-event-history. UX 확정 전 UI 작업 줄 값만 남음\n\n**고친 곳**\n- LI-EVT-P 6 [Export]: 취소선 줄 「T-IOS 경우 클릭 시, 윈도우 탐색기가 …」 지움 (Figma · 화면 MD)\n- LI-EVT-01-P 7 닫기: 취소선 블록 지움 (Figma 패널 행 · 화면 MD)\n- 참고 ID 색: 빨간 글씨를 뺄 때 검정이 된 정책 참고 · 공통 UX 참고 ID 8곳과 화면 안 참고 2곳(TI-EVT-02-P 9 `TI-EVT-01-P`, LI-EVT-P 6 `COMM-5-m(2/4)`)을 다른 참고와 같은 파란색으로\n- TI-EVT-P 번호 9: Dropdown 글자에 닿지 않게 Dropdown 위로 옮김\n\n**기계 검사 (마지막 검사 뒤 고친 6개 화면)**\n- 통과: 디스크립션 번호 · 글이 화면 MD와 Figma에서 같음, 번호 표시와 행이 1:1, 사용자 확인 라벨 없음, 글자 넘침 없음\n\n[질문 대기]\nQ1 요건 1의 UI 작업 줄 값을 정해 주세요 (Ver은 케이스 3이라 묻지 않음)\n  - 대상 (추천)\n  - 대상 아님\n  근거: 배치 · 요소가 바뀜 — C46 · C35 목록 요약 · 노출 개수 Dropdown, C30 · C26 · C27 Common UX 컴포넌트, C40 · C41 Dim 배치, C45 Event Message [Close All] · 개수 표기 / 화면 표기 글자가 바뀜 — C33 `No results found.`, C20 · C2 · C34 표기 · Module 번호. 디자인 화면은 읽지 않아 그곳 글자는 보지 못함\n\n[확인 필요]\nC1 「UI 확정해줘」는 지금 단계(UI팀 작업 전)라 UX 확정으로 보고 진행함. UI 작업 줄 답을 받으면 UX 확정을 기입하고 업데이트 메모 · 기획 진행 표시(검토 완료)로 이어 감\n\n규칙 점검: 4단계 절차 2 · 3 순서 1 ~ 2의 「하지 않는 것」 · 기계 검사 방법 지킴. 다르게 한 것 — UX 확정 뒤라 블록을 지우지 않는 규칙이 있으나 요청자 답(줄 지움)대로 LI-EVT-01-P 7 블록을 지움\n작업 기준: basis 2026-11-25 21:17 · 작업규칙 CURECA 작업규칙 @수정본 · 정책서 정책서 (policy) · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 (glossary) · 화면 정의서 화면 정의서 (screens)",
   "shot": "",
   "shots": [],
   "images": [],
-  "frames": [],
+  "frames": [
+    {
+      "nodeId": "3719:6",
+      "name": "TI-EVT-P"
+    },
+    {
+      "nodeId": "3769:1813",
+      "name": "TI-EVT-02-P"
+    },
+    {
+      "nodeId": "3751:579",
+      "name": "LI-EVT-P"
+    },
+    {
+      "nodeId": "3764:1390",
+      "name": "LI-EVT-01-P"
+    },
+    {
+      "nodeId": "3756:1924",
+      "name": "TI-EVT-01-P"
+    },
+    {
+      "nodeId": "3771:1955",
+      "name": "LI-EVT-02-P"
+    }
+  ],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "요건 1의 UI 작업 줄 값을 골라 주세요 (배치 · 요소와 화면 표기 글자가 바뀜).",
+    "free": true,
+    "options": [
+      {
+        "label": "대상 (추천)"
+      },
+      {
+        "label": "대상 아님"
+      }
+    ]
+  },
   "replies": [
     {
       "at": "2026-11-25T21:20:57+09:00",
