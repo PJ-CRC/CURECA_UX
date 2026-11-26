@@ -1,0 +1,28 @@
+{
+  "id": "brex-06_R004",
+  "kind": "request",
+  "reqId": "R004",
+  "reqType": "요청",
+  "team": "cureca",
+  "at": "2026-11-26T16:46:55+09:00",
+  "from": "2026-11-26T16:46:43+09:00",
+  "by": "최고관리자",
+  "doneBy": "Claude",
+  "pc": "BREX_06",
+  "fileKey": "etCQFF3CTf1EA6C79d4BBf",
+  "fileName": "UX AI TEST",
+  "page": "Setting  Ⓛ / Ⓣ_To Be",
+  "frame": "",
+  "nodeId": "",
+  "text": "Reset, Search 버튼 높이가 맞아?",
+  "models": {
+    "claude-opus-5-5": 2
+  },
+  "calls": 2,
+  "input": 6,
+  "cacheWrite": 4196,
+  "cacheRead": 930549,
+  "output": 1741,
+  "total": 936492,
+  "usd": 0.2545
+}
