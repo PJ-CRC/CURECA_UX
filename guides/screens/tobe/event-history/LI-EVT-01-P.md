@@ -75,7 +75,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
   - Resolution Notes 영역은 선택한 Event에 대한 조치 이력을 기록할 수 있는 메모장 역할
 - 기능
   - Optional : 입력 필수값이 아니며, 사용자가 필요 시 작성 가능
-  - Input Type : 멀티라인 텍스트 박스(Multiline Textarea) 제공, 최대 ~~500자~~ 300자 입력 가능
+  - Input Type : 멀티라인 텍스트 박스(Multiline Textarea) 제공, 최대 300자 입력 가능
   - Placeholder : Enter action details
   - Inline Editing : 텍스트 박스를 클릭하면 활성화 상태로 전환되며, 입력 완료 후 우측에 Save / Cancel 버튼 아이콘 노출
 - 활성화 조건

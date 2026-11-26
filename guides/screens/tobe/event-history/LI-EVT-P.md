@@ -43,8 +43,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
   - 정확히 일치하는 값만 노출
 - Type(Dropdown)
   - Default : All
-  - 드롭다운 리스트 항목 : ~~All, Instrument, Consumable, Reagent, Waste Bin/bottle, System~~
-  - All, Instrument, Inventory, Sample, System
+  - 드롭다운 리스트 항목 : All, Instrument, Inventory, Sample, System
   - 정렬 기준 : 위에 적힌 순서대로 노출
 - Module(Dropdown)
   - Module 유형으로 검색하는 필터
@@ -77,8 +76,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
   - Default : Occurred Date/Time 최신순
   - 정렬 가능한 컬럼 항목 : Occurred Date/Time
 - 컬럼 항목
-  - Type : ~~Instrument, Consumable, Reagent, Waste Bin/bottle, System~~
-  - Instrument, Inventory, Sample, System
+  - Type : Instrument, Inventory, Sample, System
   - Code : Event Code
   - Description : Event Code에 따라 정의된 Event 내용
   - Module : Event가 발생한 Module / Instrument와 무관한 Event는 '-' 노출
