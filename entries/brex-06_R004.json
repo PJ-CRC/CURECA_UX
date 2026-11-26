@@ -25,7 +25,13 @@
   "marks": [],
   "ask": null,
   "replies": [],
-  "raws": [],
+  "raws": [
+    {
+      "at": "2026-11-26T16:27:10+09:00",
+      "text": "R004는 처리하지 않고 멈췄습니다. 상태를 「진행 중」으로 바꾸려 하자 서버가 「사람이 멈춘 요청입니다」라고 거절했습니다. 규칙상 이 오류를 받으면 그 요청은 더 고치지 않으니 상태와 note도 그대로 두었고, Figma도 고치지 않았습니다.\n\n- **멈추기 전에 본 것(읽기만):** Figma 파일은 열렸습니다. 요청한 페이지 「Setting Ⓛ / Ⓣ_To Be」는 지금 작업 페이지가 맞습니다.\n- **질문의 답:** 높이는 맞습니다. 이 페이지에 Reset · Search 버튼이 있는 프레임은 TI-STN-08, TI-STN-08/Case(두 곳), TI-STN-08-P, LI-STN-08, LI-STN-08-P입니다. 모든 곳에서 두 버튼은 같은 컴포넌트 `Square`의 Size=L(Reset은 Gray, Search는 Filled)이라 높이가 48px이고 같은 줄에 놓여 있습니다. 너비는 Reset 76px, Search 79px로 조금 다릅니다.\n\n이 답은 Workbench에 남기지 못했습니다. 남기려면 사람이 Workbench에서 「다시 진행」을 눌러야 하고, 그러면 다음 차례에 처리합니다.",
+      "cut": false
+    }
+  ],
   "work": "",
   "handoff": null
 }
