@@ -99,8 +99,8 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 | 디스크립션 번호 | 요소 | 예시 값 | 기준 |
 | --- | --- | --- | --- |
 | 0 | Popup 제목 | Import file | 기존 원본 (As Is TI-STN-08-01 3288:237146) |
-| 1 | 파일 영역 | Drag and drop files here, or / Select files / json · Multiple files | 기존 원본 |
-| 2 | 선택한 파일 목록 | 기존 원본 3행 그대로 (ap_master_v4.json 0.8 MB / ap_pretreat_v5.json 0.3 MB / ap_pcr_gi-b1_v6.json 2.4 MB) | 기존 원본 |
+| 1 | 파일 영역 | Drag and drop files here, or / Select files / json · Multiple files | 기존 원본 (As Is 3288:237446) |
+| 2 | 선택한 파일 목록 | 기존 원본 3행 그대로 (ap_master_v4.json 0.8 MB / ap_pretreat_v5.json 0.3 MB / ap_pcr_gi-b1_v6.json 2.4 MB) | 기존 원본 (As Is 3288:237453 · 237459 · 237465) |
 | Case 1 | 파일 선택 전 · 후 | 기존 원본 그대로 | 기존 원본 ([TI-STN-08 / Import 정의] ① · ② 3288:240943) |
 
 ## 화면 표기 글자
