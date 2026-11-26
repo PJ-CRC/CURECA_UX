@@ -29,7 +29,7 @@ started: 2026-11-25
 | 4. 수정 · 확인 | | | |
 | 5. 완료 | | | |
 
-이어서 작업할 곳: 3단계 · 화면 MD 6개 씀 (2026-11-26), TI-EVT-P부터 그릴 차례 (다시 읽을 곳: 3단계 flow/3-design-case3.md 흐름 · 3-4 · 공통 규칙에서 케이스 3만 다른 것 / flow/3-design.md 공통 3 · 공통 4 · 공통 5 / 작업 기록 "요건 목록" 요건 1 · "설계" 화면별 작업 · 찾은 것 · "질문 대기" · "변경 확인")
+이어서 작업할 곳: 3단계 · TI-EVT-P / LI-EVT-P 그림 (2026-11-26), TI-EVT-01-P부터 그릴 차례 (다시 읽을 곳: 3단계 flow/3-design-case3.md 흐름 · 3-4 · 공통 규칙에서 케이스 3만 다른 것 / flow/3-design.md 공통 3 · 공통 4 · 공통 5 / 작업 기록 "요건 목록" 요건 1 · "설계" 화면별 작업 · 컴포넌트 없이 그린 요소 · 찾은 것 · "질문 대기" · "변경 확인")
 
 ## 요청
 
@@ -236,7 +236,7 @@ started: 2026-11-25
 <!-- 절차 1번 순서 2에서 그릴 T · L 한 쌍마다 줄을 만들어 따른 케이스 · 요건 번호를 채우고, 그 쌍을 다 그리면 공통 3-10에서 섹션 · 기획 프레임 · 상태 · 케이스 프레임 링크를 채웁니다. -->
 | T · L 한 쌍 | 따른 케이스 | 요건 번호 | 섹션 | 기획 프레임 | 상태 · 케이스 프레임 |
 | --- | --- | --- | --- | --- | --- |
-| Event History (TI-EVT-P / LI-EVT-P) | 3 | 1 | 자리 잡음: T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1250 / L https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1257 | | |
+| Event History (TI-EVT-P / LI-EVT-P) | 3 | 1 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1250 / L https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1257 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3719-6 / L https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3751-579 | 케이스 T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3721-315 / L https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3751-1263 (마무리 확인 2026-11-26) |
 | Event Detail (TI-EVT-01-P / LI-EVT-01-P) | 3 | 1 | 자리 잡음: T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1251 / L https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1258 | | |
 | Event Message (TI-EVT-02-P / LI-EVT-02-P) | 3 | 1 | 자리 잡음: T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1252 / L https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1259 | | |
 
