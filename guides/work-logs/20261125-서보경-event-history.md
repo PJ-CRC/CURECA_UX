@@ -293,7 +293,25 @@ started: 2026-11-25
 | C9 | `Created Date` | `Occurred Date/Time` | LI-EVT-01-P #1 | POL-EVT-001 정의 | L만 | - | |
 | C10 | 디스크립션 Recommended Action → Effect 순서 | Effect → Recommended Action | LI-EVT-01-P #1 | POL-EVT-001 정의 순서 · 화면 글자 | L만 | - | |
 | C11 | 케이스 `0 /100자` | `0 /300자` | LI-EVT-01-P 케이스 | POL-EVT-002 규칙 5 | L만 | O | |
-| C12 | `Enter action Details.` · `refill.Consumables` | `Enter action details.` · `refill. Consumables` | LI-EVT-01-P 케이스, TI · LI-EVT-P 케이스 | 오타 | 같음 | - | |
+| C12 | `Enter action Details.` · `refill.Consumables` | `Enter action details.` · `refill. Consumables` | LI-EVT-01-P 케이스, TI · LI-EVT-P 케이스 | 오타 | 같음 | - | 맞음 (오타, 2026-11-26) |
+| C13 | 일시 `YYYY-MM-DD hh:mm:ss` (목록 · L 상세 Occurred · Updated) | `YYYY-MM-DD hh:mm` | TI-EVT-P · LI-EVT-P #3, LI-EVT-01-P #1 · #4 | Common UX COMM-4-a(1/4) (뒤 단계용 확인 항목 12) | 같음 | O | |
+| C14 | 디스크립션 5 Mark as Closed · 5-1 [Mark as Closed] 버튼 클릭 (번호 블록 전체 취소선) | 디스크립션 · 번호 표시에서 지움 (제거된 요소 2개, 기존 디스크립션에서 이미 지운 기능) | TI-EVT-P 0 | `flow/3-design-case3.md` 3-2 | T만 | - | |
+| C15 | 디스크립션 6 · 7 둘 다 「닫기」 | 7을 빨간 취소선 (6 하나로) | LI-EVT-01-P #7 | 반영 대기 LI-EVT-01-P-R02 | L만 | - | |
+| C16 | `Created Date` | `Occurred Date/Time` | TI-EVT-01-P #1 | 반영 대기 TI-EVT-01-P-R02, POL-EVT-001 정의 | T만 | - | |
+| C17 | Status 변경 가능 여부 없음, Notes 「L-IOS에서 작성했을 경우 노출」 | Status 「노출 (상태 변경 불가)」, Notes 「작성된 Resolution Notes가 있을 경우 노출」, 정책 참고 POL-EVT-002 | TI-EVT-01-P #1 · #3 | 반영 대기 TI-EVT-01-P-R03, POL-EVT-002 | T만 | O | |
+| C18 | 0 「Profile에서 Event notifications 설정에 따라 On일 경우 노출」 | 「Profile > General의 Event notifications 설정이 On일 경우 노출, Off일 경우 미노출 (기본 On)」 | TI-EVT-02-P 0 | 반영 대기 TI-EVT-02-P-R01, POL-EVT-003 | T만 | - | |
+| C19 | 0 노출 PC Type 「Main PC · 콘솔용 PC」 | 노출되는 L-IOS Client Mode 「Main Mode, Console Mode」 | LI-EVT-02-P 0 | 반영 대기 LI-EVT-02-P-R01, POL-EVT-003 | L만 | - | |
+| C20 | `Statue` · `Cureca` · `Event Id, Code` · `OPEN` · `CFX96-1` · `형식:CSV` | `Status` · `CURECA` · `Event ID, Code` · `Open` · `CFX96 (1)` · `.csv` | TI-EVT-P · LI-EVT-P 0 · #1 · #2 · #3 · #6 | 반영 대기 TI-EVT-P-R05 · R06 · R07, LI-EVT-P-R04 · R06 | 같음 | O | |
+| C21 | [Mark all as Closed] 범위 「상태값이 Open인 모든 Events」, Status · Notes 활성화 조건 「공통 UX 참고 : COMM-3-a」 | 「지금 검색 조건으로 불러온 목록의 모든 페이지에서 Status가 Open인 Event 전체」, 활성화 조건 「L-IOS Client Mode가 Main Mode일 때 활성화」 · 정책 참고 POL-EVT-002 | LI-EVT-P #4 · #5, LI-EVT-01-P #1-2 · #3 | 반영 대기 LI-EVT-P-R02 · R03, LI-EVT-01-P-R03 | L만 | O | |
+| C22 | Module `FlexibleExtraction` · `Flexible Extraction(1)`, Unit `Starlet` | `Flexible Extraction (1)`, `STARlet` | TI-EVT-01-P · LI-EVT-01-P #2 | 반영 대기 TI-EVT-01-P-R01 · LI-EVT-01-P-R04 | 같음 | O | |
+| C23 | `Eorrer` · `warning` · `High-throughput Extraction(1)` | `Error` · `Warning` · `High-throughput Extraction (1)` | TI-EVT-02-P · LI-EVT-02-P #1 · #7 | 반영 대기 TI-EVT-02-P-R04 · LI-EVT-02-P-R03, 오타 | 같음 | - | 맞음 (오타, 2026-11-26) |
+| C24 | 9 `Event Detail Popup(LI-EVT-01-P)` (T), 3 Type 값 | 9 `TI-EVT-01-P`, 3 `Instrument, Inventory, Sample, System` | TI-EVT-02-P #3 · #9, LI-EVT-02-P #3 | 반영 대기 TI-EVT-02-P-R02 · R03, LI-EVT-02-P-R02 | 같음 | - | |
+| C25 | 디스크립션에 없던 설명 | 8 페이지네이션(Type 1 Number) · 3 컬럼 항목 · 정렬 가능한 컬럼 · 상세 1 Type 노출 항목 · `공통 UX 참고` 줄 | TI-EVT-P · LI-EVT-P #3 · #8, TI-EVT-01-P · LI-EVT-01-P #1 | Common UX COMM-5-g · 5-l · 5-r · 5-v, 기존 화면 (뒤 단계용 확인 항목 1) | 같음 | - | 맞음 (Common UX · 기존 화면, 2026-11-26) |
+| C26 | [Export] 버튼 Gray | T Filled · L Outlined (Common UX Square Button) | TI-EVT-P · LI-EVT-P #6 | Common UX COMM-5-c | 같음 | O | |
+| C27 | [View Details] 청록 버튼 · [Close] 버튼 (기존 컴포넌트) | Common UX Square Filled · Outlined | TI-EVT-02-P · LI-EVT-02-P #8 · #9 | Common UX COMM-5-c · COMM-5-m(3/4) | 같음 | O | |
+| C28 | Resolution Notes 입력 칸 (기존 텍스트 박스) | Common UX Inline Input | LI-EVT-01-P #3 · 케이스 | Common UX COMM-5-t | L만 | O | |
+| C29 | 번호 표시 5가 Notes 칸 위에 있음 | [List] 버튼 옆에 둠 | TI-EVT-01-P · LI-EVT-01-P #5 | 디스크립션 5 = [List] 버튼 | 같음 | - | |
+| C30 | 검색 영역 입력 칸 · 목록 표 · Status Toggle · 페이지 번호 (기존 컴포넌트) | Common UX 컴포넌트(Text Input · Dropdown · Basic Table · Status/Event Level · Toggle Switch · Number Pagination)로 다시 그림 | TI-EVT-P · LI-EVT-P #1 · #3 · #4 · #8 | Common UX COMM-5-p · 5-g · 5-q · 5-l | 같음 | - | |
 ## 검토 질의
 
 ## 언어셋
