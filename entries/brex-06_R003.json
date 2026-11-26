@@ -2,11 +2,11 @@
   "id": "brex-06_R003",
   "kind": "request",
   "team": "cureca",
-  "status": "보류",
-  "at": "2026-11-26T09:14:40+09:00",
+  "status": "대기",
+  "at": "2026-11-26T09:15:08+09:00",
   "createdAt": "2026-11-26T09:09:31+09:00",
   "by": "최고관리자",
-  "doneBy": "Claude",
+  "doneBy": "최고관리자",
   "pc": "BREX_06",
   "reqId": "R003",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,24 +17,13 @@
   "type": "요청",
   "layout": "",
   "text": "https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3288-235028&t=GdYCaPho44GgAu5i-1 여기가 AS IS\nAssay Pack Setting 화면 다시 그려줘",
-  "note": "케이스 3 · 1단계 · 20261126-최고관리자-assay-pack - 요건 목록 확인 질문을 하나씩 묻습니다 (1/4: 질문 2)\n- Import file 팝업 (TI-STN-08-01)은 Assay Pack Setting (TI-STN-08) #3 [Import]가 여는 팝업인데 IA에 없는 CID입니다.\n- 넣으면 대상 화면이 다섯이 되고, IA에는 5단계 완료 때 더합니다(반영 대기 TI-STN-08-R02와 같은 내용). 넣지 않으면 TI-STN-08 #3에서 [Import]가 여는 팝업을 이번에 그리지 않습니다.\n- 다음에 물을 것: 질문 3 asis 다시 추출 · 질문 4 기존 작업 기록 처리 · 질문 5 진행 확인\n규칙 점검: 1단계 「하지 않는 것」 지킴(Figma · 반영 대기 고치지 않음)\n작업 기준: basis 2026-11-26 09:11 · 작업규칙 CURECA 작업규칙 @수정본 · 정책서 정책서 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 · 화면 정의서 화면 정의서",
+  "note": "",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": {
-    "q": "질문 2: Import file 팝업 (TI-STN-08-01, IA에 없음)도 이번 작업에 넣을까요?",
-    "options": [
-      {
-        "label": "넣음 (추천)"
-      },
-      {
-        "label": "넣지 않음"
-      }
-    ],
-    "free": true
-  },
+  "ask": null,
   "replies": [
     {
       "at": "2026-11-26T09:10:45+09:00",
@@ -47,6 +36,12 @@
       "by": "최고관리자",
       "q": "1단계 요건 목록 확인: 질문 2 ~ 5를 추천(굵은 글씨)대로 진행할까요?",
       "text": "하나씩 정하기"
+    },
+    {
+      "at": "2026-11-26T09:15:08+09:00",
+      "by": "최고관리자",
+      "q": "질문 2: Import file 팝업 (TI-STN-08-01, IA에 없음)도 이번 작업에 넣을까요?",
+      "text": "넣음 (추천)"
     }
   ],
   "raws": [
