@@ -175,7 +175,7 @@ started: 2026-11-26
 | T · L 한 쌍 | 따른 케이스 | 요건 번호 | 섹션 | 기획 프레임 | 상태 · 케이스 프레임 |
 | --- | --- | --- | --- | --- | --- |
 | TI-STN-08 / LI-STN-08 | 3 | 1 | [T 3667:11461](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3667-11461) · [L 3667:11468](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3667-11468) | [T 3670:2367](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3670-2367) · [L 3672:2347](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3672-2347) | 그림 · [TI-STN-08/Case 3672:1148](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3672-1148) (L 케이스 없음) |
-| TI-STN-08-P / LI-STN-08-P | 3 | 1 | | | |
+| TI-STN-08-P / LI-STN-08-P | 3 | 1 | [T 3667:11462](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3667-11462) · [L 3667:11469](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3667-11469) | [T 3684:1754](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3684-1754) · [L 3689:3388](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3689-3388) | 그림 · [TI-STN-08-P/Case 3686:2704](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3686-2704) · [LI-STN-08-P/Case 3694:15541](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3694-15541) |
 | TI-STN-08-01 / (짝 없음) | 3 | 1 | | | |
 
 ### 컴포넌트 없이 그린 요소
