@@ -275,6 +275,9 @@ started: 2026-11-25
 | Q2 | Resolution Notes 입력 중 닫기 · List를 누를 때 Confirm 여부 (POL-EVT-002 규칙 5는 Cancel만 정함, 메뉴 이탈용 Confirm_007 · 016 있음) | LI-EVT-01-P #3 · #5 · #6 | | L만 | |
 | Q3 | Event Message의 L-IOS Client Mode (POL-EVT-003 규칙 1 Main · Console / client-mode-matrix에 Event Message 줄 없음) | LI-EVT-02-P 0 · 머리말 `client_mode` | | L만 | |
 | Q4 | Module 이름 뒤 번호 `(1)` 표기 여부 (T 목록은 없음 · L 목록 · 상세 · Message는 있음, glossary.md `Module (Index)`) | TI-EVT-P · LI-EVT-P #3, TI · LI-EVT-01-P #2, TI · LI-EVT-02-P #7 | | 같음 | |
+| Q5 | T-IOS 목록에 노출 개수 Dropdown을 둘지 (Common UX Basic Table은 T-IOS 10 · 30 · 50 · 100 items 선택, 기존 화면은 10개 고정이라 기존대로 그림) | TI-EVT-P #3 | | T만 | |
+| Q6 | 목록에 데이터가 없을 때 안내 문구 (Common UX No Data가 화면에 맡김, 기존 원본 · 정책서 · 같은 메뉴에 없음) | TI-EVT-P · LI-EVT-P #3 | | 같음 | |
+| Q7 | Event Message 오른쪽 썸네일 목록을 둘지 (Common UX Event Stacked Popup은 썸네일 목록 5개씩, 기존 화면은 [< >] 버튼만이라 기존대로 그림) | TI-EVT-02-P · LI-EVT-02-P #12 | | 같음 | |
 ## 변경 확인
 
 | 번호 (C) | 기존 화면 | 바꿔 그린 것 | 관련된 곳 (CID · 디스크립션 번호) | 근거 | T · L 같음 | 업데이트 메모 (O / -) | 확인한 날 · 답 (맞음 / 되돌림) |
