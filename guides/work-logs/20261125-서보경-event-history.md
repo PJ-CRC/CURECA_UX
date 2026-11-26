@@ -3,7 +3,7 @@ status: 진행 중            # 진행 중 | 끝남 | 멈춤
 requester: 서보경
 menu: Event History (EVT)
 cids: [TI-EVT-P, LI-EVT-P, TI-EVT-01-P, LI-EVT-01-P, TI-EVT-02-P, LI-EVT-02-P]
-policies: []
+policies: []            # 2단계: 고칠 정책 없음 (2026-11-26)
 cid_system:
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3577-18413
 test: false
@@ -131,18 +131,129 @@ started: 2026-11-25
 
 ## 근거
 
+**읽은 자료 목록**
+
+| 요건 | 종류 | 자료 (ID · 파일) | 연결 근거 (왜 이 요건과 관련 있나) | 설계에 씀 (O / -) | 쓰는 화면 · 요소 | 설계에 쓸 규칙 (번호 · 문장, `-`면 쓰지 않는 이유) |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | 정책 | POL-EVT-001 | ① `cids`에 대상 6개 모두 | O | 목록 · 상세 Event Info · Instrument Info · Message 1 ~ 7, 목록 요약 | 정의: Level Warning / Error, Status Open / Closed, Type Instrument / Inventory / Sample / System, Event 항목 순서 Event ID, Event Code, Description, Effect, Recommended Action, Level, Status, Type, Occurred Date/Time, Module·Unit·Process. 규칙 1 생기면 Open, 2 ID 순서대로 고유, 3 Effect 없으면 '-' · 여러 개면 목록, 4 Module 단위면 Unit '-' · 무관하면 모두 '-', 5 화면 Event 개수(목록 요약 등)는 Open만 셈 |
+| 1 | 정책 | POL-EVT-002 | ① `cids` TI · LI-EVT-P, TI · LI-EVT-01-P | O | 목록 4 Status · 5 [Mark all as Closed], 상세 1 Status · 3 Notes · 4 Updated | 1 L-IOS만 Open ↔ Closed, T-IOS는 보여 주기만. 2 모든 User Type, L-IOS는 Main Mode만 · 그 밖 Mode는 조회만. 3 Notes는 L-IOS만, T는 읽기만. 4 [Mark all as Closed] = 지금 검색 조건(기간, Type, Module, Level, Status)으로 불러온 목록 모든 페이지의 Open을 Closed로, Confirm_003, T에는 없음. 5 Notes 필수 아님 · 최대 300자 · 저장하면 조치 기록 · 취소하면 반영 안 함. 6 바뀌면 Updated Date/Time · Updated by(로그인 ID) |
+| 1 | 정책 | POL-EVT-003 | ① `cids` TI · LI-EVT-02-P | O | Message 0 화면 정의 · 8 ~ 12 | 1 L-IOS는 Main Mode · Console Mode만, MS Mode 안 보임. 2 T-IOS는 Profile > General Event notifications On일 때만(기본 On). 3 로그인 뒤 생긴 Event부터. 4 여러 개면 쌓고 2개 이상이면 1/20 · [Close All] · 이전 · 다음. 5 [Close]는 그 Event만 빠지고 개수 줄어듦. 6 [View Details]는 모두 닫고 Event History Detail로 |
+| 1 | 정책 | POL-COM-006 | ① `cids` TI · LI-EVT-P | O | 목록 6 [Export] | 1 내보내는 파일은 .csv. 3 T-IOS는 OS 파일 탐색기에서 경로 · 파일 이름. 4 L-IOS는 경로 저장 / USB 저장 고르는 Popup (Common UX COMM-5-m(2/4)), 기본 경로 System Setting Export / Import Location. 표: Event History는 목록 전체와 Detail 내용 |
+| 1 | 정책 | POL-SYS-004 | ④ POL-COM-006이 가리킴 | - | | (Log 내보내기 · 기본 경로 설정 화면 규칙. Event History에는 POL-COM-006 규칙 4의 기본 경로 문장만 씀) |
+| 1 | 정책 | POL-ACC-009 | ③ 글자 찾기 (규칙 6이 POL-EVT-003을 가리킴) | - | | (Profile 화면 규칙. Message 노출 조건은 POL-EVT-003 규칙 2로 씀) |
+| 1 | 기준 자료 | `glossary/status-values.csv` Event Status · Level · Type | ④ POL-EVT-001 `data` | O | 목록 Type · Level · Status 값, Message 1 Level · 3 Type | Status Open, Closed / Level Warning(Orange), Error(Red), 컴포넌트 Status/Event Level / Type Instrument, Inventory, Sample, System |
+| 1 | 기준 자료 | `policy/permission-matrix.csv` Event History | ④ POL-EVT-002 `data` · 0번 User Type 확인 | O | 6개 화면 `user_type` | View · Status Control · Note Writing 모두 Service O, Admin O, User O. Status Control · Note Writing은 L-IOS만 |
+| 1 | 기준 자료 | `policy/client-mode-matrix.csv` Event History | ④ POL-EVT-002 · 003 `data` · 0번 L-IOS Client Mode 확인 | O | LI 화면 `client_mode` | View Main O, Console O, MS O / Status Control · Note Writing Main O, Console X, MS X. Event Message 노출 줄은 없음 (Q3) |
+| 1 | 기준 자료 | `ia/ia-screens.csv` EVT 줄 | 줄 찾기 · 화면 이름 | O | 화면 이름 | Lv.1 Event History (Popup), Lv.2 Event Detail · Event Message (Popup). T-IOS 줄 짝 화면 동일 Y |
+| 1 | Alert | `alert/alert-catalog.csv` Confirm_003 | LI-EVT-P 5 디스크립션 | O | LI-EVT-P 5 [Mark all as Closed] | 발생 조건 Mark as closed all 버튼 클릭 시, 제목 Close all events?, 버튼 OK / Cancel, OK → 닫힌 뒤 목록 새로고침 / Cancel → 닫힘 · 화면 유지 |
+| 1 | Alert | `alert/alert-catalog.csv` Confirm_007 · Confirm_016 | 뒤 단계용 확인 항목 5 (저장하지 않고 나감) | - | | (메뉴 이탈용. Notes 입력 중 닫기에 쓸지는 Q2) |
+| 1 | Alert | Confirm_L_003 · Alert_L_003 (TI-EVT-P 5-1) | TI-EVT-P 디스크립션 | - | | (카탈로그에 없음. T-IOS 5 · 5-1은 취소선으로 제거된 기능, POL-EVT-002 규칙 4) |
+| 1 | 기준 자료 | `glossary/modules.csv` · `module-units.csv` | ⑤ 목록 · 상세 · Message의 Module · Unit 글자 | O | 목록 Module · Unit, 상세 2, Message 7 | Module UI 표기: Sample Storage, Consumable Storage, Sample Pre-treatment, High-throughput Extraction, Flexible Extraction, PCR Setup, Plate Sealing, Universal PCR. Unit: Inbound Trolley, Outbound Trolley, Trolley, Sample Processing (Upper) / (Lower), M9600, Spin Tip Storage, STARlet, MB Tube Storage, Buffer Cartridge Storage, 300 μL Tip Storage (1), CFX96 (#) |
+| 1 | 기준 자료 | `glossary/glossary.md` 표기 규칙 | 용어 대조 | O | Module · Unit 이름 | 이름과 번호 사이 띄어 씀 (PCR Setup (1), CFX96 (1)), μL 앞 띄어 씀 |
+| 1 | 장비 | `policy/modules/` 8개 Module 문서와 관련 정책(INV · LOD · MAT · SMP · EQP · TST) | ⑤ 화면에 나오는 Module | - | | (Event History는 Module 이름을 데이터로만 보여 줌. 관련 정책에서 Event는 생기는 상황만 적고 Event 화면 표시 규칙은 없음 — POL-LOD-001 · 004, POL-INV-003 · 007) |
+| 1 | 논의 대상 | DS-0001 · DS-0004 · DS-0005 (모두 종료) | 정책 · `cids`에 EVT | - | | (반영 끝남. DS-0004 Unit 이름 Sample Processing (Upper) / (Lower)는 module-units.csv로 씀) |
+| 1 | 반영 대기 | `pending/open.md` EVT 줄 23개 | 1단계 "대상 화면의 반영 대기 항목" | O | 1단계 표 그대로 | 묶음 1 ~ 5 반영, 묶음 6 제외 (요청자 확인 3) |
+
+**관련 자료 없는 영역 · 요소**
+
+| 화면 · 영역 · 요소 | 근거로 삼는 것 |
+| --- | --- |
+| 목록 1 검색 영역 (기간 최대 1년 · 미래일 선택 불가 · Reset) | 기존 UX 화면설계서만 근거 (기간 1년 초과는 3단계에서 Common UX 확인) |
+| 목록 3 목록 (10개씩 · 최신순 · 줄임 · Tooltip) | 기존 UX 화면설계서만 근거 |
+| 상세 5 List 버튼 (이전 페이지로 복귀) · 닫기 | 기존 UX 화면설계서만 근거 |
+| Message 0 스크롤 · 10 ~ 12 일부 동작 | POL-EVT-003 규칙 4 · 5 외에는 기존 UX 화면설계서만 근거 |
+
+**대조**
+
+| 요건 · 화면 · 요소 | 결과 | 근거 | 다음 |
+| --- | --- | --- | --- |
+| 1 · 6개 화면 · Event 구분 · 항목 · 표시 | 정책에 있음 | POL-EVT-001 | 디스크립션 끝에 POL-EVT-001 |
+| 1 · TI · LI-EVT-P 4 · 5, TI · LI-EVT-01-P 1 · 3 · 4 | 정책에 있음 | POL-EVT-002 (T는 반영 대기 묶음 2: T-IOS는 상태값만 표기) | 디스크립션 끝에 POL-EVT-002 |
+| 1 · TI · LI-EVT-02-P 0 · 8 ~ 12 | 정책에 있음 | POL-EVT-003 (0은 반영 대기 묶음 3) | 디스크립션 끝에 POL-EVT-003 |
+| 1 · TI · LI-EVT-P 6 [Export] | 정책에 있음 | POL-COM-006 (반영 대기 묶음 4) | 디스크립션 끝에 POL-COM-006 |
+| 1 · LI-EVT-P 5 [Mark all as Closed] | 정책에 있음 | POL-EVT-002 규칙 4, Confirm_003 | 범위는 반영 대기 LI-EVT-P-R02 |
+| 1 · 6개 화면 머리말 `user_type` [Service, Admin, User] | 정책에 있음 | permission-matrix View O O O | 그대로 |
+| 1 · LI-EVT-P · LI-EVT-01-P `client_mode` [Main, Console, MS] | 정책에 있음 | client-mode-matrix View O O O | 그대로 |
+| 1 · LI-EVT-02-P `client_mode` [Main, Console] | 기준 자료끼리 다름 | POL-EVT-003 규칙 1 (MS Mode 안 보임) / client-mode-matrix에 Event Message 줄 없음, Event History View 줄은 MS O | Q3 |
+| 1 · LI-EVT-P 6 Common UX 참고 `COMM-5-j(4/4)` | 기존 화면이 정책과 다름 | POL-COM-006 규칙 4: COMM-5-m(2/4) | C1 |
+| 1 · TI · LI-EVT-02-P 화면 글자 `Type: Consumable` | 기존 화면이 정책과 다름 | status-values.csv Event Type (Consumable 없음, 소모품은 Inventory) | C2 |
+| 1 · TI-EVT-01-P 화면 번호 표시 `1-2` | 기존 화면이 정책과 다름 | POL-EVT-002 규칙 1 (T-IOS Status 변경 없음) | C3 |
+| 1 · TI · LI-EVT-01-P Unit `Starlet`, TI-EVT-01-P Module `FlexibleExtraction` (케이스 · 화면 글자 셋째 줄 포함) | 기존 화면이 정책과 다름 | module-units.csv STARlet, modules.csv Flexible Extraction | 반영 대기 TI-EVT-01-P-R01 · LI-EVT-01-P-R04 (화면 글자 `FlexibleExtraction` 단독 줄 포함) |
+| 1 · TI-EVT-02-P · LI-EVT-02-P 9 `Event Detail Popup(LI-EVT-01-P)`, 화면 이름 `Event History Detail` · `Event Message Popup` | 기존 화면이 정책과 다름 | IA Lv.2 Event Detail · Event Message (요청자 확인 1) | C4 (TI-EVT-02-P 9는 반영 대기 R03) |
+| 1 · TI · LI-EVT-P 0, 6개 화면 디스크립션 용어 | 기존 화면이 정책과 다름 | terms.csv (아래 용어 목록) | C5 |
+| 1 · TI · LI-EVT-P 목록 3행 Unit `Sample Processing` | 기존 화면이 정책과 다름 | module-units.csv (Upper / Lower로 나뉨) | C6 |
+| 1 · LI-EVT-P · LI-EVT-02-P Module `이름(1)` 붙여 씀 | 기존 화면이 정책과 다름 | glossary.md 이름과 번호 띄어 씀 | C7 (TI-EVT-02-P는 반영 대기 R04) |
+| 1 · TI · LI-EVT-P 1 Type Default `all` | 기존 화면이 정책과 다름 | 화면 글자 All, status-values 표기 | C8 |
+| 1 · LI-EVT-01-P 1 `Created Date` | 기존 화면이 정책과 다름 | POL-EVT-001 정의 Occurred Date/Time | C9 (TI는 반영 대기 R02) |
+| 1 · LI-EVT-01-P 1 Effect · Recommended Action 디스크립션 순서 | 기존 화면이 정책과 다름 | POL-EVT-001 정의 순서, 화면 글자 순서 | C10 |
+| 1 · LI-EVT-01-P 케이스 `0 /100자` | 기존 화면이 정책과 다름 | POL-EVT-002 규칙 5 (300자) | C11 |
+| 1 · LI-EVT-01-P 케이스 · TI · LI-EVT-P 케이스 오타 | 기존 화면이 정책과 다름 | 오타 (placeholder 대소문자, 띄어쓰기) | C12 |
+| 1 · TI · LI-EVT-P 2 목록 요약 `Items` / `Total Event` | 정해지지 않음 | 화면과 디스크립션이 다름, POL-EVT-001 규칙 5는 Open 개수만 정함 | Q1 |
+| 1 · LI-EVT-01-P 3 Notes 입력 중 닫기 · List | 정책에 없음 (Confirm) | POL-EVT-002 규칙 5는 취소만 정함, Confirm_007 · 016은 메뉴 이탈용 | Q2 |
+| 1 · TI-EVT-P · LI-EVT-P · 상세 일시 표기 | 정해지지 않음 | 공통 정책 없음 (POL-SMP-002 규칙 4는 Sample 화면만) | 3단계 Common UX 확인, 없으면 Q |
+| 1 · 6개 화면 Module 표기의 번호 `(1)` 유무 (T 목록은 번호 없음) | 정해지지 않음 | glossary.md 위치 표기 `Module (Index)`, 기존 화면 T · L이 다름 | Q4 |
+
+**정책 수정 범위**
+
+없음 — 대조에서 "더함" · "바꿈"으로 정한 정책이 없음 (정책에 없는 Confirm은 Q2로 4단계에서 답을 받음)
+
+**용어 목록**
+
+| 원래 표현 | 표준어 | 어디서 | 새 용어면 처리 |
+| --- | --- | --- | --- |
+| 장비 | Instrument | TI · LI-EVT-P 0, TI · LI-EVT-01-P 2 · 0, TI · LI-EVT-02-P 0 · 7 | |
+| 구동 시스템 | System (Event Type) | TI · LI-EVT-P 0 | |
+| 모듈 | Module | TI · LI-EVT-P 1 | |
+| 이벤트 | Event | TI · LI-EVT-02-P 4 | |
+| 팝업 | Popup | 6개 화면 0 · 5 · 7 · 8 ~ 11 | |
+| 툴팁 | Tooltip | TI · LI-EVT-P 3, 케이스 | |
+| Cureca | CURECA | TI · LI-EVT-P 0 | |
+| 표시 (보여 준다는 뜻) | 노출 | 6개 화면 디스크립션 | |
+| 체크박스 | Checkbox | TI-EVT-P 5 · 5-1 (취소선, 다시 그릴 때 빠짐) | |
+| Statue | Status | TI · LI-EVT-P 1 | |
+| OPEN | Open | TI · LI-EVT-P 화면 글자 목록 요약, LI-EVT-P 4 | |
+| all | All | TI · LI-EVT-P 1 Type Default | |
+| search | Search | TI · LI-EVT-P 1 | |
+| Event Id, Code | Event ID, Code | TI-EVT-P 화면 글자 | |
+| Eorrer · warning | Error · Warning | TI · LI-EVT-02-P 1 | |
+| Consumable (Event Type) | Inventory | TI · LI-EVT-02-P 화면 글자 | |
+| 알람 | Event | TI · LI-EVT-02-P 1 | |
+| Main PC · 콘솔용 PC | Main Mode · Console Mode | LI-EVT-02-P 0 | |
+| FlexibleExtraction | Flexible Extraction (1) | TI-EVT-01-P 화면 글자 · LI-EVT-01-P | |
+| Starlet | STARlet | TI · LI-EVT-01-P 화면 글자 | |
+| CFX96-1 | CFX96 (1) | TI · LI-EVT-P 목록 | |
+| Sample Processing | Sample Processing (Upper) / (Lower) | TI · LI-EVT-P 목록 3행 | |
+| Sample Storage(1) 등 붙여 쓴 번호 | Sample Storage (1) | LI-EVT-P 목록, TI · LI-EVT-02-P 7 | |
+| 형식:CSV | .csv | TI · LI-EVT-P 6 | |
+| Event History Detail · Event Detail Popup | Event Detail | TI · LI-EVT-01-P 제목, TI · LI-EVT-02-P 9 | |
+| Event Message Popup · message popup | Event Message | TI · LI-EVT-02-P 제목 · 0 | |
+| Created Date | Occurred Date/Time | TI · LI-EVT-01-P 1 | |
 ## 설계
 
 ## 질문 대기
 
 | 번호 (Q) | 질문 | 관련된 곳 (CID · 디스크립션 번호) | 논의 대상 | T · L 같음 | 풀린 날 · 어떻게 |
 | --- | --- | --- | --- | --- | --- |
-
+| Q1 | 목록 요약의 전체 개수 이름 (화면 `Items` / 디스크립션 `Total Event`, POL-EVT-001 규칙 5는 Open 개수만 정함) | TI-EVT-P · LI-EVT-P #2 | | 같음 | |
+| Q2 | Resolution Notes 입력 중 닫기 · List를 누를 때 Confirm 여부 (POL-EVT-002 규칙 5는 Cancel만 정함, 메뉴 이탈용 Confirm_007 · 016 있음) | LI-EVT-01-P #3 · #5 · #6 | | L만 | |
+| Q3 | Event Message의 L-IOS Client Mode (POL-EVT-003 규칙 1 Main · Console / client-mode-matrix에 Event Message 줄 없음) | LI-EVT-02-P 0 · 머리말 `client_mode` | | L만 | |
+| Q4 | Module 이름 뒤 번호 `(1)` 표기 여부 (T 목록은 없음 · L 목록 · 상세 · Message는 있음, glossary.md `Module (Index)`) | TI-EVT-P · LI-EVT-P #3, TI · LI-EVT-01-P #2, TI · LI-EVT-02-P #7 | | 같음 | |
 ## 변경 확인
 
 | 번호 (C) | 기존 화면 | 바꿔 그린 것 | 관련된 곳 (CID · 디스크립션 번호) | 근거 | T · L 같음 | 업데이트 메모 (O / -) | 확인한 날 · 답 (맞음 / 되돌림) |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-
+| C1 | Common UX 참고 `COMM-5-j(4/4)` | `COMM-5-m(2/4)` Import / Export Popup | LI-EVT-P #6 | POL-COM-006 규칙 4 | L만 | - | |
+| C2 | 화면 글자 `Type: Consumable` | `Type: Inventory` | TI-EVT-02-P · LI-EVT-02-P #3 | status-values.csv Event Type | 같음 | - | |
+| C3 | 상세 Status 옆 번호 표시 `1-2` (T) | T에서 `1-2` 번호 표시 뺌 (Status는 표기만) | TI-EVT-01-P #1 | POL-EVT-002 규칙 1 | T만 | - | |
+| C4 | 화면 이름 Event History Detail · Event Message Popup | Event Detail · Event Message | TI · LI-EVT-01-P, TI · LI-EVT-02-P | IA Lv.2 (요청자 확인 1) | 같음 | - | |
+| C5 | 디스크립션 용어 (장비 · 팝업 · 툴팁 · 모듈 · 이벤트 · 알람 · 표시 등) | 용어집 표준어로 | 6개 화면 디스크립션 | terms.csv (근거 "용어 목록") | 같음 | - | |
+| C6 | 목록 Unit `Sample Processing` | `Sample Processing (Upper)` (예시 데이터) | TI-EVT-P · LI-EVT-P #3 | module-units.csv, DS-0004 | 같음 | - | |
+| C7 | Module `Sample Storage(1)` 등 붙여 씀 | `Sample Storage (1)` 띄어 씀 | LI-EVT-P #3, LI-EVT-02-P #7 | glossary.md 이름과 번호 | L만 | - | |
+| C8 | Type Default `all` | `All` | TI-EVT-P · LI-EVT-P #1 | 화면 글자 · status-values 표기 | 같음 | - | |
+| C9 | `Created Date` | `Occurred Date/Time` | LI-EVT-01-P #1 | POL-EVT-001 정의 | L만 | - | |
+| C10 | 디스크립션 Recommended Action → Effect 순서 | Effect → Recommended Action | LI-EVT-01-P #1 | POL-EVT-001 정의 순서 · 화면 글자 | L만 | - | |
+| C11 | 케이스 `0 /100자` | `0 /300자` | LI-EVT-01-P 케이스 | POL-EVT-002 규칙 5 | L만 | O | |
+| C12 | `Enter action Details.` · `refill.Consumables` | `Enter action details.` · `refill. Consumables` | LI-EVT-01-P 케이스, TI · LI-EVT-P 케이스 | 오타 | 같음 | - | |
 ## 검토 질의
 
 ## 언어셋
