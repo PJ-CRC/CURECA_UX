@@ -25,7 +25,7 @@ started: 2026-11-25
 | --- | --- | --- | --- |
 | 1. 시작 · 요건 정의 | 2026-11-25 | 요청자 확인 2026-11-25 | 겹치는 다른 작업: 없음 |
 | 2. 근거 · 분석 | 2026-11-26 | 물을 것 없음 (2026-11-26) | 정책 수정 범위 없음, 질문 대기 Q1 ~ Q4, 변경 확인 C1 ~ C12 |
-| 3. 화면 설계 | | | 진행 중: 자리 잡음 (2026-11-26) |
+| 3. 화면 설계 | 2026-11-26 | 기계 검사 통과 (2026-11-26) | 6개 화면 MD · Figma, 질문 대기 Q1 ~ Q7, 변경 확인 C1 ~ C31 |
 | 4. 수정 · 확인 | | | |
 | 5. 완료 | | | |
 
@@ -320,9 +320,9 @@ started: 2026-11-25
 | C19 | 0 노출 PC Type 「Main PC · 콘솔용 PC」 | 노출되는 L-IOS Client Mode 「Main Mode, Console Mode」 | LI-EVT-02-P 0 | 반영 대기 LI-EVT-02-P-R01, POL-EVT-003 | L만 | - | |
 | C20 | `Statue` · `Cureca` · `Event Id, Code` · `OPEN` · `CFX96-1` · `형식:CSV` | `Status` · `CURECA` · `Event ID, Code` · `Open` · `CFX96 (1)` · `.csv` | TI-EVT-P · LI-EVT-P 0 · #1 · #2 · #3 · #6 | 반영 대기 TI-EVT-P-R05 · R06 · R07, LI-EVT-P-R04 · R06 | 같음 | O | |
 | C21 | [Mark all as Closed] 범위 「상태값이 Open인 모든 Events」, Status · Notes 활성화 조건 「공통 UX 참고 : COMM-3-a」 | 「지금 검색 조건으로 불러온 목록의 모든 페이지에서 Status가 Open인 Event 전체」, 활성화 조건 「L-IOS Client Mode가 Main Mode일 때 활성화」 · 정책 참고 POL-EVT-002 | LI-EVT-P #4 · #5, LI-EVT-01-P #1-2 · #3 | 반영 대기 LI-EVT-P-R02 · R03, LI-EVT-01-P-R03 | L만 | O | |
-| C22 | Module `FlexibleExtraction` · `Flexible Extraction(1)`, Unit `Starlet` | `Flexible Extraction (1)`, `STARlet` | TI-EVT-01-P · LI-EVT-01-P #2 | 반영 대기 TI-EVT-01-P-R01 · LI-EVT-01-P-R04 | 같음 | O | |
+| C22 | Module `FlexibleExtraction` · `Flexible Extraction(1)`, Unit `Starlet` | `Flexible Extraction (1)`, `STARlet` | TI-EVT-01-P · LI-EVT-01-P #2 | 반영 대기 TI-EVT-01-P-R01 · LI-EVT-01-P-R04 | 같음 | O | 맞음 (기계 검사, 2026-11-26) |
 | C23 | `Eorrer` · `warning` · `High-throughput Extraction(1)` | `Error` · `Warning` · `High-throughput Extraction (1)` | TI-EVT-02-P · LI-EVT-02-P #1 · #7 | 반영 대기 TI-EVT-02-P-R04 · LI-EVT-02-P-R03, 오타 | 같음 | - | 맞음 (오타, 2026-11-26) |
-| C24 | 9 `Event Detail Popup(LI-EVT-01-P)` (T), 3 Type 값 | 9 `TI-EVT-01-P`, 3 `Instrument, Inventory, Sample, System` | TI-EVT-02-P #3 · #9, LI-EVT-02-P #3 | 반영 대기 TI-EVT-02-P-R02 · R03, LI-EVT-02-P-R02 | 같음 | - | |
+| C24 | 9 `Event Detail Popup(LI-EVT-01-P)` (T), 3 Type 값 | 9 `TI-EVT-01-P`, 3 `Instrument, Inventory, Sample, System` | TI-EVT-02-P #3 · #9, LI-EVT-02-P #3 | 반영 대기 TI-EVT-02-P-R02 · R03, LI-EVT-02-P-R02 | 같음 | - | 맞음 (기계 검사, 2026-11-26) |
 | C25 | 디스크립션에 없던 설명 | 8 페이지네이션(Type 1 Number) · 3 컬럼 항목 · 정렬 가능한 컬럼 · 상세 1 Type 노출 항목 · `공통 UX 참고` 줄 | TI-EVT-P · LI-EVT-P #3 · #8, TI-EVT-01-P · LI-EVT-01-P #1 | Common UX COMM-5-g · 5-l · 5-r · 5-v, 기존 화면 (뒤 단계용 확인 항목 1) | 같음 | - | 맞음 (Common UX · 기존 화면, 2026-11-26) |
 | C26 | [Export] 버튼 Gray | T Filled · L Outlined (Common UX Square Button) | TI-EVT-P · LI-EVT-P #6 | Common UX COMM-5-c | 같음 | O | |
 | C27 | [View Details] 청록 버튼 · [Close] 버튼 (기존 컴포넌트) | Common UX Square Filled · Outlined | TI-EVT-02-P · LI-EVT-02-P #8 · #9 | Common UX COMM-5-c · COMM-5-m(3/4) | 같음 | O | |
