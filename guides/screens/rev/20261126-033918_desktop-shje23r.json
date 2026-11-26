@@ -1,0 +1,12 @@
+{
+  "rev": "20261126-033918_desktop-shje23r",
+  "by": "Claude",
+  "at": "2026-11-26T03:39:18+09:00",
+  "note": "이력 설명의 「형식」을 「예외」로 맞춤(형식 열을 없앴으므로)",
+  "base": "20261126-033910_desktop-shje23r",
+  "pc": "DESKTOP-SHJE23R",
+  "req": "형식 열을 없앤 뒤 이력 설명 문구 맞춤 (정다예, 2026-11-26, Claude Code 대화)",
+  "jobId": "",
+  "file": "README.md",
+  "orig": true
+}

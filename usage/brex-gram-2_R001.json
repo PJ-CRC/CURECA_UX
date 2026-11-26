@@ -1,0 +1,28 @@
+{
+  "id": "brex-gram-2_R001",
+  "kind": "request",
+  "reqId": "R001",
+  "reqType": "요청",
+  "team": "cureca",
+  "at": "2026-11-26T15:43:46+09:00",
+  "from": "2026-11-26T15:43:20+09:00",
+  "by": "하승현",
+  "doneBy": "Claude",
+  "pc": "BREX_GRAM_2",
+  "fileKey": "etCQFF3CTf1EA6C79d4BBf",
+  "fileName": "UX AI TEST",
+  "page": "Policy Setting_tobe",
+  "frame": "",
+  "nodeId": "",
+  "text": "Language db 어디에 저장되어 있어?\nUX 문서 > 기준 데이터에 있는 언어셋 말고",
+  "models": {
+    "claude-opus-5-5": 5
+  },
+  "calls": 5,
+  "input": 9,
+  "cacheWrite": 7321,
+  "cacheRead": 230366,
+  "output": 2497,
+  "total": 240193,
+  "usd": 0.1546
+}

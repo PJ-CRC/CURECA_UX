@@ -1,0 +1,12 @@
+{
+  "rev": "20261125-210004_brex-01",
+  "by": "Claude",
+  "at": "2026-11-25T21:00:04+09:00",
+  "note": "모은 예시 표에 requirements-samples.md 줄 추가",
+  "base": "README.md",
+  "pc": "BREX_01",
+  "req": "flow 1 문서 정리: 케이스 3 내용을 한 덩어리로 모으고, 예시 · 예 칸을 examples로 옮기고, 겹치는 설명 · 긴 표현을 줄임 (규칙은 바꾸지 않음)",
+  "jobId": "",
+  "file": "../examples/README.md",
+  "orig": true
+}

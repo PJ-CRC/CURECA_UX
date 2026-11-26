@@ -27,3 +27,6 @@
 | TI-STN-05-R03 | Setting | Account Setting (TI-STN-05) | 논의 결정 | 삭제 제한 없음 (자기 계정, 로그인 중인 계정, 마지막 Admin 삭제) | 임시 정책 PV-0002 반영 (Admin에게 Service 계정 숨김, Service 계정 최소 1개, 자기 계정 삭제 불가 Alert_047) | PV-0002, CA-0003 | 제외 (2026-11-05, PV-0002 승인으로 R04 · R05 · R06로 대체) |
 | LI-STN-08-R01 | Setting | Assay Pack Setting (LI-STN-08) | 점검 발견 | 번호 3이 없음 (2 다음 4) | 번호 정리 | 디스크립션 | 제외 (2026-11-25, 케이스 3 규칙과 부딪힘: 빈 번호를 그대로 둠) |
 | TI-STN-08-R01 | Setting | Assay Pack Setting (TI-STN-08) | 점검 발견 | Ver 0.3.0 (화면 Ver 체계 X.Y.ZZ가 아님) | 2.1.ZZ 체계로 | `old-rules/repository-and-id.md` 6절 | 제외 (2026-11-25, 케이스 3 규칙과 부딪힘: 케이스 3은 기존 Ver 그대로 둠) |
+| LI-EVT-P-R05 | Event History | Event History (LI-EVT-P) | 기준 자료 변경 | Expiration date Status, Under 30 Day | 대소문자 통일, Under 30 days | `archive/glossary/review-v0.md` | 제외 (2026-11-25, 바꾸지 않음: 이 화면에 없는 글자, 시약 만료 상태는 시스템에서 쓰지 않는 값 — 요청자 답) |
+| TI-EVT-P-R03 | Event History | Event History (TI-EVT-P) | 기준 자료 변경 | Expiration date Status | 대소문자 통일 (PD-0001 결정 후) | `archive/glossary/review-v0.md` | 제외 (2026-11-25, 바꾸지 않음: 이 화면에 없는 글자, 시약 만료 상태는 시스템에서 쓰지 않는 값 — 요청자 답) |
+| TI-EVT-P-R04 | Event History | Event History (TI-EVT-P) | 기준 자료 변경 | Under 30 Day | Under 30 days | `glossary/status-values.csv` 시약 만료 상태 | 제외 (2026-11-25, 바꾸지 않음: 이 화면에 없는 글자, 시약 만료 상태는 시스템에서 쓰지 않는 값 — 요청자 답) |

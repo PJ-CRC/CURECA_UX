@@ -28,38 +28,35 @@
 | TI-DAS-R06 | Dashboard | Dashboard (TI-DAS) | 기준 자료 변경 | "Dashboard Info 페이지"를 참고하라고만 적음 | 정의는 정책 ID로 참조 (Today’s Orders 집계 기준은 SMP·TST 정책, 노출 조건은 INV 정책을 쓸 때 옮김) | 헌법 3조 | 대기 |
 | TI-DAS-R07 | Dashboard | Dashboard (TI-DAS) | 점검 발견 | Module 이름과 번호 붙여 씀: High-throughput Extraction(1), PCR Setup(1) | High-throughput Extraction (1) | 이름 (번호) 띄어쓰기 | 대기 |
 | TI-DAS-R08 | Dashboard | Dashboard (TI-DAS) | 점검 발견 | Event 툴팁 예시 "ER-0112, 유닛의 상태를 확인해주세요." (한국어) | 영어 화면 문구로 | `old-rules/language-set.md` | 대기 |
-| LI-EVT-01-P-R02 | Event History | Event History Detail (LI-EVT-01-P) | 점검 발견 | 6, 7 "닫기" 중복 | 하나로 | 디스크립션 | 대기 |
-| LI-EVT-01-P-R03 | Event History | Event History Detail (LI-EVT-01-P) | 기준 자료 변경 | Status·Notes "공통 UX 참고 : COMM-3-a" | POL-EVT-002 참조 | POL-EVT-002 | 대기 |
-| LI-EVT-01-P-R04 | Event History | Event History Detail (LI-EVT-01-P) | 기준 자료 변경 | Module "FlexibleExtraction", Unit "Starlet" | Flexible Extraction (1), STARlet | `glossary/modules.csv` | 대기 |
-| LI-EVT-02-P-R01 | Event History | Event Message Popup (LI-EVT-02-P) | 기준 자료 변경 | 0 "Main PC, 콘솔용 PC" | L-IOS Client Mode로 표기: Main Mode, Console Mode (MS Mode 제외) | POL-EVT-003, `policy/client-mode.md` | 대기 |
-| LI-EVT-02-P-R02 | Event History | Event Message Popup (LI-EVT-02-P) | 기준 자료 변경 | 3 Type "Instrument, Consumable, Reagent" | Instrument, Inventory, Sample, System | `glossary/status-values.csv` | 대기 |
-| LI-EVT-02-P-R03 | Event History | Event Message Popup (LI-EVT-02-P) | 점검 발견 | Eorrer, warning | Error, Warning | 오타 | 대기 |
-| LI-EVT-P-R02 | Event History | Event History (LI-EVT-P) | 기준 자료 변경 | 5 [Mark all as Closed] 범위 "상태값이 Open인 모든 Events" | 디스크립션에 넣음: 지금 검색 조건으로 불러온 목록의 모든 페이지에서 Open인 Event 전체 | POL-EVT-002 규칙 4 | 대기 |
-| LI-EVT-P-R03 | Event History | Event History (LI-EVT-P) | 기준 자료 변경 | 4 "공통 UX 참고 : COMM-3-a" | Status 변경 가능 조건은 POL-EVT-002 참조 | POL-EVT-002 | 대기 |
-| LI-EVT-P-R04 | Event History | Event History (LI-EVT-P) | 기준 자료 변경 | OPEN, Statue, Cureca | Open, Status, CURECA | `glossary/status-values.csv`, 오타 | 대기 |
-| LI-EVT-P-R05 | Event History | Event History (LI-EVT-P) | 기준 자료 변경 | Expiration date Status, Under 30 Day | 대소문자 통일, Under 30 days | `archive/glossary/review-v0.md` | 대기 (최신 영역 화면에서 확인) |
-| LI-EVT-P-R06 | Event History | Event History (LI-EVT-P) | 기준 자료 변경 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
-| TI-EVT-01-P-R01 | Event History | Event History Detail (TI-EVT-01-P) | 기준 자료 변경 | Module "FlexibleExtraction", Unit "Starlet" (코드명·소문자) | Flexible Extraction (1), STARlet | `glossary/modules.csv`, `module-units.csv` | 대기 |
-| TI-EVT-01-P-R02 | Event History | Event History Detail (TI-EVT-01-P) | 점검 발견 | 1 "Created Date", 화면 "Occurred Date/Time" | 하나로 통일 | 화면 글자 | 대기 |
-| TI-EVT-01-P-R03 | Event History | Event History Detail (TI-EVT-01-P) | 기준 자료 변경 | T-IOS에서 Status를 바꿀 수 있는지 상세 화면에 없음 (목록 TI-EVT-P 4는 바꿀 수 있음) | POL-EVT-002 참조 | POL-EVT-002 | 대기 |
-| TI-EVT-02-P-R01 | Event History | Event Message Popup (TI-EVT-02-P) | 기준 자료 변경 | 0 "Profile에 추가 예정, 지금은 모두 노출" | Profile > General의 Event notifications(On이면 노출, 기본 On)로 정리 | POL-EVT-003, TI-CPW-01-P (v2.1.11) | 대기 |
-| TI-EVT-02-P-R02 | Event History | Event Message Popup (TI-EVT-02-P) | 기준 자료 변경 | 3 Type "Instrument, Consumable, Reagent" | Instrument, Inventory, Sample, System | `glossary/status-values.csv` | 대기 |
-| TI-EVT-02-P-R03 | Event History | Event Message Popup (TI-EVT-02-P) | 기준 자료 변경 | 8 "Event Detail Popup(LI-EVT-01-P)" | TI-EVT-01-P | IA | 대기 |
-| TI-EVT-02-P-R04 | Event History | Event Message Popup (TI-EVT-02-P) | 점검 발견 | Eorrer, warning, High-throughput Extraction(1) | Error, Warning, High-throughput Extraction (1) | 오타, 이름 (번호) | 대기 |
-| TI-EVT-P-R03 | Event History | Event History (TI-EVT-P) | 기준 자료 변경 | Expiration date Status | 대소문자 통일 (PD-0001 결정 후) | `archive/glossary/review-v0.md` | 대기 (최신 영역 화면에서 확인) |
-| TI-EVT-P-R04 | Event History | Event History (TI-EVT-P) | 기준 자료 변경 | Under 30 Day | Under 30 days | `glossary/status-values.csv` 시약 만료 상태 | 대기 (최신 영역 화면에서 확인) |
-| TI-EVT-P-R05 | Event History | Event History (TI-EVT-P) | 점검 발견 | Statue, Cureca, 1 "Event ID, Code" 검색 (화면에 입력 칸 없음) | Status, CURECA, 검색 항목을 화면과 맞춤 | 오타, 화면 글자 | 대기 |
-| TI-EVT-P-R06 | Event History | Event History (TI-EVT-P) | 기준 자료 변경 | 목록 요약 "OPEN", Unit "CFX96-1" | Open, CFX96 (1) | `glossary/status-values.csv`, 이름 (번호) | 대기 |
-| TI-EVT-P-R07 | Event History | Event History (TI-EVT-P) | 기준 자료 변경 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
-| LI-INF-01-P-R01 | Information | Release Notes Popup (LI-INF-01-P) | 기준 자료 변경 | 경로 "Information > Installation information Popup" | Information > Program > Release Notes | `ia/ia-screens.csv` | 대기 |
+| LI-EVT-01-P-R02 | Event History | Event History Detail (LI-EVT-01-P) | 점검 발견 | 6, 7 "닫기" 중복 | 하나로 | 디스크립션 | 작업 중 (20261125-서보경-event-history) |
+| LI-EVT-01-P-R03 | Event History | Event History Detail (LI-EVT-01-P) | 기준 자료 변경 | Status·Notes "공통 UX 참고 : COMM-3-a" | POL-EVT-002 참조 | POL-EVT-002 | 작업 중 (20261125-서보경-event-history) |
+| LI-EVT-01-P-R04 | Event History | Event History Detail (LI-EVT-01-P) | 기준 자료 변경 | Module "FlexibleExtraction", Unit "Starlet" | Flexible Extraction (1), STARlet | `glossary/modules.csv` | 작업 중 (20261125-서보경-event-history) |
+| LI-EVT-02-P-R01 | Event History | Event Message Popup (LI-EVT-02-P) | 기준 자료 변경 | 0 "Main PC, 콘솔용 PC" | L-IOS Client Mode로 표기: Main Mode, Console Mode (MS Mode 제외) | POL-EVT-003, `policy/client-mode.md` | 작업 중 (20261125-서보경-event-history) |
+| LI-EVT-02-P-R02 | Event History | Event Message Popup (LI-EVT-02-P) | 기준 자료 변경 | 3 Type "Instrument, Consumable, Reagent" | Instrument, Inventory, Sample, System | `glossary/status-values.csv` | 작업 중 (20261125-서보경-event-history) |
+| LI-EVT-02-P-R03 | Event History | Event Message Popup (LI-EVT-02-P) | 점검 발견 | Eorrer, warning | Error, Warning | 오타 | 작업 중 (20261125-서보경-event-history) |
+| LI-EVT-P-R02 | Event History | Event History (LI-EVT-P) | 기준 자료 변경 | 5 [Mark all as Closed] 범위 "상태값이 Open인 모든 Events" | 디스크립션에 넣음: 지금 검색 조건으로 불러온 목록의 모든 페이지에서 Open인 Event 전체 | POL-EVT-002 규칙 4 | 작업 중 (20261125-서보경-event-history) |
+| LI-EVT-P-R03 | Event History | Event History (LI-EVT-P) | 기준 자료 변경 | 4 "공통 UX 참고 : COMM-3-a" | Status 변경 가능 조건은 POL-EVT-002 참조 | POL-EVT-002 | 작업 중 (20261125-서보경-event-history) |
+| LI-EVT-P-R04 | Event History | Event History (LI-EVT-P) | 기준 자료 변경 | OPEN, Statue, Cureca | Open, Status, CURECA | `glossary/status-values.csv`, 오타 | 작업 중 (20261125-서보경-event-history) |
+| LI-EVT-P-R06 | Event History | Event History (LI-EVT-P) | 기준 자료 변경 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 작업 중 (20261125-서보경-event-history) |
+| TI-EVT-01-P-R01 | Event History | Event History Detail (TI-EVT-01-P) | 기준 자료 변경 | Module "FlexibleExtraction", Unit "Starlet" (코드명·소문자) | Flexible Extraction (1), STARlet | `glossary/modules.csv`, `module-units.csv` | 작업 중 (20261125-서보경-event-history) |
+| TI-EVT-01-P-R02 | Event History | Event History Detail (TI-EVT-01-P) | 점검 발견 | 1 "Created Date", 화면 "Occurred Date/Time" | 하나로 통일 | 화면 글자 | 작업 중 (20261125-서보경-event-history) |
+| TI-EVT-01-P-R03 | Event History | Event History Detail (TI-EVT-01-P) | 기준 자료 변경 | T-IOS에서 Status를 바꿀 수 있는지 상세 화면에 없음 (목록 TI-EVT-P 4는 바꿀 수 있음) | POL-EVT-002 참조 | POL-EVT-002 | 작업 중 (20261125-서보경-event-history) |
+| TI-EVT-02-P-R01 | Event History | Event Message Popup (TI-EVT-02-P) | 기준 자료 변경 | 0 "Profile에 추가 예정, 지금은 모두 노출" | Profile > General의 Event notifications(On이면 노출, 기본 On)로 정리 | POL-EVT-003, TI-CPW-01-P (v2.1.11) | 작업 중 (20261125-서보경-event-history) |
+| TI-EVT-02-P-R02 | Event History | Event Message Popup (TI-EVT-02-P) | 기준 자료 변경 | 3 Type "Instrument, Consumable, Reagent" | Instrument, Inventory, Sample, System | `glossary/status-values.csv` | 작업 중 (20261125-서보경-event-history) |
+| TI-EVT-02-P-R03 | Event History | Event Message Popup (TI-EVT-02-P) | 기준 자료 변경 | 8 "Event Detail Popup(LI-EVT-01-P)" | TI-EVT-01-P | IA | 작업 중 (20261125-서보경-event-history) |
+| TI-EVT-02-P-R04 | Event History | Event Message Popup (TI-EVT-02-P) | 점검 발견 | Eorrer, warning, High-throughput Extraction(1) | Error, Warning, High-throughput Extraction (1) | 오타, 이름 (번호) | 작업 중 (20261125-서보경-event-history) |
+| TI-EVT-P-R05 | Event History | Event History (TI-EVT-P) | 점검 발견 | Statue, Cureca, 1 "Event ID, Code" 검색 (화면에 입력 칸 없음) | Status, CURECA, 검색 항목을 화면과 맞춤 | 오타, 화면 글자 | 작업 중 (20261125-서보경-event-history) |
+| TI-EVT-P-R06 | Event History | Event History (TI-EVT-P) | 기준 자료 변경 | 목록 요약 "OPEN", Unit "CFX96-1" | Open, CFX96 (1) | `glossary/status-values.csv`, 이름 (번호) | 작업 중 (20261125-서보경-event-history) |
+| TI-EVT-P-R07 | Event History | Event History (TI-EVT-P) | 기준 자료 변경 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 작업 중 (20261125-서보경-event-history) |
+| LI-INF-01-P-R01 | Information | Release Notes Popup (LI-INF-01-P) | 기준 자료 변경 | 경로 "Information > Installation information Popup" | Information > Program Info > Release Notes | `ia/ia-screens.csv` | 대기 |
 | LI-INF-01-P-R02 | Information | Release Notes Popup (LI-INF-01-P) | 점검 발견 | [OK], [X] 버튼 동작 설명 없음 | 버튼 동작 추가 (팝업 닫힘) | 화면 글자 | 대기 |
 | LI-INF-02-P-R01 | Information | Installation information Popup (LI-INF-02-P) | 기준 자료 변경 | 화면 정보 CID "LI-INF-01-P" | LI-INF-02-P | Figma 프레임 이름, `ia/ia-screens.csv` | 대기 |
 | LI-INF-02-P-R02 | Information | Installation information Popup (LI-INF-02-P) | 다른 화면 파급 | [OK], [X] 버튼 동작 설명 없음, Language·Data reset 기준 시점 | TI-INF-02-P 반영 대기 목록 1~3과 같이 | TI-INF-02-P | 대기 |
-| LI-INF-R01 | Information | Information (LI-INF) | 기준 자료 변경 | 화면 정보 CID "LI-STN-02", 경로 "Information", Ver 1.0 (TI-INF는 2.0) | LI-INF, Information > Program, 버전 확인 | `ia/ia-screens.csv`, Figma 프레임 이름 | 대기 |
+| LI-INF-R01 | Information | Information (LI-INF) | 기준 자료 변경 | 화면 정보 CID "LI-STN-02", 경로 "Information", Ver 1.0 (TI-INF는 2.0) | LI-INF, Information > Program Info, 버전 확인 | `ia/ia-screens.csv`, Figma 프레임 이름 | 대기 |
 | LI-INF-R02 | Information | Information (LI-INF) | 기준 자료 변경 | 0 "Cureca 프로그램" | CURECA | `glossary/terms.csv` | 대기 |
-| LI-INF-R03 | Information | Information (LI-INF) | 점검 발견 | 0 진입 방법 "LNB의 ‘Information’" | LNB의 Information > Program | 화면 글자 (LNB) | 대기 |
-| LI-INF-R04 | Information | Information (LI-INF) | 기준 자료 변경 | LNB Information 아래 "Manual" | IA에 Manual 화면 없음. 메뉴 유지 여부 확인 | `ia/ia-screens.csv` | 대기 (확인 필요) |
-| TI-INF-01-P-R01 | Information | Release Notes Popup (TI-INF-01-P) | 기준 자료 변경 | 경로 "Information > Installation information Popup" | Information > Program > Release Notes | `ia/ia-screens.csv` | 대기 |
+| LI-INF-R03 | Information | Information (LI-INF) | 점검 발견 | 0 진입 방법 "LNB의 ‘Information’" | LNB의 Information > Program Info | 화면 글자 (LNB) | 대기 |
+| LI-INF-R04 | Information | Information (LI-INF) | 기준 자료 변경 | LNB Information 아래 "Manual" | IA에 User Manual 화면 없음. 메뉴 유지 여부 확인 | `ia/ia-screens.csv` | 대기 (확인 필요) |
+| TI-INF-01-P-R01 | Information | Release Notes Popup (TI-INF-01-P) | 기준 자료 변경 | 경로 "Information > Installation information Popup" | Information > Program Info > Release Notes | `ia/ia-screens.csv` | 대기 |
 | TI-INF-01-P-R02 | Information | Release Notes Popup (TI-INF-01-P) | 기준 자료 변경 | "Release Notes"(화면), "Release Note"(IA) | 하나로 통일 | `ia/ia-screens.csv` | 대기 |
 | TI-INF-01-P-R03 | Information | Release Notes Popup (TI-INF-01-P) | 점검 발견 | [OK], [X] 버튼 동작 설명 없음 | 버튼 동작 추가 (팝업 닫힘) | 화면 글자 | 대기 |
 | TI-INF-02-P-R01 | Information | Installation information Popup (TI-INF-02-P) | 점검 발견 | [OK], [X] 버튼 동작 설명 없음 | 버튼 동작 추가 (팝업 닫힘) | 화면 글자 | 대기 |
@@ -71,7 +68,7 @@
 | TI-INF-03-01-R04 | Information | Run Report (TI-INF-03-01) | 기준 자료 변경 | 2-1 Generated Date/Time "배치 종료(정상 완료 또는 실패) 후" | End Status 값이 5개(Not Tested, Partially Completed, Stopped 포함)라 "배치 종료 후"로 정리 | `glossary/status-values.csv` | 대기 |
 | TI-INF-03-01-R05 | Information | Run Report (TI-INF-03-01) | 기준 자료 변경 | 1-1 "구동 ID(Run By)" | 실행한 User ID (2-1과 같은 말로) | `glossary/terms.csv` Run (구동은 쓰지 않는 표현) | 대기 |
 | TI-INF-03-01-R06 | Information | Run Report (TI-INF-03-01) | 점검 발견 | 2-2 "새 탭 PDF 뷰어 호출"과 "TI-INF-03-02 노출"이 함께 있음 | TI-INF-03-02가 PDF 뷰어로 보여 주는 리포트 화면인지 정리 | 디스크립션 | 대기 (확인 필요) |
-| TI-INF-03-01-R07 | Information | Run Report (TI-INF-03-01) | 기준 자료 변경 | LNB Information 아래 "Manual" | IA에 Manual 화면 없음. 메뉴 유지 여부 확인 | `ia/ia-screens.csv` | 대기 (확인 필요) |
+| TI-INF-03-01-R07 | Information | Run Report (TI-INF-03-01) | 기준 자료 변경 | LNB Information 아래 "Manual" | IA에 User Manual 화면 없음. 메뉴 유지 여부 확인 | `ia/ia-screens.csv` | 대기 (확인 필요) |
 | TI-INF-03-01-R08 | Information | Run Report (TI-INF-03-01) | 점검 발견 | 레포트 / 리포트 섞어 씀 | 하나로 통일 | 디스크립션 | 대기 |
 | TI-INF-03-02-R01 | Information | Run Report Detail (TI-INF-03-02) | 기준 자료 변경 | IA 화면 이름 "Datail", Figma 화면 이름 "Run Report" | Detail (IA 오타 수정), 화면 이름을 Run Report Detail 등으로 구분 | `ia/ia-screens.csv`, 디스크립션 0 | 대기 |
 | TI-INF-03-02-R02 | Information | Run Report Detail (TI-INF-03-02) | 기준 자료 변경 | User Type별 접근 정의 없음 | TI-INF-03-01과 같이: T-IOS에서만, Service·Admin·User 모두 볼 수 있음 | `policy/permission-matrix.csv` Information > Report, POL-SMP-004 규칙 6 | 대기 |
@@ -86,10 +83,10 @@
 | TI-INF-03-02-R11 | Information | Run Report Detail (TI-INF-03-02) | 점검 발견 | 2-1 Samples Total "Trolley에 적재되어 검사된 전체 검체 수" | STAT Storage Sample 포함 여부를 팀 논의 후 정함 | PD-0003 | 대기 (확인 필요) |
 | TI-INF-03-02-R12 | Information | Run Report Detail (TI-INF-03-02) | 기준 자료 변경 | 4-3 Run-time Current Run "h · m", Cumulative "h" 표기. Instruments Run-time은 h만 | Run-time 표기를 POL-EQP-005와 맞춤 | POL-EQP-005 | 대기 |
 | TI-INF-R01 | Information | Information (TI-INF) | 기준 자료 변경 | 0 "Cureca 프로그램" | CURECA | `glossary/terms.csv` | 대기 |
-| TI-INF-R02 | Information | Information (TI-INF) | 기준 자료 변경 | 화면 이름 "Information", IA 화면 이름 "Program" | 하나로 맞춤 | `ia/ia-screens.csv` | 대기 (확인 필요) |
-| TI-INF-R03 | Information | Information (TI-INF) | 점검 발견 | 0 진입 방법 "LNB의 ‘Information’" | Information 아래에 Run Report, Program, Manual이 있으므로 "LNB의 Information > Program" | 화면 글자 (LNB) | 대기 |
+| TI-INF-R02 | Information | Information (TI-INF) | 기준 자료 변경 | 화면 이름 "Information", IA 화면 이름 "Program Info" | 하나로 맞춤 | `ia/ia-screens.csv` | 대기 (확인 필요) |
+| TI-INF-R03 | Information | Information (TI-INF) | 점검 발견 | 0 진입 방법 "LNB의 ‘Information’" | Information 아래에 Run Report, Program Info, User Manual이 있으므로 "LNB의 Information > Program Info" | 화면 글자 (LNB) | 대기 |
 | TI-INF-R04 | Information | Information (TI-INF) | 기준 자료 변경 | 버튼 "Release Notes", IA "Release Note" | 하나로 통일 | `ia/ia-screens.csv` | 대기 |
-| TI-INF-R05 | Information | Information (TI-INF) | 기준 자료 변경 | LNB Information 아래 "Manual" | IA에 Manual 화면 없음. 메뉴 유지 여부 확인 | `ia/ia-screens.csv` | 대기 (확인 필요) |
+| TI-INF-R05 | Information | Information (TI-INF) | 기준 자료 변경 | LNB Information 아래 "Manual" | IA에 User Manual 화면 없음. 메뉴 유지 여부 확인 | `ia/ia-screens.csv` | 대기 (확인 필요) |
 | LI-INS-01-P-R01 | Instruments | Door Control Popup (LI-INS-01-P) | 기준 자료 변경 | Section 17 메모 "통합 상태가 Ready, Paused, Error 상태일 경우, Unlock all doors 버튼 사용 가능" | 장비 통합 상태가 Ready, Error, Paused, Not Initialized일 때 활성화 (디스크립션 3은 이미 맞음) | POL-EQP-008, 2026-11-02 확인 | 대기 |
 | LI-INS-01-P-R02 | Instruments | Door Control Popup (LI-INS-01-P) | 기준 자료 변경 | "Locks automatically 5 seconds after the door is closed." / "The door will be automatically locked 5 seconds after it is closed." 두 가지 | 하나로 통일 | `archive/glossary/review-v0.md` 화면 정정 대상 추가 | 대기 |
 | LI-INS-01-P-R03 | Instruments | Door Control Popup (LI-INS-01-P) | 점검 발견 | "Cannot unlock while the module is running." / "Cannot unlock while the system is running." 두 가지 | 쓰임을 구분하거나 하나로 통일 | 같음 | 대기 |
@@ -903,8 +900,8 @@
 | TI-STN-06-R01 | Setting | SMTP Setting (TI-STN-06) | 점검 발견 | SMTP Server 예시 값이 파일 경로("\\192.168.0.100\data\csv") | 서버 주소 예시로 (예: smtp.example.com) | 화면 | 대기 |
 | TI-STN-06-R02 | Setting | SMTP Setting (TI-STN-06) | 점검 발견 | 5 Use SMTP Feature를 Enable에서 Disable로 바꿔 저장하는 경우 [Save]가 비활성화되어 끌 수 없음 | 팀 논의 후 정함 | PD-0002 | 대기 (팀 논의) |
 | TI-STN-06-R03 | Setting | SMTP Setting (TI-STN-06) | 기준 자료 변경 | 2 "입력 조건 없음" (Port Number 형식) | 숫자만 등 조건 확인 | 헌법 8조 | 대기 (확인 필요) |
-| TI-STN-08-P-R01 | Setting | Assay Pack File Details (TI-STN-08-P) | 기준 자료 변경 | 화면 이름 "Assay Pack Setting", Ver 0.4.0 | Assay Pack File Details (IA "Details"), 2.1.ZZ 체계 | IA | 작업 중 (20261125-최고관리자-assay-pack) |
-| TI-STN-08-R02 | Setting | Assay Pack Setting (TI-STN-08) | 기준 자료 변경 | Import file 팝업 TI-STN-08-01이 IA에 없음 | IA에 추가할지 확인 | `ia/ia-screens.csv` | 작업 중 (20261125-최고관리자-assay-pack) |
+| TI-STN-08-P-R01 | Setting | Assay Pack File Details (TI-STN-08-P) | 기준 자료 변경 | 화면 이름 "Assay Pack Setting", Ver 0.4.0 | Assay Pack File Details (IA "Details"), 2.1.ZZ 체계 | IA | 작업 중 (20261126-최고관리자-assay-pack) |
+| TI-STN-08-R02 | Setting | Assay Pack Setting (TI-STN-08) | 기준 자료 변경 | Import file 팝업 TI-STN-08-01이 IA에 없음 | IA에 추가할지 확인 | `ia/ia-screens.csv` | 작업 중 (20261126-최고관리자-assay-pack) |
 | TI-SVS-01-P-R01 | Setting | Sample Tube Details (TI-SVS-01-P) | 기준 자료 변경 | [Delete] → Confirm_009 | Confirm_009는 "Local Storage Detected"(로컬 드라이브 경고)라 삭제 확인에 맞지 않음. 삭제 확인 알럿 ID로 바꿈 | `alert/alert-catalog.csv` | 대기 |
 | TI-SVS-01-R01 | Setting | Sample Tube Setting (TI-SVS-01) | 기준 자료 변경 | 화면 이름 "Sample tube Setting", IA "Tube Setting" | 하나로 통일 | IA | 대기 |
 | TI-SVS-01-R02 | Setting | Sample Tube Setting (TI-SVS-01) | 기준 자료 변경 | 입력 값 조건(코드 형식, 치수 범위, 중복 여부)이 목록 화면에 없음 | 세부정의·Modify 화면 확인 후 POL-TST-009에 넣음 | 헌법 8조 | 대기 (확인 필요) |

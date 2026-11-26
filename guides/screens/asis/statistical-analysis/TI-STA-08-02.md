@@ -2,51 +2,67 @@
 cid: TI-STA-08-02
 pair_cid:
 tl_relation: 단독
-title: Event 통계 - Table
-path: Statistical Analysis > Test Analytics > Event 통계 - Table
-type: Page
+title: Event _ Event Trend
+path: Statistical Analysis > Event
+type: Tab
 version: 2.1.14
-date: 2026-10-26
+date: 2026.10.26
 author: 정다예
 client_mode: []
 user_type: [Service, Admin, User]
 policies: []
-rules_version:
-provisional: []
-flags: []
 source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=7688-120510
-figma_region: 2.1 2차
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-471774
 ---
-# TI-STA-08-02 Event 통계 - Table
+# TI-STA-08-02 Event _ Event Trend
 
-> 기존 화면(기존 작업방 Statistical Analysis 페이지, 2.1 2차 영역, Ver 2.1.14)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 `SA_Event_asis` 페이지, Ver 2.1.14)을 2026-11-26에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
 
-- T-IOS 전용 메뉴. TI-STA-08-01의 Segmented Control을 Table로 바꾼 화면. 화면 타이틀은 "Event Trend"
+- T/L 차이: T-IOS 단독 (IA에 L 짝 없음)
+- 호출하는 화면: [TI-STA-08-01] Event Trend Chart (View Chart)
+- 호출되는 곳: [TI-STA-08-01] 2 Table
 - 관련 정책: POL-STA-001, POL-STA-002, POL-STA-003, POL-STA-006, POL-EVT-001, POL-COM-006
-- 호출하는 화면: Event 통계 - Chart (TI-STA-08-01)
-- 다른 프레임: [Legend Module 탭, Consumable Storage 선택](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=7688-120745)
+- 같은 페이지에 Legend를 Module로 고른 모양의 같은 CID 프레임이 1개 더 있습니다(아래 케이스 절).
 
 ## 기존 화면
 
+<!-- `{메뉴}_asis` 페이지에 있는 그대로 옮깁니다. 고치거나 정리하지 않습니다. 틀린 곳 · 정책과 다른 곳도 그대로 옮깁니다. 그 화면의 To-Be 작업 1단계에서 읽으며 찾아 그 작업에서 고칩니다(`flow/1-requirements.md` 절차 4번 순서 3 "뒤 단계로 넘김"의 5). -->
+
 ### 화면 글자
 
-- (GNB)(LNB) TI-STA-01-01과 같음
-- (Tab) Event Trend, (Segmented Control) Chart | Table, Export
-- (합계 표) Total | Instrument | Inventory | Sample | System
+- (GNB) Running | Instrument | L-IOS | D.A PC | Event | Error 3 | Warning 2 | 2026-04-10 11:30
+- (LNB) TIOS | Event | Dashboard | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis | Test Analytics | Instrument | Inventory | Event | Test Forecasting | Setting | Information | Keira Knightley | Logout
+- 탭: Event Trend
+- Chart | Table | Export
+- Event Trend
+- 합계 표: Total | Instrument | Inventory | Sample | System
+  - 215 | 27 | 84 | 61 | 43
 - (Unit : count)
-- (표) Event Type | 날짜 열 → Instrument, Inventory, Sample, System 행, Total 행
-- Filter Options: TI-STA-08-01과 같음
+- 표: Event Type | 01-01 | 01-02 | 01-03 | 01-04 | 01-05 | 01-06 | 01-07
+  - Instrument | 2 | 3 | 4 | 6 | 3 | 3 | 6
+  - Inventory | 11 | 13 | 12 | 11 | 13 | 12 | 12
+  - Sample | 10 | 7 | 10 | 5 | 9 | 10 | 10
+  - System | 5 | 6 | 6 | 6 | 5 | 6 | 9
+  - Total | 28 | 29 | 32 | 28 | 30 | 31 | 37
+- 오른쪽 조회 영역
+  - Date Range: Daily | Monthly / 2026-01-01 | 2026-01-07
+  - Legend: Event Type | Module / Select All | Instrument | Inventory | Sample | System
 
 ### 사용 컴포넌트
 
-Table (53), 1 Depth (6), Form/CheckBox (5), 2 Depth (5), Table/Filled Table Cell (5), Description Number (5), Square (4), Date&Time/Calendar_Outlined (2)
+Table (53), 1 Depth (6), Form/CheckBox (5), 2 Depth (5), Table/Filled Table  Cell (5), Description Number (5), Square (4), Date&Time/Calendar_Outlined (2), Interface/Info_Circle_Outlined (2), Frame (1), Arrow/Chevron_Up (1), Interface/Setting_Outlined (1), ViewMode/Barchart (1), ViewMode/Data_List (1)
 
 ### 디스크립션 (원문)
 
 #### 0. Event _ Event Trend 화면
 
-- 원문은 TI-STA-08-01 0과 같음
+- 정의
+- 사용자가 조회한 기간 내 이벤트 유형별/모듈별 이벤트 발생 건수 정보 제공
+- 동작
+- 최초 진입 후, 데이터 로딩 시 스켈레톤 화면 노출
+- 참고 : TI-STA-05_Skeleton
+- 데이터 산출식
+- 이벤트 발생 건수 = 조회 기간 내 발생한 Error, Warning 건수의 총합
 
 #### 1. 항목별 이벤트 발생 건수 합계 정보(Table 형태)
 
@@ -96,3 +112,19 @@ Table (53), 1 Depth (6), Form/CheckBox (5), 2 Depth (5), Table/Filled Table Cell
 
 - 해당 일자(또는 월)별로 선택된 모든 항목의 이벤트 발생 건수 총 합산 값 고정 표출
 - 단, 데이터가 없을 경우 ‘-’로 표기
+
+### 케이스
+
+<!-- `{메뉴}_asis` 페이지의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
+
+이 화면만의 케이스 프레임은 없습니다. 디스크립션 2-2가 가리키는 것은 `TI-STA-08-01/Case`([3543:472251](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-472251))의 Case 2입니다(내용은 [TI-STA-08-01] 케이스 절).
+
+| Case | 제목 (원문) | 조건 | 프레임 |
+| --- | --- | --- | --- |
+| 2 | Legend 전체 해제 시 | Legend 전체 해제 | `TI-STA-08-01/Case` y 777 |
+
+같은 CID의 프레임 (기획 프레임 아래, 라벨 없음, 패널 디스크립션 `0`만):
+
+| 프레임 | 모양 |
+| --- | --- |
+| [3543:472009](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-472009) | Legend Module 선택. 합계 Total 301 · Consumable Storage (1) 53 · (2) 96 · (3) 70 · (4) 82. 표 머리 Module, 행 (1) 6 · 7 · 8 · 9 · 7 · 7 · 9 / (2) 13 · 14 · 14 · 13 · 14 · 14 · 14 / (3) 8 · 9 · 9 · 11 · 13 · 9 · 11 / (4) 12 · 10 · 12 · 8 · 16 · 12 · 12 / Total 39 · 40 · 43 · 41 · 50 · 42 · 46 |

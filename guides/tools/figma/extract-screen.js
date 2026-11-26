@@ -1,5 +1,5 @@
-// 기존 작업방 기획 화면(오른쪽 화면 정보·디스크립션 패널이 있는 2252px 프레임)을 MD 본문으로 옮긴다.
-// 사용: 아래 CONFIG를 채워 use_figma(fileKey=기존 작업방)의 code로 실행한다. Figma는 읽기만 한다.
+// 작업방 {메뉴}_asis 페이지의 기획 화면(오른쪽 화면 정보·디스크립션 패널이 있는 2252px 프레임)을 MD 본문으로 옮긴다(2026-11-25~, 예전에는 기존 작업방 Part.2).
+// 사용: 아래 CONFIG(pageId = 그 메뉴의 _asis 페이지)를 채워 use_figma(fileKey=작업방)의 code로 실행한다. Figma는 읽기만 한다. region은 쓰지 않는다(_asis에는 최신 화면만 있음).
 // 규칙: old-rules/screen-spec.md 3절. 결과는 20KB 제한이 있어 한 번에 2개 프레임 정도만 넣는다. GNB(위 72px), LNB(왼쪽 250px)는 따로 묶는다.
 const CONFIG = {
   pageId: '281:1770',

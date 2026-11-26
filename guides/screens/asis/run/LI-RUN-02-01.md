@@ -3,45 +3,65 @@ cid: LI-RUN-02-01
 pair_cid:
 tl_relation: 단독
 title: Run Preparation
-path: Run > Check Test Protocol
+path: LNB > Run
 type: Page
 version: 2.0
-date: 2026-06-15
+date: 2026.06.15
 author: 정다예
 client_mode: [Main Mode, Console Mode]
 user_type: [Service, Admin, User]
 policies: []
-rules_version:
-provisional: []
-flags: []
 source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=6902-44543
-figma_region: 2.1 2차
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-78975
 ---
-# LI-RUN-02-01 Run Preparation (Check Test Protocol)
+# LI-RUN-02-01 Run Preparation
 
-> 기존 화면(기존 작업방 Run/Quick Start 페이지, 2.1 2차 영역, Ver 2.0)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 `Run_asis` 페이지, Ver 2.0)을 2026-11-25에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
 
-- L-IOS 전용. Run Preparation Step 2/5. Policy Setting의 Allow Protocol Changes Before Test가 ON일 때만 나옴 (`policy/permission-matrix.csv` Run > Check Test Protocol 단계)
+- T/L 차이: L-IOS 단독 화면 (IA에 T 짝 없음). Run Preparation Step 2/5 (Check test protocol, Policy Setting 「Allow Protocol Changes Before Test」가 ON일 때만 노출)
+- 호출하는 화면: [LI-RUN-01] (5 [Previous]), [LI-RUN-02] (6 [Next]), Confirm_001 (0 · 4 [Cancel]), Alert_001 (0)
+- 호출되는 곳: (원문에 없음)
 - 관련 정책: POL-SMP-007. Protocol 목록·Applied는 POL-TST-006 (Protocol Setting) 참고
-- 호출하는 화면: Confirm_001, Alert_001, 이전 LI-RUN-01, 다음 LI-RUN-02
+- 참조 프레임: 같은 페이지의 [Run Preparation - Check Test Protocol 단계 노출 여부](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-79245) 섹션 (2026-11-26에 아래 참조 섹션 (원문) 절로 옮김)
 
 ## 기존 화면
 
+<!-- `{메뉴}_asis` 페이지에 있는 그대로 옮깁니다. 고치거나 정리하지 않습니다. 틀린 곳 · 정책과 다른 곳은 반영 대기 목록(`pending/open.md`)에 "점검 발견"으로 남깁니다. -->
+
 ### 화면 글자
 
-- STEP 1 Check samples | STEP 2 Check test protocol | STEP 3 Check consumables | STEP 4 Check reagents | STEP 5 Check waste bin/bottle
+- (GNB) Running | Instrument | T-IOS | D.A PC | Event | Error 3 | Warning 2 | 2026-04-10 11:30
+- (LNB) LIOS | Dashboard | Material Setup | Test Management | Sample Tracking | Instrument | Inventory | Setting | Information | Quick Start | Run | Keira Knightley | Shut Down
+- Run Preparation
+- STEP 1 | Check samples | STEP 2 | Check test protocol | STEP 3 | Check consumables | STEP 4 | Check reagents | STEP 5 | Check waste bin/bottle
 - Pre-Treatment Protocol | Extraction Protocol
-- Items | Please load any additional consumables resulting from the protocol change into the trolley.
-- (두 표 모두) Protocol Name | Usage | Modified by | Modified Date/Time
-- Seegene Protocol (SG protocol) | Applied (Pre-Treatment) / - (Extraction) | - | -
-- Pre-Treatment Test Protocol AA | - | Admin02 | 2026-03-24 10:24:56 ; Extraction Test Protocol AA | Applied | Admin25 | 2026-03-24 10:24:56
-- (같은 형식의 행 BB ~ HH, 행마다 라디오 버튼)
+- Items 26 | Please load any additional consumables resulting from the protocol change into the trolley. | Items 26
+- Protocol Name | Usage | Modified by | Modified Date/Time (두 목록 같음)
+- Pre-Treatment 목록
+  - Seegene Protocol | SG protocol | Applied | - | -
+  - Pre-Treatment Test Protocol AA | - | Admin02 | 2026-03-24 10:24:56
+  - Pre-Treatment Test Protocol BB | - | Admin03 | 2026-03-24 10:24:56
+  - Pre-Treatment Test Protocol CC | - | Admin04 | 2026-03-24 10:24:56
+  - Pre-Treatment Test Protocol DD | - | Admin03 | 2026-03-24 10:24:56
+  - Pre-Treatment Test Protocol EE | - | Admin03 | 2026-03-24 10:24:56
+  - Pre-Treatment Test Protocol FF | - | Admin03 | 2026-03-24 10:24:56
+  - Pre-Treatment Test Protocol GG | - | Admin03 | 2026-03-24 10:24:56
+  - Pre-Treatment Test Protocol HH | - | Admin03 | 2026-03-24 10:24:56
+- Extraction 목록
+  - Seegene Protocol | SG protocol | - | - | -
+  - Extraction Test Protocol AA | Applied | Admin25 | 2026-03-24 10:24:56
+  - Extraction Test Protocol BB | - | Admin23 | 2026-03-24 10:24:56
+  - Extraction Test Protocol CC | - | Admin12 | 2026-03-24 10:24:56
+  - Extraction Test Protocol DD | - | Admin24 | 2026-03-24 10:24:56
+  - Extraction Test Protocol EE | - | Admin06 | 2026-03-24 10:24:56
+  - Extraction Test Protocol FF | - | Admin07 | 2026-03-24 10:24:56
+  - Extraction Test Protocol GG | - | Admin05 | 2026-03-24 10:24:56
+  - Extraction Test Protocol HH | - | Admin05 | 2026-03-24 10:24:56
 - Cancel | Previous | Next
 
 ### 사용 컴포넌트
 
-Form/Radio BTN (18), Table (16), Description (16), Title (10), Description Number (9), Square Text Badge (4), Contents/Scroll Bar (1)
+Form/Radio BTN (18), Frame 42 (18), Table (16), Description (16), Frame 50 (15), Frame 55 (14), Title (10), Description Number (9), Square Text Badge (4), Frame 54 (4), Contents/Scroll Bar (1), Arrow/Chevron_Left (1), Icon/Popup Status (1), Frame 56 (1), Arrow/Chevron_Right (1), Component 4 (1), Frame (1)
 
 ### 디스크립션 (원문)
 
@@ -127,3 +147,23 @@ Form/Radio BTN (18), Table (16), Description (16), Title (10), Description Numbe
 #### 6. [Next] 버튼
 
 - 클릭 시 LI-RUN-02(다음 단계)으로 이동
+
+### 케이스
+
+<!-- `{메뉴}_asis` 페이지의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
+
+없음 (`Run_asis` 페이지에 LI-RUN-02-01 케이스 프레임 없음)
+
+### 참조 섹션 (원문)
+
+<!-- 디스크립션이 참고하라고 가리키는 기획 프레임 밖 섹션 · 프레임의 글을 원본대로 옮깁니다. 고치거나 정리하지 않습니다. To-Be 작업에서는 정책 · 기준데이터로 옮길 내용인지 2단계에서 가립니다. -->
+
+#### `Run Preparation - Check Test Protocol 단계 노출 여부` 섹션 ([3543:79245](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-79245), 2107×950)
+
+흐름도의 글자를 순서대로 옮깁니다(화살표 · 도형은 글로 옮기지 않음). 위에 `T-IOS` | `L-IOS` 구역 이름이 있고, 흐름 글자는 T-IOS 쪽에만 있습니다.
+
+- `프로그램 실행` → `T-IOS 시스템 실행`
+- `계정 로그인` → `ID / PW 입력` (`*Service 또는 Admin 권한`)
+- `Policy Setting 메뉴 선택` → `페이지 진입`
+- 분기 `ON` (`*Default`) → `Run 구동 준비 시 / Protocol 선택 단계 노출`
+- 분기 `OFF` → `Run 구동 준비 시 / Protocol 선택 단계 미노출`

@@ -6,42 +6,43 @@ title: Test Forecasting
 path: Statistical Analysis > Test Forecasting
 type: Page
 version: 2.0
-date: 2026-06-15
+date: 2026.06.15
 author: 정다예
 client_mode: []
 user_type: [Service, Admin, User]
 policies: []
-rules_version:
-provisional: []
-flags: []
 source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=2138-1079411
-figma_region: 2.1 2차
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-478882
 ---
 # TI-STA-05 Test Forecasting
 
-> 기존 화면(기존 작업방 Statistical Analysis 페이지, 2.1 2차 영역, Ver 2.0)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 `SA_Test Forecasting_asis` 페이지, Ver 2.0)을 2026-11-26에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
 
-- T-IOS 전용 메뉴
+- T/L 차이: T-IOS 단독 (IA에 L 짝 없음)
+- 호출하는 화면: 없음 (툴팁 · 케이스만)
+- 호출되는 곳: LNB > Statistical Analysis > Test Forecasting
 - 관련 정책: POL-STA-001, POL-STA-005
-- 다른 프레임: [TI-STA-05/Case](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=2138-1079710)
+- CID: IA 변경 요청 2번(`ia/change-requests.md`)에 Instrument Run-time(TI-STA-05-01 · 05-02)과 계층이 겹쳐 TI-STA-09로 바꾸자는 안이 있습니다(요청 전). 원본 CID 그대로 둡니다.
+- 기획 프레임 밖에는 섹션 `통계 예측 관련 정책`([3543:479674](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-479674))이 있습니다(옮기지 않음).
 
 ## 기존 화면
 
+<!-- `{메뉴}_asis` 페이지에 있는 그대로 옮깁니다. 고치거나 정리하지 않습니다. 틀린 곳 · 정책과 다른 곳도 그대로 옮깁니다. 그 화면의 To-Be 작업 1단계에서 읽으며 찾아 그 작업에서 고칩니다(`flow/1-requirements.md` 절차 4번 순서 3 "뒤 단계로 넘김"의 5). -->
+
 ### 화면 글자
 
-- (GNB) TI-STA-01-01과 같음
-- (LNB) Dashboard | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis (Test Analytics, Test Forecasting) | Setting | Information | Manual | Keira Knightley
-- Forecast Range: 1 Week | 2 Weeks | 1 Month, Product: All, Apply
+- (GNB) Network Status | Instrument | L-IOS | D.A PC | Running | Event | Error 3 | Warning 2 | 2026-04-10 11:30
+- (LNB) TIOS | Test Forecasting | Dashboard | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis | Test Analytics | Test Forecasting | Setting | Information | Manual | Keira Knightley
+- 조회 조건: Forecast Range 1 Week | 2 Weeks | 1 Month | Product All (Dropdown) | Apply
 - All Tests Count Prediction
-- Historical Test | Forcasted Test | Predicted Change
-- Max 8,000 / Average 6,504 / Min 2,000 | Max 9,500 / Average 7,604 / Min 3,800 | 5%
-- (Unit : count), X축 오늘 날짜 아래 "04-10 (Today)"
-- (차트 범례) Actual | Forecast
+- 요약: Historical Test — Average 6,504 | Max 8,000 | Min 2,000 / Forcasted Test — Average 7,604 | Max 9,500 | Min 3,800 / Predicted Change 5%
+- 차트: (Unit : count) | 범례 Actual | Forecast
+  - Y축 10000 · 8000 · 6000 · 4000 · 2000 · 0
+  - X축 03-11 | 03-13 | 03-15 | 03-17 | 03-19 | 03-21 | 03-23 | 03-25 | 03-27 | 03-29 | 03-31 | 04-02 | 04-04 | 04-06 | 04-08 | 04-10 (Today) | 04-12 | 04-14 | 04-16
 
 ### 사용 컴포넌트
 
-Description Number (13), 1 Depth (7), Square (4), Interface/Info_Circle_Outlined (2), Form/Dropdown Box (1)
+Description Number (13), 1 Depth (7), Square (4), Interface/Info_Circle_Outlined (2), profile (1), Layout/Align_Right_05_Solid (1), Form/Dropdown Box (1), Frame (1)
 
 ### 디스크립션 (원문)
 
@@ -163,4 +164,26 @@ Description Number (13), 1 Depth (7), Square (4), Interface/Info_Circle_Outlined
 
 ### 케이스
 
-- TI-STA-05/Case: Case 1. Chart 상세 데이터 Tooltip / Case 2. 데이터 로딩 중 Case / Case 3. 최초 진입 시 (예측 조건 조회 전) / Case 4. Forecast Range Tooltip / Case 5. Predicted Change Tooltip
+<!-- `{메뉴}_asis` 페이지의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
+
+케이스는 같은 페이지의 별도 프레임 `TI-STA-05/Case`([3543:479181](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-479181), 2252×3178)에 있습니다. 케이스마다 오른쪽 패널이 있습니다(CID `TI-STA-05/Case`, 작성자 정다예, Ver 2.0, Date 2026.06.15). 디스크립션은 Case 1에만 있고 Case 2 ~ 5는 `0`입니다. 프레임 칸의 y는 케이스 제목 글자 자리입니다.
+
+| Case | 제목 (원문) | 조건 | 프레임 |
+| --- | --- | --- | --- |
+| 1 | Chart 상세 데이터 Tooltip | 차트 내 특정 시점에 마우스 호버 | 위 프레임 y 16 |
+| 2 | 데이터 로딩 중 Case | 데이터 로딩 중 | 위 프레임 y 788 |
+| 3 | 최초 진입 시 (예측 조건 조회 전) | 최초 진입 (Forecast Range 미선택) | 위 프레임 y 1562 |
+| 4 | Forecast Range Tooltip | Forecast Range 안내 아이콘 | 위 프레임 y 2408 |
+| 5 | Predicted Change Tooltip | Predicted Change 안내 아이콘 | 위 프레임 y 2780 |
+
+- Case 1 패널
+  - 1 Chart 상세 데이터 Tooltip — 노출 조건: 차트 내 특정 시점(일별 막대 또는 월별 막대)에 마우스 호버시 해당 마우스 포인터 위치를 기준으로 팝업 노출
+  - 1-1 시점 정보 — 표출 항목: 호버된 해당 일자 정보 표출
+  - 1-2 지표별 상세 정보 — 표출 항목: Test Count 행 / ㄴ 해당 시점의 총 검사 건수 수치 표출
+  - 툴팁 예시: 04-10 / Test Count 4,000 (설명용 확대본과 차트 위 두 자리에 있음). 화면은 기획 화면과 같음
+- Case 2: 요약 값이 모두 `-`(Historical Test · Forcasted Test Average · Max · Min, Predicted Change), 차트는 (Unit : count)만
+- Case 3: 요약 값 모두 `-`, 차트 자리에 `Please select a target and forecast range.` 안내
+- Case 4
+  - 설명: 예측 범례 선택에 따른 과거 데이터 및 예측 데이터 기간 안내 문구 노출
+  - Forecast Range 툴팁: 1 Week : 7d Forecast based on 30d past data / 2 Weeks : 15d Forecast based on 60d past data / 1 Month : 30d Forecast based on 90d past data
+- Case 5: Predicted Change 5% 툴팁 `Predicted Max vs Past Avg.`

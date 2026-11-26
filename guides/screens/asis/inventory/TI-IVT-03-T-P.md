@@ -3,44 +3,52 @@ cid: TI-IVT-03-T-P
 pair_cid: LI-IVT-03-T-P
 tl_relation: 동일
 title: Consumables Item details popup
-path: Inventory > Consumables > Item details
+path: Inventory > Consumables Tab > Item details
 type: Popup
-version: 2.1.04
-date: 2026-08-28
-author: 서보경
+version: 2.1.18
+date: 2026.11.19
+author: 이상헌
 client_mode: []
 user_type: [Service, Admin, User]
 policies: []
-rules_version:
-provisional: []
-flags: []
 source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=7336-427034
-figma_region: 2.1 2차
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-383368
 ---
 # TI-IVT-03-T-P Consumables Item details popup
 
-> 기존 화면(기존 작업방 Inventory 페이지, 2.1 2차 영역, Ver 2.1.04)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 `Inventory_asis` 페이지, Ver 2.1.18)을 2026-11-25에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
 
-- T/L 차이: 없음 (LI-IVT-03-T-P와 같음)
+- T/L 차이: 팝업 · 디스크립션 같음. 뒤 화면의 LNB 메뉴만 다름
+- 호출하는 화면: 없음 (5 [Close] · 6 [X] 닫기)
+- 호출되는 곳: [TI-IVT-03-T] Consumables Tab 3-7 [Item details]
 - 관련 정책: POL-INV-001, POL-INV-004, POL-EQP-009
-- 호출하는 화면: 없음. Consumables Tab(TI-IVT-03-T)의 [Item details]에서 열림
 
 ## 기존 화면
 
+<!-- `{메뉴}_asis` 페이지에 있는 그대로 옮깁니다. 고치거나 정리하지 않습니다. 틀린 곳 · 정책과 다른 곳도 그대로 옮깁니다. 그 화면의 To-Be 작업 1단계에서 읽으며 찾아 그 작업에서 고칩니다(`flow/1-requirements.md` 절차 4번 순서 3 "뒤 단계로 넘김"의 5). -->
+
 ### 화면 글자
 
-- (뒤 화면) Summary | Overview | Consumables | Reagents | Waste Bin/Bottle | Usage History
+- (뒤 화면) Inventory Consumables Tab: (GNB) Running | Instrument | L-IOS | D.A PC | Event | Error 3 | Warning 2 | 2026-04-10 11:30 / (LNB) TIOS | Dashboard | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis | Setting | Information | Keira Knightley / Tab: Summary | Overview | Consumables | Reagents | Waste Bin/Bottle | Usage History
 - Item details
 - 1000 μL Tip | Remaining Qty 2,021 (22 rack)
 - Location | Barcode | Location in storage | Inbound Date | Remaining Qty
-- Consumable Storage (1) > Trolley | 260520280609EX294628G01EB144S | 8462-1981 / 3 / C02 | 12 ea (1 rack)
-- (같은 형식 9줄 더: Consumable Storage (1)~(3) > Trolley, 56~96 ea (1 rack))
+  - Consumable Storage (1) > Trolley | 260520280609EX294628G01EB144S | 8462-1981 / 3 / C02 | 2024-07-01 | 12 ea (1 rack)
+  - Consumable Storage (1) > Trolley | 260520280609EX294628G01EB144S | 8462-1981 / 3 / C02 | 2024-07-01 | 96 ea (1 rack)
+  - Consumable Storage (2) > Trolley | 260520280609EX294628G01EB144S | 8462-1981 / 3 / C02 | 2024-07-01 | 96 ea  (1 rack)
+  - Consumable Storage (2) > Trolley | 260520280609EX294628G01EB144S | 8462-1981 / 3 / C02 | 2024-07-01 | 96 ea (1 rack)
+  - Consumable Storage (1) > Trolley | 260520280609EX294628G01EB144S | 8462-1981 / 3 / C02 | 2024-07-01 | 96 ea (1 rack)
+  - Consumable Storage (1) > Trolley | 260520280609EX294628G01EB144S | 8462-1981 / 3 / C02 | 2024-07-01 | 96 ea (1 rack)
+  - Consumable Storage (3) > Trolley | 260520280609EX294628G01EB144S | 8462-1981 / 3 / C02 | 2024-07-01 | 56 ea (1 rack)
+  - Consumable Storage (3) > Trolley | 260520280609EX294628G01EB144S | 8462-1981 / 3 / C02 | 2024-07-01 | 96 ea (1 rack)
+  - Consumable Storage (3) > Trolley | 260520280609EX294628G01EB144S | 8462-1981 / 3 / C02 | 2024-07-01 | 96 ea (1 rack)
+  - Consumable Storage (3) > Trolley | 260520280609EX294628G01EB144S | 8462-1981 / 3 / C02 | 2024-07-01 | 96 ea (1 rack)
+- 1 | 2 | 3 | 4
 - Close
 
 ### 사용 컴포넌트
 
-Description Number (7), Item_Segment Tabs (6), Frame (1), Component 4 (1), Page number (1), Square (1)
+Description Number (7), ⛔️ Item_Segment Tabs (6), Frame (1), Component 4 (1), Page number (1), Square (1)
 
 ### 디스크립션 (원문)
 
@@ -74,8 +82,8 @@ Description Number (7), Item_Segment Tabs (6), Frame (1), Component 4 (1), Page 
 - Location in storage
 - 해당 소모품의 위치 값 표시
 - 표기 방식
-- ㄴTrolley 경우: Trolley ID / Tray Floor / Position
-- ㄴDX 서랍식 입고 경우: 서랍 위치값 단일 표기
+  - ㄴTrolley 경우: Trolley ID / Tray Floor / Position
+  - ㄴDX 서랍식 입고 경우: 서랍 위치값 단일 표기
 - Inbound Date
 - Material Setup 메뉴에서 Storage에 소모품 입고한 일자 표기
 - Remaining Qty(Module+Storage기준)
@@ -102,3 +110,9 @@ Description Number (7), Item_Segment Tabs (6), Frame (1), Component 4 (1), Page 
 #### 6. [X] 버튼
 
 - 클릭 시, 팝업이 닫힌 후 기존 화면 노출
+
+### 케이스
+
+<!-- `{메뉴}_asis` 페이지의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
+
+없음 (`Inventory_asis` 페이지에 TI-IVT-03-T-P 케이스 프레임 없음)

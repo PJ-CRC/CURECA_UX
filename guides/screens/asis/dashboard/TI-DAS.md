@@ -6,41 +6,55 @@ title: Dashboard
 path: Dashboard
 type: Page
 version: 2.1.14
-date: 2026-10-30
+date: 2026.10.30
 author: 서보경
 client_mode: []
 user_type: [Service, Admin, User]
 policies: []
-rules_version:
-provisional: []
-flags: []
 source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3249-57523
-figma_region: 2.1 2차
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-7110
 ---
 # TI-DAS Dashboard
 
-> 기존 화면(기존 작업방 Dashboard 페이지, 2.1 2차 영역, Ver 2.1.14)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 `Dashboard_asis` 페이지, Ver 2.1.14)을 2026-11-25에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
 
-- T/L 차이: L-IOS(LI-DAS)에는 CURECA 구동 컨트롤러([Initialize], [Stop])와 Instrument Status의 Door Control이 더 있음
+- T/L 차이: L-IOS(LI-DAS)에는 4-1 CURECA 구동 컨트롤러([Initialize] · [Stop])와 5-2 [Unlock] 버튼(화면 글자는 `Door control`)이 더 있어 5-2 Event 표기 영역이 L에서는 5-3. 화면 글자도 다른 곳이 있음: Inventory Status 탭 `Empty`(T) / `Insufficient`(L), 시약 줄 `270 rxns (3 sockets)`(T) / `(3 sets)`(L), Event 툴팁 예시 글, GNB 시스템 표시, LNB 메뉴
+- 호출하는 화면: [TI-TMG-02] Test Status (3-1 [+More]), Instrument Overview Tab (5-1 [+More]), Inventory Summary Tab (6-1 · 7-1 [+More])
+- 호출되는 곳: LNB `Dashboard` (0 진입 방법)
 - 관련 정책: POL-EQP-001, POL-EQP-002, POL-EQP-004, POL-SMP-001, POL-SMP-004, POL-SMP-009
-- 참조 프레임: [SB_Dashboard Info](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=5136-325772) (Inventory Status, Waste Bin/Bottle Status 노출 케이스)
+- 참조 프레임: 같은 페이지의 [SB_Dashboard Info](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-8244) (디스크립션 1 · 4가 「Dashboard Info」를 참고하라고 함. 2026-11-26에 아래 케이스 절로 옮김)
 
 ## 기존 화면
 
+<!-- `{메뉴}_asis` 페이지에 있는 그대로 옮깁니다. 고치거나 정리하지 않습니다. 틀린 곳 · 정책과 다른 곳은 반영 대기 목록(`pending/open.md`)에 "점검 발견"으로 남깁니다. -->
+
 ### 화면 글자
 
-- (GNB) Running | Instrument | L-IOS | D.A PC | Event | Error 3 | Warning 2 | 2026-04-10 11:30 | TIOS
-- (LNB) Dashboard | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis | Setting | Information | Keira Knightley
-- Today’s Orders: Orders | Pending | In Progress | Completed (16,560씩)
-- Test Status | More (Running)
-- Inventory Status | More: Empty | Low 탭, 목록 예: MB DWP · High-throughput Extraction(1) / MB Storage · Required Qty 380 rxns (4 DWPs), 5X GI-B(I) MOM, EM2, RNase-free Water, GI-B(I) PC · 270 rxns (3 sockets), Empty Standard Tube · Consumable Storage(1) / Trolley · 80 ea (2 racks), 300 μL Tip · 75 ea (1 rack), BB TUB, WB1 TUB, WB2 TUB, WB3 TUB, EB TUB · Flexible Extraction(1) / Buffer Cartridge Storage · 60 rxns (1 set)
-- Instrument Status | More: Module Type마다 Connected / Status / Door Status / Event, View All, Event 툴팁 "[HT Extraction(3)] ER-0112, 유닛의 상태를 확인해주세요."
-- Waste Bin/Bottle Status: Full | Almost Full, 목록 예: High-throughput Extraction(1) Waste Bin Full, Liquid Waste Bottle Full, Flexible Extraction(1) Waste Bin Full, PCR Setup(1) Waste Bin 88%, Flexible Extraction(2) Waste Bin 75%
+- (GNB) Running | Instrument | L-IOS | D.A PC | Event | Error 3 | Warning 2 | 2026-04-10 11:30
+- (LNB) TIOS | Dashboard | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis | Setting | Information | Keira Knightley
+- Today’s Orders: Orders 16,560 | Pending 16,560 | In Progress 16,560 | Completed 16,560
+- Test Status | More: Running
+- Inventory Status | More: Empty 3 | Low 3
+  - MB DWP | Required Qty | High-throughput Extraction(1) / MB Storage | 380 rxns (4 DWPs)
+  - 5X GI-B(I) MOM, EM2, RNase-free Water, GI-B(I) PC | Required Qty | 270 rxns (3 sockets) | High-throughput Extraction(1) / MB Storage
+  - Empty Standard Tube | Required Qty | 80 ea (2 racks) | Consumable Storage (1) / Trolley
+  - 300 μL Tip | Required Qty | Consumable Storage (1) / Trolley | 75 ea (1 rack)
+  - BB TUB, WB1 TUB, WB2 TUB, WB3 TUB, EB TUB | Required Qty | 60 rxns (1 set) | Flexible Extraction(1) / Buffer Cartridge Storage
+- Instrument Status | More | View All
+  - Module: Sample Storage | Consumable Storage | Sample Pre-treatment | High-throughput Extraction | Flexible Extraction | PCR Setup | Plate Sealing | Universal PCR
+  - 행 이름: Status | Door Status | Event
+  - Module마다 값(Status · Door Status · Event 순): `- 1 - - / Open - / 0 0` | `- - 1 - / Open 1 / 0 0` | `1 3 1 - / Open 1 / 0 0` | `- 2 1 1 / Open 1 / 0 0` | `- 2 - 1 / Open 1 / 0 0` | `- 3 1 - / Open 1 / 0 0` | `- 1 1 - / Open 1 / 0 0` | `1 4 1 - / Open 1 / 0 0`
+  - Event 툴팁: [HT Extraction(3)] / ER-0112, 유닛의 상태를 확인해주세요.
+- Waste Bin/Bottle Status | More: Full 3 | Almost Full 3
+  - Waste Bin | Full | High-throughput Extraction(1)
+  - Liquid Waste Bottle | Full | Flexible Extraction(1)
+  - Waste Bin | Full | PCR Setup(1)
+  - Waste Bin | 88% | PCR Setup(2)
+  - Waste Bin | 75% | Flexible Extraction(2)
 
 ### 사용 컴포넌트
 
-Frame/Instrument_Status (32), Tag Status (16), Description (15), Description Number (11), Table/Filled Table Cell (8), Interface/Plus (4), Icon/Alert Error (3), Title (3), Button/Tertiary XSmall (1), Tooltip (1)
+Frame/Instrument_Status (32), Tag Status (16), Description (15), Description Number (11), Table/Filled Table  Cell (8), Interface/Plus (4), Icon/Alert Error (3), Title (3), Button/Tertiary XSmall (1), Tooltip (1), Component 4 (1), Frame (1)
 
 ### 디스크립션 (원문)
 
@@ -93,7 +107,8 @@ Frame/Instrument_Status (32), Tag Status (16), Description (15), Description Num
 - 노출 방식: 아이콘 클릭 시 툴팁형식으로 내용이 노출되며, X 클릭 시 닫히는 방식
 - 노출 조건: Event 상태가 ‘Open’인 항목이 존재할 경우
 - 표시 기준: ‘Open’ 상태 Event 중 최신 1건 표시됨
-- 표기 형식: [{Module Name}]\n{Event Code}, {Event Description}
+- 표기 형식:
+- [{Module Name}]\n{Event Code}, {Event Description}
 
 #### 6. Inventory status 영역
 
@@ -125,3 +140,20 @@ Frame/Instrument_Status (32), Tag Status (16), Description (15), Description Num
 #### 7-1. [+More] 클릭
 
 - Inventory 메뉴의 Summary tab으로 이동 및 ‘Waste Bin/Bottle’ 섹션으로 포커싱되어 이동됨
+
+### 케이스
+
+<!-- `{메뉴}_asis` 페이지의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
+
+`TI-DAS/Case` 이름의 프레임은 없고, 디스크립션 1 · 4가 참고하라고 한 별도 프레임 `SB_Dashboard Info`([3543:8244](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-8244), 2150×1695, 기획 프레임 밖)에 케이스 하나가 있습니다. 오른쪽 패널은 빈 틀입니다(Ver 0.1, Date 2026.00.00, CID `text`, 작성자 `이름`, 화면 `화면이름`, 경로 `경로 > 경로2`, 디스크립션 0 · 1 · 2 `내용`). 원본에 Case 번호가 없습니다. 디스크립션 1이 함께 가리키는 [전체 Cureca 구동 상태 값] · [구동 프로세스]는 이 프레임에 없습니다(구동 프로세스는 같은 페이지의 L-IOS 쪽 섹션, LI-DAS 참조 섹션 절).
+
+| Case | 제목 (원문) | 조건 | 프레임 |
+| --- | --- | --- | --- |
+| - | Inventory Status 영역 및 Waste Bin/Bottle Status 영역 노출 케이스 | 표시할 항목이 있을 때 / 없을 때 | 위 프레임 y 141 |
+
+- 왼쪽(항목 있음)
+  - Inventory Status | More — Insufficient 1 | Low - / MB DWP — Required Qty 380 rxns (4 DWPs), High-throughput Extraction(1) / MB Storage
+  - Waste Bin/Bottle Status | More — Full 2 | Almost Full - / High-throughput Extraction(1) Waste Bin Full · PCR Setup(1) Waste Bin Full
+- 오른쪽(항목 없음)
+  - Inventory Status | More — Insufficient - | Low - / `Shown only if system running or Inbound Trolley docked`
+  - Waste Bin/Bottle Status | More — Full - | Almost Full - / `No actions required`

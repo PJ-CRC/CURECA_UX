@@ -1,0 +1,12 @@
+{
+  "rev": "20261126-030416_desktop-shje23r",
+  "by": "Claude",
+  "at": "2026-11-26T03:04:16+09:00",
+  "note": "머리말 client_mode · user_type과 「관련 정책」 줄을 다시 쓰기 전 asis MD 값으로 되살림",
+  "base": "20261126-025559_desktop-shje23r",
+  "pc": "DESKTOP-SHJE23R",
+  "req": "asis 화면 MD 머리말 되살림: 다시 쓰면서 지운 client_mode · user_type 값과 머리 「관련 정책」 줄을 다시 쓰기 전 MD 그대로 되살림. 지운 것은 요청에 없던 내용을 Claude가 규칙에 넣어 생긴 일 (정다예, 2026-11-26, Claude Code 대화)",
+  "jobId": "",
+  "file": "asis/statistical-analysis/TI-STA-07-01.md",
+  "orig": true
+}

@@ -1,0 +1,12 @@
+{
+  "rev": "20261125-202419_daye",
+  "by": "정다예",
+  "at": "2026-11-25T20:24:19+09:00",
+  "note": "Dashboard asis 화면 MD를 작업방 Dashboard_asis 페이지 기준으로 새로 씀 (정다예)",
+  "base": "asis/dashboard/LI-DAS.md",
+  "pc": "DAYE",
+  "req": "Dashboard asis 화면 MD 다시 쓰기: 작업방 Dashboard_asis 페이지에서 단순 추출해 지금 파일을 덮어씀, 정다예가 새로 쓴 것으로 남김 (2026-11-25, Claude Code 대화로 추출)",
+  "jobId": "",
+  "file": "asis/dashboard/LI-DAS.md",
+  "orig": true
+}

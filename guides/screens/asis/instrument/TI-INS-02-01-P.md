@@ -3,44 +3,44 @@ cid: TI-INS-02-01-P
 pair_cid: LI-INS-02-01-P
 tl_relation: 기능 추가
 title: Management Popup
-path: Instruments > All > Management
+path: Instrument > All Tab > Management Popup
 type: Popup
-version: 2.1.01
-date: 2026-08-07
-author: 서보경
+version: 2.1.18
+date: 2026.11.19
+author: 이상헌
 client_mode: []
 user_type: [Service, Admin, User]
 policies: []
-rules_version:
-provisional: []
-flags: []
 source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3249-112456
-figma_region: 2.1 1차
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-318226
 ---
 # TI-INS-02-01-P Management Popup
 
-> 기존 화면(기존 작업방 Instruments 페이지, 2.1 1차 영역, Ver 2.1.01)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 `Instrument_asis` 페이지, Ver 2.1.18)을 2026-11-25에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
 
-- T/L 차이: T-IOS는 Service가 Enabled를 바꿀 수 있음. L-IOS(LI-INS-02-01-P)는 조회만
+- T/L 차이: T-IOS는 사용 여부를 바꾸는 설정 팝업(Enable / Disable 라디오, 1-3, 3 [Save] · [Cancle]), L-IOS(LI-INS-02-01-P)는 보기 전용(Enabled Y/N, [OK]). 0 정의 문장도 다름
+- 호출하는 화면: Alert_013 · Alert_014 · Alert_015 (3 [Save] 유효성 · 장비 상태), Toast `Changes saved.` (3)
+- 호출되는 곳: [TI-INS-02-T] All Tab 2-2 [Management]
 - 관련 정책: POL-EQP-005, POL-EQP-009, POL-EQP-010 / 고객 논의 CA-0001
+- 참조 프레임: 같은 페이지의 [「모듈별 예시 노출 예시」 프레임](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-319005) (프레임 이름 `TI-INS-02-01-P`, 1132px, 아래 「케이스」에 글자를 옮김)
 
 ## 기존 화면
 
+<!-- `{메뉴}_asis` 페이지에 있는 그대로 옮깁니다. 고치거나 정리하지 않습니다. 틀린 곳 · 정책과 다른 곳은 반영 대기 목록(`pending/open.md`)에 "점검 발견"으로 남깁니다. -->
+
 ### 화면 글자
 
-- Management
-- Sample Pre-treatment
+- Management | Sample Pre-treatment (드롭박스)
 - Module - Device | Serial No. | Run-time(h) | Enable
-- Sample Pre-treatment (1) | A123B123C1234f123 | 9,193 | Enable | Disable
-- Sample Aliquoting (Upper) | A123B123C1234f123 | 9,193 | Enable | Disable
-- Sample Aliquoting (Lower) | A123B123C1234f123 | 9,193 | Enable | Disable
-- Sample Pre-treatment (2) | A123B123C1234f123 | 9,193 | Enable | Disable
-- Sample Aliquoting (Upper) | A123B123C1234f123 | 9,193 | Enable | Disable
-- Sample Processing (Lower) | A123B123C1234f123 | 9,193 | Enable | Disable
-- Sample Pre-treatment (3) | A123B123C1234f123 | 9,193 | Enable | Disable
-- Sample Aliquoting (Upper) | A123B123C1234f123 | 9,193 | Enable | Disable
-- Sample Processing (Lower) | A123B123C1234f123 | 9,193 | Enable | Disable
+- Sample Pre-treatment (1) | A123B123C1234f123 | 9,193 | Enable · Disable
+  - Sample Aliquoting (Upper) | A123B123C1234f123 | 9,193 | Enable · Disable
+  - Sample Aliquoting (Lower) | A123B123C1234f123 | 9,193 | Enable · Disable
+- Sample Pre-treatment (2) | A123B123C1234f123 | 9,193 | Enable · Disable
+  - Sample Aliquoting (Upper) | A123B123C1234f123 | 9,193 | Enable · Disable
+  - Sample Processing (Lower) | A123B123C1234f123 | 9,193 | Enable · Disable
+- Sample Pre-treatment (3) | A123B123C1234f123 | 9,193 | Enable · Disable
+  - Sample Aliquoting (Upper) | A123B123C1234f123 | 9,193 | Enable · Disable
+  - Sample Processing (Lower) | A123B123C1234f123 | 9,193 | Enable · Disable
 - Cancle | Save
 
 ### 사용 컴포넌트
@@ -129,5 +129,24 @@ Radio Button (18), Description Number (5), Table (4), Arrow/Chevron_Up (3), Squa
 
 ### 케이스
 
-- Case2. Account Type=Service일 경우, Error Rate 표기
-- Case1. Account Type=User or Admin일 경우, Error Rate 미표기
+<!-- `{메뉴}_asis` 페이지의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
+
+| Case | 제목 | 조건 | 프레임 |
+| --- | --- | --- | --- |
+| - (원본에 번호 없음) | 모듈에 Device Unit이 없는 Case | Module 안에 Device가 없음 (아코디언 없음) | 기획 프레임 안 `case` (y 1108) |
+| - (원본에 번호 없음) | Account Type별 노출 Case | Case1. Account Type=User or Admin일 경우, Error Rate 미표기 / Case2. Account Type=Service일 경우, Error Rate 표기 | 기획 프레임 안 `case` (y 1671) |
+| - (원본에 번호 없음) | 모듈별 예시 노출 예시 | Module Type마다 목록 예시 | 같은 페이지 별도 프레임 `TI-INS-02-01-P` ([3543:319005](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-319005)) |
+
+- 모듈에 Device Unit이 없는 Case: Management | Sample Storage — Sample Storage (1) · (2) · (3) | A123B123C1234f123 | 9,193 | Enable · Disable | Cancle | Save
+- Account Type별 노출 Case
+  - Case1 (User or Admin): Management | Sample Pre-treatment 목록 (Error Rate 열 없음) — Sample Pre-treatment (1) · (2)와 그 Device
+  - Case2 (Service): Management | Sample Storage — Module - Device | Serial No. | Run-time(h) | Error Rate | Enable — Sample Storage (1) · (2) | A123B123C1234f123 | 9,193 | 8% | Enable · Disable
+- 모듈별 예시 노출 예시 (Module - Device | Serial No. | Run-time(h) | Enable, 모든 값 A123B123C1234f123 · 9,193)
+  - Sample Storage (1) · (2)
+  - Consumable Storage (1) · (2)
+  - Sample Pre-treatment (1) ~ (3) — Device Sample Aliquoting (Upper) · Sample Aliquoting (Lower) 또는 Sample Processing (Lower)
+  - High-throughput Extraction (1) · (2) — Device M9600 (Enable 칸 없음)
+  - Flexible Extraction (1) — Device STARlet (Enable 칸 없음)
+  - PCR Setup (1) · (2) — Device STARlet (Enable 칸 없음)
+  - Plate Sealing (1) — Device Sealer (1) · Sealer (2)
+  - Universal PCR (1) — Device CFX96 (1) · CFX96 (2) … (원본 프레임 참고)

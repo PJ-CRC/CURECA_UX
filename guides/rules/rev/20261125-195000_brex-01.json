@@ -1,0 +1,12 @@
+{
+  "rev": "20261125-195000_brex-01",
+  "by": "Claude",
+  "at": "2026-11-25T19:50:00+09:00",
+  "note": "F2: 화면을 보지 않아도 정해지는 대기 (확인 필요) 항목은 1단계에서 값을 묻고, 바꾸지 않음 답은 제외로 (pending-changes.md)",
+  "base": "../reference-rules/pending-changes.md",
+  "pc": "BREX_01",
+  "req": "F2 대기 (확인 필요) 항목: 답이 화면을 보지 않아도 정해지는 것(이름 · 값 · 목록 항목 고르기, 어느 쪽으로 맞출지)은 1단계 질문 6에서 값을 함께 묻고, 바꾸지 않음 답은 제외로 처리 (서보경, 2026-11-25, Claude Code 대화)",
+  "jobId": "",
+  "file": "../reference-rules/pending-changes.md",
+  "orig": true
+}

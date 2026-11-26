@@ -1,0 +1,12 @@
+{
+  "rev": "20261126-033910_desktop-shje23r",
+  "by": "Claude",
+  "at": "2026-11-26T03:39:10+09:00",
+  "note": "asis 메뉴 표: 형식 열을 없애고 「파일 수」만 두며, 예전에 옮긴 그대로인 곳(Material Setup · STN-08)만 표 아래에 적음",
+  "base": "20261126-033722_desktop-shje23r",
+  "pc": "DESKTOP-SHJE23R",
+  "req": "「새 규칙」 열이 무슨 뜻인지 알 수 없어, 예외 두 곳만 풀어 적도록 단순화 (정다예, 2026-11-26, Claude Code 대화)",
+  "jobId": "",
+  "file": "README.md",
+  "orig": true
+}

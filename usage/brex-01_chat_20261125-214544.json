@@ -1,0 +1,30 @@
+{
+  "id": "brex-01_chat_20261125-214544",
+  "kind": "work",
+  "chat": "doc",
+  "reqId": "",
+  "reqType": "",
+  "team": "cureca",
+  "at": "2026-11-25T21:45:44+09:00",
+  "from": "2026-11-25T14:02:36+09:00",
+  "by": "서보경",
+  "doneBy": "Claude",
+  "pc": "BREX_01",
+  "fileKey": "",
+  "fileName": "",
+  "page": "",
+  "frame": "",
+  "nodeId": "",
+  "text": "채팅: background/handoff.md 43줄 · background/todo.md T18c: 「끊겼으면 처음부터 읽음」이라는 옛 표현이 남아 ",
+  "turns": 7,
+  "models": {
+    "claude-opus-5-5": 95
+  },
+  "calls": 95,
+  "input": 208,
+  "cacheWrite": 214085,
+  "cacheRead": 41958030,
+  "output": 93230,
+  "total": 42265553,
+  "usd": 11.9697
+}

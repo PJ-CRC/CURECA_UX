@@ -1,0 +1,12 @@
+{
+  "rev": "20261126-031937_desktop-shje23r",
+  "by": "Claude",
+  "at": "2026-11-26T03:19:37+09:00",
+  "note": "화면 글자를 _asis 원본에서 다시 읽어 원문 그대로 적음 (줄여 쓴 범위 · 「같음」 표현 없앰)",
+  "base": "20261126-030339_desktop-shje23r",
+  "pc": "DESKTOP-SHJE23R",
+  "req": "asis 화면 MD 화면 글자 원문으로 풀기: 다시 쓸 때 범위(~) · 「다른 화면과 같음」으로 줄여 쓴 화면 글자를 _asis 페이지 기획 프레임에서 다시 읽어 원문 그대로 적음 (정다예, 2026-11-26, Claude Code 대화)",
+  "jobId": "",
+  "file": "asis/setting/TI-STN-03-01.md",
+  "orig": true
+}

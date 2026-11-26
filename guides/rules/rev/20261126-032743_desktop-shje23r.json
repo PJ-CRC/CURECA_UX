@@ -1,0 +1,12 @@
+{
+  "rev": "20261126-032743_desktop-shje23r",
+  "by": "Claude",
+  "at": "2026-11-26T03:27:43+09:00",
+  "note": "1단계 읽은 화면 틀 예시 줄: 새 흐름(asis 화면 MD, 1단계 Figma 안 엶)에 맞춤",
+  "base": "20261126-030055_desktop-shje23r",
+  "pc": "DESKTOP-SHJE23R",
+  "req": "읽은 화면 틀 예시 줄(371줄)이 예전 흐름 표현(다시 옮김 · 2.1 2차, 케이스 프레임)이라 새 흐름에 맞춤 (정다예, 2026-11-26, Claude Code 대화)",
+  "jobId": "",
+  "file": "../flow/1-requirements.md",
+  "orig": true
+}

@@ -2,51 +2,51 @@
 cid: TI-STA-01-01
 pair_cid:
 tl_relation: 단독
-title: Test Count - Chart
-path: Statistical Analysis > Test Analytics > Test Count - Chart
-type: Page
+title: Test Analytics _ Test Count
+path: Statistical Analysis > Test Analytics
+type: Tab
 version: 2.1.01
-date: 2026-08-07
+date: 2026.08.07
 author: 정다예
 client_mode: []
 user_type: [Service, Admin, User]
 policies: []
-rules_version:
-provisional: []
-flags: []
 source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=2138-1075431
-figma_region: 2.1 2차
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-412518
 ---
-# TI-STA-01-01 Test Count - Chart
+# TI-STA-01-01 Test Analytics _ Test Count
 
-> 기존 화면(기존 작업방 Statistical Analysis 페이지, 2.1 2차 영역, Ver 2.1.01)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 `SA_Test Analytics_asis` 페이지, Ver 2.1.01)을 2026-11-25에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
 
-- T-IOS 전용 메뉴. Figma 화면 이름은 "Test Analytics _ Test Count"
+- T/L 차이: T-IOS 단독 (IA에 L 짝 없음)
+- 호출하는 화면: [TI-STA-01-02] Test Count Table (6-3 View Table), [TI-STA-02-01] Test Ratio · [TI-STA-03-01] Test TAT · [TI-STA-04-01] Test Cost (6 Key Metrics)
+- 호출되는 곳: LNB > Statistical Analysis > Test Analytics (6 Default : Test Count)
 - 관련 정책: POL-STA-001, POL-STA-002, POL-STA-003, POL-STA-004, POL-COM-006
-- 호출하는 화면: Test Count - Table (TI-STA-01-02, View의 Table), 다른 Key Metrics 화면 (TI-STA-02-01, TI-STA-03-01, TI-STA-04-01)
-- 다른 프레임: [TI-STA-01/Case](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=2138-1077425) (Test Analytics 공통 케이스)
 
 ## 기존 화면
 
+<!-- `{메뉴}_asis` 페이지에 있는 그대로 옮깁니다. 고치거나 정리하지 않습니다. 틀린 곳 · 정책과 다른 곳도 그대로 옮깁니다. 그 화면의 To-Be 작업 1단계에서 읽으며 찾아 그 작업에서 고칩니다(`flow/1-requirements.md` 절차 4번 순서 3 "뒤 단계로 넘김"의 5). -->
+
 ### 화면 글자
 
-- (GNB) Network Status | Instrument | L-IOS | D.A PC | Running | Event | Error 3 | Warning 2 | 2026-04-10 11:30 | TIOS
-- (LNB) Dashboard | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis (Test Analytics, Test Forecasting) | Setting | Information | Manual | Keira Knightley
+- (GNB) Network Status | Instrument | L-IOS | D.A PC | Running | Event | Error 3 | Warning 2 | 2026-04-10 11:30
+- (LNB) TIOS | Dashboard | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis | Test Analytics | Test Forecasting | Setting | Information | Manual | Keira Knightley
+- Test Analytics
 - Test Count | Export
-- Key Metrics: Test Count | Test Ratio | Test TAT | Test Cost
-- (합계 표) Total | RP1 | RP2 | RP3 | PB | GI-V | GI-B1 | GI-B2 | GI-P | Allplex HPV28 | STI-12
-- 368,950 | 40,250 | 33,700 | … (항목별 건수)
-- (Unit : count), Y축 2,000 ~ 10,000
-- (차트 범례) RP1 | RP2 | RP3 | PB | GI-V | GI-B1 | GI-B2 | GI-P | Allplex HPV28 | STI-12
-- Filter Options
-- Date Range: Daily | Monthly
-- Legend: Product | Sample Type, Select All, RP1 ~ STI-12 칩
-- View: Chart | Table
+- 합계 표: Total | RP1 | RP2 | RP3 | PB | GI-V | GI-B1 | GI-B2 | GI-P | Allplex HPV28 | STI-12
+  - 368,950 | 40,250 | 33,700 | 33,900 | 44,950 | 37,400 | 37,400 | 31,250 | 37,950 | 34,450 | 34,450
+- 차트: (Unit : count) | Y축 10,000 · 8,000 · 6,000 · 4,000 · 2,000 · 0 | X축 01-01 | 01-02 | 01-03 | 01-04 | 01-05 | 01-06 | 01-07
+  - 범례: RP1 | RP2 | RP3 | PB | GI-V | GI-B1 | GI-B2 | GI-P | Allplex HPV28 | STI-12
+- 오른쪽 조회 영역
+  - Key Metrics: Test Count | Test Ratio | Test TAT | Test Cost
+  - Filter Options
+  - Date Range: Daily | Monthly / 2026-01-01 | 2026-01-07
+  - Legend: Product | Sample Type / Select All / RP1 | RP2 | RP3 | PB | GI-V | GI-B1 | GI-B2 | GI-P | Allplex HPV28 | STI-12
+  - View: Chart | Table
 
 ### 사용 컴포넌트
 
-Square (22), Description Number (12), Table (11), Table/Filled Table Cell (11), 1 Depth (7), Dropdown Outlined (2)
+Square (22), Description Number (12), Table (11), Table/Filled Table  Cell (11), 1 Depth (7), Dropdown Outlined (2), profile (1), Layout/Align_Right_05_Solid (1), Frame (1)
 
 ### 디스크립션 (원문)
 
@@ -188,4 +188,22 @@ Square (22), Description Number (12), Table (11), Table/Filled Table Cell (11), 
 
 ### 케이스
 
-- TI-STA-01/Case: Case 1. Chart 상세 데이터 Tooltip / Case 2. 데이터 로딩 중 Case / Case 3. Legend 전체 해제 시 / Case 4. Legend 유형별 노출 데이터
+<!-- `{메뉴}_asis` 페이지의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
+
+케이스는 같은 페이지의 별도 프레임 `TI-STA-01/Case`([3543:414512](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-414512), 2252×3121)에 있습니다. 케이스마다 오른쪽 패널이 있습니다(CID `TI-STA-01/Case`, 작성자 정다예, Ver · Date `-`). TI-STA-01-02 · 02-01 · 02-02 · 04-01 · 04-02 디스크립션도 이 프레임의 Case 2 · 3 · 4를 가리킵니다.
+
+| Case | 제목 | 조건 | 프레임 |
+| --- | --- | --- | --- |
+| 1 | Chart 상세 데이터 Tooltip | 차트 내 특정 시점에 마우스 호버 | 위 프레임 (0, 0) |
+| 2 | 데이터 로딩 중 Case | 데이터 로딩 중 | 위 프레임 (0, 773) |
+| 3 | Legend 전체 해제 시 (3-1. Chart 모드일 경우 / 3-2. Table 모드일 경우) | Legend 전체 해제 | 위 프레임 (0, 1546) |
+| 4 | Legend 유형별 노출 데이터 (4-1. Product 선택 시 / 4-2. Sample Type 선택 시) | Legend 탭 선택 | 위 프레임 (0, 2336) |
+
+- Case 1 패널
+  - 1 Chart 상세 데이터 Tooltip — 노출 조건: 차트 내 특정 시점(일별 막대 또는 월별 막대)에 마우스 호버시 해당 마우스 포인터 위치를 기준으로 팝업 노출
+  - 1-1 시점 및 총합 정보 — 표출 항목: 호버된 해당 일자 또는 월 정보 표출 / 선택된 검사 항목들의 해당 시점 기준 총 검사 건수 합산 값을 Total : 총 건수 형태로 표출
+  - 1-2 개별 항목 리스트 정보 — 표출 항목: 해당 시점에 발생한 항목별 누적 검사 건수 수치 표출
+  - 툴팁 예시: 01-04 | Total : 52,750 / RP1 6,200 | RP2 4,750 | RP3 4,750 | PB 3,850 | GI-V 3,850 | GI-B1 3,900 | GI-B2 4,750 | GI-P 6,100 | Allplex HPV28 7,300 | STI-12 7,300
+- Case 2: 글자는 화면 제목 `Test Analytics` · GNB와 오른쪽 조회 영역(Key Metrics · Filter Options · Date Range · Legend · View)만 있음. 패널 디스크립션 `0` / `-`
+- Case 3: Chart · Table 모드 모두 `Please select one or more legends.` 안내. Chart 모드는 Y축 0만, Table 모드는 Product 열 머리 · 01-01 ~ 01-07과 `Total | - | - | - | - | - | - | -` 행
+- Case 4: Product 탭 — RP1 | RP2 | RP3 | PB | GI-V | GI-B1 | GI-B2 | GI-P | Allplex HPV28 | STI-12 / Sample Type 탭 — Swab | Aspirate | BAL | Saliva | Sputum | Raw stool | Cary-blair | eNAT stool | Fecal swab | Thinprep | Surepath | Cellpreserv | Urine | Semen

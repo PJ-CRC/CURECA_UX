@@ -1,0 +1,136 @@
+---
+cid: TI-EVT-01-P
+pair_cid: LI-EVT-01-P
+tl_relation: 기능 추가
+title: Event Detail
+path: Event History > Event Detail
+type: Popup
+version: 2.1.14
+date: 2026.10.30
+author: 서보경
+client_mode: []
+user_type: [Service, Admin, User]
+policies: [POL-EVT-001, POL-EVT-002]
+basis:
+basis_versions:
+source: tobe
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1251
+---
+# TI-EVT-01-P Event Detail
+
+- T/L 차이: L-IOS(LI-EVT-01-P)는 1-2 Status Toggle(상태 변경)과 3 Resolution Notes 입력이 있음. T-IOS는 Status 값만 노출하고 Notes는 읽기 전용
+- 호출하는 화면: [TI-EVT-P] Event History 목록 (5 [List] 버튼)
+- 호출되는 곳: [TI-EVT-P] Event History 목록에서 Event 클릭, [TI-EVT-02-P] Event Message의 [View Details]
+- 반영 대기 항목: `pending/open.md`에서 이 CID로 찾음
+- 화면 변경 이력: `screen-history.md`의 이 CID 줄
+
+## 디스크립션
+
+**0  <span style="color:red">Event Detail</span> 화면**
+- 정의
+  - Event History의 특정 Event의 상세 정보가 <span style="color:red">노출</span>되는 화면
+- 동작
+  - Event History 목록에서 특정 Event 클릭 시 진입
+  - 이중 <span style="color:red">Popup</span>이 아닌, Event <span style="color:red">Popup</span> 내에서 목록 → 상세로 전환되는 구조
+- User Type : Service, Admin, User
+
+**1  Event Info**
+- 정의
+  - 선택한 Event의 상세 정보를 확인할 수 있는 영역으로, Event와 관련된 주요 속성 제공
+- 노출 항목
+  - Event ID : Event를 식별하기 위한 고유 키 값으로, Event별로 서로 다른 ID 부여
+  - ㄴ ID 생성 규칙 : Event 생성 시 시스템에서 자동으로 순차 증가되는 고유 ID 부여. 생성된 ID는 중복되지 않으며, Event 식별을 위한 Primary Key로 사용
+  - Event Code : Event의 발생 유형을 구분하는 코드 값(에러 코드와 유사한 개념)
+  - <span style="color:red">Type : Event 종류 (Instrument, Inventory, Sample, System)</span>
+  - Description : Event Code에 따라 정의된 Event의 상세 내용 노출
+  - Effect : Event Code에 연계된 Scenario Code의 'description' 내용 노출
+  - ㄴ 연계된 코드가 없는 경우, '-' 노출
+  - ㄴ N개인 경우, 목록형으로 기호를 표기하여 N개 노출
+  - ㄴ 참고 문서명 : [SRD] CURECA Prep 및 Dx 장비 Event 정의
+  - Recommended Action : Event Code에 따라 정의된 조치 방법 노출
+  - Level : Event의 중요도를 나타내며, Error 또는 Warning 값으로 구분
+  - Status : Event Status 값인 Open 또는 Closed <span style="color:red">노출 (상태 변경 불가)</span>
+  - <span style="color:red">Occurred Date/Time</span> : Event 발생 일시 / 표기 : YYYY-MM-DD hh:mm
+- 정책 참고 : POL-EVT-001, <span style="color:red">POL-EVT-002</span>
+
+**2  Instrument Info**
+- 정의
+  - Event가 <span style="color:red">Instrument</span>에서 발생한 경우, 해당 <span style="color:red">Instrument</span>의 Module / Unit / Process 정보 노출
+  - Event가 Module 단위에서만 유효한 경우, Unit 값은 '-' 노출
+  - <span style="color:red">Instrument</span>와 무관한 Event의 경우, Module / Unit / Process 전체 '-' 노출
+- 정책 참고 : POL-EVT-001
+
+**3  Notes**
+- 정의
+  - Resolution Notes 읽기 전용(Read only) 영역
+  - <span style="color:red">영역은 늘 노출, 작성된 Resolution Notes가 있을 경우 그 내용 노출</span>
+- 정책 참고 : <span style="color:red">POL-EVT-002</span>
+
+**4  Updated Date/Time, Updated by**
+- 정의
+  - Event의 Status 값이나 Resolution Notes가 변경/작성될 경우, 변경 시점과 변경 사용자의 정보를 <span style="color:red">노출</span>하는 영역
+- 노출 항목
+  - Updated Date : 정보가 변경된 일시
+  - Updated by : 정보를 변경한 사용자의 로그인 ID
+- 정책 참고 : POL-EVT-002
+
+**5  [List] 버튼**
+- 동작
+  - 클릭 시 Event 목록 페이지로 이동
+  - 이전 페이지 유지 : 사용자가 특정 페이지(예: 페이지 3)에서 상세 페이지로 진입한 경우, 이전에 조회하던 페이지(페이지 3)로 복귀
+
+**6  닫기**
+- 동작
+  - 클릭 시, Event <span style="color:red">Popup</span> 닫힘
+
+## 케이스
+
+없음 (`Event History_asis` 페이지에 TI-EVT-01-P 케이스 프레임 없음)
+
+## Alert · Confirm · Toast
+
+| 디스크립션 번호 | 종류 (Alert / Confirm / Toast) | 코드 | 언제 | 버튼 동작 |
+| --- | --- | --- | --- | --- |
+| - | - | - | 없음 | - |
+
+## 화면 예시 글자
+
+| 디스크립션 번호 | 요소 | 예시 값 | 기준 |
+| --- | --- | --- | --- |
+| - | 제목 | Event History | 기존 원본 `3543:47431` |
+| 1 | Event Info 표 | 기존 원본 그대로 (Event ID 235123 · Type Instrument · Occurred Date/Time 2025-09-29 15:57 · Code F180T001 · Level Error · Status Open · Description Pick Up Fail · Effect 2줄 · Recommended Action) | 기존 원본 `3543:47436` |
+| 2 | Module · Unit · Process | Flexible Extraction · STARlet · Nucleic Acid Extraction | 기존 원본 `3543:47488`, 반영 대기 TI-EVT-01-P-R01 (`glossary/modules.csv` · `module-units.csv`), Q4 답 (Module 1대면 번호 표기 안 함) |
+| 3 | Resolution Notes | (빈 칸) | 기존 원본 `3543:47506` |
+| 4 | Updated Date/Time · Updated by | 2026-09-29 16:01 · ID123423 | 기존 원본 `3543:47483` |
+| 5 | 버튼 | List | 기존 원본 `3543:47519` |
+
+## 화면 표기 글자
+
+| 화면 표기 글자 (영어) | 출처 | Language ID |
+| --- | --- | --- |
+| Event History | 화면 제목 | |
+| Event Info | 화면 1 | |
+| Event ID | 화면 1 | |
+| Type | 화면 1 | |
+| Instrument | 화면 1 | |
+| Occurred Date/Time | 화면 1 | |
+| Code | 화면 1 | |
+| Level | 화면 1 | |
+| Error | 화면 1 | |
+| Status | 화면 1 | |
+| Open | 화면 1 | |
+| Description | 화면 1 | |
+| Effect | 화면 1 | |
+| Recommended Action | 화면 1 | |
+| Instrument Info | 화면 2 | |
+| Module | 화면 2 | |
+| Unit | 화면 2 | |
+| Process | 화면 2 | |
+| Flexible Extraction | 화면 2 | |
+| STARlet | 화면 2 | |
+| Nucleic Acid Extraction | 화면 2 | |
+| Notes | 화면 3 | |
+| Resolution Notes | 화면 3 | |
+| Updated Date/Time. {date} | 화면 4 (date = 2026-09-29 16:01) | |
+| Updated by. {id} | 화면 4 (id = ID123423) | |
+| List | 화면 5 | |

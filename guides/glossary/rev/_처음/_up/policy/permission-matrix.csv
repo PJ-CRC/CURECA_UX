@@ -1,0 +1,35 @@
+Menu (1),Menu (2),Function / 영역,Service,Admin,User,제품 제한,근거,상태
+Login,,All,O,O,O,,2026-10-30 결정,확정
+Logout,,All,O,O,O,,2026-10-30 결정,확정
+Profile,,All,O,O,O,,TI-CPW-01-P / LI-CPW-01-P; 2026-10-30 결정,확정
+Exit (프로그램 종료·시스템 종료),,All,O,X,X,,Common UX COMM-3-a(1/2),확정
+Shut Down (시스템 종료),,All,X,O,O,,Common UX COMM-3-a(1/2),확정
+Dashboard,,All,O,O,O,,2026-10-30 결정,확정
+Event History,,View,O,O,O,,Status Control·Note Writing이 모두 O라 View도 O,확정
+Event History,,Status Control,O,O,O,L-IOS만 (T-IOS는 조회),2026-10-30 결정; 2026-11-02 T-IOS 취소선 확인 (POL-EVT-002),확정
+Event History,,Note Writing,O,O,O,L-IOS만 (T-IOS는 조회),2026-10-30 결정; 2026-11-02 (POL-EVT-002),확정
+Run,Run Preparation,Check Test Protocol 단계,O,O,O,,2026-10-30 결정. 단계 표시 여부는 Setting에서 사용으로 설정했을 때만,확정
+Quick Start,,All,O,O,O,,2026-10-30 결정,확정
+Test Management,,All,O,O,O,,2026-10-30 결정,확정
+Sample Tracking,,All,O,O,O,,2026-10-30 결정,확정
+Instrument,,View,O,O,O,,Door Control이 모두 O라 View도 O,확정
+Instrument,,Error Rate 표시,O,X,X,,TI/LI-INS-02-01-P (Management Popup); 정책서. Runtime Info Popup(TI/LI-INS-02-02-P)은 IA v1.03에서 제거,확정
+Instrument,,Door Control,O,O,O,,2026-10-30 결정,확정
+Inventory,,All,O,O,O,,2026-10-30 결정,확정
+Material Setup,,All,O,O,O,,2026-10-30 결정,확정
+Statistical Analysis,,All,O,O,O,T-IOS만,2026-10-30 결정,확정
+Statistical Analysis,,Error Rate Trend,O,X,X,T-IOS만,2026-11-02 (POL-EQP-010 규칙 5; POL-STA-001),확정
+Information,Program,All,O,O,O,,2026-10-30 결정,확정
+Information,Report,All,O,O,O,T-IOS만,2026-11-02 결정 (SM7; POL-SMP-004),확정
+Setting,Policy Setting,All,O,O,X,T-IOS에서 설정·변경 / L-IOS는 View,2026-10-30 결정,확정
+Setting,Policy Setting,NC/PC Dispensing Order 영역,O,X,X,,TI/LI-STN-01; 정책서 Test Policy,확정
+Setting,Policy Setting,Sample Dispensing Options 영역,O,X,X,,TI/LI-STN-01; 정책서 Test Policy,확정
+Setting,Policy Setting,Cost Setting,O,O,X,T-IOS만,정책서 Test Policy (Admin은 NC/PC·Sample Dispensing 외 모든 항목); 2026-10-30 결정 (User 제외),확정
+Setting,Protocol Setting,All,O,O,X,T-IOS에서 추가·변경·삭제 / L-IOS는 View,2026-10-30 결정,확정
+Setting,System Setting,All,O,O,X,,2026-10-30 결정. Session Timeout 설정 포함 (계정 잠금 시간은 5분 고정, POL-ACC-007),확정
+Setting,Account Setting,All,O,O,X,,2026-10-30 결정,확정
+Setting,SMTP Setting,All,O,O,X,T-IOS만,2026-10-30 결정,확정
+Setting,Tube Setting,All,O,X,X,,2026-10-30 결정,확정
+Setting,Assay Pack Setting,All,O,X,X,,2026-10-30 결정,확정
+Instrument,,Management 조회,O,O,O,,T-IOS·L-IOS 모두. 2026-11-02 결정 (POL-EQP-009),확정
+Instrument,,Management Enabled 변경,O,X,X,T-IOS만 (L-IOS는 조회만),2026-11-02 결정 (POL-EQP-009),확정

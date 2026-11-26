@@ -3,52 +3,114 @@ cid: TI-INF-03-02
 pair_cid:
 tl_relation: 단독
 title: Run Report Detail
-path: Information > Report > Detail
+path: Information > Run Report
 type: Page
 version: 2.1.14
-date: 2026-10-30
+date: 2026.10.30
 author: 정다예
 client_mode: []
 user_type: [Service, Admin, User]
 policies: []
-rules_version:
-provisional: []
-flags: []
 source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=6089-662998
-figma_region: 2.1 2차
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-503969
 ---
 # TI-INF-03-02 Run Report Detail
 
-> 기존 화면(기존 작업방 Profile/Information 페이지, 2.1 2차 영역, Ver 2.1.14)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 `Run Report_asis` 페이지, Ver 2.1.14)을 2026-11-26에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
 
-- T-IOS 전용 화면. IA 화면 이름은 "Datail"(오타), Figma 화면 이름은 "Run Report", 경로 "Information > Run Report". 프레임 높이 4116px의 리포트 문서 화면 (GNB·LNB 없음)
+- T/L 차이: T-IOS 단독 (IA에 L 짝 없음)
+- 패널 화면 이름은 `Run Report`이고, 기획 프레임 높이가 4116이라 리포트 전체가 화면 아래로 이어집니다.
+- 호출하는 화면: 없음
+- 호출되는 곳: [TI-INF-03-01] 2-2 [View] (브라우저 새 탭 PDF 뷰어)
 - 관련 정책: POL-SMP-002, POL-SMP-004
-- 호출하는 화면: 없음 (TI-INF-03-01 [View]에서 열림)
-- 다른 프레임: [TI-INF-03-02/Case1](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=7650-560833) (Instrument Error 0건)
+- 원본 디스크립션 번호는 0 ~ 4 · 4-3입니다(4-1 · 4-2 없음).
 
 ## 기존 화면
 
+<!-- `{메뉴}_asis` 페이지에 있는 그대로 옮깁니다. 고치거나 정리하지 않습니다. 틀린 곳 · 정책과 다른 곳도 그대로 옮깁니다. 그 화면의 To-Be 작업 1단계에서 읽으며 찾아 그 작업에서 고칩니다(`flow/1-requirements.md` 절차 4번 순서 3 "뒤 단계로 넘김"의 5). -->
+
 ### 화면 글자
 
-- REPORT ID RPT-2026-0901-001 | Generated Date/Time 2026-09-01 08:31:04
-- End Status Failed | SW 버전: T-IOS v3.2.1 | L-IOS v3.2.1 | CFX96 v3.2.1 | SG Viewer v3.2.1
-- CURECA (Module Count by Type): Sample Storage | Consumable Storage | Sample Pre-treatment | High-throughput Extraction | Flexible Extraction | PCR Setup | Plate Sealing | Universal PCR
+- REPORT ID | Generated Date/Time
+- RPT-2026-0901-001 | 2026-09-01 08:31:04
+- End Status | Failed | T-IOS | v3.2.1 | L-IOS | v3.2.1 | CFX96 | v3.2.1 | SG Viewer | v3.2.1
+- CURECA (Module Count by Type)
+- Sample Storage | 1 | Consumable Storage | 1 | Sample Pre-treatment | 2 | High-throughput Extraction | 1
+- Flexible Extraction | 1 | PCR Setup | 1 | Plate Sealing | 1 | Universal PCR | 1
 - Run Summary
-- Batch ID BAT-2026-0901-001 | Run By seegene1234 | Start Date/Time 2026-04-24 11:10:20 | End Date/Time 2026-04-24 14:25:45
-- Samples (Total / Processed) 1,902 / 1,803 (STAT 32 / STAT 21) | Products (Total / Processed) (STAT 165 / STAT 86) | Total TAT (Turnaround Time) 5h 48m
-- Completed | Failed | Not tested
-- Tests by Product Group: Group | Product | Count | Ratio → GI (GI-V, GI-B1, GI-B2, GI-P) 746 39% | HPV (Allplex HPV28) 214 11% | RP (RP1, RP2, RP3, PB) 812 43% | RTI (STI-12) 130 7%
-- Tests by Process: No | Process | Product Status (Completed | Failed) → 01 Sample Preparation 1,847 | 02 Nucleic Acid Extraction 1,816 | 03 PCR Setup 1,816 / 13 | 04 Plate Sealing 1,803 / 0 | 05 PCR 1,803 / 7
+- Batch ID | BAT-2026-0901-001 | Run By | seegene1234
+- Start Date/Time | 2026-04-24 11:10:20 | End Date/Time | 2026-04-24 14:25:45
+- Samples (Total / Processed) | Products (Total / Processed) | Total TAT (Turnaround Time)
+- 823 | STAT 32 | 700 | STAT 21 | 1,902 | STAT 165 | 928 | STAT 86 | 5h 48m
+- Completed | 1,803 | Failed | 51 | Not tested | 24
+- ❖ | Tests by Product Group | ❖ | Tests by Process
+- Product Status
+- No | Process
+- Completed | Failed
+- Total
+- 1,902 | 01 | Sample Preparation | 1,847 | 31
+- 02 | Nucleic Acid Extraction | 1,816 | 0
+- Group | Product | Count | Ratio | 03 | PCR Setup | 1,816 | 13
+- GI | GI-V, GI-B1, GI-B2, GI-P | 746 | 39%
+- HPV | Allplex HPV28 | 214 | 11% | 04 | Plate Sealing | 1,803 | 0
+- RP | RP1, RP2, RP3, PB | 812 | 43%
+- RTI | STI-12 | 130 | 7% | 05 | PCR | 1,803 | 7
 - Run Events Summary
-- Events by Type: Type | Error | Warning → Instrument | Inventory | Sample | System
-- Events by Module Type: Module Type별 Error | Warning (8종)
-- Event History (Instrument Type Only): Code | Description | Module | Unit | Occurred Date/Time
-- Module / Unit Operation Summary: Module / Unit | Run-time (Current Run | Cumulative) | Instrument Events (Current Run | Cumulative)
+- ❖ | Events by Type | ❖ | Events by Module Type
+- 12 | 11 | Error | Warning
+- 10
+- 8 | 7 | 8 | Sample Storage | 0 | 0
+- 6
+- 6 | Consumable Storage | 1 | 3
+- 4
+- 2 | Sample Pre-treatment | 3 | 4
+- 0 | High-throughput Extraction | 1 | 2
+- Type | Error | Warning | Flexible Extraction | 1 | 2
+- Instrument | 2 | 4 | PCR Setup | 1 | 3
+- Inventory | 1 | 6 | Plate Sealing | 2 | 4
+- Sample | 3 | 5
+- Universal PCR | 1 | 4
+- System | 4 | 7 | 0 | 2 | 4 | 6 | 8 | 10
+- ❖ | Event History (Instrument Type Only)
+- Code | Description | Module | Unit | Occurred Date/Time
+- ER-5231 | Pick Up Fail | Sample Storage | Inbound Trolley | 2025-09-29 15:57:00
+- ER-1234 | Open the door | Consumable Storage (1) | Trolley | 2025-09-29 15:57:00
+- ER-1234 | Open the door | High-throughoutput Extraction | Spin Tip Storage | 2025-09-29 15:57:00
+- ER-1234 | Open the door | Universal PCR(1) | Outbound Trolley | 2025-09-29 15:57:00
+- Module / Unit Operation Summary
+- Run-time(h) | Instrument Events ( Error / Warning )
+- Module / Unit
+- Current Run | Cumulative | Current Run | Cumulative
+- Sample Pre-treatment (1) | 48 h | 32,850 h | 1 | / | 1 | 1 | / | 1
+- Sample Processing (Upper) | 48 h | 32,850 h | 1 | / | 1 | 1 | / | 1
+- Sample Processing (Lower) | 48 h | 32,850 h | 1 | / | 1 | 1 | / | 1
+- Sample Aliquoting (Upper) | 48 h | 32,850 h | 1 | / | 1 | 1 | / | 1
+- Sample Aliquoting (Lower) | 48 h | 32,850 h | 1 | / | 1 | 1 | / | 1
+- Sample Pre-treatment (2) | 48 h | 32,850 h | 1 | / | 1 | 1 | / | 1
+- Sample Processing (Upper) | 48 h | 32,850 h | 1 | / | 1 | 1 | / | 1
+- Sample Processing (Lower) | 48 h | 32,850 h | 1 | / | 1 | 1 | / | 1
+- High-throughput Extraction | 38 h | 45,990 h | 1 | / | 1 | 1 | / | 1
+- M9600 | 29 h 15 m | 45,990 h | 1 | / | 1 | 1 | / | 1
+- Flexible Extraction | 29 h 15 m | 21,900 h | 1 | / | 1 | 1 | / | 1
+- Flexible Extraction | 38 h | 21,900 h | 1 | / | 1 | 1 | / | 1
+- PCR Setup (1) | 19 h | 19,710 h | 1 | / | 1 | 1 | / | 1
+- STARlet | 19 h | 19,710 h | 1 | / | 1 | 1 | / | 1
+- PCR Setup (2) | 19 h | 19,710 h | 1 | / | 1 | 1 | / | 1
+- STARlet | 19 h | 19,710 h | 1 | / | 1 | 1 | / | 1
+- Plate Sealing | 8 h | 9,710 h | 1 | / | 1 | 1 | / | 1
+- Sealer (1) | 8 h | 9,710 h | 1 | / | 1 | 1 | / | 1
+- Sealer (2) | 8 h | 9,710 h | 1 | / | 1 | 1 | / | 1
+- Universal PCR | 21 h | 35,040 h | 1 | / | 1 | 1 | / | 1
+- CFX96 (1) | 21 h | 35,040 h | 1 | / | 1 | 1 | / | 1
+- CFX96 (2) | 21 h | 35,040 h | 1 | / | 1 | 1 | / | 1
+- CFX96 (3) | 21 h | 35,040 h | 1 | / | 1 | 1 | / | 1
+- CFX96 (4) | 21 h | 35,040 h | 1 | / | 1 | 1 | / | 1
+- CFX96 (5) | 21 h | 35,040 h | 1 | / | 1 | 1 | / | 1
+- CFX96 (6) | 21 h | 35,040 h | 1 | / | 1 | 1 | / | 1
 
 ### 사용 컴포넌트
 
-Table (13), Description Number (8), Tag Status (1)
+Icon (33), Checkbox (18), Table (13), Check/Line (8), Description Number (8), Tag Status (1)
 
 ### 디스크립션 (원문)
 
@@ -108,6 +170,7 @@ Table (13), Description Number (8), Tag Status (1)
 - End Date/Time
 - 해당 배치가 종료된 시점
 - Test Status 메뉴의 End Date/Time와 동일 정보
+  - ---------------------------------------------------------
 - Samples (Total / Processed)
 - Total : Trolley에 적재되어 검사된 전체 검체 수
 - Processed : Completed+Failed+Not tested 상태 검체 수
@@ -117,6 +180,7 @@ Table (13), Description Number (8), Tag Status (1)
 - Total TAT (Turnaround Time)
 - 배치 시작부터 종료까지 소요된 총 검사 시간 표기
 - End Date/Time - Start Date/Time
+  - ---------------------------------------------------------
 - Completed (완료) : Product 단위 완료 검사 수
 - Failed (실패) : Product 단위 실패 검사 수
 - Not tested (미검사) : Product 미수행 검사 수
@@ -248,4 +312,13 @@ Table (13), Description Number (8), Tag Status (1)
 
 ### 케이스
 
-- Case 1. 배치 구동 중 Instrument의 Error가 0건인 경우 ([TI-INF-03-02/Case1](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=7650-560833))
+<!-- `{메뉴}_asis` 페이지의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
+
+케이스는 같은 페이지의 별도 프레임 `TI-INF-03-02/Case1`([3543:513703](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-513703), 2252×1700)에 있습니다. 오른쪽 패널은 화면 정보만 있습니다(CID `TI-INF-03-02/Case1`, 작성자 정다예, Ver · Date `-`, 디스크립션 `0`).
+
+| Case | 제목 (원문) | 조건 | 프레임 |
+| --- | --- | --- | --- |
+| 1 | 배치 구동 중 Instrument의 Error가 0건인 경우 | Instrument Error 0건 | 위 프레임 y 16 |
+
+- Run Events Summary — Events by Type 표 Instrument `0 | 6` · Inventory `1 | 6` · Sample `3 | 5` · System `4 | 7`, Events by Module Type은 기획 화면과 같음
+- 표 제목이 `❖ Instrument Error-Level Event History`(기획 화면은 `Event History (Instrument Type Only)`), 목록 자리에 `No error events occurred.`

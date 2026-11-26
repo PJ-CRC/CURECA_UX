@@ -3,47 +3,54 @@ cid: LI-RUN-02
 pair_cid:
 tl_relation: 단독
 title: Run Preparation
-path: Run > Check Consumables
+path: LNB > Run
 type: Page
 version: 2.1.13
-date: 2026-10-23
+date: 2026.10.23
 author: 정다예
 client_mode: [Main Mode, Console Mode]
 user_type: [Service, Admin, User]
 policies: []
-rules_version:
-provisional: []
-flags: []
 source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=6902-42518
-figma_region: 2.1 2차
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-76660
 ---
-# LI-RUN-02 Run Preparation (Check Consumables)
+# LI-RUN-02 Run Preparation
 
-> 기존 화면(기존 작업방 Run/Quick Start 페이지, 2.1 2차 영역, Ver 2.1.13)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 `Run_asis` 페이지, Ver 2.1.13)을 2026-11-25에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
 
-- L-IOS 전용. Run Preparation Step 2 (Check Test Protocol을 쓰면 Step 3). IA 화면 이름은 "Check Consumables"
+- T/L 차이: L-IOS 단독 화면 (IA에 T 짝 없음). Run Preparation Step 2 (Check consumables, Check test protocol 단계가 있으면 Step 3)
+- 호출하는 화면: [LI-RUN-01] (7 [Previous]), [LI-RUN-03] (8 [Next]), LI-RUN-03-P Item details (3-7), Confirm_001 (0 · 6 [Cancel]), Alert_001 (0)
+- 호출되는 곳: [LI-RUN-01] 7 [Next]
 - 관련 정책: POL-SMP-007, POL-INV-002, POL-INV-003
-- 호출하는 화면: Item details Popup (IA LI-IVT-03-T-P, 디스크립션은 LI-RUN-03-P), Confirm_001, Alert_001
-- 다른 프레임: [LI-RUN-02/Case1](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=6902-44953) (Capacity Tooltip)
+- 기획 프레임 높이 2617. 아래 「화면 글자」는 카드 영역별로 적음
 
 ## 기존 화면
 
+<!-- `{메뉴}_asis` 페이지에 있는 그대로 옮깁니다. 고치거나 정리하지 않습니다. 틀린 곳 · 정책과 다른 곳은 반영 대기 목록(`pending/open.md`)에 "점검 발견"으로 남깁니다. -->
+
 ### 화면 글자
 
-- STEP 1 Check samples | STEP 2 Check consumables | STEP 3 Check reagents | STEP 4 Check waste bin/bottle
-- Status: Insufficient 4 | Low 3 | Sufficient 2 | Refresh
-- (왼쪽 카드) Plates: 96-DWP 1 ea / 2 ea, PCR Plate 3 ea | Tips: 1000 μL Tip, 300 μL Tip, Wide Bore Tip | Tubes: Empty Standard Tube, MM Tube | Tub: PBS Tub, Saline Tub, LB Tub (Prep) | Sealing Film 200 ea | Stool Swab 72 ea (3 racks) — 카드마다 Remaining Qty | Required Qty | Status
-- (오른쪽 카드, 예: 1000 μL Tip) Item details | Location | Capacity | Remaining Qty | Required Qty
-- Consumable Storage (1) > Trolley | 6 DWPs | 96 ea (1 rack)
-- PCR Setup (1) > 1000 μL Tip Storage | 11 rack | 96 ea (1 rack)
-- PCR Setup (1) > 300 μL Tip Storage(1) | 11 rack | 96 ea (1 rack)
-- (예시 행 더 있음. 단위 ea, rack(s), socket(s), sets, T)
+- (GNB) Running | Instrument | T-IOS | D.A PC | Event | Error 3 | Warning 2 | 2026-04-10 11:30
+- (LNB) LIOS | Dashboard | Material Setup | Test Management | Sample Tracking | Instrument | Inventory | Setting | Information | Quick Start | Run | Keira Knightley | Shut Down
+- Run Preparation
+- STEP 1 | Check samples | STEP 2 | Check consumables | STEP 3 | Check reagents | STEP 4 | Check waste bin/bottle
+- Status | Insufficient 4 | Low 3 | Sufficient 2 | Refresh | Previous
+- 좌측 카드
+  - Plates | Remaining Qty | Required Qty | Status: 96-DWP 1 ea / 2 ea, PCR Plate 0 / 3 ea
+  - Tips | Remaining Qty | Required Qty | Status: 1000 μL Tip 0 / 480 ea (5 racks), 300 μL Tip 96 ea (1 rack) / 384 ea (4 racks), Wide Bore Tip 192 ea (2 racks) / 96 ea (1 rack)
+  - Tubes | Remaining Qty | Required Qty | Status: Empty Standard Tube 48 ea (1 rack) / 144 ea (3 racks), MM Tube 14 ea (1 socket) / 28 ea (2 sockets)
+  - Sealing Film | Remaining Qty | Required Qty | Status: 200 ea / -
+  - Stool Swab | Remaining Qty | Required Qty | Status: 72 ea (3 racks) / -
+  - 같은 자리에 겹친 카드(Tubes 카드 자리): Tub | Sample Preparation | Remaining Qty | Required Qty | Status — PBS Tub #Trolley - / 200T (2 racks), Saline Tub #Trolley 100T (1 rack) / 100T (1 rack), LB Tub (Prep) #Trolley - / 200T (2 racks)
+- 우측 카드 (Tips 선택 상태)
+  - 1000 μL Tip | Item details — Location | Capacity | Remaining Qty | Required Qty: Consumable Storage (1) > Trolley 6 DWPs 0 96 ea (1 rack), Consumable Storage (2) > Trolley 6 DWPs 0 96 ea (1 rack), Consumable Storage (3) > Trolley 0 96 ea (1 rack) / PCR Setup (1) > 1000 μL Tip Storage 11 rack 0 96 ea (1 rack), PCR Setup (2) > 1000 μL Tip Storage 11 rack 0 96 ea (1 rack)
+  - 300 μL Tip | Item details — Location | Capacity | Remaining Qty | Required Qty: Consumable Storage (1) > Trolley 6 DWPs 0 96 ea (1 rack), Consumable Storage (3) > Trolley 6 DWPs 0 96 ea (1 rack) / PCR Setup (1) > 300 μL Tip Storage(1) 11 rack 0 96 ea (1 rack), PCR Setup (1) > 300 μL Tip Storage(2) 11 rack 96 ea (1 rack) 96 ea (1 rack)
+  - Wide Bore Tip | Item details — Location | Capacity | Remaining Qty | Required Qty: Consumable Storage (1) > Trolley 5 sets 96 ea (1 rack) 96 ea (1 rack), Consumable Storage (2) > Trolley 5 sets 96 ea (1 rack) -
 - Cancel | Previous | Next
 
 ### 사용 컴포넌트
 
-Description Number (16), Status (9), Description (7), Square (4), Chip (3), Interface/Info_Circle_Outlined (1), Icon/Popup Status (1)
+Description Number (16), Status (9), Description (7), Square (4), Chip (3), Interface/Info_Circle_Outlined (1), Icon/Popup Status (1), Component 4 (1), Frame (1)
 
 ### 디스크립션 (원문)
 
@@ -67,8 +74,7 @@ Description Number (16), Status (9), Description (7), Square (4), Chip (3), Inte
 - 선택 상태의 Chip 재선택 : 선택 해제, 필터링 해제되어 전체 데이터 표기
 - 다중 선택 :Chip은 여러 개 동시에 선택 가능하며 선택된 상태값에 해당되는 모든 데이터가 필터링되어 보여짐
 - 적용 범위
-- 좌측 / 우측 영역 모두 선택된 Status값에 해당 하는 항목만
-- 필터링하여 노출
+- 좌측 / 우측 영역 모두 선택된 Status값에 해당 하는 항목만 필터링하여 노출
 
 #### 2. 카드 리스트(좌측 영역)
 
@@ -99,8 +105,7 @@ Description Number (16), Status (9), Description (7), Square (4), Chip (3), Inte
 - 산출 방식
 - 도킹된 Trolley + Storage 영역 + 장비 내 Buffer 공간에 적재된 수량을 모두 포함
 - 단,장비 내 거치 공간에 있는 소모품은 실시간으로 차감되지 않는며, 적재된 순간의 수량을 그대로 유지함
-- 소모품이 모두 소진되거나 다시 Storage로 반환되는 기준으로
-- 재고가 업데이트 됨
+- 소모품이 모두 소진되거나 다시 Storage로 반환되는 기준으로 재고가 업데이트 됨
 - 표기 방식
 - 소모품/시약 표기 방식에 따름 : 낱개 수량(입고 단위 수량)
 - 100개당 1 Rack일 경우, 입고 단위 수량을 올림 처리
@@ -177,13 +182,11 @@ Description Number (16), Status (9), Description (7), Square (4), Chip (3), Inte
 #### 3-5. Remaining Qty(우측 영역_도킹된 Trolley+Module+Storage기준)
 
 - 정의
-- 해당 소모품이 적재된 Location(Trolley+Module+Storage
-- 기준으로 장비에 남은 개수 표기
+- 해당 소모품이 적재된 Location(Trolley+Module+Storage 기준으로 장비에 남은 개수 표기
 - 산출 방식
 - 도킹된 Trolley + Storage 영역 + 장비 내 Buffer 공간에 적재된 수량을 모두 포함
 - 단,장비 내 거치 공간에 있는 소모품은 실시간으로 차감되지 않는며, 적재된 순간의 수량을 그대로 유지함
-- 소모품이 모두 소진되거나 다시 Storage로 반환되는 기준으로
-- 재고가 업데이트 됨
+- 소모품이 모두 소진되거나 다시 Storage로 반환되는 기준으로 재고가 업데이트 됨
 - 표기 방식
 - 소모품 표기 방식에 따름 : 낱개 수량(입고 단위 수량)
 - 100개당 1 Rack일 경우, 입고 단위 수량을 올림 처리
@@ -237,4 +240,11 @@ Description Number (16), Status (9), Description (7), Square (4), Chip (3), Inte
 
 ### 케이스
 
-- Case 1. Capacity Tooltip ([LI-RUN-02/Case1](https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=6902-44953))
+<!-- `{메뉴}_asis` 페이지의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
+
+| Case | 제목 | 조건 | 프레임 |
+| --- | --- | --- | --- |
+| 1 | Progress 상태 정보 Tooltip (패널 화면 이름: Capacity Tooltip) | Info 아이콘의 툴팁 표출 (디스크립션 5 「표출 예시 : LI-RUN-02/Case1」) | [LI-RUN-02/Case1](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-79398) |
+
+- 케이스 패널: 화면 정보만 있고 디스크립션 번호 · 내용 없음(번호 칸 `0`)
+- 케이스 화면 글자: 툴팁 `Capacity : Shown only for fixed-capacity storage.` / `Required Qty : Displays the additional quantity required based on current inventory.` / `Status : Status is determined by run availability.` / `Sufficient (enough stock)` / `Low (partial shortage)` / `Insufficient (no stock)`

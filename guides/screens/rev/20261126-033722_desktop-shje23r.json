@@ -1,0 +1,12 @@
+{
+  "rev": "20261126-033722_desktop-shje23r",
+  "by": "Claude",
+  "at": "2026-11-26T03:37:22+09:00",
+  "note": "asis 메뉴 표: 지금 형식(새 규칙 · 예전 방식) · 파일 수 표를 위에 더하고, 처음 옮길 때 표는 이력으로 남김",
+  "base": "20261125-200416_daye",
+  "pc": "DESKTOP-SHJE23R",
+  "req": "screens/README.md 메뉴 표가 처음 옮긴 기록만 있어 지금 형식(새 규칙 · 예전 방식)을 알 수 없어 정리 (정다예, 2026-11-26, Claude Code 대화)",
+  "jobId": "",
+  "file": "README.md",
+  "orig": true
+}

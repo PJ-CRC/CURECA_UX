@@ -2,51 +2,68 @@
 cid: TI-STA-06-02
 pair_cid:
 tl_relation: 단독
-title: Instrument Error Rate - Table
-path: Statistical Analysis > Test Analytics > Instrument Error Rate - Table
-type: Page
+title: Instrument _ Error Rate Trend
+path: Statistical Analysis > Instrument
+type: Tab
 version: 2.1.03
-date: 2026-08-21
+date: 2026.08.21
 author: 정다예
 client_mode: []
 user_type: [Service]
 policies: []
-rules_version:
-provisional: []
-flags: []
 source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=3271-172921
-figma_region: 2.1 2차
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-440479
 ---
-# TI-STA-06-02 Instrument Error Rate - Table
+# TI-STA-06-02 Instrument _ Error Rate Trend
 
-> 기존 화면(기존 작업방 Statistical Analysis 페이지, 2.1 2차 영역, Ver 2.1.03)을 2026-11-02에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다. 다시 그릴 때는 `old-rules/screen-spec.md`를 따릅니다.
+> 기존 화면(작업방 `SA_Instrument_asis` 페이지, Ver 2.1.03)을 2026-11-26에 옮긴 것입니다. 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
 
-- T-IOS 전용 메뉴. TI-STA-06-01의 Segmented Control을 Table로 바꾼 화면. Error Rate Trend Tab은 Service에게만 보임 (TI-STA-06-01 디스크립션 1)
+- T/L 차이: T-IOS 단독 (IA에 L 짝 없음)
+- 호출하는 화면: [TI-STA-06-01] Error Rate Trend Chart (View Chart), [TI-STA-05-02] Run-time Trend (Tab)
+- 호출되는 곳: [TI-STA-06-01] 2 Table
 - 관련 정책: POL-STA-001, POL-STA-002, POL-STA-003, POL-STA-006, POL-EQP-010, POL-COM-006
-- 호출하는 화면: Instrument Error Rate - Chart (TI-STA-06-01)
 
 ## 기존 화면
 
+<!-- `{메뉴}_asis` 페이지에 있는 그대로 옮깁니다. 고치거나 정리하지 않습니다. 틀린 곳 · 정책과 다른 곳도 그대로 옮깁니다. 그 화면의 To-Be 작업 1단계에서 읽으며 찾아 그 작업에서 고칩니다(`flow/1-requirements.md` 절차 4번 순서 3 "뒤 단계로 넘김"의 5). -->
+
 ### 화면 글자
 
-- (GNB)(LNB) TI-STA-01-01과 같음
-- (Tab) Run-time Trend | Error Rate Trend, (Segmented Control) Chart | Table, Export
+- (GNB) Running | Instrument | L-IOS | D.A PC | Event | Error 3 | Warning 2 | 2026-04-10 11:30
+- (LNB) TIOS | Instrument | Dashboard | Test Management | Sample Tracking | Instrument | Inventory | Statistical Analysis | Test Analytics | Instrument | Inventory | Event | Test Forecasting | Setting | Information | Keira Knightley | Logout
+- 탭: Run-time Trend | Error Rate Trend
+- Chart | Table | Export
 - Error Rate Trend (Cumulative)
-- (합계 표) Consumable Storage(1) | (2) | (3) | (4) → 10% | 11% | 13% | 16%
+- 누적 에러율 표: Consumable Storage (1) | Consumable Storage (2) | Consumable Storage (3) | Consumable Storage (4)
+  - 10% | 11% | 13% | 16%
 - (Unit : %)
-- (표) Module | 날짜 열 → Consumable Storage(1) ~ (4) 행, Total 행
-- Filter Options: TI-STA-06-01과 같음
+- 표: Module | 2026-01 | 2026-02 | 2026-03 | 2026-04 | 2026-05 | 2026-06 | 2026-07
+  - Consumable Storage (1) | 8 | 9 | 10 | 12 | 9 | 9 | 12
+  - Consumable Storage (2) | 8 | 10 | 10 | 13 | 14 | 10 | 13
+  - Consumable Storage (3) | 14 | 11 | 14 | 11 | 12 | 13 | 14
+  - Consumable Storage (4) | 15 | 16 | 16 | 15 | 16 | 16 | 16
+  - Total | 11 | 11 | 12 | 13 | 13 | 12 | 14
+- 오른쪽 조회 영역
+  - Date Range: Daily | Monthly / 2026-01 | 2026-07
+  - Legend: Module | Unit / Consumable Storage (Dropdown) / Select All | Consumable Storage (1) | Consumable Storage (2) | Consumable Storage (3) | Consumable Storage (4)
 
 ### 사용 컴포넌트
 
-Table (52), Square (6), 1 Depth (6), 2 Depth (5), Form/CheckBox (5), Description Number (5), Table/Filled Table Cell (4), Dropdown Outlined (3)
+Table (52), Square (6), 1 Depth (6), 2 Depth (5), Form/CheckBox (5), Description Number (5), Table/Filled Table  Cell (4), Dropdown Outlined (3), Frame (1), Arrow/Chevron_Up (1), Interface/Setting_Outlined (1), ViewMode/Barchart (1), ViewMode/Data_List (1)
 
 ### 디스크립션 (원문)
 
 #### 0. Instrument _ Error Rate Trend 화면
 
-- 원문은 TI-STA-06-01 0과 같음
+- 정의
+- 사용자가 조회한 기간 내 장비 별 누적 에러율 정보 제공
+- 동작
+- 최초 진입 후, 데이터 로딩 시 스켈레톤 화면 노출
+- 참고 : TI-STA-05_Skeleton
+- 데이터 산출식
+- (에러 횟수 / 전체 구동 횟수) * 100
+- 구동 횟수 기준 : DWP가 장비에 입고되는 기준 +1씩 카운팅
+- 에러 횟수 기준 : 씨젠 측에서 에러코드 정의 후 공유될 예정
 
 #### 1. 장비별 누적 에러율 정보(Table 형태)
 
@@ -94,3 +111,13 @@ Table (52), Square (6), 1 Depth (6), 2 Depth (5), Form/CheckBox (5), Description
 
 - 해당 일자(또는 월)별로 선택된 모든 항목별 누적 에러율 고정 표출
 - 단, 데이터가 없을 경우 ‘-’로 표기
+
+### 케이스
+
+<!-- `{메뉴}_asis` 페이지의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
+
+이 화면만의 케이스 프레임은 없습니다. 디스크립션 2-2가 가리키는 것은 `TI-STA-06-01/Case`([3543:439482](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-439482))의 Case 2입니다(내용은 [TI-STA-06-01] 케이스 절).
+
+| Case | 제목 (원문) | 조건 | 프레임 |
+| --- | --- | --- | --- |
+| 2 | Legend 전체 해제 시 | Legend 전체 해제 | `TI-STA-06-01/Case` y 777 |

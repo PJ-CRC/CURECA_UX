@@ -1,0 +1,12 @@
+{
+  "rev": "20261126-025516_desktop-shje23r",
+  "by": "정다예",
+  "at": "2026-11-26T02:55:16+09:00",
+  "note": "Run_asis 참조 섹션(디스크립션이 가리키는 기획 프레임 밖 섹션)을 케이스 · 참조 섹션 (원문) 절로 옮김 (정다예)",
+  "base": "20261125-203948_daye",
+  "pc": "DESKTOP-SHJE23R",
+  "req": "asis 화면 MD 보완: 1단계가 asis MD만 읽도록 작업규칙을 바꾸며, 디스크립션이 참고하라고 한 Run_asis 의 섹션 글을 MD에 옮김 (2026-11-26, Claude Code 대화)",
+  "jobId": "",
+  "file": "asis/run/LI-RUN-02-01.md",
+  "orig": true
+}

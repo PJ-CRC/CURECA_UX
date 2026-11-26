@@ -2,8 +2,8 @@
   "id": "brex-06_R002",
   "kind": "request",
   "team": "cureca",
-  "status": "대기",
-  "at": "2026-11-25T17:09:05+09:00",
+  "status": "보류",
+  "at": "2026-11-26T08:29:15+09:00",
   "createdAt": "2026-11-25T16:46:27+09:00",
   "by": "최고관리자",
   "doneBy": "Claude",
@@ -17,18 +17,34 @@
   "type": "요청",
   "layout": "",
   "text": "작업 진행해 R001",
-  "note": "사용 한도로 멈춤 — 19:01에 이어 함 (멈출 때: 케이스 3 · 3단계 · 20261125-최고관리자-assay-pack · TI-STN-08 그림(패널 · 사용자 확인 목록 · 라벨), LI-STN-08 그리는 중)",
+  "note": "케이스 3 · 3 ~ 4단계 · 20261125-최고관리자-assay-pack - [3단계 보고] 화면 설계를 마쳤습니다. 이어서 [4단계] 사용자 확인 목록을 확인해 주세요\n- 3단계: 화면 MD 5개(screens/tobe/setting/) · Figma 섹션 5개(TI-STN-08 · TI-STN-08-01 · TI-STN-08-P / LI-STN-08 · LI-STN-08-P)를 「Setting  Ⓛ / Ⓣ_To Be」에 그림, 용어 점검(바꿀 것 없음), 마침 점검 기계 검사 통과(2026-11-25)\n- 사용자 확인 목록: 질문 대기 5 · 변경 확인 6\n\n질문 대기 - 답을 정해 주실 것 (번호마다 답 / 고객에게 물음)\n- Q1 TI-STN-08 4-1 · TI-STN-08-P 3 (T만): Master 파일의 Active 변경 버튼 모습 - 지금 [Active] · [Inactive] 비활성으로 그림 / 버튼을 숨김 (추천: 비활성, TI-STN-08-P 기존 원본)\n- Q2 TI-STN-08-P 4 (T만, DS-0012): [Activate](Confirm_029) 뒤 Toast 문구 - 문구를 정해 주세요 / 고객에게 물음 (Alert 카탈로그에 「& Toast」만 있고 문구 없음)\n- Q3 LI-STN-08 2 · LI-STN-08-P 뒤 목록 (L만): L-IOS 노출 개수 Dropdown - 기존대로 둠(지금 그림) / 없앰(Common UX Basic Table: L-IOS는 노출 개수 고정)\n- Q4 LI-STN-08 4 (L만): 데이터 없음 문구 - 지금 「No files found. Click Import to add a file.」(TI-STN-08 문구) 그대로 / 다른 문구 (L-IOS에는 [Import] 없음)\n- Q5 TI-STN-08 4-1 · TI-STN-08-P 3 · LI-STN-08 4-1 · LI-STN-08-P 3 (T · L 같음): Status Base에 검정 Variant가 없어 Active Navy · Inactive Gray로 그림 - 이대로 / 다른 색\n\n변경 확인 - 맞는지만 봐 주실 것 (번호마다 맞음 / 되돌림)\n- C1 TI-STN-08-P 4: Delete Confirm 제목 「Delete the selected file?」 → 「Delete the selected files?」 (Alert 카탈로그 Confirm_026)\n- C2 TI-STN-08-P 4: Delete 뒤 Toast 「The file has been deleted.」 → 「The selected files have been deleted.」 (Confirm_026 버튼 동작)\n- C3 TI-STN-08-P 4: [Save] 뒤 Confirm_029 · 030 반영 시 Toast 없음 → Toast 노출 (Deactivate 「{version} has been deactivated.」, Activate는 Q2)\n- C4 TI-STN-08 4 · LI-STN-08 4 · TI-STN-08-P 3 · LI-STN-08-P 3: 다른 정의 프레임([세부정의] · [유형별 정의])을 가리키던 것 → 데이터 없음 문구 · File type별 정보 묶음을 디스크립션에 옮겨 씀\n- C5 TI-STN-08-01 0: Import file 뒤에 목록을 깔고 Dim → 목록 없이 Dim과 Popup만 그림 (3단계 공통 3-9)\n- C6 TI-STN-08-P 0 (패널 화면 정보): 화면 이름 「Assay Pack Setting」 → 「Assay Pack File Details」 (IA Details, 반영 대기 TI-STN-08-P-R01)\n\n번호로 답해 주세요(예: 「Q1 비활성, Q2 고객에게 물음, C1 ~ C6 맞음」). 위 내용에서 바꿀 곳이 있으면 함께 말씀해 주세요. 모아 둔 예외 질문은 없습니다. 케이스 3이라 기획 진행 표시는 바꾸지 않습니다.\n참고: Figma 결과물은 작업 기록(17:45, 3단계 마침 점검까지)과 같다고 보고 다시 그리지 않음. basis_start 뒤로 정책 · 기준데이터 · 반영 대기에 이 작업 밖의 변경 없음\n규칙 점검: 이번에 한 단계(3단계 절차 5 · 4단계 절차 1 순서 1 ~ 2)의 「하지 않는 것」 · 마침 점검 지킴\n작업 기준: basis 2026-11-25 16:24 · 작업규칙 CURECA 작업규칙 @원본 · 정책서 policy · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 glossary · 화면 정의서 screens",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "사용자 확인 목록(Q1 ~ Q5 · C1 ~ C6)에 답해 주세요",
+    "options": [
+      {
+        "label": "그린 대로 모두 (Q1 · Q3 · Q4 · Q5 지금 그림대로, Q2 고객에게 물음, C1 ~ C6 맞음)"
+      },
+      {
+        "label": "하나씩 정하기"
+      }
+    ],
+    "free": true
+  },
   "replies": [],
   "raws": [
     {
       "at": "2026-11-25T16:55:30+09:00",
       "text": "R002는 아직 진행 중이고, 이번 차례는 3단계 중간까지 하고 「대기」로 돌려 두었습니다. 화면 MD 5개를 쓰고 Figma에 자리만 잡았습니다. 화면은 아직 하나도 그리지 않았고, 다음 세션이 이어서 그립니다.\n\n**처리한 방식**\n- R002의 「작업 진행해 R001」을 R001 작업을 이어 하라는 뜻으로 보고, R001의 작업 기록 `20261125-최고관리자-assay-pack` 3단계(케이스 3)부터 이어 갔습니다.\n- R002의 페이지가 지금 작업 페이지(To Be, 3481:216078)와 같아서 바로 진행했습니다.\n- R001은 질문이 남은 「보류」 상태 그대로 두었습니다.\n\n**이번에 한 일**\n- **화면 MD**: `screens/tobe/setting/`에 TI-STN-08 · TI-STN-08-01 · TI-STN-08-P · LI-STN-08 · LI-STN-08-P를 케이스 3 규칙대로 새로 썼습니다. 다른 정의 프레임(세부정의 · 유형별 정의)에 있던 내용은 디스크립션으로 옮겼습니다.\n- **Figma To Be 페이지**:\n  - 시스템 구분 표시(T-IOS · L-IOS 2.1)를 두었습니다.\n  - 기획 진행 표시는 기존 작업방 것을 옮겨 「검토 완료 · 2026.10.26」로 두었습니다.\n  - CID 섹션 5개를 빈 채로 만들었습니다.\n- **Toast 카탈로그**: 일반 메뉴용 `alert/toast-catalog.csv`가 없어서 새로 만들고 두 줄을 넣었습니다.\n  - Toast_001: 파일 삭제 뒤\n  - Toast_002: 버전 비활성 뒤\n- **작업 기록**:\n  - 「설계」 절(화면별 작업 · 찾은 것 등)을 채우고, 읽은 자료 목록에 3단계에서 더 읽은 자료를 더했습니다.\n  - 질문 대기 Q3 · Q4와 변경 확인 C4 ~ C6을 더했습니다.\n  - `이어서 작업할 곳:` 줄을 「TI-STN-08부터 그릴 차례」로 고쳤습니다.\n\n**4단계에서 확인받을 것 (새로 생긴 것)**\n- Q3: L-IOS 목록에 노출 개수 Dropdown을 그대로 둘지. Common UX는 L-IOS 노출 개수를 고정으로 정했는데, 기존 화면에는 Dropdown이 있어 기존대로 썼습니다.\n- Q4: L-IOS 목록에 데이터가 없을 때 문구. L용 정의 프레임이 없어 T 문구 \"No files found. Click Import to add a file.\"를 썼는데, L-IOS에는 [Import]가 없습니다.\n- C4 ~ C6:\n  - C4: 정의 프레임 내용을 디스크립션으로 옮김\n  - C5: Import file Popup 뒤에 목록 대신 Dim만 깖\n  - C6: TI-STN-08-P 화면 이름을 Assay Pack File Details로 바꿈(반영 대기 TI-STN-08-P-R01)\n\n**다음 차례**: 백그라운드 감시가 새 세션으로 TI-STN-08 / LI-STN-08부터 T · L 한 쌍씩 그리고, 이어서 용어 점검과 3단계 마침 점검을 합니다. 화면 MD를 쓰는 데 대화가 많이 쌓여 작업규칙의 「나눠서 이어 가기」대로 여기서 끊었습니다. 사용량은 요청이라 서버가 자동으로 남깁니다.",
+      "cut": false
+    },
+    {
+      "at": "2026-11-26T08:29:23+09:00",
+      "text": "R002는 3단계 보고와 4단계 사용자 확인 목록까지 진행했고, 요청자 답을 기다리도록 **「보류」**로 두었습니다. 이번 차례에 Figma는 고치지 않았습니다.\n\n- **어디서 이어 갔나**: Workbench 메모에는 「LI-STN-08 그리는 중」으로 남아 있었습니다. 하지만 작업 기록(17:45 저장)을 보면 그 뒤에 그리기, 용어 점검, 3단계 마침 점검이 모두 끝나 있었습니다. 그래서 다음 차례인 3단계 보고와 4단계 절차 1번부터 했습니다.\n- **Figma 대조는 생략**: 작업 기록이 그림을 마지막으로 고친 뒤에 저장돼 있어 그림과 기록이 같다고 보고 Figma를 다시 열어 보지 않았습니다. 이 점은 Workbench 답변에도 적었습니다.\n- **기준 변경 없음**: 시작 기준(16:24) 뒤로 정책, 기준데이터, 반영 대기 목록에 이 작업 밖의 변경은 없었습니다.\n- **Workbench 답변에 올린 것**:\n  - 3단계에서 한 일: 화면 MD 5개, Figma 섹션 5개, 기계 검사 통과\n  - 질문 대기 Q1~Q5: 번호마다 답하거나 「고객에게 물음」을 고르게 했습니다.\n  - 변경 확인 C1~C6: 번호마다 「맞음」 또는 「되돌림」을 고르게 했습니다.\n  - 답 선택지는 「그린 대로 모두」와 「하나씩 정하기」 두 가지이고, 직접 써서 답할 수도 있습니다.\n- **작업 기록** (`20261125-최고관리자-assay-pack.md`):\n  - `이어서 작업할 곳:` 줄을 「4단계 절차 1번, 답을 받으면 순서 3부터」로 고쳤습니다.\n  - 「요청자 확인」 표에 6번 줄(이번 사용자 확인 목록)을 더했습니다.\n- 케이스 3이라 기획 진행 표시는 바꾸지 않았습니다. 사용량은 Workbench 요청이라 서버가 남깁니다.",
       "cut": false
     }
   ],
