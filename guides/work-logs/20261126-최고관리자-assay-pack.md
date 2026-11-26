@@ -213,6 +213,11 @@ started: 2026-11-26
 ### 용어 치환
 | 원래 표현 | 표준어 | 위치 |
 | --- | --- | --- |
+| 표시 (보여 준다는 뜻) | 노출 | TI-STN-08 #4 Checkbox 「일부 선택 시 Mix 노출」, TI-STN-08-P · LI-STN-08-P 케이스 Master 「Product Name은 「Master Info」로 노출」 (화면 MD · Figma) |
+| 체크박스 | Checkbox | TI-STN-08 화면 정보 T/L 차이 · #4 텍스트 정렬 · #4 머리, LI-STN-08 화면 정보 T/L 차이 · #4 (2단계 용어 목록에 있으나 화면 MD에 남아 있었음, 화면 MD · Figma) |
+| 시약 | Reagent | TI-STN-08-P · LI-STN-08-P #3 · 파일 종류별 노출 항목 · 케이스 (2단계 용어 목록에 있으나 남아 있었음, 화면 MD · Figma) |
+| 유효기간 | Expiration Date | TI-STN-08-P · LI-STN-08-P 파일 종류별 노출 항목 Master (같음) |
+| 소켓 | Socket | TI-STN-08-P 파일 종류별 노출 항목 PCR 구성품 (같음) |
 
 ## 질문 대기
 
