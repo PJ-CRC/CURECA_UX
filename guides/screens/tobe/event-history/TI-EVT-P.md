@@ -152,17 +152,17 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 
 | 화면 표기 글자 (영어) | 출처 | Language ID |
 | --- | --- | --- |
-| Event History | 화면 제목 | |
+| Event History | 화면 제목 | LID-EVT-001 |
 | Event ID, Code | 화면 1 | |
-| Type | 화면 1 · 화면 3 | |
-| Module | 화면 1 · 화면 3 | |
-| Level | 화면 1 · 화면 3 | |
-| Status | 화면 1 · 화면 3 | |
-| All | 화면 1 · 디스크립션 1 | |
-| Instrument | 디스크립션 1 · 화면 3 | |
-| Inventory | 디스크립션 1 · 화면 3 | |
-| Sample | 디스크립션 1 | |
-| System | 디스크립션 1 | |
+| Type | 화면 1 · 화면 3 | LID-EVT-004 |
+| Module | 화면 1 · 화면 3 | LID-EVT-012 |
+| Level | 화면 1 · 화면 3 | LID-EVT-014 |
+| Status | 화면 1 · 화면 3 | LID-EVT-017 |
+| All | 화면 1 · 디스크립션 1 | LID-EVT-003 |
+| Instrument | 디스크립션 1 · 화면 3 | LID-EVT-005 |
+| Inventory | 디스크립션 1 · 화면 3 | LID-IVT-001 |
+| Sample | 디스크립션 1 | LID-SPT-022 |
+| System | 디스크립션 1 | LID-EVT-009 |
 | Sample Storage | 디스크립션 1 · 화면 3 | |
 | Consumable Storage | 디스크립션 1 · 화면 3 | |
 | Sample Pre-treatment | 디스크립션 1 · 화면 3 | |
@@ -171,21 +171,21 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 | PCR Setup | 디스크립션 1 · 화면 3 | |
 | Plate Sealing | 디스크립션 1 | |
 | Universal PCR | 디스크립션 1 · 화면 3 | |
-| Error | 디스크립션 1 · 화면 3 | |
-| Warning | 디스크립션 1 · 화면 3 | |
-| Open | 디스크립션 1 · 화면 2 · 화면 3 | |
-| Closed | 디스크립션 1 · 화면 3 | |
-| Reset | 화면 1 | |
-| Search | 화면 1 | |
-| Items | 화면 2 | |
+| Error | 디스크립션 1 · 화면 3 | LID-EVT-037 |
+| Warning | 디스크립션 1 · 화면 3 | LID-EVT-038 |
+| Open | 디스크립션 1 · 화면 2 · 화면 3 | LID-EVT-042 |
+| Closed | 디스크립션 1 · 화면 3 | LID-EVT-043 |
+| Reset | 화면 1 | LID-EVT-022 |
+| Search | 화면 1 | LID-STN-016 |
+| Items | 화면 2 | LID-STN-006 |
 | {n} items | 화면 9 · 디스크립션 9 (n = 10, 30, 50, 100) | |
 | of | 화면 2 (`10 items of Items 1,112`) | |
-| No results found. | 디스크립션 3 | |
-| Export | 화면 6 | |
-| Code | 화면 3 | |
-| Description | 화면 3 | |
-| Unit | 화면 3 | |
-| Occurred Date/Time | 화면 3 | |
+| No results found. | 디스크립션 3 | LID-STN-015 |
+| Export | 화면 6 | LID-EVT-023 |
+| Code | 화면 3 | LID-EVT-010 |
+| Description | 화면 3 | LID-EVT-011 |
+| Unit | 화면 3 | LID-EVT-013 |
+| Occurred Date/Time | 화면 3 | LID-EVT-016 |
 | Inbound Trolley | 화면 3 | |
 | Outbound Trolley | 화면 3 | |
 | Trolley | 화면 3 | |

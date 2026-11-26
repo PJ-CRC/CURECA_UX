@@ -113,29 +113,29 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 
 | 화면 표기 글자 (영어) | 출처 | Language ID |
 | --- | --- | --- |
-| Event History | 화면 제목 | |
-| Event Info | 화면 1 | |
-| Event ID | 화면 1 | |
-| Type | 화면 1 | |
-| Instrument | 화면 1 | |
-| Occurred Date/Time | 화면 1 | |
-| Code | 화면 1 | |
-| Level | 화면 1 | |
-| Error | 화면 1 | |
-| Status | 화면 1 | |
-| Open | 화면 1 | |
-| Description | 화면 1 | |
-| Effect | 화면 1 | |
-| Recommended Action | 화면 1 | |
-| Instrument Info | 화면 2 | |
-| Module | 화면 2 | |
-| Unit | 화면 2 | |
-| Process | 화면 2 | |
+| Event History | 화면 제목 | LID-EVT-001 |
+| Event Info | 화면 1 | LID-EVT-029 |
+| Event ID | 화면 1 | LID-EVT-030 |
+| Type | 화면 1 | LID-EVT-004 |
+| Instrument | 화면 1 | LID-EVT-005 |
+| Occurred Date/Time | 화면 1 | LID-EVT-016 |
+| Code | 화면 1 | LID-EVT-010 |
+| Level | 화면 1 | LID-EVT-014 |
+| Error | 화면 1 | LID-EVT-037 |
+| Status | 화면 1 | LID-EVT-017 |
+| Open | 화면 1 | LID-EVT-042 |
+| Description | 화면 1 | LID-EVT-011 |
+| Effect | 화면 1 | LID-EVT-045 |
+| Recommended Action | 화면 1 | LID-EVT-031 |
+| Instrument Info | 화면 2 | LID-EVT-032 |
+| Module | 화면 2 | LID-EVT-012 |
+| Unit | 화면 2 | LID-EVT-013 |
+| Process | 화면 2 | LID-STN-026 |
 | Flexible Extraction | 화면 2 | |
 | STARlet | 화면 2 | |
-| Nucleic Acid Extraction | 화면 2 | |
-| Notes | 화면 3 | |
+| Nucleic Acid Extraction | 화면 2 | LID-SPT-025 |
+| Notes | 화면 3 | LID-EVT-033 |
 | Resolution Notes | 화면 3 | |
 | Updated Date/Time. {date} | 화면 4 (date = 2026-09-29 16:01) | |
 | Updated by. {id} | 화면 4 (id = ID123423) | |
-| List | 화면 5 | |
+| List | 화면 5 | LID-EVT-036 |

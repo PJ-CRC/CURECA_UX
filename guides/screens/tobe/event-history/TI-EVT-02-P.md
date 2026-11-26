@@ -131,21 +131,21 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 | 화면 표기 글자 (영어) | 출처 | Language ID |
 | --- | --- | --- |
 | {n}/{m} | 화면 11 (n = 1, m = 20) | |
-| Close All | 화면 10 | |
+| Close All | 화면 10 | LID-EVT-046 |
 | Event Code: | 화면 2 | |
 | Type: | 화면 3 | |
-| Inventory | 화면 3 | |
-| Instrument | 디스크립션 3 | |
-| Sample | 디스크립션 3 | |
-| System | 디스크립션 3 | |
-| Error | 디스크립션 1 | |
-| Warning | 디스크립션 1 | |
-| Description | 화면 4 | |
-| Effect | 화면 5 | |
-| Recommended Action | 화면 6 | |
+| Inventory | 화면 3 | LID-IVT-001 |
+| Instrument | 디스크립션 3 | LID-EVT-005 |
+| Sample | 디스크립션 3 | LID-SPT-022 |
+| System | 디스크립션 3 | LID-EVT-009 |
+| Error | 디스크립션 1 | LID-EVT-037 |
+| Warning | 디스크립션 1 | LID-EVT-038 |
+| Description | 화면 4 | LID-EVT-011 |
+| Effect | 화면 5 | LID-EVT-045 |
+| Recommended Action | 화면 6 | LID-EVT-031 |
 | Module: | 화면 7 | |
 | Unit: | 화면 7 | |
 | High-throughput Extraction | 화면 7 | |
 | M9600 | 화면 7 | |
-| Close | 화면 8 | |
-| View Details | 화면 9 | |
+| Close | 화면 8 | LID-EVT-039 |
+| View Details | 화면 9 | LID-EVT-040 |
