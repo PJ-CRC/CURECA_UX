@@ -400,7 +400,7 @@ started: 2026-11-25
 | DB 맞춤 (제거) | LI-EVT-01-P (DB 비고: 메모 취소 · 저장 버튼 — 화면은 아이콘만) | LID-STN-021 · LID-STN-022 | Cancel · Save | - (제거) | 있음 |
 | DB 맞춤 (제거) | TI-EVT-02-P · LI-EVT-02-P (DB 비고: Popup 타이틀) | LID-INS-018 | Event | - (제거) | 있음 |
 
-- 바뀌지 않은 글자 중 비슷한 글자만 있는 것(요청자 확인 14, 답에 따라 Language ID · DB 맞춤을 정함): TI · LI-EVT-02-P `Event Code:` · `Type:` · `Module:` · `Unit:` ↔ LID-EVT-041 · 004 · 012 · 013 / TI · LI-EVT-01-P `Updated Date/Time. {date}` · `Updated by. {id}` ↔ LID-EVT-027 · 028 / TI · LI-EVT-P `300 μL Tip Storage (1)` ↔ 공통 LID-COM-TRM-040
+- **대조는 문구만 (2026-11-26 서보경, 요청자 확인 14):** 언어셋 대상은 문자 그 자체 — `:` 같은 특수문자, 값(`{date}` · `{id}` · 숫자), Module · Unit 인덱스 `(n)`은 빼고 봄. 그래서 TI · LI-EVT-02-P `Event Code:` · `Type:` · `Module:` · `Unit:` = LID-EVT-041 · 004 · 012 · 013, TI · LI-EVT-01-P `Updated Date/Time. {date}` · `Updated by. {id}` = LID-EVT-027 · 028 (모두 있음, CID도 이미 있음). `{n} items` · `of`는 대상 아님(Items만), `{n}/{m}`은 문자가 없어 대상 아님. asis와 인덱스만 다른 Module 이름(LI-EVT-P 목록 `Sample Storage(1)` 등, `CFX96-1`)은 바뀌지 않은 글자로 봄
 - 언어셋 DB에서 이 화면 CID인데 표에 없어도 두는 것(판단, 2026-11-26 Claude): Select a Date · Sun ~ Sat · Done (LID-RUN-021 · LID-STA-009 ~ 015 · LID-EVT-025) — 1 기간 검색이 여는 Common UX Date Calendar의 글자. 기획 프레임에 그리지 않아 표에 없을 뿐 화면에서 그대로 씀
 - 화면 MD "화면 표기 글자" 표의 Language ID: `있음`과 바뀌지 않은 줄의 메뉴 파일 ID를 채움 (2026-11-26). `변경` 줄 · 공통에만 있는 줄 · 요청자 확인 14 줄은 비움
 
