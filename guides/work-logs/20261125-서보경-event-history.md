@@ -344,6 +344,9 @@ started: 2026-11-25
 | C42 | TI-EVT-P/Case Case 1 (Tooltip) | 케이스 프레임 지움, 디스크립션 3 케이스 참고 줄 빨간 취소선 | TI-EVT-P #3 · 케이스 | 검토 질의 6 | T만 | - | 맞음 (2026-11-26) |
 | C43 | LI-EVT-P/Case Case 1 (Tooltip) | 케이스 프레임 지움(섹션 높이 1822로 맞춤), 디스크립션 3 케이스 참고 줄 빨간 취소선, 화면 예시 글자 Case 1-1 줄 지움 | LI-EVT-P #3 · 케이스 | 검토 질의 7 | L만 | - | 맞음 (2026-11-26) |
 | C44 | 디스크립션 3 「케이스 참고 : TI-EVT-P/Case > Case 1」 · 「… LI-EVT-P/Case > Case 1」 빨간 취소선 줄 (C42 · C43) | 줄 지움, 기획 프레임 · 섹션 높이를 패널에 맞춤 (TI 1418 · LI 1610) | TI-EVT-P · LI-EVT-P #3 | 검토 질의 8 | 같음 | - | 맞음 (2026-11-26) |
+| C45 | Event Message의 [Close All] · 메시지 개수 표기가 보이지 않고 번호 표시가 글자를 가림 | Popup 위에 `1/20`(11) · [Close All](10) 노출, 번호 표시를 각 글자 위로 옮김 | TI-EVT-02-P · LI-EVT-02-P #1 ~ #12 | 검토 질의 9 · 10 | 같음 | - | 맞음 (2026-11-26) |
+| C46 | T 목록 요약 `Items 1,112` · 노출 개수 Dropdown · `Open 20`이 떨어져 있음 | 노출 개수 Dropdown → `of` → `Items 1,112 \| Open 20` 한 줄 (Dropdown은 목록 왼쪽 끝) | TI-EVT-P #2 · #9 | 검토 질의 11 | T만 (L은 Dropdown 없음) | O | 맞음 (2026-11-26) |
+| C47 | 디스크립션의 바뀐 글 빨간색 | 기본 글자색으로 (글은 그대로, 파란 참고 링크는 그대로). 화면 MD 6개의 `color:red`도 뺌 | 6개 화면 디스크립션 | 검토 질의 12 | 같음 | - | 맞음 (2026-11-26) |
 | C29 | 번호 표시 5가 Notes 칸 위에 있음 | [List] 버튼 옆에 둠 | TI-EVT-01-P · LI-EVT-01-P #5 | 디스크립션 5 = [List] 버튼 | 같음 | - | 맞음 (2026-11-26) |
 | C30 | 검색 영역 입력 칸 · 목록 표 · Status Toggle · 페이지 번호 (기존 컴포넌트) | Common UX 컴포넌트(Text Input · Dropdown · Basic Table · Status/Event Level · Toggle Switch · Number Pagination)로 다시 그림 | TI-EVT-P · LI-EVT-P #1 · #3 · #4 · #8 | Common UX COMM-5-p · 5-g · 5-q · 5-l | 같음 | - | 맞음 (2026-11-26) |
 ## 검토 질의
