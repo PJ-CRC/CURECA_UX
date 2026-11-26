@@ -1,5 +1,5 @@
 {
-  "reportAt": "2026-11-26T17:28:27+09:00",
+  "reportAt": "2026-11-26T17:28:56+09:00",
   "pc": "BREX_06",
   "slug": "brex-06",
   "user": "최고관리자",
@@ -8,7 +8,7 @@
   "alive": true,
   "status": "idle",
   "msg": "마지막 처리: PENDING R008 · 컨텍스트 8%",
-  "statusAt": "2026-11-26T17:28:17+09:00",
+  "statusAt": "2026-11-26T17:28:49+09:00",
   "claude": "따로 설치",
   "claudeWay": "cli",
   "autoWatch": true,
