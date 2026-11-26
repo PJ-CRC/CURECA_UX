@@ -2,8 +2,8 @@
   "id": "brex-01_R001",
   "kind": "request",
   "team": "cureca",
-  "status": "진행 중",
-  "at": "2026-11-26T19:56:01+09:00",
+  "status": "보류",
+  "at": "2026-11-26T19:56:46+09:00",
   "createdAt": "2026-11-25T21:16:32+09:00",
   "by": "서보경",
   "doneBy": "Claude",
@@ -17,13 +17,33 @@
   "type": "요청",
   "layout": "",
   "text": "Event History 화면 옮겨줘\n\n기존 화면: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-45275&t=8ZUolJfFqEx5iunS-1\n옮길 페이지: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3577-18413&t=8ZUolJfFqEx5iunS-1",
-  "note": "답 반영 시작: 디스크립션 취소선 모두 지움 · UI 작업 줄 대상 아님 · UX 확정 기입",
+  "note": "디스크립션 취소선 모두 지움 · UI 작업 줄 대상 아님 기입 · 케이스 3 · 4단계 · 20261125-서보경-event-history. UX 확정 다시 물음\n\n**고친 곳**\n- LI-EVT-P 1 Type(Dropdown): 취소선 예전 항목을 지우고 `드롭다운 리스트 항목 : All, Instrument, Inventory, Sample, System` 한 줄로\n- LI-EVT-P 3 컬럼 항목: `Type : Instrument, Inventory, Sample, System` 한 줄로\n- LI-EVT-01-P 3 Resolution Notes: `최대 300자 입력 가능` (취소선 500자 지움)\n- 6개 화면 디스크립션에 취소선이 하나도 남지 않음 (Figma · 화면 MD 같음)\n\n**기입한 것**\n- 요건 1 UI 작업 줄: `대상 아님` (요청자 결정, 추천 `대상`에서 바뀜)\n\n[질문 대기]\nQ1 사용자 확인 목록과 질의가 모두 풀렸습니다. 최종으로 UX 확정을 하시겠습니까?\n  - UX 확정\n  - 아직\n  근거: 검토 질의 14(취소선 지움)가 UX 확정 답 뒤에 들어와 규칙대로 다시 물음. 확정하면 업데이트 메모 · 기획 진행 표시(검토 완료) · 언어셋 정리로 이어 감 (Ver · UI 작업 줄은 다시 묻지 않음)\n\n규칙 점검: 4단계 절차 2 · 3의 「하지 않는 것」 지킴. 다르게 한 것 — UX 확정 뒤에는 블록 · 문구를 지우지 않고 취소선을 두는 규칙이 있으나 요청자 답(취소선 모두 제거)대로 지움\n작업 기준: basis 2026-11-25 21:17 · 작업규칙 CURECA 작업규칙 @수정본 · 정책서 정책서 (policy) · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 (glossary) · 화면 정의서 화면 정의서 (screens)",
   "shot": "",
   "shots": [],
   "images": [],
-  "frames": [],
+  "frames": [
+    {
+      "nodeId": "3751:579",
+      "name": "LI-EVT-P"
+    },
+    {
+      "nodeId": "3764:1390",
+      "name": "LI-EVT-01-P"
+    }
+  ],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "사용자 확인 목록과 질의가 모두 풀렸습니다. 최종으로 UX 확정을 하시겠습니까?",
+    "free": true,
+    "options": [
+      {
+        "label": "UX 확정"
+      },
+      {
+        "label": "아직"
+      }
+    ]
+  },
   "replies": [
     {
       "at": "2026-11-25T21:20:57+09:00",
