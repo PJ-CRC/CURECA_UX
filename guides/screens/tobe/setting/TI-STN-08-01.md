@@ -33,6 +33,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
   - [TI-STN-08] 목록 [Import] 선택 시 노출
   - 배경(목록 · 메뉴) Dim, Popup 밖 영역 선택 불가
   - [X] · ESC 선택 시 Popup 닫힘, [TI-STN-08] 목록으로 돌아감 (반영 없음)
+  - <span style="color:red">파일을 1개 이상 선택한 채 [X] · ESC 선택 시 Confirm 노출 : Confirm_031</span>
 - User Type : Service
 - 공통 UX 참고 : COMM-5-m
 - 정책 참고 : POL-TST-008
@@ -66,6 +67,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 - [Cancel] 버튼
   - 동작
     - 선택 시 Popup 닫힘, [TI-STN-08] 목록으로 돌아감 (반영 없음)
+    - <span style="color:red">파일을 1개 이상 선택한 채 선택 시 Confirm 노출 : Confirm_031</span>
 - 정책 참고 : POL-TST-008
 - 케이스 참고 : TI-STN-08-01/Case > Case 1
 
