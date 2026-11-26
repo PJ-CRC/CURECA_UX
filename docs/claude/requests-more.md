@@ -50,3 +50,9 @@
   - Workbench 수정 요청 칸에서 붙여넣기 · 끌어다 놓기 · 파일 선택으로 넣는다. 조건은 **Claude가 읽을 수 있는 것**(Claude 문서 기준, 2026-11-11): 이미지 PNG · JPG · GIF · WEBP는 파일 7.5MB(base64 10MB) · 8000×8000px 이하, PDF · 글(TXT · MD · CSV)은 30MB 이하, 한 요청에 20개까지. Word · Excel 등은 받지 않는다(Claude가 바로 읽지 못함 — PDF로 바꿔 올린다). 화면(`Figma_Workbench.html`의 `ATT_*`)과 서버(`node/server/writes.js`의 `ATT_*`)가 같은 조건을 쓴다. 원본을 `POST /api/attach?ext=` → `{tmp}`로 먼저 올리고, `add`의 `images:[{tmp, small, name}]`로 등록하면 서버가 요청 ID 이름으로 옮긴다.
   - 작업 이력(깃 공유)에는 원본이 아니라 이미지만 브라우저가 만든 줄인 사본(긴 변 1600 JPG, `small`)을 `.history/attach/{PC}_{요청 ID}_{n}.jpg`로 올린다. PDF · 글은 사본이 없어 이 PC에만 있다. 요청을 지우면 원본 · 사본 모두 지운다.
 - **레이아웃**: 요청에 `layout`(예: `2. 목록 (테이블)`)이 있으면 `docs/layout_structures/Layout_Structure.html`의 그 레이아웃(공통 틀 · 영역 크기 · 규칙, 테이블이면 텍스트 정렬)을 따라 만들거나 고친다. 와이어프레임은 같은 폴더의 PNG(`01_dashboard.png` … `09_chart_filter.png`)다.
+
+## 완료 뒤 · 그 밖
+
+- **모델 · 노력(강도)**(2026-11-24): 요청 · 작업에 `model` · `effort`가 있으면 사람이 그 설정으로 처리하라고 고른 것이다. 백그라운드 감시는 이미 그 설정의 세션으로 보낸다. Claude 앱 대화로 감시하다가 지금 대화와 다른 값을 보면 그대로 처리하고, note 끝에 「(모델 {model} · 노력 {effort} 요청 — 앱 대화 설정으로 처리)」를 붙인다.
+- **프로토타입 맞추기**: 「완료」한 뒤 `GET /api/prototypes`에서 고친 프레임이 「갱신 필요」(`stale`)인 프로토타입이 있으면, 프로토타입마다 `POST /api/jobs {action:'add', kind:'prototype-sync', fileKey, proto:{id}, name, text:'R0xx 반영', frames:{stale}, by:'Claude'}`를 쌓는다(같은 프로토타입에 「대기」가 있으면 서버가 합친다). 요청은 기다리게 하지 않고, 다음 감시(`JOBS`)에서 `prototype.md`의 prototype-sync대로 맞춘다.
+- **완료 때 고를 다음 행동(`ask.options[].action`)**: 없음 = 그 글을 답으로 다시 「대기」, `done` = 더 할 일 없이 「완료」, `delete` = `ids`의 요청을 지우고 「완료」(사람이 확인 창에서 한 번 더 고른다). 예: 같은 요청이 여러 건이면 `{label:'R001 · R002 지우기', action:'delete', ids:['R001','R002']}` · `{label:'그대로 두기', action:'done'}`, `free:false`.

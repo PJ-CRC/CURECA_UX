@@ -34,7 +34,7 @@ Workbench의 「캡처 받기」 · 「Claude에게 목록 만들기 요청」, 
      - `fit:[{node, min}]`: 채운 뒤 그 노드(예: 기획 프레임)의 높이를 안에 든 것의 아래 끝까지 맞춘다(`min`보다 작게는 안 함). 패널 행이 늘어 프레임을 키울 때.
      - **한 작업에 다 넣는다**: 패널의 제목 행(화면 정보)까지 모든 행, 행 꾸밈(굵게 · 코드 색 · 번호 칸 배경), 사용자 확인 목록(틀 복제 → 행), 라벨(`near`), 프레임 높이(`fit`)를 한 작업의 그룹들로 보낸다. 채운 뒤 `use_figma`로 꾸밈을 다시 고치지 않는다(측정 2026-11-25 R002: 채운 뒤 후처리 · 확인 목록을 코드로 따로 그려 호출이 다시 늘었다). 위 기능으로 안 되는 것만 직접 고치고 note에 적는다.
   4. 끝날 때까지 기다린다(Monitor로 `GET /api/jobs?kind=fill`의 그 id가 「완료」 · 「실패」, **최대 3분**). 플러그인이 수정 가능 페이지에서만 만들고, 하나라도 실패하면 이번에 만든 것을 모두 지우고 「실패」 + 이유를 남긴다.
-  5. 「완료」면 작업의 `result`(`made` 만든 수 · `removed` 지운 수 · `groups[].ids` 만든 노드 id · `problems[]` = `{kind:'넘침'|'겹침', row, node}`)를 본다. `problems`가 있는 곳만 `use_figma`로 고친다(스크린샷은 `requests.md` 「스크린샷」 횟수 안에서).
+  5. 「완료」면 작업의 `result`(`made` 만든 수 · `removed` 지운 수 · `groups[].ids` 만든 노드 id · `problems[]` = `{kind:'넘침'|'겹침', row, node}`)를 본다. `problems`가 있는 곳만 `use_figma`로 고친다(스크린샷은 `requests.md` 「Figma · 도구 토큰 절약」의 「스크린샷」 줄 횟수 안에서).
      - **`use_figma`에는 늦게 보인다**: 플러그인은 사람 PC의 Figma에서 고치므로 Claude의 Figma 연결에는 1 ~ 2분 뒤에 보인다(2026-11-24 시험). `groups[].ids`를 찾지 못하거나 옛 노드가 남아 있으면 고친 것이 아니라 아직 안 보이는 것이니, 다시 만들지 말고 1분쯤 뒤 다시 읽는다. 같은 자리를 바로 `use_figma`로 고치면 플러그인이 한 것과 겹칠 수 있으니 `result`가 깨끗하면 읽지 않고 넘어간다.
   6. 「실패」이거나 3분 안에 「대기」 그대로면 그 작업을 「실패」(note: 「플러그인이 받지 않아 직접 그림」)로 바꾸고 `use_figma`로 직접 그린다.
 - **자동 캡처(`auto: true`)는 Claude가 받지 않는다**(Figma 플러그인 몫). Workbench에서 Figma 페이지를 고르면 캡처 없는 프레임 전체를 `POST /api/jobs {action:'auto-plan', fileKey, list:[[nodeId, name]…]}`로 서버에 맡기고(`workbench/auto_capture.json`, 파일마다 하나 · 나중 것이 바꿈 · 빈 list면 지움), 서버는 플러그인이 캡처 작업을 물을 때(`GET /api/jobs?kind=capture`, Origin `null`)마다 「대기」 자동 캡처가 10개가 되게 채운다. 그래서 Workbench 탭이 뒤에 있거나 닫혀도 플러그인이 쉬지 않고 이어 받는다(2026-11-11).
