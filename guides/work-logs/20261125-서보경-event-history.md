@@ -82,22 +82,22 @@ started: 2026-11-25
 
 | # | 무엇 (절차 4번 순서 3 "뒤 단계로 넘김"의 1 ~ 5) | 관련된 곳 (CID · 디스크립션 번호) | 넘기는 곳 (2단계 / 3단계) | 이어진 번호 (Q · C · 논의 대상 ID / 근거로 풀림) |
 | --- | --- | --- | --- | --- |
-| 1 | 1. 기능 정의가 안 된 요소: 목록 아래 페이지 번호(1 ~ 10)에 번호 · 설명이 없음 | TI-EVT-P · LI-EVT-P #3 | 3단계 | |
-| 2 | 1. 기능 정의가 안 된 요소: 목록 행을 누르면 상세로 넘어가는 동작이 목록 디스크립션에 없음 (상세 화면 0 진입 방법에만 있음) | TI-EVT-P · LI-EVT-P #3 | 3단계 | |
-| 3 | 1. 기능 정의가 안 된 요소: 기간 검색에서 최대 1년을 넘게 고르면 어떻게 되는지 없음 | TI-EVT-P · LI-EVT-P #1 | 3단계 | |
-| 4 | 1. 기능 정의가 안 된 요소: 화면 번호 표시 1-2(Status)에 디스크립션 블록이 없음 | TI-EVT-01-P #1-2 | 3단계 | |
-| 5 | 2. Alert · Confirm 보완 필요 지점: Resolution Notes 입력 중 Cancel · 닫기를 누르면 입력한 내용이 반영되지 않는데, 다시 묻는 Confirm이 디스크립션에 없음 | LI-EVT-01-P #3 · #6 | 2단계 | |
-| 6 | 5. 대상 화면에서 찾은 고칠 점: Unit `Sample Processing`은 기준데이터에 없는 예전 이름 (`Sample Processing (Upper)` / `Sample Processing (Lower)` 가운데 무엇인지 정해지지 않음) | TI-EVT-P · LI-EVT-P #3 목록 3행 | 3단계 | |
-| 7 | 5. 대상 화면에서 찾은 고칠 점: Module 이름과 번호 사이 띄어쓰기 `Sample Storage(1)` · `High-throughput Extraction(1)` · `Flexible Extraction(1)` · `PCR Setup(1)` · `Universal PCR(1)` → `Sample Storage (1)` 등 (`glossary/glossary.md` 이름과 번호 띄어 씀). TI-EVT-02-P는 반영 대기 TI-EVT-02-P-R04에 있음 | LI-EVT-P #3 목록, LI-EVT-02-P #7 | 3단계 | |
-| 8 | 5. 대상 화면에서 찾은 고칠 점: 검색 라벨 `Event Id, Code` → `Event ID, Code` (LI-EVT-P 화면 · 디스크립션과 맞춤) | TI-EVT-P #1 | 3단계 | |
-| 9 | 5. 대상 화면에서 찾은 고칠 점: Type 기본값 `all` → `All` | TI-EVT-P · LI-EVT-P #1 | 3단계 | |
-| 10 | 5. 대상 화면에서 찾은 고칠 점: 목록 요약 화면 글자 `Items`와 디스크립션 `Total Event`가 다름 (무엇으로 맞출지 정해지지 않음) | TI-EVT-P · LI-EVT-P #2 | 3단계 | |
-| 11 | 5. 대상 화면에서 찾은 고칠 점: 디스크립션 `Created Date`와 화면 `Occurred Date/Time`이 다름 (TI는 반영 대기 TI-EVT-01-P-R02에 있음) | LI-EVT-01-P #1 | 3단계 | |
-| 12 | 5. 대상 화면에서 찾은 고칠 점: 일시 표기가 화면마다 다름 — 상세 Occurred T `2025-09-29 15:57` / L `15:57:03`, 목록 `15:57:00`, Updated T `16:01` / L `16:01:13` (무엇으로 맞출지 정해지지 않음) | TI-EVT-01-P · LI-EVT-01-P #1 · #4, TI-EVT-P · LI-EVT-P #3 | 3단계 | |
-| 13 | 5. 대상 화면에서 찾은 고칠 점: Effect · Recommended Action 줄 순서가 T와 L 디스크립션에서 다름 | TI-EVT-01-P · LI-EVT-01-P #1 | 3단계 | |
-| 14 | 5. 대상 화면에서 찾은 고칠 점: Resolution Notes 최대 글자 수가 디스크립션 300자, 케이스 그림 `0 /100자`로 다름 | LI-EVT-01-P #3, 케이스 프레임 | 3단계 | |
-| 15 | 5. 대상 화면에서 찾은 고칠 점: placeholder `Enter action details.`와 케이스 설명 글 `Enter action Details.`의 대소문자가 다름 | LI-EVT-01-P #3, 케이스 프레임 | 3단계 | |
-| 16 | 5. 대상 화면에서 찾은 고칠 점: 케이스 툴팁 예시 글 `refill.Consumables` 띄어쓰기 빠짐 → `refill. Consumables` | TI-EVT-P · LI-EVT-P 케이스 프레임 | 3단계 | |
+| 1 | 1. 기능 정의가 안 된 요소: 목록 아래 페이지 번호(1 ~ 10)에 번호 · 설명이 없음 | TI-EVT-P · LI-EVT-P #3 | 3단계 | 3단계로 (Common UX 페이지 번호 컴포넌트) |
+| 2 | 1. 기능 정의가 안 된 요소: 목록 행을 누르면 상세로 넘어가는 동작이 목록 디스크립션에 없음 (상세 화면 0 진입 방법에만 있음) | TI-EVT-P · LI-EVT-P #3 | 3단계 | 근거로 풀림 (TI-EVT-01-P · LI-EVT-01-P 디스크립션 0 진입 방법) |
+| 3 | 1. 기능 정의가 안 된 요소: 기간 검색에서 최대 1년을 넘게 고르면 어떻게 되는지 없음 | TI-EVT-P · LI-EVT-P #1 | 3단계 | 3단계로 (Common UX 기간 선택 컴포넌트, 없으면 질문 대기) |
+| 4 | 1. 기능 정의가 안 된 요소: 화면 번호 표시 1-2(Status)에 디스크립션 블록이 없음 | TI-EVT-01-P #1-2 | 3단계 | 근거로 풀림 (POL-EVT-002 규칙 1: T-IOS는 Status를 보여 주기만 함) · C3 |
+| 5 | 2. Alert · Confirm 보완 필요 지점: Resolution Notes 입력 중 Cancel · 닫기를 누르면 입력한 내용이 반영되지 않는데, 다시 묻는 Confirm이 디스크립션에 없음 | LI-EVT-01-P #3 · #6 | 2단계 | Cancel은 근거로 풀림 (POL-EVT-002 규칙 5: 취소하면 반영하지 않음) · 입력 중 닫기 · List는 Q2 |
+| 6 | 5. 대상 화면에서 찾은 고칠 점: Unit `Sample Processing`은 기준데이터에 없는 예전 이름 (`Sample Processing (Upper)` / `Sample Processing (Lower)` 가운데 무엇인지 정해지지 않음) | TI-EVT-P · LI-EVT-P #3 목록 3행 | 3단계 | C6 |
+| 7 | 5. 대상 화면에서 찾은 고칠 점: Module 이름과 번호 사이 띄어쓰기 `Sample Storage(1)` · `High-throughput Extraction(1)` · `Flexible Extraction(1)` · `PCR Setup(1)` · `Universal PCR(1)` → `Sample Storage (1)` 등 (`glossary/glossary.md` 이름과 번호 띄어 씀). TI-EVT-02-P는 반영 대기 TI-EVT-02-P-R04에 있음 | LI-EVT-P #3 목록, LI-EVT-02-P #7 | 3단계 | 근거로 풀림 (glossary.md 이름과 번호 띄어 씀) · C7 |
+| 8 | 5. 대상 화면에서 찾은 고칠 점: 검색 라벨 `Event Id, Code` → `Event ID, Code` (LI-EVT-P 화면 · 디스크립션과 맞춤) | TI-EVT-P #1 | 3단계 | 근거로 풀림 (LI-EVT-P 화면 글자, 반영 대기 TI-EVT-P-R05) |
+| 9 | 5. 대상 화면에서 찾은 고칠 점: Type 기본값 `all` → `All` | TI-EVT-P · LI-EVT-P #1 | 3단계 | C8 |
+| 10 | 5. 대상 화면에서 찾은 고칠 점: 목록 요약 화면 글자 `Items`와 디스크립션 `Total Event`가 다름 (무엇으로 맞출지 정해지지 않음) | TI-EVT-P · LI-EVT-P #2 | 3단계 | Q1 |
+| 11 | 5. 대상 화면에서 찾은 고칠 점: 디스크립션 `Created Date`와 화면 `Occurred Date/Time`이 다름 (TI는 반영 대기 TI-EVT-01-P-R02에 있음) | LI-EVT-01-P #1 | 3단계 | 근거로 풀림 (POL-EVT-001 정의 Event 항목: Occurred Date/Time) · C9 |
+| 12 | 5. 대상 화면에서 찾은 고칠 점: 일시 표기가 화면마다 다름 — 상세 Occurred T `2025-09-29 15:57` / L `15:57:03`, 목록 `15:57:00`, Updated T `16:01` / L `16:01:13` (무엇으로 맞출지 정해지지 않음) | TI-EVT-01-P · LI-EVT-01-P #1 · #4, TI-EVT-P · LI-EVT-P #3 | 3단계 | 3단계로 (Common UX 일시 표기 확인, 없으면 질문 대기) |
+| 13 | 5. 대상 화면에서 찾은 고칠 점: Effect · Recommended Action 줄 순서가 T와 L 디스크립션에서 다름 | TI-EVT-01-P · LI-EVT-01-P #1 | 3단계 | 근거로 풀림 (POL-EVT-001 정의 순서 · 화면 글자 T · L 같음: Effect → Recommended Action) · C10 |
+| 14 | 5. 대상 화면에서 찾은 고칠 점: Resolution Notes 최대 글자 수가 디스크립션 300자, 케이스 그림 `0 /100자`로 다름 | LI-EVT-01-P #3, 케이스 프레임 | 3단계 | 근거로 풀림 (POL-EVT-002 규칙 5: 최대 300자) · C11 |
+| 15 | 5. 대상 화면에서 찾은 고칠 점: placeholder `Enter action details.`와 케이스 설명 글 `Enter action Details.`의 대소문자가 다름 | LI-EVT-01-P #3, 케이스 프레임 | 3단계 | C12 |
+| 16 | 5. 대상 화면에서 찾은 고칠 점: 케이스 툴팁 예시 글 `refill.Consumables` 띄어쓰기 빠짐 → `refill. Consumables` | TI-EVT-P · LI-EVT-P 케이스 프레임 | 3단계 | C12 |
 
 ## 대상 화면의 반영 대기 항목
 
