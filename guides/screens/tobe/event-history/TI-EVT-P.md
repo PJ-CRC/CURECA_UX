@@ -89,7 +89,6 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
   - 텍스트는 1줄까지만 노출 / 데이터 값이 영역을 초과할 경우 '…'으로 노출
   - '…' 노출 영역에 마우스 오버 시 전체 데이터(추가 정보)를 <span style="color:red">Tooltip</span>으로 노출
   - <span style="color:red">검색 조건과 일치한 항목이 없을 경우, 'No results found.' 노출</span>
-- <span style="color:red">~~케이스 참고 : TI-EVT-P/Case > Case 1~~</span>
 - 공통 UX 참고 : COMM-5-g, COMM-5-r, COMM-5-v
 - 정책 참고 : POL-EVT-001
 
