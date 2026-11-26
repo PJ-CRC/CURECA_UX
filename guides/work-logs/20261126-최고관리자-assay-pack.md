@@ -187,6 +187,7 @@ started: 2026-11-26
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | C1 | [Delete] 확인 Confirm 제목 「Delete the selected file?」 | Confirm_026 제목 「Delete the selected files?」로 | TI-STN-08-P #4 | (alert-catalog.csv Confirm_026) | T만 | O | |
 | C2 | [Delete] 뒤 Toast 「The file has been deleted.」 | Toast_001 「The selected files have been deleted.」로 | TI-STN-08-P #4 | (toast-catalog.csv Toast_001, Confirm_026 버튼 동작) | T만 | O | |
+| C3 | Confirm_029 · 030 발생 조건 (Alert 카탈로그 기존 조건) | DS-0012 결정대로 File Details에서 Active · Inactive를 바꾸고 [Save]를 누를 때 Confirm_029 · 030을 띄움 (다른 작업의 결정을 따름, 멈춘 20261125-최고관리자-assay-pack에서 이어받음, 이 작업 5단계 완료 때 카탈로그 반영 전) | TI-STN-08-P #4 | DS-0012 | T만 | O | |
 
 ## 검토 질의
 
@@ -208,6 +209,7 @@ started: 2026-11-26
 
 | 논의 대상 | 상태 (논의 중 / 결정) | 내용 한 줄 | 5단계 반영 |
 | --- | --- | --- | --- |
+| DS-0012 | 결정 | Confirm_029 · 030 발생 조건을 File Details [Save]로 (POL-TST-008 규칙 6). 멈춘 20261125-최고관리자-assay-pack에서 이어받음 (2026-11-26, `work` 고침) | O (Alert 카탈로그) |
 
 ## 이 작업이 남긴 것
 
