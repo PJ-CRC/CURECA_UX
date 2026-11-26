@@ -15,18 +15,18 @@ rules_version:
 provisional: []
 flags: []
 source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=7669-175713
-figma_region: 2.1 2차
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3288-235494
+figma_page: Setting  Ⓛ / Ⓣ_As Is (3288:235028)
 ---
 # TI-STN-08-P Assay Pack File Details
 
-> 기존 화면(기존 작업방 Setting 페이지, 2.1 2차 영역, Ver 0.4.0)을 2026-11-25에 다시 옮긴 것입니다(처음 옮긴 날 2026-11-02). 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
+> 기존 화면(작업방 「Setting  Ⓛ / Ⓣ_As Is」 페이지, Ver 0.4.0)을 2026-11-26에 다시 옮긴 것입니다(처음 옮긴 날 2026-11-02, 2026-11-25에는 기존 작업방 파일에서 옮김). 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
 
 - T/L 차이: T-IOS만 Active·Inactive 변경과 [Save], [Delete]
 - 호출하는 화면: 없음 (패널 안의 [Delete] · [Save]는 Confirm · Alert만 엶)
 - 호출되는 곳: [TI-STN-08] 목록 [Details]
 - 관련 정책: POL-TST-008
-- 다른 프레임(기존 작업방): TI-STN-08-P 유형별 정의 (7669:177702), 같은 이름 TI-STN-08-P 프레임 (7669:176224, 유형별 정의 아래)
+- 다른 프레임(「Setting  Ⓛ / Ⓣ_As Is」): TI-STN-08-P 유형별 정의 (3288:237480, 아래 참조 섹션), 같은 CID 다른 모양 TI-STN-08-P (3288:236005, 아래 케이스), 1920 프레임 TI-STN-08-P (3288:243286, 기획 프레임 밖이라 UI 화면일 수 있어 열지 않음). [TI-STN-08 / 팝업 정의] · [TI-STN-08 / 정책]은 이 페이지에 없음
 
 ## 기존 화면
 
@@ -106,9 +106,62 @@ Table (47), Title (30), Check Box/Square (12), Reagent Product Name (11), 2 Dept
 
 ### 케이스
 
-<!-- 기존 작업방의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
+<!-- 「Setting  Ⓛ / Ⓣ_As Is」 페이지의 같은 CID 다른 모양 프레임(패널 내용 전체 펼침)을 옮김. Case 번호는 원본에 없어 원본 제목 그대로 적음 -->
 
-기획 프레임 안에 케이스 프레임 없음 (2026-11-25 다시 옮길 때 확인)
+같은 CID의 다른 모양 프레임 TI-STN-08-P ([3288:236005](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3288-236005)): 파일 종류별 패널 내용 전체 펼침 4개. 기획 프레임 안 케이스 없음.
 
 | Case | 제목 | 조건 | 프레임 |
 | --- | --- | --- | --- |
+| (번호 없음) | Case. Master 화면 | File type : Master / Product Name은 「Master Info」로 표시 · 최신 버전 자동 활성 (활성 선택 불가) / Test Group Info · Sample Type Info · Barcode Schema Info · Item Group Info · PCR Reagent Socket Component Info / 패널 내용 전체 펼침 (실제 화면은 패널 안에서 스크롤) | [3288:236005](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3288-236005) |
+| (번호 없음) | Case. Pretreatment 화면 | File type : Pretreatment / 구성품 없음 · 단일 시약 / Reagent Basic Info · Barcode Info · Quantity Info · Storage Location / 패널 내용 전체 펼침 (실제 화면은 패널 안에서 스크롤) | [3288:236005](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3288-236005) |
+| (번호 없음) | Case. Extraction 화면 | File type : Extraction / 구성품 2개 (LB Tub · MB Tube) / Reagent Basic Info · Barcode Info · 구성품 탭(Component)별 Basic · Barcode · Quantity · Storage / 패널 내용 전체 펼침 (실제 화면은 패널 안에서 스크롤) | [3288:236005](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3288-236005) |
+| (번호 없음) | Case. PCR 화면 | File type : PCR / 구성품 2개 (MOM · IC) / Reagent Basic Info(Test Item · Test Group ID · Test Target · Sample Type Mapping 표) · Barcode Info · Extraction Device Availability · 구성품 탭별 Barcode · Max Rxns · Quantity · Storage · PCR Socket Component(Type · Abbreviation · Socket Positions) / 패널 내용 전체 펼침 (실제 화면은 패널 안에서 스크롤) | [3288:236005](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3288-236005) |
+
+#### 케이스 화면 글자 (원문, 패널)
+
+- Case. Master 화면: File details | File Info | File name | File type | ap_master_v3 | Master | File Version | File Created Date/Time | v3 | 2026-10-21 17:40:12 | Active | Active | Import Info | Registered Date/Time | User ID | 2026-10-22 09:12:45 | service
+  - Test Group Info: Test Group ID | Test Group Name | Test Group Code / TEST_GROUP_1 | RP | RP / TEST_GROUP_2 | GI | GI / TEST_GROUP_3 | HPV | HPV / TEST_GROUP_4 | RTI | RTI
+  - Sample Type Info: Sample Type ID | Sample Type Name | Sample Type Code / SAMPLE_TYPE_1 | Swab | Swab / SAMPLE_TYPE_2 | Aspirate | Aspirate / SAMPLE_TYPE_3 | BAL | BAL / SAMPLE_TYPE_4 | Saliva | Saliva / SAMPLE_TYPE_5 | Sputum | Sputum / SAMPLE_TYPE_6 | Raw stool | Raw_stool / SAMPLE_TYPE_7 | Cary-blair | Cary-blair / SAMPLE_TYPE_8 | eNAT stool | eNAT_stool / SAMPLE_TYPE_9 | Fecal swab | Fecal_swab / SAMPLE_TYPE_10 | Thinprep | Thinprep / SAMPLE_TYPE_11 | Surepath | Surepath / SAMPLE_TYPE_12 | Cellpreserv | Cellpreserv / SAMPLE_TYPE_13 | Urine | Urine / SAMPLE_TYPE_14 | Semen | Semen
+  - Barcode Schema Info: (탭) Pretreatment Reagent | STARMag UC Master | STARMag UC Tub | STARMag UC Tube | PCR Reagent Box | PCR Reagent Component / Barcode Schema ID | Barcode Schema Name | Barcode Length | Expiration Date Segment Order / BARCODE_SCHEMA_1 | Pretreatment Reagent | 27 | 2 / Segment Info (8): Segment Order | Segment Name | Segment Length / 1 | 제조 일자 | 6 / 2 | 유효 기간 | 6 / 3 | 제품 고유 번호 | 4 / 4 | 연도 | 2 / 5 | 월 | 1 / 6 | 생산 번호 | 2 / 7 | 버퍼 정보 | 2 / 8 | 일련 번호 | 4
+  - Item Group Info: Item Group ID | Item Group Name / ITEM_GROUP_1 | Tube / ITEM_GROUP_2 | Tub / ITEM_GROUP_3 | Tip / ITEM_GROUP_4 | PCR reagent component / ITEM_GROUP_5 | IC
+  - PCR Reagent Socket Component Info: Component ID | Component Type | Color Code / PCR_REAGENT_SOCKET_COMPONENT_1 | MOM | #FCFCFD / PCR_REAGENT_SOCKET_COMPONENT_2 | TOM | #FCFCFD / PCR_REAGENT_SOCKET_COMPONENT_3 | Buffer | #B3B3B3
+  - 아래 버튼: Delete
+- Case. Pretreatment 화면: File details | File Info | ap_pretreat_v4 | Pretreatment | v4 | 2026-10-20 18:02:15 | Active | Active · Inactive | Import Info | 2026-10-21 14:20:31 | service
+  - Reagent Basic Info: Product Name | Product Code | Max Rxns | Max Usage Count / PBS Standard Tube | PBS_Standard_Tube | 1 | 1 / Item Group ID | Item Group Name / ITEM_GROUP_1 | Tube
+  - Barcode Info: Barcode Schema ID | Barcode Schema Name / BARCODE_SCHEMA_1 | Pretreatment Reagent / Segment Info: Segment 3 | PR02 | 제품 고유 번호
+  - Quantity Info: Quantity | Base Unit | Packaging Unit / 1 | ea | rack
+  - Storage Location Info: Module Code | Unit Code / ConsumableStorage | Trolley
+  - 아래 버튼: Delete | Save
+- Case. Extraction 화면: File details | File Info | ap_extraction_v3 | Extraction | v3 | 2026-10-13 17:40:52 | Active | Active · Inactive | Import Info | 2026-10-14 09:12:08 | service
+  - Reagent Basic Info: Product Name | Product Code / STARMag Universal Cartridge Kit | STARMag_UC_Kit
+  - Barcode Info: Barcode Schema ID | Barcode Schema Name / BARCODE_SCHEMA_2 | STARMag UC Master / Segment Info: Segment 3 | UC96 | 제품 고유 번호
+  - Component Info: (탭) LB Tub | MB Tube / Component Name | Component Code | Max Rxns | Max Usage Count / LB Tub | STARMag_UC_Kit_LB_TUB | 96 | 10 / Item Group ID | Item Group Name / ITEM_GROUP_2 | Tub
+    - Barcode Info: Barcode Schema ID | Barcode Schema Name / BARCODE_SCHEMA_3 | STARMag UC Tub / Segment Info: Segment 3 | Segment 7 / UC96 | LB / 제품 고유 번호 | 버퍼 정보
+    - Quantity Info: 96 | rxns | tub / Storage Location Info: ConsumableStorage | Trolley
+  - 아래 버튼: Delete | Save
+- Case. PCR 화면: File details | File Info | ap_pcr_gi-b1_v5 | PCR | v5 | 2026-10-06 15:32:09 | Active | Active · Inactive | Import Info | 2026-10-07 12:13:44 | service
+  - Reagent Basic Info: Product Name | Product Code | Test Item Name | Test Item Code / Allplex™ GI-Bacteria(I) Assay | Allplex_GI-B1_Assay | GI-B1 | GI-B1 / Test Group ID | Test Group Code | Test Target Selectable / TEST_GROUP_2 | GI | Y / Test Target Names (7): Sh/EI | Cam | Yer | Vib | CdB | Aer | Sal / Sample Type Mapping Info (4): Sample Type ID | Sample Type Code / SAMPLE_TYPE_6 | Raw_stool / SAMPLE_TYPE_7 | Cary-blair / SAMPLE_TYPE_8 | eNAT_stool / SAMPLE_TYPE_9 | Fecal_swab
+  - Barcode Info: Barcode Schema ID | Barcode Schema Name / BARCODE_SCHEMA_5 | PCR Reagent Box / Segment Info: Segment 3 | GI04
+  - Extraction Device Availability: M9600 | STARlet / Available | Available
+  - Component Info: (탭) 5X GI-B(I) MOM | GI-BP IC / Component Name | Component Code | Max Rxns | Max Usage Count / 5X GI-B(I) MOM | Allplex_GI-B1_Assay_MOM | 100 | 5 / Item Group ID | Item Group Name / ITEM_GROUP_4 | PCR reagent component
+    - Barcode Info: Barcode Schema ID | Barcode Scheme Name / BARCODE_SCHEMA_6 | PCR Reagent Component / Segment Info: Segment 1 | GI04XMOM00 | 구성품 고유 번호
+    - Quantity Info: 100 | rxns | set / Storage Location Info: PlateSealing | ColdStorage
+    - PCR Socket Component Info: Component ID | Component Type / PCR_REAGENT_SOCKET_COMPONENT_1 | MOM / Component Abbreviation: MOM / Socket Positions (2): Row | Column / A | 1 / B | 7
+  - 아래 버튼: Delete | Save
+
+### 참조 섹션 (원문)
+
+#### `TI-STN-08-P 유형별 정의` ([3288:237480](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3288-237480))
+
+- File details 패널 · 파일 종류별 표시 항목 (TI-STN-08-P와 동일, JSON 순서) (Ver 0.9.0 · 2026.10.26) · 기준 : 마스터 정보 · 시약 정보 JSON (시약 파일당 시약 1개)
+- 파일 종류 : Master / Pretreatment / Extraction / PCR (Master는 Product Name 「Master Info」, 최신 버전 강제 활성)
+- 바코드 Segment : 파일에 들어온 Segment 개수만큼 Segment 순서(segmentOrder) 오름차순으로 표시 (개수 제한 없음), Segment 이름(segmentName)이 있으면 코드 아래 표시
+- 구성품(Component)이 있는 파일(Extraction · PCR)은 구성품 탭으로 전환, 첫 구성품 기본 선택
+- 항목 정렬 : 같은 줄 항목은 명칭 높이를 맞춰 값을 같은 줄에 표시 (명칭이 길거나 다국어로 2줄이 돼도 유지)
+- PCR Extraction Device Availability : M9600 · STARlet 각각 사용 가능 여부 표시
+- 수량 : Quantity · Base Unit · Packaging Unit 각각 표시(합친 Display 없음), 시약 단위 rxns
+- Item Group Name(itemGroupName) : Pretreatment는 Reagent Basic Info, Extraction · PCR은 구성품별 표시 (예: Tube / Tub / PCR reagent component · IC)
+- ID : JSON의 ID 값(testGroupId · sampleTypeId · barcodeSchemaId · itemGroupId · componentId)을 해당 항목과 함께 그대로 표시
+- Master : Test Group Info(표) → Sample Type Info(표) → Barcode Schema Info(스키마 탭 · 길이 · 유효기간 Segment 순서 · Segment 표) → Item Group Info(표) → PCR Reagent Socket Component Info(표 · Component ID · Type · Color Code)
+- PCR 구성품 : Max Rxns · Max Usage Count는 구성품별 표시, PCR Socket Component Info(Component Type · Abbreviation · Socket Positions 표)는 소켓 정보가 있는 구성품만
+- 견본 패널 4개(File details | Master · Pretreatment · Extraction · PCR): 글은 위 "케이스 화면 글자"의 네 Case와 같음
