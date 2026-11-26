@@ -255,3 +255,22 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 | Delete | 화면 4 · 화면 1 | |
 | Save | 화면 4 | |
 | Import | 화면 1 | |
+| Assay Pack Setting | 화면 배경 목록 (TI-STN-08) | |
+| Enter file name | 화면 배경 목록 (TI-STN-08) | |
+| All | 화면 배경 목록 (TI-STN-08) | |
+| Period | 화면 배경 목록 (TI-STN-08) | |
+| Registered Date | 화면 배경 목록 (TI-STN-08) | |
+| Select Date Range | 화면 배경 목록 (TI-STN-08) | |
+| Active only | 화면 배경 목록 (TI-STN-08) | |
+| Reset | 화면 배경 목록 (TI-STN-08) | |
+| Search | 화면 배경 목록 (TI-STN-08) | |
+| Items | 화면 배경 목록 (TI-STN-08) | |
+| {n} items | 화면 배경 목록 (TI-STN-08) (n = 10) | |
+| Version | 화면 배경 목록 (TI-STN-08) | |
+| Created Date/Time | 화면 배경 목록 (TI-STN-08) | |
+| Details | 화면 배경 목록 (TI-STN-08) | |
+| Master Info | 화면 배경 목록 (TI-STN-08) | |
+| Master | 화면 배경 목록 (TI-STN-08) | |
+| Pretreatment | 화면 배경 목록 (TI-STN-08) | |
+| Extraction | 화면 배경 목록 (TI-STN-08) | |
+| PCR | 화면 배경 목록 (TI-STN-08) | |
