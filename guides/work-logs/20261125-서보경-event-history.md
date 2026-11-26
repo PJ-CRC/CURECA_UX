@@ -29,7 +29,7 @@ started: 2026-11-25
 | 4. 수정 · 확인 | | | |
 | 5. 완료 | | | |
 
-이어서 작업할 곳: 3단계 · 자리 잡음 (CID 6개 섹션 · 메뉴 단위 표시, 2026-11-26), 화면 MD 6개를 asis에서 tobe로 새로 쓸 차례(케이스 3 흐름 2 · 3-2) 뒤 TI-EVT-P부터 그릴 차례 (다시 읽을 곳: 3단계 flow/3-design.md 절차 1번 "읽을 것" 3 · 4 · 공통 1 ~ 5 / flow/3-design-case3.md 흐름 · 3-2 ~ 3-4 · 공통 규칙에서 케이스 3만 다른 것 / 작업 기록 "요건 목록" 요건 1 · "뒤 단계용 확인 항목(claude)" · "대상 화면의 반영 대기 항목" · "근거" · "설계" 화면별 작업 · "질문 대기" · "변경 확인")
+이어서 작업할 곳: 3단계 · 화면 MD 6개 씀 (2026-11-26), TI-EVT-P부터 그릴 차례 (다시 읽을 곳: 3단계 flow/3-design-case3.md 흐름 · 3-4 · 공통 규칙에서 케이스 3만 다른 것 / flow/3-design.md 공통 3 · 공통 4 · 공통 5 / 작업 기록 "요건 목록" 요건 1 · "설계" 화면별 작업 · 찾은 것 · "질문 대기" · "변경 확인")
 
 ## 요청
 
@@ -288,8 +288,8 @@ started: 2026-11-25
 | C4 | 화면 이름 Event History Detail · Event Message Popup | Event Detail · Event Message | TI · LI-EVT-01-P, TI · LI-EVT-02-P | IA Lv.2 (요청자 확인 1) | 같음 | - | |
 | C5 | 디스크립션 용어 (장비 · 팝업 · 툴팁 · 모듈 · 이벤트 · 알람 · 표시 등) | 용어집 표준어로 | 6개 화면 디스크립션 | terms.csv (근거 "용어 목록") | 같음 | - | |
 | C6 | 목록 Unit `Sample Processing` | `Sample Processing (Upper)` (예시 데이터) | TI-EVT-P · LI-EVT-P #3 | module-units.csv, DS-0004 | 같음 | - | |
-| C7 | Module `Sample Storage(1)` 등 붙여 씀 | `Sample Storage (1)` 띄어 씀 | LI-EVT-P #3, LI-EVT-02-P #7 | glossary.md 이름과 번호 | L만 | - | |
-| C8 | Type Default `all` | `All` | TI-EVT-P · LI-EVT-P #1 | 화면 글자 · status-values 표기 | 같음 | - | |
+| C7 | Module `Sample Storage(1)` 등 붙여 씀 | `Sample Storage (1)` 띄어 씀 | LI-EVT-P #3, LI-EVT-02-P #7 | glossary.md 이름과 번호 | L만 | - | 맞음 (오타, 2026-11-26) |
+| C8 | Type Default `all` | `All` | TI-EVT-P · LI-EVT-P #1 | 화면 글자 · status-values 표기 | 같음 | - | 맞음 (오타, 2026-11-26) |
 | C9 | `Created Date` | `Occurred Date/Time` | LI-EVT-01-P #1 | POL-EVT-001 정의 | L만 | - | |
 | C10 | 디스크립션 Recommended Action → Effect 순서 | Effect → Recommended Action | LI-EVT-01-P #1 | POL-EVT-001 정의 순서 · 화면 글자 | L만 | - | |
 | C11 | 케이스 `0 /100자` | `0 /300자` | LI-EVT-01-P 케이스 | POL-EVT-002 규칙 5 | L만 | O | |
