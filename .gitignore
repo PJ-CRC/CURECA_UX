@@ -65,3 +65,5 @@ workbench/.agent_cancel
 workbench/.agent_ctx.json
 # 개발 PC 표시(이 PC에서만 「감시 상태」 메뉴 · /api/agents). 배포 · 깃에 넣지 않는다
 workbench/dev.flag
+workbench/.agent_win.json
+workbench/.chat_usage.json
