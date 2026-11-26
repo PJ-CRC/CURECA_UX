@@ -1,5 +1,5 @@
 {
-  "reportAt": "2026-11-26T16:10:46+09:00",
+  "reportAt": "2026-11-26T16:11:46+09:00",
   "pc": "BREX_GRAM_2",
   "slug": "brex-gram-2",
   "user": "하승현",
@@ -7,8 +7,8 @@
   "version": "0.32.26",
   "alive": true,
   "status": "idle",
-  "msg": "R002 질문 답을 기다리는 중(17:03까지 이어서 처리) · 컨텍스트 11%",
-  "statusAt": "2026-11-26T16:10:38+09:00",
+  "msg": "마지막 처리: PENDING R002 · 컨텍스트 11%",
+  "statusAt": "2026-11-26T16:11:33+09:00",
   "claude": "따로 설치",
   "claudeWay": "",
   "autoWatch": true,
@@ -40,6 +40,14 @@
     }
   ],
   "turns": [
+    {
+      "at": "2026-11-26T16:11:04+09:00",
+      "what": "PENDING R002 · 강도 medium",
+      "resume": true,
+      "end": "2026-11-26T16:11:32+09:00",
+      "ok": true,
+      "sec": 28
+    },
     {
       "at": "2026-11-26T16:05:18+09:00",
       "what": "PENDING R002 · 강도 medium",
