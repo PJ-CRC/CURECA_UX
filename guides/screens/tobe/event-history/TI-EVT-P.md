@@ -114,6 +114,12 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 - <span style="color:red">Pagination 유형 : Type 1 Number</span>
 - <span style="color:red">공통 UX 참고 : COMM-5-l</span>
 
+**9  <span style="color:red">노출 개수 Dropdown</span>**
+- <span style="color:red">드롭다운 리스트 항목 : 10 items, 30 items, 50 items, 100 items</span>
+- <span style="color:red">Default : 10 items</span>
+- <span style="color:red">선택 시 해당 개수로 목록 즉시 업데이트</span>
+- <span style="color:red">공통 UX 참고 : COMM-5-g</span>
+
 ## 케이스
 
 ### Case 1. 목록의 텍스트 영역의 '...' 줄임된 경우, 마우스 hover시, Tooltip으로 전체 내용 제공
@@ -142,6 +148,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 | 3 | 목록 | 기존 원본 10행 그대로 / 3행 Unit `Sample Processing (Upper)` / 7행 Unit `CFX96 (1)` / 1 ~ 10행 Occurred Date/Time `2025-09-29 15:57` | 기존 원본 `3543:47130`, `glossary/module-units.csv`, COMM-4-a(1/4) 일시 표기 |
 | 3 | Level | Error · Warning (기존 원본 행 그대로) | `glossary/status-values.csv` Event Level (Status/Event Level) |
 | 8 | 페이지 | 1 ~ 10 (2 선택) | 기존 원본 `3543:47127` |
+| 9 | 노출 개수 | 10 items | COMM-5-g Basic Table (Q5 답) |
 | Case 1-1 | Tooltip | Consumables are low. Please check and refill. Consumables are low. Please check and refill. Consumables are low. Please check and refill. | 기존 원본 `3543:47386` (refill.Consumables → refill. Consumables) |
 
 ## 화면 표기 글자
@@ -174,6 +181,8 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 | Reset | 화면 1 | |
 | Search | 화면 1 | |
 | Items | 화면 2 | |
+| {n} items | 화면 9 · 디스크립션 9 (n = 10, 30, 50, 100) | |
+| No results found. | 디스크립션 3 | |
 | Export | 화면 6 | |
 | Code | 화면 3 | |
 | Description | 화면 3 | |
