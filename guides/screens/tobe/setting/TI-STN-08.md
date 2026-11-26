@@ -14,7 +14,7 @@ policies: [POL-TST-008]
 basis: 2026-11-26 09:27 · history 4079e90d
 basis_versions: rules @2026-11-26 · policy @2026-11-25 · glossary @2026-11-25 · screens @2026-11-26 · common_ux @2026-11-25
 source: tobe
-figma:
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3667-11461
 ---
 # TI-STN-08 Assay Pack Setting
 
