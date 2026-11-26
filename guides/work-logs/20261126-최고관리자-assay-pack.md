@@ -40,11 +40,61 @@ started: 2026-11-26
 
 ## 요건 목록
 
+### 요건 1. Assay Pack Setting 화면을 「Setting  Ⓛ / Ⓣ_As Is」 기준으로 「Setting  Ⓛ / Ⓣ_To Be」 페이지에 처음부터 다시 그림
+- 요청 상태: 최초
+- 경로 분기 기준 (근거) · 읽는 강도: 8 옮겨 다시 그림 (케이스 3) (요청 글 "다시 그려줘" + 요청자 답 "처음부터 다시 그림") · 케이스 3 (다시 그리기)
+- 지나가는 단계: 1 → 2 → 3 → 4 → 5
+- UI 작업: 대상 아님 (케이스 3 기본값, 다시 그리며 바뀐 곳이 생기면 4단계 UX 확정 때 다시 정함)
+
+| 대상 화면 | 케이스 | 작업 대상 | 근거 |
+| --- | --- | --- | --- |
+| Assay Pack Setting (TI-STN-08) | 3 | O | |
+| Assay Pack Setting (LI-STN-08) | 3 | O | 짝 화면 · 함께 고침 (두 화면에 같은 목록 · 검색 · 상세 기능, L-IOS는 조회 전용) |
+| Assay Pack File Details (TI-STN-08-P) | 3 | O | 같은 메뉴 화면 · 대상 (IA Assay Pack Setting > Details, TI-STN-08 [Details]가 엶) |
+| Assay Pack File Details (LI-STN-08-P) | 3 | O | 짝 화면 · 함께 고침 (두 화면에 같은 상세 기능, L-IOS는 조회 전용) |
+| **Import file 팝업 (TI-STN-08-01, IA에 없음)** | 3 | 미정 | → 아래 요청자 확인 2 |
+
+- 케이스: To-Be 화면 MD 머리말 `figma`에 이전 작업(20261125-최고관리자-assay-pack)이 그린 섹션 링크가 있어 표로는 케이스 1이지만, 요청자 답이 "처음부터 다시 그림"이라 케이스 3 "예전에 그린 메뉴도 처음부터 다시 그림(2026-11-25 결정)"으로 가름
+
+### 찾았지만 대상 아님
+
+다른 화면 없음 (화면 MD `screens/tobe/` · `screens/asis/`에서 STN-08이 나오는 곳은 이 다섯 화면 MD뿐. 옮겨 다시 그리는 요건이라 같은 글자 · Common UX 번호로 찾을 바뀌는 요소가 없음)
+
+### 영향 화면
+
+없음 (위와 같음. 2단계에서 정책으로 다시 찾음)
+
+작업이 지나가는 단계: 1 → 2 → 3 → 4 → 5
+
 ## 읽은 화면
+
+| 화면 (CID) | 읽은 것 (화면 MD / 기획 프레임 / 케이스 프레임 / 호출 화면) | Figma 링크 |
+| --- | --- | --- |
+| Assay Pack Setting (TI-STN-08) | 화면 MD (asis, 2026-11-25 옮김, 케이스 프레임 없음, 참조 섹션 절 없음) | https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=7669-175417 (asis MD 머리말, 기존 작업방 파일) |
+| Assay Pack Setting (LI-STN-08) | 화면 MD (asis, 같음) | https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=7669-181039 |
+| Assay Pack File Details (TI-STN-08-P) | 화면 MD (asis, 같음) | https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=7669-175713 |
+| Assay Pack File Details (LI-STN-08-P) | 화면 MD (asis, 같음) | https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=7669-181335 |
+| Import file 팝업 (TI-STN-08-01) | 화면 MD (asis, 같음) | https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=7669-177368 |
+
+- 1단계라 Figma `Setting  Ⓛ / Ⓣ_As Is` 페이지는 열지 않음(케이스 3 (이행 기간) 1)
+- asis 화면 MD 다섯 개 모두 기존 작업방 파일(kI8nm6…)에서 2026-11-25에 옮긴 것이고, 요청 글이 원본으로 준 같은 파일 「Setting  Ⓛ / Ⓣ_As Is」 페이지(3288:235028)에서 추출한 것이 아님 → 요청자 확인 3
+- 디스크립션이 가리키는 프레임([TI-STN-08 / 세부정의] · [팝업 정의] · [Import 정의] · [정책], [TI-STN-08-P 유형별 정의] · [LI-STN-08-P 유형별 정의], [LI-STN-08 / 세부정의])의 내용이 화면 MD에 없음("참조 섹션 (원문)" 절 없음) → asis 추출 빠짐, 요청자 확인 3
+- Module · Unit 이름이 나오지 않는 화면이라 `glossary/modules.csv` 대조는 해당 없음
+- To-Be 화면 MD 빈 틀은 아직 만들지 않음: `screens/tobe/setting/` 다섯 파일은 진행 중인 20261125-최고관리자-assay-pack의 결과물이라, 그 작업 기록을 어떻게 둘지(요청자 확인 4) 답을 받은 뒤 빈 틀로 다시 씀
 
 ## 뒤 단계용 확인 항목(claude)
 
+| # | 무엇 (절차 4번 순서 3 "뒤 단계로 넘김"의 1 ~ 5) | 관련된 곳 (CID · 디스크립션 번호) | 넘기는 곳 (2단계 / 3단계) | 이어진 번호 (Q · C · 논의 대상 ID / 근거로 풀림) |
+| --- | --- | --- | --- | --- |
+| 1 | 1. 기능 정의가 안 된 요소: [Delete] 「삭제 & Toast」의 Toast 문구가 없음 (TI-STN-08-P #4에는 「The file has been deleted.」) | TI-STN-08 #3 | 3단계 | |
+| 2 | 2. Alert · Confirm 보완 필요 지점: 파일을 고른 채 [X] · ESC · [Cancel]로 닫을 때 다시 묻는지 디스크립션에 없음 | TI-STN-08-01 화면 노출 경로 · #3 | 2단계 | |
+| 3 | 2. Alert · Confirm 보완 필요 지점: Active · Inactive를 바꾸고 [Save] 없이 [닫기] · 다른 Row [Details]를 누를 때 다시 묻는지 디스크립션에 없음 | TI-STN-08-P #2-1 · #3-1 | 2단계 | |
+| 4 | 4. 요청과 기존 화면이 맞지 않는 곳: Master 파일의 Active 변경 버튼이 TI-STN-08 #4-1은 「상세에 변경 버튼 미노출」, TI-STN-08-P #3은 「[Active] · [Inactive] 버튼 비활성」으로 서로 다름 | TI-STN-08 #4-1 · TI-STN-08-P #3 | 2단계 | |
+| 5 | 5. 대상 화면에서 찾은 고칠 점: 패널 화면 정보 title `Assay Pack Setting` → `Assay Pack File Details` (IA "Details", 화면 MD 제목과 다름) | TI-STN-08-P · LI-STN-08-P | 3단계 | |
+
 ## 대상 화면의 반영 대기 항목
+
+대상 화면에 `대기` 항목 없음. 대상 화면의 항목 둘(TI-STN-08-P-R01 화면 이름 · TI-STN-08-R02 Import file 팝업 IA 추가)은 `작업 중 (20261125-최고관리자-assay-pack)`이라 옮기지 않음 → 요청자 확인 4에서 함께 정함
 
 ## 근거
 
