@@ -2,7 +2,7 @@
 
 > 원본입니다. 고치는 법과 엑셀로 뽑는 법은 `language-set/README.md`. 항목을 더하거나 바꾸거나 지우면 `language-set/db/history.md` "항목 이력"에 한 줄을 더합니다.
 
-- 언어셋 v0.05 목록 시트에서 옮김 (2026-11-17), v0.06 반영 (2026-11-19). 행 94개, 사용 94개 · 삭제 0개
+- 언어셋 v0.05 목록 시트에서 옮김 (2026-11-17), v0.06 반영 (2026-11-19), 한국어 · 첨부 반영 (2026-11-26, R003). 행 94개, 사용 94개 · 삭제 0개
 
 | Language ID | 재사용 | 상태 | 검증 상태 | 플랫폼 | Type | English | Korean | German | Portuguese | Spanish | Italian | French | 참조 시트 | 비고 | Menu | CID |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -10,7 +10,7 @@
 | LID-STN-361 |  | 사용 | AI 번역 | T/L | txt | File name |  | Dateiname | Nome do ficheiro | Nombre del archivo | Nome file | Nom du fichier |  | 검색 레이블·컬럼명 | Assay Pack Setting | TI-STN-08 / LI-STN-08 |
 | LID-STN-362 |  | 사용 | AI 번역 | T/L | txt | Enter file name |  | Dateinamen eingeben | Insira o nome do ficheiro | Introduzca el nombre del archivo | Inserisci il nome del file | Saisissez le nom du fichier |  | 플레이스홀더 | Assay Pack Setting | TI-STN-08 / LI-STN-08 |
 | LID-STN-363 |  | 사용 | AI 번역 | T/L | txt | File type |  | Dateityp | Tipo de ficheiro | Tipo de archivo | Tipo di file | Type de fichier |  | 검색 레이블·컬럼명 | Assay Pack Setting | TI-STN-08 / LI-STN-08 |
-| LID-EVT-003 | ref | 사용 | AI 번역 | T/L | txt | All |  | Alle | Todos | Todos | Tutti | Tous |  | File type 옵션 기본값 | Assay Pack Setting | TI-STN-08 / LI-STN-08 |
+| LID-EVT-003 | ref | 사용 | AI 번역 | T/L | txt | All | 전체 | Alle | Todos | Todos | Tutti | Tous |  | File type 옵션 기본값 | Assay Pack Setting | TI-STN-08 / LI-STN-08 |
 | LID-STN-364 |  | 사용 | AI 번역 | T/L | txt | Master |  | Master | Master | Master | Master | Master |  | File type 값 | Assay Pack Setting | TI-STN-08 / LI-STN-08 / TI-STN-08-P / LI-STN-08-P |
 | LID-STN-365 |  | 사용 | AI 번역 | T/L | txt | Pretreatment |  | Vorbehandlung | Pré-tratamento | Pretratamiento | Pretrattamento | Prétraitement |  | File type 값 | Assay Pack Setting | TI-STN-08 / LI-STN-08 / TI-STN-08-P / LI-STN-08-P |
 | LID-STN-366 |  | 사용 | AI 번역 | T/L | txt | Extraction |  | Extraktion | Extração | Extracción | Estrazione | Extraction |  | File type 값 | Assay Pack Setting | TI-STN-08 / LI-STN-08 / TI-STN-08-P / LI-STN-08-P |
@@ -19,29 +19,29 @@
 | LID-STN-369 |  | 사용 | AI 번역 | T/L | txt | Created Date |  | Erstellungsdatum | Data de Criação | Fecha de Creación | Data di Creazione | Date de création |  | 기간 유형 옵션 값 | Assay Pack Setting | TI-STN-08 / LI-STN-08 |
 | LID-STN-370 |  | 사용 | AI 번역 | T/L | txt | Select Date Range |  | Zeitraum auswählen | Selecionar Período | Seleccionar Intervalo de Fechas | Seleziona Intervallo Date | Sélectionner la plage de dates |  | 기간 필드 플레이스홀더 | Assay Pack Setting | TI-STN-08 / LI-STN-08 |
 | LID-STN-371 |  | 사용 | AI 번역 | T/L | txt | Active only |  | Nur aktive | Apenas ativos | Solo activos | Solo attivi | Actifs uniquement |  | 체크박스 필터 | Assay Pack Setting | TI-STN-08 / LI-STN-08 |
-| LID-EVT-022 | ref | 사용 | AI 번역 | T/L | btn | Reset |  | Zurücksetzen | Redefinir | Restablecer | Reimposta | Réinitialiser | LID-COM-BTN-001 | 검색 초기화 버튼 | Assay Pack Setting | TI-STN-08 / LI-STN-08 |
-| LID-STN-016 | ref | 사용 | AI 번역 | T/L | btn | Search |  | Suchen | Pesquisar | Buscar | Cerca | Rechercher | LID-COM-BTN-002 | 검색 버튼 | Assay Pack Setting | TI-STN-08 / LI-STN-08 |
+| LID-EVT-022 | ref | 사용 | AI 번역 | T/L | btn | Reset | 초기화 | Zurücksetzen | Redefinir | Restablecer | Reimposta | Réinitialiser | LID-COM-BTN-001 | 검색 초기화 버튼 | Assay Pack Setting | TI-STN-08 / LI-STN-08 |
+| LID-STN-016 | ref | 사용 | AI 번역 | T/L | btn | Search | 검색 | Suchen | Pesquisar | Buscar | Cerca | Rechercher | LID-COM-BTN-002 | 검색 버튼 | Assay Pack Setting | TI-STN-08 / LI-STN-08 |
 | LID-EVT-044 | ref | 사용 | AI 번역 | T | txt | {N} of {M} Items |  | {N} von {M} Einträgen | {N} de {M} Itens | {N} de {M} Elementos | {N} di {M} Elementi | {N} sur {M} éléments |  | 목록 개수 | Assay Pack Setting | TI-STN-08 |
-| LID-STN-006 | ref | 사용 | AI 번역 | L | txt | Items |  | Einträge | Itens | Elementos | Elementi | Éléments |  | 목록 총 개수 | Assay Pack Setting | LI-STN-08 |
-| LID-STN-019 | ref | 사용 | AI 번역 | T | btn | Delete |  | Löschen | Eliminar | Eliminar | Elimina | Supprimer | LID-COM-BTN-011 | 목록·상세 삭제 버튼 | Assay Pack Setting | TI-STN-08 / TI-STN-08-P |
-| LID-TMG-035 | ref | 사용 | AI 번역 | T | btn | Import |  | Importieren | Importar | Importar | Importa | Importer | LID-COM-BTN-004 | 가져오기 버튼·Popup 버튼 | Assay Pack Setting | TI-STN-08 / TI-STN-08-01 |
-| LID-STN-147 | ref | 사용 | AI 번역 | T/L | txt | Product Name |  | Produktname | Nome do Produto | Nombre del Producto | Nome Prodotto | Nom du produit |  | 테이블 컬럼·상세 레이블 | Assay Pack Setting | TI-STN-08 / LI-STN-08 / TI-STN-08-P / LI-STN-08-P |
+| LID-STN-006 | ref | 사용 | AI 번역 | L | txt | Items | 항목 | Einträge | Itens | Elementos | Elementi | Éléments |  | 목록 총 개수 | Assay Pack Setting | LI-STN-08 |
+| LID-STN-019 | ref | 사용 | AI 번역 | T | btn | Delete | 삭제 | Löschen | Eliminar | Eliminar | Elimina | Supprimer | LID-COM-BTN-011 | 목록·상세 삭제 버튼 | Assay Pack Setting | TI-STN-08 / TI-STN-08-P |
+| LID-TMG-035 | ref | 사용 | AI 번역 | T | btn | Import | 가져오기 | Importieren | Importar | Importar | Importa | Importer | LID-COM-BTN-004 | 가져오기 버튼·Popup 버튼 | Assay Pack Setting | TI-STN-08 / TI-STN-08-01 |
+| LID-STN-147 | ref | 사용 | AI 번역 | T/L | txt | Product Name | 제품명 | Produktname | Nome do Produto | Nombre del Producto | Nome Prodotto | Nom du produit |  | 테이블 컬럼·상세 레이블 | Assay Pack Setting | TI-STN-08 / LI-STN-08 / TI-STN-08-P / LI-STN-08-P |
 | LID-INF-008 | ref | 사용 | AI 번역 | T/L | txt | Version |  | Version | Versão | Versión | Versione | Version |  | 테이블 컬럼 | Assay Pack Setting | TI-STN-08 / LI-STN-08 |
 | LID-STN-372 |  | 사용 | AI 번역 | T/L | txt | Registered Date/Time |  | Registrierungsdatum/-zeit | Data/Hora de Registo | Fecha/Hora de Registro | Data/Ora di Registrazione | Date/heure d'enregistrement |  | 테이블 컬럼·상세 레이블 | Assay Pack Setting | TI-STN-08 / LI-STN-08 / TI-STN-08-P / LI-STN-08-P |
 | LID-STN-373 |  | 사용 | AI 번역 | T/L | txt | Created Date/Time |  | Erstellungsdatum/-zeit | Data/Hora de Criação | Fecha/Hora de Creación | Data/Ora di Creazione | Date/heure de création |  | 테이블 컬럼 | Assay Pack Setting | TI-STN-08 / LI-STN-08 |
-| LID-STN-073 | ref | 사용 | AI 번역 | T/L | txt | User ID |  | Benutzer-ID | ID do Utilizador | ID de Usuario | ID Utente | ID utilisateur |  | 테이블 컬럼·상세 레이블 | Assay Pack Setting | TI-STN-08 / LI-STN-08 / TI-STN-08-P / LI-STN-08-P |
+| LID-STN-073 | ref | 사용 | AI 번역 | T/L | txt | User ID | 사용자 ID | Benutzer-ID | ID do Utilizador | ID de Usuario | ID Utente | ID utilisateur |  | 테이블 컬럼·상세 레이블 | Assay Pack Setting | TI-STN-08 / LI-STN-08 / TI-STN-08-P / LI-STN-08-P |
 | LID-STN-374 |  | 사용 | AI 번역 | T/L | txt | Active |  | Aktiv | Ativo | Activo | Attivo | Actif |  | 테이블 컬럼·활성 태그 | Assay Pack Setting | TI-STN-08 / LI-STN-08 / TI-STN-08-P / LI-STN-08-P |
 | LID-STN-375 |  | 사용 | AI 번역 | T/L | txt | Inactive |  | Inaktiv | Inativo | Inactivo | Inattivo | Inactif |  | 비활성 태그 | Assay Pack Setting | TI-STN-08 / LI-STN-08 / TI-STN-08-P / LI-STN-08-P |
-| LID-STN-012 | ref | 사용 | AI 번역 | T/L | txt | Details |  | Details | Detalhes | Detalles | Dettagli | Détails |  | 테이블 컬럼 | Assay Pack Setting | TI-STN-08 / LI-STN-08 |
+| LID-STN-012 | ref | 사용 | AI 번역 | T/L | txt | Details | 상세 정보 | Details | Detalhes | Detalles | Dettagli | Détails |  | 테이블 컬럼 | Assay Pack Setting | TI-STN-08 / LI-STN-08 |
 | LID-STN-376 |  | 사용 | AI 번역 | T/L | txt | Master Info |  | Master-Informationen | Informações do Master | Información del Master | Informazioni Master | Informations Master |  | Master 파일 Product Name 고정값 | Assay Pack Setting | TI-STN-08 / LI-STN-08 |
 | LID-STN-377 |  | 사용 | AI 번역 | T/L | txt | No files found. |  | Keine Dateien gefunden. | Nenhum ficheiro encontrado. | No se encontraron archivos. | Nessun file trovato. | Aucun fichier trouvé. |  | 등록 파일 없음 안내 | Assay Pack Setting | TI-STN-08 / LI-STN-08 |
 | LID-STN-378 |  | 사용 | AI 번역 | T | txt | Click Import to add a file. |  | Klicken Sie auf Importieren, um eine Datei hinzuzufügen. | Clique em Importar para adicionar um ficheiro. | Haga clic en Importar para añadir un archivo. | Fai clic su Importa per aggiungere un file. | Cliquez sur Importer pour ajouter un fichier. |  | 등록 파일 없음 안내 | Assay Pack Setting | TI-STN-08 |
-| LID-STN-015 | ref | 사용 | AI 번역 | T/L | txt | No results found. |  | Keine Ergebnisse gefunden. | Nenhum resultado encontrado. | No se encontraron resultados. | Nessun risultato trovato. | Aucun résultat trouvé. |  | 검색 결과 없음 | Assay Pack Setting | TI-STN-08 / LI-STN-08 |
+| LID-STN-015 | ref | 사용 | AI 번역 | T/L | txt | No results found. | 검색 결과가 없습니다. | Keine Ergebnisse gefunden. | Nenhum resultado encontrado. | No se encontraron resultados. | Nessun risultato trovato. | Aucun résultat trouvé. |  | 검색 결과 없음 | Assay Pack Setting | TI-STN-08 / LI-STN-08 |
 | LID-STN-379 |  | 사용 | AI 번역 | T | title | Import file |  | Datei importieren | Importar ficheiro | Importar archivo | Importa file | Importer un fichier |  | Import Popup 타이틀 | Assay Pack Setting | TI-STN-08-01 |
 | LID-STN-380 |  | 사용 | AI 번역 | T | txt | * Files : json · Multiple files |  | * Dateien: json · Mehrere Dateien | * Ficheiros: json · Vários ficheiros | * Archivos: json · Varios archivos | * File: json · Più file | * Fichiers : json · Plusieurs fichiers |  | 파일 형식 안내 | Assay Pack Setting | TI-STN-08-01 |
 | LID-STN-381 |  | 사용 | AI 번역 | T | txt | Drag and drop files here, or |  | Dateien hierher ziehen oder | Arraste e largue os ficheiros aqui ou | Arrastre y suelte los archivos aquí o | Trascina i file qui oppure | Glissez-déposez les fichiers ici ou |  | 파일 영역 안내 | Assay Pack Setting | TI-STN-08-01 |
 | LID-STN-383 |  | 사용 | AI 번역 | T | btn | Select files |  | Dateien auswählen | Selecionar ficheiros | Seleccionar archivos | Seleziona file | Sélectionner des fichiers |  | 파일 선택 버튼 | Assay Pack Setting | TI-STN-08-01 |
-| LID-EVT-039 | ref | 사용 | AI 번역 | T | btn | Close |  | Schließen | Fechar | Cerrar | Chiudi | Fermer | LID-COM-BTN-009 | Popup 닫기 버튼 | Assay Pack Setting | TI-STN-08-01 |
+| LID-EVT-039 | ref | 사용 | AI 번역 | T | btn | Close | 닫기 | Schließen | Fechar | Cerrar | Chiudi | Fermer | LID-COM-BTN-009 | Popup 닫기 버튼 | Assay Pack Setting | TI-STN-08-01 |
 | LID-STN-384 |  | 사용 | AI 번역 | T/L | title | File details |  | Dateidetails | Detalhes do ficheiro | Detalles del archivo | Dettagli file | Détails du fichier |  | 상세 패널 타이틀 | Assay Pack Setting | TI-STN-08-P / LI-STN-08-P |
 | LID-STN-385 |  | 사용 | AI 번역 | T/L | txt | File Version |  | Dateiversion | Versão do Ficheiro | Versión del Archivo | Versione File | Version du fichier |  | 상세 레이블 | Assay Pack Setting | TI-STN-08-P / LI-STN-08-P |
 | LID-STN-386 |  | 사용 | AI 번역 | T/L | txt | File Created Date/Time |  | Erstellungsdatum/-zeit der Datei | Data/Hora de Criação do Ficheiro | Fecha/Hora de Creación del Archivo | Data/Ora di Creazione File | Date/heure de création du fichier |  | 상세 레이블 | Assay Pack Setting | TI-STN-08-P / LI-STN-08-P |
@@ -52,8 +52,8 @@
 | LID-STN-391 |  | 사용 | AI 번역 | T/L | txt | Test Group Code |  | Testgruppencode | Código do Grupo de Testes | Código del Grupo de Pruebas | Codice Gruppo Test | Code du groupe de tests |  | 테이블 컬럼·상세 레이블 | Assay Pack Setting | TI-STN-08-P / LI-STN-08-P |
 | LID-STN-392 |  | 사용 | AI 번역 | T/L | txt | Sample Type Info |  | Probentyp-Informationen | Informações do Tipo de Amostra | Información del Tipo de Muestra | Informazioni Tipo Campione | Informations sur le type d'échantillon |  | Master 영역 타이틀 | Assay Pack Setting | TI-STN-08-P / LI-STN-08-P |
 | LID-STN-393 |  | 사용 | AI 번역 | T/L | txt | Sample Type ID |  | Probentyp-ID | ID do Tipo de Amostra | ID del Tipo de Muestra | ID Tipo Campione | ID du type d'échantillon |  | 테이블 컬럼·상세 레이블 | Assay Pack Setting | TI-STN-08-P / LI-STN-08-P |
-| LID-STN-216 | ref | 사용 | AI 번역 | T/L | txt | Sample Type Name |  | Probentyp-Name | Nome do Tipo de Amostra | Nombre del Tipo de Muestra | Nome Tipo Campione | Nom du type d'échantillon |  | 테이블 컬럼 | Assay Pack Setting | TI-STN-08-P / LI-STN-08-P |
-| LID-STN-214 | ref | 사용 | AI 번역 | T/L | txt | Sample Type Code |  | Probentyp-Code | Código do Tipo de Amostra | Código de Tipo de Muestra | Codice Tipo Campione | Code du type d'échantillon |  | 테이블 컬럼·상세 레이블 | Assay Pack Setting | TI-STN-08-P / LI-STN-08-P |
+| LID-STN-216 | ref | 사용 | AI 번역 | T/L | txt | Sample Type Name | 검체 유형명 | Probentyp-Name | Nome do Tipo de Amostra | Nombre del Tipo de Muestra | Nome Tipo Campione | Nom du type d'échantillon |  | 테이블 컬럼 | Assay Pack Setting | TI-STN-08-P / LI-STN-08-P |
+| LID-STN-214 | ref | 사용 | AI 번역 | T/L | txt | Sample Type Code | 검체 유형 코드 | Probentyp-Code | Código do Tipo de Amostra | Código de Tipo de Muestra | Codice Tipo Campione | Code du type d'échantillon |  | 테이블 컬럼·상세 레이블 | Assay Pack Setting | TI-STN-08-P / LI-STN-08-P |
 | LID-STN-394 |  | 사용 | AI 번역 | T/L | txt | Barcode Schema Info |  | Barcode-Schema-Informationen | Informações do Esquema de Código de Barras | Información del Esquema de Código de Barras | Informazioni Schema Codice a Barre | Informations sur le schéma de code-barres |  | Master 영역 타이틀 | Assay Pack Setting | TI-STN-08-P / LI-STN-08-P |
 | LID-STN-395 |  | 사용 | AI 번역 | T/L | txt | Barcode Schema ID |  | Barcode-Schema-ID | ID do Esquema de Código de Barras | ID del Esquema de Código de Barras | ID Schema Codice a Barre | ID du schéma de code-barres |  | 상세 레이블 | Assay Pack Setting | TI-STN-08-P / LI-STN-08-P |
 | LID-STN-396 |  | 사용 | AI 번역 | T/L | txt | Barcode Schema Name |  | Barcode-Schema-Name | Nome do Esquema de Código de Barras | Nombre del Esquema de Código de Barras | Nome Schema Codice a Barre | Nom du schéma de code-barres |  | 상세 레이블 | Assay Pack Setting | TI-STN-08-P / LI-STN-08-P |
@@ -99,7 +99,7 @@
 | LID-STN-433 |  | 사용 | AI 번역 | T/L | txt | Socket Positions ({N}) |  | Socket-Positionen ({N}) | Posições do Socket ({N}) | Posiciones del Socket ({N}) | Posizioni Socket ({N}) | Positions du socket ({N}) |  | 상세 레이블. 개수 표시 | Assay Pack Setting | TI-STN-08-P / LI-STN-08-P |
 | LID-STN-434 |  | 사용 | AI 번역 | T/L | txt | Row |  | Zeile | Linha | Fila | Riga | Ligne |  | Socket 위치 레이블 | Assay Pack Setting | TI-STN-08-P / LI-STN-08-P |
 | LID-STN-435 |  | 사용 | AI 번역 | T/L | txt | Column |  | Spalte | Coluna | Columna | Colonna | Colonne |  | Socket 위치 레이블 | Assay Pack Setting | TI-STN-08-P / LI-STN-08-P |
-| LID-STN-022 | ref | 사용 | AI 번역 | T | btn | Save |  | Speichern | Guardar | Guardar | Salva | Enregistrer | LID-COM-BTN-013 | Active 변경 저장 버튼 | Assay Pack Setting | TI-STN-08-P |
+| LID-STN-022 | ref | 사용 | AI 번역 | T | btn | Save | 저장 | Speichern | Guardar | Guardar | Salva | Enregistrer | LID-COM-BTN-013 | Active 변경 저장 버튼 | Assay Pack Setting | TI-STN-08-P |
 
 ## 변경 이력
 
@@ -107,3 +107,4 @@
 | --- | --- | --- |
 | 2026-11-17 | 언어셋 v0.05 엑셀 목록 시트에서 옮겨 원본으로 만듦 | 사용자 요청 (서보경) |
 | 2026-11-19 | 언어셋 v0.06 반영 (`db/history.md` 항목 이력 v0.06 줄) | 언어셋 v0.06 (하승현), 사용자 요청 (서보경) |
+| 2026-11-26 | 언어셋 첨부 반영: 한국어 14칸 채움(그중 공통 글자로 1칸) (`db/history.md` 항목 이력 2026-11-26 줄) | 언어셋 첨부 파일 (하승현, R002), 사용자 요청 R003 (하승현) |
