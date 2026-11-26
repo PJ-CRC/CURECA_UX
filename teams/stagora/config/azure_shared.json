@@ -1,7 +1,7 @@
 {
-  "at": 1795683723854,
-  "pc": "anjongbeom-ui-MacBookAir-2.local",
-  "by": "안종범",
+  "at": 1795726153906,
+  "pc": "BREX_06",
+  "by": "최고관리자",
   "data": {
     "name": "[주간보고 UX/UI] PL-11.4 / All (PL-11.4) 외 2주",
     "values": [
@@ -3346,11 +3346,11 @@
         "Local",
         "16574",
         "환자용 통계 리포트 사이트 개발",
-        "리포트 변경에 따른 화면 수정",
+        "리포트 변경에 따른 화면 수정 -v6",
         "11.3",
         "2026-11-26",
         "2026-11-26",
-        "",
+        "16 → 16",
         "유혜인 과장",
         "In Progress",
         "",
@@ -3393,13 +3393,60 @@
         "Local",
         "16574",
         "환자용 통계 리포트 사이트 개발",
-        "└ #18988 [UX] 리포트 변경에 따른 화면 수정",
+        "└ #18988 [UX] 리포트 변경에 따른 화면 수정 -v6",
         "11.3",
         "2026-11-26",
         "2026-11-26",
-        "",
+        "8 → 8",
         "유병규",
-        "In Progress",
+        "Resolved",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "Local",
+        "16574",
+        "환자용 통계 리포트 사이트 개발",
+        "└ #18989 [UI] 리포트 변경에 따른 화면 수정 -v6",
+        "11.3",
+        "2026-11-26",
+        "2026-11-26",
+        "8 → 8",
+        "유연정",
+        "Resolved",
         "",
         "",
         "",
@@ -6652,7 +6699,7 @@
         null,
         null,
         null,
-        "#d9ead3"
+        "#b7dcc8"
       ],
       [
         "#e2ece9",
@@ -6694,6 +6741,47 @@
         null,
         null,
         "#d9ead3"
+      ],
+      [
+        "#e2ece9",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "#cfe2f3"
       ],
       [
         "#fff1c1",
@@ -7941,6 +8029,10 @@
       [
         100,
         9
+      ],
+      [
+        101,
+        9
       ]
     ],
     "fw": [
@@ -8495,6 +8587,18 @@
         "#5f6368",
         "#5f6368"
       ],
+      [
+        null,
+        null,
+        null,
+        "#5f6368",
+        "#5f6368",
+        "#5f6368",
+        "#5f6368",
+        "#5f6368",
+        "#5f6368",
+        "#5f6368"
+      ],
       [],
       [
         null,
@@ -8734,29 +8838,29 @@
       [
         29,
         0,
-        44,
+        45,
         1
       ],
       [
-        73,
+        74,
         0,
         4,
         1
       ],
       [
-        77,
+        78,
         0,
         3,
         1
       ],
       [
-        80,
+        81,
         0,
         17,
         1
       ],
       [
-        97,
+        98,
         0,
         4,
         1
@@ -8800,59 +8904,59 @@
       [
         29,
         1,
-        44,
+        45,
         1
       ],
       [
-        73,
+        74,
         1,
         2,
         1
       ],
       [
-        75,
+        76,
         1,
         2,
         1
       ],
       [
-        77,
+        78,
         1,
         3,
         1
       ],
       [
-        80,
+        81,
         1,
         3,
         1
       ],
       [
-        83,
+        84,
         1,
         5,
         1
       ],
       [
-        88,
+        89,
         1,
         3,
         1
       ],
       [
-        91,
+        92,
         1,
         2,
         1
       ],
       [
-        93,
+        94,
         1,
         4,
         1
       ],
       [
-        97,
+        98,
         1,
         4,
         1
@@ -8896,59 +9000,59 @@
       [
         29,
         2,
-        44,
+        45,
         1
       ],
       [
-        73,
-        2,
-        2,
-        1
-      ],
-      [
-        75,
+        74,
         2,
         2,
         1
       ],
       [
-        77,
+        76,
+        2,
+        2,
+        1
+      ],
+      [
+        78,
         2,
         3,
         1
       ],
       [
-        80,
+        81,
         2,
         3,
         1
       ],
       [
-        83,
+        84,
         2,
         5,
         1
       ],
       [
-        88,
+        89,
         2,
         3,
         1
       ],
       [
-        91,
+        92,
         2,
         2,
         1
       ],
       [
-        93,
+        94,
         2,
         4,
         1
       ],
       [
-        97,
+        98,
         2,
         4,
         1
@@ -9628,12 +9732,12 @@
       [
         73,
         1,
-        "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17697"
+        "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/16574"
       ],
       [
         73,
         3,
-        "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17697"
+        "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/18989"
       ],
       [
         74,
@@ -9642,266 +9746,276 @@
       ],
       [
         74,
+        3,
+        "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17697"
+      ],
+      [
+        75,
+        1,
+        "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17697"
+      ],
+      [
+        75,
         3,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17829"
       ],
       [
-        75,
+        76,
         1,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17743"
       ],
       [
-        75,
+        76,
         3,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17743"
       ],
       [
-        76,
+        77,
         1,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17743"
       ],
       [
-        76,
+        77,
         3,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17830"
       ],
       [
-        77,
+        78,
         1,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17938"
       ],
       [
-        77,
+        78,
         3,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17938"
       ],
       [
-        78,
+        79,
         1,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17938"
       ],
       [
-        78,
+        79,
         3,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/18485"
       ],
       [
-        79,
+        80,
         1,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17938"
       ],
       [
-        79,
+        80,
         3,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/18901"
       ],
       [
-        80,
+        81,
         1,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/16202"
       ],
       [
-        80,
+        81,
         3,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/16202"
       ],
       [
-        81,
+        82,
         1,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/16202"
       ],
       [
-        81,
+        82,
         3,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/16567"
       ],
       [
-        82,
+        83,
         1,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/16202"
       ],
       [
-        82,
+        83,
         3,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17114"
       ],
       [
-        83,
+        84,
         1,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/16626"
       ],
       [
-        83,
+        84,
         3,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/16626"
       ],
       [
-        84,
+        85,
         1,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/16626"
       ],
       [
-        84,
+        85,
         3,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17057"
       ],
       [
-        85,
+        86,
         1,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/16626"
       ],
       [
-        85,
+        86,
         3,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17118"
       ],
       [
-        86,
+        87,
         1,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/16626"
       ],
       [
-        86,
+        87,
         3,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/16626"
       ],
       [
-        87,
+        88,
         1,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/16626"
       ],
       [
-        87,
+        88,
         3,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17692"
       ],
       [
-        88,
+        89,
         1,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/15991"
       ],
       [
-        88,
+        89,
         3,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/15991"
       ],
       [
-        89,
+        90,
         1,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/15991"
       ],
       [
-        89,
+        90,
         3,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17069"
       ],
       [
-        90,
+        91,
         1,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/15991"
       ],
       [
-        90,
+        91,
         3,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17121"
       ],
       [
-        91,
+        92,
         1,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17404"
       ],
       [
-        91,
+        92,
         3,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17404"
       ],
       [
-        92,
+        93,
         1,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17404"
       ],
       [
-        92,
+        93,
         3,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17448"
       ],
       [
-        93,
+        94,
         1,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17431"
       ],
       [
-        93,
+        94,
         3,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17431"
       ],
       [
-        94,
+        95,
         1,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17431"
       ],
       [
-        94,
+        95,
         3,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17449"
       ],
       [
-        95,
+        96,
         1,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17431"
       ],
       [
-        95,
+        96,
         3,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17431"
       ],
       [
-        96,
+        97,
         1,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17431"
       ],
       [
-        96,
+        97,
         3,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/18295"
       ],
       [
-        97,
+        98,
         1,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/16972"
       ],
       [
-        97,
+        98,
         3,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/16972"
       ],
       [
-        98,
+        99,
         1,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/16972"
       ],
       [
-        98,
+        99,
         3,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17204"
       ],
       [
-        99,
+        100,
         1,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/16972"
       ],
       [
-        99,
+        100,
         3,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/16972"
       ],
       [
-        100,
+        101,
         1,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/16972"
       ],
       [
-        100,
+        101,
         3,
         "https://dev.azure.com/SG-Collaboration-Projects/STAgora/_workitems/edit/17452"
       ]
@@ -10077,101 +10191,102 @@
       },
       {
         "row": 71,
-        "key": "16574|리포트 변경에 따른 화면 수정",
+        "key": "16574|리포트 변경에 따른 화면 수정 -v6",
         "rows": [
-          72
+          72,
+          73
         ]
       },
       {
-        "row": 73,
+        "row": 74,
         "key": "17697|Admin > 이용약관 및 개인정보수집이용 동의 관리",
         "rows": [
-          74
+          75
         ]
       },
       {
-        "row": 75,
+        "row": 76,
         "key": "17743|Admin > 권한 추가",
         "rows": [
-          76
+          77
         ]
       },
       {
-        "row": 77,
+        "row": 78,
         "key": "17938|[검사실_로컬] 오픈소스 고지 조회 기능 제공",
         "rows": [
-          78,
-          79
+          79,
+          80
         ]
       },
       {
-        "row": 80,
+        "row": 81,
         "key": "16202|[검사실_로컬] 로그인 화면 개발",
         "rows": [
-          81,
-          82
+          82,
+          83
         ]
       },
       {
-        "row": 83,
+        "row": 84,
         "key": "16626|[검사실_로컬] Help Center 화면 구현",
         "rows": [
-          84,
-          85
+          85,
+          86
         ]
       },
       {
-        "row": 86,
+        "row": 87,
         "key": "16626|[검사실_로컬] Help Center 화면 구현 - 매뉴얼 다운로드 기능 추가",
         "rows": [
-          87
+          88
         ]
       },
       {
-        "row": 88,
+        "row": 89,
         "key": "15991|[검사실_로컬] 설치 버전 정보 표기",
         "rows": [
-          89,
-          90
+          90,
+          91
         ]
       },
       {
-        "row": 91,
+        "row": 92,
         "key": "17404|User Service access 항목에 Statistical Report Viewer 항목 추가",
         "rows": [
-          92
+          93
         ]
       },
       {
-        "row": 93,
+        "row": 94,
         "key": "17431|Admin > C-Lab 종합검사 구성 관리",
         "rows": [
-          94
+          95
         ]
       },
       {
-        "row": 95,
+        "row": 96,
         "key": "17431|Admin > C-Lab 종합검사 구성 관리 수정사항 추가 반영",
         "rows": [
-          96
+          97
         ]
       },
       {
-        "row": 97,
+        "row": 98,
         "key": "16972|Master data > Hospitals Hospital Code & Hospital No 추가",
         "rows": [
-          98
+          99
         ]
       },
       {
-        "row": 99,
+        "row": 100,
         "key": "16972|Hospitals Hospital Code & Hospital No 추가 요구사항 반영",
         "rows": [
-          100
+          101
         ]
       }
     ],
-    "at": 1795683723844,
+    "at": 1795726153901,
     "readonly": true,
     "azure": true,
     "wbs": true,
