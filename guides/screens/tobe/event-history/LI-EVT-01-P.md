@@ -107,9 +107,6 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
   - 클릭 시, Event Popup 닫힘
   - 3 Resolution Notes 입력 중 클릭 시, Confirm 노출 : Confirm_016
 
-~~**7  닫기**~~
-- ~~클릭 시, Event 팝업이 닫힘~~
-
 ## 케이스
 
 ### Case 1. Resolution Notes - Inline edit

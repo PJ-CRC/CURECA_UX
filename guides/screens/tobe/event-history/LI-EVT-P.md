@@ -117,7 +117,6 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 **6  [Export] 버튼**
 - 동작
   - 클릭 시, 경로 저장 또는 USB 저장을 선택하는 Popup 노출 : COMM-5-m(2/4)
-  - ~~T-IOS 경우 클릭 시, 윈도우 탐색기가 호출되며, 원하는 경로를 지정할 수 있음~~
 - 대상 범위 : 목록에 노출된 전체 리스트
 - 저장 항목 : Detail에서 제공되는 모든 내용
 - 형식 : .csv
