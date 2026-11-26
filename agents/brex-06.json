@@ -1,5 +1,5 @@
 {
-  "reportAt": "2026-11-26T10:43:22+09:00",
+  "reportAt": "2026-11-26T10:44:22+09:00",
   "pc": "BREX_06",
   "slug": "brex-06",
   "user": "최고관리자",
@@ -8,7 +8,7 @@
   "alive": true,
   "status": "limit",
   "msg": "Claude 사용 한도에 걸려 11:01에 다시 시작합니다. 그 사이 요청은 「대기」로 남습니다.",
-  "statusAt": "2026-11-26T10:43:13+09:00",
+  "statusAt": "2026-11-26T10:44:13+09:00",
   "claude": "따로 설치",
   "claudeWay": "cli",
   "autoWatch": true,
