@@ -900,8 +900,8 @@
 | TI-STN-06-R01 | Setting | SMTP Setting (TI-STN-06) | 점검 발견 | SMTP Server 예시 값이 파일 경로("\\192.168.0.100\data\csv") | 서버 주소 예시로 (예: smtp.example.com) | 화면 | 대기 |
 | TI-STN-06-R02 | Setting | SMTP Setting (TI-STN-06) | 점검 발견 | 5 Use SMTP Feature를 Enable에서 Disable로 바꿔 저장하는 경우 [Save]가 비활성화되어 끌 수 없음 | 팀 논의 후 정함 | PD-0002 | 대기 (팀 논의) |
 | TI-STN-06-R03 | Setting | SMTP Setting (TI-STN-06) | 기준 자료 변경 | 2 "입력 조건 없음" (Port Number 형식) | 숫자만 등 조건 확인 | 헌법 8조 | 대기 (확인 필요) |
-| TI-STN-08-P-R01 | Setting | Assay Pack File Details (TI-STN-08-P) | 기준 자료 변경 | 화면 이름 "Assay Pack Setting", Ver 0.4.0 | Assay Pack File Details (IA "Details"), 2.1.ZZ 체계 | IA | 작업 중 (20261125-최고관리자-assay-pack) |
-| TI-STN-08-R02 | Setting | Assay Pack Setting (TI-STN-08) | 기준 자료 변경 | Import file 팝업 TI-STN-08-01이 IA에 없음 | IA에 추가할지 확인 | `ia/ia-screens.csv` | 작업 중 (20261125-최고관리자-assay-pack) |
+| TI-STN-08-P-R01 | Setting | Assay Pack File Details (TI-STN-08-P) | 기준 자료 변경 | 화면 이름 "Assay Pack Setting", Ver 0.4.0 | Assay Pack File Details (IA "Details"), 2.1.ZZ 체계 | IA | 작업 중 (20261126-최고관리자-assay-pack) |
+| TI-STN-08-R02 | Setting | Assay Pack Setting (TI-STN-08) | 기준 자료 변경 | Import file 팝업 TI-STN-08-01이 IA에 없음 | IA에 추가할지 확인 | `ia/ia-screens.csv` | 작업 중 (20261126-최고관리자-assay-pack) |
 | TI-SVS-01-P-R01 | Setting | Sample Tube Details (TI-SVS-01-P) | 기준 자료 변경 | [Delete] → Confirm_009 | Confirm_009는 "Local Storage Detected"(로컬 드라이브 경고)라 삭제 확인에 맞지 않음. 삭제 확인 알럿 ID로 바꿈 | `alert/alert-catalog.csv` | 대기 |
 | TI-SVS-01-R01 | Setting | Sample Tube Setting (TI-SVS-01) | 기준 자료 변경 | 화면 이름 "Sample tube Setting", IA "Tube Setting" | 하나로 통일 | IA | 대기 |
 | TI-SVS-01-R02 | Setting | Sample Tube Setting (TI-SVS-01) | 기준 자료 변경 | 입력 값 조건(코드 형식, 치수 범위, 중복 여부)이 목록 화면에 없음 | 세부정의·Modify 화면 확인 후 POL-TST-009에 넣음 | 헌법 8조 | 대기 (확인 필요) |

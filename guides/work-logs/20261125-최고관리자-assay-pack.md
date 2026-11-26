@@ -1,5 +1,6 @@
 ---
-status: 진행 중            # 진행 중 | 끝남 | 멈춤
+status: 멈춤               # 진행 중 | 끝남 | 멈춤
+stopped: 2026-11-26 · 최고관리자 · 같은 화면을 새 작업 20261126-최고관리자-assay-pack으로 처음부터 다시 그리기로 함(R003 요청자 답). 반영 대기 TI-STN-08-P-R01 · TI-STN-08-R02는 그 작업으로 옮김
 requester: 최고관리자
 menu: Setting · Assay Pack Setting (STN)
 cids: [TI-STN-08, LI-STN-08, TI-STN-08-P, LI-STN-08-P, TI-STN-08-01]
