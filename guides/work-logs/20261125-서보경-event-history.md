@@ -342,6 +342,7 @@ started: 2026-11-25
 | C40 | Dim(scrim) 1696 · 1628 너비, 패널 앞 흰 칸 · Popup 원본 자리 | Dim을 패널 왼쪽 끝(1920)까지 채우고 Popup · 화면 요소를 Dim 가운데로 (Event History +113px, Event Detail +167px) | TI-EVT-P · LI-EVT-P · TI-EVT-01-P · LI-EVT-01-P 0 | 검토 질의 4 | 같음 | - | 맞음 (2026-11-26) |
 | C41 | Popup이 Dim 위쪽에 치우침 | Popup · 화면 요소를 Dim 세로 가운데로 (Event History +48px, Event Detail +21px) | TI-EVT-P · LI-EVT-P · TI-EVT-01-P · LI-EVT-01-P 0 | 검토 질의 5 | 같음 | - | 맞음 (2026-11-26) |
 | C42 | TI-EVT-P/Case Case 1 (Tooltip) | 케이스 프레임 지움, 디스크립션 3 케이스 참고 줄 빨간 취소선 | TI-EVT-P #3 · 케이스 | 검토 질의 6 | T만 | - | 맞음 (2026-11-26) |
+| C43 | LI-EVT-P/Case Case 1 (Tooltip) | 케이스 프레임 지움(섹션 높이 1822로 맞춤), 디스크립션 3 케이스 참고 줄 빨간 취소선, 화면 예시 글자 Case 1-1 줄 지움 | LI-EVT-P #3 · 케이스 | 검토 질의 7 | L만 | - | 맞음 (2026-11-26) |
 | C29 | 번호 표시 5가 Notes 칸 위에 있음 | [List] 버튼 옆에 둠 | TI-EVT-01-P · LI-EVT-01-P #5 | 디스크립션 5 = [List] 버튼 | 같음 | - | 맞음 (2026-11-26) |
 | C30 | 검색 영역 입력 칸 · 목록 표 · Status Toggle · 페이지 번호 (기존 컴포넌트) | Common UX 컴포넌트(Text Input · Dropdown · Basic Table · Status/Event Level · Toggle Switch · Number Pagination)로 다시 그림 | TI-EVT-P · LI-EVT-P #1 · #3 · #4 · #8 | Common UX COMM-5-p · 5-g · 5-q · 5-l | 같음 | - | 맞음 (2026-11-26) |
 ## 검토 질의
