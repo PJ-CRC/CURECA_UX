@@ -2833,3 +2833,38 @@
 | 2026-11-26 |  | ref: LID-DAS-023 | Instrument | LI-INS-01-P | 번역 추가 (Korean) |  | 가동 중 | 언어셋 첨부 (R002) 목록 시트 1719행 · R003 · 공통 LID-COM-SCD-015 글자 (R003 답 2) | 하승현 |
 | 2026-11-26 |  | ref: LID-EVT-017 | Material Setup | LI-TSS-RGE-02 | 번역 추가 (Korean) |  | 상태 | 언어셋 첨부 (R002) 목록 시트 1741행 · R003 | 하승현 |
 | 2026-11-26 |  | LID-MAS-462 | Material Setup | LI-TSS-RGE-02 | 번역 추가 (Korean) |  | 비어 있음 | 언어셋 첨부 (R002) 목록 시트 1742행 · R003 · 공통 LID-COM-SCD-044 글자 (R003 답 2) | 하승현 |
+| 2026-11-26 |  | LID-EVT-005 | Event History | TI-EVT-02-P / LI-EVT-02-P | 재사용 추가 |  |  | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | ref: LID-IVT-001 | Event History | TI-EVT-02-P / LI-EVT-02-P | 재사용 추가 |  |  | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | ref: LID-SPT-022 | Event History | TI-EVT-02-P / LI-EVT-02-P | 재사용 추가 |  |  | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | LID-EVT-009 | Event History | TI-EVT-02-P / LI-EVT-02-P | 재사용 추가 |  |  | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | LID-EVT-010 | Event History | TI-EVT-01-P / LI-EVT-01-P | 재사용 추가 |  |  | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | LID-EVT-015 | Event History | TI-EVT-P / LI-EVT-P | 삭제 | Occurred Date |  | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | ref: LID-STN-012 | Event History | TI-EVT-P / LI-EVT-P | 삭제 | Details |  | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | ref: LID-STN-006 | Event History | TI-EVT-P | 재사용 추가 |  |  | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | LID-EVT-044 | Event History | TI-EVT-P | 삭제 | {N} of {M} Items |  | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | LID-EVT-026 | Event History | TI-EVT-01-P / LI-EVT-01-P | 삭제 | Back to list |  | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | ref: LID-STN-021 | Event History | LI-EVT-01-P | 삭제 | Cancel |  | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | ref: LID-STN-022 | Event History | LI-EVT-01-P | 삭제 | Save |  | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | ref: LID-INS-018 | Event History | TI-EVT-02-P / LI-EVT-02-P | 삭제 | Event |  | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | LID-EVT-047 | Event History | TI-EVT-01-P / LI-EVT-01-P | 추가 |  | Resolution Notes | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | ref: LID-STN-015 | Event History | TI-EVT-P / LI-EVT-P | 추가 |  | No results found. | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | ref: LID-SPT-025 | Event History | TI-EVT-01-P / LI-EVT-01-P | 추가 |  | Nucleic Acid Extraction | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | ref: LID-SPT-026 | Event History | TI-EVT-P / LI-EVT-P | 추가 |  | PCR Setup | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | ref: LID-SPT-032 | Event History | TI-EVT-P / LI-EVT-P | 추가 |  | Plate Sealing | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | LID-EVT-048 | Event History | TI-EVT-P / LI-EVT-P | 추가 |  | Sample Storage | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | LID-EVT-049 | Event History | TI-EVT-P / LI-EVT-P | 추가 |  | Consumable Storage | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | LID-EVT-050 | Event History | TI-EVT-P / LI-EVT-P | 추가 |  | Sample Pre-treatment | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | LID-EVT-051 | Event History | TI-EVT-P / LI-EVT-P / TI-EVT-02-P / LI-EVT-02-P | 추가 |  | High-throughput Extraction | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | LID-EVT-052 | Event History | TI-EVT-P / LI-EVT-P / TI-EVT-01-P / LI-EVT-01-P | 추가 |  | Flexible Extraction | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | LID-EVT-053 | Event History | TI-EVT-P / LI-EVT-P | 추가 |  | Universal PCR | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | LID-EVT-054 | Event History | TI-EVT-P / LI-EVT-P | 추가 |  | Inbound Trolley | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | LID-EVT-055 | Event History | TI-EVT-P / LI-EVT-P | 추가 |  | Outbound Trolley | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | LID-EVT-056 | Event History | TI-EVT-P / LI-EVT-P | 추가 |  | Trolley | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | LID-EVT-057 | Event History | TI-EVT-P / LI-EVT-P | 추가 |  | Sample Processing (Upper) | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | LID-EVT-058 | Event History | TI-EVT-02-P / LI-EVT-02-P | 추가 |  | M9600 | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | LID-EVT-059 | Event History | TI-EVT-01-P / LI-EVT-01-P | 추가 |  | STARlet | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | LID-EVT-060 | Event History | TI-EVT-P / LI-EVT-P | 추가 |  | CFX96 | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | LID-EVT-061 | Event History | TI-EVT-P / LI-EVT-P | 추가 |  | Spin Tip Storage | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | LID-EVT-062 | Event History | TI-EVT-P / LI-EVT-P | 추가 |  | MB Tube Storage | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | LID-EVT-063 | Event History | TI-EVT-P / LI-EVT-P | 추가 |  | Buffer Cartridge Storage | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-26 |  | LID-EVT-064 | Event History | TI-EVT-P / LI-EVT-P | 추가 |  | 300 μL Tip Storage | 작업 기록 20261125-서보경-event-history · 5단계 언어셋 반영 | Claude (서보경 작업) |

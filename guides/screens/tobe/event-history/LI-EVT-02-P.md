@@ -146,7 +146,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 | Recommended Action | 화면 6 | LID-EVT-031 |
 | Module: | 화면 7 | LID-EVT-012 |
 | Unit: | 화면 7 | LID-EVT-013 |
-| High-throughput Extraction | 화면 7 | |
-| M9600 | 화면 7 | |
+| High-throughput Extraction | 화면 7 | LID-EVT-051 |
+| M9600 | 화면 7 | LID-EVT-058 |
 | Close | 화면 8 | LID-EVT-039 |
 | View Details | 화면 9 | LID-EVT-040 |

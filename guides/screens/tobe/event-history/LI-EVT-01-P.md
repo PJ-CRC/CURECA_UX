@@ -175,13 +175,13 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 | Module | 화면 2 | LID-EVT-012 |
 | Unit | 화면 2 | LID-EVT-013 |
 | Process | 화면 2 | LID-STN-026 |
-| Flexible Extraction | 화면 2 | |
-| STARlet | 화면 2 | |
+| Flexible Extraction | 화면 2 | LID-EVT-052 |
+| STARlet | 화면 2 | LID-EVT-059 |
 | Nucleic Acid Extraction | 화면 2 | LID-SPT-025 |
 | Notes | 화면 3 · 케이스 Case 1 | LID-EVT-033 |
-| Resolution Notes | 케이스 Case 1 | |
+| Resolution Notes | 케이스 Case 1 | LID-EVT-047 |
 | Enter action details. | 화면 3 · 케이스 Case 1-1 | LID-EVT-034 |
 | Updated Date/Time. {date} | 화면 4 (date = 2026-09-29 16:01) | LID-EVT-027 |
 | Updated by. {id} | 화면 4 (id = ID123423) | LID-EVT-028 |
 | List | 화면 5 | LID-EVT-036 |
-| {n} /300자 | 케이스 Case 1-2 (n = 0) | |
+| {n} /300자 | 케이스 Case 1-2 (n = 0) | LID-EVT-035 |

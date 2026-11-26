@@ -153,7 +153,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 | 화면 표기 글자 (영어) | 출처 | Language ID |
 | --- | --- | --- |
 | Event History | 화면 제목 | LID-EVT-001 |
-| Event ID, Code | 화면 1 | |
+| Event ID, Code | 화면 1 | LID-EVT-002 |
 | Type | 화면 1 · 화면 3 | LID-EVT-004 |
 | Module | 화면 1 · 화면 3 | LID-EVT-012 |
 | Level | 화면 1 · 화면 3 | LID-EVT-014 |
@@ -163,14 +163,14 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 | Inventory | 디스크립션 1 · 화면 3 | LID-IVT-001 |
 | Sample | 디스크립션 1 | LID-SPT-022 |
 | System | 디스크립션 1 | LID-EVT-009 |
-| Sample Storage | 디스크립션 1 · 화면 3 | |
-| Consumable Storage | 디스크립션 1 · 화면 3 | |
-| Sample Pre-treatment | 디스크립션 1 · 화면 3 | |
-| High-throughput Extraction | 디스크립션 1 · 화면 3 | |
-| Flexible Extraction | 디스크립션 1 · 화면 3 | |
+| Sample Storage | 디스크립션 1 · 화면 3 | LID-EVT-048 |
+| Consumable Storage | 디스크립션 1 · 화면 3 | LID-EVT-049 |
+| Sample Pre-treatment | 디스크립션 1 · 화면 3 | LID-EVT-050 |
+| High-throughput Extraction | 디스크립션 1 · 화면 3 | LID-EVT-051 |
+| Flexible Extraction | 디스크립션 1 · 화면 3 | LID-EVT-052 |
 | PCR Setup | 디스크립션 1 · 화면 3 | LID-SPT-026 |
 | Plate Sealing | 디스크립션 1 | LID-SPT-032 |
-| Universal PCR | 디스크립션 1 · 화면 3 | |
+| Universal PCR | 디스크립션 1 · 화면 3 | LID-EVT-053 |
 | Error | 디스크립션 1 · 화면 3 | LID-EVT-037 |
 | Warning | 디스크립션 1 · 화면 3 | LID-EVT-038 |
 | Open | 디스크립션 1 · 화면 2 · 화면 3 | LID-EVT-042 |
@@ -186,12 +186,12 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 | Description | 화면 3 | LID-EVT-011 |
 | Unit | 화면 3 | LID-EVT-013 |
 | Occurred Date/Time | 화면 3 | LID-EVT-016 |
-| Inbound Trolley | 화면 3 | |
-| Outbound Trolley | 화면 3 | |
-| Trolley | 화면 3 | |
-| Sample Processing (Upper) | 화면 3 | |
-| Spin Tip Storage | 화면 3 | |
-| Buffer Cartridge Storage | 화면 3 | |
-| 300 μL Tip Storage (1) | 화면 3 | |
-| CFX96 (1) | 화면 3 | |
-| MB Tube Storage | 화면 3 | |
+| Inbound Trolley | 화면 3 | LID-EVT-054 |
+| Outbound Trolley | 화면 3 | LID-EVT-055 |
+| Trolley | 화면 3 | LID-EVT-056 |
+| Sample Processing (Upper) | 화면 3 | LID-EVT-057 |
+| Spin Tip Storage | 화면 3 | LID-EVT-061 |
+| Buffer Cartridge Storage | 화면 3 | LID-EVT-063 |
+| 300 μL Tip Storage (1) | 화면 3 | LID-EVT-064 |
+| CFX96 (1) | 화면 3 | LID-EVT-060 |
+| MB Tube Storage | 화면 3 | LID-EVT-062 |
