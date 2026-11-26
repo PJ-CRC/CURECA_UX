@@ -1,5 +1,5 @@
 {
-  "reportAt": "2026-11-26T14:32:35+09:00",
+  "reportAt": "2026-11-26T14:33:36+09:00",
   "pc": "BREX_GRAM_2",
   "slug": "brex-gram-2",
   "user": "하승현",
@@ -7,8 +7,8 @@
   "version": "0.32.25",
   "alive": true,
   "status": "idle",
-  "msg": "준비 확인 중 (Claude 로그인 · Figma 연결)",
-  "statusAt": "2026-11-26T14:32:30+09:00",
+  "msg": "요청을 기다리는 중",
+  "statusAt": "2026-11-26T14:33:33+09:00",
   "claude": "따로 설치",
   "claudeWay": "",
   "autoWatch": true,
