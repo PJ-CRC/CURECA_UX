@@ -101,4 +101,4 @@ async function record(o) {
   return `USAGE ${name} calls=${e.calls} input=${e.input} cacheWrite=${e.cacheWrite} cacheRead=${e.cacheRead} output=${e.output} usd=${e.usd}`;
 }
 
-module.exports = { record, logDir };
+module.exports = { record, logDir, jsonlFiles, rates, pcName, pcSlug, iso, stamp };

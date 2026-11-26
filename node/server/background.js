@@ -154,6 +154,7 @@ foreach ($dir in $places) { $lnk = Join-Path $dir 'Figma AI Run.lnk'; try { if (
     log(`절전에서 깨어남(${Math.round(gap / 1000)}초 멈춤) — 탭 · 진행 중 확인을 잠시 미룹니다.`);
   }
 
+  let chatAt = Date.now() + 120000, chatBusy = false;
   let handAt = Date.now() + 20000, agAt = Date.now() + 15000, azAt = Date.now() + 90000, azBusy = false;
   setInterval(() => {
     try { wakeCheck(); } catch (e) {}
@@ -178,6 +179,8 @@ foreach ($dir in $places) { $lnk = Join-Path $dir 'Figma AI Run.lnk'; try { if (
         azBusy = false;
       })();
     }
+    // 채팅 작업 사용량(2026-11-26): 10분마다 Claude 앱 대화 중 Figma AI Run에 영향을 준 차례만 사용량으로 남긴다(chatusage.js)
+    if (Date.now() >= chatAt && !chatBusy) { chatAt = Date.now() + 10 * 60000; chatBusy = true; require('./chatusage').sweep().catch((e) => errLog('채팅 사용량', e)).then(() => { chatBusy = false; }); }
     if (Date.now() >= agAt) { agAt = Date.now() + 60000; try { require('./agents').report(h.agentInfo); } catch (e) { errLog('감시 상태 남기기', e); } }   // PC별 감시 상태 → .history/agents(2026-11-19)
   }, 1000);
 };

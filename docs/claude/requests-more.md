@@ -36,7 +36,7 @@
   - 감시가 `RESUME R0xx`를 출력하면(겹침이 풀림) 그 요청을 「진행 중」으로 바꾸고, 프레임을 **지금 상태로 다시 읽은 뒤** 위 순서대로 처리한다. 다른 작업자가 이미 같은 수정을 했으면 「완료」로 두고 note에 그렇게 적는다.
   - Workbench는 같은 프레임에 다른 작업자의 「대기 · 진행 중」 요청이 있으면 등록할 때 경고한다(막지는 않는다).
 - 요청 없이 채팅으로 Figma를 고쳤으면 작업 이력을 직접 남긴다: `POST /api/history {action:'add', by:작업자 이름, doneBy:'Claude', title, text, fileKey, fileName, page, frame, nodeId}` (캡처를 먼저 갱신하면 함께 남는다).
-  - 사용량도 직접 남긴다: `POST /api/usage {from:{작업 시작 시각 ISO}, by:{작업자}, title:{작업 내용}, team, frame?, nodeId?, fileKey?, fileName?, page?}`(UTF-8 파일로 curl, 윈도우 · 맥 같음). 시작 시각은 그 작업을 부탁받은 사용자 메시지 시각이다.
+  - 사용량은 남기지 않는다(2026-11-26부터 서버가 대화 기록에서 자동으로 남긴다 — Figma AI Run에 영향을 준 차례만, `node/server/chatusage.js`). `POST /api/usage`를 부르면 두 번 세어진다.
 - 요청 데이터: `workbench/edit_requests.json` (`items[]`: id, nodeId, frame, page, fileKey, fileName, editable, type, priority, layout, text, status, note, author, images, ask, replies). 작업 기록 목록은 `GET /api/worklogs?team=`(머리말 · 지금 단계 · `다음:` 줄)
 
 ## 수정할 부분 표시 · 첨부 · 레이아웃
