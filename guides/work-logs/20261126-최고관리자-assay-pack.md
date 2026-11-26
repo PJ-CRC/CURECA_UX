@@ -227,12 +227,12 @@ started: 2026-11-26
 
 | 번호 (Q) | 질문 | 관련된 곳 (CID · 디스크립션 번호) | 논의 대상 | T · L 같음 | 풀린 날 · 어떻게 |
 | --- | --- | --- | --- | --- | --- |
-| Q1 | Master 파일 Active 변경 버튼 모습 (TI-STN-08 #4-1 「상세에 변경 버튼 미노출」 ↔ TI-STN-08-P #3 「[Active] · [Inactive] 버튼 비활성」, POL-TST-008 규칙 6은 바꿀 수 없음만) | TI-STN-08 #4-1 · TI-STN-08-P #3 | | T만 (L-IOS는 보기만) | |
-| Q2 | Confirm_029 [Activate] 뒤 Toast 노출 여부 · 문구 (카탈로그 버튼 동작 「& Toast」, Toast 카탈로그에 없음) | TI-STN-08-P #4 | | T만 | |
-| Q3 | 파일을 고른 채 Import file Popup을 [X] · ESC · [Cancel]로 닫을 때 다시 묻는지 (Alert 카탈로그에 없음) | TI-STN-08-01 화면 노출 경로 · #3 | | T만 | |
-| Q4 | Active · Inactive를 바꾸고 [Save] 없이 [닫기] · 다른 Row [Details]를 누를 때 다시 묻는지 (Alert 카탈로그에 없음) | TI-STN-08-P #2-1 · #3-1 | | T만 | |
-| Q6 | Status Base에 맞는 Variant가 없어 Active는 Navy, Inactive는 Gray로 그림 (기존 Active 태그 검정, Active · Inactive는 상태값 표에 없음) | TI-STN-08 #4-1 · LI-STN-08 #4-1 (상세 패널 · 케이스의 Active 태그도 같음) | | 같음 | |
-| Q5 | L-IOS 등록된 파일 없음 · 검색 결과 없음 문구 ([LI-STN-08 / 세부정의]가 As Is 페이지에 없음, T-IOS 「Click Import to add a file.」은 [Import]가 없는 L-IOS에 맞지 않음) | LI-STN-08 #1-4 | | 다름 | |
+| Q1 | Master 파일 Active 변경 버튼 모습 (TI-STN-08 #4-1 「상세에 변경 버튼 미노출」 ↔ TI-STN-08-P #3 「[Active] · [Inactive] 버튼 비활성」, POL-TST-008 규칙 6은 바꿀 수 없음만) | TI-STN-08 #4-1 · TI-STN-08-P #3 | | T만 (L-IOS는 보기만) | 2026-11-26 · 상세에 버튼 미노출 (TI-STN-08 #4-1대로, C12. Figma Case 1-1은 이미 버튼 없음) |
+| Q2 | Confirm_029 [Activate] 뒤 Toast 노출 여부 · 문구 (카탈로그 버튼 동작 「& Toast」, Toast 카탈로그에 없음) | TI-STN-08-P #4 | | T만 | 2026-11-26 · Toast 노출 안 함, Confirm만 (C13) |
+| Q3 | 파일을 고른 채 Import file Popup을 [X] · ESC · [Cancel]로 닫을 때 다시 묻는지 (Alert 카탈로그에 없음) | TI-STN-08-01 화면 노출 경로 · #3 | | T만 | 2026-11-26 · Confirm으로 다시 물음, Confirm_031 카탈로그에 추가 (C14) |
+| Q4 | Active · Inactive를 바꾸고 [Save] 없이 [닫기] · 다른 Row [Details]를 누를 때 다시 묻는지 (Alert 카탈로그에 없음) | TI-STN-08-P #2-1 · #3-1 | | T만 | 2026-11-26 · 묻지 않고 바꾼 값 버림 (C15) |
+| Q6 | Status Base에 맞는 Variant가 없어 Active는 Navy, Inactive는 Gray로 그림 (기존 Active 태그 검정, Active · Inactive는 상태값 표에 없음) | TI-STN-08 #4-1 · LI-STN-08 #4-1 (상세 패널 · 케이스의 Active 태그도 같음) | | 같음 | 2026-11-26 · 기존 스타일대로: 기존 원본 태그(Active #1F2329 · Inactive #E9ECEF)로 바꿔 그림 (기존과 같아져 변경 확인 없음, "컴포넌트 없이 그린 요소") |
+| Q5 | L-IOS 등록된 파일 없음 · 검색 결과 없음 문구 ([LI-STN-08 / 세부정의]가 As Is 페이지에 없음, T-IOS 「Click Import to add a file.」은 [Import]가 없는 L-IOS에 맞지 않음) | LI-STN-08 #1-4 | | 다름 | 2026-11-26 · 등록된 파일 없음은 「No files found.」만, 검색 결과 없음은 T-IOS(TI-STN-08 Case 1-2)와 같게 「No results found.」 (C16) |
 
 ## 변경 확인
 
