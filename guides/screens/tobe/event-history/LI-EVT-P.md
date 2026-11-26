@@ -1,120 +1,216 @@
 ---
 cid: LI-EVT-P
 pair_cid: TI-EVT-P
-tl_relation:   # 동일 | 권한 차이 | 기능 추가 | 단독
+tl_relation: 기능 추가
 title: Event History
-path:
-type:          # Page | Popup | Tab
-version:       # X.Y.ZZ. 케이스 1 · 2는 4단계 UX 확정 때 요청자가 정한 값(그 전까지 케이스 1은 기존 Ver, 케이스 2는 비움), 케이스 3은 기존 화면의 Ver 그대로 (reference-rules/description.md 7절 "화면 정보에 적는 값")
-date:          # YYYY.MM.DD. 케이스 3은 기존 화면의 Date 그대로, 케이스 1 · 2는 작성일
-author:        # 케이스 3은 기존 화면 담당자 그대로, 케이스 1 · 2는 요청자
-client_mode: [] # L-IOS 화면만. user_type과 함께 원본은 권한 · 모드 표(policy/permission-matrix.csv · client-mode-matrix.csv)이고 표 값을 적음(줄 찾는 법은 flow/2-evidence.md "경로 분기 기준마다 읽는 것"의 케이스 3 줄). 표에 없으면 질문 대기로 두고 4단계 답을 적음. 표는 5단계에서 맞춤
-user_type: []
-policies: []   # 정책 ID. 작업 완료 전인 결정으로 그렸으면 "POL-EQP-004 · DS-0012"처럼 논의 대상 ID를 함께 적고, 5단계(완료) 반영 뒤 뗌
-basis:         # 화면 기준: 시각 · history 커밋 (reference-rules/work-log.md "작업 기준")
-basis_versions: # 문서마다 basis 시각 전에 마지막으로 바뀐 때 (rules · policy · glossary · screens · common_ux 모두 @날짜)
-source: tobe   # To-Be 화면 MD. 작업방에 그렸는지는 머리말 figma로 가름
-figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1257   # 작업방의 이 CID 섹션 링크
+path: Event History
+type: Popup
+version: 2.1.01
+date: 2026.08.07
+author: 서보경
+client_mode: [Main Mode, Console Mode, MS Mode]
+user_type: [Service, Admin, User]
+policies: [POL-EVT-001, POL-EVT-002, POL-COM-006]
+basis:
+basis_versions:
+source: tobe
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1257
 ---
 # LI-EVT-P Event History
 
-- T/L 차이:
-- 호출하는 화면: [CID] 화면 이름 (어디서 → 어디로)
-- 호출되는 곳: (공통 Popup이면 호출 위치 목록)
+- T/L 차이: L-IOS에만 4 Status Toggle(상태 변경), 5 [Mark all as Closed] 버튼, 6 [Export]의 저장 위치 선택 Popup이 있음. 목록의 Module 이름에 `(1)`이 붙음
+- 호출하는 화면: [LI-EVT-01-P] Event Detail (목록에서 Event 클릭 → 상세로 전환), Confirm_003 (5 [Mark all as Closed]), COMM-5-m(2/4) Import/Export Popup (6 [Export])
+- 호출되는 곳: 상단 Bar `Event` 아이콘, 각 화면의 Event 아이콘
 - 반영 대기 항목: `pending/open.md`에서 이 CID로 찾음
 - 화면 변경 이력: `screen-history.md`의 이 CID 줄
 
 ## 디스크립션
 
-<!-- 원본입니다. Figma 패널에 그대로 들어갑니다. 쓰는 법은 reference-rules/description.md, 작성예시문서는 examples/description-samples.md.
-     바뀐 글 표시(빨간 글씨 · 빨간 취소선)는 reference-rules/description.md 7절 "바뀐 글 표시"의 HTML 태그로 적습니다.
-     코드(화면 · 케이스 · Alert · Confirm · Toast · Common UX · 정책)는 화면 MD에 색을 적지 않습니다. Figma 패널에서만 파란색으로 칠합니다(reference-rules/description.md 7절 "참고 코드 표시").
-     아래는 모양 예시입니다. 실제 내용으로 바꿔 씁니다. -->
-
-**0  ○○ 화면**
+**0  Event History 화면**
 - 정의
-  - 내용
+  - <span style="color:red">CURECA</span> <span style="color:red">Instrument</span> 또는 <span style="color:red">System</span>에서 이상 상태 발생 시, Error 및 Warning 메시지를 조회하고 관리하는 메뉴
+  - Event 메뉴는 <span style="color:red">Popup</span>으로 제공
 - 동작
-  - 내용
-- User Type : 
-- L-IOS Client Mode : (L-IOS 화면에만 씀)
+  - 상단 Bar의 Event 아이콘 클릭 시 진입
+  - 각 화면(페이지)에 <span style="color:red">노출</span>된 Event 아이콘을 통해서도 동일하게 진입 가능
+- User Type : Service, Admin, User
+- L-IOS Client Mode : Main Mode, Console Mode, MS Mode
 
-**1  ○○ 영역**
+**1  검색 영역**
 - 정의
-  - 내용
-- 공통 UX 참고 : 
+  - 입력 및 선택 후 [Search] 버튼 클릭 시, 해당되는 값 노출
+- Event ID, Code(Text Input)
+  - 정확히 일치하는 값만 노출
+- Type(Dropdown)
+  - Default : <span style="color:red">All</span>
+  - 드롭다운 리스트 항목 : ~~All, Instrument, Consumable, Reagent, Waste Bin/bottle, System~~
+  - All, Instrument, Inventory, Sample, System
+  - 정렬 기준 : 위에 적힌 순서대로 노출
+- Module(Dropdown)
+  - <span style="color:red">Module</span> 유형으로 검색하는 필터
+  - Default : All
+  - 드롭다운 리스트 항목 : All, Sample Storage, Consumable Storage, Sample Pre-treatment, High-throughput Extraction, Flexible Extraction, PCR Setup, Plate Sealing, Universal PCR
+  - 정렬 기준 : 위에 적힌 순서대로 노출
+- Level(Dropdown)
+  - Default : All
+  - 드롭다운 리스트 항목 : All, Error, Warning
+- <span style="color:red">Status</span>(Dropdown)
+  - Default : All
+  - 드롭다운 리스트 항목 : All, Open, Closed
+- 기간 검색(Period)
+  - Default : 시작일-7일 전 ~ 종료일-Today
+  - 오늘 기준 미래일자는 선택 불가
+  - 기간 선택 정책 : 최대 1년
+- [Reset] 버튼
+  - 클릭 시, 모두 Default 값으로 초기화
+- 공통 UX 참고 : COMM-5-p, COMM-5-d
 
-**1-1  항목 이름(Dropdown)**
-- 기능 : 
-- Default : 
-- 드롭다운 리스트 항목
-  - 내용
-- 공통 UX 참고 : 
+**2  목록 요약**
+- 노출 항목
+  - Total Event : 목록에 노출된 총 Event 개수 노출
+  - Open : 목록에 노출된 전체 리스트에서 Status가 Open인 Event 개수의 합 노출
+- 정책 참고 : POL-EVT-001
 
-**2  ○○ 리스트**
-- 정의 : 
+**3  목록**
+- 정의 : 검색 조건에 해당하는 Event 리스트
 - 정렬
-  - Default : 
-- 컬럼 항목
-  - 컬럼 이름 : 무슨 값인지 / 표기 / 값이 없을 때
+  - Default : Occurred Date/Time 최신순
+  - <span style="color:red">정렬 가능한 컬럼 항목 : Occurred Date/Time</span>
+- <span style="color:red">컬럼 항목</span>
+  - Type : ~~Instrument, Consumable, Reagent, Waste Bin/bottle, System~~
+  - Instrument, Inventory, Sample, System
+  - <span style="color:red">Code : Event Code</span>
+  - <span style="color:red">Description : Event Code에 따라 정의된 Event 내용</span>
+  - <span style="color:red">Module : Event가 발생한 Module / Instrument와 무관한 Event는 '-' 노출</span>
+  - <span style="color:red">Unit : Event가 발생한 Unit / Module 단위 Event 또는 Instrument와 무관한 Event는 '-' 노출</span>
+  - <span style="color:red">Level : Error, Warning</span>
+  - <span style="color:red">Occurred Date/Time : Event 발생 일시 / 표기 : YYYY-MM-DD hh:mm</span>
+  - <span style="color:red">Status : Open, Closed (4 Toggle로 노출)</span>
 - 동작
-  - 내용
-- 공통 UX 참고 : 
+  - 한 페이지에 최대 10개 노출
+  - 최초 진입 시, 상단 기간 검색의 Default 기간에 맞춰 오늘 기준 7일 전까지의 데이터만 노출
+  - 텍스트는 1줄까지만 노출 / 데이터 값이 영역을 초과할 경우 '…'으로 노출
+  - '…' 노출 영역에 마우스 오버 시 전체 데이터(추가 정보)를 <span style="color:red">Tooltip</span>으로 노출
+- 케이스 참고 : LI-EVT-P/Case > Case 1
+- 공통 UX 참고 : COMM-5-g, COMM-5-r, COMM-5-v
+- 정책 참고 : POL-EVT-001
 
-**3  [버튼 이름] 버튼**
+**4  Status - Open/Closed Toggle**
 - 정의
-  - 내용
+  - Event의 Status 값을 변경하는 기능
 - 활성화 조건
-  - 내용
+  - <span style="color:red">L-IOS Client Mode가 Main Mode일 때 활성화</span>
+  - 단, 활성화되지 않는 Mode(<span style="color:red">Console Mode, MS Mode</span>)일 경우 View 모드로 노출
 - 동작
-  - 내용
-- 정책 참고 : 
+  - Event 최초 생성 시, <span style="color:red">Open</span>으로 등록되며 클릭 시 Closed로 변경
+  - 재클릭 시, Closed에서 <span style="color:red">Open</span>으로 변경 가능
+- 공통 UX 참고 : COMM-5-q
+- 정책 참고 : <span style="color:red">POL-EVT-002</span>
+
+**5  [Mark all as Closed] 버튼**
+- 정의
+  - <span style="color:red">지금 검색 조건으로 불러온 목록의 모든 페이지에서 Status가 Open인 Event 전체</span>를 Closed로 변경하는 기능
+- 동작
+  - 클릭 시, Confirm 노출 : Confirm_003
+- 정책 참고 : POL-EVT-002
+
+**6  [Export] 버튼**
+- 동작
+  - 클릭 시, 경로 저장 또는 USB 저장을 선택하는 Popup 노출 : <span style="color:red">COMM-5-m(2/4)</span>
+  - <span style="color:red">~~T-IOS 경우 클릭 시, 윈도우 탐색기가 호출되며, 원하는 경로를 지정할 수 있음~~</span>
+- 대상 범위 : 목록에 노출된 전체 리스트
+- 저장 항목 : Detail에서 제공되는 모든 내용
+- 형식 : <span style="color:red">.csv</span>
+- 정책 참고 : POL-COM-006
+
+**7  닫기**
+- 동작
+  - 클릭 시, <span style="color:red">Popup</span> 닫힘
+
+**8  <span style="color:red">페이지네이션</span>**
+- <span style="color:red">Pagination 유형 : Type 1 Number</span>
+- <span style="color:red">공통 UX 참고 : COMM-5-l</span>
 
 ## 케이스
 
-<!-- 케이스 화면의 원본입니다 (flow/3-design.md 공통 5 "케이스 화면", 작성예시문서 examples/case-samples.md).
-     근거는 셋 중 하나: 기존 원본 / 디스크립션 조건 / 요청자. 어느 것도 아니면 올리지 않고 질문 대기에 둡니다.
-     종류(디스크립션 조건일 때): 1 상태별 데이터 노출, 2 올리거나 눌렀을 때 뜨는 것, 3 유형 · 대상에 따라 노출 항목 구성이 다른 것,
-     4 개수가 기준을 넘어 요소가 생기거나 배치가 바뀌는 것, 5 처음 들어왔거나 데이터가 없을 때, 6 한 번의 조작으로 여러 단계를 거쳐 바뀌는 것.
-     Case 번호는 바꾸지 않고, 지워도 다시 쓰지 않습니다. 케이스가 없으면 "없음"이라고 적습니다.
-     케이스 블록: Case마다 하나씩 둡니다. Figma 케이스 프레임은 이 블록을 그대로 옮깁니다.
-     ### Case n. 제목 = 초록 띠, 그 아래 머리 줄 세 줄 = 디스크립션 번호 · 근거 · 종류(근거가 디스크립션 조건이 아니면 `-`), #### n-1. 조건 = 노란 띠, 그 아래 글머리 기호 목록 = 띠 아래 설명 글.
-     케이스 3에서 기존 원본 케이스 프레임에 패널이 있으면, 패널의 번호마다 `번호. 내용` 줄을 그 번호 표시가 달린 노란 띠의 설명에 더합니다.
-     지운 케이스는 블록을 지우지 않고 머리 줄 아래에 `- 지움 (날짜, 이유)` 줄을 더합니다. -->
+### Case 1. 목록의 텍스트 영역의 '...' 줄임된 경우, 마우스 hover시, 툴팁박스로 전체 내용 제공
 
-### Case 1. 제목
+- 디스크립션 번호 : 3
+- 근거 (기존 원본 / 디스크립션 조건 / 요청자) : 기존 원본
+- 종류 (1 ~ 6, 근거가 디스크립션 조건일 때) : -
 
-- 디스크립션 번호 :
-- 근거 (기존 원본 / 디스크립션 조건 / 요청자) :
-- 종류 (1 ~ 6, 근거가 디스크립션 조건일 때) :
-
-#### 1-1. 조건
-
-- 설명
+#### 1-1. 목록 텍스트가 '...'로 줄임된 경우 마우스 hover
 
 ## Alert · Confirm · Toast
 
-<!-- Alert · Confirm · Toast를 모두 적습니다. 코드는 카탈로그(alert/)의 ID. 카탈로그에 없으면 3단계에서 카탈로그에 새 줄을 더해 그 코드를 씁니다(flow/3-design.md 공통 1의 4, 케이스 3의 Toast는 flow/3-design-case3.md 3-2). Toast는 버튼 동작을 `-`로 둡니다. -->
-
 | 디스크립션 번호 | 종류 (Alert / Confirm / Toast) | 코드 | 언제 | 버튼 동작 |
 | --- | --- | --- | --- | --- |
+| 5 | Confirm | Confirm_003 | [Mark all as Closed] 버튼 클릭 시 | OK 선택 시 → Confirm이 닫힌 후, 목록 새로고침 / Cancel 선택 시 → 해당 Confirm 닫힘, 기존 작업 화면 유지 |
 
 ## 화면 예시 글자
 
-<!-- 그릴 때 화면에 넣는 예시 값. 상태값 · 단위 · 품목 · 수치는 기준데이터(`glossary/`의 csv) · 정책 기준. 기준이 없으면 만들지 않고 "질문 대기"에 올립니다.
-     디스크립션 번호는 그 요소의 디스크립션 번호. 번호가 없는 요소는 `-`.
-     목록 · 표는 한 페이지 최대 노출 개수만큼 행을 채웁니다. 줄였으면 이유를 적습니다.
-     목록 · 표의 여러 행, 케이스 조각의 값, 지어 쓴 값을 적는 법은 flow/3-design.md 공통 1의 5. -->
-
 | 디스크립션 번호 | 요소 | 예시 값 | 기준 |
 | --- | --- | --- | --- |
+| - | 제목 | Event History | 기존 원본 `3543:46812` |
+| 1 | Event ID, Code 입력 칸 | Event ID, Code (placeholder) | 기존 원본 `3543:47039` |
+| 1 | Type · Module · Level · Status | All · All · All · All | 기존 원본 `3543:47037` |
+| 1 | 기간 | 2026-03-11 ~ 2026-03-17 | 기존 원본 `3543:47055` |
+| 2 | Items · Open | 1,112 · 20 | 기존 원본 `3543:46815` (OPEN → Open, `glossary/status-values.csv` Event Status) |
+| 3 | 목록 | 기존 원본 10행 그대로 / Module `Sample Storage (1)` · `High-throughput Extraction (1)` · `Flexible Extraction (1)` · `PCR Setup (1)` · `Universal PCR (1)` (이름과 번호 띄어 씀) / 3행 Unit `Sample Processing (Upper)` / 7행 Unit `CFX96 (1)` / 1 ~ 10행 Occurred Date/Time `2025-09-29 15:57` | 기존 원본 `3543:46825`, `glossary/glossary.md` · `module-units.csv`, COMM-4-a(1/4) 일시 표기 |
+| 3 | Level | Error · Warning (기존 원본 행 그대로) | `glossary/status-values.csv` Event Level (Status/Event Level) |
+| 4 | Status Toggle | 기존 원본 행 그대로 (Open 7행 · Closed 3행) | 기존 원본 `3543:46825` |
+| 8 | 페이지 | 1 ~ 10 (2 선택) | 기존 원본 `3543:46821` |
+| Case 1-1 | Tooltip | Consumables are low. Please check and refill. Consumables are low. Please check and refill. Consumables are low. Please check and refill. | 기존 원본 `3543:47082` (refill.Consumables → refill. Consumables) |
 
 ## 화면 표기 글자
 
-<!-- 화면에 표기되는 영어 글자와 그 글자의 언어셋 Language ID를 적습니다. 지금 화면에 있는 글자만 둡니다(없어진 글자는 줄을 지움).
-     3단계에서 화면 MD를 쓸 때 함께 적고 화면을 고칠 때 같이 고칩니다(`flow/3-design.md` 공통 1의 9). Language ID는 4단계 절차 4번(UX 확정 뒤)에서 채웁니다. 번역과 이번 작업에서 바뀐 것(신규 · 변경 · 제거)은 표에 적지 않고 작업 기록 "언어셋" 절에 적습니다.
-     출처: 그 글자가 있는 곳. 화면(기획 프레임) / 디스크립션(디스크립션에 적힌 화면 표기 글자, 예: 드롭다운 리스트 항목 · Tooltip · 안내 문구) / 케이스(케이스 화면) 뒤에 위치를 붙입니다(예: `화면 1-1`, `디스크립션 1-2`, `케이스 Case 1-2`, 번호가 없으면 `화면 제목`처럼 위치 이름). 여러 곳이면 ` · `로 잇습니다. 출처는 글자를 찾아 고치고, 같은 영어 글자에 Language ID가 여럿일 때(버튼 · 제목 등 쓰임이 다름) 맞는 줄을 고르는 데 씁니다. 디스크립션의 설명 글과 GNB · LNB 같은 공통 영역의 글자는 적지 않습니다(공통 영역은 따로 관리, `background/todo.md` 5-3d). 숫자처럼 값이 들어가는 자리는 `{n}`으로 두고 한 줄로 적고, 출처에 그 값을 적습니다(예: `{n} items` · `화면 2-3 (n = 10 · 30 · 50 · 100)`, 언어셋 DB의 `{N} of {M} Items`와 같은 모양, 2026-11-25 서보경 정함).
-     Language ID: 언어셋 원본(language-set/db/)의 메뉴 파일 ID. 번역 전체는 이 ID로 원본에서 찾습니다. 원본에 아직 없는 글자는 비워 두고, 5단계에서 원본에 새 줄을 만들 때 채웁니다. 글자를 바꿀 때는 Language ID를 지우지 않고 둡니다(4단계가 이 ID로 언어셋 DB의 줄과 짝지어 변경을 가림). 바뀐 글자가 이미 언어셋에 있으면 5단계에서 그 ID로 바뀝니다(`language-set/README.md` "화면설계 흐름에서 반영하는 법"). -->
-
 | 화면 표기 글자 (영어) | 출처 | Language ID |
 | --- | --- | --- |
+| Event History | 화면 제목 | |
+| Event ID, Code | 화면 1 | |
+| Type | 화면 1 · 화면 3 | |
+| Module | 화면 1 · 화면 3 | |
+| Level | 화면 1 · 화면 3 | |
+| Status | 화면 1 · 화면 3 | |
+| All | 화면 1 · 디스크립션 1 | |
+| Instrument | 디스크립션 1 · 화면 3 | |
+| Inventory | 디스크립션 1 · 화면 3 | |
+| Sample | 디스크립션 1 | |
+| System | 디스크립션 1 | |
+| Sample Storage | 디스크립션 1 | |
+| Consumable Storage | 디스크립션 1 | |
+| Sample Pre-treatment | 디스크립션 1 | |
+| High-throughput Extraction | 디스크립션 1 | |
+| Flexible Extraction | 디스크립션 1 | |
+| PCR Setup | 디스크립션 1 | |
+| Plate Sealing | 디스크립션 1 | |
+| Universal PCR | 디스크립션 1 | |
+| Sample Storage (1) | 화면 3 | |
+| Consumable Storage (1) | 화면 3 | |
+| Sample Pre-treatment (1) | 화면 3 | |
+| High-throughput Extraction (1) | 화면 3 | |
+| Flexible Extraction (1) | 화면 3 | |
+| PCR Setup (1) | 화면 3 | |
+| Universal PCR (1) | 화면 3 | |
+| Error | 디스크립션 1 · 화면 3 | |
+| Warning | 디스크립션 1 · 화면 3 | |
+| Open | 디스크립션 1 · 화면 2 · 화면 4 | |
+| Closed | 디스크립션 1 · 화면 4 | |
+| Reset | 화면 1 | |
+| Search | 화면 1 | |
+| Items | 화면 2 | |
+| Export | 화면 6 | |
+| Mark all as Closed | 화면 5 | |
+| Code | 화면 3 | |
+| Description | 화면 3 | |
+| Unit | 화면 3 | |
+| Occurred Date/Time | 화면 3 | |
+| Inbound Trolley | 화면 3 | |
+| Outbound Trolley | 화면 3 | |
+| Trolley | 화면 3 | |
+| Sample Processing (Upper) | 화면 3 | |
+| Spin Tip Storage | 화면 3 | |
+| Buffer Cartridge Storage | 화면 3 | |
+| 300 μL Tip Storage (1) | 화면 3 | |
+| CFX96 (1) | 화면 3 | |
+| MB Tube Storage | 화면 3 | |
