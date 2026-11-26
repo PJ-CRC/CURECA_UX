@@ -380,7 +380,7 @@ started: 2026-11-25
 | 변경 | TI-EVT-01-P 화면 2 | | FlexibleExtraction → Flexible Extraction | - (고유명사, 공통 `미번역`) | 공통에 있음 (LID-COM-TRM-011) |
 | 변경 | TI-EVT-01-P · LI-EVT-01-P 화면 2 | | Starlet → STARlet | - (고유명사, 공통 `미번역`) | 공통에 있음 (LID-COM-TRM-027) |
 | 변경 | TI-EVT-P · LI-EVT-P 화면 3 | | Sample Processing → Sample Processing (Upper) | - (고유명사, 공통 `미번역`) | 공통에 있음 (LID-COM-TRM-022) |
-| 변경 | LI-EVT-01-P 케이스 Case 1-2 | | 0 /100자 → {n} /300자 | O | 비슷한 글자 `{n}/{max} Characters` (LID-EVT-035), 요청자 확인 15 답 기다림 |
+| 변경 | LI-EVT-01-P 케이스 Case 1-2 | | 0 /100자 → {n} /300자 | O | 있음 (LID-EVT-035 `{n}/{max} Characters` — 같은 글자로 봄, 요청자 확인 15) |
 | 신규 | TI-EVT-P · LI-EVT-P 디스크립션 3 | LID-STN-015 | No results found. | O | 있음 (setting-protocol 메뉴 파일) |
 | 제거 | TI-EVT-P · LI-EVT-P (asis 화면 글자 화면 2) | | OPEN | - (제거) | 없음 (LID-EVT-021은 이미 `삭제`) |
 | 제거 | TI-EVT-02-P · LI-EVT-02-P (asis 화면 글자 화면 3) | | Consumable | - (제거) | 없음 (Event History 줄 LID-EVT-006은 이미 `삭제`) |
@@ -409,7 +409,6 @@ started: 2026-11-25
 | English | Type | German | Portuguese | Spanish | Italian | French | 검증 상태 | 가장 긴 언어 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Resolution Notes | title | Lösungsnotizen | Notas de Resolução | Notas de Resolución | Note di Risoluzione | Notes de résolution | AI 번역 | ES · IT · FR (19) |
-| {n} /300자 | txt | {n}/300 Zeichen | {n}/300 caracteres | {n}/300 caracteres | {n}/300 caratteri | {n}/300 caractères | AI 번역 | PT · ES · FR (18) — 요청자 확인 15가 「같은 글자」면 지움 |
 
 ## 요청자 확인
 
@@ -428,7 +427,7 @@ started: 2026-11-25
 | 12 | 2026-11-26 | 4단계 절차 2 순서 5 (UX 확정 뒤 질의 14를 고쳐 다시 물음) | 사용자 확인 목록과 질의가 모두 풀렸습니다. 최종으로 UX 확정을 하시겠습니까? | 6개 화면 | | UX 확정 (2026-11-26, 서보경) |
 | 13 | 2026-11-26 | 4단계 절차 3 순서 2 | 기계 검사를 한 번 더 검토할까요? (마지막 검사 뒤 LI-EVT-P 1 · 3, LI-EVT-01-P 3 취소선 지움, C49. 추천 검토함) | LI-EVT-P · LI-EVT-01-P | | 하지 않음 (2026-11-26, 서보경) |
 | 14 | 2026-11-26 | 4단계 절차 4 순서 5 (언어셋 비슷한 글자) | 언어셋 DB에 비슷한 글자가 있습니다. 같은 글자로 볼까요? ① `Event Code:` · `Type:` · `Module:` · `Unit:` ↔ LID-EVT-041 · 004 · 012 · 013 (콜론만 다름) ② `Updated Date/Time. {date}` · `Updated by. {id}` ↔ LID-EVT-027 · 028 (마침표 · 값만 다름) ③ `300 μL Tip Storage (1)` · `CFX96 (1)` ↔ 공통 LID-COM-TRM-040 · 029 (번호만 다름) ④ T 목록 요약 `{n} items` · `of` ↔ LID-EVT-044 `{N} of {M} Items` ⑤ `{n} /300자` ↔ LID-EVT-035 `{n}/{max} Characters`. 추천 모두 같은 글자로 봄 | TI · LI-EVT-02-P, TI · LI-EVT-01-P, TI · LI-EVT-P, LI-EVT-01-P 케이스 | Language ID 비운 채 "새로 넣을 줄"에 임시로 둠 | 문구만 봄 — ① `:` 빼고 ② Updated Date/Time · Updated by 문구만 ③ 인덱스 (n) 빼고 ④ Items만. ⑤는 답 없음 → 15로 다시 물음 (2026-11-26, 서보경) |
-| 15 | 2026-11-26 | 4단계 절차 4 순서 5 (14의 ⑤) | `{n} /300자`를 LID-EVT-035 `{n}/{max} Characters`와 같은 글자로 볼지 (①~④는 모두 DB에 있다고 답함). 추천 같은 글자 | LI-EVT-01-P 케이스 Case 1-2 | Language ID 비운 채 "새로 넣을 줄"에 임시로 둠 | |
+| 15 | 2026-11-26 | 4단계 절차 4 순서 5 (14의 ⑤) | `{n} /300자`를 LID-EVT-035 `{n}/{max} Characters`와 같은 글자로 볼지 (①~④는 모두 DB에 있다고 답함). 추천 같은 글자 | LI-EVT-01-P 케이스 Case 1-2 | Language ID 비운 채 "새로 넣을 줄"에 임시로 둠 | 같은 글자 (2026-11-26, 서보경) → "언어셋" 그 줄 대조 `있음 (LID-EVT-035)`, "새로 넣을 줄"에서 지움 |
 | 4 | 2026-11-25 | 1단계 절차 5 질문 7 | 위 요건 목록과 흐름대로 진행할지 (2단계로 넘어갈지) | 요건 1 | | 그대로 진행 (2026-11-25, 서보경). 이어서 「1단계까지만 하고 2단계는 멈춤」 (2026-11-25, 서보경) |
 
 ## 이 작업의 논의 대상
