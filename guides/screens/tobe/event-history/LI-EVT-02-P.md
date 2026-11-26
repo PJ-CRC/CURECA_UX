@@ -3,7 +3,7 @@ cid: LI-EVT-02-P
 pair_cid: TI-EVT-02-P
 tl_relation: 동일
 title: Event Message
-path: Event History > Event Message
+path: Event Message
 type: Popup
 version: 2.1.14
 date: 2026.10.26
@@ -119,7 +119,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 | 4 | Description | GANTRY Well Plate Expansion Operation Time Out Error | 기존 원본 |
 | 5 | Effect | Failed to transfer Consumable to next Module / Failed to unload consumable from STARlet | 기존 원본 |
 | 6 | Recommended Action | Check GANTRY Well Plate Expansion Cylinder | 기존 원본 |
-| 7 | Module · Unit | High-throughput Extraction (1) · M9600 | 기존 원본, `glossary/glossary.md` (이름과 번호 띄어 씀) |
+| 7 | Module · Unit | High-throughput Extraction · M9600 | 기존 원본, `glossary/glossary.md` (이름과 번호 띄어 씀), Q4 답 (Module 1대면 번호 표기 안 함) |
 | 11 | 메시지 개수 | 1/20 | 기존 원본 |
 
 ## 화면 표기 글자
@@ -141,7 +141,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 | Recommended Action | 화면 6 | |
 | Module: | 화면 7 | |
 | Unit: | 화면 7 | |
-| High-throughput Extraction (1) | 화면 7 | |
+| High-throughput Extraction | 화면 7 | |
 | M9600 | 화면 7 | |
 | Close | 화면 8 | |
 | View Details | 화면 9 | |
