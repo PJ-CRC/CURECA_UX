@@ -29,7 +29,7 @@ started: 2026-11-26
 | 4. 수정 · 확인 | | | |
 | 5. 완료 | | | |
 
-이어서 작업할 곳: 3단계 · 절차 1 화면별 작업 줄 만듦, 절차 2 순서 1(흐름 2: 화면 MD 다섯 개를 asis에서 tobe로 새로 씀)부터 할 차례 (다시 읽을 곳: 3단계 flow/3-design.md 절차 1 "읽을 것" · 공통 1 · flow/3-design-case3.md 3-2 / 작업 기록 "읽을 것" 1의 절)
+이어서 작업할 곳: 3단계 · 흐름 2 화면 MD TI-STN-08 · LI-STN-08 씀(C4 ~ C6 더함), TI-STN-08-P · LI-STN-08-P · TI-STN-08-01 화면 MD 쓸 차례 (다시 읽을 곳: 3단계 flow/3-design.md 절차 1 "읽을 것" · 공통 1 · flow/3-design-case3.md 3-2 / 작업 기록 "읽을 것" 1의 절)
 
 ## 요청
 
@@ -208,6 +208,9 @@ started: 2026-11-26
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | C1 | [Delete] 확인 Confirm 제목 「Delete the selected file?」 | Confirm_026 제목 「Delete the selected files?」로 | TI-STN-08-P #4 | (alert-catalog.csv Confirm_026) | T만 | O | |
 | C2 | [Delete] 뒤 Toast 「The file has been deleted.」 | Toast_001 「The selected files have been deleted.」로 | TI-STN-08-P #4 | (toast-catalog.csv Toast_001, Confirm_026 버튼 동작) | T만 | O | |
+| C4 | 노출 개수 Dropdown (10 · 30 · 50 · 100 items) | 노출 개수 Dropdown 지움, 10 items 고정 (Common UX Basic Table: L-IOS 노출 개수 고정) | LI-STN-08 #2 | COMM-5-g | L만 | O | |
+| C5 | Pagination 「COMM-5-i 정의 참고 (10개 단위)」 | Pagination 유형 Type 1 Number를 적음 (화면에 보이는 번호 페이지) | TI-STN-08 #5 · LI-STN-08 #5 | 기존 화면 · COMM-5-l | 같음 | - | 맞음 (기존 화면, 2026-11-26) |
+| C6 | 정렬 「등록 일시 최신순」만 | 정렬 가능한 컬럼 항목 Active를 적음 (화면 Active 머리의 정렬 아이콘) | TI-STN-08 #4 · LI-STN-08 #4 | 기존 화면 · COMM-5-r | 같음 | - | 맞음 (기존 화면, 2026-11-26) |
 | C3 | Confirm_029 · 030 발생 조건 (Alert 카탈로그 기존 조건) | DS-0012 결정대로 File Details에서 Active · Inactive를 바꾸고 [Save]를 누를 때 Confirm_029 · 030을 띄움 (다른 작업의 결정을 따름, 멈춘 20261125-최고관리자-assay-pack에서 이어받음, 이 작업 5단계 완료 때 카탈로그 반영 전) | TI-STN-08-P #4 | DS-0012 | T만 | O | |
 
 ## 검토 질의
