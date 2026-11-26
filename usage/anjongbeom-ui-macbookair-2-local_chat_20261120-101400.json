@@ -1,0 +1,31 @@
+{
+  "id": "anjongbeom-ui-macbookair-2-local_chat_20261120-101400",
+  "kind": "work",
+  "chat": "figma",
+  "reqId": "",
+  "reqType": "",
+  "team": "stagora",
+  "at": "2026-11-20T10:14:00+09:00",
+  "from": "2026-11-19T17:07:05+09:00",
+  "by": "안종범",
+  "doneBy": "Claude",
+  "pc": "anjongbeom-ui-MacBookAir-2.local",
+  "fileKey": "cDjaemHjetS7RcAHRUIMY5",
+  "fileName": "",
+  "page": "",
+  "frame": "",
+  "nodeId": "",
+  "text": "채팅: 시안 그려줘",
+  "turns": 6,
+  "models": {
+    "claude-opus-5-5": 58,
+    "<synthetic>": 1
+  },
+  "calls": 59,
+  "input": 130,
+  "cacheWrite": 260154,
+  "cacheRead": 9788427,
+  "output": 58413,
+  "total": 10107124,
+  "usd": 5.2077
+}
