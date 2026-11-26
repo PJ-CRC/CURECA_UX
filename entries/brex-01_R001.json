@@ -2,11 +2,11 @@
   "id": "brex-01_R001",
   "kind": "request",
   "team": "cureca",
-  "status": "보류",
-  "at": "2026-11-26T16:12:08+09:00",
+  "status": "대기",
+  "at": "2026-11-26T16:13:08+09:00",
   "createdAt": "2026-11-25T21:16:32+09:00",
   "by": "서보경",
-  "doneBy": "Claude",
+  "doneBy": "서보경",
   "pc": "BREX_01",
   "reqId": "R001",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,7 +17,7 @@
   "type": "요청",
   "layout": "",
   "text": "Event History 화면 옮겨줘\n\n기존 화면: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-45275&t=8ZUolJfFqEx5iunS-1\n옮길 페이지: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3577-18413&t=8ZUolJfFqEx5iunS-1",
-  "note": "케이스 3 · 4단계 · 20261125-서보경-event-history — 검토 질의 7(LI-EVT-P/Case 제거)을 반영했습니다. UX 확정 여부를 다시 여쭙니다.\n\n**고친 곳**\n- LI-EVT-P: 케이스 프레임 `LI-EVT-P/Case`(Case 1 Tooltip) 지움 → 섹션 높이를 기획 프레임에 맞춤 (C43)\n- LI-EVT-P 디스크립션 3: 「케이스 참고 : LI-EVT-P/Case > Case 1」 줄 빨간 취소선 (TI-EVT-P C42와 같은 방식)\n- 화면 MD LI-EVT-P: 케이스 절 「없음」, 화면 예시 글자 Case 1-1 줄 지움\n\n**[확인 필요]**\n- C1 LI-EVT-P · TI-EVT-P는 디스크립션 상자가 길어 기획 프레임 아래쪽(Dim 아래)이 흰 바탕으로 남아 있습니다. 세로로도 Dim을 채우길 원하시면 알려 주세요(지금은 질의 4 · 5대로 너비 · 세로 가운데만 맞춤).\n\n**[질문 대기]**\n- Q1 사용자 확인 목록과 질의가 모두 풀렸습니다. 최종으로 UX 확정을 하시겠습니까?\n\n규칙 점검: 4단계 절차 2(화면 MD → Figma, 짝 화면 확인 — TI-EVT-P는 질의 6으로 이미 지움) · 「하지 않는 것」 지킴. 기계 검사는 하지 않음(절차 공통 「기계 검사 시점」)\n작업 기준: basis 2026-11-25 21:17 · 작업규칙 rules @수정본 · 정책서 policy · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 glossary · 화면 정의서 screens",
+  "note": "",
   "shot": "",
   "shots": [],
   "images": [],
@@ -28,18 +28,7 @@
     }
   ],
   "marks": [],
-  "ask": {
-    "q": "사용자 확인 목록과 질의가 모두 풀렸습니다. 최종으로 UX 확정을 하시겠습니까?",
-    "options": [
-      {
-        "label": "UX 확정"
-      },
-      {
-        "label": "아직 (검토 더 남음)"
-      }
-    ],
-    "free": true
-  },
+  "ask": null,
   "replies": [
     {
       "at": "2026-11-25T21:20:57+09:00",
@@ -148,6 +137,12 @@
       "by": "서보경",
       "q": "사용자 확인 목록과 질의가 모두 풀렸습니다. 최종으로 UX 확정을 하시겠습니까?",
       "text": "LI-EVT-P/Case 여기도 제거해줘"
+    },
+    {
+      "at": "2026-11-26T16:13:08+09:00",
+      "by": "서보경",
+      "q": "사용자 확인 목록과 질의가 모두 풀렸습니다. 최종으로 UX 확정을 하시겠습니까?",
+      "text": "C1. -> 아니야 세로는 그냥 두는거야."
     }
   ],
   "raws": [
