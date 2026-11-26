@@ -323,7 +323,7 @@ function details(out) {
       const r = items.find((x) => x.id === id); if (!r) continue;
       const o = { id: r.id, team: r.team || 'cureca', status: r.status, priority: r.priority, fileKey: r.fileKey, fileName: r.fileName, page: r.page, nodeId: r.nodeId, frame: r.frame, editable: r.editable,
         author: r.author, createdAt: r.createdAt, text: cut(r.text, 3000), layout: r.layout || undefined, case: r.case || undefined, work: r.work || undefined, from: r.from || undefined,
-        images: (r.images || []).length ? r.images.map((m) => ({ file: m.file, name: m.name })) : undefined,
+        images: (r.images || []).length ? r.images.map((m) => Object.assign({ file: m.file, name: m.name }, m.text ? { text: m.text } : {})) : undefined,   // text: Office 첨부에서 서버가 뽑아 둔 글(이것을 읽는다)
         marks: (r.marks || []).length ? r.marks : undefined, shotAt: r.shotAt || undefined, fixRows: (r.fixRows || []).length ? r.fixRows : undefined,
         replies: (r.replies || []).length ? r.replies.slice(-3).map((x) => ({ at: x.at, by: x.by, q: cut(x.q, 400), text: cut(x.text, 1500) })) : undefined,
         note: r.status === '대기' && r.note ? cut(r.note, 1500) : undefined };
