@@ -2,11 +2,11 @@
   "id": "brex-06_R003",
   "kind": "request",
   "team": "cureca",
-  "status": "보류",
-  "at": "2026-11-26T09:13:02+09:00",
+  "status": "대기",
+  "at": "2026-11-26T09:14:21+09:00",
   "createdAt": "2026-11-26T09:09:31+09:00",
   "by": "최고관리자",
-  "doneBy": "Claude",
+  "doneBy": "최고관리자",
   "pc": "BREX_06",
   "reqId": "R003",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,30 +17,25 @@
   "type": "요청",
   "layout": "",
   "text": "https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3288-235028&t=GdYCaPho44GgAu5i-1 여기가 AS IS\nAssay Pack Setting 화면 다시 그려줘",
-  "note": "케이스 3 · 1단계 · 20261126-최고관리자-assay-pack - [1단계] 요건 목록을 확인해 주세요 (요청 R003, 지나가는 단계 1 → 2 → 3 → 4 → 5)\n- 요건 1: Assay Pack Setting 화면을 As Is 기준으로 To Be 페이지에 처음부터 다시 그림 · 경로 분기 기준 8 옮겨 다시 그림 (케이스 3) · UI 작업 대상 아님\n- 대상 화면: Assay Pack Setting (TI-STN-08) O · (LI-STN-08) O 짝 화면 함께 · Assay Pack File Details (TI-STN-08-P) O · (LI-STN-08-P) O 짝 화면 함께 · Import file 팝업 (TI-STN-08-01, IA에 없음) 미정 → 질문 2\n- 찾았지만 대상 아님: 없음 / 영향 화면: 없음 (STN-08이 나오는 화면 MD는 이 다섯뿐, 2단계에서 정책으로 다시 찾음)\n- 대상 화면의 반영 대기 항목: 대기 항목 없음 (TI-STN-08-P-R01 · TI-STN-08-R02는 기존 작업이 작업 중 → 질문 4)\n답해 주실 것 (위 내용에서 바꿀 곳이 있으면 말씀해 주세요)\n2. Import file 팝업 (TI-STN-08-01)도 이번 작업에 넣을까요? → **넣음** / 넣지 않음\n3. asis 화면 MD가 요청하신 원본(이 파일 「Setting  Ⓛ / Ⓣ_As Is」 페이지)이 아니라 기존 작업방 파일에서 옮긴 것이고, 디스크립션이 가리키는 세부정의 · 팝업 정의 · Import 정의 · 정책 · 유형별 정의 프레임 내용이 빠져 있습니다 → **As Is 페이지에서 다시 추출한 뒤 진행** / 지금 asis 화면 MD 그대로 진행\n4. 진행 중인 20261125-최고관리자-assay-pack(4단계) → **멈춤으로 두고, 그 To-Be 화면 MD · To Be 페이지 섹션을 이번에 처음부터 다시 쓰며 반영 대기 TI-STN-08-P-R01 · TI-STN-08-R02를 이 작업으로 옮김** / 그대로 두고 새 섹션에 따로 그림\n5. 위 요건 목록과 흐름대로 진행할까요? → **이대로 진행** / 고칠 곳 있음\n규칙 점검: 다르게 한 것 - 케이스 3 (이행 기간) 4 To-Be 화면 MD 빈 틀은 기존 작업의 결과물을 덮어쓰게 되어 질문 4 답 뒤로 미룸. 그 밖 1단계 「하지 않는 것」 지킴(Figma As Is 페이지 열지 않음, Figma · 반영 대기 고치지 않음)\n작업 기준: basis 2026-11-26 09:11 · 작업규칙 CURECA 작업규칙 @수정본 · 정책서 정책서 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 · 화면 정의서 화면 정의서",
+  "note": "",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": {
-    "q": "1단계 요건 목록 확인: 질문 2 ~ 5를 추천(굵은 글씨)대로 진행할까요?",
-    "options": [
-      {
-        "label": "추천대로 진행"
-      },
-      {
-        "label": "하나씩 정하기"
-      }
-    ],
-    "free": true
-  },
+  "ask": null,
   "replies": [
     {
       "at": "2026-11-26T09:10:45+09:00",
       "by": "최고관리자",
       "q": "Assay Pack Setting 다시 그리기를 어떻게 진행할까요?",
       "text": "새 작업으로 시작 (1단계부터 처음부터 다시 그림)"
+    },
+    {
+      "at": "2026-11-26T09:14:21+09:00",
+      "by": "최고관리자",
+      "q": "1단계 요건 목록 확인: 질문 2 ~ 5를 추천(굵은 글씨)대로 진행할까요?",
+      "text": "하나씩 정하기"
     }
   ],
   "raws": [
