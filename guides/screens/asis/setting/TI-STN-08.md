@@ -15,18 +15,18 @@ rules_version:
 provisional: []
 flags: []
 source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=7669-175417
-figma_region: 2.1 2차
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3288-235198
+figma_page: Setting  Ⓛ / Ⓣ_As Is (3288:235028)
 ---
 # TI-STN-08 Assay Pack Setting
 
-> 기존 화면(기존 작업방 Setting 페이지, 2.1 2차 영역, Ver 0.3.0)을 2026-11-25에 다시 옮긴 것입니다(처음 옮긴 날 2026-11-02). 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
+> 기존 화면(작업방 「Setting  Ⓛ / Ⓣ_As Is」 페이지, Ver 0.3.0)을 2026-11-26에 다시 옮긴 것입니다(처음 옮긴 날 2026-11-02, 2026-11-25에는 기존 작업방 파일에서 옮김). 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
 
 - T/L 차이: T-IOS는 Import·Delete·Active 변경. L-IOS(LI-STN-08)는 조회만
 - 호출하는 화면: [TI-STN-08-P] File details ([Details] → 목록 위 패널), [TI-STN-08-01] Import file 팝업([Import], IA에 없음)
 - 호출되는 곳: LNB Setting > Assay Pack Setting
 - 관련 정책: POL-TST-008
-- 다른 프레임(기존 작업방): TI-STN-08-01 Import file 팝업(7669:177368, IA에 없음), TI-STN-08 / 세부정의(7811:247618), TI-STN-08 / Import 정의(7811:247733)
+- 다른 프레임(「Setting  Ⓛ / Ⓣ_As Is」): TI-STN-08-01 Import file 팝업 (3288:237146, IA에 없음), TI-STN-08 / 세부정의 (3288:240828, 아래 케이스), TI-STN-08 / Import 정의 (3288:240943, 아래 참조 섹션). 1920 프레임 TI-STN-08 다섯 개 (3288:241001 · 241162 · 241305 · 241696 · 243242)는 기획 프레임 밖이라 UI 화면일 수 있어 열지 않음. [TI-STN-08 / 팝업 정의] · [TI-STN-08 / 정책]은 이 페이지에 없음
 
 ## 기존 화면
 
@@ -118,9 +118,30 @@ Table (47), Title (30), Check Box/Square (12), Reagent Product Name (11), Descri
 
 ### 케이스
 
-<!-- 기존 작업방의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
+<!-- 「Setting  Ⓛ / Ⓣ_As Is」 페이지의 세부정의 프레임을 옮김. Case 번호는 원본 번호(1-1 · 1-2) 그대로 -->
 
-기획 프레임 안에 케이스 프레임 없음 (2026-11-25 다시 옮길 때 확인)
+기획 프레임 안 케이스 없음. 세부정의 프레임 [TI-STN-08 / 세부정의] ([3288:240828](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3288-240828))에 두 모양:
 
 | Case | 제목 | 조건 | 프레임 |
 | --- | --- | --- | --- |
+| 1-1 | 등록된 파일 없음 정의 | 등록된 파일이 없을 경우, 안내 문구 노출 | [3288:240828](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3288-240828) |
+| 1-2 | 검색 결과 없음 정의 | 검색 조건과 일치하는 파일이 없을 경우, 검색 결과 없음 문구 노출 | [3288:240828](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3288-240828) |
+
+#### 케이스 화면 글자 (원문)
+
+- 1-1: File name | Enter file name | File type | All | Period | Registered Date | Select Date Range | Active only | Reset | Search / Items | 0 | 10 items | Delete | Import / Product Name | Version | File type | File name | Registered Date/Time | Created Date/Time | User ID | Active | Details / No files found. ⏎ Click Import to add a file.
+- 1-2: (검색 영역 · Items 0 · 목록 머리 1-1과 같음) / No results found. / 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
+
+### 참조 섹션 (원문)
+
+#### `TI-STN-08 / Import 정의` ([3288:240943](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3288-240943))
+
+- 1. 파일 Import 화면 (TI-STN-08-01)
+  - 목록 [Import] 선택 시 노출 → 파일 여러 개 선택 · 끌어놓기 (개수 · 용량 제한 없음, json만) → [Import] 선택 시 파일별 양식 검증 → 같은 버전이 있으면 Confirm_028 → 등록 & 최신 버전 자동 활성 → Alert_039
+  - ① 파일 선택 전 · [Import] 비활성: Import file | ✕ | ↑ | Drag and drop files here, or | Select files | json · Multiple files | Cancel | Import
+  - ② 파일 선택 후 · [Import] 활성 (여러 파일, 파일별 [✕]로 빼기, 다시 선택하면 목록에 추가): Import file | ✕ | ↑ | Drag and drop files here, or | Select files | json · Multiple files | ▤ ap_master_v4.json 0.8 MB ✕ | ▤ ap_pretreat_v5.json 0.3 MB ✕ | ▤ ap_pcr_gi-b1_v6.json 2.4 MB ✕ | Cancel | Import
+- 디스크립션 3이 가리키는 「[TI-STN-08 / Import 정의] 5」 · TI-STN-08-P #4의 「7」 번호는 이 프레임에 없음(1번만 있음)
+
+#### `TI-STN-08 / 팝업 정의` · `TI-STN-08 / 정책`
+
+- 디스크립션 3 · 4-1이 가리키지만 「Setting  Ⓛ / Ⓣ_As Is」 페이지에 없음 (asis 추출 빠짐)

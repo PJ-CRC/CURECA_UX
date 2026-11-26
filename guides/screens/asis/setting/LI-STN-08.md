@@ -15,12 +15,12 @@ rules_version:
 provisional: []
 flags: []
 source: asis
-figma: https://www.figma.com/design/kI8nm6HBJsfBa4fbReZwgh/?node-id=7669-181039
-figma_region: 2.1 2차
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3288-238191
+figma_page: Setting  Ⓛ / Ⓣ_As Is (3288:235028)
 ---
 # LI-STN-08 Assay Pack Setting
 
-> 기존 화면(기존 작업방 Setting 페이지, 2.1 2차 영역, Ver 0.1.0)을 2026-11-25에 다시 옮긴 것입니다(처음 옮긴 날 2026-11-02). 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
+> 기존 화면(작업방 「Setting  Ⓛ / Ⓣ_As Is」 페이지, Ver 0.1.0)을 2026-11-26에 다시 옮긴 것입니다(처음 옮긴 날 2026-11-02, 2026-11-25에는 기존 작업방 파일에서 옮김). 디스크립션은 원문 그대로이며 정책 정리 전 내용입니다.
 
 - T/L 차이: 조회 전용. [Import] · [Delete] · 체크박스 없음 (T-IOS TI-STN-08에서 관리)
 - 호출하는 화면: [LI-STN-08-P] File details ([Details] → 목록 위 패널)
@@ -102,9 +102,7 @@ Table (47), Title (30), Reagent Product Name (11), Description Number (10), 2 De
 
 ### 케이스
 
-<!-- 기존 작업방의 케이스 프레임을 빠짐없이 적습니다. 다시 그릴 때 케이스 블록의 근거 "기존 원본"이 됩니다. Case 번호는 원본 그대로. -->
-
-기획 프레임 안에 케이스 프레임 없음 (2026-11-25 다시 옮길 때 확인)
+기획 프레임 안 케이스 없음. 디스크립션 1-4가 가리키는 [LI-STN-08 / 세부정의]는 「Setting  Ⓛ / Ⓣ_As Is」 페이지에 없음 (asis 추출 빠짐, T-IOS [TI-STN-08 / 세부정의] 3288:240828은 있음)
 
 | Case | 제목 | 조건 | 프레임 |
 | --- | --- | --- | --- |
