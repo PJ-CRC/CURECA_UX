@@ -285,6 +285,28 @@ module.exports = function register(on, h) {
   }
   h.autoFill = autoFill;
 
+  // 작업 사용량(2026-11-26): Claude가 처리하는 작업만(캡처 · 목록 · 채우기 · 글 · 옮기기는 Figma API · 플러그인이 한다 — Claude 사용량이 없다)
+  //  제목은 사용량 통계가 종류를 나누는 말(CLAUDE.md 「사용량」): 카테고리 이름 · 연관 항목 찾기 · 고칠 화면 찾기 · 회의록 요약 · 논의 대상 · 프로토타입
+  const CLAUDE_JOBS = ['guide', 'guide-edit', 'guide-check', 'minutes', 'plan', 'prototype', 'prototype-edit', 'prototype-sync'];
+  const CAT = { guide: 'UX가이드', rule: '작업규칙', policy: '정책서', data: '기준데이터', spec: '화면 정의서' };
+  function jobTitle(j, T) {
+    const k = nn(j.kind), meta = j.guide ? core.readJson(path.join(T.guideRoot, nn(j.guide), 'meta.json')) || {} : {};
+    let kind = '기타', name = nn(j.name) || nn(meta.title) || nn(j.guide);
+    if (k === 'guide') kind = CAT[nn(j.docKind)] || 'UX가이드';
+    else if (k === 'guide-edit') kind = CAT[nn(meta.kind)] || 'UX가이드';
+    else if (k === 'guide-check') kind = j.scope === 'spec' ? '연관 항목 찾기' : '고칠 화면 찾기';
+    else if (k === 'minutes') { kind = '회의록 요약'; name = name || nn(j.minute); }
+    else if (k === 'plan') { kind = '논의 대상'; name = nn(j.target) || nn(j.sub); }
+    else if (/^prototype/.test(k)) { kind = '프로토타입'; name = name || nn(j.proto); }
+    return `${kind}: ${name || k} (${j.id})`;
+  }
+  function jobUsage(j, T) {
+    const wins = core.arr(j.runs).filter((w) => w && w.from && w.to), id = nn(j.id);
+    setTimeout(() => {
+      usage.record({ wins, by: nn(j.by), title: jobTitle(j, T), team: nn(j.team) || T.team, fileKey: nn(j.fileKey), nodeId: nn(j.nodeId), strict: true })
+        .then((o) => console.log(`  [${core.now()}] 사용량 ${id} ${o}`)).catch((e) => console.log(`  [${core.now()}] 사용량 기록 실패 ${id}: ${e.message}`));
+    }, 5000);
+  }
   on('POST', '/api/jobs', async ({ req, body, T }) => {
     const b = await body();
     if (nn(b.action) === 'auto-plan') {
@@ -297,7 +319,7 @@ module.exports = function register(on, h) {
       return { ok: true, count: list.length };
     }
     const jj = core.readJson(C.jobFile) || { version: 0, items: [] };
-    let items = core.arr(jj.items).filter(Boolean); const now = core.now(); let hit = null;
+    let items = core.arr(jj.items).filter(Boolean); const now = core.now(); let hit = null, jobUsageId = '';
     switch (nn(b.action)) {
       case 'add': {
         const kind = nn(b.kind); let key = nn(b.fileKey), nid = nn(b.nodeId), srcs = [], mmode = '';
@@ -434,6 +456,11 @@ module.exports = function register(on, h) {
         if (nn(b.status) === '진행 중' && nn(hit.status) === '진행 중' && !b.force) throw new Error(`이미 진행 중인 작업입니다(다른 Claude 세션이 처리 중): ${hit.id}. 이 작업은 건너뛰세요.`);
         // 끝난 작업을 다시 집지 않기(F6): 「완료」 · 「실패」를 「진행 중」으로 바꾸려 하면 거절(다시 하려면 새 작업)
         if (nn(b.status) === '진행 중' && ['완료', '실패'].includes(nn(hit.status)) && !b.force) throw new Error(`이미 끝난 작업입니다(${nn(hit.status)}): ${hit.id}. 이 작업은 건너뛰세요.`);
+        // 작업 사용량 자동 기록(2026-11-26): 「진행 중」 구간(runs)을 적어 두고, 「진행 중」을 벗어나면 서버가 남긴다(요청 R과 같음). 예전에는 Claude가 POST /api/usage를 직접 불렀다
+        if (b.status && nn(b.status) !== nn(hit.status)) {
+          if (nn(b.status) === '진행 중') hit.startedAt = now;
+          else if (nn(hit.status) === '진행 중' && hit.startedAt) { hit.runs = core.arr(hit.runs).filter(Boolean).concat([{ from: nn(hit.startedAt), to: now }]).slice(-20); jobUsageId = hit.id; }
+        }
         if (b.status) hit.status = nn(b.status);
         if (b.note != null) hit.note = nn(b.note);
         if (b.guide) hit.guide = nn(b.guide);
@@ -451,6 +478,7 @@ module.exports = function register(on, h) {
     if (items.length > 300) { let k = 0; items = items.filter((x) => (x.kind === 'transfer' && ['대기', '진행 중'].includes(x.status)) || ++k <= 300); }
     core.writeJson(C.jobFile, { version: (parseInt(jj.version, 10) || 0) + 1, items });
     if (b.action === 'update' && hit && hit.kind === 'guide-check') saveCheckLog(hit);
+    if (jobUsageId && hit && CLAUDE_JOBS.includes(nn(hit.kind))) jobUsage(hit, T);
     // 복사 옮기기를 맡기면 ① 탭을 앞으로(뒤에 있는 탭의 플러그인은 거의 멈춰 있다 — keys.js showTab)
     //  그 전에 지금 창 상태(맨 앞 창 · Figma 최소화)를 작업에 적어 두고, 끝나면 되돌린다(restoreWin)
     if (b.action === 'add' && hit && hit.kind === 'transfer' && hit.mode === 'paste' && hit.phase === 'select' && hit.auto && h.showTab) {

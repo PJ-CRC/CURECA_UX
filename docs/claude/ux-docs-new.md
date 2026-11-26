@@ -24,4 +24,4 @@
      - `meta.json`(UTF-8): `{id, kind(작업의 docKind: 'rule' · 'policy' · 'data' · 'spec', UX가이드는 빼거나 'guide'), title, summary(한두 문장), link, fileKey, fileName, scope(범위 페이지 · 섹션 이름 또는 「참고 파일」), frames(참고한 프레임 수), sources(참고 파일 이름 목록), by, request(작업 방법 원문), jobId, createdAt, updatedAt}`
      - 참고 파일 원본은 `.history`로 옮기지 않는다(이 PC에만). 「개요」에 무엇(파일 이름 · Figma 링크)을 기준으로 정리했는지 적는다.
   5. `POST /api/jobs {action:'update', id, status:'완료', guide:{가이드 id}, note:'섹션 N개 · 참고 프레임 M개 · 참고 파일 K개'}`. UX가이드는 UX 문서 「UX가이드」 탭 위쪽 목록에, 다른 카테고리는 그 탭(작업규칙 · 정책서 · 기준데이터 · 화면 정의서) 카드에 나타나고(모든 작업자), `UX_Guide.html?g={id}`에서 본다. 작업 기준으로 쓸지는 작업자가 각자 탭마다 「내 작업 기준」 선택 상자 + [적용]으로 정한다(카테고리마다 하나, 그 PC에만 · 그 PC의 모든 프로젝트에 적용, Claude가 정하지 않는다. `POST /api/guides {action:'apply', kind:'rule'|'policy'|'guide'|'data'|'spec', fileKey, guideId}`).
-  6. UX 문서의 만듦 · 수정은 UX 문서 「변경이력」 탭에만 남는다(아래). 사용량(`POST /api/usage`) 제목은 「{카테고리 이름}: {제목}」.
+  6. UX 문서의 만듦 · 수정은 UX 문서 「변경이력」 탭에만 남는다(아래).

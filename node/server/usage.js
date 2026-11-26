@@ -42,6 +42,9 @@ async function record(o) {
   o = o || {};
   const meta = { kind: 'work', reqId: '', reqType: '', team: nn(o.team), by: nn(o.by), fileKey: nn(o.fileKey), fileName: nn(o.fileName), page: nn(o.page), frame: nn(o.frame), nodeId: nn(o.nodeId), text: nn(o.title) };
   let from = nn(o.from), r = null;
+  // 작업(J) 자동 기록(2026-11-26): 서버가 그 작업의 「진행 중」 구간들(wins)을 준다
+  const owins = Array.isArray(o.wins) ? o.wins.map((w) => [Date.parse(w && w.from), Date.parse(w && w.to)]).filter((w) => !isNaN(w[0]) && !isNaN(w[1])) : [];
+  if (!from && owins.length) from = iso(Math.min.apply(null, owins.map((w) => w[0])));
   if (o.reqId) {
     const j = core.readJson(C.reqFile); r = core.arr(j && j.items).find((x) => x && x.id === o.reqId);
     if (!r) return 'NOREQ ' + o.reqId;
@@ -56,6 +59,7 @@ async function record(o) {
   // 처리 구간들: 요청이면 runs를 모두 더한다(from을 따로 주지 않았을 때)
   const wins = [];
   if (r && !o.from) for (const w of core.arr(r.runs)) { const a = Date.parse(w && w.from), b = w && w.to ? Date.parse(w.to) : t1; if (!isNaN(a) && !isNaN(b)) wins.push([a, b]); }
+  if (!wins.length && owins.length) wins.push(...owins);
   if (!wins.length) wins.push([t0, t1]);
   t0 = Math.min.apply(null, wins.map((w) => w[0]));
   const inWin = (ts) => wins.some((w) => ts >= w[0] && ts <= w[1]);
@@ -66,6 +70,8 @@ async function record(o) {
   const files = [];
   for (const f of jsonlFiles(logDir(), t0 - 1000)) { let txt = ''; try { txt = await fs.promises.readFile(f, 'utf8'); } catch (e) { continue; } files.push({ f, txt }); }
   const tagged = tag ? files.filter((x) => new RegExp('\\b' + tag + '\\b').test(x.txt)) : [];
+  // strict(서버 자동 기록): 그 ID가 적힌 대화 기록이 없으면 남기지 않는다(구간 안 남의 사용량을 더하지 않게)
+  if (o.strict && tag && !tagged.length) return 'NOUSAGE (' + tag + '가 적힌 대화 기록 없음)';
   // 서브에이전트 기록(…/{세션}/subagents/*.jsonl)은 부모 세션 파일이 그 ID를 담고 있으면 함께 센다
   const keep = tagged.length ? new Set(tagged.map((x) => x.f.replace(/\.jsonl$/, ''))) : null;
   const msgs = new Map();
@@ -89,7 +95,8 @@ async function record(o) {
     const mn = nn(m.model); models[mn] = (models[mn] || 0) + 1;
   }
   if (!s.calls) return 'NOUSAGE ' + new Date(t0).toISOString() + ' ~ ' + new Date(t1).toISOString();
-  const name = pcSlug() + '_' + (o.reqId ? o.reqId : stamp(t1));
+  // 작업(J)은 요청처럼 {PC}_{작업 ID} — 서버 자동 기록과 Claude가 직접 부른 기록이 같은 파일이 되어 두 번 세지 않는다
+  const name = pcSlug() + '_' + (o.reqId ? o.reqId : /^J\d+$/.test(tag) ? tag : stamp(t1));
   const e = {
     id: name, kind: meta.kind, reqId: meta.reqId, reqType: meta.reqType, team: meta.team || 'cureca', at: iso(t1), from: iso(t0),
     by: meta.by, doneBy: 'Claude', pc: pcName(), fileKey: meta.fileKey, fileName: meta.fileName, page: meta.page, frame: meta.frame, nodeId: meta.nodeId, text: meta.text,
