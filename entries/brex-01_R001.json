@@ -2,11 +2,11 @@
   "id": "brex-01_R001",
   "kind": "request",
   "team": "cureca",
-  "status": "대기",
-  "at": "2026-11-26T19:57:22+09:00",
+  "status": "보류",
+  "at": "2026-11-26T19:57:33+09:00",
   "createdAt": "2026-11-25T21:16:32+09:00",
   "by": "서보경",
-  "doneBy": "서보경",
+  "doneBy": "Claude",
   "pc": "BREX_01",
   "reqId": "R001",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,22 +17,24 @@
   "type": "요청",
   "layout": "",
   "text": "Event History 화면 옮겨줘\n\n기존 화면: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-45275&t=8ZUolJfFqEx5iunS-1\n옮길 페이지: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3577-18413&t=8ZUolJfFqEx5iunS-1",
-  "note": "",
+  "note": "UX 확정 답 받음 · 케이스 3 · 4단계 절차 3 순서 2 · 20261125-서보경-event-history. 기계 검사를 한 번 더 할지 물음\n\n[질문 대기]\nQ1 기계 검사를 한 번 더 검토할까요?\n  - 검토함 (추천)\n  - 하지 않음\n  근거: 마지막 기계 검사(19:5x) 뒤로 LI-EVT-P 1 · 3, LI-EVT-01-P 3 디스크립션 취소선을 지움(C49). 글만 바뀌어 검사는 두 화면의 디스크립션 대조 · 글자 넘침만 함\n  답을 받으면 업데이트 메모 · 기획 진행 표시(검토 완료) · 언어셋 정리로 이어 감 (UI 작업 줄 `대상 아님`, Ver은 케이스 3이라 묻지 않음)\n\n작업 기준: basis 2026-11-25 21:17 · 작업규칙 CURECA 작업규칙 @수정본 · 정책서 정책서 (policy) · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 (glossary) · 화면 정의서 화면 정의서 (screens)",
   "shot": "",
   "shots": [],
   "images": [],
-  "frames": [
-    {
-      "nodeId": "3751:579",
-      "name": "LI-EVT-P"
-    },
-    {
-      "nodeId": "3764:1390",
-      "name": "LI-EVT-01-P"
-    }
-  ],
+  "frames": [],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "기계 검사를 한 번 더 검토할까요? (마지막 검사 뒤 LI-EVT-P · LI-EVT-01-P 취소선만 지움)",
+    "free": true,
+    "options": [
+      {
+        "label": "검토함 (추천)"
+      },
+      {
+        "label": "하지 않음"
+      }
+    ]
+  },
   "replies": [
     {
       "at": "2026-11-25T21:20:57+09:00",
