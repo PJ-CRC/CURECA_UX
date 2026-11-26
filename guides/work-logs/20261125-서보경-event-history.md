@@ -437,5 +437,12 @@ started: 2026-11-25
 
 ## 이 작업이 남긴 것
 
-- 다른 화면의 반영 대기 항목:
+- 다른 화면의 반영 대기 항목: 없음 (영향 화면 없음)
+- 5단계 정보 업데이트 (2026-11-26, Claude):
+  - IA: 해당 없음 (새 CID 없음, 화면 이름 Event Detail · Event Message는 IA에 이미 있음)
+  - 반영 대기: 작업 중 20개(TI · LI-EVT-P · 01-P · 02-P) → `반영 완료 (2026-11-26)`, `pending/closed.md`로 옮김
+  - L-IOS Client Mode 표: `policy/client-mode-matrix.csv`에 `Event History,Event Message,,,View,O,O,X` 줄 더함 (Q3 답 · POL-EVT-003 규칙 1). User Type 표는 그대로 (값이 같음)
+  - 정책: 해당 없음 (이 작업의 논의 대상 없음)
+  - 언어셋: `language-set/db/event-history.md` 새 줄 22개(LID-EVT-047 Resolution Notes, LID-EVT-048 ~ 064 공통 참조 모듈 · 유닛 이름 17개, ref LID-STN-015 · LID-SPT-025 · 026 · 032), CID 더함 6줄(LID-EVT-005 · 009 · 010, ref LID-IVT-001 · LID-SPT-022 · LID-STN-006), CID 뺌 1줄(LID-EVT-041), 삭제 7줄(LID-EVT-044 · 015 · 026, ref LID-STN-012 · 021 · 022 · LID-INS-018). 항목 이력 35줄. 화면 MD Language ID 42칸 채움 (`Event ID, Code` LID-EVT-002, `{n} /300자` LID-EVT-035 포함). `제거` 줄 OPEN · Consumable은 원본에 없던 글자라 할 일 없음
+  - 화면 변경 이력: `screen-history.md`에 T · L 짝 3줄 (Event History · Event Detail · Event Message)
 - 고친 카탈로그 줄: alert/alert-catalog.csv Confirm_016 사용 화면에 LI-EVT-01-P 더함 (2026-11-26, Q2 답)
