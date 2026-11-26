@@ -2,8 +2,8 @@
   "id": "brex-01_R001",
   "kind": "request",
   "team": "cureca",
-  "status": "진행 중",
-  "at": "2026-11-26T16:07:32+09:00",
+  "status": "보류",
+  "at": "2026-11-26T16:08:25+09:00",
   "createdAt": "2026-11-25T21:16:32+09:00",
   "by": "서보경",
   "doneBy": "Claude",
@@ -17,13 +17,24 @@
   "type": "요청",
   "layout": "",
   "text": "Event History 화면 옮겨줘\n\n기존 화면: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-45275&t=8ZUolJfFqEx5iunS-1\n옮길 페이지: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3577-18413&t=8ZUolJfFqEx5iunS-1",
-  "note": "배경 · 가운데 정렬 다시 확인, TI-EVT-P/Case 지우는 중",
+  "note": "케이스 3 · 4단계 절차 1 · 20261125-서보경-event-history — 배경 · 가운데 정렬을 다시 확인해 맞췄고, TI-EVT-P/Case를 지웠습니다\n\n**반영한 것**\n- Event History (TI · LI-EVT-P) · Event Detail (TI · LI-EVT-01-P): Dim 배경이 패널(디스크립션 상자) 왼쪽 끝까지 채워져 있음(너비 1920, 사이 빈 칸 없음, 16:06에 고침 — 보신 화면이 그 전 모습이었을 수 있습니다). 이번에 Popup을 Dim의 가로 · 세로 가운데로 맞춤 (Event History 48px · Event Detail 21px 아래로)\n- TI-EVT-P/Case 프레임 지움 → 화면 MD 케이스 절 「없음」, 디스크립션 3의 「케이스 참고 : TI-EVT-P/Case > Case 1」은 빨간 취소선 (이번 작업에서 지운 문구). LI-EVT-P/Case는 그대로 둠\n- 섹션 높이 · L-IOS 줄 위치(T-IOS 줄 아래 2000px) 다시 맞춤\n\n**미해결 항목: 없음** (변경 확인 C41 · C42와 검토 질의 5 · 6은 요청대로 고친 것이라 맞음으로 기록)\n\n규칙 점검: 4단계 「화면 수정 규칙」(화면 MD 먼저 → Figma, 지운 문구는 빨간 취소선) 지킴\n작업 기준: basis 없음 (UX 확정 때) · 시작 2026-11-25 21:17 · 작업규칙 CURECA 작업규칙 @수정본 · 정책서 정책서 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 · 화면 정의서 화면 정의서",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "사용자 확인 목록과 질의가 모두 풀렸습니다. 최종으로 UX 확정을 하시겠습니까?",
+    "options": [
+      {
+        "label": "UX 확정"
+      },
+      {
+        "label": "아직 (더 고칠 것 있음)"
+      }
+    ],
+    "free": true
+  },
   "replies": [
     {
       "at": "2026-11-25T21:20:57+09:00",
