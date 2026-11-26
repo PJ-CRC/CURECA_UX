@@ -196,6 +196,7 @@ started: 2026-11-26
 | 선택한 파일 줄 (목록 줄) | 고른 파일 · [✕] 빼기 | TI-STN-08-01 #2 (Case 1-2 같음) | 기존 화면에서 따옴 (Interface/Close로 바꿀 여지: 줄 끝 [✕]) | 472×39 × 3줄, 모서리 4, 선 #DEE2E7 1, 글자 4 (「▤」 Inter Regular 14 #0B8580 · 파일명 Inter Medium 14 · 용량 Inter Regular 12 #838C96 · 「✕」 Inter Regular 13 #5F666E), 인스턴스 0 (As Is 3288:237453 · 237459 · 237465) | 같음 |
 | Case 조각 바탕 (영역 틀) | Case Popup 조각 바탕 | TI-STN-08-01/Case 1-1 · 1-2 | 기존 화면에서 따옴 | #E9EBF0, 모서리 0, Popup 하나씩 담음 (원본은 두 Popup을 한 바탕 1657×610에 담음, 화면 MD 1-1 · 1-2로 나눠 조각마다 600×(Popup+80)), 원본에 번호 표시 없음 (As Is 3288:240946) | [3703:4893](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3703-4893) |
 | Sample Type Info 표 (맞는 Variant 없음, Card/Table Item 최대 10 · 행 14) | Master 파일의 Sample Type 목록 | TI-STN-08-P/Case · LI-STN-08-P/Case Case 1-1 (디스크립션 3) | 기존 화면에서 따옴 | 묶음 760×609 세로 간격 20 = 제목 135×19 (「Sample Type Info」 Inter Bold 16 #1F2329) + 표 760×570 모서리 4 선 #DEE3E8 1, 머리 줄 758×36 #F7F8FA (글자 3 Inter Bold 12 #5F666E) + 줄 14 × 758×38 (칸 3, 글자 Inter Regular 14 #1F2329), 글자 46 · 인스턴스 0 (As Is 3288:236956). 마침 점검에서 제목이 빠진 것을 찾아 원본 묶음대로 고침 | [T 3711:16351](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3711-16351) · [L 3711:16354](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3711-16354) |
+| Active · Inactive 태그 (영역 틀 · 글자) | 활성 여부 표시 | TI-STN-08 · LI-STN-08 #4-1, TI-STN-08-P · LI-STN-08-P 배경 목록 | 기존 화면에서 따옴 (Q6 답, 2026-11-26. Status Base Navy · Gray에서 바꿈) | Active 46×17 #1F2329 모서리 2 여백 6 · 2, 글자 Inter Semi Bold 11 #FFFFFF / Inactive 55×17 #E9ECEF, 글자 #5F6B7A (As Is 3288:235233 · 3288:235313) | [3670:2367](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3670-2367) |
 
 ### 근거로 풀린 것
 | 질문 | 푼 근거 |
@@ -249,6 +250,11 @@ started: 2026-11-26
 | C10 | File details 정보 묶음 (기존 원본 글 · 표 묶음) | Common UX List Card · Table Card · Outline Container Tab으로 다시 그림 | TI-STN-08-P #3 · LI-STN-08-P #3 (Case 1-1 ~ 4-1 같음) | COMM-5-e · COMM-5-s | 같음 | O | |
 | C11 | Popup 닫기 「✕」 글자, [Select files] · [Cancel] · [Import] 직접 그린 버튼 (Import 청록 #12B5AE) | Interface/Close · Square (Outlined M · Filled M, 높이 36은 원본대로) | TI-STN-08-01 0 · #1 · #3 (Case 1-1 · 1-2 같음) | COMM-5-m (Basic Popup: 닫기 Interface/Close, 하단 버튼 Square) | T만 | O | |
 | C3 | Confirm_029 · 030 발생 조건 (Alert 카탈로그 기존 조건) | DS-0012 결정대로 File Details에서 Active · Inactive를 바꾸고 [Save]를 누를 때 Confirm_029 · 030을 띄움 (다른 작업의 결정을 따름, 멈춘 20261125-최고관리자-assay-pack에서 이어받음, 이 작업 5단계 완료 때 카탈로그 반영 전) | TI-STN-08-P #4 | DS-0012 | T만 | O | |
+| C12 | Master 파일 [Active] · [Inactive] 버튼 비활성 (변경 불가) | 버튼 미노출 (변경 불가) | TI-STN-08-P #3 | Q1의 답 | T만 | O | 맞음 (2026-11-26) |
+| C13 | Confirm_029 [Activate] 뒤 Toast (카탈로그 버튼 동작 「& Toast」) | Toast 미노출, Confirm만 | TI-STN-08-P #4 | Q2의 답 | T만 | O | 맞음 (2026-11-26) |
+| C14 | 파일을 고른 채 [X] · ESC · [Cancel] 선택 시 바로 닫힘 | Confirm_031로 다시 물음 (Discard 시 닫힘 / Cancel 시 Popup · 선택 유지) | TI-STN-08-01 0 · #3 | Q3의 답 | T만 | O | 맞음 (2026-11-26) |
+| C15 | [Save] 없이 [닫기] · 다른 Row [Details] 선택 시 동작 정의 없음 | 묻지 않고 바꾼 값 버림 | TI-STN-08-P #2-1 · #3-1 | Q4의 답 | T만 | O | 맞음 (2026-11-26) |
+| C16 | 등록된 파일 없음 · 검색 결과 없음 문구 정의 없음 | 「No files found.」 · 「No results found.」 | LI-STN-08 #1-4 · #4 | Q5의 답 (검색 결과 없음 문구는 TI-STN-08 Case 1-2) | L만 | O | 맞음 (2026-11-26) |
 
 ## 검토 질의
 
