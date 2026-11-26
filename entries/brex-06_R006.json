@@ -2,8 +2,8 @@
   "id": "brex-06_R006",
   "kind": "request",
   "team": "cureca",
-  "status": "진행 중",
-  "at": "2026-11-26T16:59:09+09:00",
+  "status": "완료",
+  "at": "2026-11-26T16:59:27+09:00",
   "createdAt": "2026-11-26T16:56:33+09:00",
   "by": "최고관리자",
   "doneBy": "Claude",
@@ -17,13 +17,33 @@
   "type": "요청",
   "layout": "",
   "text": "이거 왜 2개 생성이 되지?",
-  "note": "답대로 겹친 메모 지우는 중",
-  "shot": "",
-  "shots": [],
+  "note": "답대로 TI-STN-08-P · LI-STN-08-P에서 겹친 v2.1.18 update 메모를 1개씩 지웠습니다\n\n**[고친 곳]**\n- TI-STN-08-P: 메모 2개 → 프레임 오른쪽 위 1개만 남김 (아래 것 지움)\n- LI-STN-08-P: 메모 2개 → 프레임 오른쪽 위 1개만 남김 (아래 것 지움)\n- 남긴 메모 내용 · 위치는 그대로 (v2.1.18 update / 모듈명칭 변경 / Prep Consumable Storage → Consumable Storage)\n\n**[참고]**\n- 원인: As Is에서 본 프레임 옆 · 유형별 정의 프레임 옆에 같은 메모가 1개씩 있었고, To Be로 옮길 때 둘 다 본 프레임 옆에 둠\n\n작업 기준: basis 2026-11-26 17:00 · 작업규칙 rules @수정본 · 정책서 policy · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 glossary · 화면 정의서 screens",
+  "shot": "shots/brex-06_R006.jpg",
+  "shots": [
+    {
+      "file": "shots/brex-06_R006.jpg",
+      "nodeId": "3667:11462",
+      "frame": "TI-STN-08-P"
+    },
+    {
+      "file": "shots/brex-06_R006-2.jpg",
+      "nodeId": "3667:11469",
+      "frame": "LI-STN-08-P"
+    }
+  ],
   "images": [
     "attach/brex-06_R006_1.jpg"
   ],
-  "frames": [],
+  "frames": [
+    {
+      "nodeId": "3667:11462",
+      "name": "TI-STN-08-P"
+    },
+    {
+      "nodeId": "3667:11469",
+      "name": "LI-STN-08-P"
+    }
+  ],
   "marks": [],
   "ask": null,
   "replies": [
