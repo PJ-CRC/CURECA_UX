@@ -2,11 +2,11 @@
   "id": "brex-01_R001",
   "kind": "request",
   "team": "cureca",
-  "status": "보류",
-  "at": "2026-11-26T16:04:03+09:00",
+  "status": "대기",
+  "at": "2026-11-26T16:05:50+09:00",
   "createdAt": "2026-11-25T21:16:32+09:00",
   "by": "서보경",
-  "doneBy": "Claude",
+  "doneBy": "서보경",
   "pc": "BREX_01",
   "reqId": "R001",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,24 +17,13 @@
   "type": "요청",
   "layout": "",
   "text": "Event History 화면 옮겨줘\n\n기존 화면: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-45275&t=8ZUolJfFqEx5iunS-1\n옮길 페이지: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3577-18413&t=8ZUolJfFqEx5iunS-1",
-  "note": "케이스 3 · 4단계 절차 1 · 20261125-서보경-event-history — C33 질문에 답합니다: 「데이터 없음」 문구가 저장소(화면 MD · 언어셋 DB)에 어디에 쓰였는지 찾아봤습니다\n\n**쓰이는 곳 (저장소 전체)**\n\n| 문구 | 뜻 | 쓰는 화면 | 언어셋 |\n| --- | --- | --- | --- |\n| No results found. | 검색 조건에 맞는 결과 없음 | Protocol Setting (TI · LI-STN-03-01 · 03-02), Tube Setting (TI · LI-SVS-01), Assay Pack Setting (TI · LI-STN-08) | LID-STN-015 (법인 검토 완료, 3개 메뉴가 같이 씀) |\n| No sample tube settings found. / Click Add to create a new setting. | 등록한 항목이 하나도 없음 | Tube Setting (TI · LI-SVS-01) | LID-STN-330 |\n| No files found. / Click Import to add a file. | 등록한 파일이 하나도 없음 | Assay Pack Setting (TI · LI-STN-08) | LID-STN-377 |\n| There are no tests in progress. | 진행 중인 것이 없음 | Test Management (TI · LI-TMG-02) | LID-TMG-034 |\n| No registered modules available | 등록 모듈 없음 | Inventory (TI · LI-IVT-02-T) | LID-IVT-015 |\n| No item | 표 칸 값 없음 | Instrument Storage (TI · LI-INS-02-T) | LID-INS-054 |\n\n- 목록 · 검색 화면의 「없음」은 Setting 세 메뉴만 정의돼 있고, 다른 목록 화면(Sample · Inventory 목록 등)은 아직 정의가 없습니다. Common UX No Data도 「문구는 SB에 따라 다름」으로 화면에 맡깁니다\n- 많이 쓰는 모양은 두 가지입니다: 검색 결과 없음 = **No results found.**, 등록된 것 자체가 없음 = **No {대상} found.** (+ 다음 할 일 안내 한 줄)\n- Event History는 늘 검색 조건(기본 기간 7일)으로 불러오는 목록이라 결과 없음과 같은 경우입니다. 추천: **No results found.** 그대로 (이미 번역 · 법인 검토가 된 LID-STN-015를 같이 씀). 「Event가 없다」를 드러내고 싶으면 No events found. (새 문구 · 번역 필요)\n\n규칙 점검: 4단계 절차 1 지킴 (C33 확인 전이라 화면은 'No results found.'로 둔 채 기다림)\n작업 기준: basis 없음 (UX 확정 때) · 시작 2026-11-25 21:17 · 작업규칙 CURECA 작업규칙 @수정본 · 정책서 정책서 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 · 화면 정의서 화면 정의서",
+  "note": "",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": {
-    "q": "Event History 목록에 데이터가 없을 때 문구를 무엇으로 할까요?",
-    "options": [
-      {
-        "label": "No results found. 그대로 (C33 맞음)"
-      },
-      {
-        "label": "No events found.로 바꿈"
-      }
-    ],
-    "free": true
-  },
+  "ask": null,
   "replies": [
     {
       "at": "2026-11-25T21:20:57+09:00",
@@ -125,6 +114,12 @@
       "by": "서보경",
       "q": "C33 데이터가 없을 때 'No results found.' 노출이 맞는지 알려 주세요",
       "text": "쓰는데 딱 거기뿐인가? 다른 화면은 아직 안쓴거지? 혹시 no items 같은 개념의 내용이 없다라는 뜻은 보통 어떤 것을 많이 쓰지?"
+    },
+    {
+      "at": "2026-11-26T16:05:50+09:00",
+      "by": "서보경",
+      "q": "Event History 목록에 데이터가 없을 때 문구를 무엇으로 할까요?",
+      "text": "통일 하는 것이 좋을 거 같아. 추천안대로 갈께. 그리고 TI-EVT-P와 그 짝, TI-EVT-01-P와 짝은 왜 디스크립션 상자와 사이가 비었어. TI-EVT-02-P와 같이 디스크립션 박스까지 쭉 뒤에 배경채우고 중앙 정렬 잘 맞춰줘"
     }
   ],
   "raws": [
