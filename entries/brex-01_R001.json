@@ -2,11 +2,11 @@
   "id": "brex-01_R001",
   "kind": "request",
   "team": "cureca",
-  "status": "보류",
-  "at": "2026-11-26T16:15:22+09:00",
+  "status": "대기",
+  "at": "2026-11-26T16:17:55+09:00",
   "createdAt": "2026-11-25T21:16:32+09:00",
   "by": "서보경",
-  "doneBy": "Claude",
+  "doneBy": "서보경",
   "pc": "BREX_01",
   "reqId": "R001",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,7 +17,7 @@
   "type": "요청",
   "layout": "",
   "text": "Event History 화면 옮겨줘\n\n기존 화면: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-45275&t=8ZUolJfFqEx5iunS-1\n옮길 페이지: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3577-18413&t=8ZUolJfFqEx5iunS-1",
-  "note": "케이스 3 · 4단계 · 20261125-서보경-event-history — 검토 질의 8(디스크립션 3의 케이스 참고 취소선 줄 제거)을 반영했습니다. UX 확정 여부를 다시 여쭙니다.\n\n**고친 곳**\n- TI-EVT-P 디스크립션 3: 「케이스 참고 : TI-EVT-P/Case > Case 1」 취소선 줄 지움 (C44)\n- LI-EVT-P 디스크립션 3: 「케이스 참고 : LI-EVT-P/Case > Case 1」 취소선 줄 지움 (C44)\n- 두 화면 기획 프레임 · 섹션 높이를 줄어든 패널에 맞춤 (TI 1418 · LI 1610), 화면 MD도 같은 줄 지움\n\n**[질문 대기]**\n- Q1 사용자 확인 목록과 질의(1 ~ 8)가 모두 풀렸습니다. 최종으로 UX 확정을 하시겠습니까?\n\n규칙 점검: 4단계 절차 2(화면 MD → Figma, 짝 화면 함께) · 「하지 않는 것」 지킴\n작업 기준: basis 2026-11-25 21:17 · 작업규칙 rules @수정본 · 정책서 policy · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 glossary · 화면 정의서 screens",
+  "note": "",
   "shot": "",
   "shots": [],
   "images": [],
@@ -32,18 +32,7 @@
     }
   ],
   "marks": [],
-  "ask": {
-    "q": "사용자 확인 목록과 질의가 모두 풀렸습니다. 최종으로 UX 확정을 하시겠습니까?",
-    "options": [
-      {
-        "label": "UX 확정"
-      },
-      {
-        "label": "아직 (검토 더 남음)"
-      }
-    ],
-    "free": true
-  },
+  "ask": null,
   "replies": [
     {
       "at": "2026-11-25T21:20:57+09:00",
@@ -164,6 +153,12 @@
       "by": "서보경",
       "q": "사용자 확인 목록과 질의가 모두 풀렸습니다. 최종으로 UX 확정을 하시겠습니까?",
       "text": "3번 디스크립션에 있는 케이스 참고 취소선 글자 제거해줘. case 제거했으면 맞춰서 글자도 제거하자"
+    },
+    {
+      "at": "2026-11-26T16:17:55+09:00",
+      "by": "서보경",
+      "q": "사용자 확인 목록과 질의가 모두 풀렸습니다. 최종으로 UX 확정을 하시겠습니까?",
+      "text": "UX 확정"
     }
   ],
   "raws": [
