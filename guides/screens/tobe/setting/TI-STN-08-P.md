@@ -55,6 +55,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 **2-1  다른 Row의 Details**
 - 동작
   - 선택 시 패널 내용 변경
+  - <span style="color:red">Active · Inactive를 바꾸고 [Save] 없이 선택 시 바꾼 값 버림 (다시 묻지 않음)</span>
 
 **3  File Details**
 - 정의
@@ -64,7 +65,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
   - Import Info : Registered Date/Time(YYYY-MM-DD hh:mm:ss), User ID(service)
   - Reagent 정보 : 파일 종류별 항목 (아래 「파일 종류별 노출 항목」)
 - Active(Active · Inactive 태그)
-  - Master : 최신 버전 강제 활성(Active 고정), [Active] · [Inactive] 버튼 비활성(변경 불가)
+  - Master : 최신 버전 강제 활성(Active 고정), [Active] · [Inactive] 버튼 <span style="color:red">미노출</span>(변경 불가)
   - Pretreatment · Extraction · PCR : 최신 버전 등록 시 최신 버전 자동 활성, [Active] · [Inactive]로 변경 가능
   - 같은 Reagent(File type · Product Name 동일)은 1개만 활성, 다른 버전을 Active로 바꾸면 기존 활성 버전은 Inactive로 전환
   - 변경 후 하단 [Save] 선택 시 반영
@@ -89,6 +90,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 **3-1  [닫기] 버튼**
 - 동작
   - 선택 시 패널 닫힘, [TI-STN-08] 목록으로 돌아가며 Row 활성화 해제
+  - <span style="color:red">Active · Inactive를 바꾸고 [Save] 없이 선택 시 바꾼 값 버림 (다시 묻지 않음)</span>
 
 **4  [Delete] 버튼, [Save] 버튼**
 - [Delete] 버튼
@@ -105,7 +107,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
   - 동작
     - Active로 바꾼 뒤 선택 시 Confirm 노출 : Confirm_029
     - Inactive로 바꾼 뒤 선택 시 Confirm 노출 : Confirm_030
-    - 확인 시 반영
+    - 확인 시 반영<span style="color:red"> (Confirm_029의 [Activate]는 Toast 미노출)</span>
 - 정책 참고 : POL-TST-008
 
 ## 케이스
@@ -165,7 +167,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 | 4 | Alert | Alert_042 | [Delete] 선택 시 적용 중(Active) 파일 | OK 선택 시 → 해당 Alert 닫힘, 삭제하지 않음, 선택 유지 |
 | 4 | Confirm | Confirm_026 | [Delete] 선택 시 (Active 아닌 파일) | Delete 선택 시 → 선택한 파일 등록 정보 삭제 & Toast 노출 (The selected files have been deleted.) / Cancel 선택 시 → 해당 Confirm 닫힘, 선택 유지 |
 | 4 | Toast | Toast_001 | Confirm_026 [Delete]로 삭제 완료 | - |
-| 4 | Confirm | Confirm_029 | Active로 바꾸고 [Save] 선택 시 | Activate 선택 시 → 선택 버전 활성 & 기존 활성 버전 자동 비활성 (동시에 1개만) & Toast / Cancel 선택 시 → 변경 없음 |
+| 4 | Confirm | Confirm_029 | Active로 바꾸고 [Save] 선택 시 | Activate 선택 시 → 선택 버전 활성 & 기존 활성 버전 자동 비활성 (동시에 1개만) <span style="color:red">~~& Toast~~</span> / Cancel 선택 시 → 변경 없음 |
 | 4 | Confirm | Confirm_030 | Inactive로 바꾸고 [Save] 선택 시 | Deactivate 선택 시 → 해당 버전 비활성 & Toast ({version} has been deactivated.) / Cancel 선택 시 → 변경 없음 |
 | 4 | Toast | Toast_002 | Confirm_030 [Deactivate]로 비활성 완료 | - |
 
