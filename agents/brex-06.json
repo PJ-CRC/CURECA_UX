@@ -1,14 +1,14 @@
 {
-  "reportAt": "2026-11-26T11:15:01+09:00",
+  "reportAt": "2026-11-26T11:16:02+09:00",
   "pc": "BREX_06",
   "slug": "brex-06",
   "user": "최고관리자",
   "os": "windows",
   "version": "0.32.20",
   "alive": true,
-  "status": "idle",
-  "msg": "마지막 처리: PENDING R003 · 컨텍스트 19%",
-  "statusAt": "2026-11-26T11:15:00+09:00",
+  "status": "working",
+  "msg": "처리 중: PENDING R003 · 강도 medium",
+  "statusAt": "2026-11-26T11:15:59+09:00",
   "claude": "따로 설치",
   "claudeWay": "cli",
   "autoWatch": true,
@@ -375,6 +375,14 @@
     }
   ],
   "turns": [
+    {
+      "at": "2026-11-26T11:15:06+09:00",
+      "what": "PENDING R003 · 강도 medium",
+      "resume": false,
+      "end": "",
+      "ok": null,
+      "sec": null
+    },
     {
       "at": "2026-11-26T11:06:39+09:00",
       "what": "PENDING R003 · 강도 medium",
