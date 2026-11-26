@@ -11,8 +11,8 @@ author: 이상헌
 client_mode: [Main Mode]
 user_type: [Service]
 policies: [POL-TST-008]
-basis: 2026-11-26 09:27 · history 4079e90d
-basis_versions: rules @2026-11-26 · policy @2026-11-25 · glossary @2026-11-25 · screens @2026-11-26 · common_ux @2026-11-25
+basis: 2026-11-26 17:09 · history 402e669e
+basis_versions: rules @2026-11-26 14:30 · policy @2026-11-25 21:21 · glossary @2026-11-26 15:17 · screens @2026-11-26 16:15 · common_ux @2026-11-25 16:08
 source: tobe
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3667-11468
 ---
