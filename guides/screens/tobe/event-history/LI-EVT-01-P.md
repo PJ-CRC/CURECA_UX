@@ -100,10 +100,12 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 - 동작
   - 클릭 시 Event 목록 페이지로 이동
   - 이전 페이지 유지 : 사용자가 특정 페이지(예: 페이지 3)에서 상세 페이지로 진입한 경우, 이전에 조회하던 페이지(페이지 3)로 복귀
+  - <span style="color:red">3 Resolution Notes 입력 중 클릭 시, Confirm 노출 : Confirm_016</span>
 
 **6  닫기**
 - 동작
   - 클릭 시, Event <span style="color:red">Popup</span> 닫힘
+  - <span style="color:red">3 Resolution Notes 입력 중 클릭 시, Confirm 노출 : Confirm_016</span>
 
 <span style="color:red">~~**7  닫기**~~</span>
 - <span style="color:red">~~클릭 시, Event 팝업이 닫힘~~</span>
@@ -132,7 +134,8 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 
 | 디스크립션 번호 | 종류 (Alert / Confirm / Toast) | 코드 | 언제 | 버튼 동작 |
 | --- | --- | --- | --- | --- |
-| - | - | - | 없음 | - |
+| 5 | Confirm | Confirm_016 | Resolution Notes 입력 중 [List] 클릭 시 | Leave 선택 시 → 입력한 내용 미반영, Event 목록으로 이동 / Cancel 선택 시 → 해당 Confirm 닫힘 |
+| 6 | Confirm | Confirm_016 | Resolution Notes 입력 중 닫기 클릭 시 | Leave 선택 시 → 입력한 내용 미반영, Popup 닫힘 / Cancel 선택 시 → 해당 Confirm 닫힘 |
 
 ## 화면 예시 글자
 
@@ -170,7 +173,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 | Module | 화면 2 | |
 | Unit | 화면 2 | |
 | Process | 화면 2 | |
-| Flexible Extraction (1) | 화면 2 | |
+| Flexible Extraction | 화면 2 | |
 | STARlet | 화면 2 | |
 | Nucleic Acid Extraction | 화면 2 | |
 | Notes | 화면 3 · 케이스 Case 1 | |
