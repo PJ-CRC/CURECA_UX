@@ -211,6 +211,8 @@ started: 2026-11-26
 | C4 | 노출 개수 Dropdown (10 · 30 · 50 · 100 items) | 노출 개수 Dropdown 지움, 10 items 고정 (Common UX Basic Table: L-IOS 노출 개수 고정) | LI-STN-08 #2 | COMM-5-g | L만 | O | |
 | C5 | Pagination 「COMM-5-i 정의 참고 (10개 단위)」 | Pagination 유형 Type 1 Number를 적음 (화면에 보이는 번호 페이지) | TI-STN-08 #5 · LI-STN-08 #5 | 기존 화면 · COMM-5-l | 같음 | - | 맞음 (기존 화면, 2026-11-26) |
 | C6 | 정렬 「등록 일시 최신순」만 | 정렬 가능한 컬럼 항목 Active를 적음 (화면 Active 머리의 정렬 아이콘) | TI-STN-08 #4 · LI-STN-08 #4 | 기존 화면 · COMM-5-r | 같음 | - | 맞음 (기존 화면, 2026-11-26) |
+| C7 | 화면 이름 「Assay Pack Setting」 (패널 화면 정보 · 경로 File details) | 「Assay Pack File Details」, 경로 Setting > Assay Pack Setting > Details (TI-STN-08-P-R01, 뒤 단계용 5) | TI-STN-08-P · LI-STN-08-P 화면 정보 | IA (`ia/ia-screens.csv`) | 같음 | - | |
+| C8 | PCR 구성품 Barcode Info 머리 「Barcode Scheme Name」, LI-STN-08-P Extraction 머리 「Schema Name」 | 「Barcode Schema Name」 (뒤 단계용 8) | TI-STN-08-P · LI-STN-08-P Case | 2단계 용어 목록 | 같음 | - | 맞음 (오타, 2026-11-26) |
 | C3 | Confirm_029 · 030 발생 조건 (Alert 카탈로그 기존 조건) | DS-0012 결정대로 File Details에서 Active · Inactive를 바꾸고 [Save]를 누를 때 Confirm_029 · 030을 띄움 (다른 작업의 결정을 따름, 멈춘 20261125-최고관리자-assay-pack에서 이어받음, 이 작업 5단계 완료 때 카탈로그 반영 전) | TI-STN-08-P #4 | DS-0012 | T만 | O | |
 
 ## 검토 질의
