@@ -1,10 +1,10 @@
 {
-  "reportAt": "2026-11-26T09:24:35+09:00",
+  "reportAt": "2026-11-26T09:26:07+09:00",
   "pc": "BREX_01",
   "slug": "brex-01",
   "user": "서보경",
   "os": "windows",
-  "version": "0.32.19",
+  "version": "0.32.20",
   "alive": false,
   "status": "dead",
   "msg": "요청을 기다리는 중",
