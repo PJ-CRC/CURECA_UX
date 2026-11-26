@@ -26,7 +26,7 @@
 - **기존 디스크립션에 없는 설명을 더할 때:** `reference-rules/description.md` 3절 "Common UX가 화면에 맡긴 것" 때문에 기존 디스크립션에 없던 설명을 더하면(예: 표의 컬럼 항목), 화면 글자 · 정책 · Common UX에서 채우고 `reference-rules/description.md` 5절 "기존 디스크립션에 없던 설명을 더한 곳" 표대로 확인합니다.
 - 기존 디스크립션의 참고 줄은 `○○ 참고 : 코드` 모양(`reference-rules/description.md` 2절 "참고")으로 옮겨 씁니다. 문장 끝 괄호 안의 케이스 코드(`(참고 : TI-STA-01/Case > Case 2)`)는 블록 끝 `케이스 참고` 줄로 옮깁니다. 동작 줄 안의 Alert · Confirm · Toast · 화면 코드는 그대로 둡니다. 모양만 바꾼 것이라 바뀐 글 표시를 하지 않습니다.
 - 기존 디스크립션에 Alert · Confirm · Toast 문구가 적혀 있으면 지우고 코드만 남깁니다(`reference-rules/description.md` 3절). 모양만 바꾼 것이라 바뀐 글 표시 · 변경 확인을 하지 않습니다.
-- 기존 디스크립션의 "팝업 노출 : 코드" · "알럿" · "컨펌"은 뒤에 오는 코드의 종류대로 `Confirm 노출` · `Alert 노출` · `Popup 노출`(화면 CID · COMM 번호), Alert · Confirm으로 바꿉니다(`reference-rules/description.md` 2절 "뜨는 것의 이름"). 모양만 바꾼 것이라 바뀐 글 표시 · 변경 확인을 하지 않고, 2단계 용어 목록에 없던 것만 작업 기록 "용어 치환"에 남깁니다.
+- 기존 디스크립션의 "팝업 노출 : 코드" · "알럿" · "컨펌"은 뒤에 오는 코드의 종류대로 `Confirm 노출` · `Alert 노출` · `Popup 노출`(화면 CID · COMM 번호), Alert · Confirm으로 바꿉니다(`reference-rules/description.md` 2절 "뜨는 것의 이름"). 모양만 바꾼 것이라 바뀐 글 표시 · 변경 확인을 하지 않고, 2단계 용어 목록에 없던 것만 작업 기록 "용어 목록"에 `3단계` 줄로 더합니다.
 - **Toast에 코드가 없으면** Toast 카탈로그(일반 메뉴 `alert/toast-catalog.csv`, Material Setup `alert/toast-catalog-ms.csv`)에서 찾습니다. 문구는 코드를 찾는 데만 쓰고, 디스크립션에는 코드만 남깁니다.
   - **Toast 줄:** 줄에 `토스트` 또는 `toast`가 있음(대소문자 · 띄어쓰기 · "팝업" · "Popup" · "메시지"가 붙은 것도 같음).
   - **문구:** 그 줄의 `:` 뒤, 거기 없으면 바로 아래 줄(`Main text:` · `text :` 등)의 영어 글. 취소선 글자는 빼고 봅니다.
