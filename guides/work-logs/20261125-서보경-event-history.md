@@ -153,6 +153,8 @@ started: 2026-11-25
 | 1 | 장비 | `policy/modules/` 8개 Module 문서와 관련 정책(INV · LOD · MAT · SMP · EQP · TST) | ⑤ 화면에 나오는 Module | - | | (Event History는 Module 이름을 데이터로만 보여 줌. 관련 정책에서 Event는 생기는 상황만 적고 Event 화면 표시 규칙은 없음 — POL-LOD-001 · 004, POL-INV-003 · 007) |
 | 1 | 논의 대상 | DS-0001 · DS-0004 · DS-0005 (모두 종료) | 정책 · `cids`에 EVT | - | | (반영 끝남. DS-0004 Unit 이름 Sample Processing (Upper) / (Lower)는 module-units.csv로 씀) |
 | 1 | 반영 대기 | `pending/open.md` EVT 줄 23개 | 1단계 "대상 화면의 반영 대기 항목" | O | 1단계 표 그대로 | 묶음 1 ~ 5 반영, 묶음 6 제외 (요청자 확인 3) |
+| 1 | Common UX | `common-ux/comm-index.md` COMM-4-a(1/4) (Figma `918:2771` 날짜 표기) (3단계에서 추가) | 뒤 단계용 확인 항목 12 | O | TI · LI-EVT-P 3, LI-EVT-01-P 1 · 4 | 년 · 월 · 일 · 일시 `YYYY-MM-DD hh:mm`. Module명: 1대면 Module type명, 2대 이상 ModuleType+(index) |
+| 1 | Common UX | `common-ux/comm-index.md` COMM-5-p · 5-d · 5-g · 5-r · 5-v · 5-l · 5-q · 5-c · 5-t · 5-e · 5-m(2/4) · 5-m(3/4) (3단계에서 추가) | 요소 그리기 (공통 1의 8 · 공통 3-2) | O | TI · LI-EVT-P 1 · 3 · 4 · 6 · 8, 상세 1-2 · 3 · 5, Message 0 · 8 · 9 · 12 | Search Area(조건 3개 이상 Reset), Date Calendar(최대 1년 · 미래일 불가), Basic Table(10개 · T-IOS 노출 개수 Dropdown · No Data 문구는 SB), Number Pagination, Ellipsis Tooltip, Switch(Basic+Label), Square Button(하나뿐이면 Filled · Reset Gray), Inline Input, List Card(2열), Event Stacked Popup(Basic Popup Case 2 · 썸네일 목록) |
 
 **관련 자료 없는 영역 · 요소**
 
