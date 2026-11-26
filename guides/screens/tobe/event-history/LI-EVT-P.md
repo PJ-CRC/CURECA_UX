@@ -134,13 +134,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 
 ## 케이스
 
-### Case 1. 목록의 텍스트 영역의 '...' 줄임된 경우, 마우스 hover시, Tooltip으로 전체 내용 제공
-
-- 디스크립션 번호 : 3
-- 근거 (기존 원본 / 디스크립션 조건 / 요청자) : 기존 원본
-- 종류 (1 ~ 6, 근거가 디스크립션 조건일 때) : -
-
-#### 1-1. 목록 텍스트가 '...'로 줄임된 경우 마우스 hover
+없음 (Case 1 Tooltip 케이스는 요청자 요청으로 지움, 2026-11-26 — 검토 질의 7. Case 번호 1은 다시 쓰지 않음)
 
 ## Alert · Confirm · Toast
 
@@ -161,7 +155,6 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 | 3 | Level | Error · Warning (기존 원본 행 그대로) | `glossary/status-values.csv` Event Level (Status/Event Level) |
 | 4 | Status Toggle | 기존 원본 행 그대로 (Open 7행 · Closed 3행) | 기존 원본 `3543:46825` |
 | 8 | 페이지 | 1 ~ 10 (2 선택) | 기존 원본 `3543:46821` |
-| Case 1-1 | Tooltip | Consumables are low. Please check and refill. Consumables are low. Please check and refill. Consumables are low. Please check and refill. | 기존 원본 `3543:47082` (refill.Consumables → refill. Consumables) |
 
 ## 화면 표기 글자
 
