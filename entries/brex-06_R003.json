@@ -2,8 +2,8 @@
   "id": "brex-06_R003",
   "kind": "request",
   "team": "cureca",
-  "status": "진행 중",
-  "at": "2026-11-26T16:14:51+09:00",
+  "status": "보류",
+  "at": "2026-11-26T16:19:44+09:00",
   "createdAt": "2026-11-26T09:09:31+09:00",
   "by": "최고관리자",
   "doneBy": "Claude",
@@ -17,13 +17,24 @@
   "type": "요청",
   "layout": "",
   "text": "https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3288-235028&t=GdYCaPho44GgAu5i-1 여기가 AS IS\nAssay Pack Setting 화면 다시 그려줘",
-  "note": "4단계 절차 1 · Q1 ~ Q6 답을 화면 MD에 반영하는 중 (다음: Figma 패널 · 라벨 · 사용자 확인 목록)",
+  "note": "케이스 3 · 4단계 절차 1 · 20261126-최고관리자-assay-pack - 질문 대기 Q1 ~ Q6 답을 화면에 반영했고, 변경 확인 8개 답을 기다립니다\n\n**반영한 것** (화면 MD → Figma, 바뀐 글 빨간색, 사용자 확인 라벨 · 목록의 Q 모두 지움)\n- TI-STN-08-P #3: Master [Active] · [Inactive] 버튼 비활성 → 미노출 (Q1, C12)\n- TI-STN-08-P #4: Confirm_029 [Activate] 뒤 Toast 미노출 (Q2, C13)\n- TI-STN-08-01 0 · #3: 파일을 고른 채 [X] · ESC · [Cancel] → Confirm_031로 다시 물음, Alert 카탈로그에 Confirm_031 추가 (Q3, C14)\n- TI-STN-08-P #2-1 · #3-1: [Save] 없이 닫기 · 다른 Row → 묻지 않고 바꾼 값 버림 (Q4, C15)\n- LI-STN-08 #4 · #1-4: 「No files found.」 · 「No results found.」 (Q5, C16)\n- 목록 · 배경 목록 Active · Inactive 태그 40개: 기존 원본 태그 모양(Active 검정 · Inactive 회색)으로 (Q6)\n- 패널이 길어져 TI-STN-08-P · LI-STN-08 기획 프레임 높이를 늘리고 케이스 프레임 · L-IOS 줄을 내림\n\n**[질문 대기] 변경 확인 - 맞는지만 봐 주세요 (맞음 / 되돌림)**\n- C1 TI-STN-08-P #4: Confirm 제목 「Delete the selected file?」 → Confirm_026 「Delete the selected files?」 (카탈로그)\n- C2 TI-STN-08-P #4: Toast 「The file has been deleted.」 → Toast_001 「The selected files have been deleted.」 (카탈로그)\n- C3 TI-STN-08-P #4: Confirm_029 · 030을 File Details에서 바꾸고 [Save] 누를 때 띄움 (DS-0012)\n- C4 LI-STN-08 #2: 노출 개수 Dropdown 지움, 10 items 고정 (Common UX COMM-5-g)\n- C7 TI-STN-08-P · LI-STN-08-P 화면 정보: 화면 이름 「Assay Pack File Details」, 경로 Setting > Assay Pack Setting > Details (IA)\n- C9 TI-STN-08 · LI-STN-08 #1-3: Active only Square 체크박스 → Circle Checkbox (COMM-5-p)\n- C10 TI-STN-08-P · LI-STN-08-P #3: File details 정보 묶음 → List Card · Table Card · Outline Container Tab (COMM-5-e · COMM-5-s)\n- C11 TI-STN-08-01 0 · #1 · #3: 닫기 「✕」 글자 · 직접 그린 버튼 → Interface/Close · Square 버튼 (COMM-5-m)\n\n[확인 필요]\n- Q5 답은 등록된 파일 없음 문구로 보고, 검색 결과 없음 문구는 T-IOS(TI-STN-08 Case 1-2)와 같은 「No results found.」로 넣었습니다. 다르면 알려 주세요\n- Confirm_029 카탈로그의 「& Toast」는 5단계에 DS-0012와 함께 고칩니다\n- 패널 행 글은 있는 행에 줄만 더하는 일이라 플러그인 채우기가 아니라 use_figma로 고쳤습니다\n\n규칙 점검: 4단계 절차 1 「화면 수정 규칙」(화면 MD 먼저 · 바뀐 글 빨간색 · 답으로 바뀐 곳 변경 확인 줄 추가) 지킴. 기계 검사는 C 답을 모두 받은 뒤 함\n작업 기준: basis 2026-11-26 09:27 · 작업규칙 CURECA 작업규칙 (rules) @원본 · 정책서 policy · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 glossary · 화면 정의서 screens",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "변경 확인 C1 · C2 · C3 · C4 · C7 · C9 · C10 · C11에 번호로 답해 주세요 (맞음 / 되돌림)",
+    "free": true,
+    "options": [
+      {
+        "label": "모두 맞음"
+      },
+      {
+        "label": "하나씩 정하기"
+      }
+    ]
+  },
   "replies": [
     {
       "at": "2026-11-26T09:10:45+09:00",
