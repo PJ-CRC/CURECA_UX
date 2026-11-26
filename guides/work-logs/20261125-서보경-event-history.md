@@ -250,8 +250,19 @@ started: 2026-11-25
 ### 근거로 풀린 것
 | 질문 | 푼 근거 |
 | --- | --- |
+| 목록 아래 페이지 번호에 번호 · 설명 없음 (뒤 단계용 확인 항목 1) | Common UX COMM-5-l Type 1 Number Pagination → 디스크립션 8 페이지네이션 (C25) |
+| 기간 검색에서 1년 넘게 고르면 (뒤 단계용 확인 항목 3) | Common UX COMM-5-d Date Calendar 조건: 선택일로부터 최대 1년까지만 선택 가능, 오늘 이후 선택 불가 (디스크립션 1 `공통 UX 참고 : COMM-5-d`) |
+| 일시 표기가 화면마다 다름 (뒤 단계용 확인 항목 12) | Common UX COMM-4-a(1/4) 일시 `YYYY-MM-DD hh:mm` (C13) |
 
 ### 찾은 것
+- 원본 케이스 프레임 제목에 번호가 없음(`Case.`) → 케이스 블록 · 케이스 프레임을 `Case 1`로 적음 (TI-EVT-P · LI-EVT-P · LI-EVT-01-P)
+- 원본 케이스에 노란 띠가 없음 → 목록 케이스는 조건을 노란 띠 `1-1`로 두고 설명 글은 두지 않음(원본에 없음). LI-EVT-01-P 케이스는 조각마다 위에 있던 한 줄을 조건(노란 띠)과 설명으로 나눔 (글자는 원본 그대로, 오타만 C12)
+- 원본 번호 표시 5가 Notes 칸 위에 있으나 디스크립션 5는 [List] 버튼 → [List] 버튼 옆에 둠 (C29)
+- 원본 LI-EVT-01-P `1-2` 번호 표시에 디스크립션 블록이 없음(1의 Status 줄에만 설명) → 1-2 Status(Toggle) 블록을 만들고 활성화 조건은 반영 대기 LI-EVT-01-P-R03(POL-EVT-002)으로 씀 (C21)
+- 화면 표기 글자 표에는 라벨 · 선택지 · 기준데이터 값만 적고 예시 데이터(Event ID · Code · Description · Effect 글)는 적지 않음
+- 규칙에 없어 판단한 곳: [Export] 버튼 Style — T는 버튼 하나라 Filled, L은 [Mark all as Closed]가 Filled라 [Export]는 Outlined (COMM-5-c 가르는 법)
+- 상세 Event Info · Instrument Info · Notes 표는 Common UX Card/List(2열)로 한 줄 3쌍(6칸)을 담을 수 없어 기존 화면에서 따옴 (컴포넌트 없이 그린 요소)
+- TI-EVT-02-P · LI-EVT-02-P 경로: 원본 `-` → IA Lv.1 · Lv.2대로 `Event History > Event Message` (C4에 포함)
 
 ### 용어 치환
 | 원래 표현 | 표준어 | 위치 |
