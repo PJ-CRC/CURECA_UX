@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="appnav.css">
 <script src="common.js"></script>
+<script src="mdview.js"></script>
 <style>
 :root{
   --canvas:#dcdee2;   /* 작업대(캡처 뒤) 회색 — 나머지 색은 appnav.css 공통(A 잉크) */
@@ -156,7 +157,14 @@ a.tbtn{color:var(--ink-2);text-decoration:none}
 /* 수정 요청 입력창: 이미지 아래 고정, 가운데 둥근 입력 상자(최대 900px) */
 .cmp-wrap{flex:none;padding:10px 12px;background:var(--canvas);border-top:1px solid var(--line)}
 /* 작업 페이지 목록(화면 이미지 아래 드롭다운): 버튼에 지금 대상, 누르면 위로 목록(페이지 › 섹션 › 프레임) */
-.pgpick{flex:none;position:relative;padding:8px 12px;background:var(--accent-soft);border-bottom:1px solid var(--line)}
+.pgpick{flex:none;position:relative;display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--accent-soft);border-bottom:1px solid var(--line)}
+.pgpick .pgbtn{flex:1;min-width:0}
+/* 보기 전용 페이지일 때 머리 줄 오른쪽 「이 페이지를 작업 페이지로」(2026-11-26 — 목록을 펼치지 않아도 바로 바꾼다) */
+.pgmk{flex:none;height:38px;padding:0 14px;border:0;border-radius:8px;background:var(--accent);color:var(--on-accent);font:inherit;font-size:13px;font-weight:700;white-space:nowrap;cursor:pointer}
+.pgmk:hover{filter:brightness(1.1)}
+.pgmk[hidden]{display:none}
+:root[data-theme="dark"] .pgmk{color:#0f1115}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pgmk{color:#0f1115}}
 .pgbtn{width:100%;display:flex;align-items:center;gap:10px;height:38px;padding:0 12px 0 0;border:1px solid var(--accent);border-radius:8px;background:var(--surface);color:var(--ink);overflow:hidden;font:inherit;font-size:13px;text-align:left;cursor:pointer;min-width:0}
 .pgbtn:hover,.pgbtn[aria-expanded="true"]{border-color:var(--accent)}
 .pgbtn:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
@@ -502,7 +510,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
 .empty{color:var(--ink-3);font-size:13px;padding:8px 0}
 /* Claude 답변: 요청 한 줄 + Claude가 남긴 처리 메모 */
 .req .q{margin:4px 0 0;font-size:13px;color:var(--ink-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.req .a{margin-top:6px;font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-word;color:var(--ink-2)}
+.req .a{margin-top:8px;padding-top:8px;border-top:1px solid var(--line);font-size:14px;line-height:1.65;white-space:pre-wrap;word-break:break-word;color:var(--ink-2)}
 .req .a.wait{color:var(--ink-3)}
 .req .raw{margin-top:6px;font-size:12px}
 .req .raw summary{display:inline-flex;align-items:center;gap:6px;min-height:24px;cursor:pointer;color:var(--ink-3);font-weight:600;list-style:none}
@@ -515,10 +523,12 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
 .req.live .raw .rb{background:var(--surface)}
 .req .raw .rt{font-size:12px;color:var(--ink-3);margin-bottom:4px}
 .req .raw .rx{font-size:13px;line-height:1.6;color:var(--ink-2);word-break:break-word;max-height:420px;overflow:auto}
-.req .a p{margin:0}
-.req .a p+p,.req .a p+ul,.req .a ul+p{margin-top:6px}
-.req .a ul{margin:4px 0 0;padding-left:18px;white-space:normal}
-.req .a li{margin:3px 0}
+/* 한 줄짜리 예전 note(문장 · 「 / 」로 나눈 것)만 — 서식 있는 답은 .md가 맡는다 */
+.req .a>p{margin:0}
+.req .a>p+p,.req .a>p+ul,.req .a>ul+p{margin-top:8px}
+.req .a>ul{margin:4px 0 0;padding-left:1.25em;white-space:normal}
+.req .a>ul>li+li{margin-top:3px}
+.req .a>ul>li::marker{color:var(--ink-3)}
 .req .retry{margin-top:6px;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-3)}
 .req .retry button{padding:4px 10px;border:1px solid var(--accent);border-radius:8px;background:var(--surface);color:var(--accent);font-size:13px;font-weight:700;cursor:pointer}
 .req .retry button:hover{background:var(--accent-soft)}
@@ -529,25 +539,17 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
 .req .qa .qq{color:var(--ink-3)}
 .req .qa .qr{color:var(--ink)}
 .req .qa i{font-style:normal;color:var(--ink-3);margin-left:6px;font-size:12px}
-.req .ask{margin-top:8px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2)}
+/* 답할 질문 = 사람이 할 일: 보고서 위, 주의 색 바탕으로 한눈에(2026-11-26) */
+.req .ask{margin-top:10px;padding:12px 14px;border:1px solid color-mix(in srgb,var(--warn) 38%,transparent);border-radius:10px;background:var(--warn-soft)}
 .req.live .ask{background:var(--surface)}
-.req .ask .aq{margin:0 0 8px;font-size:13px;font-weight:500;color:var(--ink)}
-/* Claude 답변 서식(mdView): 요약 · 질문 · 자세히 */
-.md{white-space:normal}
-.md p{margin:0}
-.md>*+*{margin-top:6px}
-.md .mh{margin-top:10px;color:var(--ink)}
-.md>.mh:first-child{margin-top:0}
-.md ul,.md ol{margin:4px 0 0;padding-left:18px}
-.md ul ul,.md ol ul,.md ul ol{margin-top:2px}
-.md li{margin:2px 0}
-.md b{font-weight:600;color:var(--ink)}
-.md code{font-size:12px;padding:0 3px;border-radius:3px;background:var(--surface-2)}
-.md .mt{overflow-x:auto}
-.md table{border-collapse:collapse;font-size:12px;margin-top:2px}
-.md th,.md td{border:1px solid var(--line);padding:3px 6px;text-align:left;vertical-align:top}
-.md th{font-weight:600;background:var(--surface-2)}
+.req .ask .aq{margin:0 0 10px;font-size:14px;font-weight:500;color:var(--ink)}
+.req .ask .aq .md>p:first-child{font-weight:700}
+.req .ask .aq .md li{color:var(--ink)}
+.req .a.after-ask{margin-top:12px}
+/* Claude 답변 서식(.md)은 appnav.css(변경 이력과 같이 씀) */
 .req .ask .opts{display:flex;flex-wrap:wrap;gap:6px}
+.req .ask .opt:first-child:not(.del){background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.req .ask .opt:first-child:not(.del):hover{filter:brightness(1.12);color:var(--on-accent)}
 .req .ask .opt{min-height:30px;padding:0 12px;border:1px solid var(--line-2);border-radius:8px;background:var(--surface);color:var(--ink-2);font-size:13px;font-weight:600;cursor:pointer}
 .req .ask .opt:hover{border-color:var(--ink-3);color:var(--ink)}
 .req .ask .opt.del{border-color:var(--red);color:var(--red)}
@@ -667,6 +669,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     <!-- 작업 페이지 목록: 화면 이미지 위 드롭다운(페이지 › 섹션 › 프레임). 누르면 아래로 펼쳐진다 -->
     <div class="pgpick" id="pgPick">
       <button type="button" class="pgbtn" id="pgBtn" aria-haspopup="true" aria-expanded="false" aria-controls="pgPop"><span class="pk">작업 페이지</span><span class="pv" id="pgBtnTxt"></span><span class="sub" id="count"></span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></button>
+      <button type="button" class="pgmk w-only" id="pgMk" hidden>이 페이지를 작업 페이지로</button>
       <div class="pgpop" id="pgPop" role="dialog" aria-label="작업 페이지 목록" hidden>
           <div class="depth">
             <label>화면 찾기<input id="tsearch" type="search" placeholder="화면 ID · 프레임 이름" autocomplete="off" aria-label="화면 ID · 프레임 이름 검색"></label>
@@ -872,7 +875,8 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     bar.className = 'edbar ' + (cur.editable ? 'ok' : 'ro2');
     bar.innerHTML = cur.editable
       ? '<span class="t">✓ <b>작업 페이지</b> · Claude가 이 페이지를 고칩니다</span>'
-      : '<span class="t"><b>보기 전용</b> · 지금 작업 페이지는 「' + esc(ed || '없음') + '」</span><button type="button" class="w-only" data-ed="' + esc(cur.pageId) + '">이 페이지를 작업 페이지로</button>';
+      : '<span class="t"><b>보기 전용</b> · 지금 작업 페이지는 「' + esc(ed || '없음') + '」</span>';
+    var mk = $('pgMk'); mk.hidden = !!cur.editable; mk.dataset.ed = cur.pageId || '';   // 바꾸기 버튼은 머리 줄 오른쪽(2026-11-26)
     var order = CAT.pages.filter(function(pg){ return pg.editable; }).concat(CAT.pages.filter(function(pg){ return !pg.editable; }));
     var body = order.map(pgHtml).join('');
     $('menu').innerHTML = body ? '<ul class="tree" role="tree" aria-label="페이지 · 화면 목록">' + body + '</ul>' : '<p class="empty">「' + esc($('tsearch').value) + '」에 맞는 화면이 없습니다.</p>';
@@ -1534,6 +1538,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
   function emptyPg(id){ return !byId[id] && CAT && (CAT.pages || []).some(function(p){ return p.id === id; }) && !pgFrames(id).length; }
   function togglePg(pid, open){ openPg[pid] = open === undefined ? !openPg[pid] : open; renderMenu(); }
   $('edBar').addEventListener('click', function(e){ var b = e.target.closest('[data-ed]'); if (b && cur) setEditable(b.dataset.ed, cur.page); });
+  $('pgMk').addEventListener('click', function(){ if (cur && this.dataset.ed) setEditable(this.dataset.ed, cur.page); });
   /* 트리: 묶음 줄은 펼치기/접기, 프레임 줄은 그 프레임으로 */
   function toggle(key, open){ openKeys[key] = open === undefined ? !openKeys[key] : open; try { store('wb.open.' + FILE.key, JSON.stringify(openKeys)); } catch(x){} renderMenu(); }
   $('menu').addEventListener('click', function(e){
@@ -2051,64 +2056,8 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       L.slice().reverse().map(function(x){ return '<div class="rb"><div class="rt">' + esc(fmt(x.at)) + (x.cut ? ' · 앞부분 2만 자' : '') + '</div><div class="rx">' + mdView(x.text) + '</div></div>'; }).join('') + '</details>';
   }
   document.addEventListener('toggle', function(e){ var d = e.target; if (d && d.matches && d.matches('details.raw[data-raw]')) { if (d.open) RAW_OPEN[d.dataset.raw] = 1; else delete RAW_OPEN[d.dataset.raw]; } }, true);
-  /* Claude 답변 서식(2026-11-26): 요약(note) · 질문(ask) · 원래 답변(자세히)에 같은 모양 — **굵게** · `코드` · 제목(#) · 글머리표(들여쓰기 2단) · 번호 목록 · 표 · 줄 바꿈 · 빈 줄 = 문단 */
-  function mdInline(s){ return esc(s).replace(/\*\*([^*\n]+)\*\*/g, '<b>$1</b>').replace(/`([^`\n]+)`/g, '<code>$1</code>'); }
-  function mdView(src){
-    var L = String(src || '').replace(/\r/g, '').split('\n'), html = '', para = [], lists = [], i = 0;
-    function endPara(){ if (para.length) { html += '<p>' + para.map(mdInline).join('<br>') + '</p>'; para = []; } }
-    function endLists(d){ while (lists.length > d) { html += '</li></' + lists.pop().t + '>'; } }
-    function endAll(){ endPara(); endLists(0); }
-    for (; i < L.length; i++) {
-      var l = L[i], t = l.trim();
-      if (!t) { endAll(); continue; }
-      var hm = /^(#{1,4})\s+(.+)$/.exec(t);
-      if (hm) { endAll(); html += '<p class="mh"><b>' + mdInline(hm[2].replace(/\*\*/g, '')) + '</b></p>'; continue; }
-      if (/^\|.*\|$/.test(t)) {   // 표: 연속한 | 줄
-        endAll(); var rows = [];
-        for (; i < L.length && /^\|.*\|$/.test(L[i].trim()); i++) rows.push(L[i].trim());
-        i--;
-        var cells = function(r){ return r.replace(/^\||\|$/g, '').split('|').map(function(c){ return c.trim(); }); };
-        var body = rows.filter(function(r){ return !/^\|[\s:|-]+\|$/.test(r); });
-        html += '<div class="mt"><table>' + body.map(function(r, k){ var tg = k === 0 && rows.length > 1 && /^\|[\s:|-]+\|$/.test(rows[1]) ? 'th' : 'td'; return '<tr>' + cells(r).map(function(c){ return '<' + tg + '>' + mdInline(c) + '</' + tg + '>'; }).join('') + '</tr>'; }).join('') + '</table></div>';
-        continue;
-      }
-      var lm = /^(\s*)([-*•·]|\d+[.)])\s+(.*)$/.exec(l);
-      if (lm) {
-        endPara();
-        var d = Math.min(2, Math.floor(lm[1].replace(/\t/g, '  ').length / 2) + 1), tag = /\d/.test(lm[2]) ? 'ol' : 'ul';
-        if (d > lists.length + 1) d = lists.length + 1;
-        endLists(d);
-        if (lists.length === d && lists[d - 1].t !== tag) endLists(d - 1);
-        if (lists.length === d) html += '</li><li>';
-        else { html += '<' + tag + '><li>'; lists.push({ t: tag }); }
-        html += mdInline(lm[3]);
-        continue;
-      }
-      if (lists.length && /^\s{2,}/.test(l)) { html += '<br>' + mdInline(t); continue; }   // 글머리표 아래 이어지는 줄
-      endLists(0); para.push(t);
-    }
-    endAll();
-    return '<div class="md">' + html + '</div>';
-  }
-  function noteHtml(s){
-    // 여러 줄이거나 마크다운 표시가 있으면 서식대로. 한 줄짜리 예전 note만 아래처럼 문장 · 「 / 」로 나눠 보인다
-    if (/\n/.test(String(s)) || /\*\*|`/.test(String(s))) return mdView(s);
-    var paras = [String(s)];
-    paras = String(s).split(/(?<=[.。])\s+(?=\S)|;\s+/);
-    var html = '', list = [];
-    function flush(){ if (list.length) { html += '<ul>' + list.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>'; list = []; } }
-    paras.forEach(function(p){
-      p = p.trim(); if (!p) return;
-      if (/^[-•·]\s+/.test(p)) { list.push(p.replace(/^[-•·]\s+/, '')); return; }
-      var parts = p.split(/\s+\/\s+/);
-      var head = parts.shift();
-      if (parts.length && /:\s*(.+)$/.test(head)) { var m = head.match(/^(.*?:)\s*(.+)$/); flush(); html += '<p>' + esc(m[1]) + '</p>'; list.push(m[2]); parts.forEach(function(x){ list.push(x); }); flush(); return; }
-      if (parts.length) { flush(); [head].concat(parts).forEach(function(x){ list.push(x); }); flush(); return; }
-      flush(); html += '<p>' + esc(head) + '</p>';
-    });
-    flush();
-    return html;
-  }
+  /* Claude 답변 서식: pages/mdview.js(변경 이력과 같이 씀) */
+  var mdView = window.WBMD.view, noteHtml = window.WBMD.note, mdInline = window.WBMD.inline;
   /* 「보류」 요청 다시 진행: Claude 미연결 · Figma 인증 등으로 보류된 요청을 「대기」로 돌린다(답변은 비운다).
      「겹침 대기」는 다른 작업자 요청이 끝나면 감시가 알아서 이어 처리하므로 버튼을 두지 않는다 */
   function canRetry(r){ return r.status === '보류' && !hasAsk(r) && String(r.note || '').indexOf('겹침 대기') !== 0; }
@@ -2116,8 +2065,11 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
      선택지 action: 없음(그 글을 답으로) · done(더 할 일 없이 완료) · delete(ids 요청을 지우고 완료). 입력 중인 답은 다시 그려도 남게 drafts에 둔다 */
   var drafts = {};
   function hasAsk(r){ return !!(r.ask && r.ask.q); }
-  function askHtml(r){
-    var h = (r.replies || []).map(function(x){
+  /* 답할 질문(2026-11-26): 답변은 간략한 보고서라, 사람이 할 일(질문 · 선택지)을 보고서 위에 먼저 보인다. 지난 질문 · 답(replies)은 보고서 아래 */
+  function askOpenHtml(r){ return hasAsk(r) ? askHtml(r, true) : ''; }
+  function askHtml(r, openOnly){
+    if (openOnly === undefined && hasAsk(r)) return (r.replies || []).length ? askHtml({ replies: r.replies }) : '';
+    var h = openOnly ? '' : (r.replies || []).map(function(x){
       return '<div class="qa"><span class="qq">Claude 질문 · ' + esc(String(x.q || '').split('\n')[0]) + '</span><span class="qr">' + esc(x.by || '') + ' 답 · ' + esc(x.text) + '<i>' + fmt(x.at) + '</i></span></div>';
     }).join('');
     if (!hasAsk(r)) return h;
@@ -2206,7 +2158,8 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
         '<span class="sp"></span><span class="who">' + esc(r.author || '이름 없음') + '</span>' +
         '</div>' + (r.case ? '<div class="h"><span class="cs" title="' + esc(r.work ? '작업 기록 ' + r.work : '새 작업') + '">' + esc(String(r.type || '').replace(/^케이스 /, 'Case ')) + '</span>' + (r.work ? '<span class="who">' + esc(r.work) + '</span>' : '') + '</div>' : '') + '<div class="q" title="' + esc(r.text) + '">요청 · ' + esc(String(r.text || '').split('\n')[0]) + '</div>' +
         ((r.images || []).length ? '<div class="ims">' + r.images.map(function(m){ var ex = ((/\.([a-z0-9]+)$/i.exec(m.file || '') || [])[1] || '').toLowerCase(); if (!attImg(ex)) return '<a class="doc" href="' + esc(m.file) + '" target="_blank" rel="noopener" title="' + esc(m.name || '첨부') + ' · 원본 보기"><b>' + esc(ex.toUpperCase()) + '</b></a>'; return '<a href="' + esc(m.file) + '" target="_blank" rel="noopener" title="' + esc(m.name || '첨부 이미지') + ' · 원본 보기"><img loading="lazy" alt="첨부 이미지" src="' + esc(m.small || m.file) + '"></a>'; }).join('') + '</div>' : '') +
-        '<div class="a' + (r.note ? '' : ' wait') + '">' + (r.note ? noteHtml(r.note) : esc(WAIT[r.status] || '')) + '</div>' +
+        askOpenHtml(r) +
+        '<div class="a' + (r.note ? '' : ' wait') + (hasAsk(r) ? ' after-ask' : '') + '">' + (r.note ? noteHtml(r.note) : esc(WAIT[r.status] || '')) + '</div>' +
         rawHtml(r) +
         fixedHtml(r) +
         askHtml(r) +
@@ -2451,7 +2404,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
   function showWaiting(){
     cur = null;
     $('count').textContent = FILE.name;
-    $('tsearch').disabled = true; $('edBar').hidden = true;
+    $('tsearch').disabled = true; $('edBar').hidden = true; $('pgMk').hidden = true;
     var j = catJob();
     var tok = typeof CM !== 'undefined' && CM.ok;   // Figma 토큰이 있으면 서버가 몇 초 만에 만든다(2026-11-13)
     $('menu').innerHTML = '<div class="mgroup">' + esc(FILE.name) + '</div><p class="ro">이 파일의 프레임 목록이 아직 없습니다. ' + (tok ? '아래 버튼으로 바로 만들 수 있습니다.' : '둘 중 하나로 만들어 주세요.') + '</p>' +

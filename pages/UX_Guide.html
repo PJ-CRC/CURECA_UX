@@ -789,7 +789,26 @@ html.embed,html.embed body{overflow:hidden}
         pieces.push({ t: '## ' + (G0[k] || k || '기타') + '\n\n', f: '' });
         groups[k].forEach(function(f){ if (!asBook(f, 3)) pieces.push({ t: chunk(m, f.path, byPath[f.path], 3) + '\n\n', f: f.path }); });
       });
-    } else list.forEach(function(f){ if (!asBook(f, 2)) pieces.push({ t: chunk(m, f.path, byPath[f.path], 2) + '\n\n', f: f.path }); });
+    } else {
+      /* 파일 묶음(meta.fileGroups, 2026-11-26 — 예: 기준데이터 › 언어셋): [{title, files:[경로], strip:'절 이름', keep:[경로]}].
+         묶음의 첫 파일 자리에 대분류(## title) 하나를 두고, 파일마다 항목(###)으로 넣는다. strip 절(예: 메뉴마다의 「변경 이력」)은 keep에 없는 파일에서 뺀다 */
+      var arrOf = function(v){ return Array.isArray(v) ? v : []; }, FG = arrOf(m.fileGroups), inGrp = {}, grpDone = {};
+      FG.forEach(function(g, gi){ arrOf(g.files).forEach(function(p){ inGrp[p] = gi; }); });
+      var stripSec = function(t, name){
+        if (!name) return t;
+        var re = new RegExp('^##\\s+' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s*\\n[\\s\\S]*?(?=^##\\s|(?![\\s\\S]))', 'm');
+        return String(t || '').replace(/\r\n/g, '\n').replace(re, '').replace(/\s+$/, '') + '\n';
+      };
+      list.forEach(function(f){
+        if (asBook(f, 2)) return;
+        var gi = inGrp[f.path];
+        if (gi == null) { pieces.push({ t: chunk(m, f.path, byPath[f.path], 2) + '\n\n', f: f.path }); return; }
+        var g = FG[gi];
+        if (!grpDone[gi]) { grpDone[gi] = 1; pieces.push({ t: '## ' + (g.title || '묶음') + '\n\n', f: '' }); }
+        var txt = arrOf(g.keep).indexOf(f.path) >= 0 ? byPath[f.path] : stripSec(byPath[f.path], g.strip);
+        pieces.push({ t: chunk(m, f.path, txt, 3) + '\n\n', f: f.path });
+      });
+    }
     /* split()과 같은 규칙으로 제목을 세며 주인 파일을 적는다 */
     FILEMAP = []; var fence = false, l1 = false, md = '';
     pieces.forEach(function(p, pi){
@@ -1594,7 +1613,7 @@ html.embed,html.embed body{overflow:hidden}
       var s = { id: (stage === 'tobe' ? 'tobe:' : '') + o.cid, cid: o.cid, stage: stage, o: o, body: fr.body, file: f.path, rev: f.rev, menu: k };
       mn.screens.push(s); SC.byCid[s.id] = s;
     });
-    var mo = meta.menuOrder || [], mi = function(m){ var i = mo.indexOf(m.base); return i < 0 ? 999 : i; }, so = { '': 0, asis: 1, tobe: 2 };
+    var mo = meta.menuOrder || [], mi = function(m){ var i = mo.indexOf(m.base); return i < 0 ? 999 : i; }, so = { '': 0, tobe: 1, asis: 2 };   // To Be 먼저(2026-11-26 — 처음 열 때 To Be 탭 · 첫 화면)
     SC.menus = order.map(function(k){ return menus[k]; }).sort(function(a, b){ return so[a.stage] - so[b.stage] || mi(a) - mi(b) || order.indexOf(a.key) - order.indexOf(b.key); });
     SC.menus.forEach(function(mn){
       mn.screens.sort(function(a, b){ var ia = mn.cids.indexOf(a.cid), ib = mn.cids.indexOf(b.cid); ia = ia < 0 ? 999 : ia; ib = ib < 0 ? 999 : ib; return ia - ib || a.cid.localeCompare(b.cid); });
@@ -1628,7 +1647,7 @@ html.embed,html.embed body{overflow:hidden}
   var SC_STAGE = { asis: 'AS IS', tobe: 'To Be' }, scStage = '';
   function scHit(s, mn, q){ return !q || (s.cid + ' ' + (s.o.title || '') + ' ' + mn.name).toLowerCase().indexOf(q) >= 0 || s.body.toLowerCase().indexOf(q) >= 0; }
   function scTree(q){
-    var h = '', stages = ['asis', 'tobe'].filter(function(st){ return SC.menus.some(function(m){ return m.stage === st; }); });
+    var h = '', stages = ['tobe', 'asis'].filter(function(st){ return SC.menus.some(function(m){ return m.stage === st; }); });
     /* AS IS · To Be 탭(CURECA asis/ · tobe/ 구조일 때만 — 다른 팀 사본은 stage가 비어 탭 없음). 탭 옆 수 = 검색에 맞는 화면 수 */
     var tb = $('scTabs');
     if (stages.length) {
