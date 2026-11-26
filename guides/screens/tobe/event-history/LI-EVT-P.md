@@ -18,7 +18,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 ---
 # LI-EVT-P Event History
 
-- T/L 차이: L-IOS에만 4 Status Toggle(상태 변경), 5 [Mark all as Closed] 버튼, 6 [Export]의 저장 위치 선택 Popup이 있음. 목록의 Module 이름에 `(1)`이 붙음
+- T/L 차이: L-IOS에만 4 Status Toggle(상태 변경), 5 [Mark all as Closed] 버튼, 6 [Export]의 저장 위치 선택 Popup이 있음. T-IOS에만 9 노출 개수 Dropdown이 있음
 - 호출하는 화면: [LI-EVT-01-P] Event Detail (목록에서 Event 클릭 → 상세로 전환), Confirm_003 (5 [Mark all as Closed]), COMM-5-m(2/4) Import/Export Popup (6 [Export])
 - 호출되는 곳: 상단 Bar `Event` 아이콘, 각 화면의 Event 아이콘
 - 반영 대기 항목: `pending/open.md`에서 이 CID로 찾음
@@ -157,7 +157,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 | 1 | Type · Module · Level · Status | All · All · All · All | 기존 원본 `3543:47037` |
 | 1 | 기간 | 2026-03-11 ~ 2026-03-17 | 기존 원본 `3543:47055` |
 | 2 | Items · Open | 1,112 · 20 | 기존 원본 `3543:46815` (OPEN → Open, `glossary/status-values.csv` Event Status) |
-| 3 | 목록 | 기존 원본 10행 그대로 / Module `Sample Storage (1)` · `High-throughput Extraction (1)` · `Flexible Extraction (1)` · `PCR Setup (1)` · `Universal PCR (1)` (이름과 번호 띄어 씀) / 3행 Unit `Sample Processing (Upper)` / 7행 Unit `CFX96 (1)` / 1 ~ 10행 Occurred Date/Time `2025-09-29 15:57` | 기존 원본 `3543:46825`, `glossary/glossary.md` · `module-units.csv`, COMM-4-a(1/4) 일시 표기 |
+| 3 | 목록 | 기존 원본 10행 그대로 / Module 이름 뒤 번호 `(1)` 뺌 (Q4 답: Module이 1대면 번호 표기 안 함) / 3행 Unit `Sample Processing (Upper)` / 7행 Unit `CFX96 (1)` / 1 ~ 10행 Occurred Date/Time `2025-09-29 15:57` | 기존 원본 `3543:46825`, `glossary/glossary.md` · `module-units.csv`, COMM-4-a(1/4) 일시 표기 |
 | 3 | Level | Error · Warning (기존 원본 행 그대로) | `glossary/status-values.csv` Event Level (Status/Event Level) |
 | 4 | Status Toggle | 기존 원본 행 그대로 (Open 7행 · Closed 3행) | 기존 원본 `3543:46825` |
 | 8 | 페이지 | 1 ~ 10 (2 선택) | 기존 원본 `3543:46821` |
