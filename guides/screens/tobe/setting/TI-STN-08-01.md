@@ -94,6 +94,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 | 1 | Alert | Alert_041 | json 외 파일 선택 | OK 선택 시 → 해당 Alert 닫힘, 데이터 반영 없음 |
 | 3 | Alert | Alert_040 | [Import] 양식 불일치 파일 포함 | OK 선택 시 → 해당 Alert 닫힘, 데이터 반영 없음 |
 | 3 | Confirm | Confirm_028 | [Import] 같은 File type · Product Name · 버전이 이미 있음 | Overwrite 선택 시 → 기존 파일 교체 & 등록 → Alert_039 / Cancel 선택 시 → Confirm 닫힘, Import 중단 ([TI-STN-08-01] Import file 유지) |
+| 0 · 3 | Confirm | Confirm_031 | 파일을 1개 이상 선택한 채 [X] · ESC · [Cancel] 선택 | Discard 선택 시 → Popup 닫힘, [TI-STN-08] 목록으로 돌아감 (반영 없음) / Cancel 선택 시 → 해당 Confirm 닫힘, Import file Popup · 선택한 파일 유지 |
 | 3 | Alert | Alert_039 | [Import] 모두 양식과 일치해 등록 완료 | OK 선택 시 → Alert 닫힘 & 목록 최상단에 Import한 파일 노출, 최신 버전 자동 활성 |
 
 ## 화면 예시 글자

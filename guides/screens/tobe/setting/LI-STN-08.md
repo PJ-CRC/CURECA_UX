@@ -75,7 +75,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 - 동작
   - [Reset] 선택 시 검색 조건 초기화 및 전체 목록 노출
   - [Search] 선택 시 검색 결과 노출
-  - 검색 결과가 없을 경우 검색 결과 없음 문구 노출
+  - 검색 결과가 없을 경우 검색 결과 없음 문구 노출<span style="color:red"> : No results found.</span>
 
 **2  Items 개수**
 - Items : 등록된 파일 전체 건수 (검색 시 검색 결과 건수)
@@ -100,7 +100,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 - 텍스트 정렬 : Version · 일시 · Active · Details 가운데 / 나머지 왼쪽
 - Checkbox 없음 (선택 · 삭제 기능 없음)
 - 10개 초과 시 Pagination
-- 등록된 파일이 없을 경우 안내 문구 노출
+- 등록된 파일이 없을 경우 안내 문구 노출<span style="color:red"> : No files found.</span>
 - 공통 UX 참고 : COMM-5-g
 
 **4-1  Active (조회 전용)**
