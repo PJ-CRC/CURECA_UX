@@ -372,6 +372,51 @@ started: 2026-11-25
 
 ## 언어셋
 
+<!-- 4단계 절차 4 (2026-11-26, Claude). 케이스 3이라 기준 = asis 화면 MD(화면 글자 · 디스크립션 (원문) · 케이스). 대조는 상태 `사용` 줄만 -->
+
+| 변경 상태 | CID · 출처 | Language ID | English (변경은 변경 전 → 변경 후) | 번역 대상 (O / - 이유) | 언어셋 DB 대조 |
+| --- | --- | --- | --- | --- | --- |
+| 변경 | TI-EVT-P 화면 1 | | Event Id, Code → Event ID, Code | O | 있음 (LID-EVT-002) |
+| 변경 | TI-EVT-01-P · LI-EVT-01-P 화면 2 | | FlexibleExtraction (T) · Flexible Extraction(1) (L) → Flexible Extraction | - (고유명사, 공통 `미번역`) | 공통에 있음 (LID-COM-TRM-011) |
+| 변경 | TI-EVT-01-P · LI-EVT-01-P 화면 2 | | Starlet → STARlet | - (고유명사, 공통 `미번역`) | 공통에 있음 (LID-COM-TRM-027) |
+| 변경 | TI-EVT-02-P · LI-EVT-02-P 화면 7 | | High-throughput Extraction(1) → High-throughput Extraction | - (고유명사, 공통 `미번역`) | 공통에 있음 (LID-COM-TRM-009) |
+| 변경 | TI-EVT-P · LI-EVT-P 화면 3 | | Sample Processing → Sample Processing (Upper) | - (고유명사, 공통 `미번역`) | 공통에 있음 (LID-COM-TRM-022) |
+| 변경 | TI-EVT-P · LI-EVT-P 화면 3 | | CFX96-1 → CFX96 (1) | - (고유명사) | 없음 — 비슷한 글자 공통 `CFX96` (LID-COM-TRM-029), 요청자 확인 14 |
+| 변경 | LI-EVT-01-P 케이스 Case 1-2 | | 0 /100자 → {n} /300자 | O | 없음 — 비슷한 글자 `{n}/{max} Characters` (LID-EVT-035), 요청자 확인 14 |
+| 신규 | TI-EVT-P 화면 9 · 디스크립션 9 | | {n} items | O | 없음 — 비슷한 글자 `{N} of {M} Items` (LID-EVT-044, T-IOS 목록 개수), 요청자 확인 14 |
+| 신규 | TI-EVT-P 화면 2 | | of | O | 없음 — 위와 같음, 요청자 확인 14 |
+| 신규 | TI-EVT-P · LI-EVT-P 디스크립션 3 | LID-STN-015 | No results found. | O | 있음 (setting-protocol 메뉴 파일) |
+| 제거 | TI-EVT-P · LI-EVT-P (asis 화면 글자 화면 2) | | OPEN | - (제거) | 없음 (LID-EVT-021은 이미 `삭제`) |
+| 제거 | LI-EVT-P (asis 화면 글자 화면 3, 목록 예시 데이터) | | Sample Storage(1) · Consumable Storage (1) · Sample Pre-treatment (1) · High-throughput Extraction(1) · Flexible Extraction(1) · PCR Setup(1) · Universal PCR(1) | - (제거) | 없음 |
+| 제거 | TI-EVT-02-P · LI-EVT-02-P (asis 화면 글자 화면 3) | | Consumable | - (제거) | 없음 (Event History 줄 LID-EVT-006은 이미 `삭제`) |
+| DB 맞춤 (추가) | TI-EVT-01-P · LI-EVT-01-P 화면 3 · 케이스 | | Resolution Notes | O | 없음 |
+| DB 맞춤 (추가) | TI-EVT-02-P · LI-EVT-02-P 화면 11 | | {n}/{m} | - (숫자 표기) | 없음 |
+| DB 맞춤 (CID 추가) | TI-EVT-P | LID-STN-006 | 1개 (Items) | DB 그대로 | 있음 |
+| DB 맞춤 (CID 추가) | TI-EVT-01-P · LI-EVT-01-P | LID-EVT-010 · LID-SPT-025 | 2개 (Code, Nucleic Acid Extraction) | DB 그대로 | 있음 |
+| DB 맞춤 (CID 추가) | TI-EVT-02-P · LI-EVT-02-P | LID-EVT-005 · LID-SPT-022 · LID-EVT-009 · LID-IVT-001 | 4개 (Instrument, Sample, System, Inventory) | DB 그대로 | 있음 |
+| DB 맞춤 (CID 추가) | TI-EVT-P · LI-EVT-P | LID-SPT-026 · LID-SPT-032 | 2개 (PCR Setup, Plate Sealing) | DB 그대로 | 있음 (sample-tracking 메뉴 파일) |
+| DB 맞춤 (CID 추가) | TI-EVT-P · LI-EVT-P | | 12개 (Sample Storage TRM-006 · Consumable Storage TRM-007 · Sample Pre-treatment TRM-008 · High-throughput Extraction TRM-009 · Flexible Extraction TRM-011 · Universal PCR TRM-014 · Inbound Trolley TRM-019 · Outbound Trolley TRM-020 · Trolley TRM-021 · Spin Tip Storage TRM-035 · MB Tube Storage TRM-037 · Buffer Cartridge Storage TRM-038) | DB 그대로 | 공통에 있음 (LID-COM-…) |
+| DB 맞춤 (CID 추가) | TI-EVT-02-P · LI-EVT-02-P | | 1개 (M9600) | DB 그대로 | 공통에 있음 (LID-COM-TRM-026) |
+| DB 맞춤 (제거) | TI-EVT-P · LI-EVT-P (DB 비고: 상세 보기 / 테이블 컬럼 값 · 필터 레이블) | LID-STN-012 · LID-EVT-015 | Details · Occurred Date | - (제거) | 있음 |
+| DB 맞춤 (제거) | TI-EVT-01-P · LI-EVT-01-P (DB 비고: 목록 이동 버튼 · 테이블 구분 값) | LID-EVT-026 · LID-EVT-041 (01만) | Back to list · Event Code | - (제거) | 있음 |
+| DB 맞춤 (제거) | LI-EVT-01-P (DB 비고: 메모 취소 · 저장 버튼 — 화면은 아이콘만) | LID-STN-021 · LID-STN-022 | Cancel · Save | - (제거) | 있음 |
+| DB 맞춤 (제거) | TI-EVT-02-P · LI-EVT-02-P (DB 비고: Popup 타이틀) | LID-INS-018 | Event | - (제거) | 있음 |
+
+- 바뀌지 않은 글자 중 비슷한 글자만 있는 것(요청자 확인 14, 답에 따라 Language ID · DB 맞춤을 정함): TI · LI-EVT-02-P `Event Code:` · `Type:` · `Module:` · `Unit:` ↔ LID-EVT-041 · 004 · 012 · 013 / TI · LI-EVT-01-P `Updated Date/Time. {date}` · `Updated by. {id}` ↔ LID-EVT-027 · 028 / TI · LI-EVT-P `300 μL Tip Storage (1)` ↔ 공통 LID-COM-TRM-040
+- 언어셋 DB에서 이 화면 CID인데 표에 없어도 두는 것(판단, 2026-11-26 Claude): Select a Date · Sun ~ Sat · Done (LID-RUN-021 · LID-STA-009 ~ 015 · LID-EVT-025) — 1 기간 검색이 여는 Common UX Date Calendar의 글자. 기획 프레임에 그리지 않아 표에 없을 뿐 화면에서 그대로 씀
+- 화면 MD "화면 표기 글자" 표의 Language ID: `있음`과 바뀌지 않은 줄의 메뉴 파일 ID를 채움 (2026-11-26). `변경` 줄 · 공통에만 있는 줄 · 요청자 확인 14 줄은 비움
+
+**새로 넣을 줄** (언어셋 DB 대조가 `없음`이고 `제거`가 아닌 줄. 요청자 확인 14 줄은 답 뒤 확정)
+
+| English | Type | German | Portuguese | Spanish | Italian | French | 검증 상태 | 가장 긴 언어 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Resolution Notes | title | Lösungsnotizen | Notas de Resolução | Notas de Resolución | Note di Risoluzione | Notes de résolution | AI 번역 | ES · IT · FR (19) |
+| {n}/{m} | txt | - | - | - | - | - | AI 번역 | - |
+| CFX96 (1) | txt | - | - | - | - | - | AI 번역 | - (요청자 확인 14) |
+| {n} items | txt | {n} Einträge | {n} itens | {n} elementos | {n} elementi | {n} éléments | AI 번역 | ES (13) (요청자 확인 14) |
+| of | txt | von | de | de | di | sur | AI 번역 | DE · FR (3) (요청자 확인 14) |
+| {n} /300자 | txt | {n}/300 Zeichen | {n}/300 caracteres | {n}/300 caracteres | {n}/300 caratteri | {n}/300 caractères | AI 번역 | PT · ES · FR (18) (요청자 확인 14) |
+
 ## 요청자 확인
 
 | # | 생긴 날 | 단계 · 절차 (질문 번호 또는 `예외`) | 물은 것 | 관련된 곳 (CID · 디스크립션 번호 · Language ID) | 답을 받을 때까지 둔 모습 (예외 질문만) | 답 (날짜) |
@@ -388,6 +433,7 @@ started: 2026-11-25
 | 11 | 2026-11-26 | 4단계 절차 3 순서 3 | 요건 1 UI 작업 줄 값 (추천 `대상`: C46 · C35 · C30 · C26 · C27 · C40 · C41 · C45 배치 · 요소, C33 · C20 · C2 · C34 화면 표기 글자. 디자인 화면은 읽지 않아 그곳 글자는 보지 못함). Ver은 케이스 3이라 묻지 않음. 「UI 확정해줘」를 UX 확정으로 본 것도 함께 알림 | 요건 1 | | `대상 아님` — 우선 UI 작업 없음 (2026-11-26, 서보경). 같은 답에 검토 질의 14 |
 | 12 | 2026-11-26 | 4단계 절차 2 순서 5 (UX 확정 뒤 질의 14를 고쳐 다시 물음) | 사용자 확인 목록과 질의가 모두 풀렸습니다. 최종으로 UX 확정을 하시겠습니까? | 6개 화면 | | UX 확정 (2026-11-26, 서보경) |
 | 13 | 2026-11-26 | 4단계 절차 3 순서 2 | 기계 검사를 한 번 더 검토할까요? (마지막 검사 뒤 LI-EVT-P 1 · 3, LI-EVT-01-P 3 취소선 지움, C49. 추천 검토함) | LI-EVT-P · LI-EVT-01-P | | 하지 않음 (2026-11-26, 서보경) |
+| 14 | 2026-11-26 | 4단계 절차 4 순서 5 (언어셋 비슷한 글자) | 언어셋 DB에 비슷한 글자가 있습니다. 같은 글자로 볼까요? ① `Event Code:` · `Type:` · `Module:` · `Unit:` ↔ LID-EVT-041 · 004 · 012 · 013 (콜론만 다름) ② `Updated Date/Time. {date}` · `Updated by. {id}` ↔ LID-EVT-027 · 028 (마침표 · 값만 다름) ③ `300 μL Tip Storage (1)` · `CFX96 (1)` ↔ 공통 LID-COM-TRM-040 · 029 (번호만 다름) ④ T 목록 요약 `{n} items` · `of` ↔ LID-EVT-044 `{N} of {M} Items` ⑤ `{n} /300자` ↔ LID-EVT-035 `{n}/{max} Characters`. 추천 모두 같은 글자로 봄 | TI · LI-EVT-02-P, TI · LI-EVT-01-P, TI · LI-EVT-P, LI-EVT-01-P 케이스 | Language ID 비운 채 "새로 넣을 줄"에 임시로 둠 | |
 | 4 | 2026-11-25 | 1단계 절차 5 질문 7 | 위 요건 목록과 흐름대로 진행할지 (2단계로 넘어갈지) | 요건 1 | | 그대로 진행 (2026-11-25, 서보경). 이어서 「1단계까지만 하고 2단계는 멈춤」 (2026-11-25, 서보경) |
 
 ## 이 작업의 논의 대상
