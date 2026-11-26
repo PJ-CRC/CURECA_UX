@@ -2,8 +2,8 @@
   "id": "brex-06_R003",
   "kind": "request",
   "team": "cureca",
-  "status": "진행 중",
-  "at": "2026-11-26T09:09:56+09:00",
+  "status": "보류",
+  "at": "2026-11-26T09:10:38+09:00",
   "createdAt": "2026-11-26T09:09:31+09:00",
   "by": "최고관리자",
   "doneBy": "Claude",
@@ -17,13 +17,24 @@
   "type": "요청",
   "layout": "",
   "text": "https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3288-235028&t=GdYCaPho44GgAu5i-1 여기가 AS IS\nAssay Pack Setting 화면 다시 그려줘",
-  "note": "작업규칙 · 기준 문서 확인 중",
+  "note": "작업규칙 CURECA 작업규칙대로 1단계 시작 전 확인 - 새 작업인지 이어 갈 작업인지 정해 주세요.\n- 같은 화면(Assay Pack Setting: TI-STN-08 · LI-STN-08 · TI-STN-08-P · LI-STN-08-P · TI-STN-08-01)을 다시 그리는 작업 기록 20261125-최고관리자-assay-pack이 진행 중입니다(R001 · R002, 3단계 끝, 4단계에서 질문 대기 Q1 ~ Q5 · 변경 확인 C1 ~ C6 답 기다림).\n- 「다시 그려줘」가 그 작업을 이어 가라는 뜻인지, 지금 To Be 그림을 버리고 새 작업(1단계부터, 2026-11-26 다시 추출한 asis 화면 MD 기준)으로 처음부터 다시 그리라는 뜻인지 요청 글로 가를 수 없어 아무것도 고치지 않았습니다.\n- 새 작업으로 시작하면 기존 작업 기록은 어떻게 둘지(멈춤 처리 등)도 함께 알려 주세요.\n규칙 점검: 1단계 시작 전 겹침 확인에서 멈춤, 작업 기록 · Figma · 저장소 고치지 않음\n작업 기준: basis 2026-11-26 09:15 · 작업규칙 CURECA 작업규칙 @수정본 · 정책서 정책서 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 · 화면 정의서 화면 정의서",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "Assay Pack Setting 다시 그리기를 어떻게 진행할까요?",
+    "options": [
+      {
+        "label": "새 작업으로 시작 (1단계부터 처음부터 다시 그림)"
+      },
+      {
+        "label": "20261125-최고관리자-assay-pack 이어 하기"
+      }
+    ],
+    "free": true
+  },
   "replies": [],
   "raws": [],
   "work": "",
