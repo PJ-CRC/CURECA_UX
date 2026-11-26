@@ -26,10 +26,10 @@ started: 2026-11-25
 | 1. 시작 · 요건 정의 | 2026-11-25 | 요청자 확인 2026-11-25 | 겹치는 다른 작업: 없음 |
 | 2. 근거 · 분석 | 2026-11-26 | 물을 것 없음 (2026-11-26) | 정책 수정 범위 없음, 질문 대기 Q1 ~ Q4, 변경 확인 C1 ~ C12 |
 | 3. 화면 설계 | 2026-11-26 | 기계 검사 통과 (2026-11-26) | 6개 화면 MD · Figma, 질문 대기 Q1 ~ Q7, 변경 확인 C1 ~ C31 |
-| 4. 수정 · 확인 | | | 진행 중: 절차 1 끝남, 절차 3 UX 확정 물음 (2026-11-26) |
+| 4. 수정 · 확인 | | | 진행 중: 절차 1 끝남, 검토 질의 1 ~ 7 반영, 절차 3 UX 확정 물음 (2026-11-26) |
 | 5. 완료 | | | |
 
-이어서 작업할 곳: 4단계 절차 1 끝남 (2026-11-26): 사용자 확인 목록 · 검토 질의 1 ~ 6 모두 풀림. 절차 3 「최종으로 UX 확정을 하시겠습니까?」 다시 물음, 답 기다림 (다시 읽을 곳: 4단계 절차 3 순서 2 ~ 8 / 작업 기록 "변경 확인" (맞음 · 업데이트 메모 O 줄) · "요건 목록" UI 작업 줄)
+이어서 작업할 곳: 4단계 · 검토 질의 1 ~ 7 반영함 (2026-11-26, 질의 7 LI-EVT-P/Case 지움 C43): 사용자 확인 목록 · 검토 질의 모두 풀림. 절차 3 「최종으로 UX 확정을 하시겠습니까?」 다시 물음, 답 기다림 (다시 읽을 곳: 4단계 절차 3 순서 2 ~ 8 / 작업 기록 "변경 확인" (맞음 · 업데이트 메모 O 줄) · "요건 목록" UI 작업 줄)
 
 ## 요청
 
@@ -236,7 +236,7 @@ started: 2026-11-25
 <!-- 절차 1번 순서 2에서 그릴 T · L 한 쌍마다 줄을 만들어 따른 케이스 · 요건 번호를 채우고, 그 쌍을 다 그리면 공통 3-10에서 섹션 · 기획 프레임 · 상태 · 케이스 프레임 링크를 채웁니다. -->
 | T · L 한 쌍 | 따른 케이스 | 요건 번호 | 섹션 | 기획 프레임 | 상태 · 케이스 프레임 |
 | --- | --- | --- | --- | --- | --- |
-| Event History (TI-EVT-P / LI-EVT-P) | 3 | 1 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1250 / L https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1257 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3719-6 / L https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3751-579 | 케이스 T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3721-315 / L https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3751-1263 (마무리 확인 2026-11-26) |
+| Event History (TI-EVT-P / LI-EVT-P) | 3 | 1 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1250 / L https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1257 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3719-6 / L https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3751-579 | 케이스 T 지움 (검토 질의 6) / L 지움 (검토 질의 7) (마무리 확인 2026-11-26) |
 | Event Detail (TI-EVT-01-P / LI-EVT-01-P) | 3 | 1 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1251 / L https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1258 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3756-1924 / L https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3764-1390 | 케이스 T 없음 / L https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3764-1765 (마무리 확인 2026-11-26) |
 | Event Message (TI-EVT-02-P / LI-EVT-02-P) | 3 | 1 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1252 / L https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1259 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3769-1813 / L https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3771-1955 | 케이스 없음 (마무리 확인 2026-11-26) |
 

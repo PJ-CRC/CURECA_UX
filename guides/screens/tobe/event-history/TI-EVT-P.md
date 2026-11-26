@@ -122,7 +122,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 
 ## 케이스
 
-없음 (Case 1 Tooltip 케이스는 요청자 요청으로 지움, 2026-11-26 — 검토 질의 5. Case 번호 1은 다시 쓰지 않음)
+없음 (Case 1 Tooltip 케이스는 요청자 요청으로 지움, 2026-11-26 — 검토 질의 6. Case 번호 1은 다시 쓰지 않음)
 
 ## Alert · Confirm · Toast
 
