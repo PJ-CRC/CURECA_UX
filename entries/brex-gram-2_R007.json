@@ -2,8 +2,8 @@
   "id": "brex-gram-2_R007",
   "kind": "request",
   "team": "cureca",
-  "status": "진행 중",
-  "at": "2026-11-26T17:27:42+09:00",
+  "status": "보류",
+  "at": "2026-11-26T17:30:13+09:00",
   "createdAt": "2026-11-26T17:07:33+09:00",
   "by": "하승현",
   "doneBy": "Claude",
@@ -17,13 +17,24 @@
   "type": "요청",
   "layout": "",
   "text": "Case 3 테스트로 작업 지시를 해볼거야.\n작업할 Tobe 페이지에 작업해주고 관련 내용 기록은 하지 않아도 돼.\n정상적인 프로세스로 작업이 진행되는 지 확인하고 싶어서 그래.\n\nasis 링크 주소 주면 돼?",
-  "note": "2단계 · 정책(POL-TST-001~005 · 010 · ACC-001) · 기준데이터 · Alert 읽음, 대조 정리 중",
+  "note": "케이스 3 · 1 ~ 2단계 · 20261126-하승현-policy-setting — 1단계를 마치고(묶음 1 ~ 6 모두 반영) 2단계 근거 · 분석을 했습니다. 물을 것이 있어 확인받고 3단계로 넘어갑니다.\n\n**[2단계] 근거를 확인해 주세요**\n작업 기록 20261126-하승현-policy-setting (테스트) · 요청 R007 · 지나가는 단계 1 → 2 → 3 → 4 → 5\n\n**1. 읽은 강도** — 요건 1 · 경로 8 옮겨 다시 그림 · 케이스 3 (다시 그리기). 바뀐 경로 없음\n- 읽은 것: POL-TST-001 ~ 005 · 010 · ACC-001, 추출 Module 문서 2개, 권한 · 모드 표, test-items · consumables · status-values · glossary.md, Alert_046 · Confirm_010 · Alert_017, DS-0003\n\n**2. 대조 — 기존 화면이 정책과 다름** (3단계에서 기준 자료대로 그림, 변경 확인 C1 ~ C13)\n- Policy Setting (TI-STN-01): 1 장비 상태 → CURECA Status · 비활성 범위 ② ~ ⑨ / 5 PCR Protocol 선택지 / 6-2 뜻 · 기본 On (화면은 Off) / 6-1 Test Cut-off Time 뜻 · POL-TST-002\n- Policy Setting (TI-STN-01 · LI-STN-01) 7 · 8: Service 계정 → User Type이 Service\n- LI-STN-01 3 → LI-STN-01-04 / LI-STN-01-04 패널 CID / TI-STN-01-02 화면 이름 Extraction Module Usage Setting\n- Extraction Module Usage Setting (TI · LI-STN-01-02): 검사 항목 · 기본값을 test-items.csv로 / Comparison Simulation (TI-STN-01-03): RB · HPV28 → PB · Allplex HPV28\n- Cost Setting (TI-STN-01-01): μL Tip 이름 · 수량 표기 `24 ea (1 rack)` · MM Tube 단위 socket / Reagents 탭 정의 추가 · 품목은 consumables.csv로 (ASL Standard Tube는 기준에 없어 뺌)\n- TI-STN-01-02: 얼럿 배너 → Alert 배너\n\n**3. 대조 — 정책에 없음**\n- Analyze Breakpoint (TI · LI-STN-01-04) Breakpoint 계산 방식 → 정책 수정 범위 1\n- Cost Setting 통화를 바꿀 때 입력 단가 처리 → 질문 대기 Q3 (4단계에서 물음)\n\n**4. 정책 수정 범위**\n- 1 더함 · POL-TST-004 Breakpoint 계산 — 변경 전: 예외 \"계산 방식은 화면에 정의가 없음\" / 변경 후(안): Cost Setting 단가로 계산한 Cost per test가 High-throughput Extraction과 Flexible Extraction에서 같아지는 Sample 수를 Breakpoint로 하고, 그래프(Samples count · Cost per test)에 두 Module 선과 만나는 곳을 표시. 테스트라 논의 대상은 만들지 않음\n\n**5. 영향 화면 (2단계에서 더한 것)** — 없음. POL-TST-002 · 003의 다른 화면(Dashboard · Statistical Analysis)은 이번 요건이 값을 바꾸지 않아 해당 없음\n**6. 요건 목록에 더한 화면** — 없음 (정책 cids의 STN 화면이 모두 이미 대상)\n\n**[질문 대기] 답해 주실 것**\nQ1 정책 수정 범위 1 (POL-TST-004 Breakpoint 계산)을 어떻게 할까요?\n  - 논의 중으로 둠 — 기존 화면대로 그리고 질문 대기 Q1로 표시 (추천)\n  - 이대로 결정\n  근거: 계산식은 장비사 · 고객 확인이 필요해 확정하지 않는 것이 안전함\nQ4 User Type에 따라 화면이 달라집니다 — NC/PC Dispensing Order · Sample Dispensing Options 영역은 Service만 보임 (TI-STN-01 7 · 8, LI-STN-01 4 · 5). 케이스 화면으로 나눠 그릴까요?\n  - 모두 그림 — Admin으로 볼 때(두 영역 없음) 케이스 화면 추가 (추천)\n  - 모두 그리지 않음 — 디스크립션 조건만\nQ 3단계로 넘어갈까요?\n  - 넘어감 (추천)\n  - 고칠 곳 있음\n\n[확인 필요]\nC1 질문 대기 Q1 ~ Q4와 변경 확인 C1 ~ C13은 4단계에서 한 번에 보여 드립니다\nC2 테스트라 저장소(.history)는 바뀌지 않음, 논의 대상 · 반영 대기 목록도 고치지 않음\n\n규칙 점검: 2단계 절차 1 ~ 6 · 「읽는 법」 지킴 (Common UX는 3단계에서 읽음)\n작업 기준: basis 2026-11-26 17:17 · 작업규칙 CURECA 작업규칙 @원본 · 정책서 정책서 (policy) · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 (glossary) · 화면 정의서 화면 정의서 (screens)",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "[2단계] Breakpoint 계산은 「논의 중」으로 두고, Service 전용 영역은 Admin 케이스 화면으로 나눠 그리며 3단계로 넘어갈까요?",
+    "options": [
+      {
+        "label": "추천대로 진행 (논의 중 · 케이스 그림 · 3단계로)"
+      },
+      {
+        "label": "하나씩 정하기"
+      }
+    ],
+    "free": true
+  },
   "replies": [
     {
       "at": "2026-11-26T17:14:39+09:00",
