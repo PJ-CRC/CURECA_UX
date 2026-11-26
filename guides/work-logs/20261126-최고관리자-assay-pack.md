@@ -187,6 +187,9 @@ started: 2026-11-26
 | Items 줄 틀 (영역 틀) | Items · 노출 개수 · 버튼 바탕 | TI-STN-08 · LI-STN-08 #2 | 기존 화면에서 따옴 | 1639×56, #FFFFFF, 글자 2 (Items Inter Regular 14 · 24 Inter Bold 14) | 같음 |
 | 목록 틀 (영역 틀) | 목록 · Pagination 바탕 | TI-STN-08 · LI-STN-08 #4 · #5 | 기존 화면에서 따옴 | 1639×730, #FFFFFF (안의 표 · Pagination은 Common UX) | 같음 |
 | Details 아이콘 (아이콘) | Row 상세 열기 | TI-STN-08 · LI-STN-08 #4-2 | 기존 화면에서 따옴 | 원본 인스턴스 `Name=KB-A-right, Size=16`(원본 라이브러리) 20×20, 셀 가운데. Table/Cell에 아이콘 Variant가 없어 셀 위에 따로 둠 | 같음 |
+| File details 패널 바탕 (사각형) | 목록 위에 겹친 상세 패널 바탕 | TI-STN-08-P · LI-STN-08-P #3 (Case 1-1 ~ 4-1 패널 같음) | 기존 화면에서 따옴 | 811×802, 모서리 0, #FFFFFF, 도형 1 · 글자 0 · 인스턴스 0 (As Is 3288:235780 · 3288:238772) | [3684:1754](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3684-1754) |
+| File details 머리 줄 (영역 틀) | 패널 제목 · [닫기] | TI-STN-08-P · LI-STN-08-P #3 · #3-1 | 기존 화면에서 따옴 | 811×48, #FFFFFF, 글자 1 「File details」, 인스턴스 1 `Interface/Close` (As Is 3288:235781) | 같음 |
+| 패널 스크롤 막대 (사각형 2) | 패널 안 스크롤 위치 | TI-STN-08-P · LI-STN-08-P #3 | 기존 화면에서 따옴 | 트랙 4×673(L 4×728) #EEF1F5 모서리 2 · 손잡이 4×278(L 4×325) #ADB5BD 모서리 2 (As Is 3288:235994 · 235995 / 3288:238984 · 238985) | 같음 |
 | Case 조각 바탕 · 안내 문구 (영역 틀 · 글자) | 데이터 없음 조각 | TI-STN-08/Case 1-1 · 1-2 | 기존 화면에서 따옴 | 1657×326 #E9EDF4, 안내 문구 Inter Regular 14 가운데 (「No files found.⏎Click Import to add a file.」 · 「No results found.」), 원본에 번호 표시 없음 | [3672:1148](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3672-1148) |
 
 ### 근거로 풀린 것
@@ -228,6 +231,7 @@ started: 2026-11-26
 | C7 | 화면 이름 「Assay Pack Setting」 (패널 화면 정보 · 경로 File details) | 「Assay Pack File Details」, 경로 Setting > Assay Pack Setting > Details (TI-STN-08-P-R01, 뒤 단계용 5) | TI-STN-08-P · LI-STN-08-P 화면 정보 | IA (`ia/ia-screens.csv`) | 같음 | - | |
 | C8 | PCR 구성품 Barcode Info 머리 「Barcode Scheme Name」, LI-STN-08-P Extraction 머리 「Schema Name」 | 「Barcode Schema Name」 (뒤 단계용 8) | TI-STN-08-P · LI-STN-08-P Case | 2단계 용어 목록 | 같음 | - | 맞음 (오타, 2026-11-26) |
 | C9 | Active only 체크박스 Square 모양 | Circle Checkbox (Common UX Search Area 조회 조건 체크박스) | TI-STN-08 #1-3 · LI-STN-08 #1-3 | COMM-5-p | 같음 | O | |
+| C10 | File details 정보 묶음 (기존 원본 글 · 표 묶음) | Common UX List Card · Table Card · Outline Container Tab으로 다시 그림 | TI-STN-08-P #3 · LI-STN-08-P #3 (Case 1-1 ~ 4-1 같음) | COMM-5-e · COMM-5-s | 같음 | O | |
 | C3 | Confirm_029 · 030 발생 조건 (Alert 카탈로그 기존 조건) | DS-0012 결정대로 File Details에서 Active · Inactive를 바꾸고 [Save]를 누를 때 Confirm_029 · 030을 띄움 (다른 작업의 결정을 따름, 멈춘 20261125-최고관리자-assay-pack에서 이어받음, 이 작업 5단계 완료 때 카탈로그 반영 전) | TI-STN-08-P #4 | DS-0012 | T만 | O | |
 
 ## 검토 질의
