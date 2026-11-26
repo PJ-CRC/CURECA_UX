@@ -178,21 +178,15 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 | Inventory | 디스크립션 1 · 화면 3 | |
 | Sample | 디스크립션 1 | |
 | System | 디스크립션 1 | |
-| Sample Storage | 디스크립션 1 | |
-| Consumable Storage | 디스크립션 1 | |
-| Sample Pre-treatment | 디스크립션 1 | |
-| High-throughput Extraction | 디스크립션 1 | |
-| Flexible Extraction | 디스크립션 1 | |
-| PCR Setup | 디스크립션 1 | |
+| Sample Storage | 디스크립션 1 · 화면 3 | |
+| Consumable Storage | 디스크립션 1 · 화면 3 | |
+| Sample Pre-treatment | 디스크립션 1 · 화면 3 | |
+| High-throughput Extraction | 디스크립션 1 · 화면 3 | |
+| Flexible Extraction | 디스크립션 1 · 화면 3 | |
+| PCR Setup | 디스크립션 1 · 화면 3 | |
 | Plate Sealing | 디스크립션 1 | |
-| Universal PCR | 디스크립션 1 | |
-| Sample Storage (1) | 화면 3 | |
-| Consumable Storage (1) | 화면 3 | |
-| Sample Pre-treatment (1) | 화면 3 | |
-| High-throughput Extraction (1) | 화면 3 | |
-| Flexible Extraction (1) | 화면 3 | |
-| PCR Setup (1) | 화면 3 | |
-| Universal PCR (1) | 화면 3 | |
+| Universal PCR | 디스크립션 1 · 화면 3 | |
+| No results found. | 디스크립션 3 | |
 | Error | 디스크립션 1 · 화면 3 | |
 | Warning | 디스크립션 1 · 화면 3 | |
 | Open | 디스크립션 1 · 화면 2 · 화면 4 | |

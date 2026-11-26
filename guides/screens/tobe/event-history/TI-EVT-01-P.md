@@ -63,7 +63,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 **3  Notes**
 - 정의
   - Resolution Notes 읽기 전용(Read only) 영역
-  - <span style="color:red">작성된 Resolution Notes가 있을 경우 노출</span>
+  - <span style="color:red">영역은 늘 노출, 작성된 Resolution Notes가 있을 경우 그 내용 노출</span>
 - 정책 참고 : <span style="color:red">POL-EVT-002</span>
 
 **4  Updated Date/Time, Updated by**
