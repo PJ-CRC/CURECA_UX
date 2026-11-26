@@ -250,6 +250,7 @@ td.usd{font-weight:700}
   function rtypeRank(u){ var t = rtypeOf(u), i = RTYPES.indexOf(t); return !t ? 999 : i >= 0 ? i : t === '(유형 없음)' ? 998 : 500; }
   function kindOf(u){
     if (u.reqId) return '요청';
+    if (u.chat) return u.chat === 'doc' ? 'UX 문서' : 'Figma 직접 수정';   // 서버가 대화 기록에서 모은 채팅 작업(2026-11-26, chatusage.js)
     var t = String(u.text || '').trim();
     if (/연관 항목|화면 찾기/.test(t)) return '연관 항목';
     if (/^(작업규칙|정책서|UX ?가이드|가이드 수정|기준 ?데이터|화면 ?정의서)/.test(t)) return 'UX 문서';
