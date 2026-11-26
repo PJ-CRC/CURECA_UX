@@ -1,120 +1,146 @@
 ---
 cid: TI-EVT-02-P
 pair_cid: LI-EVT-02-P
-tl_relation:   # 동일 | 권한 차이 | 기능 추가 | 단독
-title: Event Message Popup
-path:
-type:          # Page | Popup | Tab
-version:       # X.Y.ZZ. 케이스 1 · 2는 4단계 UX 확정 때 요청자가 정한 값(그 전까지 케이스 1은 기존 Ver, 케이스 2는 비움), 케이스 3은 기존 화면의 Ver 그대로 (reference-rules/description.md 7절 "화면 정보에 적는 값")
-date:          # YYYY.MM.DD. 케이스 3은 기존 화면의 Date 그대로, 케이스 1 · 2는 작성일
-author:        # 케이스 3은 기존 화면 담당자 그대로, 케이스 1 · 2는 요청자
-client_mode: [] # L-IOS 화면만. user_type과 함께 원본은 권한 · 모드 표(policy/permission-matrix.csv · client-mode-matrix.csv)이고 표 값을 적음(줄 찾는 법은 flow/2-evidence.md "경로 분기 기준마다 읽는 것"의 케이스 3 줄). 표에 없으면 질문 대기로 두고 4단계 답을 적음. 표는 5단계에서 맞춤
-user_type: []
-policies: []   # 정책 ID. 작업 완료 전인 결정으로 그렸으면 "POL-EQP-004 · DS-0012"처럼 논의 대상 ID를 함께 적고, 5단계(완료) 반영 뒤 뗌
-basis:         # 화면 기준: 시각 · history 커밋 (reference-rules/work-log.md "작업 기준")
-basis_versions: # 문서마다 basis 시각 전에 마지막으로 바뀐 때 (rules · policy · glossary · screens · common_ux 모두 @날짜)
-source: tobe   # To-Be 화면 MD. 작업방에 그렸는지는 머리말 figma로 가름
-figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1252   # 작업방의 이 CID 섹션 링크
+tl_relation: 동일
+title: Event Message
+path: Event History > Event Message
+type: Popup
+version: 2.1.14
+date: 2026.10.30
+author: 서보경
+client_mode: []
+user_type: [Service, Admin, User]
+policies: [POL-EVT-001, POL-EVT-003]
+basis:
+basis_versions:
+source: tobe
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1252
 ---
-# TI-EVT-02-P Event Message Popup
+# TI-EVT-02-P Event Message
 
-- T/L 차이:
-- 호출하는 화면: [CID] 화면 이름 (어디서 → 어디로)
-- 호출되는 곳: (공통 Popup이면 호출 위치 목록)
+- T/L 차이: 0 화면 정의만 다름(T-IOS는 Profile > General의 Event notifications 설정에 따라 노출). 1 ~ 12는 같음
+- 호출하는 화면: [TI-EVT-01-P] Event Detail (9 [View Details])
+- 호출되는 곳: Event 발생 시
 - 반영 대기 항목: `pending/open.md`에서 이 CID로 찾음
 - 화면 변경 이력: `screen-history.md`의 이 CID 줄
 
 ## 디스크립션
 
-<!-- 원본입니다. Figma 패널에 그대로 들어갑니다. 쓰는 법은 reference-rules/description.md, 작성예시문서는 examples/description-samples.md.
-     바뀐 글 표시(빨간 글씨 · 빨간 취소선)는 reference-rules/description.md 7절 "바뀐 글 표시"의 HTML 태그로 적습니다.
-     코드(화면 · 케이스 · Alert · Confirm · Toast · Common UX · 정책)는 화면 MD에 색을 적지 않습니다. Figma 패널에서만 파란색으로 칠합니다(reference-rules/description.md 7절 "참고 코드 표시").
-     아래는 모양 예시입니다. 실제 내용으로 바꿔 씁니다. -->
-
-**0  ○○ 화면**
+**0  <span style="color:red">Event Message</span> 화면**
 - 정의
-  - 내용
+  - Event 발생 시, 화면에 <span style="color:red">노출</span>되는 <span style="color:red">Event Message Popup</span>
+  - <span style="color:red">Profile > General의 Event notifications 설정이 On일 경우 노출, Off일 경우 미노출 (기본 On)</span>
+- 노출 조건
+  - 최초 로그인 이후 발생되는 메시지부터 노출되며, 여러 개 발생 시 누적되어 <span style="color:red">Popup</span>으로 동시에 노출
+  - 노출 형태 : 여러 개의 <span style="color:red">Popup</span>이 겹쳐서 화면에 <span style="color:red">노출</span>
+- 스크롤
+  - 노출되는 내용이 많을 경우, 줄임 처리하지 않고 모두 노출
+  - 최대 <span style="color:red">Popup</span> 크기를 초과할 경우, 스크롤 적용(UI 참고)
+- User Type : Service, Admin, User
+- 정책 참고 : POL-EVT-003
+
+**1  Level**
+- <span style="color:red">Event</span>의 Level인 <span style="color:red">Error</span>, <span style="color:red">Warning</span> 값 <span style="color:red">노출</span>
+- 정책 참고 : POL-EVT-001
+
+**2  Code**
+- Event Code <span style="color:red">노출</span>
+
+**3  Type**
+- Instrument, Inventory, Sample, System 중 해당되는 항목 <span style="color:red">노출</span>
+- 정책 참고 : POL-EVT-001
+
+**4  Description**
+- <span style="color:red">Event</span> 내용 <span style="color:red">노출</span>
+
+**5  Effect**
+- Event Code에 연계된 Scenario Code의 'description' 내용 <span style="color:red">노출</span>
+- 표기 방식
+  - 연계된 코드가 없는 경우, '-' 노출
+  - N개인 경우, 목록형으로 기호를 표기하여 N개 노출
+- 참고 문서명 : [SRD] CURECA Prep 및 Dx 장비 Event 정의
+
+**6  Recommended Action**
+- 조치 방법 내용 <span style="color:red">노출</span>
+
+**7  Module, Unit**
+- Event가 발생한 <span style="color:red">Instrument</span> 정보 <span style="color:red">노출</span>
+
+**8  [Close] 버튼**
 - 동작
-  - 내용
-- User Type : 
-- L-IOS Client Mode : (L-IOS 화면에만 씀)
+  - 클릭 시, <span style="color:red">Popup</span> 닫힘
+  - N개일 경우, <span style="color:red">Popup</span>이 닫히며 메시지 총 개수에서 제거되고 여러 개 <span style="color:red">Popup</span> 구조 리스트에서 제거
+- 정책 참고 : POL-EVT-003
 
-**1  ○○ 영역**
-- 정의
-  - 내용
-- 공통 UX 참고 : 
-
-**1-1  항목 이름(Dropdown)**
-- 기능 : 
-- Default : 
-- 드롭다운 리스트 항목
-  - 내용
-- 공통 UX 참고 : 
-
-**2  ○○ 리스트**
-- 정의 : 
-- 정렬
-  - Default : 
-- 컬럼 항목
-  - 컬럼 이름 : 무슨 값인지 / 표기 / 값이 없을 때
+**9  [View Details] 버튼**
 - 동작
-  - 내용
-- 공통 UX 참고 : 
+  - 클릭 시, 해당 Event의 <span style="color:red">Event Detail 화면으로 이동 : TI-EVT-01-P</span>
+  - N개일 경우, 클릭 시 <span style="color:red">Popup</span>이 모두 닫히며 이동
+- 정책 참고 : POL-EVT-003
 
-**3  [버튼 이름] 버튼**
-- 정의
-  - 내용
-- 활성화 조건
-  - 내용
+**10  [Close All] 버튼**
+- 노출 조건
+  - Event Message Popup이 2개 이상일 경우 노출(1개일 경우 미노출)
 - 동작
-  - 내용
-- 정책 참고 : 
+  - 클릭 시, 화면에 떠 있는 모든 Event Message Popup 일괄 닫힘
+- 정책 참고 : POL-EVT-003
+
+**11  메시지 개수 표기**
+- 노출 조건
+  - Event Message Popup이 2개 이상일 경우 노출(1개일 경우 미노출)
+- 노출 항목
+  - 현재 보고 있는 메시지 순서 / 총 발생한 Event Message 개수
+- 정책 참고 : POL-EVT-003
+
+**12  [< >] 메시지 변경 버튼**
+- 동작
+  - 클릭 시, 다음 메시지 또는 이전 메시지 확인 가능
+  - [Close]를 클릭하지 않으면, 확인한 메시지도 사라지지 않고 계속 남아 순서대로 다시 확인 가능
+- 공통 UX 참고 : COMM-5-m(3/4)
 
 ## 케이스
 
-<!-- 케이스 화면의 원본입니다 (flow/3-design.md 공통 5 "케이스 화면", 작성예시문서 examples/case-samples.md).
-     근거는 셋 중 하나: 기존 원본 / 디스크립션 조건 / 요청자. 어느 것도 아니면 올리지 않고 질문 대기에 둡니다.
-     종류(디스크립션 조건일 때): 1 상태별 데이터 노출, 2 올리거나 눌렀을 때 뜨는 것, 3 유형 · 대상에 따라 노출 항목 구성이 다른 것,
-     4 개수가 기준을 넘어 요소가 생기거나 배치가 바뀌는 것, 5 처음 들어왔거나 데이터가 없을 때, 6 한 번의 조작으로 여러 단계를 거쳐 바뀌는 것.
-     Case 번호는 바꾸지 않고, 지워도 다시 쓰지 않습니다. 케이스가 없으면 "없음"이라고 적습니다.
-     케이스 블록: Case마다 하나씩 둡니다. Figma 케이스 프레임은 이 블록을 그대로 옮깁니다.
-     ### Case n. 제목 = 초록 띠, 그 아래 머리 줄 세 줄 = 디스크립션 번호 · 근거 · 종류(근거가 디스크립션 조건이 아니면 `-`), #### n-1. 조건 = 노란 띠, 그 아래 글머리 기호 목록 = 띠 아래 설명 글.
-     케이스 3에서 기존 원본 케이스 프레임에 패널이 있으면, 패널의 번호마다 `번호. 내용` 줄을 그 번호 표시가 달린 노란 띠의 설명에 더합니다.
-     지운 케이스는 블록을 지우지 않고 머리 줄 아래에 `- 지움 (날짜, 이유)` 줄을 더합니다. -->
-
-### Case 1. 제목
-
-- 디스크립션 번호 :
-- 근거 (기존 원본 / 디스크립션 조건 / 요청자) :
-- 종류 (1 ~ 6, 근거가 디스크립션 조건일 때) :
-
-#### 1-1. 조건
-
-- 설명
+없음 (`Event History_asis` 페이지에 TI-EVT-02-P 케이스 프레임 없음)
 
 ## Alert · Confirm · Toast
 
-<!-- Alert · Confirm · Toast를 모두 적습니다. 코드는 카탈로그(alert/)의 ID. 카탈로그에 없으면 3단계에서 카탈로그에 새 줄을 더해 그 코드를 씁니다(flow/3-design.md 공통 1의 4, 케이스 3의 Toast는 flow/3-design-case3.md 3-2). Toast는 버튼 동작을 `-`로 둡니다. -->
-
 | 디스크립션 번호 | 종류 (Alert / Confirm / Toast) | 코드 | 언제 | 버튼 동작 |
 | --- | --- | --- | --- | --- |
+| - | - | - | 없음 | - |
 
 ## 화면 예시 글자
 
-<!-- 그릴 때 화면에 넣는 예시 값. 상태값 · 단위 · 품목 · 수치는 기준데이터(`glossary/`의 csv) · 정책 기준. 기준이 없으면 만들지 않고 "질문 대기"에 올립니다.
-     디스크립션 번호는 그 요소의 디스크립션 번호. 번호가 없는 요소는 `-`.
-     목록 · 표는 한 페이지 최대 노출 개수만큼 행을 채웁니다. 줄였으면 이유를 적습니다.
-     목록 · 표의 여러 행, 케이스 조각의 값, 지어 쓴 값을 적는 법은 flow/3-design.md 공통 1의 5. -->
-
 | 디스크립션 번호 | 요소 | 예시 값 | 기준 |
 | --- | --- | --- | --- |
+| 1 | Level 아이콘 | Error | 기존 원본 `3543:47691` (Icon/Popup Status) · `glossary/status-values.csv` Event Level |
+| 2 | Event Code | E0203 | 기존 원본 `3543:47691` |
+| 3 | Type | Inventory | `glossary/status-values.csv` Event Type (기존 Consumable → Inventory) |
+| 4 | Description | GANTRY Well Plate Expansion Operation Time Out Error | 기존 원본 |
+| 5 | Effect | Failed to transfer Consumable to next Module / Failed to unload consumable from STARlet | 기존 원본 |
+| 6 | Recommended Action | Check GANTRY Well Plate Expansion Cylinder | 기존 원본 |
+| 7 | Module · Unit | High-throughput Extraction (1) · M9600 | 기존 원본, 반영 대기 TI-EVT-02-P-R04 (이름과 번호 띄어 씀) |
+| 11 | 메시지 개수 | 1/20 | 기존 원본 |
 
 ## 화면 표기 글자
 
-<!-- 화면에 표기되는 영어 글자와 그 글자의 언어셋 Language ID를 적습니다. 지금 화면에 있는 글자만 둡니다(없어진 글자는 줄을 지움).
-     3단계에서 화면 MD를 쓸 때 함께 적고 화면을 고칠 때 같이 고칩니다(`flow/3-design.md` 공통 1의 9). Language ID는 4단계 절차 4번(UX 확정 뒤)에서 채웁니다. 번역과 이번 작업에서 바뀐 것(신규 · 변경 · 제거)은 표에 적지 않고 작업 기록 "언어셋" 절에 적습니다.
-     출처: 그 글자가 있는 곳. 화면(기획 프레임) / 디스크립션(디스크립션에 적힌 화면 표기 글자, 예: 드롭다운 리스트 항목 · Tooltip · 안내 문구) / 케이스(케이스 화면) 뒤에 위치를 붙입니다(예: `화면 1-1`, `디스크립션 1-2`, `케이스 Case 1-2`, 번호가 없으면 `화면 제목`처럼 위치 이름). 여러 곳이면 ` · `로 잇습니다. 출처는 글자를 찾아 고치고, 같은 영어 글자에 Language ID가 여럿일 때(버튼 · 제목 등 쓰임이 다름) 맞는 줄을 고르는 데 씁니다. 디스크립션의 설명 글과 GNB · LNB 같은 공통 영역의 글자는 적지 않습니다(공통 영역은 따로 관리, `background/todo.md` 5-3d). 숫자처럼 값이 들어가는 자리는 `{n}`으로 두고 한 줄로 적고, 출처에 그 값을 적습니다(예: `{n} items` · `화면 2-3 (n = 10 · 30 · 50 · 100)`, 언어셋 DB의 `{N} of {M} Items`와 같은 모양, 2026-11-25 서보경 정함).
-     Language ID: 언어셋 원본(language-set/db/)의 메뉴 파일 ID. 번역 전체는 이 ID로 원본에서 찾습니다. 원본에 아직 없는 글자는 비워 두고, 5단계에서 원본에 새 줄을 만들 때 채웁니다. 글자를 바꿀 때는 Language ID를 지우지 않고 둡니다(4단계가 이 ID로 언어셋 DB의 줄과 짝지어 변경을 가림). 바뀐 글자가 이미 언어셋에 있으면 5단계에서 그 ID로 바뀝니다(`language-set/README.md` "화면설계 흐름에서 반영하는 법"). -->
-
 | 화면 표기 글자 (영어) | 출처 | Language ID |
 | --- | --- | --- |
+| {n}/{m} | 화면 11 (n = 1, m = 20) | |
+| Close All | 화면 10 | |
+| Event Code: | 화면 2 | |
+| Type: | 화면 3 | |
+| Inventory | 화면 3 | |
+| Instrument | 디스크립션 3 | |
+| Sample | 디스크립션 3 | |
+| System | 디스크립션 3 | |
+| Error | 디스크립션 1 | |
+| Warning | 디스크립션 1 | |
+| Description | 화면 4 | |
+| Effect | 화면 5 | |
+| Recommended Action | 화면 6 | |
+| Module: | 화면 7 | |
+| Unit: | 화면 7 | |
+| High-throughput Extraction (1) | 화면 7 | |
+| M9600 | 화면 7 | |
+| Close | 화면 8 | |
+| View Details | 화면 9 | |
