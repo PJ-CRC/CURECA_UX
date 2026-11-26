@@ -246,6 +246,10 @@ started: 2026-11-25
 ### 컴포넌트 없이 그린 요소
 | 요소 이름 (종류) | 하는 일 | 쓴 곳 (CID · 디스크립션 번호) | 어디서 (후보 ID / 신규로 만듦 / 기존 화면에서 따옴) | 원본 요약 (기존 화면에서 따옴만: 크기 · 모서리 · 줄 × 칸 · 도형 · 글자 · 인스턴스) | Figma 링크 |
 | --- | --- | --- | --- | --- | --- |
+| scrim (Dim 바탕) | Popup 뒤 Dim | TI-EVT-P · LI-EVT-P 0 | 기존 화면에서 따옴 (`3543:47110` · `3543:46804` Alarm_List > scrim) | 1696×1023 · 모서리 0 · 도형 1 (#000000, 불투명도 0.7) · 글자 0 · 인스턴스 0 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3719-1888 |
+| Popup (Popup 바탕) | Event History Popup 틀 | TI-EVT-P · LI-EVT-P 0 | 기존 화면에서 따옴 (Alarm_List > Popup). Common UX Popup(COMM-5-m(1/4))은 PC 컴포넌트 없음 | 1475×794 · 모서리 0 · 테두리 #D6DBE1 1 · 바탕 #FFFFFF · 도형 1 (안 요소는 따로 그림: 제목 · 닫기 · 목록 요약 · 버튼 · 목록 · 페이지네이션) | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3719-1889 |
+| 검색 영역 (영역 틀) | 검색 조건 묶음 틀 | TI-EVT-P · LI-EVT-P 1 | 기존 화면에서 따옴 (Alarm_List > Text Data). 안의 입력 칸 · 버튼은 Common UX(Text Input · Dropdown · Square) | 1423×72 · 모서리 4 · 테두리 #DDDDDD 1 · 바탕 없음 · 줄 1 × 칸 7 (입력 5 · 버튼 2) | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3719-2204 |
+| 목록 요약 (요약 줄 틀) | Items · Open 개수 | TI-EVT-P · LI-EVT-P 2 | 기존 화면에서 따옴 (Popup > Frame 1984080651) | 314×22 · 모서리 0 · 글자 4 · 선 1 (Line 264, 22, #000000 20%) · 인스턴스 0 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3719-2237 |
 
 ### 근거로 풀린 것
 | 질문 | 푼 근거 |
