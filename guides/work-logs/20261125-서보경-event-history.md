@@ -26,10 +26,10 @@ started: 2026-11-25
 | 1. 시작 · 요건 정의 | 2026-11-25 | 요청자 확인 2026-11-25 | 겹치는 다른 작업: 없음 |
 | 2. 근거 · 분석 | 2026-11-26 | 물을 것 없음 (2026-11-26) | 정책 수정 범위 없음, 질문 대기 Q1 ~ Q4, 변경 확인 C1 ~ C12 |
 | 3. 화면 설계 | 2026-11-26 | 기계 검사 통과 (2026-11-26) | 6개 화면 MD · Figma, 질문 대기 Q1 ~ Q7, 변경 확인 C1 ~ C31 |
-| 4. 수정 · 확인 | | | 진행 중: 절차 1 답 반영 · 기계 검사 통과, C33 확인 기다림 (2026-11-26) |
+| 4. 수정 · 확인 | | | 진행 중: 절차 1 끝남, 절차 3 UX 확정 물음 (2026-11-26) |
 | 5. 완료 | | | |
 
-이어서 작업할 곳: 4단계 절차 1 · 사용자 확인 목록 답 반영 (2026-11-26): Q1 ~ Q7 풀림, 변경 확인 맞음, 검토 질의 1 ~ 3 고침, 기계 검사 통과. C33('No results found.', Q6 답으로 다른 화면 따름) — 요청자가 사용처를 되물어 "요청자 확인" 5로 답하고 문구 고르기 기다림 (다시 읽을 곳: 4단계 절차 1 순서 3 ~ 6 · 절차 3 / 작업 기록 "변경 확인" C33 · "검토 질의")
+이어서 작업할 곳: 4단계 절차 1 끝남 (2026-11-26): 사용자 확인 목록 · 검토 질의 1 ~ 4 모두 풀림, 기계 검사 통과. 절차 3 「최종으로 UX 확정을 하시겠습니까?」 물음, 답 기다림 (다시 읽을 곳: 4단계 절차 3 순서 2 ~ 8 / 작업 기록 "변경 확인" (맞음 · 업데이트 메모 O 줄) · "요건 목록" UI 작업 줄)
 
 ## 요청
 
@@ -268,6 +268,7 @@ started: 2026-11-25
 ### 찾은 것
 - Q4 답(2026-11-26, 서보경): Module이 1대로 설치되면 index (n)을 표시하지 않음 (Common UX COMM-4-a(1/4) Module명 규칙과 같음). 그래서 반영 대기 TI-EVT-01-P-R01 · LI-EVT-01-P-R04 · TI-EVT-02-P-R04의 「Flexible Extraction (1)」 · 「High-throughput Extraction (1)」은 번호 없이 반영함 (5단계에서 그 항목 변경 후 값과 다름을 적음)
 - 플러그인 채우기 J089는 「실패」로 바꾼 뒤에 늦게 실행돼 TI-EVT-01-P 패널 행 11개 · 라벨 4개가 중복됨 → 2026-11-26 지움. 이 차례 수정은 중복을 피하려고 use_figma로 함
+- Event History · Event Detail의 Dim(scrim)은 검토 질의 4(요청자)로 원본 크기와 달라짐(너비 1920). "컴포넌트 없이 그린 요소"의 원본 요약은 원본 값 그대로 둠 (2026-11-26)
 - 원본 케이스 프레임 제목에 번호가 없음(`Case.`) → 케이스 블록 · 케이스 프레임을 `Case 1`로 적음 (TI-EVT-P · LI-EVT-P · LI-EVT-01-P)
 - 원본 케이스에 노란 띠가 없음 → 목록 케이스는 조건을 노란 띠 `1-1`로 두고 설명 글은 두지 않음(원본에 없음). LI-EVT-01-P 케이스는 조각마다 위에 있던 한 줄을 조건(노란 띠)과 설명으로 나눔 (글자는 원본 그대로, 오타만 C12)
 - 원본 번호 표시 5가 Notes 칸 위에 있으나 디스크립션 5는 [List] 버튼 → [List] 버튼 옆에 둠 (C29)
@@ -331,13 +332,14 @@ started: 2026-11-25
 | C28 | ~~Resolution Notes 입력 칸 (기존 텍스트 박스)~~ | ~~Common UX Inline Input~~ 바뀜 (2026-11-26, Claude, Text Input/Inline의 Typing 변형에 글자 수 · Cancel/Save 아이콘이 없어 데이터를 다 담지 못함 → 기존 화면에서 따옴, "컴포넌트 없이 그린 요소") | LI-EVT-01-P #3 · 케이스 | Common UX COMM-5-t | L만 | - | 해당 없음 (바꿔 그리지 않음, 2026-11-26) |
 | C31 | 상세 Level 값 (기존 그림 Error 칩) | Common UX Status/Event Level | TI-EVT-01-P · LI-EVT-01-P #1 | Common UX COMM-5-g · Status/Event Level (3단계에서 추가) | 같음 | - | 맞음 (2026-11-26) |
 | C32 | 목록 요약 디스크립션 Total Event | Items | TI-EVT-P · LI-EVT-P #2 | Q1의 답 | 같음 | - | 맞음 (2026-11-26) |
-| C33 | 데이터가 없을 때 문구 없음 | 검색 조건과 일치한 항목이 없을 경우 'No results found.' 노출 (디스크립션 3) | TI-EVT-P · LI-EVT-P #3 | Q6의 답 (다른 화면 확인) — TI-STN-03-01 · LI-STN-03-01 · TI-SVS-01 · LI-SVS-01 · TI-STN-08 케이스 | 같음 | O | |
+| C33 | 데이터가 없을 때 문구 없음 | 검색 조건과 일치한 항목이 없을 경우 'No results found.' 노출 (디스크립션 3) | TI-EVT-P · LI-EVT-P #3 | Q6의 답 (다른 화면 확인) — TI-STN-03-01 · LI-STN-03-01 · TI-SVS-01 · LI-SVS-01 · TI-STN-08 케이스 | 같음 | O | 맞음 (2026-11-26, 서보경: 통일, No results found. 그대로) |
 | C34 | Module 이름 뒤 (1) (L 목록 · 상세 · Message) | 번호 뺌 (Sample Storage, Flexible Extraction, High-throughput Extraction 등) | LI-EVT-P #3 · 케이스, TI · LI-EVT-01-P #2, TI · LI-EVT-02-P #7 | Q4의 답 | 같음 | O | 맞음 (2026-11-26) |
 | C35 | T 목록 10개 고정 | 9 노출 개수 Dropdown 추가 (10 · 30 · 50 · 100 items, Items 오른쪽), 3 동작 「선택한 개수만큼 노출」 | TI-EVT-P #3 · #9 | Q5의 답, Common UX COMM-5-g | T만 | O | 맞음 (2026-11-26) |
 | C36 | Resolution Notes 입력 중 닫기 · [List] Confirm 없음 | Confirm_016 노출 | LI-EVT-01-P #5 · #6 | Q2의 답, alert-catalog Confirm_016 | L만 | O | 맞음 (2026-11-26) |
 | C37 | 경로 Event History > Event Message | Event Message (Message는 단독으로 뜸) | TI-EVT-02-P · LI-EVT-02-P 경로 | 검토 질의 1 | 같음 | - | 맞음 (2026-11-26) |
 | C38 | Notes 「작성된 Resolution Notes가 있을 경우 노출」 | 「영역은 늘 노출, 작성된 Resolution Notes가 있을 경우 그 내용 노출」 | TI-EVT-01-P #3 | 검토 질의 2 | T만 | O | 맞음 (2026-11-26) |
 | C39 | 4 정의의 검은 취소선 문구 3줄 | 지움 (취소선 없는 문구만 남김) | TI-EVT-P #4 | 검토 질의 3 | T만 | - | 맞음 (2026-11-26) |
+| C40 | Dim(scrim) 1696 · 1628 너비, 패널 앞 흰 칸 · Popup 원본 자리 | Dim을 패널 왼쪽 끝(1920)까지 채우고 Popup · 화면 요소를 Dim 가운데로 (Event History +113px, Event Detail +167px) | TI-EVT-P · LI-EVT-P · TI-EVT-01-P · LI-EVT-01-P 0 | 검토 질의 4 | 같음 | - | 맞음 (2026-11-26) |
 | C29 | 번호 표시 5가 Notes 칸 위에 있음 | [List] 버튼 옆에 둠 | TI-EVT-01-P · LI-EVT-01-P #5 | 디스크립션 5 = [List] 버튼 | 같음 | - | 맞음 (2026-11-26) |
 | C30 | 검색 영역 입력 칸 · 목록 표 · Status Toggle · 페이지 번호 (기존 컴포넌트) | Common UX 컴포넌트(Text Input · Dropdown · Basic Table · Status/Event Level · Toggle Switch · Number Pagination)로 다시 그림 | TI-EVT-P · LI-EVT-P #1 · #3 · #4 · #8 | Common UX COMM-5-p · 5-g · 5-q · 5-l | 같음 | - | 맞음 (2026-11-26) |
 ## 검토 질의
@@ -347,6 +349,7 @@ started: 2026-11-25
 | 1 | 2026-11-26 | 요청자 | Event Message는 단독으로 뜨므로 경로를 Event Message로만 | TI-EVT-02-P · LI-EVT-02-P 경로 | 고침 (C37) | 2026-11-26 |
 | 2 | 2026-11-26 | 요청자 | C17 Notes 문구가 모호함 — 영역은 고정, 내용이 있으면 표기되는 뜻으로 | TI-EVT-01-P #3 | 고침 (C38) | 2026-11-26 |
 | 3 | 2026-11-26 | 요청자 | TI-EVT-P 디스크립션 4의 취소선 문구 제거, 취소선 없는 문구만 남김 | TI-EVT-P #4 | 고침 (C39) | 2026-11-26 |
+| 4 | 2026-11-26 | 요청자 | Event History · Event Detail도 Event Message처럼 Dim 배경을 패널까지 채우고 가운데 정렬 | TI · LI-EVT-P, TI · LI-EVT-01-P | 고침 (C40) | 2026-11-26 |
 
 ## 언어셋
 
@@ -357,7 +360,7 @@ started: 2026-11-25
 | 1 | 2026-11-25 | 1단계 절차 4 순서 3 (IA와 화면이 다른 곳) | 화면 이름: IA Lv.2는 `Event Detail` · `Event Message`, 화면은 `Event History Detail` · `Event Message Popup`. 어느 이름으로 그릴지 | TI-EVT-01-P · LI-EVT-01-P · TI-EVT-02-P · LI-EVT-02-P | | IA 이름대로 (`Event Detail` · `Event Message`) (2026-11-25, 서보경) |
 | 2 | 2026-11-25 | 1단계 절차 4 순서 3 (IA와 화면이 다른 곳) | 짝 화면 관계: IA T-IOS 줄은 `짝 화면 동일 Y`인데, 화면은 L-IOS에만 Status Toggle · [Mark all as Closed] · Resolution Notes 입력이 있어 다름(화면 MD `tl_relation: 기능 추가`). IA를 화면에 맞출지 | TI-EVT-P · TI-EVT-01-P (짝 LI-EVT-P · LI-EVT-01-P) | | IA 그대로 — T · L은 같은 화면이고 기능 차이일 뿐 (2026-11-25, 서보경) |
 | 3 | 2026-11-25 | 1단계 절차 5 질문 6 | 대상 화면의 반영 대기 항목 23개(묶음 1 ~ 6)를 묶음마다 반영할지 | "대상 화면의 반영 대기 항목" 묶음 1 ~ 6 | | 묶음 1 ~ 5 반영 (1 · 3 · 4 · 5는 추천대로, 2는 「T-IOS는 Status 변경 기능 없이 목록에 상태값만 표기」로 반영), 묶음 6 제외 (바꾸지 않음) (2026-11-25, 서보경) |
-| 5 | 2026-11-26 | 4단계 절차 1 (C33 답 대신 되물음) | 「데이터 없음」 문구는 다른 화면에서 어디에 쓰나, 보통 무엇을 쓰나 → 저장소 사용처를 보여 줌(No results found. LID-STN-015: Protocol · Tube · Assay Pack Setting / No {대상} found.: Tube · Assay Pack 등록 없음 / There are no tests in progress. / No registered modules available / No item). 추천 No results found. 그대로, 다른 안 No events found. | TI-EVT-P · LI-EVT-P #3 | 'No results found.'로 둔 채 기다림 | |
+| 5 | 2026-11-26 | 4단계 절차 1 (C33 답 대신 되물음) | 「데이터 없음」 문구는 다른 화면에서 어디에 쓰나, 보통 무엇을 쓰나 → 저장소 사용처를 보여 줌(No results found. LID-STN-015: Protocol · Tube · Assay Pack Setting / No {대상} found.: Tube · Assay Pack 등록 없음 / There are no tests in progress. / No registered modules available / No item). 추천 No results found. 그대로, 다른 안 No events found. | TI-EVT-P · LI-EVT-P #3 | 'No results found.'로 둔 채 기다림 | No results found. 그대로, 통일 (2026-11-26, 서보경) |
 | 4 | 2026-11-25 | 1단계 절차 5 질문 7 | 위 요건 목록과 흐름대로 진행할지 (2단계로 넘어갈지) | 요건 1 | | 그대로 진행 (2026-11-25, 서보경). 이어서 「1단계까지만 하고 2단계는 멈춤」 (2026-11-25, 서보경) |
 
 ## 이 작업의 논의 대상
