@@ -402,18 +402,14 @@ started: 2026-11-25
 
 - **대조는 문구만 (2026-11-26 서보경, 요청자 확인 14):** 언어셋 대상은 문자 그 자체 — `:` 같은 특수문자, 값(`{date}` · `{id}` · 숫자), Module · Unit 인덱스 `(n)`은 빼고 봄. 그래서 TI · LI-EVT-02-P `Event Code:` · `Type:` · `Module:` · `Unit:` = LID-EVT-041 · 004 · 012 · 013, TI · LI-EVT-01-P `Updated Date/Time. {date}` · `Updated by. {id}` = LID-EVT-027 · 028 (모두 있음, CID도 이미 있음). `{n} items` · `of`는 대상 아님(Items만), `{n}/{m}`은 문자가 없어 대상 아님. asis와 인덱스만 다른 Module 이름(LI-EVT-P 목록 `Sample Storage(1)` 등, `CFX96-1`)은 바뀌지 않은 글자로 봄
 - 언어셋 DB에서 이 화면 CID인데 표에 없어도 두는 것(판단, 2026-11-26 Claude): Select a Date · Sun ~ Sat · Done (LID-RUN-021 · LID-STA-009 ~ 015 · LID-EVT-025) — 1 기간 검색이 여는 Common UX Date Calendar의 글자. 기획 프레임에 그리지 않아 표에 없을 뿐 화면에서 그대로 씀
-- 화면 MD "화면 표기 글자" 표의 Language ID: `있음`과 바뀌지 않은 줄의 메뉴 파일 ID를 채움 (2026-11-26). `변경` 줄 · 공통에만 있는 줄 · 요청자 확인 14 줄은 비움
+- 화면 MD "화면 표기 글자" 표의 Language ID: `있음`과 바뀌지 않은 줄의 메뉴 파일 ID를 채움 (2026-11-26). `변경` 줄 · 공통에만 있는 줄은 비움. 요청자 확인 14 답 뒤 `Event Code:` · `Type:` · `Module:` · `Unit:` · `Updated …` 줄도 채움
 
-**새로 넣을 줄** (언어셋 DB 대조가 `없음`이고 `제거`가 아닌 줄. 요청자 확인 14 줄은 답 뒤 확정)
+**새로 넣을 줄** (언어셋 DB 대조가 `없음`이고 `제거`가 아닌 줄)
 
 | English | Type | German | Portuguese | Spanish | Italian | French | 검증 상태 | 가장 긴 언어 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Resolution Notes | title | Lösungsnotizen | Notas de Resolução | Notas de Resolución | Note di Risoluzione | Notes de résolution | AI 번역 | ES · IT · FR (19) |
-| {n}/{m} | txt | - | - | - | - | - | AI 번역 | - |
-| CFX96 (1) | txt | - | - | - | - | - | AI 번역 | - (요청자 확인 14) |
-| {n} items | txt | {n} Einträge | {n} itens | {n} elementos | {n} elementi | {n} éléments | AI 번역 | ES (13) (요청자 확인 14) |
-| of | txt | von | de | de | di | sur | AI 번역 | DE · FR (3) (요청자 확인 14) |
-| {n} /300자 | txt | {n}/300 Zeichen | {n}/300 caracteres | {n}/300 caracteres | {n}/300 caratteri | {n}/300 caractères | AI 번역 | PT · ES · FR (18) (요청자 확인 14) |
+| {n} /300자 | txt | {n}/300 Zeichen | {n}/300 caracteres | {n}/300 caracteres | {n}/300 caratteri | {n}/300 caractères | AI 번역 | PT · ES · FR (18) — 요청자 확인 15가 「같은 글자」면 지움 |
 
 ## 요청자 확인
 
