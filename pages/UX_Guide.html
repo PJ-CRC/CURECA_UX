@@ -818,7 +818,7 @@ html.embed,html.embed body{overflow:hidden}
       }
       FILES = FILEMAP = null;
       return Promise.all([metaP, fetch(g.mdPath || base + 'guide.md', { cache: 'no-store' }).then(function(r){ if (!r.ok) throw 0; return r.text(); })]);
-    }).then(function(d){ meta = d[0]; head(meta); fit(); delShow(); if (d[2]) { scBuild(d[2]); fixes(); return; } build(d[1], keepSec); fixes(); itemDates(); }, function(){ fail('이 가이드를 찾지 못했습니다: ' + id); });
+    }).then(function(d){ meta = d[0]; head(meta); fit(); delShow(); if (d[2]) return pendLoad().then(function(){ scBuild(d[2]); fixes(); }); build(d[1], keepSec); fixes(); itemDates(); }, function(){ fail('이 가이드를 찾지 못했습니다: ' + id); });
   }
   /* 권한: 「UX 문서 · 쓰기」가 없으면 보기만 — 수정 요청 버튼 · 수정 반영 안내(연관 항목 찾기 등)를 숨긴다(서버도 막는다) */
   fetch('/api/me', { cache: 'no-store' }).then(function(r){ return r.json(); }).then(function(m){
@@ -1562,6 +1562,20 @@ html.embed,html.embed body{overflow:hidden}
     var fit = function(c){ var x = c.length - hd.length; if (x <= 0 || I.now < 0) return c; return c.slice(0, I.now).concat([c.slice(I.now, I.now + x + 1).join(' | ')], c.slice(I.now + x + 1)); };
     return ls.slice(2).map(function(l){ var c = fit(cells(l)), g = function(i){ return i >= 0 ? (c[i] || '') : ''; }; return { no: g(I.no), kind: g(I.kind), now: g(I.now), to: g(I.to), why: g(I.why), st: g(I.st) }; });
   }
+  /* 반영 대기 목록이 규칙 저장소 pending/open.md 한 파일이면(2026-11-24 CURECA부터, 줄마다 「화면 (CID)」) 화면마다 그 CID 줄을 보인다.
+     파일이 없으면 PEND = null → 예전처럼 화면 MD 안의 「## 반영 대기 목록」 절 */
+  var PEND = null;
+  function pendLoad(){
+    var p = ((FILES || [])[0] || {}).mdPath || '', i = p.indexOf('/guides/'); PEND = null;
+    if (i < 0) return Promise.resolve();
+    return fetch(p.slice(0, i + 8) + 'pending/open.md', { cache: 'no-store' }).then(function(r){ return r.ok ? r.text() : ''; }).catch(function(){ return ''; }).then(function(t){
+      var ls = String(t || '').split(/\r?\n/).filter(function(l){ return /^\s*\|/.test(l); }); if (ls.length < 2) return;
+      var hd = cells(ls[0]).map(function(h){ return h.replace(/\s/g, ''); }), sc = hd.indexOf('화면(CID)'); if (sc < 0) return;
+      var body = '## 반영 대기 목록\n' + ls[0] + '\n' + ls[1] + '\n', by = {};
+      ls.slice(2).forEach(function(l){ var m = /\(([^()]+)\)\s*$/.exec(cells(l)[sc] || ''); if (m) (by[m[1].trim()] = by[m[1].trim()] || []).push(l); });
+      PEND = {}; Object.keys(by).forEach(function(c){ PEND[c] = fixRows(body + by[c].join('\n') + '\n'); });
+    });
+  }
   function scBuild(texts){
     SC = { menus: [], byCid: {}, overview: '' }; var menus = {}, order = [], split = !otherTeam();   // AS IS · To Be 나눔은 CURECA만(2026-11-26)
     FILES.forEach(function(f, i){
@@ -1589,7 +1603,7 @@ html.embed,html.embed body{overflow:hidden}
       s.pols = uniq(listOf(s.o.policies).concat(pl.match(/POL-[A-Z]{3}-\d{3}/g) || []));
       s.pvs = [];   // 예전 임시 정책(provisional) — 새 흐름에서 없앰
       // 대기 · 작업 중은 Workbench · 작업대기와 같은 기준(작업 중 = 「작업 중 (작업 기록)」 · 예전 「반영 중」)
-      s.fixes = fixRows(s.body); s.wait = s.fixes.filter(function(f){ return /^대기/.test(f.st); }).length; s.doing = s.fixes.filter(function(f){ return /^(작업 중|반영 중)/.test(f.st); }).length;
+      s.fixes = PEND ? (PEND[s.cid] || []) : fixRows(s.body); s.wait = s.fixes.filter(function(f){ return /^대기/.test(f.st); }).length; s.doing = s.fixes.filter(function(f){ return /^(작업 중|반영 중)/.test(f.st); }).length;
       var cl = (s.body.match(/^-\s*호출 위치:(.*)$/m) || [])[1] || '';
       s.calls = (cl.match(CID_RE) || []).filter(function(c){ return c !== s.cid; });
     });
