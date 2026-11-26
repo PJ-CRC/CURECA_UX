@@ -268,6 +268,35 @@ started: 2026-11-26
 
 ## 언어셋
 
+| 변경 상태 | CID · 출처 | Language ID | English (변경은 변경 전 → 변경 후) | 번역 대상 (O / - 이유) | 언어셋 DB 대조 |
+| --- | --- | --- | --- | --- | --- |
+| 신규 | LI-STN-08 디스크립션 4 (C16) | LID-STN-377 | No files found. | O | 있음 |
+| 신규 | LI-STN-08 디스크립션 1-4 (C16) | LID-STN-015 | No results found. | O | 있음 |
+| 제거 | TI-STN-08-P · LI-STN-08-P (asis 화면 글자, C8) | | Barcode Scheme Name | - (제거) | 없음 |
+| 제거 | LI-STN-08-P (asis 화면 글자, C8) | | Schema Name | - (제거) | 없음 |
+| DB 맞춤 (추가) | TI-STN-08 화면 2 · 디스크립션 2, LI-STN-08 디스크립션 2, TI-STN-08-P 화면 배경 목록 | | {n} items | O | 없음 |
+| DB 맞춤 (추가) | TI-STN-08-P · LI-STN-08-P 화면 3 · 케이스 Case 1-1 ~ 4-1 | | File Info | O | 없음 |
+| DB 맞춤 (추가) | TI-STN-08-P · LI-STN-08-P 화면 3 · 케이스 Case 4-1 | | Test Target Selectable | O | 없음 |
+| DB 맞춤 (추가) | TI-STN-08-01 화면 1 · 케이스 Case 1-1 · 1-2 | | json · Multiple files | O | 없음 |
+| DB 맞춤 (추가) | TI-STN-08-01 화면 2 · 케이스 Case 1-2 | | {n} MB | - (단위 MB 미번역, 공통 LID-COM-TRM-195) | 없음 |
+| DB 맞춤 (CID 추가) | TI-STN-08 | LID-STN-006 | 1개 (Items) | DB 그대로 | 있음 |
+| DB 맞춤 (CID 추가) | TI-STN-08 · LI-STN-08 | LID-SPT-033 | 1개 (PCR, 공통 LID-COM-TRM-005 참조) | DB 그대로 | 있음 |
+| DB 맞춤 (CID 추가) | TI-STN-08-P | LID-STN-361 · LID-STN-363 · LID-TMG-035 | 3개 (File name · File type · Import) | DB 그대로 | 있음 |
+| DB 맞춤 (CID 추가) | TI-STN-08-01 | LID-STN-021 | 1개 (Cancel) | DB 그대로 | 있음 |
+
+- 화면 MD 다섯 개 "화면 표기 글자" 표의 Language ID를 채움 (2026-11-26, 229줄. 메뉴 파일 ID만, 이 화면 → 같은 메뉴 → 다른 메뉴 순)
+- 판단한 곳: `{n}` 줄은 언어셋 DB의 `{N}` 줄(예: `Segment Info ({N})` LID-STN-399)과 자리 표시 표기만 달라 같은 글자로 보고 ID를 채움. TI-STN-08-P · LI-STN-08-P의 "화면 배경 목록 (TI-STN-08)" 글자는 TI-STN-08 목록이라 08-P CID 추가로 보지 않음
+
+**새로 넣을 줄**
+
+| English | Type | German | Portuguese | Spanish | Italian | French | 검증 상태 | 가장 긴 언어 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| {n} items | txt | {n} Einträge | {n} itens | {n} elementos | {n} elementi | {n} éléments | AI 번역 | ES |
+| File Info | txt | Dateiinformationen | Informações do ficheiro | Información del archivo | Informazioni file | Informations du fichier | AI 번역 | PT · ES · FR |
+| Test Target Selectable | txt | Testziel auswählbar | Alvo de Teste Selecionável | Diana de Prueba Seleccionable | Target Test selezionabile | Cible de test sélectionnable | AI 번역 | ES |
+| json · Multiple files | txt | json · Mehrere Dateien | json · Vários ficheiros | json · Varios archivos | json · Più file | json · Plusieurs fichiers | AI 번역 | FR |
+| {n} MB | txt | - | - | - | - | - | AI 번역 | - |
+
 ## 요청자 확인
 
 | # | 생긴 날 | 단계 · 절차 (질문 번호 또는 `예외`) | 물은 것 | 관련된 곳 (CID · 디스크립션 번호 · Language ID) | 답을 받을 때까지 둔 모습 (예외 질문만) | 답 (날짜) |
@@ -281,7 +310,8 @@ started: 2026-11-26
 | 7 | 2026-11-26 | 2단계 · 절차 6 질문 2 | DS-0012(Confirm_029 · 030 발생 조건을 File Details [Save]로) 결정을 멈춘 작업 기록 20261125-최고관리자-assay-pack이 반영하기로 되어 있음. 이 작업이 이어받아 새 결정대로 그리고 5단계에 반영할지, 기다릴지 | TI-STN-08-P #4 · DS-0012 | | 이 작업이 이어받아 새 결정대로 그림, 3단계로 넘어감 (2026-11-26) |
 | 8 | 2026-11-26 | 4단계 · 절차 3 (UX 확정) | 최종으로 UX 확정을 하시겠습니까? | 요건 1 | | UX 확정 (2026-11-26, Workbench R005 답) |
 | 9 | 2026-11-26 | 4단계 · 절차 3 순서 2 | 기계 검사를 한 번 더 검토할까요? (절차 1번 기계 검사 뒤로 C17을 고침) | TI-STN-08 · LI-STN-08 · TI-STN-08-P · LI-STN-08-P | | 검토함 (2026-11-26). 기계 검사 통과 (2026-11-26): C17 화면 4개 · TI-STN-08 Case의 Search Area 버튼 Square Size M 인스턴스 66×40 · 94×40, 위아래 14, 간격 10, 오른쪽 20, Search Area 틀 1639×68 그대로, 글자 넘침 · 겹침 없음. 바로 고친 것 · 더한 질문 대기 없음 |
-| 10 | 2026-11-26 | 4단계 · 절차 3 순서 3 | 요건 1 UI 작업 줄을 `대상`으로 확정할지 (배치 · 요소 바뀜 C4 · C9 · C10 · C11 · C12 · C17, 화면 표기 글자 바뀜 C1 · C2 · C16. 디자인 화면은 보지 못함. 케이스 3이라 Ver 묻지 않음) | 요건 1 | | |
+| 10 | 2026-11-26 | 4단계 · 절차 3 순서 3 | 요건 1 UI 작업 줄을 `대상`으로 확정할지 (배치 · 요소 바뀜 C4 · C9 · C10 · C11 · C12 · C17, 화면 표기 글자 바뀜 C1 · C2 · C16. 디자인 화면은 보지 못함. 케이스 3이라 Ver 묻지 않음) | 요건 1 | | 대상 (2026-11-26) |
+| 11 | 2026-11-26 | 4단계 · 절차 4 · UI팀에 넘길 것을 보여 줌 | `templates/ui-handover.md` 양식으로 UI팀에 넘길 것 (케이스 3: 작업 범위 `다시 그리기 (글자만)` LI-STN-08 · TI-STN-08-P · LI-STN-08-P, 언어셋 신규 2 · 제거 2) | LI-STN-08 · TI-STN-08-P · LI-STN-08-P | | 보여 줌 (2026-11-26, Workbench R005 완료 note) |
 
 ## 이 작업의 논의 대상
 
