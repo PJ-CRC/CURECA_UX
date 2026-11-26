@@ -118,7 +118,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 
 ## 케이스
 
-### Case 1. 목록의 텍스트 영역의 '...' 줄임된 경우, 마우스 hover시, 툴팁박스로 전체 내용 제공
+### Case 1. 목록의 텍스트 영역의 '...' 줄임된 경우, 마우스 hover시, Tooltip으로 전체 내용 제공
 
 - 디스크립션 번호 : 3
 - 근거 (기존 원본 / 디스크립션 조건 / 요청자) : 기존 원본
