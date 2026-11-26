@@ -8,13 +8,13 @@ cid_system:
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3481-216078 (UX AI TEST 「Setting  Ⓛ / Ⓣ_To Be」 페이지)
 test: false
 basis_start: 2026-11-26 09:11 · history 8d250d2f
-basis:
+basis: 2026-11-26 17:09 · history 402e669e
 basis_versions:
-  rules:
-  policy:
-  glossary:
-  screens:
-  common_ux:
+  rules: CURECA 작업규칙 @2026-11-26 14:30
+  policy: CURECA 정책서 @2026-11-25 21:21
+  glossary: 기준데이터 @2026-11-26 15:17
+  screens: 화면 정의서 @2026-11-26 16:15
+  common_ux: Common UX (common-ux/comm-index.md) @2026-11-25 16:08
 started: 2026-11-26
 ---
 # 작업 기록: Assay Pack Setting 화면을 To Be 페이지에 처음부터 다시 그림
