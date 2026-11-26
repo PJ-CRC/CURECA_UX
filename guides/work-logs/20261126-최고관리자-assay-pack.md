@@ -144,7 +144,7 @@ started: 2026-11-26
 | 1 · TI-STN-08 #3 [Delete] Toast 문구 | 정책에 있음 | Confirm_026 버튼 동작 · Toast_001 "The selected files have been deleted." | 뒤 단계용 1 근거로 풀림 |
 | 1 · TI-STN-08-P #4 [Delete] Confirm 제목 | 기존 화면이 정책과 다름 | 화면 「Delete the selected file?」 ↔ Confirm_026 「Delete the selected files?」 | C1 |
 | 1 · TI-STN-08-P #4 [Delete] Toast 문구 | 기존 화면이 정책과 다름 | 화면 「The file has been deleted.」 ↔ Toast_001 「The selected files have been deleted.」 | C2 |
-| 1 · TI-STN-08-P #4 [Save] Confirm_029 · 030 발생 조건 | 논의 대상에 이미 있음 | DS-0012 결정 (다른 작업 기록 `work`) | 절차 6 질문 2 |
+| 1 · TI-STN-08-P #4 [Save] Confirm_029 · 030 발생 조건 | 논의 대상에 이미 있음 | DS-0012 결정 (다른 작업 기록 `work`) | 절차 6 질문 2 → 이어받아 새 결정대로 그림, C3 |
 | 1 · TI-STN-08-P #4 [Save] → Confirm_029 [Activate] 뒤 Toast | 정책에 없음 | Confirm_029 버튼 동작 "& Toast"인데 Toast 카탈로그에 활성 Toast 없음, 화면 #4는 "확인 시 반영"만 | Q2 |
 | 1 · TI-STN-08 #4-1 · TI-STN-08-P #3 Master Active 변경 버튼 | 기존 화면끼리 다름 (정책은 "바꿀 수 없음"만) | POL-TST-008 규칙 6 | Q1 |
 | 1 · TI-STN-08-P · LI-STN-08-P 패널 · 케이스 예시 값 | 정책에 있음 | POL-TST-010 규칙 1, test-items · sample-types · modules 값과 같음 | 그대로 그림 |
