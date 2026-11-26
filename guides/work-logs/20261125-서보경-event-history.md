@@ -377,21 +377,19 @@ started: 2026-11-25
 | 변경 상태 | CID · 출처 | Language ID | English (변경은 변경 전 → 변경 후) | 번역 대상 (O / - 이유) | 언어셋 DB 대조 |
 | --- | --- | --- | --- | --- | --- |
 | 변경 | TI-EVT-P 화면 1 | | Event Id, Code → Event ID, Code | O | 있음 (LID-EVT-002) |
-| 변경 | TI-EVT-01-P · LI-EVT-01-P 화면 2 | | FlexibleExtraction (T) · Flexible Extraction(1) (L) → Flexible Extraction | - (고유명사, 공통 `미번역`) | 공통에 있음 (LID-COM-TRM-011) |
+| 변경 | TI-EVT-01-P 화면 2 | | FlexibleExtraction → Flexible Extraction | - (고유명사, 공통 `미번역`) | 공통에 있음 (LID-COM-TRM-011) |
 | 변경 | TI-EVT-01-P · LI-EVT-01-P 화면 2 | | Starlet → STARlet | - (고유명사, 공통 `미번역`) | 공통에 있음 (LID-COM-TRM-027) |
-| 변경 | TI-EVT-02-P · LI-EVT-02-P 화면 7 | | High-throughput Extraction(1) → High-throughput Extraction | - (고유명사, 공통 `미번역`) | 공통에 있음 (LID-COM-TRM-009) |
 | 변경 | TI-EVT-P · LI-EVT-P 화면 3 | | Sample Processing → Sample Processing (Upper) | - (고유명사, 공통 `미번역`) | 공통에 있음 (LID-COM-TRM-022) |
-| 변경 | TI-EVT-P · LI-EVT-P 화면 3 | | CFX96-1 → CFX96 (1) | - (고유명사) | 없음 — 비슷한 글자 공통 `CFX96` (LID-COM-TRM-029), 요청자 확인 14 |
-| 변경 | LI-EVT-01-P 케이스 Case 1-2 | | 0 /100자 → {n} /300자 | O | 없음 — 비슷한 글자 `{n}/{max} Characters` (LID-EVT-035), 요청자 확인 14 |
-| 신규 | TI-EVT-P 화면 9 · 디스크립션 9 | | {n} items | O | 없음 — 비슷한 글자 `{N} of {M} Items` (LID-EVT-044, T-IOS 목록 개수), 요청자 확인 14 |
-| 신규 | TI-EVT-P 화면 2 | | of | O | 없음 — 위와 같음, 요청자 확인 14 |
+| 변경 | LI-EVT-01-P 케이스 Case 1-2 | | 0 /100자 → {n} /300자 | O | 비슷한 글자 `{n}/{max} Characters` (LID-EVT-035), 요청자 확인 15 답 기다림 |
 | 신규 | TI-EVT-P · LI-EVT-P 디스크립션 3 | LID-STN-015 | No results found. | O | 있음 (setting-protocol 메뉴 파일) |
 | 제거 | TI-EVT-P · LI-EVT-P (asis 화면 글자 화면 2) | | OPEN | - (제거) | 없음 (LID-EVT-021은 이미 `삭제`) |
-| 제거 | LI-EVT-P (asis 화면 글자 화면 3, 목록 예시 데이터) | | Sample Storage(1) · Consumable Storage (1) · Sample Pre-treatment (1) · High-throughput Extraction(1) · Flexible Extraction(1) · PCR Setup(1) · Universal PCR(1) | - (제거) | 없음 |
 | 제거 | TI-EVT-02-P · LI-EVT-02-P (asis 화면 글자 화면 3) | | Consumable | - (제거) | 없음 (Event History 줄 LID-EVT-006은 이미 `삭제`) |
 | DB 맞춤 (추가) | TI-EVT-01-P · LI-EVT-01-P 화면 3 · 케이스 | | Resolution Notes | O | 없음 |
-| DB 맞춤 (추가) | TI-EVT-02-P · LI-EVT-02-P 화면 11 | | {n}/{m} | - (숫자 표기) | 없음 |
-| DB 맞춤 (CID 추가) | TI-EVT-P | LID-STN-006 | 1개 (Items) | DB 그대로 | 있음 |
+| DB 맞춤 (CID 추가) | TI-EVT-P | LID-STN-006 | 1개 (Items — 화면 `10 items of Items 1,112`에서 문구만, 요청자 확인 14 ④) | DB 그대로 | 있음 |
+| DB 맞춤 (CID 추가) | TI-EVT-P · LI-EVT-P | | 2개 (300 μL Tip Storage TRM-040 · CFX96 TRM-029 — 인덱스 (1) 뺀 문자, 요청자 확인 14 ③) | DB 그대로 | 공통에 있음 (LID-COM-…) |
+| DB 맞춤 (CID 추가) | LI-EVT-01-P | | 1개 (Flexible Extraction — asis `Flexible Extraction(1)`, 인덱스만 다름) | DB 그대로 | 공통에 있음 (LID-COM-TRM-011) |
+| DB 맞춤 (CID 추가) | TI-EVT-02-P · LI-EVT-02-P | | 1개 (High-throughput Extraction — asis `(1)`, 인덱스만 다름) | DB 그대로 | 공통에 있음 (LID-COM-TRM-009) |
+| DB 맞춤 (제거) | TI-EVT-P (DB 비고: 목록 총 개수) | LID-EVT-044 | {N} of {M} Items (T 목록 요약은 Items 문구만, 요청자 확인 14 ④) | - (제거) | 있음 |
 | DB 맞춤 (CID 추가) | TI-EVT-01-P · LI-EVT-01-P | LID-EVT-010 · LID-SPT-025 | 2개 (Code, Nucleic Acid Extraction) | DB 그대로 | 있음 |
 | DB 맞춤 (CID 추가) | TI-EVT-02-P · LI-EVT-02-P | LID-EVT-005 · LID-SPT-022 · LID-EVT-009 · LID-IVT-001 | 4개 (Instrument, Sample, System, Inventory) | DB 그대로 | 있음 |
 | DB 맞춤 (CID 추가) | TI-EVT-P · LI-EVT-P | LID-SPT-026 · LID-SPT-032 | 2개 (PCR Setup, Plate Sealing) | DB 그대로 | 있음 (sample-tracking 메뉴 파일) |
