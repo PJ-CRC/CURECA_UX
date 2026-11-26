@@ -2,8 +2,8 @@
   "id": "brex-gram-2_R007",
   "kind": "request",
   "team": "cureca",
-  "status": "진행 중",
-  "at": "2026-11-26T17:15:52+09:00",
+  "status": "보류",
+  "at": "2026-11-26T17:18:49+09:00",
   "createdAt": "2026-11-26T17:07:33+09:00",
   "by": "하승현",
   "doneBy": "Claude",
@@ -17,13 +17,24 @@
   "type": "요청",
   "layout": "",
   "text": "Case 3 테스트로 작업 지시를 해볼거야.\n작업할 Tobe 페이지에 작업해주고 관련 내용 기록은 하지 않아도 돼.\n정상적인 프로세스로 작업이 진행되는 지 확인하고 싶어서 그래.\n\nasis 링크 주소 주면 돼?",
-  "note": "작업규칙 · 기준 문서 읽는 중",
+  "note": "케이스 3 · 1단계 · 20261126-하승현-policy-setting — 요건 목록을 정리했습니다. 확인해 주시면 2단계로 넘어갑니다.\n\n**[1단계] 요건 목록을 확인해 주세요**\n작업 기록 20261126-하승현-policy-setting (테스트, workbench/test-work/) · 요청 R007 · 지나가는 단계 1 → 2 → 3 → 4 → 5\n\n**1. 요건 목록**\n- 요건 1. Policy Setting 기존 화면 8개를 `Policy Setting_tobe`에 다시 그림 — 경로 8 옮겨 다시 그림 (케이스 3) · UI 작업 대상 아님\n  - T-IOS: Policy Setting (TI-STN-01) · Cost Setting (TI-STN-01-01) · Extraction Module Usage Setting (TI-STN-01-02) · Comparison Simulation (TI-STN-01-03) · Analyze Breakpoint (TI-STN-01-04)\n  - L-IOS: Policy Setting (LI-STN-01) · Extraction Module Usage Setting (LI-STN-01-02) · Analyze Breakpoint (LI-STN-01-04)\n  - 8화면 모두 케이스 3 · 작업 대상 O (요청자 답: 전체 8화면)\n\n**2. 찾았지만 대상 아님** — 없음. 옮기는 요건이라 바뀌는 글자 · Common UX 요소 · 동작이 없음\n**3. 영향 화면** — 없음. 2단계에서 정책으로 찾은 것이 있으면 더함\n\n**4. 대상 화면의 반영 대기 항목** (19개, 묶음별)\n- 묶음 1 검사 항목 표기 (test-items.csv): LI-STN-01-02-R01 · TI-STN-01-02-R02 · TI-STN-01-03-R01\n- 묶음 2 IA · 화면 이름 · CID: LI-STN-01-R01 · LI-STN-01-04-R01 · TI-STN-01-02-R01\n- 묶음 3 정책 · 용어 (POL-TST-001 · 002 · ACC-001): LI-STN-01-R02 · TI-STN-01-R01 ~ R05\n- 묶음 4 표기 기준 (μL · 수량 표기 · Alert 배너): TI-STN-01-01-R01 · R02 · TI-STN-01-02-R03\n- 묶음 5 점검 발견 (Reagents 탭 정의 · 품목 새 버전 · 화면 정보 Ver): TI-STN-01-01-R03 · R04 · TI-STN-01-R06\n- 묶음 6 무엇으로 바꿀지 아직 정해지지 않은 항목: TI-STN-01-04-R01 (Breakpoint 계산 방식). 이번에 넣으면 2 · 3단계에서 정해 반영합니다\n\n**[질문 대기] 답해 주실 것**\nQ6 반영 대기 묶음 1 ~ 6을 어디까지 반영할까요?\n  - 묶음 1 ~ 6 모두 반영 (추천)\n  - 묶음마다 직접 적음\n  근거: 모두 이번 대상 화면 항목이고 다시 그리며 함께 고치는 것이 맞음. 테스트라 반영 대기 목록은 고치지 않음\nQ7 위 요건 목록과 흐름대로 진행하고 2단계로 넘어갈까요?\n  - 이대로 진행 (추천)\n  - 고칠 곳 있음\n\n[확인 필요]\nC1 겹치는 다른 작업: 20261126-최고관리자-assay-pack (Assay Pack Setting, 같은 STN 체계 · 화면은 겹치지 않음, 지금 4단계). 따로 진행합니다\nC2 테스트로 진행: 저장소(.history) 변경 없음(git status 깨끗함). 작업 기록 · To-Be 화면 MD 빈 틀 8개는 workbench/test-work/에만 씀\n\n규칙 점검: 1단계 「하지 않는 것」 · 절차 1 ~ 4 지킴 (1단계는 Figma asis 페이지를 열지 않고 asis 화면 MD로 읽음)\n작업 기준: basis 2026-11-26 17:17 · 작업규칙 CURECA 작업규칙 @원본 · 정책서 정책서 (policy) · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 (glossary) · 화면 정의서 화면 정의서 (screens)",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "[1단계] 반영 대기 묶음 1 ~ 6을 모두 반영하고 이 요건 목록대로 2단계로 넘어갈까요?",
+    "options": [
+      {
+        "label": "추천대로 진행 (모두 반영 · 2단계로)"
+      },
+      {
+        "label": "하나씩 정하기"
+      }
+    ],
+    "free": true
+  },
   "replies": [
     {
       "at": "2026-11-26T17:14:39+09:00",
@@ -39,6 +50,6 @@
       "cut": false
     }
   ],
-  "work": "",
+  "work": "20261126-하승현-policy-setting",
   "handoff": null
 }
