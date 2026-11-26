@@ -2,11 +2,11 @@
   "id": "brex-01_R001",
   "kind": "request",
   "team": "cureca",
-  "status": "대기",
-  "at": "2026-11-26T19:55:52+09:00",
+  "status": "진행 중",
+  "at": "2026-11-26T19:56:01+09:00",
   "createdAt": "2026-11-25T21:16:32+09:00",
   "by": "서보경",
-  "doneBy": "서보경",
+  "doneBy": "Claude",
   "pc": "BREX_01",
   "reqId": "R001",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,36 +17,11 @@
   "type": "요청",
   "layout": "",
   "text": "Event History 화면 옮겨줘\n\n기존 화면: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-45275&t=8ZUolJfFqEx5iunS-1\n옮길 페이지: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3577-18413&t=8ZUolJfFqEx5iunS-1",
-  "note": "",
+  "note": "답 반영 시작: 디스크립션 취소선 모두 지움 · UI 작업 줄 대상 아님 · UX 확정 기입",
   "shot": "",
   "shots": [],
   "images": [],
-  "frames": [
-    {
-      "nodeId": "3719:6",
-      "name": "TI-EVT-P"
-    },
-    {
-      "nodeId": "3769:1813",
-      "name": "TI-EVT-02-P"
-    },
-    {
-      "nodeId": "3751:579",
-      "name": "LI-EVT-P"
-    },
-    {
-      "nodeId": "3764:1390",
-      "name": "LI-EVT-01-P"
-    },
-    {
-      "nodeId": "3756:1924",
-      "name": "TI-EVT-01-P"
-    },
-    {
-      "nodeId": "3771:1955",
-      "name": "LI-EVT-02-P"
-    }
-  ],
+  "frames": [],
   "marks": [],
   "ask": null,
   "replies": [
