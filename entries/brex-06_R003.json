@@ -2,8 +2,8 @@
   "id": "brex-06_R003",
   "kind": "request",
   "team": "cureca",
-  "status": "진행 중",
-  "at": "2026-11-26T16:23:49+09:00",
+  "status": "보류",
+  "at": "2026-11-26T16:25:16+09:00",
   "createdAt": "2026-11-26T09:09:31+09:00",
   "by": "최고관리자",
   "doneBy": "Claude",
@@ -17,13 +17,24 @@
   "type": "요청",
   "layout": "",
   "text": "https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3288-235028&t=GdYCaPho44GgAu5i-1 여기가 AS IS\nAssay Pack Setting 화면 다시 그려줘",
-  "note": "변경 확인 모두 맞음 - 라벨 · 목록 지우고 기계 검사 하는 중",
+  "note": "케이스 3 · 4단계 절차 1 · 20261126-최고관리자-assay-pack - 사용자 확인 목록을 모두 반영했고 기계 검사를 통과했습니다. UX 확정 여부를 정해 주세요\n\n**반영한 것**\n- 변경 확인 C1 · C2 · C3 · C4 · C7 · C9 · C10 · C11 모두 맞음: 사용자 확인 라벨 9개 · 사용자 확인 목록 5개(TI-STN-08 · LI-STN-08 · TI-STN-08-P · LI-STN-08-P · TI-STN-08-01) 지움\n- 질문 대기 Q1 ~ Q6은 지난 차례에 반영함 (C12 ~ C16)\n\n**기계 검사** (고친 화면 TI-STN-08 · LI-STN-08 · TI-STN-08-P · LI-STN-08-P · TI-STN-08-01과 케이스 프레임): 통과\n- 바로 고친 것: LI-STN-08-P 패널이 기획 프레임보다 24px 길어 프레임을 1038 → 1062로 늘리고 케이스 프레임을 내림\n\n[질문 대기]\nQ 최종으로 UX 확정을 하시겠습니까?\n  - UX 확정 (추천)\n  - 고객 UX 검토 뒤에 확정\n확정하면 다음 차례에 기계 검사를 한 번 더 할지 · UI 작업 줄 · 이번 작업의 Ver을 함께 묻습니다 (케이스 3은 Ver · Date · 작성자를 바꾸지 않음)\n\n규칙 점검: 4단계 절차 1 「하지 않는 것」 · 화면 수정 규칙 · 기계 검사 시점 지킴\n작업 기준: basis 2026-11-26 09:27 · 작업규칙 CURECA 작업규칙 (rules) @원본 · 정책서 policy · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 glossary · 화면 정의서 screens",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "최종으로 UX 확정을 하시겠습니까?",
+    "free": true,
+    "options": [
+      {
+        "label": "UX 확정 (추천)"
+      },
+      {
+        "label": "고객 UX 검토 뒤에 확정"
+      }
+    ]
+  },
   "replies": [
     {
       "at": "2026-11-26T09:10:45+09:00",
