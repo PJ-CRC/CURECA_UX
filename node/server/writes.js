@@ -15,9 +15,9 @@ module.exports = function register(on, h) {
   const attachDir = path.join(C.root, 'workbench', 'req_images'), attachTmp = path.join(attachDir, '_tmp');
   // 첨부 조건 = Claude가 읽을 수 있는 것(Claude 문서 기준, 2026-11-11): 이미지 PNG · JPG · GIF · WEBP는 base64 10MB(파일 7.5MB) · 8000px 이하,
   //  PDF · 글(txt · md · csv)은 30MB 이하(claude.ai 파일 한도), 한 요청에 20개(claude.ai 한 메시지 한도). Word · Excel은 Claude가 바로 읽지 못해 받지 않는다
-  const ATT_IMG = ['png', 'jpg', 'gif', 'webp'], ATT_DOC = ['pdf', 'txt', 'md', 'csv'], ATT_N = 20;
+  const ATT_IMG = ['png', 'jpg', 'gif', 'webp'], ATT_DOC = ['pdf', 'txt', 'md', 'csv', 'docx', 'xlsx', 'pptx'], ATT_OFFICE = ['docx', 'xlsx', 'pptx'], ATT_N = 20;   // Office 문서(2026-11-26): 올릴 때 글(md)을 뽑아 둔다(office.js)
   const ATT_IMG_MAX = 7.5 * 1024 * 1024, ATT_DOC_MAX = 30 * 1024 * 1024;
-  const ATT_RE = /^[0-9a-f]{32}\.(png|jpg|gif|webp|pdf|txt|md|csv)$/;
+  const ATT_RE = /^[0-9a-f]{32}\.(png|jpg|gif|webp|pdf|txt|md|csv|docx|xlsx|pptx)$/;
 
   // 그림을 JPG(품질 85, 흰 바탕)로: 윈도우 System.Drawing(기존 서버와 같은 결과), 맥 sips. 안 되면 원본 그대로 복사(기존과 같음)
   function toJpeg(src, dst) {
@@ -89,8 +89,11 @@ module.exports = function register(on, h) {
       fs.renameSync(path.join(attachTmp, t), path.join(attachDir, f));
       let sf = '';
       if (/^[0-9a-f]{32}\.jpg$/.test(s) && core.exists(path.join(attachTmp, s))) { sf = `${id}_${n}_s.jpg`; fs.renameSync(path.join(attachTmp, s), path.join(attachDir, sf)); }
+      // Office 문서는 올릴 때 뽑아 둔 글(.txt.md)도 옮겨 text로 — Claude는 원본 대신 이것을 읽는다
+      let tf = ''; const tt = t.replace(/\.[a-z]+$/, '.txt.md');
+      if (ATT_OFFICE.includes(path.extname(t).slice(1)) && core.exists(path.join(attachTmp, tt))) { tf = `${id}_${n}.md`; fs.renameSync(path.join(attachTmp, tt), path.join(attachDir, tf)); }
       let nm = nn(a.name); if (nm.length > 80) nm = nm.slice(0, 80);
-      out.push({ file: 'workbench/req_images/' + f, small: sf ? 'workbench/req_images/' + sf : '', name: nm, size: fs.statSync(path.join(attachDir, f)).size });
+      out.push(Object.assign({ file: 'workbench/req_images/' + f, small: sf ? 'workbench/req_images/' + sf : '', name: nm, size: fs.statSync(path.join(attachDir, f)).size }, tf ? { text: 'workbench/req_images/' + tf } : {}));
     }
     return out;
   }
@@ -1442,16 +1445,22 @@ module.exports = function register(on, h) {
   on('POST', '/api/attach', async ({ q, raw }) => {
     let ext = String(q.get('ext') || '').toLowerCase(); if (ext === 'jpeg') ext = 'jpg'; if (ext === 'markdown') ext = 'md';
     const img = ATT_IMG.includes(ext);
-    if (!img && !ATT_DOC.includes(ext)) throw new Error('첨부할 수 없는 형식입니다(가능: 이미지 PNG · JPG · GIF · WEBP, PDF, 글 TXT · MD · CSV).');
-    const max = img ? ATT_IMG_MAX : ATT_DOC_MAX, over = img ? '이미지는 7.5MB 이하만 첨부할 수 있습니다.' : 'PDF · 글 파일은 30MB 이하만 첨부할 수 있습니다.';
+    if (['doc', 'xls', 'ppt'].includes(ext)) throw new Error('옛 형식(' + ext.toUpperCase() + ')은 글을 읽을 수 없습니다. Office에서 「다른 이름으로 저장」으로 ' + ext.toUpperCase() + 'X 형식으로 저장해 올려 주세요.');
+    if (!img && !ATT_DOC.includes(ext)) throw new Error('첨부할 수 없는 형식입니다(가능: 이미지 PNG · JPG · GIF · WEBP, PDF, 글 TXT · MD · CSV, 엑셀 · 워드 · 파워포인트 XLSX · DOCX · PPTX).');
+    const max = img ? ATT_IMG_MAX : ATT_DOC_MAX, over = img ? '이미지는 7.5MB 이하만 첨부할 수 있습니다.' : '문서 · 글 파일은 30MB 이하만 첨부할 수 있습니다.';
     let buf; try { buf = await raw(max + 1); } catch (e) { throw new Error(over); }
     if (!buf.length || buf.length > max) throw new Error(over);
+    // 암호 · 문서보안(DRM)이 걸린 Office 파일은 zip이 아니라 암호 컨테이너(D0 CF 11 E0)라 글을 읽을 수 없다 — 올리기 전에 알린다
+    if (ATT_OFFICE.includes(ext) && buf.length > 8 && buf.readUInt32BE(0) === 0xD0CF11E0) throw new Error('암호나 문서보안(DRM)이 걸린 파일이라 글을 읽을 수 없습니다. 보안을 풀거나 PDF로 저장해 올려 주세요.');
     fs.mkdirSync(attachTmp, { recursive: true });
     const old = Date.now() - 6 * 3600 * 1000;   // 등록하지 않고 남은 임시 파일은 6시간 뒤 지운다
     core.rmGlob(attachTmp, (x) => { try { return fs.statSync(path.join(attachTmp, x)).mtimeMs < old; } catch (e) { return false; } });
     const tmp = crypto.randomUUID().replace(/-/g, '') + '.' + ext;
     fs.writeFileSync(path.join(attachTmp, tmp), buf);
-    return { tmp };
+    // Office 문서: 글을 뽑아 같은 이름의 .txt.md로(등록할 때 요청 ID 이름의 .md로 옮김). 뽑지 못하면 원본만 둔다
+    let chars = 0;
+    if (ATT_OFFICE.includes(ext)) { try { const t = require('./office').toText(buf, ext); if (t) { fs.writeFileSync(path.join(attachTmp, tmp.replace(/\.[a-z]+$/, '.txt.md')), t, 'utf8'); chars = t.length; } } catch (e) {} }
+    return { tmp, chars };
   });
 
   // ── POST /api/requests {action: add | update | answer | delete} ──

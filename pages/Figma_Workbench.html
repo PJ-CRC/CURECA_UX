@@ -646,7 +646,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
         <div class="cmp-box">
           <button type="button" class="cmp-ico" id="attAdd" title="파일 첨부" aria-label="파일 첨부"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M10 4v12M4 10h12"/></svg></button>
           <button type="button" class="cmp-mark" id="markBtn" aria-pressed="false" title="수정할 부분 표시: 켜고 캡처 위를 드래그해 사각형을 그립니다(여러 개 · 상자는 끌어서 옮기고 모서리로 크기 조절 · Esc로 끄기)"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="1.5" stroke-dasharray="3 2"/></svg><span>영역 선택</span></button>
-          <input type="file" id="attFile" accept="image/png,image/jpeg,image/gif,image/webp,application/pdf,.pdf,.txt,.md,.markdown,.csv,text/plain,text/markdown,text/csv" multiple hidden>
+          <input type="file" id="attFile" accept="image/png,image/jpeg,image/gif,image/webp,application/pdf,.pdf,.txt,.md,.markdown,.csv,text/plain,text/markdown,text/csv,.xlsx,.docx,.pptx,.xls,.doc,.ppt" multiple hidden>
           <textarea id="rtext" rows="1" aria-label="수정 요청 내용"></textarea>
           <span class="cmp-model" data-wbm="bare"></span>
           <button type="button" class="cmp-send" id="add" title="요청 등록 (Ctrl + Enter)" aria-label="요청 등록"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10 15V5M5.5 9.5 10 5l4.5 4.5"/></svg></button>
@@ -1046,6 +1046,22 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     renderMarks(); renderPins();
   }
   function setZoom(z){ fit = null; zoom = Math.min(2, Math.max(general ? 0.002 : 0.05, z)); applyZoom(); }
+  /* 보던 곳 지키기(2026-11-26): 다시 그리기 전 화면 가운데가 가리키던 Figma 좌표를 기억했다가, 다시 그린 뒤 그 좌표가 다시 가운데 오게 스크롤한다.
+     스크롤 값만 되돌리면 프레임이 더해지거나 옮겨져 페이지 기준점(PG.x0 · y0)이 바뀔 때 다른 곳을 가리켰다 */
+  function viewAnchor(){
+    if (!general || !PG) return null;
+    var c = $('pgCanvas'), sr = stage.getBoundingClientRect(), cr = c.getBoundingClientRect();
+    var ox = cr.left - sr.left + stage.scrollLeft, oy = cr.top - sr.top + stage.scrollTop;   // 스크롤 안에서 캔버스가 시작하는 자리
+    return { id: PG.id, zoom: zoom, fit: fit, x: (stage.scrollLeft + stage.clientWidth / 2 - ox) / zoom + PG.x0, y: (stage.scrollTop + stage.clientHeight / 2 - oy) / zoom + PG.y0 };
+  }
+  function restoreAnchor(a){
+    if (!a || !general || !PG || PG.id !== a.id) return;
+    fit = a.fit; zoom = a.zoom; applyZoom();
+    var c = $('pgCanvas'), sr = stage.getBoundingClientRect(), cr = c.getBoundingClientRect();
+    var ox = cr.left - sr.left + stage.scrollLeft, oy = cr.top - sr.top + stage.scrollTop;
+    stage.scrollLeft = (a.x - PG.x0) * zoom + ox - stage.clientWidth / 2;
+    stage.scrollTop = (a.y - PG.y0) * zoom + oy - stage.clientHeight / 2;
+  }
   /* 캡처가 없으면 실시간 보기를 자동으로 열지 않는다(Figma 뷰어를 통째로 받아 무겁다). [캡처 받기] · [실시간 보기]를 고르게 한다 */
   function hasShot(p){ return !!shotMeta[p.id]; }
   function renderNoShot(p){
@@ -2208,7 +2224,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
      조건 = Claude가 읽을 수 있는 것(Claude 문서 기준): 이미지 PNG · JPG · GIF · WEBP 7.5MB(base64 10MB) · 8000px 이하, PDF · 글(TXT · MD · CSV) 30MB 이하, 한 요청에 20개.
      서버(node/server/writes.js ATT_*)와 같게 고친다 */
   var ATT_MAX = 20, ATT_IMG_MAX = 7.5 * 1024 * 1024, ATT_DOC_MAX = 30 * 1024 * 1024, ATT_PX = 8000;
-  var ATT_TYPES = {'image/png':'png', 'image/jpeg':'jpg', 'image/gif':'gif', 'image/webp':'webp'}, ATT_DOCS = {pdf:'pdf', txt:'txt', md:'md', markdown:'md', csv:'csv'};
+  var ATT_TYPES = {'image/png':'png', 'image/jpeg':'jpg', 'image/gif':'gif', 'image/webp':'webp'}, ATT_DOCS = {pdf:'pdf', txt:'txt', md:'md', markdown:'md', csv:'csv', docx:'docx', xlsx:'xlsx', pptx:'pptx', doc:'doc', xls:'xls', ppt:'ppt'};   // Office(2026-11-26): 옛 형식(doc · xls · ppt)은 서버가 새 형식으로 저장해 달라고 알린다
   var atts = [];
   function attExt(f){
     if (ATT_TYPES[f.type]) return ATT_TYPES[f.type];
@@ -2231,8 +2247,9 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     var skip = [], wait = [];
     Array.prototype.forEach.call(list || [], function(f){
       var nm = f.name || '붙여넣은 파일', ext = attExt(f), img = attImg(ext);
-      if (!ext) skip.push(nm + ': 첨부할 수 없는 형식(이미지 PNG · JPG · GIF · WEBP, PDF, TXT · MD · CSV만)');
-      else if (f.size > (img ? ATT_IMG_MAX : ATT_DOC_MAX)) skip.push(nm + ': ' + (img ? '이미지는 7.5MB 이하' : 'PDF · 글은 30MB 이하'));
+      if (!ext) skip.push(nm + ': 첨부할 수 없는 형식(이미지 PNG · JPG · GIF · WEBP, PDF, TXT · MD · CSV, 엑셀 · 워드 · 파워포인트만)');
+      else if (/^(doc|xls|ppt)$/.test(ext)) skip.push(nm + ': 옛 형식(' + ext.toUpperCase() + ')은 읽을 수 없어요. 「다른 이름으로 저장」에서 ' + ext.toUpperCase() + 'X로 저장해 올려 주세요');
+      else if (f.size > (img ? ATT_IMG_MAX : ATT_DOC_MAX)) skip.push(nm + ': ' + (img ? '이미지는 7.5MB 이하' : '문서 · 글은 30MB 이하'));
       else if (atts.length + wait.length >= ATT_MAX) skip.push(nm + ': 최대 ' + ATT_MAX + '개');
       else if (!img) atts.push({file:f, ext:ext, img:false});
       else {
@@ -2344,7 +2361,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       var after = cur && shotMeta[cur.id] ? shotMeta[cur.id].at : '';
       if (general) {
         /* 페이지 전체 보기: 이 페이지 프레임의 캡처가 새로 들어오거나 바뀌면 자리를 지키며 다시 그린다 */
-        if (PG && pgSig() !== pb) { var sl0 = stage.scrollLeft, st0 = stage.scrollTop; renderPage(); stage.scrollLeft = sl0; stage.scrollTop = st0; var ip = navList(cur.d1); $('meta').textContent = ip.length + '개 프레임 · 캡처 ' + ip.filter(hasShot).length + ' / ' + ip.length; }
+        if (PG && pgSig() !== pb) { var anc = viewAnchor(); renderPage(); restoreAnchor(anc); var ip = navList(cur.d1); $('meta').textContent = ip.length + '개 프레임 · 캡처 ' + ip.filter(hasShot).length + ' / ' + ip.length; }
         return;
       }
       if (cur && after && after !== before) {
@@ -2449,7 +2466,13 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       if (CAT && CAT.savedAt === c.savedAt && edId(CAT) === edId(c) && !first) return true;
       FILE.name = c.fileName || FILE.name;
       var keep = cur && cur.id; build(c);
-      if (keep && byId[keep]) go(keep, false, general);
+      // 같은 화면을 다시 그릴 때(목록만 새로 받음)는 확대 비율 · 보던 위치를 그대로(2026-11-26 — 페이지 전체를 확대해 보다가 풀리던 것)
+      var anc = viewAnchor(), g0 = general, z0 = zoom, f0 = fit, fx = stage.scrollLeft, fy = stage.scrollTop;
+      if (keep && byId[keep]) {
+        go(keep, false, general);
+        if (general === g0 && anc) restoreAnchor(anc);   // 페이지 전체: 보던 Figma 좌표로
+        else if (general === g0 && !general) { fit = f0; zoom = z0; applyZoom(); stage.scrollLeft = fx; stage.scrollTop = fy; }   // 프레임 하나: 확대 · 스크롤 그대로
+      }
       else if (keep && cur.empty && (c.pages || []).some(function(p){ return p.id === keep; })) selectEmpty(keep);   // 빈 페이지를 보던 중(작업 페이지로 바꾼 뒤 등)
       else start();
       if (!first) toast('페이지 · 프레임 목록을 받았습니다');
