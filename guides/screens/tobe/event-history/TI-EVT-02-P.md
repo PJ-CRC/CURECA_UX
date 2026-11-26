@@ -26,56 +26,56 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 
 ## 디스크립션
 
-**0  <span style="color:red">Event Message</span> 화면**
+**0  Event Message 화면**
 - 정의
-  - Event 발생 시, 화면에 <span style="color:red">노출</span>되는 <span style="color:red">Event Message Popup</span>
-  - <span style="color:red">Profile > General의 Event notifications 설정이 On일 경우 노출, Off일 경우 미노출 (기본 On)</span>
+  - Event 발생 시, 화면에 노출되는 Event Message Popup
+  - Profile > General의 Event notifications 설정이 On일 경우 노출, Off일 경우 미노출 (기본 On)
 - 노출 조건
-  - 최초 로그인 이후 발생되는 메시지부터 노출되며, 여러 개 발생 시 누적되어 <span style="color:red">Popup</span>으로 동시에 노출
-  - 노출 형태 : 여러 개의 <span style="color:red">Popup</span>이 겹쳐서 화면에 <span style="color:red">노출</span>
+  - 최초 로그인 이후 발생되는 메시지부터 노출되며, 여러 개 발생 시 누적되어 Popup으로 동시에 노출
+  - 노출 형태 : 여러 개의 Popup이 겹쳐서 화면에 노출
 - 스크롤
   - 노출되는 내용이 많을 경우, 줄임 처리하지 않고 모두 노출
-  - 최대 <span style="color:red">Popup</span> 크기를 초과할 경우, 스크롤 적용(UI 참고)
+  - 최대 Popup 크기를 초과할 경우, 스크롤 적용(UI 참고)
 - User Type : Service, Admin, User
 - 정책 참고 : POL-EVT-003
 
 **1  Level**
-- <span style="color:red">Event</span>의 Level인 <span style="color:red">Error</span>, <span style="color:red">Warning</span> 값 <span style="color:red">노출</span>
+- Event의 Level인 Error, Warning 값 노출
 - 정책 참고 : POL-EVT-001
 
 **2  Code**
-- Event Code <span style="color:red">노출</span>
+- Event Code 노출
 
 **3  Type**
-- Instrument, Inventory, Sample, System 중 해당되는 항목 <span style="color:red">노출</span>
+- Instrument, Inventory, Sample, System 중 해당되는 항목 노출
 - 정책 참고 : POL-EVT-001
 
 **4  Description**
-- <span style="color:red">Event</span> 내용 <span style="color:red">노출</span>
+- Event 내용 노출
 
 **5  Effect**
-- Event Code에 연계된 Scenario Code의 'description' 내용 <span style="color:red">노출</span>
+- Event Code에 연계된 Scenario Code의 'description' 내용 노출
 - 표기 방식
   - 연계된 코드가 없는 경우, '-' 노출
   - N개인 경우, 목록형으로 기호를 표기하여 N개 노출
 - 참고 문서명 : [SRD] CURECA Prep 및 Dx 장비 Event 정의
 
 **6  Recommended Action**
-- 조치 방법 내용 <span style="color:red">노출</span>
+- 조치 방법 내용 노출
 
 **7  Module, Unit**
-- Event가 발생한 <span style="color:red">Instrument</span> 정보 <span style="color:red">노출</span>
+- Event가 발생한 Instrument 정보 노출
 
 **8  [Close] 버튼**
 - 동작
-  - 클릭 시, <span style="color:red">Popup</span> 닫힘
-  - N개일 경우, <span style="color:red">Popup</span>이 닫히며 메시지 총 개수에서 제거되고 여러 개 <span style="color:red">Popup</span> 구조 리스트에서 제거
+  - 클릭 시, Popup 닫힘
+  - N개일 경우, Popup이 닫히며 메시지 총 개수에서 제거되고 여러 개 Popup 구조 리스트에서 제거
 - 정책 참고 : POL-EVT-003
 
 **9  [View Details] 버튼**
 - 동작
-  - 클릭 시, 해당 Event의 <span style="color:red">Event Detail 화면으로 이동 : TI-EVT-01-P</span>
-  - N개일 경우, 클릭 시 <span style="color:red">Popup</span>이 모두 닫히며 이동
+  - 클릭 시, 해당 Event의 Event Detail 화면으로 이동 : TI-EVT-01-P
+  - N개일 경우, 클릭 시 Popup이 모두 닫히며 이동
 - 정책 참고 : POL-EVT-003
 
 **10  [Close All] 버튼**

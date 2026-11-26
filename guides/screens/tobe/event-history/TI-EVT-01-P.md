@@ -26,12 +26,12 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 
 ## 디스크립션
 
-**0  <span style="color:red">Event Detail</span> 화면**
+**0  Event Detail 화면**
 - 정의
-  - Event History의 특정 Event의 상세 정보가 <span style="color:red">노출</span>되는 화면
+  - Event History의 특정 Event의 상세 정보가 노출되는 화면
 - 동작
   - Event History 목록에서 특정 Event 클릭 시 진입
-  - 이중 <span style="color:red">Popup</span>이 아닌, Event <span style="color:red">Popup</span> 내에서 목록 → 상세로 전환되는 구조
+  - 이중 Popup이 아닌, Event Popup 내에서 목록 → 상세로 전환되는 구조
 - User Type : Service, Admin, User
 
 **1  Event Info**
@@ -41,7 +41,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
   - Event ID : Event를 식별하기 위한 고유 키 값으로, Event별로 서로 다른 ID 부여
   - ㄴ ID 생성 규칙 : Event 생성 시 시스템에서 자동으로 순차 증가되는 고유 ID 부여. 생성된 ID는 중복되지 않으며, Event 식별을 위한 Primary Key로 사용
   - Event Code : Event의 발생 유형을 구분하는 코드 값(에러 코드와 유사한 개념)
-  - <span style="color:red">Type : Event 종류 (Instrument, Inventory, Sample, System)</span>
+  - Type : Event 종류 (Instrument, Inventory, Sample, System)
   - Description : Event Code에 따라 정의된 Event의 상세 내용 노출
   - Effect : Event Code에 연계된 Scenario Code의 'description' 내용 노출
   - ㄴ 연계된 코드가 없는 경우, '-' 노출
@@ -49,26 +49,26 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
   - ㄴ 참고 문서명 : [SRD] CURECA Prep 및 Dx 장비 Event 정의
   - Recommended Action : Event Code에 따라 정의된 조치 방법 노출
   - Level : Event의 중요도를 나타내며, Error 또는 Warning 값으로 구분
-  - Status : Event Status 값인 Open 또는 Closed <span style="color:red">노출 (상태 변경 불가)</span>
-  - <span style="color:red">Occurred Date/Time</span> : Event 발생 일시 / 표기 : YYYY-MM-DD hh:mm
-- 정책 참고 : POL-EVT-001, <span style="color:red">POL-EVT-002</span>
+  - Status : Event Status 값인 Open 또는 Closed 노출 (상태 변경 불가)
+  - Occurred Date/Time : Event 발생 일시 / 표기 : YYYY-MM-DD hh:mm
+- 정책 참고 : POL-EVT-001, POL-EVT-002
 
 **2  Instrument Info**
 - 정의
-  - Event가 <span style="color:red">Instrument</span>에서 발생한 경우, 해당 <span style="color:red">Instrument</span>의 Module / Unit / Process 정보 노출
+  - Event가 Instrument에서 발생한 경우, 해당 Instrument의 Module / Unit / Process 정보 노출
   - Event가 Module 단위에서만 유효한 경우, Unit 값은 '-' 노출
-  - <span style="color:red">Instrument</span>와 무관한 Event의 경우, Module / Unit / Process 전체 '-' 노출
+  - Instrument와 무관한 Event의 경우, Module / Unit / Process 전체 '-' 노출
 - 정책 참고 : POL-EVT-001
 
 **3  Notes**
 - 정의
   - Resolution Notes 읽기 전용(Read only) 영역
-  - <span style="color:red">영역은 늘 노출, 작성된 Resolution Notes가 있을 경우 그 내용 노출</span>
-- 정책 참고 : <span style="color:red">POL-EVT-002</span>
+  - 영역은 늘 노출, 작성된 Resolution Notes가 있을 경우 그 내용 노출
+- 정책 참고 : POL-EVT-002
 
 **4  Updated Date/Time, Updated by**
 - 정의
-  - Event의 Status 값이나 Resolution Notes가 변경/작성될 경우, 변경 시점과 변경 사용자의 정보를 <span style="color:red">노출</span>하는 영역
+  - Event의 Status 값이나 Resolution Notes가 변경/작성될 경우, 변경 시점과 변경 사용자의 정보를 노출하는 영역
 - 노출 항목
   - Updated Date : 정보가 변경된 일시
   - Updated by : 정보를 변경한 사용자의 로그인 ID
@@ -81,7 +81,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 
 **6  닫기**
 - 동작
-  - 클릭 시, Event <span style="color:red">Popup</span> 닫힘
+  - 클릭 시, Event Popup 닫힘
 
 ## 케이스
 

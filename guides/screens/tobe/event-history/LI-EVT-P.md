@@ -28,11 +28,11 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 
 **0  Event History 화면**
 - 정의
-  - <span style="color:red">CURECA</span> <span style="color:red">Instrument</span> 또는 <span style="color:red">System</span>에서 이상 상태 발생 시, Error 및 Warning 메시지를 조회하고 관리하는 메뉴
-  - Event 메뉴는 <span style="color:red">Popup</span>으로 제공
+  - CURECA Instrument 또는 System에서 이상 상태 발생 시, Error 및 Warning 메시지를 조회하고 관리하는 메뉴
+  - Event 메뉴는 Popup으로 제공
 - 동작
   - 상단 Bar의 Event 아이콘 클릭 시 진입
-  - 각 화면(페이지)에 <span style="color:red">노출</span>된 Event 아이콘을 통해서도 동일하게 진입 가능
+  - 각 화면(페이지)에 노출된 Event 아이콘을 통해서도 동일하게 진입 가능
 - User Type : Service, Admin, User
 - L-IOS Client Mode : Main Mode, Console Mode, MS Mode
 
@@ -42,19 +42,19 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 - Event ID, Code(Text Input)
   - 정확히 일치하는 값만 노출
 - Type(Dropdown)
-  - Default : <span style="color:red">All</span>
+  - Default : All
   - 드롭다운 리스트 항목 : ~~All, Instrument, Consumable, Reagent, Waste Bin/bottle, System~~
   - All, Instrument, Inventory, Sample, System
   - 정렬 기준 : 위에 적힌 순서대로 노출
 - Module(Dropdown)
-  - <span style="color:red">Module</span> 유형으로 검색하는 필터
+  - Module 유형으로 검색하는 필터
   - Default : All
   - 드롭다운 리스트 항목 : All, Sample Storage, Consumable Storage, Sample Pre-treatment, High-throughput Extraction, Flexible Extraction, PCR Setup, Plate Sealing, Universal PCR
   - 정렬 기준 : 위에 적힌 순서대로 노출
 - Level(Dropdown)
   - Default : All
   - 드롭다운 리스트 항목 : All, Error, Warning
-- <span style="color:red">Status</span>(Dropdown)
+- Status(Dropdown)
   - Default : All
   - 드롭다운 리스트 항목 : All, Open, Closed
 - 기간 검색(Period)
@@ -67,7 +67,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 
 **2  목록 요약**
 - 노출 항목
-  - <span style="color:red">Items</span> : 목록에 노출된 총 Event 개수 노출
+  - Items : 목록에 노출된 총 Event 개수 노출
   - Open : 목록에 노출된 전체 리스트에서 Status가 Open인 Event 개수의 합 노출
 - 정책 참고 : POL-EVT-001
 
@@ -75,23 +75,23 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 - 정의 : 검색 조건에 해당하는 Event 리스트
 - 정렬
   - Default : Occurred Date/Time 최신순
-  - <span style="color:red">정렬 가능한 컬럼 항목 : Occurred Date/Time</span>
-- <span style="color:red">컬럼 항목</span>
+  - 정렬 가능한 컬럼 항목 : Occurred Date/Time
+- 컬럼 항목
   - Type : ~~Instrument, Consumable, Reagent, Waste Bin/bottle, System~~
   - Instrument, Inventory, Sample, System
-  - <span style="color:red">Code : Event Code</span>
-  - <span style="color:red">Description : Event Code에 따라 정의된 Event 내용</span>
-  - <span style="color:red">Module : Event가 발생한 Module / Instrument와 무관한 Event는 '-' 노출</span>
-  - <span style="color:red">Unit : Event가 발생한 Unit / Module 단위 Event 또는 Instrument와 무관한 Event는 '-' 노출</span>
-  - <span style="color:red">Level : Error, Warning</span>
-  - <span style="color:red">Occurred Date/Time : Event 발생 일시 / 표기 : YYYY-MM-DD hh:mm</span>
-  - <span style="color:red">Status : Open, Closed (4 Toggle로 노출)</span>
+  - Code : Event Code
+  - Description : Event Code에 따라 정의된 Event 내용
+  - Module : Event가 발생한 Module / Instrument와 무관한 Event는 '-' 노출
+  - Unit : Event가 발생한 Unit / Module 단위 Event 또는 Instrument와 무관한 Event는 '-' 노출
+  - Level : Error, Warning
+  - Occurred Date/Time : Event 발생 일시 / 표기 : YYYY-MM-DD hh:mm
+  - Status : Open, Closed (4 Toggle로 노출)
 - 동작
   - 한 페이지에 최대 10개 노출
   - 최초 진입 시, 상단 기간 검색의 Default 기간에 맞춰 오늘 기준 7일 전까지의 데이터만 노출
   - 텍스트는 1줄까지만 노출 / 데이터 값이 영역을 초과할 경우 '…'으로 노출
-  - '…' 노출 영역에 마우스 오버 시 전체 데이터(추가 정보)를 <span style="color:red">Tooltip</span>으로 노출
-  - <span style="color:red">검색 조건과 일치한 항목이 없을 경우, 'No results found.' 노출</span>
+  - '…' 노출 영역에 마우스 오버 시 전체 데이터(추가 정보)를 Tooltip으로 노출
+  - 검색 조건과 일치한 항목이 없을 경우, 'No results found.' 노출
 - 공통 UX 참고 : COMM-5-g, COMM-5-r, COMM-5-v
 - 정책 참고 : POL-EVT-001
 
@@ -99,37 +99,37 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 - 정의
   - Event의 Status 값을 변경하는 기능
 - 활성화 조건
-  - <span style="color:red">L-IOS Client Mode가 Main Mode일 때 활성화</span>
-  - 단, 활성화되지 않는 Mode(<span style="color:red">Console Mode, MS Mode</span>)일 경우 View 모드로 노출
+  - L-IOS Client Mode가 Main Mode일 때 활성화
+  - 단, 활성화되지 않는 Mode(Console Mode, MS Mode)일 경우 View 모드로 노출
 - 동작
-  - Event 최초 생성 시, <span style="color:red">Open</span>으로 등록되며 클릭 시 Closed로 변경
-  - 재클릭 시, Closed에서 <span style="color:red">Open</span>으로 변경 가능
+  - Event 최초 생성 시, Open으로 등록되며 클릭 시 Closed로 변경
+  - 재클릭 시, Closed에서 Open으로 변경 가능
 - 공통 UX 참고 : COMM-5-q
-- 정책 참고 : <span style="color:red">POL-EVT-002</span>
+- 정책 참고 : POL-EVT-002
 
 **5  [Mark all as Closed] 버튼**
 - 정의
-  - <span style="color:red">지금 검색 조건으로 불러온 목록의 모든 페이지에서 Status가 Open인 Event 전체</span>를 Closed로 변경하는 기능
+  - 지금 검색 조건으로 불러온 목록의 모든 페이지에서 Status가 Open인 Event 전체를 Closed로 변경하는 기능
 - 동작
   - 클릭 시, Confirm 노출 : Confirm_003
 - 정책 참고 : POL-EVT-002
 
 **6  [Export] 버튼**
 - 동작
-  - 클릭 시, 경로 저장 또는 USB 저장을 선택하는 Popup 노출 : <span style="color:red">COMM-5-m(2/4)</span>
-  - <span style="color:red">~~T-IOS 경우 클릭 시, 윈도우 탐색기가 호출되며, 원하는 경로를 지정할 수 있음~~</span>
+  - 클릭 시, 경로 저장 또는 USB 저장을 선택하는 Popup 노출 : COMM-5-m(2/4)
+  - ~~T-IOS 경우 클릭 시, 윈도우 탐색기가 호출되며, 원하는 경로를 지정할 수 있음~~
 - 대상 범위 : 목록에 노출된 전체 리스트
 - 저장 항목 : Detail에서 제공되는 모든 내용
-- 형식 : <span style="color:red">.csv</span>
+- 형식 : .csv
 - 정책 참고 : POL-COM-006
 
 **7  닫기**
 - 동작
-  - 클릭 시, <span style="color:red">Popup</span> 닫힘
+  - 클릭 시, Popup 닫힘
 
-**8  <span style="color:red">페이지네이션</span>**
-- <span style="color:red">Pagination 유형 : Type 1 Number</span>
-- <span style="color:red">공통 UX 참고 : COMM-5-l</span>
+**8  페이지네이션**
+- Pagination 유형 : Type 1 Number
+- 공통 UX 참고 : COMM-5-l
 
 ## 케이스
 
