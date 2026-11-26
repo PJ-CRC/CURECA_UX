@@ -313,7 +313,8 @@ started: 2026-11-25
 | C25 | 디스크립션에 없던 설명 | 8 페이지네이션(Type 1 Number) · 3 컬럼 항목 · 정렬 가능한 컬럼 · 상세 1 Type 노출 항목 · `공통 UX 참고` 줄 | TI-EVT-P · LI-EVT-P #3 · #8, TI-EVT-01-P · LI-EVT-01-P #1 | Common UX COMM-5-g · 5-l · 5-r · 5-v, 기존 화면 (뒤 단계용 확인 항목 1) | 같음 | - | 맞음 (Common UX · 기존 화면, 2026-11-26) |
 | C26 | [Export] 버튼 Gray | T Filled · L Outlined (Common UX Square Button) | TI-EVT-P · LI-EVT-P #6 | Common UX COMM-5-c | 같음 | O | |
 | C27 | [View Details] 청록 버튼 · [Close] 버튼 (기존 컴포넌트) | Common UX Square Filled · Outlined | TI-EVT-02-P · LI-EVT-02-P #8 · #9 | Common UX COMM-5-c · COMM-5-m(3/4) | 같음 | O | |
-| C28 | Resolution Notes 입력 칸 (기존 텍스트 박스) | Common UX Inline Input | LI-EVT-01-P #3 · 케이스 | Common UX COMM-5-t | L만 | O | |
+| C28 | ~~Resolution Notes 입력 칸 (기존 텍스트 박스)~~ | ~~Common UX Inline Input~~ 바뀜 (2026-11-26, Claude, Text Input/Inline의 Typing 변형에 글자 수 · Cancel/Save 아이콘이 없어 데이터를 다 담지 못함 → 기존 화면에서 따옴, "컴포넌트 없이 그린 요소") | LI-EVT-01-P #3 · 케이스 | Common UX COMM-5-t | L만 | - | 해당 없음 (바꿔 그리지 않음, 2026-11-26) |
+| C31 | 상세 Level 값 (기존 그림 Error 칩) | Common UX Status/Event Level | TI-EVT-01-P · LI-EVT-01-P #1 | Common UX COMM-5-g · Status/Event Level (3단계에서 추가) | 같음 | - | |
 | C29 | 번호 표시 5가 Notes 칸 위에 있음 | [List] 버튼 옆에 둠 | TI-EVT-01-P · LI-EVT-01-P #5 | 디스크립션 5 = [List] 버튼 | 같음 | - | |
 | C30 | 검색 영역 입력 칸 · 목록 표 · Status Toggle · 페이지 번호 (기존 컴포넌트) | Common UX 컴포넌트(Text Input · Dropdown · Basic Table · Status/Event Level · Toggle Switch · Number Pagination)로 다시 그림 | TI-EVT-P · LI-EVT-P #1 · #3 · #4 · #8 | Common UX COMM-5-p · 5-g · 5-q · 5-l | 같음 | - | |
 ## 검토 질의
