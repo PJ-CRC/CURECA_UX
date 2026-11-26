@@ -2,11 +2,11 @@
   "id": "brex-01_R001",
   "kind": "request",
   "team": "cureca",
-  "status": "대기",
-  "at": "2026-11-26T20:11:35+09:00",
+  "status": "보류",
+  "at": "2026-11-26T20:12:01+09:00",
   "createdAt": "2026-11-25T21:16:32+09:00",
   "by": "서보경",
-  "doneBy": "서보경",
+  "doneBy": "Claude",
   "pc": "BREX_01",
   "reqId": "R001",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,13 +17,24 @@
   "type": "요청",
   "layout": "",
   "text": "Event History 화면 옮겨줘\n\n기존 화면: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-45275&t=8ZUolJfFqEx5iunS-1\n옮길 페이지: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3577-18413&t=8ZUolJfFqEx5iunS-1",
-  "note": "",
+  "note": "케이스 3 · 4단계 · 20261125-서보경-event-history — 답대로 문구만(특수문자 · 인덱스 · 값 제외) 대조했습니다. ①~④는 모두 언어셋 DB에 있는 문자입니다. ⑤ 하나만 남았습니다.\n\n**대조 결과 (문구만)**\n- ① Event Code · Type · Module · Unit → 있음 (LID-EVT-041 · 004 · 012 · 013, Event Message CID 이미 들어 있음)\n- ② Updated Date/Time · Updated by → 있음 (LID-EVT-027 · 028, Event Detail CID 이미 들어 있음)\n- ③ 300 μL Tip Storage · CFX96 → 공통 파일에 있음 (LID-COM-TRM-040 · 029)\n- ④ Items → 있음 (LID-STN-006, TI-EVT-P CID만 더함). `{n} items` · `of`는 언어셋 대상에서 뺌\n- 같은 원칙으로 Module 이름 뒤 `(1)`은 바뀐 글자로 보지 않음 (Flexible Extraction · High-throughput Extraction · CFX96 줄은 「바뀌지 않음」으로 고침)\n\n[질문 대기]\nQ1 ⑤ Resolution Notes 글자 수 `{n} /300자`는 문구만 보면 숫자를 뺀 글자 수 표기입니다. 언어셋 DB의 `{n}/{max} Characters` (LID-EVT-035, 한국어 `0/n자`)와 같은 글자로 볼까요?\n  - 같은 글자 (LID-EVT-035) (추천)\n  - 다른 글자 (새로 넣음)\n  근거: 숫자(0 · 300)를 빼면 남는 것은 글자 수 단위뿐이고, LID-EVT-035가 같은 자리(LI-EVT-01-P 최대 글자 수 표기)의 줄임\n\n규칙 점검: 4단계 절차 4 「언어셋 DB 대조」 · 순서 지킴\n작업 기준: basis 2026-11-26 20:00 · 작업규칙 CURECA 작업규칙 @원본 · 정책서 정책서 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 · 화면 정의서 화면 정의서",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "⑤ `{n} /300자`를 LID-EVT-035 `{n}/{max} Characters`와 같은 글자로 볼까요? (①~④는 모두 DB에 있음)",
+    "options": [
+      {
+        "label": "같은 글자 (LID-EVT-035)"
+      },
+      {
+        "label": "다른 글자 (새로 넣음)"
+      }
+    ],
+    "free": true
+  },
   "replies": [
     {
       "at": "2026-11-25T21:20:57+09:00",
