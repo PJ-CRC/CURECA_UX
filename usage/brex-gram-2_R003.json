@@ -1,0 +1,28 @@
+{
+  "id": "brex-gram-2_R003",
+  "kind": "request",
+  "reqId": "R003",
+  "reqType": "요청",
+  "team": "cureca",
+  "at": "2026-11-26T16:22:51+09:00",
+  "from": "2026-11-26T16:19:24+09:00",
+  "by": "하승현",
+  "doneBy": "Claude",
+  "pc": "BREX_GRAM_2",
+  "fileKey": "etCQFF3CTf1EA6C79d4BBf",
+  "fileName": "UX AI TEST",
+  "page": "Policy Setting_tobe",
+  "frame": "",
+  "nodeId": "",
+  "text": "R002 중 '확인이 필요한 곳' 다시 답변할 게.\n나머진 그대로 진행해줘.\n\n1. 현재 한국어 유지해줘.\n2. 공통에 적힌 단어와 같이 목록에도 작성해줘.\n3. 목록에 적힌 단어와 같이 공통에도 작성해줘.",
+  "models": {
+    "claude-opus-5-5": 23
+  },
+  "calls": 23,
+  "input": 43,
+  "cacheWrite": 65389,
+  "cacheRead": 1988911,
+  "output": 22378,
+  "total": 2076721,
+  "usd": 1.3686
+}
