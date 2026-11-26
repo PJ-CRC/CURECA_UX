@@ -2,11 +2,11 @@
   "id": "brex-01_R001",
   "kind": "request",
   "team": "cureca",
-  "status": "보류",
-  "at": "2026-11-26T19:47:24+09:00",
+  "status": "대기",
+  "at": "2026-11-26T19:50:09+09:00",
   "createdAt": "2026-11-25T21:16:32+09:00",
   "by": "서보경",
-  "doneBy": "Claude",
+  "doneBy": "서보경",
   "pc": "BREX_01",
   "reqId": "R001",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,7 +17,7 @@
   "type": "요청",
   "layout": "",
   "text": "Event History 화면 옮겨줘\n\n기존 화면: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-45275&t=8ZUolJfFqEx5iunS-1\n옮길 페이지: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3577-18413&t=8ZUolJfFqEx5iunS-1",
-  "note": "검토 질의 9 ~ 12 반영함 · 케이스 3 · 4단계 · 20261125-서보경-event-history. 빨간 취소선 2곳만 답 기다림\n\n**고친 곳**\n- TI-EVT-P 목록 요약: `Items 1,112` · 노출 개수 Dropdown · `Open 20`이 떨어져 있던 것 → `10 items ▾ of Items 1,112 | Open 20` 한 줄 (Dropdown은 목록 왼쪽 끝, 번호 2 · 9 함께 옮김) (C46, 검토 질의 11)\n- 6개 화면 디스크립션: 빨간 글씨를 기본 글자색으로 (글은 그대로, 파란 참고 링크는 그대로). 화면 MD 6개의 빨간색 표시도 뺌 (C47, 검토 질의 12)\n- Event Message 10 · 11 / 번호 표시 (검토 질의 9 · 10): Figma에서 [Close All] · `1/20`이 Popup 위에 보이고 번호가 글자 위로 옮겨져 있음 — 앞 차례에 고쳤으나 작업 기록에 빠져 있어 기록만 보충 (C45)\n\n[질문 대기]\nQ1 빨간 취소선 2곳(LI-EVT-P 6 「T-IOS 경우 클릭 시, 윈도우 탐색기가 …」 줄, LI-EVT-01-P 7 「닫기」 블록)을 어떻게 할까요? 지금은 색만 검정으로 바꾸고 취소선은 둠\n  - 줄 지움 (추천)\n  - 검은 취소선으로 둠\n  근거: 검토 질의 3 · 8에서 취소선 글자를 지운 것과 같음. 단 규칙상 UX 확정 뒤에는 블록을 지우지 않으므로 결정이 필요\n\n[확인 필요]\nC1 Event Message의 X 버튼: 디스크립션에 X 요소가 없어(10 = [Close All]) 따로 그리지 않음. X가 필요하면 알려 주세요\nC2 답을 받아 고친 뒤 UX 확정을 다시 묻습니다\n\n규칙 점검: 4단계 절차 2의 「하지 않는 것」 · 수정 순서 지킴 (기계 검사는 하지 않음 — 확정 때 물음). 다르게 한 것 — Figma를 먼저 고치고 화면 MD를 뒤에 고침(같은 차례 안, 내용은 같음)\n작업 기준: basis 2026-11-25 21:17 · 작업규칙 CURECA 작업규칙 @수정본 · 정책서 정책서 (policy) · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 (glossary) · 화면 정의서 화면 정의서 (screens)",
+  "note": "",
   "shot": "",
   "shots": [],
   "images": [],
@@ -48,18 +48,7 @@
     }
   ],
   "marks": [],
-  "ask": {
-    "q": "빨간 취소선 2곳(LI-EVT-P 6 일부 줄, LI-EVT-01-P 7 닫기 블록)을 지울까요?",
-    "free": true,
-    "options": [
-      {
-        "label": "줄 지움 (추천)"
-      },
-      {
-        "label": "검은 취소선으로 둠"
-      }
-    ]
-  },
+  "ask": null,
   "replies": [
     {
       "at": "2026-11-25T21:20:57+09:00",
@@ -198,6 +187,12 @@
       "by": "서보경",
       "q": "사용자 확인 목록과 질의가 모두 풀렸습니다. 최종으로 UX 확정을 하시겠습니까?",
       "text": "Event History 목록페이지 보면 T쪽만 10 tiems of items 1,112 | Open 20 이렇게 적용해줘. 그리고 디스크립션에 빨간글씨 다 빼줘도 될거 같아"
+    },
+    {
+      "at": "2026-11-26T19:50:09+09:00",
+      "by": "서보경",
+      "q": "빨간 취소선 2곳(LI-EVT-P 6 일부 줄, LI-EVT-01-P 7 닫기 블록)을 지울까요?",
+      "text": "줄지워 주고, 공통 UX 참고, 정책 참고에 색깔 안들어간거 있어. 한번 점검 후에 UI 확정해줘"
     }
   ],
   "raws": [
