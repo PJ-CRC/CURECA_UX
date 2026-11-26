@@ -4,7 +4,7 @@
   "reqId": "R003",
   "reqType": "요청",
   "team": "cureca",
-  "at": "2026-11-26T16:19:46+09:00",
+  "at": "2026-11-26T16:25:17+09:00",
   "from": "2026-11-26T09:09:56+09:00",
   "by": "최고관리자",
   "doneBy": "Claude",
@@ -16,14 +16,14 @@
   "nodeId": "",
   "text": "https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3288-235028&t=GdYCaPho44GgAu5i-1 여기가 AS IS\nAssay Pack Setting 화면 다시 그려줘",
   "models": {
-    "claude-opus-5-5": 414,
+    "claude-opus-5-5": 422,
     "<synthetic>": 1
   },
-  "calls": 415,
-  "input": 781,
-  "cacheWrite": 2053738,
-  "cacheRead": 74710488,
-  "output": 419405,
-  "total": 77184412,
-  "usd": 39.7632
+  "calls": 423,
+  "input": 796,
+  "cacheWrite": 2066172,
+  "cacheRead": 76546103,
+  "output": 425113,
+  "total": 79038184,
+  "usd": 40.344
 }
