@@ -144,32 +144,32 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 
 | 화면 표기 글자 (영어) | 출처 | Language ID |
 | --- | --- | --- |
-| Assay Pack Setting | 화면 제목 | |
-| File name | 화면 1-1 · 화면 4 | |
-| Enter file name | 화면 1-1 | |
-| File type | 화면 1-1 · 화면 4 | |
-| All | 화면 1-1 · 디스크립션 1-1 | |
-| Master | 디스크립션 1-1 · 화면 4 | |
-| Pretreatment | 디스크립션 1-1 · 화면 4 | |
-| Extraction | 디스크립션 1-1 · 화면 4 | |
-| PCR | 디스크립션 1-1 · 화면 4 | |
-| Period | 화면 1-2 | |
-| Registered Date | 화면 1-2 · 디스크립션 1-2 | |
-| Created Date | 디스크립션 1-2 | |
-| Select Date Range | 화면 1-2 | |
-| Active only | 화면 1-3 | |
-| Reset | 화면 1-4 | |
-| Search | 화면 1-4 | |
-| Items | 화면 2 | |
+| Assay Pack Setting | 화면 제목 | LID-STN-360 |
+| File name | 화면 1-1 · 화면 4 | LID-STN-361 |
+| Enter file name | 화면 1-1 | LID-STN-362 |
+| File type | 화면 1-1 · 화면 4 | LID-STN-363 |
+| All | 화면 1-1 · 디스크립션 1-1 | LID-EVT-003 |
+| Master | 디스크립션 1-1 · 화면 4 | LID-STN-364 |
+| Pretreatment | 디스크립션 1-1 · 화면 4 | LID-STN-365 |
+| Extraction | 디스크립션 1-1 · 화면 4 | LID-STN-366 |
+| PCR | 디스크립션 1-1 · 화면 4 | LID-SPT-033 |
+| Period | 화면 1-2 | LID-STN-367 |
+| Registered Date | 화면 1-2 · 디스크립션 1-2 | LID-STN-368 |
+| Created Date | 디스크립션 1-2 | LID-STN-369 |
+| Select Date Range | 화면 1-2 | LID-STN-370 |
+| Active only | 화면 1-3 | LID-STN-371 |
+| Reset | 화면 1-4 | LID-EVT-022 |
+| Search | 화면 1-4 | LID-STN-016 |
+| Items | 화면 2 | LID-STN-006 |
 | {n} items | 디스크립션 2 (n = 10) | |
-| Product Name | 화면 4 | |
-| Version | 화면 4 | |
-| Registered Date/Time | 화면 4 | |
-| Created Date/Time | 화면 4 | |
-| User ID | 화면 4 | |
-| Active | 화면 4 · 화면 4-1 | |
-| Inactive | 화면 4-1 | |
-| Details | 화면 4 · 화면 4-2 | |
-| Master Info | 화면 4 | |
-| No results found. | 디스크립션 1-4 | |
-| No files found. | 디스크립션 4 | |
+| Product Name | 화면 4 | LID-STN-147 |
+| Version | 화면 4 | LID-INF-008 |
+| Registered Date/Time | 화면 4 | LID-STN-372 |
+| Created Date/Time | 화면 4 | LID-STN-373 |
+| User ID | 화면 4 | LID-STN-073 |
+| Active | 화면 4 · 화면 4-1 | LID-STN-374 |
+| Inactive | 화면 4-1 | LID-STN-375 |
+| Details | 화면 4 · 화면 4-2 | LID-STN-012 |
+| Master Info | 화면 4 | LID-STN-376 |
+| No results found. | 디스크립션 1-4 | LID-STN-015 |
+| No files found. | 디스크립션 4 | LID-STN-377 |

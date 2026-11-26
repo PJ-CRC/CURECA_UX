@@ -110,10 +110,10 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 
 | 화면 표기 글자 (영어) | 출처 | Language ID |
 | --- | --- | --- |
-| Import file | 화면 0 · 케이스 Case 1-1 · 1-2 | |
-| Drag and drop files here, or | 화면 1 · 케이스 Case 1-1 · 1-2 | |
-| Select files | 화면 1 · 케이스 Case 1-1 · 1-2 | |
+| Import file | 화면 0 · 케이스 Case 1-1 · 1-2 | LID-STN-379 |
+| Drag and drop files here, or | 화면 1 · 케이스 Case 1-1 · 1-2 | LID-STN-381 |
+| Select files | 화면 1 · 케이스 Case 1-1 · 1-2 | LID-STN-383 |
 | json · Multiple files | 화면 1 · 케이스 Case 1-1 · 1-2 | |
 | {n} MB | 화면 2 · 케이스 Case 1-2 (n = 0.8 · 0.3 · 2.4) | |
-| Cancel | 화면 3 · 케이스 Case 1-1 · 1-2 | |
-| Import | 화면 3 · 케이스 Case 1-1 · 1-2 | |
+| Cancel | 화면 3 · 케이스 Case 1-1 · 1-2 | LID-STN-021 |
+| Import | 화면 3 · 케이스 Case 1-1 · 1-2 | LID-TMG-035 |
