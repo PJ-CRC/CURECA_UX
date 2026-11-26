@@ -4,7 +4,7 @@
   "reqId": "R005",
   "reqType": "요청",
   "team": "cureca",
-  "at": "2026-11-26T17:01:31+09:00",
+  "at": "2026-11-26T17:05:30+09:00",
   "from": "2026-11-26T16:51:49+09:00",
   "by": "최고관리자",
   "doneBy": "Claude",
@@ -16,13 +16,13 @@
   "nodeId": "",
   "text": "COMM-5-p Search Area: 버튼 사이즈를 40으로 정해줘",
   "models": {
-    "claude-opus-5-5": 34
+    "claude-opus-5-5": 40
   },
-  "calls": 34,
-  "input": 65,
-  "cacheWrite": 117068,
-  "cacheRead": 3050546,
-  "output": 18329,
-  "total": 3186008,
-  "usd": 1.9135
+  "calls": 40,
+  "input": 76,
+  "cacheWrite": 133000,
+  "cacheRead": 3710169,
+  "output": 22667,
+  "total": 3865912,
+  "usd": 2.2597
 }

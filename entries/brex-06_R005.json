@@ -2,8 +2,8 @@
   "id": "brex-06_R005",
   "kind": "request",
   "team": "cureca",
-  "status": "진행 중",
-  "at": "2026-11-26T17:04:16+09:00",
+  "status": "보류",
+  "at": "2026-11-26T17:05:29+09:00",
   "createdAt": "2026-11-26T16:51:15+09:00",
   "by": "최고관리자",
   "doneBy": "Claude",
@@ -17,13 +17,24 @@
   "type": "요청",
   "layout": "",
   "text": "COMM-5-p Search Area: 버튼 사이즈를 40으로 정해줘",
-  "note": "기계 검사 검토함 답 받음 · C17 화면 4개 기계 검사 중",
+  "note": "케이스 3 · 4단계 · 20261126-최고관리자-assay-pack - 기계 검사를 통과했고, UI 작업 줄을 확인받습니다.\n\n**[기계 검사]** 통과 (C17로 고친 TI-STN-08 · LI-STN-08 · TI-STN-08-P · LI-STN-08-P와 TI-STN-08 Case)\n- Search Area [Reset] · [Search]: Square Size M 인스턴스, 66×40 · 94×40, 위아래 14 가운데, 간격 10, 오른쪽 끝 20\n- Search Area 틀 1639×68 그대로, 글자 넘침 · 요소 겹침 없음\n- 바로 고친 것 · 더한 질문 대기 없음\n\n**[질문 대기]**\nQ1 요건 1의 UI 작업 줄을 확정합니다 (1단계 임시 값 「대상 아님」)\n  - 대상 (추천)\n  - 대상 아님\n  근거: 화면의 배치 · 요소가 바뀜 - L-IOS 노출 개수 Dropdown 지움(C4) · Circle Checkbox(C9) · File details Card · Tab(C10) · Popup 닫기 · 버튼(C11) · Master [Active] · [Inactive] 미노출(C12) · Search Area 버튼 높이 40(C17). 화면 표기 글자도 바뀜 - Confirm · Toast 문구(C1 · C2), 데이터 없음 문구(C16)\n  참고: 디자인 화면은 읽지 않아, 디자인 화면에서 같은 글자를 쓰는 곳은 보지 못했습니다\n  Ver: 케이스 3이라 묻지 않음 (기존 화면의 Ver 그대로)\n\n규칙 점검: 4단계 절차 3번 순서 2 · 3대로 함, 「하지 않는 것」 · 마침 점검 지킴\n작업 기준: basis 2026-11-26 09:11 · 작업규칙 rules @원본 · 정책서 policy · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 glossary · 화면 정의서 screens",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "요건 1의 UI 작업 줄을 「대상」으로 확정할까요? (배치 · 요소 · 화면 표기 글자가 바뀜)",
+    "free": true,
+    "options": [
+      {
+        "label": "대상 (추천)"
+      },
+      {
+        "label": "대상 아님"
+      }
+    ]
+  },
   "replies": [
     {
       "at": "2026-11-26T16:53:40+09:00",
