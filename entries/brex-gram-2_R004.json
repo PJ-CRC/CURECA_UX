@@ -3,10 +3,10 @@
   "kind": "request",
   "team": "cureca",
   "status": "완료",
-  "at": "2026-11-26T16:30:06+09:00",
+  "at": "2026-11-26T16:32:45+09:00",
   "createdAt": "2026-11-26T16:28:48+09:00",
   "by": "하승현",
-  "doneBy": "Claude",
+  "doneBy": "하승현",
   "pc": "BREX_GRAM_2",
   "reqId": "R004",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -23,24 +23,15 @@
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": {
-    "q": "R002를 어떻게 할까요?",
-    "options": [
-      {
-        "label": "R002 지우기",
-        "action": "delete",
-        "ids": [
-          "R002"
-        ]
-      },
-      {
-        "label": "그대로 두기",
-        "action": "done"
-      }
-    ],
-    "free": false
-  },
-  "replies": [],
+  "ask": null,
+  "replies": [
+    {
+      "at": "2026-11-26T16:32:45+09:00",
+      "by": "하승현",
+      "q": "R002를 어떻게 할까요?",
+      "text": "R002 지우기 (R002 지움)"
+    }
+  ],
   "raws": [
     {
       "at": "2026-11-26T16:30:12+09:00",
