@@ -2,11 +2,11 @@
   "id": "brex-01_R001",
   "kind": "request",
   "team": "cureca",
-  "status": "보류",
-  "at": "2026-11-26T16:13:20+09:00",
+  "status": "대기",
+  "at": "2026-11-26T16:14:05+09:00",
   "createdAt": "2026-11-25T21:16:32+09:00",
   "by": "서보경",
-  "doneBy": "Claude",
+  "doneBy": "서보경",
   "pc": "BREX_01",
   "reqId": "R001",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,24 +17,13 @@
   "type": "요청",
   "layout": "",
   "text": "Event History 화면 옮겨줘\n\n기존 화면: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-45275&t=8ZUolJfFqEx5iunS-1\n옮길 페이지: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3577-18413&t=8ZUolJfFqEx5iunS-1",
-  "note": "케이스 3 · 4단계 · 20261125-서보경-event-history — C1 답대로 Dim 세로는 그대로 둡니다(화면 바뀜 없음). UX 확정 여부를 다시 여쭙니다.\n\n**반영한 답**\n- C1 TI-EVT-P · LI-EVT-P Dim 아래 흰 바탕 → 세로는 그대로 (2026-11-26, 서보경), Figma · 화면 MD 고침 없음\n\n**[질문 대기]**\n- Q1 사용자 확인 목록과 질의(1 ~ 7)가 모두 풀렸습니다. 최종으로 UX 확정을 하시겠습니까?\n\n규칙 점검: 4단계 절차 2 순서 5 · 「하지 않는 것」 지킴\n작업 기준: basis 2026-11-25 21:17 · 작업규칙 rules @수정본 · 정책서 policy · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 glossary · 화면 정의서 screens",
+  "note": "",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": {
-    "q": "사용자 확인 목록과 질의가 모두 풀렸습니다. 최종으로 UX 확정을 하시겠습니까?",
-    "options": [
-      {
-        "label": "UX 확정"
-      },
-      {
-        "label": "아직 (검토 더 남음)"
-      }
-    ],
-    "free": true
-  },
+  "ask": null,
   "replies": [
     {
       "at": "2026-11-25T21:20:57+09:00",
@@ -149,6 +138,12 @@
       "by": "서보경",
       "q": "사용자 확인 목록과 질의가 모두 풀렸습니다. 최종으로 UX 확정을 하시겠습니까?",
       "text": "C1. -> 아니야 세로는 그냥 두는거야."
+    },
+    {
+      "at": "2026-11-26T16:14:05+09:00",
+      "by": "서보경",
+      "q": "사용자 확인 목록과 질의가 모두 풀렸습니다. 최종으로 UX 확정을 하시겠습니까?",
+      "text": "3번 디스크립션에 있는 케이스 참고 취소선 글자 제거해줘. case 제거했으면 맞춰서 글자도 제거하자"
     }
   ],
   "raws": [
