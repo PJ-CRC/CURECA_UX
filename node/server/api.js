@@ -126,7 +126,7 @@ on('GET', '/api/changes', ({ q, T }) => {
   if (T && T.guideRoot) {
     const sd = specDoc(T); let bn = 0, bm = 0;
     if (sd) for (const f of specFiles(T, sd)) { bn++; const t = mt(f.abs); if (t > bm) bm = t; }
-    out.blg = sd + ':' + bn + ':' + bm;
+    out.blg = sd + ':' + bn + ':' + bm + ':' + mt(pendingPaths(T).open);
     let gn = 0, gm = mt(T.guideApply);
     for (const d of dirNames(T.guideRoot)) { gn++; const dd = path.join(T.guideRoot, d); for (const f of [path.join(dd, 'meta.json'), path.join(dd, 'rev')]) { const t = mt(f); if (t > gm) gm = t; } }
     out.gd = gn + ':' + gm;
@@ -431,27 +431,61 @@ on('GET', '/api/worklogs', ({ T }) => {
   return { dir: `${T.guideRel}/work-logs`, stages: STAGES, items: items.sort((a, b) => String(b.started).localeCompare(String(a.started)) || a.name.localeCompare(b.name)) };
 });
 
-// ── 반영 대기: 화면 정의서(규칙 저장소 screens/asis/{메뉴}/{CID}.md · screens/tobe/{메뉴}/…, 예전 screens/{메뉴}/…)마다 「## 반영 대기 목록」 중 대기 · 작업 중 항목 (reference-rules/pending-changes.md)
-//  Workbench가 지금 고른 프레임에 반영할 항목이 있는지 알리는 데 쓴다. 화면 ↔ 프레임은 머리말 figma: 링크(파일 키 · 노드)와 CID로 맞춘다
-function readBacklog(f, rel) {
-  const t = String(core.readText(f) || '').replace(/^﻿/, ''), fm = {}, m = /^---\r?\n([\s\S]*?)\r?\n---/.exec(t);
-  if (m) for (const l of m[1].split(/\r?\n/)) { const k = /^([A-Za-z_]+):\s*(.*?)\s*(#.*)?$/.exec(l); if (k && !/^\s/.test(l)) fm[k[1]] = k[2]; }
-  const sec = /^##\s*반영 대기 목록[^\n]*\n([\s\S]*?)(?=^##\s|(?![\s\S]))/m.exec(t); if (!sec) return null;
-  const lines = sec[1].split(/\r?\n/).filter((l) => /^\s*\|/.test(l));
-  const cells = (l) => l.trim().replace(/^\||\|$/g, '').split('|').map((x) => x.trim());
-  if (lines.length < 2) return null;
+// ── 반영 대기: 그 팀 규칙 저장소 pending/open.md(대기 · 작업 중, 2026-11-24부터 — 모든 화면을 한 표에, 줄마다 메뉴 · 화면 (CID)) (reference-rules/pending-changes.md)
+//  끝난 항목은 pending/closed.md로 옮기므로 open.md만 읽는다. open.md가 없는 팀은 예전처럼 화면 정의서마다 「## 반영 대기 목록」 절을 읽는다
+//  Workbench가 지금 고른 프레임에 반영할 항목이 있는지 알리는 데 쓴다. 화면 ↔ 프레임은 화면 MD 머리말 figma: 링크(파일 키 · 노드)와 CID로 맞춘다
+function pendingPaths(T) { const d = path.join(T.guideRoot, 'pending'); return { dir: d, open: path.join(d, 'open.md'), closed: path.join(d, 'closed.md'), rel: 'pending/open.md' }; }
+// 마크다운 표(첫 표) → [{n, menu, screen, cid, kind, now, to, why, st}]. 칸 안에 「|」를 그대로 쓴 줄(예: "Empty | Low")은 칸이 늘어난다:
+//  앞 칸(ID · 타입)과 뒤 칸(근거 · 상태)은 양 끝에서 세고, 남는 것은 「변경 전」에 붙인다. 「\|」는 칸 안의 글자로 읽는다
+function readPendingTable(text) {
+  const lines = String(text || '').split(/\r?\n/).filter((l) => /^\s*\|/.test(l)); if (lines.length < 2) return [];
+  const cells = (l) => l.trim().replace(/^\||\|$/g, '').split(/(?<!\\)\|/).map((x) => x.trim().replace(/\\\|/g, '|'));
   const H = cells(lines[0]).map((h) => h.replace(/\s/g, ''));
   const col = (...a) => { for (const n of a) { const i = H.indexOf(n); if (i >= 0) return i; } return -1; };
-  const ci = { n: col('ID', '#'), kind: col('타입', '구분'), now: col('변경전', '지금'), to: col('변경후', '바꿀것'), why: col('근거'), st: col('상태') };
-  // 칸 안에 「|」를 그대로 쓴 줄(예: "Empty | Low")은 칸이 늘어난다: 앞 칸(ID · 타입)과 뒤 칸(근거 · 상태)은 양 끝에서 세고, 남는 것은 「변경 전」에 붙인다
+  const ci = { n: col('ID', '#'), menu: col('메뉴'), screen: col('화면(CID)', '화면'), kind: col('타입', '구분'), now: col('변경전', '지금'), to: col('변경후', '바꿀것'), why: col('근거'), st: col('상태') };
   const fit = (c) => { const x = c.length - H.length; if (x <= 0 || ci.now < 0) return c; return c.slice(0, ci.now).concat([c.slice(ci.now, ci.now + x + 1).join(' | ')], c.slice(ci.now + x + 1)); };
-  const rows = lines.slice(1).filter((l) => !/^\s*\|[\s:|-]+\|?\s*$/.test(l)).map((l) => { const c = fit(cells(l)), g = (i) => (i >= 0 ? c[i] || '' : ''); return { n: g(ci.n), kind: g(ci.kind), now: g(ci.now), to: g(ci.to), why: g(ci.why), st: g(ci.st) }; })
-    .filter((r) => (r.n || r.to) && /^(대기|작업 중|반영 중)/.test(r.st));
-  if (!rows.length) return null;
-  const fig = String(fm.figma || ''), key = keyOf(fig), nd = /node-id=(\d+)[-:](\d+)/.exec(fig);
-  const h1 = /^#\s+(.+)$/m.exec(t.slice(m ? m[0].length : 0));
-  return { cid: String(fm.cid || path.basename(f, '.md')), title: String(fm.title || (h1 ? h1[1] : '')), author: String(fm.author || ''), path: rel,
-    fileKey: key, nodeId: nd ? `${nd[1]}:${nd[2]}` : '', rows };
+  return lines.slice(1).filter((l) => !/^\s*\|[\s:|-]+\|?\s*$/.test(l)).map((l) => {
+    const c = fit(cells(l)), g = (i) => (i >= 0 ? c[i] || '' : ''), sc = g(ci.screen), cm = /\(([^()]+)\)\s*$/.exec(sc);
+    return { n: g(ci.n), menu: g(ci.menu), screen: cm ? sc.slice(0, cm.index).trim() : sc, cid: cm ? cm[1].trim() : '', kind: g(ci.kind), now: g(ci.now), to: g(ci.to), why: g(ci.why), st: g(ci.st) };
+  }).filter((r) => r.n || r.to);
+}
+const OPEN_ST = /^(대기|작업 중|반영 중)/;
+const rowOut = ({ n, kind, now, to, why, st }) => ({ n, kind, now, to, why, st });
+// 화면 MD 머리말 → {fm, t, title}
+function screenHead(t) {
+  t = String(t || '').replace(/^﻿/, ''); const fm = {}, m = /^---\r?\n([\s\S]*?)\r?\n---/.exec(t);
+  if (m) for (const l of m[1].split(/\r?\n/)) { const k = /^([A-Za-z_]+):\s*(.*?)\s*(#.*)?$/.exec(l); if (k && !/^\s/.test(l)) fm[k[1]] = k[2]; }
+  const h1 = /^#\s+(.+)$/m.exec(t.slice(m ? m[0].length : 0)); return { fm, t, title: String(fm.title || (h1 ? h1[1] : '')) };
+}
+function backlogItem(cid, title, author, rel, fig, rows) {
+  const nd = /node-id=(\d+)[-:](\d+)/.exec(fig || '');
+  return { cid, title, author, path: rel, figma: String(fig || ''), fileKey: keyOf(String(fig || '')), nodeId: nd ? `${nd[1]}:${nd[2]}` : '', rows };
+}
+// 예전 구조: 화면 MD 안의 「## 반영 대기 목록」 절
+function readBacklog(f, rel) {
+  const h = screenHead(core.readText(f)), sec = /^##\s*반영 대기 목록[^\n]*\n([\s\S]*?)(?=^##\s|(?![\s\S]))/m.exec(h.t); if (!sec) return null;
+  const rows = readPendingTable(sec[1]).filter((r) => OPEN_ST.test(r.st)).map(rowOut); if (!rows.length) return null;
+  return backlogItem(String(h.fm.cid || path.basename(f, '.md')), h.title, String(h.fm.author || ''), rel, h.fm.figma, rows);
+}
+// 새 구조: pending/open.md의 줄을 화면(CID)마다 묶고, 화면 정의서에서 그 CID의 화면 MD(머리말 figma · title · author)를 찾아 붙인다
+//  같은 CID가 asis · tobe 둘 다 있으면 tobe(작업방에 그린 화면)를 쓴다. 화면 MD가 없으면 표의 화면 이름만
+function readOpenBacklog(T, id) {
+  const P = pendingPaths(T); if (!core.exists(P.open)) return null;
+  const by = new Map();
+  for (const r of readPendingTable(core.readText(P.open))) { if (!r.cid || !OPEN_ST.test(r.st)) continue; if (!by.has(r.cid)) by.set(r.cid, []); by.get(r.cid).push(r); }
+  const scr = {};
+  if (id && by.size) for (const f of specFiles(T, id)) {
+    const tobe = /^tobe\//.test(f.rel), base = path.basename(f.rel, '.md');
+    if (!by.has(base) || (scr[base] && scr[base].tobe && !tobe)) continue;   // 파일 이름 = CID(화면 정의서 규칙)
+    const h = screenHead(core.readText(f.abs)); scr[base] = { tobe, rel: f.rel, h };
+  }
+  const items = [];
+  for (const [cid, rs] of by) {
+    const s = scr[cid], fm = s ? s.h.fm : {};
+    const it = backlogItem(cid, s ? s.h.title : rs[0].screen, String(fm.author || ''), s ? s.rel : '', fm.figma, rs.map(rowOut));
+    it.menu = rs[0].menu; it.src = P.rel; items.push(it);
+  }
+  return items;
 }
 // 반영 대기를 읽을 화면 정의서(2026-11-19): 이 PC가 그 팀에서 「내 작업 기준」으로 적용한 화면 정의서(카테고리마다 하나라 어느 파일 칸이든 같다).
 //  적용한 것이 없으면 CURECA는 원래의 screens, 다른 팀은 없음(예전에는 팀과 상관없이 늘 screens — 다른 팀에 CURECA에서 복사해 온 사본이 있으면 CURECA 항목이 보였다)
@@ -473,7 +507,9 @@ function specFiles(T, id) {
   return out;
 }
 on('GET', '/api/backlog', ({ T }) => {
-  const id = specDoc(T), items = [];
+  const id = specDoc(T), open = readOpenBacklog(T, id);
+  if (open) return { doc: id, dir: id ? `${T.guideRel}/${id}` : '', src: pendingPaths(T).rel, items: open };
+  const items = [];
   if (id) for (const f of specFiles(T, id)) { const s = readBacklog(f.abs, f.rel); if (s) items.push(s); }
   return { doc: id, dir: id ? `${T.guideRel}/${id}` : '', items };
 });
