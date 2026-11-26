@@ -39,6 +39,7 @@
     "language-set/sheet06.styles.json",
     "language-set/sheet07.csv",
     "language-set/sheet07.styles.json",
+    "../language-set/README.md",
     "../language-set/db/common.md",
     "../language-set/db/dashboard-all.md",
     "../language-set/db/dashboard.md",
@@ -121,10 +122,11 @@
     "../language-set/db/setting-tube.md": "언어셋 · Tube Setting · setting-tube.md",
     "../language-set/db/statistical-analysis.md": "언어셋 · Statistical Analysis · statistical-analysis.md",
     "../language-set/db/test-management.md": "언어셋 · Test Management · test-management.md",
-    "../language-set/db/history.md": "언어셋 이력 · history.md"
+    "../language-set/db/history.md": "언어셋 이력 · history.md",
+    "../language-set/README.md": "언어셋 · 구성 · 쓰는 법 · README.md"
   },
-  "updatedAt": "2026-11-26T05:54:56.360Z",
-  "note": "2026-11-20 CURECA_AI_20261120_8bceea1로 맞춤 / 2026-11-26 언어셋 원본(language-set/db/*.md, v0.06) 24개를 목록에 더함",
+  "updatedAt": "2026-11-26T05:56:22.432Z",
+  "note": "2026-11-20 CURECA_AI_20261120_8bceea1로 맞춤 / 2026-11-26 언어셋 원본(language-set/db/*.md, v0.06) 24개를 목록에 더함 / 2026-11-26 언어셋 README 더함",
   "books": {
     "language-set": {
       "title": "언어셋",
