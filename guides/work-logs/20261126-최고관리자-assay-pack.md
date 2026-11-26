@@ -89,9 +89,9 @@ started: 2026-11-26
 | 2 | 2. Alert · Confirm 보완 필요 지점: 파일을 고른 채 [X] · ESC · [Cancel]로 닫을 때 다시 묻는지 디스크립션에 없음 | TI-STN-08-01 화면 노출 경로 · #3 | 2단계 | Q3 |
 | 3 | 2. Alert · Confirm 보완 필요 지점: Active · Inactive를 바꾸고 [Save] 없이 [닫기] · 다른 Row [Details]를 누를 때 다시 묻는지 디스크립션에 없음 | TI-STN-08-P #2-1 · #3-1 | 2단계 | Q4 |
 | 4 | 4. 요청과 기존 화면이 맞지 않는 곳: Master 파일의 Active 변경 버튼이 TI-STN-08 #4-1은 「상세에 변경 버튼 미노출」, TI-STN-08-P #3은 「[Active] · [Inactive] 버튼 비활성」으로 서로 다름 | TI-STN-08 #4-1 · TI-STN-08-P #3 | 2단계 | Q1 |
-| 5 | 5. 대상 화면에서 찾은 고칠 점: 패널 화면 정보 title `Assay Pack Setting` → `Assay Pack File Details` (IA "Details", 화면 MD 제목과 다름) | TI-STN-08-P · LI-STN-08-P | 3단계 | |
+| 5 | 5. 대상 화면에서 찾은 고칠 점: 패널 화면 정보 title `Assay Pack Setting` → `Assay Pack File Details` (IA "Details", 화면 MD 제목과 다름) | TI-STN-08-P · LI-STN-08-P | 3단계 | C7 |
 | 6 | 5. 대상 화면에서 찾은 고칠 점: 케이스 패널의 Storage Location Info Module · Unit 값(ConsumableStorage · Trolley, PlateSealing · ColdStorage)이 `glossary/modules.csv` · `module-units.csv` 이름인지 확인 | TI-STN-08-P · LI-STN-08-P 케이스 | 2단계 | 근거로 풀림 (modules.csv ConsumableStorage · PlateSealing, module-units.csv Trolley · ColdStorage 코드명) |
-| 7 | 5. 대상 화면에서 찾은 고칠 점: TI-STN-08-01 배경 목록의 Master 줄 Product Name 「-」 · Active 모두 Inactive가 TI-STN-08 목록(「Master Info」 · Active 4줄)과 다름 | TI-STN-08-01 배경 · TI-STN-08 #4 | 3단계 | |
+| 7 | 5. 대상 화면에서 찾은 고칠 점: TI-STN-08-01 배경 목록의 Master 줄 Product Name 「-」 · Active 모두 Inactive가 TI-STN-08 목록(「Master Info」 · Active 4줄)과 다름 | TI-STN-08-01 배경 · TI-STN-08 #4 | 3단계 | 근거로 풀림 (`flow/3-design.md` 공통 3-9: Popup은 Dim만 깔고 배경 화면을 그리지 않음) |
 | 8 | 5. 대상 화면에서 찾은 고칠 점: LI-STN-08-P 케이스 Extraction Barcode Info 머리 「Schema Name」 · PCR 구성품 「Barcode Scheme Name」이 다른 곳(「Barcode Schema Name」)과 다름 | TI-STN-08-P · LI-STN-08-P 케이스 | 3단계 | |
 
 ## 대상 화면의 반영 대기 항목
@@ -187,6 +187,11 @@ started: 2026-11-26
 | --- | --- |
 
 ### 찾은 것
+- 규칙에 없어 판단한 곳: As Is 페이지에 없는 [TI-STN-08 / 팝업 정의] · [TI-STN-08 / 정책] · [Import 정의] 5 · 7을 가리키던 디스크립션 참고는 옮기지 않고 코드(Alert · Confirm · Toast) · `정책 참고 : POL-TST-008`로 대신함 (요청자 확인 6)
+- 규칙에 없어 판단한 곳: TI-STN-08-P · LI-STN-08-P 원본 케이스(파일 종류별 패널 네 장)에 Case 번호가 없어 원본 순서대로 Case 1 Master · 2 Pretreatment · 3 Extraction · 4 PCR로 매김. [TI-STN-08-P 유형별 정의] 프레임 글은 디스크립션 3 「파일 종류별 노출 항목」 · 「표기」로 옮김
+- 규칙에 없어 판단한 곳: TI-STN-08 [세부정의] 1-1 · 1-2를 TI-STN-08/Case > Case 1(제목 「세부정의」)로, [TI-STN-08 / Import 정의] ① · ②를 TI-STN-08-01/Case > Case 1로 옮김
+- 규칙에 없어 판단한 곳: 원본 디스크립션의 번호 없는 「화면 노출 경로」 블록(TI-STN-08-P · LI-STN-08-P · TI-STN-08-01)은 0번 동작으로 옮김
+- TI-STN-08-01은 `공통 3-9`대로 배경 목록 없이 Dim 위에 Popup만 그림 → 뒤 단계용 7(배경 목록 Master 줄 · Active 값)은 그리지 않아 풀림. TI-STN-08-P는 목록 위에 겹치는 패널이고 목록 버튼이 보이는 화면이라 배경 목록을 그대로 그림
 
 ### 용어 치환
 | 원래 표현 | 표준어 | 위치 |
