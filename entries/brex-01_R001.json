@@ -2,11 +2,11 @@
   "id": "brex-01_R001",
   "kind": "request",
   "team": "cureca",
-  "status": "보류",
-  "at": "2026-11-26T15:34:06+09:00",
+  "status": "대기",
+  "at": "2026-11-26T15:56:09+09:00",
   "createdAt": "2026-11-25T21:16:32+09:00",
   "by": "서보경",
-  "doneBy": "Claude",
+  "doneBy": "서보경",
   "pc": "BREX_01",
   "reqId": "R001",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,24 +17,13 @@
   "type": "요청",
   "layout": "",
   "text": "Event History 화면 옮겨줘\n\n기존 화면: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-45275&t=8ZUolJfFqEx5iunS-1\n옮길 페이지: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3577-18413&t=8ZUolJfFqEx5iunS-1",
-  "note": "케이스 3 · 3 ~ 4단계 · 20261125-서보경-event-history — 3단계 그리기를 마치고(기계 검사 통과) 4단계 사용자 확인 목록을 보여 드립니다\n\n**[3단계] 화면 설계 결과**\n- Event History (TI-EVT-P / LI-EVT-P): T는 앞 세션이 그린 것을 점검(scrim 높이 · 기획 진행 표시 날짜 바로잡음), L은 T 복제 후 Status Toggle · [Mark all as Closed] · Module (1) · 패널 · 확인 목록 반영\n- Event Detail (TI-EVT-01-P / LI-EVT-01-P): 원본 표를 같은 값으로 따오고 Level은 Common UX Status/Event Level, [List]는 Square Filled. L은 Status Toggle · Notes 입력 칸 · 케이스(입력 3장면)\n- Event Message (TI-EVT-02-P / LI-EVT-02-P): Popup은 원본에서 따오고 [Close] · [View Details]만 Common UX Square\n- 용어 점검: 케이스 제목 「툴팁박스」 → Tooltip 고침\n- 마침 점검(기계 검사) 통과 — 사용자 확인 목록: 질문 대기 7 · 변경 확인 22 (+ 3단계에서 확인된 것 8)\n- Resolution Notes 입력 칸은 Common UX Text Input/Inline에 글자 수 · Cancel/Save 아이콘을 담는 변형이 없어 원본에서 따옴(C28은 적용하지 않음)\n\n**[4단계] 질문 대기 — 답을 정해 주실 것**\n\n| 번호 | 화면 · 위치 | 질문 | 고를 것 | 추천 |\n| --- | --- | --- | --- | --- |\n| Q1 | TI · LI-EVT-P 2 목록 요약 | 전체 개수 이름 (화면 Items / 디스크립션 Total Event) | Items / Total Event | |\n| Q2 | LI-EVT-01-P 3 · 5 · 6 | Resolution Notes 입력 중 닫기 · [List]를 누를 때 Confirm을 띄울지 (정책은 Cancel만 정함) | 띄움 / 안 띄움 | |\n| Q3 | LI-EVT-02-P 0 | Event Message가 보이는 L-IOS Client Mode (정책 Main · Console, 모드 표에 줄 없음) | Main · Console (정책대로) / 다른 값 | Main · Console (POL-EVT-003 규칙 1) |\n| Q4 | 목록 3 · 상세 2 · Message 7 (T · L) | Module 이름 뒤 번호 (1) 표기 (T 목록은 없음, L · 상세 · Message는 있음) | 붙임 / 뺌 | 붙임 (glossary.md Module (Index)) |\n| Q5 | TI-EVT-P 3 | T-IOS 목록에 노출 개수 Dropdown(10 · 30 · 50 · 100)을 둘지 (기존은 10개 고정) | 둠 / 안 둠 | |\n| Q6 | TI · LI-EVT-P 3 | 목록에 데이터가 없을 때 안내 문구 | 문구를 알려 주세요 / 고객에게 물음 | |\n| Q7 | TI · LI-EVT-02-P 12 | 오른쪽 썸네일 목록(Common UX Event Stacked Popup)을 둘지 (기존은 [< >]만) | 둠 / 안 둠 | |\n\n**[4단계] 변경 확인 — 맞는지만 봐 주실 것**\n\n| 번호 | 화면 · 위치 | 기존 | 바꿔 그린 것 | 근거 |\n| --- | --- | --- | --- | --- |\n| C1 | LI-EVT-P 6 | 공통 UX 참고 COMM-5-j(4/4) | COMM-5-m(2/4) Import / Export Popup | POL-COM-006 |\n| C2 | TI · LI-EVT-02-P 3 | Type: Consumable | Type: Inventory | 기준데이터 Event Type |\n| C3 | TI-EVT-01-P 1 | Status 옆 번호 1-2 | 번호 표시 뺌 (Status 표기만) | POL-EVT-002 |\n| C4 | 상세 · Message (T · L) | Event History Detail · Event Message Popup | Event Detail · Event Message | IA (요청자 확인 1) |\n| C5 | 6개 화면 디스크립션 | 장비 · 팝업 · 툴팁 · 모듈 · 표시 등 | 용어집 표준어 | terms.csv |\n| C6 | TI · LI-EVT-P 3 | Unit Sample Processing | Sample Processing (Upper) | module-units.csv |\n| C9 | LI-EVT-01-P 1 | Created Date | Occurred Date/Time | POL-EVT-001 |\n| C10 | LI-EVT-01-P 1 | Recommended Action → Effect 순서 | Effect → Recommended Action | POL-EVT-001 |\n| C11 | LI-EVT-01-P 케이스 | 0 /100자 | 0 /300자 | POL-EVT-002 |\n| C13 | 목록 3, LI-EVT-01-P 1 · 4 | YYYY-MM-DD hh:mm:ss | YYYY-MM-DD hh:mm | Common UX 날짜 표기 |\n| C14 | TI-EVT-P 0 | 5 · 5-1 (취소선 블록) | 디스크립션 · 번호에서 지움 | 케이스 3 규칙 |\n| C15 | LI-EVT-01-P 7 | 6 · 7 둘 다 닫기 | 7을 빨간 취소선 | 반영 대기 |\n| C16 | TI-EVT-01-P 1 | Created Date | Occurred Date/Time | 반영 대기 · POL-EVT-001 |\n| C17 | TI-EVT-01-P 1 · 3 | Status 변경 여부 없음, Notes L-IOS 작성 시 | Status 노출 (상태 변경 불가), Notes 작성된 것이 있을 때 노출 | POL-EVT-002 |\n| C18 | TI-EVT-02-P 0 | Profile에서 On일 때 노출 | Profile > General Event notifications On일 때, 기본 On | POL-EVT-003 |\n| C19 | LI-EVT-02-P 0 | Main PC · 콘솔용 PC | Main Mode, Console Mode | POL-EVT-003 |\n| C21 | LI-EVT-P 4 · 5, LI-EVT-01-P 1-2 · 3 | 범위 「Open인 모든 Events」, 조건 COMM-3-a | 지금 검색 조건의 모든 페이지 Open 전체, Main Mode일 때 활성화 | POL-EVT-002 |\n| C26 | TI · LI-EVT-P 6 | [Export] Gray | T Filled · L Outlined | Common UX Button |\n| C27 | TI · LI-EVT-02-P 8 · 9 | 기존 버튼 | Square Outlined · Filled | Common UX |\n| C29 | TI · LI-EVT-01-P 5 | 번호 5가 Notes 칸 위 | [List] 버튼 옆 | 디스크립션 5 = [List] |\n| C30 | TI · LI-EVT-P 1 · 3 · 4 · 8 | 기존 입력 칸 · 표 · Toggle · 페이지 번호 | Common UX 컴포넌트 | Common UX |\n| C31 | TI · LI-EVT-01-P 1 | Level 기존 그림 칩 | Common UX Status/Event Level | Common UX |\n\n**3단계에서 확인된 것 (반영한 항목)**: C7 Module 번호 띄어 씀 · C8 all → All · C12 오타 · C20 Status · CURECA · Event ID · Open · CFX96 (1) · .csv · C22 Flexible Extraction (1) · STARlet · C23 Error · Warning · C24 TI-EVT-01-P · Type 값 · C25 Common UX 설명 더함. 이상한 줄이 있으면 번호로 짚어 주세요\n\n- 확인 필요: 플러그인 채우기 J089가 5분 넘게 멈춰 「실패」로 바꾸고 그 뒤 패널은 직접 그림\n\n규칙 점검: 3단계 「하지 않는 것」 · 마침 점검 1 ~ 18(케이스 3 14 ~ 16 포함) 지킴. 다르게 한 것 — C28 Inline Input 미적용(맞는 변형 없어 규칙대로 원본에서 따옴), LI-EVT-01-P 케이스 글자 수를 화면 MD대로 보이게 둠\n작업 기준: basis 없음 (UX 확정 때) · 시작 2026-11-25 21:17 · 작업규칙 CURECA 작업규칙 @수정본 · 정책서 정책서 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 · 화면 정의서 화면 정의서",
+  "note": "",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": {
-    "q": "사용자 확인 목록(Q1 ~ Q7 답, C 맞음 / 되돌림)을 번호로 알려 주세요 (예: Q1 Items, Q4 붙임, C 모두 맞음)",
-    "options": [
-      {
-        "label": "C 모두 맞음 (Q는 따로 답함)"
-      },
-      {
-        "label": "하나씩 정하기"
-      }
-    ],
-    "free": true
-  },
+  "ask": null,
   "replies": [
     {
       "at": "2026-11-25T21:20:57+09:00",
@@ -113,6 +102,12 @@
       "by": "서보경",
       "q": "3단계 그리기를 어떻게 이어 갈까요?",
       "text": "1M 모델 설정 확인 후 다시 맡김"
+    },
+    {
+      "at": "2026-11-26T15:56:09+09:00",
+      "by": "서보경",
+      "q": "사용자 확인 목록(Q1 ~ Q7 답, C 맞음 / 되돌림)을 번호로 알려 주세요 (예: Q1 Items, Q4 붙임, C 모두 맞음)",
+      "text": "q1. Items로 해줘  q2. 띄워줘 q3. 정책대로 q4. 빼줘. 그리고 너가 알아야할 것이 있어. 모듈이 단일로 설치되어 있으면 inex (n) 표시되지 않아. 그래서 그걸 표현하기 위해서 예제를 이걸로 쓴거야. q5. 여기도 T는 10 30 ~ 선택하는 구조로 넣어야해 q6. 현재 다른 화면에서는 이럴 때 어떻게 쓰고 있는 지 체크해줘 q7. 썸네일 목록은 굳이 두지 않아도 될거 같아.   C4 -> 이거 경로가. Event History가 아니라 메시지는 단독으로 뜨는거라 그냥 Event Message로만 써주면 될거 같아  C17 -> 말을 모호하게 쓴거 같아. 영역은 고정이고, 내용이 있으면 표기된다는 늬앙스로 다시 써줘 나머지는 확인 완료했어.   추가로 TI-EVT-P 에 디스크립션 4번 취소선 되어 있는 것은 문구 제거해주면 될거 같아. 취소선 없는 문구만 남겨줘"
     }
   ],
   "raws": [
