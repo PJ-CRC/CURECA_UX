@@ -2,8 +2,8 @@
   "id": "brex-01_R001",
   "kind": "request",
   "team": "cureca",
-  "status": "진행 중",
-  "at": "2026-11-26T16:43:30+09:00",
+  "status": "보류",
+  "at": "2026-11-26T16:45:42+09:00",
   "createdAt": "2026-11-25T21:16:32+09:00",
   "by": "서보경",
   "doneBy": "Claude",
@@ -17,13 +17,36 @@
   "type": "요청",
   "layout": "",
   "text": "Event History 화면 옮겨줘\n\n기존 화면: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-45275&t=8ZUolJfFqEx5iunS-1\n옮길 페이지: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3577-18413&t=8ZUolJfFqEx5iunS-1",
-  "note": "답 받음: Event Message 10 · 11번(X · Close All) 확인 · 번호 표시 위치 조정 중 (4단계 검토 질의 9)",
+  "note": "케이스 3 · 4단계 · 20261125-서보경-event-history — 검토 질의 9(Event Message 10 · 11번 · 번호 표시)를 고쳤습니다.\n\n**[고친 곳]**\n- Event Message (TI-EVT-02-P · LI-EVT-02-P): 10 [Close All] · 11 메시지 개수(1/20) → 흰 글자가 Popup 흰 바탕 뒤에 겹쳐 안 보였음(Popup을 가운데로 옮길 때 같이 올리지 않음). Popup 위 Dim 위로 올려 기존 화면처럼 보이게 함, 번호 10 · 11도 함께 올림\n- 같은 화면: 번호 표시 2 ~ 7 → 글자(Event Code · Description · Effect · Recommended Action · Module)를 가리던 것을 각 항목 위 빈칸으로 옮김 (2 · 3은 Event Code · Type 위)\n- 디스크립션 · 화면 MD는 바뀌지 않음 (배치만 고침, 변경 확인 C45)\n\n**[질문 대기]**\nQ1 최종으로 UX 확정을 하시겠습니까? (사용자 확인 목록 · 검토 질의 미해결 없음)\n  - 확정 · 기계 검사 다시 함 · UI 작업 대상 (추천)\n  - 확정 · 기계 검사 안 함 · UI 작업 대상\n  - 아직\n  근거: 기계 검사 — 절차 1 뒤 C37 ~ C45로 화면 · 배치를 여러 번 고침 / UI 작업 대상 — C35 · C30 · C26 · C27 · C40 · C41 배치 · 요소, C33 · C20 · C2 · C34 화면 표기 글자가 바뀜\n\n**[확인 필요]**\n- Ver은 케이스 3이라 묻지 않습니다. 디자인 화면은 읽지 않아 그곳 글자는 보지 못했습니다.\n- Event Message Popup 오른쪽 테두리가 [>] 높이쯤에서 끊겨 보입니다(Popup 틀 높이 285가 내용보다 짧음, 이번에 고치지 않음). 고칠지 알려 주세요.\n\n규칙 점검: 4단계 절차 2 · 3의 「하지 않는 것」 · 묻는 곳 지킴 (기계 검사는 답을 받은 뒤)\n작업 기준: basis 2026-11-25 21:17 (basis_start · history 5ec517c7) · 작업규칙 CURECA 작업규칙 @원본 · 정책서 정책서 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 · 화면 정의서 화면 정의서",
   "shot": "",
   "shots": [],
   "images": [],
-  "frames": [],
+  "frames": [
+    {
+      "nodeId": "3769:1813",
+      "name": "TI-EVT-02-P"
+    },
+    {
+      "nodeId": "3771:1955",
+      "name": "LI-EVT-02-P"
+    }
+  ],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "사용자 확인 목록과 질의가 모두 풀렸습니다. 최종으로 UX 확정을 하시겠습니까?",
+    "options": [
+      {
+        "label": "확정 · 기계 검사 다시 함 · UI 작업 대상 (추천)"
+      },
+      {
+        "label": "확정 · 기계 검사 안 함 · UI 작업 대상"
+      },
+      {
+        "label": "아직"
+      }
+    ],
+    "free": true
+  },
   "replies": [
     {
       "at": "2026-11-25T21:20:57+09:00",
