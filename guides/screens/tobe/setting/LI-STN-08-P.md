@@ -29,7 +29,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 **0  Assay Pack File Details 화면**
 - 정의
   - 목록에서 고른 Assay Pack 파일의 상세 정보를 보는 패널
-  - 파일 종류(Master · Pretreatment · Extraction · PCR)별 시약 정보 노출
+  - 파일 종류(Master · Pretreatment · Extraction · PCR)별 Reagent 정보 노출
 - 동작
   - [LI-STN-08] 목록에서 Details(›) 선택 시, File Details 패널이 목록 위에 겹쳐 노출 (화면 2분할 아님)
   - 노출 위치 : 목록 우측, 목록 영역 높이에 맞춤
@@ -51,13 +51,13 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 
 **3  File Details (조회 전용)**
 - 정의
-  - 파일 종류별 JSON 순서대로 시약 정보 노출
+  - 파일 종류별 JSON 순서대로 Reagent 정보 노출
 - 노출 항목
   - File Info : File name(확장자 제외), File type, File Version, File Created Date/Time(YYYY-MM-DD hh:mm:ss), Active(Active · Inactive 태그, 보기만)
   - Import Info : Registered Date/Time(YYYY-MM-DD hh:mm:ss), User ID(service)
-  - 시약 정보 : 파일 종류별 항목 (아래 「파일 종류별 노출 항목」)
+  - Reagent 정보 : 파일 종류별 항목 (아래 「파일 종류별 노출 항목」)
 - 파일 종류별 노출 항목
-  - Master : Product Name 「Master Info」, Test Group Info(표) → Sample Type Info(표) → Barcode Schema Info(스키마 탭 · 길이 · 유효기간 Segment 순서 · Segment 표) → Item Group Info(표) → PCR Reagent Socket Component Info(표 · Component ID · Type · Color Code)
+  - Master : Product Name 「Master Info」, Test Group Info(표) → Sample Type Info(표) → Barcode Schema Info(스키마 탭 · 길이 · Expiration Date Segment 순서 · Segment 표) → Item Group Info(표) → PCR Reagent Socket Component Info(표 · Component ID · Type · Color Code)
   - Pretreatment : Reagent Basic Info(Item Group 포함) · Barcode Info · Quantity Info · Storage Location Info
   - Extraction : Reagent Basic Info · Barcode Info · 구성품 탭(Component)별 Basic · Barcode · Quantity · Storage Location Info
   - PCR : Reagent Basic Info(Test Item · Test Group ID · Test Target · Sample Type Mapping 표) · Barcode Info · Extraction Device Availability · 구성품 탭별 Barcode · Max Rxns · Quantity · Storage Location · PCR Socket Component Info
@@ -86,7 +86,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 
 #### 1-1. File type : Master
 
-- Product Name은 「Master Info」로 표시 · 최신 버전 자동 활성 (활성 선택 불가)
+- Product Name은 「Master Info」로 노출 · 최신 버전 자동 활성 (활성 선택 불가)
 - Test Group Info · Sample Type Info · Barcode Schema Info · Item Group Info · PCR Reagent Socket Component Info
 - 패널 내용 전체 펼침 (실제 화면은 패널 안에서 스크롤)
 
@@ -98,7 +98,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 
 #### 2-1. File type : Pretreatment
 
-- 구성품 없음 · 단일 시약
+- 구성품 없음 · 단일 Reagent
 - Reagent Basic Info · Barcode Info · Quantity Info · Storage Location
 - 패널 내용 전체 펼침 (실제 화면은 패널 안에서 스크롤)
 

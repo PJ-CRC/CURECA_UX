@@ -29,7 +29,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 **0  Assay Pack File Details 화면**
 - 정의
   - 목록에서 고른 Assay Pack 파일의 상세 정보를 보는 패널
-  - 파일 종류(Master · Pretreatment · Extraction · PCR)별 시약 정보 노출
+  - 파일 종류(Master · Pretreatment · Extraction · PCR)별 Reagent 정보 노출
 - 동작
   - [TI-STN-08] 목록에서 Details(›) 선택 시, File Details 패널이 목록 위에 겹쳐 노출 (화면 2분할 아님)
   - 노출 위치 : 목록 우측, 목록 영역 높이에 맞춤
@@ -58,18 +58,18 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 
 **3  File Details**
 - 정의
-  - 파일 종류별 JSON 순서대로 시약 정보 노출 (파일당 시약 1개)
+  - 파일 종류별 JSON 순서대로 Reagent 정보 노출 (파일당 Reagent 1개)
 - 노출 항목
   - File Info : File name(확장자 제외), File type, File Version, File Created Date/Time(YYYY-MM-DD hh:mm:ss), Active
   - Import Info : Registered Date/Time(YYYY-MM-DD hh:mm:ss), User ID(service)
-  - 시약 정보 : 파일 종류별 항목 (아래 「파일 종류별 노출 항목」)
+  - Reagent 정보 : 파일 종류별 항목 (아래 「파일 종류별 노출 항목」)
 - Active(Active · Inactive 태그)
   - Master : 최신 버전 강제 활성(Active 고정), [Active] · [Inactive] 버튼 비활성(변경 불가)
   - Pretreatment · Extraction · PCR : 최신 버전 등록 시 최신 버전 자동 활성, [Active] · [Inactive]로 변경 가능
-  - 같은 시약(File type · Product Name 동일)은 1개만 활성, 다른 버전을 Active로 바꾸면 기존 활성 버전은 Inactive로 전환
+  - 같은 Reagent(File type · Product Name 동일)은 1개만 활성, 다른 버전을 Active로 바꾸면 기존 활성 버전은 Inactive로 전환
   - 변경 후 하단 [Save] 선택 시 반영
 - 파일 종류별 노출 항목
-  - Master : Product Name 「Master Info」, Test Group Info(표) → Sample Type Info(표) → Barcode Schema Info(스키마 탭 · 길이 · 유효기간 Segment 순서 · Segment 표) → Item Group Info(표) → PCR Reagent Socket Component Info(표 · Component ID · Type · Color Code)
+  - Master : Product Name 「Master Info」, Test Group Info(표) → Sample Type Info(표) → Barcode Schema Info(스키마 탭 · 길이 · Expiration Date Segment 순서 · Segment 표) → Item Group Info(표) → PCR Reagent Socket Component Info(표 · Component ID · Type · Color Code)
   - Pretreatment : Reagent Basic Info(Item Group 포함) · Barcode Info · Quantity Info · Storage Location Info
   - Extraction : Reagent Basic Info · Barcode Info · 구성품 탭(Component)별 Basic · Barcode · Quantity · Storage Location Info
   - PCR : Reagent Basic Info(Test Item · Test Group ID · Test Target · Sample Type Mapping 표) · Barcode Info · Extraction Device Availability · 구성품 탭별 Barcode · Max Rxns · Quantity · Storage Location · PCR Socket Component Info
@@ -77,10 +77,10 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
   - ID 값(Test Group · Sample Type · Barcode Schema · Item Group · Component ID)은 JSON 그대로 해당 항목과 함께 노출
   - 구성품(Component)이 있는 파일(Extraction · PCR)은 구성품 탭으로 전환, 첫 구성품 기본 선택
   - Barcode Info : Segments 개수 없이 「Segment Info」 라벨 아래 Segment 노출, 파일에 들어온 개수만큼 Segment 순서(오름차순)대로 노출 (개수 제한 없음), Segment 이름이 있으면 코드 아래 노출
-  - Quantity Info : Quantity · Base Unit · Packaging Unit 각각 노출 (합친 Display 없음), 시약 단위 rxns
+  - Quantity Info : Quantity · Base Unit · Packaging Unit 각각 노출 (합친 Display 없음), Reagent 단위 rxns
   - Item Group Name : Pretreatment는 Reagent Basic Info, Extraction · PCR은 구성품별 노출
   - Extraction Device Availability(PCR) : M9600 · STARlet 각각 사용 가능 여부 노출
-  - PCR 구성품 : Max Rxns · Max Usage Count는 구성품별 노출, PCR Socket Component Info(Component Type · Abbreviation · Socket Positions 표)는 소켓 정보가 있는 구성품만 노출
+  - PCR 구성품 : Max Rxns · Max Usage Count는 구성품별 노출, PCR Socket Component Info(Component Type · Abbreviation · Socket Positions 표)는 Socket 정보가 있는 구성품만 노출
   - 같은 줄 항목은 명칭 높이를 맞춰 값을 같은 줄에 노출 (명칭이 길거나 다국어로 2줄이 돼도 유지)
 - 내용이 길면 패널 안에서 스크롤
 - 정책 참고 : POL-TST-008, POL-TST-010
@@ -118,7 +118,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 
 #### 1-1. File type : Master
 
-- Product Name은 「Master Info」로 표시 · 최신 버전 자동 활성 (활성 선택 불가)
+- Product Name은 「Master Info」로 노출 · 최신 버전 자동 활성 (활성 선택 불가)
 - Test Group Info · Sample Type Info · Barcode Schema Info · Item Group Info · PCR Reagent Socket Component Info
 - 패널 내용 전체 펼침 (실제 화면은 패널 안에서 스크롤)
 
@@ -130,7 +130,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 
 #### 2-1. File type : Pretreatment
 
-- 구성품 없음 · 단일 시약
+- 구성품 없음 · 단일 Reagent
 - Reagent Basic Info · Barcode Info · Quantity Info · Storage Location
 - 패널 내용 전체 펼침 (실제 화면은 패널 안에서 스크롤)
 

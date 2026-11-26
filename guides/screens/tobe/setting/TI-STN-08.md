@@ -18,7 +18,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 ---
 # TI-STN-08 Assay Pack Setting
 
-- T/L 차이: T-IOS는 [Delete] · [Import] · 체크박스로 파일을 지우고 등록함. L-IOS(LI-STN-08)는 조회만 함
+- T/L 차이: T-IOS는 [Delete] · [Import] · Checkbox로 파일을 지우고 등록함. L-IOS(LI-STN-08)는 조회만 함
 - 호출하는 화면: [TI-STN-08-P] Assay Pack File Details ([Details] → 목록 위 패널), [TI-STN-08-01] Import file Popup ([Import])
 - 호출되는 곳: LNB Setting > Assay Pack Setting
 - 반영 대기 항목: `pending/open.md`에서 이 CID로 찾음
@@ -120,10 +120,10 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
   - User ID : 등록한 사용자 ID
   - Active : 활성 여부
   - Details : [Details] 버튼
-- 텍스트 정렬 : Version · 일시 · Active · 체크박스 · Details 가운데 / 나머지 왼쪽
-- 체크박스
+- 텍스트 정렬 : Version · 일시 · Active · Checkbox · Details 가운데 / 나머지 왼쪽
+- Checkbox
   - 개별 선택 · 헤더 선택 시 현재 페이지 전체 선택
-  - 일부 선택 시 Mix 표시
+  - 일부 선택 시 Mix 노출
 - 10개 초과 시 Pagination
 - 등록된 파일이 없을 경우 안내 문구 노출
 - 공통 UX 참고 : COMM-5-g, COMM-5-q
