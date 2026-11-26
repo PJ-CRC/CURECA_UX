@@ -137,7 +137,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 | 1 | Event ID, Code 입력 칸 | Event ID, Code (placeholder) | 기존 원본 `3543:47343`, 반영 대기 TI-EVT-P-R05 (Event Id → Event ID) |
 | 1 | Type · Module · Level · Status | All · All · All · All | 기존 원본 `3543:47347` · `47350` · `47354` · `47358` |
 | 1 | 기간 | 2026-03-11 ~ 2026-03-17 | 기존 원본 `3543:47360` |
-| 2 | Items · Open | 1,112 · 20 | 기존 원본 `3543:47121` (OPEN → Open, `glossary/status-values.csv` Event Status) |
+| 2 | Items · Open | 1,112 · 20 / 표기 `10 items of Items 1,112 \| Open 20` (9 노출 개수 Dropdown 다음에 `of`, Items와 Open 사이 구분선) | 기존 원본 `3543:47121` (OPEN → Open, `glossary/status-values.csv` Event Status), 검토 질의 11 |
 | 3 | 목록 | 기존 원본 10행 그대로 / 3행 Unit `Sample Processing (Upper)` / 7행 Unit `CFX96 (1)` / 1 ~ 10행 Occurred Date/Time `2025-09-29 15:57` | 기존 원본 `3543:47130`, `glossary/module-units.csv`, COMM-4-a(1/4) 일시 표기 |
 | 3 | Level | Error · Warning (기존 원본 행 그대로) | `glossary/status-values.csv` Event Level (Status/Event Level) |
 | 8 | 페이지 | 1 ~ 10 (2 선택) | 기존 원본 `3543:47127` |
@@ -174,6 +174,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 | Search | 화면 1 | |
 | Items | 화면 2 | |
 | {n} items | 화면 9 · 디스크립션 9 (n = 10, 30, 50, 100) | |
+| of | 화면 2 (`10 items of Items 1,112`) | |
 | No results found. | 디스크립션 3 | |
 | Export | 화면 6 | |
 | Code | 화면 3 | |
