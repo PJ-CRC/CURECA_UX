@@ -280,7 +280,7 @@ started: 2026-11-27
 | Warning (폐기함 상태) | Almost Full | TI-IVT-01-T 3-5, TI-IVT-05-T 3-3 "(Warning)" | | 2단계 |
 | Error (폐기함 상태 뒤 괄호) | (지움, 폐기함/폐액통 상태는 Full) | TI-IVT-05-T 3-3 "Full 상태 (Error)" | | 2단계 |
 | Waste Status · Waste Status Icon | Waste Bin/Bottle Status · Waste Bin/Bottle Status Icon | TI-IVT-01-T 3-4, TI-IVT-05-T 0 | | 2단계 |
-| 폐기물함 · 폐기함 · 폐기물 함 · 폐기물 | Waste Bin/Bottle | TI-IVT-05-T 0 · 2-2 · 3-2 · 3-3 · 3-4 | | 2단계 |
+| 폐기물함 · 폐기함 · 폐기물 함 · 폐기물 | Waste Bin/Bottle | TI-IVT-05-T 0 · 2-2 · 3-2 · 3-3 · 3-4 (3-3 "이후 발생하는 폐기물"은 폐기 개수를 뜻해 "누적 사용 개수"로 고침, 3단계 용어 점검) | | 2단계 |
 | 모듈 · Moule | Module | 8개 화면 0, TI-IVT-05-T 0 · 2 · 3 · 3-1 | | 2단계 |
 | 사용여부가 '사용'인 모듈 | Enabled인 Module | 8개 화면 0 | | 2단계 |
 | 소모품 | Consumable | TI-IVT-01-T 0, TI-IVT-02-T 0 (3단계 용어 점검에서 찾음), TI-IVT-03-T 0 · 2 · 2-3 · 2-4 · 3-1 · 3-3 · 3-5 · 3-7, TI-IVT-03-T-P 0 · 1 · 2 · 2-1, TI-IVT-04-T 2-4 · 3-5, TI-IVT-04-T-P 2-1, TI-IVT-06-T 0 · 2 | | 2단계 |
