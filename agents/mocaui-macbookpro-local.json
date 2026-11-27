@@ -1,18 +1,28 @@
 {
-  "reportAt": "2026-11-27T10:23:49+09:00",
+  "reportAt": "2026-11-27T10:24:25+09:00",
   "pc": "Mocaui-MacBookPro.local",
   "slug": "mocaui-macbookpro-local",
   "user": "김목화",
   "os": "mac",
-  "version": "0.32.7",
+  "version": "0.32.31",
   "alive": true,
   "status": "idle",
-  "msg": "요청을 기다리는 중",
-  "statusAt": "2026-11-27T10:23:38+09:00",
+  "msg": "준비 확인 중 (Claude 로그인 · Figma 연결)",
+  "statusAt": "2026-11-27T10:24:21+09:00",
   "claude": "앱 내장",
   "claudeWay": "",
   "autoWatch": true,
   "events": [
+    {
+      "at": "2026-11-27T10:24:21+09:00",
+      "kind": "start",
+      "text": "감시 시작"
+    },
+    {
+      "at": "2026-11-27T10:24:16+09:00",
+      "kind": "stop",
+      "text": "감시 중지"
+    },
     {
       "at": "2026-11-25T09:48:56+09:00",
       "kind": "start",
