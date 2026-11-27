@@ -1,0 +1,28 @@
+{
+  "id": "brex-01_J106",
+  "kind": "work",
+  "reqId": "",
+  "reqType": "",
+  "team": "cureca",
+  "at": "2026-11-27T11:27:33+09:00",
+  "from": "2026-11-27T11:26:58+09:00",
+  "by": "서보경",
+  "doneBy": "Claude",
+  "pc": "BREX_01",
+  "fileKey": "",
+  "fileName": "",
+  "page": "",
+  "frame": "",
+  "nodeId": "",
+  "text": "논의 대상: DS-0014 (J106)",
+  "models": {
+    "claude-opus-5-5": 9
+  },
+  "calls": 9,
+  "input": 17,
+  "cacheWrite": 38024,
+  "cacheRead": 419058,
+  "output": 3912,
+  "total": 461011,
+  "usd": 0.4663
+}
