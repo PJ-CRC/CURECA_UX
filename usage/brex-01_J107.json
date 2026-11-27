@@ -1,0 +1,28 @@
+{
+  "id": "brex-01_J107",
+  "kind": "work",
+  "reqId": "",
+  "reqType": "",
+  "team": "cureca",
+  "at": "2026-11-27T11:30:54+09:00",
+  "from": "2026-11-27T11:30:30+09:00",
+  "by": "서보경",
+  "doneBy": "Claude",
+  "pc": "BREX_01",
+  "fileKey": "",
+  "fileName": "",
+  "page": "",
+  "frame": "",
+  "nodeId": "",
+  "text": "논의 대상: DS-0014 (J107)",
+  "models": {
+    "claude-opus-5-5": 7
+  },
+  "calls": 7,
+  "input": 13,
+  "cacheWrite": 39797,
+  "cacheRead": 328264,
+  "output": 2773,
+  "total": 370847,
+  "usd": 0.4395
+}
