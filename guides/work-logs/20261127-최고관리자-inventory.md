@@ -8,13 +8,13 @@ cid_system:
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST (작업방 `Inventory_tobe` 페이지)
 test: false
 basis_start: 2026-11-27 09:58 · history fc0b3d0e7
-basis:
+basis: 2026-11-27 15:53 · history c133247fe
 basis_versions:
-  rules:
-  policy:
-  glossary:
-  screens:
-  common_ux:
+  rules: CURECA 작업규칙 @2026-11-27 11:34
+  policy: CURECA 정책서 @2026-11-27 15:31
+  glossary: 기준데이터 @2026-11-26 15:17
+  screens: 화면 정의서 @2026-11-27 15:45
+  common_ux: Common UX (common-ux/comm-index.md) @2026-11-25 16:08
 started: 2026-11-27
 ---
 # 작업 기록: Inventory T-IOS 화면을 Inventory_tobe에 다시 그리기
@@ -26,7 +26,7 @@ started: 2026-11-27
 | 1. 시작 · 요건 정의 | 2026-11-27 | 요청자 확인 (2026-11-27) | 겹치는 다른 작업: 없음 |
 | 2. 근거 · 분석 | 2026-11-27 | 요청자 확인 (2026-11-27) | 정책 수정 범위 1건 (DS-0013, 하지 않음으로 종료) |
 | 3. 화면 설계 | 2026-11-27 | 기계 검사 통과 (2026-11-27) | 화면 MD 8 · Figma 섹션 8, 질문 대기 8 · 변경 확인 (사용자 확인 목록) |
-| 4. 수정 · 확인 | | | |
+| 4. 수정 · 확인 | | | UX 확정 (2026-11-27) |
 | 5. 완료 | | | |
 
 이어서 작업할 곳: 4단계 · 사용자 확인 목록 반영함(Q1 ~ Q8 답, 변경 확인 39건 맞음, 2026-11-27) · 기계 검사 통과(2026-11-27, TI-IVT-01-T · 04-T · 06-T), 미해결 항목 없음. UX 확정함 답 받음(2026-11-27), 절차 3번 순서 3 UI 작업 줄 답을 기다림 → 받으면 순서 4 ~ 8 (다시 읽을 곳: 4단계 `flow/4-revise-verify.md` 절차 3 / 작업 기록 "요건 목록" · "변경 확인" · "요청자 확인", `reference-rules/description.md` 5절 "업데이트 메모")
