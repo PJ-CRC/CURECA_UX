@@ -1,122 +1,233 @@
 ---
-cid:
-pair_cid:
-tl_relation:   # 동일 | 권한 차이 | 기능 추가 | 단독
-title:
-path:
-type:          # Page | Popup | Tab
-version:       # X.Y.ZZ. 케이스 1 · 2는 4단계 UX 확정 때 요청자가 정한 값(그 전까지 케이스 1은 기존 Ver, 케이스 2는 비움), 케이스 3은 기존 화면의 Ver 그대로 (reference-rules/description.md 7절 "화면 정보에 적는 값")
-date:          # YYYY.MM.DD. 케이스 3은 기존 화면의 Date 그대로, 케이스 1 · 2는 작성일
-author:        # 케이스 3은 기존 화면 담당자 그대로, 케이스 1 · 2는 요청자
-client_mode: [] # L-IOS 화면만. user_type과 함께 원본은 권한 · 모드 표(policy/permission-matrix.csv · client-mode-matrix.csv)이고 표 값을 적음(줄 찾는 법은 flow/2-evidence.md "경로 분기 기준마다 읽는 것"의 케이스 3 줄). 표에 없으면 질문 대기로 두고 4단계 답을 적음. 표는 5단계에서 맞춤
-user_type: []
-policies: []   # 정책 ID. 작업 완료 전인 결정으로 그렸으면 "POL-EQP-004 · DS-0012"처럼 논의 대상 ID를 함께 적고, 5단계(완료) 반영 뒤 뗌
-basis:         # 화면 기준: 시각 · history 커밋 (reference-rules/work-log.md "작업 기준")
-basis_versions: # 문서마다 basis 시각 전에 마지막으로 바뀐 때 (rules · policy · glossary · screens · common_ux 모두 @날짜)
-source: tobe   # To-Be 화면 MD. 작업방에 그렸는지는 머리말 figma로 가름
-figma:         # 작업방의 이 CID 섹션 링크
+cid: TI-IVT-03-T
+pair_cid: LI-IVT-03-T
+tl_relation: 동일   # 동일 | 권한 차이 | 기능 추가 | 단독
+title: Inventory Consumables
+path: Inventory > Consumables Tab
+type: Tab          # Page | Popup | Tab
+version: 2.1.18
+date: 2026.11.19
+author: 이상헌
+client_mode: []
+user_type: [Service, Admin, User]
+policies: [POL-INV-001, POL-INV-002, POL-INV-003, POL-INV-006, POL-EQP-009]
+basis:
+basis_versions:
+source: tobe
+figma:
 ---
-# CID 화면 이름
+# TI-IVT-03-T Inventory Consumables
 
-- T/L 차이:
-- 호출하는 화면: [CID] 화면 이름 (어디서 → 어디로)
-- 호출되는 곳: (공통 Popup이면 호출 위치 목록)
+- T/L 차이: 화면 · 디스크립션 같음. LNB 메뉴만 다름
+- 호출하는 화면: [TI-IVT-03-T-P] Consumables Item details popup (3-7 [Item details])
+- 호출되는 곳: LNB > Inventory > Consumables Tab, [TI-IVT-01-T] 등 Inventory Tab 구성
 - 반영 대기 항목: `pending/open.md`에서 이 CID로 찾음
 - 화면 변경 이력: `screen-history.md`의 이 CID 줄
 
 ## 디스크립션
 
-<!-- 원본입니다. Figma 패널에 그대로 들어갑니다. 쓰는 법은 reference-rules/description.md, 작성예시문서는 examples/description-samples.md.
-     바뀐 글 표시(빨간 글씨 · 빨간 취소선)는 reference-rules/description.md 7절 "바뀐 글 표시"의 HTML 태그로 적습니다.
-     코드(화면 · 케이스 · Alert · Confirm · Toast · Common UX · 정책)는 화면 MD에 색을 적지 않습니다. Figma 패널에서만 파란색으로 칠합니다(reference-rules/description.md 7절 "참고 코드 표시").
-     아래는 모양 예시입니다. 실제 내용으로 바꿔 씁니다. -->
-
-**0  ○○ 화면**
+**0  Inventory Consumables 화면**
 - 정의
-  - 내용
+  - <span style="color:red">CURECA</span> 장비에서 사용되는 Consumables의 재고를 확인할 수 있는 화면
+  - <span style="color:red">Enabled인 Module</span> 대상으로만 노출
+  - <span style="color:red">Consumable</span> 기준으로 모아보기 기능을 제공하며, 특성이 같은 기준으로 묶어서 노출
+  - ~~시약 개수 표기 방식~~
+  - ~~"낱개 수량(입고 단위 수량)" 형식으로 제공~~
+  - ~~100개당 1 Rack일 경우, 입고 단위 수량을 올림 처리~~
+  - ~~(예: 101 → 2 Rack)~~
 - 동작
-  - 내용
-- User Type : 
-- L-IOS Client Mode : (L-IOS 화면에만 씀)
+  - LNB의 Inventory > Consumables Tab을 통해 진입
+- User Type : Service, Admin, User
+- 공통 UX 참고 : COMM-4-b(5/5)
+- 정책 참고 : POL-INV-001, POL-EQP-009
 
-**1  ○○ 영역**
+**1  Chip 영역(Status 필터)**
+- 기능
+  - Status : Insufficient, Low, <span style="color:red">Sufficient</span>
+  - 상태값 옆 숫자는 좌측 영역의 Status별 건수 노출
+- Default : 모든 Chip이 선택되지 않은 상태(전체 데이터 노출)
+- 동작
+  - Chip 클릭 시 선택 상태로 변경, 해당 Status 값에 해당하는 데이터만 필터링하여 노출
+  - 동일 Chip 재클릭 시 선택 해제, 필터링 해제되어 전체 데이터 노출
+  - 다중 선택 : Chip은 여러 개 동시에 선택 가능하며 선택된 상태값에 해당되는 모든 데이터가 필터링되어 노출
+  - 적용 범위 : 좌측 / 우측 영역 모두 동일하게 필터링 적용
+  - 우측 영역 규칙 : Status 값에 해당하는 Storage만 필터링되어 노출
+- 공통 UX 참고 : COMM-5-f
+- 정책 참고 : POL-INV-003
+
+**2  좌측 영역 - 카드 리스트**
 - 정의
-  - 내용
-- 공통 UX 참고 : 
-
-**1-1  항목 이름(Dropdown)**
-- 기능 : 
-- Default : 
-- 드롭다운 리스트 항목
-  - 내용
-- 공통 UX 참고 : 
-
-**2  ○○ 리스트**
-- 정의 : 
+  - <span style="color:red">Consumable</span> 이름을 기준으로 성질이 유사한 항목들을 그룹화하여 카드 형태로 노출 (예외 처리 : 그룹화 불가 항목은 단일 카드로 별도 노출)
+- Default : 첫 번째 카드가 선택된 상태로 노출
+- 동작
+  - 카드 전체가 클릭 가능 영역이며, 클릭 시 우측 영역([3])에 해당 카드의 상세 정보 노출
 - 정렬
-  - Default : 
-- 컬럼 항목
-  - 컬럼 이름 : 무슨 값인지 / 표기 / 값이 없을 때
-- 동작
-  - 내용
-- 공통 UX 참고 : 
+  - 공통 UX 참고(COMM-4-b(3/5))
+- 노출 조건
+  - Remaining Qty가 1개 이상 존재하거나 Required Qty가 1개 이상 필요한 경우 노출
+  - Remaining Qty 및 Required Qty가 모두 0일 경우 해당 항목(<span style="color:red">Consumable</span>)은 숨김 처리
+  - 카드 영역 내 모든 항목이 미노출 조건이면 해당 카드 전체 미노출
+  - 항목이 N개로 노출되는 카드일 경우, 노출되는 항목이 1개일 경우에도 '단일 <span style="color:red">Consumable</span>' 기준으로 노출되지 않고 [2-1] 형태로 카드 제목이 있는 케이스로 노출
+- 공통 UX 참고 : COMM-5-e
+- 정책 참고 : POL-INV-003
 
-**3  [버튼 이름] 버튼**
+**2-1  카드 제목**
+- 표기 방식 : 카드 내에 묶인 항목들의 성질을 대표하는 항목명을 카드 제목으로 사용
+
+**2-2  카드 내 항목**
+- 표기 방식 : 카드 제목에 해당되는 <span style="color:red">Consumable</span> 이름을 기준으로, 동일 성질을 가진 항목들을 목록 형태로 카드 내부에 노출
+
+**2-3  단일 <span style="color:red">Consumable</span>**
+- 정의 : 동일한 성질을 가진 다른 <span style="color:red">Consumable</span>과 그룹화가 불가능한 경우, 단일 항목으로 별도 카드로 노출
+
+**2-4  Remaining Qty(좌측 영역)**
+- 정의 : 좌측 영역의 Remaining Qty는 해당 <span style="color:red">Consumable</span>이 적재된 모든 Storage의 개수를 합산하여 노출
+- 산출 방식
+  - Storage 영역과 장비 내 거치 공간(장비가 가져간 <span style="color:red">Consumable</span> 포함)의 수량을 모두 합산하여 재고로 노출
+  - 단, 장비 내 거치 공간에 있는 <span style="color:red">Consumable</span>은 실시간으로 차감되지 <span style="color:red">않으며</span>, 적재된 순간의 수량을 그대로 유지
+  - <span style="color:red">Consumable</span>이 모두 소진되거나 다시 Storage로 반환되는 기준으로 Inventory 재고 업데이트
+  - 잔여량 집계 : <span style="color:red">Storage</span> 및 장비 내 적재된 <span style="color:red">Consumable</span>을 포함하여 관리
+  - <span style="color:red">Storage</span>에 <span style="color:red">Consumable</span> 입고 시 해당 수량 증가
+  - 장비에서 <span style="color:red">Consumable</span> 사용 후 <span style="color:red">Storage</span>로 반환 시 실제 사용 수량만큼 차감
+  - 장비에서 <span style="color:red">Consumable</span> 사용 후 폐기 시 실제 사용 수량만큼 차감
+  - <span style="color:red">Storage</span>에서 <span style="color:red">Consumable</span> 제거 시 해당 수량 차감
+  - <span style="color:red">사용량(Usage History)은 폐기할 때만 기록, 반환할 때는 Remaining Qty만 차감</span>
+- 공통 UX 참고 : COMM-4-b(5/5)
+- 정책 참고 : POL-INV-002, POL-INV-006
+
+**2-5  Required Qty(좌측 영역)**
+- 정의 : 좌측 영역의 <span style="color:red">Required Qty</span>는 현재 전체 Run 기준으로 해당 <span style="color:red">Consumable</span>이 적재된 모든 Storage 및 장비 내 Buffer 공간의 합계를 기준으로 집계
+- 산출 방식
+  - 총 필요 수량에서 현재 재고를 제외한 부족 수량을 계산
+  - 예시 : 남은 재고 10개, 필요 수량 14개 → Required Qty = 4
+- 노출 조건
+  - <span style="color:red">Inbound Trolley가 Docked 상태이거나, [Run Start] 뒤 진행 중인 Batch가 끝나지 않았으면 노출 (둘 중 하나)</span>
+  - <span style="color:red">장비 통합 상태가 Partial Running · Error가 되어도 Batch가 끝나기 전이면 계속 노출, Run 중 Inbound Trolley를 분리해도 계속 노출</span>
+  - 예외 처리 : 위의 상황이 아닐 경우 '-'로 노출
+- 정책 참고 : POL-INV-003
+
+**2-6  Status**
 - 정의
-  - 내용
-- 활성화 조건
-  - 내용
+  - 현재 전체 Run 기준으로 필요 수량 대비 재고 상태를 정의된 아이콘 형식으로 노출
+  - <span style="color:red">Insufficient : 잔여 수량 0. 그 품목을 쓰는 단계에서 Error가 생겨 가동이 중단됨 (예: 재고 0)</span>
+  - <span style="color:red">Low : 필요 수량보다 1개 이상 적으나 가동 가능 (예: 1000개 필요, 999개 이하)</span>
+  - Sufficient : Remaining Qty가 필요 수량을 충족하여 부족이 없는 상태
+- 우선순위 규칙 : 동일 항목의 상세 정보에서 Insufficient와 Low 상태가 동시에 존재할 경우, 좌측 카드에는 Insufficient로 노출
+  - 예시 : 설계서의 '300 μL Tip' → 우측 상세에는 Insufficient 1개, Low 1개 노출되어 있지만, 좌측 카드에는 Insufficient 값으로 노출
+- 노출 조건
+  - <span style="color:red">Inbound Trolley가 Docked 상태이거나, [Run Start] 뒤 진행 중인 Batch가 끝나지 않았으면 노출 (둘 중 하나)</span>
+  - <span style="color:red">장비 통합 상태가 Partial Running · Error가 되어도 Batch가 끝나기 전이면 계속 노출</span>
+  - 예외 처리 : 위의 상황이 아닐 경우 '-'로 노출
+- 정책 참고 : POL-INV-003
+
+**3  우측 영역**
+- 정의
+  - 좌측에서 선택된 카드의 정보를 우측 영역에 노출
+  - <span style="color:red">Consumable</span>별 <span style="color:red">Module (Index)</span> + Storage 기준으로 Location Row 생성
+- 정렬 : 좌측 영역 카드 내 항목 순서와 동일하게 적용
+- 노출 조건
+  - Remaining Qty가 1개 이상 존재하거나 Required Qty가 1개 이상 필요한 경우 노출
+  - Remaining Qty 및 Required Qty가 모두 0일 경우 해당 Location은 숨김 처리
+- 공통 UX 참고 : COMM-5-e
+- 정책 참고 : POL-INV-003
+
+**3-1  <span style="color:red">Consumable</span> 개별 카드**
+- 좌측 카드 목록에 해당되는 '<span style="color:red">Consumable</span> 이름'을 기준으로 구성
+- 해당 <span style="color:red">Consumable</span>이 들어가는 위치 정보를 함께 묶어서 카드 내에 노출
+
+**3-2  Location**
+- 해당 <span style="color:red">Consumable</span>이 적재되는 '<span style="color:red">Module (Index)</span> > Storage Unit' 기준으로 노출
+
+**3-3  구분선**
+- 정의 : 동일 <span style="color:red">Consumable</span>이 여러 Storage에 적재되는 경우, 위치 정보를 구분하여 노출(Storage 이름 기준으로 구분)
+- 표기 방식
+  - 동일 <span style="color:red">Consumable</span>이 서로 다른 Storage Unit에 적재될 경우, 각 위치 정보를 구분선(Line)으로 나누어 노출
+  - 구분선은 시각적으로 항목 간 경계를 명확히 하여 사용자가 Storage별 적재 현황을 쉽게 인지할 수 있도록 함
+
+**3-4  Capacity(우측 영역_Module+Storage 기준)**
+- 정의 : 최대 적재량을 관리할 수 있는 Storage에 한해 Capacity 값 노출
+- 최대 노출 값 : 장비에서 설정된 값 노출
+  - 기존에는 값이 fix되어 있었으나 26.08.20 기준, 제작 시 장비 설계 방식에 따라 적재 용량이 다르게 적용되는 케이스가 발생하여 장비 셋팅 시 설정된 값을 노출하는 방식으로 적용
+- 예외 처리 : 여러 품목을 혼합 적재하여 최대 적재량 관리가 불가능한 경우 해당 영역 미제공 (예시 : Cold Storage)
+- 정책 참고 : POL-INV-002
+
+**3-5  Remaining Qty(우측 영역_Module+Storage 기준)**
+- 정의 : 해당 <span style="color:red">Consumable</span>이 적재된 Location(Module+Storage) 기준으로 장비에 남은 개수 노출
+- 산출 방식
+  - Storage 영역과 장비 내 거치 공간(장비가 가져간 <span style="color:red">Consumable</span> 포함)의 수량을 모두 합산하여 재고로 노출
+  - 단, 장비 내 거치 공간에 있는 <span style="color:red">Consumable</span>은 실시간으로 차감되지 <span style="color:red">않으며</span>, 적재된 순간의 수량을 그대로 유지
+  - <span style="color:red">Consumable</span>이 모두 소진되거나 다시 Storage로 반환되는 기준으로 Inventory 재고 업데이트
+- 공통 UX 참고 : COMM-4-b(5/5)
+- 정책 참고 : POL-INV-002
+
+**3-6  Required Qty(우측 영역_Module+Storage 기준)**
+- 정의 : 현재 전체 Run 기준으로 해당 <span style="color:red">Consumable</span>이 적재된 Location(Module+Storage) 및 장비 내 Buffer 공간의 합계를 기준으로 집계
+- 산출 방식
+  - 총 필요 수량에서 현재 재고를 제외한 부족 수량을 계산
+  - 예시 : 남은 재고 10개, 필요 수량 14개 → Required Qty = 4
+- 노출 조건
+  - <span style="color:red">Inbound Trolley가 Docked 상태이거나, [Run Start] 뒤 진행 중인 Batch가 끝나지 않았으면 노출 (둘 중 하나)</span>
+  - <span style="color:red">장비 통합 상태가 Partial Running · Error가 되어도 Batch가 끝나기 전이면 계속 노출</span>
+  - 예외 처리 : 위의 상황이 아닐 경우 '-'로 노출
+- 정책 참고 : POL-INV-003
+
+**3-7  [Item details] 버튼**
+- 정의 : 해당 <span style="color:red">Consumable</span>의 개별 상세 정보를 확인할 수 있는 Popup 호출
 - 동작
-  - 내용
-- 정책 참고 : 
+  - 클릭 시 Popup 노출 : TI-IVT-03-T-P
+- 정책 참고 : POL-INV-001
+
+**4  [Refresh] 버튼**
+- 동작
+  - 클릭 시 전체 데이터가 최신 상태로 갱신되어 노출
+  - <span style="color:red">데이터를 불러오지 못할 경우 Alert 노출 : Alert_020</span>
+- 정책 참고 : POL-INV-001
+
+**5  Capacity Tooltip**
+- Tooltip 문구
+  - Capacity: Shown only for fixed-capacity storage.
+  - Required Qty: Displays the additional quantity required based on current inventory.
+  - Status: Status is determined by run availability: Sufficient(enough stock), Low(partial shortage), Insufficient(no stock)
+- 공통 UX 참고 : COMM-5-v
 
 ## 케이스
 
-<!-- 케이스 화면의 원본입니다 (flow/3-design.md 공통 5 "케이스 화면", 작성예시문서 examples/case-samples.md).
-     근거는 셋 중 하나: 기존 원본 / 디스크립션 조건 / 요청자. 어느 것도 아니면 올리지 않고 질문 대기에 둡니다.
-     종류(디스크립션 조건일 때): 1 상태별 데이터 노출, 2 올리거나 눌렀을 때 뜨는 것, 3 유형 · 대상에 따라 노출 항목 구성이 다른 것,
-     4 개수가 기준을 넘어 요소가 생기거나 배치가 바뀌는 것, 5 처음 들어왔거나 데이터가 없을 때, 6 한 번의 조작으로 여러 단계를 거쳐 바뀌는 것.
-     Case 번호는 바꾸지 않고, 지워도 다시 쓰지 않습니다. 케이스가 없으면 "없음"이라고 적습니다.
-     케이스 블록: Case마다 하나씩 둡니다. Figma 케이스 프레임은 이 블록을 그대로 옮깁니다.
-     ### Case n. 제목 = 초록 띠, 그 아래 머리 줄 세 줄 = 디스크립션 번호 · 근거 · 종류(근거가 디스크립션 조건이 아니면 `-`), #### n-1. 조건 = 노란 띠, 그 아래 글머리 기호 목록 = 띠 아래 설명 글.
-     케이스 3에서 기존 원본 케이스 프레임에 패널이 있으면, 패널의 번호마다 `번호. 내용` 줄을 그 번호 표시가 달린 노란 띠의 설명에 더합니다.
-     지운 케이스는 블록을 지우지 않고 머리 줄 아래에 `- 지움 (날짜, 이유)` 줄을 더합니다. -->
-
-### Case 1. 제목
-
-- 디스크립션 번호 :
-- 근거 (기존 원본 / 디스크립션 조건 / 요청자) :
-- 종류 (1 ~ 6, 근거가 디스크립션 조건일 때) :
-
-#### 1-1. 조건
-
-- 설명
+없음 (`Inventory_asis` 페이지에 TI-IVT-03-T 케이스 프레임 없음)
 
 ## Alert · Confirm · Toast
 
-<!-- Alert · Confirm · Toast를 모두 적습니다. 코드는 카탈로그(alert/)의 ID. 카탈로그에 없으면 3단계에서 카탈로그에 새 줄을 더해 그 코드를 씁니다(flow/3-design.md 공통 1의 4, 케이스 3의 Toast는 flow/3-design-case3.md 3-2). Toast는 버튼 동작을 `-`로 둡니다. -->
-
 | 디스크립션 번호 | 종류 (Alert / Confirm / Toast) | 코드 | 언제 | 버튼 동작 |
 | --- | --- | --- | --- | --- |
+| 4 | Alert | Alert_020 | 데이터를 불러오지 못했을 때 | OK 선택 시 → 해당 Alert 닫힘 |
 
 ## 화면 예시 글자
 
-<!-- 그릴 때 화면에 넣는 예시 값. 상태값 · 단위 · 품목 · 수치는 기준데이터(`glossary/`의 csv) · 정책 기준. 기준이 없으면 만들지 않고 "질문 대기"에 올립니다.
-     디스크립션 번호는 그 요소의 디스크립션 번호. 번호가 없는 요소는 `-`.
-     목록 · 표는 한 페이지 최대 노출 개수만큼 행을 채웁니다. 줄였으면 이유를 적습니다.
-     목록 · 표의 여러 행, 케이스 조각의 값, 지어 쓴 값을 적는 법은 flow/3-design.md 공통 1의 5. -->
-
 | 디스크립션 번호 | 요소 | 예시 값 | 기준 |
 | --- | --- | --- | --- |
+| - | Tab | Summary / Overview / Consumables (선택) / Reagents / Waste Bin/Bottle / Usage History | POL-INV-001 정의 |
+| 1 | Chip | Insufficient 12 / Low 7 / Sufficient 2 | 기존 원본, `status-values.csv` 재고 상태 |
+| 2 | 카드 목록 5장 | 기존 원본 5장 그대로 (Plates 2행 · Tips 3행 · Tubes 2행 · Sealing Film · Stool Swab) | `Inventory_asis` TI-IVT-03-T 왼쪽 카드 목록 |
+| 2-6 · 3 | Status | 기존 원본 그대로 (Remaining Qty 0 = Insufficient, 0보다 크고 Required Qty가 있으면 Low, Required Qty '-'면 Sufficient) | `status-values.csv` 재고 상태 |
+| 3 | 1000 μL Tip 카드 5행 | Consumable Storage (1) > Trolley · 6 DWPs · 0 · 96 ea (1 rack) / Consumable Storage (2) > Trolley · 6 DWPs · 0 · 96 ea (1 rack) / Consumable Storage (3) > Trolley · 6 DWPs · 0 · 96 ea (1 rack) / PCR Setup (1) > 1000 μL Tip Storage · 11 racks · 0 · 96 ea (1 rack) / PCR Setup (2) > 1000 μL Tip Storage · 11 racks · 0 · 96 ea (1 rack) | 기존 원본, 반영 대기 TI-IVT-03-T-R08 (11 racks) |
+| 3 | 300 μL Tip 카드 4행 | Consumable Storage (1) > Trolley · 6 DWPs · 0 · 96 ea (1 rack) / Consumable Storage (3) > Trolley · 6 DWPs · 0 · 96 ea (1 rack) / PCR Setup (1) > 300 μL Tip Storage (1) · 11 racks · 0 · 96 ea (1 rack) / PCR Setup (1) > 300 μL Tip Storage (2) · 11 racks · 96 ea (1 rack) · 96 ea (1 rack) | 기존 원본, 반영 대기 TI-IVT-03-T-R08 |
+| 3 | Wide Bore Tip 카드 2행 | 기존 원본 2행 그대로 | 기존 원본 |
 
 ## 화면 표기 글자
 
-<!-- 화면에 표기되는 영어 글자와 그 글자의 언어셋 Language ID를 적습니다. 지금 화면에 있는 글자만 둡니다(없어진 글자는 줄을 지움).
-     3단계에서 화면 MD를 쓸 때 함께 적고 화면을 고칠 때 같이 고칩니다(`flow/3-design.md` 공통 1의 9). Language ID는 4단계 절차 4번(UX 확정 뒤)에서 채웁니다. 번역과 이번 작업에서 바뀐 것(신규 · 변경 · 제거)은 표에 적지 않고 작업 기록 "언어셋" 절에 적습니다.
-     출처: 그 글자가 있는 곳. 화면(기획 프레임) / 디스크립션(디스크립션에 적힌 화면 표기 글자, 예: 드롭다운 리스트 항목 · Tooltip · 안내 문구) / 케이스(케이스 화면) 뒤에 위치를 붙입니다(예: `화면 1-1`, `디스크립션 1-2`, `케이스 Case 1-2`, 번호가 없으면 `화면 제목`처럼 위치 이름). 여러 곳이면 ` · `로 잇습니다. 출처는 글자를 찾아 고치고, 같은 영어 글자에 Language ID가 여럿일 때(버튼 · 제목 등 쓰임이 다름) 맞는 줄을 고르는 데 씁니다. 디스크립션의 설명 글과 GNB · LNB 같은 공통 영역의 글자는 적지 않습니다(공통 영역은 따로 관리, `background/todo.md` 5-3d). 숫자처럼 값이 들어가는 자리는 `{n}`으로 두고 한 줄로 적고, 출처에 그 값을 적습니다(예: `{n} items` · `화면 2-3 (n = 10 · 30 · 50 · 100)`, 언어셋 DB의 `{N} of {M} Items`와 같은 모양, 2026-11-25 서보경 정함).
-     글자는 문구만 적습니다(언어셋 대상은 글자 그 자체). 라벨 끝의 `:`와, 라벨 뒤에 붙은 값과 그 앞의 `.`를 빼고(`Event Code:` → `Event Code`, `Updated by. {id}` → `Updated by`), Module · Unit · 장비 이름 뒤 번호 `(n)` · `-n`도 뺍니다(`CFX96 (1)` · `CFX96-1` → `CFX96`). 문장 끝 마침표(`No results found.`)는 글자의 일부라 둡니다. 글 안에 값이 들어가는 글(`{n} items`)은 위처럼 `{n}`으로 둡니다.
-     컴포넌트 글 · 값 · 구분자가 한 줄로 이어진 글(예: `10 items of Items 1,112 | Open 20`)은 어느 문구를 적을지 정하지 않았습니다. 이런 글은 정하지 않고 예외 질문(작업 기록 "요청자 확인"에 답을 비운 줄, `flow/README.md` "단계를 지나는 규칙" 9)으로 묻습니다.
-     Language ID: 언어셋 원본(language-set/db/)의 메뉴 파일 ID. 번역 전체는 이 ID로 원본에서 찾습니다. 원본에 아직 없는 글자는 비워 두고, 5단계에서 원본에 새 줄을 만들 때 채웁니다. 글자를 바꿀 때는 Language ID를 지우지 않고 둡니다(4단계가 이 ID로 언어셋 DB의 줄과 짝지어 변경을 가림). 바뀐 글자가 이미 언어셋에 있으면 5단계에서 그 ID로 바뀝니다(`language-set/README.md` "화면설계 흐름에서 반영하는 법"). -->
-
 | 화면 표기 글자 (영어) | 출처 | Language ID |
 | --- | --- | --- |
+| Inventory | 화면 제목 | |
+| Summary · Overview · Consumables · Reagents · Waste Bin/Bottle · Usage History | 화면 Tab | |
+| Insufficient · Low · Sufficient | 화면 1 · 2-6 | |
+| Refresh | 화면 4 | |
+| Remaining Qty · Required Qty · Status | 화면 2 열 제목 | |
+| Location · Capacity | 화면 3 열 제목 | |
+| Item details | 화면 3-7 | |
+| Plates · Tips · Tubes | 화면 2-1 카드 제목 | |
+| 96-DWP · PCR Plate · 1000 μL Tip · 300 μL Tip · Wide Bore Tip · Empty Standard Tube · MM Tube · Sealing Film · Stool Swab | 화면 2-2 · 2-3 · 3-1 (품목 이름) | |
+| Consumable Storage · PCR Setup | 화면 3-2 (Module 이름) | |
+| Trolley · 1000 μL Tip Storage · 300 μL Tip Storage | 화면 3-2 (Unit 이름) | |
+| {n} ea · {n} ea ({m} rack) · {n} ea ({m} racks) · {n} ea ({m} socket) · {n} ea ({m} sockets) · {n} DWPs · {n} racks · {n} sets | 화면 2-4 · 2-5 · 3-4 · 3-5 · 3-6 (n · m = 수량) | |
+| Capacity: Shown only for fixed-capacity storage. | 디스크립션 5 | |
+| Required Qty: Displays the additional quantity required based on current inventory. | 디스크립션 5 | |
+| Status: Status is determined by run availability: Sufficient(enough stock), Low(partial shortage), Insufficient(no stock) | 디스크립션 5 | |
