@@ -288,7 +288,11 @@ async function sendTurn(text) {
       St.act = now();
       if (m.type === 'assistant') {
         const tus = ((m.message && m.message.content) || []).filter((c) => c && c.type === 'tool_use'), tu = tus[tus.length - 1]; St.tool = tu ? String(tu.name || '') : '';
-        for (const x of tus) if (/^(Read|Edit|Write)$/.test(x.name) && x.input && x.input.file_path) (S.read || (S.read = new Set())).add(String(x.input.file_path));   // 이 세션이 이미 아는 파일(readHint)
+        // 이 세션이 이미 아는 파일(readHint). offset · limit으로 일부만 읽은 것은 「일부」로(다른 부분을 읽지 말라는 뜻이 되지 않게)
+        for (const x of tus) if (/^(Read|Edit|Write)$/.test(x.name) && x.input && x.input.file_path) {
+          const R = S.read || (S.read = new Map()), k = String(x.input.file_path), part = x.name === 'Read' && (x.input.offset != null || x.input.limit != null);
+          if (!R.has(k) || R.get(k)) R.set(k, part);   // 한 번이라도 통째로 읽거나 쓰면 「일부」가 아니다
+        }
       }
       else St.tool = '';
       if (Date.now() - savedAt >= 5000) save(null, null);
@@ -344,9 +348,9 @@ function details(out) {
    또 읽어 차례마다 15 ~ 25초씩 늘었다(R005). 감시가 센 목록을 그대로 보여 준다. 서버 · 플러그인이 바꾸는 workbench/ · 그림은 뺀다 */
 function readHint() {
   const rel = (p) => { const r = path.relative(ROOT, path.resolve(ROOT, p)); return r.startsWith('..') ? p : r.replace(/\\/g, '/'); };
-  const ls = [...((S && S.read) || [])].map(rel).filter((p) => !/^workbench\//i.test(p) && !/\.(png|jpe?g|gif|webp)$/i.test(p));
+  const ls = [...(((S && S.read) || new Map()).entries())].map(([p, part]) => [rel(p), part]).filter(([p]) => !/^workbench\//i.test(p) && !/\.(png|jpe?g|gif|webp)$/i.test(p));
   if (!ls.length) return '';
-  return `\n[이 세션에서 이미 읽거나 쓴 파일 - 감시가 센 것. 다시 Read하지 않는다(대화가 요약돼 내용이 기억나지 않을 때만). 사람 · 다른 PC가 바꿀 수 있는 작업 기록만 offset · limit으로 머리말 · 단계 표 · 이어 갈 곳 줄을 본다]\n${ls.slice(-60).map((p) => '- ' + p).join('\n')}\n`;
+  return `\n[이 세션에서 이미 읽거나 쓴 파일 - 감시가 센 것. 읽은 부분은 다시 Read하지 않는다(대화가 요약돼 내용이 기억나지 않을 때만). 「일부」는 그때 읽은 범위만이라 다른 부분은 필요하면 읽는다. 사람 · 다른 PC가 바꿀 수 있는 작업 기록만 offset · limit으로 머리말 · 단계 표 · 이어 갈 곳 줄을 본다]\n${ls.slice(-60).map(([p, part]) => '- ' + p + (part ? ' (일부)' : '')).join('\n')}\n`;
 }
 // 같은 세션에 답만 보낼 때(질문을 남기고 기다리던 세션)
 function makeResume(out) {
