@@ -3,7 +3,7 @@ status: 진행 중            # 진행 중 | 끝남 | 멈춤
 requester: 최고관리자
 menu: Inventory (IVT)
 cids: [TI-IVT-01-T, TI-IVT-02-T, TI-IVT-03-T, TI-IVT-03-T-P, TI-IVT-04-T, TI-IVT-04-T-P, TI-IVT-05-T, TI-IVT-06-T]
-policies: [POL-INV-002]
+policies: []
 cid_system:
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST (작업방 `Inventory_tobe` 페이지)
 test: false
@@ -24,7 +24,7 @@ started: 2026-11-27
 | 단계 | 끝낸 날 | 마침 점검 | 남긴 것 |
 | --- | --- | --- | --- |
 | 1. 시작 · 요건 정의 | 2026-11-27 | 요청자 확인 (2026-11-27) | 겹치는 다른 작업: 없음 |
-| 2. 근거 · 분석 | | | 정책 수정 범위 1건 (DS-0013) |
+| 2. 근거 · 분석 | | | 정책 수정 범위 1건 (DS-0013, 하지 않음으로 종료) |
 | 3. 화면 설계 | | | |
 | 4. 수정 · 확인 | | | |
 | 5. 완료 | | | |
@@ -256,7 +256,7 @@ started: 2026-11-27
 | 요건 1 · TI-IVT-01-T 1 노출 기준 "통합 상태 Run O / Docking X" | 기존 화면이 정책과 다름 ([Run Start] 뒤 Batch가 끝나기 전이면 Partial Running · Error여도 보여 줌) | POL-INV-003 규칙 2 · 3-1 | C3 |
 | 요건 1 · TI-IVT-06-T 2 목록 Unit 칸 `Plate Sealing` · `PCR Setup` | 기존 화면이 정책과 다름 (Unit이 아님) | `module-units.csv`, POL-INV-006 규칙 2 | C4 |
 | 요건 1 · TI-IVT-06-T 3 [Export] 저장 방식 | 기존 화면이 정책과 다름 (T-IOS 저장 방식이 없음) | POL-COM-006 규칙 3 | C5 |
-| 요건 1 · TI-IVT-03-T-P · 04-T-P Remaining Qty | 정책에 있음 (`cids`만 빠짐) | POL-INV-002 정의 · 규칙 2 · 5 | 정책 수정 범위 1 (DS-0013) |
+| 요건 1 · TI-IVT-03-T-P · 04-T-P Remaining Qty | 정책에 있음 (`cids`만 빠짐) | POL-INV-002 정의 · 규칙 2 · 5 | 정책 수정 범위 1 (DS-0013) → 하지 않음. Popup 정책 참고는 POL-INV-004 규칙 7 |
 | 요건 1 · TI-IVT-05-T 3-2 · TI-IVT-01-T 3 Sample Pre-treatment Waste Unit | 장비사에 따라 화면이 갈림 | `policy/modules/sample-pretreatment.md` Unit, `module-units.csv` | 절차 6번 질문 4 |
 | 요건 1 · TI-IVT-06-T 0 · 1 · 2 (아래 프레임) | 정책에 있음 | POL-INV-006 규칙 1 · 2 · 4 | 정책 ID로 이음 |
 
@@ -267,7 +267,7 @@ started: 2026-11-27
 
 | # | 바꿈 / 더함 | 정책 ID · 규칙 (또는 기준 자료) | 변경 전 | 변경 후 (안) | 논의 대상 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | 더함 | POL-INV-002 머리말 `cids` | `cids`에 Item details Popup 없음 | TI-IVT-03-T-P, LI-IVT-03-T-P, TI-IVT-04-T-P, LI-IVT-04-T-P를 더함 (규칙 문장은 그대로) | DS-0013 |
+| 1 | 더함 | POL-INV-002 머리말 `cids` | `cids`에 Item details Popup 없음 | TI-IVT-03-T-P, LI-IVT-03-T-P, TI-IVT-04-T-P, LI-IVT-04-T-P를 더함 (규칙 문장은 그대로) | DS-0013 (종료: 하지 않음, 2026-11-27 요청자 답) |
 
 **용어 목록**
 
@@ -351,7 +351,7 @@ started: 2026-11-27
 | 3 | 2026-11-27 | 1단계 · 절차 4번 순서 3 (IA와 화면이 다른 곳) | TI-IVT-06-T 기획 프레임이 같은 이름 · 같은 Ver(2.1.18)로 둘 있음: 위 프레임(3543:361230, asis 화면 MD가 옮긴 것, Item Type 기본값 `All Item Types`, 반환 시점 포함) / 아래 프레임(3543:361388, 기본값 `All`, 폐기 시점만) 가운데 어느 것을 원본으로 다시 그릴지 | TI-IVT-06-T #0 · #1 · #2 | | 아래 프레임 3543:361388을 원본으로 (2026-11-27, 추천대로 진행) |
 | 4 | 2026-11-27 | 1단계 · 절차 4번 순서 3 (asis 추출 빠짐) | TI-IVT-04-T 3-3 Capacity "해당 화면설계에 없으나 아래 다른 예시 화면에서 확인 가능"이 가리키는 예시 화면이 asis 화면 MD에 없음: 그 프레임을 알려 주시거나, 없으면 디스크립션대로 그림 | TI-IVT-04-T #3-3 | | 따로 없음, 디스크립션대로 그림 (2026-11-27, 추천대로 진행) |
 | 5 | 2026-11-27 | 1단계 · 절차 5번 질문 7 | 위 요건 목록과 흐름대로 진행할지 (대상 화면 = Inventory 메뉴 T-IOS 화면 8개, L-IOS 짝 화면은 고치지 않음) | 요건 1 | | 이대로 진행 (2026-11-27) |
-| 6 | 2026-11-27 | 2단계 · 절차 6번 질문 1 | 정책 수정 범위 1 (DS-0013): POL-INV-002 `cids`에 Item details Popup 넷을 더할지 - 이대로 결정 / 논의 중으로 둠 | TI-IVT-03-T-P, TI-IVT-04-T-P, DS-0013 | | (2026-11-27 10:19 요청자가 「POL-INV-002 이게 어디있지?」로 되물음 → 위치(`policy/inv/POL-INV-002.md`, 정책서 Inventory)와 내용을 답하고 다시 물음. 10:20 「하나씩 정하기」 → 질문 1부터 따로 물음) |
+| 6 | 2026-11-27 | 2단계 · 절차 6번 질문 1 | 정책 수정 범위 1 (DS-0013): POL-INV-002 `cids`에 Item details Popup 넷을 더할지 - 이대로 결정 / 논의 중으로 둠 | TI-IVT-03-T-P, TI-IVT-04-T-P, DS-0013 | | (2026-11-27 10:19 요청자가 「POL-INV-002 이게 어디있지?」로 되물음 → 위치(`policy/inv/POL-INV-002.md`, 정책서 Inventory)와 내용을 답하고 다시 물음. 10:20 「하나씩 정하기」 → 질문 1부터 따로 물음) 더하지 않음 (2026-11-27) |
 | 7 | 2026-11-27 | 2단계 · 절차 6번 질문 4 | Sample Pre-treatment의 Waste Unit은 제조사마다 다름(단디메카 Waste Bin (Upper · Lower) / 로체시스템즈 Tip Waste Bin · Film Waste Bin (Upper · Lower)): TI-IVT-05-T 3-2 · TI-IVT-01-T 3을 제조사별 케이스 화면으로 나눠 그릴지 - 모두 그림 / 그리지 않음 (기본 화면 하나) | TI-IVT-05-T #3-2, TI-IVT-01-T #3 | | |
 
 ## 이 작업의 논의 대상
@@ -359,7 +359,7 @@ started: 2026-11-27
 
 | 논의 대상 | 상태 (논의 중 / 결정) | 내용 한 줄 | 5단계 반영 |
 | --- | --- | --- | --- |
-| DS-0013 | 논의 중 | POL-INV-002 `cids`에 Item details Popup(TI/LI-IVT-03-T-P, TI/LI-IVT-04-T-P)을 더함 | |
+| DS-0013 | 종료 (하지 않음, 2026-11-27) | POL-INV-002 `cids`에 Item details Popup(TI/LI-IVT-03-T-P, TI/LI-IVT-04-T-P)을 더함 | 해당 없음 (하지 않음) |
 
 ## 이 작업이 남긴 것
 
