@@ -1,5 +1,5 @@
 {
-  "reportAt": "2026-11-27T09:37:24+09:00",
+  "reportAt": "2026-11-27T09:38:24+09:00",
   "pc": "BREX_GRAM_2",
   "slug": "brex-gram-2",
   "user": "하승현",
@@ -8,7 +8,7 @@
   "alive": true,
   "status": "working",
   "msg": "처리 중: PENDING R007 · 강도 medium",
-  "statusAt": "2026-11-27T09:37:22+09:00",
+  "statusAt": "2026-11-27T09:38:23+09:00",
   "claude": "따로 설치",
   "claudeWay": "",
   "autoWatch": true,
