@@ -7,9 +7,9 @@
 | Language ID | 재사용 | 상태 | 검증 상태 | 플랫폼 | Type | English | Korean | German | Portuguese | Spanish | Italian | French | 참조 시트 | 비고 | Menu | CID |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | LID-STN-360 |  | 사용 | AI 번역 | T/L | title | Assay Pack Setting |  | Assay-Pack-Einstellungen | Configuração de Assay Pack | Configuración de Assay Pack | Impostazioni Assay Pack | Paramètres Assay Pack | LID-COM-MEN-032 | 화면 타이틀. 새 메뉴 | Assay Pack Setting | TI-STN-08 / LI-STN-08 |
-| LID-STN-361 |  | 사용 | AI 번역 | T/L | txt | File name |  | Dateiname | Nome do ficheiro | Nombre del archivo | Nome file | Nom du fichier |  | 검색 레이블·컬럼명 | Assay Pack Setting | TI-STN-08 / LI-STN-08 |
+| LID-STN-361 |  | 사용 | AI 번역 | T/L | txt | File name |  | Dateiname | Nome do ficheiro | Nombre del archivo | Nome file | Nom du fichier |  | 검색 레이블·컬럼명 | Assay Pack Setting | TI-STN-08 / LI-STN-08 / TI-STN-08-P |
 | LID-STN-362 |  | 사용 | AI 번역 | T/L | txt | Enter file name |  | Dateinamen eingeben | Insira o nome do ficheiro | Introduzca el nombre del archivo | Inserisci il nome del file | Saisissez le nom du fichier |  | 플레이스홀더 | Assay Pack Setting | TI-STN-08 / LI-STN-08 |
-| LID-STN-363 |  | 사용 | AI 번역 | T/L | txt | File type |  | Dateityp | Tipo de ficheiro | Tipo de archivo | Tipo di file | Type de fichier |  | 검색 레이블·컬럼명 | Assay Pack Setting | TI-STN-08 / LI-STN-08 |
+| LID-STN-363 |  | 사용 | AI 번역 | T/L | txt | File type |  | Dateityp | Tipo de ficheiro | Tipo de archivo | Tipo di file | Type de fichier |  | 검색 레이블·컬럼명 | Assay Pack Setting | TI-STN-08 / LI-STN-08 / TI-STN-08-P |
 | LID-EVT-003 | ref | 사용 | AI 번역 | T/L | txt | All | 전체 | Alle | Todos | Todos | Tutti | Tous |  | File type 옵션 기본값 | Assay Pack Setting | TI-STN-08 / LI-STN-08 |
 | LID-STN-364 |  | 사용 | AI 번역 | T/L | txt | Master |  | Master | Master | Master | Master | Master |  | File type 값 | Assay Pack Setting | TI-STN-08 / LI-STN-08 / TI-STN-08-P / LI-STN-08-P |
 | LID-STN-365 |  | 사용 | AI 번역 | T/L | txt | Pretreatment |  | Vorbehandlung | Pré-tratamento | Pretratamiento | Pretrattamento | Prétraitement |  | File type 값 | Assay Pack Setting | TI-STN-08 / LI-STN-08 / TI-STN-08-P / LI-STN-08-P |
@@ -24,7 +24,7 @@
 | LID-EVT-044 | ref | 사용 | AI 번역 | T | txt | {N} of {M} Items |  | {N} von {M} Einträgen | {N} de {M} Itens | {N} de {M} Elementos | {N} di {M} Elementi | {N} sur {M} éléments |  | 목록 개수 | Assay Pack Setting | TI-STN-08 |
 | LID-STN-006 | ref | 사용 | AI 번역 | T/L | txt | Items | 항목 | Einträge | Itens | Elementos | Elementi | Éléments |  | 목록 총 개수 | Assay Pack Setting | LI-STN-08 / TI-STN-08 |
 | LID-STN-019 | ref | 사용 | AI 번역 | T | btn | Delete | 삭제 | Löschen | Eliminar | Eliminar | Elimina | Supprimer | LID-COM-BTN-011 | 목록·상세 삭제 버튼 | Assay Pack Setting | TI-STN-08 / TI-STN-08-P |
-| LID-TMG-035 | ref | 사용 | AI 번역 | T | btn | Import | 가져오기 | Importieren | Importar | Importar | Importa | Importer | LID-COM-BTN-004 | 가져오기 버튼·Popup 버튼 | Assay Pack Setting | TI-STN-08 / TI-STN-08-01 |
+| LID-TMG-035 | ref | 사용 | AI 번역 | T | btn | Import | 가져오기 | Importieren | Importar | Importar | Importa | Importer | LID-COM-BTN-004 | 가져오기 버튼·Popup 버튼 | Assay Pack Setting | TI-STN-08 / TI-STN-08-01 / TI-STN-08-P |
 | LID-STN-147 | ref | 사용 | AI 번역 | T/L | txt | Product Name | 제품명 | Produktname | Nome do Produto | Nombre del Producto | Nome Prodotto | Nom du produit |  | 테이블 컬럼·상세 레이블 | Assay Pack Setting | TI-STN-08 / LI-STN-08 / TI-STN-08-P / LI-STN-08-P |
 | LID-INF-008 | ref | 사용 | AI 번역 | T/L | txt | Version |  | Version | Versão | Versión | Versione | Version |  | 테이블 컬럼 | Assay Pack Setting | TI-STN-08 / LI-STN-08 |
 | LID-STN-372 |  | 사용 | AI 번역 | T/L | txt | Registered Date/Time |  | Registrierungsdatum/-zeit | Data/Hora de Registo | Fecha/Hora de Registro | Data/Ora di Registrazione | Date/heure d'enregistrement |  | 테이블 컬럼·상세 레이블 | Assay Pack Setting | TI-STN-08 / LI-STN-08 / TI-STN-08-P / LI-STN-08-P |
