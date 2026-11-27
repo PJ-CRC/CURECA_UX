@@ -25,11 +25,11 @@ started: 2026-11-27
 | --- | --- | --- | --- |
 | 1. 시작 · 요건 정의 | 2026-11-27 | 요청자 확인 (2026-11-27) | 겹치는 다른 작업: 없음 |
 | 2. 근거 · 분석 | 2026-11-27 | 물을 것 없음 (2026-11-27) | 질문 대기 Q1 ~ Q4 · 변경 확인 C1 ~ C7 |
-| 3. 화면 설계 | | | |
+| 3. 화면 설계 | 2026-11-27 | 기계 검사 통과 (2026-11-27) | 질문 대기 Q1 ~ Q7 · 변경 확인 C1 ~ C16 (3단계 확인 C1 · C3 · C9 · C10 · C11 · C13 · C16) |
 | 4. 수정 · 확인 | | | |
 | 5. 완료 | | | |
 
-이어서 작업할 곳: 3단계 · TI-STN-04-01-T 그림, TI-STN-04-02-T 그릴 차례 (다시 읽을 곳: 3단계 `flow/3-design-case3.md` 흐름 · 공통 3 / 작업 기록 "요건 목록" 요건 1 · "설계" 화면별 작업 · 컴포넌트 없이 그린 요소 · "질문 대기" · "변경 확인")
+이어서 작업할 곳: 4단계 · 절차 1 사용자 확인 목록을 보냄, 답 기다림 (다시 읽을 곳: 4단계 `flow/4-revise-verify.md` 절차 1 · 절차 공통: 화면 수정 규칙 / 작업 기록 "질문 대기" · "변경 확인")
 
 ## 요청
 <!-- 1단계 절차 1번. 요청 글 한두 줄과 출처, 공유 파일 (아래 "항목마다 적는 법") -->
@@ -184,7 +184,7 @@ started: 2026-11-27
 | T · L 한 쌍 | 따른 케이스 | 요건 번호 | 섹션 | 기획 프레임 | 상태 · 케이스 프레임 |
 | --- | --- | --- | --- | --- | --- |
 | Interface Configuration (TI-STN-04-01-T / L 없음) | 3 | 1 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3893-18 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3893-19 | 케이스 T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3896-359 (마무리 확인 2026-11-27) |
-| Code Mapping (TI-STN-04-02-T / L 없음) | 3 | 1 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3893-20 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3893-21 | |
+| Code Mapping (TI-STN-04-02-T / L 없음) | 3 | 1 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3893-20 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3893-21 | 케이스 T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3911-1145 (마무리 확인 2026-11-27) |
 
 - 메뉴 단위 표시 (2026-11-27, Claude): T-IOS 줄 시스템 구분 `T-IOS - 2.1` · 기획 진행 표시 `SB-Update : 2026.10.15 (검토 완료)` — asis 페이지의 기획 진행 표시(`컨펌 완료`)를 날짜 그대로, 진행 상태는 새 이름으로 옮김. 너비 8000 (섹션 줄 너비 5774 < 최소 8000). LIS Setting은 IA에 L-IOS 화면이 없어 L-IOS 줄은 두지 않음
 
@@ -196,6 +196,10 @@ started: 2026-11-27
 | Interface Configuration 카드 (설정 영역 틀) | General · T-IOS Network · LIS Network 묶음 | TI-STN-04-01-T 1 ~ 4 · 6 | 기존 화면에서 따옴 (`3543:568744`). 안의 입력 칸은 Common UX Dropdown · Text Input으로 바꿈, 원본 안의 패널(Frame 1) · 번호 표시는 뺌 | 1658×639 · 모서리 0 · 바탕 #FFFFFF · 머리 틀 1 (1658×64, 글 2) · 글 10 (라벨 · 영역 제목) · 인스턴스 5 (Form/Dropdown Box 2 · Form/Input Text Box 3) | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3893-19 |
 | HL7 (값 글) | Interface Type 고정 값 | TI-STN-04-01-T 1 | 기존 화면에서 따옴 (`3543:568821`) | 글 1 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3893-19 |
 | 케이스 초록 띠 · 라벨 글 (케이스 조각) | 케이스 제목 · 조각 라벨 | TI-STN-04-01-T/Case | 기존 화면에서 따옴 (`3543:568822` 피드백, 조각 글 7 · 번호 표시 3) | 1920×60 #C3F286 (케이스 프레임 너비 2252로 늘림) · 글 1 / 조각 글 7 · 번호 표시 3 (3-1 · 3-1 · 3-2) | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3896-359 |
+| 콘텐츠 영역 바탕 · 화면 제목 (영역 틀 · 글) | 화면 콘텐츠 바탕 · LIS Setting 제목 | TI-STN-04-02-T 0 | 기존 화면에서 따옴 (`3543:567517` · `3543:567518`) | 1701×1136 · 모서리 0 · 도형 1 (#E9EDF4) / 글 1 (24) | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3893-21 |
+| Code Mapping 영역 틀 (영역 틀) | Code Type 좌측 · 우측 영역 묶음 (제목 · Items 글 · 하단 고정 영역 포함) | TI-STN-04-02-T 1 ~ 5, 케이스 Case 1 ~ 3 | 기존 화면에서 따옴 (`3543:568046` · 케이스 `3543:568320` · `3543:567542` · `3543:568577`). 안의 Code Type 버튼은 Outline Tab, 검색은 Text Input, 목록은 Table/Header Cell · Table/Cell, [Edit]는 Text Button Basic(Interface/Pencil_Outlined), 편집 칸은 Text Input/Inline · Square · Interface/Close, Save는 Square로 바꿈 | 1610×967 (케이스 1610×790) · 모서리 8 · 바탕 #FFFFFF · Sidebar 286 (#FBFCFE) + Container 1322 · 글 (제목 · Items) · 인스턴스: 원본 표는 프레임 · 글로 그린 것(인스턴스 없음) | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3893-21 |
+| Products 목록 (목록, 맞는 Variant 없음 — Outline Tab에 둘째 줄 "n targets"를 담을 수 없음) | Target을 쓰는 검사 항목 고르기 | TI-STN-04-02-T 케이스 Case 1 · 3 (3) | 기존 화면에서 따옴 (`3543:568320` · `3543:568577` 안). Tab/Outline(Arrow)로 바꿀 여지: 항목 이름 · 화살표 | 9개 항목 · 항목마다 글 2 (이름 · n targets) · 화살표 1 · 선택 항목 바탕 #EEF6FF | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3911-1145 |
+| 케이스 초록 띠 (케이스 조각) | 케이스 제목 | TI-STN-04-02-T/Case | 기존 화면에서 따옴 (`3543:567524` · `3543:567522` · `3543:567526` 피드백) | 1920×60 #C3F286 · 글 1 (케이스 프레임 너비 2252로 늘림) | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3911-1145 |
 
 ### 근거로 풀린 것
 | 질문 | 푼 근거 |
@@ -210,6 +214,10 @@ started: 2026-11-27
 - 사용자 확인 라벨: TI-STN-04-01-T 3 · 4 · 6은 오른쪽 · 왼쪽(LNB)이 글자를 가려 번호 표시 위에 둠. 7은 네 방향 모두 글자를 가려 오른쪽에 둠
 - 컴포넌트 채우기(플러그인) J102가 「실패」(플러그인 오류: Figma 연결 10초 초과) → TI-STN-04-01-T 패널 · 라벨은 use_figma로 직접 그림. 사용자 확인 목록은 Block 여러 개를 만들 수 없어 use_figma로 그림
 - LNB의 Setting 하위 메뉴는 Common UX LNB(Item 5개)에 기존 화면의 하위 메뉴 이름을 넣고 LIS Setting을 선택함
+- TI-STN-04-02-T 업데이트 메모: asis 페이지 메모 2개(`v2.1.11 update` · `v2.1.12 update`)를 그대로 옮김. TI-STN-04-01-T는 원본에 메모 없음
+- TI-STN-04-02-T Case 2 Test Code 목록은 원본처럼 30행을 넣고 조각 높이(790)에서 잘려 보임(원본과 같음). 화면 MD 화면 예시 글자 "기존 원본 11행 그대로"는 보이는 행 수를 적은 것
+- 사용자 확인 라벨: TI-STN-04-02-T 2는 오른쪽이 제목을 가려 왼쪽, 2-1은 위, 1 · 4 · 6은 네 방향 모두 글자를 가려 오른쪽. 케이스 Case 1의 3 옆에 C7
+- 반영 대기 TI-STN-04-01-T-R01(`지움`) · R04(넣을 문장이 적혀 있음)는 바꿀 값이 그대로 적힌 항목이라 C1 · C3을 라벨 · 목록 없이 기계 검사로 확인함 (description.md 5절 표)
 ## 질문 대기
 <!-- 사용자 확인 목록의 질문 대기. 원본은 이 표(화면 MD에는 두지 않음). 2단계(대조에서 나온 것) · 3단계(설계하며 나온 것)가 앞의 다섯 칸으로 줄을 만들고, 4단계가 "풀린 날 · 어떻게"를 채움. 번호 Q1 · Q2 …는 작업 하나에 통번호(2단계부터 이어 매김, T · L에 같은 것은 같은 번호)이고, 사용자 확인 라벨 · Figma 사용자 확인 목록에 같은 번호를 씀. "질문"은 요청자가 정할 것을 명사형으로, 근거는 괄호로(reference-rules/description.md 5절). 정책을 정해야 하는 질문은 논의 대상 ID를 적음. 줄은 지우지 않음 -->
 
@@ -228,9 +236,9 @@ started: 2026-11-27
 
 | 번호 (C) | 기존 화면 | 바꿔 그린 것 | 화면 표기 글자 (기존 → 새) | 관련된 곳 (CID · 디스크립션 번호) | 근거 | T · L 같음 | 업데이트 메모 (O / -) | 확인한 날 · 답 (맞음 / 되돌림) |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| C1 | 0에 "Default: All / 데이터: All, Error, Warning" | 그 줄을 빨간 취소선으로 (LIS Setting에 없는 값) | | TI-STN-04-01-T 0 | 반영 대기 TI-STN-04-01-T-R01 | - (T-IOS 단독) | - | |
+| C1 | 0에 "Default: All / 데이터: All, Error, Warning" | 그 줄을 빨간 취소선으로 (LIS Setting에 없는 값) | | TI-STN-04-01-T 0 | 반영 대기 TI-STN-04-01-T-R01 | - (T-IOS 단독) | - | 맞음 (기계 검사, 2026-11-27) |
 | C2 | 기본 상태 화면이 Order Reception Mode `Push Mode`, Port `20200` | 기본 상태 화면을 `Query Mode`, Port 비활성 · 빈 값으로 (POL-SYS-001 규칙 4 · 5) | Push Mode → Query Mode (예시 값) | TI-STN-04-01-T 3 · 3-2 · 4 | POL-SYS-001 규칙 4 · 5, 반영 대기 TI-STN-04-01-T-R03 | - (T-IOS 단독) | O | |
-| C3 | 설정이 CURECA마다인지 디스크립션에 없음 | 0에 "상단에서 고른 CURECA의 설정을 보여 주고 바꿈"을 더함 | | TI-STN-04-01-T 0 · TI-STN-04-02-T 0 | POL-SYS-001 규칙 7, POL-SYS-002 규칙 6, POL-COM-005 규칙 5, 반영 대기 TI-STN-04-01-T-R04 | - (T-IOS 단독) | O | |
+| C3 | 설정이 CURECA마다인지 디스크립션에 없음 | 0에 "상단에서 고른 CURECA의 설정을 보여 주고 바꿈"을 더함 | | TI-STN-04-01-T 0 · TI-STN-04-02-T 0 | POL-SYS-001 규칙 7, POL-SYS-002 규칙 6, POL-COM-005 규칙 5, 반영 대기 TI-STN-04-01-T-R04 | - (T-IOS 단독) | O | 맞음 (기계 검사, 2026-11-27) |
 | C4 | 0 "데이터 관련 정의"에 Assay Pack 데이터 키 이름(fileType, sampleTypeInfo, testItemCode, isTargetNames 등) | Code Type마다 관리 항목 · 출처를 풀어 쓰고 POL-SYS-002 참고로 이음 (헌법 3조) | | TI-STN-04-02-T 0 | POL-SYS-002 정의 · 규칙 1, 반영 대기 TI-STN-04-02-T-R03 | - (T-IOS 단독) | - | |
 | C5 | 4 Done · Enter · 다른 영역 클릭 시 "입력값 저장 처리" | 행 입력 확정(edit 모드 종료)으로 쓰고, 저장은 5 [Save]로만 된다고 구분 (POL-SYS-002 규칙 5) | | TI-STN-04-02-T 4 · 5 | POL-SYS-002 규칙 5, 반영 대기 TI-STN-04-02-T-R02 | - (T-IOS 단독) | O | |
 | C6 | Sample Type Name `Raw_stool` · `eNAT_stool` · `Fecal_swab` (코드) | UI 표기로 (LIS Sample Type Code 칸은 그대로) | Raw_stool → Raw stool · eNAT_stool → eNAT stool · Fecal_swab → Fecal swab | TI-STN-04-02-T 2 | `glossary/sample-types.csv`, POL-SYS-002 규칙 2, 반영 대기 TI-STN-04-02-T-R01 | - (T-IOS 단독) | O | |
