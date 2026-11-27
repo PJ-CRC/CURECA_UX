@@ -1,0 +1,30 @@
+{
+  "id": "brex-06_chat_20261125-161639",
+  "kind": "work",
+  "chat": "doc",
+  "reqId": "",
+  "reqType": "",
+  "team": "cureca",
+  "at": "2026-11-25T16:16:39+09:00",
+  "from": "2026-11-25T11:32:01+09:00",
+  "by": "최고관리자",
+  "doneBy": "Claude",
+  "pc": "BREX_06",
+  "fileKey": "",
+  "fileName": "",
+  "page": "",
+  "frame": "",
+  "nodeId": "",
+  "text": "채팅: 우선순위 1번만 해줘 3-design.md:17 · :89 2-evidence.md:18",
+  "turns": 3,
+  "models": {
+    "claude-opus-5-5": 18
+  },
+  "calls": 18,
+  "input": 42,
+  "cacheWrite": 29469,
+  "cacheRead": 11529969,
+  "output": 17574,
+  "total": 11577054,
+  "usd": 2.8934
+}

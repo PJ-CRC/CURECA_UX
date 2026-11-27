@@ -1,0 +1,71 @@
+{
+  "id": "brex-06_R006",
+  "kind": "request",
+  "team": "cureca",
+  "status": "완료",
+  "at": "2026-11-26T16:59:27+09:00",
+  "createdAt": "2026-11-26T16:56:33+09:00",
+  "by": "최고관리자",
+  "doneBy": "Claude",
+  "pc": "BREX_06",
+  "reqId": "R006",
+  "fileKey": "etCQFF3CTf1EA6C79d4BBf",
+  "fileName": "UX AI TEST",
+  "page": "Setting  Ⓛ / Ⓣ_To Be",
+  "frame": "",
+  "nodeId": "",
+  "type": "요청",
+  "layout": "",
+  "text": "이거 왜 2개 생성이 되지?",
+  "note": "답대로 TI-STN-08-P · LI-STN-08-P에서 겹친 v2.1.18 update 메모를 1개씩 지웠습니다\n\n**[고친 곳]**\n- TI-STN-08-P: 메모 2개 → 프레임 오른쪽 위 1개만 남김 (아래 것 지움)\n- LI-STN-08-P: 메모 2개 → 프레임 오른쪽 위 1개만 남김 (아래 것 지움)\n- 남긴 메모 내용 · 위치는 그대로 (v2.1.18 update / 모듈명칭 변경 / Prep Consumable Storage → Consumable Storage)\n\n**[참고]**\n- 원인: As Is에서 본 프레임 옆 · 유형별 정의 프레임 옆에 같은 메모가 1개씩 있었고, To Be로 옮길 때 둘 다 본 프레임 옆에 둠\n\n작업 기준: basis 2026-11-26 17:00 · 작업규칙 rules @수정본 · 정책서 policy · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 glossary · 화면 정의서 screens",
+  "shot": "shots/brex-06_R006.jpg",
+  "shots": [
+    {
+      "file": "shots/brex-06_R006.jpg",
+      "nodeId": "3667:11462",
+      "frame": "TI-STN-08-P"
+    },
+    {
+      "file": "shots/brex-06_R006-2.jpg",
+      "nodeId": "3667:11469",
+      "frame": "LI-STN-08-P"
+    }
+  ],
+  "images": [
+    "attach/brex-06_R006_1.jpg"
+  ],
+  "frames": [
+    {
+      "nodeId": "3667:11462",
+      "name": "TI-STN-08-P"
+    },
+    {
+      "nodeId": "3667:11469",
+      "name": "LI-STN-08-P"
+    }
+  ],
+  "marks": [],
+  "ask": null,
+  "replies": [
+    {
+      "at": "2026-11-26T16:58:57+09:00",
+      "by": "최고관리자",
+      "q": "TI-STN-08-P · LI-STN-08-P에 2개씩 있는 v2.1.18 update 메모를 어떻게 할까요?",
+      "text": "화면마다 1개만 남기고 지움"
+    }
+  ],
+  "raws": [
+    {
+      "at": "2026-11-26T16:57:57+09:00",
+      "text": "R006에 답했습니다. 메모가 2개씩 생긴 건 As Is에 같은 메모가 원래 2개씩 있었기 때문이에요. Figma는 바꾸지 않았고, 요청은 「보류」로 두고 처리 방법을 묻는 질문을 남겼어요.\n\n- **원인:** As Is에는 같은 「v2.1.18 update」 메모(Prep Consumable Storage → Consumable Storage)가 화면마다 2개 있었습니다. TI-STN-08-P · LI-STN-08-P 프레임 옆에 1개씩, 각 「유형별 정의」 프레임 옆에 1개씩입니다.\n- **2개가 된 경위:** R002(2026-11-25)에서 To Be로 그릴 때, 케이스 3 규칙(As Is 메모를 그대로 옮김)에 따라 둘 다 옮겼습니다. 그런데 「/Case」 프레임 옆으로 나누지 않고 둘 다 본 프레임 오른쪽에 위아래로 붙여 놓았습니다. 그래서 To Be의 TI-STN-08-P · LI-STN-08-P 섹션에 같은 메모가 2개씩 보입니다.\n\n이어서 하려면 Workbench에서 아래 중 하나를 골라 주세요.\n- 화면마다 1개만 남기고 지움 (추천: 같은 버전 · 같은 내용이라 1개면 충분합니다)\n- 1개는 「/Case」 프레임 옆으로 옮김 (As Is 배치대로)\n- 그대로 둠",
+      "cut": false
+    },
+    {
+      "at": "2026-11-26T16:59:31+09:00",
+      "text": "R006을 답(「화면마다 1개만 남기고 지움」)대로 처리하고 「완료」로 바꿨어요.\n\n- **TI-STN-08-P:** 2개 있던 「v2.1.18 update」 메모 중 아래 것을 지우고, 프레임 오른쪽 위 1개만 남겼습니다.\n- **LI-STN-08-P:** 같은 방법으로 1개만 남겼습니다.\n- 남긴 메모의 내용과 위치는 그대로예요.\n- 「완료」 때 두 섹션(TI-STN-08-P · LI-STN-08-P)을 바뀐 화면으로 함께 보냈고, 캡처는 서버가 찍습니다.\n\n작업 기록(assay-pack)에는 이번 변경을 적지 않았어요. 단계 문서(`requests-flow.md`)를 이번에 읽지 않아서, 이런 정리도 기록에 남겨야 하는지 확인하지 못했습니다.",
+      "cut": false
+    }
+  ],
+  "work": "",
+  "handoff": null
+}

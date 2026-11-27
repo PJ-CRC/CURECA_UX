@@ -20,7 +20,7 @@
 
 | 메뉴 | 행 | 사용 | 삭제 | Language ID 메뉴 글자 |
 | --- | --- | --- | --- | --- |
-| [Event History](db/event-history.md) | 63 | 56 | 7 | EVT |
+| [Event History](db/event-history.md) | 85 | 71 | 14 | EVT |
 | [Login](db/login.md) | 30 | 30 | 0 | LOG |
 | [Run](db/run.md) | 86 | 77 | 9 | RUN |
 | [Quick Start](db/quick-start.md) | 21 | 19 | 2 | QUK |

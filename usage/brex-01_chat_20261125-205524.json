@@ -1,0 +1,30 @@
+{
+  "id": "brex-01_chat_20261125-205524",
+  "kind": "work",
+  "chat": "doc",
+  "reqId": "",
+  "reqType": "",
+  "team": "cureca",
+  "at": "2026-11-25T20:55:24+09:00",
+  "from": "2026-11-25T15:58:37+09:00",
+  "by": "서보경",
+  "doneBy": "Claude",
+  "pc": "BREX_01",
+  "fileKey": "",
+  "fileName": "",
+  "page": "",
+  "frame": "",
+  "nodeId": "",
+  "text": "채팅: 7개 언어 번역을 넘기는 길 -> 이거 그냥 UI팀에 넘기는 곳에 신규와 변경된 언어의 내역 뽑아서 전달하게 문서를 수정해줘.",
+  "turns": 8,
+  "models": {
+    "claude-opus-5-5": 60
+  },
+  "calls": 60,
+  "input": 136,
+  "cacheWrite": 99608,
+  "cacheRead": 47239509,
+  "output": 53329,
+  "total": 47392582,
+  "usd": 11.3119
+}

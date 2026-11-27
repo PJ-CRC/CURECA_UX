@@ -11,8 +11,8 @@ author: 이상헌
 client_mode: []
 user_type: [Service]
 policies: [POL-TST-008]
-basis: 2026-11-26 09:27 · history 4079e90d
-basis_versions: rules @2026-11-26 · policy @2026-11-25 · glossary @2026-11-25 · screens @2026-11-26 · common_ux @2026-11-25
+basis: 2026-11-26 17:09 · history 402e669e
+basis_versions: rules @2026-11-26 14:30 · policy @2026-11-25 21:21 · glossary @2026-11-26 15:17 · screens @2026-11-26 16:15 · common_ux @2026-11-25 16:08
 source: tobe
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3667-11463
 ---
@@ -33,6 +33,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
   - [TI-STN-08] 목록 [Import] 선택 시 노출
   - 배경(목록 · 메뉴) Dim, Popup 밖 영역 선택 불가
   - [X] · ESC 선택 시 Popup 닫힘, [TI-STN-08] 목록으로 돌아감 (반영 없음)
+  - <span style="color:red">파일을 1개 이상 선택한 채 [X] · ESC 선택 시 Confirm 노출 : Confirm_031</span>
 - User Type : Service
 - 공통 UX 참고 : COMM-5-m
 - 정책 참고 : POL-TST-008
@@ -66,6 +67,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 - [Cancel] 버튼
   - 동작
     - 선택 시 Popup 닫힘, [TI-STN-08] 목록으로 돌아감 (반영 없음)
+    - <span style="color:red">파일을 1개 이상 선택한 채 선택 시 Confirm 노출 : Confirm_031</span>
 - 정책 참고 : POL-TST-008
 - 케이스 참고 : TI-STN-08-01/Case > Case 1
 
@@ -92,6 +94,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 | 1 | Alert | Alert_041 | json 외 파일 선택 | OK 선택 시 → 해당 Alert 닫힘, 데이터 반영 없음 |
 | 3 | Alert | Alert_040 | [Import] 양식 불일치 파일 포함 | OK 선택 시 → 해당 Alert 닫힘, 데이터 반영 없음 |
 | 3 | Confirm | Confirm_028 | [Import] 같은 File type · Product Name · 버전이 이미 있음 | Overwrite 선택 시 → 기존 파일 교체 & 등록 → Alert_039 / Cancel 선택 시 → Confirm 닫힘, Import 중단 ([TI-STN-08-01] Import file 유지) |
+| 0 · 3 | Confirm | Confirm_031 | 파일을 1개 이상 선택한 채 [X] · ESC · [Cancel] 선택 | Discard 선택 시 → Popup 닫힘, [TI-STN-08] 목록으로 돌아감 (반영 없음) / Cancel 선택 시 → 해당 Confirm 닫힘, Import file Popup · 선택한 파일 유지 |
 | 3 | Alert | Alert_039 | [Import] 모두 양식과 일치해 등록 완료 | OK 선택 시 → Alert 닫힘 & 목록 최상단에 Import한 파일 노출, 최신 버전 자동 활성 |
 
 ## 화면 예시 글자
@@ -107,10 +110,10 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 
 | 화면 표기 글자 (영어) | 출처 | Language ID |
 | --- | --- | --- |
-| Import file | 화면 0 · 케이스 Case 1-1 · 1-2 | |
-| Drag and drop files here, or | 화면 1 · 케이스 Case 1-1 · 1-2 | |
-| Select files | 화면 1 · 케이스 Case 1-1 · 1-2 | |
+| Import file | 화면 0 · 케이스 Case 1-1 · 1-2 | LID-STN-379 |
+| Drag and drop files here, or | 화면 1 · 케이스 Case 1-1 · 1-2 | LID-STN-381 |
+| Select files | 화면 1 · 케이스 Case 1-1 · 1-2 | LID-STN-383 |
 | json · Multiple files | 화면 1 · 케이스 Case 1-1 · 1-2 | |
 | {n} MB | 화면 2 · 케이스 Case 1-2 (n = 0.8 · 0.3 · 2.4) | |
-| Cancel | 화면 3 · 케이스 Case 1-1 · 1-2 | |
-| Import | 화면 3 · 케이스 Case 1-1 · 1-2 | |
+| Cancel | 화면 3 · 케이스 Case 1-1 · 1-2 | LID-STN-021 |
+| Import | 화면 3 · 케이스 Case 1-1 · 1-2 | LID-TMG-035 |

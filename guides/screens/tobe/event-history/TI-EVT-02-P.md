@@ -3,7 +3,7 @@ cid: TI-EVT-02-P
 pair_cid: LI-EVT-02-P
 tl_relation: 동일
 title: Event Message
-path: Event History > Event Message
+path: Event Message
 type: Popup
 version: 2.1.14
 date: 2026.10.30
@@ -11,8 +11,13 @@ author: 서보경
 client_mode: []
 user_type: [Service, Admin, User]
 policies: [POL-EVT-001, POL-EVT-003]
-basis:
+basis: 2026-11-26 20:00 · history a15b3986
 basis_versions:
+  rules: CURECA 작업규칙 @2026-11-26 14:30
+  policy: 정책서 @2026-11-25 21:21
+  glossary: 기준데이터 @2026-11-26 15:17
+  screens: 화면 정의서 @2026-11-26 03:39
+  common_ux: Common UX (common-ux/comm-index.md) @2026-11-25 16:08
 source: tobe
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1252
 ---
@@ -26,56 +31,56 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 
 ## 디스크립션
 
-**0  <span style="color:red">Event Message</span> 화면**
+**0  Event Message 화면**
 - 정의
-  - Event 발생 시, 화면에 <span style="color:red">노출</span>되는 <span style="color:red">Event Message Popup</span>
-  - <span style="color:red">Profile > General의 Event notifications 설정이 On일 경우 노출, Off일 경우 미노출 (기본 On)</span>
+  - Event 발생 시, 화면에 노출되는 Event Message Popup
+  - Profile > General의 Event notifications 설정이 On일 경우 노출, Off일 경우 미노출 (기본 On)
 - 노출 조건
-  - 최초 로그인 이후 발생되는 메시지부터 노출되며, 여러 개 발생 시 누적되어 <span style="color:red">Popup</span>으로 동시에 노출
-  - 노출 형태 : 여러 개의 <span style="color:red">Popup</span>이 겹쳐서 화면에 <span style="color:red">노출</span>
+  - 최초 로그인 이후 발생되는 메시지부터 노출되며, 여러 개 발생 시 누적되어 Popup으로 동시에 노출
+  - 노출 형태 : 여러 개의 Popup이 겹쳐서 화면에 노출
 - 스크롤
   - 노출되는 내용이 많을 경우, 줄임 처리하지 않고 모두 노출
-  - 최대 <span style="color:red">Popup</span> 크기를 초과할 경우, 스크롤 적용(UI 참고)
+  - 최대 Popup 크기를 초과할 경우, 스크롤 적용(UI 참고)
 - User Type : Service, Admin, User
 - 정책 참고 : POL-EVT-003
 
 **1  Level**
-- <span style="color:red">Event</span>의 Level인 <span style="color:red">Error</span>, <span style="color:red">Warning</span> 값 <span style="color:red">노출</span>
+- Event의 Level인 Error, Warning 값 노출
 - 정책 참고 : POL-EVT-001
 
 **2  Code**
-- Event Code <span style="color:red">노출</span>
+- Event Code 노출
 
 **3  Type**
-- Instrument, Inventory, Sample, System 중 해당되는 항목 <span style="color:red">노출</span>
+- Instrument, Inventory, Sample, System 중 해당되는 항목 노출
 - 정책 참고 : POL-EVT-001
 
 **4  Description**
-- <span style="color:red">Event</span> 내용 <span style="color:red">노출</span>
+- Event 내용 노출
 
 **5  Effect**
-- Event Code에 연계된 Scenario Code의 'description' 내용 <span style="color:red">노출</span>
+- Event Code에 연계된 Scenario Code의 'description' 내용 노출
 - 표기 방식
   - 연계된 코드가 없는 경우, '-' 노출
   - N개인 경우, 목록형으로 기호를 표기하여 N개 노출
 - 참고 문서명 : [SRD] CURECA Prep 및 Dx 장비 Event 정의
 
 **6  Recommended Action**
-- 조치 방법 내용 <span style="color:red">노출</span>
+- 조치 방법 내용 노출
 
 **7  Module, Unit**
-- Event가 발생한 <span style="color:red">Instrument</span> 정보 <span style="color:red">노출</span>
+- Event가 발생한 Instrument 정보 노출
 
 **8  [Close] 버튼**
 - 동작
-  - 클릭 시, <span style="color:red">Popup</span> 닫힘
-  - N개일 경우, <span style="color:red">Popup</span>이 닫히며 메시지 총 개수에서 제거되고 여러 개 <span style="color:red">Popup</span> 구조 리스트에서 제거
+  - 클릭 시, Popup 닫힘
+  - N개일 경우, Popup이 닫히며 메시지 총 개수에서 제거되고 여러 개 Popup 구조 리스트에서 제거
 - 정책 참고 : POL-EVT-003
 
 **9  [View Details] 버튼**
 - 동작
-  - 클릭 시, 해당 Event의 <span style="color:red">Event Detail 화면으로 이동 : TI-EVT-01-P</span>
-  - N개일 경우, 클릭 시 <span style="color:red">Popup</span>이 모두 닫히며 이동
+  - 클릭 시, 해당 Event의 Event Detail 화면으로 이동 : TI-EVT-01-P
+  - N개일 경우, 클릭 시 Popup이 모두 닫히며 이동
 - 정책 참고 : POL-EVT-003
 
 **10  [Close All] 버튼**
@@ -118,7 +123,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 | 4 | Description | GANTRY Well Plate Expansion Operation Time Out Error | 기존 원본 |
 | 5 | Effect | Failed to transfer Consumable to next Module / Failed to unload consumable from STARlet | 기존 원본 |
 | 6 | Recommended Action | Check GANTRY Well Plate Expansion Cylinder | 기존 원본 |
-| 7 | Module · Unit | High-throughput Extraction (1) · M9600 | 기존 원본, 반영 대기 TI-EVT-02-P-R04 (이름과 번호 띄어 씀) |
+| 7 | Module · Unit | High-throughput Extraction · M9600 | 기존 원본, 반영 대기 TI-EVT-02-P-R04 (이름과 번호 띄어 씀), Q4 답 (Module 1대면 번호 표기 안 함) |
 | 11 | 메시지 개수 | 1/20 | 기존 원본 |
 
 ## 화면 표기 글자
@@ -126,21 +131,21 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 | 화면 표기 글자 (영어) | 출처 | Language ID |
 | --- | --- | --- |
 | {n}/{m} | 화면 11 (n = 1, m = 20) | |
-| Close All | 화면 10 | |
-| Event Code: | 화면 2 | |
-| Type: | 화면 3 | |
-| Inventory | 화면 3 | |
-| Instrument | 디스크립션 3 | |
-| Sample | 디스크립션 3 | |
-| System | 디스크립션 3 | |
-| Error | 디스크립션 1 | |
-| Warning | 디스크립션 1 | |
-| Description | 화면 4 | |
-| Effect | 화면 5 | |
-| Recommended Action | 화면 6 | |
-| Module: | 화면 7 | |
-| Unit: | 화면 7 | |
-| High-throughput Extraction (1) | 화면 7 | |
-| M9600 | 화면 7 | |
-| Close | 화면 8 | |
-| View Details | 화면 9 | |
+| Close All | 화면 10 | LID-EVT-046 |
+| Event Code: | 화면 2 | LID-EVT-041 |
+| Type: | 화면 3 | LID-EVT-004 |
+| Inventory | 화면 3 | LID-IVT-001 |
+| Instrument | 디스크립션 3 | LID-EVT-005 |
+| Sample | 디스크립션 3 | LID-SPT-022 |
+| System | 디스크립션 3 | LID-EVT-009 |
+| Error | 디스크립션 1 | LID-EVT-037 |
+| Warning | 디스크립션 1 | LID-EVT-038 |
+| Description | 화면 4 | LID-EVT-011 |
+| Effect | 화면 5 | LID-EVT-045 |
+| Recommended Action | 화면 6 | LID-EVT-031 |
+| Module: | 화면 7 | LID-EVT-012 |
+| Unit: | 화면 7 | LID-EVT-013 |
+| High-throughput Extraction | 화면 7 | LID-EVT-051 |
+| M9600 | 화면 7 | LID-EVT-058 |
+| Close | 화면 8 | LID-EVT-039 |
+| View Details | 화면 9 | LID-EVT-040 |

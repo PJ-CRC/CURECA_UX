@@ -1,0 +1,30 @@
+{
+  "id": "brex-01_chat_20261126-222003",
+  "kind": "work",
+  "chat": "doc",
+  "reqId": "",
+  "reqType": "",
+  "team": "cureca",
+  "at": "2026-11-26T22:20:03+09:00",
+  "from": "2026-11-26T21:13:10+09:00",
+  "by": "서보경",
+  "doneBy": "Claude",
+  "pc": "BREX_01",
+  "fileKey": "",
+  "fileName": "",
+  "page": "",
+  "frame": "",
+  "nodeId": "",
+  "text": "채팅: 반영하고, 4번은 명확하지 않은거라 질문을 더 남겨주고 그런 케이스가 발생되면 다시 이야기해보자. 그리고 함께 볼만한 것은 처음부터 적으면 될거",
+  "turns": 8,
+  "models": {
+    "claude-opus-5-5": 56
+  },
+  "calls": 56,
+  "input": 128,
+  "cacheWrite": 130230,
+  "cacheRead": 27622365,
+  "output": 82124,
+  "total": 27834847,
+  "usd": 8.2093
+}

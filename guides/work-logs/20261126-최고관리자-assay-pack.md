@@ -8,13 +8,13 @@ cid_system:
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3481-216078 (UX AI TEST 「Setting  Ⓛ / Ⓣ_To Be」 페이지)
 test: false
 basis_start: 2026-11-26 09:11 · history 8d250d2f
-basis:
+basis: 2026-11-26 17:09 · history 402e669e
 basis_versions:
-  rules:
-  policy:
-  glossary:
-  screens:
-  common_ux:
+  rules: CURECA 작업규칙 @2026-11-26 14:30
+  policy: CURECA 정책서 @2026-11-25 21:21
+  glossary: 기준데이터 @2026-11-26 15:17
+  screens: 화면 정의서 @2026-11-26 16:15
+  common_ux: Common UX (common-ux/comm-index.md) @2026-11-25 16:08
 started: 2026-11-26
 ---
 # 작업 기록: Assay Pack Setting 화면을 To Be 페이지에 처음부터 다시 그림
@@ -26,10 +26,10 @@ started: 2026-11-26
 | 1. 시작 · 요건 정의 | 2026-11-26 | 요청자 확인 (2026-11-26) | 겹치는 다른 작업: 있음 (20261125-최고관리자-assay-pack, 대상 화면 모두 겹침. 요청자 답으로 새 작업, 처리는 요청자 확인 4) |
 | 2. 근거 · 분석 | 2026-11-26 | 요청자 확인 (2026-11-26) | 논의 대상 DS-0012 이어받음 (`work` 고침), C3 |
 | 3. 화면 설계 | 2026-11-26 | 기계 검사 통과 (2026-11-26) | 질문 대기 6 (Q1 ~ Q6) · 변경 확인 8 (C1 · C2 · C3 · C4 · C7 · C9 · C10 · C11), 마침 점검에서 고친 것 "찾은 것" 끝 |
-| 4. 수정 · 확인 | | | |
+| 4. 수정 · 확인 | | | UX 확정 (2026-11-26) · 내부 검토 반영 (고객 UX 검토 없이 요청자가 확정, 요청자 확인 8 · Workbench R005 답). 기계 검사 통과 (2026-11-26, 요청자 확인 9). 업데이트 메모 `재설계 후 변경 내역` 5개 (T · L 08 · 08-P, TI-STN-08-01). 기획 진행 표시는 케이스 3이라 바꾸지 않음 |
 | 5. 완료 | | | |
 
-이어서 작업할 곳: 4단계 · 절차 1번 사용자 확인 목록을 보여 줌(2026-11-26 다섯 번째 세션, 3단계 기계 검사 통과) - 질문 대기 Q1 ~ Q6 · 변경 확인 C1 · C2 · C3 · C4 · C7 · C9 · C10 · C11 답 기다림 (다시 읽을 곳: 4단계 flow/4-revise-verify.md 절차 1 · "절차 공통: 화면 수정 규칙" / 작업 기록 "질문 대기" · "변경 확인" · "설계" 화면별 작업)
+이어서 작업할 곳: 4단계 · UI팀에 넘길 것을 보여 줌 (2026-11-26) (다시 읽을 곳: 4단계 절차 5 / 작업 기록 "검토 질의" · "언어셋")
 
 ## 요청
 
@@ -44,7 +44,7 @@ started: 2026-11-26
 - 요청 상태: 최초
 - 경로 분기 기준 (근거) · 읽는 강도: 8 옮겨 다시 그림 (케이스 3) (요청 글 "다시 그려줘" + 요청자 답 "처음부터 다시 그림") · 케이스 3 (다시 그리기)
 - 지나가는 단계: 1 → 2 → 3 → 4 → 5
-- UI 작업: 대상 아님 (케이스 3 기본값, 다시 그리며 바뀐 곳이 생기면 4단계 UX 확정 때 다시 정함)
+- UI 작업: ~~대상 아님 (케이스 3 기본값, 다시 그리며 바뀐 곳이 생기면 4단계 UX 확정 때 다시 정함)~~ 대상 · 바뀜 (2026-11-26, 최고관리자, 화면의 배치 · 요소가 바뀜 C4 · C9 · C10 · C11 · C12 · C17, 화면 표기 글자가 바뀜 C1 · C2 · C16. 요청자 확인 10)
 
 | 대상 화면 | 케이스 | 작업 대상 | 근거 |
 | --- | --- | --- | --- |
@@ -196,6 +196,7 @@ started: 2026-11-26
 | 선택한 파일 줄 (목록 줄) | 고른 파일 · [✕] 빼기 | TI-STN-08-01 #2 (Case 1-2 같음) | 기존 화면에서 따옴 (Interface/Close로 바꿀 여지: 줄 끝 [✕]) | 472×39 × 3줄, 모서리 4, 선 #DEE2E7 1, 글자 4 (「▤」 Inter Regular 14 #0B8580 · 파일명 Inter Medium 14 · 용량 Inter Regular 12 #838C96 · 「✕」 Inter Regular 13 #5F666E), 인스턴스 0 (As Is 3288:237453 · 237459 · 237465) | 같음 |
 | Case 조각 바탕 (영역 틀) | Case Popup 조각 바탕 | TI-STN-08-01/Case 1-1 · 1-2 | 기존 화면에서 따옴 | #E9EBF0, 모서리 0, Popup 하나씩 담음 (원본은 두 Popup을 한 바탕 1657×610에 담음, 화면 MD 1-1 · 1-2로 나눠 조각마다 600×(Popup+80)), 원본에 번호 표시 없음 (As Is 3288:240946) | [3703:4893](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3703-4893) |
 | Sample Type Info 표 (맞는 Variant 없음, Card/Table Item 최대 10 · 행 14) | Master 파일의 Sample Type 목록 | TI-STN-08-P/Case · LI-STN-08-P/Case Case 1-1 (디스크립션 3) | 기존 화면에서 따옴 | 묶음 760×609 세로 간격 20 = 제목 135×19 (「Sample Type Info」 Inter Bold 16 #1F2329) + 표 760×570 모서리 4 선 #DEE3E8 1, 머리 줄 758×36 #F7F8FA (글자 3 Inter Bold 12 #5F666E) + 줄 14 × 758×38 (칸 3, 글자 Inter Regular 14 #1F2329), 글자 46 · 인스턴스 0 (As Is 3288:236956). 마침 점검에서 제목이 빠진 것을 찾아 원본 묶음대로 고침 | [T 3711:16351](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3711-16351) · [L 3711:16354](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3711-16354) |
+| Active · Inactive 태그 (영역 틀 · 글자) | 활성 여부 표시 | TI-STN-08 · LI-STN-08 #4-1, TI-STN-08-P · LI-STN-08-P 배경 목록 | 기존 화면에서 따옴 (Q6 답, 2026-11-26. Status Base Navy · Gray에서 바꿈) | Active 46×17 #1F2329 모서리 2 여백 6 · 2, 글자 Inter Semi Bold 11 #FFFFFF / Inactive 55×17 #E9ECEF, 글자 #5F6B7A (As Is 3288:235233 · 3288:235313) | [3670:2367](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3670-2367) |
 
 ### 근거로 풀린 것
 | 질문 | 푼 근거 |
@@ -214,6 +215,9 @@ started: 2026-11-26
 - 마침 점검(2026-11-26 다섯 번째 세션)에서 고친 것: ① TI-STN-08-P/Case · LI-STN-08-P/Case Case 1-1의 Sample Type 표에 원본 제목 「Sample Type Info」가 빠져 있어 원본 묶음(제목 + 표, 간격 20)대로 되살림 → 패널 · Case 1-1 조각 · 케이스 프레임 · 섹션을 39px 늘리고 뒤 조각을 내림, T 줄 가장 긴 섹션이 길어져 L-IOS 줄(시스템 구분 · 진행 표시 · 섹션)을 39px 내려 2000px 간격 유지(y 14062) (검사 3 · 14) ② TI-STN-08-P · LI-STN-08-P 목록 틀이 1639×730으로 원본(1639×746)과 달라 원본 크기로 맞춤 (검사 14) ③ 네 기획 프레임(TI-STN-08 · LI-STN-08 · TI-STN-08-P · LI-STN-08-P) LNB 선택 메뉴 「Assay Pack Setting」(Inter Bold 14)이 말줄임으로 잘려 컴포넌트를 떼지 않고 글 상자를 글자 너비로 바꿈 (검사 11, 공통 3-10 ①) ④ TI-STN-08-P · LI-STN-08-P 화면 표기 글자 표에 배경 목록(TI-STN-08 · LI-STN-08 화면) 글자 19 · 18개가 빠져 있어 더함 (검사 3)
 - 규칙에 없어 판단한 곳 (마침 점검): TI-STN-08-01 케이스 블록 「디스크립션 번호 : 1, 2, 3」인데 `케이스 참고` 줄은 #3에만 있음. 케이스 블록 · Figma Case · 참고 줄은 1:1로 맞아 검사 5는 통과로 보고 그대로 둠
 
+- 4단계 Q 답 반영(2026-11-26)에서 패널 글이 늘어 TI-STN-08-P 기획 프레임 1582 → 1666(케이스 프레임 · 섹션 84px 내림 · 늘림, T 줄 가장 긴 섹션이 길어져 L-IOS 줄을 84px 내려 2000px 간격 유지, y 14146), LI-STN-08 기획 프레임 1374 → 1386(섹션 12px 늘림)으로 맞춤. 패널 행 글은 플러그인 채우기(새 행 만들기)가 아니라 있는 행에 줄만 더하는 일이라 use_figma로 고침
+- 4단계 절차 1번 순서 4 기계 검사(2026-11-26, 고친 화면 TI-STN-08 · LI-STN-08 · TI-STN-08-P · LI-STN-08-P · TI-STN-08-01과 케이스 프레임): 통과. 바로 고친 것: LI-STN-08-P 패널(1062)이 기획 프레임(1038)보다 길어 프레임을 1062로 늘리고 케이스 프레임 · 섹션을 24px 내림 · 늘림 (검사 11). 케이스 3이라 기획 진행 표시는 바꾸지 않음 (절차 1번 순서 5)
+
 ### 용어 치환
 | 원래 표현 | 표준어 | 위치 |
 | --- | --- | --- |
@@ -227,32 +231,71 @@ started: 2026-11-26
 
 | 번호 (Q) | 질문 | 관련된 곳 (CID · 디스크립션 번호) | 논의 대상 | T · L 같음 | 풀린 날 · 어떻게 |
 | --- | --- | --- | --- | --- | --- |
-| Q1 | Master 파일 Active 변경 버튼 모습 (TI-STN-08 #4-1 「상세에 변경 버튼 미노출」 ↔ TI-STN-08-P #3 「[Active] · [Inactive] 버튼 비활성」, POL-TST-008 규칙 6은 바꿀 수 없음만) | TI-STN-08 #4-1 · TI-STN-08-P #3 | | T만 (L-IOS는 보기만) | |
-| Q2 | Confirm_029 [Activate] 뒤 Toast 노출 여부 · 문구 (카탈로그 버튼 동작 「& Toast」, Toast 카탈로그에 없음) | TI-STN-08-P #4 | | T만 | |
-| Q3 | 파일을 고른 채 Import file Popup을 [X] · ESC · [Cancel]로 닫을 때 다시 묻는지 (Alert 카탈로그에 없음) | TI-STN-08-01 화면 노출 경로 · #3 | | T만 | |
-| Q4 | Active · Inactive를 바꾸고 [Save] 없이 [닫기] · 다른 Row [Details]를 누를 때 다시 묻는지 (Alert 카탈로그에 없음) | TI-STN-08-P #2-1 · #3-1 | | T만 | |
-| Q6 | Status Base에 맞는 Variant가 없어 Active는 Navy, Inactive는 Gray로 그림 (기존 Active 태그 검정, Active · Inactive는 상태값 표에 없음) | TI-STN-08 #4-1 · LI-STN-08 #4-1 (상세 패널 · 케이스의 Active 태그도 같음) | | 같음 | |
-| Q5 | L-IOS 등록된 파일 없음 · 검색 결과 없음 문구 ([LI-STN-08 / 세부정의]가 As Is 페이지에 없음, T-IOS 「Click Import to add a file.」은 [Import]가 없는 L-IOS에 맞지 않음) | LI-STN-08 #1-4 | | 다름 | |
+| Q1 | Master 파일 Active 변경 버튼 모습 (TI-STN-08 #4-1 「상세에 변경 버튼 미노출」 ↔ TI-STN-08-P #3 「[Active] · [Inactive] 버튼 비활성」, POL-TST-008 규칙 6은 바꿀 수 없음만) | TI-STN-08 #4-1 · TI-STN-08-P #3 | | T만 (L-IOS는 보기만) | 2026-11-26 · 상세에 버튼 미노출 (TI-STN-08 #4-1대로, C12. Figma Case 1-1은 이미 버튼 없음) |
+| Q2 | Confirm_029 [Activate] 뒤 Toast 노출 여부 · 문구 (카탈로그 버튼 동작 「& Toast」, Toast 카탈로그에 없음) | TI-STN-08-P #4 | | T만 | 2026-11-26 · Toast 노출 안 함, Confirm만 (C13) |
+| Q3 | 파일을 고른 채 Import file Popup을 [X] · ESC · [Cancel]로 닫을 때 다시 묻는지 (Alert 카탈로그에 없음) | TI-STN-08-01 화면 노출 경로 · #3 | | T만 | 2026-11-26 · Confirm으로 다시 물음, Confirm_031 카탈로그에 추가 (C14) |
+| Q4 | Active · Inactive를 바꾸고 [Save] 없이 [닫기] · 다른 Row [Details]를 누를 때 다시 묻는지 (Alert 카탈로그에 없음) | TI-STN-08-P #2-1 · #3-1 | | T만 | 2026-11-26 · 묻지 않고 바꾼 값 버림 (C15) |
+| Q6 | Status Base에 맞는 Variant가 없어 Active는 Navy, Inactive는 Gray로 그림 (기존 Active 태그 검정, Active · Inactive는 상태값 표에 없음) | TI-STN-08 #4-1 · LI-STN-08 #4-1 (상세 패널 · 케이스의 Active 태그도 같음) | | 같음 | 2026-11-26 · 기존 스타일대로: 기존 원본 태그(Active #1F2329 · Inactive #E9ECEF)로 바꿔 그림 (기존과 같아져 변경 확인 없음, "컴포넌트 없이 그린 요소") |
+| Q5 | L-IOS 등록된 파일 없음 · 검색 결과 없음 문구 ([LI-STN-08 / 세부정의]가 As Is 페이지에 없음, T-IOS 「Click Import to add a file.」은 [Import]가 없는 L-IOS에 맞지 않음) | LI-STN-08 #1-4 | | 다름 | 2026-11-26 · 등록된 파일 없음은 「No files found.」만, 검색 결과 없음은 T-IOS(TI-STN-08 Case 1-2)와 같게 「No results found.」 (C16) |
 
 ## 변경 확인
 
 | 번호 (C) | 기존 화면 | 바꿔 그린 것 | 관련된 곳 (CID · 디스크립션 번호) | 근거 | T · L 같음 | 업데이트 메모 (O / -) | 확인한 날 · 답 (맞음 / 되돌림) |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| C1 | [Delete] 확인 Confirm 제목 「Delete the selected file?」 | Confirm_026 제목 「Delete the selected files?」로 | TI-STN-08-P #4 | (alert-catalog.csv Confirm_026) | T만 | O | |
-| C2 | [Delete] 뒤 Toast 「The file has been deleted.」 | Toast_001 「The selected files have been deleted.」로 | TI-STN-08-P #4 | (toast-catalog.csv Toast_001, Confirm_026 버튼 동작) | T만 | O | |
-| C4 | 노출 개수 Dropdown (10 · 30 · 50 · 100 items) | 노출 개수 Dropdown 지움, 10 items 고정 (Common UX Basic Table: L-IOS 노출 개수 고정) | LI-STN-08 #2 | COMM-5-g | L만 | O | |
+| C1 | [Delete] 확인 Confirm 제목 「Delete the selected file?」 | Confirm_026 제목 「Delete the selected files?」로 | TI-STN-08-P #4 | (alert-catalog.csv Confirm_026) | T만 | O | 맞음 (2026-11-26) |
+| C2 | [Delete] 뒤 Toast 「The file has been deleted.」 | Toast_001 「The selected files have been deleted.」로 | TI-STN-08-P #4 | (toast-catalog.csv Toast_001, Confirm_026 버튼 동작) | T만 | O | 맞음 (2026-11-26) |
+| C4 | 노출 개수 Dropdown (10 · 30 · 50 · 100 items) | 노출 개수 Dropdown 지움, 10 items 고정 (Common UX Basic Table: L-IOS 노출 개수 고정) | LI-STN-08 #2 | COMM-5-g | L만 | O | 맞음 (2026-11-26) |
 | C5 | Pagination 「COMM-5-i 정의 참고 (10개 단위)」 | Pagination 유형 Type 1 Number를 적음 (화면에 보이는 번호 페이지) | TI-STN-08 #5 · LI-STN-08 #5 | 기존 화면 · COMM-5-l | 같음 | - | 맞음 (기존 화면, 2026-11-26) |
 | C6 | 정렬 「등록 일시 최신순」만 | 정렬 가능한 컬럼 항목 Active를 적음 (화면 Active 머리의 정렬 아이콘) | TI-STN-08 #4 · LI-STN-08 #4 | 기존 화면 · COMM-5-r | 같음 | - | 맞음 (기존 화면, 2026-11-26) |
-| C7 | 화면 이름 「Assay Pack Setting」 (패널 화면 정보 · 경로 File details) | 「Assay Pack File Details」, 경로 Setting > Assay Pack Setting > Details (TI-STN-08-P-R01, 뒤 단계용 5) | TI-STN-08-P · LI-STN-08-P 화면 정보 | IA (`ia/ia-screens.csv`) | 같음 | - | |
+| C7 | 화면 이름 「Assay Pack Setting」 (패널 화면 정보 · 경로 File details) | 「Assay Pack File Details」, 경로 Setting > Assay Pack Setting > Details (TI-STN-08-P-R01, 뒤 단계용 5) | TI-STN-08-P · LI-STN-08-P 화면 정보 | IA (`ia/ia-screens.csv`) | 같음 | - | 맞음 (2026-11-26) |
 | C8 | PCR 구성품 Barcode Info 머리 「Barcode Scheme Name」, LI-STN-08-P Extraction 머리 「Schema Name」 | 「Barcode Schema Name」 (뒤 단계용 8) | TI-STN-08-P · LI-STN-08-P Case | 2단계 용어 목록 | 같음 | - | 맞음 (오타, 2026-11-26) |
-| C9 | Active only 체크박스 Square 모양 | Circle Checkbox (Common UX Search Area 조회 조건 체크박스) | TI-STN-08 #1-3 · LI-STN-08 #1-3 | COMM-5-p | 같음 | O | |
-| C10 | File details 정보 묶음 (기존 원본 글 · 표 묶음) | Common UX List Card · Table Card · Outline Container Tab으로 다시 그림 | TI-STN-08-P #3 · LI-STN-08-P #3 (Case 1-1 ~ 4-1 같음) | COMM-5-e · COMM-5-s | 같음 | O | |
-| C11 | Popup 닫기 「✕」 글자, [Select files] · [Cancel] · [Import] 직접 그린 버튼 (Import 청록 #12B5AE) | Interface/Close · Square (Outlined M · Filled M, 높이 36은 원본대로) | TI-STN-08-01 0 · #1 · #3 (Case 1-1 · 1-2 같음) | COMM-5-m (Basic Popup: 닫기 Interface/Close, 하단 버튼 Square) | T만 | O | |
-| C3 | Confirm_029 · 030 발생 조건 (Alert 카탈로그 기존 조건) | DS-0012 결정대로 File Details에서 Active · Inactive를 바꾸고 [Save]를 누를 때 Confirm_029 · 030을 띄움 (다른 작업의 결정을 따름, 멈춘 20261125-최고관리자-assay-pack에서 이어받음, 이 작업 5단계 완료 때 카탈로그 반영 전) | TI-STN-08-P #4 | DS-0012 | T만 | O | |
+| C9 | Active only 체크박스 Square 모양 | Circle Checkbox (Common UX Search Area 조회 조건 체크박스) | TI-STN-08 #1-3 · LI-STN-08 #1-3 | COMM-5-p | 같음 | O | 맞음 (2026-11-26) |
+| C10 | File details 정보 묶음 (기존 원본 글 · 표 묶음) | Common UX List Card · Table Card · Outline Container Tab으로 다시 그림 | TI-STN-08-P #3 · LI-STN-08-P #3 (Case 1-1 ~ 4-1 같음) | COMM-5-e · COMM-5-s | 같음 | O | 맞음 (2026-11-26) |
+| C11 | Popup 닫기 「✕」 글자, [Select files] · [Cancel] · [Import] 직접 그린 버튼 (Import 청록 #12B5AE) | Interface/Close · Square (Outlined M · Filled M, 높이 36은 원본대로) | TI-STN-08-01 0 · #1 · #3 (Case 1-1 · 1-2 같음) | COMM-5-m (Basic Popup: 닫기 Interface/Close, 하단 버튼 Square) | T만 | O | 맞음 (2026-11-26) |
+| C3 | Confirm_029 · 030 발생 조건 (Alert 카탈로그 기존 조건) | DS-0012 결정대로 File Details에서 Active · Inactive를 바꾸고 [Save]를 누를 때 Confirm_029 · 030을 띄움 (다른 작업의 결정을 따름, 멈춘 20261125-최고관리자-assay-pack에서 이어받음, 이 작업 5단계 완료 때 카탈로그 반영 전) | TI-STN-08-P #4 | DS-0012 | T만 | O | 맞음 (2026-11-26) |
+| C12 | Master 파일 [Active] · [Inactive] 버튼 비활성 (변경 불가) | 버튼 미노출 (변경 불가) | TI-STN-08-P #3 | Q1의 답 | T만 | O | 맞음 (2026-11-26) |
+| C13 | Confirm_029 [Activate] 뒤 Toast (카탈로그 버튼 동작 「& Toast」) | Toast 미노출, Confirm만 | TI-STN-08-P #4 | Q2의 답 | T만 | O | 맞음 (2026-11-26) |
+| C14 | 파일을 고른 채 [X] · ESC · [Cancel] 선택 시 바로 닫힘 | Confirm_031로 다시 물음 (Discard 시 닫힘 / Cancel 시 Popup · 선택 유지) | TI-STN-08-01 0 · #3 | Q3의 답 | T만 | O | 맞음 (2026-11-26) |
+| C15 | [Save] 없이 [닫기] · 다른 Row [Details] 선택 시 동작 정의 없음 | 묻지 않고 바꾼 값 버림 | TI-STN-08-P #2-1 · #3-1 | Q4의 답 | T만 | O | 맞음 (2026-11-26) |
+| C16 | 등록된 파일 없음 · 검색 결과 없음 문구 정의 없음 | 「No files found.」 · 「No results found.」 | LI-STN-08 #1-4 · #4 | Q5의 답 (검색 결과 없음 문구는 TI-STN-08 Case 1-2) | L만 | O | 맞음 (2026-11-26) |
+| C17 | Search Area [Reset] · [Search] Square Size L (높이 48) | Square Size M (높이 40, Reset 66×40 · Search 94×40). 오른쪽 끝 · 버튼 간격 10 · 세로 가운데 그대로 (디스크립션 · 화면 MD는 크기를 적지 않아 바뀌지 않음) | TI-STN-08 #1-4 · LI-STN-08 #1-4 · TI-STN-08-P · LI-STN-08-P 배경 목록 · TI-STN-08 Case 1 (Search Area 2곳) | 검토 질의 1 | 같음 | O | 맞음 (2026-11-26) |
 
 ## 검토 질의
 
+| 번호 | 받은 날 | 출처 (요청자 · 고객 UX 검토 · 고객 UI 검토) | 질의 | 관련된 곳 (CID · 디스크립션 번호) | 처리 | 처리한 날 |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | 2026-11-26 | 요청자 (Workbench R005 「COMM-5-p Search Area: 버튼 사이즈를 40으로 정해줘」, 답: Setting 화면 4개만 · 이 작업 기록에 이어서) | Search Area [Reset] · [Search] 버튼 높이를 40으로 | TI-STN-08 #1-4 · LI-STN-08 #1-4 · TI-STN-08-P · LI-STN-08-P | 고침 (C17) | 2026-11-26 |
+
 ## 언어셋
+
+| 변경 상태 | CID · 출처 | Language ID | English (변경은 변경 전 → 변경 후) | 번역 대상 (O / - 이유) | 언어셋 DB 대조 |
+| --- | --- | --- | --- | --- | --- |
+| 신규 | LI-STN-08 디스크립션 4 (C16) | LID-STN-377 | No files found. | O | 있음 |
+| 신규 | LI-STN-08 디스크립션 1-4 (C16) | LID-STN-015 | No results found. | O | 있음 |
+| 제거 | TI-STN-08-P · LI-STN-08-P (asis 화면 글자, C8) | | Barcode Scheme Name | - (제거) | 없음 |
+| 제거 | LI-STN-08-P (asis 화면 글자, C8) | | Schema Name | - (제거) | 없음 |
+| DB 맞춤 (추가) | TI-STN-08 화면 2 · 디스크립션 2, LI-STN-08 디스크립션 2, TI-STN-08-P 화면 배경 목록 | | {n} items | O | 없음 |
+| DB 맞춤 (추가) | TI-STN-08-P · LI-STN-08-P 화면 3 · 케이스 Case 1-1 ~ 4-1 | | File Info | O | 없음 |
+| DB 맞춤 (추가) | TI-STN-08-P · LI-STN-08-P 화면 3 · 케이스 Case 4-1 | | Test Target Selectable | O | 없음 |
+| DB 맞춤 (추가) | TI-STN-08-01 화면 1 · 케이스 Case 1-1 · 1-2 | | json · Multiple files | O | 없음 |
+| DB 맞춤 (추가) | TI-STN-08-01 화면 2 · 케이스 Case 1-2 | | {n} MB | - (단위 MB 미번역, 공통 LID-COM-TRM-195) | 없음 |
+| DB 맞춤 (CID 추가) | TI-STN-08 | LID-STN-006 | 1개 (Items) | DB 그대로 | 있음 |
+| DB 맞춤 (CID 추가) | TI-STN-08 · LI-STN-08 | LID-SPT-033 | 1개 (PCR, 공통 LID-COM-TRM-005 참조) | DB 그대로 | 있음 |
+| DB 맞춤 (CID 추가) | TI-STN-08-P | LID-STN-361 · LID-STN-363 · LID-TMG-035 | 3개 (File name · File type · Import) | DB 그대로 | 있음 |
+| DB 맞춤 (CID 추가) | TI-STN-08-01 | LID-STN-021 | 1개 (Cancel) | DB 그대로 | 있음 |
+
+- 화면 MD 다섯 개 "화면 표기 글자" 표의 Language ID를 채움 (2026-11-26, 229줄. 메뉴 파일 ID만, 이 화면 → 같은 메뉴 → 다른 메뉴 순)
+- 판단한 곳: `{n}` 줄은 언어셋 DB의 `{N}` 줄(예: `Segment Info ({N})` LID-STN-399)과 자리 표시 표기만 달라 같은 글자로 보고 ID를 채움. TI-STN-08-P · LI-STN-08-P의 "화면 배경 목록 (TI-STN-08)" 글자는 TI-STN-08 목록이라 08-P CID 추가로 보지 않음
+
+**새로 넣을 줄**
+
+| English | Type | German | Portuguese | Spanish | Italian | French | 검증 상태 | 가장 긴 언어 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| {n} items | txt | {n} Einträge | {n} itens | {n} elementos | {n} elementi | {n} éléments | AI 번역 | ES |
+| File Info | txt | Dateiinformationen | Informações do ficheiro | Información del archivo | Informazioni file | Informations du fichier | AI 번역 | PT · ES · FR |
+| Test Target Selectable | txt | Testziel auswählbar | Alvo de Teste Selecionável | Diana de Prueba Seleccionable | Target Test selezionabile | Cible de test sélectionnable | AI 번역 | ES |
+| json · Multiple files | txt | json · Mehrere Dateien | json · Vários ficheiros | json · Varios archivos | json · Più file | json · Plusieurs fichiers | AI 번역 | FR |
+| {n} MB | txt | - | - | - | - | - | AI 번역 | - |
 
 ## 요청자 확인
 
@@ -265,6 +308,10 @@ started: 2026-11-26
 | 5 | 2026-11-26 | 1단계 · 절차 5 질문 7 | 위 요건 목록(요건 1 · 경로 분기 기준 8 · 케이스 3)과 흐름(1 → 2 → 3 → 4 → 5)대로 진행할지 | 요건 1 | | 이대로 진행 (2026-11-26) |
 | 6 | 2026-11-26 | 1단계 · 절차 4 (asis 추출 빠짐) | 디스크립션이 가리키는 [TI-STN-08 / 팝업 정의] · [TI-STN-08 / 정책] · [LI-STN-08 / 세부정의] 프레임과 [TI-STN-08 / Import 정의] 5 · 7번이 As Is 페이지에 없음. 2단계에서 Alert 카탈로그 · POL-TST-008 · [TI-STN-08 / 세부정의]로 대신 확인하고 넘어갈지, 원본 프레임을 As Is 페이지에 옮겨 둔 뒤 다시 추출할지 | TI-STN-08 #1-4 · #3 · #4-1, LI-STN-08 #1-4, TI-STN-08-P #4, TI-STN-08-01 #1 · #3 | | 2단계에서 Alert 카탈로그 · POL-TST-008로 대신 확인, 2단계로 넘어감 (2026-11-26) |
 | 7 | 2026-11-26 | 2단계 · 절차 6 질문 2 | DS-0012(Confirm_029 · 030 발생 조건을 File Details [Save]로) 결정을 멈춘 작업 기록 20261125-최고관리자-assay-pack이 반영하기로 되어 있음. 이 작업이 이어받아 새 결정대로 그리고 5단계에 반영할지, 기다릴지 | TI-STN-08-P #4 · DS-0012 | | 이 작업이 이어받아 새 결정대로 그림, 3단계로 넘어감 (2026-11-26) |
+| 8 | 2026-11-26 | 4단계 · 절차 3 (UX 확정) | 최종으로 UX 확정을 하시겠습니까? | 요건 1 | | UX 확정 (2026-11-26, Workbench R005 답) |
+| 9 | 2026-11-26 | 4단계 · 절차 3 순서 2 | 기계 검사를 한 번 더 검토할까요? (절차 1번 기계 검사 뒤로 C17을 고침) | TI-STN-08 · LI-STN-08 · TI-STN-08-P · LI-STN-08-P | | 검토함 (2026-11-26). 기계 검사 통과 (2026-11-26): C17 화면 4개 · TI-STN-08 Case의 Search Area 버튼 Square Size M 인스턴스 66×40 · 94×40, 위아래 14, 간격 10, 오른쪽 20, Search Area 틀 1639×68 그대로, 글자 넘침 · 겹침 없음. 바로 고친 것 · 더한 질문 대기 없음 |
+| 10 | 2026-11-26 | 4단계 · 절차 3 순서 3 | 요건 1 UI 작업 줄을 `대상`으로 확정할지 (배치 · 요소 바뀜 C4 · C9 · C10 · C11 · C12 · C17, 화면 표기 글자 바뀜 C1 · C2 · C16. 디자인 화면은 보지 못함. 케이스 3이라 Ver 묻지 않음) | 요건 1 | | 대상 (2026-11-26) |
+| 11 | 2026-11-26 | 4단계 · 절차 4 · UI팀에 넘길 것을 보여 줌 | `templates/ui-handover.md` 양식으로 UI팀에 넘길 것 (케이스 3: 작업 범위 `다시 그리기 (글자만)` LI-STN-08 · TI-STN-08-P · LI-STN-08-P, 언어셋 신규 2 · 제거 2) | LI-STN-08 · TI-STN-08-P · LI-STN-08-P | | 보여 줌 (2026-11-26, Workbench R005 완료 note) |
 
 ## 이 작업의 논의 대상
 
@@ -275,4 +322,4 @@ started: 2026-11-26
 ## 이 작업이 남긴 것
 
 - 다른 화면의 반영 대기 항목:
-- 고친 카탈로그 줄:
+- 고친 카탈로그 줄: Confirm_031 추가 (Import file Popup에서 파일을 고른 채 닫을 때, 사용 화면 TI-STN-08-01, Q3 답, 2026-11-26). Confirm_029 버튼 동작의 「& Toast」 지움은 Q2 답으로 정함 - 5단계 DS-0012 반영(Confirm_029 발생 조건) 때 같은 줄에 함께 고침

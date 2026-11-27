@@ -1,0 +1,30 @@
+{
+  "id": "brex-06_chat_20261126-143041",
+  "kind": "work",
+  "chat": "doc",
+  "reqId": "",
+  "reqType": "",
+  "team": "cureca",
+  "at": "2026-11-26T14:30:41+09:00",
+  "from": "2026-11-26T14:20:34+09:00",
+  "by": "최고관리자",
+  "doneBy": "Claude",
+  "pc": "BREX_06",
+  "fileKey": "",
+  "fileName": "",
+  "page": "",
+  "frame": "",
+  "nodeId": "",
+  "text": "채팅: 고쳐줘",
+  "turns": 3,
+  "models": {
+    "claude-opus-5-5": 34
+  },
+  "calls": 34,
+  "input": 74,
+  "cacheWrite": 62411,
+  "cacheRead": 18617396,
+  "output": 44447,
+  "total": 18724328,
+  "usd": 5.112
+}

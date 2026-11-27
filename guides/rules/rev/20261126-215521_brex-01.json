@@ -1,0 +1,12 @@
+{
+  "rev": "20261126-215521_brex-01",
+  "by": "Claude",
+  "at": "2026-11-26T21:55:21+09:00",
+  "note": "언어셋 틀 DB 맞춤 (CID 추가) 줄: 근거가 없는 「옛 화면 번호」 문장을 뺌",
+  "base": "20261126-215351_brex-01",
+  "pc": "BREX_01",
+  "req": "「케이스 3은 기존 언어셋 DB의 CID가 옛 화면 번호를 따른 곳이 많아」 문장 제거 (Event History · Setting · Sample Tracking에서 근거 없음)",
+  "jobId": "",
+  "file": "../flow/4-revise-verify.md",
+  "orig": true
+}

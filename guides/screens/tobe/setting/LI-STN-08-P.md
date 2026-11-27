@@ -11,8 +11,8 @@ author: 이상헌
 client_mode: [Main Mode]
 user_type: [Service]
 policies: [POL-TST-008, POL-TST-010]
-basis: 2026-11-26 09:27 · history 4079e90d
-basis_versions: rules @2026-11-26 · policy @2026-11-25 · glossary @2026-11-25 · screens @2026-11-26 · common_ux @2026-11-25
+basis: 2026-11-26 17:09 · history 402e669e
+basis_versions: rules @2026-11-26 14:30 · policy @2026-11-25 21:21 · glossary @2026-11-26 15:17 · screens @2026-11-26 16:15 · common_ux @2026-11-25 16:08
 source: tobe
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3667-11469
 ---
@@ -147,86 +147,86 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 
 | 화면 표기 글자 (영어) | 출처 | Language ID |
 | --- | --- | --- |
-| File details | 화면 3 · 케이스 Case 1-1 ~ 4-1 | |
+| File details | 화면 3 · 케이스 Case 1-1 ~ 4-1 | LID-STN-384 |
 | File Info | 화면 3 · 케이스 Case 1-1 ~ 4-1 | |
-| File name | 화면 3 · 케이스 Case 1-1 | |
-| File type | 화면 3 · 케이스 Case 1-1 | |
-| File Version | 화면 3 · 케이스 Case 1-1 | |
-| File Created Date/Time | 화면 3 · 케이스 Case 1-1 | |
-| Active | 화면 3 · 케이스 Case 1-1 ~ 4-1 | |
-| Inactive | 디스크립션 3 | |
-| Import Info | 화면 3 · 케이스 Case 1-1 ~ 4-1 | |
-| Registered Date/Time | 화면 3 · 케이스 Case 1-1 | |
-| User ID | 화면 3 · 케이스 Case 1-1 | |
-| Reagent Basic Info | 화면 3 · 케이스 Case 2-1 ~ 4-1 | |
-| Product Name | 화면 3 · 케이스 Case 2-1 ~ 4-1 | |
-| Product Code | 화면 3 · 케이스 Case 2-1 ~ 4-1 | |
-| Test Item Name | 화면 3 · 케이스 Case 4-1 | |
-| Test Item Code | 화면 3 · 케이스 Case 4-1 | |
-| Test Group ID | 화면 3 · 케이스 Case 1-1 · 4-1 | |
-| Test Group Name | 케이스 Case 1-1 | |
-| Test Group Code | 화면 3 · 케이스 Case 1-1 · 4-1 | |
+| File name | 화면 3 · 케이스 Case 1-1 | LID-STN-361 |
+| File type | 화면 3 · 케이스 Case 1-1 | LID-STN-363 |
+| File Version | 화면 3 · 케이스 Case 1-1 | LID-STN-385 |
+| File Created Date/Time | 화면 3 · 케이스 Case 1-1 | LID-STN-386 |
+| Active | 화면 3 · 케이스 Case 1-1 ~ 4-1 | LID-STN-374 |
+| Inactive | 디스크립션 3 | LID-STN-375 |
+| Import Info | 화면 3 · 케이스 Case 1-1 ~ 4-1 | LID-STN-387 |
+| Registered Date/Time | 화면 3 · 케이스 Case 1-1 | LID-STN-372 |
+| User ID | 화면 3 · 케이스 Case 1-1 | LID-STN-073 |
+| Reagent Basic Info | 화면 3 · 케이스 Case 2-1 ~ 4-1 | LID-STN-410 |
+| Product Name | 화면 3 · 케이스 Case 2-1 ~ 4-1 | LID-STN-147 |
+| Product Code | 화면 3 · 케이스 Case 2-1 ~ 4-1 | LID-STN-411 |
+| Test Item Name | 화면 3 · 케이스 Case 4-1 | LID-STN-426 |
+| Test Item Code | 화면 3 · 케이스 Case 4-1 | LID-STN-427 |
+| Test Group ID | 화면 3 · 케이스 Case 1-1 · 4-1 | LID-STN-389 |
+| Test Group Name | 케이스 Case 1-1 | LID-STN-390 |
+| Test Group Code | 화면 3 · 케이스 Case 1-1 · 4-1 | LID-STN-391 |
 | Test Target Selectable | 화면 3 · 케이스 Case 4-1 | |
-| Test Target Names ({n}) | 화면 3 · 케이스 Case 4-1 (n = 7) | |
-| Sample Type Mapping Info ({n}) | 화면 3 · 케이스 Case 4-1 (n = 4) | |
-| Sample Type ID | 화면 3 · 케이스 Case 1-1 · 4-1 | |
-| Sample Type Name | 케이스 Case 1-1 | |
-| Sample Type Code | 화면 3 · 케이스 Case 1-1 · 4-1 | |
-| Test Group Info | 케이스 Case 1-1 | |
-| Sample Type Info | 케이스 Case 1-1 | |
-| Barcode Schema Info | 케이스 Case 1-1 | |
-| Barcode Schema ID | 케이스 Case 1-1 ~ 4-1 | |
-| Barcode Schema Name | 케이스 Case 1-1 ~ 4-1 | |
-| Barcode Length | 케이스 Case 1-1 | |
-| Expiration Date Segment Order | 케이스 Case 1-1 | |
-| Segment Info ({n}) | 케이스 Case 1-1 (n = 8) | |
-| Segment Info | 케이스 Case 2-1 ~ 4-1 | |
-| Segment Order | 케이스 Case 1-1 | |
-| Segment Name | 케이스 Case 1-1 | |
-| Segment Length | 케이스 Case 1-1 | |
-| Segment {n} | 케이스 Case 2-1 ~ 4-1 (n = 1 · 3 · 7) | |
-| Item Group Info | 케이스 Case 1-1 | |
-| Item Group ID | 케이스 Case 1-1 ~ 4-1 | |
-| Item Group Name | 케이스 Case 1-1 ~ 4-1 | |
-| PCR Reagent Socket Component Info | 케이스 Case 1-1 | |
-| Component ID | 케이스 Case 1-1 · 4-1 | |
-| Component Type | 케이스 Case 1-1 · 4-1 | |
-| Color Code | 케이스 Case 1-1 | |
-| Barcode Info | 케이스 Case 2-1 ~ 4-1 | |
-| Max Rxns | 케이스 Case 2-1 ~ 4-1 | |
-| Max Usage Count | 케이스 Case 2-1 ~ 4-1 | |
-| Quantity Info | 케이스 Case 2-1 ~ 4-1 | |
-| Quantity | 케이스 Case 2-1 | |
-| Base Unit | 케이스 Case 2-1 | |
-| Packaging Unit | 케이스 Case 2-1 | |
-| Storage Location Info | 케이스 Case 2-1 ~ 4-1 | |
-| Module Code | 케이스 Case 2-1 | |
-| Unit Code | 케이스 Case 2-1 | |
-| Component Info | 케이스 Case 3-1 · 4-1 | |
-| Component Name | 케이스 Case 3-1 · 4-1 | |
-| Component Code | 케이스 Case 3-1 · 4-1 | |
-| Extraction Device Availability | 케이스 Case 4-1 | |
-| Available | 케이스 Case 4-1 | |
-| PCR Socket Component Info | 케이스 Case 4-1 | |
-| Component Abbreviation | 케이스 Case 4-1 | |
-| Socket Positions ({n}) | 케이스 Case 4-1 (n = 2) | |
-| Row | 케이스 Case 4-1 | |
-| Column | 케이스 Case 4-1 | |
-| Assay Pack Setting | 화면 배경 목록 (LI-STN-08) | |
-| Enter file name | 화면 배경 목록 (LI-STN-08) | |
-| All | 화면 배경 목록 (LI-STN-08) | |
-| Period | 화면 배경 목록 (LI-STN-08) | |
-| Registered Date | 화면 배경 목록 (LI-STN-08) | |
-| Select Date Range | 화면 배경 목록 (LI-STN-08) | |
-| Active only | 화면 배경 목록 (LI-STN-08) | |
-| Reset | 화면 배경 목록 (LI-STN-08) | |
-| Search | 화면 배경 목록 (LI-STN-08) | |
-| Items | 화면 배경 목록 (LI-STN-08) | |
-| Version | 화면 배경 목록 (LI-STN-08) | |
-| Created Date/Time | 화면 배경 목록 (LI-STN-08) | |
-| Details | 화면 배경 목록 (LI-STN-08) | |
-| Master Info | 화면 배경 목록 (LI-STN-08) | |
-| Master | 화면 배경 목록 (LI-STN-08) | |
-| Pretreatment | 화면 배경 목록 (LI-STN-08) | |
-| Extraction | 화면 배경 목록 (LI-STN-08) | |
-| PCR | 화면 배경 목록 (LI-STN-08) | |
+| Test Target Names ({n}) | 화면 3 · 케이스 Case 4-1 (n = 7) | LID-STN-428 |
+| Sample Type Mapping Info ({n}) | 화면 3 · 케이스 Case 4-1 (n = 4) | LID-STN-429 |
+| Sample Type ID | 화면 3 · 케이스 Case 1-1 · 4-1 | LID-STN-393 |
+| Sample Type Name | 케이스 Case 1-1 | LID-STN-216 |
+| Sample Type Code | 화면 3 · 케이스 Case 1-1 · 4-1 | LID-STN-214 |
+| Test Group Info | 케이스 Case 1-1 | LID-STN-388 |
+| Sample Type Info | 케이스 Case 1-1 | LID-STN-392 |
+| Barcode Schema Info | 케이스 Case 1-1 | LID-STN-394 |
+| Barcode Schema ID | 케이스 Case 1-1 ~ 4-1 | LID-STN-395 |
+| Barcode Schema Name | 케이스 Case 1-1 ~ 4-1 | LID-STN-396 |
+| Barcode Length | 케이스 Case 1-1 | LID-STN-397 |
+| Expiration Date Segment Order | 케이스 Case 1-1 | LID-STN-398 |
+| Segment Info ({n}) | 케이스 Case 1-1 (n = 8) | LID-STN-399 |
+| Segment Info | 케이스 Case 2-1 ~ 4-1 | LID-STN-415 |
+| Segment Order | 케이스 Case 1-1 | LID-STN-400 |
+| Segment Name | 케이스 Case 1-1 | LID-STN-401 |
+| Segment Length | 케이스 Case 1-1 | LID-STN-402 |
+| Segment {n} | 케이스 Case 2-1 ~ 4-1 (n = 1 · 3 · 7) | LID-STN-416 |
+| Item Group Info | 케이스 Case 1-1 | LID-STN-403 |
+| Item Group ID | 케이스 Case 1-1 ~ 4-1 | LID-STN-404 |
+| Item Group Name | 케이스 Case 1-1 ~ 4-1 | LID-STN-405 |
+| PCR Reagent Socket Component Info | 케이스 Case 1-1 | LID-STN-406 |
+| Component ID | 케이스 Case 1-1 · 4-1 | LID-STN-407 |
+| Component Type | 케이스 Case 1-1 · 4-1 | LID-STN-408 |
+| Color Code | 케이스 Case 1-1 | LID-STN-409 |
+| Barcode Info | 케이스 Case 2-1 ~ 4-1 | LID-STN-414 |
+| Max Rxns | 케이스 Case 2-1 ~ 4-1 | LID-STN-412 |
+| Max Usage Count | 케이스 Case 2-1 ~ 4-1 | LID-STN-413 |
+| Quantity Info | 케이스 Case 2-1 ~ 4-1 | LID-STN-417 |
+| Quantity | 케이스 Case 2-1 | LID-STN-148 |
+| Base Unit | 케이스 Case 2-1 | LID-STN-418 |
+| Packaging Unit | 케이스 Case 2-1 | LID-STN-419 |
+| Storage Location Info | 케이스 Case 2-1 ~ 4-1 | LID-STN-420 |
+| Module Code | 케이스 Case 2-1 | LID-STN-421 |
+| Unit Code | 케이스 Case 2-1 | LID-STN-422 |
+| Component Info | 케이스 Case 3-1 · 4-1 | LID-STN-423 |
+| Component Name | 케이스 Case 3-1 · 4-1 | LID-STN-424 |
+| Component Code | 케이스 Case 3-1 · 4-1 | LID-STN-425 |
+| Extraction Device Availability | 케이스 Case 4-1 | LID-STN-430 |
+| Available | 케이스 Case 4-1 | LID-STN-436 |
+| PCR Socket Component Info | 케이스 Case 4-1 | LID-STN-431 |
+| Component Abbreviation | 케이스 Case 4-1 | LID-STN-432 |
+| Socket Positions ({n}) | 케이스 Case 4-1 (n = 2) | LID-STN-433 |
+| Row | 케이스 Case 4-1 | LID-STN-434 |
+| Column | 케이스 Case 4-1 | LID-STN-435 |
+| Assay Pack Setting | 화면 배경 목록 (LI-STN-08) | LID-STN-360 |
+| Enter file name | 화면 배경 목록 (LI-STN-08) | LID-STN-362 |
+| All | 화면 배경 목록 (LI-STN-08) | LID-EVT-003 |
+| Period | 화면 배경 목록 (LI-STN-08) | LID-STN-367 |
+| Registered Date | 화면 배경 목록 (LI-STN-08) | LID-STN-368 |
+| Select Date Range | 화면 배경 목록 (LI-STN-08) | LID-STN-370 |
+| Active only | 화면 배경 목록 (LI-STN-08) | LID-STN-371 |
+| Reset | 화면 배경 목록 (LI-STN-08) | LID-EVT-022 |
+| Search | 화면 배경 목록 (LI-STN-08) | LID-STN-016 |
+| Items | 화면 배경 목록 (LI-STN-08) | LID-STN-006 |
+| Version | 화면 배경 목록 (LI-STN-08) | LID-INF-008 |
+| Created Date/Time | 화면 배경 목록 (LI-STN-08) | LID-STN-373 |
+| Details | 화면 배경 목록 (LI-STN-08) | LID-STN-012 |
+| Master Info | 화면 배경 목록 (LI-STN-08) | LID-STN-376 |
+| Master | 화면 배경 목록 (LI-STN-08) | LID-STN-364 |
+| Pretreatment | 화면 배경 목록 (LI-STN-08) | LID-STN-365 |
+| Extraction | 화면 배경 목록 (LI-STN-08) | LID-STN-366 |
+| PCR | 화면 배경 목록 (LI-STN-08) | LID-SPT-033 |

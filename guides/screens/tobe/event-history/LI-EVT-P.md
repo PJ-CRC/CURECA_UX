@@ -11,14 +11,19 @@ author: 서보경
 client_mode: [Main Mode, Console Mode, MS Mode]
 user_type: [Service, Admin, User]
 policies: [POL-EVT-001, POL-EVT-002, POL-COM-006]
-basis:
+basis: 2026-11-26 20:00 · history a15b3986
 basis_versions:
+  rules: CURECA 작업규칙 @2026-11-26 14:30
+  policy: 정책서 @2026-11-25 21:21
+  glossary: 기준데이터 @2026-11-26 15:17
+  screens: 화면 정의서 @2026-11-26 03:39
+  common_ux: Common UX (common-ux/comm-index.md) @2026-11-25 16:08
 source: tobe
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1257
 ---
 # LI-EVT-P Event History
 
-- T/L 차이: L-IOS에만 4 Status Toggle(상태 변경), 5 [Mark all as Closed] 버튼, 6 [Export]의 저장 위치 선택 Popup이 있음. 목록의 Module 이름에 `(1)`이 붙음
+- T/L 차이: L-IOS에만 4 Status Toggle(상태 변경), 5 [Mark all as Closed] 버튼, 6 [Export]의 저장 위치 선택 Popup이 있음. T-IOS에만 9 노출 개수 Dropdown이 있음
 - 호출하는 화면: [LI-EVT-01-P] Event Detail (목록에서 Event 클릭 → 상세로 전환), Confirm_003 (5 [Mark all as Closed]), COMM-5-m(2/4) Import/Export Popup (6 [Export])
 - 호출되는 곳: 상단 Bar `Event` 아이콘, 각 화면의 Event 아이콘
 - 반영 대기 항목: `pending/open.md`에서 이 CID로 찾음
@@ -28,11 +33,11 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 
 **0  Event History 화면**
 - 정의
-  - <span style="color:red">CURECA</span> <span style="color:red">Instrument</span> 또는 <span style="color:red">System</span>에서 이상 상태 발생 시, Error 및 Warning 메시지를 조회하고 관리하는 메뉴
-  - Event 메뉴는 <span style="color:red">Popup</span>으로 제공
+  - CURECA Instrument 또는 System에서 이상 상태 발생 시, Error 및 Warning 메시지를 조회하고 관리하는 메뉴
+  - Event 메뉴는 Popup으로 제공
 - 동작
   - 상단 Bar의 Event 아이콘 클릭 시 진입
-  - 각 화면(페이지)에 <span style="color:red">노출</span>된 Event 아이콘을 통해서도 동일하게 진입 가능
+  - 각 화면(페이지)에 노출된 Event 아이콘을 통해서도 동일하게 진입 가능
 - User Type : Service, Admin, User
 - L-IOS Client Mode : Main Mode, Console Mode, MS Mode
 
@@ -42,19 +47,18 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 - Event ID, Code(Text Input)
   - 정확히 일치하는 값만 노출
 - Type(Dropdown)
-  - Default : <span style="color:red">All</span>
-  - 드롭다운 리스트 항목 : ~~All, Instrument, Consumable, Reagent, Waste Bin/bottle, System~~
-  - All, Instrument, Inventory, Sample, System
+  - Default : All
+  - 드롭다운 리스트 항목 : All, Instrument, Inventory, Sample, System
   - 정렬 기준 : 위에 적힌 순서대로 노출
 - Module(Dropdown)
-  - <span style="color:red">Module</span> 유형으로 검색하는 필터
+  - Module 유형으로 검색하는 필터
   - Default : All
   - 드롭다운 리스트 항목 : All, Sample Storage, Consumable Storage, Sample Pre-treatment, High-throughput Extraction, Flexible Extraction, PCR Setup, Plate Sealing, Universal PCR
   - 정렬 기준 : 위에 적힌 순서대로 노출
 - Level(Dropdown)
   - Default : All
   - 드롭다운 리스트 항목 : All, Error, Warning
-- <span style="color:red">Status</span>(Dropdown)
+- Status(Dropdown)
   - Default : All
   - 드롭다운 리스트 항목 : All, Open, Closed
 - 기간 검색(Period)
@@ -67,7 +71,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 
 **2  목록 요약**
 - 노출 항목
-  - Total Event : 목록에 노출된 총 Event 개수 노출
+  - Items : 목록에 노출된 총 Event 개수 노출
   - Open : 목록에 노출된 전체 리스트에서 Status가 Open인 Event 개수의 합 노출
 - 정책 참고 : POL-EVT-001
 
@@ -75,23 +79,22 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 - 정의 : 검색 조건에 해당하는 Event 리스트
 - 정렬
   - Default : Occurred Date/Time 최신순
-  - <span style="color:red">정렬 가능한 컬럼 항목 : Occurred Date/Time</span>
-- <span style="color:red">컬럼 항목</span>
-  - Type : ~~Instrument, Consumable, Reagent, Waste Bin/bottle, System~~
-  - Instrument, Inventory, Sample, System
-  - <span style="color:red">Code : Event Code</span>
-  - <span style="color:red">Description : Event Code에 따라 정의된 Event 내용</span>
-  - <span style="color:red">Module : Event가 발생한 Module / Instrument와 무관한 Event는 '-' 노출</span>
-  - <span style="color:red">Unit : Event가 발생한 Unit / Module 단위 Event 또는 Instrument와 무관한 Event는 '-' 노출</span>
-  - <span style="color:red">Level : Error, Warning</span>
-  - <span style="color:red">Occurred Date/Time : Event 발생 일시 / 표기 : YYYY-MM-DD hh:mm</span>
-  - <span style="color:red">Status : Open, Closed (4 Toggle로 노출)</span>
+  - 정렬 가능한 컬럼 항목 : Occurred Date/Time
+- 컬럼 항목
+  - Type : Instrument, Inventory, Sample, System
+  - Code : Event Code
+  - Description : Event Code에 따라 정의된 Event 내용
+  - Module : Event가 발생한 Module / Instrument와 무관한 Event는 '-' 노출
+  - Unit : Event가 발생한 Unit / Module 단위 Event 또는 Instrument와 무관한 Event는 '-' 노출
+  - Level : Error, Warning
+  - Occurred Date/Time : Event 발생 일시 / 표기 : YYYY-MM-DD hh:mm
+  - Status : Open, Closed (4 Toggle로 노출)
 - 동작
   - 한 페이지에 최대 10개 노출
   - 최초 진입 시, 상단 기간 검색의 Default 기간에 맞춰 오늘 기준 7일 전까지의 데이터만 노출
   - 텍스트는 1줄까지만 노출 / 데이터 값이 영역을 초과할 경우 '…'으로 노출
-  - '…' 노출 영역에 마우스 오버 시 전체 데이터(추가 정보)를 <span style="color:red">Tooltip</span>으로 노출
-- 케이스 참고 : LI-EVT-P/Case > Case 1
+  - '…' 노출 영역에 마우스 오버 시 전체 데이터(추가 정보)를 Tooltip으로 노출
+  - 검색 조건과 일치한 항목이 없을 경우, 'No results found.' 노출
 - 공통 UX 참고 : COMM-5-g, COMM-5-r, COMM-5-v
 - 정책 참고 : POL-EVT-001
 
@@ -99,47 +102,40 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 - 정의
   - Event의 Status 값을 변경하는 기능
 - 활성화 조건
-  - <span style="color:red">L-IOS Client Mode가 Main Mode일 때 활성화</span>
-  - 단, 활성화되지 않는 Mode(<span style="color:red">Console Mode, MS Mode</span>)일 경우 View 모드로 노출
+  - L-IOS Client Mode가 Main Mode일 때 활성화
+  - 단, 활성화되지 않는 Mode(Console Mode, MS Mode)일 경우 View 모드로 노출
 - 동작
-  - Event 최초 생성 시, <span style="color:red">Open</span>으로 등록되며 클릭 시 Closed로 변경
-  - 재클릭 시, Closed에서 <span style="color:red">Open</span>으로 변경 가능
+  - Event 최초 생성 시, Open으로 등록되며 클릭 시 Closed로 변경
+  - 재클릭 시, Closed에서 Open으로 변경 가능
 - 공통 UX 참고 : COMM-5-q
-- 정책 참고 : <span style="color:red">POL-EVT-002</span>
+- 정책 참고 : POL-EVT-002
 
 **5  [Mark all as Closed] 버튼**
 - 정의
-  - <span style="color:red">지금 검색 조건으로 불러온 목록의 모든 페이지에서 Status가 Open인 Event 전체</span>를 Closed로 변경하는 기능
+  - 지금 검색 조건으로 불러온 목록의 모든 페이지에서 Status가 Open인 Event 전체를 Closed로 변경하는 기능
 - 동작
   - 클릭 시, Confirm 노출 : Confirm_003
 - 정책 참고 : POL-EVT-002
 
 **6  [Export] 버튼**
 - 동작
-  - 클릭 시, 경로 저장 또는 USB 저장을 선택하는 Popup 노출 : <span style="color:red">COMM-5-m(2/4)</span>
-  - <span style="color:red">~~T-IOS 경우 클릭 시, 윈도우 탐색기가 호출되며, 원하는 경로를 지정할 수 있음~~</span>
+  - 클릭 시, 경로 저장 또는 USB 저장을 선택하는 Popup 노출 : COMM-5-m(2/4)
 - 대상 범위 : 목록에 노출된 전체 리스트
 - 저장 항목 : Detail에서 제공되는 모든 내용
-- 형식 : <span style="color:red">.csv</span>
+- 형식 : .csv
 - 정책 참고 : POL-COM-006
 
 **7  닫기**
 - 동작
-  - 클릭 시, <span style="color:red">Popup</span> 닫힘
+  - 클릭 시, Popup 닫힘
 
-**8  <span style="color:red">페이지네이션</span>**
-- <span style="color:red">Pagination 유형 : Type 1 Number</span>
-- <span style="color:red">공통 UX 참고 : COMM-5-l</span>
+**8  페이지네이션**
+- Pagination 유형 : Type 1 Number
+- 공통 UX 참고 : COMM-5-l
 
 ## 케이스
 
-### Case 1. 목록의 텍스트 영역의 '...' 줄임된 경우, 마우스 hover시, 툴팁박스로 전체 내용 제공
-
-- 디스크립션 번호 : 3
-- 근거 (기존 원본 / 디스크립션 조건 / 요청자) : 기존 원본
-- 종류 (1 ~ 6, 근거가 디스크립션 조건일 때) : -
-
-#### 1-1. 목록 텍스트가 '...'로 줄임된 경우 마우스 hover
+없음 (Case 1 Tooltip 케이스는 요청자 요청으로 지움, 2026-11-26 — 검토 질의 7. Case 번호 1은 다시 쓰지 않음)
 
 ## Alert · Confirm · Toast
 
@@ -156,61 +152,54 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=37
 | 1 | Type · Module · Level · Status | All · All · All · All | 기존 원본 `3543:47037` |
 | 1 | 기간 | 2026-03-11 ~ 2026-03-17 | 기존 원본 `3543:47055` |
 | 2 | Items · Open | 1,112 · 20 | 기존 원본 `3543:46815` (OPEN → Open, `glossary/status-values.csv` Event Status) |
-| 3 | 목록 | 기존 원본 10행 그대로 / Module `Sample Storage (1)` · `High-throughput Extraction (1)` · `Flexible Extraction (1)` · `PCR Setup (1)` · `Universal PCR (1)` (이름과 번호 띄어 씀) / 3행 Unit `Sample Processing (Upper)` / 7행 Unit `CFX96 (1)` / 1 ~ 10행 Occurred Date/Time `2025-09-29 15:57` | 기존 원본 `3543:46825`, `glossary/glossary.md` · `module-units.csv`, COMM-4-a(1/4) 일시 표기 |
+| 3 | 목록 | 기존 원본 10행 그대로 / Module 이름 뒤 번호 `(1)` 뺌 (Q4 답: Module이 1대면 번호 표기 안 함) / 3행 Unit `Sample Processing (Upper)` / 7행 Unit `CFX96 (1)` / 1 ~ 10행 Occurred Date/Time `2025-09-29 15:57` | 기존 원본 `3543:46825`, `glossary/glossary.md` · `module-units.csv`, COMM-4-a(1/4) 일시 표기 |
 | 3 | Level | Error · Warning (기존 원본 행 그대로) | `glossary/status-values.csv` Event Level (Status/Event Level) |
 | 4 | Status Toggle | 기존 원본 행 그대로 (Open 7행 · Closed 3행) | 기존 원본 `3543:46825` |
 | 8 | 페이지 | 1 ~ 10 (2 선택) | 기존 원본 `3543:46821` |
-| Case 1-1 | Tooltip | Consumables are low. Please check and refill. Consumables are low. Please check and refill. Consumables are low. Please check and refill. | 기존 원본 `3543:47082` (refill.Consumables → refill. Consumables) |
 
 ## 화면 표기 글자
 
 | 화면 표기 글자 (영어) | 출처 | Language ID |
 | --- | --- | --- |
-| Event History | 화면 제목 | |
-| Event ID, Code | 화면 1 | |
-| Type | 화면 1 · 화면 3 | |
-| Module | 화면 1 · 화면 3 | |
-| Level | 화면 1 · 화면 3 | |
-| Status | 화면 1 · 화면 3 | |
-| All | 화면 1 · 디스크립션 1 | |
-| Instrument | 디스크립션 1 · 화면 3 | |
-| Inventory | 디스크립션 1 · 화면 3 | |
-| Sample | 디스크립션 1 | |
-| System | 디스크립션 1 | |
-| Sample Storage | 디스크립션 1 | |
-| Consumable Storage | 디스크립션 1 | |
-| Sample Pre-treatment | 디스크립션 1 | |
-| High-throughput Extraction | 디스크립션 1 | |
-| Flexible Extraction | 디스크립션 1 | |
-| PCR Setup | 디스크립션 1 | |
-| Plate Sealing | 디스크립션 1 | |
-| Universal PCR | 디스크립션 1 | |
-| Sample Storage (1) | 화면 3 | |
-| Consumable Storage (1) | 화면 3 | |
-| Sample Pre-treatment (1) | 화면 3 | |
-| High-throughput Extraction (1) | 화면 3 | |
-| Flexible Extraction (1) | 화면 3 | |
-| PCR Setup (1) | 화면 3 | |
-| Universal PCR (1) | 화면 3 | |
-| Error | 디스크립션 1 · 화면 3 | |
-| Warning | 디스크립션 1 · 화면 3 | |
-| Open | 디스크립션 1 · 화면 2 · 화면 4 | |
-| Closed | 디스크립션 1 · 화면 4 | |
-| Reset | 화면 1 | |
-| Search | 화면 1 | |
-| Items | 화면 2 | |
-| Export | 화면 6 | |
-| Mark all as Closed | 화면 5 | |
-| Code | 화면 3 | |
-| Description | 화면 3 | |
-| Unit | 화면 3 | |
-| Occurred Date/Time | 화면 3 | |
-| Inbound Trolley | 화면 3 | |
-| Outbound Trolley | 화면 3 | |
-| Trolley | 화면 3 | |
-| Sample Processing (Upper) | 화면 3 | |
-| Spin Tip Storage | 화면 3 | |
-| Buffer Cartridge Storage | 화면 3 | |
-| 300 μL Tip Storage (1) | 화면 3 | |
-| CFX96 (1) | 화면 3 | |
-| MB Tube Storage | 화면 3 | |
+| Event History | 화면 제목 | LID-EVT-001 |
+| Event ID, Code | 화면 1 | LID-EVT-002 |
+| Type | 화면 1 · 화면 3 | LID-EVT-004 |
+| Module | 화면 1 · 화면 3 | LID-EVT-012 |
+| Level | 화면 1 · 화면 3 | LID-EVT-014 |
+| Status | 화면 1 · 화면 3 | LID-EVT-017 |
+| All | 화면 1 · 디스크립션 1 | LID-EVT-003 |
+| Instrument | 디스크립션 1 · 화면 3 | LID-EVT-005 |
+| Inventory | 디스크립션 1 · 화면 3 | LID-IVT-001 |
+| Sample | 디스크립션 1 | LID-SPT-022 |
+| System | 디스크립션 1 | LID-EVT-009 |
+| Sample Storage | 디스크립션 1 · 화면 3 | LID-EVT-048 |
+| Consumable Storage | 디스크립션 1 · 화면 3 | LID-EVT-049 |
+| Sample Pre-treatment | 디스크립션 1 · 화면 3 | LID-EVT-050 |
+| High-throughput Extraction | 디스크립션 1 · 화면 3 | LID-EVT-051 |
+| Flexible Extraction | 디스크립션 1 · 화면 3 | LID-EVT-052 |
+| PCR Setup | 디스크립션 1 · 화면 3 | LID-SPT-026 |
+| Plate Sealing | 디스크립션 1 | LID-SPT-032 |
+| Universal PCR | 디스크립션 1 · 화면 3 | LID-EVT-053 |
+| No results found. | 디스크립션 3 | LID-STN-015 |
+| Error | 디스크립션 1 · 화면 3 | LID-EVT-037 |
+| Warning | 디스크립션 1 · 화면 3 | LID-EVT-038 |
+| Open | 디스크립션 1 · 화면 2 · 화면 4 | LID-EVT-042 |
+| Closed | 디스크립션 1 · 화면 4 | LID-EVT-043 |
+| Reset | 화면 1 | LID-EVT-022 |
+| Search | 화면 1 | LID-STN-016 |
+| Items | 화면 2 | LID-STN-006 |
+| Export | 화면 6 | LID-EVT-023 |
+| Mark all as Closed | 화면 5 | LID-EVT-024 |
+| Code | 화면 3 | LID-EVT-010 |
+| Description | 화면 3 | LID-EVT-011 |
+| Unit | 화면 3 | LID-EVT-013 |
+| Occurred Date/Time | 화면 3 | LID-EVT-016 |
+| Inbound Trolley | 화면 3 | LID-EVT-054 |
+| Outbound Trolley | 화면 3 | LID-EVT-055 |
+| Trolley | 화면 3 | LID-EVT-056 |
+| Sample Processing (Upper) | 화면 3 | LID-EVT-057 |
+| Spin Tip Storage | 화면 3 | LID-EVT-061 |
+| Buffer Cartridge Storage | 화면 3 | LID-EVT-063 |
+| 300 μL Tip Storage (1) | 화면 3 | LID-EVT-064 |
+| CFX96 (1) | 화면 3 | LID-EVT-060 |
+| MB Tube Storage | 화면 3 | LID-EVT-062 |

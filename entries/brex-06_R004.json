@@ -1,0 +1,42 @@
+{
+  "id": "brex-06_R004",
+  "kind": "request",
+  "team": "cureca",
+  "status": "완료",
+  "at": "2026-11-26T16:46:53+09:00",
+  "createdAt": "2026-11-26T16:25:33+09:00",
+  "by": "최고관리자",
+  "doneBy": "Claude",
+  "pc": "BREX_06",
+  "reqId": "R004",
+  "fileKey": "etCQFF3CTf1EA6C79d4BBf",
+  "fileName": "UX AI TEST",
+  "page": "Setting  Ⓛ / Ⓣ_To Be",
+  "frame": "",
+  "nodeId": "",
+  "type": "요청",
+  "layout": "",
+  "text": "Reset, Search 버튼 높이가 맞아?",
+  "note": "질문 답변: Reset과 Search 버튼의 높이는 서로 같습니다(48px). 다만 같은 줄의 조회 조건(38px)보다 10px 높습니다.\n\n**확인한 곳** (Figma는 고치지 않음)\n- TI-STN-08 · TI-STN-08/Case(2곳) · TI-STN-08-P · LI-STN-08 · LI-STN-08-P, 모두 같음\n- Reset: `Square` Style=Gray, Size=L → 76 × 48\n- Search: `Square` Style=Filled, Size=L → 79 × 48\n- 같은 Search Area의 Text Input · Dropdown: 높이 38\n\n**UX가이드 기준**\n- COMM-5-p Search Area: 버튼은 Square(Reset Gray · Search Filled)로 정해져 있고 크기는 정하지 않음\n- Square 버튼 높이: XL 56 · L 48 · M 40 · S 32\n\n[확인 필요]\nC1 조회 조건(38)과 높이를 맞추려면 Size=M(40)이 가장 가깝습니다. 바꾸려면 요청을 다시 주세요.\n\n작업 기준: basis 2026-11-26 16:47 · 작업규칙 CURECA 작업규칙 (질문 · 자료 찾기, 흐름 타지 않음) · 정책서 정책서 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 · 화면 정의서 화면 정의서",
+  "shot": "",
+  "shots": [],
+  "images": [],
+  "frames": [],
+  "marks": [],
+  "ask": null,
+  "replies": [],
+  "raws": [
+    {
+      "at": "2026-11-26T16:27:10+09:00",
+      "text": "R004는 처리하지 않고 멈췄습니다. 상태를 「진행 중」으로 바꾸려 하자 서버가 「사람이 멈춘 요청입니다」라고 거절했습니다. 규칙상 이 오류를 받으면 그 요청은 더 고치지 않으니 상태와 note도 그대로 두었고, Figma도 고치지 않았습니다.\n\n- **멈추기 전에 본 것(읽기만):** Figma 파일은 열렸습니다. 요청한 페이지 「Setting Ⓛ / Ⓣ_To Be」는 지금 작업 페이지가 맞습니다.\n- **질문의 답:** 높이는 맞습니다. 이 페이지에 Reset · Search 버튼이 있는 프레임은 TI-STN-08, TI-STN-08/Case(두 곳), TI-STN-08-P, LI-STN-08, LI-STN-08-P입니다. 모든 곳에서 두 버튼은 같은 컴포넌트 `Square`의 Size=L(Reset은 Gray, Search는 Filled)이라 높이가 48px이고 같은 줄에 놓여 있습니다. 너비는 Reset 76px, Search 79px로 조금 다릅니다.\n\n이 답은 Workbench에 남기지 못했습니다. 남기려면 사람이 Workbench에서 「다시 진행」을 눌러야 하고, 그러면 다음 차례에 처리합니다.",
+      "cut": false
+    },
+    {
+      "at": "2026-11-26T16:46:58+09:00",
+      "text": "R004를 처리하고 「완료」로 바꿨습니다. 질문이라 Figma는 고치지 않았습니다.\n\n- **답:** Reset과 Search 버튼은 높이가 서로 같습니다(48px). 둘 다 `Square` 컴포넌트의 Size=L이고, Reset은 Gray, Search는 Filled입니다. 이 버튼이 있는 프레임은 6곳(TI-STN-08, TI-STN-08/Case 2곳, TI-STN-08-P, LI-STN-08, LI-STN-08-P)이고 모두 같습니다.\n- **다른 점:** 같은 줄에 있는 Text Input과 Dropdown은 38px이라 버튼이 10px 더 높습니다.\n- **UX가이드 기준:** Common UX 가이드는 검색 영역 버튼을 Square(Reset Gray, Search Filled)로 정했지만 크기는 정하지 않았습니다.\n- **Claude 답변 끝 확인 필요(C1):** 입력칸 높이에 맞추려면 Size=M(40px)이 가장 가깝다고 적었습니다. 바꾸려면 새 요청이 필요합니다.\n\n이 요청은 앞선 차례에 사람이 멈춘 상태였는데, 이번에는 「진행 중」으로 바꾸는 것이 받아들여져 답변을 Workbench에 남겼습니다.",
+      "cut": false
+    }
+  ],
+  "work": "",
+  "handoff": null
+}

@@ -1,0 +1,12 @@
+{
+  "rev": "20261126-165307_brex-06",
+  "by": "최고관리자",
+  "at": "2026-11-26T16:53:07+09:00",
+  "note": "COMM-5-p Search Bar: Reset · Search 버튼은 Square Size=M(40px)으로(조회 조건과 높이 맞춤)",
+  "base": "Common UX 가이드.md",
+  "pc": "BREX_06",
+  "req": "COMM-5-p에 Size=M 규칙 추가",
+  "jobId": "",
+  "file": "Common UX 가이드.md",
+  "orig": true
+}

@@ -1,5 +1,5 @@
 ---
-status: 진행 중            # 진행 중 | 끝남 | 멈춤
+status: 끝남            # 진행 중 | 끝남 | 멈춤
 requester: 서보경
 menu: Event History (EVT)
 cids: [TI-EVT-P, LI-EVT-P, TI-EVT-01-P, LI-EVT-01-P, TI-EVT-02-P, LI-EVT-02-P]
@@ -8,13 +8,13 @@ cid_system:
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3577-18413
 test: false
 basis_start: 2026-11-25 21:17 · history 5ec517c7
-basis:
+basis: 2026-11-26 20:00 · history a15b3986
 basis_versions:
-  rules:
-  policy:
-  glossary:
-  screens:
-  common_ux:
+  rules: CURECA 작업규칙 @2026-11-26 14:30
+  policy: 정책서 @2026-11-25 21:21
+  glossary: 기준데이터 @2026-11-26 15:17
+  screens: 화면 정의서 @2026-11-26 03:39
+  common_ux: Common UX (common-ux/comm-index.md) @2026-11-25 16:08
 started: 2026-11-25
 ---
 # 작업 기록: Event History 화면을 Event History_tobe 페이지로 옮겨 다시 그림
@@ -25,11 +25,11 @@ started: 2026-11-25
 | --- | --- | --- | --- |
 | 1. 시작 · 요건 정의 | 2026-11-25 | 요청자 확인 2026-11-25 | 겹치는 다른 작업: 없음 |
 | 2. 근거 · 분석 | 2026-11-26 | 물을 것 없음 (2026-11-26) | 정책 수정 범위 없음, 질문 대기 Q1 ~ Q4, 변경 확인 C1 ~ C12 |
-| 3. 화면 설계 | | | 진행 중: 자리 잡음 (2026-11-26) |
-| 4. 수정 · 확인 | | | |
-| 5. 완료 | | | |
+| 3. 화면 설계 | 2026-11-26 | 기계 검사 통과 (2026-11-26) | 6개 화면 MD · Figma, 질문 대기 Q1 ~ Q7, 변경 확인 C1 ~ C31 |
+| 4. 수정 · 확인 | 2026-11-26 | 통과 (2026-11-26) | UX 확정 (2026-11-26) · 내부 검토 반영 (요청자 서보경이 검토 질의 1 ~ 14로 검토, 고객 검토 없음), UI 확정 해당 없음 (UI 작업 줄 `대상 아님`, 2026-11-26 서보경). 재설계 후 변경 내역 메모 6개 (J101). 언어셋 정리함 (요청자 확인 14 · 15 답 반영) |
+| 5. 완료 | 2026-11-26 | 통과 (2026-11-26) | 반영 |
 
-이어서 작업할 곳: 3단계 · 화면 MD 6개 씀 (2026-11-26), TI-EVT-P부터 그릴 차례 (다시 읽을 곳: 3단계 flow/3-design-case3.md 흐름 · 3-4 · 공통 규칙에서 케이스 3만 다른 것 / flow/3-design.md 공통 3 · 공통 4 · 공통 5 / 작업 기록 "요건 목록" 요건 1 · "설계" 화면별 작업 · 찾은 것 · "질문 대기" · "변경 확인")
+이어서 작업할 곳: 5단계 · 끝남 (2026-11-26)
 
 ## 요청
 
@@ -44,7 +44,7 @@ started: 2026-11-25
 - 요청 상태: 최초
 - 경로 분기 기준 (근거) · 읽는 강도: 8 옮겨 다시 그림 (케이스 3) (요건 목록의 모든 줄이 케이스 3, 바꾸는 요건 없음) · 케이스 3 (다시 그리기)
 - 지나가는 단계: 1 → 2 → 3 → 4 → 5
-- UI 작업: 대상 아님 (케이스 3 기본값. 다시 그리며 바뀐 곳이 생기면 4단계 UX 확정 때 다시 정함)
+- UI 작업: 대상 아님 (케이스 3 기본값. 다시 그리며 바뀐 곳이 생기면 4단계 UX 확정 때 다시 정함) → 확정 값 `대상 아님` (2026-11-26, 서보경: 「우선 UI 작업은 없음」. Claude 추천 `대상`과 다름)
 
 | 대상 화면 | 케이스 | 작업 대상 | 근거 |
 | --- | --- | --- | --- |
@@ -236,9 +236,9 @@ started: 2026-11-25
 <!-- 절차 1번 순서 2에서 그릴 T · L 한 쌍마다 줄을 만들어 따른 케이스 · 요건 번호를 채우고, 그 쌍을 다 그리면 공통 3-10에서 섹션 · 기획 프레임 · 상태 · 케이스 프레임 링크를 채웁니다. -->
 | T · L 한 쌍 | 따른 케이스 | 요건 번호 | 섹션 | 기획 프레임 | 상태 · 케이스 프레임 |
 | --- | --- | --- | --- | --- | --- |
-| Event History (TI-EVT-P / LI-EVT-P) | 3 | 1 | 자리 잡음: T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1250 / L https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1257 | | |
-| Event Detail (TI-EVT-01-P / LI-EVT-01-P) | 3 | 1 | 자리 잡음: T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1251 / L https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1258 | | |
-| Event Message (TI-EVT-02-P / LI-EVT-02-P) | 3 | 1 | 자리 잡음: T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1252 / L https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1259 | | |
+| Event History (TI-EVT-P / LI-EVT-P) | 3 | 1 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1250 / L https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1257 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3719-6 / L https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3751-579 | 케이스 T 지움 (검토 질의 6) / L 지움 (검토 질의 7) (마무리 확인 2026-11-26) |
+| Event Detail (TI-EVT-01-P / LI-EVT-01-P) | 3 | 1 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1251 / L https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1258 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3756-1924 / L https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3764-1390 | 케이스 T 없음 / L https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3764-1765 (마무리 확인 2026-11-26) |
+| Event Message (TI-EVT-02-P / LI-EVT-02-P) | 3 | 1 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1252 / L https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3706-1259 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3769-1813 / L https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3771-1955 | 케이스 없음 (마무리 확인 2026-11-26) |
 
 - 메뉴 단위 표시 (2026-11-26, Claude): T-IOS 줄 시스템 구분 `T-IOS - 2.1` · 기획 진행 표시 `SB-Update : 2026.08.05 (검토 완료)` / L-IOS 줄 `L-IOS - 2.1` · `SB-Update : 2026.08.07 (검토 완료)` — asis 페이지의 기획 진행 표시(`컨펌 완료`)를 날짜 그대로, 진행 상태는 새 이름으로 옮김 (flow/3-design-case3.md "공통 3 머리 · 공통 4"). 너비 8469 (섹션 줄 너비, T · L 같음)
 - 섹션 높이는 자리 잡기용 임시 값(asis 기획 프레임 높이 + 200). 그린 뒤 맞춤. 기획 프레임 너비는 asis 원본 너비대로: TI · LI-EVT-P · TI · LI-EVT-01-P 2252, TI · LI-EVT-02-P 1960 (섹션 너비 2787 / 2495)
@@ -246,6 +246,17 @@ started: 2026-11-25
 ### 컴포넌트 없이 그린 요소
 | 요소 이름 (종류) | 하는 일 | 쓴 곳 (CID · 디스크립션 번호) | 어디서 (후보 ID / 신규로 만듦 / 기존 화면에서 따옴) | 원본 요약 (기존 화면에서 따옴만: 크기 · 모서리 · 줄 × 칸 · 도형 · 글자 · 인스턴스) | Figma 링크 |
 | --- | --- | --- | --- | --- | --- |
+| scrim (Dim 바탕) | Popup 뒤 Dim | TI-EVT-P · LI-EVT-P 0 | 기존 화면에서 따옴 (`3543:47110` · `3543:46804` Alarm_List > scrim) | 1696×1023 · 모서리 0 · 도형 1 (#000000, 불투명도 0.7) · 글자 0 · 인스턴스 0 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3719-1888 |
+| Popup (Popup 바탕) | Event History Popup 틀 | TI-EVT-P · LI-EVT-P 0 | 기존 화면에서 따옴 (Alarm_List > Popup). Common UX Popup(COMM-5-m(1/4))은 PC 컴포넌트 없음 | 1475×794 · 모서리 0 · 테두리 #D6DBE1 1 · 바탕 #FFFFFF · 도형 1 (안 요소는 따로 그림: 제목 · 닫기 · 목록 요약 · 버튼 · 목록 · 페이지네이션) | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3719-1889 |
+| 검색 영역 (영역 틀) | 검색 조건 묶음 틀 | TI-EVT-P · LI-EVT-P 1 | 기존 화면에서 따옴 (Alarm_List > Text Data). 안의 입력 칸 · 버튼은 Common UX(Text Input · Dropdown · Square) | 1423×72 · 모서리 4 · 테두리 #DDDDDD 1 · 바탕 없음 · 줄 1 × 칸 7 (입력 5 · 버튼 2) | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3719-2204 |
+| 목록 요약 (요약 줄 틀) | Items · Open 개수 | TI-EVT-P · LI-EVT-P 2 | 기존 화면에서 따옴 (Popup > Frame 1984080651) | 314×22 · 모서리 0 · 글자 4 · 선 1 (Line 264, 22, #000000 20%) · 인스턴스 0 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3719-2237 |
+| scrim · Popup (Dim · Popup 바탕) | 상세 Popup 틀 | TI-EVT-01-P · LI-EVT-01-P 0 | 기존 화면에서 따옴 (`3543:47409` Alarm_List > scrim · Popup) | scrim 1628×948 · #000000 불투명도 0.7 / Popup 1475×734 · 모서리 0 · 테두리 #D6DBE1 1 · 바탕 #FFFFFF (안 요소는 따로 그림) | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3756-1926 |
+| Event Info 표 (정보 표, 맞는 Variant 없음, Card/List 2열 — 한 줄 3쌍 6칸) | 선택한 Event 상세 정보 | TI-EVT-01-P · LI-EVT-01-P 1 | 기존 화면에서 따옴 (`3543:47436` Module_Data Table). Card/List로 바꿀 여지: 한 줄 1쌍인 Description · Effect · Recommended Action 줄 | 1417×284 · 모서리 0 · 줄 5 (3쌍 2줄 + 1쌍 3줄) · 제목 글 1 · 갱신 글 1 · 인스턴스 31 (⛔️ Item_Basic Data Table Header 9 · Data 6, Divider 3, 숨김 Checkbox · Radio · Pencil · Square). Level 칸만 Common UX Status/Event Level (C31), L은 Status 칸 Toggle Switch (원본과 같은 컴포넌트) | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3756-1937 |
+| Instrument Info 표 (정보 표, 맞는 Variant 없음, Card/List 2열 — 한 줄 3쌍) | Module · Unit · Process | TI-EVT-01-P · LI-EVT-01-P 2 | 기존 화면에서 따옴 (`3543:47488`) | 1417×83 · 모서리 0 · 줄 1 × 칸 6 · 제목 글 1 · 인스턴스 9 (Header 3 · Data 3 · Divider 3) | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3756-1989 |
+| Notes 표 · Resolution Notes 칸 (입력 칸, 맞는 Variant 없음, Text Input/Inline — Typing에 글자 수 · Cancel/Save 아이콘 없음) | Resolution Notes 보기 · 입력 | TI-EVT-01-P · LI-EVT-01-P 3, LI-EVT-01-P/Case | 기존 화면에서 따옴 (T `3543:47506`, L `3543:46744` · 케이스 `3543:46757` · `46775` · `46766`). Text Input/Inline로 바꿀 여지: 기본(Enabled) · 완료(Complete) 상태 | 1417×160 · 모서리 0 · 제목 글 1 · 줄 1 × 칸 2 · 인스턴스 3 (Header 1 · Divider 1 · Basic 입력 칸 1248×122: T Read-only, L Enabled · 케이스 Typing · Completed) | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3756-2007 / L 칸 https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3765-1544 |
+| scrim (Dim 바탕) | Event Message 뒤 Dim | TI-EVT-02-P · LI-EVT-02-P 0 | 기존 화면에서 따옴 (`3543:47691` Alarm_List > scrim) | 1628×948 · #000000 불투명도 0.7 · 도형 1 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3769-1814 |
+| Event Message Popup (Popup 틀, Common UX Event Stacked Popup은 PC 컴포넌트 없음) | Event 한 건 내용 · 버튼 | TI-EVT-02-P · LI-EVT-02-P 1 ~ 9 | 기존 화면에서 따옴 (`3543:47721` Popup/Alert Popup). 하단 버튼 둘만 Common UX Square(C27), 원래 버튼은 숨김 | 560×328 · 모서리 8 · 테두리 #C6CDDA 1 · 인스턴스 9 (Popup/Resource 3, Icon/Popup Status 1, Popup Middle Text 4, 번호 표시 6) · 글자 1 (Module · Unit) | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3770-2073 |
+| 1/20 · Close All · [< >] (글 · 글 버튼) | 메시지 개수 · 모두 닫기 · 이전 · 다음 | TI-EVT-02-P · LI-EVT-02-P 10 · 11 · 12 | 기존 화면에서 따옴 (`3543:47744` · `47745` · `47746`). Arrow/Chevron_Right로 바꿀 여지: [< >] (Q7과 함께 정함) | 글 3 (흰색, 18 · 18 · 22) · 인스턴스 0 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3769-1880 |
 
 ### 근거로 풀린 것
 | 질문 | 푼 근거 |
@@ -255,6 +266,9 @@ started: 2026-11-25
 | 일시 표기가 화면마다 다름 (뒤 단계용 확인 항목 12) | Common UX COMM-4-a(1/4) 일시 `YYYY-MM-DD hh:mm` (C13) |
 
 ### 찾은 것
+- Q4 답(2026-11-26, 서보경): Module이 1대로 설치되면 index (n)을 표시하지 않음 (Common UX COMM-4-a(1/4) Module명 규칙과 같음). 그래서 반영 대기 TI-EVT-01-P-R01 · LI-EVT-01-P-R04 · TI-EVT-02-P-R04의 「Flexible Extraction (1)」 · 「High-throughput Extraction (1)」은 번호 없이 반영함 (5단계에서 그 항목 변경 후 값과 다름을 적음)
+- 플러그인 채우기 J089는 「실패」로 바꾼 뒤에 늦게 실행돼 TI-EVT-01-P 패널 행 11개 · 라벨 4개가 중복됨 → 2026-11-26 지움. 이 차례 수정은 중복을 피하려고 use_figma로 함
+- Event History · Event Detail의 Dim(scrim)은 검토 질의 4(요청자)로 원본 크기와 달라짐(너비 1920). "컴포넌트 없이 그린 요소"의 원본 요약은 원본 값 그대로 둠 (2026-11-26)
 - 원본 케이스 프레임 제목에 번호가 없음(`Case.`) → 케이스 블록 · 케이스 프레임을 `Case 1`로 적음 (TI-EVT-P · LI-EVT-P · LI-EVT-01-P)
 - 원본 케이스에 노란 띠가 없음 → 목록 케이스는 조건을 노란 띠 `1-1`로 두고 설명 글은 두지 않음(원본에 없음). LI-EVT-01-P 케이스는 조각마다 위에 있던 한 줄을 조건(노란 띠)과 설명으로 나눔 (글자는 원본 그대로, 오타만 C12)
 - 원본 번호 표시 5가 Notes 칸 위에 있으나 디스크립션 5는 [List] 버튼 → [List] 버튼 옆에 둠 (C29)
@@ -263,6 +277,12 @@ started: 2026-11-25
 - 규칙에 없어 판단한 곳: [Export] 버튼 Style — T는 버튼 하나라 Filled, L은 [Mark all as Closed]가 Filled라 [Export]는 Outlined (COMM-5-c 가르는 법)
 - 상세 Event Info · Instrument Info · Notes 표는 Common UX Card/List(2열)로 한 줄 3쌍(6칸)을 담을 수 없어 기존 화면에서 따옴 (컴포넌트 없이 그린 요소)
 - TI-EVT-02-P · LI-EVT-02-P 경로: 원본 `-` → IA Lv.1 · Lv.2대로 `Event History > Event Message` (C4에 포함)
+- 기존 화면에서 따온 표 · 입력 칸은 원본 요소를 같은 값으로 옮기려고 그 요소만 복제해 넣음(기획 프레임 전체는 복제하지 않음). 원본 안 숨김 레이어도 그대로 둠 (2026-11-26, Claude)
+- TI-EVT-P scrim 높이를 원본 1023으로 맞춤(앞 세션이 1319로 그림), 기획 진행 표시 글을 asis 날짜로 고침(`2026.00.00` 그대로였음) (2026-11-26, Claude)
+- LI-EVT-01-P 케이스 1-2의 글자 수(`0 /300자`)는 원본에서 숨김이었으나 화면 MD 화면 예시 글자 · 화면 표기 글자에 있어 보이게 둠 (2026-11-26, Claude)
+- 사용자 확인 라벨: 네 방향 모두 글자 · 요소를 가리는 곳(LI-EVT-P 4 · 5, LI-EVT-01-P 1-2)은 번호 표시 오른쪽에 둠 (description.md 5절)
+- 반영 대기 · 찾은 고칠 점에서 바꿀 값이 그대로 적힌 변경(C20 · C22 · C24)은 사용자 확인 라벨 · 목록 없이 마침 점검 기계 검사로 확인 (description.md 5절 반영 대기 항목 표)
+- 컴포넌트 채우기(플러그인): LI-EVT-P 패널 · 라벨은 J088로 채움(제목 행 Date · 작성자 칸만 직접 고침). TI-EVT-01-P J089가 5분 넘게 멈춰 「실패」로 바꾸고, 그 뒤 패널 · 라벨은 use_figma로 직접 그림
 
 ### 용어 치환
 | 원래 표현 | 표준어 | 위치 |
@@ -271,50 +291,124 @@ started: 2026-11-25
 
 | 번호 (Q) | 질문 | 관련된 곳 (CID · 디스크립션 번호) | 논의 대상 | T · L 같음 | 풀린 날 · 어떻게 |
 | --- | --- | --- | --- | --- | --- |
-| Q1 | 목록 요약의 전체 개수 이름 (화면 `Items` / 디스크립션 `Total Event`, POL-EVT-001 규칙 5는 Open 개수만 정함) | TI-EVT-P · LI-EVT-P #2 | | 같음 | |
-| Q2 | Resolution Notes 입력 중 닫기 · List를 누를 때 Confirm 여부 (POL-EVT-002 규칙 5는 Cancel만 정함, 메뉴 이탈용 Confirm_007 · 016 있음) | LI-EVT-01-P #3 · #5 · #6 | | L만 | |
-| Q3 | Event Message의 L-IOS Client Mode (POL-EVT-003 규칙 1 Main · Console / client-mode-matrix에 Event Message 줄 없음) | LI-EVT-02-P 0 · 머리말 `client_mode` | | L만 | |
-| Q4 | Module 이름 뒤 번호 `(1)` 표기 여부 (T 목록은 없음 · L 목록 · 상세 · Message는 있음, glossary.md `Module (Index)`) | TI-EVT-P · LI-EVT-P #3, TI · LI-EVT-01-P #2, TI · LI-EVT-02-P #7 | | 같음 | |
-| Q5 | T-IOS 목록에 노출 개수 Dropdown을 둘지 (Common UX Basic Table은 T-IOS 10 · 30 · 50 · 100 items 선택, 기존 화면은 10개 고정이라 기존대로 그림) | TI-EVT-P #3 | | T만 | |
-| Q6 | 목록에 데이터가 없을 때 안내 문구 (Common UX No Data가 화면에 맡김, 기존 원본 · 정책서 · 같은 메뉴에 없음) | TI-EVT-P · LI-EVT-P #3 | | 같음 | |
-| Q7 | Event Message 오른쪽 썸네일 목록을 둘지 (Common UX Event Stacked Popup은 썸네일 목록 5개씩, 기존 화면은 [< >] 버튼만이라 기존대로 그림) | TI-EVT-02-P · LI-EVT-02-P #12 | | 같음 | |
+| Q1 | 목록 요약의 전체 개수 이름 (화면 `Items` / 디스크립션 `Total Event`, POL-EVT-001 규칙 5는 Open 개수만 정함) | TI-EVT-P · LI-EVT-P #2 | | 같음 | 2026-11-26 · Items로 (서보경) → C32 |
+| Q2 | Resolution Notes 입력 중 닫기 · List를 누를 때 Confirm 여부 (POL-EVT-002 규칙 5는 Cancel만 정함, 메뉴 이탈용 Confirm_007 · 016 있음) | LI-EVT-01-P #3 · #5 · #6 | | L만 | 2026-11-26 · 입력 중 닫기 · [List] 클릭 시 Confirm 띄움 (서보경) → Confirm_016, C36 |
+| Q3 | Event Message의 L-IOS Client Mode (POL-EVT-003 규칙 1 Main · Console / client-mode-matrix에 Event Message 줄 없음) | LI-EVT-02-P 0 · 머리말 `client_mode` | | L만 | 2026-11-26 · 정책대로 Main Mode, Console Mode (서보경), 화면 바뀌지 않음 |
+| Q4 | Module 이름 뒤 번호 `(1)` 표기 여부 (T 목록은 없음 · L 목록 · 상세 · Message는 있음, glossary.md `Module (Index)`) | TI-EVT-P · LI-EVT-P #3, TI · LI-EVT-01-P #2, TI · LI-EVT-02-P #7 | | 같음 | 2026-11-26 · 번호 뺌 (서보경: Module이 1대로 설치되면 index (n)을 표시하지 않음) → C34 |
+| Q5 | T-IOS 목록에 노출 개수 Dropdown을 둘지 (Common UX Basic Table은 T-IOS 10 · 30 · 50 · 100 items 선택, 기존 화면은 10개 고정이라 기존대로 그림) | TI-EVT-P #3 | | T만 | 2026-11-26 · T-IOS에 노출 개수 Dropdown(10 · 30 · 50 · 100 items) 둠 (서보경) → C35 |
+| Q6 | 목록에 데이터가 없을 때 안내 문구 (Common UX No Data가 화면에 맡김, 기존 원본 · 정책서 · 같은 메뉴에 없음) | TI-EVT-P · LI-EVT-P #3 | | 같음 | 2026-11-26 · 다른 화면 확인 요청 (서보경) → Protocol · LIS Code 목록(TI-STN-03-01 · LI-STN-03-01 · TI-SVS-01 · LI-SVS-01 · TI-STN-08)의 'No results found.'로 그림, C33으로 확인받음 |
+| Q7 | Event Message 오른쪽 썸네일 목록을 둘지 (Common UX Event Stacked Popup은 썸네일 목록 5개씩, 기존 화면은 [< >] 버튼만이라 기존대로 그림) | TI-EVT-02-P · LI-EVT-02-P #12 | | 같음 | 2026-11-26 · 썸네일 목록 두지 않음 (서보경), 화면 바뀌지 않음 |
 ## 변경 확인
 
 | 번호 (C) | 기존 화면 | 바꿔 그린 것 | 관련된 곳 (CID · 디스크립션 번호) | 근거 | T · L 같음 | 업데이트 메모 (O / -) | 확인한 날 · 답 (맞음 / 되돌림) |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| C1 | Common UX 참고 `COMM-5-j(4/4)` | `COMM-5-m(2/4)` Import / Export Popup | LI-EVT-P #6 | POL-COM-006 규칙 4 | L만 | - | |
-| C2 | 화면 글자 `Type: Consumable` | `Type: Inventory` | TI-EVT-02-P · LI-EVT-02-P #3 | status-values.csv Event Type | 같음 | - | |
-| C3 | 상세 Status 옆 번호 표시 `1-2` (T) | T에서 `1-2` 번호 표시 뺌 (Status는 표기만) | TI-EVT-01-P #1 | POL-EVT-002 규칙 1 | T만 | - | |
-| C4 | 화면 이름 Event History Detail · Event Message Popup | Event Detail · Event Message | TI · LI-EVT-01-P, TI · LI-EVT-02-P | IA Lv.2 (요청자 확인 1) | 같음 | - | |
-| C5 | 디스크립션 용어 (장비 · 팝업 · 툴팁 · 모듈 · 이벤트 · 알람 · 표시 등) | 용어집 표준어로 | 6개 화면 디스크립션 | terms.csv (근거 "용어 목록") | 같음 | - | |
-| C6 | 목록 Unit `Sample Processing` | `Sample Processing (Upper)` (예시 데이터) | TI-EVT-P · LI-EVT-P #3 | module-units.csv, DS-0004 | 같음 | - | |
+| C1 | Common UX 참고 `COMM-5-j(4/4)` | `COMM-5-m(2/4)` Import / Export Popup | LI-EVT-P #6 | POL-COM-006 규칙 4 | L만 | - | 맞음 (2026-11-26) |
+| C2 | 화면 글자 `Type: Consumable` | `Type: Inventory` | TI-EVT-02-P · LI-EVT-02-P #3 | status-values.csv Event Type | 같음 | - | 맞음 (2026-11-26) |
+| C3 | 상세 Status 옆 번호 표시 `1-2` (T) | T에서 `1-2` 번호 표시 뺌 (Status는 표기만) | TI-EVT-01-P #1 | POL-EVT-002 규칙 1 | T만 | - | 맞음 (2026-11-26) |
+| C4 | 화면 이름 Event History Detail · Event Message Popup | Event Detail · Event Message | TI · LI-EVT-01-P, TI · LI-EVT-02-P | IA Lv.2 (요청자 확인 1) | 같음 | - | 맞음 (2026-11-26) · 경로는 검토 질의 1로 고침 (C37) |
+| C5 | 디스크립션 용어 (장비 · 팝업 · 툴팁 · 모듈 · 이벤트 · 알람 · 표시 등) | 용어집 표준어로 | 6개 화면 디스크립션 | terms.csv (근거 "용어 목록") | 같음 | - | 맞음 (2026-11-26) |
+| C6 | 목록 Unit `Sample Processing` | `Sample Processing (Upper)` (예시 데이터) | TI-EVT-P · LI-EVT-P #3 | module-units.csv, DS-0004 | 같음 | - | 맞음 (2026-11-26) |
 | C7 | Module `Sample Storage(1)` 등 붙여 씀 | `Sample Storage (1)` 띄어 씀 | LI-EVT-P #3, LI-EVT-02-P #7 | glossary.md 이름과 번호 | L만 | - | 맞음 (오타, 2026-11-26) |
 | C8 | Type Default `all` | `All` | TI-EVT-P · LI-EVT-P #1 | 화면 글자 · status-values 표기 | 같음 | - | 맞음 (오타, 2026-11-26) |
-| C9 | `Created Date` | `Occurred Date/Time` | LI-EVT-01-P #1 | POL-EVT-001 정의 | L만 | - | |
-| C10 | 디스크립션 Recommended Action → Effect 순서 | Effect → Recommended Action | LI-EVT-01-P #1 | POL-EVT-001 정의 순서 · 화면 글자 | L만 | - | |
-| C11 | 케이스 `0 /100자` | `0 /300자` | LI-EVT-01-P 케이스 | POL-EVT-002 규칙 5 | L만 | O | |
+| C9 | `Created Date` | `Occurred Date/Time` | LI-EVT-01-P #1 | POL-EVT-001 정의 | L만 | - | 맞음 (2026-11-26) |
+| C10 | 디스크립션 Recommended Action → Effect 순서 | Effect → Recommended Action | LI-EVT-01-P #1 | POL-EVT-001 정의 순서 · 화면 글자 | L만 | - | 맞음 (2026-11-26) |
+| C11 | 케이스 `0 /100자` | `0 /300자` | LI-EVT-01-P 케이스 | POL-EVT-002 규칙 5 | L만 | O | 맞음 (2026-11-26) |
 | C12 | `Enter action Details.` · `refill.Consumables` | `Enter action details.` · `refill. Consumables` | LI-EVT-01-P 케이스, TI · LI-EVT-P 케이스 | 오타 | 같음 | - | 맞음 (오타, 2026-11-26) |
-| C13 | 일시 `YYYY-MM-DD hh:mm:ss` (목록 · L 상세 Occurred · Updated) | `YYYY-MM-DD hh:mm` | TI-EVT-P · LI-EVT-P #3, LI-EVT-01-P #1 · #4 | Common UX COMM-4-a(1/4) (뒤 단계용 확인 항목 12) | 같음 | O | |
-| C14 | 디스크립션 5 Mark as Closed · 5-1 [Mark as Closed] 버튼 클릭 (번호 블록 전체 취소선) | 디스크립션 · 번호 표시에서 지움 (제거된 요소 2개, 기존 디스크립션에서 이미 지운 기능) | TI-EVT-P 0 | `flow/3-design-case3.md` 3-2 | T만 | - | |
-| C15 | 디스크립션 6 · 7 둘 다 「닫기」 | 7을 빨간 취소선 (6 하나로) | LI-EVT-01-P #7 | 반영 대기 LI-EVT-01-P-R02 | L만 | - | |
-| C16 | `Created Date` | `Occurred Date/Time` | TI-EVT-01-P #1 | 반영 대기 TI-EVT-01-P-R02, POL-EVT-001 정의 | T만 | - | |
-| C17 | Status 변경 가능 여부 없음, Notes 「L-IOS에서 작성했을 경우 노출」 | Status 「노출 (상태 변경 불가)」, Notes 「작성된 Resolution Notes가 있을 경우 노출」, 정책 참고 POL-EVT-002 | TI-EVT-01-P #1 · #3 | 반영 대기 TI-EVT-01-P-R03, POL-EVT-002 | T만 | O | |
-| C18 | 0 「Profile에서 Event notifications 설정에 따라 On일 경우 노출」 | 「Profile > General의 Event notifications 설정이 On일 경우 노출, Off일 경우 미노출 (기본 On)」 | TI-EVT-02-P 0 | 반영 대기 TI-EVT-02-P-R01, POL-EVT-003 | T만 | - | |
-| C19 | 0 노출 PC Type 「Main PC · 콘솔용 PC」 | 노출되는 L-IOS Client Mode 「Main Mode, Console Mode」 | LI-EVT-02-P 0 | 반영 대기 LI-EVT-02-P-R01, POL-EVT-003 | L만 | - | |
-| C20 | `Statue` · `Cureca` · `Event Id, Code` · `OPEN` · `CFX96-1` · `형식:CSV` | `Status` · `CURECA` · `Event ID, Code` · `Open` · `CFX96 (1)` · `.csv` | TI-EVT-P · LI-EVT-P 0 · #1 · #2 · #3 · #6 | 반영 대기 TI-EVT-P-R05 · R06 · R07, LI-EVT-P-R04 · R06 | 같음 | O | |
-| C21 | [Mark all as Closed] 범위 「상태값이 Open인 모든 Events」, Status · Notes 활성화 조건 「공통 UX 참고 : COMM-3-a」 | 「지금 검색 조건으로 불러온 목록의 모든 페이지에서 Status가 Open인 Event 전체」, 활성화 조건 「L-IOS Client Mode가 Main Mode일 때 활성화」 · 정책 참고 POL-EVT-002 | LI-EVT-P #4 · #5, LI-EVT-01-P #1-2 · #3 | 반영 대기 LI-EVT-P-R02 · R03, LI-EVT-01-P-R03 | L만 | O | |
-| C22 | Module `FlexibleExtraction` · `Flexible Extraction(1)`, Unit `Starlet` | `Flexible Extraction (1)`, `STARlet` | TI-EVT-01-P · LI-EVT-01-P #2 | 반영 대기 TI-EVT-01-P-R01 · LI-EVT-01-P-R04 | 같음 | O | |
+| C13 | 일시 `YYYY-MM-DD hh:mm:ss` (목록 · L 상세 Occurred · Updated) | `YYYY-MM-DD hh:mm` | TI-EVT-P · LI-EVT-P #3, LI-EVT-01-P #1 · #4 | Common UX COMM-4-a(1/4) (뒤 단계용 확인 항목 12) | 같음 | O | 맞음 (2026-11-26) |
+| C14 | 디스크립션 5 Mark as Closed · 5-1 [Mark as Closed] 버튼 클릭 (번호 블록 전체 취소선) | 디스크립션 · 번호 표시에서 지움 (제거된 요소 2개, 기존 디스크립션에서 이미 지운 기능) | TI-EVT-P 0 | `flow/3-design-case3.md` 3-2 | T만 | - | 맞음 (2026-11-26) |
+| C15 | 디스크립션 6 · 7 둘 다 「닫기」 | 7을 빨간 취소선 (6 하나로) | LI-EVT-01-P #7 | 반영 대기 LI-EVT-01-P-R02 | L만 | - | 맞음 (2026-11-26) |
+| C16 | `Created Date` | `Occurred Date/Time` | TI-EVT-01-P #1 | 반영 대기 TI-EVT-01-P-R02, POL-EVT-001 정의 | T만 | - | 맞음 (2026-11-26) |
+| C17 | Status 변경 가능 여부 없음, Notes 「L-IOS에서 작성했을 경우 노출」 | Status 「노출 (상태 변경 불가)」, Notes 「작성된 Resolution Notes가 있을 경우 노출」, 정책 참고 POL-EVT-002 | TI-EVT-01-P #1 · #3 | 반영 대기 TI-EVT-01-P-R03, POL-EVT-002 | T만 | O | 맞음 (2026-11-26) · 문구는 검토 질의 2로 고침 (C38) |
+| C18 | 0 「Profile에서 Event notifications 설정에 따라 On일 경우 노출」 | 「Profile > General의 Event notifications 설정이 On일 경우 노출, Off일 경우 미노출 (기본 On)」 | TI-EVT-02-P 0 | 반영 대기 TI-EVT-02-P-R01, POL-EVT-003 | T만 | - | 맞음 (2026-11-26) |
+| C19 | 0 노출 PC Type 「Main PC · 콘솔용 PC」 | 노출되는 L-IOS Client Mode 「Main Mode, Console Mode」 | LI-EVT-02-P 0 | 반영 대기 LI-EVT-02-P-R01, POL-EVT-003 | L만 | - | 맞음 (2026-11-26) |
+| C20 | `Statue` · `Cureca` · `Event Id, Code` · `OPEN` · `CFX96-1` · `형식:CSV` | `Status` · `CURECA` · `Event ID, Code` · `Open` · `CFX96 (1)` · `.csv` | TI-EVT-P · LI-EVT-P 0 · #1 · #2 · #3 · #6 | 반영 대기 TI-EVT-P-R05 · R06 · R07, LI-EVT-P-R04 · R06 | 같음 | O | 맞음 (기계 검사, 2026-11-26) |
+| C21 | [Mark all as Closed] 범위 「상태값이 Open인 모든 Events」, Status · Notes 활성화 조건 「공통 UX 참고 : COMM-3-a」 | 「지금 검색 조건으로 불러온 목록의 모든 페이지에서 Status가 Open인 Event 전체」, 활성화 조건 「L-IOS Client Mode가 Main Mode일 때 활성화」 · 정책 참고 POL-EVT-002 | LI-EVT-P #4 · #5, LI-EVT-01-P #1-2 · #3 | 반영 대기 LI-EVT-P-R02 · R03, LI-EVT-01-P-R03 | L만 | O | 맞음 (2026-11-26) |
+| C22 | Module `FlexibleExtraction` · `Flexible Extraction(1)`, Unit `Starlet` | `Flexible Extraction (1)`, `STARlet` | TI-EVT-01-P · LI-EVT-01-P #2 | 반영 대기 TI-EVT-01-P-R01 · LI-EVT-01-P-R04 | 같음 | O | 맞음 (기계 검사, 2026-11-26) |
 | C23 | `Eorrer` · `warning` · `High-throughput Extraction(1)` | `Error` · `Warning` · `High-throughput Extraction (1)` | TI-EVT-02-P · LI-EVT-02-P #1 · #7 | 반영 대기 TI-EVT-02-P-R04 · LI-EVT-02-P-R03, 오타 | 같음 | - | 맞음 (오타, 2026-11-26) |
-| C24 | 9 `Event Detail Popup(LI-EVT-01-P)` (T), 3 Type 값 | 9 `TI-EVT-01-P`, 3 `Instrument, Inventory, Sample, System` | TI-EVT-02-P #3 · #9, LI-EVT-02-P #3 | 반영 대기 TI-EVT-02-P-R02 · R03, LI-EVT-02-P-R02 | 같음 | - | |
+| C24 | 9 `Event Detail Popup(LI-EVT-01-P)` (T), 3 Type 값 | 9 `TI-EVT-01-P`, 3 `Instrument, Inventory, Sample, System` | TI-EVT-02-P #3 · #9, LI-EVT-02-P #3 | 반영 대기 TI-EVT-02-P-R02 · R03, LI-EVT-02-P-R02 | 같음 | - | 맞음 (기계 검사, 2026-11-26) |
 | C25 | 디스크립션에 없던 설명 | 8 페이지네이션(Type 1 Number) · 3 컬럼 항목 · 정렬 가능한 컬럼 · 상세 1 Type 노출 항목 · `공통 UX 참고` 줄 | TI-EVT-P · LI-EVT-P #3 · #8, TI-EVT-01-P · LI-EVT-01-P #1 | Common UX COMM-5-g · 5-l · 5-r · 5-v, 기존 화면 (뒤 단계용 확인 항목 1) | 같음 | - | 맞음 (Common UX · 기존 화면, 2026-11-26) |
-| C26 | [Export] 버튼 Gray | T Filled · L Outlined (Common UX Square Button) | TI-EVT-P · LI-EVT-P #6 | Common UX COMM-5-c | 같음 | O | |
-| C27 | [View Details] 청록 버튼 · [Close] 버튼 (기존 컴포넌트) | Common UX Square Filled · Outlined | TI-EVT-02-P · LI-EVT-02-P #8 · #9 | Common UX COMM-5-c · COMM-5-m(3/4) | 같음 | O | |
-| C28 | Resolution Notes 입력 칸 (기존 텍스트 박스) | Common UX Inline Input | LI-EVT-01-P #3 · 케이스 | Common UX COMM-5-t | L만 | O | |
-| C29 | 번호 표시 5가 Notes 칸 위에 있음 | [List] 버튼 옆에 둠 | TI-EVT-01-P · LI-EVT-01-P #5 | 디스크립션 5 = [List] 버튼 | 같음 | - | |
-| C30 | 검색 영역 입력 칸 · 목록 표 · Status Toggle · 페이지 번호 (기존 컴포넌트) | Common UX 컴포넌트(Text Input · Dropdown · Basic Table · Status/Event Level · Toggle Switch · Number Pagination)로 다시 그림 | TI-EVT-P · LI-EVT-P #1 · #3 · #4 · #8 | Common UX COMM-5-p · 5-g · 5-q · 5-l | 같음 | - | |
+| C26 | [Export] 버튼 Gray | T Filled · L Outlined (Common UX Square Button) | TI-EVT-P · LI-EVT-P #6 | Common UX COMM-5-c | 같음 | O | 맞음 (2026-11-26) |
+| C27 | [View Details] 청록 버튼 · [Close] 버튼 (기존 컴포넌트) | Common UX Square Filled · Outlined | TI-EVT-02-P · LI-EVT-02-P #8 · #9 | Common UX COMM-5-c · COMM-5-m(3/4) | 같음 | O | 맞음 (2026-11-26) |
+| C28 | ~~Resolution Notes 입력 칸 (기존 텍스트 박스)~~ | ~~Common UX Inline Input~~ 바뀜 (2026-11-26, Claude, Text Input/Inline의 Typing 변형에 글자 수 · Cancel/Save 아이콘이 없어 데이터를 다 담지 못함 → 기존 화면에서 따옴, "컴포넌트 없이 그린 요소") | LI-EVT-01-P #3 · 케이스 | Common UX COMM-5-t | L만 | - | 해당 없음 (바꿔 그리지 않음, 2026-11-26) |
+| C31 | 상세 Level 값 (기존 그림 Error 칩) | Common UX Status/Event Level | TI-EVT-01-P · LI-EVT-01-P #1 | Common UX COMM-5-g · Status/Event Level (3단계에서 추가) | 같음 | - | 맞음 (2026-11-26) |
+| C32 | 목록 요약 디스크립션 Total Event | Items | TI-EVT-P · LI-EVT-P #2 | Q1의 답 | 같음 | - | 맞음 (2026-11-26) |
+| C33 | 데이터가 없을 때 문구 없음 | 검색 조건과 일치한 항목이 없을 경우 'No results found.' 노출 (디스크립션 3) | TI-EVT-P · LI-EVT-P #3 | Q6의 답 (다른 화면 확인) — TI-STN-03-01 · LI-STN-03-01 · TI-SVS-01 · LI-SVS-01 · TI-STN-08 케이스 | 같음 | O | 맞음 (2026-11-26, 서보경: 통일, No results found. 그대로) |
+| C34 | Module 이름 뒤 (1) (L 목록 · 상세 · Message) | 번호 뺌 (Sample Storage, Flexible Extraction, High-throughput Extraction 등) | LI-EVT-P #3 · 케이스, TI · LI-EVT-01-P #2, TI · LI-EVT-02-P #7 | Q4의 답 | 같음 | O | 맞음 (2026-11-26) |
+| C35 | T 목록 10개 고정 | 9 노출 개수 Dropdown 추가 (10 · 30 · 50 · 100 items, Items 오른쪽), 3 동작 「선택한 개수만큼 노출」 | TI-EVT-P #3 · #9 | Q5의 답, Common UX COMM-5-g | T만 | O | 맞음 (2026-11-26) |
+| C36 | Resolution Notes 입력 중 닫기 · [List] Confirm 없음 | Confirm_016 노출 | LI-EVT-01-P #5 · #6 | Q2의 답, alert-catalog Confirm_016 | L만 | O | 맞음 (2026-11-26) |
+| C37 | 경로 Event History > Event Message | Event Message (Message는 단독으로 뜸) | TI-EVT-02-P · LI-EVT-02-P 경로 | 검토 질의 1 | 같음 | - | 맞음 (2026-11-26) |
+| C38 | Notes 「작성된 Resolution Notes가 있을 경우 노출」 | 「영역은 늘 노출, 작성된 Resolution Notes가 있을 경우 그 내용 노출」 | TI-EVT-01-P #3 | 검토 질의 2 | T만 | O | 맞음 (2026-11-26) |
+| C39 | 4 정의의 검은 취소선 문구 3줄 | 지움 (취소선 없는 문구만 남김) | TI-EVT-P #4 | 검토 질의 3 | T만 | - | 맞음 (2026-11-26) |
+| C40 | Dim(scrim) 1696 · 1628 너비, 패널 앞 흰 칸 · Popup 원본 자리 | Dim을 패널 왼쪽 끝(1920)까지 채우고 Popup · 화면 요소를 Dim 가운데로 (Event History +113px, Event Detail +167px) | TI-EVT-P · LI-EVT-P · TI-EVT-01-P · LI-EVT-01-P 0 | 검토 질의 4 | 같음 | - | 맞음 (2026-11-26) |
+| C41 | Popup이 Dim 위쪽에 치우침 | Popup · 화면 요소를 Dim 세로 가운데로 (Event History +48px, Event Detail +21px) | TI-EVT-P · LI-EVT-P · TI-EVT-01-P · LI-EVT-01-P 0 | 검토 질의 5 | 같음 | - | 맞음 (2026-11-26) |
+| C42 | TI-EVT-P/Case Case 1 (Tooltip) | 케이스 프레임 지움, 디스크립션 3 케이스 참고 줄 빨간 취소선 | TI-EVT-P #3 · 케이스 | 검토 질의 6 | T만 | - | 맞음 (2026-11-26) |
+| C43 | LI-EVT-P/Case Case 1 (Tooltip) | 케이스 프레임 지움(섹션 높이 1822로 맞춤), 디스크립션 3 케이스 참고 줄 빨간 취소선, 화면 예시 글자 Case 1-1 줄 지움 | LI-EVT-P #3 · 케이스 | 검토 질의 7 | L만 | - | 맞음 (2026-11-26) |
+| C44 | 디스크립션 3 「케이스 참고 : TI-EVT-P/Case > Case 1」 · 「… LI-EVT-P/Case > Case 1」 빨간 취소선 줄 (C42 · C43) | 줄 지움, 기획 프레임 · 섹션 높이를 패널에 맞춤 (TI 1418 · LI 1610) | TI-EVT-P · LI-EVT-P #3 | 검토 질의 8 | 같음 | - | 맞음 (2026-11-26) |
+| C45 | Event Message의 [Close All] · 메시지 개수 표기가 보이지 않고 번호 표시가 글자를 가림 | Popup 위에 `1/20`(11) · [Close All](10) 노출, 번호 표시를 각 글자 위로 옮김 | TI-EVT-02-P · LI-EVT-02-P #1 ~ #12 | 검토 질의 9 · 10 | 같음 | - | 맞음 (2026-11-26) |
+| C46 | T 목록 요약 `Items 1,112` · 노출 개수 Dropdown · `Open 20`이 떨어져 있음 | 노출 개수 Dropdown → `of` → `Items 1,112 \| Open 20` 한 줄 (Dropdown은 목록 왼쪽 끝) | TI-EVT-P #2 · #9 | 검토 질의 11 | T만 (L은 Dropdown 없음) | O | 맞음 (2026-11-26) |
+| C47 | 디스크립션의 바뀐 글 빨간색 | 기본 글자색으로 (글은 그대로, 파란 참고 링크는 그대로). 화면 MD 6개의 `color:red`도 뺌 | 6개 화면 디스크립션 | 검토 질의 12 | 같음 | - | 맞음 (2026-11-26) |
+| C48 | 취소선 줄 LI-EVT-P 6 「T-IOS 경우 클릭 시, 윈도우 탐색기가 …」 · LI-EVT-01-P 7 닫기 블록, 참고 ID 10곳 검정 | 취소선 줄 · 블록 지움 (UX 확정 뒤지만 요청자 답대로), 정책 참고 · 공통 UX 참고 ID와 화면 안 참고(TI-EVT-02-P 9 `TI-EVT-01-P`, LI-EVT-P 6 `COMM-5-m(2/4)`)를 파란색으로, TI-EVT-P 번호 9를 Dropdown 위로 | LI-EVT-P #6, LI-EVT-01-P #7, 6개 화면 디스크립션 | 요청자 확인 10, 검토 질의 13 | 같음 | - | 맞음 (2026-11-26) |
+| C49 | 디스크립션 취소선 예전 값 (LI-EVT-P 1 · 3 Type 항목 `~~All, Instrument, Consumable, Reagent, Waste Bin/bottle, System~~`, LI-EVT-01-P 3 `~~500자~~`) | 취소선 글 지우고 새 값과 한 줄로 (`드롭다운 리스트 항목 : All, Instrument, Inventory, Sample, System`, `Type : Instrument, Inventory, Sample, System`, `최대 300자 입력 가능`) | LI-EVT-P #1 · #3, LI-EVT-01-P #3 | 검토 질의 14 | L만 (T에는 취소선 없음) | - | 맞음 (2026-11-26) |
+| C29 | 번호 표시 5가 Notes 칸 위에 있음 | [List] 버튼 옆에 둠 | TI-EVT-01-P · LI-EVT-01-P #5 | 디스크립션 5 = [List] 버튼 | 같음 | - | 맞음 (2026-11-26) |
+| C30 | 검색 영역 입력 칸 · 목록 표 · Status Toggle · 페이지 번호 (기존 컴포넌트) | Common UX 컴포넌트(Text Input · Dropdown · Basic Table · Status/Event Level · Toggle Switch · Number Pagination)로 다시 그림 | TI-EVT-P · LI-EVT-P #1 · #3 · #4 · #8 | Common UX COMM-5-p · 5-g · 5-q · 5-l | 같음 | - | 맞음 (2026-11-26) |
 ## 검토 질의
 
+| 번호 | 받은 날 | 출처 (요청자 · 고객 UX 검토 · 고객 UI 검토) | 질의 | 관련된 곳 (CID · 디스크립션 번호) | 처리 | 처리한 날 |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | 2026-11-26 | 요청자 | Event Message는 단독으로 뜨므로 경로를 Event Message로만 | TI-EVT-02-P · LI-EVT-02-P 경로 | 고침 (C37) | 2026-11-26 |
+| 2 | 2026-11-26 | 요청자 | C17 Notes 문구가 모호함 — 영역은 고정, 내용이 있으면 표기되는 뜻으로 | TI-EVT-01-P #3 | 고침 (C38) | 2026-11-26 |
+| 3 | 2026-11-26 | 요청자 | TI-EVT-P 디스크립션 4의 취소선 문구 제거, 취소선 없는 문구만 남김 | TI-EVT-P #4 | 고침 (C39) | 2026-11-26 |
+| 4 | 2026-11-26 | 요청자 | Event History · Event Detail도 Event Message처럼 Dim 배경을 패널까지 채우고 가운데 정렬 | TI · LI-EVT-P, TI · LI-EVT-01-P | 고침 (C40) | 2026-11-26 |
+| 5 | 2026-11-26 | 요청자 (UX 확정 물음에 「아니」로 다시 요청) | 디스크립션 상자와 사이가 비지 않게 배경 채우고 가운데 정렬 잘 맞춤 — 너비는 질의 4로 이미 맞춰져 있어 세로 가운데까지 맞춤 | TI · LI-EVT-P, TI · LI-EVT-01-P | 고침 (C41) | 2026-11-26 |
+| 6 | 2026-11-26 | 요청자 | TI-EVT-P/Case 프레임은 없어도 됨, 지움 | TI-EVT-P 케이스 | 고침 (C42) | 2026-11-26 |
+| 7 | 2026-11-26 | 요청자 (UX 확정 물음에 다시 요청) | LI-EVT-P/Case 프레임도 지움 | LI-EVT-P 케이스 | 고침 (C43) | 2026-11-26 |
+| 8 | 2026-11-26 | 요청자 (UX 확정 물음에 다시 요청) | 케이스를 지웠으니 디스크립션 3의 케이스 참고 취소선 글자도 지움 | TI-EVT-P · LI-EVT-P #3 | 고침 (C44) | 2026-11-26 |
+| 9 | 2026-11-26 | 요청자 (요청자 확인 8에 답 대신 요청) | Event Message 10 · 11번이 화면에 안 보임 (X · Close All) | TI-EVT-02-P · LI-EVT-02-P #10 · #11 | 고침 (C45) — 앞 차례에서 Figma를 고쳤으나 작업 기록에 빠져 있어, 2026-11-26 Claude가 결과물(Figma)로 확인해 적음 | 2026-11-26 |
+| 10 | 2026-11-26 | 요청자 (같은 답) | 번호 표시가 글자를 가림, 다시 조정 | TI-EVT-02-P · LI-EVT-02-P #1 ~ #12 | 고침 (C45, 위와 같음) | 2026-11-26 |
+| 11 | 2026-11-26 | 요청자 (UX 확정 물음에 다시 요청) | T 목록 요약을 `10 items of Items 1,112 \| Open 20`으로 | TI-EVT-P #2 · #9 | 고침 (C46) | 2026-11-26 |
+| 12 | 2026-11-26 | 요청자 (같은 답) | 디스크립션의 빨간 글씨를 모두 뺌 | 6개 화면 디스크립션 | 고침 (C47). 빨간 취소선 2곳은 요청자 확인 10으로 물음 → 지움 (C48) | 2026-11-26 |
+| 13 | 2026-11-26 | 요청자 (요청자 확인 10 답과 함께) | 공통 UX 참고 · 정책 참고에 색이 안 들어간 곳 있음, 점검 | 6개 화면 디스크립션 | 고침 (C48) | 2026-11-26 |
+| 14 | 2026-11-26 | 요청자 (요청자 확인 11 답과 함께) | 디스크립션의 취소선을 모두 지움 | LI-EVT-P #1 · #3, LI-EVT-01-P #3 | 고침 (C49) | 2026-11-26 |
+
 ## 언어셋
+
+<!-- 4단계 절차 4 (2026-11-26, Claude). 케이스 3이라 기준 = asis 화면 MD(화면 글자 · 디스크립션 (원문) · 케이스). 대조는 상태 `사용` 줄만 -->
+
+| 변경 상태 | CID · 출처 | Language ID | English (변경은 변경 전 → 변경 후) | 번역 대상 (O / - 이유) | 언어셋 DB 대조 |
+| --- | --- | --- | --- | --- | --- |
+| 변경 | TI-EVT-P 화면 1 | | Event Id, Code → Event ID, Code | O | 있음 (LID-EVT-002) |
+| 변경 | TI-EVT-01-P 화면 2 | | FlexibleExtraction → Flexible Extraction | - (고유명사, 공통 `미번역`) | 공통에 있음 (LID-COM-TRM-011) |
+| 변경 | TI-EVT-01-P · LI-EVT-01-P 화면 2 | | Starlet → STARlet | - (고유명사, 공통 `미번역`) | 공통에 있음 (LID-COM-TRM-027) |
+| 변경 | TI-EVT-P · LI-EVT-P 화면 3 | | Sample Processing → Sample Processing (Upper) | - (고유명사, 공통 `미번역`) | 공통에 있음 (LID-COM-TRM-022) |
+| 변경 | LI-EVT-01-P 케이스 Case 1-2 | | 0 /100자 → {n} /300자 | O | 있음 (LID-EVT-035 `{n}/{max} Characters` — 같은 글자로 봄, 요청자 확인 15) |
+| 신규 | TI-EVT-P · LI-EVT-P 디스크립션 3 | LID-STN-015 | No results found. | O | 있음 (setting-protocol 메뉴 파일) |
+| 제거 | TI-EVT-P · LI-EVT-P (asis 화면 글자 화면 2) | | OPEN | - (제거) | 없음 (LID-EVT-021은 이미 `삭제`) |
+| 제거 | TI-EVT-02-P · LI-EVT-02-P (asis 화면 글자 화면 3) | | Consumable | - (제거) | 없음 (Event History 줄 LID-EVT-006은 이미 `삭제`) |
+| DB 맞춤 (추가) | TI-EVT-01-P · LI-EVT-01-P 화면 3 · 케이스 | | Resolution Notes | O | 없음 |
+| DB 맞춤 (CID 추가) | TI-EVT-P | LID-STN-006 | 1개 (Items — 화면 `10 items of Items 1,112`에서 문구만, 요청자 확인 14 ④) | DB 그대로 | 있음 |
+| DB 맞춤 (CID 추가) | TI-EVT-P · LI-EVT-P | | 2개 (300 μL Tip Storage TRM-040 · CFX96 TRM-029 — 인덱스 (1) 뺀 문자, 요청자 확인 14 ③) | DB 그대로 | 공통에 있음 (LID-COM-…) |
+| DB 맞춤 (CID 추가) | LI-EVT-01-P | | 1개 (Flexible Extraction — asis `Flexible Extraction(1)`, 인덱스만 다름) | DB 그대로 | 공통에 있음 (LID-COM-TRM-011) |
+| DB 맞춤 (CID 추가) | TI-EVT-02-P · LI-EVT-02-P | | 1개 (High-throughput Extraction — asis `(1)`, 인덱스만 다름) | DB 그대로 | 공통에 있음 (LID-COM-TRM-009) |
+| DB 맞춤 (제거) | TI-EVT-P (DB 비고: 목록 총 개수) | LID-EVT-044 | {N} of {M} Items (T 목록 요약은 Items 문구만, 요청자 확인 14 ④) | - (제거) | 있음 |
+| DB 맞춤 (CID 추가) | TI-EVT-01-P · LI-EVT-01-P | LID-EVT-010 · LID-SPT-025 | 2개 (Code, Nucleic Acid Extraction) | DB 그대로 | 있음 |
+| DB 맞춤 (CID 추가) | TI-EVT-02-P · LI-EVT-02-P | LID-EVT-005 · LID-SPT-022 · LID-EVT-009 · LID-IVT-001 | 4개 (Instrument, Sample, System, Inventory) | DB 그대로 | 있음 |
+| DB 맞춤 (CID 추가) | TI-EVT-P · LI-EVT-P | LID-SPT-026 · LID-SPT-032 | 2개 (PCR Setup, Plate Sealing) | DB 그대로 | 있음 (sample-tracking 메뉴 파일) |
+| DB 맞춤 (CID 추가) | TI-EVT-P · LI-EVT-P | | 12개 (Sample Storage TRM-006 · Consumable Storage TRM-007 · Sample Pre-treatment TRM-008 · High-throughput Extraction TRM-009 · Flexible Extraction TRM-011 · Universal PCR TRM-014 · Inbound Trolley TRM-019 · Outbound Trolley TRM-020 · Trolley TRM-021 · Spin Tip Storage TRM-035 · MB Tube Storage TRM-037 · Buffer Cartridge Storage TRM-038) | DB 그대로 | 공통에 있음 (LID-COM-…) |
+| DB 맞춤 (CID 추가) | TI-EVT-02-P · LI-EVT-02-P | | 1개 (M9600) | DB 그대로 | 공통에 있음 (LID-COM-TRM-026) |
+| DB 맞춤 (제거) | TI-EVT-P · LI-EVT-P (DB 비고: 상세 보기 / 테이블 컬럼 값 · 필터 레이블) | LID-STN-012 · LID-EVT-015 | Details · Occurred Date | - (제거) | 있음 |
+| DB 맞춤 (제거) | TI-EVT-01-P · LI-EVT-01-P (DB 비고: 목록 이동 버튼 · 테이블 구분 값) | LID-EVT-026 · LID-EVT-041 (01만) | Back to list · Event Code | - (제거) | 있음 |
+| DB 맞춤 (제거) | LI-EVT-01-P (DB 비고: 메모 취소 · 저장 버튼 — 화면은 아이콘만) | LID-STN-021 · LID-STN-022 | Cancel · Save | - (제거) | 있음 |
+| DB 맞춤 (제거) | TI-EVT-02-P · LI-EVT-02-P (DB 비고: Popup 타이틀) | LID-INS-018 | Event | - (제거) | 있음 |
+
+- **대조는 문구만 (2026-11-26 서보경, 요청자 확인 14):** 언어셋 대상은 문자 그 자체 — `:` 같은 특수문자, 값(`{date}` · `{id}` · 숫자), Module · Unit 인덱스 `(n)`은 빼고 봄. 그래서 TI · LI-EVT-02-P `Event Code:` · `Type:` · `Module:` · `Unit:` = LID-EVT-041 · 004 · 012 · 013, TI · LI-EVT-01-P `Updated Date/Time. {date}` · `Updated by. {id}` = LID-EVT-027 · 028 (모두 있음, CID도 이미 있음). `{n} items` · `of`는 대상 아님(Items만), `{n}/{m}`은 문자가 없어 대상 아님. asis와 인덱스만 다른 Module 이름(LI-EVT-P 목록 `Sample Storage(1)` 등, `CFX96-1`)은 바뀌지 않은 글자로 봄
+- 언어셋 DB에서 이 화면 CID인데 표에 없어도 두는 것(판단, 2026-11-26 Claude): Select a Date · Sun ~ Sat · Done (LID-RUN-021 · LID-STA-009 ~ 015 · LID-EVT-025) — 1 기간 검색이 여는 Common UX Date Calendar의 글자. 기획 프레임에 그리지 않아 표에 없을 뿐 화면에서 그대로 씀
+- 화면 MD "화면 표기 글자" 표의 Language ID: `있음`과 바뀌지 않은 줄의 메뉴 파일 ID를 채움 (2026-11-26). `변경` 줄 · 공통에만 있는 줄은 비움. 요청자 확인 14 답 뒤 `Event Code:` · `Type:` · `Module:` · `Unit:` · `Updated …` 줄도 채움
+
+**새로 넣을 줄** (언어셋 DB 대조가 `없음`이고 `제거`가 아닌 줄)
+
+| English | Type | German | Portuguese | Spanish | Italian | French | 검증 상태 | 가장 긴 언어 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Resolution Notes | title | Lösungsnotizen | Notas de Resolução | Notas de Resolución | Note di Risoluzione | Notes de résolution | AI 번역 | ES · IT · FR (19) |
 
 ## 요청자 확인
 
@@ -323,6 +417,17 @@ started: 2026-11-25
 | 1 | 2026-11-25 | 1단계 절차 4 순서 3 (IA와 화면이 다른 곳) | 화면 이름: IA Lv.2는 `Event Detail` · `Event Message`, 화면은 `Event History Detail` · `Event Message Popup`. 어느 이름으로 그릴지 | TI-EVT-01-P · LI-EVT-01-P · TI-EVT-02-P · LI-EVT-02-P | | IA 이름대로 (`Event Detail` · `Event Message`) (2026-11-25, 서보경) |
 | 2 | 2026-11-25 | 1단계 절차 4 순서 3 (IA와 화면이 다른 곳) | 짝 화면 관계: IA T-IOS 줄은 `짝 화면 동일 Y`인데, 화면은 L-IOS에만 Status Toggle · [Mark all as Closed] · Resolution Notes 입력이 있어 다름(화면 MD `tl_relation: 기능 추가`). IA를 화면에 맞출지 | TI-EVT-P · TI-EVT-01-P (짝 LI-EVT-P · LI-EVT-01-P) | | IA 그대로 — T · L은 같은 화면이고 기능 차이일 뿐 (2026-11-25, 서보경) |
 | 3 | 2026-11-25 | 1단계 절차 5 질문 6 | 대상 화면의 반영 대기 항목 23개(묶음 1 ~ 6)를 묶음마다 반영할지 | "대상 화면의 반영 대기 항목" 묶음 1 ~ 6 | | 묶음 1 ~ 5 반영 (1 · 3 · 4 · 5는 추천대로, 2는 「T-IOS는 Status 변경 기능 없이 목록에 상태값만 표기」로 반영), 묶음 6 제외 (바꾸지 않음) (2026-11-25, 서보경) |
+| 5 | 2026-11-26 | 4단계 절차 1 (C33 답 대신 되물음) | 「데이터 없음」 문구는 다른 화면에서 어디에 쓰나, 보통 무엇을 쓰나 → 저장소 사용처를 보여 줌(No results found. LID-STN-015: Protocol · Tube · Assay Pack Setting / No {대상} found.: Tube · Assay Pack 등록 없음 / There are no tests in progress. / No registered modules available / No item). 추천 No results found. 그대로, 다른 안 No events found. | TI-EVT-P · LI-EVT-P #3 | 'No results found.'로 둔 채 기다림 | No results found. 그대로, 통일 (2026-11-26, 서보경) |
+| 6 | 2026-11-26 | 4단계 절차 2 (예외, 질의 7 결과 보고) | TI-EVT-P · LI-EVT-P 기획 프레임에서 Dim 아래(디스크립션 상자 쪽 세로)가 흰 바탕으로 남음. 세로로도 Dim을 채울지 | TI-EVT-P · LI-EVT-P 0 | 너비 · 세로 가운데만 맞춘 채 둠 | 세로는 그대로 둠 (2026-11-26, 서보경), 고침 없음 |
+| 7 | 2026-11-26 | 4단계 절차 3 (UX 확정 물음) | 사용자 확인 목록과 질의가 모두 풀렸습니다. 최종으로 UX 확정을 하시겠습니까? | 6개 화면 | | UX 확정 (2026-11-26, 서보경) |
+| 8 | 2026-11-26 | 4단계 절차 3 순서 2 · 3 | 기계 검사를 한 번 더 검토할지 (추천 검토함, 절차 1 뒤 C37 ~ C44로 고침) · 요건 1 UI 작업 줄 값 (추천 `대상`: C35 · C30 · C26 · C27 · C40 · C41 배치 · 요소, C33 · C20 · C2 · C34 화면 표기 글자. 디자인 화면은 읽지 않아 그곳 글자는 보지 못함). Ver은 케이스 3이라 묻지 않음 | 요건 1, 6개 화면 | | 답 대신 검토 질의 9 · 10 요청 (2026-11-26, 서보경) → UX 확정 다시 물음 |
+| 9 | 2026-11-26 | 4단계 절차 2 순서 5 (UX 확정 다시 물음) | 사용자 확인 목록과 질의가 모두 풀렸습니다. 최종으로 UX 확정을 하시겠습니까? | 6개 화면 | | 답 대신 검토 질의 11 · 12 요청 (2026-11-26, 서보경) |
+| 10 | 2026-11-26 | 4단계 절차 2 (예외, 검토 질의 12) | 빨간 글씨를 뺄 때 빨간 취소선 2곳(LI-EVT-P 6 「T-IOS 경우 클릭 시, 윈도우 탐색기가 …」 줄, LI-EVT-01-P 7 「닫기」 블록)은 줄을 지울지, 검은 취소선으로 둘지. 추천 지움 (검토 질의 3 · 8과 같음, 단 UX 확정 뒤에는 블록을 지우지 않는 규칙이 있어 7 블록은 요청자 결정 필요) | LI-EVT-P #6, LI-EVT-01-P #7 | 색만 검정으로 바꾸고 취소선은 둔 채 기다림 | 줄 지움 (2026-11-26, 서보경) → C48. 같은 답에 「참고 색 점검 후 UI 확정」 → 검토 질의 13, 기계 검사, UX 확정으로 봄 |
+| 11 | 2026-11-26 | 4단계 절차 3 순서 3 | 요건 1 UI 작업 줄 값 (추천 `대상`: C46 · C35 · C30 · C26 · C27 · C40 · C41 · C45 배치 · 요소, C33 · C20 · C2 · C34 화면 표기 글자. 디자인 화면은 읽지 않아 그곳 글자는 보지 못함). Ver은 케이스 3이라 묻지 않음. 「UI 확정해줘」를 UX 확정으로 본 것도 함께 알림 | 요건 1 | | `대상 아님` — 우선 UI 작업 없음 (2026-11-26, 서보경). 같은 답에 검토 질의 14 |
+| 12 | 2026-11-26 | 4단계 절차 2 순서 5 (UX 확정 뒤 질의 14를 고쳐 다시 물음) | 사용자 확인 목록과 질의가 모두 풀렸습니다. 최종으로 UX 확정을 하시겠습니까? | 6개 화면 | | UX 확정 (2026-11-26, 서보경) |
+| 13 | 2026-11-26 | 4단계 절차 3 순서 2 | 기계 검사를 한 번 더 검토할까요? (마지막 검사 뒤 LI-EVT-P 1 · 3, LI-EVT-01-P 3 취소선 지움, C49. 추천 검토함) | LI-EVT-P · LI-EVT-01-P | | 하지 않음 (2026-11-26, 서보경) |
+| 14 | 2026-11-26 | 4단계 절차 4 순서 5 (언어셋 비슷한 글자) | 언어셋 DB에 비슷한 글자가 있습니다. 같은 글자로 볼까요? ① `Event Code:` · `Type:` · `Module:` · `Unit:` ↔ LID-EVT-041 · 004 · 012 · 013 (콜론만 다름) ② `Updated Date/Time. {date}` · `Updated by. {id}` ↔ LID-EVT-027 · 028 (마침표 · 값만 다름) ③ `300 μL Tip Storage (1)` · `CFX96 (1)` ↔ 공통 LID-COM-TRM-040 · 029 (번호만 다름) ④ T 목록 요약 `{n} items` · `of` ↔ LID-EVT-044 `{N} of {M} Items` ⑤ `{n} /300자` ↔ LID-EVT-035 `{n}/{max} Characters`. 추천 모두 같은 글자로 봄 | TI · LI-EVT-02-P, TI · LI-EVT-01-P, TI · LI-EVT-P, LI-EVT-01-P 케이스 | Language ID 비운 채 "새로 넣을 줄"에 임시로 둠 | 문구만 봄 — ① `:` 빼고 ② Updated Date/Time · Updated by 문구만 ③ 인덱스 (n) 빼고 ④ Items만. ⑤는 답 없음 → 15로 다시 물음 (2026-11-26, 서보경) |
+| 15 | 2026-11-26 | 4단계 절차 4 순서 5 (14의 ⑤) | `{n} /300자`를 LID-EVT-035 `{n}/{max} Characters`와 같은 글자로 볼지 (①~④는 모두 DB에 있다고 답함). 추천 같은 글자 | LI-EVT-01-P 케이스 Case 1-2 | Language ID 비운 채 "새로 넣을 줄"에 임시로 둠 | 같은 글자 (2026-11-26, 서보경) → "언어셋" 그 줄 대조 `있음 (LID-EVT-035)`, "새로 넣을 줄"에서 지움 |
 | 4 | 2026-11-25 | 1단계 절차 5 질문 7 | 위 요건 목록과 흐름대로 진행할지 (2단계로 넘어갈지) | 요건 1 | | 그대로 진행 (2026-11-25, 서보경). 이어서 「1단계까지만 하고 2단계는 멈춤」 (2026-11-25, 서보경) |
 
 ## 이 작업의 논의 대상
@@ -332,5 +437,12 @@ started: 2026-11-25
 
 ## 이 작업이 남긴 것
 
-- 다른 화면의 반영 대기 항목:
-- 고친 카탈로그 줄:
+- 다른 화면의 반영 대기 항목: 없음 (영향 화면 없음)
+- 5단계 정보 업데이트 (2026-11-26, Claude):
+  - IA: 해당 없음 (새 CID 없음, 화면 이름 Event Detail · Event Message는 IA에 이미 있음)
+  - 반영 대기: 작업 중 20개(TI · LI-EVT-P · 01-P · 02-P) → `반영 완료 (2026-11-26)`, `pending/closed.md`로 옮김
+  - L-IOS Client Mode 표: `policy/client-mode-matrix.csv`에 `Event History,Event Message,,,View,O,O,X` 줄 더함 (Q3 답 · POL-EVT-003 규칙 1). User Type 표는 그대로 (값이 같음)
+  - 정책: 해당 없음 (이 작업의 논의 대상 없음)
+  - 언어셋: `language-set/db/event-history.md` 새 줄 22개(LID-EVT-047 Resolution Notes, LID-EVT-048 ~ 064 공통 참조 모듈 · 유닛 이름 17개, ref LID-STN-015 · LID-SPT-025 · 026 · 032), CID 더함 6줄(LID-EVT-005 · 009 · 010, ref LID-IVT-001 · LID-SPT-022 · LID-STN-006), CID 뺌 1줄(LID-EVT-041), 삭제 7줄(LID-EVT-044 · 015 · 026, ref LID-STN-012 · 021 · 022 · LID-INS-018). 항목 이력 35줄. 화면 MD Language ID 42칸 채움 (`Event ID, Code` LID-EVT-002, `{n} /300자` LID-EVT-035 포함). `제거` 줄 OPEN · Consumable은 원본에 없던 글자라 할 일 없음
+  - 화면 변경 이력: `screen-history.md`에 T · L 짝 3줄 (Event History · Event Detail · Event Message)
+- 고친 카탈로그 줄: alert/alert-catalog.csv Confirm_016 사용 화면에 LI-EVT-01-P 더함 (2026-11-26, Q2 답)

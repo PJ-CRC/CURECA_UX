@@ -1,0 +1,37 @@
+{
+  "id": "brex-gram-2_R001",
+  "kind": "request",
+  "team": "cureca",
+  "status": "완료",
+  "at": "2026-11-26T15:43:44+09:00",
+  "createdAt": "2026-11-26T15:42:55+09:00",
+  "by": "하승현",
+  "doneBy": "Claude",
+  "pc": "BREX_GRAM_2",
+  "reqId": "R001",
+  "fileKey": "etCQFF3CTf1EA6C79d4BBf",
+  "fileName": "UX AI TEST",
+  "page": "Policy Setting_tobe",
+  "frame": "",
+  "nodeId": "",
+  "type": "요청",
+  "layout": "",
+  "text": "Language db 어디에 저장되어 있어?\nUX 문서 > 기준 데이터에 있는 언어셋 말고",
+  "note": "Language DB는 규칙 저장소 `.history/guides/language-set/db/` 폴더에 있습니다(언어셋 원본).\n\n**위치 · 구성**\n- `.history/guides/language-set/db/{메뉴}.md` (22개): 메뉴마다 화면 글자와 번역(Language ID `LID-{메뉴}-{번호}` · 상태 · 검증 상태 · English · Korean · German · Portuguese · Spanish · Italian · French)\n  - Policy Setting은 `db/setting-policy.md` (84행, Language ID `LID-STN-…`)\n- `db/common.md`: 여러 화면에서 같이 쓰는 말의 번역 기준(`LID-COM-…`)\n- `db/history.md`: 버전 · 항목 이력(추가 · 변경 · 삭제)\n- 설명서: `.history/guides/language-set/README.md`\n- 받은 엑셀(출처, 고치지 않음): `language-set/source/CURECA_Language_Set_v0.06.xlsx` 등\n\n**기준 데이터의 언어셋과 차이**\n- UX 문서 > 기준 데이터의 언어셋은 `.history/guides/glossary/language-set/sheet01~07.csv`(엑셀 시트를 그대로 옮긴 표)입니다.\n- `language-set/db/`는 UX 문서 목록에 따로 올라가 있지 않은 폴더이고, 언어셋은 여기서 고치며 엑셀은 필요할 때 이 원본에서 뽑습니다(README 기준).\n\n참고: Figma는 고치지 않았습니다(질문 답변).\n\n작업 기준: basis 2026-11-26 15:45 · 작업규칙 CURECA 작업규칙 (rules) · 정책서 정책서 (policy) · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 (glossary) · 화면 정의서 화면 정의서 (screens)",
+  "shot": "",
+  "shots": [],
+  "images": [],
+  "frames": [],
+  "marks": [],
+  "ask": null,
+  "replies": [],
+  "raws": [
+    {
+      "at": "2026-11-26T15:43:50+09:00",
+      "text": "R001은 질문에 답만 하는 요청이라 Figma는 고치지 않고 「완료」로 바꿨습니다.\n\n- **답변**: Language DB는 `.history/guides/language-set/db/` 폴더에 있습니다. 메뉴마다 화면 글자와 번역을 담은 파일이 22개이고, 공통 번역 기준 `common.md`와 버전 이력 `history.md`가 함께 있습니다. Policy Setting 화면의 번역은 `db/setting-policy.md`에 있습니다.\n- **기준 데이터와의 차이**: 「UX 문서 > 기준 데이터」의 언어셋은 `glossary/language-set/sheet01~07.csv`로, 엑셀 시트를 그대로 옮긴 표입니다. `language-set/README.md`에 따르면 언어셋은 `db/` 폴더에서 고치고, 엑셀은 필요할 때 여기서 뽑습니다.\n- **처리 과정**: 시작 전에 Figma 파일이 열리는지와 작업 페이지가 「Policy Setting_tobe」로 맞는지 확인했습니다.\n- **규칙 문서**: 이 PC에 적용된 작업규칙·정책서 등 UX 문서 내용은 읽지 않았습니다. 질문 답변이라 필요 없다고 판단했지만, 「요청마다」 2단계는 읽고 처리하라고 정하고 있습니다. 완료 note 끝의 작업 기준 줄에도 적용된 문서 이름만 적었습니다.",
+      "cut": false
+    }
+  ],
+  "work": "",
+  "handoff": null
+}

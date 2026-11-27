@@ -38,7 +38,32 @@
     "language-set/sheet06.csv",
     "language-set/sheet06.styles.json",
     "language-set/sheet07.csv",
-    "language-set/sheet07.styles.json"
+    "language-set/sheet07.styles.json",
+    "../language-set/README.md",
+    "../language-set/db/common.md",
+    "../language-set/db/dashboard-all.md",
+    "../language-set/db/dashboard.md",
+    "../language-set/db/event-history.md",
+    "../language-set/db/information.md",
+    "../language-set/db/instruments.md",
+    "../language-set/db/inventory.md",
+    "../language-set/db/login.md",
+    "../language-set/db/material-setup.md",
+    "../language-set/db/profile.md",
+    "../language-set/db/quick-start.md",
+    "../language-set/db/run.md",
+    "../language-set/db/sample-tracking.md",
+    "../language-set/db/setting-account.md",
+    "../language-set/db/setting-assay-pack.md",
+    "../language-set/db/setting-lis.md",
+    "../language-set/db/setting-policy.md",
+    "../language-set/db/setting-protocol.md",
+    "../language-set/db/setting-smtp.md",
+    "../language-set/db/setting-system.md",
+    "../language-set/db/setting-tube.md",
+    "../language-set/db/statistical-analysis.md",
+    "../language-set/db/test-management.md",
+    "../language-set/db/history.md"
   ],
   "filesDir": "",
   "format": "files",
@@ -73,13 +98,38 @@
     "status-values.csv": "상태값 · status-values.csv",
     "terms.csv": "용어 · terms.csv",
     "test-items.csv": "검사 항목 · test-items.csv",
-    "test-stages.csv": "검사 단계 · test-stages.csv"
+    "test-stages.csv": "검사 단계 · test-stages.csv",
+    "../language-set/db/common.md": "공통 (A ~ D) · common.md",
+    "../language-set/db/dashboard-all.md": "Dashboard (All) · dashboard-all.md",
+    "../language-set/db/dashboard.md": "Dashboard · dashboard.md",
+    "../language-set/db/event-history.md": "Event History · event-history.md",
+    "../language-set/db/information.md": "Information · information.md",
+    "../language-set/db/instruments.md": "Instrument · instruments.md",
+    "../language-set/db/inventory.md": "Inventory · inventory.md",
+    "../language-set/db/login.md": "Login · login.md",
+    "../language-set/db/material-setup.md": "Material Setup · material-setup.md",
+    "../language-set/db/profile.md": "Profile · profile.md",
+    "../language-set/db/quick-start.md": "Quick Start · quick-start.md",
+    "../language-set/db/run.md": "Run · run.md",
+    "../language-set/db/sample-tracking.md": "Sample Tracking · sample-tracking.md",
+    "../language-set/db/setting-account.md": "Account Setting · setting-account.md",
+    "../language-set/db/setting-assay-pack.md": "Assay Pack Setting · setting-assay-pack.md",
+    "../language-set/db/setting-lis.md": "LIS Setting · setting-lis.md",
+    "../language-set/db/setting-policy.md": "Policy Setting · setting-policy.md",
+    "../language-set/db/setting-protocol.md": "Protocol Setting · setting-protocol.md",
+    "../language-set/db/setting-smtp.md": "SMTP Setting · setting-smtp.md",
+    "../language-set/db/setting-system.md": "System Setting · setting-system.md",
+    "../language-set/db/setting-tube.md": "Tube Setting · setting-tube.md",
+    "../language-set/db/statistical-analysis.md": "Statistical Analysis · statistical-analysis.md",
+    "../language-set/db/test-management.md": "Test Management · test-management.md",
+    "../language-set/db/history.md": "언어셋 이력 · history.md",
+    "../language-set/README.md": "구성 · 쓰는 법 · README.md"
   },
-  "updatedAt": "2026-11-20T06:48:48.801Z",
-  "note": "2026-11-20 CURECA_AI_20261120_8bceea1로 맞춤",
+  "updatedAt": "2026-11-26T06:17:27.270Z",
+  "note": "2026-11-20 CURECA_AI_20261120_8bceea1로 맞춤 / 2026-11-26 언어셋 원본(language-set/db/*.md, v0.06) 24개를 목록에 더함 / 2026-11-26 언어셋 README 더함 / 2026-11-26 언어셋 원본을 「언어셋」 묶음으로, 예전 엑셀 묶음은 「언어셋.xlsx」",
   "books": {
     "language-set": {
-      "title": "언어셋",
+      "title": "언어셋.xlsx",
       "source": "../language-set/source/CURECA_Language Set_v0.03.xlsx",
       "sheets": {
         "language-set/sheet01.csv": "표지",
@@ -2175,5 +2225,42 @@
         "size": 10
       }
     }
-  }
+  },
+  "fileGroups": [
+    {
+      "title": "언어셋",
+      "files": [
+        "../language-set/README.md",
+        "../language-set/db/common.md",
+        "../language-set/db/dashboard-all.md",
+        "../language-set/db/dashboard.md",
+        "../language-set/db/event-history.md",
+        "../language-set/db/information.md",
+        "../language-set/db/instruments.md",
+        "../language-set/db/inventory.md",
+        "../language-set/db/login.md",
+        "../language-set/db/material-setup.md",
+        "../language-set/db/profile.md",
+        "../language-set/db/quick-start.md",
+        "../language-set/db/run.md",
+        "../language-set/db/sample-tracking.md",
+        "../language-set/db/setting-account.md",
+        "../language-set/db/setting-assay-pack.md",
+        "../language-set/db/setting-lis.md",
+        "../language-set/db/setting-policy.md",
+        "../language-set/db/setting-protocol.md",
+        "../language-set/db/setting-smtp.md",
+        "../language-set/db/setting-system.md",
+        "../language-set/db/setting-tube.md",
+        "../language-set/db/statistical-analysis.md",
+        "../language-set/db/test-management.md",
+        "../language-set/db/history.md"
+      ],
+      "strip": "변경 이력",
+      "keep": [
+        "../language-set/db/history.md",
+        "../language-set/README.md"
+      ]
+    }
+  ]
 }

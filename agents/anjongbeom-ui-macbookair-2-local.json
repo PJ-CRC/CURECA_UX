@@ -1,18 +1,38 @@
 {
-  "reportAt": "2026-11-25T19:00:40+09:00",
+  "reportAt": "2026-11-26T18:25:50+09:00",
   "pc": "anjongbeom-ui-MacBookAir-2.local",
   "slug": "anjongbeom-ui-macbookair-2-local",
   "user": "안종범",
   "os": "mac",
-  "version": "0.32.17",
-  "alive": false,
-  "status": "dead",
-  "msg": "요청을 기다리는 중",
-  "statusAt": "2026-11-25T18:51:14+09:00",
+  "version": "0.32.29",
+  "alive": true,
+  "status": "idle",
+  "msg": "마지막 처리: PENDING R002 · 컨텍스트 14%",
+  "statusAt": "2026-11-26T18:25:38+09:00",
   "claude": "따로 설치",
   "claudeWay": "cli",
   "autoWatch": true,
   "events": [
+    {
+      "at": "2026-11-26T17:30:41+09:00",
+      "kind": "start",
+      "text": "감시 시작"
+    },
+    {
+      "at": "2026-11-26T17:30:37+09:00",
+      "kind": "stop",
+      "text": "감시 중지"
+    },
+    {
+      "at": "2026-11-26T16:00:12+09:00",
+      "kind": "start",
+      "text": "감시 시작"
+    },
+    {
+      "at": "2026-11-26T16:00:09+09:00",
+      "kind": "stop",
+      "text": "감시 중지"
+    },
     {
       "at": "2026-11-25T15:04:47+09:00",
       "kind": "start",
@@ -62,29 +82,17 @@
       "at": "2026-11-20T11:06:17+09:00",
       "kind": "stop",
       "text": "감시 중지"
-    },
-    {
-      "at": "2026-11-19T17:03:45+09:00",
-      "kind": "start",
-      "text": "감시 시작"
-    },
-    {
-      "at": "2026-11-19T16:51:29+09:00",
-      "kind": "stop",
-      "text": "감시 중지"
-    },
-    {
-      "at": "2026-11-19T13:41:51+09:00",
-      "kind": "start",
-      "text": "감시 시작"
-    },
-    {
-      "at": "2026-11-19T13:40:37+09:00",
-      "kind": "stop",
-      "text": "감시 중지"
     }
   ],
   "turns": [
+    {
+      "at": "2026-11-26T17:32:36+09:00",
+      "what": "PENDING R002 · 강도 medium",
+      "resume": false,
+      "end": "2026-11-26T17:37:22+09:00",
+      "ok": true,
+      "sec": 285
+    },
     {
       "at": "2026-11-25T15:51:05+09:00",
       "what": "PENDING R002 · 강도 medium",

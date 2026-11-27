@@ -11,8 +11,8 @@ author: 이상헌
 client_mode: []
 user_type: [Service]
 policies: [POL-TST-008 · DS-0012, POL-TST-010]
-basis: 2026-11-26 09:27 · history 4079e90d
-basis_versions: rules @2026-11-26 · policy @2026-11-25 · glossary @2026-11-25 · screens @2026-11-26 · common_ux @2026-11-25
+basis: 2026-11-26 17:09 · history 402e669e
+basis_versions: rules @2026-11-26 14:30 · policy @2026-11-25 21:21 · glossary @2026-11-26 15:17 · screens @2026-11-26 16:15 · common_ux @2026-11-25 16:08
 source: tobe
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3667-11462
 ---
@@ -55,6 +55,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 **2-1  다른 Row의 Details**
 - 동작
   - 선택 시 패널 내용 변경
+  - <span style="color:red">Active · Inactive를 바꾸고 [Save] 없이 선택 시 바꾼 값 버림 (다시 묻지 않음)</span>
 
 **3  File Details**
 - 정의
@@ -64,7 +65,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
   - Import Info : Registered Date/Time(YYYY-MM-DD hh:mm:ss), User ID(service)
   - Reagent 정보 : 파일 종류별 항목 (아래 「파일 종류별 노출 항목」)
 - Active(Active · Inactive 태그)
-  - Master : 최신 버전 강제 활성(Active 고정), [Active] · [Inactive] 버튼 비활성(변경 불가)
+  - Master : 최신 버전 강제 활성(Active 고정), [Active] · [Inactive] 버튼 <span style="color:red">미노출</span>(변경 불가)
   - Pretreatment · Extraction · PCR : 최신 버전 등록 시 최신 버전 자동 활성, [Active] · [Inactive]로 변경 가능
   - 같은 Reagent(File type · Product Name 동일)은 1개만 활성, 다른 버전을 Active로 바꾸면 기존 활성 버전은 Inactive로 전환
   - 변경 후 하단 [Save] 선택 시 반영
@@ -89,6 +90,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 **3-1  [닫기] 버튼**
 - 동작
   - 선택 시 패널 닫힘, [TI-STN-08] 목록으로 돌아가며 Row 활성화 해제
+  - <span style="color:red">Active · Inactive를 바꾸고 [Save] 없이 선택 시 바꾼 값 버림 (다시 묻지 않음)</span>
 
 **4  [Delete] 버튼, [Save] 버튼**
 - [Delete] 버튼
@@ -105,7 +107,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
   - 동작
     - Active로 바꾼 뒤 선택 시 Confirm 노출 : Confirm_029
     - Inactive로 바꾼 뒤 선택 시 Confirm 노출 : Confirm_030
-    - 확인 시 반영
+    - 확인 시 반영<span style="color:red"> (Confirm_029의 [Activate]는 Toast 미노출)</span>
 - 정책 참고 : POL-TST-008
 
 ## 케이스
@@ -165,7 +167,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 | 4 | Alert | Alert_042 | [Delete] 선택 시 적용 중(Active) 파일 | OK 선택 시 → 해당 Alert 닫힘, 삭제하지 않음, 선택 유지 |
 | 4 | Confirm | Confirm_026 | [Delete] 선택 시 (Active 아닌 파일) | Delete 선택 시 → 선택한 파일 등록 정보 삭제 & Toast 노출 (The selected files have been deleted.) / Cancel 선택 시 → 해당 Confirm 닫힘, 선택 유지 |
 | 4 | Toast | Toast_001 | Confirm_026 [Delete]로 삭제 완료 | - |
-| 4 | Confirm | Confirm_029 | Active로 바꾸고 [Save] 선택 시 | Activate 선택 시 → 선택 버전 활성 & 기존 활성 버전 자동 비활성 (동시에 1개만) & Toast / Cancel 선택 시 → 변경 없음 |
+| 4 | Confirm | Confirm_029 | Active로 바꾸고 [Save] 선택 시 | Activate 선택 시 → 선택 버전 활성 & 기존 활성 버전 자동 비활성 (동시에 1개만) <span style="color:red">~~& Toast~~</span> / Cancel 선택 시 → 변경 없음 |
 | 4 | Confirm | Confirm_030 | Inactive로 바꾸고 [Save] 선택 시 | Deactivate 선택 시 → 해당 버전 비활성 & Toast ({version} has been deactivated.) / Cancel 선택 시 → 변경 없음 |
 | 4 | Toast | Toast_002 | Confirm_030 [Deactivate]로 비활성 완료 | - |
 
@@ -187,90 +189,90 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 
 | 화면 표기 글자 (영어) | 출처 | Language ID |
 | --- | --- | --- |
-| File details | 화면 3 · 케이스 Case 1-1 ~ 4-1 | |
+| File details | 화면 3 · 케이스 Case 1-1 ~ 4-1 | LID-STN-384 |
 | File Info | 화면 3 · 케이스 Case 1-1 ~ 4-1 | |
-| File name | 화면 3 · 케이스 Case 1-1 | |
-| File type | 화면 3 · 케이스 Case 1-1 | |
-| File Version | 화면 3 · 케이스 Case 1-1 | |
-| File Created Date/Time | 화면 3 · 케이스 Case 1-1 | |
-| Active | 화면 3 · 케이스 Case 1-1 ~ 4-1 | |
-| Inactive | 화면 3 · 케이스 Case 2-1 ~ 4-1 | |
-| Import Info | 화면 3 · 케이스 Case 1-1 ~ 4-1 | |
-| Registered Date/Time | 화면 3 · 케이스 Case 1-1 | |
-| User ID | 화면 3 · 케이스 Case 1-1 | |
-| Reagent Basic Info | 화면 3 · 케이스 Case 2-1 ~ 4-1 | |
-| Product Name | 화면 3 · 케이스 Case 2-1 ~ 4-1 | |
-| Product Code | 화면 3 · 케이스 Case 2-1 ~ 4-1 | |
-| Test Item Name | 화면 3 · 케이스 Case 4-1 | |
-| Test Item Code | 화면 3 · 케이스 Case 4-1 | |
-| Test Group ID | 화면 3 · 케이스 Case 1-1 · 4-1 | |
-| Test Group Name | 케이스 Case 1-1 | |
-| Test Group Code | 화면 3 · 케이스 Case 1-1 · 4-1 | |
+| File name | 화면 3 · 케이스 Case 1-1 | LID-STN-361 |
+| File type | 화면 3 · 케이스 Case 1-1 | LID-STN-363 |
+| File Version | 화면 3 · 케이스 Case 1-1 | LID-STN-385 |
+| File Created Date/Time | 화면 3 · 케이스 Case 1-1 | LID-STN-386 |
+| Active | 화면 3 · 케이스 Case 1-1 ~ 4-1 | LID-STN-374 |
+| Inactive | 화면 3 · 케이스 Case 2-1 ~ 4-1 | LID-STN-375 |
+| Import Info | 화면 3 · 케이스 Case 1-1 ~ 4-1 | LID-STN-387 |
+| Registered Date/Time | 화면 3 · 케이스 Case 1-1 | LID-STN-372 |
+| User ID | 화면 3 · 케이스 Case 1-1 | LID-STN-073 |
+| Reagent Basic Info | 화면 3 · 케이스 Case 2-1 ~ 4-1 | LID-STN-410 |
+| Product Name | 화면 3 · 케이스 Case 2-1 ~ 4-1 | LID-STN-147 |
+| Product Code | 화면 3 · 케이스 Case 2-1 ~ 4-1 | LID-STN-411 |
+| Test Item Name | 화면 3 · 케이스 Case 4-1 | LID-STN-426 |
+| Test Item Code | 화면 3 · 케이스 Case 4-1 | LID-STN-427 |
+| Test Group ID | 화면 3 · 케이스 Case 1-1 · 4-1 | LID-STN-389 |
+| Test Group Name | 케이스 Case 1-1 | LID-STN-390 |
+| Test Group Code | 화면 3 · 케이스 Case 1-1 · 4-1 | LID-STN-391 |
 | Test Target Selectable | 화면 3 · 케이스 Case 4-1 | |
-| Test Target Names ({n}) | 화면 3 · 케이스 Case 4-1 (n = 7) | |
-| Sample Type Mapping Info ({n}) | 화면 3 · 케이스 Case 4-1 (n = 4) | |
-| Sample Type ID | 화면 3 · 케이스 Case 1-1 · 4-1 | |
-| Sample Type Name | 케이스 Case 1-1 | |
-| Sample Type Code | 화면 3 · 케이스 Case 1-1 · 4-1 | |
-| Test Group Info | 케이스 Case 1-1 | |
-| Sample Type Info | 케이스 Case 1-1 | |
-| Barcode Schema Info | 케이스 Case 1-1 | |
-| Barcode Schema ID | 케이스 Case 1-1 ~ 4-1 | |
-| Barcode Schema Name | 케이스 Case 1-1 ~ 4-1 | |
-| Barcode Length | 케이스 Case 1-1 | |
-| Expiration Date Segment Order | 케이스 Case 1-1 | |
-| Segment Info ({n}) | 케이스 Case 1-1 (n = 8) | |
-| Segment Info | 케이스 Case 2-1 ~ 4-1 | |
-| Segment Order | 케이스 Case 1-1 | |
-| Segment Name | 케이스 Case 1-1 | |
-| Segment Length | 케이스 Case 1-1 | |
-| Segment {n} | 케이스 Case 2-1 ~ 4-1 (n = 1 · 3 · 7) | |
-| Item Group Info | 케이스 Case 1-1 | |
-| Item Group ID | 케이스 Case 1-1 ~ 4-1 | |
-| Item Group Name | 케이스 Case 1-1 ~ 4-1 | |
-| PCR Reagent Socket Component Info | 케이스 Case 1-1 | |
-| Component ID | 케이스 Case 1-1 · 4-1 | |
-| Component Type | 케이스 Case 1-1 · 4-1 | |
-| Color Code | 케이스 Case 1-1 | |
-| Barcode Info | 케이스 Case 2-1 ~ 4-1 | |
-| Max Rxns | 케이스 Case 2-1 ~ 4-1 | |
-| Max Usage Count | 케이스 Case 2-1 ~ 4-1 | |
-| Quantity Info | 케이스 Case 2-1 ~ 4-1 | |
-| Quantity | 케이스 Case 2-1 | |
-| Base Unit | 케이스 Case 2-1 | |
-| Packaging Unit | 케이스 Case 2-1 | |
-| Storage Location Info | 케이스 Case 2-1 ~ 4-1 | |
-| Module Code | 케이스 Case 2-1 | |
-| Unit Code | 케이스 Case 2-1 | |
-| Component Info | 케이스 Case 3-1 · 4-1 | |
-| Component Name | 케이스 Case 3-1 · 4-1 | |
-| Component Code | 케이스 Case 3-1 · 4-1 | |
-| Extraction Device Availability | 케이스 Case 4-1 | |
-| Available | 케이스 Case 4-1 | |
-| PCR Socket Component Info | 케이스 Case 4-1 | |
-| Component Abbreviation | 케이스 Case 4-1 | |
-| Socket Positions ({n}) | 케이스 Case 4-1 (n = 2) | |
-| Row | 케이스 Case 4-1 | |
-| Column | 케이스 Case 4-1 | |
-| Delete | 화면 4 · 화면 1 | |
-| Save | 화면 4 | |
-| Import | 화면 1 | |
-| Assay Pack Setting | 화면 배경 목록 (TI-STN-08) | |
-| Enter file name | 화면 배경 목록 (TI-STN-08) | |
-| All | 화면 배경 목록 (TI-STN-08) | |
-| Period | 화면 배경 목록 (TI-STN-08) | |
-| Registered Date | 화면 배경 목록 (TI-STN-08) | |
-| Select Date Range | 화면 배경 목록 (TI-STN-08) | |
-| Active only | 화면 배경 목록 (TI-STN-08) | |
-| Reset | 화면 배경 목록 (TI-STN-08) | |
-| Search | 화면 배경 목록 (TI-STN-08) | |
-| Items | 화면 배경 목록 (TI-STN-08) | |
+| Test Target Names ({n}) | 화면 3 · 케이스 Case 4-1 (n = 7) | LID-STN-428 |
+| Sample Type Mapping Info ({n}) | 화면 3 · 케이스 Case 4-1 (n = 4) | LID-STN-429 |
+| Sample Type ID | 화면 3 · 케이스 Case 1-1 · 4-1 | LID-STN-393 |
+| Sample Type Name | 케이스 Case 1-1 | LID-STN-216 |
+| Sample Type Code | 화면 3 · 케이스 Case 1-1 · 4-1 | LID-STN-214 |
+| Test Group Info | 케이스 Case 1-1 | LID-STN-388 |
+| Sample Type Info | 케이스 Case 1-1 | LID-STN-392 |
+| Barcode Schema Info | 케이스 Case 1-1 | LID-STN-394 |
+| Barcode Schema ID | 케이스 Case 1-1 ~ 4-1 | LID-STN-395 |
+| Barcode Schema Name | 케이스 Case 1-1 ~ 4-1 | LID-STN-396 |
+| Barcode Length | 케이스 Case 1-1 | LID-STN-397 |
+| Expiration Date Segment Order | 케이스 Case 1-1 | LID-STN-398 |
+| Segment Info ({n}) | 케이스 Case 1-1 (n = 8) | LID-STN-399 |
+| Segment Info | 케이스 Case 2-1 ~ 4-1 | LID-STN-415 |
+| Segment Order | 케이스 Case 1-1 | LID-STN-400 |
+| Segment Name | 케이스 Case 1-1 | LID-STN-401 |
+| Segment Length | 케이스 Case 1-1 | LID-STN-402 |
+| Segment {n} | 케이스 Case 2-1 ~ 4-1 (n = 1 · 3 · 7) | LID-STN-416 |
+| Item Group Info | 케이스 Case 1-1 | LID-STN-403 |
+| Item Group ID | 케이스 Case 1-1 ~ 4-1 | LID-STN-404 |
+| Item Group Name | 케이스 Case 1-1 ~ 4-1 | LID-STN-405 |
+| PCR Reagent Socket Component Info | 케이스 Case 1-1 | LID-STN-406 |
+| Component ID | 케이스 Case 1-1 · 4-1 | LID-STN-407 |
+| Component Type | 케이스 Case 1-1 · 4-1 | LID-STN-408 |
+| Color Code | 케이스 Case 1-1 | LID-STN-409 |
+| Barcode Info | 케이스 Case 2-1 ~ 4-1 | LID-STN-414 |
+| Max Rxns | 케이스 Case 2-1 ~ 4-1 | LID-STN-412 |
+| Max Usage Count | 케이스 Case 2-1 ~ 4-1 | LID-STN-413 |
+| Quantity Info | 케이스 Case 2-1 ~ 4-1 | LID-STN-417 |
+| Quantity | 케이스 Case 2-1 | LID-STN-148 |
+| Base Unit | 케이스 Case 2-1 | LID-STN-418 |
+| Packaging Unit | 케이스 Case 2-1 | LID-STN-419 |
+| Storage Location Info | 케이스 Case 2-1 ~ 4-1 | LID-STN-420 |
+| Module Code | 케이스 Case 2-1 | LID-STN-421 |
+| Unit Code | 케이스 Case 2-1 | LID-STN-422 |
+| Component Info | 케이스 Case 3-1 · 4-1 | LID-STN-423 |
+| Component Name | 케이스 Case 3-1 · 4-1 | LID-STN-424 |
+| Component Code | 케이스 Case 3-1 · 4-1 | LID-STN-425 |
+| Extraction Device Availability | 케이스 Case 4-1 | LID-STN-430 |
+| Available | 케이스 Case 4-1 | LID-STN-436 |
+| PCR Socket Component Info | 케이스 Case 4-1 | LID-STN-431 |
+| Component Abbreviation | 케이스 Case 4-1 | LID-STN-432 |
+| Socket Positions ({n}) | 케이스 Case 4-1 (n = 2) | LID-STN-433 |
+| Row | 케이스 Case 4-1 | LID-STN-434 |
+| Column | 케이스 Case 4-1 | LID-STN-435 |
+| Delete | 화면 4 · 화면 1 | LID-STN-019 |
+| Save | 화면 4 | LID-STN-022 |
+| Import | 화면 1 | LID-TMG-035 |
+| Assay Pack Setting | 화면 배경 목록 (TI-STN-08) | LID-STN-360 |
+| Enter file name | 화면 배경 목록 (TI-STN-08) | LID-STN-362 |
+| All | 화면 배경 목록 (TI-STN-08) | LID-EVT-003 |
+| Period | 화면 배경 목록 (TI-STN-08) | LID-STN-367 |
+| Registered Date | 화면 배경 목록 (TI-STN-08) | LID-STN-368 |
+| Select Date Range | 화면 배경 목록 (TI-STN-08) | LID-STN-370 |
+| Active only | 화면 배경 목록 (TI-STN-08) | LID-STN-371 |
+| Reset | 화면 배경 목록 (TI-STN-08) | LID-EVT-022 |
+| Search | 화면 배경 목록 (TI-STN-08) | LID-STN-016 |
+| Items | 화면 배경 목록 (TI-STN-08) | LID-STN-006 |
 | {n} items | 화면 배경 목록 (TI-STN-08) (n = 10) | |
-| Version | 화면 배경 목록 (TI-STN-08) | |
-| Created Date/Time | 화면 배경 목록 (TI-STN-08) | |
-| Details | 화면 배경 목록 (TI-STN-08) | |
-| Master Info | 화면 배경 목록 (TI-STN-08) | |
-| Master | 화면 배경 목록 (TI-STN-08) | |
-| Pretreatment | 화면 배경 목록 (TI-STN-08) | |
-| Extraction | 화면 배경 목록 (TI-STN-08) | |
-| PCR | 화면 배경 목록 (TI-STN-08) | |
+| Version | 화면 배경 목록 (TI-STN-08) | LID-INF-008 |
+| Created Date/Time | 화면 배경 목록 (TI-STN-08) | LID-STN-373 |
+| Details | 화면 배경 목록 (TI-STN-08) | LID-STN-012 |
+| Master Info | 화면 배경 목록 (TI-STN-08) | LID-STN-376 |
+| Master | 화면 배경 목록 (TI-STN-08) | LID-STN-364 |
+| Pretreatment | 화면 배경 목록 (TI-STN-08) | LID-STN-365 |
+| Extraction | 화면 배경 목록 (TI-STN-08) | LID-STN-366 |
+| PCR | 화면 배경 목록 (TI-STN-08) | LID-SPT-033 |

@@ -1,0 +1,37 @@
+{
+  "id": "brex-gram-2_R005",
+  "kind": "request",
+  "team": "cureca",
+  "status": "완료",
+  "at": "2026-11-26T16:33:45+09:00",
+  "createdAt": "2026-11-26T16:32:57+09:00",
+  "by": "하승현",
+  "doneBy": "Claude",
+  "pc": "BREX_GRAM_2",
+  "reqId": "R005",
+  "fileKey": "etCQFF3CTf1EA6C79d4BBf",
+  "fileName": "UX AI TEST",
+  "page": "Policy Setting_tobe",
+  "frame": "",
+  "nodeId": "",
+  "type": "요청",
+  "layout": "",
+  "text": "완료됐어?",
+  "note": "작업규칙 CURECA 작업규칙대로 처리. 네, 모두 끝났습니다. 파일 · Figma는 고치지 않았습니다.\n\n**상태**\n- R002: 목록에서 지워졌습니다(R004의 「R002 지우기」가 처리됨). 남은 일 없습니다.\n- R003: 완료 — R002 첨부 파일을 언어셋 원본에 반영했습니다(한국어 928 + 공통 322칸, `db/history.md` 이력 추가 확인).\n- R004: 완료 — LID-SPT-021은 말씀대로 그대로 두었습니다.\n- 지금 남은 요청은 이 요청(R005)뿐입니다.\n\n작업 기준: basis 2026-11-26 16:20 · 작업규칙 CURECA 작업규칙 (rules) @원본 · 정책서 정책서 (policy) · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 (glossary) · 화면 정의서 화면 정의서 (screens)",
+  "shot": "",
+  "shots": [],
+  "images": [],
+  "frames": [],
+  "marks": [],
+  "ask": null,
+  "replies": [],
+  "raws": [
+    {
+      "at": "2026-11-26T16:33:50+09:00",
+      "text": "R005를 「완료」로 바꿨습니다. 하승현 님이 앞서 맡긴 일이 끝났는지 물어서 「네, 모두 끝났습니다」로 답했습니다. 이번에는 파일과 Figma를 고치지 않았습니다.\n\n- **R002:** 요청 목록에 없습니다. R004 답변의 「R002 지우기」를 눌러 지워진 것으로 봤지만, 실제로 누른 기록까지 확인하지는 않았습니다.\n- **R003:** 완료 상태입니다. 언어셋 이력 파일 `db/history.md`에 「번역 추가 (Korean)」 줄이 1,225개 있습니다. R003에서 1,224줄을 추가했다고 했으니 반영이 남아 있는 것으로 봤습니다.\n- **R004:** 완료 상태입니다. LID-SPT-021은 하승현 님 말대로 그대로 둔 상태입니다.\n- **남은 요청:** R005 말고는 없습니다.\n\nFigma 파일은 열렸고, 작업 페이지는 「Policy Setting_tobe」로 요청 페이지와 같았습니다.",
+      "cut": false
+    }
+  ],
+  "work": "",
+  "handoff": null
+}

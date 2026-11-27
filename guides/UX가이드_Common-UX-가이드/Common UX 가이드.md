@@ -928,6 +928,7 @@ Import · Export 기능을 고르면 뜨는 위치 선택 팝업을 정의한다
 *COMM-5-p · Search Bar*
 
 - Text Field · Dropdown · Check Box 등 조회 조건과 함께 쓴다. 조건이 3개 이상이면 Reset 버튼을 둔다. 각 조건의 입력 규칙 · Default는 화면별로 정의한다.
+- Reset · Search 버튼은 Square(COMM-5-c) **Size=M(높이 40px)**으로 그린다(Reset = Gray, Search = Filled). 같은 줄의 조회 조건(Text Field · Dropdown)과 높이를 맞추기 위함이며, 원본 화면의 버튼 크기와 달라도 이 크기를 쓴다.
 
 | 번호 | 영역 | 동작 |
 |---|---|---|

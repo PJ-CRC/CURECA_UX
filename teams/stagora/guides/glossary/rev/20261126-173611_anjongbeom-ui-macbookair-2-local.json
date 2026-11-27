@@ -1,0 +1,12 @@
+{
+  "rev": "20261126-173611_anjongbeom-ui-macbookair-2-local",
+  "by": "Claude",
+  "at": "2026-11-26T17:36:11+09:00",
+  "note": "R002: 표지 K13 날짜 26.11.26",
+  "base": "",
+  "pc": "anjongbeom-ui-MacBookAir-2.local",
+  "req": "R002 언어셋 UX Writing 검토 — Excel로 변경, 공통/다른 페이지 등록 여부 확인",
+  "jobId": "",
+  "file": "language-set/sheet01.csv",
+  "orig": true
+}

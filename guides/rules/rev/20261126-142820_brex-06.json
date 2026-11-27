@@ -1,0 +1,12 @@
+{
+  "rev": "20261126-142820_brex-06",
+  "by": "최고관리자",
+  "at": "2026-11-26T14:28:20+09:00",
+  "note": "1-requirements.md 「요건 목록 틀」 예시를 요건 3 하나로 줄인 것에 맞춤(설명 한 줄)",
+  "base": "requirements-samples.md",
+  "pc": "BREX_06",
+  "req": "예시 문서의 \"요건 3 · 4만 남겼습니다\" 줄 고치기",
+  "jobId": "",
+  "file": "../examples/requirements-samples.md",
+  "orig": true
+}

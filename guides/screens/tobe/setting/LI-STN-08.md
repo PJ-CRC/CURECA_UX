@@ -11,8 +11,8 @@ author: 이상헌
 client_mode: [Main Mode]
 user_type: [Service]
 policies: [POL-TST-008]
-basis: 2026-11-26 09:27 · history 4079e90d
-basis_versions: rules @2026-11-26 · policy @2026-11-25 · glossary @2026-11-25 · screens @2026-11-26 · common_ux @2026-11-25
+basis: 2026-11-26 17:09 · history 402e669e
+basis_versions: rules @2026-11-26 14:30 · policy @2026-11-25 21:21 · glossary @2026-11-26 15:17 · screens @2026-11-26 16:15 · common_ux @2026-11-25 16:08
 source: tobe
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3667-11468
 ---
@@ -75,7 +75,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 - 동작
   - [Reset] 선택 시 검색 조건 초기화 및 전체 목록 노출
   - [Search] 선택 시 검색 결과 노출
-  - 검색 결과가 없을 경우 검색 결과 없음 문구 노출
+  - 검색 결과가 없을 경우 검색 결과 없음 문구 노출<span style="color:red"> : No results found.</span>
 
 **2  Items 개수**
 - Items : 등록된 파일 전체 건수 (검색 시 검색 결과 건수)
@@ -100,7 +100,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 - 텍스트 정렬 : Version · 일시 · Active · Details 가운데 / 나머지 왼쪽
 - Checkbox 없음 (선택 · 삭제 기능 없음)
 - 10개 초과 시 Pagination
-- 등록된 파일이 없을 경우 안내 문구 노출
+- 등록된 파일이 없을 경우 안내 문구 노출<span style="color:red"> : No files found.</span>
 - 공통 UX 참고 : COMM-5-g
 
 **4-1  Active (조회 전용)**
@@ -144,30 +144,32 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 
 | 화면 표기 글자 (영어) | 출처 | Language ID |
 | --- | --- | --- |
-| Assay Pack Setting | 화면 제목 | |
-| File name | 화면 1-1 · 화면 4 | |
-| Enter file name | 화면 1-1 | |
-| File type | 화면 1-1 · 화면 4 | |
-| All | 화면 1-1 · 디스크립션 1-1 | |
-| Master | 디스크립션 1-1 · 화면 4 | |
-| Pretreatment | 디스크립션 1-1 · 화면 4 | |
-| Extraction | 디스크립션 1-1 · 화면 4 | |
-| PCR | 디스크립션 1-1 · 화면 4 | |
-| Period | 화면 1-2 | |
-| Registered Date | 화면 1-2 · 디스크립션 1-2 | |
-| Created Date | 디스크립션 1-2 | |
-| Select Date Range | 화면 1-2 | |
-| Active only | 화면 1-3 | |
-| Reset | 화면 1-4 | |
-| Search | 화면 1-4 | |
-| Items | 화면 2 | |
+| Assay Pack Setting | 화면 제목 | LID-STN-360 |
+| File name | 화면 1-1 · 화면 4 | LID-STN-361 |
+| Enter file name | 화면 1-1 | LID-STN-362 |
+| File type | 화면 1-1 · 화면 4 | LID-STN-363 |
+| All | 화면 1-1 · 디스크립션 1-1 | LID-EVT-003 |
+| Master | 디스크립션 1-1 · 화면 4 | LID-STN-364 |
+| Pretreatment | 디스크립션 1-1 · 화면 4 | LID-STN-365 |
+| Extraction | 디스크립션 1-1 · 화면 4 | LID-STN-366 |
+| PCR | 디스크립션 1-1 · 화면 4 | LID-SPT-033 |
+| Period | 화면 1-2 | LID-STN-367 |
+| Registered Date | 화면 1-2 · 디스크립션 1-2 | LID-STN-368 |
+| Created Date | 디스크립션 1-2 | LID-STN-369 |
+| Select Date Range | 화면 1-2 | LID-STN-370 |
+| Active only | 화면 1-3 | LID-STN-371 |
+| Reset | 화면 1-4 | LID-EVT-022 |
+| Search | 화면 1-4 | LID-STN-016 |
+| Items | 화면 2 | LID-STN-006 |
 | {n} items | 디스크립션 2 (n = 10) | |
-| Product Name | 화면 4 | |
-| Version | 화면 4 | |
-| Registered Date/Time | 화면 4 | |
-| Created Date/Time | 화면 4 | |
-| User ID | 화면 4 | |
-| Active | 화면 4 · 화면 4-1 | |
-| Inactive | 화면 4-1 | |
-| Details | 화면 4 · 화면 4-2 | |
-| Master Info | 화면 4 | |
+| Product Name | 화면 4 | LID-STN-147 |
+| Version | 화면 4 | LID-INF-008 |
+| Registered Date/Time | 화면 4 | LID-STN-372 |
+| Created Date/Time | 화면 4 | LID-STN-373 |
+| User ID | 화면 4 | LID-STN-073 |
+| Active | 화면 4 · 화면 4-1 | LID-STN-374 |
+| Inactive | 화면 4-1 | LID-STN-375 |
+| Details | 화면 4 · 화면 4-2 | LID-STN-012 |
+| Master Info | 화면 4 | LID-STN-376 |
+| No results found. | 디스크립션 1-4 | LID-STN-015 |
+| No files found. | 디스크립션 4 | LID-STN-377 |
