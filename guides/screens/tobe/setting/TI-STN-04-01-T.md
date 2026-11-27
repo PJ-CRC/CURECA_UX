@@ -71,6 +71,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=38
 - Order Reception Mode에서 ‘<span style="color:red">Push Mode</span>’를 선택할 경우만 설정 가능
 - ‘<span style="color:red">Query Mode</span>’를 선택할 경우 Port Text Input 내 입력값이 제거되며 Disabled 처리
 - 다시 Order Reception Mode에서 ‘<span style="color:red">Query Mode</span>’에서 ‘<span style="color:red">Push Mode</span>’를 선택할 경우, Port Text Input 영역이 활성화되며 Default 값 20200 자동 기입
+- <span style="color:red">Port는 필수값이 아니며 입력 형식 · 범위 검사 없음</span>
 - 공통 UX 참고 : COMM-5-t
 - 정책 참고 : POL-SYS-001
 - 케이스 참고 : TI-STN-04-01-T/Case > Case 1
@@ -88,6 +89,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=38
   - Text Input 형태로 제공되며, Default는 빈 값(Empty)으로 표시
 - Port : 검사 결과 전송 시 사용할 LIS 서버의 Port 번호를 입력하는 항목
   - Text Input 형태로 제공되며, Default는 빈 값(Empty)으로 표시
+- <span style="color:red">Host Address(IP) · Port는 필수값이 아니며 입력 형식 · 범위 검사 없음</span>
 - 공통 UX 참고 : COMM-5-t
 - 정책 참고 : POL-SYS-001
 
