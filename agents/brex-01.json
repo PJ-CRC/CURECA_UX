@@ -1,5 +1,5 @@
 {
-  "reportAt": "2026-11-27T15:32:33+09:00",
+  "reportAt": "2026-11-27T15:33:33+09:00",
   "pc": "BREX_01",
   "slug": "brex-01",
   "user": "서보경",
@@ -8,7 +8,7 @@
   "alive": true,
   "status": "idle",
   "msg": "마지막 처리: PENDING R002 · 컨텍스트 29%",
-  "statusAt": "2026-11-27T15:32:31+09:00",
+  "statusAt": "2026-11-27T15:33:25+09:00",
   "claude": "따로 설치",
   "claudeWay": "app",
   "autoWatch": true,
