@@ -1,0 +1,30 @@
+{
+  "id": "daye_chat_20261127-173122",
+  "kind": "work",
+  "chat": "doc",
+  "reqId": "",
+  "reqType": "",
+  "team": "cureca",
+  "at": "2026-11-27T17:31:22+09:00",
+  "from": "2026-11-27T16:56:47+09:00",
+  "by": "정다예",
+  "doneBy": "Claude",
+  "pc": "DAYE",
+  "fileKey": "etCQFF3CTf1EA6C79d4BBf",
+  "fileName": "",
+  "page": "",
+  "frame": "",
+  "nodeId": "",
+  "text": "채팅: 계속 진행해줘",
+  "turns": 2,
+  "models": {
+    "claude-opus-5-5": 93
+  },
+  "calls": 93,
+  "input": 190,
+  "cacheWrite": 344325,
+  "cacheRead": 31977094,
+  "output": 141651,
+  "total": 32463260,
+  "usd": 11.9838
+}
