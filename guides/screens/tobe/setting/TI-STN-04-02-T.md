@@ -19,7 +19,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=38
 # TI-STN-04-02-T Code Mapping
 
 - T/L 차이: T-IOS 단독 (IA에 L 짝 없음)
-- 호출하는 화면: [TI-STN-04-01-T] Interface Configuration (탭 → Interface Configuration 탭), Confirm_010 (5 [Save]), Confirm_016 (5 저장하지 않고 이동)
+- 호출하는 화면: [TI-STN-04-01-T] Interface Configuration (탭 → Interface Configuration 탭), Alert_048 (4 같은 LIS Code 확정), Confirm_010 (5 [Save]), Confirm_016 (5 저장하지 않고 이동)
 - 호출되는 곳: [TI-STN-04-01-T] Code Mapping 탭
 - 반영 대기 항목: `pending/open.md`에서 이 CID로 찾음
 - 화면 변경 이력: `screen-history.md`의 이 CID 줄
@@ -110,7 +110,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=38
 - 취소 처리
   - X 클릭 시 <span style="color:red">입력값 확정 없이</span> Edit 모드 종료
 - [4-2] <span style="color:red">확정</span> 후 표시
-  - 수정된 항목은 색상으로 구분되어 변경 내역 강조
+  - 수정된 항목은 <span style="color:red">~~색상으로 구분되어~~</span> <span style="color:red">색으로</span> 변경 내역 강조 <span style="color:red">(색은 UI에서 정함)</span>
   - 단, 이전 값과 동일한 값을 입력한 경우에는 변경사항 없음으로 처리되어 색상 표시가 되지 않음
 - 공통 UX 참고 : COMM-5-t
 - 정책 참고 : POL-SYS-002
@@ -166,6 +166,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=38
 | 디스크립션 번호 | 종류 (Alert / Confirm / Toast) | 코드 | 언제 | 버튼 동작 |
 | --- | --- | --- | --- | --- |
 | 5 | Confirm | Confirm_010 | [Save] 버튼 클릭 시 | OK 선택 시 → 데이터 저장 & Alert_017 노출 / Close 선택 시 → 해당 Alert 닫힘 |
+| 4 | Alert | Alert_048 | 다른 항목과 같은 LIS Code로 확정 시 | OK 선택 시 → 해당 Alert 닫힘 |
 | 5 | Confirm | Confirm_016 | 수정 후 저장하지 않고 다른 페이지로 이동하거나 메뉴 변경 시 | Leave 선택 시 → 클릭한 메뉴로 이동 / Cancel 선택 시 → 해당 Alert 닫힘 |
 
 ## 화면 예시 글자
@@ -192,6 +193,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=38
 | Target Code | 화면 1 · 케이스 Case 1 · 3 | |
 | Test Code | 화면 1 · 케이스 Case 2 | |
 | Search by sample type or LIS code | 화면 2-1 | |
+| No results found. | 디스크립션 2-1 | |
 | {n} Items | 화면 2 · 케이스 Case 1 · 2 · 3 (n = 14 · 7 · 30 · 1) | |
 | No. | 화면 2 · 케이스 Case 1 · 2 · 3 | |
 | Sample Type Name | 화면 2 | |
