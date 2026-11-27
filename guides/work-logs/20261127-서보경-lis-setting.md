@@ -173,12 +173,23 @@ started: 2026-11-27
 
 | 번호 (Q) | 질문 | 관련된 곳 (CID · 디스크립션 번호) | 논의 대상 | T · L 같음 | 풀린 날 · 어떻게 |
 | --- | --- | --- | --- | --- | --- |
+| Q1 | LIS Setting을 쓸 수 있는 User Type (권한 표 `policy/permission-matrix.csv`에 LIS Setting 줄 없음. POL-SYS-001 규칙 8 · 기존 화면은 Service · Admin) | TI-STN-04-01-T 0 · TI-STN-04-02-T 0 | | - (T-IOS 단독) | |
+| Q2 | Port · Host Address(IP) 입력값의 형식 · 범위 검사와 빈 값으로 [Save]를 누를 때의 동작 (POL-SYS-001에 없음) | TI-STN-04-01-T 3-2 · 4 · 4 (LIS Network) · 5 | | - (T-IOS 단독) | |
+| Q3 | LIS Code를 빈 값 · 다른 항목과 같은 값으로 입력할 때의 동작 (POL-SYS-002에 없음) | TI-STN-04-02-T 4 | | - (T-IOS 단독) | |
+| Q4 | 처음 설치할 때 채워지는 LIS Test Code 값 (기존 화면 `Allplex_HPV_HR`은 `glossary/test-items.csv`에서 쓰지 않는 표현, 검사 항목 코드는 `HPVHR-HP72/73`. POL-SYS-002 규칙 3) | TI-STN-04-02-T 케이스 Test Code 화면 | | - (T-IOS 단독) | |
 
 ## 변경 확인
 <!-- 사용자 확인 목록의 변경 확인이자 이 작업으로 화면에서 바뀐 요소의 목록. 원본은 이 표(화면 MD에는 두지 않음). 틀 설명은 reference-rules/work-log.md "틀"의 "변경 확인" 주석 -->
 
 | 번호 (C) | 기존 화면 | 바꿔 그린 것 | 화면 표기 글자 (기존 → 새) | 관련된 곳 (CID · 디스크립션 번호) | 근거 | T · L 같음 | 업데이트 메모 (O / -) | 확인한 날 · 답 (맞음 / 되돌림) |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| C1 | 0에 "Default: All / 데이터: All, Error, Warning" | 그 줄을 지움 (LIS Setting에 없는 값) | | TI-STN-04-01-T 0 | 반영 대기 TI-STN-04-01-T-R01 | - (T-IOS 단독) | - | |
+| C2 | 기본 상태 화면이 Order Reception Mode `Push Mode`, Port `20200` | 기본 상태 화면을 `Query Mode`, Port 비활성 · 빈 값으로 (POL-SYS-001 규칙 4 · 5) | Push Mode → Query Mode (예시 값) | TI-STN-04-01-T 3 · 3-2 · 4 | POL-SYS-001 규칙 4 · 5, 반영 대기 TI-STN-04-01-T-R03 | - (T-IOS 단독) | O | |
+| C3 | 설정이 CURECA마다인지 디스크립션에 없음 | 0에 "상단에서 고른 CURECA의 설정을 보여 주고 바꿈"을 더함 | | TI-STN-04-01-T 0 · TI-STN-04-02-T 0 | POL-SYS-001 규칙 7, POL-SYS-002 규칙 6, POL-COM-005 규칙 5, 반영 대기 TI-STN-04-01-T-R04 | - (T-IOS 단독) | O | |
+| C4 | 0 "데이터 관련 정의"에 Assay Pack 데이터 키 이름(fileType, sampleTypeInfo, testItemCode, isTargetNames 등) | Code Type마다 관리 항목 · 출처를 풀어 쓰고 POL-SYS-002 참고로 이음 (헌법 3조) | | TI-STN-04-02-T 0 | POL-SYS-002 정의 · 규칙 1, 반영 대기 TI-STN-04-02-T-R03 | - (T-IOS 단독) | - | |
+| C5 | 4 Done · Enter · 다른 영역 클릭 시 "입력값 저장 처리" | 행 입력 확정(edit 모드 종료)으로 쓰고, 저장은 5 [Save]로만 된다고 구분 (POL-SYS-002 규칙 5) | | TI-STN-04-02-T 4 · 5 | POL-SYS-002 규칙 5, 반영 대기 TI-STN-04-02-T-R02 | - (T-IOS 단독) | O | |
+| C6 | Sample Type Name `Raw_stool` · `eNAT_stool` · `Fecal_swab` (코드) | UI 표기로 (LIS Sample Type Code 칸은 그대로) | Raw_stool → Raw stool · eNAT_stool → eNAT stool · Fecal_swab → Fecal swab | TI-STN-04-02-T 2 | `glossary/sample-types.csv`, POL-SYS-002 규칙 2, 반영 대기 TI-STN-04-02-T-R01 | - (T-IOS 단독) | O | |
+| C7 | Code Type의 Target Code 항목 수 · Products 수 `10` (목록은 9개) | `9`로 (Target Masking 가능 Y 9종) | | TI-STN-04-02-T 1-1 · 케이스 Target Code 화면 | `glossary/test-items.csv`, POL-TST-010 규칙 4 | - (T-IOS 단독) | O | |
 
 ## 검토 질의
 <!-- 4단계 절차 2번. 틀은 flow/4-revise-verify.md "검토 질의 틀" -->
