@@ -2,11 +2,11 @@
   "id": "brex-gram-2_R007",
   "kind": "request",
   "team": "cureca",
-  "status": "대기",
-  "at": "2026-11-27T13:54:02+09:00",
+  "status": "진행 중",
+  "at": "2026-11-27T13:55:08+09:00",
   "createdAt": "2026-11-26T17:07:33+09:00",
   "by": "하승현",
-  "doneBy": "하승현",
+  "doneBy": "Claude",
   "pc": "BREX_GRAM_2",
   "reqId": "R007",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,52 +17,11 @@
   "type": "요청",
   "layout": "",
   "text": "Case 3 테스트로 작업 지시를 해볼거야.\n작업할 Tobe 페이지에 작업해주고 관련 내용 기록은 하지 않아도 돼.\n정상적인 프로세스로 작업이 진행되는 지 확인하고 싶어서 그래.\n\nasis 링크 주소 주면 돼?",
-  "note": "",
+  "note": "케이스 3 · 4단계 · 20261126-하승현-policy-setting — 「하나씩 정하기」 답을 받아 사용자 확인 목록을 번호마다 정리 중",
   "shot": "",
   "shots": [],
   "images": [],
-  "frames": [
-    {
-      "nodeId": "3857:1120",
-      "name": "TI-STN-01-01"
-    },
-    {
-      "nodeId": "3858:1470",
-      "name": "TI-STN-01-01/Case"
-    },
-    {
-      "nodeId": "3863:1530",
-      "name": "TI-STN-01-02"
-    },
-    {
-      "nodeId": "3865:2005",
-      "name": "TI-STN-01-02/Case"
-    },
-    {
-      "nodeId": "3866:2230",
-      "name": "LI-STN-01-02"
-    },
-    {
-      "nodeId": "3871:3302",
-      "name": "TI-STN-01-03"
-    },
-    {
-      "nodeId": "3876:3573",
-      "name": "TI-STN-01-04"
-    },
-    {
-      "nodeId": "3876:3892",
-      "name": "LI-STN-01-04"
-    },
-    {
-      "nodeId": "3827:3619",
-      "name": "TI-STN-01"
-    },
-    {
-      "nodeId": "3831:691",
-      "name": "LI-STN-01"
-    }
-  ],
+  "frames": [],
   "marks": [],
   "ask": null,
   "replies": [
