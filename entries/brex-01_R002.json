@@ -2,11 +2,11 @@
   "id": "brex-01_R002",
   "kind": "request",
   "team": "cureca",
-  "status": "보류",
-  "at": "2026-11-27T15:20:21+09:00",
+  "status": "대기",
+  "at": "2026-11-27T15:30:20+09:00",
   "createdAt": "2026-11-27T10:05:47+09:00",
   "by": "서보경",
-  "doneBy": "Claude",
+  "doneBy": "서보경",
   "pc": "BREX_01",
   "reqId": "R002",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,24 +17,13 @@
   "type": "요청",
   "layout": "",
   "text": "LIS setting 메뉴 옮겨줘\n기존 작업페이지: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-567478&t=x241oPtWNq1qkgw5-1",
-  "note": "케이스 3 · 4단계 · 20261127-서보경-lis-setting — Query Mode 때 Port 칸 None을 UX 화면에 반영함, 미해결 항목이 모두 풀려 UX 확정을 다시 묻습니다\n\n**UX 확정 뒤 고친 것** (검토 질의 6 ~ 8)\n- TI-STN-04-01-T 화면 상단 안내 문구 지움 (C27)\n- TI-STN-04-01-T (6) 입력 안내 글: `Enter IP Address` · `Enter Port` (C28)\n- TI-STN-04-02-T (2-1) · Case 1 · 2 · 3 검색 입력 안내 글을 언어셋 DB 문구로 (C29)\n- TI-STN-04-01-T (4) Query Mode일 때 T-IOS Network Port 칸에 `None` 노출 · Disabled — 메인 화면 Port 칸 · 디스크립션 (4) 「(Text Input에 None 노출)」 · 화면 MD를 고침, 케이스 Case 1-2는 이미 None (C30)\n- 두 화면의 「재설계 후 변경 내역」 메모에 위 변경 줄을 더함\n- 언어셋 절: 화면 표기 글자가 모두 언어셋 DB(LIS Setting)에 있어 새로 넣을 줄 없음\n\n**[질문 대기]**\nQ1 사용자 확인 목록과 검토 질의 1 ~ 8이 모두 풀렸습니다. 최종으로 UX 확정을 하시겠습니까?\n  - 확정함\n  - 아직\n\n**[참고]**\n- 확정하면 UX 확정 날짜를 고쳐 적고, UI 작업이 대상 아님이라 UI 확정 해당 없음으로 4단계를 닫은 뒤 5단계(완료)로 갑니다.\n- 값을 지우고 비활성화하는 정책(POL-SYS-001 규칙 5)은 그대로이고 화면 표기만 바뀌어 논의 대상은 만들지 않았습니다.\n\n규칙 점검: 4단계 절차 2 · 절차 3 「UX 확정 뒤에 고칠 때」 순서대로(변경 확인 줄 → 화면 MD → Figma), 「하지 않는 것」 지킴\n작업 기준: basis 2026-11-27 14:45 · 작업규칙 CURECA 작업규칙 @2026-11-27 11:34 · 정책서 정책서 @2026-11-25 21:21 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) @2026-11-26 16:53 · 기준데이터 기준데이터 @2026-11-25 21:21 · 화면 정의서 화면 정의서 @2026-11-26 03:39",
+  "note": "",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": {
-    "q": "[4단계 · 절차 3] 사용자 확인 목록과 검토 질의 1 ~ 8이 모두 풀렸습니다. 최종으로 UX 확정을 하시겠습니까?",
-    "options": [
-      {
-        "label": "확정함"
-      },
-      {
-        "label": "아직"
-      }
-    ],
-    "free": true
-  },
+  "ask": null,
   "replies": [
     {
       "at": "2026-11-27T10:12:09+09:00",
@@ -119,6 +108,12 @@
       "by": "서보경",
       "q": "Query Mode일 때 T-IOS Network Port 칸은 지금처럼 빈 값 · Disabled로 두고 언어셋 DB의 None을 지울까요?",
       "text": "아니야 none은 유지해줘 ux에도 내역 반영해줘."
+    },
+    {
+      "at": "2026-11-27T15:30:20+09:00",
+      "by": "서보경",
+      "q": "[4단계 · 절차 3] 사용자 확인 목록과 검토 질의 1 ~ 8이 모두 풀렸습니다. 최종으로 UX 확정을 하시겠습니까?",
+      "text": "확정함"
     }
   ],
   "raws": [
