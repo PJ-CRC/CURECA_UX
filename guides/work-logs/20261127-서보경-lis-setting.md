@@ -29,7 +29,7 @@ started: 2026-11-27
 | 4. 수정 · 확인 | | | |
 | 5. 완료 | | | |
 
-이어서 작업할 곳: 4단계 · 절차 1 사용자 확인 목록을 보냄, 요청자가 「하나씩 답하기」를 골라 한 항목씩 묻는 중 — Q1 ~ Q7 답 받음(C17 ~ C21), 변경 확인 C2 · C4 ~ C8 · C12 · C14 · C15를 한 번에 물음, 답 기다림. Q1 ~ Q7 반영 끝(화면 MD · Figma 패널 · 라벨 · 사용자 확인 목록 질문 대기 묶음 지움 · 프레임 높이 맞춤, Alert_048 새 줄). C 답을 받아 반영하면 기계 검사 → 기획 진행 표시(케이스 3은 바꾸지 않음) (다시 읽을 곳: 4단계 `flow/4-revise-verify.md` 절차 1 · 절차 공통: 화면 수정 규칙 / 작업 기록 "질문 대기" · "변경 확인")
+이어서 작업할 곳: 4단계 · 절차 1 사용자 확인 목록 반영 중 — Q1 ~ Q7 반영 끝, C1 · C2 · C4 · C5 · C6 · Q4 답 받음(C22 · C23), 작업 기록 끝 · 화면 MD · Figma 진행 중. C7 · C8 · C12 · C14 · C15 물음, 답 기다림. 반영 대기 TI-STN-04-02-T-R03 \pending/open.md\ 대기로 되돌릴 것 (다시 읽을 곳: 4단계 \low/4-revise-verify.md\ 절차 1 · 절차 공통: 화면 수정 규칙 / 작업 기록 "질문 대기" · "변경 확인")
 
 ## 요청
 <!-- 1단계 절차 1번. 요청 글 한두 줄과 출처, 공유 파일 (아래 "항목마다 적는 법") -->
@@ -105,7 +105,7 @@ started: 2026-11-27
 | 1 점검 발견 (디스크립션 · 화면) | Code Mapping (TI-STN-04-02-T) | TI-STN-04-02-T-R02 | 4 Done·Enter로 "입력값 저장 처리"와 5 [Save]로 최종 저장이 섞임 | 행 단위 확정과 [Save] 저장을 구분해 씀 | 반영 (2026-11-27, 요청자 답) |
 | 2 기준 자료 변경 (정책 · 기준데이터 · 헌법) | Interface Configuration (TI-STN-04-01-T) | TI-STN-04-01-T-R04 | CURECA가 여러 대일 때(TI-ADS) LIS 설정이 장비마다인지 화면에 없음 | 디스크립션에 넣음: LIS 설정은 상단에서 고른 CURECA마다 | 반영 (2026-11-27, 요청자 답) |
 | 2 기준 자료 변경 (정책 · 기준데이터 · 헌법) | Code Mapping (TI-STN-04-02-T) | TI-STN-04-02-T-R01 | Sample Type 이름 예시 (Aspirate, Cary-blair, Cellpreserv 등) | `glossary/sample-types.csv`의 UI 표기와 맞춤 | 반영 (2026-11-27, 요청자 답) |
-| 2 기준 자료 변경 (정책 · 기준데이터 · 헌법) | Code Mapping (TI-STN-04-02-T) | TI-STN-04-02-T-R03 | Assay Pack 데이터 키 이름(fileType, sampleTypeInfo 등)을 디스크립션에 직접 적음 | 데이터 정의는 Assay Pack 기준 자료로 옮기고 ID로 참조 | 반영 (2026-11-27, 요청자 답) |
+| 2 기준 자료 변경 (정책 · 기준데이터 · 헌법) | Code Mapping (TI-STN-04-02-T) | TI-STN-04-02-T-R03 | Assay Pack 데이터 키 이름(fileType, sampleTypeInfo 등)을 디스크립션에 직접 적음 | 데이터 정의는 Assay Pack 기준 자료로 옮기고 ID로 참조 | 이번엔 안 함 (2026-11-27, 서보경, 4단계 C4 답: 디스크립션에 Assay Pack 문서의 정확한 파라미터로 직접 씀 → C23) |
 
 - TI-STN-04-01-T-R02(번호 4가 두 번, 3-1 없음 → 번호 정리)는 케이스 3 규칙과 부딪혀 후보에 넣지 않고 `제외 (2026-11-27, 케이스 3 규칙과 부딪힘: …)`로 `pending/closed.md`에 옮겼습니다(빈 번호 3-1은 그대로 두고, 겹친 4는 케이스 3 번호 규칙대로 3단계에서 고침 — "뒤 단계용 확인 항목" 6).
 
@@ -226,7 +226,7 @@ started: 2026-11-27
 | Q1 | LIS Setting을 쓸 수 있는 User Type (권한 표 `policy/permission-matrix.csv`에 LIS Setting 줄 없음. POL-SYS-001 규칙 8 · 기존 화면은 Service · Admin) | TI-STN-04-01-T 0 · TI-STN-04-02-T 0 | | - (T-IOS 단독) | 2026-11-27 · 요청자 답 "Service, Admin" — 디스크립션 0이 이미 Service, Admin이라 화면 변경 없음. Figma 사용자 확인 목록 Q1 항목 지움 (라벨 없음). 권한 표는 5단계에서 맞춤 |
 | Q2 | Port · Host Address(IP) 입력값의 형식 · 범위 검사와 빈 값으로 [Save]를 누를 때의 동작 (POL-SYS-001에 없음) | TI-STN-04-01-T 3-2 · 4 · 4 (LIS Network) · 5 | | - (T-IOS 단독) || 2026-11-27 · 요청자 답: Text Input 그대로, 필수값으로 두지 않고 형식 · 범위 검사 정책도 두지 않음(테스트하며 확인) → C17 |
 | Q3 | LIS Code를 빈 값 · 다른 항목과 같은 값으로 입력할 때의 동작 (POL-SYS-002에 없음) | TI-STN-04-02-T 4 | | - (T-IOS 단독) || 2026-11-27 · 요청자 답: 빈 값으로 확정하면 Default 값으로 바뀌어 저장, 다른 항목과 같은 값은 쓸 수 없고 Alert(이미 사용 중)로 안내 → C18 (Alert_048 새로 더함). 이 화면 안의 결정이라 논의 대상은 만들지 않음 (discussions.md 4절) |
-| Q4 | 처음 설치할 때 채워지는 LIS Test Code 값 (기존 화면 `Allplex_HPV_HR`은 `glossary/test-items.csv`에서 쓰지 않는 표현, 검사 항목 코드는 `HPVHR-HP72/73`. POL-SYS-002 규칙 3) | TI-STN-04-02-T 케이스 Test Code 화면 | | - (T-IOS 단독) || 2026-11-27 · 요청자 답: 기존 화면 값 그대로 — 화면 변경 없음 |
+| Q4 | 처음 설치할 때 채워지는 LIS Test Code 값 (기존 화면 `Allplex_HPV_HR`은 `glossary/test-items.csv`에서 쓰지 않는 표현, 검사 항목 코드는 `HPVHR-HP72/73`. POL-SYS-002 규칙 3) | TI-STN-04-02-T 케이스 Test Code 화면 | | - (T-IOS 단독) || 2026-11-27 · 요청자 답: 기존 화면 값 그대로 → 같은 날 C6 답에서 바꿈: LIS Test Code도 LIS Sample Type Code처럼 코드(\glossary/test-items.csv\ 검사 항목 코드)로 → C22 |
 | Q5 | 검색 결과가 없을 때 목록에 보여 줄 문구 (Common UX Basic Table No Data는 문구를 화면에 맡김, 기존 화면 · 정책서 · 같은 메뉴에 없음) | TI-STN-04-02-T 2-1 | | - (T-IOS 단독) || 2026-11-27 · 요청자 답: 다른 화면과 같은 공통 문구 No results found. (LID-STN-015) → C19 |
 | Q6 | [4-2] 확정한 항목을 강조하는 표시 (기존 디스크립션 "색상으로 구분", 색 · 모양 정의 없음) | TI-STN-04-02-T 4 | | - (T-IOS 단독) || 2026-11-27 · 요청자 답: 색은 UI에서 정함, 디스크립션에는 색으로 강조된다고만 → C20 |
 | Q7 | 목록의 노출 개수 · Pagination 적용 (Common UX Basic Table은 10 items · 노출 개수 Dropdown · Pagination, 기존 화면은 전체 노출이라 기존대로 그림) | TI-STN-04-02-T 2 · 케이스 Case 1 · 2 | | - (T-IOS 단독) || 2026-11-27 · 요청자 답: Pagination 없이 전체 노출 (항목 최대 약 50개, 검색 있음) — 지금 그린 대로 → C21 (디스크립션만) |
@@ -236,12 +236,12 @@ started: 2026-11-27
 
 | 번호 (C) | 기존 화면 | 바꿔 그린 것 | 화면 표기 글자 (기존 → 새) | 관련된 곳 (CID · 디스크립션 번호) | 근거 | T · L 같음 | 업데이트 메모 (O / -) | 확인한 날 · 답 (맞음 / 되돌림) |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| C1 | 0에 "Default: All / 데이터: All, Error, Warning" | 그 줄을 빨간 취소선으로 (LIS Setting에 없는 값) | | TI-STN-04-01-T 0 | 반영 대기 TI-STN-04-01-T-R01 | - (T-IOS 단독) | - | 맞음 (기계 검사, 2026-11-27) |
-| C2 | 기본 상태 화면이 Order Reception Mode `Push Mode`, Port `20200` | 기본 상태 화면을 `Query Mode`, Port 비활성 · 빈 값으로 (POL-SYS-001 규칙 4 · 5) | Push Mode → Query Mode (예시 값) | TI-STN-04-01-T 3 · 3-2 · 4 | POL-SYS-001 규칙 4 · 5, 반영 대기 TI-STN-04-01-T-R03 | - (T-IOS 단독) | O | |
+| C1 | 0에 "Default: All / 데이터: All, Error, Warning" | 그 줄을 빨간 취소선으로 (LIS Setting에 없는 값) | | TI-STN-04-01-T 0 | 반영 대기 TI-STN-04-01-T-R01 | - (T-IOS 단독) | - | 바꿈 (2026-11-27, 요청자: 잘못 들어간 줄이라 취소선 없이 지움) |
+| C2 | 기본 상태 화면이 Order Reception Mode `Push Mode`, Port `20200` | 기본 상태 화면을 `Query Mode`, Port 비활성 · 빈 값으로 (POL-SYS-001 규칙 4 · 5) | Push Mode → Query Mode (예시 값) | TI-STN-04-01-T 3 · 3-2 · 4 | POL-SYS-001 규칙 4 · 5, 반영 대기 TI-STN-04-01-T-R03 | - (T-IOS 단독) | O | 맞음 (2026-11-27, Port는 Push Mode에서만 활성) |
 | C3 | 설정이 CURECA마다인지 디스크립션에 없음 | 0에 "상단에서 고른 CURECA의 설정을 보여 주고 바꿈"을 더함 | | TI-STN-04-01-T 0 · TI-STN-04-02-T 0 | POL-SYS-001 규칙 7, POL-SYS-002 규칙 6, POL-COM-005 규칙 5, 반영 대기 TI-STN-04-01-T-R04 | - (T-IOS 단독) | O | 맞음 (기계 검사, 2026-11-27) |
-| C4 | 0 "데이터 관련 정의"에 Assay Pack 데이터 키 이름(fileType, sampleTypeInfo, testItemCode, isTargetNames 등) | Code Type마다 관리 항목 · 출처를 풀어 쓰고 POL-SYS-002 참고로 이음 (헌법 3조) | | TI-STN-04-02-T 0 | POL-SYS-002 정의 · 규칙 1, 반영 대기 TI-STN-04-02-T-R03 | - (T-IOS 단독) | - | |
-| C5 | 4 Done · Enter · 다른 영역 클릭 시 "입력값 저장 처리" | 행 입력 확정(edit 모드 종료)으로 쓰고, 저장은 5 [Save]로만 된다고 구분 (POL-SYS-002 규칙 5) | | TI-STN-04-02-T 4 · 5 | POL-SYS-002 규칙 5, 반영 대기 TI-STN-04-02-T-R02 | - (T-IOS 단독) | O | |
-| C6 | Sample Type Name `Raw_stool` · `eNAT_stool` · `Fecal_swab` (코드) | UI 표기로 (LIS Sample Type Code 칸은 그대로) | Raw_stool → Raw stool · eNAT_stool → eNAT stool · Fecal_swab → Fecal swab | TI-STN-04-02-T 2 | `glossary/sample-types.csv`, POL-SYS-002 규칙 2, 반영 대기 TI-STN-04-02-T-R01 | - (T-IOS 단독) | O | |
+| C4 | 0 "데이터 관련 정의"에 Assay Pack 데이터 키 이름(fileType, sampleTypeInfo, testItemCode, isTargetNames 등) | Code Type마다 관리 항목 · 출처를 풀어 쓰고 POL-SYS-002 참고로 이음 (헌법 3조) | | TI-STN-04-02-T 0 | POL-SYS-002 정의 · 규칙 1, 반영 대기 TI-STN-04-02-T-R03 | - (T-IOS 단독) | - | 바꿈 (2026-11-27, 요청자: Assay Pack 문서를 확인해 정확한 파라미터로 → C23) |
+| C5 | 4 Done · Enter · 다른 영역 클릭 시 "입력값 저장 처리" | 행 입력 확정(edit 모드 종료)으로 쓰고, 저장은 5 [Save]로만 된다고 구분 (POL-SYS-002 규칙 5) | | TI-STN-04-02-T 4 · 5 | POL-SYS-002 규칙 5, 반영 대기 TI-STN-04-02-T-R02 | - (T-IOS 단독) | O | 맞음 (2026-11-27) |
+| C6 | Sample Type Name `Raw_stool` · `eNAT_stool` · `Fecal_swab` (코드) | UI 표기로 (LIS Sample Type Code 칸은 그대로) | Raw_stool → Raw stool · eNAT_stool → eNAT stool · Fecal_swab → Fecal swab | TI-STN-04-02-T 2 | `glossary/sample-types.csv`, POL-SYS-002 규칙 2, 반영 대기 TI-STN-04-02-T-R01 | - (T-IOS 단독) | O | 맞음 (2026-11-27) |
 | C7 | Code Type의 Target Code 항목 수 · Products 수 `10` (목록은 9개) | `9`로 (Target Masking 가능 Y 9종) | | TI-STN-04-02-T 1-1 · 케이스 Target Code 화면 | `glossary/test-items.csv`, POL-TST-010 규칙 4 | - (T-IOS 단독) | O | |
 | C8 | 디스크립션 번호 `4`가 두 번 (T-IOS Network · LIS Network), LIS Network에 화면 번호 표시 없음 | 뒤의 LIS Network를 끝 번호 다음 `6`으로, 화면에 번호 표시 6을 둠 (flow/3-design-case3.md 번호) | | TI-STN-04-01-T 6 | 기존 원본 번호 겹침 (뒤 단계용 확인 항목 6) | - (T-IOS 단독) | - | |
 | C9 | 화면 제목 아래 안내 문구가 디스크립션에 없음 | 0에 "화면 상단에 Interface Configuration 제목과 안내 문구 노출"을 더함 | | TI-STN-04-01-T 0 | 기존 화면에 보이는 것 (뒤 단계용 확인 항목 5) | - (T-IOS 단독) | - | 맞음 (기존 화면, 2026-11-27) |
@@ -257,6 +257,8 @@ started: 2026-11-27
 | C19 | 2-1 검색 결과가 없을 때 문구 없음 | 2-1에 「일치하는 항목이 없으면 목록에 No results found. 노출」을 더함 | 없음 → No results found. | TI-STN-04-02-T 2-1 | Q5의 답 | - (T-IOS 단독) | O | 맞음 (2026-11-27) |
 | C20 | 4 [4-2] 「색상으로 구분」 | 「색으로 강조 (색은 UI에서 정함)」으로 | | TI-STN-04-02-T 4 | Q6의 답 | - (T-IOS 단독) | - | 맞음 (2026-11-27) |
 | C21 | 2 노출 개수 · Pagination 설명 없음 | 2에 「목록 전체 노출 (Pagination 없음)」을 더함 | | TI-STN-04-02-T 2 | Q7의 답 | - (T-IOS 단독) | - | 맞음 (2026-11-27) |
+| C22 | 케이스 Case 2 LIS Test Code 예시 값이 검사 항목 이름 (Allplex HPV HR만 \Allplex_HPV_HR\) | LIS Test Code를 \glossary/test-items.csv\ 검사 항목 코드로 | Allplex_HPV_HR → HPVHR-HP72/73 · Anyplex II HPV HR → HPV_HR · H.ClariR → H_ClariR · M.AziR → M_AziR · M.MoxiR → M_MoxiR · BV plus → BV_plus (예시 값) | TI-STN-04-02-T 케이스 Case 2 | Q4의 답 (C6 답에서 바꿈) | - (T-IOS 단독) | O | 맞음 (2026-11-27) |
+| C23 | 0 데이터 관련 정의를 풀어 쓴 문장 (C4) | 씨젠 Assay Pack 명세 R06의 파일 · 파라미터 이름으로 다시 씀: Master 파일 검체 타입 목록(sampleTypeId · sampleTypeName · sampleTypeCode), PCR 파일 testItemCode · testItemName, isTestTargetSelectable · testTargetNames | | TI-STN-04-02-T 0 | 요청자 답 (C4, 2026-11-27) · \eference/customer/assay-pack/README.md\ | - (T-IOS 단독) | - | 맞음 (2026-11-27) |
 
 ## 검토 질의
 <!-- 4단계 절차 2번. 틀은 flow/4-revise-verify.md "검토 질의 틀" -->
