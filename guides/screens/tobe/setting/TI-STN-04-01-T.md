@@ -105,11 +105,9 @@ figma:
 - 근거 (기존 원본 / 디스크립션 조건 / 요청자) : 기존 원본
 - 종류 (1 ~ 6, 근거가 디스크립션 조건일 때) : -
 
-#### 1-1. Order Reception Mode 드롭다운을 열었을 때
+#### 1-1. Order Reception Mode에서 Query Mode를 고를 때
 
-#### 1-2. Push Mode를 선택했을 때
-
-#### 1-3. Query Mode를 선택했을 때
+#### 1-2. Query Mode를 선택한 뒤
 
 ## Alert · Confirm · Toast
 
