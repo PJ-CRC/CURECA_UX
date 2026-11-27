@@ -2,11 +2,11 @@
   "id": "brex-01_R002",
   "kind": "request",
   "team": "cureca",
-  "status": "보류",
-  "at": "2026-11-27T10:09:20+09:00",
+  "status": "대기",
+  "at": "2026-11-27T10:12:09+09:00",
   "createdAt": "2026-11-27T10:05:47+09:00",
   "by": "서보경",
-  "doneBy": "Claude",
+  "doneBy": "서보경",
   "pc": "BREX_01",
   "reqId": "R002",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,25 +17,21 @@
   "type": "요청",
   "layout": "",
   "text": "LIS setting 메뉴 옮겨줘\n기존 작업페이지: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-567478&t=x241oPtWNq1qkgw5-1",
-  "note": "케이스 3 · 1단계 · 20261127-서보경-lis-setting — 요건 목록을 정리했고 확인을 기다립니다.\n\n**[1단계] 요건 목록을 확인해 주세요**\n작업 기록 20261127-서보경-lis-setting · 출처 Workbench 요청 R002 · 지나가는 단계 1 → 2 → 3 → 4 → 5\n\n**1. 요건 목록**\n- 요건 1. LIS Setting 메뉴 화면을 `LIS Setting_asis`에서 `LIS Setting_tobe`에 다시 그림\n  - 경로 8 옮겨 다시 그림 (케이스 3) · UI 작업 대상 아님 (4단계 UX 확정 때 다시 정함)\n  - Interface Configuration (TI-STN-04-01-T) · 케이스 3 · O\n  - Code Mapping (TI-STN-04-02-T) · 케이스 3 · O\n  - 짝 화면 없음 (두 화면 모두 T-IOS 단독, IA에 L 짝 CID 없음)\n\n**2. 찾았지만 대상 아님** — 없음 (옮겨 다시 그리는 요건이라 바뀌는 글자 · Common UX 규칙 · 호출 동작이 없음)\n\n**3. 영향 화면** — 없음 (2단계에서 정책으로 찾은 것이 있으면 더함, 완료 때 반영 대기로 남김)\n\n**4. 대상 화면의 반영 대기 항목** (6건)\n- 묶음 1 점검 발견 (디스크립션 · 화면)\n  - TI-STN-04-01-T-R01: 0의 \"Default: All / 데이터: All, Error, Warning\" → 지움\n  - TI-STN-04-01-T-R03: 화면 예시 Push Mode ↔ 기본값 Query Mode → 기본 상태 화면을 기본값과 맞춤\n  - TI-STN-04-02-T-R02: 4 Done·Enter \"저장 처리\"와 5 [Save] 저장이 섞임 → 행 단위 확정과 [Save] 저장을 구분\n- 묶음 2 기준 자료 변경 (정책 · 기준데이터 · 헌법)\n  - TI-STN-04-01-T-R04: CURECA 여러 대일 때 LIS 설정이 장비마다인지 없음 → 상단에서 고른 CURECA마다 (POL-SYS-001 규칙 7, POL-COM-005)\n  - TI-STN-04-02-T-R01: Sample Type 이름 예시 → `glossary/sample-types.csv` UI 표기와 맞춤\n  - TI-STN-04-02-T-R03: Assay Pack 데이터 키 이름을 디스크립션에 직접 적음 → Assay Pack 기준 자료로 옮기고 ID로 참조 (헌법 3조)\n- 참고: TI-STN-04-01-T-R02(번호 정리)는 케이스 3 규칙(빈 번호는 그대로)과 부딪혀 제외했고, 겹친 번호 4는 3단계에서 케이스 3 번호 규칙대로 고칩니다.\n\n**[질문 대기]** 위 내용에서 바꿀 곳이 있으면 말씀해 주세요.\nQ6 반영 대기 항목을 어디까지 반영할까요?\n  - 묶음 1 · 2 모두 반영 (추천)\n  - 묶음마다 반영 / 이번엔 안 함을 따로 정함\nQ7 위 요건 목록과 흐름대로 진행하고 2단계로 넘어갈까요?\n  - 이대로 진행, 2단계로 (추천)\n  - 고칠 곳 있음\n\n[참고] 겹치는 다른 작업 없음 (같은 STN 체계의 Assay Pack Setting 작업 20261126-최고관리자-assay-pack은 화면이 겹치지 않음). To-Be 화면 MD 2개를 빈 틀로 만들었고, Figma는 아직 그리지 않았습니다.\n규칙 점검: 1단계 절차 1 ~ 5 · 「하지 않는 것」 지킴 (1단계에서 asis 페이지를 Figma로 열지 않음, 반영 대기 후보만 적고 상태는 답을 받은 뒤 바꿈)\n작업 기준: basis 2026-11-27 10:07 · 작업규칙 CURECA 작업규칙 @원본 · 정책서 정책서 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 · 화면 정의서 화면 정의서",
+  "note": "",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": {
-    "q": "[1단계] 반영 대기 6건을 묶음 1 · 2 모두 반영하고, 요건 목록대로 2단계로 넘어갈까요?",
-    "options": [
-      {
-        "label": "추천대로 진행 (모두 반영 · 2단계로)"
-      },
-      {
-        "label": "하나씩 정하기"
-      }
-    ],
-    "free": true
-  },
-  "replies": [],
+  "ask": null,
+  "replies": [
+    {
+      "at": "2026-11-27T10:12:09+09:00",
+      "by": "서보경",
+      "q": "[1단계] 반영 대기 6건을 묶음 1 · 2 모두 반영하고, 요건 목록대로 2단계로 넘어갈까요?",
+      "text": "추천대로 진행 (모두 반영 · 2단계로)"
+    }
+  ],
   "raws": [
     {
       "at": "2026-11-27T10:09:27+09:00",
