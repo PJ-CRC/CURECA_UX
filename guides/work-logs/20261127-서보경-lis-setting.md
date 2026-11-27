@@ -159,9 +159,9 @@ started: 2026-11-27
 | C16 | 2에 컬럼 항목 설명 없음 | 2에 "컬럼 항목"(No. · 항목 이름 · LIS Code)을 더함 | | TI-STN-04-02-T 2 | 기존 화면에 보이는 것 (reference-rules/description.md 3절 표) | - (T-IOS 단독) | - | 맞음 (기존 화면, 2026-11-27) |
 | 요건 1 · TI-STN-04-02-T Test Code 30종 · GI-B1 Target 7개 | 정책에 있음 | `glossary/test-items.csv` | 그대로 그림 |
 | 요건 1 · TI-STN-04-02-T Test Code의 LIS Test Code 예시 (`Allplex_HPV_HR` 등) | 정책에 없음 (처음 채워지는 CURECA 값이 무엇인지 없음) | POL-SYS-002 규칙 3, `glossary/test-items.csv` 코드 | Q4 |
-| Q5 | 검색 결과가 없을 때 목록에 보여 줄 문구 (Common UX Basic Table No Data는 문구를 화면에 맡김, 기존 화면 · 정책서 · 같은 메뉴에 없음) | TI-STN-04-02-T 2-1 | | - (T-IOS 단독) || 2026-11-27 · 요청자 답: 다른 화면과 같은 공통 문구 No results found. (LID-STN-015) → C19 |
-| Q6 | [4-2] 확정한 항목을 강조하는 표시 (기존 디스크립션 "색상으로 구분", 색 · 모양 정의 없음) | TI-STN-04-02-T 4 | | - (T-IOS 단독) || 2026-11-27 · 요청자 답: 색은 UI에서 정함, 디스크립션에는 색으로 강조된다고만 → C20 |
-| Q7 | 목록의 노출 개수 · Pagination 적용 (Common UX Basic Table은 10 items · 노출 개수 Dropdown · Pagination, 기존 화면은 전체 노출이라 기존대로 그림) | TI-STN-04-02-T 2 · 케이스 Case 1 · 2 | | - (T-IOS 단독) || 2026-11-27 · 요청자 답: Pagination 없이 전체 노출 (항목 최대 약 50개, 검색 있음) — 지금 그린 대로 → C21 (디스크립션만) |
+| Q5 | 검색 결과가 없을 때 목록에 보여 줄 문구 (Common UX Basic Table No Data는 문구를 화면에 맡김, 기존 화면 · 정책서 · 같은 메뉴에 없음) | TI-STN-04-02-T 2-1 | | - (T-IOS 단독) | |
+| Q6 | [4-2] 확정한 항목을 강조하는 표시 (기존 디스크립션 "색상으로 구분", 색 · 모양 정의 없음) | TI-STN-04-02-T 4 | | - (T-IOS 단독) | |
+| Q7 | 목록의 노출 개수 · Pagination 적용 (Common UX Basic Table은 10 items · 노출 개수 Dropdown · Pagination, 기존 화면은 전체 노출이라 기존대로 그림) | TI-STN-04-02-T 2 · 케이스 Case 1 · 2 | | - (T-IOS 단독) | |
 | 요건 1 · 두 화면 5 [Save] · 저장하지 않고 이동 | 정책에 있음 | Confirm_010 · Alert_017 · Confirm_016 | 디스크립션 끝에 코드 |
 | 요건 1 · 두 화면 0 User Type | 표에 줄 없음 | POL-SYS-001 규칙 8 (Service · Admin), `policy/permission-matrix.csv`에 LIS Setting 줄 없음 | Q1 |
 
@@ -252,6 +252,11 @@ started: 2026-11-27
 | C14 | 탭(Interface Configuration · Code Mapping)에 번호 · 디스크립션 없음, 모양은 Box Tabs | 탭 영역 번호 (TI-STN-04-01-T `7` · TI-STN-04-02-T `6`)와 디스크립션을 더하고 Common UX Underline Tab으로 그림 | | TI-STN-04-01-T 7 · TI-STN-04-02-T 6 | Common UX COMM-5-s Underline Tab | - (T-IOS 단독) | O | |
 | C15 | Code Type 목록이 버튼 모양(항목 이름 + 개수 원) | Common UX Outline Tab(Count)으로 그림 | | TI-STN-04-02-T 1 · 1-1 · 케이스 Case 1 · 2 · 3 | Common UX COMM-5-s Outline Tab | - (T-IOS 단독) | O | |
 | C16 | 2에 컬럼 항목 설명 없음 | 2에 "컬럼 항목"(No. · 항목 이름 · LIS Code)을 더함 | | TI-STN-04-02-T 2 | 기존 화면에 보이는 것 (reference-rules/description.md 3절 표) | - (T-IOS 단독) | - | 맞음 (기존 화면, 2026-11-27) |
+| C17 | 4 · 6 Port · Host Address(IP) 입력값 검사 · 필수 여부 없음 | 4 · 6에 「필수값 아님, 입력 형식 · 범위 검사 없음」을 더함 | | TI-STN-04-01-T 4 · 6 | Q2의 답 | - (T-IOS 단독) | O | 맞음 (2026-11-27) |
+| C18 | 4 LIS Code를 빈 값 · 같은 값으로 확정할 때 동작 없음 | 4에 「빈 값으로 확정 → Default 값으로 바뀜」 · 「다른 항목과 같은 값 → Alert_048 노출, 확정 안 됨」을 더함 | | TI-STN-04-02-T 4 | Q3의 답 | - (T-IOS 단독) | O | 맞음 (2026-11-27) |
+| C19 | 2-1 검색 결과가 없을 때 문구 없음 | 2-1에 「일치하는 항목이 없으면 목록에 No results found. 노출」을 더함 | 없음 → No results found. | TI-STN-04-02-T 2-1 | Q5의 답 | - (T-IOS 단독) | O | 맞음 (2026-11-27) |
+| C20 | 4 [4-2] 「색상으로 구분」 | 「색으로 강조 (색은 UI에서 정함)」으로 | | TI-STN-04-02-T 4 | Q6의 답 | - (T-IOS 단독) | - | 맞음 (2026-11-27) |
+| C21 | 2 노출 개수 · Pagination 설명 없음 | 2에 「목록 전체 노출 (Pagination 없음)」을 더함 | | TI-STN-04-02-T 2 | Q7의 답 | - (T-IOS 단독) | - | 맞음 (2026-11-27) |
 
 ## 검토 질의
 <!-- 4단계 절차 2번. 틀은 flow/4-revise-verify.md "검토 질의 틀" -->
