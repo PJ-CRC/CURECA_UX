@@ -85,7 +85,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=40
 
 #### 1-1. 아이디/비밀번호 오류 시 에러 메시지 표시
 
-- 1. ID 및 PW 입력값이 유효하지 않을 경우
+- (1) ID 및 PW 입력값이 유효하지 않을 경우
   - 실패 횟수 카운팅 기준
     - 입력된 ID의 DB 존재 여부를 따지지 않고 해당 입력 ID 문자열 기준으로 실패 횟수를 누적
   - 노출 조건
