@@ -37,8 +37,8 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=38
   - Sample Type Code
     - <span style="color:red">~~Assay pack 관리에서 fileType이 ‘common’ 정보에서 내 ‘sampleTypeInfo’ 정보가 관리항목이다.~~</span>
     - <span style="color:red">~~실제로는 ‘sampleTypeCode’로 관리되나 화면에는 ‘sampleTypeName’ 값으로 표시됨~~</span>
-    - <span style="color:red">Assay Pack의 공통 정보에 들어 있는 Sample Type이 관리 항목</span>
-    - <span style="color:red">화면에는 코드 대신 Sample Type 이름 노출</span>
+    - <span style="color:red">Assay Pack Master 파일(fileType: Master)의 검체 타입 목록(sampleTypeId · sampleTypeName · sampleTypeCode)이 관리 항목</span>
+    - <span style="color:red">화면에는 sampleTypeName 노출, LIS Sample Type Code 기본값은 sampleTypeCode</span>
   - Test Code
     - <span style="color:red">~~Assay pack 관리에서 fileType이 ‘PCR’인 정보에서 내 ‘testItemCode’ 정보가 관리항목이다.~~</span>
     - <span style="color:red">~~다만 화면에는 ‘testItemName’ 값으로 표시됨~~</span>

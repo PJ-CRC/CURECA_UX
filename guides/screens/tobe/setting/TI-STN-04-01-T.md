@@ -33,7 +33,6 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=38
   - <span style="color:red">화면 상단에 Interface Configuration 제목과 안내 문구 노출</span>
 - 진입 방법
   - LNB의 ‘Setting > LIS Setting’을 통해 진입
-  - <span style="color:red">~~Default: All / 데이터: All, Error, Warning~~</span>
 - User Type : Service, Admin
 - 정책 참고 : POL-SYS-001, POL-COM-005
 
