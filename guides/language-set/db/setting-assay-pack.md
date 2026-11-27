@@ -22,7 +22,7 @@
 | LID-EVT-022 | ref | 사용 | AI 번역 | T/L | btn | Reset | 초기화 | Zurücksetzen | Redefinir | Restablecer | Reimposta | Réinitialiser | LID-COM-BTN-001 | 검색 초기화 버튼 | Assay Pack Setting | TI-STN-08 / LI-STN-08 |
 | LID-STN-016 | ref | 사용 | AI 번역 | T/L | btn | Search | 검색 | Suchen | Pesquisar | Buscar | Cerca | Rechercher | LID-COM-BTN-002 | 검색 버튼 | Assay Pack Setting | TI-STN-08 / LI-STN-08 |
 | LID-EVT-044 | ref | 사용 | AI 번역 | T | txt | {N} of {M} Items |  | {N} von {M} Einträgen | {N} de {M} Itens | {N} de {M} Elementos | {N} di {M} Elementi | {N} sur {M} éléments |  | 목록 개수 | Assay Pack Setting | TI-STN-08 |
-| LID-STN-006 | ref | 사용 | AI 번역 | L | txt | Items | 항목 | Einträge | Itens | Elementos | Elementi | Éléments |  | 목록 총 개수 | Assay Pack Setting | LI-STN-08 |
+| LID-STN-006 | ref | 사용 | AI 번역 | T/L | txt | Items | 항목 | Einträge | Itens | Elementos | Elementi | Éléments |  | 목록 총 개수 | Assay Pack Setting | LI-STN-08 / TI-STN-08 |
 | LID-STN-019 | ref | 사용 | AI 번역 | T | btn | Delete | 삭제 | Löschen | Eliminar | Eliminar | Elimina | Supprimer | LID-COM-BTN-011 | 목록·상세 삭제 버튼 | Assay Pack Setting | TI-STN-08 / TI-STN-08-P |
 | LID-TMG-035 | ref | 사용 | AI 번역 | T | btn | Import | 가져오기 | Importieren | Importar | Importar | Importa | Importer | LID-COM-BTN-004 | 가져오기 버튼·Popup 버튼 | Assay Pack Setting | TI-STN-08 / TI-STN-08-01 |
 | LID-STN-147 | ref | 사용 | AI 번역 | T/L | txt | Product Name | 제품명 | Produktname | Nome do Produto | Nombre del Producto | Nome Prodotto | Nom du produit |  | 테이블 컬럼·상세 레이블 | Assay Pack Setting | TI-STN-08 / LI-STN-08 / TI-STN-08-P / LI-STN-08-P |
@@ -100,6 +100,13 @@
 | LID-STN-434 |  | 사용 | AI 번역 | T/L | txt | Row |  | Zeile | Linha | Fila | Riga | Ligne |  | Socket 위치 레이블 | Assay Pack Setting | TI-STN-08-P / LI-STN-08-P |
 | LID-STN-435 |  | 사용 | AI 번역 | T/L | txt | Column |  | Spalte | Coluna | Columna | Colonna | Colonne |  | Socket 위치 레이블 | Assay Pack Setting | TI-STN-08-P / LI-STN-08-P |
 | LID-STN-022 | ref | 사용 | AI 번역 | T | btn | Save | 저장 | Speichern | Guardar | Guardar | Salva | Enregistrer | LID-COM-BTN-013 | Active 변경 저장 버튼 | Assay Pack Setting | TI-STN-08-P |
+| LID-IVT-151 | ref | 사용 | AI 번역 | T/L | txt | {n} items |  | {n} Einträge | {n} itens | {n} elementos | {n} elementi | {n} éléments |  | 노출 개수 Dropdown | Assay Pack Setting | TI-STN-08 / LI-STN-08 / TI-STN-08-P |
+| LID-SPT-033 | ref | 사용 | 법인 검토 완료 | T/L | txt | PCR | - | - | - | - | - | - | LID-COM-TRM-005 | 검사 단계명 (File type 값) | Assay Pack Setting | TI-STN-08 / LI-STN-08 |
+| LID-STN-021 | ref | 사용 | 법인 검토 완료 | T | btn | Cancel | 취소 | Abbrechen | Cancelar | Cancelar | Annulla | Annuler | LID-COM-BTN-008 | Import file Popup 취소 버튼 | Assay Pack Setting | TI-STN-08-01 |
+| LID-STN-438 |  | 사용 | AI 번역 | T/L | txt | File Info |  | Dateiinformationen | Informações do ficheiro | Información del archivo | Informazioni file | Informations du fichier |  | File Details 정보 묶음 제목 | Assay Pack Setting | TI-STN-08-P / LI-STN-08-P |
+| LID-STN-439 |  | 사용 | AI 번역 | T/L | txt | Test Target Selectable |  | Testziel auswählbar | Alvo de Teste Selecionável | Diana de Prueba Seleccionable | Target Test selezionabile | Cible de test sélectionnable |  | PCR 파일 항목 레이블 | Assay Pack Setting | TI-STN-08-P / LI-STN-08-P |
+| LID-STN-440 |  | 사용 | AI 번역 | T | txt | json · Multiple files |  | json · Mehrere Dateien | json · Vários ficheiros | json · Varios archivos | json · Più file | json · Plusieurs fichiers |  | Import file Popup 파일 형식 안내 | Assay Pack Setting | TI-STN-08-01 |
+| LID-STN-441 |  | 사용 | AI 번역 | T | txt | {n} MB |  | - | - | - | - | - |  | Import file Popup 파일 크기 (단위 MB 미번역) | Assay Pack Setting | TI-STN-08-01 |
 
 ## 변경 이력
 
