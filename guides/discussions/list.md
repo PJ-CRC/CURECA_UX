@@ -24,9 +24,7 @@
 
 ## 4. 결정 · 작업 중
 
-| ID | 제목 | 누가 정하나 | 걸린 정책 | 걸린 화면 | 생긴 날 | 상태 |
-| --- | --- | --- | --- | --- | --- | --- |
-| [DS-0012](DS-0012.md) | Alert 카탈로그 Confirm_029 · Confirm_030 발생 조건을 POL-TST-008 규칙 6(File details에서 바꾸고 [Save])에 맞춤 | 내부 (최고관리자) | POL-TST-008 | TI-STN-08, TI-STN-08-P | 2026-11-25 | 결정 |
+없음
 
 ## 5. 보류
 
@@ -40,6 +38,7 @@
 
 | ID | 제목 | 누가 정하나 | 걸린 정책 | 걸린 화면 | 생긴 날 | 상태 |
 | --- | --- | --- | --- | --- | --- | --- |
+| [DS-0012](DS-0012.md) | Alert 카탈로그 Confirm_029 · Confirm_030 발생 조건을 POL-TST-008 규칙 6(File details에서 바꾸고 [Save])에 맞춤 | 내부 (최고관리자) | POL-TST-008 | TI-STN-08, TI-STN-08-P | 2026-11-25 | 종료 |
 | [DS-0013](DS-0013.md) | POL-INV-002 cids에 Item details Popup(TI/LI-IVT-03-T-P, TI/LI-IVT-04-T-P)을 더함 | 내부 | POL-INV-002 | TI-IVT-03-T-P, LI-IVT-03-T-P, TI-IVT-04-T-P, LI-IVT-04-T-P | 2026-11-27 | 종료 |
 | [DS-0001](DS-0001.md) | Service Mode를 L-IOS Client Mode로 바꾸고 기능 표를 새 표로 고침 | 내부 (서보경) | POL-ACC-001, POL-ACC-008, POL-COM-001, POL-EVT-002, POL-EVT-003, POL-INV-005, POL-LOD-005, POL-MAT-001, POL-SYS-004, POL-TST-008, POL-TST-009 | Material Setup 30개, LI-STN-02 (이름 바꾸기는 화면 MD 187개를 함께 고침) | 2026-11-12 | 종료 |
 | [DS-0003](DS-0003.md) | 장비 통합 상태의 영문 · 화면 라벨을 CURECA Status로 정하고, 상태값 분류 이름을 Hardware Status로 바꿈 | 내부 (서보경) | POL-EQP-001 | LI-STN-02 | 2026-11-12 | 종료 |
