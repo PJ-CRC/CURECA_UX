@@ -2,11 +2,11 @@
   "id": "brex-06_R009",
   "kind": "request",
   "team": "cureca",
-  "status": "보류",
-  "at": "2026-11-27T10:00:35+09:00",
+  "status": "대기",
+  "at": "2026-11-27T10:06:12+09:00",
   "createdAt": "2026-11-27T09:55:49+09:00",
   "by": "최고관리자",
-  "doneBy": "Claude",
+  "doneBy": "최고관리자",
   "pc": "BREX_06",
   "reqId": "R009",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,25 +17,21 @@
   "type": "요청",
   "layout": "",
   "text": "https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-360786&t=GdYCaPho44GgAu5i-1\nInventory T-ios 화면만 다시 그려줘",
-  "note": "케이스 3 · 1단계 · 20261127-최고관리자-inventory - 요건 목록을 정리했습니다. 확인해 주시면 2단계(근거 · 분석)로 넘어갑니다.\n\n**[1단계] 요건 목록을 확인해 주세요**\n작업 기록 `20261127-최고관리자-inventory` · 출처 Workbench R009 (최고관리자, 2026-11-27) · 지나가는 단계 1 → 2 → 3 → 4 → 5\n\n**1. 요건 목록**\n- 요건 1. Inventory 메뉴 T-IOS 화면을 `Inventory_asis`에서 `Inventory_tobe`에 다시 그림\n  - 경로: 8 옮겨 다시 그림 (케이스 3) · UI 작업 대상 아님 (4단계 UX 확정 때 다시 정함)\n  - 대상 (케이스 3, 작업 대상 O): Inventory Summary (TI-IVT-01-T) · Inventory Overview (TI-IVT-02-T) · Inventory Consumables (TI-IVT-03-T) · Consumables Item details popup (TI-IVT-03-T-P) · Inventory Reagent (TI-IVT-04-T) · Reagent Item details Popup (TI-IVT-04-T-P) · Waste Bin/Bottle (TI-IVT-05-T) · Inventory Usage History (TI-IVT-06-T)\n  - L-IOS 짝 화면 8개 (LI-IVT-…): 작업 대상 X, 짝 화면 · 고치지 않음 (요청 글: T-IOS만)\n  - 요청 글 「Inventory T-ios 화면」을 IA의 Inventory 메뉴 T-IOS 화면 8개 모두로 읽었습니다.\n\n**2. 찾았지만 대상 아님** - 없음. 옮겨 다시 그리는 요건이라 같은 글자 · Common UX 번호 · 호출 관계로 찾을 바뀌는 것이 없음\n\n**3. 영향 화면** - 없음. 2단계에서 정책으로 찾은 화면이 있으면 더하고, 완료 때 반영 대기로 남김\n\n**4. 대상 화면의 반영 대기 항목** (74건, 표 전체는 작업 기록 「대상 화면의 반영 대기 항목」)\n- 묶음 1 기준데이터 · IA 표기 (용어집 · 상태값 · Module-Unit · IA) 24건: 01-T-R01 · R03 · R04 · R05 · R09 · R10, 02-T-R01 · R06, 03-T-P-R03 · R04, 03-T-R02 · R07, 04-T-P-R01 · R02 · R04 · R06, 04-T-R07 · R09, 05-T-R01 · R02 · R06 · R08, 06-T-R03 · R06\n- 묶음 2 정책을 디스크립션에 반영 (POL-INV · POL-EQP-009 · POL-COM-006) 17건: 01-T-R02 · R08, 02-T-R03, 03-T-R01 · R04 · R10 · R11, 04-T-R01 · R02 · R10 · R12 · R13, 05-T-R05 · R10, 06-T-R08 · R09 · R10\n- 묶음 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 예시 값 · 다른 화면 참조) 32건: 01-T-R06 · R11, 02-T-R02 · R04 · R05 · R07, 03-T-P-R01 · R02 · R05, 03-T-R03 · R05 · R06 · R08 · R09, 04-T-P-R03 · R05 · R07 · R08, 04-T-R04 · R05 · R06 · R08 · R11, 05-T-R03 · R04 · R07 · R09, 06-T-R01 · R02 · R04 · R05 · R07\n- 묶음 4 무엇으로 바꿀지 아직 정해지지 않은 항목 1건: TI-IVT-02-T-R08 (IA 「짝 화면 동일」이 LI-IVT-02-T 줄에 비어 있음)\n- (항목 ID 앞 `TI-IVT-` 생략)\n\n**[질문 대기]** 위 내용에서 바꿀 곳이 있으면 말씀해 주세요.\nQ1 반영 대기 묶음 1 · 2 · 3을 이번에 반영할까요?\n  - 세 묶음 모두 반영 (추천)\n  - 묶음마다 반영 / 이번엔 안 함을 따로 적음\n  다시 그리는 화면이라 함께 고치면 뒤에 따로 고칠 일이 없음\nQ2 TI-IVT-02-T-R08: IA `LI-IVT-02-T` 줄의 「짝 화면 동일」을 Y로 채울까요?\n  - Y로 채움 (추천)\n  - 바꾸지 않음\n  - 이번엔 안 함\n  두 화면의 화면 · 디스크립션이 같음 (asis 화면 MD T/L 차이)\nQ3 TI-IVT-06-T 기획 프레임이 같은 이름 · 같은 Ver 2.1.18로 둘 있습니다. 어느 것을 원본으로 다시 그릴까요?\n  - 아래 프레임 3543:361388 (Item Type 기본값 All, 사용 이력은 폐기 시점만) (추천)\n  - 위 프레임 3543:361230 (asis 화면 MD가 옮긴 것, 기본값 All Item Types, 반환 시점 포함)\n  아래 프레임이 디스크립션 기본값(All)과 반영 대기 TI-IVT-06-T-R09(폐기할 때만 기록)에 맞음\nQ4 TI-IVT-04-T 3-3 Capacity가 가리키는 「아래 다른 예시 화면」이 asis 화면 MD에 없습니다. 어느 프레임인가요?\n  - 따로 없음, 디스크립션대로 그림 (추천)\n  - 프레임을 알려 줌\nQ5 위 요건 목록과 흐름대로 진행할까요? (진행하면 2단계로 넘어갑니다)\n  - 이대로 진행 (추천)\n  - 고칠 곳 있음\n\n[참고]\n- To-Be 화면 MD 8개를 빈 틀로 만들었습니다 (`screens/tobe/inventory/`).\n- 케이스 3 규칙(빈 번호를 채우지 않음)과 부딪히는 반영 대기 TI-IVT-01-T-R07 · TI-IVT-04-T-R03은 제외로 `pending/closed.md`에 옮겼습니다.\n- 겹치는 다른 작업: 없음. Figma는 아직 그리지 않았습니다 (3단계에서 그림).\n\n규칙 점검: 1단계 절차 1 ~ 5와 케이스 3 (이행 기간)대로 함, 1단계에서 Figma `Inventory_asis`를 열지 않음\n작업 기준: basis 2026-11-27 09:58 · 작업규칙 CURECA 작업규칙 @원본 · 정책서 정책서 (1단계는 머리말만, 2단계에서 읽음) · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 · 화면 정의서 화면 정의서",
+  "note": "",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": {
-    "q": "[1단계] 요건 목록과 질문 Q1 ~ Q5를 확인해 주세요.",
-    "options": [
-      {
-        "label": "추천대로 진행"
-      },
-      {
-        "label": "하나씩 정하기"
-      }
-    ],
-    "free": true
-  },
-  "replies": [],
+  "ask": null,
+  "replies": [
+    {
+      "at": "2026-11-27T10:06:12+09:00",
+      "by": "최고관리자",
+      "q": "[1단계] 요건 목록과 질문 Q1 ~ Q5를 확인해 주세요.",
+      "text": "추천대로 진행"
+    }
+  ],
   "raws": [
     {
       "at": "2026-11-27T10:00:48+09:00",
