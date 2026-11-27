@@ -25,7 +25,13 @@
   "marks": [],
   "ask": null,
   "replies": [],
-  "raws": [],
+  "raws": [
+    {
+      "at": "2026-11-27T14:21:23+09:00",
+      "text": "R011 처리를 마치고 「완료」로 바꿨습니다. 바꾼 것은 언어셋 DB뿐이고 Figma는 그대로입니다.\n\n**바꾼 것** (첨부 엑셀 목록 시트의 1701·1703·1706행, `.history/guides/language-set/db/material-setup.md`)\n- **1701행 LID-MAS-436** (보충 확인 버튼): `Confirm refill` → `Confirm`. 독일어·포르투갈어·스페인어·이탈리아어·프랑스어 다섯 언어도 엑셀대로 바꿨습니다.\n- **1703행 LID-MAS-438** (가이드 텍스트): `After refilling, click [Confirm refill].` → `After refilling, click [Confirm].` 다섯 언어 문장 속 버튼 이름도 함께 바꿨습니다.\n- **1706행 LID-MAS-441** (전체 보충 확인 버튼): `Confirm all refills` → `Confirm all`. 다섯 언어도 바꿨습니다.\n- `db/history.md` 항목 이력에 「변경」 3줄을 더했습니다(근거: 언어셋 v0.06 목록 시트 행 번호, R011 첨부).\n- 엑셀 A열이 「추가·검토」라서 검증 상태는 그대로 「AI 번역」입니다.\n\n**Figma를 고치지 않은 이유**\n이 세 문구는 Material Setup 화면 LI-TSS-DXI-08·09에서만 씁니다. 이 Figma 파일에도 화면 MD에도 그 화면이 없어서 고칠 프레임이 없었고, 캡처와 프로토타입 맞추기도 하지 않았습니다.\n\n**확인할 것**\n- 첨부 엑셀 이름이 `source/`에 있는 v0.06 엑셀과 같습니다. 11-19에 받은 엑셀을 지우지 않으려고 덮어쓰지 않았으니, 새 엑셀을 `source/`에 둘지 정해 주세요.\n- R009의 질문(Q2·Q2-1·Q6·Q7·C3)은 아직 답을 기다리고 있습니다.",
+      "cut": false
+    }
+  ],
   "work": "",
   "handoff": null,
   "uid": "WBAH-R011",
