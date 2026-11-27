@@ -9,6 +9,8 @@
 | ID | 제목 | 누가 정하나 | 걸린 정책 | 걸린 화면 | 생긴 날 | 상태 |
 | --- | --- | --- | --- | --- | --- | --- |
 | [DS-0014](DS-0014.md) | Inventory Reagent의 Spare Cap 항목을 Tub 바로 아래에 두고, Cap을 채워야 Run을 마칠 수 있을 때만 부족으로 보여 줌 | 고객 | POL-INV-003, POL-INV-002, POL-LOD-004 | TI-IVT-04-T, LI-IVT-04-T | 2026-11-27 | 결정 |
+| [DS-0015](DS-0015.md) | PCR Reagent Lot 구성 때 IC Tube만이 아니라 박스 안의 모든 Tube를 Lot으로 묶음 | 고객 | POL-MAT-009, POL-MAT-008, POL-INV-007 | LI-TSS-LTG, LI-TSS-LTG-02-01, LI-TSS-LTG-02-02 | 2026-11-27 | 결정 |
+| [DS-0016](DS-0016.md) | MS Cap 채우기 완료 버튼명을 [Confirm refill]에서 [Confirm]으로 줄임 | 고객 | - | LI-TSS-DXI-08, LI-TSS-DXI-09 | 2026-11-27 | 결정 |
 
 ## 2. 논의 중 · 고객
 
