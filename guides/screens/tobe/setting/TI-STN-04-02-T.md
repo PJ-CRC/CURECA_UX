@@ -71,6 +71,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=38
 - LIS Code 영역 Default
   - 최초 설치 시 CURECA 시스템이 관리하는 값이 자동으로 입력(pre-filled)되어 있으며 필요에 따라 수정하여 사용
 - 정렬 : 오름차순
+- <span style="color:red">목록 전체 노출 (Pagination 없음)</span>
 - 컬럼 항목
   - No. : 목록 순번
   - Sample Type Name · Product Name · Target Code : 항목의 UI 표기 이름
@@ -84,6 +85,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=38
 - 검색 결과
   - 입력된 키워드와 일치하는 항목이 필터링되어 표기
   - 코드 매핑 화면에서 해당 항목만 리스트에 노출
+  - <span style="color:red">일치하는 항목이 없으면 목록에 문구 노출 : No results found.</span>
 - 공통 UX 참고 : COMM-5-t
 - 케이스 참고 : TI-STN-04-02-T/Case > Case 3
 
@@ -103,6 +105,8 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=38
 - 입력 및 <span style="color:red">확정</span> 처리
   - 값 입력 후 Done 버튼 클릭 또는 Enter 입력 또는 다른 영역 클릭 시 → 입력값 <span style="color:red">~~저장 처리~~</span> <span style="color:red">확정</span>, Edit 모드 종료, 화면은 원래 상태로 복귀
   - <span style="color:red">확정한 값은 [Save] 클릭 시 저장</span>
+  - <span style="color:red">빈 값으로 확정하면 Default 값(최초 설치 시 CURECA 시스템이 관리하는 값)으로 바뀌어 저장</span>
+  - <span style="color:red">다른 항목과 같은 LIS Code는 사용 불가, 같은 값으로 확정하면 Alert 노출 : Alert_048 (확정되지 않음)</span>
 - 취소 처리
   - X 클릭 시 <span style="color:red">입력값 확정 없이</span> Edit 모드 종료
 - [4-2] <span style="color:red">확정</span> 후 표시
