@@ -30,27 +30,21 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=38
 - 정의
   - T-IOS only
   - LIS에서 전달되는 외부 코드와 우리 시스템 코드 간 매핑을 정의하는 메뉴
-  - <span style="color:red">T-IOS 상단에서 고른 CURECA의 Code Mapping을 보여 주고 바꿈</span>
+  - CURECA가 여러 대 설치된 경우, Top Navigation에서 선택한 CURECA의 Code Mapping 화면 (한 대만 설치된 경우 해당 없음)
 - 진입 방법
   - LNB의 ‘Setting > LIS Setting’을 통해 진입
 - 데이터 관련 정의
   - Sample Type Code
-    - <span style="color:red">~~Assay pack 관리에서 fileType이 ‘common’ 정보에서 내 ‘sampleTypeInfo’ 정보가 관리항목이다.~~</span>
-    - <span style="color:red">~~실제로는 ‘sampleTypeCode’로 관리되나 화면에는 ‘sampleTypeName’ 값으로 표시됨~~</span>
-    - <span style="color:red">Assay Pack Master 파일(fileType: Master)의 검체 타입 목록(sampleTypeId · sampleTypeName · sampleTypeCode)이 관리 항목</span>
-    - <span style="color:red">화면에는 sampleTypeName 노출, LIS Sample Type Code 기본값은 sampleTypeCode</span>
+    - Assay Pack Master 파일(fileType: Master)의 검체 타입 목록(sampleTypeId · sampleTypeName · sampleTypeCode)이 관리 항목
+    - 화면에는 sampleTypeName 노출, LIS Sample Type Code 기본값은 sampleTypeCode
   - Test Code
-    - <span style="color:red">~~Assay pack 관리에서 fileType이 ‘PCR’인 정보에서 내 ‘testItemCode’ 정보가 관리항목이다.~~</span>
-    - <span style="color:red">~~다만 화면에는 ‘testItemName’ 값으로 표시됨~~</span>
-    - <span style="color:red">Assay Pack PCR 파일(fileType: PCR)의 시약 기본 정보 중 검사 항목(testItemCode · testItemName)이 관리 항목</span>
-    - <span style="color:red">화면에는 testItemName 노출, LIS Test Code 기본값은 testItemCode</span>
+    - Assay Pack PCR 파일(fileType: PCR)의 시약 기본 정보 중 검사 항목(testItemCode · testItemName)이 관리 항목
+    - 화면에는 testItemName 노출, LIS Test Code 기본값은 testItemCode
   - Target Code Case
-    - <span style="color:red">~~Assay pack 관리에서 fileType이 ‘PCR’인 목록 중에 ‘isTargetNames’ 값이 True인 경우만 항목에 추가되어 관리된다.~~</span>
-    - <span style="color:red">~~이때 ‘testTargetNames’ 항목들이 2 depth 항목으로 제공되어 관리됨~~</span>
-    - <span style="color:red">Assay Pack PCR 파일 중 isTestTargetSelectable이 true인 검사 항목만 관리 항목</span>
-    - <span style="color:red">그 검사 항목의 testTargetNames가 2 Depth 항목으로 제공되어 관리됨</span>
-  - <span style="color:red">Assay Pack이 바뀌면 관리 항목도 바뀜</span>
-  - <span style="color:red">파라미터 기준 : 씨젠 Assay Pack 명세 R06 (2026-10-26)</span>
+    - Assay Pack PCR 파일 중 isTestTargetSelectable이 true인 검사 항목만 관리 항목
+    - 그 검사 항목의 testTargetNames가 2 Depth 항목으로 제공되어 관리됨
+  - Assay Pack이 바뀌면 관리 항목도 바뀜
+  - 파라미터 기준 : 씨젠 Assay Pack 명세 R06 (2026-10-26)
 - User Type : Service, Admin
 - 정책 참고 : POL-SYS-002, POL-COM-005, POL-TST-010
 
@@ -72,7 +66,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=38
 - LIS Code 영역 Default
   - 최초 설치 시 CURECA 시스템이 관리하는 값이 자동으로 입력(pre-filled)되어 있으며 필요에 따라 수정하여 사용
 - 정렬 : 오름차순
-- <span style="color:red">목록 전체 노출 (Pagination 없음)</span>
+- 목록 전체 노출 (Pagination 없음)
 - 컬럼 항목
   - No. : 목록 순번
   - Sample Type Name · Product Name · Target Code : 항목의 UI 표기 이름
@@ -82,15 +76,15 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=38
 
 **2-1  검색 영역**
 - 검색 대상
-  - <span style="color:red">Sample Type Name 또는 LIS Sample Type Code</span>를 기준으로 검색 가능
+  - Sample Type Name 또는 LIS Sample Type Code를 기준으로 검색 가능
 - 검색 결과
   - 입력된 키워드와 일치하는 항목이 필터링되어 표기
   - 코드 매핑 화면에서 해당 항목만 리스트에 노출
-  - <span style="color:red">일치하는 항목이 없으면 목록에 문구 노출 : No results found.</span>
+  - 일치하는 항목이 없으면 목록에 문구 노출 : No results found.
 - 공통 UX 참고 : COMM-5-t
 - 케이스 참고 : TI-STN-04-02-T/Case > Case 3
 
-**2-2  <span style="color:red">System Code</span> 기입 영역**
+**2-2  System Code 기입 영역**
 - 실제 System Code가 아닌 UI 표기명으로 표기
 
 **3  우측 영역 (Depth 구조)**
@@ -103,15 +97,15 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=38
 **4  수정 기능 - [Edit] 버튼**
 - 진입 동작
   - Edit 클릭 시 해당 항목이 [4-1] Text Input으로 전환되어 Edit 모드 진입
-- 입력 및 <span style="color:red">확정</span> 처리
-  - 값 입력 후 Done 버튼 클릭 또는 Enter 입력 또는 다른 영역 클릭 시 → 입력값 <span style="color:red">~~저장 처리~~</span> <span style="color:red">확정</span>, Edit 모드 종료, 화면은 원래 상태로 복귀
-  - <span style="color:red">확정한 값은 [Save] 클릭 시 저장</span>
-  - <span style="color:red">빈 값으로 확정하면 Default 값(최초 설치 시 CURECA 시스템이 관리하는 값)으로 바뀌어 저장</span>
-  - <span style="color:red">다른 항목과 같은 LIS Code는 사용 불가, 같은 값으로 확정하면 Alert 노출 : Alert_048 (확정되지 않음)</span>
+- 입력 및 확정 처리
+  - 값 입력 후 Done 버튼 클릭 또는 Enter 입력 또는 다른 영역 클릭 시 → 입력값 확정, Edit 모드 종료, 화면은 원래 상태로 복귀
+  - 확정한 값은 [Save] 클릭 시 저장
+  - 빈 값으로 확정하면 Default 값(최초 설치 시 CURECA 시스템이 관리하는 값)으로 바뀌어 저장
+  - 다른 항목과 같은 LIS Code는 사용 불가, 같은 값으로 확정하면 Alert 노출 : Alert_048 (확정되지 않음)
 - 취소 처리
-  - X 클릭 시 <span style="color:red">입력값 확정 없이</span> Edit 모드 종료
-- [4-2] <span style="color:red">확정</span> 후 표시
-  - 수정된 항목은 <span style="color:red">~~색상으로 구분되어~~</span> <span style="color:red">색으로</span> 변경 내역 강조 <span style="color:red">(색은 UI에서 정함)</span>
+  - X 클릭 시 입력값 확정 없이 Edit 모드 종료
+- [4-2] 확정 후 표시
+  - 수정된 항목은 색으로 변경 내역 강조 (색은 UI에서 정함)
   - 단, 이전 값과 동일한 값을 입력한 경우에는 변경사항 없음으로 처리되어 색상 표시가 되지 않음
 - 공통 UX 참고 : COMM-5-t
 - 정책 참고 : POL-SYS-002
@@ -130,11 +124,6 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=38
 - 해당 영역 고정되어 항시 노출(스크롤 영역X)
 - 공통 UX 참고 : COMM-5-c
 - 정책 참고 : POL-SYS-002
-
-**<span style="color:red">6</span>  <span style="color:red">탭 영역</span>**
-- <span style="color:red">Interface Configuration, Code Mapping 탭으로 LIS Setting 안의 화면 전환</span>
-- <span style="color:red">Interface Configuration 선택 시 이동 : TI-STN-04-01-T</span>
-- 공통 UX 참고 : COMM-5-s
 
 ## 케이스
 
@@ -187,8 +176,8 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=38
 | 화면 표기 글자 (영어) | 출처 | Language ID |
 | --- | --- | --- |
 | LIS Setting | 화면 제목 | |
-| Interface Configuration | 화면 6 | |
-| Code Mapping | 화면 6 | |
+| Interface Configuration | 탭 | |
+| Code Mapping | 탭 | |
 | Code Type | 화면 1 · 케이스 Case 1 · 2 · 3 | |
 | Sample Type Code | 화면 1 · 화면 2 · 케이스 Case 1 · 2 · 3 | |
 | Target Code | 화면 1 · 케이스 Case 1 · 3 | |
