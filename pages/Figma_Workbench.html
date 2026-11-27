@@ -557,6 +557,29 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
 .req .ask .af{display:flex;gap:6px;margin-top:7px}
 .req .ask .af input{flex:1;min-width:0;padding:5px 9px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:13px;color:var(--ink)}
 .req .ask .af button{padding:5px 12px;border:0;border-radius:8px;background:var(--accent);color:var(--on-accent);font-size:13px;font-weight:700;cursor:pointer}
+/* 질문마다 골라 한 번에 답하기: 고를 값을 누르면 고름(.sel), 아래 줄의 버튼으로 한 번에 보낸다 */
+.req.qpick .qblk .qopt{list-style:none;margin-left:2.2em;padding-left:0}
+.req.qpick .qblk .qopt>li{display:flex;flex-wrap:wrap;align-items:center;gap:6px;width:fit-content;max-width:100%;padding:4px 10px 4px 28px;border:1px solid var(--line-2);border-radius:8px;background:var(--surface);color:var(--ink-2);font-weight:500;cursor:pointer;position:relative}
+.req.qpick .qblk .qopt>li::before{content:"";position:absolute;left:10px;top:50%;width:10px;height:10px;margin-top:-6px;border:1.5px solid var(--ink-3);border-radius:50%}
+.req.qpick .qblk .qopt>li:hover{border-color:var(--ink-3);color:var(--ink)}
+.req.qpick .qblk .qopt>li.sel{border-color:var(--accent);color:var(--ink);font-weight:600;background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
+.req.qpick .qblk .qopt>li.sel::before{border-color:var(--accent);background:var(--accent);box-shadow:inset 0 0 0 2px var(--surface)}
+.req.qpick .qblk .qopt>li+li{margin-top:5px}
+.req.qpick .qblk.qtd .qopt{margin:0;padding:0}
+.req.qpick .qblk.qtd .qopt>li{flex-wrap:nowrap;width:auto;padding:3px 8px 3px 24px;font-size:12.5px;line-height:1.35}
+.req.qpick .qblk.qtd .qopt>li .recb{flex:none}
+.req.qpick .md td:has(>.qtd){min-width:230px}
+.req.qpick .qblk .qin{display:block;box-sizing:border-box;width:100%;max-width:340px;margin-top:5px;padding:4px 9px;border:1px dashed var(--line-2);border-radius:8px;background:var(--surface);font-size:12.5px;color:var(--ink)}
+.req.qpick .qblk:not(.qtd) .qin{margin-left:2.2em;max-width:min(340px,calc(100% - 2.2em))}
+.req.qpick .qblk .qin:focus{outline:none;border-style:solid;border-color:var(--ink-3)}
+.req.qpick .qblk .qin.on{border-style:solid;border-color:var(--accent);background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
+.req.qpick .qblk.qtd .qopt>li::before{left:8px}
+.req.qpick .qblk.qtd .qopt>li+li{margin-top:4px}
+.req .ask .qpk{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:9px;padding-top:9px;border-top:1px dashed color-mix(in srgb,var(--warn) 38%,transparent);font-size:12.5px;color:var(--ink-2)}
+.req .ask .qpk span{flex:1;min-width:180px}
+.req .ask .qpk b{color:var(--ink)}
+.req .ask .qpk button{min-height:30px;padding:0 12px;border:0;border-radius:8px;background:var(--accent);color:var(--on-accent);font-size:13px;font-weight:700;cursor:pointer}
+.req .ask .qpk button:disabled{opacity:.5;cursor:default}
 .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#1e232b;color:#fff;padding:9px 16px;border-radius:10px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:20}
 .toast.on{opacity:1}
 /* 좁은 화면: 뷰어 위, 작업 페이지 · 수정 요청 아래로 쌓고 페이지 전체 스크롤 */
@@ -2080,7 +2103,42 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
   /* Claude의 질문 · 선택지(ask {q, options:[{label, action?, ids?}], free}) — 답하면 요청에 쌓이고(replies) 다시 「대기」로 Claude가 이어서 처리한다.
      선택지 action: 없음(그 글을 답으로) · done(더 할 일 없이 완료) · delete(ids 요청을 지우고 완료). 입력 중인 답은 다시 그려도 남게 drafts에 둔다 */
   var drafts = {};
+  /* 질문마다 골라 한 번에 답하기(2026-11-27): 「하나씩 정하기」는 질문 하나마다 Claude 한 차례(1분 반 ~ 2분)라 기다림이 질문 수만큼 늘었다.
+     note · 질문에 Q1 · Q2 … 고를 값(ul.qopt, mdview.js)이 있으면 눌러 고르고(처음엔 추천), 「Q1: 값」 줄로 한 번에 보낸다. picks[요청 ID] = {Q1: 값} */
+  var picks = {}, qtyped = {};   // qtyped[요청 ID] = {Q1: 직접 입력한 답} - 있으면 고른 값보다 먼저
+  function qVal(id, k){ var t = String(((qtyped[id] || {})[k]) || '').trim(); return t || (picks[id] || {})[k]; }
   function hasAsk(r){ return !!(r.ask && r.ask.q); }
+  function qKeys(li){ var ks = []; Array.prototype.forEach.call(li.querySelectorAll('.qblk[data-q]'), function(b){ if (b.querySelector('.qopt>li[data-v]') && ks.indexOf(b.dataset.q) < 0) ks.push(b.dataset.q); }); return ks; }
+  function qMark(li, id){
+    var p = picks[id] || {}, ty = qtyped[id] || {}, ks = qKeys(li);
+    Array.prototype.forEach.call(li.querySelectorAll('.qblk[data-q] .qopt>li[data-v]'), function(o){ var k = o.closest('.qblk').dataset.q, on = !String(ty[k] || '').trim() && p[k] === o.dataset.v; o.classList.toggle('sel', on); o.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+    Array.prototype.forEach.call(li.querySelectorAll('.qblk[data-q] .qin'), function(x){ x.classList.toggle('on', !!String(ty[x.dataset.qin] || '').trim()); });
+    var n = ks.filter(function(k){ return qVal(id, k) != null; }).length, c = li.querySelector('.qpk .qn'); if (c) c.textContent = n + ' / ' + ks.length;
+  }
+  function qDecorate(){
+    if (document.documentElement.classList.contains('perm-ro')) return;
+    Array.prototype.forEach.call($('reqs').querySelectorAll('li.req[data-id]'), function(li){
+      var id = li.dataset.id, r = (reqData.items || []).filter(function(x){ return x.id === id; })[0];
+      if (!r || !hasAsk(r) || r.status !== '보류') return;
+      var ks = qKeys(li), box = li.querySelector('.ask'); if (!ks.length || !box) return;
+      li.classList.add('qpick');
+      ks.forEach(function(k){ var b = li.querySelector('.qblk[data-q="' + k + '"]'), u = b && b.querySelector('.qopt'); if (!u) return;
+        var inp = document.createElement('input'); inp.type = 'text'; inp.className = 'qin w-only'; inp.dataset.qin = k; inp.dataset.qid = id; inp.placeholder = '직접 입력'; inp.setAttribute('aria-label', k + ' 답 직접 입력'); inp.value = (qtyped[id] || {})[k] || '';
+        u.parentNode.insertBefore(inp, u.nextSibling); });
+      if (!picks[id]) { picks[id] = {}; ks.forEach(function(k){ var o = li.querySelector('.qblk[data-q="' + k + '"] .qopt>li.rec[data-v]'); if (o) picks[id][k] = o.dataset.v; }); }
+      var bar = document.createElement('div'); bar.className = 'qpk w-only';
+      bar.innerHTML = '<span>질문마다 답을 눌러 고르세요(처음엔 추천). 고른 답 <b class="qn"></b></span><button type="button" data-qsend="' + esc(id) + '">고른 답 한 번에 보내기</button>';
+      box.insertBefore(bar, box.querySelector('.af'));
+      qMark(li, id);
+    });
+  }
+  function qSend(id, btn){
+    var li = btn.closest('li.req'), ks = qKeys(li), p = picks[id] || {}, d = String(drafts[id] || '').trim();
+    var miss = ks.filter(function(k){ return qVal(id, k) == null; });
+    if (miss.length && !d) { say(miss.join(', ') + '은(는) 아직 고르지 않았습니다. 고르거나 아래 칸에 직접 적어 주세요.', true); return; }
+    var t = ks.filter(function(k){ return qVal(id, k) != null; }).map(function(k){ return k + ': ' + qVal(id, k); }).join('\n') + (d ? '\n' + d : '');
+    answer(id, t, false, btn);
+  }
   /* 답할 질문(2026-11-26): 답변은 간략한 보고서라, 사람이 할 일(질문 · 선택지)을 보고서 위에 먼저 보인다. 지난 질문 · 답(replies)은 보고서 아래 */
   function askOpenHtml(r){ return hasAsk(r) ? askHtml(r, true) : ''; }
   function askHtml(r, openOnly){
@@ -2100,7 +2158,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     if (!online) { say('로컬 서버가 꺼져 있어 보낼 수 없습니다. Figma AI Run을 실행해 주세요.', true); return Promise.resolve(); }
     if (btn) btn.disabled = true;
     return post({action:'answer', id:id, text:text, resolve:!!resolve})
-      .then(function(){ delete drafts[id]; renderReqs(); say(id + (resolve ? ' 요청을 「완료」로 마쳤습니다.' : ' 답을 보냈습니다. 백그라운드 Claude가 이어서 처리합니다.')); })
+      .then(function(){ delete drafts[id]; delete picks[id]; delete qtyped[id]; renderReqs(); say(id + (resolve ? ' 요청을 「완료」로 마쳤습니다.' : ' 답을 보냈습니다. 백그라운드 Claude가 이어서 처리합니다.')); })
       .catch(function(e){ if (btn) btn.disabled = false; say('답 보내기 실패: ' + e.message, true); });
   }
   async function pickOption(id, i, btn){
@@ -2158,7 +2216,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
              : items.slice().sort(function(a, b){ return String(b.updatedAt || '').localeCompare(String(a.updatedAt || '')); }).slice(0, 10);
     $('rcount').textContent = filter === 'here' ? (general ? '이 페이지 ' : '이 프레임 ') + list.length + '건' : '최근 ' + list.length + '건';
     var hb = $('rfilter').querySelector('[data-f="here"]'); if (hb) hb.textContent = general ? '이 페이지' : '이 프레임';
-    var ae = document.activeElement, typing = ae && ae.dataset && $('reqs').contains(ae) ? ae.dataset.draft : '';
+    var ae = document.activeElement, typing = ae && ae.dataset && $('reqs').contains(ae) ? ae.dataset.draft : '', qFocus = ae && ae.dataset && ae.dataset.qin && $('reqs').contains(ae) ? [ae.dataset.qid, ae.dataset.qin] : null;
     $('reqs').innerHTML = list.length ? list.map(function(r){
       var stc = 'st-' + String(r.status).split(' ')[0];
       /* 「대기」 이유(2026-11-25): 새 요청의 대기와, Claude가 이어 가려고 돌려 둔 대기(새 세션 · 사용 한도)가 똑같이 보여 헷갈렸다 */
@@ -2183,6 +2241,8 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
         (r.status === '대기' || r.status === '진행 중' ? '<div class="retry stop w-only"><button type="button" data-stop="' + esc(r.id) + '" data-st="' + esc(r.status) + '">멈추기</button>' + (r.status === '진행 중' ? 'Claude가 처리 중입니다. 멈추면 그때까지 반영된 것은 그대로 두고 「보류」로 바꿉니다.' : '처리 전에 멈추고 「보류」로 둡니다.') + '</div>' : '') +
         (canRetry(r) ? '<div class="retry w-only"><button type="button" data-retry="' + esc(r.id) + '">다시 진행</button>원인(Claude 연결 · Figma 인증 등)을 해결했으면 다시 「대기」로 돌려 처리합니다.</div>' : '') + '</li>';
     }).join('') : '<li class="empty">' + (filter === 'here' ? (general ? '이 페이지에 Claude 답변이 없습니다. 페이지 전체나 프레임에 요청하면 처리 후 여기에 답변이 나옵니다.' : '이 프레임에 Claude 답변이 없습니다. 요청을 등록하면 처리 후 여기에 답변이 나옵니다.') : '요청이 없습니다.') + '</li>';
+    qDecorate();
+    if (qFocus) { var qe = $('reqs').querySelector('.qin[data-qid="' + qFocus[0] + '"][data-qin="' + qFocus[1] + '"]'); if (qe) { qe.focus(); qe.setSelectionRange(qe.value.length, qe.value.length); } }
     /* 답을 입력하던 칸은 다시 그린 뒤에도 커서를 그대로 */
     if (typing) { var el = $('reqs').querySelector('[data-draft="' + typing + '"]'); if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length); } }
   }
@@ -2329,14 +2389,20 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     var sb = e.target.closest('[data-stop]'); if (sb) stopReq(sb.dataset.stop, sb.dataset.st, sb);
     var ob = e.target.closest('[data-ask]'); if (ob) pickOption(ob.dataset.ask, +ob.dataset.i, ob);
     var sb = e.target.closest('[data-send]'); if (sb) sendDraft(sb.dataset.send, sb);
+    var qs = e.target.closest('[data-qsend]'); if (qs) qSend(qs.dataset.qsend, qs);
+    var qo = e.target.closest('li.qpick .qblk[data-q] .qopt>li[data-v]');
+    if (qo) { var qli = qo.closest('li.req'), qid = qli.dataset.id, qk = qo.closest('.qblk').dataset.q; picks[qid] = picks[qid] || {}; var hadT = qtyped[qid] && String(qtyped[qid][qk] || '').trim(); if (qtyped[qid]) delete qtyped[qid][qk]; var qi = qli.querySelector('.qin[data-qin="' + qk + '"]'); if (qi) qi.value = '';
+      if (picks[qid][qk] === qo.dataset.v && !hadT) delete picks[qid][qk]; else picks[qid][qk] = qo.dataset.v; qMark(qli, qid); }
   });
   function sendDraft(id, btn){
     var t = String(drafts[id] || '').trim();
     if (!t) { say('답을 입력해 주세요.', true); var inp = $('reqs').querySelector('[data-draft="' + id + '"]'); if (inp) inp.focus(); return; }
     answer(id, t, false, btn);
   }
-  $('reqs').addEventListener('input', function(e){ var d = e.target.closest('[data-draft]'); if (d) drafts[d.dataset.draft] = d.value; });
+  $('reqs').addEventListener('input', function(e){ var d = e.target.closest('[data-draft]'); if (d) drafts[d.dataset.draft] = d.value;
+    var qi = e.target.closest('.qin[data-qin]'); if (qi) { (qtyped[qi.dataset.qid] = qtyped[qi.dataset.qid] || {})[qi.dataset.qin] = qi.value; qMark(qi.closest('li.req'), qi.dataset.qid); } });
   $('reqs').addEventListener('keydown', function(e){
+    var qi = e.target.closest('.qin[data-qin]'); if (qi && e.key === 'Enter' && !e.isComposing) { e.preventDefault(); var qb = qi.closest('li.req').querySelector('[data-qsend]'); if (qb) qSend(qi.dataset.qid, qb); return; }
     var d = e.target.closest('[data-draft]'); if (!d || e.key !== 'Enter' || e.isComposing) return;
     e.preventDefault(); sendDraft(d.dataset.draft, d.parentNode.querySelector('[data-send]'));
   });

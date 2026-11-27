@@ -263,6 +263,9 @@ a.btn:not(.primary):not(.bad){color:var(--ink)}
 .md ul.qopt>li+li{margin-top:4px}
 .md ul.qopt>li.rec{color:var(--ink);font-weight:600}
 .md ul.qopt>li.rec::marker{color:var(--ok)}
+.md ul.qopt .qsub{color:var(--ink-3);font-weight:400;font-size:.92em}
+.md td .qtd ul.qopt{margin:0;padding-left:1.1em}
+.md td .qtd ul.qopt>li+li{margin-top:2px}
 .md .recb{display:inline-block;margin-left:8px;padding:0 7px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-size:11px;font-weight:700;line-height:18px;vertical-align:1px}
 .md .qnote{margin:5px 0 0 2.6em;font-size:12.5px;line-height:1.55;color:var(--ink-3)}
 .md .qblk+.qblk,.md li.qli+li.qli,.md>.qblk+p.hang,.md>p.hang+.qblk{margin-top:14px}

@@ -1587,7 +1587,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       '<div class="mrange" role="group" aria-label="기간으로 찾기"><input type="date" id="mFrom" value="' + esc(mFrom) + '" aria-label="시작일"' + (mTo ? ' max="' + esc(mTo) + '"' : '') + '><span>~</span><input type="date" id="mTo" value="' + esc(mTo) + '" aria-label="종료일"' + (mFrom ? ' min="' + esc(mFrom) + '"' : '') + '></div>' +
       '<div class="mquick">' + [['week', '이번 주'], ['month', '이번 달'], ['3m', '최근 3개월']].map(function(q){ return '<button type="button" class="pill' + (mQuick === q[0] ? ' on' : '') + '" data-mq="' + q[0] + '">' + q[1] + '</button>'; }).join('') +
         (ranged ? '<button type="button" class="pill" data-mq="">기간 지우기</button>' : '') + '</div>' +
-      (W && rest.length ? '<button class="btn sm mimport" type="button" data-mimport>시트 회의록 가져오기 (' + rest.length + '건)</button>' : '') +
+      // 시트 회의록 가져오기 - 쓰지 않음(2026-11-27 주석): (W && rest.length ? '<button class="btn sm mimport" type="button" data-mimport>시트 회의록 가져오기 (' + rest.length + '건)</button>' : '') +
       (L.length ? groups.map(function(k){
         var y = k.slice(0, 4), mo = +k.slice(5, 7);
         return '<details class="mgrp"' + grpAttr('mt|' + k, ranged || k === (function(d){ return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'); })(new Date())) + '><summary><span>' + (y === thisY ? '' : y + '년 ') + mo + '월</span><span class="muted">' + gm[k].length + '</span></summary>' +
@@ -1752,6 +1752,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
       api('/api/minutes', { action: 'delete', id: m.id }).then(function(){ msel = ''; return loadMd(); }).then(function(){ renderMinutes(); toast('회의록을 지웠습니다.'); }).catch(function(err){ WB.alert(err.message); });
       return;
     }
+    /* 시트 회의록 가져오기 - 쓰지 않음(2026-11-27 주석, 버튼도 주석)
     if (b.hasAttribute('data-mimport')) {
       var rest = (meetings() || {}).sheetRest || []; if (!rest.length) return;
       if (!(await WB.confirm('회의 ' + rest.length + '건을 회의록으로 옮길까요?\n시트 「' + minName() + '」의 회의를 회의록으로 옮깁니다. 시트는 그대로 둡니다.', { ok: '옮기기' }))) return;
@@ -1763,7 +1764,7 @@ dialog::backdrop{background:rgba(10,14,20,.45)}
           return api('/api/minutes', { action: 'save', date: sKey(s), title: s.title || '회의', attendees: att, body: body.join('\n\n') }).then(function(){ n++; b.textContent = '옮기는 중… ' + n + ' / ' + rest.length; });
         });
       }, Promise.resolve()).then(loadMd).then(function(){ renderMinutes(); toast(n + '건을 옮겼습니다.'); }).catch(function(err){ WB.alert('옮기다 멈췄습니다(' + n + '건 완료).\n' + err.message); loadMd().then(renderMinutes); });
-    }
+    } */
   });
   document.addEventListener('submit', function(e){
     if (e.target.id !== 'mform') return; e.preventDefault();
