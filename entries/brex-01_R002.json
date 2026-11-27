@@ -2,11 +2,11 @@
   "id": "brex-01_R002",
   "kind": "request",
   "team": "cureca",
-  "status": "대기",
-  "at": "2026-11-27T13:16:16+09:00",
+  "status": "보류",
+  "at": "2026-11-27T13:16:30+09:00",
   "createdAt": "2026-11-27T10:05:47+09:00",
   "by": "서보경",
-  "doneBy": "서보경",
+  "doneBy": "Claude",
   "pc": "BREX_01",
   "reqId": "R002",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,13 +17,24 @@
   "type": "요청",
   "layout": "",
   "text": "LIS setting 메뉴 옮겨줘\n기존 작업페이지: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-567478&t=x241oPtWNq1qkgw5-1",
-  "note": "",
+  "note": "케이스 3 · 4단계 절차 1 · 20261127-서보경-lis-setting — 「하나씩 답하기」로 한 항목씩 묻습니다. 지금: **Q2** (답함: Q1 Service, Admin / 남은 것 Q2 ~ Q7 · C2 · C4 ~ C8 · C12 · C14 · C15)",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "[4단계 · 2/16] Q2 Interface Configuration 4 · 6의 Port · Host Address(IP) 입력 형식 · 범위 검사와, 빈 값으로 [Save]를 누를 때 동작은? (POL-SYS-001에 없음)",
+    "free": true,
+    "options": [
+      {
+        "label": "고객에게 물음"
+      },
+      {
+        "label": "직접 정함 (아래에 입력)"
+      }
+    ]
+  },
   "replies": [
     {
       "at": "2026-11-27T10:12:09+09:00",
