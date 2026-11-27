@@ -2,8 +2,8 @@
   "id": "brex-gram-2_R012",
   "kind": "request",
   "team": "cureca",
-  "status": "진행 중",
-  "at": "2026-11-27T14:25:56+09:00",
+  "status": "보류",
+  "at": "2026-11-27T14:26:19+09:00",
   "createdAt": "2026-11-27T14:25:29+09:00",
   "by": "하승현",
   "doneBy": "Claude",
@@ -17,13 +17,21 @@
   "type": "요청",
   "layout": "",
   "text": "그 이전에 나한테 질문한 사항 다시 질문해줘.",
-  "note": "이전 요청에서 드린 질문을 찾는 중",
+  "note": "질문 답변 — 아직 답을 기다리는 R009의 질문 5개(Q2 · Q2-1 · Q6 · Q7 · C3)를 다시 여쭙니다. Figma는 고치지 않았습니다.\n\n**[상황]**\n- 작업: 케이스 3 · 4단계 · 작업 기록 `20261126-하승현-policy-setting` (Policy Setting 8화면, 테스트)\n- R009 답으로 Q1 · Q3 · Q4와 C1 · C2 · C4 · C5 · C9 · C10 · C11 · C13 · C16은 반영했고, 아래 5개만 남았습니다.\n- 이 요청에 답해 주시면 그 답으로 4단계를 이어 갑니다(R009에 따로 답하지 않아도 됩니다).\n\n**[질문 대기]**\nQ2 Comparison Simulation(TI-STN-01-03 2 · 3) 그날 검사가 없을 때 표시를 하나로 정해 주세요\n  - 하이픈(-)\n  - 빈 값\n  Common UX · 정책서에 빈 값 표기 규칙이 없어 추천 없음\nQ2-1 같은 화면 결과 값 표기(통화 · 시간 단위)는 답에 없어 남았습니다\n  - 지금 그린 대로\n  - 고객에게 물음\nQ6 Extraction Module Usage Setting Case 2 디폴트 표(TI-STN-01-02) — 「원본 표 내용 알려 줌」을 고르셨는데 표 내용이 오지 않았습니다. 내용을 답 칸에 적어 주시거나 아래에서 고르세요\n  - 지금 그린 대로 (test-items.csv 기본값)\n  - 표 내용 적음\nQ7 화면 정보 Ver(TI-STN-01 0) — 두 값이 함께 와서 하나로 정해 주세요\n  - 기존 Ver 2.0 그대로 (추천)\n    케이스 3 규칙은 기존 Ver 그대로\n  - 최신 Ver로\nC3 TI-STN-01 6-2 토글 기본값 Off → On (POL-TST-001 규칙 8) — 디스크립션이 아니라 화면 토글 그림을 바꾼 것입니다\n  - 맞음\n  - 되돌림 (Off)\n\n작업 기준: basis 2026-11-27 14:27 · 작업규칙 CURECA 작업규칙 (rules) @원본 · 정책서 정책서 (policy) · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 (glossary) · 화면 정의서 화면 정의서 (screens)",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "[4단계] Q2 · Q2-1 · Q6 · Q7 · C3 답을 골라 주세요 (Q6는 표 내용을 직접 적어도 됩니다)",
+    "options": [
+      {
+        "label": "추천대로 진행"
+      }
+    ],
+    "free": true
+  },
   "replies": [],
   "raws": [],
   "work": "",
