@@ -806,7 +806,17 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
   function reqOpen(r){ return sameFile(r) && r.status !== '완료' && r.status !== '보류'; }
   function openCount(id){ return reqData.items.filter(function(r){ return r.nodeId === id && reqOpen(r); }).length; }
   // 페이지 줄 배지에 더할 「페이지 전체」 요청(프레임 없이 그 페이지에 한 요청)
-  function pageOpen(pg){ return reqData.items.filter(function(r){ return !r.nodeId && reqOpen(r) && (r.page || edPage()) === pg.name; }).length; }
+  /* 페이지 전체 요청이 이 페이지(pg {id, name, editable}) 것인지(2026-11-27): 페이지 이름이 바뀌면(Inventory_tobe → Inventory_tobe(진행중)) 이름으로는 못 찾아
+     Workbench 내역이 안 보였다. 페이지 id로 먼저, 예전 요청(pageId 없음)은 이름으로, 그 이름의 페이지가 이제 없으면 끝의 상태 표시 「(진행중)」 · 「(완료)」를 빼고 견준다
+     (아주 다른 이름으로 바뀐 페이지의 예전 요청은 「최근 전체」에서만 보인다 — 다른 페이지에 섞이지 않게) */
+  function pgBase(n){ return String(n || '').replace(/\s*[(（][^()（）]*[)）]\s*$/, '').trim(); }
+  function reqPg(r, pg){
+    if (r.pageId) return r.pageId === pg.id;
+    var pn = r.page || edPage(); if (pn === pg.name) return true;
+    var known = CAT && CAT.pages ? CAT.pages.some(function(p){ return p.name === pn; }) : true;
+    return !known && !!pgBase(pn) && pgBase(pn) === pgBase(pg.name);
+  }
+  function pageOpen(pg){ return reqData.items.filter(function(r){ return !r.nodeId && reqOpen(r) && reqPg(r, pg); }).length; }
 
   /* ── 화면 트리 ──
      묶음: COMM-5-a 같은 하위 화면 ID는 COMM-5 아래로, 나머지 화면 ID는 그 자체가 묶음이다.
@@ -2208,9 +2218,9 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     /* 이 페이지 = 요청한 화면이거나, Claude가 실제로 고친 화면(frames)에 이 화면이 있는 요청 */
     /* 페이지 전체면 「이 페이지」 = 이 Figma 페이지의 요청(페이지 전체 요청 + 이 페이지 프레임의 요청). 예전 일반 질문(page 없음)은 작업 페이지 것으로 본다 */
     var inPg = function(r){
-      if (sent(r)) return r.from.nodeId ? !!(byId[r.from.nodeId] && byId[r.from.nodeId].d1 === cur.d1) : r.from.page === cur.page;
+      if (sent(r)) return r.from.nodeId ? !!(byId[r.from.nodeId] && byId[r.from.nodeId].d1 === cur.d1) : r.from.pageId ? r.from.pageId === cur.pageId : r.from.page === cur.page;
       if (r.nodeId) return !!(byId[r.nodeId] && byId[r.nodeId].d1 === cur.d1) || (r.frames || []).some(function(f){ return byId[f.nodeId] && byId[f.nodeId].d1 === cur.d1; });
-      return (r.page || edPage()) === cur.page;
+      return reqPg(r, { id: cur.pageId, name: cur.page, editable: cur.editable });
     };
     var list = filter === 'here' ? items.filter(function(r){ return general ? inPg(r) : sent(r) ? r.from.nodeId === cur.id : (r.nodeId === cur.id || (r.frames || []).some(function(f){ return f.nodeId === cur.id; })); })
              : items.slice().sort(function(a, b){ return String(b.updatedAt || '').localeCompare(String(a.updatedAt || '')); }).slice(0, 10);
@@ -2271,7 +2281,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       });
     }).then(function(images){
       // 페이지 전체: 프레임 지정 없이(nodeId · frame 빈 값) 고른 Figma 페이지(page)로 등록한다. 보기 전용 페이지면 Claude가 「보류」
-      var b = {action:'add', nodeId:general ? '' : cur.id, frame:general ? '' : cur.name, page:cur.page, fileKey:FILE.key, fileName:FILE.name, editable:cur.editable, type:'요청', priority:$('rpri').value, layout: layout ? lname(LAYOUTS[layout - 1]) : '', text:t, images:images, marks:mk, shotAt: mk.length && metaOf(cur) ? metaOf(cur).at : ''};
+      var b = {action:'add', nodeId:general ? '' : cur.id, frame:general ? '' : cur.name, page:cur.page, pageId:cur.pageId || '', fileKey:FILE.key, fileName:FILE.name, editable:cur.editable, type:'요청', priority:$('rpri').value, layout: layout ? lname(LAYOUTS[layout - 1]) : '', text:t, images:images, marks:mk, shotAt: mk.length && metaOf(cur) ? metaOf(cur).at : ''};
       return post(b);
     })
       .then(function(d){ $('rtext').value = ''; growText(); store('wb.draft.' + FILE.key, ''); clearAtts(); setLayout(0); lpop(false); if (mk.length) { marks[sentFrame] = []; setMarkMode(false); renderMarks(); } say(d.items[0].id + ' 요청을 등록했습니다.' + (mk.length ? ' (표시 ' + mk.length + '개)' : '') + (n ? ' (첨부 ' + n + '개)' : '')); filter = 'here'; syncFilter(); renderReqs(); })
