@@ -277,6 +277,27 @@ started: 2026-11-27
 ## 언어셋
 <!-- 4단계 절차 4번. 틀은 flow/4-revise-verify.md "언어셋 틀" -->
 
+- 기준: 언어셋 DB `language-set/db/setting-lis.md`(CID 칸에 TI-STN-04-01-T · TI-STN-04-02-T가 있는 `사용` 줄). 그 밖의 화면 표기 글자는 기준 줄과 같아 Language ID만 채움(두 화면 MD 「화면 표기 글자」, 2026-11-27). `T-IOS Network (Push Mode Only)`는 DB가 영역 타이틀(LID-STN-204)과 보조 문구(LID-STN-267)로 나눠 둔 것과 같아 두 ID를 적음.
+- C6 Sample Type Name · C22 LIS Test Code는 화면 예시 값이라 화면 표기 글자 표에 없어 보지 않음.
+- 아래 `DB 맞춤` 줄(화면과 DB가 처음부터 다름, 이번에 바꾼 글자 아님)은 어느 쪽에 맞출지 요청자 확인 #8로 물음 — 답 전이라 변경 상태 뒤에 `(답 기다림)`. 「화면을 DB에 맞춤」이면 이 줄들은 빠지고 화면을 고침.
+
+| 변경 상태 | CID · 출처 | Language ID | English (변경은 변경 전 → 변경 후) | 번역 대상 (O / - 이유) | 언어셋 DB 대조 |
+| --- | --- | --- | --- | --- | --- |
+| 신규 | TI-STN-04-01-T 화면 3 · 디스크립션 3 (C2, Push Mode → Query Mode 예시 값. Push Mode가 표의 다른 자리에 남아 신규) | LID-STN-265 | Query Mode | O | 있음 |
+| 신규 | TI-STN-04-02-T 디스크립션 2-1 (C19) | LID-STN-015 | No results found. | O | 있음 (event-history · setting-protocol 등 메뉴 파일, 법인 검토 완료) |
+| DB 맞춤 (추가) (답 기다림) | TI-STN-04-01-T 화면 영역 안내 문구 | | Configure LIS interface settings for order and result transmission. | O | 없음 (LID-STN-196은 `삭제`, 비고 「디자인에 안내 문구 없음」) |
+| DB 맞춤 (추가) (답 기다림) | TI-STN-04-01-T 화면 6 | | IP Address | O | 없음 (LID-STN-208이 v0.05에서 `IP Address` → `Enter IP Address`로 바뀜) |
+| DB 맞춤 (제거) (답 기다림) | TI-STN-04-01-T (DB 비고: 플레이스홀더) | LID-STN-208 | Enter IP Address | - (제거) | 있음 |
+| DB 맞춤 (제거) (답 기다림) | TI-STN-04-01-T (DB 비고: Port 플레이스홀더) | LID-STN-269 | Enter Port | - (제거) | 있음 |
+| DB 맞춤 (제거) (답 기다림) | TI-STN-04-01-T (DB 비고: Query Mode 때 Port 표시값) | LID-STN-268 | None | - (제거) | 있음 |
+| DB 맞춤 (추가) (답 기다림) | TI-STN-04-02-T 화면 2-1 | | Search by sample type or LIS code | O | 없음 |
+| DB 맞춤 (추가) (답 기다림) | TI-STN-04-02-T 케이스 Case 1 · 3 | | Search product name | O | 없음 |
+| DB 맞춤 (추가) (답 기다림) | TI-STN-04-02-T 케이스 Case 1 · 3 | | Search target or LIS code | O | 없음 |
+| DB 맞춤 (추가) (답 기다림) | TI-STN-04-02-T 케이스 Case 2 | | Search by product or LIS code | O | 없음 |
+| DB 맞춤 (제거) (답 기다림) | TI-STN-04-02-T (DB 비고: 검색 플레이스홀더) | LID-STN-271 · LID-STN-275 · LID-STN-276 · LID-STN-272 | Sample type or LIS code · Product name or code · Target or LIS code · Test or LIS code | - (제거) | 있음 |
+
+**새로 넣을 줄** — 요청자 확인 #8 답 뒤에 채움(「DB를 화면에 맞춤」이면 위 `DB 맞춤 (추가)` 줄)
+
 ## 요청자 확인
 <!-- 요청자에게 물은 것을 모두 한 줄씩 적음. 틀 설명은 reference-rules/work-log.md "틀"의 "요청자 확인" 주석 -->
 
