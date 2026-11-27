@@ -286,7 +286,10 @@ async function sendTurn(text) {
     // 살아 있음: 출력이 올 때마다 움직인 시각, 도구를 부르면 결과가 올 때까지 그 이름(빈 값 = 생각 · 답 쓰는 중). 5초마다만 파일에 쓴다
     if (m.type === 'assistant' || m.type === 'user') {
       St.act = now();
-      if (m.type === 'assistant') { const tu = ((m.message && m.message.content) || []).filter((c) => c && c.type === 'tool_use').pop(); St.tool = tu ? String(tu.name || '') : ''; }
+      if (m.type === 'assistant') {
+        const tus = ((m.message && m.message.content) || []).filter((c) => c && c.type === 'tool_use'), tu = tus[tus.length - 1]; St.tool = tu ? String(tu.name || '') : '';
+        for (const x of tus) if (/^(Read|Edit|Write)$/.test(x.name) && x.input && x.input.file_path) (S.read || (S.read = new Set())).add(String(x.input.file_path));   // 이 세션이 이미 아는 파일(readHint)
+      }
       else St.tool = '';
       if (Date.now() - savedAt >= 5000) save(null, null);
     }
@@ -337,12 +340,20 @@ function details(out) {
   }
   return lines.length ? '\n[요청 · 작업 내용 — 감시가 지금 파일에서 읽은 것. 처리를 시작할 때 다시 조회하지 말고 바로 쓴다]\n' + lines.join('\n') + '\n' : '';
 }
+/* 이 세션에서 이미 읽은(Read) · 쓴(Edit · Write) 파일(2026-11-27): 「다시 읽지 마라」만으로는 답을 받은 차례마다 3-design.md · 4-revise-verify.md 등을
+   또 읽어 차례마다 15 ~ 25초씩 늘었다(R005). 감시가 센 목록을 그대로 보여 준다. 서버 · 플러그인이 바꾸는 workbench/ · 그림은 뺀다 */
+function readHint() {
+  const rel = (p) => { const r = path.relative(ROOT, path.resolve(ROOT, p)); return r.startsWith('..') ? p : r.replace(/\\/g, '/'); };
+  const ls = [...((S && S.read) || [])].map(rel).filter((p) => !/^workbench\//i.test(p) && !/\.(png|jpe?g|gif|webp)$/i.test(p));
+  if (!ls.length) return '';
+  return `\n[이 세션에서 이미 읽거나 쓴 파일 - 감시가 센 것. 다시 Read하지 않는다(대화가 요약돼 내용이 기억나지 않을 때만). 사람 · 다른 PC가 바꿀 수 있는 작업 기록만 offset · limit으로 머리말 · 단계 표 · 이어 갈 곳 줄을 본다]\n${ls.slice(-60).map((p) => '- ' + p).join('\n')}\n`;
+}
 // 같은 세션에 답만 보낼 때(질문을 남기고 기다리던 세션)
 function makeResume(out) {
   return `[Workbench 요청 감시 결과 — 이 대화에서 질문을 남긴 요청에 답이 왔다]
 ${out}
 ${details(out)}
-이 대화에서 「보류」 + 질문으로 멈춘 요청에 사람이 답했다(위 replies의 마지막). 이 대화에서 이미 읽은 규칙 문서 · 화면 MD는 바뀌지 않았으면 다시 읽지 말되, 답대로 **다음 단계로 넘어가면 그 단계 문서는 작업규칙대로 처음부터 읽는다**(아직 읽지 않은 문서다 — 작업규칙이 읽으라고 정한 문서 · 범위는 줄이지 않는다). 작업 기록이 있으면 처음부터 읽지 말고 머리말 · 단계 표 · 이어 갈 곳 줄만 다시 읽어 내가 마지막에 쓴 것과 같은지만 본다(다르면 처음부터가 아니라 작업규칙의 「끊긴 작업 이어 가기」대로 — docs/claude/requests-flow.md 「같은 세션에서 이어 갈 때」). 그 답대로 하던 작업을 이어서 처리하라. **답을 받은 차례는 빠르게**(requests-flow.md 「답을 받은 차례」): 다음 질문이 있으면 그 질문(「보류」 + ask)부터 먼저 올리고, 답 기록 · 작업 기록 쓰기는 그 뒤에 한 번에 몰아서 한다. 처리 방식(「진행 중」 → 처리 → 「완료」 또는 「보류」 + ask, 캡처, frames, 사용자에게 대화로 묻지 않기, 끝나면 몇 줄 요약)은 앞과 같다.${ctxHint()}${usageHint()}`;
+이 대화에서 「보류」 + 질문으로 멈춘 요청에 사람이 답했다(위 replies의 마지막). 이 대화에서 이미 읽은 규칙 문서 · 화면 MD는 바뀌지 않았으면 다시 읽지 말되, 답대로 **다음 단계로 넘어가면 그 단계 문서는 작업규칙대로 처음부터 읽는다**(아직 읽지 않은 문서다 — 작업규칙이 읽으라고 정한 문서 · 범위는 줄이지 않는다). 작업 기록이 있으면 처음부터 읽지 말고 머리말 · 단계 표 · 이어 갈 곳 줄만 다시 읽어 내가 마지막에 쓴 것과 같은지만 본다(다르면 처음부터가 아니라 작업규칙의 「끊긴 작업 이어 가기」대로 — docs/claude/requests-flow.md 「같은 세션에서 이어 갈 때」). 그 답대로 하던 작업을 이어서 처리하라. 답이 「Q1: 값」 · 「Q2: 값」 줄 여럿이면 사람이 질문마다 한 번에 고른 것이다 - 이 차례에 모두 반영하고 질문마다 다시 묻지 않는다. **답을 받은 차례는 빠르게**(requests-flow.md 「답을 받은 차례」): 다음 질문이 있으면 그 질문(「보류」 + ask)부터 먼저 올리고, 답 기록 · 작업 기록 쓰기는 그 뒤에 한 번에 몰아서 한다. 처리 방식(「진행 중」 → 처리 → 「완료」 또는 「보류」 + ask, 캡처, frames, 사용자에게 대화로 묻지 않기, 끝나면 몇 줄 요약)은 앞과 같다.${readHint()}${ctxHint()}${usageHint()}`;
 }
 // 이어서 계속(2026-11-26): Claude가 사람에게 묻지 않고 요청을 「대기」로 돌려 차례를 끝냈는데 대화가 KEEP_MAX 아래면, 새 세션을 띄우지 않고 같은 대화에 이어 보낸다
 function makeCont(out) {
@@ -350,7 +361,7 @@ function makeCont(out) {
 ${out}
 ${details(out)}
 (질문을 먼저 올리고 기록하던 사이 사람이 답했으면 위 replies의 마지막이 새 답이다 — 그 답대로 이어 간다.)
-방금 이 대화에서 「대기」로 돌려 둔 요청을 같은 대화에서 이어 간다. 새 세션이 아니니 규칙 문서 · 작업 기록 · 화면 MD를 다시 읽지 말고, 「진행 중」으로 바꾼 뒤 멈춘 곳부터 바로 이어라. 작업규칙이 사람에게 묻는 곳(「보류」 + ask)이나 끝까지 멈추지 않는다(requests-flow.md 「끊지 않고 이어 가기」). 처리 방식은 앞과 같다.${ctxHint()}${usageHint()}`;
+방금 이 대화에서 「대기」로 돌려 둔 요청을 같은 대화에서 이어 간다. 새 세션이 아니니 규칙 문서 · 작업 기록 · 화면 MD를 다시 읽지 말고, 「진행 중」으로 바꾼 뒤 멈춘 곳부터 바로 이어라. 작업규칙이 사람에게 묻는 곳(「보류」 + ask)이나 끝까지 멈추지 않는다(requests-flow.md 「끊지 않고 이어 가기」). 처리 방식은 앞과 같다.${readHint()}${ctxHint()}${usageHint()}`;
 }
 // 차례가 끝난 뒤 그 차례의 요청 중 「보류」 + 질문(ask)으로 답을 기다리는 것(겹침 대기는 빼고)
 // 요청 · 작업의 지금 note · status(차례 앞뒤로 견줘 진척을 본다)

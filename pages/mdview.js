@@ -51,12 +51,38 @@
   }
   function mdQHtml(no, qq){
     return '<p class="hang qh"><b class="no">' + esc(mdNo(no)) + '</b>' + mdInline(qq.q) + '</p>' +
-      '<ul class="qopt">' + qq.opts.map(function(o){ return '<li' + (o.rec ? ' class="rec"' : '') + '>' + mdInline(o.t) + (o.rec ? '<span class="recb">추천</span>' : '') + '</li>'; }).join('') + '</ul>' +
+      '<ul class="qopt">' + qq.opts.map(function(o){ return '<li' + (o.rec ? ' class="rec"' : '') + ' data-v="' + esc(o.t) + '">' + mdInline(o.t) + (o.rec ? '<span class="recb">추천</span>' : '') + (o.sub ? ' <span class="qsub">' + mdInline(o.sub) + '</span>' : '') + '</li>'; }).join('') + '</ul>' +
       (qq.note ? '<p class="qnote">' + mdInline(qq.note) + '</p>' : '');
+  }
+  /* 질문 묶음(2026-11-27): data-q(Q1 …) · 선택지 data-v - Workbench가 질문마다 골라 한 번에 답하게 쓴다 */
+  function qBlk(no, qq){ return '<div class="qblk" data-q="Q' + String(no).replace(/\D/g, '') + '">' + mdQHtml(no, qq) + '</div>'; }
+  /* 표로 쓴 질문(2026-11-27, CURECA 4단계 사용자 확인 목록처럼 「| 번호 | … | 고를 것 | 추천 |」): 첫 칸이 Q1 · Q2 …이고 「고를 것」 칸이 「 / 」로 2 ~ 6개면
+     그 칸을 고를 값 목록(qblk)으로 그린다. 추천 칸(괄호 앞 글)과 같은 값, 또는 **굵게** 쓴 값이 추천 */
+  function qTd(no, c, rc){
+    var nm = /^\**\s*(Q\d{1,3})\b/.exec(String(no || '')); if (!nm) return '';
+    var opts = mdSplitTop(c, ' / ').map(function(x){ return x.trim(); }).filter(Boolean); if (opts.length < 2 || opts.length > 6) return '';
+    var rt = String(rc || '').replace(/\*\*/g, '').replace(/\s*[(（][^()（）]*[)）]\s*$/, '').trim();
+    var items = opts.map(function(o){ var b = /^\*\*(.+)\*\*$/.exec(o), t = b ? b[1].trim() : o; return { t: t, rec: !!b || (!!rt && (rt === t || rt.indexOf(t) === 0 || t.indexOf(rt) === 0)) }; });
+    return '<div class="qblk qtd" data-q="' + nm[1] + '"><ul class="qopt">' + items.map(function(o){ return '<li' + (o.rec ? ' class="rec"' : '') + ' data-v="' + esc(o.t) + '">' + mdInline(o.t) + (o.rec ? '<span class="recb">추천</span>' : '') + '</li>'; }).join('') + '</ul></div>';
+  }
+  /* 「Q1 질문」 줄 아래 「  - 값 (추천)」 · 「  - 값」 줄로 쓴 고를 값(requests.md 「note」 형식): j부터 들여쓰기 ind 이상 글머리표 2 ~ 6줄 */
+  function qLook(L, j, ind){
+    var opts = [];
+    for (; j < L.length; j++) {
+      var m = /^(\s*)[-*•·]\s+(.+)$/.exec(L[j]);
+      if (!m || m[1].replace(/\t/g, '  ').length < ind || /^[A-Z]{1,2}\d{1,3}[.:]?\s/.test(m[2])) break;
+      opts.push(m[2].trim());
+    }
+    if (opts.length < 2 || opts.length > 6) return null;
+    return { n: opts.length, opts: opts.map(function(o){
+      var rm = /\s*[(（]\s*추천\s*(?:[,，:：]\s*([^()（）]*))?[)）]\s*$/.exec(o), sub = '';
+      if (rm) { sub = (rm[1] || '').trim(); o = o.slice(0, rm.index).trim(); }
+      return { t: o, rec: !!rm, sub: sub };
+    }) };
   }
   function mdLine(t){
     var qm = /^(Q\d{1,3}[.:]?)\s+(.+)$/.exec(t), qq = qm && mdQ(qm[2]);
-    if (qq) return '<div class="qblk">' + mdQHtml(qm[1], qq) + '</div>';
+    if (qq) return qBlk(qm[1], qq);
     var s = mdSlash(t); if (s) return (s.head ? '<p>' + mdInline(s.head) + '</p>' : '') + mdSub(s.items);
     var tb = /^\*\*(.+)\*\*$/.exec(t), t0 = tb ? tb[1] : t;   // 「**[4단계] 질문 대기 — …**」처럼 통째로 굵게 쓴 줄도
     var pre = /^\[([^\]\n]{1,24})\]\s*/.exec(t0), rest = pre ? t0.slice(pre[0].length) : t0, am = MD_ACT.exec(rest);
@@ -81,8 +107,19 @@
         i--;
         var cells = function(r){ return r.replace(/^\||\|$/g, '').split('|').map(function(c){ return c.trim(); }); };
         var body = rows.filter(function(r){ return !/^\|[\s:|-]+\|$/.test(r); });
-        html += '<div class="mt"><table>' + body.map(function(r, k){ var tg = k === 0 && rows.length > 1 && /^\|[\s:|-]+\|$/.test(rows[1]) ? 'th' : 'td'; return '<tr>' + cells(r).map(function(c){ return '<' + tg + '>' + mdInline(c) + '</' + tg + '>'; }).join('') + '</tr>'; }).join('') + '</table></div>';
+        var hasH = rows.length > 1 && /^\|[\s:|-]+\|$/.test(rows[1]), hc = hasH ? cells(body[0]) : [], ci = -1, ri = -1;
+        hc.forEach(function(h, x){ if (ci < 0 && /고를/.test(h)) ci = x; if (ri < 0 && /추천/.test(h)) ri = x; });
+        // 고를 값을 칸 안에서 고르게 그리면 「추천」 칸은 뺀다(추천은 고를 값에 표시)
+        var qRows = body.filter(function(r, k){ return k > 0 && /^\**\s*Q\d/.test(cells(r)[0]); });
+        var dropR = ci >= 0 && ri >= 0 && qRows.length > 0 && qRows.every(function(r){ var cs = cells(r); return !!qTd(cs[0], cs[ci] || '', ''); });
+        html += '<div class="mt"><table>' + body.map(function(r, k){ var tg = k === 0 && hasH ? 'th' : 'td', cs = cells(r); return '<tr>' + cs.map(function(c, x){ if (dropR && x === ri) return ''; return '<' + tg + (tg === 'th' && x === ci && dropR ? ' class="qth"' : '') + '>' + (tg === 'td' && x === ci ? (qTd(cs[0], c, ri >= 0 ? cs[ri] : '') || mdInline(c)) : mdInline(c)) + '</' + tg + '>'; }).join('') + '</tr>'; }).join('') + '</table></div>';
         continue;
+      }
+      var qp = !lists.length && /^(Q\d{1,3}[.:]?)\s+(.+)$/.exec(t), ql = qp && !mdQ(qp[2]) ? qLook(L, i + 1, 0) : null;
+      if (ql) {   // 「Q1 질문」 줄 + 고를 값 줄(+ 들여 쓴 근거 한 줄)
+        endAll(); i += ql.n; var qnote = '';
+        if (i + 1 < L.length && /^\s{2,}\S/.test(L[i + 1]) && !/^\s*([-*•·]|\d+[.)])\s/.test(L[i + 1])) qnote = L[++i].trim();
+        html += qBlk(qp[1], { q: qp[2], opts: ql.opts, note: qnote }); continue;
       }
       var lm = /^(\s*)([-*•·]|\d+[.)])\s+(.*)$/.exec(l);
       if (lm) {
@@ -92,12 +129,14 @@
         endLists(d);
         if (lists.length === d && lists[d - 1].t !== tag) endLists(d - 1);
         // 「- Q1 …」 · 「- C3 …」처럼 번호로 시작하는 항목은 글머리표 대신 번호를 앞에 두고 내어 쓴다
-        var qn = /^([A-Z]{1,2}\d{1,3}[.:]?)\s+(.+)$/.exec(lm[3]), qq2 = qn && /^Q/.test(qn[1]) ? mdQ(qn[2]) : null, liO = qq2 ? '<li class="qli">' : qn ? '<li class="qn">' : '<li>';
+        var qn = /^([A-Z]{1,2}\d{1,3}[.:]?)\s+(.+)$/.exec(lm[3]), qq2 = qn && /^Q/.test(qn[1]) ? mdQ(qn[2]) : null, ql2 = qn && !qq2 && /^Q/.test(qn[1]) ? qLook(L, i + 1, lm[1].replace(/\t/g, '  ').length + 1) : null, liO = qq2 || ql2 ? '<li class="qli">' : qn ? '<li class="qn">' : '<li>';
         if (lists.length === d) html += '</li>' + liO;
         else { html += '<' + tag + '>' + liO; lists.push({ t: tag }); }
         var body = qn ? qn[2] : lm[3], sl = mdSlash(body);
         // 질문 줄은 위(qq2)에서 나눔
-        if (qq2) { html += '<div class="qblk">' + mdQHtml(qn[1], qq2) + '</div>'; continue; }
+        if (qq2) { html += qBlk(qn[1], qq2); continue; }
+        // 「- Q1 질문」 아래 더 들여 쓴 고를 값(ql2)
+        if (ql2) { html += qBlk(qn[1], { q: qn[2], opts: ql2.opts, note: '' }); i += ql2.n; continue; }
         if (qn) html += '<b class="no">' + esc(mdNo(qn[1])) + '</b>';
         html += sl ? (sl.head ? mdInline(sl.head) : '') + mdSub(sl.items) : mdInline(body);
         continue;

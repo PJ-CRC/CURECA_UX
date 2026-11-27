@@ -6,7 +6,7 @@
 
 - 회의록은 md 파일 `.history/minutes/{id}.md`(id `m{YYYYMMDD}-{6자}`)로 저장되고 작업 이력과 함께 깃으로 모든 PC에 공유된다. 머리말 `id · date(YYYY-MM-DD HH:MM) · title · attendees(회사마다 「 / 」로 이음) · by · createdAt · updatedBy · updatedAt`, 그 아래 본문(내용, `## 소제목` · `[주제]` 줄).
 - API: `GET /api/minutes`(최신순) · `POST /api/minutes {action:'save', id?, date, title, attendees, body}` · `{action:'delete', id}`. 읽기 = `plan` 읽기, 쓰기 = `plan` 쓰기.
-- 화면(회의록 탭): 왼쪽 월별 목록(최신이 위, 두 번째 줄은 본문의 [주제] 또는 참석 요약), 오른쪽 보기 · 작성 · 수정. 시트 「0.회의록」에만 있는 회의는 [시트 회의록 가져오기]로 md로 옮긴다(시트는 그대로). 주간 진행 현황의 회의 내역은 md + 아직 옮기지 않은 시트 회의.
+- 화면(회의록 탭): 왼쪽 월별 목록(최신이 위, 두 번째 줄은 본문의 [주제] 또는 참석 요약), 오른쪽 보기 · 작성 · 수정. 시트 「0.회의록」에서 md로 옮기는 [시트 회의록 가져오기]는 쓰지 않아 주석 처리했다(2026-11-27, `pages/Work.html`). 주간 진행 현황의 회의 내역은 md + 아직 옮기지 않은 시트 회의.
 - Claude가 회의록을 쓰거나 고칠 때도 이 API를 쓴다.
 - **각자 작성**: 참석자마다 자기 내용을 `.history/minutes/{id}.notes/{작성자 ID}.md`(머리말 author · authorId · updatedAt + 본문)에 쓴다. `POST /api/minutes {action:'note', id, body}`(로그인 계정 ID, 없으면 PC 이름. 빈 글이면 지움). `GET /api/minutes`의 item마다 `notes:[{author, authorId, updatedAt, body}]`, 맨 위 `me`.
 - **요약 정리(작업 대기열 kind `minutes`)**: 화면의 [요약 정리]가 `{kind:'minutes', minute:{회의록 ID}, name, text, by}` 작업을 쌓는다(`JOBS`에 나온다). 처리:
