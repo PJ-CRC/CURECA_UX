@@ -2,11 +2,11 @@
   "id": "brex-01_R002",
   "kind": "request",
   "team": "cureca",
-  "status": "보류",
-  "at": "2026-11-27T13:16:38+09:00",
+  "status": "대기",
+  "at": "2026-11-27T13:38:47+09:00",
   "createdAt": "2026-11-27T10:05:47+09:00",
   "by": "서보경",
-  "doneBy": "Claude",
+  "doneBy": "서보경",
   "pc": "BREX_01",
   "reqId": "R002",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,24 +17,13 @@
   "type": "요청",
   "layout": "",
   "text": "LIS setting 메뉴 옮겨줘\n기존 작업페이지: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-567478&t=x241oPtWNq1qkgw5-1",
-  "note": "케이스 3 · 4단계 절차 1 · 20261127-서보경-lis-setting — 「하나씩 답하기」로 한 항목씩 묻습니다. 지금: **Q2** (답함: Q1 Service, Admin / 남은 것 Q2 ~ Q7 · C2 · C4 ~ C8 · C12 · C14 · C15)\n\n**[질문 대기] 답을 정해 주실 것**\nQ1 LIS Setting을 쓸 수 있는 User Type (권한 표에 LIS Setting 줄 없음) — 두 화면 0\n  - Service, Admin (추천)\n  - 다른 값\n  근거: POL-SYS-001 규칙 8 · 기존 화면이 Service, Admin\nQ2 Port · Host Address(IP) 입력 형식 · 범위 검사와 빈 값으로 [Save] 할 때 동작 — Interface Configuration 4 · 6\n  - 값을 정해 주심\n  - 고객에게 물음\nQ3 LIS Code를 빈 값 · 다른 항목과 같은 값으로 확정할 때 동작 — Code Mapping 4\n  - 값을 정해 주심\n  - 고객에게 물음\nQ4 처음 채워지는 LIS Test Code 값 (기존 `Allplex_HPV_HR`, 검사 항목 코드는 `HPVHR-HP72/73`) — Code Mapping 케이스 2\n  - 검사 항목 코드 (추천)\n  - 기존 화면 값 그대로\n  근거: Sample Type Code는 기존 화면에서 코드가 채워져 있음\nQ5 검색 결과가 없을 때 목록 문구 — Code Mapping 2-1\n  - 문구를 정해 주심\n  - 고객에게 물음\nQ6 [4-2] 확정한 항목을 강조하는 표시(색) — Code Mapping 4\n  - 정해 주심\n  - UI팀에 맡김\nQ7 목록 노출 개수 · Pagination (Common UX는 10 items · Pagination, 기존 화면은 전체 노출이라 기존대로 그림) — Code Mapping 2\n  - 기존대로 전체 노출 (추천)\n  - Common UX대로 10 items · Pagination\n  근거: 항목 수가 최대 30개(검사 항목)\n\n**[확인 필요] 변경 확인 — 맞는지 봐 주실 것 (맞음 / 되돌림)**\nC2 Interface Configuration 3 · 기본 화면 Push Mode · Port 20200 → Query Mode · Port 비활성 빈 값 (POL-SYS-001 기본값)\nC4 Code Mapping 0 · 데이터 관련 정의의 Assay Pack 데이터 키 이름 → 관리 항목 · 출처 설명 (POL-SYS-002, 헌법 3조)\nC5 Code Mapping 4 · Done · Enter는 입력값 확정, 저장은 [Save]로 구분 (POL-SYS-002 규칙 5)\nC6 Code Mapping 2 · Sample Type Name Raw_stool · eNAT_stool · Fecal_swab → Raw stool · eNAT stool · Fecal swab (기준데이터 UI 표기, LIS 코드는 그대로)\nC7 Code Mapping 1-1 · 케이스 1 · Target Code 항목 수 10 → 9 (Target 선택 가능 검사 항목 9종, 목록도 9개)\nC8 Interface Configuration 6 · LIS Network 번호 4 → 6 (번호 4 중복)\nC12 Code Mapping 2-1 · 검색 대상 System Code 또는 LIS Code → Sample Type Name 또는 LIS Sample Type Code (화면 검색창과 맞춤)\nC14 두 화면 탭 · 번호 · 설명 추가, Box Tabs → Underline Tab (Common UX Tab)\nC15 Code Mapping 1 · Code Type 목록 버튼 → Outline Tab (Common UX Tab)\n\n**반영한 항목 (3단계에서 확인, 이상하면 번호로 알려 주세요)**\n- C1 메뉴 정의의 \"Default: All / 데이터: All, Error, Warning\" 취소선 · C3 CURECA마다 설정이라는 설명 추가 (반영 대기 값 그대로)\n- C9 안내 문구 설명 추가 · C10 'Push' → 'Push Mode' · C11 영역 이름 화면과 맞춤 · C13 System code → System Code · C16 컬럼 항목 설명 추가\n\n[참고] 플러그인 채우기(J102)가 Figma 연결 오류로 실패해 패널 · 라벨은 직접 그림. LIS Setting은 L-IOS 화면이 없어 L-IOS 줄은 두지 않음. 반영 대기 6건은 「작업 중」, 번호 정리 항목 1건은 케이스 3 규칙으로 제외.\n규칙 점검: 1 ~ 3단계 「하지 않는 것」 · 마침 점검 지킴 (asis 기획 프레임 전체를 복제하지 않고 영역 틀만 따와 Common UX 컴포넌트로 바꿔 그림)\n작업 기준: basis 2026-11-27 10:07 · 작업규칙 CURECA 작업규칙 @원본 · 정책서 정책서 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 · 화면 정의서 화면 정의서",
+  "note": "",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": {
-    "q": "[4단계 · 2/16] Q2 Interface Configuration 4 · 6의 Port · Host Address(IP) 입력 형식 · 범위 검사와, 빈 값으로 [Save]를 누를 때 동작은? (POL-SYS-001에 없음)",
-    "free": true,
-    "options": [
-      {
-        "label": "고객에게 물음"
-      },
-      {
-        "label": "직접 정함 (아래에 입력)"
-      }
-    ]
-  },
+  "ask": null,
   "replies": [
     {
       "at": "2026-11-27T10:12:09+09:00",
@@ -53,6 +42,12 @@
       "by": "서보경",
       "q": "[4단계 · 1/16] Q1 LIS Setting을 쓸 수 있는 User Type은? (권한 표에 LIS Setting 줄 없음. POL-SYS-001 규칙 8 · 기존 화면은 Service, Admin)",
       "text": "Service, Admin 이게 맞아"
+    },
+    {
+      "at": "2026-11-27T13:38:47+09:00",
+      "by": "서보경",
+      "q": "[4단계 · 2/16] Q2 Interface Configuration 4 · 6의 Port · Host Address(IP) 입력 형식 · 범위 검사와, 빈 값으로 [Save]를 누를 때 동작은? (POL-SYS-001에 없음)",
+      "text": "한번에 답할께, q2. 그냥 텍스트 필드로 놓고, 저장에 꼭 필요한 필수값으로 우선 지정하지 않을께. 이 부분은 테스트하며 체크해야하는 부분이라 아직까지는 추가 정책은 필요 없을 거 같아. q3. 빈값을 입력할 경우, 디폴트 값으로 자동 변환해서 저장되도록 해주고, 다른 항목과 동일한 값을 사용하지 못하게해야해. 그럴경우 알럿으로 이미 사용중인 값이라고 안내했으며냏. q4. 이건 기존 화면 값 그대로 해줘. q5. 노 리절트로 시작하는 문구로 넣어줘. 다른 화면에서도 그거 공통으로 쓰고 있는 것으로. q6. 이건UI에서 지정하는거고 우리는 디스크립션에 해당 케이스에 색으로 강조된다 정도로만 남겨주면 돼. q7. 최대 50개정도일거 같아서 굳이 페이지네이션은 넣지 않는 것이 좋을거 같아. 어짜피 검색필드가 있기 때문에 상관 없을거 같아."
     }
   ],
   "raws": [
