@@ -3,7 +3,7 @@ status: 진행 중            # 진행 중 | 끝남 | 멈춤
 requester: 최고관리자
 menu: Inventory (IVT)
 cids: [TI-IVT-01-T, TI-IVT-02-T, TI-IVT-03-T, TI-IVT-03-T-P, TI-IVT-04-T, TI-IVT-04-T-P, TI-IVT-05-T, TI-IVT-06-T]
-policies: []
+policies: [POL-INV-002]
 cid_system:
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST (작업방 `Inventory_tobe` 페이지)
 test: false
@@ -100,20 +100,20 @@ started: 2026-11-27
 
 | # | 무엇 (절차 4번 순서 3 "뒤 단계로 넘김"의 1 ~ 5) | 관련된 곳 (CID · 디스크립션 번호) | 넘기는 곳 (2단계 / 3단계) | 이어진 번호 (Q · C · 논의 대상 ID / 근거로 풀림) |
 | --- | --- | --- | --- | --- |
-| 1 | 1. 기능 정의가 안 된 요소: [Refresh]에서 데이터 불러오기에 실패했을 때 동작이 없음 (TI-IVT-02-T 3만 Alert_020) | TI-IVT-01-T #4 · TI-IVT-03-T #4 · TI-IVT-04-T #4 · TI-IVT-05-T #4 | 2단계 (POL-LOD) | |
-| 2 | 1. 기능 정의가 안 된 요소: 검색 [Reset] · [Search], Items 건수, 페이지네이션에 디스크립션이 없음 (COMM-5-s Type3로 풀릴 수 있음) | TI-IVT-06-T #1 · #2 | 3단계 | |
-| 3 | 1. 기능 정의가 안 된 요소: 목록 · 팝업에 값이 없을 때 무엇을 보여 주는지 없음 | TI-IVT-03-T-P #2 · TI-IVT-04-T-P #2 · TI-IVT-06-T #2 | 3단계 | |
-| 4 | 2. Alert · Confirm 보완 필요 지점: [Export] 저장 실패 · 내보낼 목록이 0건일 때 안내가 없음 | TI-IVT-06-T #3 | 2단계 (POL-COM-006) | |
-| 5 | 5. 대상 화면에서 찾은 고칠 점: Unit 이름이 Module-Unit 표에 없음 `Sample Pre-treatment (1) Tip Waste Bin` → `Tip Waste Bin (Upper)` 또는 `(Lower)`, `High-throughput Extraction(1) Waste Bin` → `DWP Waste Bin`, `Plate Sealing(1) Sealer Waste Bin` → `Sealer Waste Bin (1)`, `PCR Setup(1) / 300 μL Tip Storage` → `300 μL Tip Storage (1)` | TI-IVT-01-T #1 · #3 화면 글자 | 3단계 (용어 점검) | |
-| 6 | 5. 대상 화면에서 찾은 고칠 점: `Required Qty 250 (3 DWPs)` 단위 없음 → `250 rxns (3 DWPs)` | TI-IVT-01-T #1-4 화면 글자 | 3단계 | |
-| 7 | 5. 대상 화면에서 찾은 고칠 점: 케이스 "구동 중이 아닐 경우, 'No actions required' 문구 표기"의 제목과 조각 글자(`Shown only if system running or Inbound Trolley docked`)가 다름, 케이스 조각 상태값 `Empty` · `Insufficient`(화면은 Insufficient · Low), `Pagenation` → `Pagination` | TI-IVT-01-T 케이스 | 3단계 | |
-| 8 | 5. 대상 화면에서 찾은 고칠 점: T-IOS 화면 GNB에 `L-IOS`가 표기됨 | TI-IVT-02-T · 03-T · 03-T-P · 04-T · 04-T-P · 05-T · 06-T GNB | 3단계 | |
-| 9 | 5. 대상 화면에서 찾은 고칠 점: LNB에 다른 화면에 없는 `Status` 메뉴가 있음 | TI-IVT-03-T · TI-IVT-04-T LNB | 3단계 | |
-| 10 | 5. 대상 화면에서 찾은 고칠 점: 케이스 조각 단위 `288T` · `300T` → `rxns` (COMM-4-b) | TI-IVT-02-T 케이스 | 3단계 | |
-| 11 | 5. 대상 화면에서 찾은 고칠 점: 왼쪽 카드 목록에 `Allplex™ GI-Virus Assay` 카드가 두 번 나옴 | TI-IVT-04-T #2 화면 글자 | 3단계 | |
-| 12 | 5. 대상 화면에서 찾은 고칠 점: `96 ea  (1 rack)` 띄어쓰기 두 칸 | TI-IVT-03-T-P #2-1 화면 글자 | 3단계 | |
-| 13 | 5. 대상 화면에서 찾은 고칠 점: Module 이름에 번호가 없는 것이 섞임 `Flexible Extraction` · `Universal PCR` (다른 Module은 `(1)` · `(2)`) | TI-IVT-05-T #2 · #3-1 화면 글자 | 3단계 (용어 점검) | |
-| 14 | 5. 대상 화면에서 찾은 고칠 점: Unit 칸에 Module 이름이 들어간 줄 `Plate Sealing(1) / Plate Sealing`, `PCR Setup(1) / PCR Setup` (반영 대기 TI-IVT-06-T-R03에 없는 줄) | TI-IVT-06-T #2 화면 글자 | 3단계 (용어 점검) | |
+| 1 | 1. 기능 정의가 안 된 요소: [Refresh]에서 데이터 불러오기에 실패했을 때 동작이 없음 (TI-IVT-02-T 3만 Alert_020) | TI-IVT-01-T #4 · TI-IVT-03-T #4 · TI-IVT-04-T #4 · TI-IVT-05-T #4 | 2단계 (POL-LOD) | 근거로 풀림 (POL-INV-001 규칙 4, Alert_020) · C2 |
+| 2 | 1. 기능 정의가 안 된 요소: 검색 [Reset] · [Search], Items 건수, 페이지네이션에 디스크립션이 없음 (COMM-5-s Type3로 풀릴 수 있음) | TI-IVT-06-T #1 · #2 | 3단계 | 3단계로 |
+| 3 | 1. 기능 정의가 안 된 요소: 목록 · 팝업에 값이 없을 때 무엇을 보여 주는지 없음 | TI-IVT-03-T-P #2 · TI-IVT-04-T-P #2 · TI-IVT-06-T #2 | 3단계 | 3단계로 |
+| 4 | 2. Alert · Confirm 보완 필요 지점: [Export] 저장 실패 · 내보낼 목록이 0건일 때 안내가 없음 | TI-IVT-06-T #3 | 2단계 (POL-COM-006) | Q1 |
+| 5 | 5. 대상 화면에서 찾은 고칠 점: Unit 이름이 Module-Unit 표에 없음 `Sample Pre-treatment (1) Tip Waste Bin` → `Tip Waste Bin (Upper)` 또는 `(Lower)`, `High-throughput Extraction(1) Waste Bin` → `DWP Waste Bin`, `Plate Sealing(1) Sealer Waste Bin` → `Sealer Waste Bin (1)`, `PCR Setup(1) / 300 μL Tip Storage` → `300 μL Tip Storage (1)` | TI-IVT-01-T #1 · #3 화면 글자 | 3단계 (용어 점검) | C1 |
+| 6 | 5. 대상 화면에서 찾은 고칠 점: `Required Qty 250 (3 DWPs)` 단위 없음 → `250 rxns (3 DWPs)` | TI-IVT-01-T #1-4 화면 글자 | 3단계 | 3단계로 |
+| 7 | 5. 대상 화면에서 찾은 고칠 점: 케이스 "구동 중이 아닐 경우, 'No actions required' 문구 표기"의 제목과 조각 글자(`Shown only if system running or Inbound Trolley docked`)가 다름, 케이스 조각 상태값 `Empty` · `Insufficient`(화면은 Insufficient · Low), `Pagenation` → `Pagination` | TI-IVT-01-T 케이스 | 3단계 | 3단계로 |
+| 8 | 5. 대상 화면에서 찾은 고칠 점: T-IOS 화면 GNB에 `L-IOS`가 표기됨 | TI-IVT-02-T · 03-T · 03-T-P · 04-T · 04-T-P · 05-T · 06-T GNB | 3단계 | 3단계로 |
+| 9 | 5. 대상 화면에서 찾은 고칠 점: LNB에 다른 화면에 없는 `Status` 메뉴가 있음 | TI-IVT-03-T · TI-IVT-04-T LNB | 3단계 | 3단계로 |
+| 10 | 5. 대상 화면에서 찾은 고칠 점: 케이스 조각 단위 `288T` · `300T` → `rxns` (COMM-4-b) | TI-IVT-02-T 케이스 | 3단계 | 3단계로 |
+| 11 | 5. 대상 화면에서 찾은 고칠 점: 왼쪽 카드 목록에 `Allplex™ GI-Virus Assay` 카드가 두 번 나옴 | TI-IVT-04-T #2 화면 글자 | 3단계 | 3단계로 |
+| 12 | 5. 대상 화면에서 찾은 고칠 점: `96 ea  (1 rack)` 띄어쓰기 두 칸 | TI-IVT-03-T-P #2-1 화면 글자 | 3단계 | 3단계로 |
+| 13 | 5. 대상 화면에서 찾은 고칠 점: Module 이름에 번호가 없는 것이 섞임 `Flexible Extraction` · `Universal PCR` (다른 Module은 `(1)` · `(2)`) | TI-IVT-05-T #2 · #3-1 화면 글자 | 3단계 (용어 점검) | 3단계로 |
+| 14 | 5. 대상 화면에서 찾은 고칠 점: Unit 칸에 Module 이름이 들어간 줄 `Plate Sealing(1) / Plate Sealing`, `PCR Setup(1) / PCR Setup` (반영 대기 TI-IVT-06-T-R03에 없는 줄) | TI-IVT-06-T #2 화면 글자 | 3단계 (용어 점검) | C4 |
 
 ## 대상 화면의 반영 대기 항목
 <!-- 1단계 절차 3번 순서 4. 틀은 flow/1-requirements.md "대상 화면의 반영 대기 항목 틀" -->
