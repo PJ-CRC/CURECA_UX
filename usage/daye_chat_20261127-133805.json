@@ -1,0 +1,30 @@
+{
+  "id": "daye_chat_20261127-133805",
+  "kind": "work",
+  "chat": "figma",
+  "reqId": "",
+  "reqType": "",
+  "team": "cureca",
+  "at": "2026-11-27T13:38:05+09:00",
+  "from": "2026-11-27T13:27:57+09:00",
+  "by": "정다예",
+  "doneBy": "Claude",
+  "pc": "DAYE",
+  "fileKey": "etCQFF3CTf1EA6C79d4BBf",
+  "fileName": "",
+  "page": "",
+  "frame": "",
+  "nodeId": "",
+  "text": "채팅: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=2535-6539",
+  "turns": 2,
+  "models": {
+    "claude-opus-5-5": 15
+  },
+  "calls": 15,
+  "input": 34,
+  "cacheWrite": 16155,
+  "cacheRead": 8919907,
+  "output": 13586,
+  "total": 8949682,
+  "usd": 2.1851
+}
