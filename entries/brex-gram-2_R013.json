@@ -2,11 +2,11 @@
   "id": "brex-gram-2_R013",
   "kind": "request",
   "team": "cureca",
-  "status": "보류",
-  "at": "2026-11-27T14:37:25+09:00",
+  "status": "대기",
+  "at": "2026-11-27T14:41:59+09:00",
   "createdAt": "2026-11-27T14:32:42+09:00",
   "by": "하승현",
-  "doneBy": "Claude",
+  "doneBy": "하승현",
   "pc": "BREX_GRAM_2",
   "reqId": "R013",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,7 +17,7 @@
   "type": "요청",
   "layout": "",
   "text": "Q2. 하이픈(-) 표기\n\nQ2-1. 통화는 TI-STN-01-01에서 해당 일자에 설정된 통화로 표기, 시간 단위는 유지\n\nQ6. 지금 그린 대로 items.csv 기본값 따라 기재\n\nQ7. 기존 버전 그대로",
-  "note": "케이스 3 · 4단계 · 20261126-하승현-policy-setting — R007 남은 질문 Q2 · Q6 · Q7 답을 반영했습니다. 남은 C3 하나만 다시 여쭙니다\n\n**반영한 것**\n- Comparison Simulation (TI-STN-01-03) 2 · 3: Q2 답대로 디스크립션에 더함 (빨간 글, C20)\n  - 2 · 3: 해당 일자에 진행한 검사가 없으면 하이픈(-) 노출\n  - 3: Total Cost는 [TI-STN-01-01] Cost Setting에서 해당 일자에 설정된 통화로 표기, Total TAT는 시간 단위 표기 유지\n- Extraction Module Usage Setting (TI-STN-01-02) Case 2 디폴트 표: Q6 지금 그린 대로 (test-items.csv 기본값) — 화면 그대로\n- Policy Setting (TI-STN-01) 화면 정보 Ver: Q7 기존 Ver 2.0 그대로 — 화면 그대로, 반영 대기 TI-STN-01-R06은 제외 (바꾸지 않음)\n- Figma: Q2 · Q6 · Q7 사용자 확인 라벨과 목록 항목 지움 (TI-STN-01-02 · -03 목록 없어짐, TI-STN-01은 C3만 남음)\n\n**[질문 대기]**\nC3 Policy Setting 6-2 Allow Protocol Changes Before Test 토글 기본값 (asis Off → 정책대로 On으로 그림)\n  - 맞음 (추천)\n    POL-TST-001 규칙 8 · 반영 대기 TI-STN-01-R04\n  - 되돌림\n\n**[확인 필요]**\n- C1 작업 기록 첫 줄이 깨져 R009 답(Q1 · Q3 · Q4, C1 · C2 · C4 · C5 · C9 · C10 · C11 · C13 · C16)이 표에 들어가 있지 않아 바로잡음 (내용 그대로 옮김)\n- C2 테스트라 저장소(`.history`)는 고치지 않음 (git 상태 바뀐 것 없음), 기계 검사는 C3이 풀린 뒤 함\n\n규칙 점검: 4단계 절차 1 순서 3 — 받은 답부터 고침(변경 확인 줄 → 화면 MD → Figma), 답 없는 C3은 다시 물음\n작업 기준: basis 2026-11-26 17:17 (시작 기준 · history 778f921b) · 작업규칙 CURECA 작업규칙 @수정본 · 정책서 정책서 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 · 화면 정의서 화면 정의서",
+  "note": "",
   "shot": "",
   "shots": [],
   "images": [],
@@ -36,19 +36,15 @@
     }
   ],
   "marks": [],
-  "ask": {
-    "q": "[4단계] C3 — Policy Setting 6-2 토글 기본값을 정책대로 On으로 그린 것이 맞나요?",
-    "options": [
-      {
-        "label": "맞음 (On)"
-      },
-      {
-        "label": "되돌림 (Off)"
-      }
-    ],
-    "free": true
-  },
-  "replies": [],
+  "ask": null,
+  "replies": [
+    {
+      "at": "2026-11-27T14:41:59+09:00",
+      "by": "하승현",
+      "q": "[4단계] C3 — Policy Setting 6-2 토글 기본값을 정책대로 On으로 그린 것이 맞나요?",
+      "text": "맞음 (On)"
+    }
+  ],
   "raws": [
     {
       "at": "2026-11-27T14:37:36+09:00",
