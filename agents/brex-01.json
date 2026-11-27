@@ -1,5 +1,5 @@
 {
-  "reportAt": "2026-11-27T15:57:00+09:00",
+  "reportAt": "2026-11-27T15:58:00+09:00",
   "pc": "BREX_01",
   "slug": "brex-01",
   "user": "서보경",
@@ -8,7 +8,7 @@
   "alive": true,
   "status": "idle",
   "msg": "요청을 기다리는 중",
-  "statusAt": "2026-11-27T15:56:51+09:00",
+  "statusAt": "2026-11-27T15:57:51+09:00",
   "claude": "따로 설치",
   "claudeWay": "app",
   "autoWatch": true,
