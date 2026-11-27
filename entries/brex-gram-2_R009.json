@@ -2,8 +2,8 @@
   "id": "brex-gram-2_R009",
   "kind": "request",
   "team": "cureca",
-  "status": "진행 중",
-  "at": "2026-11-27T14:14:56+09:00",
+  "status": "보류",
+  "at": "2026-11-27T14:16:13+09:00",
   "createdAt": "2026-11-27T14:13:53+09:00",
   "by": "하승현",
   "doneBy": "Claude",
@@ -17,13 +17,21 @@
   "type": "요청",
   "layout": "",
   "text": "Q1.현업 내부 계산식으로 통해 그래프 및 breakpoint 표기. 계산식은 모름\n\nQ2.빈 값 or 하이픈(-) 값으로 표기\n\nQ3.단위만 변경\n\nQ4. close 누르면 그냥 닫힌다. 따로 컨펌 묻지 않음.\n\nQ6.원본 표 내용 알려 줌\n\nQ7.기존 Ver 2.0 그대로 | 최신 Ver로\n\nC1. 맞음\n\nC2.이거 무슨 말이야? 디스크립션에 더한다면 맞음\n\nC3.이거 무슨 말이야? 디스크립션에 더한다면 맞음\n\nC4.이거 무슨 말이야? 디스크립션에 더한다면 맞음\n\nC5. 맞음\n\nC9.맞음\n\nC10.맞음\n\nC11.맞음\n\nC13.맞음\n\nC16.맞음",
-  "note": "R007 질문(Q1 ~ Q7 · C1 ~ C16)에 대한 답으로 보고 작업 기록 20261126-하승현-policy-setting(테스트) 4단계를 이어 갑니다",
+  "note": "케이스 3 · 4단계 · 20261126-하승현-policy-setting — 받은 답(Q1 · Q3 · Q4, C1 · C2 · C4 · C5 · C9 · C10 · C11 · C13 · C16 맞음)을 지금 반영하고 있고, 답이 덜 정해진 4개를 다시 여쭙니다 · R007의 질문에 대한 답으로 처리\n\n**[C2 ~ C4 뜻]**\n- C2 TI-STN-01 5 PCR Protocol Setting: 기존엔 기본값만 있었는데, 선택지 Cyclic-CMTA · End Point-CMTA와 그 뜻을 디스크립션에 더함 → 디스크립션 추가라 **맞음**으로 처리\n- C4 TI-STN-01 6-1 Test Cut-off Time: 기존 「세부정의 참고」 대신 뜻(오더 집계 마감 시각)과 정책 ID를 디스크립션에 더함 → **맞음**으로 처리\n- C3 TI-STN-01 6-2 토글: On이면 Check Test Protocol 단계 표시, Off이면 건너뜀을 디스크립션에 더함(→ 맞음) + **화면의 토글 기본값을 Off → On으로 바꿔 그림**(디스크립션이 아니라 화면 변경이라 아래 C3로 다시 여쭙니다)\n\n**[질문 대기]**\nQ2 Comparison Simulation(TI-STN-01-03 2 · 3) 그날 검사가 없을 때 표시를 하나로 정해 주세요\n  - 하이픈(-)\n  - 빈 값\n  Common UX · 정책서에 빈 값 표기 규칙이 없어 추천 없음\nQ2-1 같은 화면 결과 값 표기(통화 · 시간 단위)는 답에 없어 남았습니다\n  - 지금 그린 대로\n  - 고객에게 물음\nQ6 Extraction Module Usage Setting Case 2 디폴트 표(TI-STN-01-02) — 「원본 표 내용 알려 줌」을 고르셨는데 표 내용이 오지 않았습니다. 내용을 답 칸에 적어 주시거나 아래에서 고르세요\n  - 지금 그린 대로 (test-items.csv 기본값)\n  - 표 내용 적음\nQ7 화면 정보 Ver(TI-STN-01 0) — 두 값이 함께 와서 하나로 정해 주세요\n  - 기존 Ver 2.0 그대로 (추천)\n    케이스 3 규칙은 기존 Ver 그대로\n  - 최신 Ver로\nC3 TI-STN-01 6-2 토글 기본값 Off → On (POL-TST-001 규칙 8)\n  - 맞음\n  - 되돌림 (Off)\n\n작업 기준: basis 2026-11-26 17:17 (시작 기준 · history 778f921b) · 작업규칙 CURECA 작업규칙 (rules) @원본 · 정책서 정책서 (policy) · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 (glossary) · 화면 정의서 화면 정의서 (screens)",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "[4단계] Q2 · Q2-1 · Q6 · Q7 · C3 답을 골라 주세요 (Q6는 표 내용을 직접 적어도 됩니다)",
+    "options": [
+      {
+        "label": "추천대로 진행"
+      }
+    ],
+    "free": true
+  },
   "replies": [],
   "raws": [],
   "work": "20261126-하승현-policy-setting",
