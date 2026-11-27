@@ -29,7 +29,7 @@ started: 2026-11-27
 | 4. 수정 · 확인 | | | |
 | 5. 완료 | | | |
 
-이어서 작업할 곳: 3단계 · TI-IVT-01-T · 02-T · 03-T · 03-T-P(상세 표 Basic Table로 다시 그림) · 04-T 그림 (04-T 기획 3926:2), TI-IVT-04-T-P부터 그릴 차례 (원본 3543:383580) (다시 읽을 곳: 3단계 `flow/3-design-case3.md` 흐름 · 3-4 · 케이스 3 표, `flow/3-design.md` 공통 3 · 공통 5 / 작업 기록 "설계" 화면별 작업 · 컴포넌트 없이 그린 요소 · "질문 대기" · "변경 확인", 화면 MD `screens/tobe/inventory/TI-IVT-04-T-P.md`, `projects/etCQFF3CTf1EA6C79d4BBf/components.md` 「Inventory To Be」)
+이어서 작업할 곳: 4단계 절차 1번 · 3단계 마침 점검 통과(2026-11-27), 사용자 확인 목록(질문 대기 Q1 ~ Q8 · 변경 확인 39건)을 보여 주고 답을 기다림 (다시 읽을 곳: 4단계 `flow/4-revise-verify.md` 절차 공통 · 절차 1 / 작업 기록 "질문 대기" · "변경 확인" · "설계" 화면별 작업, `projects/etCQFF3CTf1EA6C79d4BBf/components.md` 「Inventory To Be」)
 
 ## 요청
 <!-- 1단계 절차 1번. 요청 글 한두 줄과 출처, 공유 파일 (아래 "항목마다 적는 법") -->
