@@ -310,7 +310,7 @@ button{cursor:pointer}
     if (RL.length) h += '<details class="raw"><summary>자세히 · Claude 원래 답변' + (RL.length > 1 ? ' ' + RL.length + '개' : '') + '</summary>' +
       RL.slice().reverse().map(function(x){ return '<div class="rb"><div class="rt">' + esc(String(x.at || '').replace('T', ' ').slice(0, 16)) + (x.cut ? ' · 앞부분 2만 자' : '') + '</div><div class="rx">' + window.WBMD.view(x.text) + '</div></div>'; }).join('') + '</details>';
     /* Claude 질문과 답(replies): 이 PC 요청이면 선택지 버튼 · 직접 답하기, 다른 PC 요청은 보기만 */
-    (r.replies || []).forEach(function(x){
+    (r.replies || []).slice().reverse().forEach(function(x){   // 최근 질문 · 답이 위(2026-11-27)
       h += '<div class="qa"><span class="qq">Claude 질문 · ' + esc(String(x.q || '').split('\n')[0]) + '</span><span class="qr">' + esc(x.by || '') + ' 답 · ' + esc(x.text) + ' <i>' + esc(fmt(x.at)) + '</i></span></div>';
     });
     if (asking) {}

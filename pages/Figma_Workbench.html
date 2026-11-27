@@ -2085,7 +2085,7 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
   function askOpenHtml(r){ return hasAsk(r) ? askHtml(r, true) : ''; }
   function askHtml(r, openOnly){
     if (openOnly === undefined && hasAsk(r)) return (r.replies || []).length ? askHtml({ replies: r.replies }) : '';
-    var h = openOnly ? '' : (r.replies || []).map(function(x){
+    var h = openOnly ? '' : (r.replies || []).slice().reverse().map(function(x){   // 최근 질문 · 답이 위(2026-11-27)
       return '<div class="qa"><span class="qq">Claude 질문 · ' + esc(String(x.q || '').split('\n')[0]) + '</span><span class="qr">' + esc(x.by || '') + ' 답 · ' + esc(x.text) + '<i>' + fmt(x.at) + '</i></span></div>';
     }).join('');
     if (!hasAsk(r)) return h;
