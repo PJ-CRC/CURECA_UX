@@ -161,12 +161,12 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=39
 
 | 화면 표기 글자 (영어) | 출처 | Language ID |
 | --- | --- | --- |
-| Inventory | 화면 제목 | |
-| Summary · Overview · Consumables · Reagents · Waste Bin/Bottle · Usage History | 화면 Tab | |
-| Status | 화면 1 · 2-2 · 3-4 | |
-| Full · Almost Full · Available | 화면 1 · 2-2 · 3-4 | |
-| Refresh | 화면 4 | |
-| Sample Pre-treatment · High-throughput Extraction · Flexible Extraction · PCR Setup · Plate Sealing · Universal PCR | 화면 2-1 · 3-1 (Module 이름) | |
-| Unit · Fill Level(%) · Last Emptied Date/Time | 화면 3 열 제목 | |
+| Inventory | 화면 제목 | LID-IVT-001 |
+| Summary · Overview · Consumables · Reagents · Waste Bin/Bottle · Usage History | 화면 Tab | LID-IVT-002 · LID-IVT-003 · LID-RUN-044 · LID-SPT-043 · LID-IVT-053 · LID-IVT-004 |
+| Status | 화면 1 · 2-2 · 3-4 | LID-EVT-017 |
+| Full · Almost Full · Available | 화면 1 · 2-2 · 3-4 | LID-DAS-030 · LID-DAS-031 · LID-RUN-059 |
+| Refresh | 화면 4 | LID-RUN-033 |
+| Sample Pre-treatment · High-throughput Extraction · Flexible Extraction · PCR Setup · Plate Sealing · Universal PCR | 화면 2-1 · 3-1 (Module 이름) | LID-EVT-050 · LID-EVT-051 · LID-EVT-052 · LID-SPT-026 · LID-SPT-032 · LID-EVT-053 |
+| Unit · Fill Level(%) · Last Emptied Date/Time | 화면 3 열 제목 | LID-EVT-013 · LID-RUN-060 · LID-IVT-031 |
 | Waste Bin (Upper) · Liquid Waste Bottle (Upper) · Waste Bin (Lower) · Liquid Waste Bottle (Lower) | 화면 3-2 (Unit 이름) | |
 | {n}% | 화면 3-3 (n = 적재율) | |
