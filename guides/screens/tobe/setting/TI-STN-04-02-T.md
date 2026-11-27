@@ -1,122 +1,206 @@
 ---
-cid:
+cid: TI-STN-04-02-T
 pair_cid:
-tl_relation:   # 동일 | 권한 차이 | 기능 추가 | 단독
-title:
-path:
-type:          # Page | Popup | Tab
-version:       # X.Y.ZZ. 케이스 1 · 2는 4단계 UX 확정 때 요청자가 정한 값(그 전까지 케이스 1은 기존 Ver, 케이스 2는 비움), 케이스 3은 기존 화면의 Ver 그대로 (reference-rules/description.md 7절 "화면 정보에 적는 값")
-date:          # YYYY.MM.DD. 케이스 3은 기존 화면의 Date 그대로, 케이스 1 · 2는 작성일
-author:        # 케이스 3은 기존 화면 담당자 그대로, 케이스 1 · 2는 요청자
-client_mode: [] # L-IOS 화면만. user_type과 함께 원본은 권한 · 모드 표(policy/permission-matrix.csv · client-mode-matrix.csv)이고 표 값을 적음(줄 찾는 법은 flow/2-evidence.md "경로 분기 기준마다 읽는 것"의 케이스 3 줄). 표에 없으면 질문 대기로 두고 4단계 답을 적음. 표는 5단계에서 맞춤
-user_type: []
-policies: []   # 정책 ID. 작업 완료 전인 결정으로 그렸으면 "POL-EQP-004 · DS-0012"처럼 논의 대상 ID를 함께 적고, 5단계(완료) 반영 뒤 뗌
-basis:         # 화면 기준: 시각 · history 커밋 (reference-rules/work-log.md "작업 기준")
-basis_versions: # 문서마다 basis 시각 전에 마지막으로 바뀐 때 (rules · policy · glossary · screens · common_ux 모두 @날짜)
-source: tobe   # To-Be 화면 MD. 작업방에 그렸는지는 머리말 figma로 가름
-figma:         # 작업방의 이 CID 섹션 링크
+tl_relation: 단독
+title: Code Mapping
+path: Setting > LIS Setting > Code Mapping tab
+type: Tab
+version: 2.1.12
+date: 2026.10.16
+author: 서보경
+client_mode: []
+user_type: [Service, Admin]
+policies: [POL-SYS-002, POL-COM-005, POL-TST-010]
+basis:
+basis_versions:
+source: tobe
+figma:
 ---
-# CID 화면 이름
+# TI-STN-04-02-T Code Mapping
 
-- T/L 차이:
-- 호출하는 화면: [CID] 화면 이름 (어디서 → 어디로)
-- 호출되는 곳: (공통 Popup이면 호출 위치 목록)
+- T/L 차이: T-IOS 단독 (IA에 L 짝 없음)
+- 호출하는 화면: [TI-STN-04-01-T] Interface Configuration (탭 → Interface Configuration 탭), Confirm_010 (5 [Save]), Confirm_016 (5 저장하지 않고 이동)
+- 호출되는 곳: [TI-STN-04-01-T] Code Mapping 탭
 - 반영 대기 항목: `pending/open.md`에서 이 CID로 찾음
 - 화면 변경 이력: `screen-history.md`의 이 CID 줄
 
 ## 디스크립션
 
-<!-- 원본입니다. Figma 패널에 그대로 들어갑니다. 쓰는 법은 reference-rules/description.md, 작성예시문서는 examples/description-samples.md.
-     바뀐 글 표시(빨간 글씨 · 빨간 취소선)는 reference-rules/description.md 7절 "바뀐 글 표시"의 HTML 태그로 적습니다.
-     코드(화면 · 케이스 · Alert · Confirm · Toast · Common UX · 정책)는 화면 MD에 색을 적지 않습니다. Figma 패널에서만 파란색으로 칠합니다(reference-rules/description.md 7절 "참고 코드 표시").
-     아래는 모양 예시입니다. 실제 내용으로 바꿔 씁니다. -->
-
-**0  ○○ 화면**
+**0  Code Mapping 화면**
 - 정의
-  - 내용
-- 동작
-  - 내용
-- User Type : 
-- L-IOS Client Mode : (L-IOS 화면에만 씀)
+  - T-IOS only
+  - LIS에서 전달되는 외부 코드와 우리 시스템 코드 간 매핑을 정의하는 메뉴
+  - <span style="color:red">T-IOS 상단에서 고른 CURECA의 Code Mapping을 보여 주고 바꿈</span>
+- 진입 방법
+  - LNB의 ‘Setting > LIS Setting’을 통해 진입
+- 데이터 관련 정의
+  - Sample Type Code
+    - <span style="color:red">~~Assay pack 관리에서 fileType이 ‘common’ 정보에서 내 ‘sampleTypeInfo’ 정보가 관리항목이다.~~</span>
+    - <span style="color:red">~~실제로는 ‘sampleTypeCode’로 관리되나 화면에는 ‘sampleTypeName’ 값으로 표시됨~~</span>
+    - <span style="color:red">Assay Pack의 공통 정보에 들어 있는 Sample Type이 관리 항목</span>
+    - <span style="color:red">화면에는 코드 대신 Sample Type 이름 노출</span>
+  - Test Code
+    - <span style="color:red">~~Assay pack 관리에서 fileType이 ‘PCR’인 정보에서 내 ‘testItemCode’ 정보가 관리항목이다.~~</span>
+    - <span style="color:red">~~다만 화면에는 ‘testItemName’ 값으로 표시됨~~</span>
+    - <span style="color:red">Assay Pack의 PCR 정보에 들어 있는 검사 항목이 관리 항목</span>
+    - <span style="color:red">화면에는 코드 대신 검사 항목 이름 노출</span>
+  - Target Code Case
+    - <span style="color:red">~~Assay pack 관리에서 fileType이 ‘PCR’인 목록 중에 ‘isTargetNames’ 값이 True인 경우만 항목에 추가되어 관리된다.~~</span>
+    - <span style="color:red">~~이때 ‘testTargetNames’ 항목들이 2 depth 항목으로 제공되어 관리됨~~</span>
+    - <span style="color:red">Assay Pack의 PCR 정보 중 Target 이름을 쓰는 검사 항목만 관리 항목</span>
+    - <span style="color:red">그 검사 항목의 Target이 2 Depth 항목으로 제공되어 관리됨</span>
+  - <span style="color:red">Assay Pack이 바뀌면 관리 항목도 바뀜</span>
+- User Type : Service, Admin
+- 정책 참고 : POL-SYS-002, POL-COM-005, POL-TST-010
 
-**1  ○○ 영역**
-- 정의
-  - 내용
-- 공통 UX 참고 : 
+**1  Code Type - 좌측 영역**
+- 진입 시 첫 번째 항목이 Default로 선택되어 표기
+- 정렬 : 오름차순
+- 특정 항목 클릭 시 우측에 관련된 내역 표기
+- 공통 UX 참고 : COMM-5-s
 
-**1-1  항목 이름(Dropdown)**
-- 기능 : 
-- Default : 
-- 드롭다운 리스트 항목
-  - 내용
-- 공통 UX 참고 : 
+**1-1  관리 항목수 표시 영역**
+- 표기 기준
+  - 해당 Type이 관리하는 항목의 총 개수 표시 (예: Sample Type Code라면 등록된 Sample Type 항목 수 표기)
+- Depth 구조 처리
+  - 구조가 단일 Depth일 경우 → 전체 항목 개수를 그대로 표시
+  - 구조가 다중 Depth일 경우(Target Code 등) → 1 Depth의 항목 개수까지만 표시 (하위 Depth의 세부 항목은 합산하지 않음)
 
-**2  ○○ 리스트**
-- 정의 : 
-- 정렬
-  - Default : 
+**2  우측 영역 (단일 구조)**
+- 각 항목에 대응되는 LIS Code를 입력할 수 있으며, 입력된 코드는 LIS 연동 시 매핑 기준으로 사용
+- LIS Code 영역 Default
+  - 최초 설치 시 CURECA 시스템이 관리하는 값이 자동으로 입력(pre-filled)되어 있으며 필요에 따라 수정하여 사용
+- 정렬 : 오름차순
 - 컬럼 항목
-  - 컬럼 이름 : 무슨 값인지 / 표기 / 값이 없을 때
-- 동작
-  - 내용
-- 공통 UX 참고 : 
+  - No. : 목록 순번
+  - Sample Type Name · Product Name · Target Code : 항목의 UI 표기 이름
+  - LIS Sample Type Code · LIS Test Code · LIS Target Code : 그 항목에 대응되는 LIS Code
+- 공통 UX 참고 : COMM-5-g
+- 정책 참고 : POL-SYS-002, POL-TST-010
 
-**3  [버튼 이름] 버튼**
-- 정의
-  - 내용
-- 활성화 조건
-  - 내용
-- 동작
-  - 내용
-- 정책 참고 : 
+**2-1  검색 영역**
+- 검색 대상
+  - <span style="color:red">Sample Type Name 또는 LIS Sample Type Code</span>를 기준으로 검색 가능
+- 검색 결과
+  - 입력된 키워드와 일치하는 항목이 필터링되어 표기
+  - 코드 매핑 화면에서 해당 항목만 리스트에 노출
+- 공통 UX 참고 : COMM-5-t
+- 케이스 참고 : TI-STN-04-02-T/Case > Case 3
+
+**2-2  <span style="color:red">System Code</span> 기입 영역**
+- 실제 System Code가 아닌 UI 표기명으로 표기
+
+**3  우측 영역 (Depth 구조)**
+- Depth 구조가 있는 경우 좌측에는 설정 화면이, 우측에는 해당 Depth에서 관리하는 항목 노출
+- 진입 시 첫 번째 항목이 Default로 선택되어 표기
+- 우측 및 좌측 항목 정렬 : 오름차순
+- 특정 항목 클릭 시 우측에 관련된 내역 표기
+- 케이스 참고 : TI-STN-04-02-T/Case > Case 1
+
+**4  수정 기능 - [Edit] 버튼**
+- 진입 동작
+  - Edit 클릭 시 해당 항목이 [4-1] Text Input으로 전환되어 Edit 모드 진입
+- 입력 및 <span style="color:red">확정</span> 처리
+  - 값 입력 후 Done 버튼 클릭 또는 Enter 입력 또는 다른 영역 클릭 시 → 입력값 <span style="color:red">~~저장 처리~~</span> <span style="color:red">확정</span>, Edit 모드 종료, 화면은 원래 상태로 복귀
+  - <span style="color:red">확정한 값은 [Save] 클릭 시 저장</span>
+- 취소 처리
+  - X 클릭 시 <span style="color:red">입력값 확정 없이</span> Edit 모드 종료
+- [4-2] <span style="color:red">확정</span> 후 표시
+  - 수정된 항목은 색상으로 구분되어 변경 내역 강조
+  - 단, 이전 값과 동일한 값을 입력한 경우에는 변경사항 없음으로 처리되어 색상 표시가 되지 않음
+- 공통 UX 참고 : COMM-5-t
+- 정책 참고 : POL-SYS-002
+
+**5  [Save] 버튼**
+- 버튼 활성화 조건
+  - 최소 1건이라도 수정된 내역이 있으면 버튼 활성화
+  - 수정된 내역이 없으면 버튼 비활성화
+- 버튼 클릭 시 동작
+  - Confirm 노출 : Confirm_010
+- 저장되지 않은 변경사항 안내 및 확인 요청
+- 페이지 이동/메뉴 변경 시 동작
+  - 수정 후 저장하지 않고 다른 페이지로 이동하거나 메뉴를 변경할 경우 Confirm 노출 : Confirm_016
+- 저장 후 상태 갱신
+  - 저장 완료 시 수정 내역이 반영되고 버튼은 다시 비활성화 상태로 전환
+- 해당 영역 고정되어 항시 노출(스크롤 영역X)
+- 공통 UX 참고 : COMM-5-c
+- 정책 참고 : POL-SYS-002
+
+**<span style="color:red">6</span>  <span style="color:red">탭 영역</span>**
+- <span style="color:red">Interface Configuration, Code Mapping 탭으로 LIS Setting 안의 화면 전환</span>
+- <span style="color:red">Interface Configuration 선택 시 이동 : TI-STN-04-01-T</span>
+- 공통 UX 참고 : COMM-5-s
 
 ## 케이스
 
-<!-- 케이스 화면의 원본입니다 (flow/3-design.md 공통 5 "케이스 화면", 작성예시문서 examples/case-samples.md).
-     근거는 셋 중 하나: 기존 원본 / 디스크립션 조건 / 요청자. 어느 것도 아니면 올리지 않고 질문 대기에 둡니다.
-     종류(디스크립션 조건일 때): 1 상태별 데이터 노출, 2 올리거나 눌렀을 때 뜨는 것, 3 유형 · 대상에 따라 노출 항목 구성이 다른 것,
-     4 개수가 기준을 넘어 요소가 생기거나 배치가 바뀌는 것, 5 처음 들어왔거나 데이터가 없을 때, 6 한 번의 조작으로 여러 단계를 거쳐 바뀌는 것.
-     Case 번호는 바꾸지 않고, 지워도 다시 쓰지 않습니다. 케이스가 없으면 "없음"이라고 적습니다.
-     케이스 블록: Case마다 하나씩 둡니다. Figma 케이스 프레임은 이 블록을 그대로 옮깁니다.
-     ### Case n. 제목 = 초록 띠, 그 아래 머리 줄 세 줄 = 디스크립션 번호 · 근거 · 종류(근거가 디스크립션 조건이 아니면 `-`), #### n-1. 조건 = 노란 띠, 그 아래 글머리 기호 목록 = 띠 아래 설명 글.
-     케이스 3에서 기존 원본 케이스 프레임에 패널이 있으면, 패널의 번호마다 `번호. 내용` 줄을 그 번호 표시가 달린 노란 띠의 설명에 더합니다.
-     지운 케이스는 블록을 지우지 않고 머리 줄 아래에 `- 지움 (날짜, 이유)` 줄을 더합니다. -->
+### Case 1. Target Code 화면
 
-### Case 1. 제목
+- 디스크립션 번호 : 1, 1-1, 3
+- 근거 (기존 원본 / 디스크립션 조건 / 요청자) : 기존 원본
+- 종류 (1 ~ 6, 근거가 디스크립션 조건일 때) : -
 
-- 디스크립션 번호 :
-- 근거 (기존 원본 / 디스크립션 조건 / 요청자) :
-- 종류 (1 ~ 6, 근거가 디스크립션 조건일 때) :
+#### 1-1. Code Type에서 Target Code를 선택했을 때
 
-#### 1-1. 조건
+### Case 2. Test Code 화면
 
-- 설명
+- 디스크립션 번호 : 1, 2, 4
+- 근거 (기존 원본 / 디스크립션 조건 / 요청자) : 기존 원본
+- 종류 (1 ~ 6, 근거가 디스크립션 조건일 때) : -
+
+#### 2-1. Code Type에서 Test Code를 선택했을 때
+
+### Case 3. 필터 화면
+
+- 디스크립션 번호 : 2-1
+- 근거 (기존 원본 / 디스크립션 조건 / 요청자) : 기존 원본
+- 종류 (1 ~ 6, 근거가 디스크립션 조건일 때) : -
+
+#### 3-1. Target Code에서 Target을 검색했을 때
 
 ## Alert · Confirm · Toast
 
-<!-- Alert · Confirm · Toast를 모두 적습니다. 코드는 카탈로그(alert/)의 ID. 카탈로그에 없으면 3단계에서 카탈로그에 새 줄을 더해 그 코드를 씁니다(flow/3-design.md 공통 1의 4, 케이스 3의 Toast는 flow/3-design-case3.md 3-2). Toast는 버튼 동작을 `-`로 둡니다. -->
-
 | 디스크립션 번호 | 종류 (Alert / Confirm / Toast) | 코드 | 언제 | 버튼 동작 |
 | --- | --- | --- | --- | --- |
+| 5 | Confirm | Confirm_010 | [Save] 버튼 클릭 시 | OK 선택 시 → 데이터 저장 & Alert_017 노출 / Close 선택 시 → 해당 Alert 닫힘 |
+| 5 | Confirm | Confirm_016 | 수정 후 저장하지 않고 다른 페이지로 이동하거나 메뉴 변경 시 | Leave 선택 시 → 클릭한 메뉴로 이동 / Cancel 선택 시 → 해당 Alert 닫힘 |
 
 ## 화면 예시 글자
 
-<!-- 그릴 때 화면에 넣는 예시 값. 상태값 · 단위 · 품목 · 수치는 기준데이터(`glossary/`의 csv) · 정책 기준. 기준이 없으면 만들지 않고 "질문 대기"에 올립니다.
-     디스크립션 번호는 그 요소의 디스크립션 번호. 번호가 없는 요소는 `-`.
-     목록 · 표는 한 페이지 최대 노출 개수만큼 행을 채웁니다. 줄였으면 이유를 적습니다.
-     목록 · 표의 여러 행, 케이스 조각의 값, 지어 쓴 값을 적는 법은 flow/3-design.md 공통 1의 5. -->
-
 | 디스크립션 번호 | 요소 | 예시 값 | 기준 |
 | --- | --- | --- | --- |
+| 1-1 | Code Type 항목 수 | Sample Type Code 14 / Target Code 9 / Test Code 30 | `glossary/sample-types.csv` 14종 · `glossary/test-items.csv` Target Masking 가능 Y 9종 · 30종 |
+| 2 | Sample Type 목록 (Sample Type Name / LIS Sample Type Code) | Aspirate / Asp · BAL / BAL · Cary-blair / Cary-blair · Cellpreserv / Cellpreserv (Edit 모드) · eNAT stool / eNAT_stool · Fecal swab / Fecal_swab · Raw stool / Raw_stool · Saliva / Saliva · Semen / Semen · Sputum / Sputum · Surepath / Surepath · Swab / Swab · Thinprep / Thinprep · Urine / Urine | `glossary/sample-types.csv` UI 표기 · 코드, LIS 코드는 기존 원본 14행 그대로 (`3543:567498`) |
+| 2 | Items | 14 | `glossary/sample-types.csv` |
+| Case 1 | Products 목록 | Allplex HPV28 28 targets · Anyplex II HPV HR 14 targets · GI-B1 7 targets · GI-B2 6 targets · GI-V 6 targets · PB 7 targets · RP1 7 targets · RP2 7 targets · RP3 5 targets, Products 9 | `glossary/test-items.csv` (Target Masking 가능 Y) |
+| Case 1 | GI-B1 Target 목록 | 기존 원본 7행 그대로 (Aer · Cam · CdB · Sal · Sh/EI · Vib · Yer) | `glossary/test-items.csv`, 기존 원본 (`3543:568320`) |
+| Case 2 | Test Code 목록 | 기존 원본 11행 그대로 (Allplex HPV HR … GI-H1, Items 30) | `glossary/test-items.csv`, 기존 원본 (`3543:567542`) |
+| Case 3 | 필터 결과 | 기존 원본 1행 그대로 (Aer, Items 1) | 기존 원본 (`3543:568577`) |
 
 ## 화면 표기 글자
 
-<!-- 화면에 표기되는 영어 글자와 그 글자의 언어셋 Language ID를 적습니다. 지금 화면에 있는 글자만 둡니다(없어진 글자는 줄을 지움).
-     3단계에서 화면 MD를 쓸 때 함께 적고 화면을 고칠 때 같이 고칩니다(`flow/3-design.md` 공통 1의 9). Language ID는 4단계 절차 4번(UX 확정 뒤)에서 채웁니다. 번역과 이번 작업에서 바뀐 것(신규 · 변경 · 제거)은 표에 적지 않고 작업 기록 "언어셋" 절에 적습니다.
-     출처: 그 글자가 있는 곳. 화면(기획 프레임) / 디스크립션(디스크립션에 적힌 화면 표기 글자, 예: 드롭다운 리스트 항목 · Tooltip · 안내 문구) / 케이스(케이스 화면) 뒤에 위치를 붙입니다(예: `화면 1-1`, `디스크립션 1-2`, `케이스 Case 1-2`, 번호가 없으면 `화면 제목`처럼 위치 이름). 여러 곳이면 ` · `로 잇습니다. 출처는 글자를 찾아 고치고, 같은 영어 글자에 Language ID가 여럿일 때(버튼 · 제목 등 쓰임이 다름) 맞는 줄을 고르는 데 씁니다. 디스크립션의 설명 글과 GNB · LNB 같은 공통 영역의 글자는 적지 않습니다(공통 영역은 따로 관리, `background/todo.md` 5-3d). 숫자처럼 값이 들어가는 자리는 `{n}`으로 두고 한 줄로 적고, 출처에 그 값을 적습니다(예: `{n} items` · `화면 2-3 (n = 10 · 30 · 50 · 100)`, 언어셋 DB의 `{N} of {M} Items`와 같은 모양, 2026-11-25 서보경 정함).
-     글자는 문구만 적습니다(언어셋 대상은 글자 그 자체). 라벨 끝의 `:`와, 라벨 뒤에 붙은 값과 그 앞의 `.`를 빼고(`Event Code:` → `Event Code`, `Updated by. {id}` → `Updated by`), Module · Unit · 장비 이름 뒤 번호 `(n)` · `-n`도 뺍니다(`CFX96 (1)` · `CFX96-1` → `CFX96`). 문장 끝 마침표(`No results found.`)는 글자의 일부라 둡니다. 글 안에 값이 들어가는 글(`{n} items`)은 위처럼 `{n}`으로 둡니다.
-     컴포넌트 글 · 값 · 구분자가 한 줄로 이어진 글(예: `10 items of Items 1,112 | Open 20`)은 어느 문구를 적을지 정하지 않았습니다. 이런 글은 정하지 않고 예외 질문(작업 기록 "요청자 확인"에 답을 비운 줄, `flow/README.md` "단계를 지나는 규칙" 9)으로 묻습니다.
-     Language ID: 언어셋 원본(language-set/db/)의 메뉴 파일 ID. 번역 전체는 이 ID로 원본에서 찾습니다. 원본에 아직 없는 글자는 비워 두고, 5단계에서 원본에 새 줄을 만들 때 채웁니다. 글자를 바꿀 때는 Language ID를 지우지 않고 둡니다(4단계가 이 ID로 언어셋 DB의 줄과 짝지어 변경을 가림). 바뀐 글자가 이미 언어셋에 있으면 5단계에서 그 ID로 바뀝니다(`language-set/README.md` "화면설계 흐름에서 반영하는 법"). -->
-
 | 화면 표기 글자 (영어) | 출처 | Language ID |
 | --- | --- | --- |
+| LIS Setting | 화면 제목 | |
+| Interface Configuration | 화면 6 | |
+| Code Mapping | 화면 6 | |
+| Code Type | 화면 1 · 케이스 Case 1 · 2 · 3 | |
+| Sample Type Code | 화면 1 · 화면 2 · 케이스 Case 1 · 2 · 3 | |
+| Target Code | 화면 1 · 케이스 Case 1 · 3 | |
+| Test Code | 화면 1 · 케이스 Case 2 | |
+| Search by sample type or LIS code | 화면 2-1 | |
+| {n} Items | 화면 2 · 케이스 Case 1 · 2 · 3 (n = 14 · 7 · 30 · 1) | |
+| No. | 화면 2 · 케이스 Case 1 · 2 · 3 | |
+| Sample Type Name | 화면 2 | |
+| LIS Sample Type Code | 화면 2 | |
+| Edit | 화면 4 · 케이스 Case 1 · 2 · 3 | |
+| Done | 화면 4-1 · 케이스 Case 2 | |
+| Save | 화면 5 · 케이스 Case 1 · 2 · 3 | |
+| Products | 케이스 Case 1 · 3 | |
+| Search product name | 케이스 Case 1 · 3 | |
+| {n} targets | 케이스 Case 1 · 3 (n = 28 · 14 · 7 · 6 · 5) | |
+| Target Codes | 케이스 Case 1 · 3 | |
+| Search target or LIS code | 케이스 Case 1 · 3 | |
+| LIS Target Code | 케이스 Case 1 · 3 | |
+| Search by product or LIS code | 케이스 Case 2 | |
+| Product Name | 케이스 Case 2 | |
+| LIS Test Code | 케이스 Case 2 | |
