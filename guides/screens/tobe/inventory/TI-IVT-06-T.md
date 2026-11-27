@@ -107,6 +107,8 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=39
 
 | 디스크립션 번호 | 종류 (Alert / Confirm / Toast) | 코드 | 언제 | 버튼 동작 |
 | --- | --- | --- | --- | --- |
+| 3 | Alert | Alert_050 | [Export] 리스트에 내보낼 데이터가 없을 때(0건) | OK 선택 시 → 해당 Alert 닫힘, OS 파일 탐색기 호출 안 함 |
+| 3 | Alert | Alert_049 | [Export] 파일 저장에 실패했을 때 | OK 선택 시 → 해당 Alert 닫힘, 파일 저장 안 됨 |
 
 ## 화면 예시 글자
 
@@ -131,6 +133,8 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=39
 | Items | 화면 6 | |
 | {n} items | 화면 4 (n = 10 · 30 · 50 · 100) | |
 | Export | 화면 3 | |
+| No data to export · There is no data in the list to export. · OK | Alert_050 (디스크립션 3) | |
+| Export failed · The file could not be saved. Check the save location and try again. · OK | Alert_049 (디스크립션 3) | |
 | Usage · Module · Unit · Date/Time | 화면 2 컬럼 | |
 | 5X RP2 MOM, Real-time One-step Enzyme, 5X Real-time One-step Buffer · 5X GI-B(I) MOM, EM2, RNase-free Water · PBS Standard Tube · 1000 μL Tip · Empty Standard Tube · PCR Plate · Wide Bore Tip | 화면 2 (품목 이름) | |
 | Plate Sealing · Consumable Storage · PCR Setup | 화면 2 (Module 이름) | |
