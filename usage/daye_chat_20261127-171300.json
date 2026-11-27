@@ -1,0 +1,30 @@
+{
+  "id": "daye_chat_20261127-171300",
+  "kind": "work",
+  "chat": "doc",
+  "reqId": "",
+  "reqType": "",
+  "team": "cureca",
+  "at": "2026-11-27T17:13:00+09:00",
+  "from": "2026-11-25T21:23:00+09:00",
+  "by": "정다예",
+  "doneBy": "Claude",
+  "pc": "DAYE",
+  "fileKey": "etCQFF3CTf1EA6C79d4BBf",
+  "fileName": "",
+  "page": "",
+  "frame": "",
+  "nodeId": "",
+  "text": "채팅: ASIS 스크린 MD 다시쓰는 작업 이어서 진행할께",
+  "turns": 34,
+  "models": {
+    "claude-opus-5-5": 263
+  },
+  "calls": 263,
+  "input": 598,
+  "cacheWrite": 1324592,
+  "cacheRead": 152331177,
+  "output": 383098,
+  "total": 154039465,
+  "usd": 48.7273
+}

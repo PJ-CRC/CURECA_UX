@@ -1,0 +1,30 @@
+{
+  "id": "daye_chat_20261127-171641",
+  "kind": "work",
+  "chat": "figma",
+  "reqId": "",
+  "reqType": "",
+  "team": "cureca",
+  "at": "2026-11-27T17:16:41+09:00",
+  "from": "2026-11-27T17:15:08+09:00",
+  "by": "정다예",
+  "doneBy": "Claude",
+  "pc": "DAYE",
+  "fileKey": "etCQFF3CTf1EA6C79d4BBf",
+  "fileName": "",
+  "page": "",
+  "frame": "",
+  "nodeId": "",
+  "text": "채팅: Underline Tab 컴포넌트 수정하고 싶어 Inactive 상태일때도 글자아래 - 가 살아있으면 좋겠어 다만 active일때보다 오퍼시티가",
+  "turns": 1,
+  "models": {
+    "claude-opus-5-5": 14
+  },
+  "calls": 14,
+  "input": 30,
+  "cacheWrite": 67307,
+  "cacheRead": 1434103,
+  "output": 5867,
+  "total": 1507307,
+  "usd": 0.9427
+}
