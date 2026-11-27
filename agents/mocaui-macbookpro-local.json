@@ -1,5 +1,5 @@
 {
-  "reportAt": "2026-11-27T11:04:46+09:00",
+  "reportAt": "2026-11-27T11:05:47+09:00",
   "pc": "Mocaui-MacBookPro.local",
   "slug": "mocaui-macbookpro-local",
   "user": "김목화",
@@ -8,7 +8,7 @@
   "alive": true,
   "status": "idle",
   "msg": "요청을 기다리는 중",
-  "statusAt": "2026-11-27T11:03:53+09:00",
+  "statusAt": "2026-11-27T11:05:34+09:00",
   "claude": "앱 내장",
   "claudeWay": "",
   "autoWatch": true,
