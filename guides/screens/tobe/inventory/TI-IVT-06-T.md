@@ -129,18 +129,18 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=39
 
 | 화면 표기 글자 (영어) | 출처 | Language ID |
 | --- | --- | --- |
-| Inventory | 화면 제목 | |
-| Summary · Overview · Consumables · Reagents · Waste Bin/Bottle · Usage History | 화면 Tab | |
-| Item Type · Name · Barcode · Module-Unit | 화면 1 | |
-| All · Consumable · Reagent | 화면 1 · 2 · 디스크립션 1 | |
-| Select a module · Select a module first | 화면 1 | |
-| Reset · Search | 화면 5 | |
-| Items | 화면 6 | |
+| Inventory | 화면 제목 | LID-IVT-001 |
+| Summary · Overview · Consumables · Reagents · Waste Bin/Bottle · Usage History | 화면 Tab | LID-IVT-002 · LID-IVT-003 · LID-RUN-044 · LID-SPT-043 · LID-IVT-053 · LID-IVT-004 |
+| Item Type · Name · Barcode · Module-Unit | 화면 1 | LID-IVT-038 · LID-STN-046 · LID-SPT-018 · - |
+| All · Consumable · Reagent | 화면 1 · 2 · 디스크립션 1 | LID-EVT-003 · LID-IVT-052 · LID-RUN-062 |
+| Select a module · Select a module first | 화면 1 | LID-IVT-036 · LID-IVT-037 |
+| Reset · Search | 화면 5 | LID-EVT-022 · LID-STN-016 |
+| Items | 화면 6 | LID-STN-006 |
 | {n} items | 화면 4 (n = 10 · 30 · 50 · 100) | |
-| Export | 화면 3 | |
-| No data to export · There is no data in the list to export. · OK | Alert_050 (디스크립션 3) | |
-| Export failed · The file could not be saved. Check the save location and try again. · OK | Alert_049 (디스크립션 3) | |
-| Usage · Module · Unit · Date/Time | 화면 2 컬럼 | |
-| 5X RP2 MOM, Real-time One-step Enzyme, 5X Real-time One-step Buffer · 5X GI-B(I) MOM, EM2, RNase-free Water · PBS Standard Tube · 1000 μL Tip · Empty Standard Tube · PCR Plate · Wide Bore Tip | 화면 2 (품목 이름) | |
-| Plate Sealing · Consumable Storage · PCR Setup | 화면 2 (Module 이름) | |
-| Cold Storage · Trolley · PCR Plate Storage | 화면 2 (Unit 이름) | |
+| Export | 화면 3 | LID-EVT-023 |
+| No data to export · There is no data in the list to export. · OK | Alert_050 (디스크립션 3) | - · - · LID-RUN-011 |
+| Export failed · The file could not be saved. Check the save location and try again. · OK | Alert_049 (디스크립션 3) | - · - · LID-RUN-011 |
+| Usage · Module · Unit · Date/Time | 화면 2 컬럼 | LID-IVT-039 · LID-EVT-012 · LID-EVT-013 · LID-IVT-040 |
+| 5X RP2 MOM, Real-time One-step Enzyme, 5X Real-time One-step Buffer · 5X GI-B(I) MOM, EM2, RNase-free Water · PBS Standard Tube · 1000 μL Tip · Empty Standard Tube · PCR Plate · Wide Bore Tip | 화면 2 (품목 이름) | - · - · - · - · - · LID-SPT-031 · - |
+| Plate Sealing · Consumable Storage · PCR Setup | 화면 2 (Module 이름) | LID-SPT-032 · LID-EVT-049 · LID-SPT-026 |
+| Cold Storage · Trolley · PCR Plate Storage | 화면 2 (Unit 이름) | - · LID-EVT-056 · - |
