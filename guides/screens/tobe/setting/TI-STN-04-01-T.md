@@ -122,7 +122,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=38
 | 1 | Interface Type | HL7 | POL-SYS-001 규칙 2 |
 | 2 | Transport Protocol | MLLP | POL-SYS-001 규칙 3 (Default) |
 | 3 | Order Reception Mode | Query Mode | POL-SYS-001 규칙 4 (Default) |
-| 4 | Port (T-IOS Network) | 빈 값 · Disabled | POL-SYS-001 규칙 5 (Query Mode일 때) |
+| 4 | Port (T-IOS Network) | None · Disabled | POL-SYS-001 규칙 5 (Query Mode일 때), 언어셋 DB LID-STN-268 (검토 질의 8) |
 | 6 | Host Address (IP) | Enter IP Address (입력 안내 글) | 언어셋 DB LID-STN-208 (검토 질의 7) |
 | 6 | Port (LIS Network) | Enter Port (입력 안내 글) | 언어셋 DB LID-STN-269 (검토 질의 7) |
 | Case 1-2 | Port (T-IOS Network) | 20200 | 기존 원본 케이스 |
@@ -145,6 +145,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=38
 | Push Mode | 디스크립션 3 · 케이스 Case 1-1 · 1-2 | LID-STN-266 |
 | T-IOS Network (Push Mode Only) | 화면 4 · 케이스 Case 1-2 · 1-3 | LID-STN-204 · LID-STN-267 |
 | Port | 화면 4 · 화면 6 · 케이스 Case 1-2 · 1-3 | LID-STN-205 |
+| None | 화면 4 · 케이스 Case 1-2 | LID-STN-268 |
 | LIS Network | 화면 6 | LID-STN-206 |
 | Host Address (IP) | 화면 6 | LID-STN-207 |
 | Enter IP Address | 화면 6 | LID-STN-208 |

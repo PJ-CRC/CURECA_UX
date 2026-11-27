@@ -286,7 +286,7 @@ started: 2026-11-27
 
 - 기준: 언어셋 DB `language-set/db/setting-lis.md`(CID 칸에 TI-STN-04-01-T · TI-STN-04-02-T가 있는 `사용` 줄). 그 밖의 화면 표기 글자는 기준 줄과 같아 Language ID만 채움(두 화면 MD 「화면 표기 글자」, 2026-11-27). `T-IOS Network (Push Mode Only)`는 DB가 영역 타이틀(LID-STN-204)과 보조 문구(LID-STN-267)로 나눠 둔 것과 같아 두 ID를 적음.
 - C6 Sample Type Name · C22 LIS Test Code는 화면 예시 값이라 화면 표기 글자 표에 없어 보지 않음.
-- 화면과 DB가 처음부터 다른 글자는 요청자 확인 #8 · #9 답으로 화면을 언어셋 DB에 맞춤(검토 질의 6 · 7, C27 · C28 · C29). Query Mode 때 Port 표시값 None만 #10 답 기다림 `(답 기다림)`.
+- 화면과 DB가 처음부터 다른 글자는 요청자 확인 #8 · #9 답으로 화면을 언어셋 DB에 맞춤(검토 질의 6 · 7, C27 · C28 · C29). Query Mode 때 Port 표시값 None은 #10 답으로 화면에도 보임(검토 질의 8, C30).
 
 | 변경 상태 | CID · 출처 | Language ID | English (변경은 변경 전 → 변경 후) | 번역 대상 (O / - 이유) | 언어셋 DB 대조 |
 | --- | --- | --- | --- | --- | --- |
@@ -296,9 +296,9 @@ started: 2026-11-27
 | 신규 | TI-STN-04-01-T 화면 6 (C28, `IP Address` → `Enter IP Address`) | LID-STN-208 | Enter IP Address | O | 있음 |
 | 신규 | TI-STN-04-01-T 화면 6 (C28, `Port` → `Enter Port`. `Port`는 표의 다른 자리(라벨)에 남음) | LID-STN-269 | Enter Port | O | 있음 |
 | 신규 | TI-STN-04-02-T 화면 2-1 · 케이스 Case 1 · 2 · 3 (C29) | LID-STN-271 · LID-STN-275 · LID-STN-276 · LID-STN-272 | Sample type or LIS code · Product name or code · Target or LIS code · Test or LIS code | O | 있음 |
-| DB 맞춤 (제거) (답 기다림) | TI-STN-04-01-T (DB 비고: Query Mode 때 Port 표시값) | LID-STN-268 | None | - (제거) | 있음 |
+| 신규 | TI-STN-04-01-T 화면 4 · 케이스 Case 1-2 (C30, 없음 → None) | LID-STN-268 | None | O | 있음 |
 
-**새로 넣을 줄** — 없음 (입력 안내 글은 화면을 언어셋 DB 글자로 고쳐(검토 질의 7) 모두 DB에 있음. 남은 `DB 맞춤 (제거) (답 기다림)` None 줄은 요청자 확인 #10 답 기다림)
+**새로 넣을 줄** — 없음 (입력 안내 글은 화면을 언어셋 DB 글자로 고쳐(검토 질의 7) 모두 DB에 있음. None도 화면에 반영해 DB에 있음)
 
 ## 요청자 확인
 <!-- 요청자에게 물은 것을 모두 한 줄씩 적음. 틀 설명은 reference-rules/work-log.md "틀"의 "요청자 확인" 주석 -->
