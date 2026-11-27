@@ -24,12 +24,12 @@ started: 2026-11-27
 | 단계 | 끝낸 날 | 마침 점검 | 남긴 것 |
 | --- | --- | --- | --- |
 | 1. 시작 · 요건 정의 | 2026-11-27 | 요청자 확인 (2026-11-27) | 겹치는 다른 작업: 없음 |
-| 2. 근거 · 분석 | | | |
+| 2. 근거 · 분석 | | | 정책 수정 범위 1건 (DS-0013) |
 | 3. 화면 설계 | | | |
 | 4. 수정 · 확인 | | | |
 | 5. 완료 | | | |
 
-이어서 작업할 곳: 2단계 · 절차 1 읽는 강도 정하기부터
+이어서 작업할 곳: 2단계 · 절차 6 근거 확인 질문(요청자 확인 6 · 7) 답 기다림 (Workbench R009 「보류」) (다시 읽을 곳: 2단계 `flow/2-evidence.md` 절차 6번 "답을 받은 뒤" · 마침 점검 / 작업 기록 "근거" · "요청자 확인" · "이 작업의 논의 대상")
 
 ## 요청
 <!-- 1단계 절차 1번. 요청 글 한두 줄과 출처, 공유 파일 (아래 "항목마다 적는 법") -->
@@ -322,12 +322,18 @@ started: 2026-11-27
 
 | 번호 (Q) | 질문 | 관련된 곳 (CID · 디스크립션 번호) | 논의 대상 | T · L 같음 | 풀린 날 · 어떻게 |
 | --- | --- | --- | --- | --- | --- |
+| Q1 | [Export] 저장 실패 · 내보낼 목록이 0건일 때의 안내 (Alert 카탈로그 · POL-COM-006에 없음) | TI-IVT-06-T #3 | | - (L-IOS 고치지 않음) | |
 
 ## 변경 확인
 <!-- 사용자 확인 목록의 변경 확인이자 이 작업으로 화면에서 바뀐 요소의 목록. 원본은 이 표(화면 MD에는 두지 않음). 2단계 · 3단계가 앞의 여덟 칸으로 줄을 만들고(오타 · 표기만 고친 줄은 3단계가 "확인한 날 · 답"에 `맞음 (오타, 날짜)`, Common UX · 기존 화면대로 설명을 더한 줄은 `맞음 (Common UX, 날짜)` · `맞음 (기존 화면, 날짜)`, 반영 대기 값을 그대로 쓴 줄은 3단계 마침 점검이 `맞음 (기계 검사, 날짜)`를 적음, reference-rules/description.md 5절), 4단계가 나머지 줄의 "확인한 날 · 답"을 채우고 답 · 검토 질의로 바뀐 줄을 더함. 번호 C1 · C2 …는 질문 대기와 같은 방식. "바꿔 그린 것"은 한 줄 요약, 근거는 괄호, 접두어 없음. "업데이트 메모"는 줄을 만들 때 채움: 보이는 것 · 동작 · 조건이 바뀌었거나 요소가 더해지거나 빠졌으면 O, 문서 정리(말투 · 용어 · 오타 · 번호 · 패널의 화면 정보)면 -(reference-rules/description.md 5절 "업데이트 메모"). "화면 표기 글자 (기존 → 새)"는 화면에 보이는 영어 글자가 바뀐 줄만 문구로 그대로 적음(`Statue → Status`, 새로 넣은 글자 `없음 → No results found.`, 지운 글자 `OPEN → 없음`). 여러 글자가 바뀌면 ` · `로 모두 적고 「등」으로 묶지 않음. 디스크립션 설명 글만 바뀐 줄은 비움. 4단계 언어셋이 이 칸으로 이번에 바뀐 글자를 가림(flow/4-revise-verify.md 절차 4). 줄은 지우지 않음 -->
 
 | 번호 (C) | 기존 화면 | 바꿔 그린 것 | 화면 표기 글자 (기존 → 새) | 관련된 곳 (CID · 디스크립션 번호) | 근거 | T · L 같음 | 업데이트 메모 (O / -) | 확인한 날 · 답 (맞음 / 되돌림) |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| C1 | `High-throughput Extraction(1) Waste Bin` · `Plate Sealing(1) Sealer Waste Bin` · `Sample Pre-treatment (1) Tip Waste Bin` · `PCR Setup(1) / 300 μL Tip Storage` | Unit 이름을 Module-Unit 표의 UI 표기로 (`module-units.csv`) | Waste Bin → DWP Waste Bin · Sealer Waste Bin → Sealer Waste Bin (1) · Tip Waste Bin → Tip Waste Bin (Upper) · 300 μL Tip Storage → 300 μL Tip Storage (1) | TI-IVT-01-T #1 · #3 | `glossary/module-units.csv` | - (L-IOS 고치지 않음) | - | |
+| C2 | [Refresh]로 불러오기에 실패했을 때 동작 없음 (TI-IVT-02-T만 Alert_020) | 데이터를 불러오지 못하면 Alert_020 노출 (POL-INV-001 규칙 4) | | TI-IVT-01-T #4 · TI-IVT-03-T #4 · TI-IVT-04-T #4 · TI-IVT-05-T #4 | POL-INV-001 규칙 4, Alert_020 | - (L-IOS 고치지 않음) | O | |
+| C3 | 노출 기준 "통합 상태 Run O / Docking X = 부족량 노출" 등 Run 여부로 가름 | Inbound Trolley가 도킹되어 있거나 [Run Start] 뒤 진행 중인 Batch가 끝나지 않았으면 부족 목록을 보여 줌. Partial Running · Error여도 Batch가 끝나기 전이면 계속 보여 줌 (POL-INV-003 규칙 2 · 3-1) | | TI-IVT-01-T #1 | POL-INV-003 규칙 2 · 3-1 | - (L-IOS 고치지 않음) | O | |
+| C4 | 목록 Unit 칸에 `Plate Sealing` · `PCR Setup` (Module 이름) | 실제 Storage Unit으로: Plate Sealing의 Reagent는 Cold Storage, PCR Setup의 PCR Plate는 PCR Plate Storage (`module-units.csv`, POL-INV-006 규칙 2) | Plate Sealing → Cold Storage · PCR Setup → PCR Plate Storage | TI-IVT-06-T #2 | `glossary/module-units.csv`, POL-INV-006 규칙 2 | - (L-IOS 고치지 않음) | - | |
+| C5 | [Export] "로컬 PC에 파일(.CVS) 형태로 저장" | [Export]를 누르면 OS 파일 탐색기에서 저장 경로와 파일 이름을 정해 .csv로 저장 (POL-COM-006 규칙 1 · 3) | | TI-IVT-06-T #3 | POL-COM-006 규칙 1 · 3 | - (L-IOS 고치지 않음) | - | |
 
 ## 검토 질의
 <!-- 4단계 절차 2번. 틀은 flow/4-revise-verify.md "검토 질의 틀" -->
@@ -345,12 +351,15 @@ started: 2026-11-27
 | 3 | 2026-11-27 | 1단계 · 절차 4번 순서 3 (IA와 화면이 다른 곳) | TI-IVT-06-T 기획 프레임이 같은 이름 · 같은 Ver(2.1.18)로 둘 있음: 위 프레임(3543:361230, asis 화면 MD가 옮긴 것, Item Type 기본값 `All Item Types`, 반환 시점 포함) / 아래 프레임(3543:361388, 기본값 `All`, 폐기 시점만) 가운데 어느 것을 원본으로 다시 그릴지 | TI-IVT-06-T #0 · #1 · #2 | | 아래 프레임 3543:361388을 원본으로 (2026-11-27, 추천대로 진행) |
 | 4 | 2026-11-27 | 1단계 · 절차 4번 순서 3 (asis 추출 빠짐) | TI-IVT-04-T 3-3 Capacity "해당 화면설계에 없으나 아래 다른 예시 화면에서 확인 가능"이 가리키는 예시 화면이 asis 화면 MD에 없음: 그 프레임을 알려 주시거나, 없으면 디스크립션대로 그림 | TI-IVT-04-T #3-3 | | 따로 없음, 디스크립션대로 그림 (2026-11-27, 추천대로 진행) |
 | 5 | 2026-11-27 | 1단계 · 절차 5번 질문 7 | 위 요건 목록과 흐름대로 진행할지 (대상 화면 = Inventory 메뉴 T-IOS 화면 8개, L-IOS 짝 화면은 고치지 않음) | 요건 1 | | 이대로 진행 (2026-11-27) |
+| 6 | 2026-11-27 | 2단계 · 절차 6번 질문 1 | 정책 수정 범위 1 (DS-0013): POL-INV-002 `cids`에 Item details Popup 넷을 더할지 - 이대로 결정 / 논의 중으로 둠 | TI-IVT-03-T-P, TI-IVT-04-T-P, DS-0013 | | |
+| 7 | 2026-11-27 | 2단계 · 절차 6번 질문 4 | Sample Pre-treatment의 Waste Unit은 제조사마다 다름(단디메카 Waste Bin (Upper · Lower) / 로체시스템즈 Tip Waste Bin · Film Waste Bin (Upper · Lower)): TI-IVT-05-T 3-2 · TI-IVT-01-T 3을 제조사별 케이스 화면으로 나눠 그릴지 - 모두 그림 / 그리지 않음 (기본 화면 하나) | TI-IVT-05-T #3-2, TI-IVT-01-T #3 | | |
 
 ## 이 작업의 논의 대상
 <!-- 2 · 3 · 4단계가 논의 대상을 만들거나 결정 줄을 더할 때마다 한 줄. 5단계는 `결정`인 줄을 반영함 (아래 "쓰는 법"의 "이 작업의 논의 대상") -->
 
 | 논의 대상 | 상태 (논의 중 / 결정) | 내용 한 줄 | 5단계 반영 |
 | --- | --- | --- | --- |
+| DS-0013 | 논의 중 | POL-INV-002 `cids`에 Item details Popup(TI/LI-IVT-03-T-P, TI/LI-IVT-04-T-P)을 더함 | |
 
 ## 이 작업이 남긴 것
 
