@@ -4,7 +4,7 @@
   "reqId": "R009",
   "reqType": "요청",
   "team": "cureca",
-  "at": "2026-11-27T16:05:48+09:00",
+  "at": "2026-11-27T16:17:58+09:00",
   "from": "2026-11-27T09:56:20+09:00",
   "by": "최고관리자",
   "doneBy": "Claude",
@@ -16,14 +16,14 @@
   "nodeId": "",
   "text": "https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-360786&t=GdYCaPho44GgAu5i-1\nInventory T-ios 화면만 다시 그려줘",
   "models": {
-    "claude-opus-5-5": 495,
+    "claude-opus-5-5": 557,
     "<synthetic>": 1
   },
-  "calls": 496,
-  "input": 965,
-  "cacheWrite": 1561526,
-  "cacheRead": 161988298,
-  "output": 552077,
-  "total": 164102866,
-  "usd": 55.9353
+  "calls": 558,
+  "input": 1096,
+  "cacheWrite": 1654582,
+  "cacheRead": 181021542,
+  "output": 605442,
+  "total": 183282662,
+  "usd": 61.5542
 }
