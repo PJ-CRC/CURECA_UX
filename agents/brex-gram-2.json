@@ -1,5 +1,5 @@
 {
-  "reportAt": "2026-11-27T13:49:20+09:00",
+  "reportAt": "2026-11-27T13:50:20+09:00",
   "pc": "BREX_GRAM_2",
   "slug": "brex-gram-2",
   "user": "하승현",
@@ -8,7 +8,7 @@
   "alive": true,
   "status": "idle",
   "msg": "요청을 기다리는 중",
-  "statusAt": "2026-11-27T13:49:14+09:00",
+  "statusAt": "2026-11-27T13:50:14+09:00",
   "claude": "따로 설치",
   "claudeWay": "",
   "autoWatch": true,
