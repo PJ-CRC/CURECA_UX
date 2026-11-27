@@ -10,7 +10,7 @@ date: 2026.10.22
 author: 이상헌
 client_mode: []
 user_type: [Service]
-policies: [POL-TST-008 · DS-0012, POL-TST-010]
+policies: [POL-TST-008, POL-TST-010]
 basis: 2026-11-26 17:09 · history 402e669e
 basis_versions: rules @2026-11-26 14:30 · policy @2026-11-25 21:21 · glossary @2026-11-26 15:17 · screens @2026-11-26 16:15 · common_ux @2026-11-25 16:08
 source: tobe
