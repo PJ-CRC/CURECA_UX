@@ -123,8 +123,8 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=38
 | 2 | Transport Protocol | MLLP | POL-SYS-001 규칙 3 (Default) |
 | 3 | Order Reception Mode | Query Mode | POL-SYS-001 규칙 4 (Default) |
 | 4 | Port (T-IOS Network) | 빈 값 · Disabled | POL-SYS-001 규칙 5 (Query Mode일 때) |
-| 6 | Host Address (IP) | IP Address (입력 안내 글) | 기존 원본 (`3543:568738`) |
-| 6 | Port (LIS Network) | Port (입력 안내 글) | 기존 원본 (`3543:568738`) |
+| 6 | Host Address (IP) | Enter IP Address (입력 안내 글) | 언어셋 DB LID-STN-208 (검토 질의 7) |
+| 6 | Port (LIS Network) | Enter Port (입력 안내 글) | 언어셋 DB LID-STN-269 (검토 질의 7) |
 | Case 1-2 | Port (T-IOS Network) | 20200 | 기존 원본 케이스 |
 
 ## 화면 표기 글자
@@ -147,5 +147,6 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=38
 | Port | 화면 4 · 화면 6 · 케이스 Case 1-2 · 1-3 | LID-STN-205 |
 | LIS Network | 화면 6 | LID-STN-206 |
 | Host Address (IP) | 화면 6 | LID-STN-207 |
-| IP Address | 화면 6 | |
+| Enter IP Address | 화면 6 | LID-STN-208 |
+| Enter Port | 화면 6 | LID-STN-269 |
 | Save | 화면 5 | LID-STN-022 |

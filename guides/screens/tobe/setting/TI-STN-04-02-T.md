@@ -187,7 +187,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=38
 | Sample Type Code | 화면 1 · 화면 2 · 케이스 Case 1 · 2 · 3 | LID-STN-214 |
 | Target Code | 화면 1 · 케이스 Case 1 · 3 | LID-STN-270 |
 | Test Code | 화면 1 · 케이스 Case 2 | LID-STN-213 |
-| Search by sample type or LIS code | 화면 2-1 | |
+| Sample type or LIS code | 화면 2-1 | LID-STN-271 |
 | No results found. | 디스크립션 2-1 | LID-STN-015 |
 | {n} Items | 화면 2 · 케이스 Case 1 · 2 · 3 (n = 14 · 7 · 30 · 1) | LID-STN-006 |
 | No. | 화면 2 · 케이스 Case 1 · 2 · 3 | LID-STN-146 |
@@ -197,11 +197,11 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=38
 | Done | 화면 4-1 · 케이스 Case 2 | LID-EVT-025 |
 | Save | 화면 5 · 케이스 Case 1 · 2 · 3 | LID-STN-022 |
 | Products | 케이스 Case 1 · 3 | LID-STN-273 |
-| Search product name | 케이스 Case 1 · 3 | |
+| Product name or code | 케이스 Case 1 · 3 | LID-STN-275 |
 | {n} targets | 케이스 Case 1 · 3 (n = 28 · 14 · 7 · 6 · 5) | LID-STN-277 |
 | Target Codes | 케이스 Case 1 · 3 | LID-STN-274 |
-| Search target or LIS code | 케이스 Case 1 · 3 | |
+| Target or LIS code | 케이스 Case 1 · 3 | LID-STN-276 |
 | LIS Target Code | 케이스 Case 1 · 3 | LID-STN-278 |
-| Search by product or LIS code | 케이스 Case 2 | |
+| Test or LIS code | 케이스 Case 2 | LID-STN-272 |
 | Product Name | 케이스 Case 2 | LID-STN-147 |
 | LIS Test Code | 케이스 Case 2 | LID-STN-215 |
