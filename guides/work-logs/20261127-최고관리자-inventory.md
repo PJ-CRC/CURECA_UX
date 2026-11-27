@@ -376,14 +376,14 @@ started: 2026-11-27
 
 | 번호 (Q) | 질문 | 관련된 곳 (CID · 디스크립션 번호) | 논의 대상 | T · L 같음 | 풀린 날 · 어떻게 |
 | --- | --- | --- | --- | --- | --- |
-| Q1 | [Export] 저장 실패 · 내보낼 목록이 0건일 때의 안내 (Alert 카탈로그 · POL-COM-006에 없음) | TI-IVT-06-T #3 | | - (L-IOS 고치지 않음) | |
-| Q2 | 1-7 Tooltip 문구 (기존에 4줄이 함께 있음, L-IOS는 앞 2줄이 취소선, 반영 대기 TI-IVT-01-T-R06) | TI-IVT-01-T #1-7 | | - (L-IOS 고치지 않음) | |
-| Q3 | Capacity Tooltip 문구를 3-4 Capacity 정의(장비에서 설정된 값)와 맞출 문장 (반영 대기 TI-IVT-03-T-R05) | TI-IVT-03-T #5 | | - (L-IOS 고치지 않음) | |
-| Q4 | 반영 대기의 예시 값 "#Trolley" · Tub "200T (2 racks)"가 기존 원본 화면에 없음 (반영 대기 TI-IVT-03-T-R09 · TI-IVT-04-T-R11, 기존대로 그림) | TI-IVT-03-T #3 · TI-IVT-04-T #3 | | - (L-IOS 고치지 않음) | |
-| Q5 | 반영 대기가 비었다고 한 예시 값(Inbound Date · Expiration Date · Usage · Barcode)이 기존 원본에는 채워져 있음 (반영 대기 TI-IVT-03-T-P-R02 · TI-IVT-04-T-P-R08 · TI-IVT-06-T-R02, 기존대로 그림) | TI-IVT-03-T-P #2-1 · TI-IVT-04-T-P #2-1 · TI-IVT-06-T #2 | | - (L-IOS 고치지 않음) | |
-| Q6 | [Close] · [X] 동작 문장을 하나로 맞출 문장 (반영 대기 TI-IVT-03-T-P-R05) | TI-IVT-03-T-P #5 · #6 | | - (L-IOS 고치지 않음) | |
-| Q7 | Reagents type Chip 띄어쓰기 통일 방식 (`# Sample Preparation` · `#Nucleic Acid Extraction`, 반영 대기 TI-IVT-04-T-R08) | TI-IVT-04-T #1 · #2-7 | | - (L-IOS 고치지 않음) | |
-| Q8 | 3-8 Capacity 열을 보일지와 값 (기존 원본에 6 DWPs · 5 sets 값이 투명하게 숨겨져 있음, 요청자 확인 4 "디스크립션대로"는 예시 화면이 없다는 답이라 기존대로 숨겨 그림) | TI-IVT-04-T #3-8 | | - (L-IOS 고치지 않음) | |
+| Q1 | [Export] 저장 실패 · 내보낼 목록이 0건일 때의 안내 (Alert 카탈로그 · POL-COM-006에 없음) | TI-IVT-06-T #3 | | - (L-IOS 고치지 않음) | 2026-11-27 · Alert 새로 추가: Alert_049 (저장 실패) · Alert_050 (0건) → C91 |
+| Q2 | 1-7 Tooltip 문구 (기존에 4줄이 함께 있음, L-IOS는 앞 2줄이 취소선, 반영 대기 TI-IVT-01-T-R06) | TI-IVT-01-T #1-7 | | - (L-IOS 고치지 않음) | 2026-11-27 · 뒤 2줄만 둠 → C92 |
+| Q3 | Capacity Tooltip 문구를 3-4 Capacity 정의(장비에서 설정된 값)와 맞출 문장 (반영 대기 TI-IVT-03-T-R05) | TI-IVT-03-T #5 | | - (L-IOS 고치지 않음) | 2026-11-27 · 지금 문구 그대로 (반영 대기 TI-IVT-03-T-R05 제외) |
+| Q4 | 반영 대기의 예시 값 "#Trolley" · Tub "200T (2 racks)"가 기존 원본 화면에 없음 (반영 대기 TI-IVT-03-T-R09 · TI-IVT-04-T-R11, 기존대로 그림) | TI-IVT-03-T #3 · TI-IVT-04-T #3 | | - (L-IOS 고치지 않음) | 2026-11-27 · 기존대로 둠 (반영 대기 TI-IVT-03-T-R09 · TI-IVT-04-T-R11 제외) |
+| Q5 | 반영 대기가 비었다고 한 예시 값(Inbound Date · Expiration Date · Usage · Barcode)이 기존 원본에는 채워져 있음 (반영 대기 TI-IVT-03-T-P-R02 · TI-IVT-04-T-P-R08 · TI-IVT-06-T-R02, 기존대로 그림) | TI-IVT-03-T-P #2-1 · TI-IVT-04-T-P #2-1 · TI-IVT-06-T #2 | | - (L-IOS 고치지 않음) | 2026-11-27 · 채운 대로 둠 (반영 대기 TI-IVT-03-T-P-R02 · TI-IVT-04-T-P-R08 · TI-IVT-06-T-R02 제외) |
+| Q6 | [Close] · [X] 동작 문장을 하나로 맞출 문장 (반영 대기 TI-IVT-03-T-P-R05) | TI-IVT-03-T-P #5 · #6 | | - (L-IOS 고치지 않음) | 2026-11-27 · 그대로 (반영 대기 TI-IVT-03-T-P-R05 제외) |
+| Q7 | Reagents type Chip 띄어쓰기 통일 방식 (`# Sample Preparation` · `#Nucleic Acid Extraction`, 반영 대기 TI-IVT-04-T-R08) | TI-IVT-04-T #1 · #2-7 | | - (L-IOS 고치지 않음) | 2026-11-27 · `#` 뒤 붙여 통일 → C93 |
+| Q8 | 3-8 Capacity 열을 보일지와 값 (기존 원본에 6 DWPs · 5 sets 값이 투명하게 숨겨져 있음, 요청자 확인 4 "디스크립션대로"는 예시 화면이 없다는 답이라 기존대로 숨겨 그림) | TI-IVT-04-T #3-8 | | - (L-IOS 고치지 않음) | 2026-11-27 · 숨김 그대로 |
 
 ## 변경 확인
 <!-- 사용자 확인 목록의 변경 확인이자 이 작업으로 화면에서 바뀐 요소의 목록. 원본은 이 표(화면 MD에는 두지 않음). 2단계 · 3단계가 앞의 여덟 칸으로 줄을 만들고(오타 · 표기만 고친 줄은 3단계가 "확인한 날 · 답"에 `맞음 (오타, 날짜)`, Common UX · 기존 화면대로 설명을 더한 줄은 `맞음 (Common UX, 날짜)` · `맞음 (기존 화면, 날짜)`, 반영 대기 값을 그대로 쓴 줄은 3단계 마침 점검이 `맞음 (기계 검사, 날짜)`를 적음, reference-rules/description.md 5절), 4단계가 나머지 줄의 "확인한 날 · 답"을 채우고 답 · 검토 질의로 바뀐 줄을 더함. 번호 C1 · C2 …는 질문 대기와 같은 방식. "바꿔 그린 것"은 한 줄 요약, 근거는 괄호, 접두어 없음. "업데이트 메모"는 줄을 만들 때 채움: 보이는 것 · 동작 · 조건이 바뀌었거나 요소가 더해지거나 빠졌으면 O, 문서 정리(말투 · 용어 · 오타 · 번호 · 패널의 화면 정보)면 -(reference-rules/description.md 5절 "업데이트 메모"). "화면 표기 글자 (기존 → 새)"는 화면에 보이는 영어 글자가 바뀐 줄만 문구로 그대로 적음(`Statue → Status`, 새로 넣은 글자 `없음 → No results found.`, 지운 글자 `OPEN → 없음`). 여러 글자가 바뀌면 ` · `로 모두 적고 「등」으로 묶지 않음. 디스크립션 설명 글만 바뀐 줄은 비움. 4단계 언어셋이 이 칸으로 이번에 바뀐 글자를 가림(flow/4-revise-verify.md 절차 4). 줄은 지우지 않음 -->
