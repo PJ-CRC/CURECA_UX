@@ -1,0 +1,12 @@
+{
+  "rev": "20261127-163748_brexui-macbookpro-2-local",
+  "by": "Claude",
+  "at": "2026-11-27T16:37:48+09:00",
+  "note": "시스템 확인: 17번(10-13 통합 파일 링크 재연결 · 수정 내역 엑셀) 추가",
+  "base": "20261124-111702_brexui-macbookpro-2-local",
+  "pc": "BREXui-MacBookPro-2.local",
+  "req": "10. 기획서 작성 정책: 내가 올린 문서로 업데이트 해줘",
+  "jobId": "J001",
+  "file": "시스템 확인.md",
+  "orig": true
+}
