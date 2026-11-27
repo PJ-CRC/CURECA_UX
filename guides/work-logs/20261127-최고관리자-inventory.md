@@ -323,6 +323,12 @@ started: 2026-11-27
 | 번호 (Q) | 질문 | 관련된 곳 (CID · 디스크립션 번호) | 논의 대상 | T · L 같음 | 풀린 날 · 어떻게 |
 | --- | --- | --- | --- | --- | --- |
 | Q1 | [Export] 저장 실패 · 내보낼 목록이 0건일 때의 안내 (Alert 카탈로그 · POL-COM-006에 없음) | TI-IVT-06-T #3 | | - (L-IOS 고치지 않음) | |
+| Q2 | 1-7 Tooltip 문구 (기존에 4줄이 함께 있음, L-IOS는 앞 2줄이 취소선, 반영 대기 TI-IVT-01-T-R06) | TI-IVT-01-T #1-7 | | - (L-IOS 고치지 않음) | |
+| Q3 | Capacity Tooltip 문구를 3-4 Capacity 정의(장비에서 설정된 값)와 맞출 문장 (반영 대기 TI-IVT-03-T-R05) | TI-IVT-03-T #5 | | - (L-IOS 고치지 않음) | |
+| Q4 | 반영 대기의 예시 값 "#Trolley" · Tub "200T (2 racks)"가 기존 원본 화면에 없음 (반영 대기 TI-IVT-03-T-R09 · TI-IVT-04-T-R11, 기존대로 그림) | TI-IVT-03-T #3 · TI-IVT-04-T #3 | | - (L-IOS 고치지 않음) | |
+| Q5 | 반영 대기가 비었다고 한 예시 값(Inbound Date · Expiration Date · Usage · Barcode)이 기존 원본에는 채워져 있음 (반영 대기 TI-IVT-03-T-P-R02 · TI-IVT-04-T-P-R08 · TI-IVT-06-T-R02, 기존대로 그림) | TI-IVT-03-T-P #2-1 · TI-IVT-04-T-P #2-1 · TI-IVT-06-T #2 | | - (L-IOS 고치지 않음) | |
+| Q6 | [Close] · [X] 동작 문장을 하나로 맞출 문장 (반영 대기 TI-IVT-03-T-P-R05) | TI-IVT-03-T-P #5 · #6 | | - (L-IOS 고치지 않음) | |
+| Q7 | Reagents type Chip 띄어쓰기 통일 방식 (`# Sample Preparation` · `#Nucleic Acid Extraction`, 반영 대기 TI-IVT-04-T-R08) | TI-IVT-04-T #1 · #2-7 | | - (L-IOS 고치지 않음) | |
 
 ## 변경 확인
 <!-- 사용자 확인 목록의 변경 확인이자 이 작업으로 화면에서 바뀐 요소의 목록. 원본은 이 표(화면 MD에는 두지 않음). 2단계 · 3단계가 앞의 여덟 칸으로 줄을 만들고(오타 · 표기만 고친 줄은 3단계가 "확인한 날 · 답"에 `맞음 (오타, 날짜)`, Common UX · 기존 화면대로 설명을 더한 줄은 `맞음 (Common UX, 날짜)` · `맞음 (기존 화면, 날짜)`, 반영 대기 값을 그대로 쓴 줄은 3단계 마침 점검이 `맞음 (기계 검사, 날짜)`를 적음, reference-rules/description.md 5절), 4단계가 나머지 줄의 "확인한 날 · 답"을 채우고 답 · 검토 질의로 바뀐 줄을 더함. 번호 C1 · C2 …는 질문 대기와 같은 방식. "바꿔 그린 것"은 한 줄 요약, 근거는 괄호, 접두어 없음. "업데이트 메모"는 줄을 만들 때 채움: 보이는 것 · 동작 · 조건이 바뀌었거나 요소가 더해지거나 빠졌으면 O, 문서 정리(말투 · 용어 · 오타 · 번호 · 패널의 화면 정보)면 -(reference-rules/description.md 5절 "업데이트 메모"). "화면 표기 글자 (기존 → 새)"는 화면에 보이는 영어 글자가 바뀐 줄만 문구로 그대로 적음(`Statue → Status`, 새로 넣은 글자 `없음 → No results found.`, 지운 글자 `OPEN → 없음`). 여러 글자가 바뀌면 ` · `로 모두 적고 「등」으로 묶지 않음. 디스크립션 설명 글만 바뀐 줄은 비움. 4단계 언어셋이 이 칸으로 이번에 바뀐 글자를 가림(flow/4-revise-verify.md 절차 4). 줄은 지우지 않음 -->
@@ -334,6 +340,91 @@ started: 2026-11-27
 | C3 | 노출 기준 "통합 상태 Run O / Docking X = 부족량 노출" 등 Run 여부로 가름 | Inbound Trolley가 도킹되어 있거나 [Run Start] 뒤 진행 중인 Batch가 끝나지 않았으면 부족 목록을 보여 줌. Partial Running · Error여도 Batch가 끝나기 전이면 계속 보여 줌 (POL-INV-003 규칙 2 · 3-1) | | TI-IVT-01-T #1 | POL-INV-003 규칙 2 · 3-1 | - (L-IOS 고치지 않음) | O | |
 | C4 | 목록 Unit 칸에 `Plate Sealing` · `PCR Setup` (Module 이름) | 실제 Storage Unit으로: Plate Sealing의 Reagent는 Cold Storage, PCR Setup의 PCR Plate는 PCR Plate Storage (`module-units.csv`, POL-INV-006 규칙 2) | Plate Sealing → Cold Storage · PCR Setup → PCR Plate Storage | TI-IVT-06-T #2 | `glossary/module-units.csv`, POL-INV-006 규칙 2 | - (L-IOS 고치지 않음) | - | |
 | C5 | [Export] "로컬 PC에 파일(.CVS) 형태로 저장" | [Export]를 누르면 OS 파일 탐색기에서 저장 경로와 파일 이름을 정해 .csv로 저장 (POL-COM-006 규칙 1 · 3) | | TI-IVT-06-T #3 | POL-COM-006 규칙 1 · 3 | - (L-IOS 고치지 않음) | - | |
+| C6 | Tab ⛔️ Item_Segment Tabs | Tab을 Common UX Underline Tab으로 (Common UX) | | TI-IVT-01-T · 02-T · 03-T · 04-T · 05-T · 06-T #0 | COMM-5-s | - (L-IOS 고치지 않음) | O | |
+| C7 | GNB 시스템 표기 `L-IOS` (T-IOS 화면) | GNB를 T-IOS로 | L-IOS → T-IOS | TI-IVT-02-T · 03-T · 03-T-P · 04-T · 04-T-P · 05-T · 06-T #0 | 1단계 뒤 단계용 확인 항목 8, COMM-2-a | - (L-IOS 고치지 않음) | O | |
+| C8 | LNB에 `Status` 메뉴 | LNB에서 Status 메뉴 지움 (다른 화면 LNB와 같게) | Status → 없음 | TI-IVT-03-T · 04-T #0 | 1단계 뒤 단계용 확인 항목 9, COMM-2-a | - (L-IOS 고치지 않음) | O | |
+| C9 | 페이지 이동 `< 1/2 >` | Common UX Indicator Pagination으로 (Common UX) | | TI-IVT-01-T #1-6 · #3 | COMM-5-l | - (L-IOS 고치지 않음) | O | |
+| C10 | `Required Qty 250 (3 DWPs)` | 단위 rxns를 붙임 | 250 (3 DWPs) → 250 rxns (3 DWPs) | TI-IVT-01-T #1-4 | `glossary.md` Reagent 수량 | - (L-IOS 고치지 않음) | - | 맞음 (오타, 2026-11-27) |
+| C11 | 케이스 프레임에 Case 번호 없음, 01-T 케이스 제목 "구동 중이 아닐 경우, 'No actions required' 문구 표기" | Case 1 ~ 3으로 번호를 매김, 01-T Case 2 제목을 조각 글자에 맞춤 ('Shown only if system running or Inbound Trolley docked') | | TI-IVT-01-T Case · TI-IVT-02-T Case | 기존 원본 케이스 조각, `flow/3-design.md` 공통 5 | - (L-IOS 고치지 않음) | - | |
+| C12 | 제조사별 Unit 설명 없음 | 「각 Module에 설치된 제조사의 Waste Bin/Bottle Unit만 노출」 더함 | | TI-IVT-01-T #3 · TI-IVT-05-T #0 | 2단계 요청자 답 (요청자 확인 7), `policy/modules/sample-pretreatment.md` | - (L-IOS 고치지 않음) | O | 맞음 (요청자 답, 2026-11-27) |
+| C13 | `BB TUB, WB1 TUB, WB2 TUB, WB3 TUB, EB TUB` | 품목 표기대로 | BB TUB, WB1 TUB, WB2 TUB, WB3 TUB, EB TUB → BB Tub, WB1 Tub, WB2 Tub, WB3 Tub, EB Tub | TI-IVT-01-T #1 | `glossary/consumables.csv` | - (L-IOS 고치지 않음) | - | 맞음 (오타, 2026-11-27) |
+| C14 | 케이스 300 μL Tip Required Qty `100 rxns (2 racks)` | Consumable 수량 표기로 | 100 rxns (2 racks) → 100 ea (2 racks) | TI-IVT-01-T Case 1-1 | `glossary.md` Consumable 수량 | - (L-IOS 고치지 않음) | O | |
+| C15 | 케이스 수량 `288T` · `300T` | rxns로 | 288T (3 DWPs) → 288 rxns (3 DWPs) · 300T (3 sets) → 300 rxns (3 sets) | TI-IVT-02-T Case 3-1 · 3-2 | `glossary.md` T 표기 쓰지 않음 | - (L-IOS 고치지 않음) | O | |
+| C16 | 번호 2-3이 두 번, 3-3 안에 번호 없는 Capacity | 두 번째 2-3 Reagents type → 2-7, Capacity → 3-8 (끝 번호 다음) | | TI-IVT-04-T #2-7 · #3-8 | `flow/3-design-case3.md` 3-2 번호 | - (L-IOS 고치지 않음) | - | |
+| C17 | 왼쪽 카드에 Allplex™ GI-Virus Assay 카드가 두 번 | 두 번째 GI-Virus 카드를 지움 (PCR 카드 4장) | | TI-IVT-04-T #2 | 1단계 뒤 단계용 확인 항목 11 | - (L-IOS 고치지 않음) | O | |
+| C18 | 2-3 카드 내 항목에 IC · Set 입고 위치, Buffer Cartridge Cap 설명 없음 | IC는 Tube 단위 Consumable Storage > Trolley, 나머지 구성품은 Set 단위 Plate Sealing > Cold Storage, UC Kit에 Buffer Cartridge Cap 항목(5개 단위) 설명 더함 | | TI-IVT-04-T #2-3 | POL-INV-007 정의, POL-LOD-004 규칙 13 · 20 | - (L-IOS 고치지 않음) | O | |
+| C19 | Capacity "*해당 화면설계에 없으나 아래 다른 예시 화면에서 확인 가능" | 가리키는 예시 화면이 없어 그 문구를 제거(빨간 취소선) | | TI-IVT-04-T #3-8 | 1단계 요청자 답 (요청자 확인 4) | - (L-IOS 고치지 않음) | - | |
+| C20 | `96 ea  (1 rack)` (띄어쓰기 두 칸) | 띄어쓰기 한 칸 | 96 ea  (1 rack) → 96 ea (1 rack) | TI-IVT-03-T-P #2-1 | `glossary.md` | - (L-IOS 고치지 않음) | - | 맞음 (오타, 2026-11-27) |
+| C21 | Module 이름 `Flexible Extraction` · `Universal PCR` (번호 없음) | Module (Index)로 | Flexible Extraction → Flexible Extraction (1) · Universal PCR → Universal PCR (1) | TI-IVT-05-T #2 · #3-1 | `glossary.md` 이름 (번호), POL-INV-005 규칙 8 | - (L-IOS 고치지 않음) | O | |
+| C22 | 같은 Ver 프레임 둘 (위: Item Type 기본값 All Item Types, 반환 시점 포함) | 아래 프레임을 원본으로 그림 (Item Type 기본값 All, 폐기 시점만, Usage = 폐기 시점의 사용 개수) | All Item Types → All | TI-IVT-06-T #0 · #1 · #2 | 1단계 요청자 답 (요청자 확인 3), POL-INV-006 규칙 1 · 2 · 4 | - (L-IOS 고치지 않음) | O | 맞음 (요청자 답, 2026-11-27) |
+| C23 | 노출 개수 선택 없음 | 노출 개수 Dropdown 추가 (Common UX, T-IOS Basic Table) | 없음 → 10 items | TI-IVT-06-T #4 | COMM-5-g | - (L-IOS 고치지 않음) | O | |
+| C24 | [Reset] · [Search], Items, 페이지네이션에 번호 · 디스크립션 없음 | 번호와 정의, 공통 UX 참고를 더함 (화면에 이미 보이는 것) | | TI-IVT-06-T #5 · #6 · #7 | COMM-5-p · COMM-5-g · COMM-5-l | - (L-IOS 고치지 않음) | - | 맞음 (Common UX, 2026-11-27) |
+| C25 | 카드 · Chip · Dropdown · 표 · Info Box · 버튼을 기존 컴포넌트로 그림 | Common UX 컴포넌트로 다시 그림 (Header Table Card · Table Card · Filter Chip · Basic Dropdown · Basic Table · Info Box · Square Button, 모양만 달라짐) | | TI-IVT-01-T ~ 06-T | COMM-5-e · 5-f · 5-h · 5-g · 5-i · 5-c | - (L-IOS 고치지 않음) | O | |
+| C26 | 화면 카드 "Comsumable" | Consumable | Comsumable → Consumable | TI-IVT-01-T | TI-IVT-01-T-R01 · `glossary/terms.csv` | - (L-IOS 고치지 않음) | - | 맞음 (오타, 2026-11-27) |
+| C27 | 1-1·1-5 "Empty 및 Insufficient" (화면 카드는 Insufficient, Low) | Empty는 예전 값이며 Insufficient로 바뀜. 요약 정보와 Stock Status Icon은 Insufficient·Low로 나눔 (1 정렬 기준과 같음). 1-3 "Empty 상태일 경우 '0'"도 Insufficient로 | Empty → Insufficient · Insufficient → Low | TI-IVT-01-T | TI-IVT-01-T-R02 · `glossary/status-values.csv 재고 상태`, POL-INV-003 규칙 7 | - (L-IOS 고치지 않음) | O |  |
+| C28 | 1 "Inbound Trolley Unit이 'Docking' 상태" | Docked |  | TI-IVT-01-T | TI-IVT-01-T-R03 · `glossary/status-values.csv` 저장 장치 도킹 상태 | - (L-IOS 고치지 않음) | - |  |
+| C29 | 3-5 툴팁 "prioritized by Full and Warning status" | Full and Almost Full (Warning은 Waste Bin/Bottle Status 값이 아님) | prioritized by Full and Warning status → prioritized by Full and Almost Full status | TI-IVT-01-T | TI-IVT-01-T-R04 · `glossary/status-values.csv` | - (L-IOS 고치지 않음) | O |  |
+| C30 | 3-4 "Waste Status Icon" | Waste Bin/Bottle Status Icon |  | TI-IVT-01-T | TI-IVT-01-T-R05 · `glossary/terms.csv` | - (L-IOS 고치지 않음) | - |  |
+| C31 | 0 "사용여부가 '사용'인 모듈" | Enabled인 Module |  | TI-IVT-01-T | TI-IVT-01-T-R08 · POL-EQP-009 | - (L-IOS 고치지 않음) | - |  |
+| C32 | 화면 "FlexibleExtraction(1)", "WasteBin", "PCR Setup(1)" 등 | Flexible Extraction (1), Waste Bin, PCR Setup (1) | FlexibleExtraction(1) → Flexible Extraction (1) · WasteBin → Waste Bin · PCR Setup(1) → PCR Setup (1) · High-throughput Extraction(1) → High-throughput Extraction (1) · Plate Sealing(1) → Plate Sealing (1) · Universal PCR(1) → Universal PCR (1) | TI-IVT-01-T | TI-IVT-01-T-R09 · 이름 (번호) 띄어쓰기, `glossary/terms.csv` | - (L-IOS 고치지 않음) | - | 맞음 (오타, 2026-11-27) |
+| C33 | 1 "통합 상태 Run O / X" | 장비 통합 상태 Running 여부로 표기 |  | TI-IVT-01-T | TI-IVT-01-T-R10 · `glossary/terms.csv` 장비 통합 상태 | - (L-IOS 고치지 않음) | O |  |
+| C34 | 3-3 "Waste bin/bottle tab 내 2-3 참고" (Fill Level은 TI-IVT-05-T 3-3) | TI-IVT-05-T 3-3 참고 |  | TI-IVT-01-T | TI-IVT-01-T-R11 · TI-IVT-05-T | - (L-IOS 고치지 않음) | - |  |
+| C35 | Tab 이름 "Reagent" (다른 Tab 화면은 Reagents) | Reagents | Reagent → Reagents | TI-IVT-02-T | TI-IVT-02-T-R01 · IA, TI-IVT-01-T 화면 글자 | - (L-IOS 고치지 않음) | O |  |
+| C36 | 1-2 "데이트 업데이트", 1-3 "차감되지 않는며" | 데이터 업데이트, 차감되지 않으며 |  | TI-IVT-02-T | TI-IVT-02-T-R02 · 오타 | - (L-IOS 고치지 않음) | - | 맞음 (오타, 2026-11-27) |
+| C37 | 0 "사용여부가 '사용'인 모듈" | Enabled인 Module |  | TI-IVT-02-T | TI-IVT-02-T-R03 · POL-EQP-009 | - (L-IOS 고치지 않음) | - |  |
+| C38 | 1 "아래 Inventory Overview Detail Info 예시 참고하여 작업요청" (CID 없는 프레임을 가리킴) | 케이스 규칙을 디스크립션이나 정책으로 옮김 |  | TI-IVT-02-T | TI-IVT-02-T-R04 · `screens/inventory/_menu.md` | - (L-IOS 고치지 않음) | - |  |
+| C39 | 화면 "Samples (Test In Progress) 48 ea (1 racks)" | 1 rack | 48 ea (1 racks) → 48 ea (1 rack) | TI-IVT-02-T | TI-IVT-02-T-R05 · 단수·복수 | - (L-IOS 고치지 않음) | - | 맞음 (오타, 2026-11-27) |
+| C40 | 1-1 "투입 트롤리", "회수 트롤리", "검체" | Inbound Trolley, Outbound Trolley, Sample |  | TI-IVT-02-T | TI-IVT-02-T-R06 · `glossary/terms.csv` | - (L-IOS 고치지 않음) | - |  |
+| C41 | 2 툴팁 "all modules . Select" | all modules. Select | all modules . Select → all modules. Select | TI-IVT-02-T | TI-IVT-02-T-R07 · 띄어쓰기 | - (L-IOS 고치지 않음) | - | 맞음 (오타, 2026-11-27) |
+| C42 | IA "짝 화면 동일"이 비어 있으나 LI-IVT-02-T와 화면·디스크립션이 같음 | IA `LI-IVT-02-T` 줄의 짝 화면 동일을 Y로 (1단계 요청자 답, 2026-11-27) (IA는 5단계에서 반영) |  | TI-IVT-02-T | TI-IVT-02-T-R08 · `ia/ia-screens.csv` | - (L-IOS 고치지 않음) | - |  |
+| C43 | 합계 "2,021 (22 rack)" (단위 없음). Run 화면 프레임은 "2,021 ea (22 rack)" | 2,021 ea (22 racks) | 2,021 (22 rack) → 2,021 ea (22 racks) | TI-IVT-03-T-P | TI-IVT-03-T-P-R01 · 3 표기 방식, LI-IVT-03-T-P Run 프레임 | - (L-IOS 고치지 않음) | O |  |
+| C44 | 2-1 "DX 서랍식 입고" | Dx 시스템 Storage의 Drawer |  | TI-IVT-03-T-P | TI-IVT-03-T-P-R03 · `glossary/terms.csv` Drawer, Dx 시스템 | - (L-IOS 고치지 않음) | - |  |
+| C45 | "소모품", "바코드" 한국어 혼용 | Consumable, Barcode |  | TI-IVT-03-T-P | TI-IVT-03-T-P-R04 · `glossary/terms.csv` | - (L-IOS 고치지 않음) | - |  |
+| C46 | 2-6 Insufficient "재고가 0인 경우", Low "1개 이상 부족한 경우" | 디스크립션에 넣음: 재고 상태 정의는 상태값 표와 같음. Insufficient = 잔여 수량 0이라 그 품목을 쓰는 단계에서 Error가 생겨 가동이 중단됨, Low = 필요 수량보다 1개 이상 적으나 가동 가능 (예: 1000개 필요, 999개 이하). 화면의 "재고 0", "1개 이상 부족"은 이 정의의 예시로 남김 |  | TI-IVT-03-T | TI-IVT-03-T-R01 · `glossary/status-values.csv 재고 상태`, POL-INV-003 | - (L-IOS 고치지 않음) | O |  |
+| C47 | 1 "sufficient" | Sufficient |  | TI-IVT-03-T | TI-IVT-03-T-R02 · `glossary/status-values.csv` | - (L-IOS 고치지 않음) | - | 맞음 (오타, 2026-11-27) |
+| C48 | 2-5 Required Qty 절의 첫 문장이 "좌측 영역의 Remaining Qty는…" | 좌측 영역의 Required Qty는… |  | TI-IVT-03-T | TI-IVT-03-T-R03 · 디스크립션 | - (L-IOS 고치지 않음) | - |  |
+| C49 | 2-5·2-6·3-6 노출 조건 "검체 트롤리가 도킹된 상태 또는 통합 상태가 Running, Partial Running" / TI-IVT-01-T 1은 "Running이거나 Inbound Trolley Docked" | 디스크립션에 넣음: Required Qty와 Status(Run 대비 재고 상태)는 Inbound Trolley가 도킹되어 있거나, [Run Start] 뒤 진행 중인 Batch가 끝나지 않았으면 보여 줌 (둘 중 하나). Partial Running·Error가 되어도 Batch가 끝나기 전이면 계속 보여 주고, Run 중 Trolley를 분리해도 계속 보여 줌. 그 밖에는 '-' |  | TI-IVT-03-T | TI-IVT-03-T-R04 · POL-INV-003 규칙 2·3 | - (L-IOS 고치지 않음) | O |  |
+| C50 | "단,장비 내 거치 공간에 있는 소모품은 … 차감되지 않는며" (2-4, 3-5) | 차감되지 않으며 |  | TI-IVT-03-T | TI-IVT-03-T-R06 · 오타 | - (L-IOS 고치지 않음) | - | 맞음 (오타, 2026-11-27) |
+| C51 | "검체 트롤리", "소모품", "저장 장치" 한국어 혼용 | Inbound Trolley, Consumable, Storage |  | TI-IVT-03-T | TI-IVT-03-T-R07 · `glossary/terms.csv` | - (L-IOS 고치지 않음) | - |  |
+| C52 | Capacity "11 rack", "300 μL Tip Storage(1)" | 11 racks, 300 μL Tip Storage (1) | 11 rack → 11 racks · 300 μL Tip Storage(1) → 300 μL Tip Storage (1) · 300 μL Tip Storage(2) → 300 μL Tip Storage (2) | TI-IVT-03-T | TI-IVT-03-T-R08 · 단수·복수, 이름 (번호) 띄어쓰기 | - (L-IOS 고치지 않음) | - | 맞음 (오타, 2026-11-27) |
+| C53 | 0 "사용여부가 '사용'인 모듈" | Enabled인 Module |  | TI-IVT-03-T | TI-IVT-03-T-R10 · POL-EQP-009 | - (L-IOS 고치지 않음) | - |  |
+| C54 | 2-4 정책 안내 2) "저장 장치로 반환 시 실제 사용 수량을 이력에 기록" | 디스크립션에 넣음: 사용량(Usage History)은 폐기할 때만 기록함. 반환할 때는 Remaining Qty만 줄임 |  | TI-IVT-03-T | TI-IVT-03-T-R11 · POL-INV-002 규칙 6, POL-INV-006 규칙 1 | - (L-IOS 고치지 않음) | O |  |
+| C55 | 프레임 이름과 화면 정보 CID "TI-IVT-04-T" | TI-IVT-04-T-P |  | TI-IVT-04-T-P | TI-IVT-04-T-P-R01 · `ia/ia-screens.csv` | - (L-IOS 고치지 않음) | - |  |
+| C56 | "유효기한", "유효기한이 지난" | Expiration Date, Expired |  | TI-IVT-04-T-P | TI-IVT-04-T-P-R02 · `glossary/terms.csv` Expiration Date, 시약 만료 상태 | - (L-IOS 고치지 않음) | - |  |
+| C57 | 2-1 Used Counts "흡입한 회수" | 흡입한 횟수 |  | TI-IVT-04-T-P | TI-IVT-04-T-P-R03 · 오타 | - (L-IOS 고치지 않음) | - | 맞음 (오타, 2026-11-27) |
+| C58 | 2-1 Remaining Rxns "남은 반응 수 rxns 표기"와 "표기 방식 : 반응 수T"가 함께 있음 ("T"의 뜻이 없음) | 단위 하나로 (rxns) |  | TI-IVT-04-T-P | TI-IVT-04-T-P-R04 · 디스크립션, COMM-4-b | - (L-IOS 고치지 않음) | - |  |
+| C59 | 2-1 Location in storage "해당 소모품의 위치 값" (Reagent 화면) | 해당 Reagent의 위치 값 |  | TI-IVT-04-T-P | TI-IVT-04-T-P-R05 · Consumables Popup에서 복사 | - (L-IOS 고치지 않음) | - |  |
+| C60 | 2-1 "DX 서랍식 입고", "시약", "바코드", "튜브" | Dx 시스템 Storage의 Drawer, Reagent, Barcode, Tube |  | TI-IVT-04-T-P | TI-IVT-04-T-P-R06 · `glossary/terms.csv` | - (L-IOS 고치지 않음) | - |  |
+| C61 | "2,010rxns  (22 tubes)" | 2,010 rxns (22 tubes) | 2,010rxns  (22 tubes) → 2,010 rxns (22 tubes) | TI-IVT-04-T-P | TI-IVT-04-T-P-R07 · 띄어쓰기 | - (L-IOS 고치지 않음) | - | 맞음 (오타, 2026-11-27) |
+| C62 | Reagent에 재고 상태(Sufficient / Low / Insufficient)를 씀. 상태값 표의 재고 상태 대상은 Consumable뿐이었음 | 디스크립션에 넣음: Reagent도 Consumable과 같은 재고 상태(Sufficient, Low, Insufficient)를 씀. 상태값 표 대상을 Consumable / Reagent로 고침 |  | TI-IVT-04-T | TI-IVT-04-T-R01 · `glossary/status-values.csv 재고 상태`, POL-INV-003 | - (L-IOS 고치지 않음) | O |  |
+| C63 | 2-6 Insufficient "재고가 0인 경우", Low "1개 이상 부족한 경우", 1 "sufficient" | TI-IVT-03-T 반영 대기 목록 1과 같이, Sufficient |  | TI-IVT-04-T | TI-IVT-04-T-R02 · `glossary/status-values.csv 재고 상태`, POL-INV-003 | - (L-IOS 고치지 않음) | O |  |
+| C64 | 2-5 Required Qty 절 첫 문장 "좌측 영역의 Remaining Qty는…", 예외 처리 "검사 진행 중이 아닐 경우" (2-6·3-6은 "위의 상황이 아닐 경우") | Required Qty, 예외 처리 문장 통일 |  | TI-IVT-04-T | TI-IVT-04-T-R04 · 디스크립션 | - (L-IOS 고치지 않음) | - |  |
+| C65 | 단위 혼용: 2-5 "10rxns", 3-6 "10T", 화면 "200T (2 racks)" | rxns로 통일 (COMM-4-b) |  | TI-IVT-04-T | TI-IVT-04-T-R05 · 디스크립션 | - (L-IOS 고치지 않음) | - |  |
+| C66 | 2-4·3-5 "표기 방식: 0번 디스크립션 참고" (0의 표기 방식은 취소선) | Common UX COMM-4-b 참고 |  | TI-IVT-04-T | TI-IVT-04-T-R06 · Figma 취소선 | - (L-IOS 고치지 않음) | - |  |
+| C67 | 3-3 "유효기간", "유효기가 만료" | Expiration Date, Expired |  | TI-IVT-04-T | TI-IVT-04-T-R07 · `glossary/terms.csv` Expiration Date, 오타 | - (L-IOS 고치지 않음) | - |  |
+| C68 | "검체 트롤리", "시약", "소모품", "저장 장치", "장비 내 거치 공간(장비가 가져간 소모품 포함)" (Reagent 화면에 소모품) | Inbound Trolley, Reagent, Storage |  | TI-IVT-04-T | TI-IVT-04-T-R09 · `glossary/terms.csv` | - (L-IOS 고치지 않음) | - |  |
+| C69 | 2-5·2-6·3-6 노출 조건이 TI-IVT-01-T 1과 다름 (Partial Running 포함 여부) | TI-IVT-03-T 반영 대기 목록 4와 같이 |  | TI-IVT-04-T | TI-IVT-04-T-R10 · POL-INV-003 규칙 2·3 | - (L-IOS 고치지 않음) | O |  |
+| C70 | 0 "사용여부가 '사용'인 모듈" | Enabled인 Module |  | TI-IVT-04-T | TI-IVT-04-T-R12 · POL-EQP-009 | - (L-IOS 고치지 않음) | - |  |
+| C71 | 2-4 정책 안내 2) 반환 시 이력 기록 | TI-IVT-03-T 반영 대기 목록 (사용량은 폐기할 때만 기록)와 같음 |  | TI-IVT-04-T | TI-IVT-04-T-R13 · POL-INV-002 규칙 6, POL-INV-006 규칙 1 | - (L-IOS 고치지 않음) | O |  |
+| C72 | IA 화면 이름 "Waste bin", 화면 "Waste Bin/Bottle" | IA를 Waste Bin/Bottle로 (IA는 5단계에서 반영) |  | TI-IVT-05-T | TI-IVT-05-T-R01 · `ia/ia-screens.csv`, 화면 정보 | - (L-IOS 고치지 않음) | - |  |
+| C73 | 0 "상태 값(Waste Status)" | Waste Bin/Bottle Status |  | TI-IVT-05-T | TI-IVT-05-T-R02 · `glossary/terms.csv` | - (L-IOS 고치지 않음) | - |  |
+| C74 | 0 "Moule(index)" | Module (index) |  | TI-IVT-05-T | TI-IVT-05-T-R03 · 오타 | - (L-IOS 고치지 않음) | - | 맞음 (오타, 2026-11-27) |
+| C75 | 3-3 "[3-6] 최대 개수 도달/초과 후…" (3-6 없음) | 번호 지움 |  | TI-IVT-05-T | TI-IVT-05-T-R04 · 디스크립션 | - (L-IOS 고치지 않음) | - |  |
+| C76 | 2·3 "Waste Bin이 존재하지 않는 모듈은 제외", "Waste Bin이 1개이상 존재하는 Module" | Waste Bin/Bottle은 Module마다 가진 Waste Bin과 Liquid Waste Bottle을 함께 부르는 이름이므로 "Waste Bin/Bottle이 있는 Module"로 씀. Unit 칸은 Module별 Unit 이름 그대로 |  | TI-IVT-05-T | TI-IVT-05-T-R05 · POL-INV-005 규칙 7, `glossary/module-units.csv` | - (L-IOS 고치지 않음) | O |  |
+| C77 | 3-3 99% 고정 시 Almost Full, Fill Level 70%·100% 기준은 COMM-4-a에만 있음 | 상태값 표 기준(Available 70% 미만, Almost Full 70% 이상, Full 100%)과 99% 제한·센서 규칙을 정책으로 묶음 |  | TI-IVT-05-T | TI-IVT-05-T-R06 · `glossary/status-values.csv` | - (L-IOS 고치지 않음) | O |  |
+| C78 | "PlateSealing (2)" | Plate Sealing (2) | PlateSealing (1) → Plate Sealing (1) · PlateSealing (2) → Plate Sealing (2) | TI-IVT-05-T | TI-IVT-05-T-R07 · 띄어쓰기 | - (L-IOS 고치지 않음) | - | 맞음 (오타, 2026-11-27) |
+| C79 | "폐기물함", "폐기함", "폐기물 함", "모듈" 한국어 혼용 | Waste Bin/Bottle, Module |  | TI-IVT-05-T | TI-IVT-05-T-R08 · `glossary/terms.csv` | - (L-IOS 고치지 않음) | - |  |
+| C80 | 1 "Default : 모든 탭이 미선택 된 상태" (Chip을 말함) | 모든 Chip이 선택되지 않은 상태 |  | TI-IVT-05-T | TI-IVT-05-T-R09 · 디스크립션 | - (L-IOS 고치지 않음) | - |  |
+| C81 | 0 "사용여부가 '사용'인 모듈" | Enabled인 Module |  | TI-IVT-05-T | TI-IVT-05-T-R10 · POL-EQP-009 | - (L-IOS 고치지 않음) | - |  |
+| C82 | 목록 Item Type 값 "Reagents" (디스크립션 데이터는 Consumable, Reagent) | Reagent | Reagents → Reagent | TI-IVT-06-T | TI-IVT-06-T-R01 · 디스크립션 1 | - (L-IOS 고치지 않음) | O |  |
+| C83 | Consumable Storage(1)의 Unit이 "Plate Sealing"인 줄, Plate Sealing(1)의 Unit이 "Trolley"인 줄 | 실제 Module-Unit 조합으로 | Plate Sealing → Cold Storage · PCR Setup → PCR Plate Storage | TI-IVT-06-T | TI-IVT-06-T-R03 · `glossary/module-units.csv` | - (L-IOS 고치지 않음) | O |  |
+| C84 | 2 "오늘 기준 7일간의 내용만 목록에 노출" / 1 기간 검색 최대 1년 | 기본 조회 기간이 7일이라는 뜻으로 고침 |  | TI-IVT-06-T | TI-IVT-06-T-R04 · 디스크립션 | - (L-IOS 고치지 않음) | - |  |
+| C85 | 3 ".CVS" | .CSV |  | TI-IVT-06-T | TI-IVT-06-T-R05 · 오타 | - (L-IOS 고치지 않음) | - | 맞음 (오타, 2026-11-27) |
+| C86 | 0 "'Usage Tab'", "사용되느" | Usage History Tab, 사용되는 |  | TI-IVT-06-T | TI-IVT-06-T-R06 · 오타, IA | - (L-IOS 고치지 않음) | - | 맞음 (오타, 2026-11-27) |
+| C87 | "Plate Sealing(1)", "Consumable Storage(1)" | Plate Sealing (1), Consumable Storage (1) | Plate Sealing(1) → Plate Sealing (1) · PCR Setup(1) → PCR Setup (1) | TI-IVT-06-T | TI-IVT-06-T-R07 · 이름 (번호) 띄어쓰기 | - (L-IOS 고치지 않음) | - | 맞음 (오타, 2026-11-27) |
+| C88 | 0 "사용여부가 '사용'인 모듈", "소모품", "시약" | Enabled인 Module, Consumable, Reagent |  | TI-IVT-06-T | TI-IVT-06-T-R08 · POL-EQP-009, `glossary/terms.csv` | - (L-IOS 고치지 않음) | - |  |
+| C89 | 0 이력 기준 "장비가 사용 후 폐기하는 시점" / TI-IVT-03-T 2-4 정책 안내는 "저장 장치로 반환 시"에도 사용 수량을 이력에 기록 | 디스크립션에 넣음: Usage History는 폐기할 때만 기록함 (사용 완료, 최대 사용 횟수 초과, Expiration Date 경과). 반환할 때는 기록하지 않음 |  | TI-IVT-06-T | TI-IVT-06-T-R09 · POL-INV-006 규칙 1 | - (L-IOS 고치지 않음) | - |  |
+| C90 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) |  | TI-IVT-06-T | TI-IVT-06-T-R10 · POL-COM-006 | - (L-IOS 고치지 않음) | O |  |
 
 ## 검토 질의
 <!-- 4단계 절차 2번. 틀은 flow/4-revise-verify.md "검토 질의 틀" -->
