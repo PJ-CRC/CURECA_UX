@@ -2,11 +2,11 @@
   "id": "brex-01_R002",
   "kind": "request",
   "team": "cureca",
-  "status": "보류",
-  "at": "2026-11-27T14:57:37+09:00",
+  "status": "대기",
+  "at": "2026-11-27T15:13:13+09:00",
   "createdAt": "2026-11-27T10:05:47+09:00",
   "by": "서보경",
-  "doneBy": "Claude",
+  "doneBy": "서보경",
   "pc": "BREX_01",
   "reqId": "R002",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,27 +17,13 @@
   "type": "요청",
   "layout": "",
   "text": "LIS setting 메뉴 옮겨줘\n기존 작업페이지: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-567478&t=x241oPtWNq1qkgw5-1",
-  "note": "케이스 3 · 4단계 · 20261127-서보경-lis-setting — C1 안내 문구를 화면에서 지움(화면 MD · Figma · 재설계 후 변경 내역 메모), 남은 C2 ~ C5 답을 기다립니다\n\n**받은 답**\n- C1 TI-STN-04-01-T 화면 상단 안내 문구 `Configure LIS interface settings for order and result transmission.` → 화면에서 제거 (언어셋 DB LID-STN-196 「삭제」와 맞춤). UX 확정 뒤 수정이라 검토 질의 6 · 변경 확인 C27로 남기고 화면 MD → Figma 순서로 고침, TI-STN-04-01-T 재설계 후 변경 내역 메모에 「화면 상단 안내 문구 제거」 줄 더함 (완료)\n\n**[질문 대기] 남은 것 — 화면과 언어셋 DB가 다른 글자**\n- C2 TI-STN-04-01-T (6) Host Address 입력 안내 — 화면 `IP Address` / DB LID-STN-208 `Enter IP Address`\n- C3 TI-STN-04-01-T (6) Port 입력 안내 — 화면 `Port` / DB LID-STN-269 `Enter Port`\n- C4 TI-STN-04-01-T (4) Query Mode 때 Port — 화면 빈 값 · Disabled (앞서 C2 맞음으로 확인) / DB LID-STN-268 `None`\n- C5 TI-STN-04-02-T 검색 입력 안내 4개 — 화면 `Search by sample type or LIS code` · `Search product name` · `Search target or LIS code` · `Search by product or LIS code` / DB LID-STN-271 `Sample type or LIS code` · 275 `Product name or code` · 276 `Target or LIS code` · 272 `Test or LIS code`\n\nQ1 C2 ~ C5를 어느 쪽에 맞출지\n  - 화면을 언어셋 DB에 맞춤 (C1처럼) — 화면 MD · Figma의 글자를 DB 글자로 고침\n  - 언어셋 DB를 화면에 맞춤 — 5단계에서 DB 줄을 고침, 화면은 그대로\n근거 — 작업규칙은 화면 글자가 기준이지만, C1을 DB(디자인)에 맞추셨고 C2 · C5도 언어셋 담당자가 디자인 기준으로 정한 글자입니다. 번호마다 다르면 번호로 답해 주세요(예: C2 · C3 · C5 화면을 DB에, C4 DB를 화면에).\n\n**[참고]**\n- 답을 받아 고치면 사용자 확인 목록 · 검토 질의가 모두 풀리므로 「최종으로 UX 확정을 하시겠습니까?」를 다시 묻습니다(UX 확정 뒤 수정, 4단계 절차 3 「UX 확정 뒤에 고칠 때」).\n\n규칙 점검: 4단계 절차 2 · 절차 3 「UX 확정 뒤에 고칠 때」 · 절차 4 순서대로, 「하지 않는 것」 지킴\n작업 기준: basis 2026-11-27 14:45 · 작업규칙 CURECA 작업규칙 @2026-11-27 11:34 · 정책서 정책서 @2026-11-25 21:21 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) @2026-11-26 16:53 · 기준데이터 기준데이터 @2026-11-25 21:21 · 화면 정의서 화면 정의서 @2026-11-26 03:39",
+  "note": "",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": {
-    "q": "남은 C2 ~ C5(입력 안내 · Query Mode 때 Port 표시값 · 검색 입력 안내)도 C1처럼 화면을 언어셋 DB에 맞출까요?",
-    "options": [
-      {
-        "label": "화면을 DB에 맞춤 (C1처럼)"
-      },
-      {
-        "label": "DB를 화면에 맞춤"
-      },
-      {
-        "label": "번호마다 따로 정함"
-      }
-    ],
-    "free": true
-  },
+  "ask": null,
   "replies": [
     {
       "at": "2026-11-27T10:12:09+09:00",
@@ -110,6 +96,12 @@
       "by": "서보경",
       "q": "화면과 언어셋 DB가 다른 글자(안내 문구 · 입력 안내 · Port 표시값 C1 ~ C5)를 어느 쪽에 맞출까요?",
       "text": "아니 그러면 우리 화면에도\"Configure LIS interface settings for order and result transmission.\" 제거해줘."
+    },
+    {
+      "at": "2026-11-27T15:13:13+09:00",
+      "by": "서보경",
+      "q": "남은 C2 ~ C5(입력 안내 · Query Mode 때 Port 표시값 · 검색 입력 안내)도 C1처럼 화면을 언어셋 DB에 맞출까요?",
+      "text": "c2.도 UX화면 place holder 디자인 문구처럼 enter 넣어서 맞춰줘. 언어셋DB로 맞추고 UX화면에도 동일하게 문구 변경 진행해줘. 이런 문구는 동일해야해"
     }
   ],
   "raws": [
