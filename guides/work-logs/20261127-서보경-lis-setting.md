@@ -29,7 +29,7 @@ started: 2026-11-27
 | 4. 수정 · 확인 | | | |
 | 5. 완료 | | | |
 
-이어서 작업할 곳: 4단계 · 사용자 확인 목록 반영함(Q1 ~ Q7 · C1 ~ C23 모두 풀림, Figma 사용자 확인 라벨 · 목록 모두 지움) · 기계 검사 통과 (2026-11-27), 기획 진행 표시는 케이스 3이라 바꾸지 않음. UX 확정 여부를 물음, 답 기다림 (다시 읽을 곳: 4단계 `flow/4-revise-verify.md` 절차 3 / 작업 기록 "변경 확인" · "요건 목록")
+이어서 작업할 곳: 4단계 · 절차 2 검토 질의 1 ~ 5 반영 중 (작업 기록 끝, 화면 MD · Figma 진행 중). 끝나면 UX 확정을 다시 물음 (다시 읽을 곳: 4단계 절차 2 · 3 / 작업 기록 "검토 질의" · "변경 확인")
 
 ## 요청
 <!-- 1단계 절차 1번. 요청 글 한두 줄과 출처, 공유 파일 (아래 "항목마다 적는 법") -->
@@ -244,12 +244,12 @@ started: 2026-11-27
 | C6 | Sample Type Name `Raw_stool` · `eNAT_stool` · `Fecal_swab` (코드) | UI 표기로 (LIS Sample Type Code 칸은 그대로) | Raw_stool → Raw stool · eNAT_stool → eNAT stool · Fecal_swab → Fecal swab | TI-STN-04-02-T 2 | `glossary/sample-types.csv`, POL-SYS-002 규칙 2, 반영 대기 TI-STN-04-02-T-R01 | - (T-IOS 단독) | O | 맞음 (2026-11-27) |
 | C7 | Code Type의 Target Code 항목 수 · Products 수 `10` (목록은 9개) | `9`로 (Target Masking 가능 Y 9종) | | TI-STN-04-02-T 1-1 · 케이스 Target Code 화면 | `glossary/test-items.csv`, POL-TST-010 규칙 4 | - (T-IOS 단독) | O || 맞음 (2026-11-27, 예시 데이터 기준 9 — 실제 값은 오는 대로 표기) |
 | C8 | 디스크립션 번호 `4`가 두 번 (T-IOS Network · LIS Network), LIS Network에 화면 번호 표시 없음 | 뒤의 LIS Network를 끝 번호 다음 `6`으로, 화면에 번호 표시 6을 둠 (flow/3-design-case3.md 번호) | | TI-STN-04-01-T 6 | 기존 원본 번호 겹침 (뒤 단계용 확인 항목 6) | - (T-IOS 단독) | - || 맞음 (2026-11-27) |
-| C9 | 화면 제목 아래 안내 문구가 디스크립션에 없음 | 0에 "화면 상단에 Interface Configuration 제목과 안내 문구 노출"을 더함 | | TI-STN-04-01-T 0 | 기존 화면에 보이는 것 (뒤 단계용 확인 항목 5) | - (T-IOS 단독) | - | 맞음 (기존 화면, 2026-11-27) |
+| C9 | 화면 제목 아래 안내 문구가 디스크립션에 없음 | 0에 "화면 상단에 Interface Configuration 제목과 안내 문구 노출"을 더함 | | TI-STN-04-01-T 0 | 기존 화면에 보이는 것 (뒤 단계용 확인 항목 5) | - (T-IOS 단독) | - | 되돌림 (2026-11-27, 검토 질의 2 — 기능 · 데이터가 없는 요소라 설명하지 않음) |
 | C10 | 4에 "'Push'를 선택" · "Query를 선택" | `Push Mode` · `Query Mode`로 (화면 값과 맞춤) | | TI-STN-04-01-T 4 | 표기 정리 (뒤 단계용 확인 항목 7) | - (T-IOS 단독) | - | 맞음 (오타, 2026-11-27) |
 | C11 | 3-2 · 4의 영역 이름 "T-IOS Network (Order Reception Mode: Push Mode Only)" | 화면 글자 "T-IOS Network (Push Mode Only)"로 | | TI-STN-04-01-T 3-2 · 4 | 표기 정리 (뒤 단계용 확인 항목 8) | - (T-IOS 단독) | - | 맞음 (오타, 2026-11-27) |
 | C12 | 2-1 검색 대상 "System Code 또는 LIS Code" | "Sample Type Name 또는 LIS Sample Type Code"로 (화면 검색창 안내 글 `Search by sample type or LIS code`와 맞춤) | | TI-STN-04-02-T 2-1 | 기존 화면 글자 (뒤 단계용 확인 항목 9) | - (T-IOS 단독) | - || 맞음 (2026-11-27) |
 | C13 | 2-2 제목 `System code` | `System Code` | | TI-STN-04-02-T 2-2 | 표기 (뒤 단계용 확인 항목 10) | - (T-IOS 단독) | - | 맞음 (오타, 2026-11-27) |
-| C14 | 탭(Interface Configuration · Code Mapping)에 번호 · 디스크립션 없음, 모양은 Box Tabs | 탭 영역 번호 (TI-STN-04-01-T `7` · TI-STN-04-02-T `6`)와 디스크립션을 더하고 Common UX Underline Tab으로 그림 | | TI-STN-04-01-T 7 · TI-STN-04-02-T 6 | Common UX COMM-5-s Underline Tab | - (T-IOS 단독) | O || 맞음 (2026-11-27) |
+| C14 | 탭(Interface Configuration · Code Mapping)에 번호 · 디스크립션 없음, 모양은 Box Tabs | 탭 영역 번호 (TI-STN-04-01-T `7` · TI-STN-04-02-T `6`)와 디스크립션을 더하고 Common UX Underline Tab으로 그림 | | TI-STN-04-01-T 7 · TI-STN-04-02-T 6 | Common UX COMM-5-s Underline Tab | - (T-IOS 단독) | O || 맞음 (2026-11-27) · 탭 번호 · 디스크립션은 검토 질의 4로 지움 → C26 |
 | C15 | Code Type 목록이 버튼 모양(항목 이름 + 개수 원) | Common UX Outline Tab(Count)으로 그림 | | TI-STN-04-02-T 1 · 1-1 · 케이스 Case 1 · 2 · 3 | Common UX COMM-5-s Outline Tab | - (T-IOS 단독) | O || 맞음 (2026-11-27) |
 | C16 | 2에 컬럼 항목 설명 없음 | 2에 "컬럼 항목"(No. · 항목 이름 · LIS Code)을 더함 | | TI-STN-04-02-T 2 | 기존 화면에 보이는 것 (reference-rules/description.md 3절 표) | - (T-IOS 단독) | - | 맞음 (기존 화면, 2026-11-27) |
 | C17 | 4 · 6 Port · Host Address(IP) 입력값 검사 · 필수 여부 없음 | 4 · 6에 「필수값 아님, 입력 형식 · 범위 검사 없음」을 더함 | | TI-STN-04-01-T 4 · 6 | Q2의 답 | - (T-IOS 단독) | O | 맞음 (2026-11-27) |
@@ -259,9 +259,20 @@ started: 2026-11-27
 | C21 | 2 노출 개수 · Pagination 설명 없음 | 2에 「목록 전체 노출 (Pagination 없음)」을 더함 | | TI-STN-04-02-T 2 | Q7의 답 | - (T-IOS 단독) | - | 맞음 (2026-11-27) |
 | C22 | 케이스 Case 2 LIS Test Code 예시 값이 검사 항목 이름 (Allplex HPV HR만 `Allplex_HPV_HR`) | LIS Test Code를 `glossary/test-items.csv` 검사 항목 코드로 | Allplex_HPV_HR → HPVHR-HP72/73 · Anyplex II HPV HR → HPV_HR · H.ClariR → H_ClariR · M.AziR → M_AziR · M.MoxiR → M_MoxiR · BV plus → BV_plus (예시 값) | TI-STN-04-02-T 케이스 Case 2 | Q4의 답 (C6 답에서 바꿈) | - (T-IOS 단독) | O | 맞음 (2026-11-27) |
 | C23 | 0 데이터 관련 정의를 풀어 쓴 문장 (C4) | 씨젠 Assay Pack 명세 R06의 파일 · 파라미터 이름으로 다시 씀: Master 파일 검체 타입 목록(sampleTypeId · sampleTypeName · sampleTypeCode), PCR 파일 testItemCode · testItemName, isTestTargetSelectable · testTargetNames | | TI-STN-04-02-T 0 | 요청자 답 (C4, 2026-11-27) · \eference/customer/assay-pack/README.md\ | - (T-IOS 단독) | - | 맞음 (2026-11-27) |
+| C24 | 0 「T-IOS 상단에서 고른 CURECA의 … 보여 주고 바꿈」 (C3) | 「CURECA가 여러 대 설치된 경우, Top Navigation에서 선택한 CURECA의 설정 화면」으로 (한 대면 해당 없음) | | TI-STN-04-01-T 0 · TI-STN-04-02-T 0 | 검토 질의 1 | - (T-IOS 단독) | - | 맞음 (2026-11-27) |
+| C25 | 4 「Port Text Input 내 입력값」 | 「Port 영역의 Text Input 입력값」처럼 영역과 요소를 나눠 씀 | | TI-STN-04-01-T 4 | 검토 질의 3 | - (T-IOS 단독) | - | 맞음 (2026-11-27) |
+| C26 | 탭 영역 번호 · 디스크립션 (TI-STN-04-01-T 7 · TI-STN-04-02-T 6, C14에서 더함) | 번호 표시와 디스크립션 블록을 지움 (Common UX에 정리된 공통 요소, 탭 모양은 Underline Tab 그대로) | | TI-STN-04-01-T 7 · TI-STN-04-02-T 6 | 검토 질의 4 | - (T-IOS 단독) | - | 맞음 (2026-11-27) |
 
 ## 검토 질의
 <!-- 4단계 절차 2번. 틀은 flow/4-revise-verify.md "검토 질의 틀" -->
+
+| 번호 | 받은 날 | 출처 (요청자 · 고객 UX 검토 · 고객 UI 검토) | 질의 | 관련된 곳 (CID · 디스크립션 번호) | 처리 | 처리한 날 |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | 2026-11-27 | 요청자 (R002, UX 확정 질문의 답) | CURECA 설정 정의를 정확히: 여러 대 설치된 곳이면 Top 네비에서 선택한 장비의 설정 화면 | TI-STN-04-01-T #0 · TI-STN-04-02-T #0 | 고침 (C24) | 2026-11-27 |
+| 2 | 2026-11-27 | 요청자 (R002) | 「화면 상단에 Interface Configuration 제목과 안내 문구 노출」은 기능 · 데이터 요소가 아니라 설명하지 않음 | TI-STN-04-01-T #0 | 고침 (C9 되돌림) | 2026-11-27 |
+| 3 | 2026-11-27 | 요청자 (R002) | 「Port Text Input 내 입력값」 → Port 영역의 Text Input처럼 나눠 씀 | TI-STN-04-01-T #4 | 고침 (C25) | 2026-11-27 |
+| 4 | 2026-11-27 | 요청자 (R002) | 두 화면의 탭 영역(7 · 6)은 Common UX에 정리된 것이라 지움 | TI-STN-04-01-T #7 · TI-STN-04-02-T #6 | 고침 (C26) | 2026-11-27 |
+| 5 | 2026-11-27 | 요청자 (R002) | 디스크립션의 빨간 표시와 취소선을 모두 지움 (취소선 글은 지우고 빨간 글은 검은 글로) | TI-STN-04-01-T · TI-STN-04-02-T 디스크립션 전체 | 고침 (표기만, 화면 변경 없음 — reference-rules/description.md 7절 「바뀐 글 표시」와 다르게 요청자 지시대로) | 2026-11-27 |
 
 ## 언어셋
 <!-- 4단계 절차 4번. 틀은 flow/4-revise-verify.md "언어셋 틀" -->
