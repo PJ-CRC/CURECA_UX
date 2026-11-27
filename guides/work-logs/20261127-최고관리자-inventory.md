@@ -29,7 +29,7 @@ started: 2026-11-27
 | 4. 수정 · 확인 | | | |
 | 5. 완료 | | | |
 
-이어서 작업할 곳: 3단계 · TI-IVT-01-T · 02-T · 03-T 그림 (03-T 기획 3916:990), TI-IVT-03-T-P부터 그릴 차례 (다시 읽을 곳: 3단계 `flow/3-design-case3.md` 흐름 · 3-4 · 케이스 3 표, `flow/3-design.md` 공통 3 · 공통 5 / 작업 기록 "설계" 화면별 작업 · 컴포넌트 없이 그린 요소 · "질문 대기" · "변경 확인", 화면 MD `screens/tobe/inventory/TI-IVT-03-T-P.md`)
+이어서 작업할 곳: 3단계 · TI-IVT-01-T · 02-T · 03-T · 03-T-P 그림 (03-T-P 기획 3919:1616, 섹션 높이 아직 안 맞춤), TI-IVT-04-T부터 그릴 차례 (다시 읽을 곳: 3단계 `flow/3-design-case3.md` 흐름 · 3-4 · 케이스 3 표, `flow/3-design.md` 공통 3 · 공통 5 / 작업 기록 "설계" 화면별 작업 · 컴포넌트 없이 그린 요소 · "질문 대기" · "변경 확인", 화면 MD `screens/tobe/inventory/TI-IVT-04-T.md`, `projects/etCQFF3CTf1EA6C79d4BBf/components.md` 「Inventory To Be」)
 
 ## 요청
 <!-- 1단계 절차 1번. 요청 글 한두 줄과 출처, 공유 파일 (아래 "항목마다 적는 법") -->
@@ -323,7 +323,7 @@ started: 2026-11-27
 | TI-IVT-01-T / LI-IVT-01-T (X) | 3 | 1 | [3903:7487](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3903-7487) | [3905:21824](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3905-21824) | 그림 (2026-11-27) · [TI-IVT-01-T/Case 3914:8112](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3914-8112) |
 | TI-IVT-02-T / LI-IVT-02-T (X) | 3 | 1 | [3903:7488](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3903-7488) | [3914:8363](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3914-8363) | 그림 (2026-11-27) · [TI-IVT-02-T/Case 3914:8972](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3914-8972) |
 | TI-IVT-03-T / LI-IVT-03-T (X) | 3 | 1 | [3903:7489](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3903-7489) | [3916:990](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3916-990) | 그림 (2026-11-27) · 케이스 없음 |
-| TI-IVT-03-T-P / LI-IVT-03-T-P (X) | 3 | 1 | | | |
+| TI-IVT-03-T-P / LI-IVT-03-T-P (X) | 3 | 1 | [3903:7490](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3903-7490) | [3919:1616](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3919-1616) | 그림 (2026-11-27) · 케이스 없음 |
 | TI-IVT-04-T / LI-IVT-04-T (X) | 3 | 1 | | | |
 | TI-IVT-04-T-P / LI-IVT-04-T-P (X) | 3 | 1 | | | |
 | TI-IVT-05-T / LI-IVT-05-T (X) | 3 | 1 | | | |
@@ -341,6 +341,7 @@ started: 2026-11-27
 | 케이스 조각 (Inventory status 영역) | 건 수 · 미구동 · 부족 없음 모습 | TI-IVT-01-T Case 1 ~ 3 | 기존 화면에서 따옴 | 원본 케이스 조각 복제: Rectangle 1661×392 + 줄 5, Group 1661×314 ×2 | [3914:8112](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3914-8112) |
 | Module 열 카드 (목록 카드 · 열 제목 · 품목 줄) | Module별 재고 목록 | TI-IVT-02-T #1 · #1-1 · #1-3 · Case 1 ~ 3 | 기존 화면에서 따옴 (안의 Form/Dropdown Box는 Common UX Dropdown으로 바꿈, Card/List로 바꿀 여지: 품목 · 수량 줄) | 원본 노드 복제: 239 × 256 ~ 1156 열 6개, 열마다 제목 글 1 · Dropdown 1 · 줄 3 ~ 21 | [3914:8363](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3914-8363) |
 | 오른쪽 상세 카드 (제목 띠 · 위치 줄 · 구분선 · 버튼) | 고른 품목의 Location별 Capacity · Remaining · Required Qty | TI-IVT-03-T #3 · #3-1 ~ #3-7 | 기존 화면에서 따옴 (안의 Square는 Common UX Outlined로 바꿈, Card/Table로 바꿀 여지: 제목 · 열 4개 · Item details, 단 3-3 구분선을 담을 Variant 없음) | 원본 노드 복제: Group 873×919, 카드 3장, 줄 2 ~ 5 · 구분선 1, 인스턴스 Square 3 | [3916:990](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3916-990) |
+| Popup 틀 · 상세 표 (Dim · Popup 바탕 · 제목 · 합계 · 표 머리 · 행) | Barcode 단위 상세 목록 | TI-IVT-03-T-P #1 ~ #6 | 기존 화면에서 따옴 (안의 Square · Page number는 Common UX Square · Number Pagination으로 바꿈, Basic Table로 바꿀 여지: 열 5 · 행 10) | 원본 노드 복제: LotModal 1919×1031(Dim 40%), Popup 1047×640, 표 983×385 (열 5 · 행 10) | [3919:1616](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3919-1616) |
 
 ### 근거로 풀린 것
 | 질문 | 푼 근거 |
