@@ -317,9 +317,24 @@ started: 2026-11-26
 
 | 논의 대상 | 상태 (논의 중 / 결정) | 내용 한 줄 | 5단계 반영 |
 | --- | --- | --- | --- |
-| DS-0012 | 결정 | Confirm_029 · 030 발생 조건을 File Details [Save]로 (POL-TST-008 규칙 6). 멈춘 20261125-최고관리자-assay-pack에서 이어받음 (2026-11-26, `work` 고침) | O (Alert 카탈로그) |
+| DS-0012 | 결정 | Confirm_029 · 030 발생 조건을 File Details [Save]로 (POL-TST-008 규칙 6). 멈춘 20261125-최고관리자-assay-pack에서 이어받음 (2026-11-26, `work` 고침) | O (Alert 카탈로그 Confirm_029 · 030 발생 조건 · Confirm_029 버튼 동작 고침, DS-0012 종료, 2026-11-27) |
+
+## 5단계 최종 확인 (2026-11-27)
+
+| 항목 | 결과 |
+| --- | --- |
+| CID | 새 CID TI-STN-08-01 (Import file, Popup, T-IOS 전용) → IA에 넣음. TI-STN-08-P 화면 이름 Assay Pack File Details는 IA "Details" 그대로라 IA 고칠 것 없음 |
+| 반영 대기 항목 | 대상 화면 TI-STN-08-P-R01 · TI-STN-08-R02 → 반영 완료 (2026-11-27), `pending/closed.md`로 옮김. 영향 화면 없음 |
+| 이 작업의 논의 대상 | DS-0012 결정 → 반영 (영향 범위 화면, 정책 문장 그대로, Alert 카탈로그만), 종료 |
+| User Type · L-IOS Client Mode | 화면 MD 다섯 개 `user_type` [Service], LI `client_mode` [Main Mode]가 `permission-matrix.csv` (Setting · Assay Pack Setting · All: Service O) · `client-mode-matrix.csv` (Main O)와 같음 - 고칠 줄 없음 |
+| 언어셋 요약 | 신규 2 (있음, CID 이미 있음) · 제거 2 (원본에 없던 글자, 할 일 없음) · DB 맞춤 (추가) 5 · DB 맞춤 (CID 추가) 4줄. 화면은 그대로인데 언어셋 DB를 화면에 맞춤 (9줄) |
+| 끝난 방식 | 반영 |
+
+- 언어셋 반영(절차 2 순서 5): `{n} items`는 4단계 뒤 Inventory 작업이 원본에 LID-IVT-151로 넣어(2026-11-27) 새 줄 대신 `ref` 줄로 다시 씀(`language-set/README.md` "화면설계 흐름에서 반영하는 법" 둘째 줄). 새 줄 LID-STN-438 File Info · 439 Test Target Selectable · 440 json · Multiple files · 441 {n} MB. CID 추가: LID-STN-006 (TI-STN-08, 플랫폼 L → T/L) · 361 · 363 · LID-TMG-035 (TI-STN-08-P)는 이 메뉴 파일의 줄에, LID-SPT-033 (TI-STN-08 · LI-STN-08) · LID-STN-021 (TI-STN-08-01)은 이 메뉴 파일에 `ref` 줄을 더함. 화면 MD "화면 표기 글자" 표에 새 ID 9칸 채움
+- Common UX(절차 2 순서 6): 지금은 하지 않음
 
 ## 이 작업이 남긴 것
 
-- 다른 화면의 반영 대기 항목:
-- 고친 카탈로그 줄: Confirm_031 추가 (Import file Popup에서 파일을 고른 채 닫을 때, 사용 화면 TI-STN-08-01, Q3 답, 2026-11-26). Confirm_029 버튼 동작의 「& Toast」 지움은 Q2 답으로 정함 - 5단계 DS-0012 반영(Confirm_029 발생 조건) 때 같은 줄에 함께 고침
+- 다른 화면의 반영 대기 항목: 없음 (영향 화면 없음)
+- 고친 카탈로그 줄: Confirm_031 추가 (Import file Popup에서 파일을 고른 채 닫을 때, 사용 화면 TI-STN-08-01, Q3 답, 2026-11-26). Confirm_029 · 030 발생 조건 (DS-0012), Confirm_029 버튼 동작의 「Master는 Alert_045」 · 「& Toast」(Q2 답) 지움 (2026-11-27)
+- IA: TI-STN-08-01 줄 (`ia/change-requests.md` 16), 화면 변경 이력 3줄 (T · L 08, T · L 08-P, TI-STN-08-01)
