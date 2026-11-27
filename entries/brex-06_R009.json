@@ -2,11 +2,11 @@
   "id": "brex-06_R009",
   "kind": "request",
   "team": "cureca",
-  "status": "보류",
-  "at": "2026-11-27T11:38:52+09:00",
+  "status": "대기",
+  "at": "2026-11-27T13:50:41+09:00",
   "createdAt": "2026-11-27T09:55:49+09:00",
   "by": "최고관리자",
-  "doneBy": "Claude",
+  "doneBy": "최고관리자",
   "pc": "BREX_06",
   "reqId": "R009",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,24 +17,13 @@
   "type": "요청",
   "layout": "",
   "text": "https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-360786&t=GdYCaPho44GgAu5i-1\nInventory T-ios 화면만 다시 그려줘",
-  "note": "케이스 3 · 3 ~ 4단계 · 20261127-최고관리자-inventory - Inventory T-IOS 8개 화면을 모두 그리고 3단계 마침 점검(기계 검사)을 통과했습니다. 사용자 확인 목록(질문 대기 8 · 변경 확인 39)을 확인해 주세요.\n\n**[한 일]**\n- TI-IVT-03-T-P: 상세 표를 Common UX Basic Table로 다시 그림 (열이 잘리지 않게 Popup 너비 1047 → 1072)\n- TI-IVT-04-T: 왼쪽 카드 7장을 Common UX Card/Table(Reagents type = Tag)로, Chip · Info Box · 버튼을 Common UX로 그림 (중복 GI-Virus 카드 지움)\n- TI-IVT-04-T-P: 상세 표 Basic Table(열 7), Popup 너비 1289 → 1369\n- TI-IVT-05-T: Waste Bin/Bottle 카드 · 상세는 Common UX 상태 아이콘에 Full · Almost Full이 없어 기존 화면에서 따옴, Tab · Chip · 버튼은 Common UX\n- TI-IVT-06-T: 검색 영역 · 노출 개수 · Basic Table · Number Pagination을 Common UX로, 새 번호 4 ~ 7\n- 용어 점검: TI-IVT-02-T 0 「시약/소모품」 → Reagent/Consumable, TI-IVT-05-T 3-3 「폐기물」 → 누적 사용 개수\n- 마침 점검: 반영 대기 값이 그대로 적힌 변경 확인 30줄은 `맞음 (기계 검사)`로 처리(목록 · 라벨 지움), 앞서 그린 화면 목록에 빠진 항목(01-T C14 · C34, 02-T C7 · C15 · C42, 03-T C7 · C8)을 더함, 칸을 넘던 글은 칸을 넓혀 맞춤\n\n**[질문 대기 - 답을 정해 주실 것]**\n\n| 번호 | 화면 · 위치 | 질문 | 고를 것 | 추천 |\n| --- | --- | --- | --- | --- |\n| Q1 | 06-T 3 [Export] | 저장 실패 · 내보낼 목록 0건일 때 안내 (Alert 카탈로그 · POL-COM-006에 없음) | 안내 없음 / Alert 새로 추가 | 안내 없음 (기존대로) |\n| Q2 | 01-T 1-7 Tooltip | Tooltip 문구 (기존 4줄, L-IOS는 앞 2줄 취소선) | 4줄 그대로 / 뒤 2줄만 | 4줄 그대로 (기존대로) |\n| Q3 | 03-T 5 Capacity Tooltip | Tooltip 문구를 3-4 Capacity 정의(장비 설정 값)와 맞출지 | 지금 문구 / 정의에 맞춰 고침 | 지금 문구 (기존대로) |\n| Q4 | 03-T 3 · 04-T 3 | 반영 대기 예시 값 \"#Trolley\" · \"200T (2 racks)\"가 기존 화면에 없음 | 기존대로 둠 / 예시 값 넣음 | 기존대로 둠 |\n| Q5 | 03-T-P 2-1 · 04-T-P 2-1 · 06-T 2 | 반영 대기가 비었다고 한 예시 값이 기존 원본엔 채워져 있음 | 채운 대로 둠 / 비움 | 채운 대로 둠 |\n| Q6 | 03-T-P 5 · 6 | [Close] · [X] 동작 문장을 하나로 맞출지 | 그대로 / 하나로 맞춤 | 그대로 (기존대로) |\n| Q7 | 04-T 1 · 2-7 | Reagents type Chip 띄어쓰기 (`# Sample Preparation` · `#PCR`) | 기존대로 / `#` 뒤 붙여 통일 | 기존대로 |\n| Q8 | 04-T 3-8 Capacity | Capacity 열을 보일지 (원본에 6 DWPs · 5 sets 값이 투명하게 숨겨져 있음, 지금 숨김) | 숨김 그대로 / 보이게 | 숨김 그대로 (기존대로) |\n\n**[변경 확인 - 맞는지만 봐 주실 것]** (고를 것: 맞음 / 되돌림)\n\n| 번호 | 화면 · 위치 | 바꿔 그린 것 | 근거 |\n| --- | --- | --- | --- |\n| C1 | 01-T 1 · 3 | Unit 이름을 Module-Unit 표 UI 표기로 (DWP Waste Bin 등) | module-units.csv |\n| C2 | 01-T · 03-T · 04-T · 05-T 4 | [Refresh] 불러오기 실패 시 Alert_020 | POL-INV-001 규칙 4 |\n| C3 | 01-T 1 | 부족 목록 노출 기준을 Inbound Trolley 도킹 / Batch 진행 중으로 | POL-INV-003 |\n| C4 | 06-T 2 | Unit 칸을 실제 Storage Unit으로 (Cold Storage · PCR Plate Storage) | module-units.csv |\n| C5 | 06-T 3 | [Export]는 OS 파일 탐색기에서 경로 · 이름 지정 후 저장 | POL-COM-006 |\n| C6 | 01-T ~ 06-T 0 | Tab을 Common UX Underline Tab으로 | COMM-5-s |\n| C7 | 02-T · 03-T · 04-T · 05-T · 06-T 0 | GNB L-IOS → T-IOS | Common UX |\n| C8 | 03-T · 04-T 0 | LNB에서 Status 메뉴 지움 | 다른 화면 LNB |\n| C9 | 01-T 1-6 · 3 | 페이지 이동을 Indicator Pagination으로 | COMM-5-l |\n| C11 | 01-T · 02-T Case | Case 1 ~ 3 번호 매김, 01-T Case 2 제목을 조각 글자에 맞춤 | 공통 5 |\n| C14 | 01-T Case 1-1 | 300 μL Tip 100 rxns (2 racks) → 100 ea (2 racks) | Consumable 수량 표기 |\n| C15 | 02-T Case 3-1 · 3-2 | 288T · 300T → rxns | T 표기 안 씀 |\n| C16 | 04-T 2-7 · 3-8 | 두 번째 2-3 → 2-7, Capacity → 3-8 | 번호 규칙 |\n| C17 | 04-T 2 | 두 번 나온 GI-Virus 카드 하나 지움 | 1단계 확인 11 |\n| C18 | 04-T 2-3 | IC · Set 입고 위치, Buffer Cartridge Cap 설명 더함 | POL-INV-007, POL-LOD-004 |\n| C19 | 04-T 3-8 | 가리키는 예시 화면이 없는 문구 제거 | 요청자 확인 4 |\n| C21 | 05-T 2 · 3-1 | Flexible Extraction · Universal PCR → (1) 붙임 | 이름 (번호) |\n| C23 | 06-T 4 | 노출 개수 Dropdown 추가 | COMM-5-g |\n| C25 | 01-T ~ 06-T | 카드 · Chip · Dropdown · 표 · Info Box · 버튼을 Common UX로 (03-T-P · 04-T-P Popup 너비 넓힘) | COMM-5 |\n| C27 | 01-T 1-1 · 1-5 | Empty → Insufficient, 요약을 Insufficient · Low로 나눔 | 상태값 표 |\n| C33 | 01-T 1 | 「통합 상태 Run O / X」 → 장비 통합 상태 Running 여부 | 용어집 |\n| C34 | 01-T 3-3 | 참고를 화면 참고 : TI-IVT-05-T로 | TI-IVT-05-T 3-3 |\n| C38 | 02-T 1 | 「아래 예시 참고하여 작업요청」 → 케이스 규칙을 디스크립션으로 | 반영 대기 |\n| C42 | 02-T | IA LI-IVT-02-T 짝 화면 동일 Y (5단계에서 IA 반영) | 1단계 답 |\n| C46 | 03-T 2-6 | Insufficient · Low 정의를 상태값 표대로 | POL-INV-003 |\n| C49 | 03-T 2-5 · 2-6 · 3-6 | Required Qty · Status 노출 조건 정리 | POL-INV-003 |\n| C54 | 03-T 2-4 | 사용량은 폐기할 때만 기록, 반환은 Remaining Qty만 차감 | POL-INV-002 · 006 |\n| C62 | 04-T 2-6 | Reagent도 Consumable과 같은 재고 상태 | 상태값 표 |\n| C63 | 04-T 2-6 | Insufficient · Low 정의, Sufficient 표기 | 상태값 표 |\n| C64 | 04-T 2-5 | 정의 첫 단어 Required Qty, 예외 문장 통일 | 반영 대기 |\n| C69 | 04-T 2-5 · 2-6 · 3-6 | 노출 조건을 01-T와 같게 | POL-INV-003 |\n| C71 | 04-T 2-4 | 사용량은 폐기할 때만 기록 | POL-INV-002 · 006 |\n| C72 | 05-T | IA 이름 Waste bin → Waste Bin/Bottle (5단계에서 IA 반영) | 화면 정보 |\n| C76 | 05-T 2 · 3 | 「Waste Bin이 없는 모듈」 → Waste Bin/Bottle이 없는 Module | POL-INV-005 |\n| C77 | 05-T 2-2 · 3-3 | 상태 기준(70% · 100%)과 99% 제한 · 센서 규칙 | 상태값 표 |\n| C83 | 06-T 2 | Module-Unit 조합을 실제대로 | module-units.csv |\n| C84 | 06-T 2 | 「7일간의 내용만 노출」 → 조회 기간(기본 7일) 내 이력 | 반영 대기 |\n| C89 | 06-T 0 | Usage History는 폐기할 때만 기록 | POL-INV-006 |\n| C90 | 06-T 3 | 내보내는 파일 형식 .csv | POL-COM-006 |\n\n**[반영한 항목]** (3단계에서 확인됨, 이상한 줄만 번호로 알려 주세요)\n- 오타 · 표기: C10 · C13 · C20 · C26 · C32 · C36 · C39 · C41 · C47 · C50 · C52 · C57 · C61 · C74 · C78 · C85 · C86 · C87\n- 반영 대기 값 그대로 (기계 검사): C28 · C29 · C30 · C31 · C35 · C37 · C40 · C43 · C44 · C45 · C48 · C51 · C53 · C55 · C56 · C58 · C59 · C60 · C65 · C66 · C67 · C68 · C70 · C73 · C75 · C79 · C80 · C81 · C82 · C88\n- 요청자 답 · Common UX: C12 · C22 · C24\n\n**[참고]**\n- L-IOS 짝 화면은 작업 대상이 아니라 그리지 않았습니다. 케이스 3이라 기획 진행 표시는 바꾸지 않습니다.\n- 각 화면의 사용자 확인 목록은 Figma 섹션의 패널 오른쪽에 있습니다.\n\n규칙 점검: 3단계 「절차 공통: 하지 않는 것」 · 마침 점검 1 ~ 18 지킴. 다르게 한 것 - 패널 · 목록 · 라벨은 채우기 작업(J305 · J307 · J310 · J314)으로 넣고, 오토 레이아웃 안 번호 표시 옆 라벨과 앞서 그린 화면 목록 보충 · 라벨 자리 옮기기는 채우기 작업으로 안 되어 use_figma로 함\n작업 기준: basis 2026-11-27 09:58 · 작업규칙 CURECA 작업규칙 @원본 · 정책서 정책서 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 · 화면 정의서 화면 정의서",
+  "note": "",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": {
-    "q": "[4단계] 사용자 확인 목록(질문 대기 Q1 ~ Q8 · 변경 확인 39건)을 확인해 주세요.",
-    "options": [
-      {
-        "label": "추천대로 진행 (Q 추천 · C 모두 맞음)"
-      },
-      {
-        "label": "하나씩 정하기"
-      }
-    ],
-    "free": true
-  },
+  "ask": null,
   "replies": [
     {
       "at": "2026-11-27T10:06:12+09:00",
@@ -65,6 +54,12 @@
       "by": "최고관리자",
       "q": "Q2 Sample Pre-treatment 폐기함 Unit을 제조사별(단디메카 / 로체시스템즈) 케이스 화면으로 나눠 그릴까요?",
       "text": "그리지 않음"
+    },
+    {
+      "at": "2026-11-27T13:50:41+09:00",
+      "by": "최고관리자",
+      "q": "[4단계] 사용자 확인 목록(질문 대기 Q1 ~ Q8 · 변경 확인 39건)을 확인해 주세요.",
+      "text": "Q1: Alert 새로 추가\nQ2: 뒤 2줄만\nQ3: 지금 문구\nQ4: 기존대로 둠\nQ5: 채운 대로 둠\nQ6: 그대로\nQ7: `#` 뒤 붙여 통일\nQ8: 숨김 그대로"
     }
   ],
   "raws": [
