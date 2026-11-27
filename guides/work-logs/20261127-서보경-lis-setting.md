@@ -223,7 +223,7 @@ started: 2026-11-27
 
 | 번호 (Q) | 질문 | 관련된 곳 (CID · 디스크립션 번호) | 논의 대상 | T · L 같음 | 풀린 날 · 어떻게 |
 | --- | --- | --- | --- | --- | --- |
-| Q1 | LIS Setting을 쓸 수 있는 User Type (권한 표 `policy/permission-matrix.csv`에 LIS Setting 줄 없음. POL-SYS-001 규칙 8 · 기존 화면은 Service · Admin) | TI-STN-04-01-T 0 · TI-STN-04-02-T 0 | | - (T-IOS 단독) | |
+| Q1 | LIS Setting을 쓸 수 있는 User Type (권한 표 `policy/permission-matrix.csv`에 LIS Setting 줄 없음. POL-SYS-001 규칙 8 · 기존 화면은 Service · Admin) | TI-STN-04-01-T 0 · TI-STN-04-02-T 0 | | - (T-IOS 단독) | 2026-11-27 · 요청자 답 "Service, Admin" — 디스크립션 0이 이미 Service, Admin이라 화면 변경 없음. Figma 사용자 확인 목록 Q1 항목 지움 (라벨 없음). 권한 표는 5단계에서 맞춤 |
 | Q2 | Port · Host Address(IP) 입력값의 형식 · 범위 검사와 빈 값으로 [Save]를 누를 때의 동작 (POL-SYS-001에 없음) | TI-STN-04-01-T 3-2 · 4 · 4 (LIS Network) · 5 | | - (T-IOS 단독) | |
 | Q3 | LIS Code를 빈 값 · 다른 항목과 같은 값으로 입력할 때의 동작 (POL-SYS-002에 없음) | TI-STN-04-02-T 4 | | - (T-IOS 단독) | |
 | Q4 | 처음 설치할 때 채워지는 LIS Test Code 값 (기존 화면 `Allplex_HPV_HR`은 `glossary/test-items.csv`에서 쓰지 않는 표현, 검사 항목 코드는 `HPVHR-HP72/73`. POL-SYS-002 규칙 3) | TI-STN-04-02-T 케이스 Test Code 화면 | | - (T-IOS 단독) | |
