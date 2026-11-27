@@ -14,7 +14,7 @@ policies: [POL-INV-001, POL-INV-006, POL-COM-006, POL-EQP-009]
 basis:
 basis_versions:
 source: tobe
-figma:
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3903-7494
 ---
 # TI-IVT-06-T Inventory Usage History
 

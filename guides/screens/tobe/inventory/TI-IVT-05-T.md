@@ -14,7 +14,7 @@ policies: [POL-INV-001, POL-INV-005, POL-LOD-005, POL-EQP-009]
 basis:
 basis_versions:
 source: tobe
-figma:
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3903-7493
 ---
 # TI-IVT-05-T Waste Bin/Bottle
 

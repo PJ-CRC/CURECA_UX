@@ -14,7 +14,7 @@ policies: [POL-INV-001, POL-INV-004, POL-INV-007, POL-EQP-009]
 basis:
 basis_versions:
 source: tobe
-figma:
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3903-7492
 ---
 # TI-IVT-04-T-P Reagent Item details Popup
 

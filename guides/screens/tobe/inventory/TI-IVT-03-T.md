@@ -14,7 +14,7 @@ policies: [POL-INV-001, POL-INV-002, POL-INV-003, POL-INV-006, POL-EQP-009]
 basis:
 basis_versions:
 source: tobe
-figma:
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3903-7489
 ---
 # TI-IVT-03-T Inventory Consumables
 
