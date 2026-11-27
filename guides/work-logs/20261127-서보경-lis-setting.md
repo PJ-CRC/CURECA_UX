@@ -287,7 +287,7 @@ started: 2026-11-27
 | --- | --- | --- | --- | --- | --- |
 | 신규 | TI-STN-04-01-T 화면 3 · 디스크립션 3 (C2, Push Mode → Query Mode 예시 값. Push Mode가 표의 다른 자리에 남아 신규) | LID-STN-265 | Query Mode | O | 있음 |
 | 신규 | TI-STN-04-02-T 디스크립션 2-1 (C19) | LID-STN-015 | No results found. | O | 있음 (event-history · setting-protocol 등 메뉴 파일, 법인 검토 완료) |
-| DB 맞춤 (추가) (답 기다림) | TI-STN-04-01-T 화면 영역 안내 문구 | | Configure LIS interface settings for order and result transmission. | O | 없음 (LID-STN-196은 `삭제`, 비고 「디자인에 안내 문구 없음」) |
+| 제거 | TI-STN-04-01-T (asis 화면 영역 안내 문구, C27 · 요청자 확인 #8 답으로 화면에서 지움) | LID-STN-196 | Configure LIS interface settings for order and result transmission. | - (제거) | 없음 (LID-STN-196은 이미 `삭제` — 할 일 없음) |
 | DB 맞춤 (추가) (답 기다림) | TI-STN-04-01-T 화면 6 | | IP Address | O | 없음 (LID-STN-208이 v0.05에서 `IP Address` → `Enter IP Address`로 바뀜) |
 | DB 맞춤 (제거) (답 기다림) | TI-STN-04-01-T (DB 비고: 플레이스홀더) | LID-STN-208 | Enter IP Address | - (제거) | 있음 |
 | DB 맞춤 (제거) (답 기다림) | TI-STN-04-01-T (DB 비고: Port 플레이스홀더) | LID-STN-269 | Enter Port | - (제거) | 있음 |
