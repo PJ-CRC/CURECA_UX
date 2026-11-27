@@ -350,6 +350,30 @@ async function fillJob(job) {
       const h = Math.max(+f.min || 0, Math.ceil(bottom)); if (h > 0 && Math.abs(h - n.height) >= 1) n.resize(n.width, h);
       gr.fit = (gr.fit || []).concat([{ node: n.id, h }]);
     }
+    /* 글꼴 바꾸기(refont, 2026-11-27): {node, family:'Inter', skipInstances, skipName(정규식)} — 그 노드 안 모든 글의 글꼴을 family로, 굵기는 같은 이름으로
+       (Pretendard SemiBold → Inter Semi Bold). 팀 작업규칙이 「모든 글은 Inter」처럼 정할 때 Claude가 글마다 코드로 바꾸지 않게.
+       이 PC 글꼴로 하므로 Claude의 Figma 연결에 없는 글꼴(Pretendard)도 바꾼다. 못 바꾼 글은 problems(kind 글꼴) */
+    if (g.refont && g.refont.node) {
+      const n = await resolve(g.refont.node); if (!n || !onWork(n) || !('findAll' in n)) throw new Error('글꼴을 바꿀 노드를 찾지 못했습니다: ' + g.refont.node);
+      const fam = String(g.refont.family || 'Inter'), norm = s => String(s).replace(/\s+/g, '').toLowerCase();
+      const styles = (await figma.listAvailableFontsAsync()).filter(f => f.fontName.family === fam).map(f => f.fontName.style);
+      if (!styles.length) throw new Error('이 PC에 글꼴이 없습니다: ' + fam);
+      const pick = st => styles.find(s => norm(s) === norm(st)) || styles.find(s => norm(s) === 'regular') || styles[0];
+      const skipRe = g.refont.skipName ? new RegExp(g.refont.skipName) : null;
+      const skipped = t => { for (let p = t.parent; p && p !== n.parent; p = p.parent) if (p.type === 'INSTANCE') { if (g.refont.skipInstances) return true; const mc = p.mainComponent, nm = mc ? (mc.parent && mc.parent.type === 'COMPONENT_SET' ? mc.parent.name : mc.name) : ''; if (skipRe && skipRe.test(nm)) return true; } return false; };
+      const loaded = {}; const load = async f => { const k = f.family + '|' + f.style; if (!loaded[k]) loaded[k] = figma.loadFontAsync(f); return loaded[k]; };
+      let changed = 0;
+      for (const t of n.findAll(x => x.type === 'TEXT')) {
+        if (skipped(t)) continue;
+        try {
+          const segs = t.getStyledTextSegments(['fontName']);
+          if (segs.every(s => s.fontName.family === fam)) continue;
+          for (const s of segs) { if (s.fontName.family === fam) continue; await load(s.fontName); const to = { family: fam, style: pick(s.fontName.style) }; await load(to); t.setRangeFontName(s.start, s.end, to); }
+          changed++;
+        } catch (e) { out.problems.push({ kind: '글꼴', row: n.id, node: t.id, text: String(e && e.message || e).slice(0, 60) }); }
+      }
+      gr.refont = { node: n.id, changed };
+    }
     // 점검: 글이 자기 칸(부모) 밖으로 넘침 · 만든 것끼리 · 옆 노드와 겹침(배경처럼 통째로 감싸는 노드는 뺌)
     for (const inst of made) {
       for (const t of inst.findAll(n => n.type === 'TEXT' && n.visible)) {

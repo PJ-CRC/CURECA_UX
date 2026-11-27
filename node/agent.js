@@ -385,10 +385,13 @@ function authWaiting(id) {
 }
 const AUTH_RE = /Figma[^\n]{0,60}(인증|권한|로그인|연결(이|을)?\s?(안|끊|실패|필요))|(인증|편집 권한|접근 권한)[^\n]{0,30}(필요|없|공유)|다시 연결|Authenticate|auth(entication)? required/i;
 // 차례가 끝난 뒤 「대기」로 돌아가 있는 요청(사람이 멈춘 것은 빼고)
+//  note가 「새 세션」으로 시작하면(2026-11-27) Claude가 일부러 끊은 것 — 같은 대화에 잇지 않고 새 세션이 받는다(예: 화면 MD를 다 쓰고 그리기 전, 큰 대화를 끌고 그리면 부를 때마다 느리고 비쌌다 · R009)
 function selfSplitIds(ids) {
   const items = ((readJson(path.join(WB, 'edit_requests.json')) || {}).items || []).filter(Boolean);
-  return ids.filter((id) => { const r = items.find((x) => x.id === id); return r && r.status === '대기' && !r.stopped; });
+  return ids.filter((id) => { const r = items.find((x) => x.id === id); return r && r.status === '대기' && !r.stopped && !/^\s*\**\s*\[?새 세션/.test(String(r.note || '')); });
 }
+// 이어서 계속은 이 크기까지(2026-11-27): Claude는 70만 가까이에서 스스로 끊는데 감시는 70만 아래라 같은 대화에 이어 보내, 30초짜리 빈 차례가 두 번 생겼다(R009 11:03)
+const CONT_MAX = 600000;
 // 감시 결과가 기다리던 요청의 답뿐인지(PENDING · RESUME만, 모든 ID가 기다리던 것)
 function onlyAnswers(out, keep) {
   const lines = out.split('\n').filter(Boolean);
@@ -605,7 +608,7 @@ async function main() {
       continue;
     }
     // 사람에게 묻지 않고 「대기」로 돌려 끝낸 요청(나눠서 이어 가기): 진척이 있었고 KEEP_MAX 아래면 같은 세션에 「이어서 계속」(한 세션 12번까지)
-    const self = prog && ctx < KEEP_MAX && S.conts < 12 ? selfSplitIds(S.turnIds.filter((x) => /^R/.test(x))) : [];
+    const self = prog && ctx < CONT_MAX && S.conts < 12 ? selfSplitIds(S.turnIds.filter((x) => /^R/.test(x))) : [];
     if (self.length) {
       S.conts++; S.keep = self; S.cont = true; S.keepUntil = Date.now() + KEEP_MIN * 60000;
       log(`세션 유지 — ${self.join(', ')} 같은 세션에서 이어서 계속 (컨텍스트 ${pct}%, ${ctx} 토큰)`);

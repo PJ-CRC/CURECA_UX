@@ -213,12 +213,13 @@ async function fillJobs() {
       if (t.job.id !== j.id) { await jobPost({ action: 'update', id: t.job.id, status: '대기' }); continue; }
       await post({ note: '플러그인이 컴포넌트를 채우는 중' });
       log('컴포넌트 채우기 처리 중…');
-      let r;
+      let r; const t0 = Date.now(), sec = () => Math.round((Date.now() - t0) / 100) / 10;   // 걸린 시간(2026-11-27): 느릴 때 Figma 쪽인지 받기 쪽인지 가리려고
       try { r = await call('fill', { job: { groups: j.groups || [] } }); }
-      catch (e) { await post({ status: '실패', note: '플러그인 오류(만든 것은 지움): ' + (e.message || e) }); log('컴포넌트 채우기 실패'); continue; }
-      const pr = r.problems || [], over = pr.filter(p => p.kind === '넘침').length, hit = pr.filter(p => p.kind === '겹침').length;
-      await post({ status: '완료', result: { made: r.made, removed: r.removed, groups: r.groups, problems: pr },
-        note: r.made + '개 만듦' + (r.removed ? ' · ' + r.removed + '개 지움' : '') + ' · 넘침 ' + over + ' · 겹침 ' + hit + '(플러그인)' });
+      catch (e) { await post({ status: '실패', note: '플러그인 오류(만든 것은 지움, ' + sec() + '초): ' + (e.message || e) }); log('컴포넌트 채우기 실패'); continue; }
+      const pr = r.problems || [], over = pr.filter(p => p.kind === '넘침').length, hit = pr.filter(p => p.kind === '겹침').length, fo = pr.filter(p => p.kind === '글꼴').length;
+      const rf = (r.groups || []).reduce((a, g) => a + (g.refont ? g.refont.changed : 0), 0);
+      await post({ status: '완료', result: { made: r.made, removed: r.removed, groups: r.groups, problems: pr, sec: sec(), hidden: document.hidden },
+        note: r.made + '개 만듦' + (r.removed ? ' · ' + r.removed + '개 지움' : '') + (rf ? ' · 글꼴 ' + rf + '개 바꿈' : '') + ' · 넘침 ' + over + ' · 겹침 ' + hit + (fo ? ' · 글꼴 못 바꿈 ' + fo : '') + '(플러그인, ' + sec() + '초)' });
       log('컴포넌트 채우기 ' + r.made + '개');
     }
   } catch (e) { /* 서버가 꺼져 있으면 다음에 다시 */ }
