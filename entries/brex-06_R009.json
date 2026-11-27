@@ -2,11 +2,11 @@
   "id": "brex-06_R009",
   "kind": "request",
   "team": "cureca",
-  "status": "보류",
-  "at": "2026-11-27T15:50:55+09:00",
+  "status": "대기",
+  "at": "2026-11-27T15:51:30+09:00",
   "createdAt": "2026-11-27T09:55:49+09:00",
   "by": "최고관리자",
-  "doneBy": "Claude",
+  "doneBy": "최고관리자",
   "pc": "BREX_06",
   "reqId": "R009",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -18,24 +18,13 @@
   "type": "요청",
   "layout": "",
   "text": "https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-360786&t=GdYCaPho44GgAu5i-1\nInventory T-ios 화면만 다시 그려줘",
-  "note": "케이스 3 · 4단계 · 20261127-최고관리자-inventory - UX 확정 답을 받았습니다. UX 확정을 적기 전에 요건 1의 UI 작업 줄을 확인해 주세요.\n\n**[한 일]**\n- 기계 검사를 한 번 더 할지는 묻지 않음 (절차 1번 기계 검사 뒤로 고친 화면 없음, 4단계 절차 3번 순서 2)\n- Ver은 묻지 않음 (케이스 3 화면은 기존 Ver 그대로)\n\n**[질문 대기 - 답해 주실 것]**\n\nQ1 요건 1 (Inventory T-IOS 8개 화면 다시 그리기)의 UI 작업 줄\n  - 대상 (추천)\n    1단계 임시 값은 「대상 아님」이었으나 실제로 배치 · 요소와 화면 표기 글자가 바뀜\n  - 대상 아님\n\n**[근거 - 바뀐 요소 · 화면 표기 글자]**\n- 배치 · 요소: Tab을 Common UX Underline Tab으로 (01-T ~ 06-T 0, C6) · 카드 · Chip · 표 · 버튼을 Common UX로 (01-T ~ 06-T, C25, 03-T-P · 04-T-P Popup 너비 넓힘) · 노출 개수 Dropdown 추가 (06-T 4, C23) · 중복 GI-Virus 카드 지움 (04-T 2, C17) · LNB Status 메뉴 지움 (03-T · 04-T 0, C8) · Indicator Pagination (01-T 1-6 · 3, C9)\n- 화면 표기 글자: Unit 이름 (01-T 1 · 3, C1) · GNB L-IOS → T-IOS (C7) · Empty → Insufficient (01-T, C27) · 수량 단위 (01-T · 02-T Case, C14 · C15) · Module (Index) (05-T, C21) · All Item Types → All (06-T, C22) · Cold Storage · PCR Plate Storage (06-T, C4 · C83) · 1-7 Tooltip 2줄 제거 (01-T, C92) · #Sample Preparation (04-T, C93) · Alert_049 · 050 문구 (06-T 3, C91) 등\n- 디자인 화면은 읽지 않으므로, 디자인 화면에서 같은 글자를 쓰는 곳(다르게 그린 케이스 등)은 보지 못했습니다\n\n규칙 점검: 4단계 절차 3 순서 1 ~ 3 · 「하지 않는 것」 지킴\n작업 기준: basis 2026-11-27 09:58 · 작업규칙 CURECA 작업규칙 @원본 · 정책서 정책서 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 · 화면 정의서 화면 정의서",
+  "note": "",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": {
-    "q": "[4단계] 요건 1의 UI 작업 줄을 확인해 주세요.",
-    "options": [
-      {
-        "label": "대상"
-      },
-      {
-        "label": "대상 아님"
-      }
-    ],
-    "free": true
-  },
+  "ask": null,
   "replies": [
     {
       "at": "2026-11-27T10:06:12+09:00",
@@ -84,6 +73,12 @@
       "by": "최고관리자",
       "q": "[4단계] 사용자 확인 목록과 질의가 모두 풀렸습니다. 최종으로 UX 확정을 하시겠습니까?",
       "text": "UX 확정함"
+    },
+    {
+      "at": "2026-11-27T15:51:30+09:00",
+      "by": "최고관리자",
+      "q": "[4단계] 요건 1의 UI 작업 줄을 확인해 주세요.",
+      "text": "대상 아님"
     }
   ],
   "raws": [
