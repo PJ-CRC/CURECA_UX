@@ -854,7 +854,6 @@
 | TI-STN-03-02-02-V-R01 | Setting | Extraction Protocol Setting (View) (TI-STN-03-02-02-V) | 기준 자료 변경 | 1 "[TI-STN-03-01] 화면에서 선택한" | TI-STN-03-02 | IA | 대기 |
 | TI-STN-03-02-R01 | Setting | Extraction Protocol (TI-STN-03-02) | 기준 자료 변경 | 4 [Edit] → "[TI-STN-03-01-01]" | TI-STN-03-02-01 | IA | 대기 |
 | TI-STN-04-01-T-R01 | Setting | Interface Configuration (TI-STN-04-01-T) | 점검 발견 | 0에 "Default: All / 데이터: All, Error, Warning" (다른 화면에서 복사된 것으로 보임) | 지움 | 디스크립션 | 대기 |
-| TI-STN-04-01-T-R02 | Setting | Interface Configuration (TI-STN-04-01-T) | 점검 발견 | 번호 4가 두 번 (T-IOS Network, LIS Network), 3-1 없음 | 번호 정리 | 디스크립션 | 대기 |
 | TI-STN-04-01-T-R03 | Setting | Interface Configuration (TI-STN-04-01-T) | 점검 발견 | 화면 예시는 Push Mode 선택, 디스크립션 기본값은 Query Mode | 기본 상태 화면을 기본값과 맞춤 | 디스크립션 3 | 대기 |
 | TI-STN-04-01-T-R04 | Setting | Interface Configuration (TI-STN-04-01-T) | 기준 자료 변경 | CURECA가 여러 대일 때(TI-ADS) LIS 설정이 장비마다인지 화면에 없음 | 디스크립션에 넣음: LIS 설정은 상단에서 고른 CURECA마다 | POL-SYS-001 규칙 7, POL-COM-005 | 대기 |
 | TI-STN-04-02-T-R01 | Setting | Code Mapping (TI-STN-04-02-T) | 기준 자료 변경 | Sample Type 이름 예시 (Aspirate, Cary-blair, Cellpreserv 등) | `glossary/sample-types.csv`의 UI 표기와 맞춤 | `glossary/sample-types.csv` | 대기 |
