@@ -325,7 +325,7 @@ started: 2026-11-27
 | TI-IVT-03-T / LI-IVT-03-T (X) | 3 | 1 | [3903:7489](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3903-7489) | [3916:990](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3916-990) | 그림 (2026-11-27) · 케이스 없음 |
 | TI-IVT-03-T-P / LI-IVT-03-T-P (X) | 3 | 1 | [3903:7490](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3903-7490) | [3919:1616](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3919-1616) | 그림 (2026-11-27) · 케이스 없음 |
 | TI-IVT-04-T / LI-IVT-04-T (X) | 3 | 1 | [3903:7491](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3903-7491) | [3926:2](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3926-2) | 그림 (2026-11-27) · 케이스 없음 |
-| TI-IVT-04-T-P / LI-IVT-04-T-P (X) | 3 | 1 | | | |
+| TI-IVT-04-T-P / LI-IVT-04-T-P (X) | 3 | 1 | [3903:7492](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3903-7492) | [3930:570](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3930-570) | 그림 (2026-11-27) · 케이스 없음 |
 | TI-IVT-05-T / LI-IVT-05-T (X) | 3 | 1 | | | |
 | TI-IVT-06-T / LI-IVT-06-T (X) | 3 | 1 | | | |
 
