@@ -233,22 +233,22 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=39
 
 | 화면 표기 글자 (영어) | 출처 | Language ID |
 | --- | --- | --- |
-| Inventory | 화면 제목 | |
-| Summary · Overview · Consumables · Reagents · Waste Bin/Bottle · Usage History | 화면 Tab | |
-| Insufficient · Low · Sufficient | 화면 1 · 2-6 | |
-| Reagents type | 화면 1 | |
+| Inventory | 화면 제목 | LID-IVT-001 |
+| Summary · Overview · Consumables · Reagents · Waste Bin/Bottle · Usage History | 화면 Tab | LID-IVT-002 · LID-IVT-003 · LID-RUN-044 · LID-SPT-043 · LID-IVT-053 · LID-IVT-004 |
+| Insufficient · Low · Sufficient | 화면 1 · 2-6 | LID-DAS-028 · LID-DAS-029 · LID-RUN-043 |
+| Reagents type | 화면 1 | LID-RUN-049 |
 | #Sample Preparation · #Nucleic Acid Extraction · #PCR | 화면 1 · 2-7 | |
-| Refresh | 화면 4 | |
-| Remaining Qty · Required Qty · Status | 화면 2 열 제목 | |
-| Location · Capacity | 화면 3 열 제목 | |
+| Refresh | 화면 4 | LID-RUN-033 |
+| Remaining Qty · Required Qty · Status | 화면 2 열 제목 | LID-RUN-030 · LID-RUN-031 · LID-EVT-017 |
+| Location · Capacity | 화면 3 열 제목 | LID-RUN-050 · LID-IVT-022 |
 | Item details | 화면 3-7 | |
-| Pretreatment Reagents · STARMag M96 Kit · STARMag Universal Cartridge Kit · Allplex™ GI-Virus Assay · Allplex™ Respiratory Panel 1 · Allplex™ GI-Parasite Assay · Allplex™ GI-Bacteria(II) Assay | 화면 2-1 카드 제목 | |
-| Sample Preparation · Nucleic Acid Extraction · PCR | 화면 2-7 | |
-| LB Tub (Prep) · PBS Tub · Saline Tub · ASL Standard Tube · PBS Standard Tube · Prelyser Standard Tube · Saline Standard Tube · EB DWP · LB DWP · MB DWP · WB1 DWP · WB2 DWP · Spin Tip · BB Tub · EB Tub · WB1 Tub · WB2 Tub · WB3 Tub · LB Tub · MB Tube · PK Tube · Buffer Cartridge Cap · 5X GI-V MOM · 5X Real-time One-step Buffer · GI-V PC · Real-time One-step Enzyme · RNase-free Water · GI-V IC · 5X RP1 MOM · RP1 PC · RP-V IC · 5X GI-P MOM · EM2 · GI-P PC · GI-BP IC · 5X GI-B(II) MOM · GI-B(II) PC | 화면 2-3 · 3-1 (품목 이름) | |
-| Consumable Storage | 화면 3-2 (Module 이름) | |
-| Trolley | 화면 3-2 (Unit 이름) | |
+| Pretreatment Reagents · STARMag M96 Kit · STARMag Universal Cartridge Kit · Allplex™ GI-Virus Assay · Allplex™ Respiratory Panel 1 · Allplex™ GI-Parasite Assay · Allplex™ GI-Bacteria(II) Assay | 화면 2-1 카드 제목 | LID-RUN-048 · - · - · - · - · - · - |
+| Sample Preparation · Nucleic Acid Extraction · PCR | 화면 2-7 | LID-SPT-024 · LID-SPT-025 · LID-SPT-033 |
+| LB Tub (Prep) · PBS Tub · Saline Tub · ASL Standard Tube · PBS Standard Tube · Prelyser Standard Tube · Saline Standard Tube · EB DWP · LB DWP · MB DWP · WB1 DWP · WB2 DWP · Spin Tip · BB Tub · EB Tub · WB1 Tub · WB2 Tub · WB3 Tub · LB Tub · MB Tube · PK Tube · Buffer Cartridge Cap · 5X GI-V MOM · 5X Real-time One-step Buffer · GI-V PC · Real-time One-step Enzyme · RNase-free Water · GI-V IC · 5X RP1 MOM · RP1 PC · RP-V IC · 5X GI-P MOM · EM2 · GI-P PC · GI-BP IC · 5X GI-B(II) MOM · GI-B(II) PC | 화면 2-3 · 3-1 (품목 이름) | - · - · - · - · - · - · - · - · - · - · - · - · - · - · - · - · - · - · - · LID-MAS-013 · LID-MAS-014 · - · - · - · - · - · - · - · - · - · - · - · - · - · - · - · - |
+| Consumable Storage | 화면 3-2 (Module 이름) | LID-EVT-049 |
+| Trolley | 화면 3-2 (Unit 이름) | LID-EVT-056 |
 | {n} rxns ({m} racks) · {n} rxns ({m} rack) · {n} rxns ({m} DWPs) · {n} rxns ({m} DWP) · {n} rxns ({m} sets) · {n} rxns ({m} set) · {n} rxns ({m} tubes) · {n} rxns ({m} tube) · {n} ea ({m} sets) · {n} DWPs · {n} sets | 화면 2-4 · 2-5 · 3-5 · 3-6 · 3-8 (n · m = 수량) | |
-| Expired reagents are discarded or returned unused, depending on the instrument. | 화면 3-3 | |
-| Capacity · Shown only for fixed-capacity storage. | 디스크립션 5 (Tooltip) | |
-| Required Qty · Displays the additional quantity required based on current inventory. | 디스크립션 5 (Tooltip) | |
-| Status · Status is determined by run availability · Sufficient(enough stock) · Low(partial shortage) · Insufficient(no stock) | 디스크립션 5 (Tooltip) | |
+| Expired reagents are discarded or returned unused, depending on the instrument. | 화면 3-3 | LID-RUN-058 |
+| Capacity · Shown only for fixed-capacity storage. | 디스크립션 5 (Tooltip) | LID-IVT-022 · LID-RUN-052 |
+| Required Qty · Displays the additional quantity required based on current inventory. | 디스크립션 5 (Tooltip) | LID-RUN-031 · LID-RUN-032 |
+| Status · Status is determined by run availability · Sufficient(enough stock) · Low(partial shortage) · Insufficient(no stock) | 디스크립션 5 (Tooltip) | LID-EVT-017 · - · - · - · - |
