@@ -480,6 +480,9 @@ started: 2026-11-27
 | C88 | 0 "사용여부가 '사용'인 모듈", "소모품", "시약" | Enabled인 Module, Consumable, Reagent |  | TI-IVT-06-T | TI-IVT-06-T-R08 · POL-EQP-009, `glossary/terms.csv` | - (L-IOS 고치지 않음) | - | 맞음 (기계 검사, 2026-11-27) |
 | C89 | 0 이력 기준 "장비가 사용 후 폐기하는 시점" / TI-IVT-03-T 2-4 정책 안내는 "저장 장치로 반환 시"에도 사용 수량을 이력에 기록 | 디스크립션에 넣음: Usage History는 폐기할 때만 기록함 (사용 완료, 최대 사용 횟수 초과, Expiration Date 경과). 반환할 때는 기록하지 않음 |  | TI-IVT-06-T | TI-IVT-06-T-R09 · POL-INV-006 규칙 1 | - (L-IOS 고치지 않음) | - |  |
 | C90 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) |  | TI-IVT-06-T | TI-IVT-06-T-R10 · POL-COM-006 | - (L-IOS 고치지 않음) | O |  |
+| C91 | [Export] 저장 실패 · 내보낼 목록 0건일 때 안내 없음 | 저장에 실패하면 Alert_049, 내보낼 데이터가 0건이면 Alert_050 노출 (Alert 카탈로그에 새로 더함) | 없음 → Export failed · The file could not be saved. Check the save location and try again. · No data to export · There is no data in the list to export. | TI-IVT-06-T #3 | Q1의 답 | - (L-IOS 고치지 않음) | O | 맞음 (2026-11-27) |
+| C92 | 1-7 Tooltip 문구 4줄 | 앞 2줄을 빨간 취소선으로 지우고 뒤 2줄만 둠 | Shows required items by replenishment priority, visible only when system is running or Inbound Trolley is docked → 없음 · Shows required items by replenishment priority → 없음 | TI-IVT-01-T #1-7 | Q2의 답 (반영 대기 TI-IVT-01-T-R06) | - (L-IOS 고치지 않음) | O | 맞음 (2026-11-27) |
+| C93 | Reagents type Chip `# Sample Preparation` (다른 Chip은 `#` 뒤 붙임) | `#` 뒤를 붙여 통일 | # Sample Preparation → #Sample Preparation | TI-IVT-04-T #1 | Q7의 답 (반영 대기 TI-IVT-04-T-R08) | - (L-IOS 고치지 않음) | O | 맞음 (2026-11-27) |
 
 ## 검토 질의
 <!-- 4단계 절차 2번. 틀은 flow/4-revise-verify.md "검토 질의 틀" -->
