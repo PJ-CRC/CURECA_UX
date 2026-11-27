@@ -1,14 +1,14 @@
 {
-  "reportAt": "2026-11-27T14:57:18+09:00",
+  "reportAt": "2026-11-27T14:58:18+09:00",
   "pc": "BREX_01",
   "slug": "brex-01",
   "user": "서보경",
   "os": "windows",
   "version": "0.32.30",
   "alive": true,
-  "status": "working",
-  "msg": "처리 중: PENDING R002 · 강도 medium · Claude 주간 사용량 82%(11/30 16:00 초기화) — 중간에 끊길 수 있음",
-  "statusAt": "2026-11-27T14:57:16+09:00",
+  "status": "idle",
+  "msg": "R002 질문 답을 기다리는 중(15:52까지 이어서 처리) · 컨텍스트 21%",
+  "statusAt": "2026-11-27T14:58:02+09:00",
   "claude": "따로 설치",
   "claudeWay": "app",
   "autoWatch": true,
@@ -134,9 +134,9 @@
       "at": "2026-11-27T14:55:55+09:00",
       "what": "PENDING R002 · 강도 medium · Claude 주간 사용량 82%(11/30 16:00 초기화) — 중간에 끊길 수 있음",
       "resume": true,
-      "end": "",
-      "ok": null,
-      "sec": null
+      "end": "2026-11-27T14:57:46+09:00",
+      "ok": true,
+      "sec": 112
     },
     {
       "at": "2026-11-27T14:43:34+09:00",
