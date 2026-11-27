@@ -569,6 +569,8 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
 .req.qpick .qblk.qtd .qopt>li{flex-wrap:nowrap;width:auto;padding:3px 8px 3px 24px;font-size:12.5px;line-height:1.35}
 .req.qpick .qblk.qtd .qopt>li .recb{flex:none}
 .req.qpick .md td:has(>.qtd){min-width:230px}
+.req.qpick .md td:has(>.qtd.qc){min-width:0;width:1%}
+.req.qpick .qblk.qc .qopt>li{white-space:nowrap}
 .req.qpick .qblk .qin{display:block;box-sizing:border-box;width:100%;max-width:340px;margin-top:5px;padding:4px 9px;border:1px dashed var(--line-2);border-radius:8px;background:var(--surface);font-size:12.5px;color:var(--ink)}
 .req.qpick .qblk:not(.qtd) .qin{margin-left:2.2em;max-width:min(340px,calc(100% - 2.2em))}
 .req.qpick .qblk .qin:focus{outline:none;border-style:solid;border-color:var(--ink-3)}
@@ -2132,12 +2134,12 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
       if (!r || !hasAsk(r) || r.status !== '보류') return;
       var ks = qKeys(li), box = li.querySelector('.ask'); if (!ks.length || !box) return;
       li.classList.add('qpick');
-      ks.forEach(function(k){ var b = li.querySelector('.qblk[data-q="' + k + '"]'), u = b && b.querySelector('.qopt'); if (!u) return;
+      ks.forEach(function(k){ var b = li.querySelector('.qblk[data-q="' + k + '"]'), u = b && b.querySelector('.qopt'); if (!u || k.charAt(0) === 'C') return;   // 변경 확인(C)은 맞음 / 되돌림만 - 직접 입력 칸 없음(덧붙일 말은 아래 답 칸)
         var inp = document.createElement('input'); inp.type = 'text'; inp.className = 'qin w-only'; inp.dataset.qin = k; inp.dataset.qid = id; inp.placeholder = '직접 입력'; inp.setAttribute('aria-label', k + ' 답 직접 입력'); inp.value = (qtyped[id] || {})[k] || '';
         u.parentNode.insertBefore(inp, u.nextSibling); });
       if (!picks[id]) { picks[id] = {}; ks.forEach(function(k){ var o = li.querySelector('.qblk[data-q="' + k + '"] .qopt>li.rec[data-v]'); if (o) picks[id][k] = o.dataset.v; }); }
       var bar = document.createElement('div'); bar.className = 'qpk w-only';
-      bar.innerHTML = '<span>질문마다 답을 눌러 고르세요(처음엔 추천). 고른 답 <b class="qn"></b></span><button type="button" data-qsend="' + esc(id) + '">고른 답 한 번에 보내기</button>';
+      bar.innerHTML = '<span>질문마다 답을 눌러 고르세요(처음엔 추천, 변경 확인은 맞음). 고른 답 <b class="qn"></b></span><button type="button" data-qsend="' + esc(id) + '">고른 답 한 번에 보내기</button>';
       box.insertBefore(bar, box.querySelector('.af'));
       qMark(li, id);
     });
@@ -2146,7 +2148,13 @@ textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-
     var li = btn.closest('li.req'), ks = qKeys(li), p = picks[id] || {}, d = String(drafts[id] || '').trim();
     var miss = ks.filter(function(k){ return qVal(id, k) == null; });
     if (miss.length && !d) { say(miss.join(', ') + '은(는) 아직 고르지 않았습니다. 고르거나 아래 칸에 직접 적어 주세요.', true); return; }
-    var t = ks.filter(function(k){ return qVal(id, k) != null; }).map(function(k){ return k + ': ' + qVal(id, k); }).join('\n') + (d ? '\n' + d : '');
+    // 변경 확인(C)은 같은 답끼리 묶어 한 줄로(「C1 ~ C3, C5 ~ C39: 맞음」) - 39줄을 그대로 보내지 않게
+    var got = ks.filter(function(k){ return qVal(id, k) != null; }), lines = [], cg = {}, co = [];
+    got.forEach(function(k){ if (k.charAt(0) !== 'C') { lines.push(k + ': ' + qVal(id, k)); return; } var v = qVal(id, k); if (!cg[v]) { cg[v] = []; co.push(v); } cg[v].push(+k.slice(1)); });
+    co.forEach(function(v){ var ns = cg[v].sort(function(a, b){ return a - b; }), rs = [], s = ns[0], e = ns[0];
+      for (var x = 1; x <= ns.length; x++) { if (ns[x] === e + 1) { e = ns[x]; continue; } rs.push(s === e ? 'C' + s : 'C' + s + ' ~ C' + e); s = e = ns[x]; }
+      lines.push(rs.join(', ') + ': ' + v); });
+    var t = lines.join('\n') + (d ? '\n' + d : '');
     answer(id, t, false, btn);
   }
   /* 답할 질문(2026-11-26): 답변은 간략한 보고서라, 사람이 할 일(질문 · 선택지)을 보고서 위에 먼저 보인다. 지난 질문 · 답(replies)은 보고서 아래 */

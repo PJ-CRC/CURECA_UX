@@ -5,7 +5,8 @@
 //    서버가 workbench/.history_sync_now를 만들면(이력이 생김 · [깃 동기화]) 기다리지 않고 바로 맞춘다
 //  - 원격 주소: workbench/git_remote.txt(없을 때만 작업 폴더의 origin). 상태: workbench/.history_sync.json {at, checkedAt, ok, message, busy, retrying, fails}
 //  - 잠깐 실패는 5초 뒤 다시(3번 연달아 실패해야 「실패」), 로그인 · 권한 · 주소 문제는 바로 「실패」(그 뒤 1분마다 다시)
-//  - 충돌(두 PC가 같은 파일을 고침): rebase를 멈추고 merge로 다시 — 충돌한 파일은 **파일 통째로** 나중에 저장한 쪽 것,
+//  - 받기는 fetch + merge(2026-11-27, rebase는 커밋 전 수정을 버릴 수 있어 쓰지 않음 — pullMerge)
+//  - 충돌(두 PC가 같은 파일을 고침): 충돌한 파일은 **파일 통째로** 나중에 저장한 쪽 것,
 //    이름 바뀜 짐작 끔(no-renames), 진 쪽 파일은 conflicts/kept/{시각}_{PC}/{경로}, 파일마다 conflicts/{PC}.log
 //  - workbench/.history_sync_off가 있으면 이 PC는 받지도 올리지도 않는다. workbench/.history_sync.lock이 있으면(시작 안내 「깃허브 연결」이
 //    history_sync.ps1 · .sh -Interactive로 로그인 창을 띄워 맞추는 중) 쉰다 — 로그인 창이 필요한 처음 연결은 예전 스크립트가 한다
@@ -75,14 +76,17 @@ function who() {
 const slug = () => String(C.pcName).replace(/\.local$/i, '').toLowerCase().replace(/[^a-z0-9-]/g, '-');
 function stamp() { return core.now().slice(0, 19).replace(/[-:]/g, '').replace('T', '-'); }
 
-// 충돌 맞추기: rebase를 멈추고 merge로 — 충돌한 파일은 나중에 저장한 쪽 것을 통째로, 진 쪽 파일은 conflicts/kept에
-async function resolveConflict(id) {
-  await git(['rebase', '--abort']);
+// 받아 합치기(2026-11-27): pull --rebase 대신 fetch + merge. rebase는 도중에 작업 폴더의 파일을 잠깐 예전 모양으로 바꾸고,
+//  실패하면 rebase --abort가 커밋 전 수정(Claude가 그 1초 사이에 고친 것)을 버렸다(R009 작업 기록 줄이 사라짐).
+//  merge는 받은 쪽이 바꾼 파일만 건드리고, 이 PC에서 고치는 중인 파일과 겹치면 아무것도 바꾸지 않고 멈춘다 → 다음 차례에 그 파일을 먼저 커밋하고 다시 받는다.
+//  충돌(두 PC가 같은 파일의 줄을 고침)은 파일 통째로 나중에 저장한 쪽 것, 진 쪽 파일은 conflicts/kept에
+async function pullMerge(id) {
   let r = await git(['fetch', '-q', 'origin', 'history']); if (r.code) done(false, '받기(fetch) 실패: ' + last(r.out));
   const lt = parseInt((await git(['log', '-1', '--format=%ct', 'HEAD'])).out, 10) || 0, rt = parseInt((await git(['log', '-1', '--format=%ct', 'FETCH_HEAD'])).out, 10) || 0;
   const mine = lt >= rt, win = mine ? 2 : 3, lose = 5 - win, whoWin = mine ? '이 PC' : '다른 PC';   // merge에서 2 = 이 PC, 3 = 받은 쪽
-  r = await git(id.concat(['-c', 'merge.renames=false', 'merge', '-q', '--no-ff', '-X', 'no-renames', '-m', `history: 충돌 맞춤 ${C.pcName} ${core.now().slice(0, 16).replace('T', ' ')}`, 'FETCH_HEAD']));
-  if (!r.code) return;   // 줄이 부딪치지 않았으면(rebase만 실패) 그대로 합쳐짐
+  r = await git(id.concat(['-c', 'merge.renames=false', 'merge', '-q', '-X', 'no-renames', '-m', `history: 받아 합침 ${C.pcName} ${core.now().slice(0, 16).replace('T', ' ')}`, 'FETCH_HEAD']));
+  if (!r.code) return;   // 앞으로 감기 · 줄이 부딪치지 않은 합침
+  if (/would be overwritten|commit your changes or stash|untracked working tree files/i.test(r.out)) done(false, '이 PC에서 고치는 중인 파일과 겹쳐 다음 차례에 받습니다');   // 아무것도 바뀌지 않음
   const files = (await git(['-c', 'core.quotePath=false', 'diff', '--name-only', '--diff-filter=U'])).out.split('\n').map((x) => x.trim()).filter(Boolean);
   if (!files.length) { await git(['merge', '--abort']); done(false, '받기(합치기) 실패: ' + last(r.out)); }
   const tag = stamp() + '_' + slug(), lines = [];
@@ -98,7 +102,7 @@ async function resolveConflict(id) {
     else { await git(['checkout', mine ? '--ours' : '--theirs', '--', f]); await git(['add', '--', f]); how = '파일 통째로'; }
     lines.push(`  - ${f} → ${whoWin} 것(${how})${kept}`);
   }
-  r = await git(id.concat(['commit', '-q', '--no-edit']));
+  r = await git(id.concat(['commit', '-q', '-m', `history: 충돌 맞춤 ${C.pcName} ${core.now().slice(0, 16).replace('T', ' ')}`]));
   if (r.code) { await git(['merge', '--abort']); done(false, '받기(pull) 실패 · 충돌: ' + last(r.out)); }
   try {
     const lf = path.join(H(), 'conflicts', slug() + '.log'); fs.mkdirSync(path.dirname(lf), { recursive: true });
@@ -139,10 +143,7 @@ async function syncOnce() {
   if (!hasHead) done(true, '깃허브에 연결했습니다. 아직 공유된 이력이 없습니다.');
   // 받고(pull) 올린다(push). 그 사이 다른 PC가 먼저 올려 거절되면 바로 다시(최대 3번)
   for (let tr = 1; ; tr++) {
-    if (remote === 0) {
-      const p = await git(id.concat(['-c', 'merge.renames=false', 'pull', '-q', '--rebase', '-X', 'no-renames', 'origin', 'history']));
-      if (p.code) await resolveConflict(id);
-    }
+    if (remote === 0) await pullMerge(id);
     const ps = await git(['push', '-q', '-u', 'origin', 'history']);
     if (!ps.code) break;
     if (tr < 3 && /rejected|fetch first|non-fast-forward|failed to push some refs/i.test(ps.out)) { remote = 0; await new Promise((r) => setTimeout(r, 300 * tr)); continue; }

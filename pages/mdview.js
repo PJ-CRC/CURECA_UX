@@ -59,24 +59,29 @@
   /* 표로 쓴 질문(2026-11-27, CURECA 4단계 사용자 확인 목록처럼 「| 번호 | … | 고를 것 | 추천 |」): 첫 칸이 Q1 · Q2 …이고 「고를 것」 칸이 「 / 」로 2 ~ 6개면
      그 칸을 고를 값 목록(qblk)으로 그린다. 추천 칸(괄호 앞 글)과 같은 값, 또는 **굵게** 쓴 값이 추천 */
   function qTd(no, c, rc){
-    var nm = /^\**\s*(Q\d{1,3})\b/.exec(String(no || '')); if (!nm) return '';
+    var nm = /^\**\s*([QC]\d{1,3})\b/.exec(String(no || '')); if (!nm) return '';
     var opts = mdSplitTop(c, ' / ').map(function(x){ return x.trim(); }).filter(Boolean); if (opts.length < 2 || opts.length > 6) return '';
     var rt = String(rc || '').replace(/\*\*/g, '').replace(/\s*[(（][^()（）]*[)）]\s*$/, '').trim();
+    // 변경 확인(C, 2026-11-27): 「맞음 / 되돌림」은 추천이 없으면 「맞음」을 처음 값으로
+    if (!rt && nm[1].charAt(0) === 'C' && !opts.some(function(o){ return /^\*\*/.test(o); }) && opts.indexOf('맞음') >= 0) { rt = '맞음'; var cDef = true; }
     var items = opts.map(function(o){ var b = /^\*\*(.+)\*\*$/.exec(o), t = b ? b[1].trim() : o; return { t: t, rec: !!b || (!!rt && (rt === t || rt.indexOf(t) === 0 || t.indexOf(rt) === 0)) }; });
-    return '<div class="qblk qtd" data-q="' + nm[1] + '"><ul class="qopt">' + items.map(function(o){ return '<li' + (o.rec ? ' class="rec"' : '') + ' data-v="' + esc(o.t) + '">' + mdInline(o.t) + (o.rec ? '<span class="recb">추천</span>' : '') + '</li>'; }).join('') + '</ul></div>';
+    return '<div class="qblk qtd' + (nm[1].charAt(0) === 'C' ? ' qc' : '') + '" data-q="' + nm[1] + '"><ul class="qopt">' + items.map(function(o){ return '<li' + (o.rec ? ' class="rec"' : '') + ' data-v="' + esc(o.t) + '">' + mdInline(o.t) + (o.rec && !cDef ? '<span class="recb">추천</span>' : '') + '</li>'; }).join('') + '</ul></div>';
   }
   /* 「Q1 질문」 줄 아래 「  - 값 (추천)」 · 「  - 값」 줄로 쓴 고를 값(requests.md 「note」 형식): j부터 들여쓰기 ind 이상 글머리표 2 ~ 6줄 */
   function qLook(L, j, ind){
-    var opts = [];
+    /* 값 줄 아래 더 들여 쓴 설명 줄(2026-11-27, 「  - 같은 글자 (추천)」 다음 「    05-T와 …」)은 그 값의 덧붙임(qsub)으로 */
+    var opts = [], subs = [], j0 = j, bi = -1;
     for (; j < L.length; j++) {
-      var m = /^(\s*)[-*•·]\s+(.+)$/.exec(L[j]);
-      if (!m || m[1].replace(/\t/g, '  ').length < ind || /^[A-Z]{1,2}\d{1,3}[.:]?\s/.test(m[2])) break;
-      opts.push(m[2].trim());
+      var m = /^(\s*)[-*•·]\s+(.+)$/.exec(L[j]), w = m ? m[1].replace(/\t/g, '  ').length : 0;
+      if (!m && opts.length && /^\s+\S/.test(L[j]) && L[j].replace(/\t/g, '  ').search(/\S/) > bi && !/^\s*\d+[.)]\s/.test(L[j])) { subs[opts.length - 1] = (subs[opts.length - 1] ? subs[opts.length - 1] + ' ' : '') + L[j].trim(); continue; }
+      if (!m || w < ind || (bi >= 0 && w !== bi) || /^[A-Z]{1,2}\d{1,3}[.:]?\s/.test(m[2])) break;
+      bi = w; opts.push(m[2].trim());
     }
     if (opts.length < 2 || opts.length > 6) return null;
-    return { n: opts.length, opts: opts.map(function(o){
+    return { n: j - j0, opts: opts.map(function(o, k){
       var rm = /\s*[(（]\s*추천\s*(?:[,，:：]\s*([^()（）]*))?[)）]\s*$/.exec(o), sub = '';
       if (rm) { sub = (rm[1] || '').trim(); o = o.slice(0, rm.index).trim(); }
+      if (subs[k]) sub = sub ? sub + ' - ' + subs[k] : subs[k];
       return { t: o, rec: !!rm, sub: sub };
     }) };
   }
