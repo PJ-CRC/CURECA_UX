@@ -2,8 +2,8 @@
   "id": "brex-01_R002",
   "kind": "request",
   "team": "cureca",
-  "status": "진행 중",
-  "at": "2026-11-27T14:09:04+09:00",
+  "status": "보류",
+  "at": "2026-11-27T14:10:40+09:00",
   "createdAt": "2026-11-27T10:05:47+09:00",
   "by": "서보경",
   "doneBy": "Claude",
@@ -17,13 +17,24 @@
   "type": "요청",
   "layout": "",
   "text": "LIS setting 메뉴 옮겨줘\n기존 작업페이지: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-567478&t=x241oPtWNq1qkgw5-1",
-  "note": "케이스 3 · 4단계 절차 2 · 20261127-서보경-lis-setting — UX 확정 전 검토 질의 5건을 반영하는 중입니다 (0번 CURECA 정의 다시 씀 · 안내 문구 설명 지움 · Port 영역 표현 · 탭 영역 7 · 6 지움 · 빨간 표시와 취소선 지움).",
+  "note": "케이스 3 · 4단계 절차 2 · 20261127-서보경-lis-setting — 검토 질의 5건을 화면 MD와 Figma에 반영했습니다. UX 확정 여부를 다시 여쭙니다.\n\n**[반영함] 검토 질의**\n- 1 두 화면 0 · 「CURECA가 여러 대 설치된 경우, Top Navigation에서 선택한 CURECA의 LIS 설정(Code Mapping) 화면 (한 대만 설치된 경우 해당 없음)」으로 다시 씀 (C24)\n- 2 Interface Configuration 0 · 「화면 상단에 … 제목과 안내 문구 노출」 줄 지움 (C9 되돌림)\n- 3 Interface Configuration 4 · 「Port 영역의 Text Input 입력값이 제거되며 Text Input Disabled 처리」 · 「Port 영역의 Text Input이 활성화되며 …」로 (C25)\n- 4 탭 영역 디스크립션 블록과 번호 표시 지움 (Interface Configuration 7 · Code Mapping 6, 탭 모양은 Underline Tab 그대로) (C26)\n- 5 두 화면 디스크립션의 빨간 표시와 취소선을 모두 지움 (취소선 글은 삭제, 빨간 글은 검은 글로)\n  - 작업규칙 description.md 7절(바뀐 글은 빨간색 · 취소선)과 다르게 요청대로 했습니다. 무엇이 바뀌었는지는 작업 기록 「변경 확인」 표에 남아 있습니다.\n\n**[점검]** 취소선 0 · 빨간 글 0 · 글자 넘침 0, 프레임 높이를 패널에 맞춤 (1060 · 1610)\n\n**[질문 대기] 답을 정해 주실 것**\nQ UX 확정 여부 — 사용자 확인 목록과 검토 질의가 모두 풀렸습니다. 최종으로 UX 확정을 하시겠습니까?\n  - 확정함\n  - 아직 (고객 검토 등이 남음)\n\n[참고] Alert_048 문구(This code is already in use. / Enter a different LIS code.)는 Claude가 지은 것이라 확인이 필요합니다.\n규칙 점검: 다르게 한 것 — 디스크립션 바뀐 글 표시(빨간색 · 취소선)를 요청자 지시로 지움 (검토 질의 5)\n작업 기준: basis 2026-11-27 10:07 · 작업규칙 CURECA 작업규칙 @원본 · 정책서 정책서 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 · 화면 정의서 화면 정의서",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "[4단계 · 절차 3] 사용자 확인 목록과 검토 질의 1 ~ 5가 모두 풀렸습니다. 최종으로 UX 확정을 하시겠습니까?",
+    "free": true,
+    "options": [
+      {
+        "label": "확정함"
+      },
+      {
+        "label": "아직 (고객 검토 등이 남음)"
+      }
+    ]
+  },
   "replies": [
     {
       "at": "2026-11-27T10:12:09+09:00",
