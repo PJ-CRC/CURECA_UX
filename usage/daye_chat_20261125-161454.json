@@ -1,0 +1,30 @@
+{
+  "id": "daye_chat_20261125-161454",
+  "kind": "work",
+  "chat": "doc",
+  "reqId": "",
+  "reqType": "",
+  "team": "cureca",
+  "at": "2026-11-25T16:14:54+09:00",
+  "from": "2026-11-25T13:55:03+09:00",
+  "by": "정다예",
+  "doneBy": "Claude",
+  "pc": "DAYE",
+  "fileKey": "etCQFF3CTf1EA6C79d4BBf",
+  "fileName": "",
+  "page": "",
+  "frame": "",
+  "nodeId": "",
+  "text": "채팅: Figma 연결 확인해줘. 작업 파일: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-",
+  "turns": 22,
+  "models": {
+    "claude-opus-5-5": 171
+  },
+  "calls": 171,
+  "input": 388,
+  "cacheWrite": 260407,
+  "cacheRead": 48859898,
+  "output": 112715,
+  "total": 49233408,
+  "usd": 14.1111
+}

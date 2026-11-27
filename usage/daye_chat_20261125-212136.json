@@ -1,0 +1,30 @@
+{
+  "id": "daye_chat_20261125-212136",
+  "kind": "work",
+  "chat": "doc",
+  "reqId": "",
+  "reqType": "",
+  "team": "cureca",
+  "at": "2026-11-25T21:21:36+09:00",
+  "from": "2026-11-25T20:06:52+09:00",
+  "by": "정다예",
+  "doneBy": "Claude",
+  "pc": "DAYE",
+  "fileKey": "",
+  "fileName": "",
+  "page": "",
+  "frame": "",
+  "nodeId": "",
+  "text": "채팅: 아니아니 구지 왜 추가했냐 이말이야",
+  "turns": 14,
+  "models": {
+    "claude-opus-5-5": 112
+  },
+  "calls": 112,
+  "input": 252,
+  "cacheWrite": 642489,
+  "cacheRead": 68939433,
+  "output": 342207,
+  "total": 69924381,
+  "usd": 25.7729
+}
