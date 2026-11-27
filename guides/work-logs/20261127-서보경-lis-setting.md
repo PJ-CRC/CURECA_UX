@@ -265,6 +265,7 @@ started: 2026-11-27
 | C27 | 화면 영역 제목 아래 안내 문구 `Configure LIS interface settings for order and result transmission.` | 안내 문구를 화면에서 지움 (언어셋 DB LID-STN-196 「삭제」 — 디자인에 안내 문구 없음 — 와 맞춤) | Configure LIS interface settings for order and result transmission. → 없음 | TI-STN-04-01-T 화면 영역 (번호 없음) · 케이스 | 검토 질의 6 | - (T-IOS 단독) | O | 맞음 (2026-11-27) |
 | C28 | 6 LIS Network 입력 안내 글 `IP Address` · `Port` | 언어셋 DB(디자인) 글자로 (LID-STN-208 · 269) | IP Address → Enter IP Address · Port → Enter Port | TI-STN-04-01-T 6 | 검토 질의 7 | - (T-IOS 단독) | O | 맞음 (2026-11-27) |
 | C29 | 검색 입력 안내 글 `Search by sample type or LIS code` · `Search product name` · `Search target or LIS code` · `Search by product or LIS code` | 언어셋 DB(디자인) 글자로 (LID-STN-271 · 275 · 276 · 272) | Search by sample type or LIS code → Sample type or LIS code · Search product name → Product name or code · Search target or LIS code → Target or LIS code · Search by product or LIS code → Test or LIS code | TI-STN-04-02-T 2-1 · 케이스 Case 1 · 2 · 3 | 검토 질의 7 | - (T-IOS 단독) | O | 맞음 (2026-11-27) |
+| C30 | Query Mode일 때 T-IOS Network Port 칸이 빈 값 · Disabled (C2) | 값을 지운 칸에 `None`을 보이고 Disabled (언어셋 DB LID-STN-268 · 케이스 Case 1-2와 맞춤. 값은 정책대로 지워짐) | 없음 → None | TI-STN-04-01-T 4 · 화면 4 | 검토 질의 8 | - (T-IOS 단독) | O | 맞음 (2026-11-27) |
 
 ## 검토 질의
 <!-- 4단계 절차 2번. 틀은 flow/4-revise-verify.md "검토 질의 틀" -->
