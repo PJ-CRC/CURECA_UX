@@ -180,28 +180,28 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=38
 
 | 화면 표기 글자 (영어) | 출처 | Language ID |
 | --- | --- | --- |
-| LIS Setting | 화면 제목 | |
-| Interface Configuration | 탭 | |
-| Code Mapping | 탭 | |
-| Code Type | 화면 1 · 케이스 Case 1 · 2 · 3 | |
-| Sample Type Code | 화면 1 · 화면 2 · 케이스 Case 1 · 2 · 3 | |
-| Target Code | 화면 1 · 케이스 Case 1 · 3 | |
-| Test Code | 화면 1 · 케이스 Case 2 | |
+| LIS Setting | 화면 제목 | LID-STN-193 |
+| Interface Configuration | 탭 | LID-STN-194 |
+| Code Mapping | 탭 | LID-STN-195 |
+| Code Type | 화면 1 · 케이스 Case 1 · 2 · 3 | LID-STN-212 |
+| Sample Type Code | 화면 1 · 화면 2 · 케이스 Case 1 · 2 · 3 | LID-STN-214 |
+| Target Code | 화면 1 · 케이스 Case 1 · 3 | LID-STN-270 |
+| Test Code | 화면 1 · 케이스 Case 2 | LID-STN-213 |
 | Search by sample type or LIS code | 화면 2-1 | |
-| No results found. | 디스크립션 2-1 | |
-| {n} Items | 화면 2 · 케이스 Case 1 · 2 · 3 (n = 14 · 7 · 30 · 1) | |
-| No. | 화면 2 · 케이스 Case 1 · 2 · 3 | |
-| Sample Type Name | 화면 2 | |
-| LIS Sample Type Code | 화면 2 | |
-| Edit | 화면 4 · 케이스 Case 1 · 2 · 3 | |
-| Done | 화면 4-1 · 케이스 Case 2 | |
-| Save | 화면 5 · 케이스 Case 1 · 2 · 3 | |
-| Products | 케이스 Case 1 · 3 | |
+| No results found. | 디스크립션 2-1 | LID-STN-015 |
+| {n} Items | 화면 2 · 케이스 Case 1 · 2 · 3 (n = 14 · 7 · 30 · 1) | LID-STN-006 |
+| No. | 화면 2 · 케이스 Case 1 · 2 · 3 | LID-STN-146 |
+| Sample Type Name | 화면 2 | LID-STN-216 |
+| LIS Sample Type Code | 화면 2 | LID-STN-217 |
+| Edit | 화면 4 · 케이스 Case 1 · 2 · 3 | LID-STN-017 |
+| Done | 화면 4-1 · 케이스 Case 2 | LID-EVT-025 |
+| Save | 화면 5 · 케이스 Case 1 · 2 · 3 | LID-STN-022 |
+| Products | 케이스 Case 1 · 3 | LID-STN-273 |
 | Search product name | 케이스 Case 1 · 3 | |
-| {n} targets | 케이스 Case 1 · 3 (n = 28 · 14 · 7 · 6 · 5) | |
-| Target Codes | 케이스 Case 1 · 3 | |
+| {n} targets | 케이스 Case 1 · 3 (n = 28 · 14 · 7 · 6 · 5) | LID-STN-277 |
+| Target Codes | 케이스 Case 1 · 3 | LID-STN-274 |
 | Search target or LIS code | 케이스 Case 1 · 3 | |
-| LIS Target Code | 케이스 Case 1 · 3 | |
+| LIS Target Code | 케이스 Case 1 · 3 | LID-STN-278 |
 | Search by product or LIS code | 케이스 Case 2 | |
-| Product Name | 케이스 Case 2 | |
-| LIS Test Code | 케이스 Case 2 | |
+| Product Name | 케이스 Case 2 | LID-STN-147 |
+| LIS Test Code | 케이스 Case 2 | LID-STN-215 |

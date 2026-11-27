@@ -131,22 +131,22 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=38
 
 | 화면 표기 글자 (영어) | 출처 | Language ID |
 | --- | --- | --- |
-| LIS Setting | 화면 제목 | |
-| Interface Configuration | 탭 · 화면 영역 제목 | |
-| Code Mapping | 탭 | |
+| LIS Setting | 화면 제목 | LID-STN-193 |
+| Interface Configuration | 탭 · 화면 영역 제목 | LID-STN-194 |
+| Code Mapping | 탭 | LID-STN-195 |
 | Configure LIS interface settings for order and result transmission. | 화면 영역 안내 문구 | |
-| General | 화면 영역 제목 | |
-| Interface Type | 화면 1 | |
-| HL7 | 화면 1 | |
-| Transport Protocol | 화면 2 | |
-| MLLP | 화면 2 · 디스크립션 2 | |
-| HTTP | 디스크립션 2 | |
-| Order Reception Mode | 화면 3 · 케이스 Case 1-1 · 1-2 · 1-3 | |
-| Query Mode | 화면 3 · 디스크립션 3 · 케이스 Case 1-1 · 1-3 | |
-| Push Mode | 디스크립션 3 · 케이스 Case 1-1 · 1-2 | |
-| T-IOS Network (Push Mode Only) | 화면 4 · 케이스 Case 1-2 · 1-3 | |
-| Port | 화면 4 · 화면 6 · 케이스 Case 1-2 · 1-3 | |
-| LIS Network | 화면 6 | |
-| Host Address (IP) | 화면 6 | |
+| General | 화면 영역 제목 | LID-STN-197 |
+| Interface Type | 화면 1 | LID-STN-198 |
+| HL7 | 화면 1 | LID-STN-199 |
+| Transport Protocol | 화면 2 | LID-STN-201 |
+| MLLP | 화면 2 · 디스크립션 2 | LID-STN-202 |
+| HTTP | 디스크립션 2 | LID-STN-203 |
+| Order Reception Mode | 화면 3 · 케이스 Case 1-1 · 1-2 · 1-3 | LID-STN-264 |
+| Query Mode | 화면 3 · 디스크립션 3 · 케이스 Case 1-1 · 1-3 | LID-STN-265 |
+| Push Mode | 디스크립션 3 · 케이스 Case 1-1 · 1-2 | LID-STN-266 |
+| T-IOS Network (Push Mode Only) | 화면 4 · 케이스 Case 1-2 · 1-3 | LID-STN-204 · LID-STN-267 |
+| Port | 화면 4 · 화면 6 · 케이스 Case 1-2 · 1-3 | LID-STN-205 |
+| LIS Network | 화면 6 | LID-STN-206 |
+| Host Address (IP) | 화면 6 | LID-STN-207 |
 | IP Address | 화면 6 | |
-| Save | 화면 5 | |
+| Save | 화면 5 | LID-STN-022 |
