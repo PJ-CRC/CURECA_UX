@@ -21,3 +21,4 @@
 | 13 | Information 아래 메뉴 이름 (T-IOS · L-IOS) | Lv.2 "Program", "Manual" | "Program Info", "User Manual" (`ia-screens.csv` 4줄은 먼저 고침, 2026-11-25) | 2026-11-25 사용자 결정 (정다예) | 2026-11-25 | 확정 (정다예, 2026-11-25). IA 스프레드시트 · IA-문서이력은 반영 전 |
 | 14 | LI-IVT-02-T 짝 화면 동일 | 비어 있음 | Y (TI-IVT-02-T 줄과 같게, 화면 · 디스크립션이 같음) | 반영 대기 TI-IVT-02-T-R08, 작업 기록 20261127-최고관리자-inventory (최고관리자, 1단계 요청자 확인 2) | 2026-11-27 | 반영 (2026-11-27) |
 | 15 | TI-IVT-05-T 화면 이름 (T-IOS) | Lv.2 "Waste bin" | "Waste Bin/Bottle" (화면 · 화면 정보와 맞춤) | 반영 대기 TI-IVT-05-T-R01, 작업 기록 20261127-최고관리자-inventory (최고관리자) | 2026-11-27 | 반영 (2026-11-27) |
+| 16 | Assay Pack Setting Import file 팝업 새 CID (T-IOS) | 없음 | Assay Pack Setting 아래 Lv.3 "Import file" (Popup, T-IOS 전용, 짝 CID 없음, TI-STN-08-01) | 반영 대기 TI-STN-08-R02, 작업 기록 20261126-최고관리자-assay-pack (최고관리자, 1단계 요청자 확인 2) | 2026-11-27 | 반영 (2026-11-27) |
