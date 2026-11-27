@@ -1,0 +1,28 @@
+{
+  "id": "brex-gram-2_R008",
+  "kind": "request",
+  "reqId": "R008",
+  "reqType": "요청",
+  "team": "cureca",
+  "at": "2026-11-27T10:01:43+09:00",
+  "from": "2026-11-27T10:00:58+09:00",
+  "by": "하승현",
+  "doneBy": "Claude",
+  "pc": "BREX_GRAM_2",
+  "fileKey": "etCQFF3CTf1EA6C79d4BBf",
+  "fileName": "UX AI TEST",
+  "page": "Policy Setting_tobe",
+  "frame": "",
+  "nodeId": "",
+  "text": "테스트 규칙이 있구나, 그 규칙에 따라 전체 8화면 5단계까지 진행해줘",
+  "models": {
+    "claude-opus-5-5": 7
+  },
+  "calls": 7,
+  "input": 12,
+  "cacheWrite": 58790,
+  "cacheRead": 507218,
+  "output": 4455,
+  "total": 570475,
+  "usd": 0.6609
+}
