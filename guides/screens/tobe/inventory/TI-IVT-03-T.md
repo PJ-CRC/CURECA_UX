@@ -235,4 +235,4 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=39
 | {n} ea · {n} ea ({m} rack) · {n} ea ({m} racks) · {n} ea ({m} socket) · {n} ea ({m} sockets) · {n} DWPs · {n} racks · {n} sets | 화면 2-4 · 2-5 · 3-4 · 3-5 · 3-6 (n · m = 수량) | |
 | Capacity · Shown only for fixed-capacity storage. | 디스크립션 5 (Tooltip) | LID-IVT-022 · LID-RUN-052 |
 | Required Qty · Displays the additional quantity required based on current inventory. | 디스크립션 5 (Tooltip) | LID-RUN-031 · LID-RUN-032 |
-| Status · Status is determined by run availability · Sufficient(enough stock) · Low(partial shortage) · Insufficient(no stock) | 디스크립션 5 (Tooltip) | LID-EVT-017 · - · - · - · - |
+| Status · Status is determined by run availability · Sufficient(enough stock) · Low(partial shortage) · Insufficient(no stock) | 디스크립션 5 (Tooltip) | LID-EVT-017 · LID-RUN-053 · - · - · - |

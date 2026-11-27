@@ -219,7 +219,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=39
 | Waste Bin/Bottle Status | 화면 3 | LID-IVT-010 |
 | Full | 화면 3-1 · 3 리스트 | LID-DAS-030 |
 | Almost Full | 화면 3-1 | LID-DAS-031 |
-| Fill level | 화면 3-3 | |
+| Fill level | 화면 3-3 | LID-RUN-060 |
 | Next | 화면 1-6 · 3 (Indicator Pagination) | LID-RUN-025 |
 | Shown only if system running or Inbound Trolley docked | 디스크립션 1 · 케이스 Case 2-1 | LID-DAS-009 |
 | No actions required | 디스크립션 1 · 3 · 케이스 Case 3-1 | LID-IVT-009 |

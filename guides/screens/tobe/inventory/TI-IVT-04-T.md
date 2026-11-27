@@ -251,4 +251,4 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=39
 | Expired reagents are discarded or returned unused, depending on the instrument. | 화면 3-3 | LID-RUN-058 |
 | Capacity · Shown only for fixed-capacity storage. | 디스크립션 5 (Tooltip) | LID-IVT-022 · LID-RUN-052 |
 | Required Qty · Displays the additional quantity required based on current inventory. | 디스크립션 5 (Tooltip) | LID-RUN-031 · LID-RUN-032 |
-| Status · Status is determined by run availability · Sufficient(enough stock) · Low(partial shortage) · Insufficient(no stock) | 디스크립션 5 (Tooltip) | LID-EVT-017 · - · - · - · - |
+| Status · Status is determined by run availability · Sufficient(enough stock) · Low(partial shortage) · Insufficient(no stock) | 디스크립션 5 (Tooltip) | LID-EVT-017 · LID-RUN-053 · - · - · - |
