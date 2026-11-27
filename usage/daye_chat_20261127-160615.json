@@ -1,0 +1,30 @@
+{
+  "id": "daye_chat_20261127-160615",
+  "kind": "work",
+  "chat": "figma",
+  "reqId": "",
+  "reqType": "",
+  "team": "cureca",
+  "at": "2026-11-27T16:06:15+09:00",
+  "from": "2026-11-27T15:42:46+09:00",
+  "by": "정다예",
+  "doneBy": "Claude",
+  "pc": "DAYE",
+  "fileKey": "etCQFF3CTf1EA6C79d4BBf",
+  "fileName": "",
+  "page": "",
+  "frame": "",
+  "nodeId": "",
+  "text": "채팅: UX AI TEST 우리 작업방 에서 Pretendard 쓰고 있는곳 전체적으로 검토해서 리스팅 해줘 페이지 왼쪽의 큰 기획 진행 표시판 하고 ",
+  "turns": 4,
+  "models": {
+    "claude-opus-5-5": 20
+  },
+  "calls": 20,
+  "input": 48,
+  "cacheWrite": 678784,
+  "cacheRead": 13007798,
+  "output": 31524,
+  "total": 13718154,
+  "usd": 8.6625
+}
