@@ -29,7 +29,7 @@ started: 2026-11-27
 | 4. 수정 · 확인 | | | |
 | 5. 완료 | | | |
 
-이어서 작업할 곳: 4단계 · 절차 1 사용자 확인 목록을 보냄, 요청자가 「하나씩 답하기」를 골라 한 항목씩 묻는 중 — Q1 반영함, Q2 물음, 답 기다림 (순서 Q1 ~ Q7 → C2 · C4 ~ C8 · C12 · C14 · C15) (다시 읽을 곳: 4단계 `flow/4-revise-verify.md` 절차 1 · 절차 공통: 화면 수정 규칙 / 작업 기록 "질문 대기" · "변경 확인")
+이어서 작업할 곳: 4단계 · 절차 1 사용자 확인 목록을 보냄, 요청자가 「하나씩 답하기」를 골라 한 항목씩 묻는 중 — Q1 ~ Q7 답 받음(C17 ~ C21), 변경 확인 C2 · C4 ~ C8 · C12 · C14 · C15를 한 번에 물음, 답 기다림. Q2 ~ Q7 반영: 작업 기록 끝, 화면 MD · Figma 진행 중 (다시 읽을 곳: 4단계 `flow/4-revise-verify.md` 절차 1 · 절차 공통: 화면 수정 규칙 / 작업 기록 "질문 대기" · "변경 확인")
 
 ## 요청
 <!-- 1단계 절차 1번. 요청 글 한두 줄과 출처, 공유 파일 (아래 "항목마다 적는 법") -->
@@ -159,9 +159,9 @@ started: 2026-11-27
 | C16 | 2에 컬럼 항목 설명 없음 | 2에 "컬럼 항목"(No. · 항목 이름 · LIS Code)을 더함 | | TI-STN-04-02-T 2 | 기존 화면에 보이는 것 (reference-rules/description.md 3절 표) | - (T-IOS 단독) | - | 맞음 (기존 화면, 2026-11-27) |
 | 요건 1 · TI-STN-04-02-T Test Code 30종 · GI-B1 Target 7개 | 정책에 있음 | `glossary/test-items.csv` | 그대로 그림 |
 | 요건 1 · TI-STN-04-02-T Test Code의 LIS Test Code 예시 (`Allplex_HPV_HR` 등) | 정책에 없음 (처음 채워지는 CURECA 값이 무엇인지 없음) | POL-SYS-002 규칙 3, `glossary/test-items.csv` 코드 | Q4 |
-| Q5 | 검색 결과가 없을 때 목록에 보여 줄 문구 (Common UX Basic Table No Data는 문구를 화면에 맡김, 기존 화면 · 정책서 · 같은 메뉴에 없음) | TI-STN-04-02-T 2-1 | | - (T-IOS 단독) | |
-| Q6 | [4-2] 확정한 항목을 강조하는 표시 (기존 디스크립션 "색상으로 구분", 색 · 모양 정의 없음) | TI-STN-04-02-T 4 | | - (T-IOS 단독) | |
-| Q7 | 목록의 노출 개수 · Pagination 적용 (Common UX Basic Table은 10 items · 노출 개수 Dropdown · Pagination, 기존 화면은 전체 노출이라 기존대로 그림) | TI-STN-04-02-T 2 · 케이스 Case 1 · 2 | | - (T-IOS 단독) | |
+| Q5 | 검색 결과가 없을 때 목록에 보여 줄 문구 (Common UX Basic Table No Data는 문구를 화면에 맡김, 기존 화면 · 정책서 · 같은 메뉴에 없음) | TI-STN-04-02-T 2-1 | | - (T-IOS 단독) || 2026-11-27 · 요청자 답: 다른 화면과 같은 공통 문구 No results found. (LID-STN-015) → C19 |
+| Q6 | [4-2] 확정한 항목을 강조하는 표시 (기존 디스크립션 "색상으로 구분", 색 · 모양 정의 없음) | TI-STN-04-02-T 4 | | - (T-IOS 단독) || 2026-11-27 · 요청자 답: 색은 UI에서 정함, 디스크립션에는 색으로 강조된다고만 → C20 |
+| Q7 | 목록의 노출 개수 · Pagination 적용 (Common UX Basic Table은 10 items · 노출 개수 Dropdown · Pagination, 기존 화면은 전체 노출이라 기존대로 그림) | TI-STN-04-02-T 2 · 케이스 Case 1 · 2 | | - (T-IOS 단독) || 2026-11-27 · 요청자 답: Pagination 없이 전체 노출 (항목 최대 약 50개, 검색 있음) — 지금 그린 대로 → C21 (디스크립션만) |
 | 요건 1 · 두 화면 5 [Save] · 저장하지 않고 이동 | 정책에 있음 | Confirm_010 · Alert_017 · Confirm_016 | 디스크립션 끝에 코드 |
 | 요건 1 · 두 화면 0 User Type | 표에 줄 없음 | POL-SYS-001 규칙 8 (Service · Admin), `policy/permission-matrix.csv`에 LIS Setting 줄 없음 | Q1 |
 
@@ -224,12 +224,12 @@ started: 2026-11-27
 | 번호 (Q) | 질문 | 관련된 곳 (CID · 디스크립션 번호) | 논의 대상 | T · L 같음 | 풀린 날 · 어떻게 |
 | --- | --- | --- | --- | --- | --- |
 | Q1 | LIS Setting을 쓸 수 있는 User Type (권한 표 `policy/permission-matrix.csv`에 LIS Setting 줄 없음. POL-SYS-001 규칙 8 · 기존 화면은 Service · Admin) | TI-STN-04-01-T 0 · TI-STN-04-02-T 0 | | - (T-IOS 단독) | 2026-11-27 · 요청자 답 "Service, Admin" — 디스크립션 0이 이미 Service, Admin이라 화면 변경 없음. Figma 사용자 확인 목록 Q1 항목 지움 (라벨 없음). 권한 표는 5단계에서 맞춤 |
-| Q2 | Port · Host Address(IP) 입력값의 형식 · 범위 검사와 빈 값으로 [Save]를 누를 때의 동작 (POL-SYS-001에 없음) | TI-STN-04-01-T 3-2 · 4 · 4 (LIS Network) · 5 | | - (T-IOS 단독) | |
-| Q3 | LIS Code를 빈 값 · 다른 항목과 같은 값으로 입력할 때의 동작 (POL-SYS-002에 없음) | TI-STN-04-02-T 4 | | - (T-IOS 단독) | |
-| Q4 | 처음 설치할 때 채워지는 LIS Test Code 값 (기존 화면 `Allplex_HPV_HR`은 `glossary/test-items.csv`에서 쓰지 않는 표현, 검사 항목 코드는 `HPVHR-HP72/73`. POL-SYS-002 규칙 3) | TI-STN-04-02-T 케이스 Test Code 화면 | | - (T-IOS 단독) | |
-| Q5 | 검색 결과가 없을 때 목록에 보여 줄 문구 (Common UX Basic Table No Data는 문구를 화면에 맡김, 기존 화면 · 정책서 · 같은 메뉴에 없음) | TI-STN-04-02-T 2-1 | | - (T-IOS 단독) | |
-| Q6 | [4-2] 확정한 항목을 강조하는 표시 (기존 디스크립션 "색상으로 구분", 색 · 모양 정의 없음) | TI-STN-04-02-T 4 | | - (T-IOS 단독) | |
-| Q7 | 목록의 노출 개수 · Pagination 적용 (Common UX Basic Table은 10 items · 노출 개수 Dropdown · Pagination, 기존 화면은 전체 노출이라 기존대로 그림) | TI-STN-04-02-T 2 · 케이스 Case 1 · 2 | | - (T-IOS 단독) | |
+| Q2 | Port · Host Address(IP) 입력값의 형식 · 범위 검사와 빈 값으로 [Save]를 누를 때의 동작 (POL-SYS-001에 없음) | TI-STN-04-01-T 3-2 · 4 · 4 (LIS Network) · 5 | | - (T-IOS 단독) || 2026-11-27 · 요청자 답: Text Input 그대로, 필수값으로 두지 않고 형식 · 범위 검사 정책도 두지 않음(테스트하며 확인) → C17 |
+| Q3 | LIS Code를 빈 값 · 다른 항목과 같은 값으로 입력할 때의 동작 (POL-SYS-002에 없음) | TI-STN-04-02-T 4 | | - (T-IOS 단독) || 2026-11-27 · 요청자 답: 빈 값으로 확정하면 Default 값으로 바뀌어 저장, 다른 항목과 같은 값은 쓸 수 없고 Alert(이미 사용 중)로 안내 → C18 (Alert_048 새로 더함). 이 화면 안의 결정이라 논의 대상은 만들지 않음 (discussions.md 4절) |
+| Q4 | 처음 설치할 때 채워지는 LIS Test Code 값 (기존 화면 `Allplex_HPV_HR`은 `glossary/test-items.csv`에서 쓰지 않는 표현, 검사 항목 코드는 `HPVHR-HP72/73`. POL-SYS-002 규칙 3) | TI-STN-04-02-T 케이스 Test Code 화면 | | - (T-IOS 단독) || 2026-11-27 · 요청자 답: 기존 화면 값 그대로 — 화면 변경 없음 |
+| Q5 | 검색 결과가 없을 때 목록에 보여 줄 문구 (Common UX Basic Table No Data는 문구를 화면에 맡김, 기존 화면 · 정책서 · 같은 메뉴에 없음) | TI-STN-04-02-T 2-1 | | - (T-IOS 단독) || 2026-11-27 · 요청자 답: 다른 화면과 같은 공통 문구 No results found. (LID-STN-015) → C19 |
+| Q6 | [4-2] 확정한 항목을 강조하는 표시 (기존 디스크립션 "색상으로 구분", 색 · 모양 정의 없음) | TI-STN-04-02-T 4 | | - (T-IOS 단독) || 2026-11-27 · 요청자 답: 색은 UI에서 정함, 디스크립션에는 색으로 강조된다고만 → C20 |
+| Q7 | 목록의 노출 개수 · Pagination 적용 (Common UX Basic Table은 10 items · 노출 개수 Dropdown · Pagination, 기존 화면은 전체 노출이라 기존대로 그림) | TI-STN-04-02-T 2 · 케이스 Case 1 · 2 | | - (T-IOS 단독) || 2026-11-27 · 요청자 답: Pagination 없이 전체 노출 (항목 최대 약 50개, 검색 있음) — 지금 그린 대로 → C21 (디스크립션만) |
 
 ## 변경 확인
 <!-- 사용자 확인 목록의 변경 확인이자 이 작업으로 화면에서 바뀐 요소의 목록. 원본은 이 표(화면 MD에는 두지 않음). 틀 설명은 reference-rules/work-log.md "틀"의 "변경 확인" 주석 -->
