@@ -1,14 +1,14 @@
 {
-  "reportAt": "2026-11-27T15:47:47+09:00",
+  "reportAt": "2026-11-27T15:48:47+09:00",
   "pc": "BREX_06",
   "slug": "brex-06",
   "user": "최고관리자",
   "os": "windows",
   "version": "0.32.36",
   "alive": true,
-  "status": "idle",
-  "msg": "R009 질문 답을 기다리는 중(16:42까지 이어서 처리) · 컨텍스트 22%",
-  "statusAt": "2026-11-27T15:47:41+09:00",
+  "status": "working",
+  "msg": "처리 중: PENDING R009 · 강도 medium",
+  "statusAt": "2026-11-27T15:48:46+09:00",
   "claude": "따로 설치",
   "claudeWay": "cli",
   "autoWatch": true,
@@ -440,6 +440,14 @@
     }
   ],
   "turns": [
+    {
+      "at": "2026-11-27T15:47:47+09:00",
+      "what": "PENDING R009 · 강도 medium",
+      "resume": true,
+      "end": "",
+      "ok": null,
+      "sec": null
+    },
     {
       "at": "2026-11-27T15:40:20+09:00",
       "what": "PENDING R009 · 강도 medium",
