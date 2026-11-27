@@ -166,19 +166,19 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=39
 
 | 화면 표기 글자 (영어) | 출처 | Language ID |
 | --- | --- | --- |
-| Inventory | 화면 제목 | |
-| Summary · Overview · Consumables · Reagents · Waste Bin/Bottle · Usage History | 화면 Tab | |
-| Overview by Module | 화면 1 | |
-| Refresh | 화면 3 | |
-| All | 화면 1-2 · 케이스 | |
-| Sample Storage · Consumable Storage · High-throughput Extraction · Flexible Extraction · PCR Setup · Plate Sealing | 화면 1 (Module 열 제목) · 케이스 | |
-| Samples (Inbound Trolley) · Samples (Test In Progress) · Samples (Outbound Trolley) | 화면 1-1 | |
-| 96-DWP · 1000 μL Tip · 300 μL Tip · Wide Bore Tip · Empty Standard Tube · Stool Swab · LB DWP · GI-BP IC · GI-V IC · PB IC · RP-V IC · STI-12 IC · LB Tub · LB Tub (Prep) · PBS Tub · Saline Tub · ASL Standard Tube · PBS Standard Tube · PK Tube · Prelyser Standard Tube · Saline Standard Tube | 화면 1 Consumable Storage 열 (품목 이름) | |
-| EB DWP · MB DWP · WB1 DWP · WB2 DWP · Spin Tip | 화면 1 High-throughput Extraction 열 | |
-| MB Tube · BB Tub · EB Tub · WB1 Tub · WB2 Tub · WB3 Tub · Buffer Cartridge Cap | 화면 1 Flexible Extraction 열 | |
-| PCR Plate · 300 μL Tip (1) · 300 μL Tip (2) | 화면 1 PCR Setup 열 | |
-| MM Tube · Sealing Film (1) · Sealing Film (2) · Allplex™ GI-Bacteria(I) Assay · Allplex™ GI-Bacteria(II) Assay · Allplex™ GI-Virus Assay · Allplex™ HPV28 Detection · Allplex™ PneumoBacter Assay · Allplex™ Respiratory Panel 1 · Allplex™ Respiratory Panel 2 · Allplex™ Respiratory Panel 3 · Anyplex™ II STI-12 Detection | 화면 1 Plate Sealing 열 · 케이스 Case 3-2 | |
-| {n} ea · {n} ea ({m} racks) · {n} ea ({m} rack) · {n} rxns ({m} DWPs) · {n} rxns ({m} DWP) · {n} rxns ({m} tubes) · {n} rxns ({m} tube) · {n} rxns ({m} racks) · {n} rxns ({m} rack) · {n} rxns ({m} sets) · {n} ea ({m} sets) · {n} ea ({m} socket) | 화면 1 수량 (n · m = 수량) | |
-| Displays total inventory aggregated across all modules. Select a module to view its individual stock details | 디스크립션 2 | |
-| No docked trolleys | 케이스 Case 1-1 | |
-| No registered modules available | 케이스 Case 2-1 | |
+| Inventory | 화면 제목 | LID-IVT-001 |
+| Summary · Overview · Consumables · Reagents · Waste Bin/Bottle · Usage History | 화면 Tab | LID-IVT-002 · LID-IVT-003 · LID-RUN-044 · LID-SPT-043 · LID-IVT-053 · LID-IVT-004 |
+| Overview by Module | 화면 1 | LID-IVT-012 |
+| Refresh | 화면 3 | LID-RUN-033 |
+| All | 화면 1-2 · 케이스 | LID-EVT-003 |
+| Sample Storage · Consumable Storage · High-throughput Extraction · Flexible Extraction · PCR Setup · Plate Sealing | 화면 1 (Module 열 제목) · 케이스 | LID-EVT-048 · LID-EVT-049 · LID-EVT-051 · LID-EVT-052 · LID-SPT-026 · LID-SPT-032 |
+| Samples (Inbound Trolley) · Samples (Test In Progress) · Samples (Outbound Trolley) | 화면 1-1 | LID-IVT-044 · LID-IVT-045 · LID-IVT-046 |
+| 96-DWP · 1000 μL Tip · 300 μL Tip · Wide Bore Tip · Empty Standard Tube · Stool Swab · LB DWP · GI-BP IC · GI-V IC · PB IC · RP-V IC · STI-12 IC · LB Tub · LB Tub (Prep) · PBS Tub · Saline Tub · ASL Standard Tube · PBS Standard Tube · PK Tube · Prelyser Standard Tube · Saline Standard Tube | 화면 1 Consumable Storage 열 (품목 이름) | LID-SPT-020 · LID-IVT-058 · LID-IVT-056 · LID-IVT-070 · LID-IVT-071 · LID-IVT-072 · LID-IVT-073 · LID-IVT-074 · LID-IVT-075 · LID-IVT-076 · LID-IVT-077 · LID-IVT-078 · LID-IVT-079 · LID-IVT-080 · LID-IVT-057 · LID-IVT-081 · LID-IVT-082 · LID-IVT-083 · LID-MAS-014 · LID-IVT-084 · LID-IVT-085 |
+| EB DWP · MB DWP · WB1 DWP · WB2 DWP · Spin Tip | 화면 1 High-throughput Extraction 열 | LID-IVT-055 · LID-IVT-054 · LID-IVT-086 · LID-IVT-087 · LID-IVT-088 |
+| MB Tube · BB Tub · EB Tub · WB1 Tub · WB2 Tub · WB3 Tub · Buffer Cartridge Cap | 화면 1 Flexible Extraction 열 | LID-MAS-013 · LID-IVT-059 · LID-IVT-063 · LID-IVT-060 · LID-IVT-061 · LID-IVT-062 · LID-IVT-129 |
+| PCR Plate · 300 μL Tip (1) · 300 μL Tip (2) | 화면 1 PCR Setup 열 | LID-SPT-031 · LID-IVT-056 |
+| MM Tube · Sealing Film (1) · Sealing Film (2) · Allplex™ GI-Bacteria(I) Assay · Allplex™ GI-Bacteria(II) Assay · Allplex™ GI-Virus Assay · Allplex™ HPV28 Detection · Allplex™ PneumoBacter Assay · Allplex™ Respiratory Panel 1 · Allplex™ Respiratory Panel 2 · Allplex™ Respiratory Panel 3 · Anyplex™ II STI-12 Detection | 화면 1 Plate Sealing 열 · 케이스 Case 3-2 | LID-IVT-089 · LID-IVT-090 · LID-IVT-091 · LID-IVT-092 · LID-IVT-093 · LID-IVT-094 · LID-IVT-095 · LID-IVT-096 · LID-IVT-097 · LID-IVT-098 · LID-IVT-099 |
+| {n} ea · {n} ea ({m} racks) · {n} ea ({m} rack) · {n} rxns ({m} DWPs) · {n} rxns ({m} DWP) · {n} rxns ({m} tubes) · {n} rxns ({m} tube) · {n} rxns ({m} racks) · {n} rxns ({m} rack) · {n} rxns ({m} sets) · {n} ea ({m} sets) · {n} ea ({m} socket) | 화면 1 수량 (n · m = 수량) | LID-IVT-130 · LID-IVT-124 · LID-IVT-126 · LID-IVT-123 · LID-IVT-131 · LID-IVT-132 · LID-IVT-133 · LID-IVT-125 · LID-IVT-134 · LID-IVT-128 · LID-IVT-135 · LID-IVT-136 |
+| Displays total inventory aggregated across all modules. Select a module to view its individual stock details | 디스크립션 2 | LID-IVT-013 |
+| No docked trolleys | 케이스 Case 1-1 | LID-IVT-014 |
+| No registered modules available | 케이스 Case 2-1 | LID-IVT-015 |
