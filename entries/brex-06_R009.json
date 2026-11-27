@@ -2,11 +2,11 @@
   "id": "brex-06_R009",
   "kind": "request",
   "team": "cureca",
-  "status": "대기",
-  "at": "2026-11-27T10:20:22+09:00",
+  "status": "보류",
+  "at": "2026-11-27T10:20:35+09:00",
   "createdAt": "2026-11-27T09:55:49+09:00",
   "by": "최고관리자",
-  "doneBy": "최고관리자",
+  "doneBy": "Claude",
   "pc": "BREX_06",
   "reqId": "R009",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,13 +17,27 @@
   "type": "요청",
   "layout": "",
   "text": "https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-360786&t=GdYCaPho44GgAu5i-1\nInventory T-ios 화면만 다시 그려줘",
-  "note": "",
+  "note": "케이스 3 · 2단계 · 20261127-최고관리자-inventory - 하나씩 정하기로 2단계 질문 Q1부터 묻습니다 (Q2는 다음에).\n\n**[질문 대기] Q1 / 2**\nQ1 DS-0013: POL-INV-002(정책서 Inventory 「Remaining Qty, Capacity, 사용량 집계」, `policy/inv/POL-INV-002.md`) 머리말 `cids`에 Item details Popup 넷을 더할까요?\n  - 이대로 결정 (추천)\n  - 논의 중으로 둠\n  - 더하지 않음\n  더할 화면: TI-IVT-03-T-P · LI-IVT-03-T-P · TI-IVT-04-T-P · LI-IVT-04-T-P. Popup도 Remaining Qty를 이 정책의 정의(Storage와 Buffer 공간 수량 합) · 표기 규칙(규칙 5)대로 보여 줌. 규칙 문장은 그대로이고, 정책서 반영은 5단계 완료 때 함\n\n다음 질문 (Q1 답 뒤에 물음): Q2 Sample Pre-treatment 폐기함 Unit을 제조사별 케이스 화면으로 나눠 그릴지\n\n작업 기준: basis 2026-11-27 09:58 · 작업규칙 CURECA 작업규칙 @원본 · 정책서 정책서 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 · 화면 정의서 화면 정의서",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "Q1 DS-0013: POL-INV-002 cids에 Item details Popup 넷(TI/LI-IVT-03-T-P · 04-T-P)을 더할까요?",
+    "options": [
+      {
+        "label": "이대로 결정 (추천)"
+      },
+      {
+        "label": "논의 중으로 둠"
+      },
+      {
+        "label": "더하지 않음"
+      }
+    ],
+    "free": true
+  },
   "replies": [
     {
       "at": "2026-11-27T10:06:12+09:00",
