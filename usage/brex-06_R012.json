@@ -4,7 +4,7 @@
   "reqId": "R012",
   "reqType": "요청",
   "team": "cureca",
-  "at": "2026-11-27T17:37:07+09:00",
+  "at": "2026-11-27T17:43:39+09:00",
   "from": "2026-11-27T17:26:30+09:00",
   "by": "최고관리자",
   "doneBy": "Claude",
@@ -16,13 +16,13 @@
   "nodeId": "2489:43434",
   "text": "/impeccable 메뉴얼 점검, 디자인 위주로 점검, 용어도 점검해서 제안해주고\n이미지와 글자가 겹치지 않게",
   "models": {
-    "claude-opus-5-5": 56
+    "claude-opus-5-5": 87
   },
-  "calls": 56,
-  "input": 106,
-  "cacheWrite": 195523,
-  "cacheRead": 7331021,
-  "output": 57662,
-  "total": 7584312,
-  "usd": 4.1841
+  "calls": 87,
+  "input": 166,
+  "cacheWrite": 333767,
+  "cacheRead": 10194498,
+  "output": 90970,
+  "total": 10619401,
+  "usd": 6.5291
 }
