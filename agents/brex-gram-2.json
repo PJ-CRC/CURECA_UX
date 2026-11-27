@@ -1,14 +1,14 @@
 {
-  "reportAt": "2026-11-27T14:20:58+09:00",
+  "reportAt": "2026-11-27T14:21:58+09:00",
   "pc": "BREX_GRAM_2",
   "slug": "brex-gram-2",
   "user": "하승현",
   "os": "windows",
   "version": "0.32.32",
   "alive": true,
-  "status": "working",
-  "msg": "처리 중: PENDING R011 · 강도 medium",
-  "statusAt": "2026-11-27T14:20:54+09:00",
+  "status": "idle",
+  "msg": "요청을 기다리는 중",
+  "statusAt": "2026-11-27T14:21:48+09:00",
   "claude": "따로 설치",
   "claudeWay": "",
   "autoWatch": true,
@@ -79,9 +79,9 @@
       "at": "2026-11-27T14:19:19+09:00",
       "what": "PENDING R011 · 강도 medium",
       "resume": false,
-      "end": "",
-      "ok": null,
-      "sec": null
+      "end": "2026-11-27T14:21:23+09:00",
+      "ok": true,
+      "sec": 123
     },
     {
       "at": "2026-11-27T14:13:55+09:00",
