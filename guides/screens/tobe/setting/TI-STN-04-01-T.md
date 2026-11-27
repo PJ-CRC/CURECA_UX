@@ -134,7 +134,6 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=38
 | LIS Setting | 화면 제목 | LID-STN-193 |
 | Interface Configuration | 탭 · 화면 영역 제목 | LID-STN-194 |
 | Code Mapping | 탭 | LID-STN-195 |
-| Configure LIS interface settings for order and result transmission. | 화면 영역 안내 문구 | |
 | General | 화면 영역 제목 | LID-STN-197 |
 | Interface Type | 화면 1 | LID-STN-198 |
 | HL7 | 화면 1 | LID-STN-199 |

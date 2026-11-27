@@ -262,6 +262,7 @@ started: 2026-11-27
 | C24 | 0 「T-IOS 상단에서 고른 CURECA의 … 보여 주고 바꿈」 (C3) | 「CURECA가 여러 대 설치된 경우, Top Navigation에서 선택한 CURECA의 설정 화면」으로 (한 대면 해당 없음) | | TI-STN-04-01-T 0 · TI-STN-04-02-T 0 | 검토 질의 1 | - (T-IOS 단독) | - | 맞음 (2026-11-27) |
 | C25 | 4 「Port Text Input 내 입력값」 | 「Port 영역의 Text Input 입력값」처럼 영역과 요소를 나눠 씀 | | TI-STN-04-01-T 4 | 검토 질의 3 | - (T-IOS 단독) | - | 맞음 (2026-11-27) |
 | C26 | 탭 영역 번호 · 디스크립션 (TI-STN-04-01-T 7 · TI-STN-04-02-T 6, C14에서 더함) | 번호 표시와 디스크립션 블록을 지움 (Common UX에 정리된 공통 요소, 탭 모양은 Underline Tab 그대로) | | TI-STN-04-01-T 7 · TI-STN-04-02-T 6 | 검토 질의 4 | - (T-IOS 단독) | - | 맞음 (2026-11-27) |
+| C27 | 화면 영역 제목 아래 안내 문구 `Configure LIS interface settings for order and result transmission.` | 안내 문구를 화면에서 지움 (언어셋 DB LID-STN-196 「삭제」 — 디자인에 안내 문구 없음 — 와 맞춤) | Configure LIS interface settings for order and result transmission. → 없음 | TI-STN-04-01-T 화면 영역 (번호 없음) · 케이스 | 검토 질의 6 | - (T-IOS 단독) | O | 맞음 (2026-11-27) |
 
 ## 검토 질의
 <!-- 4단계 절차 2번. 틀은 flow/4-revise-verify.md "검토 질의 틀" -->
@@ -273,6 +274,7 @@ started: 2026-11-27
 | 3 | 2026-11-27 | 요청자 (R002) | 「Port Text Input 내 입력값」 → Port 영역의 Text Input처럼 나눠 씀 | TI-STN-04-01-T #4 | 고침 (C25) | 2026-11-27 |
 | 4 | 2026-11-27 | 요청자 (R002) | 두 화면의 탭 영역(7 · 6)은 Common UX에 정리된 것이라 지움 | TI-STN-04-01-T #7 · TI-STN-04-02-T #6 | 고침 (C26) | 2026-11-27 |
 | 5 | 2026-11-27 | 요청자 (R002) | 디스크립션의 빨간 표시와 취소선을 모두 지움 (취소선 글은 지우고 빨간 글은 검은 글로) | TI-STN-04-01-T · TI-STN-04-02-T 디스크립션 전체 | 고침 (표기만, 화면 변경 없음 — reference-rules/description.md 7절 「바뀐 글 표시」와 다르게 요청자 지시대로) | 2026-11-27 |
+| 6 | 2026-11-27 | 요청자 (R002, UX 확정 뒤 · 언어셋 확인 요청자 확인 #8의 답) | 화면 영역 안내 문구 `Configure LIS interface settings for order and result transmission.`를 우리 화면에서도 지움 (언어셋 DB에서 삭제된 글자) | TI-STN-04-01-T 화면 영역 | 고침 (C27) | 2026-11-27 |
 
 ## 언어셋
 <!-- 4단계 절차 4번. 틀은 flow/4-revise-verify.md "언어셋 틀" -->
