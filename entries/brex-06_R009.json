@@ -2,11 +2,11 @@
   "id": "brex-06_R009",
   "kind": "request",
   "team": "cureca",
-  "status": "대기",
-  "at": "2026-11-27T15:47:46+09:00",
+  "status": "진행 중",
+  "at": "2026-11-27T15:47:53+09:00",
   "createdAt": "2026-11-27T09:55:49+09:00",
   "by": "최고관리자",
-  "doneBy": "최고관리자",
+  "doneBy": "Claude",
   "pc": "BREX_06",
   "reqId": "R009",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -18,36 +18,11 @@
   "type": "요청",
   "layout": "",
   "text": "https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-360786&t=GdYCaPho44GgAu5i-1\nInventory T-ios 화면만 다시 그려줘",
-  "note": "",
+  "note": "변경 확인 39건 「모두 맞음」 반영 시작",
   "shot": "",
   "shots": [],
   "images": [],
-  "frames": [
-    {
-      "nodeId": "3905:21824",
-      "name": "TI-IVT-01-T"
-    },
-    {
-      "nodeId": "3916:990",
-      "name": "TI-IVT-03-T"
-    },
-    {
-      "nodeId": "3919:1616",
-      "name": "TI-IVT-03-T-P"
-    },
-    {
-      "nodeId": "3926:2",
-      "name": "TI-IVT-04-T"
-    },
-    {
-      "nodeId": "3930:570",
-      "name": "TI-IVT-04-T-P"
-    },
-    {
-      "nodeId": "3934:2",
-      "name": "TI-IVT-06-T"
-    }
-  ],
+  "frames": [],
   "marks": [],
   "ask": null,
   "replies": [
