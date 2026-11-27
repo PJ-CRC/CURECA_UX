@@ -42,14 +42,15 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=38
   - Test Code
     - <span style="color:red">~~Assay pack 관리에서 fileType이 ‘PCR’인 정보에서 내 ‘testItemCode’ 정보가 관리항목이다.~~</span>
     - <span style="color:red">~~다만 화면에는 ‘testItemName’ 값으로 표시됨~~</span>
-    - <span style="color:red">Assay Pack의 PCR 정보에 들어 있는 검사 항목이 관리 항목</span>
-    - <span style="color:red">화면에는 코드 대신 검사 항목 이름 노출</span>
+    - <span style="color:red">Assay Pack PCR 파일(fileType: PCR)의 시약 기본 정보 중 검사 항목(testItemCode · testItemName)이 관리 항목</span>
+    - <span style="color:red">화면에는 testItemName 노출, LIS Test Code 기본값은 testItemCode</span>
   - Target Code Case
     - <span style="color:red">~~Assay pack 관리에서 fileType이 ‘PCR’인 목록 중에 ‘isTargetNames’ 값이 True인 경우만 항목에 추가되어 관리된다.~~</span>
     - <span style="color:red">~~이때 ‘testTargetNames’ 항목들이 2 depth 항목으로 제공되어 관리됨~~</span>
-    - <span style="color:red">Assay Pack의 PCR 정보 중 Target 이름을 쓰는 검사 항목만 관리 항목</span>
-    - <span style="color:red">그 검사 항목의 Target이 2 Depth 항목으로 제공되어 관리됨</span>
+    - <span style="color:red">Assay Pack PCR 파일 중 isTestTargetSelectable이 true인 검사 항목만 관리 항목</span>
+    - <span style="color:red">그 검사 항목의 testTargetNames가 2 Depth 항목으로 제공되어 관리됨</span>
   - <span style="color:red">Assay Pack이 바뀌면 관리 항목도 바뀜</span>
+  - <span style="color:red">파라미터 기준 : 씨젠 Assay Pack 명세 R06 (2026-10-26)</span>
 - User Type : Service, Admin
 - 정책 참고 : POL-SYS-002, POL-COM-005, POL-TST-010
 
@@ -178,7 +179,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=38
 | 2 | Items | 14 | `glossary/sample-types.csv` |
 | Case 1 | Products 목록 | Allplex HPV28 28 targets · Anyplex II HPV HR 14 targets · GI-B1 7 targets · GI-B2 6 targets · GI-V 6 targets · PB 7 targets · RP1 7 targets · RP2 7 targets · RP3 5 targets, Products 9 | `glossary/test-items.csv` (Target Masking 가능 Y) |
 | Case 1 | GI-B1 Target 목록 | 기존 원본 7행 그대로 (Aer · Cam · CdB · Sal · Sh/EI · Vib · Yer) | `glossary/test-items.csv`, 기존 원본 (`3543:568320`) |
-| Case 2 | Test Code 목록 | 기존 원본 11행 그대로 (Allplex HPV HR … GI-H1, Items 30) | `glossary/test-items.csv`, 기존 원본 (`3543:567542`) |
+| Case 2 | Test Code 목록 | 기존 원본 30행의 Product Name 그대로 (Allplex HPV HR … , Items 30) / LIS Test Code는 검사 항목 코드: HPVHR-HP72/73 · Allplex_HPV28 · HPV_HR · BV_plus · H_ClariR · M_AziR · M_MoxiR, 나머지는 이름 = 코드 | `glossary/test-items.csv` 검사 항목 코드 (Q4의 답), 기존 원본 (`3543:567542`) |
 | Case 3 | 필터 결과 | 기존 원본 1행 그대로 (Aer, Items 1) | 기존 원본 (`3543:568577`) |
 
 ## 화면 표기 글자
