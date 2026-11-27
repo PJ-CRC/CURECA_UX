@@ -393,7 +393,7 @@ started: 2026-11-27
 | C4 | 목록 Unit 칸에 `Plate Sealing` · `PCR Setup` (Module 이름) | 실제 Storage Unit으로: Plate Sealing의 Reagent는 Cold Storage, PCR Setup의 PCR Plate는 PCR Plate Storage (`module-units.csv`, POL-INV-006 규칙 2) | Plate Sealing → Cold Storage · PCR Setup → PCR Plate Storage | TI-IVT-06-T #2 | `glossary/module-units.csv`, POL-INV-006 규칙 2 | - (L-IOS 고치지 않음) | - | |
 | C5 | [Export] "로컬 PC에 파일(.CVS) 형태로 저장" | [Export]를 누르면 OS 파일 탐색기에서 저장 경로와 파일 이름을 정해 .csv로 저장 (POL-COM-006 규칙 1 · 3) | | TI-IVT-06-T #3 | POL-COM-006 규칙 1 · 3 | - (L-IOS 고치지 않음) | - | |
 | C6 | Tab ⛔️ Item_Segment Tabs | Tab을 Common UX Underline Tab으로 (Common UX) | | TI-IVT-01-T · 02-T · 03-T · 04-T · 05-T · 06-T #0 | COMM-5-s | - (L-IOS 고치지 않음) | O | |
-| C7 | GNB 시스템 표기 `L-IOS` (T-IOS 화면) | GNB를 T-IOS로 | L-IOS → T-IOS | TI-IVT-02-T · 03-T · 03-T-P · 04-T · 04-T-P · 05-T · 06-T #0 | 1단계 뒤 단계용 확인 항목 8, COMM-2-a | - (L-IOS 고치지 않음) | O | |
+| C7 | GNB 시스템 표기 `L-IOS` (T-IOS 화면) | GNB를 T-IOS로 | L-IOS → T-IOS | TI-IVT-02-T · 03-T · 04-T · 05-T · 06-T #0 (03-T-P · 04-T-P는 Dim 위 Popup만 그려 GNB가 없어 뺌, 3단계) | 1단계 뒤 단계용 확인 항목 8, COMM-2-a | - (L-IOS 고치지 않음) | O | |
 | C8 | LNB에 `Status` 메뉴 | LNB에서 Status 메뉴 지움 (다른 화면 LNB와 같게) | Status → 없음 | TI-IVT-03-T · 04-T #0 | 1단계 뒤 단계용 확인 항목 9, COMM-2-a | - (L-IOS 고치지 않음) | O | |
 | C9 | 페이지 이동 `< 1/2 >` | Common UX Indicator Pagination으로 (Common UX) | | TI-IVT-01-T #1-6 · #3 | COMM-5-l | - (L-IOS 고치지 않음) | O | |
 | C10 | `Required Qty 250 (3 DWPs)` | 단위 rxns를 붙임 | 250 (3 DWPs) → 250 rxns (3 DWPs) | TI-IVT-01-T #1-4 | `glossary.md` Reagent 수량 | - (L-IOS 고치지 않음) | - | 맞음 (오타, 2026-11-27) |
