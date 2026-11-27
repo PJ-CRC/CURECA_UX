@@ -2,8 +2,8 @@
   "id": "brex-01_R002",
   "kind": "request",
   "team": "cureca",
-  "status": "진행 중",
-  "at": "2026-11-27T15:30:30+09:00",
+  "status": "완료",
+  "at": "2026-11-27T15:32:19+09:00",
   "createdAt": "2026-11-27T10:05:47+09:00",
   "by": "서보경",
   "doneBy": "Claude",
@@ -17,11 +17,40 @@
   "type": "요청",
   "layout": "",
   "text": "LIS setting 메뉴 옮겨줘\n기존 작업페이지: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-567478&t=x241oPtWNq1qkgw5-1",
-  "note": "4단계 · UX 확정 다시 받음 — 4단계 닫고 5단계(완료) 진행",
-  "shot": "",
-  "shots": [],
+  "note": "케이스 3 · 4 ~ 5단계 · 20261127-서보경-lis-setting — UX 확정을 다시 받아 4단계를 닫고 5단계 정보 업데이트까지 마쳐 작업 기록을 닫았습니다 (끝남 · 반영)\n\n**4단계 마무리**\n- UX 확정 (2026-11-27, 검토 질의 6 ~ 8 반영 뒤 다시 확정) · 내부 검토 반영\n- UI 확정 해당 없음 (UI 작업 대상 아님 — 화면 표기 글자는 데이터 값 · 언어셋 DB 문구에 맞춘 것뿐)\n- 4단계 마침 점검 통과\n\n**5단계 정보 업데이트**\n- IA: 해당 없음 (새 CID · IA 변경 없음)\n- 반영 대기: TI-STN-04-01-T-R01 · R03 · R04, TI-STN-04-02-T-R01 · R02 → 반영 완료, `pending/closed.md`로 옮김 (TI-STN-04-02-T-R03은 이번엔 안 함으로 대기 그대로)\n- 권한 표: `Setting, LIS Setting, All` — Service O · Admin O · User X, T-IOS만 줄 더함 (Q1 답). L-IOS Client Mode 표는 T-IOS 단독이라 해당 없음\n- 정책서: 해당 없음 (이 작업의 논의 대상 없음)\n- 언어셋: LIS Setting 파일에 `No results found.`(ref: LID-STN-015) 줄 더함 · 항목 이력 1줄. 나머지 글자(Query Mode · Enter IP Address · Enter Port · None · 검색 입력 안내 4개)는 이미 원본에 이 화면 CID로 있음. 안내 문구 LID-STN-196은 이미 삭제\n- 화면 변경 이력: TI-STN-04-01-T · TI-STN-04-02-T 두 줄 (버전 -, 재설계 후 변경 내역)\n\n**[참고]**\n- 업데이트 메모는 두 화면 패널 옆 「재설계 후 변경 내역」(회색)으로 Figma에 있습니다.\n- 디자인 화면은 읽지 않았습니다. 입력 안내 글 · None 표기는 언어셋 DB(디자인 기준)와 같게 맞췄습니다.\n\n규칙 점검: 4단계 절차 3 ~ 6 · 5단계 절차 1 ~ 3의 「하지 않는 것」 · 마침 점검 지킴\n작업 기준: basis 2026-11-27 14:45 · 작업규칙 CURECA 작업규칙 @2026-11-27 11:34 · 정책서 정책서 @2026-11-25 21:21 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) @2026-11-26 16:53 · 기준데이터 기준데이터 @2026-11-25 21:21 · 화면 정의서 화면 정의서 @2026-11-26 03:39",
+  "shot": "shots/brex-01_R002.jpg",
+  "shots": [
+    {
+      "file": "shots/brex-01_R002.jpg",
+      "nodeId": "3893:19",
+      "frame": "TI-STN-04-01-T"
+    },
+    {
+      "file": "shots/brex-01_R002-2.jpg",
+      "nodeId": "3893:21",
+      "frame": "TI-STN-04-02-T"
+    },
+    {
+      "file": "shots/brex-01_R002-3.jpg",
+      "nodeId": "3911:1145",
+      "frame": "TI-STN-04-02-T/Case"
+    }
+  ],
   "images": [],
-  "frames": [],
+  "frames": [
+    {
+      "nodeId": "3893:19",
+      "name": "TI-STN-04-01-T"
+    },
+    {
+      "nodeId": "3893:21",
+      "name": "TI-STN-04-02-T"
+    },
+    {
+      "nodeId": "3911:1145",
+      "name": "TI-STN-04-02-T/Case"
+    }
+  ],
   "marks": [],
   "ask": null,
   "replies": [
