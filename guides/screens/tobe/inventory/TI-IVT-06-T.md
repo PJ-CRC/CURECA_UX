@@ -136,11 +136,11 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=39
 | Select a module · Select a module first | 화면 1 | LID-IVT-036 · LID-IVT-037 |
 | Reset · Search | 화면 5 | LID-EVT-022 · LID-STN-016 |
 | Items | 화면 6 | LID-STN-006 |
-| {n} items | 화면 4 (n = 10 · 30 · 50 · 100) | |
+| {n} items | 화면 4 (n = 10 · 30 · 50 · 100) | LID-IVT-151 |
 | Export | 화면 3 | LID-EVT-023 |
 | No data to export · There is no data in the list to export. · OK | Alert_050 (디스크립션 3) | LID-IVT-152 · LID-IVT-153 · LID-RUN-011 |
 | Export failed · The file could not be saved. Check the save location and try again. · OK | Alert_049 (디스크립션 3) | LID-IVT-154 · LID-IVT-155 · LID-RUN-011 |
 | Usage · Module · Unit · Date/Time | 화면 2 컬럼 | LID-IVT-039 · LID-EVT-012 · LID-EVT-013 · LID-IVT-040 |
-| 5X RP2 MOM, Real-time One-step Enzyme, 5X Real-time One-step Buffer · 5X GI-B(I) MOM, EM2, RNase-free Water · PBS Standard Tube · 1000 μL Tip · Empty Standard Tube · PCR Plate · Wide Bore Tip | 화면 2 (품목 이름) | - · - · LID-IVT-083 · LID-IVT-058 · LID-IVT-071 · LID-SPT-031 · LID-IVT-070 |
+| 5X RP2 MOM, Real-time One-step Enzyme, 5X Real-time One-step Buffer · 5X GI-B(I) MOM, EM2, RNase-free Water · PBS Standard Tube · 1000 μL Tip · Empty Standard Tube · PCR Plate · Wide Bore Tip | 화면 2 (품목 이름) | LID-IVT-118, LID-IVT-107, LID-IVT-105 · LID-IVT-119, LID-IVT-112, LID-IVT-108 · LID-IVT-083 · LID-IVT-058 · LID-IVT-071 · LID-SPT-031 · LID-IVT-070 |
 | Plate Sealing · Consumable Storage · PCR Setup | 화면 2 (Module 이름) | LID-SPT-032 · LID-EVT-049 · LID-SPT-026 |
 | Cold Storage · Trolley · PCR Plate Storage | 화면 2 (Unit 이름) | LID-IVT-120 · LID-EVT-056 · LID-IVT-121 |
