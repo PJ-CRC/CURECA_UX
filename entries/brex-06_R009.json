@@ -2,8 +2,8 @@
   "id": "brex-06_R009",
   "kind": "request",
   "team": "cureca",
-  "status": "진행 중",
-  "at": "2026-11-27T15:40:51+09:00",
+  "status": "보류",
+  "at": "2026-11-27T15:46:53+09:00",
   "createdAt": "2026-11-27T09:55:49+09:00",
   "by": "최고관리자",
   "doneBy": "Claude",
@@ -18,13 +18,49 @@
   "type": "요청",
   "layout": "",
   "text": "https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-360786&t=GdYCaPho44GgAu5i-1\nInventory T-ios 화면만 다시 그려줘",
-  "note": "4단계 답(Q1 ~ Q8) 반영 시작",
+  "note": "케이스 3 · 4단계 · 20261127-최고관리자-inventory - 질문 대기 Q1 ~ Q8 답을 화면 MD · Figma에 반영했습니다. 변경 확인 39건은 답이 없어 다시 여쭙니다.\n\n**[한 일]**\n- TI-IVT-06-T 3 [Export]: 저장 실패 시 Alert_049, 내보낼 데이터 0건이면 Alert_050 노출을 디스크립션에 더함 (Q1, C91)\n  - Alert 카탈로그에 Alert_049(Export failed) · Alert_050(No data to export) 새 줄 - 제목 · 부제 문구는 Claude 초안\n- TI-IVT-01-T 1-7 Tooltip: 앞 2줄을 빨간 취소선, 뒤 2줄만 둠 (Q2, C92)\n- TI-IVT-04-T 1 Chip: `# Sample Preparation` → `#Sample Preparation` (Q7, C93)\n- Q3 · Q4 · Q5 · Q6 · Q8: 지금 그린 대로 둠. 걸린 반영 대기 7건(TI-IVT-03-T-R05 · R09, TI-IVT-04-T-R11, TI-IVT-03-T-P-R02 · R05, TI-IVT-04-T-P-R08, TI-IVT-06-T-R02)은 `제외 (바꾸지 않음)`로 closed.md에 옮김\n- Figma: 8개 화면의 질문 라벨과 사용자 확인 목록의 질문 대기 그룹을 지움 (변경 확인 라벨은 번호 표시 옆으로 당김)\n\n**[변경 확인 - 맞는지만 봐 주실 것]** (모두 맞음이면 아래 「모두 맞음」, 되돌릴 것만 `C번호: 되돌림`으로 적어 주세요)\n\n| 번호 | 화면 · 위치 | 바꿔 그린 것 | 고를 것 | 추천 |\n| --- | --- | --- | --- | --- |\n| C1 | 01-T 1 · 3 | Unit 이름을 Module-Unit 표 UI 표기로 | 맞음 / 되돌림 | 맞음 |\n| C2 | 01-T · 03-T · 04-T · 05-T 4 | [Refresh] 실패 시 Alert_020 | 맞음 / 되돌림 | 맞음 |\n| C3 | 01-T 1 | 부족 목록 노출 기준을 Trolley 도킹 / Batch 진행 중으로 | 맞음 / 되돌림 | 맞음 |\n| C4 | 06-T 2 | Unit 칸을 실제 Storage Unit으로 | 맞음 / 되돌림 | 맞음 |\n| C5 | 06-T 3 | [Export]는 OS 파일 탐색기에서 경로 · 이름 지정 | 맞음 / 되돌림 | 맞음 |\n| C6 | 01-T ~ 06-T 0 | Tab을 Common UX Underline Tab으로 | 맞음 / 되돌림 | 맞음 |\n| C7 | 02-T ~ 06-T 0 | GNB L-IOS → T-IOS | 맞음 / 되돌림 | 맞음 |\n| C8 | 03-T · 04-T 0 | LNB에서 Status 메뉴 지움 | 맞음 / 되돌림 | 맞음 |\n| C9 | 01-T 1-6 · 3 | Indicator Pagination으로 | 맞음 / 되돌림 | 맞음 |\n| C11 | 01-T · 02-T Case | Case 번호 매김, 01-T Case 2 제목 | 맞음 / 되돌림 | 맞음 |\n| C14 | 01-T Case 1-1 | 300 μL Tip 100 rxns → 100 ea | 맞음 / 되돌림 | 맞음 |\n| C15 | 02-T Case 3-1 · 3-2 | 288T · 300T → rxns | 맞음 / 되돌림 | 맞음 |\n| C16 | 04-T 2-7 · 3-8 | 번호 2-3 → 2-7, Capacity → 3-8 | 맞음 / 되돌림 | 맞음 |\n| C17 | 04-T 2 | 두 번 나온 GI-Virus 카드 하나 지움 | 맞음 / 되돌림 | 맞음 |\n| C18 | 04-T 2-3 | IC · Set 입고 위치, Buffer Cartridge Cap 설명 | 맞음 / 되돌림 | 맞음 |\n| C19 | 04-T 3-8 | 가리키는 예시 화면이 없는 문구 제거 | 맞음 / 되돌림 | 맞음 |\n| C21 | 05-T 2 · 3-1 | Flexible Extraction · Universal PCR에 (1) | 맞음 / 되돌림 | 맞음 |\n| C23 | 06-T 4 | 노출 개수 Dropdown 추가 | 맞음 / 되돌림 | 맞음 |\n| C25 | 01-T ~ 06-T | 카드 · Chip · 표 · 버튼 등을 Common UX로 | 맞음 / 되돌림 | 맞음 |\n| C27 | 01-T 1-1 · 1-5 | Empty → Insufficient, 요약을 Insufficient · Low로 | 맞음 / 되돌림 | 맞음 |\n| C33 | 01-T 1 | 「통합 상태 Run O / X」 → 장비 통합 상태 Running 여부 | 맞음 / 되돌림 | 맞음 |\n| C34 | 01-T 3-3 | 참고를 TI-IVT-05-T로 | 맞음 / 되돌림 | 맞음 |\n| C38 | 02-T 1 | 케이스 규칙을 디스크립션으로 | 맞음 / 되돌림 | 맞음 |\n| C42 | 02-T | IA LI-IVT-02-T 짝 화면 동일 Y (5단계 반영) | 맞음 / 되돌림 | 맞음 |\n| C46 | 03-T 2-6 | Insufficient · Low 정의를 상태값 표대로 | 맞음 / 되돌림 | 맞음 |\n| C49 | 03-T 2-5 · 2-6 · 3-6 | Required Qty · Status 노출 조건 정리 | 맞음 / 되돌림 | 맞음 |\n| C54 | 03-T 2-4 | 사용량은 폐기할 때만 기록 | 맞음 / 되돌림 | 맞음 |\n| C62 | 04-T 2-6 | Reagent도 같은 재고 상태 | 맞음 / 되돌림 | 맞음 |\n| C63 | 04-T 2-6 | Insufficient · Low 정의, Sufficient 표기 | 맞음 / 되돌림 | 맞음 |\n| C64 | 04-T 2-5 | Required Qty, 예외 문장 통일 | 맞음 / 되돌림 | 맞음 |\n| C69 | 04-T 2-5 · 2-6 · 3-6 | 노출 조건을 01-T와 같게 | 맞음 / 되돌림 | 맞음 |\n| C71 | 04-T 2-4 | 사용량은 폐기할 때만 기록 | 맞음 / 되돌림 | 맞음 |\n| C72 | 05-T | IA 이름 → Waste Bin/Bottle (5단계 반영) | 맞음 / 되돌림 | 맞음 |\n| C76 | 05-T 2 · 3 | Waste Bin/Bottle이 없는 Module | 맞음 / 되돌림 | 맞음 |\n| C77 | 05-T 2-2 · 3-3 | 상태 기준(70% · 100%) · 99% 제한 | 맞음 / 되돌림 | 맞음 |\n| C83 | 06-T 2 | Module-Unit 조합을 실제대로 | 맞음 / 되돌림 | 맞음 |\n| C84 | 06-T 2 | 조회 기간(기본 7일) 내 이력 | 맞음 / 되돌림 | 맞음 |\n| C89 | 06-T 0 | Usage History는 폐기할 때만 기록 | 맞음 / 되돌림 | 맞음 |\n| C90 | 06-T 3 | 내보내는 파일 형식 .csv | 맞음 / 되돌림 | 맞음 |\n\n**[참고]**\n- 작업 페이지 이름이 등록 때 `Inventory_tobe`에서 `Inventory_tobe(진행중)`으로 바뀌었으나 같은 페이지(3859:91018)라 그대로 진행\n- 변경 확인을 모두 받으면 기계 검사를 하고 UX 확정 여부를 여쭙니다\n\n규칙 점검: 4단계 절차 공통(변경 확인 줄 → 화면 MD → Figma) · 절차 1 순서 3 · 「하지 않는 것」 지킴. 다르게 한 것 - 라벨 · 목록 지우기와 패널 글 고치기는 채우기 작업으로 안 되어 use_figma로 함\n작업 기준: basis 2026-11-27 09:58 · 작업규칙 CURECA 작업규칙 @원본 · 정책서 정책서 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 · 화면 정의서 화면 정의서",
   "shot": "",
   "shots": [],
   "images": [],
-  "frames": [],
+  "frames": [
+    {
+      "nodeId": "3905:21824",
+      "name": "TI-IVT-01-T"
+    },
+    {
+      "nodeId": "3916:990",
+      "name": "TI-IVT-03-T"
+    },
+    {
+      "nodeId": "3919:1616",
+      "name": "TI-IVT-03-T-P"
+    },
+    {
+      "nodeId": "3926:2",
+      "name": "TI-IVT-04-T"
+    },
+    {
+      "nodeId": "3930:570",
+      "name": "TI-IVT-04-T-P"
+    },
+    {
+      "nodeId": "3934:2",
+      "name": "TI-IVT-06-T"
+    }
+  ],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "[4단계] 변경 확인 39건(C1 ~ C90)이 맞는지 확인해 주세요.",
+    "options": [
+      {
+        "label": "모두 맞음"
+      },
+      {
+        "label": "되돌릴 번호를 적음"
+      }
+    ],
+    "free": true
+  },
   "replies": [
     {
       "at": "2026-11-27T10:06:12+09:00",
