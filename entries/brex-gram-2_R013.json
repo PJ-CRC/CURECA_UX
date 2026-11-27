@@ -2,8 +2,8 @@
   "id": "brex-gram-2_R013",
   "kind": "request",
   "team": "cureca",
-  "status": "진행 중",
-  "at": "2026-11-27T15:14:53+09:00",
+  "status": "보류",
+  "at": "2026-11-27T15:20:03+09:00",
   "createdAt": "2026-11-27T14:32:42+09:00",
   "by": "하승현",
   "doneBy": "Claude",
@@ -17,13 +17,49 @@
   "type": "요청",
   "layout": "",
   "text": "Q2. 하이픈(-) 표기\n\nQ2-1. 통화는 TI-STN-01-01에서 해당 일자에 설정된 통화로 표기, 시간 단위는 유지\n\nQ6. 지금 그린 대로 items.csv 기본값 따라 기재\n\nQ7. 기존 버전 그대로",
-  "note": "UI 작업 줄 대상 반영 · 업데이트 메모 만드는 중 (4단계 절차 3)",
+  "note": "케이스 3 · 4단계 · 20261126-하승현-policy-setting — UX 확정을 기입하고 언어셋을 정리했습니다. UI팀에 넘길 것을 만들기 전에 언어셋 글자 두 가지를 여쭙니다\n\n**절차 3 UX 확정**\n- UI 작업 줄 (요건 1): 대상으로 기입\n- 업데이트 메모: 「재설계 후 변경 내역」(회색) 6개 — TI-STN-01 (1) · (6-2), LI-STN-01, TI-STN-01-01 (1) · (2), TI-STN-01-03 (2) · (3), TI-STN-01-04 (2), LI-STN-01-04 (3)\n  - TI-STN-01-02 · LI-STN-01-02는 넣을 변경(맞음 · 메모 O)이 없어 만들지 않음\n- 「UX 확정 (2026-11-27)」 기입, 화면 기준 basis 2026-11-27 15:16 · history 7b1216d3 (작업 기록 · 화면 MD 8개)\n- 기획 진행 표시: 케이스 3이라 바꾸지 않음\n\n**절차 4 언어셋 (언어셋 DB는 읽기만 함)**\n- 화면 MD 8개 「화면 표기 글자」 표에 Language ID 136개 채움\n- 신규 2: TI-STN-01-01 Quantity `{n} ea ({m} rack)` · `{n} ea ({m} socket)` (기존 `ea/rack`), Reagents `{n} rxns/set · /rack · /DWP · /tub`\n- DB 맞춤: 추가 3 (USD · {n} ea · Extraction module availability), CID 추가 · 제거는 화면마다 묶어 작업 기록에 적음\n- 표에 빠진 화면 글자 2개를 더함: TI-STN-01-03 `Product` (LID-RUN-023) · 시간 표기 `{h}h {m}m` (LID-TMG-028)\n\n**[질문 대기]**\nQ1 비슷한 글자 4건 — 언어셋 DB 글자와 같은 글자로 볼까요?\n  - 같은 글자로 봄 (추천)\n    TI-STN-01 `Policy settings are only available …\"Ready\"` ↔ LID-STN-105 (끝 마침표) / LI-STN-01 `You can configure the following settings in the T-IOS` ↔ LID-STN-106 (끝 마침표) / TI-STN-01-03 `Minimize turnaround time … for device allocation.` ↔ LID-STN-157 (끝 `(*TAT : Turnaround Time)`) / TI-STN-01-04 · LI-STN-01-04 `- Optimized …` · `- Suitable …` ↔ LID-STN-165 · 166 (앞 `- `)\n  - 다른 글자로 봄\nQ2 TI-STN-01-03 `Total: {n} tests / {m} samples` 한 줄 글을 어떻게 볼까요?\n  - 낱말로 봄 (추천)\n    언어셋 DB에 이 화면 낱말 Total (LID-SPT-023) · Tests (LID-STN-155) · Samples (LID-SPT-001)가 있음\n  - 한 문구로 봄\n\n규칙 점검: 4단계 절차 3 순서 1 ~ 8 · 절차 4 순서 1 ~ 4 지킴, 순서 5는 답을 받은 뒤 UI팀에 넘길 것을 채움 (테스트라 저장소 고치지 않음)\n작업 기준: basis 2026-11-27 15:16 · history 7b1216d3 · 작업규칙 CURECA 작업규칙 @2026-11-27 11:34 · 정책서 정책서 @2026-11-26 20:17 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 @2026-11-26 15:17 · 화면 정의서 화면 정의서 @2026-11-27 15:14",
   "shot": "",
   "shots": [],
   "images": [],
-  "frames": [],
+  "frames": [
+    {
+      "nodeId": "3826:3537",
+      "name": "TI-STN-01 (테스트 1)"
+    },
+    {
+      "nodeId": "3826:3538",
+      "name": "TI-STN-01-01 (테스트 1)"
+    },
+    {
+      "nodeId": "3826:3540",
+      "name": "TI-STN-01-03 (테스트 1)"
+    },
+    {
+      "nodeId": "3826:3541",
+      "name": "TI-STN-01-04 (테스트 1)"
+    },
+    {
+      "nodeId": "3826:3546",
+      "name": "LI-STN-01 (테스트 1)"
+    },
+    {
+      "nodeId": "3826:3548",
+      "name": "LI-STN-01-04 (테스트 1)"
+    }
+  ],
   "marks": [],
-  "ask": null,
+  "ask": {
+    "q": "[4단계] 언어셋: Q1 비슷한 글자 4건을 DB 글자와 같은 글자로 볼까요? Q2 `Total: {n} tests / {m} samples`를 낱말로 볼까요?",
+    "options": [
+      {
+        "label": "추천대로 (Q1 같은 글자 · Q2 낱말)"
+      },
+      {
+        "label": "Q1 다른 글자 · Q2 한 문구"
+      }
+    ],
+    "free": true
+  },
   "replies": [
     {
       "at": "2026-11-27T14:41:59+09:00",

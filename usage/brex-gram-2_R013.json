@@ -4,7 +4,7 @@
   "reqId": "R013",
   "reqType": "요청",
   "team": "cureca",
-  "at": "2026-11-27T15:00:55+09:00",
+  "at": "2026-11-27T15:20:05+09:00",
   "from": "2026-11-27T14:33:03+09:00",
   "by": "하승현",
   "doneBy": "Claude",
@@ -16,13 +16,13 @@
   "nodeId": "",
   "text": "Q2. 하이픈(-) 표기\n\nQ2-1. 통화는 TI-STN-01-01에서 해당 일자에 설정된 통화로 표기, 시간 단위는 유지\n\nQ6. 지금 그린 대로 items.csv 기본값 따라 기재\n\nQ7. 기존 버전 그대로",
   "models": {
-    "claude-opus-5-5": 49
+    "claude-opus-5-5": 75
   },
-  "calls": 49,
-  "input": 100,
-  "cacheWrite": 178928,
-  "cacheRead": 6202582,
-  "output": 37961,
-  "total": 6419571,
-  "usd": 3.4316
+  "calls": 75,
+  "input": 150,
+  "cacheWrite": 246682,
+  "cacheRead": 12251113,
+  "output": 69100,
+  "total": 12567045,
+  "usd": 5.8063
 }
