@@ -110,7 +110,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=39
   - 예외 케이스 : 최대 개수 도달 전 만재 센서 작동 시 → 노출 퍼센트 100% 상태로 즉시 변경, Status 상태 Full
   - 예외 케이스 : 만재 센서가 없는 <span style="color:red">Waste Bin/Bottle</span>인 경우 → 센서 감지 로직을 제외, 계산식에 의해 100% 도달 시 100% / Full 상태로 처리
   - Material Setup > Empty Waste Bin에서 [Confirm Empty] 버튼을 통해 비움 처리를 수행한 시점 기준으로 초기화
-  - 이후 발생하는 폐기물은 0부터 재카운팅
+  - 이후 <span style="color:red">누적 사용 개수</span>는 0부터 재카운팅
 - 정책 참고 : POL-INV-005, POL-LOD-005
 
 **3-4  <span style="color:red">Module</span> 하위 <span style="color:red">Waste Bin/Bottle</span> 별 Status**

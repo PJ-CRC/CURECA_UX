@@ -41,7 +41,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=39
   - 화면에 노출된 순서에 따라 Module 노출
   - Sample Storage(신규 추가), Consumable Storage, High-throughput Extraction, Flexible Extraction, PCR Setup, Plate Sealing
 - 정렬
-  - 시약/소모품 정렬 방식 : 공통 UX 참고(COMM-4-b(4/5))
+  - <span style="color:red">Reagent/Consumable</span> 정렬 방식 : 공통 UX 참고(COMM-4-b(4/5))
 - 케이스 참고 : TI-IVT-02-T/Case > Case 1, TI-IVT-02-T/Case > Case 2, TI-IVT-02-T/Case > Case 3
 - 정책 참고 : POL-INV-001
 
