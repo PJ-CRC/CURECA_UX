@@ -253,6 +253,30 @@ module.exports = function register(on, h) {
   // fill(컴포넌트 채우기, 2026-11-24): Claude가 정한 행 데이터(컴포넌트 · 변형 · 글 · 글 꾸밈)를 플러그인이 인스턴스로 만들어 채운다. 모든 팀 공용 —
   //  어떤 컴포넌트를 어디에 채울지는 데이터로 오고(팀 작업규칙이 정함), 프로그램은 특정 팀의 패널 모양을 모른다. 감시(JOBS)에는 나오지 않는다(plugin 몫)
   const KINDS = ['capture', 'catalog', 'guide', 'guide-check', 'guide-edit', 'text', 'fill', 'prototype', 'prototype-edit', 'prototype-sync', 'minutes', 'plan', 'transfer'];
+  /* fill 데이터 모양 미리 보기(2026-11-27): 모양이 틀린 작업은 플러그인이 받아 몇 분 뒤에야 「실패」였다(R009 J288 · rows가 배열이 아님 등).
+     Figma 없이 알 수 있는 것만 바로 돌려준다 — 배열 자리 · 앞 그룹 참조(@n) · 글 값 모양. 이름 경로가 실제로 있는지는 플러그인이 본다 */
+  function fillShape(groups) {
+    const bad = (gi, w) => { throw new Error(`채우기 데이터 모양이 틀렸습니다 — groups[${gi}] ${w}. 고쳐서 다시 쌓아 주세요(docs/claude/jobs.md 「fill」).`); };
+    const isArr = (v) => v === undefined || Array.isArray(v);
+    const refOk = (v, gi) => { const m = /^@(\d+)/.exec(nn(v)); return !m || +m[1] < gi; };
+    const textOk = (v) => typeof v === 'string' || typeof v === 'number' || (v && typeof v === 'object' && !Array.isArray(v) && isArr(v.lines) && isArr(v.ranges) && isArr(v.highlight) && (v.text !== undefined || v.lines !== undefined));
+    groups.forEach((g, gi) => {
+      if (!g || typeof g !== 'object' || Array.isArray(g)) bad(gi, '가 객체가 아닙니다');
+      for (const k of ['rows', 'set', 'clear', 'fit']) if (!isArr(g[k])) bad(gi, `.${k}가 배열이 아닙니다(한 개여도 [ ]로 — PowerShell ConvertTo-Json은 한 개짜리 배열을 풀어 버림)`);
+      if (!refOk(g.parent, gi) || !refOk(g.near, gi)) bad(gi, `가 자기 뒤 그룹(@n)을 가리킵니다: ${nn(g.parent || g.near)}`);
+      if (g.refont && !/^\d+:\d+$/.test(nn(g.refont.node))) bad(gi, '.refont.node가 노드 id가 아닙니다');
+      if (g.clone && !/^\d+:\d+$/.test(nn(g.clone.node)) && !/^@\d+/.test(nn(g.clone.node))) bad(gi, '.clone.node가 노드 id가 아닙니다');
+      core.arr(g.rows).forEach((r, ri) => {
+        if (!r || typeof r !== 'object' || !nn(r.component)) bad(gi, `.rows[${ri}]에 component가 없습니다`);
+        for (const [k, v] of Object.entries(r.texts || {})) if (!textOk(v)) bad(gi, `.rows[${ri}].texts「${k}」 값 모양이 틀렸습니다(글 · {text, ranges[]} · {lines[]})`);
+      });
+      core.arr(g.set).forEach((s, si) => {
+        if (!s || (!nn(s.path) && !Array.isArray(s.path))) bad(gi, `.set[${si}]에 path가 없습니다`);
+        if (!g.clone && !/^@\d+/.test(nn(s.path)) && !/^@\d+/.test(nn(g.parent))) bad(gi, `.set[${si}]는 이번에 복제한 틀 안만 고칠 수 있는데 clone이 없습니다`);
+        for (const [k, v] of Object.entries(s.texts || {})) if (!textOk(v)) bad(gi, `.set[${si}].texts「${k}」 값 모양이 틀렸습니다`);
+      });
+    });
+  }
   // Claude 모델(2026-11-24): 요청 · 작업마다 고른다(입력 칸 옆 「모델」). 빈 값 = 기본(CLI 기본 모델, 지금 Opus 5.5). 백그라운드 감시는 같은 모델끼리 한 세션(--model)으로 처리한다(agent.js)
   //  fable은 사용 크레딧이 따로 있어야 해서 뺐다. 이름은 CLI 별칭(최신 판을 가리킴)
   const MODELS = ['opus', 'sonnet', 'haiku'];   // Fable은 사용 크레딧이 따로 있어야 해서 뺐다
@@ -363,10 +387,11 @@ module.exports = function register(on, h) {
         if (kind === 'text' && !core.arr(b.items).length) throw new Error('바꿀 글(items)이 없습니다.');
         if (kind === 'fill') {
           const gs = core.arr(b.groups).filter((g) => g && typeof g === 'object');
-          if (!gs.length || !gs.some((g) => core.arr(g.rows).length || g.clone || core.arr(g.set).length || core.arr(g.fit).length)) throw new Error('채울 행(groups[].rows) · 틀 복제(clone) · 고칠 것(set)이 없습니다.');
+          if (!gs.length || !gs.some((g) => core.arr(g.rows).length || g.clone || core.arr(g.set).length || core.arr(g.fit).length || g.refont)) throw new Error('채울 행(groups[].rows) · 틀 복제(clone) · 고칠 것(set) · 글꼴 바꾸기(refont)가 없습니다.');
           const ref = (v) => /^\d+:\d+$/.test(nn(v)) || /^@\d+(\s*>.*)?$/.test(nn(v));   // 노드 id 또는 「@앞 그룹 번호 > 이름 > 이름」
           if (!gs.every((g) => ref(g.parent) || ref(g.near))) throw new Error('groups마다 넣을 곳(parent) 또는 옆에 둘 노드(near)가 있어야 합니다(노드 id 또는 @그룹 번호/경로).');
           if (JSON.stringify(gs).length > 400000) throw new Error('채울 내용이 너무 큽니다(400KB까지). 나눠서 쌓아 주세요.');
+          fillShape(core.arr(b.groups));
           if (!/^\d+:\d+$/.test(nid)) nid = [gs[0].parent, gs[0].near].map(nn).find((v) => /^\d+:\d+$/.test(v)) || '';
         }
         // 다음 단계로 옮기기(팀 프로젝트, 2026-11-16): Claude가 아니라 Figma 플러그인이 한다 — 읽기(보내는 파일을 연 플러그인) → 만들기(받는 파일을 연 플러그인)
@@ -459,7 +484,7 @@ module.exports = function register(on, h) {
       case 'take': {
         if (b.id) hit = items.find((x) => x.id === nn(b.id) && x.status === '대기') || null;
         else { const c = items.filter((x) => x.kind === nn(b.kind) && x.fileKey === nn(b.fileKey) && x.status === '대기'); hit = c.length ? c[c.length - 1] : null; }
-        if (hit) { hit.status = '진행 중'; hit.takenBy = nn(b.by); hit.updatedAt = now; }
+        if (hit) { hit.status = '진행 중'; hit.takenBy = nn(b.by); hit.takenAt = now; hit.updatedAt = now; }
         break;
       }
       // 사람이 멈추기(2026-11-24, UX 문서 수정 요청 · 연관 항목 찾기 등): 대기 · 진행 중인 작업을 「취소」로. 처리 중이면 감시 세션을 끊는다(요청 멈추기와 같은 .agent_cancel)
