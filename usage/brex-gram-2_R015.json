@@ -1,0 +1,28 @@
+{
+  "id": "brex-gram-2_R015",
+  "kind": "request",
+  "reqId": "R015",
+  "reqType": "요청",
+  "team": "cureca",
+  "at": "2026-11-27T16:17:49+09:00",
+  "from": "2026-11-27T16:17:01+09:00",
+  "by": "하승현",
+  "doneBy": "Claude",
+  "pc": "BREX_GRAM_2",
+  "fileKey": "etCQFF3CTf1EA6C79d4BBf",
+  "fileName": "UX AI TEST",
+  "page": "Policy Setting_tobe(test)",
+  "frame": "",
+  "nodeId": "",
+  "text": "다국어 반영하여 그린 화면 케이스는 어디있어?",
+  "models": {
+    "claude-opus-5-5": 13
+  },
+  "calls": 13,
+  "input": 27,
+  "cacheWrite": 59197,
+  "cacheRead": 673197,
+  "output": 5950,
+  "total": 738371,
+  "usd": 0.7273
+}
