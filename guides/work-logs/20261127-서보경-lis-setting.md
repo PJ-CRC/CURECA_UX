@@ -8,13 +8,13 @@ cid_system:
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST (작업방 `LIS Setting_tobe` 페이지)
 test: false
 basis_start: 2026-11-27 10:07 · history 95013cbf
-basis:
+basis: 2026-11-27 14:45 · history 31f20afa
 basis_versions:
-  rules:
-  policy:
-  glossary:
-  screens:
-  common_ux:
+  rules: CURECA 작업규칙 @2026-11-27 11:34
+  policy: 정책서 @2026-11-25 21:21
+  glossary: 기준데이터 @2026-11-25 21:21
+  screens: 화면 정의서 @2026-11-26 03:39
+  common_ux: Common UX (common-ux/comm-index.md) @2026-11-26 16:53
 started: 2026-11-27
 ---
 # 작업 기록: LIS Setting 화면을 LIS Setting_tobe에 다시 그리기
@@ -45,7 +45,7 @@ started: 2026-11-27
 - 요청 상태: 최초
 - 경로 분기 기준 (근거) · 읽는 강도: 8 옮겨 다시 그림 (케이스 3, 바꾸는 요건 없음) · 케이스 3 (다시 그리기)
 - 지나가는 단계: 1 → 2 → 3 → 4 → 5
-- UI 작업: 대상 아님 (케이스 3 기본, 4단계 UX 확정 때 다시 정함)
+- UI 작업: 대상 아님 (2026-11-27, 서보경 확정 — 바뀐 것은 이미 있는 자리에 표기되는 데이터 값이고 버튼명처럼 화면 글자가 바뀌는 수준이 아님)
 
 | 대상 화면 | 케이스 | 작업 대상 | 근거 |
 | --- | --- | --- | --- |
