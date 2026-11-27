@@ -1,5 +1,5 @@
 {
-  "reportAt": "2026-11-27T16:00:53+09:00",
+  "reportAt": "2026-11-27T16:01:53+09:00",
   "pc": "BREX_06",
   "slug": "brex-06",
   "user": "최고관리자",
@@ -8,7 +8,7 @@
   "alive": true,
   "status": "working",
   "msg": "처리 중: PENDING R009 · 강도 medium",
-  "statusAt": "2026-11-27T16:00:45+09:00",
+  "statusAt": "2026-11-27T16:01:30+09:00",
   "claude": "따로 설치",
   "claudeWay": "cli",
   "autoWatch": true,
@@ -1237,14 +1237,6 @@
       "end": "2026-11-20T16:21:33+09:00",
       "ok": true,
       "sec": 217
-    },
-    {
-      "at": "2026-11-20T16:00:56+09:00",
-      "what": "PENDING R043",
-      "resume": false,
-      "end": "2026-11-20T16:17:32+09:00",
-      "ok": true,
-      "sec": 995
     }
   ]
 }

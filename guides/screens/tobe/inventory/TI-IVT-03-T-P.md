@@ -107,9 +107,9 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=39
 | --- | --- | --- |
 | Item details | 화면 1 위 Popup 제목 | |
 | 1000 μL Tip | 화면 1 (품목 이름) | |
-| Remaining Qty | 화면 3 · 2-1 | |
-| Location · Barcode · Location in storage · Inbound Date | 화면 2-1 컬럼 | |
-| Consumable Storage | 화면 2-1 (Module 이름) | |
-| Trolley | 화면 2-1 (Unit 이름) | |
+| Remaining Qty | 화면 3 · 2-1 | LID-RUN-030 |
+| Location · Barcode · Location in storage · Inbound Date | 화면 2-1 컬럼 | LID-RUN-050 · LID-SPT-018 · LID-IVT-047 · LID-IVT-048 |
+| Consumable Storage | 화면 2-1 (Module 이름) | LID-EVT-049 |
+| Trolley | 화면 2-1 (Unit 이름) | LID-EVT-056 |
 | {n} ea ({m} rack) · {n} ea ({m} racks) | 화면 2-1 · 3 (n · m = 수량) | |
-| Close | 화면 5 | |
+| Close | 화면 5 | LID-EVT-039 |
