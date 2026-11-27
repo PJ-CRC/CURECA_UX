@@ -14,7 +14,7 @@ policies: [POL-SYS-002, POL-COM-005, POL-TST-010]
 basis:
 basis_versions:
 source: tobe
-figma:
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3893-20
 ---
 # TI-STN-04-02-T Code Mapping
 

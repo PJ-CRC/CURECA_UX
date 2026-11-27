@@ -29,7 +29,7 @@ started: 2026-11-27
 | 4. 수정 · 확인 | | | |
 | 5. 완료 | | | |
 
-이어서 작업할 곳: 3단계 · 시작
+이어서 작업할 곳: 3단계 · TI-STN-04-01-T 그림, TI-STN-04-02-T 그릴 차례 (다시 읽을 곳: 3단계 `flow/3-design-case3.md` 흐름 · 공통 3 / 작업 기록 "요건 목록" 요건 1 · "설계" 화면별 작업 · 컴포넌트 없이 그린 요소 · "질문 대기" · "변경 확인")
 
 ## 요청
 <!-- 1단계 절차 1번. 요청 글 한두 줄과 출처, 공유 파일 (아래 "항목마다 적는 법") -->
@@ -180,6 +180,36 @@ started: 2026-11-27
 ## 설계
 <!-- 3단계. 틀은 flow/3-design.md "남는 것". 질문 대기 · 변경 확인은 이 절이 아니라 아래 표에 적음 -->
 
+### 화면별 작업
+| T · L 한 쌍 | 따른 케이스 | 요건 번호 | 섹션 | 기획 프레임 | 상태 · 케이스 프레임 |
+| --- | --- | --- | --- | --- | --- |
+| Interface Configuration (TI-STN-04-01-T / L 없음) | 3 | 1 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3893-18 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3893-19 | 케이스 T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3896-359 (마무리 확인 2026-11-27) |
+| Code Mapping (TI-STN-04-02-T / L 없음) | 3 | 1 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3893-20 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3893-21 | |
+
+- 메뉴 단위 표시 (2026-11-27, Claude): T-IOS 줄 시스템 구분 `T-IOS - 2.1` · 기획 진행 표시 `SB-Update : 2026.10.15 (검토 완료)` — asis 페이지의 기획 진행 표시(`컨펌 완료`)를 날짜 그대로, 진행 상태는 새 이름으로 옮김. 너비 8000 (섹션 줄 너비 5774 < 최소 8000). LIS Setting은 IA에 L-IOS 화면이 없어 L-IOS 줄은 두지 않음
+
+### 컴포넌트 없이 그린 요소
+| 요소 이름 (종류) | 하는 일 | 쓴 곳 (CID · 디스크립션 번호) | 어디서 (후보 ID / 신규로 만듦 / 기존 화면에서 따옴) | 원본 요약 (기존 화면에서 따옴만: 크기 · 모서리 · 줄 × 칸 · 도형 · 글자 · 인스턴스) | Figma 링크 |
+| --- | --- | --- | --- | --- | --- |
+| 콘텐츠 영역 바탕 (영역 틀) | 화면 콘텐츠 바탕 | TI-STN-04-01-T 0 | 기존 화면에서 따옴 (`3543:568741`) | 1701×983 · 모서리 0 · 도형 1 (#E9EDF4) · 글자 0 · 인스턴스 0 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3893-19 |
+| 화면 제목 (글) | LIS Setting 제목 | TI-STN-04-01-T 0 | 기존 화면에서 따옴 (`3543:568742`) | 글 1 (24, #000000) | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3893-19 |
+| Interface Configuration 카드 (설정 영역 틀) | General · T-IOS Network · LIS Network 묶음 | TI-STN-04-01-T 1 ~ 4 · 6 | 기존 화면에서 따옴 (`3543:568744`). 안의 입력 칸은 Common UX Dropdown · Text Input으로 바꿈, 원본 안의 패널(Frame 1) · 번호 표시는 뺌 | 1658×639 · 모서리 0 · 바탕 #FFFFFF · 머리 틀 1 (1658×64, 글 2) · 글 10 (라벨 · 영역 제목) · 인스턴스 5 (Form/Dropdown Box 2 · Form/Input Text Box 3) | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3893-19 |
+| HL7 (값 글) | Interface Type 고정 값 | TI-STN-04-01-T 1 | 기존 화면에서 따옴 (`3543:568821`) | 글 1 | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3893-19 |
+| 케이스 초록 띠 · 라벨 글 (케이스 조각) | 케이스 제목 · 조각 라벨 | TI-STN-04-01-T/Case | 기존 화면에서 따옴 (`3543:568822` 피드백, 조각 글 7 · 번호 표시 3) | 1920×60 #C3F286 (케이스 프레임 너비 2252로 늘림) · 글 1 / 조각 글 7 · 번호 표시 3 (3-1 · 3-1 · 3-2) | T https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3896-359 |
+
+### 근거로 풀린 것
+| 질문 | 푼 근거 |
+| --- | --- |
+| 기존 원본 필터 케이스가 Test Code 목록과 겹쳐 그려짐 (뒤 단계용 확인 항목 11) | Figma 원본에서 필터 케이스가 따로 그려져 있음 (`3543:568577`) |
+
+### 찾은 것
+- 원본 케이스 프레임 제목에 번호가 없음(`Case.`) → `Case 1`로 적음. 원본 케이스에 노란 띠 · 설명 글이 없음 → 조건만 노란 띠로 두고 설명 글은 두지 않음 (TI-STN-04-01-T, Event History 작업과 같은 법)
+- TI-STN-04-01-T 원본 케이스 조각의 번호 표시 3-1 · 3-1 · 3-2를 그대로 둠 (디스크립션에 3-1 블록 없음 — 빈 번호는 그대로)
+- 원본 LIS Network에 화면 번호 표시가 없음 → 새 번호 6을 왼쪽 위에 둠 (C8)
+- 규칙에 없어 판단한 곳: 탭은 같은 화면 안 콘텐츠 영역 전환이라 Underline Tab, Code Type 목록은 세로 나열 · 항목 건수라 Outline Tab (COMM-5-s 가르는 법)
+- 사용자 확인 라벨: TI-STN-04-01-T 3 · 4 · 6은 오른쪽 · 왼쪽(LNB)이 글자를 가려 번호 표시 위에 둠. 7은 네 방향 모두 글자를 가려 오른쪽에 둠
+- 컴포넌트 채우기(플러그인) J102가 「실패」(플러그인 오류: Figma 연결 10초 초과) → TI-STN-04-01-T 패널 · 라벨은 use_figma로 직접 그림. 사용자 확인 목록은 Block 여러 개를 만들 수 없어 use_figma로 그림
+- LNB의 Setting 하위 메뉴는 Common UX LNB(Item 5개)에 기존 화면의 하위 메뉴 이름을 넣고 LIS Setting을 선택함
 ## 질문 대기
 <!-- 사용자 확인 목록의 질문 대기. 원본은 이 표(화면 MD에는 두지 않음). 2단계(대조에서 나온 것) · 3단계(설계하며 나온 것)가 앞의 다섯 칸으로 줄을 만들고, 4단계가 "풀린 날 · 어떻게"를 채움. 번호 Q1 · Q2 …는 작업 하나에 통번호(2단계부터 이어 매김, T · L에 같은 것은 같은 번호)이고, 사용자 확인 라벨 · Figma 사용자 확인 목록에 같은 번호를 씀. "질문"은 요청자가 정할 것을 명사형으로, 근거는 괄호로(reference-rules/description.md 5절). 정책을 정해야 하는 질문은 논의 대상 ID를 적음. 줄은 지우지 않음 -->
 
