@@ -2,11 +2,11 @@
   "id": "brex-01_R002",
   "kind": "request",
   "team": "cureca",
-  "status": "보류",
-  "at": "2026-11-27T14:32:39+09:00",
+  "status": "대기",
+  "at": "2026-11-27T14:40:25+09:00",
   "createdAt": "2026-11-27T10:05:47+09:00",
   "by": "서보경",
-  "doneBy": "Claude",
+  "doneBy": "서보경",
   "pc": "BREX_01",
   "reqId": "R002",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,24 +17,13 @@
   "type": "요청",
   "layout": "",
   "text": "LIS setting 메뉴 옮겨줘\n기존 작업페이지: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-567478&t=x241oPtWNq1qkgw5-1",
-  "note": "케이스 3 · 4단계 · 20261127-서보경-lis-setting — UX 확정 답(확정함) · 기계 검사 재검토 하지 않음 받음, UI 작업 줄 확인을 기다립니다\n\n**[질문 대기] 답해 주실 것 (4단계 · 절차 3 순서 3)**\n\nQ1 요건 1(LIS Setting 두 화면 다시 그리기)의 UI 작업 줄\n  - 대상 (추천)\n  - 대상 아님\n근거 — 화면 요소 모양이 바뀜: C14 탭을 Common UX Underline Tab으로(TI-STN-04-01-T · TI-STN-04-02-T) · C15 Code Type 목록을 Outline Tab(Count)으로(TI-STN-04-02-T 1 · 1-1) / 화면 표기 글자가 바뀜: C6 Raw_stool → Raw stool 등 Sample Type Name 3개(TI-STN-04-02-T 2) · C19 없음 → No results found.(TI-STN-04-02-T 2-1) · C2 Push Mode → Query Mode, C22 LIS Test Code 예시 값(예시 값)\n\n**[참고]**\n- 1단계에서 적은 임시 값은 「대상 아님 (케이스 3 기본)」이었습니다. 답에 따라 요건 목록 UI 작업 줄을 확정 값으로 고칩니다.\n- 디자인 화면은 읽지 않으므로 디자인 화면에서 같은 글자를 쓰는 곳은 보지 못했습니다.\n- Ver은 케이스 3 화면이라 묻지 않습니다(기존 화면 Ver 그대로).\n- 답을 받으면 업데이트 메모(재설계 후 변경 내역) · UX 확정 기입 · basis · 기획 진행 표시(케이스 3이라 바꾸지 않음) → 언어셋 정리로 이어 갑니다.\n\n규칙 점검: 4단계 절차 3 순서 2(하지 않음 → 순서 3) · 「하지 않는 것」 지킴\n작업 기준: basis 2026-11-27 10:07(시작 기준, UX 확정 때 다시 적음) · 작업규칙 CURECA 작업규칙 @수정본 · 정책서 정책서 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 · 화면 정의서 화면 정의서",
+  "note": "",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": {
-    "q": "요건 1(LIS Setting 두 화면)의 UI 작업 줄을 「대상」(탭 · Code Type 모양과 화면 표기 글자가 바뀜)으로 할까요?",
-    "options": [
-      {
-        "label": "대상 (추천)"
-      },
-      {
-        "label": "대상 아님"
-      }
-    ],
-    "free": true
-  },
+  "ask": null,
   "replies": [
     {
       "at": "2026-11-27T10:12:09+09:00",
@@ -89,6 +78,12 @@
       "by": "서보경",
       "q": "[4단계 · 절차 3] 기계 검사를 한 번 더 검토할까요? (절차 1 검사 뒤 검토 질의 1 ~ 5로 두 화면을 고침)",
       "text": "하지 않음"
+    },
+    {
+      "at": "2026-11-27T14:40:25+09:00",
+      "by": "서보경",
+      "q": "요건 1(LIS Setting 두 화면)의 UI 작업 줄을 「대상」(탭 · Code Type 모양과 화면 표기 글자가 바뀜)으로 할까요?",
+      "text": "좀더 설명해줘"
     }
   ],
   "raws": [
