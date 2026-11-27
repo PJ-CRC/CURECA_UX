@@ -1,0 +1,15 @@
+---
+author: 서보경
+authorId: bkseo
+updatedAt: 2026-11-27T11:01:59+09:00
+---
+[Inventory]
+- Pretreatment Reagents 내 Tub일 경우, Spare Cap 항목 추가
+- 위치: 각 Spare Cap은 해당 Tub 바로 아래에 묶어서 보이는 형식으로 추가
+  - LB Tub (Prep)
+  - LB Tub (Prep)_Spare Cap
+- 표기 정책
+   - 기존: Spare Cap이 부족한 경우, 모두 노출 (카트리지 입고하는 5칸 중에 2개의 카트리지가 cap 비워있으면 Required Qty에 2개 비어있다고 표기하고 있음)
+   - 변경: Spare Cap이 비어 있다고 해도, 지금 진행 중에 Run에 해당 시약이 더 이상 필요하지 않거나 필요하더라도 이미 cap이 있는 다른 시약이 충분이 커버가 되어 cap을 채우지 않아도 되면 부족하다고 표기하지 않음. (지금 정책상 이럴 경우, Required Qty가 0이기 때문에 해당 항목은 숨김처리됨) = 즉, Cap을 꼭 채워야 Run이 완료될 수 있는 경우에만 노출됨
+   - Remaining Qty는 표기 X
+- 기존 Universal Cartridge Kit에도 Spare Cap도 위의 정책 동일하게 적용 (위치 변경 및 노출 방식 변경)
