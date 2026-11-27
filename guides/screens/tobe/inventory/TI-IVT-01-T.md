@@ -220,6 +220,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=39
 | Full | 화면 3-1 · 3 리스트 | |
 | Almost Full | 화면 3-1 | |
 | Fill level | 화면 3-3 | |
+| Next | 화면 1-6 · 3 (Indicator Pagination) | |
 | Shown only if system running or Inbound Trolley docked | 디스크립션 1 · 케이스 Case 2-1 | |
 | No actions required | 디스크립션 1 · 3 · 케이스 Case 3-1 | |
 | Visible only when the system is running or the Inbound Trolley is docked. | 디스크립션 1-7 | |

@@ -249,6 +249,6 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=39
 | Trolley | 화면 3-2 (Unit 이름) | |
 | {n} rxns ({m} racks) · {n} rxns ({m} rack) · {n} rxns ({m} DWPs) · {n} rxns ({m} DWP) · {n} rxns ({m} sets) · {n} rxns ({m} set) · {n} rxns ({m} tubes) · {n} rxns ({m} tube) · {n} ea ({m} sets) · {n} DWPs · {n} sets | 화면 2-4 · 2-5 · 3-5 · 3-6 · 3-8 (n · m = 수량) | |
 | Expired reagents are discarded or returned unused, depending on the instrument. | 화면 3-3 | |
-| Capacity: Shown only for fixed-capacity storage. | 디스크립션 5 | |
-| Required Qty: Displays the additional quantity required based on current inventory. | 디스크립션 5 | |
-| Status: Status is determined by run availability: Sufficient(enough stock), Low(partial shortage), Insufficient(no stock) | 디스크립션 5 | |
+| Capacity · Shown only for fixed-capacity storage. | 디스크립션 5 (Tooltip) | |
+| Required Qty · Displays the additional quantity required based on current inventory. | 디스크립션 5 (Tooltip) | |
+| Status · Status is determined by run availability · Sufficient(enough stock) · Low(partial shortage) · Insufficient(no stock) | 디스크립션 5 (Tooltip) | |
