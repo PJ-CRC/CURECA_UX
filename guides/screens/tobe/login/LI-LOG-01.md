@@ -14,7 +14,7 @@ policies: [POL-ACC-003, POL-ACC-004, POL-ACC-005, POL-ACC-006, POL-ACC-007]
 basis:
 basis_versions:
 source: tobe
-figma:
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=4073-13
 ---
 # LI-LOG-01 Sign in
 

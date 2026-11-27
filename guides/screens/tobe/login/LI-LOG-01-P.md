@@ -14,7 +14,7 @@ policies: [POL-ACC-003, POL-ACC-006]
 basis:
 basis_versions:
 source: tobe
-figma:
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=4073-14
 ---
 # LI-LOG-01-P Reset Initial Password
 

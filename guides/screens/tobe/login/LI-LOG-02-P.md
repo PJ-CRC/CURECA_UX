@@ -14,7 +14,7 @@ policies: [POL-ACC-007]
 basis:
 basis_versions:
 source: tobe
-figma:
+figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=4073-15
 ---
 # LI-LOG-02-P Account Locked
 
