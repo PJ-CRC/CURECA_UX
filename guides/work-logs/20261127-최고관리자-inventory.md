@@ -490,6 +490,82 @@ started: 2026-11-27
 ## 언어셋
 <!-- 4단계 절차 4번. 틀은 flow/4-revise-verify.md "언어셋 틀" -->
 
+- 기준: 언어셋 DB `language-set/db/inventory.md`에서 CID 칸에 이 화면이 있는 `사용` 줄. 대조는 도우미 `projects/etCQFF3CTf1EA6C79d4BBf/tools/langcheck.ps1`로 화면 MD 8개 "화면 표기 글자" 표 385개 글자를 모두 봄(2026-11-27). 공통 영역(GNB · LNB, C7 · C8)은 보지 않음
+- 화면 MD 표를 문구로 고침: TI-IVT-03-T · 04-T 디스크립션 5 Tooltip 줄을 라벨과 문구로 나눔(`Capacity: Shown only…` → `Capacity · Shown only…` 등), TI-IVT-01-T에 화면에 보이는 `Next`(Indicator Pagination) 줄을 더함
+- 화면 MD 8개 표의 Language ID를 메뉴 파일 ID로 채움(99줄, 메뉴 ID가 없는 글자는 `-`, 공통에만 있는 글자 · `변경` 줄 · 새 글자는 5단계)
+- 화면에 없는 기준 줄은 Figma 기획 프레임에서 그 글자가 없음을 확인함(No.{N} · Previous · More · {N} of {M} Items · Module · 04-T Reagent)
+
+| 변경 상태 | CID · 출처 | Language ID | English (변경은 변경 전 → 변경 후) | 번역 대상 (O / - 이유) | 언어셋 DB 대조 |
+| --- | --- | --- | --- | --- | --- |
+| 신규 | TI-IVT-01-T 화면 1-1 · 케이스 (C26, Comsumable → Consumable. LID-IVT-007은 이미 `삭제`) | LID-IVT-052 | Consumable | O | 있음 |
+| 신규 | TI-IVT-01-T 화면 1-1 (C27, Empty → Insufficient · Insufficient → Low. Insufficient는 표에 남아 신규) | LID-DAS-028 · LID-DAS-029 | Insufficient · Low | O | 있음 |
+| 신규 | TI-IVT-01-T 디스크립션 3-5 (C29, 언어셋 DB는 이미 Almost Full) | LID-IVT-011 | Shows waste bin/bottle requiring emptying, prioritized by Full and Almost Full status | O | 있음 |
+| 제거 | TI-IVT-01-T 디스크립션 1-7 (C92) | LID-IVT-006 | Shows required items by replenishment priority. | - (제거) | 있음 |
+| 제거 | TI-IVT-01-T 디스크립션 1-7 (C92, asis 화면 글자) | | Shows required items by replenishment priority, visible only when system is running or Inbound Trolley is docked | - (제거) | 없음 |
+| 신규 | TI-IVT-01-T 화면 1-2 (C13, `BB TUB` 등 대문자 → 품목 표기. 변경 전 글자는 언어셋 DB에 없음) | | BB Tub · WB1 Tub · WB2 Tub · WB3 Tub · EB Tub | - (품목명 미번역) | 공통에 있음 (LID-COM-TRM-116 · 117 · 118 · 119 · 120) |
+| 신규 | TI-IVT-01-T 화면 1-2 · 3-2 (C32, FlexibleExtraction → Flexible Extraction) | LID-EVT-052 | Flexible Extraction | - (Module 이름 미번역) | 있음 (event-history 메뉴 파일) |
+| 신규 | TI-IVT-01-T 화면 3-2 (C32, WasteBin → Waste Bin) | | Waste Bin | - (Unit 이름 미번역) | 공통에 있음 (LID-COM-TRM-045) |
+| 신규 | TI-IVT-01-T 화면 3-2 (C1, Waste Bin → DWP Waste Bin. Waste Bin은 표에 남아 신규) | | DWP Waste Bin | - (Unit 이름 미번역) | 없음 |
+| 신규 | TI-IVT-01-T 화면 3-2 (C1, Tip Waste Bin → Tip Waste Bin (Upper). 변경 전 글자는 언어셋 DB에 없음) | | Tip Waste Bin (Upper) | - (Unit 이름 미번역) | 공통에 있음 (LID-COM-TRM-048) |
+| 변경 | TI-IVT-01-T 화면 1 (언어셋 DB와 대소문자만 다름, 화면 기준) | LID-DAS-027 | Inventory Status → Inventory status | O | 없음 |
+| 변경 | TI-IVT-02-T 화면 Tab (C35) | LID-RUN-062 | Reagent → Reagents | O | 있음 (LID-SPT-043) |
+| 신규 | TI-IVT-02-T 디스크립션 2 Tooltip (C41, 언어셋 DB는 이미 고친 글자) | LID-IVT-013 | Displays total inventory aggregated across all modules. Select a module to view its individual stock details | O | 있음 |
+| 변경 | TI-IVT-03-T · TI-IVT-04-T 디스크립션 5 Tooltip (언어셋 DB와 띄어쓰기만 다름, 화면 기준) | LID-RUN-054 · LID-RUN-055 · LID-RUN-056 | Sufficient (enough stock) → Sufficient(enough stock) · Low (partial shortage) → Low(partial shortage) · Insufficient (no stock) → Insufficient(no stock) | O | 없음 |
+| 신규 | TI-IVT-04-T 화면 1 (C93, `# Sample Preparation` → `#Sample Preparation`) | | #Sample Preparation | - (검사 단계명 미번역, LID-SPT-024와 같음) | 없음 |
+| 신규 | TI-IVT-05-T 화면 2-1 · 3-1 (C78, PlateSealing → Plate Sealing) | LID-SPT-032 | Plate Sealing | - (Module 이름 미번역) | 있음 (event-history 메뉴 파일) |
+| 변경 | TI-IVT-06-T 화면 1 (C22) | LID-IVT-035 | All Item Types → All | O | 있음 (LID-EVT-003) |
+| 신규 | TI-IVT-06-T 화면 2 (C82, Reagents → Reagent. Reagents는 Tab에 남아 신규) | LID-RUN-062 | Reagent | O | 있음 |
+| 신규 | TI-IVT-06-T 화면 2 Unit (C4 · C83, Plate Sealing → Cold Storage · PCR Setup → PCR Plate Storage. 변경 전 글자는 Module 칸에 남아 신규) | | Cold Storage · PCR Plate Storage | - (Unit 이름 미번역) | 공통에 있음 (LID-COM-TRM-043 · 041) |
+| 신규 | TI-IVT-06-T 화면 4 (C23) | | {n} items | O | 없음 |
+| 신규 | TI-IVT-06-T Alert_050 (C91) | | No data to export · There is no data in the list to export. | O | 없음 |
+| 신규 | TI-IVT-06-T Alert_049 (C91) | | Export failed · The file could not be saved. Check the save location and try again. | O | 없음 |
+| 신규 | TI-IVT-06-T Alert_049 · Alert_050 버튼 (C91) | LID-RUN-011 | OK | O | 있음 (information 메뉴 파일) |
+| 신규 | 수량 표기 (C10 · C14 TI-IVT-01-T, C15 · C39 TI-IVT-02-T, C52 TI-IVT-03-T, C43 TI-IVT-03-T-P, C61 TI-IVT-04-T-P) | | {n} rxns ({m} DWPs) · {n} ea ({m} racks) · {n} rxns ({m} sets) · {n} ea ({m} rack) · {n} racks · {n} rxns ({m} tubes) | - (숫자 + 단위, 단위 미번역 LID-COM-TRM-160 ~ 174) | 없음 |
+| DB 맞춤 (추가) | TI-IVT-03-T · TI-IVT-04-T 화면 3-7, TI-IVT-03-T-P · TI-IVT-04-T-P 화면 1 Popup 제목 | | Item details | O | 없음 |
+| DB 맞춤 (추가) | TI-IVT-06-T 화면 1 | | Module-Unit | O | 없음 |
+| DB 맞춤 (추가) | TI-IVT-02-T 화면 1 · TI-IVT-04-T 화면 2-3 · 3-1 | | Buffer Cartridge Cap | - (품목명 미번역) | 없음 |
+| DB 맞춤 (추가) | TI-IVT-04-T 화면 1 | | #Nucleic Acid Extraction · #PCR | - (검사 단계명 미번역, LID-SPT-025 · 033과 같음) | 없음 |
+| DB 맞춤 (추가) | TI-IVT-05-T 화면 3-2 | | Waste Bin (Upper) · Waste Bin (Lower) | - (Unit 이름 미번역) | 없음 |
+| DB 맞춤 (추가) | 수량 · 적재율 표기 (TI-IVT-01-T ~ 06-T, 위 신규 줄 말고) | | {n} ea · {n} ea ({m} socket) · {n} ea ({m} sockets) · {n} ea ({m} sets) · {n} rxns · {n} rxns ({m} racks) · {n} rxns ({m} rack) · {n} rxns ({m} set) · {n} rxns ({m} DWP) · {n} rxns ({m} tube) · {n} DWPs · {n} sets · {n}/{m} · {n}% | - (숫자 + 단위, 단위 미번역) | 없음 |
+| DB 맞춤 (CID 추가) | TI-IVT-01-T | LID-MAS-013 · LID-EVT-051 · LID-SPT-026 · LID-EVT-049 · LID-SPT-032 · LID-EVT-053 · LID-EVT-050 · LID-EVT-064 · LID-EVT-056 · LID-EVT-063 · LID-COM-TRM-110 · 113 · 080 · 106 · 079 · 034 · 033 · 046 · 047 | 19개 (품목 · Module · Unit 이름) | DB 그대로 | 있음 |
+| DB 맞춤 (CID 추가) | TI-IVT-02-T | LID-IVT-001 · LID-EVT-048 · LID-EVT-049 · LID-EVT-051 · LID-EVT-052 · LID-SPT-026 · LID-SPT-032 · LID-SPT-020 · LID-MAS-014 · LID-MAS-013 · LID-SPT-031 · LID-COM-TRM-079 · 080 · 078 · 081 · 083 · 109 · 127 · 134 · 146 · 139 · 152 · 115 · 108 · 106 · 107 · 104 · 102 · 105 · 103 · 113 · 110 · 111 · 112 · 114 · 116 · 120 · 117 · 118 · 119 · 088 · 089 · 096 · 097 · 095 · 100 · 099 · 092 · 093 · 094 | 50개 (화면 제목 · 품목 · Module 이름) | DB 그대로 | 있음 |
+| DB 맞춤 (CID 추가) | TI-IVT-03-T | LID-IVT-001 · LID-SPT-020 · LID-SPT-031 · LID-EVT-049 · LID-SPT-026 · LID-EVT-056 · LID-EVT-064 · LID-COM-TRM-079 · 080 · 078 · 081 · 088 · 089 · 083 · 039 | 15개 (화면 제목 · 품목 · Module · Unit 이름) | DB 그대로 | 있음 |
+| DB 맞춤 (CID 추가) | TI-IVT-03-T-P | LID-EVT-049 · LID-EVT-056 · LID-COM-TRM-079 | 3개 (품목 · Module · Unit 이름) | DB 그대로 | 있음 |
+| DB 맞춤 (CID 추가) | TI-IVT-04-T | LID-IVT-001 · LID-SPT-024 · LID-SPT-025 · LID-SPT-033 · LID-MAS-013 · LID-MAS-014 · LID-EVT-049 · LID-EVT-056 · LID-COM-TRM-090 · 091 · 095 · 092 · 098 · 097 · 108 · 106 · 107 · 104 · 102 · 105 · 103 · 113 · 109 · 110 · 111 · 112 · 114 · 116 · 120 · 117 · 118 · 119 · 115 · 130 · 132 · 133 · 131 · 125 · 134 · 137 · 138 · 139 · 135 · 124 · 136 · 127 · 128 · 129 | 48개 (화면 제목 · Reagents type · 품목 · Module · Unit 이름) | DB 그대로 | 있음 |
+| DB 맞춤 (CID 추가) | TI-IVT-04-T-P | LID-EVT-049 · LID-EVT-056 · LID-COM-TRM-134 | 3개 (품목 · Module · Unit 이름) | DB 그대로 | 있음 |
+| DB 맞춤 (CID 추가) | TI-IVT-05-T | LID-IVT-001 · LID-EVT-050 · LID-EVT-051 · LID-EVT-052 · LID-SPT-026 · LID-EVT-053 · LID-COM-TRM-052 · 053 | 8개 (화면 제목 · Module · Unit 이름) | DB 그대로 | 있음 |
+| DB 맞춤 (CID 추가) | TI-IVT-06-T | LID-IVT-001 · LID-SPT-031 · LID-SPT-032 · LID-EVT-049 · LID-SPT-026 · LID-EVT-056 · LID-COM-TRM-102 · 079 · 081 · 078 · 140 · 131 · 132 · 123 · 124 · 125 | 16개 (화면 제목 · 품목 · Module · Unit 이름) | DB 그대로 | 있음 |
+| DB 맞춤 (제거) | TI-IVT-01-T (화면에 없음) | LID-IVT-043 · LID-RUN-027 | No.{N} · Previous | - (제거) | 있음 |
+| DB 맞춤 (제거) | TI-IVT-03-T · TI-IVT-04-T (화면에 없음) | LID-SPT-015 | More | - (제거) | 있음 |
+| DB 맞춤 (제거) | TI-IVT-03-T-P · TI-IVT-04-T-P (화면에 없음) | LID-EVT-044 | {N} of {M} Items | - (제거) | 있음 |
+| DB 맞춤 (제거) | TI-IVT-04-T (화면에 없음) | LID-RUN-062 | Reagent | - (제거) | 있음 |
+| DB 맞춤 (제거) | TI-IVT-05-T (화면에 없음) | LID-EVT-012 | Module | - (제거) | 있음 |
+
+- 정하지 않은 글자 셋은 "요청자 확인" 10 ~ 12로 물음: TI-IVT-01-T `Fill level`(언어셋 DB LID-RUN-060 `Fill Level(%)`), TI-IVT-03-T · 04-T `Status is determined by run availability`(LID-RUN-053은 끝에 마침표), TI-IVT-02-T `Anyplex™II STI-12 Detection`(공통 LID-COM-TRM-101은 `Anyplex™ II`)
+
+**새로 넣을 줄**
+
+| English | Type | German | Portuguese | Spanish | Italian | French | 검증 상태 | 가장 긴 언어 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| DWP Waste Bin | txt | - | - | - | - | - | AI 번역 | - |
+| Inventory status | title | Bestandsstatus | Estado do Inventário | Estado del Inventario | Stato Inventario | État de l'inventaire | AI 번역 | ES |
+| Sufficient(enough stock) | txt | Ausreichend (genügend Bestand) | Suficiente (stock suficiente) | Suficiente (stock suficiente) | Sufficiente (scorte sufficienti) | Suffisant (stock suffisant) | AI 번역 | IT |
+| Low(partial shortage) | txt | Niedrig (teilweiser Mangel) | Baixo (falta parcial) | Bajo (falta parcial) | Basso (carenza parziale) | Faible (manque partiel) | AI 번역 | DE |
+| Insufficient(no stock) | txt | Unzureichend (kein Bestand) | Insuficiente (sem stock) | Insuficiente (sin stock) | Insufficiente (nessuna scorta) | Insuffisant (aucun stock) | AI 번역 | IT |
+| #Sample Preparation | txt | - | - | - | - | - | AI 번역 | - |
+| {n} items | txt | {n} Einträge | {n} itens | {n} elementos | {n} elementi | {n} éléments | AI 번역 | ES |
+| No data to export | title | Keine Daten zum Exportieren | Sem dados para exportar | No hay datos para exportar | Nessun dato da esportare | Aucune donnée à exporter | AI 번역 | DE |
+| There is no data in the list to export. | alt-txt | Die Liste enthält keine Daten zum Exportieren. | Não existem dados na lista para exportar. | No hay datos en la lista para exportar. | Non ci sono dati nell'elenco da esportare. | Il n'y a aucune donnée à exporter dans la liste. | AI 번역 | FR |
+| Export failed | title | Export fehlgeschlagen | Falha na exportação | Error al exportar | Esportazione non riuscita | Échec de l'exportation | AI 번역 | IT |
+| The file could not be saved. Check the save location and try again. | alt-txt | Die Datei konnte nicht gespeichert werden. Überprüfen Sie den Speicherort und versuchen Sie es erneut. | Não foi possível guardar o ficheiro. Verifique a localização de gravação e tente novamente. | No se pudo guardar el archivo. Compruebe la ubicación de guardado e inténtelo de nuevo. | Impossibile salvare il file. Controllare la posizione di salvataggio e riprovare. | Impossible d'enregistrer le fichier. Vérifiez l'emplacement d'enregistrement et réessayez. | AI 번역 | DE |
+| {n} rxns ({m} DWPs) · {n} ea ({m} racks) · {n} rxns ({m} sets) · {n} ea ({m} rack) · {n} racks · {n} rxns ({m} tubes) | txt | - | - | - | - | - | AI 번역 | - |
+| Item details | title | Artikeldetails | Detalhes do item | Detalles del artículo | Dettagli articolo | Détails de l'article | AI 번역 | ES |
+| Module-Unit | txt | Modul-Einheit | Módulo-Unidade | Módulo-Unidad | Modulo-Unità | Module-Unité | AI 번역 | PT |
+| Buffer Cartridge Cap | txt | - | - | - | - | - | AI 번역 | - |
+| #Nucleic Acid Extraction · #PCR | txt | - | - | - | - | - | AI 번역 | - |
+| Waste Bin (Upper) · Waste Bin (Lower) | txt | - | - | - | - | - | AI 번역 | - |
+| {n} ea · {n} ea ({m} socket) · {n} ea ({m} sockets) · {n} ea ({m} sets) · {n} rxns · {n} rxns ({m} racks) · {n} rxns ({m} rack) · {n} rxns ({m} set) · {n} rxns ({m} DWP) · {n} rxns ({m} tube) · {n} DWPs · {n} sets · {n}/{m} · {n}% | txt | - | - | - | - | - | AI 번역 | - |
+
 ## 요청자 확인
 <!-- 요청자에게 물은 것을 모두 한 줄씩 적음. 정해진 확인의 질문(단계 문서 "물을 것"의 번호)은 물을 때 적고, 작업하다 생긴 예외 질문(flow/README.md "단계를 지나는 규칙" 9)은 생길 때 답을 비운 줄로 적었다가 다음 정해진 확인에서 물음. 답은 이 표에만 적고, 답대로 고친 곳(요건 목록 · 반영 대기 등)에 다시 옮겨 적지 않음. 사용자 확인 목록의 질문 대기 · 변경 확인(Q · C)은 이 표에 적지 않고, 답은 "질문 대기" · "변경 확인" 표에만 적음. 줄은 지우지 않음 -->
 
