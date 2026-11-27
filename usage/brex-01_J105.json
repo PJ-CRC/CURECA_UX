@@ -1,0 +1,28 @@
+{
+  "id": "brex-01_J105",
+  "kind": "work",
+  "reqId": "",
+  "reqType": "",
+  "team": "cureca",
+  "at": "2026-11-27T11:24:57+09:00",
+  "from": "2026-11-27T11:20:16+09:00",
+  "by": "서보경",
+  "doneBy": "Claude",
+  "pc": "BREX_01",
+  "fileKey": "",
+  "fileName": "",
+  "page": "",
+  "frame": "",
+  "nodeId": "",
+  "text": "회의록 요약: 언어셋 통계, setting, MS 부분 리뷰 진행 (J105)",
+  "models": {
+    "claude-opus-5-5": 17
+  },
+  "calls": 17,
+  "input": 35,
+  "cacheWrite": 69804,
+  "cacheRead": 1007260,
+  "output": 8939,
+  "total": 1086038,
+  "usd": 0.9388
+}
