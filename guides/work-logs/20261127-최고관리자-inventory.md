@@ -283,8 +283,8 @@ started: 2026-11-27
 | 폐기물함 · 폐기함 · 폐기물 함 · 폐기물 | Waste Bin/Bottle | TI-IVT-05-T 0 · 2-2 · 3-2 · 3-3 · 3-4 | | 2단계 |
 | 모듈 · Moule | Module | 8개 화면 0, TI-IVT-05-T 0 · 2 · 3 · 3-1 | | 2단계 |
 | 사용여부가 '사용'인 모듈 | Enabled인 Module | 8개 화면 0 | | 2단계 |
-| 소모품 | Consumable | TI-IVT-01-T 0, TI-IVT-03-T 0 · 2 · 2-3 · 2-4 · 3-1 · 3-3 · 3-5 · 3-7, TI-IVT-03-T-P 0 · 1 · 2 · 2-1, TI-IVT-04-T 2-4 · 3-5, TI-IVT-04-T-P 2-1, TI-IVT-06-T 0 · 2 | | 2단계 |
-| 시약 | Reagent | TI-IVT-01-T 0, TI-IVT-04-T 0 · 2-3 · 2-4 · 2-5 · 3 · 3-1 · 3-2 · 3-3 · 3-5 · 3-6 · 3-7, TI-IVT-04-T-P 0 · 1 · 2 · 2-1 · 3, TI-IVT-06-T 0 · 2 | | 2단계 |
+| 소모품 | Consumable | TI-IVT-01-T 0, TI-IVT-02-T 0 (3단계 용어 점검에서 찾음), TI-IVT-03-T 0 · 2 · 2-3 · 2-4 · 3-1 · 3-3 · 3-5 · 3-7, TI-IVT-03-T-P 0 · 1 · 2 · 2-1, TI-IVT-04-T 2-4 · 3-5, TI-IVT-04-T-P 2-1, TI-IVT-06-T 0 · 2 | | 2단계 |
+| 시약 | Reagent | TI-IVT-01-T 0, TI-IVT-02-T 0 (3단계 용어 점검에서 찾음), TI-IVT-04-T 0 · 2-3 · 2-4 · 2-5 · 3 · 3-1 · 3-2 · 3-3 · 3-5 · 3-6 · 3-7, TI-IVT-04-T-P 0 · 1 · 2 · 2-1 · 3, TI-IVT-06-T 0 · 2 | | 2단계 |
 | 검체 · 검체 트롤리 | Sample · Inbound Trolley | TI-IVT-02-T 1-1, TI-IVT-03-T 2-5 · 2-6 · 3-6, TI-IVT-04-T 2-5 · 2-6 · 3-6 | | 2단계 |
 | 투입 트롤리 · 회수 트롤리 | Inbound Trolley · Outbound Trolley | TI-IVT-02-T 1-1 | | 2단계 |
 | 저장 장치 | Storage | TI-IVT-03-T 2-4, TI-IVT-04-T 2-4 | | 2단계 |
