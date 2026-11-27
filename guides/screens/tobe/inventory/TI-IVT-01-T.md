@@ -201,32 +201,32 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=39
 
 | 화면 표기 글자 (영어) | 출처 | Language ID |
 | --- | --- | --- |
-| Inventory | 화면 제목 | |
-| Summary | 화면 Tab | |
-| Overview | 화면 Tab | |
-| Consumables | 화면 Tab | |
-| Reagents | 화면 Tab | |
-| Waste Bin/Bottle | 화면 Tab | |
-| Usage History | 화면 Tab | |
+| Inventory | 화면 제목 | LID-IVT-001 |
+| Summary | 화면 Tab | LID-IVT-002 |
+| Overview | 화면 Tab | LID-IVT-003 |
+| Consumables | 화면 Tab | LID-RUN-044 |
+| Reagents | 화면 Tab | LID-SPT-043 |
+| Waste Bin/Bottle | 화면 Tab | LID-IVT-053 |
+| Usage History | 화면 Tab | LID-IVT-004 |
 | Inventory status | 화면 1 | |
-| Refresh | 화면 4 | |
-| Insufficient | 화면 1-1 · 케이스 Case 1-1 · Case 2-1 · Case 3-1 | |
-| Low | 화면 1-1 · 케이스 Case 1-1 · Case 2-1 · Case 3-1 | |
-| Consumable | 화면 1-1 · 케이스 | |
-| Reagent | 화면 1-1 · 케이스 | |
-| Remaining Qty | 화면 1-3 | |
-| Required Qty | 화면 1-4 | |
-| Waste Bin/Bottle Status | 화면 3 | |
-| Full | 화면 3-1 · 3 리스트 | |
-| Almost Full | 화면 3-1 | |
+| Refresh | 화면 4 | LID-RUN-033 |
+| Insufficient | 화면 1-1 · 케이스 Case 1-1 · Case 2-1 · Case 3-1 | LID-DAS-028 |
+| Low | 화면 1-1 · 케이스 Case 1-1 · Case 2-1 · Case 3-1 | LID-DAS-029 |
+| Consumable | 화면 1-1 · 케이스 | LID-IVT-052 |
+| Reagent | 화면 1-1 · 케이스 | LID-RUN-062 |
+| Remaining Qty | 화면 1-3 | LID-RUN-030 |
+| Required Qty | 화면 1-4 | LID-RUN-031 |
+| Waste Bin/Bottle Status | 화면 3 | LID-IVT-010 |
+| Full | 화면 3-1 · 3 리스트 | LID-DAS-030 |
+| Almost Full | 화면 3-1 | LID-DAS-031 |
 | Fill level | 화면 3-3 | |
-| Next | 화면 1-6 · 3 (Indicator Pagination) | |
-| Shown only if system running or Inbound Trolley docked | 디스크립션 1 · 케이스 Case 2-1 | |
-| No actions required | 디스크립션 1 · 3 · 케이스 Case 3-1 | |
-| Visible only when the system is running or the Inbound Trolley is docked. | 디스크립션 1-7 | |
-| Shows the quantity of consumables required for the Run. | 디스크립션 1-7 | |
-| Shows waste bin/bottle requiring emptying, prioritized by Full and Almost Full status | 디스크립션 3-5 | |
-| MB DWP · EB DWP · 300 μL Tip · PBS Tub · 1000 μL Tip · BB Tub · WB1 Tub · WB2 Tub · WB3 Tub · EB Tub · MB Tube | 화면 1-2 (품목 이름) | |
-| High-throughput Extraction · PCR Setup · Consumable Storage · Flexible Extraction · Plate Sealing · Universal PCR · Sample Pre-treatment | 화면 1-2 · 3-2 (Module 이름) | |
-| MB Storage · EB Storage · 300 μL Tip Storage · Trolley · Buffer Cartridge Storage · Waste Bin · Liquid Waste Bottle · DWP Waste Bin · Sealer Waste Bin · Tip Waste Bin (Upper) | 화면 1-2 · 3-2 (Unit 이름) | |
+| Next | 화면 1-6 · 3 (Indicator Pagination) | LID-RUN-025 |
+| Shown only if system running or Inbound Trolley docked | 디스크립션 1 · 케이스 Case 2-1 | LID-DAS-009 |
+| No actions required | 디스크립션 1 · 3 · 케이스 Case 3-1 | LID-IVT-009 |
+| Visible only when the system is running or the Inbound Trolley is docked. | 디스크립션 1-7 | LID-IVT-041 |
+| Shows the quantity of consumables required for the Run. | 디스크립션 1-7 | LID-IVT-042 |
+| Shows waste bin/bottle requiring emptying, prioritized by Full and Almost Full status | 디스크립션 3-5 | LID-IVT-011 |
+| MB DWP · EB DWP · 300 μL Tip · PBS Tub · 1000 μL Tip · BB Tub · WB1 Tub · WB2 Tub · WB3 Tub · EB Tub · MB Tube | 화면 1-2 (품목 이름) | - · - · - · - · - · - · - · - · - · - · LID-MAS-013 |
+| High-throughput Extraction · PCR Setup · Consumable Storage · Flexible Extraction · Plate Sealing · Universal PCR · Sample Pre-treatment | 화면 1-2 · 3-2 (Module 이름) | LID-EVT-051 · LID-SPT-026 · LID-EVT-049 · LID-EVT-052 · LID-SPT-032 · LID-EVT-053 · LID-EVT-050 |
+| MB Storage · EB Storage · 300 μL Tip Storage · Trolley · Buffer Cartridge Storage · Waste Bin · Liquid Waste Bottle · DWP Waste Bin · Sealer Waste Bin · Tip Waste Bin (Upper) | 화면 1-2 · 3-2 (Unit 이름) | - · - · LID-EVT-064 · LID-EVT-056 · LID-EVT-063 · - · - · - · - · - |
 | {n} rxns ({m} DWPs) · {n} ea ({m} racks) · {n} rxns ({m} racks) · {n} ea ({m} rack) · {n} rxns ({m} set) · {n} rxns ({m} sets) | 화면 1-3 · 1-4 (n · m = 수량) | |
