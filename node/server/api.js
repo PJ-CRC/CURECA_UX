@@ -137,7 +137,10 @@ on('GET', '/api/history', ({ q, T }) => {
   const all = q.get('all') === '1';
   let items = readDirJson(C.histEntries).filter((e) => !core.preReset(e)); if (!all) items = items.filter((e) => core.itemTeam(e) === T.team);
   const st = core.readJson(C.syncStat);
-  return { pc: C.pcName, pcSlug: C.pcSlug, team: all ? '' : T.team, syncing: !!(st && st.busy) || !!(helpers.isLoginOpen && helpers.isLoginOpen()), sync: st, items };
+  // 고유 ID(PC 코드 + 요청 번호, 2026-11-27): 기록에 없으면(예전 기록) 그 PC의 코드로. 코드를 아직 모르는 PC(예전 버전)는 비워 둔다
+  core.pcCode(); const codes = core.pcCodes();
+  for (const e of items) if (e.kind === 'request' && !e.uid && e.reqId) e.uid = core.reqUid(String(e.id || '').replace(/_R\d+$/, ''), e.reqId, codes);
+  return { pc: C.pcName, pcSlug: C.pcSlug, pcCode: core.pcCode(), team: all ? '' : T.team, syncing: !!(st && st.busy) || !!(helpers.isLoginOpen && helpers.isLoginOpen()), sync: st, items };
 });
 on('GET', '/api/usage', ({ T }) => {
   const items = readDirJson(C.histUsage).filter((u) => core.itemTeam(u) === T.team);
@@ -341,6 +344,11 @@ function stageFiles(dir, listed) {
   return keep.concat(found.filter((p) => !keep.includes(p)));
 }
 const isStageDoc = (T, m) => T.team === 'cureca' && m && m.view === 'screens' && m.format === 'files';
+/* 수정본 기록(rev/{수정본}.json) · 수정본 파일은 만든 뒤 바뀌지 않는다(바뀌는 것은 orig 표시뿐, false → true) — 한 번 읽은 것은 기억해
+   UX 문서를 열 때마다 수백 개를 다시 읽지 않는다(2026-11-27: 화면 정의서 수정본 264개 · 작업규칙 96개로 /api/guides가 매번 약 0.3초) */
+const revInfoCache = new Map(), revOkCache = new Set();
+function revInfo(p) { if (revInfoCache.has(p)) return revInfoCache.get(p); const j = core.readJson(p); if (j) revInfoCache.set(p, j); return j; }
+function revOk(p) { if (revOkCache.has(p)) return true; const ok = core.exists(p); if (ok) revOkCache.add(p); return ok; }
 function readGuides(T) {
   const list = []; let promoted = 0;
   for (const name of dirNames(T.guideRoot)) {
@@ -351,10 +359,10 @@ function readGuides(T) {
     const files = fileNames(rd);
     const bases = ciSort([...new Set(files.filter((n) => !/\.check-/.test(n) && !n.startsWith('_') && /\.(md|json)$/i.test(n)).map((n) => n.replace(/\.(md|json)$/i, '')))]);   // _처음은 수정본이 아니다
     for (const rn of bases) {
-      const info = core.readJson(path.join(rd, rn + '.json'));
-      if (!isFiles && !core.exists(path.join(rd, rn + '.md'))) continue;
+      const info = revInfo(path.join(rd, rn + '.json'));
+      if (!isFiles && !revOk(path.join(rd, rn + '.md'))) continue;
       // 파일형 수정본은 rev/{수정본}/{파일}. 문서 폴더 밖 파일(../flow/…)은 저장할 때 「../」를 「_up/」로 바꿔 둔다(writes.js save) — 같은 규칙으로 찾는다(2026-11-18, 작업규칙 수정이 변경이력에서 빠지던 것)
-      if (isFiles && !(info && info.file && core.exists(path.join(rd, rn, ...String(info.file).replace(/\.\.\//g, '_up/').split('/'))))) continue;
+      if (isFiles && !(info && info.file && revOk(path.join(rd, rn, ...String(info.file).replace(/\.\.\//g, '_up/').split('/'))))) continue;
       const checks = files.filter((n) => n.startsWith(rn + '.check-') && n.toLowerCase().endsWith('.json')).map((n) => core.readJson(path.join(rd, n))).filter((x) => x != null);
       const s = (k) => (info && info[k] != null ? String(info[k]) : '');
       revs.push({ rev: rn, at: s('at'), by: s('by'), note: s('note'), base: s('base'), req: s('req'), jobId: s('jobId'), file: s('file'), checks });
@@ -362,12 +370,13 @@ function readGuides(T) {
     const last = revs.length ? revs[revs.length - 1] : null;
     /* 마지막 수정본이 아직 원본에 없으면(orig 표시 없음) 원본으로 옮긴다 */
     const promote = (r, src, file) => {
-      const info = core.readJson(path.join(rd, r.rev + '.json')) || {};
-      if (info.orig) return;
+      const ip = path.join(rd, r.rev + '.json'), was = revInfoCache.get(ip); if (was && was.orig) return;
+      const info = core.readJson(ip) || {};
+      if (info.orig) { revInfoCache.set(ip, info); return; }
       const t = core.readText(src); if (t == null) return;
       keepFirst(dd, m, file);   // 처음 내용부터 남기고
       if (writeOrig(origPath(dd, m, file), t)) promoted++;
-      info.orig = true; core.writeJson(path.join(rd, r.rev + '.json'), info);
+      info.orig = true; core.writeJson(ip, info); revInfoCache.set(ip, info);
     };
     const rel = (abs) => `${T.guideRel}/${name}/` + path.relative(dd, abs).split(path.sep).join('/');
     if (isFiles) {

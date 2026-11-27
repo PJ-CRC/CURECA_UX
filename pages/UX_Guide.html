@@ -1473,7 +1473,12 @@ html.embed,html.embed body{overflow:hidden}
     })) : [{ url: (G && G.firstPath) || base + 'guide.md', at: String(meta.createdAt || '').slice(0, 10) }].concat(revs.map(function(r){   // 처음 내용(rev/_처음.md, 없으면 본문)
       return { url: base + 'rev/' + r.rev + '.md', at: rat(r) };
     }));
-    Promise.all(vers.map(function(v){ return fetch(v.url, { cache: 'no-store' }).then(function(r){ return r.ok ? r.text() : null; }).catch(function(){ return null; }); }))
+    /* 판마다 하나씩 받으면 정책서는 110여 번 요청해 2초 넘게 걸렸다 → 한 번에 받는다(/api/files, 2026-11-27). 안 되면 하나씩 */
+    var one = function(){ return Promise.all(vers.map(function(v){ return fetch(v.url, { cache: 'no-store' }).then(function(r){ return r.ok ? r.text() : null; }).catch(function(){ return null; }); })); };
+    (vers.length > 1 ? post('/api/files', { paths: vers.map(function(v){ return v.url; }) }).then(function(j){
+      var o = (j && j.files) || {}; if (!Object.keys(o).length) throw 0;
+      return vers.map(function(v){ return Object.prototype.hasOwnProperty.call(o, v.url) ? o[v.url] : null; });
+    }).catch(one) : one())
       .then(function(mds){
         var d = {}, prev = {};
         mds.forEach(function(md, i){
@@ -1636,7 +1641,7 @@ html.embed,html.embed body{overflow:hidden}
     var want = scFind(decodeURIComponent(location.hash.slice(1)));
     var first = SC.byCid[want] ? want : (SC.menus[0] && SC.menus[0].screens[0] ? SC.menus[0].screens[0].id : '');
     if (!first) { fail('화면 정의서 파일이 없습니다.'); return; }
-    scShow(first, true);
+    scShow(first, true, !SC.byCid[want]);
   }
   function scChips(s){
     return (s.wait ? '<em class="sc-chip warn">반영 대기 ' + s.wait + '</em>' : '') + (s.doing ? '<em class="sc-chip">작업 중 ' + s.doing + '</em>' : '') + (!s.o.basis && !s.o.rules_version ? '<em class="sc-chip">기준 기록 전</em>' : '');
@@ -1682,9 +1687,10 @@ html.embed,html.embed body{overflow:hidden}
     if (ids && t.replace(/\b(?:POL-[A-Z]{3}-\d{3}|DS-\d{4}|PV-\d{4}(?:-[A-Z])?|PD-\d{4}|CR-\d{4}|(?:Confirm|Alert|Info|Warning)_\d{3})\b|[,\s·/]/g, '').length < 2) return uniq(ids).map(idChip).join(' ');
     return marked.parseInline(t);
   }
-  function scShow(cid, first){
+  // shut: 처음 열 때 · 탭을 바꿀 때 저절로 고른 첫 화면은 메뉴 묶음을 펼치지 않는다(2026-11-27 — To Be · AS IS 목록은 기본 접힘)
+  function scShow(cid, first, shut){
     var s = SC.byCid[cid]; if (!s) return;
-    scCur = cid; scKind = ''; scOpen[s.menu] = true;
+    scCur = cid; scKind = ''; if (!shut) scOpen[s.menu] = true;
     var o = s.o, mn = SC.menus.filter(function(m){ return m.key === s.menu; })[0] || { name: s.menu };
     if (mn.stage) scStage = mn.stage;   // 다른 탭의 화면을 열면(링크 · 주소) 그 탭으로
     var row = function(k, v){ return v ? '<dt>' + esc(k) + '</dt><dd>' + v + '</dd>' : ''; };
@@ -2434,7 +2440,7 @@ html.embed,html.embed body{overflow:hidden}
       scStage = sct.dataset.sct; var q = $('q').value.trim().toLowerCase(), cur = SC.byCid[scCur], cm = cur && SC.menus.filter(function(m){ return m.key === cur.menu; })[0];
       if (!cm || cm.stage !== scStage) {
         var fs = null; SC.menus.some(function(m){ if (m.stage !== scStage) return false; fs = m.screens.filter(function(s){ return scHit(s, m, q); })[0] || null; return !!fs; });
-        if (fs) { scOpen[fs.menu] = true; scShow(fs.id); return; }
+        if (fs) { scShow(fs.id, false, true); return; }
       }
       scTree(q);
     }

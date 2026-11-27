@@ -29,7 +29,7 @@
 
 ## 겹침 · 대화형 감시 · 채팅으로 고쳤을 때 · 요청 데이터
 
-- **대화형 창에서 감시해 달라고 하면**: 먼저 `workbench/.agent.json`을 본다. 백그라운드가 동작 중(150초 안에 썼고 status가 stopped가 아님)이면 시작하지 말고 「백그라운드가 감시 중」이라고 알린다. 꺼져 있을 때만(대비용) `workbench/watch_requests.ps1`(맥 `perl workbench/watch_requests.pl`)을 백그라운드로 실행한다. 「대기」 요청이 생기면 `PENDING R0xx,...`(겹치면 `CONFLICT …` 줄 함께), 겹침이 풀리면 `RESUME R0xx,...`, 작업이 생기면 `JOBS J0xx,...`, 50분 동안 없으면 `TIMEOUT`을 출력하고 끝난다.
+- **대화형 창에서 감시해 달라고 하면**: 먼저 `workbench/.agent.json`을 본다. 백그라운드가 동작 중(150초 안에 썼고 status가 stopped가 아님)이면 시작하지 말고 「백그라운드가 감시 중」이라고 알린다. 꺼져 있을 때만(대비용) `workbench/watch_requests.ps1`(맥 `perl workbench/watch_requests.pl`)을 백그라운드로 실행한다. **새 대화에서만 시작한다**(2026-11-27): 이 대화에서 이미 다른 일을 했으면(규칙 · 문서를 읽었거나 다른 요청 · 개발을 함) 감시를 시작하지 말고 「요청 처리는 새 대화에서 해 주세요(이 대화 내용을 매번 함께 읽어 비쌉니다)」라고 알린다 — 오래 이어 온 대화(문맥 63만)에서 R001 1단계를 처리해 $13, 다음 날 캐시가 끝난 뒤 이어서 $5가 더 들었다. 「대기」 요청이 생기면 `PENDING R0xx,...`(겹치면 `CONFLICT …` 줄 함께), 겹침이 풀리면 `RESUME R0xx,...`, 작업이 생기면 `JOBS J0xx,...`, 50분 동안 없으면 `TIMEOUT`을 출력하고 끝난다.
 - **겹침(다른 작업자와 같은 프레임)**: 감시가 `PENDING`과 함께 `CONFLICT R0xx <다른 이력 id> <in-progress|waiting>`을 출력하면, 그 요청은 Figma를 고치지 않는다.
   - 다른 작업자의 이력 내용은 `.history/entries/<다른 이력 id>.json`(by · pc · reqId · text)에서 본다.
   - 상태를 「보류」로, note를 `겹침 대기: {by}({pc}) {reqId} {진행 중|대기} — 그 요청이 끝나면 이어서 처리합니다`로 바꾼다. note는 반드시 「겹침 대기」로 시작한다.
