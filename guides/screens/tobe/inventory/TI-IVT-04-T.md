@@ -48,7 +48,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=39
   - Reagents type : 공정별 <span style="color:red">Reagent</span>를 모아볼 수 있는 기능 제공
 - Default : 모든 Chip이 선택되지 않은 상태(전체 데이터 노출)
 - 드롭다운 리스트 항목
-  - Reagents type : # Sample Preparation, #Nucleic Acid Extraction, #PCR
+  - Reagents type : <span style="color:red">#Sample Preparation</span>, #Nucleic Acid Extraction, #PCR
 - 동작
   - Chip 클릭 시 선택 상태로 변경, 해당 Status 값에 해당하는 데이터만 필터링하여 노출
   - 동일 Chip 재클릭 시 선택 해제, 필터링 해제되어 전체 데이터 노출
@@ -218,7 +218,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=39
 | 디스크립션 번호 | 요소 | 예시 값 | 기준 |
 | --- | --- | --- | --- |
 | - | Tab | Summary / Overview / Consumables / Reagents (선택) / Waste Bin/Bottle / Usage History | POL-INV-001 정의 |
-| 1 | Chip | Insufficient 12 / Low 7 / Sufficient 2 / # Sample Preparation / #Nucleic Acid Extraction / #PCR | 기존 원본, `status-values.csv` 재고 상태 |
+| 1 | Chip | Insufficient 12 / Low 7 / Sufficient 2 / #Sample Preparation / #Nucleic Acid Extraction / #PCR | 기존 원본, `status-values.csv` 재고 상태 |
 | 2 | 카드 목록 (Pretreatment Reagents · STARMag M96 Kit · STARMag Universal Cartridge Kit) | 기존 원본 그대로 | `Inventory_asis` TI-IVT-04-T 왼쪽 카드 목록 |
 | 2 | PCR 카드 4장 | Allplex™ GI-Virus Assay / Allplex™ Respiratory Panel 1 / Allplex™ GI-Parasite Assay / Allplex™ GI-Bacteria(II) Assay (값은 기존 원본 그대로, 두 번 나온 GI-Virus 카드 하나를 지움) | 기존 원본, 1단계 뒤 단계용 확인 항목 11 |
 | 3 | Pretreatment Reagents 상세 7장 | 기존 원본 그대로 | `Inventory_asis` TI-IVT-04-T 오른쪽 상세 |
@@ -232,7 +232,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=39
 | Summary · Overview · Consumables · Reagents · Waste Bin/Bottle · Usage History | 화면 Tab | |
 | Insufficient · Low · Sufficient | 화면 1 · 2-6 | |
 | Reagents type | 화면 1 | |
-| # Sample Preparation · #Nucleic Acid Extraction · #PCR | 화면 1 · 2-7 | |
+| #Sample Preparation · #Nucleic Acid Extraction · #PCR | 화면 1 · 2-7 | |
 | Refresh | 화면 4 | |
 | Remaining Qty · Required Qty · Status | 화면 2 열 제목 | |
 | Location · Capacity | 화면 3 열 제목 | |

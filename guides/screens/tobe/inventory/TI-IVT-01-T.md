@@ -217,8 +217,6 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=39
 | Fill level | 화면 3-3 | |
 | Shown only if system running or Inbound Trolley docked | 디스크립션 1 · 케이스 Case 2-1 | |
 | No actions required | 디스크립션 1 · 3 · 케이스 Case 3-1 | |
-| Shows required items by replenishment priority, visible only when system is running or Inbound Trolley is docked | 디스크립션 1-7 | |
-| Shows required items by replenishment priority | 디스크립션 1-7 | |
 | Visible only when the system is running or the Inbound Trolley is docked. | 디스크립션 1-7 | |
 | Shows the quantity of consumables required for the Run. | 디스크립션 1-7 | |
 | Shows waste bin/bottle requiring emptying, prioritized by Full and Almost Full status | 디스크립션 3-5 | |

@@ -76,6 +76,8 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=39
 - 동작
   - <span style="color:red">클릭 시 OS 파일 탐색기가 호출되어 사용자가 저장 경로 및 파일명을 지정하여 저장</span>
   - 대상 범위 : 리스트에 노출된 데이터
+  - <span style="color:red">리스트에 내보낼 데이터가 없으면(0건) Alert_050 노출</span>
+  - <span style="color:red">파일 저장에 실패하면 Alert_049 노출</span>
 - 포맷 (Format) : <span style="color:red">.csv</span>
 - 정책 참고 : POL-COM-006, POL-INV-006
 
