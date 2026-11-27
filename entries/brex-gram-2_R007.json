@@ -2,11 +2,11 @@
   "id": "brex-gram-2_R007",
   "kind": "request",
   "team": "cureca",
-  "status": "보류",
-  "at": "2026-11-27T13:55:55+09:00",
+  "status": "대기",
+  "at": "2026-11-27T13:56:54+09:00",
   "createdAt": "2026-11-26T17:07:33+09:00",
   "by": "하승현",
-  "doneBy": "Claude",
+  "doneBy": "하승현",
   "pc": "BREX_GRAM_2",
   "reqId": "R007",
   "fileKey": "etCQFF3CTf1EA6C79d4BBf",
@@ -17,17 +17,13 @@
   "type": "요청",
   "layout": "",
   "text": "Case 3 테스트로 작업 지시를 해볼거야.\n작업할 Tobe 페이지에 작업해주고 관련 내용 기록은 하지 않아도 돼.\n정상적인 프로세스로 작업이 진행되는 지 확인하고 싶어서 그래.\n\nasis 링크 주소 주면 돼?",
-  "note": "케이스 3 · 4단계 · 20261126-하승현-policy-setting — 사용자 확인 목록을 번호마다 정해 주세요 (질문 대기 6 · 변경 확인 10)\n\n**[4단계] 사용자 확인 목록을 확인해 주세요**\n위 내용에서 바꿀 곳이 있으면 말씀해 주세요. 번호마다 답해 주시면 그대로 반영합니다 (예: `Q1 고객에게 물음, Q3 환산, C1 맞음, C3 되돌림 …`). 일부만 답해도 되고, 남은 번호는 다시 보여 드립니다.\n\n**[질문 대기] 답을 정해 주실 것**\n\n| 번호 | 화면 · 위치 | 질문 | 고를 것 | 추천 |\n| --- | --- | --- | --- | --- |\n| Q1 | Analyze Breakpoint (TI-STN-01-04 · LI-STN-01-04) 그래프 | Breakpoint 계산 방식 · 그래프 표시 항목 (POL-TST-004 예외, 2단계 안: 두 추출 Module의 Cost per test가 같아지는 Sample 수) | 2단계 안대로 정함 / 고객에게 물음 | **고객에게 물음** (정책서가 바뀌는 것, 2단계에서 논의 중으로 둠) |\n| Q2 | Comparison Simulation (TI-STN-01-03) 2 · 3 | 결과 값 표기(통화 · 시간)와 그날 검사가 없을 때 표시 | 직접 정함 (표기 · 빈 값 표시를 적어 주세요) / 고객에게 물음 | |\n| Q3 | Cost Setting (TI-STN-01-01) 1 통화 | 통화를 바꿀 때 입력한 단가를 | 환산함 / 값은 두고 단위만 바꿈 / 고객에게 물음 | |\n| Q4 | Policy Setting (TI-STN-01) 9 · Cost Setting (TI-STN-01-01) 5 · Extraction Module Usage Setting (TI-STN-01-02) 2 | 값을 바꾼 채 [Close] · 다른 메뉴로 이동할 때 다시 묻는 Confirm을 더할지 (카탈로그에 없음) | 더함 (Confirm_022 모양 참고 새 Confirm) / 더하지 않음 (기존대로) | |\n| Q6 | Extraction Module Usage Setting (TI-STN-01-02) Case 2 디폴트 표 | 원본 표가 그림이라 `glossary/test-items.csv` 기본값(M9600 · STARlet 칸)으로 그림 | 지금 그린 대로 / 원본 표 내용을 알려 줌 | **지금 그린 대로** (POL-TST-005 · 010) |\n| Q7 | Policy Setting (TI-STN-01 · LI-STN-01) 0 화면 정보 Ver | 반영 대기 TI-STN-01-R06은 최신 Ver로, 케이스 3 규칙은 기존 Ver 2.0 그대로 | 기존 Ver 2.0 그대로 / 최신 Ver로 | **기존 Ver 2.0 그대로** (케이스 3 규칙, 이번 작업 Ver는 UX 확정 때 따로 여쭘) |\n\n**[변경 확인] 맞는지만 봐 주실 것** (고를 것: 맞음 / 되돌림)\n\n| 번호 | 화면 · 위치 | 기존 | 바꿔 그린 것 | 근거 |\n| --- | --- | --- | --- | --- |\n| C1 | Policy Setting (TI-STN-01) 1 | 「장비 상태 ≠ Not Initialized or Ready」, 비활성 ② ~ ⑦ | CURECA Status가 Not Initialized · Ready가 아니면 배너, ② ~ ⑨ 기능 버튼 비활성 | POL-TST-001 규칙 3 · DS-0003 |\n| C2 | Policy Setting (TI · LI-STN-01) 5 | PCR Protocol Setting 기본값만 | 선택지 Cyclic-CMTA · End Point-CMTA와 뜻을 디스크립션에 | POL-TST-001 규칙 7 |\n| C3 | Policy Setting (TI · LI-STN-01) 6-2 | 뜻 없음, 화면 토글 Off | On이면 Check Test Protocol 단계 표시 · Off이면 건너뜀, 화면 토글 기본 On | POL-TST-001 규칙 8 |\n| C4 | Policy Setting (TI-STN-01) 6-1 | 「세부정의 참고」 | Test Cut-off Time 뜻(오더 집계 마감 시각)과 정책 ID | POL-TST-002 |\n| C5 | Policy Setting (TI-STN-01 7 · 8, LI-STN-01 4 · 5) | 「Service 계정으로 로그인 시」 | User Type이 Service일 때만 보임 | POL-ACC-001 규칙 5 |\n| C9 | Extraction Module Usage Setting (TI · LI-STN-01-02) 1 | 검사 항목 10개 예시, RP1A · Allplex_HPV28 | `test-items.csv` 30개 표기 · 기본값 | POL-TST-005 · 010 |\n| C10 | Comparison Simulation (TI-STN-01-03) 2 | Product 「RB」 · 「HPV28」 | PB · Allplex HPV28 | test-items.csv |\n| C11 | Cost Setting (TI-STN-01-01) 3 | 300 ㎕ Tip · 1,000 ㎕ Tip, 「24 ea/rack」, MM Tube 14 ea/rack | 300 μL Tip · 1000 μL Tip, `{수량} ea ({n} {단위})`, MM Tube 14 ea (1 socket) | glossary.md 표기 규칙 · consumables.csv |\n| C13 | Cost Setting (TI-STN-01-01) 2 · 세부정의 | Reagents 탭 정의 없음, 예전 품목(ASL Standard Tube 등) | Reagents 탭 정의(목록 · Cost · [Apply]), 품목은 consumables.csv Reagent 표기 | POL-TST-003 규칙 2 · 3 · consumables.csv |\n| C16 | 8화면 LNB | 하위 메뉴 Test Policy Setting | Policy Setting | IA |\n\n**[반영한 항목]** 3단계에서 확인됨 — 고르지 않아도 됩니다. 이상한 줄이 있으면 번호를 짚어 주세요(되돌림).\n- C6 LI-STN-01 3: [LI-STN-01-03] → [LI-STN-01-04] (IA)\n- C7 LI-STN-01-04 패널 CID: LI-STN-01 → LI-STN-01-04 (IA)\n- C8 TI-STN-01-02 화면 이름: Device Usage Setting → Extraction Module Usage Setting (IA)\n- C12 TI-STN-01-02 1-1: 얼럿 배너 → Alert 배너\n- C14 8화면: 공통 UX 참고 줄 더함\n- C15 TI-STN-01-02 Case 1: 번호 · 열 순서를 기획 프레임과 같게\n- C17 LI-STN-01 1: 비활성 표시 설명 더함 (기존 화면)\n\n[확인 필요] 시작 기준(2026-11-26 17:17) 뒤로 대상 화면에 걸린 정책 · 기준데이터 변경 · 새 반영 대기 항목은 없습니다.\n\n규칙 점검: 4단계 절차 1 순서 2 「보여 주는 모양」대로 보여 줌, 화면은 아직 고치지 않음 (테스트 · 저장소 고치지 않음)\n작업 기준: basis 2026-11-26 17:17 (시작 기준 · history 778f921b) · 작업규칙 CURECA 작업규칙 @수정본 · 정책서 정책서 · UX가이드 Common UX 가이드 (UX가이드_Common-UX-가이드) · 기준데이터 기준데이터 · 화면 정의서 화면 정의서",
+  "note": "",
   "shot": "",
   "shots": [],
   "images": [],
   "frames": [],
   "marks": [],
-  "ask": {
-    "q": "[4단계] Q1 ~ Q4 · Q6 · Q7과 C1 ~ C5 · C9 · C10 · C11 · C13 · C16을 번호마다 적어 주세요 (예: Q1 고객에게 물음, Q3 환산, C1 맞음, C3 되돌림). 일부만 답해도 됩니다.",
-    "options": [],
-    "free": true
-  },
+  "ask": null,
   "replies": [
     {
       "at": "2026-11-26T17:14:39+09:00",
@@ -58,6 +54,12 @@
       "by": "하승현",
       "q": "[4단계] 사용자 확인 목록(질문 대기 6 · 변경 확인 10)을 어떻게 반영할까요?",
       "text": "하나씩 정하기"
+    },
+    {
+      "at": "2026-11-27T13:56:54+09:00",
+      "by": "하승현",
+      "q": "[4단계] Q1 ~ Q4 · Q6 · Q7과 C1 ~ C5 · C9 · C10 · C11 · C13 · C16을 번호마다 적어 주세요 (예: Q1 고객에게 물음, Q3 환산, C1 맞음, C3 되돌림). 일부만 답해도 됩니다.",
+      "text": "a"
     }
   ],
   "raws": [
