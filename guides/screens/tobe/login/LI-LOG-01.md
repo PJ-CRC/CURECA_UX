@@ -1,122 +1,130 @@
 ---
-cid:
-pair_cid:
-tl_relation:   # 동일 | 권한 차이 | 기능 추가 | 단독
-title:
-path:
-type:          # Page | Popup | Tab
-version:       # X.Y.ZZ. 케이스 1 · 2는 4단계 UX 확정 때 요청자가 정한 값(그 전까지 케이스 1은 기존 Ver, 케이스 2는 비움), 케이스 3은 기존 화면의 Ver 그대로 (reference-rules/description.md 7절 "화면 정보에 적는 값")
-date:          # YYYY.MM.DD. 케이스 3은 기존 화면의 Date 그대로, 케이스 1 · 2는 작성일
-author:        # 케이스 3은 기존 화면 담당자 그대로, 케이스 1 · 2는 요청자
-client_mode: [] # L-IOS 화면만. user_type과 함께 원본은 권한 · 모드 표(policy/permission-matrix.csv · client-mode-matrix.csv)이고 표 값을 적음(줄 찾는 법은 flow/2-evidence.md "경로 분기 기준마다 읽는 것"의 케이스 3 줄). 표에 없으면 질문 대기로 두고 4단계 답을 적음. 표는 5단계에서 맞춤
-user_type: []
-policies: []   # 정책 ID. 작업 완료 전인 결정으로 그렸으면 "POL-EQP-004 · DS-0012"처럼 논의 대상 ID를 함께 적고, 5단계(완료) 반영 뒤 뗌
-basis:         # 화면 기준: 시각 · history 커밋 (reference-rules/work-log.md "작업 기준")
-basis_versions: # 문서마다 basis 시각 전에 마지막으로 바뀐 때 (rules · policy · glossary · screens · common_ux 모두 @날짜)
-source: tobe   # To-Be 화면 MD. 작업방에 그렸는지는 머리말 figma로 가름
-figma:         # 작업방의 이 CID 섹션 링크
+cid: LI-LOG-01
+pair_cid: TI-LOG-01
+tl_relation: 기능 추가
+title: Sign in
+path: Sign in
+type: Page
+version: 2.1.03
+date: 2026.08.21
+author: 정다예
+client_mode: [Main Mode, Console Mode, MS Mode]
+user_type: [Service, Admin, User]
+policies: [POL-ACC-003, POL-ACC-004, POL-ACC-005, POL-ACC-006, POL-ACC-007]
+basis:
+basis_versions:
+source: tobe
+figma:
 ---
-# CID 화면 이름
+# LI-LOG-01 Sign in
 
-- T/L 차이:
-- 호출하는 화면: [CID] 화면 이름 (어디서 → 어디로)
-- 호출되는 곳: (공통 Popup이면 호출 위치 목록)
+- T/L 차이: T-IOS에는 종료 버튼이 없고, L-IOS에는 [Shut Down] 버튼(5)이 있음
+- 호출하는 화면: [LI-LOG-01-P] Reset Initial Password (4 [Sign In] → 최초 로그인 · 관리자 비밀번호 재설정 뒤), [LI-LOG-02-P] Account Locked (4 [Sign In] → 인증 실패 누적 10회), Confirm_020 (5 [Shut Down])
+- 호출되는 곳: 프로그램 시작, 로그아웃 · Session Timeout 뒤
 - 반영 대기 항목: `pending/open.md`에서 이 CID로 찾음
 - 화면 변경 이력: `screen-history.md`의 이 CID 줄
 
 ## 디스크립션
 
-<!-- 원본입니다. Figma 패널에 그대로 들어갑니다. 쓰는 법은 reference-rules/description.md, 작성예시문서는 examples/description-samples.md.
-     바뀐 글 표시(빨간 글씨 · 빨간 취소선)는 reference-rules/description.md 7절 "바뀐 글 표시"의 HTML 태그로 적습니다.
-     코드(화면 · 케이스 · Alert · Confirm · Toast · Common UX · 정책)는 화면 MD에 색을 적지 않습니다. Figma 패널에서만 파란색으로 칠합니다(reference-rules/description.md 7절 "참고 코드 표시").
-     아래는 모양 예시입니다. 실제 내용으로 바꿔 씁니다. -->
-
-**0  ○○ 화면**
+**0  Sign in 화면**
 - 정의
-  - 내용
-- 동작
-  - 내용
-- User Type : 
-- L-IOS Client Mode : (L-IOS 화면에만 씀)
+  - 계정 ID와 비밀번호로 로그인하는 화면
+- User Type : Service, Admin, User
+- L-IOS Client Mode : Main Mode, Console Mode, MS Mode
 
-**1  ○○ 영역**
-- 정의
-  - 내용
-- 공통 UX 참고 : 
+**1  Logo**
+- 시스템 로고 이미지 노출
 
-**1-1  항목 이름(Dropdown)**
-- 기능 : 
-- Default : 
-- 드롭다운 리스트 항목
-  - 내용
-- 공통 UX 참고 : 
+**2  ID(Text Input)**
+- 공통 UX 참고 : COMM-5-t
+- Placeholder : Please enter your ID
+- 선택시, 입력필드 활성화
+- 입력 조건
+  - <span style="color:red">4자 이상, 32자 이하</span>
+  - 영문 소문자, 숫자, 특수문자(_ -) <span style="color:red">사용 가능</span>
+  - 대문자 입력 시 소문자로 자동 변환
+- 유효성 메시지 : LI-LOG-01/Case > Case 1
+- 정책 참고 : POL-ACC-005
 
-**2  ○○ 리스트**
-- 정의 : 
-- 정렬
-  - Default : 
-- 컬럼 항목
-  - 컬럼 이름 : 무슨 값인지 / 표기 / 값이 없을 때
-- 동작
-  - 내용
-- 공통 UX 참고 : 
+**3  Password(Password Input)**
+- 공통 UX 참고 : COMM-5-t
+- Placeholder : Please enter your password
+- 선택시, 입력필드 활성화
+- 입력 조건
+  - <span style="color:red">8자 이상, 64자 이하</span>
+  - 영문 <span style="color:red">대문자(A-Z), 영문 소문자(a-z)</span>, 숫자<span style="color:red">(0-9)</span>, 특수 문자(! @ # $ % ^ & * ( ) _ - + = [ ] { } ; ' : " , . < > ? /) <span style="color:red">사용 가능</span>
+  - <span style="color:red">영문 대문자, 영문 소문자, 숫자 각 1자 이상 포함 (특수문자는 선택)</span>
+  - 대소문자 구분
+- 유효성 메시지 : LI-LOG-01/Case > Case 1
+- 정책 참고 : POL-ACC-006
 
-**3  [버튼 이름] 버튼**
-- 정의
-  - 내용
+**4  [Sign In] 버튼**
 - 활성화 조건
-  - 내용
+  - Default: 비활성화
+  - [아이디], [비밀번호] 2개 필드 모두 최소 1자 이상 입력 시 버튼 활성화
 - 동작
-  - 내용
-- 정책 참고 : 
+  - 계정 인증 성공 시, 최초 로그인일 경우 비밀번호 변경 필요
+  - 초기 비밀번호 재설정 화면 노출 : LI-LOG-01-P
+  - <span style="color:red">인증 실패 누적 10회 시 계정 잠금, Popup 노출 : LI-LOG-02-P</span>
+- 정책 참고 : POL-ACC-003, POL-ACC-007
+
+**5  [Shut Down] 버튼**
+- 동작
+  - 선택 시, Confirm 노출 : Confirm_020
+- 정책 참고 : POL-ACC-004
+
+**6  Copyright 정보**
+- 로그인 페이지에서만 노출
+- 표출 텍스트 : © Seegene Inc. All rights reserved.
 
 ## 케이스
 
-<!-- 케이스 화면의 원본입니다 (flow/3-design.md 공통 5 "케이스 화면", 작성예시문서 examples/case-samples.md).
-     근거는 셋 중 하나: 기존 원본 / 디스크립션 조건 / 요청자. 어느 것도 아니면 올리지 않고 질문 대기에 둡니다.
-     종류(디스크립션 조건일 때): 1 상태별 데이터 노출, 2 올리거나 눌렀을 때 뜨는 것, 3 유형 · 대상에 따라 노출 항목 구성이 다른 것,
-     4 개수가 기준을 넘어 요소가 생기거나 배치가 바뀌는 것, 5 처음 들어왔거나 데이터가 없을 때, 6 한 번의 조작으로 여러 단계를 거쳐 바뀌는 것.
-     Case 번호는 바꾸지 않고, 지워도 다시 쓰지 않습니다. 케이스가 없으면 "없음"이라고 적습니다.
-     케이스 블록: Case마다 하나씩 둡니다. Figma 케이스 프레임은 이 블록을 그대로 옮깁니다.
-     ### Case n. 제목 = 초록 띠, 그 아래 머리 줄 세 줄 = 디스크립션 번호 · 근거 · 종류(근거가 디스크립션 조건이 아니면 `-`), #### n-1. 조건 = 노란 띠, 그 아래 글머리 기호 목록 = 띠 아래 설명 글.
-     케이스 3에서 기존 원본 케이스 프레임에 패널이 있으면, 패널의 번호마다 `번호. 내용` 줄을 그 번호 표시가 달린 노란 띠의 설명에 더합니다.
-     지운 케이스는 블록을 지우지 않고 머리 줄 아래에 `- 지움 (날짜, 이유)` 줄을 더합니다. -->
+### Case 1. 아이디/비밀번호 오류 시
 
-### Case 1. 제목
+- 디스크립션 번호 : 2, 3
+- 근거 (기존 원본 / 디스크립션 조건 / 요청자) : 기존 원본
+- 종류 (1 ~ 6, 근거가 디스크립션 조건일 때) : -
 
-- 디스크립션 번호 :
-- 근거 (기존 원본 / 디스크립션 조건 / 요청자) :
-- 종류 (1 ~ 6, 근거가 디스크립션 조건일 때) :
+#### 1-1. 아이디/비밀번호 오류 시 에러 메시지 표시
 
-#### 1-1. 조건
-
-- 설명
+- 1. ID 및 PW 입력값이 유효하지 않을 경우
+  - 실패 횟수 카운팅 기준
+    - 입력된 ID의 DB 존재 여부를 따지지 않고 해당 입력 ID 문자열 기준으로 실패 횟수를 누적
+  - 노출 조건
+    - 입력한 ID가 DB 정보와 다를 때 노출
+    - 입력한 PW가 DB 정보와 다를 때 노출
+    - 입력한 ID/PW가 모두 DB 정보와 다를 때 노출
+  - 미노출
+    - 정확한 ID/PW 입력 시 유효성 메시지 미노출
+  - 내용
+    - Invalid ID or password. ({n}/10 attempts)
+    - n : 로그인 시도 실패 횟수 (ID/PW 구분 없이 누적 집계)
+    - <span style="color:red">n이 10이 되면 Account Locked Popup 노출 : LI-LOG-02-P</span>
 
 ## Alert · Confirm · Toast
 
-<!-- Alert · Confirm · Toast를 모두 적습니다. 코드는 카탈로그(alert/)의 ID. 카탈로그에 없으면 3단계에서 카탈로그에 새 줄을 더해 그 코드를 씁니다(flow/3-design.md 공통 1의 4, 케이스 3의 Toast는 flow/3-design-case3.md 3-2). Toast는 버튼 동작을 `-`로 둡니다. -->
-
 | 디스크립션 번호 | 종류 (Alert / Confirm / Toast) | 코드 | 언제 | 버튼 동작 |
 | --- | --- | --- | --- | --- |
+| 5 | Confirm | Confirm_020 | [Shut Down] 선택 시 | Shut Down 선택 시 → 시스템 종료 / Cancel 선택 시 → 해당 Confirm 닫힘 |
 
 ## 화면 예시 글자
 
-<!-- 그릴 때 화면에 넣는 예시 값. 상태값 · 단위 · 품목 · 수치는 기준데이터(`glossary/`의 csv) · 정책 기준. 기준이 없으면 만들지 않고 "질문 대기"에 올립니다.
-     디스크립션 번호는 그 요소의 디스크립션 번호. 번호가 없는 요소는 `-`.
-     목록 · 표는 한 페이지 최대 노출 개수만큼 행을 채웁니다. 줄였으면 이유를 적습니다.
-     목록 · 표의 여러 행, 케이스 조각의 값, 지어 쓴 값을 적는 법은 flow/3-design.md 공통 1의 5. -->
-
 | 디스크립션 번호 | 요소 | 예시 값 | 기준 |
 | --- | --- | --- | --- |
+| 1 | Logo · 시스템 표시 | CURECA 로고, L-IOS | 기존 원본 `Login_asis` LI-LOG `3538:12254` |
+| Case 1 | ID · Password 입력값 | User123 · •••••••• | 기존 원본 LI-LOG/Case `3538:12497` |
+| Case 1 | 오류 문구 | Invalid ID or password. (1/10 attempts) | 기존 원본 LI-LOG/Case `3538:12497` |
 
 ## 화면 표기 글자
 
-<!-- 화면에 표기되는 영어 글자와 그 글자의 언어셋 Language ID를 적습니다. 지금 화면에 있는 글자만 둡니다(없어진 글자는 줄을 지움).
-     3단계에서 화면 MD를 쓸 때 함께 적고 화면을 고칠 때 같이 고칩니다(`flow/3-design.md` 공통 1의 9). Language ID는 4단계 절차 4번(UX 확정 뒤)에서 채웁니다. 번역과 이번 작업에서 바뀐 것(신규 · 변경 · 제거)은 표에 적지 않고 작업 기록 "언어셋" 절에 적습니다.
-     출처: 그 글자가 있는 곳. 화면(기획 프레임) / 디스크립션(디스크립션에 적힌 화면 표기 글자, 예: 드롭다운 리스트 항목 · Tooltip · 안내 문구) / 케이스(케이스 화면) 뒤에 위치를 붙입니다(예: `화면 1-1`, `디스크립션 1-2`, `케이스 Case 1-2`, 번호가 없으면 `화면 제목`처럼 위치 이름). 여러 곳이면 ` · `로 잇습니다. 출처는 글자를 찾아 고치고, 같은 영어 글자에 Language ID가 여럿일 때(버튼 · 제목 등 쓰임이 다름) 맞는 줄을 고르는 데 씁니다. 디스크립션의 설명 글과 GNB · LNB 같은 공통 영역의 글자는 적지 않습니다(공통 영역은 따로 관리, `background/todo.md` 5-3d). 숫자처럼 값이 들어가는 자리는 `{n}`으로 두고 한 줄로 적고, 출처에 그 값을 적습니다(예: `{n} items` · `화면 2-3 (n = 10 · 30 · 50 · 100)`, 언어셋 DB의 `{N} of {M} Items`와 같은 모양, 2026-11-25 서보경 정함).
-     글자는 문구만 적습니다(언어셋 대상은 글자 그 자체). 라벨 끝의 `:`와, 라벨 뒤에 붙은 값과 그 앞의 `.`를 빼고(`Event Code:` → `Event Code`, `Updated by. {id}` → `Updated by`), Module · Unit · 장비 이름 뒤 번호 `(n)` · `-n`도 뺍니다(`CFX96 (1)` · `CFX96-1` → `CFX96`). 문장 끝 마침표(`No results found.`)는 글자의 일부라 둡니다. 글 안에 값이 들어가는 글(`{n} items`)은 위처럼 `{n}`으로 둡니다.
-     컴포넌트 글 · 값 · 구분자가 한 줄로 이어진 글(예: `10 items of Items 1,112 | Open 20`)은 어느 문구를 적을지 정하지 않았습니다. 이런 글은 정하지 않고 예외 질문(작업 기록 "요청자 확인"에 답을 비운 줄, `flow/README.md` "단계를 지나는 규칙" 9)으로 묻습니다.
-     Language ID: 언어셋 원본(language-set/db/)의 메뉴 파일 ID. 번역 전체는 이 ID로 원본에서 찾습니다. 원본에 아직 없는 글자는 비워 두고, 5단계에서 원본에 새 줄을 만들 때 채웁니다. 글자를 바꿀 때는 Language ID를 지우지 않고 둡니다(4단계가 이 ID로 언어셋 DB의 줄과 짝지어 변경을 가림). 바뀐 글자가 이미 언어셋에 있으면 5단계에서 그 ID로 바뀝니다(`language-set/README.md` "화면설계 흐름에서 반영하는 법"). -->
-
 | 화면 표기 글자 (영어) | 출처 | Language ID |
 | --- | --- | --- |
+| L-IOS | 화면 1 · 케이스 Case 1-1 | |
+| ID | 화면 2 · 케이스 Case 1-1 | |
+| Please enter your ID | 화면 2 | |
+| Password | 화면 3 · 케이스 Case 1-1 | |
+| Please enter your password | 화면 3 | |
+| Sign In | 화면 4 · 케이스 Case 1-1 | |
+| Shut Down | 화면 5 | |
+| © Seegene Inc. All rights reserved. | 화면 6 | |
+| Invalid ID or password. ({n}/10 attempts) | 케이스 Case 1-1 (n = 1) | |
