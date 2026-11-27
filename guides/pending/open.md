@@ -148,27 +148,27 @@
 | LI-IVT-06-T-R05 | Inventory | Inventory Usage History (LI-IVT-06-T) | 점검 발견 | 3 형식 ".CVS" | .CSV | 오타 | 대기 |
 | LI-IVT-06-T-R06 | Inventory | Inventory Usage History (LI-IVT-06-T) | 다른 화면 파급 | 목록 "Reagents", 빈 Usage·Barcode 값, Module과 Unit이 맞지 않는 예시 줄 | TI-IVT-06-T 반영 대기 목록 1~3과 같음 | TI-IVT-06-T | 대기 |
 | LI-IVT-06-T-R07 | Inventory | Inventory Usage History (LI-IVT-06-T) | 기준 자료 변경 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
-| LI-LOG-01-P-R01 | Login | Reset Initial Password (LI-LOG-01-P) | 기준 자료 변경 | 디스크립션의 "LI-PRF-01/Case", "LI-LOG-P", "LI-LOG" | LI-LOG-01-P/Case, LI-LOG-01-P, LI-LOG-01 | `ia/ia-screens.csv` | 대기 |
-| LI-LOG-01-P-R02 | Login | Reset Initial Password (LI-LOG-01-P) | 기준 자료 변경 | 비밀번호 조건에 "각 문자 유형 최소 1자"가 없음 (TI-LOG-01-P에는 있음) | POL-ACC-006으로 통일 (영문 대문자·소문자·숫자 각 1자 이상, 특수문자는 선택) | POL-ACC-006 | 대기 |
-| LI-LOG-01-P-R03 | Login | Reset Initial Password (LI-LOG-01-P) | 점검 발견 | 1-3 "1-2에 입력한 값과", [Cancle] | 1-1, [Cancel] | 디스크립션 | 대기 |
-| LI-LOG-01-P-R04 | Login | Reset Initial Password (LI-LOG-01-P) | 기준 자료 변경 | [Cancel]을 누르면 팝업만 닫힘 | 디스크립션에 넣음: 로그인 화면으로 돌아가고, 다음 로그인 때 이 Popup을 다시 보여 줌 | POL-ACC-003 규칙 5 | 대기 |
-| LI-LOG-01-R01 | Login | Sign in (LI-LOG-01) | 기준 자료 변경 | Figma 프레임 이름·CID 칸 "LI-LOG", 디스크립션의 "LI-LOG-P" | LI-LOG-01, LI-LOG-01-P | `ia/ia-screens.csv` | 대기 |
-| LI-LOG-01-R02 | Login | Sign in (LI-LOG-01) | 기준 자료 변경 | ID·비밀번호 조건을 화면에 다시 적음 (최대 길이 없음) | 정책 ID로 참조 | 헌법 3조 | 대기 |
-| LI-LOG-02-P-R01 | Login | Account Locked (LI-LOG-02-P) | 점검 발견 | 버튼 설명은 [X], [Close], 화면은 [Ok] 하나 | 화면 버튼과 맞춤 | 화면 글자 | 대기 |
-| LI-LOG-02-P-R02 | Login | Account Locked (LI-LOG-02-P) | 기준 자료 변경 | "5분 기준으로 역산", "관리자가 설정한 제한 시간" | 잠금 시간은 5분 고정. "관리자가 설정한 제한 시간" 문구는 취소선으로 이미 제거됨. "5분 기준" 표기는 POL-ACC-007 참조로 | POL-ACC-007 | 대기 |
-| TI-LOG-01-P-R01 | Login | Reset Initial Password (TI-LOG-01-P) | 기준 자료 변경 | 디스크립션의 "TI-LOG-P", "TI-LOG" | TI-LOG-01-P, TI-LOG-01 | `ia/ia-screens.csv` | 대기 |
-| TI-LOG-01-P-R02 | Login | Reset Initial Password (TI-LOG-01-P) | 점검 발견 | Placeholder가 디스크립션 "8-64 characters: Letters, numbers, and special characters", 화면 "Please enter a valid password" | 하나로 통일 (LI-LOG-01-P 디스크립션은 화면과 같음) | 화면 글자 | 대기 |
-| TI-LOG-01-P-R03 | Login | Reset Initial Password (TI-LOG-01-P) | 기준 자료 변경 | "각 문자 유형을 최소 1자 이상 포함"이 T-IOS에만 있음 (LI-LOG-01-P에는 없음) | POL-ACC-006으로 통일 (영문 대문자·소문자·숫자 각 1자 이상, 특수문자는 선택) | POL-ACC-006 | 대기 |
-| TI-LOG-01-P-R04 | Login | Reset Initial Password (TI-LOG-01-P) | 점검 발견 | 1-3 "1-2에 입력한 값과" (1-2는 툴팁) | 1-1에 입력한 값과 | 디스크립션 | 대기 |
-| TI-LOG-01-P-R05 | Login | Reset Initial Password (TI-LOG-01-P) | 점검 발견 | [Cancle] | [Cancel] | 오타 | 대기 |
-| TI-LOG-01-P-R06 | Login | Reset Initial Password (TI-LOG-01-P) | 기준 자료 변경 | [Cancel]을 누르면 팝업만 닫힘 | 디스크립션에 넣음: 로그인 화면으로 돌아가고, 다음 로그인 때 이 Popup을 다시 보여 줌 | POL-ACC-003 규칙 5 | 대기 |
-| TI-LOG-01-R01 | Login | Sign in (TI-LOG-01) | 기준 자료 변경 | Figma 프레임 이름·CID 칸 "TI-LOG", 디스크립션의 "TI-LOG-P" | TI-LOG-01, TI-LOG-01-P | `ia/ia-screens.csv` | 대기 |
-| TI-LOG-01-R03 | Login | Sign in (TI-LOG-01) | 기준 자료 변경 | ID·비밀번호 조건을 화면에 다시 적음 (최대 길이 없음) | 정책 ID로 참조 | 헌법 3조 | 대기 |
+| LI-LOG-01-P-R01 | Login | Reset Initial Password (LI-LOG-01-P) | 기준 자료 변경 | 디스크립션의 "LI-PRF-01/Case", "LI-LOG-P", "LI-LOG" | LI-LOG-01-P/Case, LI-LOG-01-P, LI-LOG-01 | `ia/ia-screens.csv` | 작업 중 (20261127-정다예-login) |
+| LI-LOG-01-P-R02 | Login | Reset Initial Password (LI-LOG-01-P) | 기준 자료 변경 | 비밀번호 조건에 "각 문자 유형 최소 1자"가 없음 (TI-LOG-01-P에는 있음) | POL-ACC-006으로 통일 (영문 대문자·소문자·숫자 각 1자 이상, 특수문자는 선택) | POL-ACC-006 | 작업 중 (20261127-정다예-login) |
+| LI-LOG-01-P-R03 | Login | Reset Initial Password (LI-LOG-01-P) | 점검 발견 | 1-3 "1-2에 입력한 값과", [Cancle] | 1-1, [Cancel] | 디스크립션 | 작업 중 (20261127-정다예-login) |
+| LI-LOG-01-P-R04 | Login | Reset Initial Password (LI-LOG-01-P) | 기준 자료 변경 | [Cancel]을 누르면 팝업만 닫힘 | 디스크립션에 넣음: 로그인 화면으로 돌아가고, 다음 로그인 때 이 Popup을 다시 보여 줌 | POL-ACC-003 규칙 5 | 작업 중 (20261127-정다예-login) |
+| LI-LOG-01-R01 | Login | Sign in (LI-LOG-01) | 기준 자료 변경 | Figma 프레임 이름·CID 칸 "LI-LOG", 디스크립션의 "LI-LOG-P" | LI-LOG-01, LI-LOG-01-P | `ia/ia-screens.csv` | 작업 중 (20261127-정다예-login) |
+| LI-LOG-01-R02 | Login | Sign in (LI-LOG-01) | 기준 자료 변경 | ID·비밀번호 조건을 화면에 다시 적음 (최대 길이 없음) | 정책 ID로 참조 | 헌법 3조 | 작업 중 (20261127-정다예-login) |
+| LI-LOG-02-P-R01 | Login | Account Locked (LI-LOG-02-P) | 점검 발견 | 버튼 설명은 [X], [Close], 화면은 [Ok] 하나 | 화면 버튼과 맞춤 | 화면 글자 | 작업 중 (20261127-정다예-login) |
+| LI-LOG-02-P-R02 | Login | Account Locked (LI-LOG-02-P) | 기준 자료 변경 | "5분 기준으로 역산", "관리자가 설정한 제한 시간" | 잠금 시간은 5분 고정. "관리자가 설정한 제한 시간" 문구는 취소선으로 이미 제거됨. "5분 기준" 표기는 POL-ACC-007 참조로 | POL-ACC-007 | 작업 중 (20261127-정다예-login) |
+| TI-LOG-01-P-R01 | Login | Reset Initial Password (TI-LOG-01-P) | 기준 자료 변경 | 디스크립션의 "TI-LOG-P", "TI-LOG" | TI-LOG-01-P, TI-LOG-01 | `ia/ia-screens.csv` | 작업 중 (20261127-정다예-login) |
+| TI-LOG-01-P-R02 | Login | Reset Initial Password (TI-LOG-01-P) | 점검 발견 | Placeholder가 디스크립션 "8-64 characters: Letters, numbers, and special characters", 화면 "Please enter a valid password" | Please enter a valid password (화면 글자, LI-LOG-01-P와 같음. 2026-11-27 정다예) | 화면 글자 | 작업 중 (20261127-정다예-login) |
+| TI-LOG-01-P-R03 | Login | Reset Initial Password (TI-LOG-01-P) | 기준 자료 변경 | "각 문자 유형을 최소 1자 이상 포함"이 T-IOS에만 있음 (LI-LOG-01-P에는 없음) | POL-ACC-006으로 통일 (영문 대문자·소문자·숫자 각 1자 이상, 특수문자는 선택) | POL-ACC-006 | 작업 중 (20261127-정다예-login) |
+| TI-LOG-01-P-R04 | Login | Reset Initial Password (TI-LOG-01-P) | 점검 발견 | 1-3 "1-2에 입력한 값과" (1-2는 툴팁) | 1-1에 입력한 값과 | 디스크립션 | 작업 중 (20261127-정다예-login) |
+| TI-LOG-01-P-R05 | Login | Reset Initial Password (TI-LOG-01-P) | 점검 발견 | [Cancle] | [Cancel] | 오타 | 작업 중 (20261127-정다예-login) |
+| TI-LOG-01-P-R06 | Login | Reset Initial Password (TI-LOG-01-P) | 기준 자료 변경 | [Cancel]을 누르면 팝업만 닫힘 | 디스크립션에 넣음: 로그인 화면으로 돌아가고, 다음 로그인 때 이 Popup을 다시 보여 줌 | POL-ACC-003 규칙 5 | 작업 중 (20261127-정다예-login) |
+| TI-LOG-01-R01 | Login | Sign in (TI-LOG-01) | 기준 자료 변경 | Figma 프레임 이름·CID 칸 "TI-LOG", 디스크립션의 "TI-LOG-P" | TI-LOG-01, TI-LOG-01-P | `ia/ia-screens.csv` | 작업 중 (20261127-정다예-login) |
+| TI-LOG-01-R03 | Login | Sign in (TI-LOG-01) | 기준 자료 변경 | ID·비밀번호 조건을 화면에 다시 적음 (최대 길이 없음) | 정책 ID로 참조 | 헌법 3조 | 작업 중 (20261127-정다예-login) |
 | TI-LOG-01-R04 | Login | Sign in (TI-LOG-01) | 점검 발견 | Sign in / Sign In (화면 이름과 버튼) | 대소문자 PD-0001 결정 후 통일 | PD-0001 | 대기 |
-| TI-LOG-02-P-R01 | Login | Account Locked (TI-LOG-02-P) | 점검 발견 | 버튼 설명은 [X], [Close], 화면은 [Ok] 하나 | 화면 버튼과 맞춤 (버전 메모 v2.1.01 "Ok 버튼 추가") | 화면 글자 | 대기 |
-| TI-LOG-02-P-R02 | Login | Account Locked (TI-LOG-02-P) | 기준 자료 변경 | 1-2 "5분 기준으로 역산", 1 "관리자가 설정한 제한 시간" | 잠금 시간은 5분 고정. "관리자가 설정한 제한 시간" 문구는 취소선으로 이미 제거됨. "5분 기준" 표기는 POL-ACC-007 참조로 | POL-ACC-007 | 대기 |
+| TI-LOG-02-P-R01 | Login | Account Locked (TI-LOG-02-P) | 점검 발견 | 버튼 설명은 [X], [Close], 화면은 [Ok] 하나 | 화면 버튼과 맞춤 (버전 메모 v2.1.01 "Ok 버튼 추가") | 화면 글자 | 작업 중 (20261127-정다예-login) |
+| TI-LOG-02-P-R02 | Login | Account Locked (TI-LOG-02-P) | 기준 자료 변경 | 1-2 "5분 기준으로 역산", 1 "관리자가 설정한 제한 시간" | 잠금 시간은 5분 고정. "관리자가 설정한 제한 시간" 문구는 취소선으로 이미 제거됨. "5분 기준" 표기는 POL-ACC-007 참조로 | POL-ACC-007 | 작업 중 (20261127-정다예-login) |
 | TI-LOG-02-P-R03 | Login | Account Locked (TI-LOG-02-P) | 점검 발견 | Ok | OK (대소문자 PD-0001 결정 후) | PD-0001 | 대기 |
-| TI-LOG-02-P-R04 | Login | Account Locked (TI-LOG-02-P) | 기준 자료 변경 | 화면 이름 "Account Locked", IA "Temporary Account Locked" | 하나로 통일 | `ia/ia-screens.csv` | 대기 |
+| TI-LOG-02-P-R04 | Login | Account Locked (TI-LOG-02-P) | 기준 자료 변경 | 화면 이름 "Account Locked", IA "Temporary Account Locked" | Account Locked (화면 글자. 2026-11-27 정다예) | `ia/ia-screens.csv` | 작업 중 (20261127-정다예-login) |
 | LI-TSS-CMP-01-R01 | Material Setup | Select positions to delete (LI-TSS-CMP-01) | 기준 자료 변경 | 화면 이름 "Select positions to remove", 경로 "작성 예정 > Select positions to remove" | IA 이름 "Select positions to delete"와 통일 (Remove로 쓸지 IA를 고칠지) | `ia/ia-screens.csv` | 대기 (확인 필요) |
 | LI-TSS-CMP-01-R02 | Material Setup | Select positions to delete (LI-TSS-CMP-01) | 기준 자료 변경 | 세부 정의 9개 프레임이 "Confirm_006 노출" | MS_Confirm_023 | `alert/alert-catalog-ms.csv` MS_Confirm_023 (이전 ID Confirm_006) | 대기 |
 | LI-TSS-CMP-01-R03 | Material Setup | Select positions to delete (LI-TSS-CMP-01) | 기준 자료 변경 | 세부 정의 Confirm 예시 버튼이 Close/OK와 Close/Remove 두 벌로 겹쳐 있음 | MS_Confirm_023 버튼: Remove / Close | MS_Confirm_023 | 대기 |
