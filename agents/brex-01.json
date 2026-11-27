@@ -1,5 +1,5 @@
 {
-  "reportAt": "2026-11-27T13:15:39+09:00",
+  "reportAt": "2026-11-27T13:16:40+09:00",
   "pc": "BREX_01",
   "slug": "brex-01",
   "user": "서보경",
@@ -8,7 +8,7 @@
   "alive": true,
   "status": "working",
   "msg": "처리 중: PENDING R002 · 강도 medium",
-  "statusAt": "2026-11-27T13:15:35+09:00",
+  "statusAt": "2026-11-27T13:16:37+09:00",
   "claude": "따로 설치",
   "claudeWay": "app",
   "autoWatch": true,
@@ -116,12 +116,20 @@
   ],
   "turns": [
     {
-      "at": "2026-11-27T13:14:33+09:00",
+      "at": "2026-11-27T13:16:16+09:00",
       "what": "PENDING R002 · 강도 medium",
-      "resume": false,
+      "resume": true,
       "end": "",
       "ok": null,
       "sec": null
+    },
+    {
+      "at": "2026-11-27T13:14:33+09:00",
+      "what": "PENDING R002 · 강도 medium",
+      "resume": false,
+      "end": "2026-11-27T13:15:47+09:00",
+      "ok": true,
+      "sec": 72
     },
     {
       "at": "2026-11-27T11:32:02+09:00",
