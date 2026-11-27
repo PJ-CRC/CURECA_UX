@@ -1,0 +1,28 @@
+{
+  "id": "brex-01_J103",
+  "kind": "work",
+  "reqId": "",
+  "reqType": "",
+  "team": "cureca",
+  "at": "2026-11-27T11:03:31+09:00",
+  "from": "2026-11-27T11:02:14+09:00",
+  "by": "서보경",
+  "doneBy": "Claude",
+  "pc": "BREX_01",
+  "fileKey": "",
+  "fileName": "",
+  "page": "",
+  "frame": "",
+  "nodeId": "",
+  "text": "회의록 요약: 다국어 수정 사항 (J103)",
+  "models": {
+    "claude-opus-5-5": 16
+  },
+  "calls": 16,
+  "input": 30,
+  "cacheWrite": 55545,
+  "cacheRead": 890841,
+  "output": 7899,
+  "total": 954315,
+  "usd": 0.7806
+}
