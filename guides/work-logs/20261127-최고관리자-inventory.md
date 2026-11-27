@@ -200,6 +200,120 @@ started: 2026-11-27
 ## 근거
 <!-- 2단계. 틀은 flow/2-evidence.md "작업 기록에 쓰는 것"의 "근거 틀" -->
 
+- 읽은 강도: 요건 1 = 케이스 3 (다시 그리기), 요건 목록의 줄과 같음. `basis`가 있는 화면 없음(모두 케이스 3)
+- 화면 MD는 `screens/asis/inventory/`의 TI-IVT 8개와 `pending/open.md`의 그 CID 줄(1단계에서 읽음). TI-IVT-06-T는 1단계 답대로 아래 프레임(3543:361388: Item Type 기본값 `All`, 0 "폐기하는 시점기준", 2 "Usage: 폐기 시점의 사용 개수")을 원본으로 봄
+
+**읽은 자료 목록**
+
+| 요건 | 종류 | 자료 (ID · 파일) | 연결 근거 (왜 이 요건과 관련 있나) | 설계에 씀 (O / -) | 쓰는 화면 · 요소 | 설계에 쓸 규칙 (번호 · 문장, `-`면 쓰지 않는 이유) |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | 정책 | POL-INV-001 | ① 정책 `cids`에 8개 화면 모두 | O | 8개 화면 0 (User Type · 데이터 기준), [Refresh] (01-T 4 · 02-T 3 · 03-T 4 · 04-T 4 · 05-T 4), 03-T 3-7 · 04-T 3-7, 02-T 1 · 1-1 · 1-2 | 규칙 1 "Service, Admin, User 모두 볼 수 있음" / 2 "모든 Tab은 Enabled인 Module의 데이터만 보여 줌 (POL-EQP-009)" / 3 "들어올 때의 데이터를 보여 주고 실시간으로 바꾸지 않음. [Refresh]를 누르면 최신 데이터로 다시 불러옴" / 4 "데이터를 불러오지 못하면 Alert_020" / 5 "[Item details]를 누르면 Barcode 단위 Item details Popup" / 6 "Overview Module 순서 Sample Storage, Consumable Storage, High-throughput Extraction, Flexible Extraction, PCR Setup, Plate Sealing. 기본값 All" / 7 "Sample Storage는 `N ea (M racks)`" |
+| 1 | 정책 | POL-INV-002 | ① `cids` (01-T · 02-T · 03-T · 04-T). 03-T-P · 04-T-P는 `cids`에 없음 → 정책 수정 범위 1 (DS-0013) | O | Remaining Qty (01-T 1-3, 02-T 1-3, 03-T 2-4 · 3-5, 04-T 2-4 · 3-5, 03-T-P 2-1 · 3, 04-T-P 2-1 · 3), Capacity (03-T 3-4, 04-T 3-3) | 정의 "Storage와 Instrument 안 거치 공간(가져간 품목 포함)의 수량 합" / 규칙 2 "거치 공간 품목은 실시간으로 줄이지 않고 소진 · 반환 때 갱신" / 3 "카드는 모든 Location 합, 상세는 Location별" / 4 "Capacity는 최대 적재량을 관리하는 Storage만, Instrument 셋팅 값. Cold Storage는 보여 주지 않음" / 5 "Consumable `{수량} ea ({n} {단위})`, Reagent `{quantity} {baseUnit} ({n} {packagingUnit})`, 1개 단수 · 2개 이상 복수" / 6 "사용량은 폐기할 때만 기록, 반환은 Remaining Qty만 줄임" |
+| 1 | 정책 | POL-INV-003 | ① `cids` (01-T · 03-T · 04-T) | O | 01-T 1 · 1-1 · 1-4 · 1-5 · 1-6, 03-T · 04-T 1 Chip · 2-5 · 2-6 · 3-6 | 정의 표 Sufficient / Low / Insufficient (`status-values.csv`) / 규칙 2 "Required Qty와 Status는 Inbound Trolley 도킹 또는 [Run Start] 뒤 Batch가 끝나기 전이면 보여 줌(Partial Running · Error여도 Batch 전이면 계속), 아니면 '-'" / 3-1 "도킹하면 Run Start 전에도 보여 줌" / 4 "Insufficient > Low > Sufficient" / 5 "둘 다 0이면 숨김, 카드 안 모두 숨김이면 카드도" / 6 "Chip 여러 개, 다시 누르면 해제" / 7 "Summary: Insufficient, Low 순 → 부족 수량 많은 순 → Name 오름차순, 6개씩, 요약 카드 Insufficient와 Low" / 8 "조건 아니면 Shown only if system running or Inbound Trolley docked, 부족 없으면 No actions required" |
+| 1 | 정책 | POL-INV-004 | ① `cids` (03-T-P · 04-T · 04-T-P) | O | 04-T 3-3 만료 안내, 03-T-P · 04-T-P 0 · 2 · 2-1 · 3 | 규칙 6 "Location 중 한 곳이라도 Expired면 카드와 목록 사이에 만료 안내" / 7 "Barcode 단위(`Module (Index) > Storage Unit` + Barcode), Buffer 공간 포함, 위에 Remaining Qty 합과 Expired 개수" / 8 "Reagent 정렬 Expiration Date 오름차순 → Remaining Rxns → Used Counts" / 9 "Barcode: Standard Tube 대표, IC 개별, 그 밖 PCR 박스 rxns, UC Kit Tub 대표" / 정의 "Used Counts = Decapping 횟수 / 최대 사용 횟수" |
+| 1 | 정책 | POL-INV-005 | ① `cids` (05-T · 01-T) | O | 05-T 0 ~ 3-5, 01-T 3 · 3-1 · 3-3 · 3-4 | 정의 "Available 70% 미만, Almost Full 70% 이상, Full 100%", "Fill Level = 누적 ÷ 최대 × 100" / 규칙 1 ~ 4 (센서 · 99% · 센서 없으면 100% Full) / 6 "T-IOS는 비움 기능 없음" / 7 "Waste Bin이나 Liquid Waste Bottle이 있는 Module 모두, Unit 칸은 Module마다 가진 Unit 이름" / 8 "카드 상태 Full > Almost Full > Available, 카드 순서 Sample Pre-treatment … Universal PCR, 상세 Module Index 오름차순" / 9 "Summary는 Full, Almost Full만, Fill Level 높은 순 → Name 오름차순, 없으면 No actions required" |
+| 1 | 정책 | POL-INV-006 | ① `cids` (06-T) | O | 06-T 0 ~ 3 | 규칙 1 "폐기할 때만 기록, 반환은 기록하지 않음" / 2 "Unit + Barcode + Usage + Date/Time 한 줄, Usage = 폐기 때 사용 개수, Date/Time = 폐기 시각" / 3 "기본 최근 7일, 최대 1년, 미래 날짜 불가" / 4 "Item Type All · Consumable · Reagent (기본 All), Name · Barcode 부분 일치, Module과 그 Storage Unit 오름차순" / 5 "Date/Time 최신순" / 6 "[Export]는 .csv (POL-COM-006)" |
+| 1 | 정책 | POL-INV-007 | ① `cids` (04-T · 04-T-P) | O | 04-T PCR 카드 (IC와 Set 묶음) | 정의 표 "IC: Tube, Consumable Storage > Trolley, 100 rxns/tube / 나머지(MOM 등): Set, Plate Sealing > Cold Storage, 100 rxns/set" |
+| 1 | 정책 | POL-COM-006 | ① `cids` (06-T) | O | 06-T 3 [Export] | 규칙 1 "내보내는 파일은 모두 .csv" / 3 "T-IOS는 [Export]를 누르면 OS 파일 탐색기에서 저장 경로와 파일 이름을 정함" |
+| 1 | 정책 | POL-LOD-001 | ① `cids` (02-T) | O | 02-T 1-1 Sample Storage | 정의 "Inbound Trolley(투입), Outbound Trolley(회수)" / 규칙 9 "Overview의 Sample Storage 현황을 보고 Trolley를 바꿀 때를 정함" |
+| 1 | 정책 | POL-LOD-005 | ① `cids` (05-T) | O | 05-T 3-3 · 3-5 | 규칙 1 "비움 처리는 L-IOS Material Setup > Empty Waste Bin에서만, Console Mode만. T-IOS는 비움 기능 없음" / 5 "[Confirm Empty]로 누적 사용 개수를 0부터 다시 셈" |
+| 1 | 정책 | POL-EQP-009 | ③ 반영 대기 근거 · ④ POL-INV-001 규칙 2 | O | 8개 화면 0 데이터 기준 | 정의 "Enabled: Module 또는 Device Unit의 사용 여부. 화면에는 Enabled = Y, Disabled = N". 화면 MD 정책 참고는 POL-INV-001 규칙 2로 잇고 이 정책은 함께 적음 |
+| 1 | 정책 | POL-LOD-004 | ④ POL-INV-004 · ⑤ Flexible Extraction | O | 04-T STARMag Universal Cartridge Kit 카드, 02-T Flexible Extraction | 규칙 13 "Buffer Cartridge Cap도 5개 단위로 표기 (예: 5 ea (1 set))" / 20 "Inventory의 STARMag Universal Cartridge Kit에 Buffer Cartridge Cap 항목" / 23 "Prep Tub의 Cap은 Inventory 관리 항목이 아님" |
+| 1 | 정책 | POL-SMP-007 | ④ POL-INV-003 · 004 | - | | (Run 준비 규칙. 규칙 10은 Run이 Inventory UI를 따른다는 것이라 Inventory 화면에 더할 것 없음) |
+| 1 | 정책 | POL-COM-001 | ④ POL-INV-005 규칙 6 | - | | (T-IOS 역할. POL-INV-005 규칙 6으로 씀) |
+| 1 | 정책 | POL-TST-008 | ④ POL-INV-004 | - | | (Assay Pack 관리. 04-T 2-3 Reagents type의 File type 이름(Pretreatment, Extraction, PCR)만 같음. 기존 화면대로) |
+| 1 | 정책 | POL-STA-006 | ④ POL-INV-006 규칙 8 | - | | (통계 산출. Inventory 화면에 쓰지 않음) |
+| 1 | 정책 | POL-SYS-004 | ④ POL-COM-006 | - | | (L-IOS Export 경로 · Log. T-IOS 화면이라 쓰지 않음) |
+| 1 | Alert | Alert_020 (`alert/alert-catalog.csv`) | POL-INV-001 `alerts`, 02-T 3 | O | 01-T 4 · 02-T 3 · 03-T 4 · 04-T 4 · 05-T 4 · 06-T (검색 · 목록 불러오기) | "데이터 로드를 실패했을 경우" / Some data failed to load. / Please click the refresh button in the top-right corner and try again. / [OK] → Alert 닫힘. 사용 화면은 지금 LI-IVT-02-T, TI-IVT-02-T뿐 (3단계에서 사용 화면 더함) |
+| 1 | 권한 | `policy/permission-matrix.csv` Inventory · All | 0번 User Type 확인 (IA Lv.1 Inventory) | O | 8개 화면 0 User Type | Service O · Admin O · User O → asis `user_type: [Service, Admin, User]`와 같음 (T-IOS라 L-IOS Client Mode 없음) |
+| 1 | 기준데이터 | `glossary/status-values.csv` 재고 상태 · 폐기함/폐액통 상태 · 시약 만료 상태 · 저장 장치 도킹 상태 · 장비 통합 상태 | POL-INV-003 · 004 · 005 · LOD-001 `data` | O | 01-T · 03-T · 04-T Status, 05-T Status, 04-T 3-3 · 04-T-P Expired, 01-T 1 Docked | 재고 상태 Sufficient / Low / Insufficient (대상 Consumable / Reagent, Empty는 예전 표기), 폐기함/폐액통 상태 Available / Almost Full / Full, 시약 만료 상태 Valid / Under 30 days / Expired, 저장 장치 도킹 상태 Docked / Undocked, 장비 통합 상태 Running · Partial Running · Error |
+| 1 | 기준데이터 | `glossary/glossary.md` 표기 규칙 | 수량 · 이름 표기 | O | 8개 화면 화면 글자 | "이름 (번호) 띄어 씀", "Consumable `{수량} ea ({n} {단위})`", "Reagent `{quantity} {baseUnit} ({n} {packagingUnit})`", "T 표기는 쓰지 않고 rxns", "단위 1개 단수 · 2개 이상 s", "μL 앞 띄어 씀", "위치는 `Module (Index) > Storage Unit`" |
+| 1 | 기준데이터 | `glossary/modules.csv` · `module-units.csv` | POL-INV-002 · 005 `data`, ⑤ | O | 01-T · 02-T · 05-T · 06-T Module · Unit 이름 | 아래 용어 목록 Module · Unit 줄 |
+| 1 | 장비 | `policy/modules/sample-pretreatment.md` | ⑤ 05-T · 01-T 3 Module | O | 05-T 3-2 Unit, 01-T 3 목록 | "Waste: 단디메카는 Waste Bin (Upper · Lower), 로체시스템즈는 Tip Waste Bin (Upper · Lower) · Film Waste Bin (Upper · Lower). Liquid Waste Bottle (Upper · Lower)은 둘 다. 화면에는 설치된 제조사의 Unit만 표기" → 절차 6번 질문 4 |
+| 1 | 장비 | `policy/modules/ht-extraction.md` | ⑤ 05-T · 01-T 3 | O | 05-T 3-2 · 3-3, 01-T 3 | "Waste: DWP Waste Bin, DWP Film Waste Bin (만재 센서 없음, Counting으로만 관리)" (POL-INV-005 규칙 4) |
+| 1 | 장비 | `policy/modules/plate-sealing.md` | ⑤ | O | 05-T · 01-T 3 Sealer Waste Bin, 02-T Plate Sealing 열 | "Sealer Waste Bin (1) · (2), 만재 센서 있음, 최대 수용 Film 20장", "Cold Storage: PCR Reagent 구성품, MM Tube Socket" |
+| 1 | 장비 | `policy/modules/sample-storage.md` · `consumable-storage.md` · `flexible-extraction.md` · `pcr-setup.md` · `universal-pcr.md` | ⑤ | - | | (Unit 구성은 `module-units.csv`로 봄. 그 밖은 Inventory 화면에 더할 것 없음) |
+| 1 | 논의 대상 | DS-0001 · DS-0004 · DS-0005 · DS-0011 (모두 `종료`) | 걸린 정책 POL-INV-001 · 005 · 007, POL-LOD-001 · 005 | - | | (정책서 · 용어집에 이미 반영됨. 열린 논의 대상 없음) |
+
+**관련 자료 없는 영역 · 요소**
+
+| 화면 · 영역 · 요소 | 근거로 삼는 것 |
+| --- | --- |
+| 01-T 1-7 · 3-5, 02-T 2, 03-T 5 · 04-T 5 Tooltip 문구 | 기존 UX 화면설계서만 근거 (반영 대기 01-T-R04 · R06, 02-T-R07, 03-T-R05로 고침) |
+| 06-T 검색 [Reset] · [Search], Items 건수, 페이지네이션 | 기존 UX 화면설계서만 근거 (3단계 Common UX COMM-5-s Type3) |
+| 03-T-P · 04-T-P · 06-T 목록이 비었을 때 | 기존 UX 화면설계서만 근거 (3단계에서 Common UX로 보고, 없으면 질문 대기) |
+| 04-T 1 · 2-3 Reagents type Chip | 기존 UX 화면설계서만 근거 (File type 이름은 POL-TST-008 정의와 같음) |
+| 01-T 1-6 Pagination, 01-T 케이스 건수별 노출 | 기존 UX 화면설계서만 근거 (POL-INV-003 규칙 7 "한 페이지에 6개") |
+
+**대조**
+
+| 요건 · 화면 · 요소 | 결과 | 근거 | 다음 |
+| --- | --- | --- | --- |
+| 요건 1 · 8개 화면 · 반영 대기 73건 (작업 중) | 기존 화면이 정책과 다름 | 각 항목의 근거 칸 | 3단계가 그 항목의 변경 후대로 그림 (변경 확인 줄은 3단계에서 항목마다) |
+| 요건 1 · 8개 화면 0 User Type | 정책에 있음 | `permission-matrix.csv` Inventory, POL-INV-001 규칙 1 | 0번 User Type : Service, Admin, User |
+| 요건 1 · TI-IVT-01-T 화면 1 · 3 Unit 이름 | 기존 화면이 정책과 다름 | `module-units.csv` | C1 |
+| 요건 1 · TI-IVT-01-T 4 · 03-T 4 · 04-T 4 · 05-T 4 [Refresh] 불러오기 실패 | 기존 화면이 정책과 다름 (Alert_020이 02-T에만 있음) | POL-INV-001 규칙 4, Alert_020 | C2 |
+| 요건 1 · TI-IVT-01-T 1 노출 기준 "통합 상태 Run O / Docking X" | 기존 화면이 정책과 다름 ([Run Start] 뒤 Batch가 끝나기 전이면 Partial Running · Error여도 보여 줌) | POL-INV-003 규칙 2 · 3-1 | C3 |
+| 요건 1 · TI-IVT-06-T 2 목록 Unit 칸 `Plate Sealing` · `PCR Setup` | 기존 화면이 정책과 다름 (Unit이 아님) | `module-units.csv`, POL-INV-006 규칙 2 | C4 |
+| 요건 1 · TI-IVT-06-T 3 [Export] 저장 방식 | 기존 화면이 정책과 다름 (T-IOS 저장 방식이 없음) | POL-COM-006 규칙 3 | C5 |
+| 요건 1 · TI-IVT-03-T-P · 04-T-P Remaining Qty | 정책에 있음 (`cids`만 빠짐) | POL-INV-002 정의 · 규칙 2 · 5 | 정책 수정 범위 1 (DS-0013) |
+| 요건 1 · TI-IVT-05-T 3-2 · TI-IVT-01-T 3 Sample Pre-treatment Waste Unit | 장비사에 따라 화면이 갈림 | `policy/modules/sample-pretreatment.md` Unit, `module-units.csv` | 절차 6번 질문 4 |
+| 요건 1 · TI-IVT-06-T 0 · 1 · 2 (아래 프레임) | 정책에 있음 | POL-INV-006 규칙 1 · 2 · 4 | 정책 ID로 이음 |
+
+- 1단계 "뒤 단계용 확인 항목(claude)"의 이어진 번호를 채움 (2 ~ 3 · 6 ~ 13은 `3단계로`)
+- Alert · Confirm 보완 필요 지점(뒤 단계용 4): [Export] 저장 실패 · 0건 안내는 Alert 카탈로그 · POL-COM-006에 없음 → Q1
+
+**정책 수정 범위**
+
+| # | 바꿈 / 더함 | 정책 ID · 규칙 (또는 기준 자료) | 변경 전 | 변경 후 (안) | 논의 대상 |
+| --- | --- | --- | --- | --- | --- |
+| 1 | 더함 | POL-INV-002 머리말 `cids` | `cids`에 Item details Popup 없음 | TI-IVT-03-T-P, LI-IVT-03-T-P, TI-IVT-04-T-P, LI-IVT-04-T-P를 더함 (규칙 문장은 그대로) | DS-0013 |
+
+**용어 목록**
+
+| 원래 표현 | 표준어 | 어디서 | 새 용어면 처리 | 찾은 때 (2단계 / 3단계) |
+| --- | --- | --- | --- | --- |
+| Comsumable | Consumable | TI-IVT-01-T 화면 1-1 · 케이스 | | 2단계 |
+| Empty (재고 상태) | Insufficient | TI-IVT-01-T 1-1 · 1-3 · 1-5 · 케이스 (건 수별 · 구동 중이 아닐 · 작업해야할 아이템이 없을) | | 2단계 |
+| Docking (상태) | Docked | TI-IVT-01-T 1 · 케이스 | | 2단계 |
+| 통합 상태 | 장비 통합 상태 | TI-IVT-01-T 1, TI-IVT-03-T 2-5 · 2-6 · 3-6, TI-IVT-04-T 2-5 · 2-6 · 3-6 | | 2단계 |
+| Warning (폐기함 상태) | Almost Full | TI-IVT-01-T 3-5, TI-IVT-05-T 3-3 "(Warning)" | | 2단계 |
+| Error (폐기함 상태 뒤 괄호) | (지움, 폐기함/폐액통 상태는 Full) | TI-IVT-05-T 3-3 "Full 상태 (Error)" | | 2단계 |
+| Waste Status · Waste Status Icon | Waste Bin/Bottle Status · Waste Bin/Bottle Status Icon | TI-IVT-01-T 3-4, TI-IVT-05-T 0 | | 2단계 |
+| 폐기물함 · 폐기함 · 폐기물 함 · 폐기물 | Waste Bin/Bottle | TI-IVT-05-T 0 · 2-2 · 3-2 · 3-3 · 3-4 | | 2단계 |
+| 모듈 · Moule | Module | 8개 화면 0, TI-IVT-05-T 0 · 2 · 3 · 3-1 | | 2단계 |
+| 사용여부가 '사용'인 모듈 | Enabled인 Module | 8개 화면 0 | | 2단계 |
+| 소모품 | Consumable | TI-IVT-01-T 0, TI-IVT-03-T 0 · 2 · 2-3 · 2-4 · 3-1 · 3-3 · 3-5 · 3-7, TI-IVT-03-T-P 0 · 1 · 2 · 2-1, TI-IVT-04-T 2-4 · 3-5, TI-IVT-04-T-P 2-1, TI-IVT-06-T 0 · 2 | | 2단계 |
+| 시약 | Reagent | TI-IVT-01-T 0, TI-IVT-04-T 0 · 2-3 · 2-4 · 2-5 · 3 · 3-1 · 3-2 · 3-3 · 3-5 · 3-6 · 3-7, TI-IVT-04-T-P 0 · 1 · 2 · 2-1 · 3, TI-IVT-06-T 0 · 2 | | 2단계 |
+| 검체 · 검체 트롤리 | Sample · Inbound Trolley | TI-IVT-02-T 1-1, TI-IVT-03-T 2-5 · 2-6 · 3-6, TI-IVT-04-T 2-5 · 2-6 · 3-6 | | 2단계 |
+| 투입 트롤리 · 회수 트롤리 | Inbound Trolley · Outbound Trolley | TI-IVT-02-T 1-1 | | 2단계 |
+| 저장 장치 | Storage | TI-IVT-03-T 2-4, TI-IVT-04-T 2-4 | | 2단계 |
+| 바코드 · 튜브 | Barcode · Tube | TI-IVT-03-T-P 0 · 2-1, TI-IVT-04-T-P 0 · 2-1 | | 2단계 |
+| DX 서랍식 입고 · 서랍 | Dx 시스템 Storage의 Drawer | TI-IVT-03-T-P 2-1, TI-IVT-04-T-P 2-1 | | 2단계 |
+| 유효기간 · 유효기한 · 유효기가 | Expiration Date | TI-IVT-04-T 3-3, TI-IVT-04-T-P 2-1 · 3 | | 2단계 |
+| 반응 수T · 10T · 14T · 4T · 200T · 288T · 300T | rxns (`{n} rxns`) | TI-IVT-04-T 3-6, TI-IVT-04-T-P 2-1 · 3, TI-IVT-03-T 화면 (Tub 200T), TI-IVT-02-T 케이스 (LB DWP 288T, Allplex 300T) | | 2단계 |
+| sufficient | Sufficient | TI-IVT-03-T 1, TI-IVT-04-T 1 | | 2단계 |
+| 탭 (Chip을 뜻함) | Chip | TI-IVT-05-T 1 "모든 탭이 미선택" | | 2단계 |
+| 팝업 | Popup | TI-IVT-03-T 3-7, TI-IVT-04-T 3-7, TI-IVT-03-T-P 0 · 5 · 6, TI-IVT-04-T-P 0 · 5 · 6 | | 2단계 |
+| 표출 | 노출 | TI-IVT-02-T 케이스, TI-IVT-03-T-P 2-1 · TI-IVT-04-T-P 2-1 제목 "리스트 표출 항목" | | 2단계 |
+| 표시 (보여 준다는 뜻) | 노출 | 8개 화면 디스크립션 전반 (01-T 1-3 · 1-6, 02-T 1-1, 03-T 2 · 3 · 3-4 · 3-5, 03-T-P 2-1, 04-T 3-4 · 3-5, 04-T-P 2-1, 05-T 3-4, 06-T 2) | | 2단계 |
+| 최초 진입: 기본(Default) | Default | TI-IVT-03-T 2, TI-IVT-04-T 2 | | 2단계 |
+| Cureca | CURECA | 8개 화면 0 | | 2단계 |
+| Usage Tab | Usage History Tab | TI-IVT-06-T 0 | | 2단계 |
+| .CVS | .csv | TI-IVT-06-T 3 | | 2단계 |
+| Reagents (Item Type 값) | Reagent | TI-IVT-06-T 화면 2 | | 2단계 |
+| Pagenation | Pagination | TI-IVT-01-T 케이스 | | 2단계 |
+| Module[index] · Module(index) · Moule(index) | `Module (Index)` | TI-IVT-02-T 1-2, TI-IVT-03-T 3 · 3-2, TI-IVT-03-T-P 0 · 2-1, TI-IVT-04-T 3 · 3-2, TI-IVT-04-T-P 0 · 2-1, TI-IVT-05-T 0 · 3 · 3-1 | | 2단계 |
+| FlexibleExtraction(1) · High-throughput Extraction(1) · PCR Setup(1) · Plate Sealing(1) · Universal PCR(1) · PlateSealing (1) · 300 μL Tip Storage(1) · Consumable Storage(1) | 이름 (번호) 띄어 씀: Flexible Extraction (1) · High-throughput Extraction (1) · PCR Setup (1) · Plate Sealing (1) · Universal PCR (1) · 300 μL Tip Storage (1) · Consumable Storage (1) | TI-IVT-01-T 화면 1 · 3, TI-IVT-03-T 화면 3, TI-IVT-05-T 화면 2, TI-IVT-06-T 화면 2 | | 2단계 |
+| Flexible Extraction · Universal PCR (번호 없음, Module (Index) 자리) | Flexible Extraction (1) · Universal PCR (1) | TI-IVT-05-T 화면 2 · 3-1 | | 2단계 |
+| WasteBin | Waste Bin | TI-IVT-01-T 화면 3 | | 2단계 |
+| Waste Bin (High-throughput Extraction의 Unit) | DWP Waste Bin | TI-IVT-01-T 화면 3 | | 2단계 |
+| Sealer Waste Bin (번호 없음) | Sealer Waste Bin (1) | TI-IVT-01-T 화면 3 | | 2단계 |
+| Tip Waste Bin (Sample Pre-treatment, Upper · Lower 없음) | Tip Waste Bin (Upper) 또는 (Lower) (로체시스템즈 장비의 Unit) | TI-IVT-01-T 화면 3 | | 2단계 |
+| 300 μL Tip Storage (PCR Setup, 번호 없음) | 300 μL Tip Storage (1) | TI-IVT-01-T 화면 1 | | 2단계 |
+| Unit 칸 Plate Sealing · PCR Setup (Module 이름) | Plate Sealing Reagent → Cold Storage, PCR Plate → PCR Plate Storage | TI-IVT-06-T 화면 2 | | 2단계 |
+| Sample Pre-treatment Waste Unit 구성 | 제조사별: 단디메카 Waste Bin (Upper · Lower), 로체시스템즈 Tip Waste Bin (Upper · Lower) · Film Waste Bin (Upper · Lower). 둘 다 Liquid Waste Bottle (Upper · Lower) | TI-IVT-05-T 화면 3-2 (단디메카 구성으로 그려짐), TI-IVT-01-T 화면 3 (로체 Tip Waste Bin) | 절차 6번 질문 4 | 2단계 |
+
 ## 설계
 <!-- 3단계. 틀은 flow/3-design.md "남는 것". 질문 대기 · 변경 확인은 이 절이 아니라 아래 표에 적음 -->
 
