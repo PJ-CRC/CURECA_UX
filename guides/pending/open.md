@@ -853,12 +853,12 @@
 | TI-STN-03-02-02-M-R01 | Setting | Extraction Protocol Setting (Modify) (TI-STN-03-02-02-M) | 기준 자료 변경 | Plate 배치 고정, Plate 8 Spin Tip 전용이 디스크립션에 없음 | 디스크립션에 넣음: Plate 1 LB, 2 WB1, 3 WB2, 4 MB, 5 Not Used, 6 EB, 7 Not Used, 8 Tip으로 고정, 사용자가 바꿀 수 없음. 화면 예시의 "Not use"는 Not Used로 | POL-TST-007 | 대기 |
 | TI-STN-03-02-02-V-R01 | Setting | Extraction Protocol Setting (View) (TI-STN-03-02-02-V) | 기준 자료 변경 | 1 "[TI-STN-03-01] 화면에서 선택한" | TI-STN-03-02 | IA | 대기 |
 | TI-STN-03-02-R01 | Setting | Extraction Protocol (TI-STN-03-02) | 기준 자료 변경 | 4 [Edit] → "[TI-STN-03-01-01]" | TI-STN-03-02-01 | IA | 대기 |
-| TI-STN-04-01-T-R01 | Setting | Interface Configuration (TI-STN-04-01-T) | 점검 발견 | 0에 "Default: All / 데이터: All, Error, Warning" (다른 화면에서 복사된 것으로 보임) | 지움 | 디스크립션 | 대기 |
-| TI-STN-04-01-T-R03 | Setting | Interface Configuration (TI-STN-04-01-T) | 점검 발견 | 화면 예시는 Push Mode 선택, 디스크립션 기본값은 Query Mode | 기본 상태 화면을 기본값과 맞춤 | 디스크립션 3 | 대기 |
-| TI-STN-04-01-T-R04 | Setting | Interface Configuration (TI-STN-04-01-T) | 기준 자료 변경 | CURECA가 여러 대일 때(TI-ADS) LIS 설정이 장비마다인지 화면에 없음 | 디스크립션에 넣음: LIS 설정은 상단에서 고른 CURECA마다 | POL-SYS-001 규칙 7, POL-COM-005 | 대기 |
-| TI-STN-04-02-T-R01 | Setting | Code Mapping (TI-STN-04-02-T) | 기준 자료 변경 | Sample Type 이름 예시 (Aspirate, Cary-blair, Cellpreserv 등) | `glossary/sample-types.csv`의 UI 표기와 맞춤 | `glossary/sample-types.csv` | 대기 |
-| TI-STN-04-02-T-R02 | Setting | Code Mapping (TI-STN-04-02-T) | 점검 발견 | 4 Done·Enter로 "입력값 저장 처리"와 5 [Save]로 최종 저장이 섞임 | 행 단위 확정과 [Save] 저장을 구분해 씀 | 디스크립션 | 대기 |
-| TI-STN-04-02-T-R03 | Setting | Code Mapping (TI-STN-04-02-T) | 기준 자료 변경 | Assay Pack 데이터 키 이름(fileType, sampleTypeInfo 등)을 디스크립션에 직접 적음 | 데이터 정의는 Assay Pack 기준 자료로 옮기고 ID로 참조 | 헌법 3조 | 대기 |
+| TI-STN-04-01-T-R01 | Setting | Interface Configuration (TI-STN-04-01-T) | 점검 발견 | 0에 "Default: All / 데이터: All, Error, Warning" (다른 화면에서 복사된 것으로 보임) | 지움 | 디스크립션 | 작업 중 (20261127-서보경-lis-setting) |
+| TI-STN-04-01-T-R03 | Setting | Interface Configuration (TI-STN-04-01-T) | 점검 발견 | 화면 예시는 Push Mode 선택, 디스크립션 기본값은 Query Mode | 기본 상태 화면을 기본값과 맞춤 | 디스크립션 3 | 작업 중 (20261127-서보경-lis-setting) |
+| TI-STN-04-01-T-R04 | Setting | Interface Configuration (TI-STN-04-01-T) | 기준 자료 변경 | CURECA가 여러 대일 때(TI-ADS) LIS 설정이 장비마다인지 화면에 없음 | 디스크립션에 넣음: LIS 설정은 상단에서 고른 CURECA마다 | POL-SYS-001 규칙 7, POL-COM-005 | 작업 중 (20261127-서보경-lis-setting) |
+| TI-STN-04-02-T-R01 | Setting | Code Mapping (TI-STN-04-02-T) | 기준 자료 변경 | Sample Type 이름 예시 (Aspirate, Cary-blair, Cellpreserv 등) | `glossary/sample-types.csv`의 UI 표기와 맞춤 | `glossary/sample-types.csv` | 작업 중 (20261127-서보경-lis-setting) |
+| TI-STN-04-02-T-R02 | Setting | Code Mapping (TI-STN-04-02-T) | 점검 발견 | 4 Done·Enter로 "입력값 저장 처리"와 5 [Save]로 최종 저장이 섞임 | 행 단위 확정과 [Save] 저장을 구분해 씀 | 디스크립션 | 작업 중 (20261127-서보경-lis-setting) |
+| TI-STN-04-02-T-R03 | Setting | Code Mapping (TI-STN-04-02-T) | 기준 자료 변경 | Assay Pack 데이터 키 이름(fileType, sampleTypeInfo 등)을 디스크립션에 직접 적음 | 데이터 정의는 Assay Pack 기준 자료로 옮기고 ID로 참조 | 헌법 3조 | 작업 중 (20261127-서보경-lis-setting) |
 | TI-STN-05-01-P-R01 | Setting | Create New User (TI-STN-05-01-P) | 기준 자료 변경 | [Generate] 난수 비밀번호는 대문자·소문자·숫자만 필수, 특수문자 없음. 4 비밀번호 조건은 "각 문자 유형 최소 1자" | 지금 [Generate] 조건이 맞음 (특수문자는 필수 아님). 디스크립션은 POL-ACC-006 참조 | POL-ACC-006 | 대기 |
 | TI-STN-05-01-P-R02 | Setting | Create New User (TI-STN-05-01-P) | 기준 자료 변경 | 3 ID 입력 조건에 최대 길이(32자)가 없음. 오류 문구에는 "4-32 characters" | 정책 ID로 참조 (4~32자) | 8월 정책서 아이디 조건 | 대기 |
 | TI-STN-05-01-P-R03 | Setting | Create New User (TI-STN-05-01-P) | 점검 발견 | 3 Placeholder "Please enter your ID", 화면 "Please enter a valid ID" | 하나로 통일 | 화면 글자 | 대기 |
