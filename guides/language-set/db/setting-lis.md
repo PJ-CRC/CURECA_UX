@@ -39,6 +39,7 @@
 | LID-STN-006 | ref | 사용 | 법인 검토 완료 | T | txt | Items | 항목 | Einträge | Itens | Elementos | Elementi | Éléments |  | 목록 총 개수 | LIS Setting | TI-STN-04-02-T |
 | LID-STN-271 |  | 사용 | AI 번역 | T | txt | Sample type or LIS code |  | Probentyp oder LIS-Code | Tipo de amostra ou código LIS | Tipo de muestra o código LIS | Tipo di campione o codice LIS | Type d'échantillon ou code LIS |  | 검색 플레이스홀더 | LIS Setting | TI-STN-04-02-T |
 | LID-STN-272 |  | 사용 | AI 번역 | T | txt | Test or LIS code |  | Test oder LIS-Code | Teste ou código LIS | Prueba o código LIS | Test o codice LIS | Test ou code LIS |  | 검색 플레이스홀더 | LIS Setting | TI-STN-04-02-T |
+| LID-STN-015 | ref | 사용 | 법인 검토 완료 | T/L | txt | No results found. | 검색 결과가 없습니다. | Keine Ergebnisse gefunden. | Nenhum resultado encontrado. | No se encontraron resultados. | Nessun risultato trovato. | Aucun résultat trouvé. |  | 검색 결과 없음 | LIS Setting | TI-STN-04-02-T |
 | LID-STN-146 | ref | 사용 | 법인 검토 완료 | T | txt | No. | 번호 | Nr. | N.º | N.º | N. | N° |  | 테이블 컬럼 값 | LIS Setting | TI-STN-04-02-T |
 | LID-STN-147 | ref | 사용 | 법인 검토 완료 | T | txt | Product Name | 제품명 | Produktname | Nome do Produto | Nombre del Producto | Nome Prodotto | Nom du produit |  | 테이블 컬럼 값 Test Code 화면 | LIS Setting | TI-STN-04-02-T |
 | LID-STN-216 |  | 사용 | 법인 검토 완료 | T | txt | Sample Type Name | 검체 유형명 | Probentyp-Name | Nome do Tipo de Amostra | Nombre del Tipo de Muestra | Nome Tipo Campione | Nom du type d'échantillon |  | 테이블 컬럼 값 Sample Type Code 화면 | LIS Setting | TI-STN-04-02-T |

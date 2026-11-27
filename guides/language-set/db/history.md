@@ -2871,3 +2871,4 @@
 | 2026-11-27 | v0.06 | LID-MAS-436 | Material Setup | LI-TSS-DXI-08 / LI-TSS-DXI-09 | 변경 | Confirm refill | Confirm | 언어셋 v0.06 목록 시트 1701행 (R011 첨부 CURECA_Language_Set_v0.06.xlsx) | 하승현 |
 | 2026-11-27 | v0.06 | LID-MAS-438 | Material Setup | LI-TSS-DXI-08 / LI-TSS-DXI-09 | 변경 | After refilling, click [Confirm refill]. | After refilling, click [Confirm]. | 언어셋 v0.06 목록 시트 1703행 (R011 첨부 CURECA_Language_Set_v0.06.xlsx) | 하승현 |
 | 2026-11-27 | v0.06 | LID-MAS-441 | Material Setup | LI-TSS-DXI-09 | 변경 | Confirm all refills | Confirm all | 언어셋 v0.06 목록 시트 1706행 (R011 첨부 CURECA_Language_Set_v0.06.xlsx) | 하승현 |
+| 2026-11-27 |  | ref: LID-STN-015 | LIS Setting | TI-STN-04-02-T | 재사용 추가 |  |  | 작업 기록 20261127-서보경-lis-setting · 5단계 언어셋 반영 | Claude (서보경 작업) |

@@ -29,6 +29,7 @@ Setting,Protocol Setting,All,O,O,X,T-IOS에서 추가·변경·삭제 / L-IOS는
 Setting,System Setting,All,O,O,X,,2026-10-30 결정. Session Timeout 설정 포함 (계정 잠금 시간은 5분 고정, POL-ACC-007),확정
 Setting,Account Setting,All,O,O,X,,2026-10-30 결정,확정
 Setting,SMTP Setting,All,O,O,X,T-IOS만,2026-10-30 결정,확정
+Setting,LIS Setting,All,O,O,X,T-IOS만,2026-11-27 요청자 답 (작업 기록 20261127-서보경-lis-setting 질문 대기 Q1; POL-SYS-001 규칙 8 · 기존 화면 Service · Admin),확정
 Setting,Tube Setting,All,O,X,X,,2026-10-30 결정,확정
 Setting,Assay Pack Setting,All,O,X,X,,2026-10-30 결정,확정
 Instrument,,Management 조회,O,O,O,,T-IOS·L-IOS 모두. 2026-11-02 결정 (POL-EQP-009),확정

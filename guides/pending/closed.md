@@ -53,3 +53,8 @@
 | TI-EVT-P-R04 | Event History | Event History (TI-EVT-P) | 기준 자료 변경 | Under 30 Day | Under 30 days | `glossary/status-values.csv` 시약 만료 상태 | 제외 (2026-11-25, 바꾸지 않음: 이 화면에 없는 글자, 시약 만료 상태는 시스템에서 쓰지 않는 값 — 요청자 답) |
 | TI-IVT-01-T-R07 | Inventory | Inventory Summary (TI-IVT-01-T) | 점검 발견 | 번호 2 없음 (1 → 3) | 번호 정리 | 디스크립션 | 제외 (2026-11-27, 케이스 3 규칙과 부딪힘: 빈 번호를 채우지 않음, 중복 번호는 끝 번호 다음으로) |
 | TI-IVT-04-T-R03 | Inventory | Inventory Reagent (TI-IVT-04-T) | 점검 발견 | 번호 2-3이 두 번, 2-2 없음. Capacity가 3-3 안에 번호 없이 들어 있고 3-4 없음 | 번호 정리 (Capacity를 3-4로) | 디스크립션 | 제외 (2026-11-27, 케이스 3 규칙과 부딪힘: 빈 번호를 채우지 않음, 중복 번호는 끝 번호 다음으로) |
+| TI-STN-04-01-T-R01 | Setting | Interface Configuration (TI-STN-04-01-T) | 점검 발견 | 0에 "Default: All / 데이터: All, Error, Warning" (다른 화면에서 복사된 것으로 보임) | 지움 | 디스크립션 | 반영 완료 (2026-11-27) |
+| TI-STN-04-01-T-R03 | Setting | Interface Configuration (TI-STN-04-01-T) | 점검 발견 | 화면 예시는 Push Mode 선택, 디스크립션 기본값은 Query Mode | 기본 상태 화면을 기본값과 맞춤 | 디스크립션 3 | 반영 완료 (2026-11-27) |
+| TI-STN-04-01-T-R04 | Setting | Interface Configuration (TI-STN-04-01-T) | 기준 자료 변경 | CURECA가 여러 대일 때(TI-ADS) LIS 설정이 장비마다인지 화면에 없음 | 디스크립션에 넣음: LIS 설정은 상단에서 고른 CURECA마다 | POL-SYS-001 규칙 7, POL-COM-005 | 반영 완료 (2026-11-27) |
+| TI-STN-04-02-T-R01 | Setting | Code Mapping (TI-STN-04-02-T) | 기준 자료 변경 | Sample Type 이름 예시 (Aspirate, Cary-blair, Cellpreserv 등) | `glossary/sample-types.csv`의 UI 표기와 맞춤 | `glossary/sample-types.csv` | 반영 완료 (2026-11-27) |
+| TI-STN-04-02-T-R02 | Setting | Code Mapping (TI-STN-04-02-T) | 점검 발견 | 4 Done·Enter로 "입력값 저장 처리"와 5 [Save]로 최종 저장이 섞임 | 행 단위 확정과 [Save] 저장을 구분해 씀 | 디스크립션 | 반영 완료 (2026-11-27) |
