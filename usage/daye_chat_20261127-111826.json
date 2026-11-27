@@ -1,0 +1,30 @@
+{
+  "id": "daye_chat_20261127-111826",
+  "kind": "work",
+  "chat": "doc",
+  "reqId": "",
+  "reqType": "",
+  "team": "cureca",
+  "at": "2026-11-27T11:18:26+09:00",
+  "from": "2026-11-27T11:02:12+09:00",
+  "by": "정다예",
+  "doneBy": "Claude",
+  "pc": "DAYE",
+  "fileKey": "",
+  "fileName": "",
+  "page": "",
+  "frame": "",
+  "nodeId": "",
+  "text": "채팅: ()< 이 괄호로 쓰는게 좋을 것 같아",
+  "turns": 5,
+  "models": {
+    "claude-opus-5-5": 30
+  },
+  "calls": 30,
+  "input": 70,
+  "cacheWrite": 36867,
+  "cacheRead": 15365798,
+  "output": 21707,
+  "total": 15424442,
+  "usd": 3.8025
+}
