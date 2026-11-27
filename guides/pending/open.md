@@ -148,80 +148,80 @@
 | LI-IVT-06-T-R05 | Inventory | Inventory Usage History (LI-IVT-06-T) | 점검 발견 | 3 형식 ".CVS" | .CSV | 오타 | 대기 |
 | LI-IVT-06-T-R06 | Inventory | Inventory Usage History (LI-IVT-06-T) | 다른 화면 파급 | 목록 "Reagents", 빈 Usage·Barcode 값, Module과 Unit이 맞지 않는 예시 줄 | TI-IVT-06-T 반영 대기 목록 1~3과 같음 | TI-IVT-06-T | 대기 |
 | LI-IVT-06-T-R07 | Inventory | Inventory Usage History (LI-IVT-06-T) | 기준 자료 변경 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
-| TI-IVT-01-T-R01 | Inventory | Inventory Summary (TI-IVT-01-T) | 기준 자료 변경 | 화면 카드 "Comsumable" | Consumable | `glossary/terms.csv` | 대기 |
-| TI-IVT-01-T-R02 | Inventory | Inventory Summary (TI-IVT-01-T) | 기준 자료 변경 | 1-1·1-5 "Empty 및 Insufficient" (화면 카드는 Insufficient, Low) | Empty는 예전 값이며 Insufficient로 바뀜. 요약 정보와 Stock Status Icon은 Insufficient·Low로 나눔 (1 정렬 기준과 같음). 1-3 "Empty 상태일 경우 '0'"도 Insufficient로 | `glossary/status-values.csv 재고 상태`, POL-INV-003 규칙 7 | 대기 |
-| TI-IVT-01-T-R03 | Inventory | Inventory Summary (TI-IVT-01-T) | 기준 자료 변경 | 1 "Inbound Trolley Unit이 'Docking' 상태" | Docked | `glossary/status-values.csv` 저장 장치 도킹 상태 | 대기 |
-| TI-IVT-01-T-R04 | Inventory | Inventory Summary (TI-IVT-01-T) | 기준 자료 변경 | 3-5 툴팁 "prioritized by Full and Warning status" | Full and Almost Full (Warning은 Waste Bin/Bottle Status 값이 아님) | `glossary/status-values.csv` | 대기 |
-| TI-IVT-01-T-R05 | Inventory | Inventory Summary (TI-IVT-01-T) | 기준 자료 변경 | 3-4 "Waste Status Icon" | Waste Bin/Bottle Status Icon | `glossary/terms.csv` | 대기 |
-| TI-IVT-01-T-R06 | Inventory | Inventory Summary (TI-IVT-01-T) | 점검 발견 | 1-7 툴팁 문구가 4개 나열됨 (옛 문구와 새 문구가 섞인 것으로 보임) | 현재 문구 하나만 남김 (v2.1.14 "Tooltip 내용 변경"). LI-IVT-01-T에는 앞의 2개에 취소선이 있음 | 버전 메모, LI-IVT-01-T | 대기 |
-| TI-IVT-01-T-R08 | Inventory | Inventory Summary (TI-IVT-01-T) | 기준 자료 변경 | 0 "사용여부가 '사용'인 모듈" | Enabled인 Module | POL-EQP-009 | 대기 |
-| TI-IVT-01-T-R09 | Inventory | Inventory Summary (TI-IVT-01-T) | 기준 자료 변경 | 화면 "FlexibleExtraction(1)", "WasteBin", "PCR Setup(1)" 등 | Flexible Extraction (1), Waste Bin, PCR Setup (1) | 이름 (번호) 띄어쓰기, `glossary/terms.csv` | 대기 |
-| TI-IVT-01-T-R10 | Inventory | Inventory Summary (TI-IVT-01-T) | 기준 자료 변경 | 1 "통합 상태 Run O / X" | 장비 통합 상태 Running 여부로 표기 | `glossary/terms.csv` 장비 통합 상태 | 대기 |
-| TI-IVT-01-T-R11 | Inventory | Inventory Summary (TI-IVT-01-T) | 다른 화면 파급 | 3-3 "Waste bin/bottle tab 내 2-3 참고" (Fill Level은 TI-IVT-05-T 3-3) | TI-IVT-05-T 3-3 참고 | TI-IVT-05-T | 대기 |
-| TI-IVT-02-T-R01 | Inventory | Inventory Overview (TI-IVT-02-T) | 기준 자료 변경 | Tab 이름 "Reagent" (다른 Tab 화면은 Reagents) | Reagents | IA, TI-IVT-01-T 화면 글자 | 대기 |
-| TI-IVT-02-T-R02 | Inventory | Inventory Overview (TI-IVT-02-T) | 점검 발견 | 1-2 "데이트 업데이트", 1-3 "차감되지 않는며" | 데이터 업데이트, 차감되지 않으며 | 오타 | 대기 |
-| TI-IVT-02-T-R03 | Inventory | Inventory Overview (TI-IVT-02-T) | 기준 자료 변경 | 0 "사용여부가 '사용'인 모듈" | Enabled인 Module | POL-EQP-009 | 대기 |
-| TI-IVT-02-T-R04 | Inventory | Inventory Overview (TI-IVT-02-T) | 점검 발견 | 1 "아래 Inventory Overview Detail Info 예시 참고하여 작업요청" (CID 없는 프레임을 가리킴) | 케이스 규칙을 디스크립션이나 정책으로 옮김 | `screens/inventory/_menu.md` | 대기 |
-| TI-IVT-02-T-R05 | Inventory | Inventory Overview (TI-IVT-02-T) | 점검 발견 | 화면 "Samples (Test In Progress) 48 ea (1 racks)" | 1 rack | 단수·복수 | 대기 |
-| TI-IVT-02-T-R06 | Inventory | Inventory Overview (TI-IVT-02-T) | 기준 자료 변경 | 1-1 "투입 트롤리", "회수 트롤리", "검체" | Inbound Trolley, Outbound Trolley, Sample | `glossary/terms.csv` | 대기 |
-| TI-IVT-02-T-R07 | Inventory | Inventory Overview (TI-IVT-02-T) | 점검 발견 | 2 툴팁 "all modules . Select" | all modules. Select | 띄어쓰기 | 대기 |
-| TI-IVT-02-T-R08 | Inventory | Inventory Overview (TI-IVT-02-T) | 기준 자료 변경 | IA "짝 화면 동일"이 비어 있으나 LI-IVT-02-T와 화면·디스크립션이 같음 | IA 확인 | `ia/ia-screens.csv` | 대기 (확인 필요) |
-| TI-IVT-03-T-P-R01 | Inventory | Consumables Item details popup (TI-IVT-03-T-P) | 점검 발견 | 합계 "2,021 (22 rack)" (단위 없음). Run 화면 프레임은 "2,021 ea (22 rack)" | 2,021 ea (22 racks) | 3 표기 방식, LI-IVT-03-T-P Run 프레임 | 대기 |
-| TI-IVT-03-T-P-R02 | Inventory | Consumables Item details popup (TI-IVT-03-T-P) | 점검 발견 | 예시 줄에 Inbound Date 값이 없음 (열은 5개, 값은 4개) | 날짜 예시를 넣음 | 화면 글자 | 대기 |
-| TI-IVT-03-T-P-R03 | Inventory | Consumables Item details popup (TI-IVT-03-T-P) | 기준 자료 변경 | 2-1 "DX 서랍식 입고" | Dx 시스템 Storage의 Drawer | `glossary/terms.csv` Drawer, Dx 시스템 | 대기 |
-| TI-IVT-03-T-P-R04 | Inventory | Consumables Item details popup (TI-IVT-03-T-P) | 기준 자료 변경 | "소모품", "바코드" 한국어 혼용 | Consumable, Barcode | `glossary/terms.csv` | 대기 |
-| TI-IVT-03-T-P-R05 | Inventory | Consumables Item details popup (TI-IVT-03-T-P) | 점검 발견 | 5 [Close]와 6 [X]의 동작이 같은 말을 다르게 씀 | 하나의 문장으로 통일 | 디스크립션 | 대기 |
-| TI-IVT-03-T-R01 | Inventory | Inventory Consumables (TI-IVT-03-T) | 기준 자료 변경 | 2-6 Insufficient "재고가 0인 경우", Low "1개 이상 부족한 경우" | 디스크립션에 넣음: 재고 상태 정의는 상태값 표와 같음. Insufficient = 잔여 수량 0이라 그 품목을 쓰는 단계에서 Error가 생겨 가동이 중단됨, Low = 필요 수량보다 1개 이상 적으나 가동 가능 (예: 1000개 필요, 999개 이하). 화면의 "재고 0", "1개 이상 부족"은 이 정의의 예시로 남김 | `glossary/status-values.csv 재고 상태`, POL-INV-003 | 대기 |
-| TI-IVT-03-T-R02 | Inventory | Inventory Consumables (TI-IVT-03-T) | 기준 자료 변경 | 1 "sufficient" | Sufficient | `glossary/status-values.csv` | 대기 |
-| TI-IVT-03-T-R03 | Inventory | Inventory Consumables (TI-IVT-03-T) | 점검 발견 | 2-5 Required Qty 절의 첫 문장이 "좌측 영역의 Remaining Qty는…" | 좌측 영역의 Required Qty는… | 디스크립션 | 대기 |
-| TI-IVT-03-T-R04 | Inventory | Inventory Consumables (TI-IVT-03-T) | 기준 자료 변경 | 2-5·2-6·3-6 노출 조건 "검체 트롤리가 도킹된 상태 또는 통합 상태가 Running, Partial Running" / TI-IVT-01-T 1은 "Running이거나 Inbound Trolley Docked" | 디스크립션에 넣음: Required Qty와 Status(Run 대비 재고 상태)는 Inbound Trolley가 도킹되어 있거나, [Run Start] 뒤 진행 중인 Batch가 끝나지 않았으면 보여 줌 (둘 중 하나). Partial Running·Error가 되어도 Batch가 끝나기 전이면 계속 보여 주고, Run 중 Trolley를 분리해도 계속 보여 줌. 그 밖에는 '-' | POL-INV-003 규칙 2·3 | 대기 |
-| TI-IVT-03-T-R05 | Inventory | Inventory Consumables (TI-IVT-03-T) | 점검 발견 | 5 툴팁 "Capacity: Shown only for fixed-capacity storage." / 3-4 Capacity는 장비 셋팅 시 설정된 값 (26.08.20 기준 변경) | 툴팁 문구를 3-4 정의와 맞춤 | 디스크립션 | 대기 |
-| TI-IVT-03-T-R06 | Inventory | Inventory Consumables (TI-IVT-03-T) | 점검 발견 | "단,장비 내 거치 공간에 있는 소모품은 … 차감되지 않는며" (2-4, 3-5) | 차감되지 않으며 | 오타 | 대기 |
-| TI-IVT-03-T-R07 | Inventory | Inventory Consumables (TI-IVT-03-T) | 기준 자료 변경 | "검체 트롤리", "소모품", "저장 장치" 한국어 혼용 | Inbound Trolley, Consumable, Storage | `glossary/terms.csv` | 대기 |
-| TI-IVT-03-T-R08 | Inventory | Inventory Consumables (TI-IVT-03-T) | 점검 발견 | Capacity "11 rack", "300 μL Tip Storage(1)" | 11 racks, 300 μL Tip Storage (1) | 단수·복수, 이름 (번호) 띄어쓰기 | 대기 |
-| TI-IVT-03-T-R09 | Inventory | Inventory Consumables (TI-IVT-03-T) | 점검 발견 | 예시 값 "#Trolley", Tub 수량 "200T (2 racks)" | 실제 Location 예시, rxns 단위 (COMM-4-b) | 화면 글자 | 대기 |
-| TI-IVT-03-T-R10 | Inventory | Inventory Consumables (TI-IVT-03-T) | 기준 자료 변경 | 0 "사용여부가 '사용'인 모듈" | Enabled인 Module | POL-EQP-009 | 대기 |
-| TI-IVT-03-T-R11 | Inventory | Inventory Consumables (TI-IVT-03-T) | 기준 자료 변경 | 2-4 정책 안내 2) "저장 장치로 반환 시 실제 사용 수량을 이력에 기록" | 디스크립션에 넣음: 사용량(Usage History)은 폐기할 때만 기록함. 반환할 때는 Remaining Qty만 줄임 | POL-INV-002 규칙 6, POL-INV-006 규칙 1 | 대기 |
-| TI-IVT-04-T-P-R01 | Inventory | Reagent Item details Popup (TI-IVT-04-T-P) | 기준 자료 변경 | 프레임 이름과 화면 정보 CID "TI-IVT-04-T" | TI-IVT-04-T-P | `ia/ia-screens.csv` | 대기 |
-| TI-IVT-04-T-P-R02 | Inventory | Reagent Item details Popup (TI-IVT-04-T-P) | 기준 자료 변경 | "유효기한", "유효기한이 지난" | Expiration Date, Expired | `glossary/terms.csv` Expiration Date, 시약 만료 상태 | 대기 |
-| TI-IVT-04-T-P-R03 | Inventory | Reagent Item details Popup (TI-IVT-04-T-P) | 점검 발견 | 2-1 Used Counts "흡입한 회수" | 흡입한 횟수 | 오타 | 대기 |
-| TI-IVT-04-T-P-R04 | Inventory | Reagent Item details Popup (TI-IVT-04-T-P) | 기준 자료 변경 | 2-1 Remaining Rxns "남은 반응 수 rxns 표기"와 "표기 방식 : 반응 수T"가 함께 있음 ("T"의 뜻이 없음) | 단위 하나로 (rxns) | 디스크립션, COMM-4-b | 대기 |
-| TI-IVT-04-T-P-R05 | Inventory | Reagent Item details Popup (TI-IVT-04-T-P) | 점검 발견 | 2-1 Location in storage "해당 소모품의 위치 값" (Reagent 화면) | 해당 Reagent의 위치 값 | Consumables Popup에서 복사 | 대기 |
-| TI-IVT-04-T-P-R06 | Inventory | Reagent Item details Popup (TI-IVT-04-T-P) | 기준 자료 변경 | 2-1 "DX 서랍식 입고", "시약", "바코드", "튜브" | Dx 시스템 Storage의 Drawer, Reagent, Barcode, Tube | `glossary/terms.csv` | 대기 |
-| TI-IVT-04-T-P-R07 | Inventory | Reagent Item details Popup (TI-IVT-04-T-P) | 점검 발견 | "2,010rxns  (22 tubes)" | 2,010 rxns (22 tubes) | 띄어쓰기 | 대기 |
-| TI-IVT-04-T-P-R08 | Inventory | Reagent Item details Popup (TI-IVT-04-T-P) | 점검 발견 | 예시 줄에 Inbound Date, Expiration Date 값이 없음 | 날짜 예시를 넣음 | 화면 글자 | 대기 |
-| TI-IVT-04-T-R01 | Inventory | Inventory Reagent (TI-IVT-04-T) | 기준 자료 변경 | Reagent에 재고 상태(Sufficient / Low / Insufficient)를 씀. 상태값 표의 재고 상태 대상은 Consumable뿐이었음 | 디스크립션에 넣음: Reagent도 Consumable과 같은 재고 상태(Sufficient, Low, Insufficient)를 씀. 상태값 표 대상을 Consumable / Reagent로 고침 | `glossary/status-values.csv 재고 상태`, POL-INV-003 | 대기 |
-| TI-IVT-04-T-R02 | Inventory | Inventory Reagent (TI-IVT-04-T) | 기준 자료 변경 | 2-6 Insufficient "재고가 0인 경우", Low "1개 이상 부족한 경우", 1 "sufficient" | TI-IVT-03-T 반영 대기 목록 1과 같이, Sufficient | `glossary/status-values.csv 재고 상태`, POL-INV-003 | 대기 |
-| TI-IVT-04-T-R04 | Inventory | Inventory Reagent (TI-IVT-04-T) | 점검 발견 | 2-5 Required Qty 절 첫 문장 "좌측 영역의 Remaining Qty는…", 예외 처리 "검사 진행 중이 아닐 경우" (2-6·3-6은 "위의 상황이 아닐 경우") | Required Qty, 예외 처리 문장 통일 | 디스크립션 | 대기 |
-| TI-IVT-04-T-R05 | Inventory | Inventory Reagent (TI-IVT-04-T) | 점검 발견 | 단위 혼용: 2-5 "10rxns", 3-6 "10T", 화면 "200T (2 racks)" | rxns로 통일 (COMM-4-b) | 디스크립션 | 대기 |
-| TI-IVT-04-T-R06 | Inventory | Inventory Reagent (TI-IVT-04-T) | 점검 발견 | 2-4·3-5 "표기 방식: 0번 디스크립션 참고" (0의 표기 방식은 취소선) | Common UX COMM-4-b 참고 | Figma 취소선 | 대기 |
-| TI-IVT-04-T-R07 | Inventory | Inventory Reagent (TI-IVT-04-T) | 기준 자료 변경 | 3-3 "유효기간", "유효기가 만료" | Expiration Date, Expired | `glossary/terms.csv` Expiration Date, 오타 | 대기 |
-| TI-IVT-04-T-R08 | Inventory | Inventory Reagent (TI-IVT-04-T) | 점검 발견 | Chip "# Sample Preparation"과 "#Nucleic Acid Extraction" 띄어쓰기 다름 | 하나로 통일 | 화면 글자 | 대기 |
-| TI-IVT-04-T-R09 | Inventory | Inventory Reagent (TI-IVT-04-T) | 기준 자료 변경 | "검체 트롤리", "시약", "소모품", "저장 장치", "장비 내 거치 공간(장비가 가져간 소모품 포함)" (Reagent 화면에 소모품) | Inbound Trolley, Reagent, Storage | `glossary/terms.csv` | 대기 |
-| TI-IVT-04-T-R10 | Inventory | Inventory Reagent (TI-IVT-04-T) | 기준 자료 변경 | 2-5·2-6·3-6 노출 조건이 TI-IVT-01-T 1과 다름 (Partial Running 포함 여부) | TI-IVT-03-T 반영 대기 목록 4와 같이 | POL-INV-003 규칙 2·3 | 대기 |
-| TI-IVT-04-T-R11 | Inventory | Inventory Reagent (TI-IVT-04-T) | 점검 발견 | 예시 값 "#Trolley" | 실제 Location 예시 | 화면 글자 | 대기 |
-| TI-IVT-04-T-R12 | Inventory | Inventory Reagent (TI-IVT-04-T) | 기준 자료 변경 | 0 "사용여부가 '사용'인 모듈" | Enabled인 Module | POL-EQP-009 | 대기 |
-| TI-IVT-04-T-R13 | Inventory | Inventory Reagent (TI-IVT-04-T) | 기준 자료 변경 | 2-4 정책 안내 2) 반환 시 이력 기록 | TI-IVT-03-T 반영 대기 목록 (사용량은 폐기할 때만 기록)와 같음 | POL-INV-002 규칙 6, POL-INV-006 규칙 1 | 대기 |
-| TI-IVT-05-T-R01 | Inventory | Waste Bin/Bottle (TI-IVT-05-T) | 기준 자료 변경 | IA 화면 이름 "Waste bin", 화면 "Waste Bin/Bottle" | IA를 Waste Bin/Bottle로 | `ia/ia-screens.csv`, 화면 정보 | 대기 |
-| TI-IVT-05-T-R02 | Inventory | Waste Bin/Bottle (TI-IVT-05-T) | 기준 자료 변경 | 0 "상태 값(Waste Status)" | Waste Bin/Bottle Status | `glossary/terms.csv` | 대기 |
-| TI-IVT-05-T-R03 | Inventory | Waste Bin/Bottle (TI-IVT-05-T) | 점검 발견 | 0 "Moule(index)" | Module (index) | 오타 | 대기 |
-| TI-IVT-05-T-R04 | Inventory | Waste Bin/Bottle (TI-IVT-05-T) | 점검 발견 | 3-3 "[3-6] 최대 개수 도달/초과 후…" (3-6 없음) | 번호 지움 | 디스크립션 | 대기 |
-| TI-IVT-05-T-R05 | Inventory | Waste Bin/Bottle (TI-IVT-05-T) | 기준 자료 변경 | 2·3 "Waste Bin이 존재하지 않는 모듈은 제외", "Waste Bin이 1개이상 존재하는 Module" | Waste Bin/Bottle은 Module마다 가진 Waste Bin과 Liquid Waste Bottle을 함께 부르는 이름이므로 "Waste Bin/Bottle이 있는 Module"로 씀. Unit 칸은 Module별 Unit 이름 그대로 | POL-INV-005 규칙 7, `glossary/module-units.csv` | 대기 |
-| TI-IVT-05-T-R06 | Inventory | Waste Bin/Bottle (TI-IVT-05-T) | 기준 자료 변경 | 3-3 99% 고정 시 Almost Full, Fill Level 70%·100% 기준은 COMM-4-a에만 있음 | 상태값 표 기준(Available 70% 미만, Almost Full 70% 이상, Full 100%)과 99% 제한·센서 규칙을 정책으로 묶음 | `glossary/status-values.csv` | 대기 |
-| TI-IVT-05-T-R07 | Inventory | Waste Bin/Bottle (TI-IVT-05-T) | 점검 발견 | "PlateSealing (2)" | Plate Sealing (2) | 띄어쓰기 | 대기 |
-| TI-IVT-05-T-R08 | Inventory | Waste Bin/Bottle (TI-IVT-05-T) | 기준 자료 변경 | "폐기물함", "폐기함", "폐기물 함", "모듈" 한국어 혼용 | Waste Bin/Bottle, Module | `glossary/terms.csv` | 대기 |
-| TI-IVT-05-T-R09 | Inventory | Waste Bin/Bottle (TI-IVT-05-T) | 점검 발견 | 1 "Default : 모든 탭이 미선택 된 상태" (Chip을 말함) | 모든 Chip이 선택되지 않은 상태 | 디스크립션 | 대기 |
-| TI-IVT-05-T-R10 | Inventory | Waste Bin/Bottle (TI-IVT-05-T) | 기준 자료 변경 | 0 "사용여부가 '사용'인 모듈" | Enabled인 Module | POL-EQP-009 | 대기 |
-| TI-IVT-06-T-R01 | Inventory | Inventory Usage History (TI-IVT-06-T) | 점검 발견 | 목록 Item Type 값 "Reagents" (디스크립션 데이터는 Consumable, Reagent) | Reagent | 디스크립션 1 | 대기 |
-| TI-IVT-06-T-R02 | Inventory | Inventory Usage History (TI-IVT-06-T) | 점검 발견 | Usage 열 값이 예시 줄에 없음, 일부 줄은 Barcode도 없음 | 예시 값 채움 | 화면 글자 | 대기 |
-| TI-IVT-06-T-R03 | Inventory | Inventory Usage History (TI-IVT-06-T) | 기준 자료 변경 | Consumable Storage(1)의 Unit이 "Plate Sealing"인 줄, Plate Sealing(1)의 Unit이 "Trolley"인 줄 | 실제 Module-Unit 조합으로 | `glossary/module-units.csv` | 대기 |
-| TI-IVT-06-T-R04 | Inventory | Inventory Usage History (TI-IVT-06-T) | 점검 발견 | 2 "오늘 기준 7일간의 내용만 목록에 노출" / 1 기간 검색 최대 1년 | 기본 조회 기간이 7일이라는 뜻으로 고침 | 디스크립션 | 대기 |
-| TI-IVT-06-T-R05 | Inventory | Inventory Usage History (TI-IVT-06-T) | 점검 발견 | 3 ".CVS" | .CSV | 오타 | 대기 |
-| TI-IVT-06-T-R06 | Inventory | Inventory Usage History (TI-IVT-06-T) | 기준 자료 변경 | 0 "'Usage Tab'", "사용되느" | Usage History Tab, 사용되는 | 오타, IA | 대기 |
-| TI-IVT-06-T-R07 | Inventory | Inventory Usage History (TI-IVT-06-T) | 점검 발견 | "Plate Sealing(1)", "Consumable Storage(1)" | Plate Sealing (1), Consumable Storage (1) | 이름 (번호) 띄어쓰기 | 대기 |
-| TI-IVT-06-T-R08 | Inventory | Inventory Usage History (TI-IVT-06-T) | 기준 자료 변경 | 0 "사용여부가 '사용'인 모듈", "소모품", "시약" | Enabled인 Module, Consumable, Reagent | POL-EQP-009, `glossary/terms.csv` | 대기 |
-| TI-IVT-06-T-R09 | Inventory | Inventory Usage History (TI-IVT-06-T) | 기준 자료 변경 | 0 이력 기준 "장비가 사용 후 폐기하는 시점" / TI-IVT-03-T 2-4 정책 안내는 "저장 장치로 반환 시"에도 사용 수량을 이력에 기록 | 디스크립션에 넣음: Usage History는 폐기할 때만 기록함 (사용 완료, 최대 사용 횟수 초과, Expiration Date 경과). 반환할 때는 기록하지 않음 | POL-INV-006 규칙 1 | 대기 |
-| TI-IVT-06-T-R10 | Inventory | Inventory Usage History (TI-IVT-06-T) | 기준 자료 변경 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 대기 |
+| TI-IVT-01-T-R01 | Inventory | Inventory Summary (TI-IVT-01-T) | 기준 자료 변경 | 화면 카드 "Comsumable" | Consumable | `glossary/terms.csv` | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-01-T-R02 | Inventory | Inventory Summary (TI-IVT-01-T) | 기준 자료 변경 | 1-1·1-5 "Empty 및 Insufficient" (화면 카드는 Insufficient, Low) | Empty는 예전 값이며 Insufficient로 바뀜. 요약 정보와 Stock Status Icon은 Insufficient·Low로 나눔 (1 정렬 기준과 같음). 1-3 "Empty 상태일 경우 '0'"도 Insufficient로 | `glossary/status-values.csv 재고 상태`, POL-INV-003 규칙 7 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-01-T-R03 | Inventory | Inventory Summary (TI-IVT-01-T) | 기준 자료 변경 | 1 "Inbound Trolley Unit이 'Docking' 상태" | Docked | `glossary/status-values.csv` 저장 장치 도킹 상태 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-01-T-R04 | Inventory | Inventory Summary (TI-IVT-01-T) | 기준 자료 변경 | 3-5 툴팁 "prioritized by Full and Warning status" | Full and Almost Full (Warning은 Waste Bin/Bottle Status 값이 아님) | `glossary/status-values.csv` | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-01-T-R05 | Inventory | Inventory Summary (TI-IVT-01-T) | 기준 자료 변경 | 3-4 "Waste Status Icon" | Waste Bin/Bottle Status Icon | `glossary/terms.csv` | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-01-T-R06 | Inventory | Inventory Summary (TI-IVT-01-T) | 점검 발견 | 1-7 툴팁 문구가 4개 나열됨 (옛 문구와 새 문구가 섞인 것으로 보임) | 현재 문구 하나만 남김 (v2.1.14 "Tooltip 내용 변경"). LI-IVT-01-T에는 앞의 2개에 취소선이 있음 | 버전 메모, LI-IVT-01-T | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-01-T-R08 | Inventory | Inventory Summary (TI-IVT-01-T) | 기준 자료 변경 | 0 "사용여부가 '사용'인 모듈" | Enabled인 Module | POL-EQP-009 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-01-T-R09 | Inventory | Inventory Summary (TI-IVT-01-T) | 기준 자료 변경 | 화면 "FlexibleExtraction(1)", "WasteBin", "PCR Setup(1)" 등 | Flexible Extraction (1), Waste Bin, PCR Setup (1) | 이름 (번호) 띄어쓰기, `glossary/terms.csv` | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-01-T-R10 | Inventory | Inventory Summary (TI-IVT-01-T) | 기준 자료 변경 | 1 "통합 상태 Run O / X" | 장비 통합 상태 Running 여부로 표기 | `glossary/terms.csv` 장비 통합 상태 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-01-T-R11 | Inventory | Inventory Summary (TI-IVT-01-T) | 다른 화면 파급 | 3-3 "Waste bin/bottle tab 내 2-3 참고" (Fill Level은 TI-IVT-05-T 3-3) | TI-IVT-05-T 3-3 참고 | TI-IVT-05-T | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-02-T-R01 | Inventory | Inventory Overview (TI-IVT-02-T) | 기준 자료 변경 | Tab 이름 "Reagent" (다른 Tab 화면은 Reagents) | Reagents | IA, TI-IVT-01-T 화면 글자 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-02-T-R02 | Inventory | Inventory Overview (TI-IVT-02-T) | 점검 발견 | 1-2 "데이트 업데이트", 1-3 "차감되지 않는며" | 데이터 업데이트, 차감되지 않으며 | 오타 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-02-T-R03 | Inventory | Inventory Overview (TI-IVT-02-T) | 기준 자료 변경 | 0 "사용여부가 '사용'인 모듈" | Enabled인 Module | POL-EQP-009 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-02-T-R04 | Inventory | Inventory Overview (TI-IVT-02-T) | 점검 발견 | 1 "아래 Inventory Overview Detail Info 예시 참고하여 작업요청" (CID 없는 프레임을 가리킴) | 케이스 규칙을 디스크립션이나 정책으로 옮김 | `screens/inventory/_menu.md` | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-02-T-R05 | Inventory | Inventory Overview (TI-IVT-02-T) | 점검 발견 | 화면 "Samples (Test In Progress) 48 ea (1 racks)" | 1 rack | 단수·복수 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-02-T-R06 | Inventory | Inventory Overview (TI-IVT-02-T) | 기준 자료 변경 | 1-1 "투입 트롤리", "회수 트롤리", "검체" | Inbound Trolley, Outbound Trolley, Sample | `glossary/terms.csv` | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-02-T-R07 | Inventory | Inventory Overview (TI-IVT-02-T) | 점검 발견 | 2 툴팁 "all modules . Select" | all modules. Select | 띄어쓰기 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-02-T-R08 | Inventory | Inventory Overview (TI-IVT-02-T) | 기준 자료 변경 | IA "짝 화면 동일"이 비어 있으나 LI-IVT-02-T와 화면·디스크립션이 같음 | IA `LI-IVT-02-T` 줄의 짝 화면 동일을 Y로 (1단계 요청자 답, 2026-11-27) | `ia/ia-screens.csv` | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-03-T-P-R01 | Inventory | Consumables Item details popup (TI-IVT-03-T-P) | 점검 발견 | 합계 "2,021 (22 rack)" (단위 없음). Run 화면 프레임은 "2,021 ea (22 rack)" | 2,021 ea (22 racks) | 3 표기 방식, LI-IVT-03-T-P Run 프레임 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-03-T-P-R02 | Inventory | Consumables Item details popup (TI-IVT-03-T-P) | 점검 발견 | 예시 줄에 Inbound Date 값이 없음 (열은 5개, 값은 4개) | 날짜 예시를 넣음 | 화면 글자 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-03-T-P-R03 | Inventory | Consumables Item details popup (TI-IVT-03-T-P) | 기준 자료 변경 | 2-1 "DX 서랍식 입고" | Dx 시스템 Storage의 Drawer | `glossary/terms.csv` Drawer, Dx 시스템 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-03-T-P-R04 | Inventory | Consumables Item details popup (TI-IVT-03-T-P) | 기준 자료 변경 | "소모품", "바코드" 한국어 혼용 | Consumable, Barcode | `glossary/terms.csv` | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-03-T-P-R05 | Inventory | Consumables Item details popup (TI-IVT-03-T-P) | 점검 발견 | 5 [Close]와 6 [X]의 동작이 같은 말을 다르게 씀 | 하나의 문장으로 통일 | 디스크립션 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-03-T-R01 | Inventory | Inventory Consumables (TI-IVT-03-T) | 기준 자료 변경 | 2-6 Insufficient "재고가 0인 경우", Low "1개 이상 부족한 경우" | 디스크립션에 넣음: 재고 상태 정의는 상태값 표와 같음. Insufficient = 잔여 수량 0이라 그 품목을 쓰는 단계에서 Error가 생겨 가동이 중단됨, Low = 필요 수량보다 1개 이상 적으나 가동 가능 (예: 1000개 필요, 999개 이하). 화면의 "재고 0", "1개 이상 부족"은 이 정의의 예시로 남김 | `glossary/status-values.csv 재고 상태`, POL-INV-003 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-03-T-R02 | Inventory | Inventory Consumables (TI-IVT-03-T) | 기준 자료 변경 | 1 "sufficient" | Sufficient | `glossary/status-values.csv` | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-03-T-R03 | Inventory | Inventory Consumables (TI-IVT-03-T) | 점검 발견 | 2-5 Required Qty 절의 첫 문장이 "좌측 영역의 Remaining Qty는…" | 좌측 영역의 Required Qty는… | 디스크립션 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-03-T-R04 | Inventory | Inventory Consumables (TI-IVT-03-T) | 기준 자료 변경 | 2-5·2-6·3-6 노출 조건 "검체 트롤리가 도킹된 상태 또는 통합 상태가 Running, Partial Running" / TI-IVT-01-T 1은 "Running이거나 Inbound Trolley Docked" | 디스크립션에 넣음: Required Qty와 Status(Run 대비 재고 상태)는 Inbound Trolley가 도킹되어 있거나, [Run Start] 뒤 진행 중인 Batch가 끝나지 않았으면 보여 줌 (둘 중 하나). Partial Running·Error가 되어도 Batch가 끝나기 전이면 계속 보여 주고, Run 중 Trolley를 분리해도 계속 보여 줌. 그 밖에는 '-' | POL-INV-003 규칙 2·3 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-03-T-R05 | Inventory | Inventory Consumables (TI-IVT-03-T) | 점검 발견 | 5 툴팁 "Capacity: Shown only for fixed-capacity storage." / 3-4 Capacity는 장비 셋팅 시 설정된 값 (26.08.20 기준 변경) | 툴팁 문구를 3-4 정의와 맞춤 | 디스크립션 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-03-T-R06 | Inventory | Inventory Consumables (TI-IVT-03-T) | 점검 발견 | "단,장비 내 거치 공간에 있는 소모품은 … 차감되지 않는며" (2-4, 3-5) | 차감되지 않으며 | 오타 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-03-T-R07 | Inventory | Inventory Consumables (TI-IVT-03-T) | 기준 자료 변경 | "검체 트롤리", "소모품", "저장 장치" 한국어 혼용 | Inbound Trolley, Consumable, Storage | `glossary/terms.csv` | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-03-T-R08 | Inventory | Inventory Consumables (TI-IVT-03-T) | 점검 발견 | Capacity "11 rack", "300 μL Tip Storage(1)" | 11 racks, 300 μL Tip Storage (1) | 단수·복수, 이름 (번호) 띄어쓰기 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-03-T-R09 | Inventory | Inventory Consumables (TI-IVT-03-T) | 점검 발견 | 예시 값 "#Trolley", Tub 수량 "200T (2 racks)" | 실제 Location 예시, rxns 단위 (COMM-4-b) | 화면 글자 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-03-T-R10 | Inventory | Inventory Consumables (TI-IVT-03-T) | 기준 자료 변경 | 0 "사용여부가 '사용'인 모듈" | Enabled인 Module | POL-EQP-009 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-03-T-R11 | Inventory | Inventory Consumables (TI-IVT-03-T) | 기준 자료 변경 | 2-4 정책 안내 2) "저장 장치로 반환 시 실제 사용 수량을 이력에 기록" | 디스크립션에 넣음: 사용량(Usage History)은 폐기할 때만 기록함. 반환할 때는 Remaining Qty만 줄임 | POL-INV-002 규칙 6, POL-INV-006 규칙 1 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-04-T-P-R01 | Inventory | Reagent Item details Popup (TI-IVT-04-T-P) | 기준 자료 변경 | 프레임 이름과 화면 정보 CID "TI-IVT-04-T" | TI-IVT-04-T-P | `ia/ia-screens.csv` | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-04-T-P-R02 | Inventory | Reagent Item details Popup (TI-IVT-04-T-P) | 기준 자료 변경 | "유효기한", "유효기한이 지난" | Expiration Date, Expired | `glossary/terms.csv` Expiration Date, 시약 만료 상태 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-04-T-P-R03 | Inventory | Reagent Item details Popup (TI-IVT-04-T-P) | 점검 발견 | 2-1 Used Counts "흡입한 회수" | 흡입한 횟수 | 오타 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-04-T-P-R04 | Inventory | Reagent Item details Popup (TI-IVT-04-T-P) | 기준 자료 변경 | 2-1 Remaining Rxns "남은 반응 수 rxns 표기"와 "표기 방식 : 반응 수T"가 함께 있음 ("T"의 뜻이 없음) | 단위 하나로 (rxns) | 디스크립션, COMM-4-b | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-04-T-P-R05 | Inventory | Reagent Item details Popup (TI-IVT-04-T-P) | 점검 발견 | 2-1 Location in storage "해당 소모품의 위치 값" (Reagent 화면) | 해당 Reagent의 위치 값 | Consumables Popup에서 복사 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-04-T-P-R06 | Inventory | Reagent Item details Popup (TI-IVT-04-T-P) | 기준 자료 변경 | 2-1 "DX 서랍식 입고", "시약", "바코드", "튜브" | Dx 시스템 Storage의 Drawer, Reagent, Barcode, Tube | `glossary/terms.csv` | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-04-T-P-R07 | Inventory | Reagent Item details Popup (TI-IVT-04-T-P) | 점검 발견 | "2,010rxns  (22 tubes)" | 2,010 rxns (22 tubes) | 띄어쓰기 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-04-T-P-R08 | Inventory | Reagent Item details Popup (TI-IVT-04-T-P) | 점검 발견 | 예시 줄에 Inbound Date, Expiration Date 값이 없음 | 날짜 예시를 넣음 | 화면 글자 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-04-T-R01 | Inventory | Inventory Reagent (TI-IVT-04-T) | 기준 자료 변경 | Reagent에 재고 상태(Sufficient / Low / Insufficient)를 씀. 상태값 표의 재고 상태 대상은 Consumable뿐이었음 | 디스크립션에 넣음: Reagent도 Consumable과 같은 재고 상태(Sufficient, Low, Insufficient)를 씀. 상태값 표 대상을 Consumable / Reagent로 고침 | `glossary/status-values.csv 재고 상태`, POL-INV-003 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-04-T-R02 | Inventory | Inventory Reagent (TI-IVT-04-T) | 기준 자료 변경 | 2-6 Insufficient "재고가 0인 경우", Low "1개 이상 부족한 경우", 1 "sufficient" | TI-IVT-03-T 반영 대기 목록 1과 같이, Sufficient | `glossary/status-values.csv 재고 상태`, POL-INV-003 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-04-T-R04 | Inventory | Inventory Reagent (TI-IVT-04-T) | 점검 발견 | 2-5 Required Qty 절 첫 문장 "좌측 영역의 Remaining Qty는…", 예외 처리 "검사 진행 중이 아닐 경우" (2-6·3-6은 "위의 상황이 아닐 경우") | Required Qty, 예외 처리 문장 통일 | 디스크립션 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-04-T-R05 | Inventory | Inventory Reagent (TI-IVT-04-T) | 점검 발견 | 단위 혼용: 2-5 "10rxns", 3-6 "10T", 화면 "200T (2 racks)" | rxns로 통일 (COMM-4-b) | 디스크립션 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-04-T-R06 | Inventory | Inventory Reagent (TI-IVT-04-T) | 점검 발견 | 2-4·3-5 "표기 방식: 0번 디스크립션 참고" (0의 표기 방식은 취소선) | Common UX COMM-4-b 참고 | Figma 취소선 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-04-T-R07 | Inventory | Inventory Reagent (TI-IVT-04-T) | 기준 자료 변경 | 3-3 "유효기간", "유효기가 만료" | Expiration Date, Expired | `glossary/terms.csv` Expiration Date, 오타 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-04-T-R08 | Inventory | Inventory Reagent (TI-IVT-04-T) | 점검 발견 | Chip "# Sample Preparation"과 "#Nucleic Acid Extraction" 띄어쓰기 다름 | 하나로 통일 | 화면 글자 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-04-T-R09 | Inventory | Inventory Reagent (TI-IVT-04-T) | 기준 자료 변경 | "검체 트롤리", "시약", "소모품", "저장 장치", "장비 내 거치 공간(장비가 가져간 소모품 포함)" (Reagent 화면에 소모품) | Inbound Trolley, Reagent, Storage | `glossary/terms.csv` | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-04-T-R10 | Inventory | Inventory Reagent (TI-IVT-04-T) | 기준 자료 변경 | 2-5·2-6·3-6 노출 조건이 TI-IVT-01-T 1과 다름 (Partial Running 포함 여부) | TI-IVT-03-T 반영 대기 목록 4와 같이 | POL-INV-003 규칙 2·3 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-04-T-R11 | Inventory | Inventory Reagent (TI-IVT-04-T) | 점검 발견 | 예시 값 "#Trolley" | 실제 Location 예시 | 화면 글자 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-04-T-R12 | Inventory | Inventory Reagent (TI-IVT-04-T) | 기준 자료 변경 | 0 "사용여부가 '사용'인 모듈" | Enabled인 Module | POL-EQP-009 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-04-T-R13 | Inventory | Inventory Reagent (TI-IVT-04-T) | 기준 자료 변경 | 2-4 정책 안내 2) 반환 시 이력 기록 | TI-IVT-03-T 반영 대기 목록 (사용량은 폐기할 때만 기록)와 같음 | POL-INV-002 규칙 6, POL-INV-006 규칙 1 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-05-T-R01 | Inventory | Waste Bin/Bottle (TI-IVT-05-T) | 기준 자료 변경 | IA 화면 이름 "Waste bin", 화면 "Waste Bin/Bottle" | IA를 Waste Bin/Bottle로 | `ia/ia-screens.csv`, 화면 정보 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-05-T-R02 | Inventory | Waste Bin/Bottle (TI-IVT-05-T) | 기준 자료 변경 | 0 "상태 값(Waste Status)" | Waste Bin/Bottle Status | `glossary/terms.csv` | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-05-T-R03 | Inventory | Waste Bin/Bottle (TI-IVT-05-T) | 점검 발견 | 0 "Moule(index)" | Module (index) | 오타 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-05-T-R04 | Inventory | Waste Bin/Bottle (TI-IVT-05-T) | 점검 발견 | 3-3 "[3-6] 최대 개수 도달/초과 후…" (3-6 없음) | 번호 지움 | 디스크립션 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-05-T-R05 | Inventory | Waste Bin/Bottle (TI-IVT-05-T) | 기준 자료 변경 | 2·3 "Waste Bin이 존재하지 않는 모듈은 제외", "Waste Bin이 1개이상 존재하는 Module" | Waste Bin/Bottle은 Module마다 가진 Waste Bin과 Liquid Waste Bottle을 함께 부르는 이름이므로 "Waste Bin/Bottle이 있는 Module"로 씀. Unit 칸은 Module별 Unit 이름 그대로 | POL-INV-005 규칙 7, `glossary/module-units.csv` | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-05-T-R06 | Inventory | Waste Bin/Bottle (TI-IVT-05-T) | 기준 자료 변경 | 3-3 99% 고정 시 Almost Full, Fill Level 70%·100% 기준은 COMM-4-a에만 있음 | 상태값 표 기준(Available 70% 미만, Almost Full 70% 이상, Full 100%)과 99% 제한·센서 규칙을 정책으로 묶음 | `glossary/status-values.csv` | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-05-T-R07 | Inventory | Waste Bin/Bottle (TI-IVT-05-T) | 점검 발견 | "PlateSealing (2)" | Plate Sealing (2) | 띄어쓰기 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-05-T-R08 | Inventory | Waste Bin/Bottle (TI-IVT-05-T) | 기준 자료 변경 | "폐기물함", "폐기함", "폐기물 함", "모듈" 한국어 혼용 | Waste Bin/Bottle, Module | `glossary/terms.csv` | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-05-T-R09 | Inventory | Waste Bin/Bottle (TI-IVT-05-T) | 점검 발견 | 1 "Default : 모든 탭이 미선택 된 상태" (Chip을 말함) | 모든 Chip이 선택되지 않은 상태 | 디스크립션 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-05-T-R10 | Inventory | Waste Bin/Bottle (TI-IVT-05-T) | 기준 자료 변경 | 0 "사용여부가 '사용'인 모듈" | Enabled인 Module | POL-EQP-009 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-06-T-R01 | Inventory | Inventory Usage History (TI-IVT-06-T) | 점검 발견 | 목록 Item Type 값 "Reagents" (디스크립션 데이터는 Consumable, Reagent) | Reagent | 디스크립션 1 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-06-T-R02 | Inventory | Inventory Usage History (TI-IVT-06-T) | 점검 발견 | Usage 열 값이 예시 줄에 없음, 일부 줄은 Barcode도 없음 | 예시 값 채움 | 화면 글자 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-06-T-R03 | Inventory | Inventory Usage History (TI-IVT-06-T) | 기준 자료 변경 | Consumable Storage(1)의 Unit이 "Plate Sealing"인 줄, Plate Sealing(1)의 Unit이 "Trolley"인 줄 | 실제 Module-Unit 조합으로 | `glossary/module-units.csv` | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-06-T-R04 | Inventory | Inventory Usage History (TI-IVT-06-T) | 점검 발견 | 2 "오늘 기준 7일간의 내용만 목록에 노출" / 1 기간 검색 최대 1년 | 기본 조회 기간이 7일이라는 뜻으로 고침 | 디스크립션 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-06-T-R05 | Inventory | Inventory Usage History (TI-IVT-06-T) | 점검 발견 | 3 ".CVS" | .CSV | 오타 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-06-T-R06 | Inventory | Inventory Usage History (TI-IVT-06-T) | 기준 자료 변경 | 0 "'Usage Tab'", "사용되느" | Usage History Tab, 사용되는 | 오타, IA | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-06-T-R07 | Inventory | Inventory Usage History (TI-IVT-06-T) | 점검 발견 | "Plate Sealing(1)", "Consumable Storage(1)" | Plate Sealing (1), Consumable Storage (1) | 이름 (번호) 띄어쓰기 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-06-T-R08 | Inventory | Inventory Usage History (TI-IVT-06-T) | 기준 자료 변경 | 0 "사용여부가 '사용'인 모듈", "소모품", "시약" | Enabled인 Module, Consumable, Reagent | POL-EQP-009, `glossary/terms.csv` | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-06-T-R09 | Inventory | Inventory Usage History (TI-IVT-06-T) | 기준 자료 변경 | 0 이력 기준 "장비가 사용 후 폐기하는 시점" / TI-IVT-03-T 2-4 정책 안내는 "저장 장치로 반환 시"에도 사용 수량을 이력에 기록 | 디스크립션에 넣음: Usage History는 폐기할 때만 기록함 (사용 완료, 최대 사용 횟수 초과, Expiration Date 경과). 반환할 때는 기록하지 않음 | POL-INV-006 규칙 1 | 작업 중 (20261127-최고관리자-inventory) |
+| TI-IVT-06-T-R10 | Inventory | Inventory Usage History (TI-IVT-06-T) | 기준 자료 변경 | [Export] 파일 형식 | 디스크립션에 넣음: 내보내는 파일 형식은 .csv (Run Report만 제외) | POL-COM-006 | 작업 중 (20261127-최고관리자-inventory) |
 | LI-LOG-01-P-R01 | Login | Reset Initial Password (LI-LOG-01-P) | 기준 자료 변경 | 디스크립션의 "LI-PRF-01/Case", "LI-LOG-P", "LI-LOG" | LI-LOG-01-P/Case, LI-LOG-01-P, LI-LOG-01 | `ia/ia-screens.csv` | 대기 |
 | LI-LOG-01-P-R02 | Login | Reset Initial Password (LI-LOG-01-P) | 기준 자료 변경 | 비밀번호 조건에 "각 문자 유형 최소 1자"가 없음 (TI-LOG-01-P에는 있음) | POL-ACC-006으로 통일 (영문 대문자·소문자·숫자 각 1자 이상, 특수문자는 선택) | POL-ACC-006 | 대기 |
 | LI-LOG-01-P-R03 | Login | Reset Initial Password (LI-LOG-01-P) | 점검 발견 | 1-3 "1-2에 입력한 값과", [Cancle] | 1-1, [Cancel] | 디스크립션 | 대기 |
