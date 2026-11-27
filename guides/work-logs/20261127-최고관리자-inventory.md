@@ -29,7 +29,7 @@ started: 2026-11-27
 | 4. 수정 · 확인 | | | |
 | 5. 완료 | | | |
 
-이어서 작업할 곳: 3단계 · TI-IVT-01-T · 02-T · 03-T · 03-T-P 그림 (03-T-P 기획 3919:1616, 섹션 높이 아직 안 맞춤), TI-IVT-04-T부터 그릴 차례 (다시 읽을 곳: 3단계 `flow/3-design-case3.md` 흐름 · 3-4 · 케이스 3 표, `flow/3-design.md` 공통 3 · 공통 5 / 작업 기록 "설계" 화면별 작업 · 컴포넌트 없이 그린 요소 · "질문 대기" · "변경 확인", 화면 MD `screens/tobe/inventory/TI-IVT-04-T.md`, `projects/etCQFF3CTf1EA6C79d4BBf/components.md` 「Inventory To Be」)
+이어서 작업할 곳: 3단계 · TI-IVT-01-T · 02-T · 03-T · 03-T-P 그림 (03-T-P 기획 3919:1616), TI-IVT-04-T부터 그릴 차례. 남은 일: 03-T-P 상세 표를 Common UX Basic Table로 다시 그림 (지금은 원본 따옴, 케이스 3 표 ① 어긋남), 04-T 왼쪽 카드는 Reagents type Tag가 있어 Common UX Card/Table로 그릴 차례 (다시 읽을 곳: 3단계 `flow/3-design-case3.md` 흐름 · 3-4 · 케이스 3 표, `flow/3-design.md` 공통 3 · 공통 5 / 작업 기록 "설계" 화면별 작업 · 컴포넌트 없이 그린 요소 · "질문 대기" · "변경 확인", 화면 MD `screens/tobe/inventory/TI-IVT-04-T.md`, `projects/etCQFF3CTf1EA6C79d4BBf/components.md` 「Inventory To Be」)
 
 ## 요청
 <!-- 1단계 절차 1번. 요청 글 한두 줄과 출처, 공유 파일 (아래 "항목마다 적는 법") -->
