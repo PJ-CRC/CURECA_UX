@@ -53,11 +53,11 @@ figma:
   - 비밀번호 정책 불일치 시 하단에 에러메시지 노출
 - 공통 UX 참고 : COMM-5-t
 - 정책 참고 : POL-ACC-006
-- 케이스 참고 : TI-LOG-01-P/Case > Case 1
+- 케이스 참고 : <span style="color:red">TI-LOG-01-P/Case > Case 1</span>
 
 **1-2  Password 생성 조건 안내 Tooltip**
 - 공통 UX 참고 : COMM-5-v
-- 케이스 참고 : TI-LOG-01-P/Case > Case 3
+- 케이스 참고 : <span style="color:red">TI-LOG-01-P/Case > Case 3</span>
 
 **1-3  Confirm New Password(Password Input)**
 - 정의
@@ -67,7 +67,7 @@ figma:
   - [Save] 버튼 클릭 시 유효성 검사 진행
   - <span style="color:red">(1-1)</span>에 입력한 값과 일치하지 않을 경우 에러 메시지 노출
 - 공통 UX 참고 : COMM-5-t
-- 케이스 참고 : TI-LOG-01-P/Case > Case 2
+- 케이스 참고 : <span style="color:red">TI-LOG-01-P/Case > Case 2</span>
 
 **2  [Save] 버튼**
 - 활성화 조건
@@ -76,7 +76,7 @@ figma:
 - 동작
   - 입력된 정보의 유효성 검증 후 비밀번호 변경 실행
   - 단, 유효성 검증에 실패 할 경우 표출 항목 별 안내 문구 노출
-  - 유효성 검증 완료 후 로그인 화면으로 이동 : TI-LOG-01
+  - 유효성 검증 완료 후 로그인 화면으로 이동 : <span style="color:red">TI-LOG-01</span>
   - (변경한 비밀번호로 재로그인 진행)
 - 정책 참고 : POL-ACC-003
 

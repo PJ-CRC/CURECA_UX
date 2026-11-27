@@ -27,8 +27,6 @@ figma:
 ## 디스크립션
 
 **0  Sign in 화면**
-- 정의
-  - 계정 ID와 비밀번호로 로그인하는 화면
 - User Type : Service, Admin, User
 
 **1  Logo**
@@ -42,7 +40,7 @@ figma:
   - <span style="color:red">4자 이상, 32자 이하</span>
   - 영문 소문자, 숫자, 특수문자(_ -) <span style="color:red">사용 가능</span>
   - 대문자 입력 시 소문자로 자동 변환
-- 유효성 메시지 : TI-LOG-01/Case > Case 1
+- 유효성 메시지 : <span style="color:red">TI-LOG-01/Case</span> > Case 1
 - 정책 참고 : POL-ACC-005
 
 **3  Password(Password Input)**
@@ -54,7 +52,7 @@ figma:
   - 영문 <span style="color:red">대문자(A-Z), 영문 소문자(a-z)</span>, 숫자<span style="color:red">(0-9)</span>, 특수 문자(! @ # $ % ^ & * ( ) _ - + = [ ] { } ; ' : " , . < > ? /) <span style="color:red">사용 가능</span>
   - <span style="color:red">영문 대문자, 영문 소문자, 숫자 각 1자 이상 포함 (특수문자는 선택)</span>
   - 대소문자 구분
-- 유효성 메시지 : TI-LOG-01/Case > Case 1
+- 유효성 메시지 : <span style="color:red">TI-LOG-01/Case</span> > Case 1
 - 정책 참고 : POL-ACC-006
 
 **4  [Sign In] 버튼**
@@ -63,7 +61,7 @@ figma:
   - [아이디], [비밀번호] 2개 필드 모두 최소 1자 이상 입력 시 버튼 활성화
 - 동작
   - 계정 인증 성공 시, 최초 로그인일 경우 비밀번호 변경 필요
-  - 초기 비밀번호 재설정 화면 노출 : TI-LOG-01-P
+  - 초기 비밀번호 재설정 화면 노출 : <span style="color:red">TI-LOG-01-P</span>
   - <span style="color:red">인증 실패 누적 10회 시 계정 잠금, Popup 노출 : TI-LOG-02-P</span>
 - 정책 참고 : POL-ACC-003, POL-ACC-007
 
