@@ -281,4 +281,4 @@ started: 2026-11-27
 ## 이 작업이 남긴 것
 
 - 다른 화면의 반영 대기 항목: (전체 항목 ID)
-- 고친 카탈로그 줄: (코드 · 무엇을 — 새 줄 / 사용 화면 더함 / 등급(Property) 채움, `alert/`)
+- 고친 카탈로그 줄: Alert_048 · 새 줄 (`alert/alert-catalog.csv`, Code Mapping 같은 LIS Code 확정, Q3의 답, 2026-11-27)
