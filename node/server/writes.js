@@ -1530,7 +1530,8 @@ module.exports = function register(on, h) {
         let n = seqNext(items, 'R');
         const rid = 'R' + String(n).padStart(3, '0');
         const imgs = saveAttach(rid, b.images);
-        const it = { id: rid, uid: core.pcCode() + '-' + rid, team: b.team ? nn(b.team) : T.team, nodeId: nn(b.nodeId), frame: nn(b.frame), page: nn(b.page), fileKey: nn(b.fileKey), fileName: nn(b.fileName),
+        // pageId(2026-11-27): 페이지 이름이 바뀌면(Inventory_tobe → Inventory_tobe(진행중)) 이름만으로는 Workbench 「이 페이지」 목록에서 빠졌다
+        const it = { id: rid, uid: core.pcCode() + '-' + rid, team: b.team ? nn(b.team) : T.team, nodeId: nn(b.nodeId), frame: nn(b.frame), page: nn(b.page), pageId: /^\d+:\d+$/.test(nn(b.pageId)) ? nn(b.pageId) : '', fileKey: nn(b.fileKey), fileName: nn(b.fileName),
           editable: !!b.editable, type: nn(b.type), priority: nn(b.priority), layout: nn(b.layout), text: txt, status: '대기', note: '', author: nn(b.by), updatedBy: nn(b.by), createdAt: now, updatedAt: now };
         if (imgs.length) it.images = imgs;
         if (pickModel(b.model)) it.model = pickModel(b.model);
