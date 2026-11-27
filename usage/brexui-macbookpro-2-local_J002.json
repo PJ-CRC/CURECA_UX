@@ -1,0 +1,28 @@
+{
+  "id": "brexui-macbookpro-2-local_J002",
+  "kind": "work",
+  "reqId": "",
+  "reqType": "",
+  "team": "stagora",
+  "at": "2026-11-27T16:39:48+09:00",
+  "from": "2026-11-27T16:38:26+09:00",
+  "by": "유병규",
+  "doneBy": "Claude",
+  "pc": "BREXui-MacBookPro-2.local",
+  "fileKey": "",
+  "fileName": "",
+  "page": "",
+  "frame": "",
+  "nodeId": "",
+  "text": "연관 항목 찾기: STAgora 작업규칙 (J002)",
+  "models": {
+    "claude-opus-5-5": 14
+  },
+  "calls": 14,
+  "input": 27,
+  "cacheWrite": 60514,
+  "cacheRead": 745981,
+  "output": 9811,
+  "total": 816333,
+  "usd": 0.8296
+}
