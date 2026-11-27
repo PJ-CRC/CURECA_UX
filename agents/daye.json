@@ -1,5 +1,5 @@
 {
-  "reportAt": "2026-11-27T12:38:14+09:00",
+  "reportAt": "2026-11-27T13:08:07+09:00",
   "pc": "DAYE",
   "slug": "daye",
   "user": "정다예",
@@ -8,7 +8,7 @@
   "alive": false,
   "status": "dead",
   "msg": "요청을 기다리는 중",
-  "statusAt": "2026-11-27T11:39:58+09:00",
+  "statusAt": "2026-11-27T12:38:37+09:00",
   "claude": "따로 설치",
   "claudeWay": "app",
   "autoWatch": true,
