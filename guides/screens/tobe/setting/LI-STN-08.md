@@ -161,7 +161,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 | Reset | 화면 1-4 | LID-EVT-022 |
 | Search | 화면 1-4 | LID-STN-016 |
 | Items | 화면 2 | LID-STN-006 |
-| {n} items | 디스크립션 2 (n = 10) | |
+| {n} items | 디스크립션 2 (n = 10) | LID-IVT-151 |
 | Product Name | 화면 4 | LID-STN-147 |
 | Version | 화면 4 | LID-INF-008 |
 | Registered Date/Time | 화면 4 | LID-STN-372 |

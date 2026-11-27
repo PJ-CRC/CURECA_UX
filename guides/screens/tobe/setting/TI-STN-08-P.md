@@ -190,7 +190,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 | 화면 표기 글자 (영어) | 출처 | Language ID |
 | --- | --- | --- |
 | File details | 화면 3 · 케이스 Case 1-1 ~ 4-1 | LID-STN-384 |
-| File Info | 화면 3 · 케이스 Case 1-1 ~ 4-1 | |
+| File Info | 화면 3 · 케이스 Case 1-1 ~ 4-1 | LID-STN-438 |
 | File name | 화면 3 · 케이스 Case 1-1 | LID-STN-361 |
 | File type | 화면 3 · 케이스 Case 1-1 | LID-STN-363 |
 | File Version | 화면 3 · 케이스 Case 1-1 | LID-STN-385 |
@@ -208,7 +208,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 | Test Group ID | 화면 3 · 케이스 Case 1-1 · 4-1 | LID-STN-389 |
 | Test Group Name | 케이스 Case 1-1 | LID-STN-390 |
 | Test Group Code | 화면 3 · 케이스 Case 1-1 · 4-1 | LID-STN-391 |
-| Test Target Selectable | 화면 3 · 케이스 Case 4-1 | |
+| Test Target Selectable | 화면 3 · 케이스 Case 4-1 | LID-STN-439 |
 | Test Target Names ({n}) | 화면 3 · 케이스 Case 4-1 (n = 7) | LID-STN-428 |
 | Sample Type Mapping Info ({n}) | 화면 3 · 케이스 Case 4-1 (n = 4) | LID-STN-429 |
 | Sample Type ID | 화면 3 · 케이스 Case 1-1 · 4-1 | LID-STN-393 |
@@ -267,7 +267,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 | Reset | 화면 배경 목록 (TI-STN-08) | LID-EVT-022 |
 | Search | 화면 배경 목록 (TI-STN-08) | LID-STN-016 |
 | Items | 화면 배경 목록 (TI-STN-08) | LID-STN-006 |
-| {n} items | 화면 배경 목록 (TI-STN-08) (n = 10) | |
+| {n} items | 화면 배경 목록 (TI-STN-08) (n = 10) | LID-IVT-151 |
 | Version | 화면 배경 목록 (TI-STN-08) | LID-INF-008 |
 | Created Date/Time | 화면 배경 목록 (TI-STN-08) | LID-STN-373 |
 | Details | 화면 배경 목록 (TI-STN-08) | LID-STN-012 |
