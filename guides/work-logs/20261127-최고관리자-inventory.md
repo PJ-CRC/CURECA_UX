@@ -514,6 +514,7 @@ started: 2026-11-27
 | 변경 | TI-IVT-03-T · TI-IVT-04-T 디스크립션 5 Tooltip (언어셋 DB와 띄어쓰기만 다름, 화면 기준) | LID-RUN-054 · LID-RUN-055 · LID-RUN-056 | Sufficient (enough stock) → Sufficient(enough stock) · Low (partial shortage) → Low(partial shortage) · Insufficient (no stock) → Insufficient(no stock) | O | 없음 |
 | 신규 | TI-IVT-04-T 화면 1 (C93, `# Sample Preparation` → `#Sample Preparation`) | | #Sample Preparation | - (검사 단계명 미번역, LID-SPT-024와 같음) | 없음 |
 | 신규 | TI-IVT-05-T 화면 2-1 · 3-1 (C78, PlateSealing → Plate Sealing) | LID-SPT-032 | Plate Sealing | - (Module 이름 미번역) | 있음 (event-history 메뉴 파일) |
+| 신규 | TI-IVT-02-T 화면 1 Plate Sealing 열 (C94, 요청자 확인 12의 답, Anyplex™II → Anyplex™ II. 변경 전 글자는 언어셋 DB에 없음) | | Anyplex™ II STI-12 Detection | - (품목명 미번역) | 공통에 있음 (LID-COM-TRM-101) |
 | 변경 | TI-IVT-06-T 화면 1 (C22) | LID-IVT-035 | All Item Types → All | O | 있음 (LID-EVT-003) |
 | 신규 | TI-IVT-06-T 화면 2 (C82, Reagents → Reagent. Reagents는 Tab에 남아 신규) | LID-RUN-062 | Reagent | O | 있음 |
 | 신규 | TI-IVT-06-T 화면 2 Unit (C4 · C83, Plate Sealing → Cold Storage · PCR Setup → PCR Plate Storage. 변경 전 글자는 Module 칸에 남아 신규) | | Cold Storage · PCR Plate Storage | - (Unit 이름 미번역) | 공통에 있음 (LID-COM-TRM-043 · 041) |
@@ -542,7 +543,7 @@ started: 2026-11-27
 | DB 맞춤 (제거) | TI-IVT-04-T (화면에 없음) | LID-RUN-062 | Reagent | - (제거) | 있음 |
 | DB 맞춤 (제거) | TI-IVT-05-T (화면에 없음) | LID-EVT-012 | Module | - (제거) | 있음 |
 
-- 정하지 않은 글자 셋은 "요청자 확인" 10 ~ 12로 물음: TI-IVT-01-T `Fill level`(언어셋 DB LID-RUN-060 `Fill Level(%)`), TI-IVT-03-T · 04-T `Status is determined by run availability`(LID-RUN-053은 끝에 마침표), TI-IVT-02-T `Anyplex™II STI-12 Detection`(공통 LID-COM-TRM-101은 `Anyplex™ II`)
+- 정하지 않은 글자 셋은 "요청자 확인" 10 ~ 12로 물어 답대로 정함(2026-11-27): TI-IVT-01-T `Fill level`은 LID-RUN-060과 같은 글자(Language ID 채움, CID 칸에 이미 있어 언어셋 DB는 그대로), TI-IVT-03-T · 04-T `Status is determined by run availability`는 LID-RUN-053과 같은 글자(Language ID 채움, 그대로), TI-IVT-02-T 품목 이름은 화면을 공통대로 `Anyplex™ II STI-12 Detection`으로 고침(C94)
 
 **새로 넣을 줄**
 
