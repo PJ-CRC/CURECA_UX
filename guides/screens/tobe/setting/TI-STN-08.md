@@ -210,7 +210,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=36
 | Reset | 화면 1-4 | LID-EVT-022 |
 | Search | 화면 1-4 | LID-STN-016 |
 | Items | 화면 2 | LID-STN-006 |
-| {n} items | 화면 2 · 디스크립션 2 (n = 10 · 30 · 50 · 100) | |
+| {n} items | 화면 2 · 디스크립션 2 (n = 10 · 30 · 50 · 100) | LID-IVT-151 |
 | Delete | 화면 3 | LID-STN-019 |
 | Import | 화면 3 | LID-TMG-035 |
 | Product Name | 화면 4 | LID-STN-147 |
