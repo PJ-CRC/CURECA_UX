@@ -221,18 +221,18 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=39
 
 | 화면 표기 글자 (영어) | 출처 | Language ID |
 | --- | --- | --- |
-| Inventory | 화면 제목 | |
-| Summary · Overview · Consumables · Reagents · Waste Bin/Bottle · Usage History | 화면 Tab | |
-| Insufficient · Low · Sufficient | 화면 1 · 2-6 | |
-| Refresh | 화면 4 | |
-| Remaining Qty · Required Qty · Status | 화면 2 열 제목 | |
-| Location · Capacity | 화면 3 열 제목 | |
+| Inventory | 화면 제목 | LID-IVT-001 |
+| Summary · Overview · Consumables · Reagents · Waste Bin/Bottle · Usage History | 화면 Tab | LID-IVT-002 · LID-IVT-003 · LID-RUN-044 · LID-SPT-043 · LID-IVT-053 · LID-IVT-004 |
+| Insufficient · Low · Sufficient | 화면 1 · 2-6 | LID-DAS-028 · LID-DAS-029 · LID-RUN-043 |
+| Refresh | 화면 4 | LID-RUN-033 |
+| Remaining Qty · Required Qty · Status | 화면 2 열 제목 | LID-RUN-030 · LID-RUN-031 · LID-EVT-017 |
+| Location · Capacity | 화면 3 열 제목 | LID-RUN-050 · LID-IVT-022 |
 | Item details | 화면 3-7 | |
-| Plates · Tips · Tubes | 화면 2-1 카드 제목 | |
-| 96-DWP · PCR Plate · 1000 μL Tip · 300 μL Tip · Wide Bore Tip · Empty Standard Tube · MM Tube · Sealing Film · Stool Swab | 화면 2-2 · 2-3 · 3-1 (품목 이름) | |
-| Consumable Storage · PCR Setup | 화면 3-2 (Module 이름) | |
-| Trolley · 1000 μL Tip Storage · 300 μL Tip Storage | 화면 3-2 (Unit 이름) | |
+| Plates · Tips · Tubes | 화면 2-1 카드 제목 | LID-RUN-045 · LID-RUN-046 · LID-RUN-047 |
+| 96-DWP · PCR Plate · 1000 μL Tip · 300 μL Tip · Wide Bore Tip · Empty Standard Tube · MM Tube · Sealing Film · Stool Swab | 화면 2-2 · 2-3 · 3-1 (품목 이름) | LID-SPT-020 · LID-SPT-031 · - · - · - · - · - · - · - |
+| Consumable Storage · PCR Setup | 화면 3-2 (Module 이름) | LID-EVT-049 · LID-SPT-026 |
+| Trolley · 1000 μL Tip Storage · 300 μL Tip Storage | 화면 3-2 (Unit 이름) | LID-EVT-056 · - · LID-EVT-064 |
 | {n} ea · {n} ea ({m} rack) · {n} ea ({m} racks) · {n} ea ({m} socket) · {n} ea ({m} sockets) · {n} DWPs · {n} racks · {n} sets | 화면 2-4 · 2-5 · 3-4 · 3-5 · 3-6 (n · m = 수량) | |
-| Capacity · Shown only for fixed-capacity storage. | 디스크립션 5 (Tooltip) | |
-| Required Qty · Displays the additional quantity required based on current inventory. | 디스크립션 5 (Tooltip) | |
-| Status · Status is determined by run availability · Sufficient(enough stock) · Low(partial shortage) · Insufficient(no stock) | 디스크립션 5 (Tooltip) | |
+| Capacity · Shown only for fixed-capacity storage. | 디스크립션 5 (Tooltip) | LID-IVT-022 · LID-RUN-052 |
+| Required Qty · Displays the additional quantity required based on current inventory. | 디스크립션 5 (Tooltip) | LID-RUN-031 · LID-RUN-032 |
+| Status · Status is determined by run availability · Sufficient(enough stock) · Low(partial shortage) · Insufficient(no stock) | 디스크립션 5 (Tooltip) | LID-EVT-017 · - · - · - · - |
