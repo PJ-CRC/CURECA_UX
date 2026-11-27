@@ -29,7 +29,7 @@ started: 2026-11-27
 | 4. 수정 · 확인 | | | |
 | 5. 완료 | | | |
 
-이어서 작업할 곳: 3단계 · 화면 MD 8개 씀, 자리 잡음 (Inventory_tobe: 시스템 구분 3903:7483 · 기획 진행 3903:7485 · 섹션 TI-IVT-01-T 3903:7487 ~ 06-T 3903:7494), TI-IVT-01-T부터 그릴 차례 (다시 읽을 곳: 3단계 `flow/3-design-case3.md` 흐름 · 3-4 · 케이스 3 표, `flow/3-design.md` 공통 3 · 공통 4 · 공통 5 / 작업 기록 "요건 목록" 요건 1 · "설계" 화면별 작업 · "질문 대기" · "변경 확인", 화면 MD `screens/tobe/inventory/`)
+이어서 작업할 곳: 3단계 · TI-IVT-01-T 그림 (기획 3905:21824 · 패널 3905:22487 · /Case 3914:8112), TI-IVT-02-T부터 그릴 차례 (다시 읽을 곳: 3단계 `flow/3-design-case3.md` 흐름 · 3-4 · 케이스 3 표, `flow/3-design.md` 공통 3 · 공통 5 / 작업 기록 "설계" 화면별 작업 · 컴포넌트 없이 그린 요소 · "질문 대기" · "변경 확인", 화면 MD `screens/tobe/inventory/TI-IVT-02-T.md`)
 
 ## 요청
 <!-- 1단계 절차 1번. 요청 글 한두 줄과 출처, 공유 파일 (아래 "항목마다 적는 법") -->
@@ -320,7 +320,7 @@ started: 2026-11-27
 ### 화면별 작업
 | T · L 한 쌍 | 따른 케이스 | 요건 번호 | 섹션 | 기획 프레임 | 상태 · 케이스 프레임 |
 | --- | --- | --- | --- | --- | --- |
-| TI-IVT-01-T / LI-IVT-01-T (X) | 3 | 1 | | | |
+| TI-IVT-01-T / LI-IVT-01-T (X) | 3 | 1 | [3903:7487](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3903-7487) | [3905:21824](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3905-21824) | 그림 (2026-11-27) · [TI-IVT-01-T/Case 3914:8112](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3914-8112) |
 | TI-IVT-02-T / LI-IVT-02-T (X) | 3 | 1 | | | |
 | TI-IVT-03-T / LI-IVT-03-T (X) | 3 | 1 | | | |
 | TI-IVT-03-T-P / LI-IVT-03-T-P (X) | 3 | 1 | | | |
@@ -334,6 +334,11 @@ started: 2026-11-27
 ### 컴포넌트 없이 그린 요소
 | 요소 이름 (종류) | 하는 일 | 쓴 곳 (CID · 디스크립션 번호) | 어디서 (후보 ID / 신규로 만듦 / 기존 화면에서 따옴) | 원본 요약 (기존 화면에서 따옴만: 크기 · 모서리 · 줄 × 칸 · 도형 · 글자 · 인스턴스) | Figma 링크 |
 | --- | --- | --- | --- | --- | --- |
+| 영역 바탕 · 영역 틀 (바탕 도형) | 콘텐츠 영역 · Inventory status · Waste Bin/Bottle Status 영역 바탕 | TI-IVT-01-T #1 · #3 | 기존 화면에서 따옴 | 원본 노드 복제(같은 값): Rectangle 1701×1188 · 1661×529 · 1661×405, 모서리 · 색 원본 그대로 | [3905:21824](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3905-21824) |
+| 영역 제목 줄 (글 · Info 아이콘 · 버튼) | Inventory status · Waste Bin/Bottle Status 제목 줄 | TI-IVT-01-T #1 · #1-7 · #3 · #3-5 · #4 | 기존 화면에서 따옴 (안의 Refresh는 Common UX Square로 바꿈) | 원본 노드 복제: 1661×48 / 1661×48, 글 1, 아이콘 1, 인스턴스 1 | [3905:21824](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3905-21824) |
+| 요약 카드 (상태 요약 카드) | Insufficient · Low / Full · Almost Full 건수 요약 | TI-IVT-01-T #1-1 · #3-1 | 기존 화면에서 따옴 (Card/List로 바꿀 여지: 제목 · 값 줄) | 원본 노드 복제: 431×96 ×2, 431×78 ×2, 글 3 ~ 4, 상태 아이콘 1 | [3905:21824](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3905-21824) |
+| 부족 품목 줄 · 폐기함 줄 (목록 행 카드) | 품목 · 위치 · Remaining · Required Qty · 상태 아이콘 / 폐기함 · Fill level · 상태 아이콘 | TI-IVT-01-T #1-2 ~ #1-5 · #3-2 ~ #3-4 | 기존 화면에서 따옴 (Card/Table로 바꿀 여지: 값 칸 · Status 아이콘) | 원본 노드 복제: 805×82 ×6, 528×82 ×6, 글 6 ~ 7, 상태 아이콘 1 | [3905:21824](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3905-21824) |
+| 케이스 조각 (Inventory status 영역) | 건 수 · 미구동 · 부족 없음 모습 | TI-IVT-01-T Case 1 ~ 3 | 기존 화면에서 따옴 | 원본 케이스 조각 복제: Rectangle 1661×392 + 줄 5, Group 1661×314 ×2 | [3914:8112](https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3914-8112) |
 
 ### 근거로 풀린 것
 | 질문 | 푼 근거 |
