@@ -4,7 +4,7 @@
   "reqId": "R002",
   "reqType": "요청",
   "team": "cureca",
-  "at": "2026-11-27T15:20:23+09:00",
+  "at": "2026-11-27T15:32:22+09:00",
   "from": "2026-11-27T10:06:21+09:00",
   "by": "서보경",
   "doneBy": "Claude",
@@ -16,14 +16,14 @@
   "nodeId": "",
   "text": "LIS setting 메뉴 옮겨줘\n기존 작업페이지: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3543-567478&t=x241oPtWNq1qkgw5-1",
   "models": {
-    "claude-opus-5-5": 304,
+    "claude-opus-5-5": 316,
     "<synthetic>": 1
   },
-  "calls": 305,
-  "input": 595,
-  "cacheWrite": 991772,
-  "cacheRead": 67380246,
-  "output": 327002,
-  "total": 68699615,
-  "usd": 27.9526
+  "calls": 317,
+  "input": 620,
+  "cacheWrite": 1028801,
+  "cacheRead": 70574751,
+  "output": 340851,
+  "total": 71945023,
+  "usd": 29.1649
 }
