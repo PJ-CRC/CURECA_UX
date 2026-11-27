@@ -72,7 +72,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=38
 
 **4  T-IOS Network (Push Mode Only)**
 - Order Reception Mode에서 ‘Push Mode’를 선택할 경우만 설정 가능
-- ‘Query Mode’를 선택할 경우 Port 영역의 Text Input 입력값이 제거되며 Text Input Disabled 처리
+- ‘Query Mode’를 선택할 경우 Port 영역의 Text Input 입력값이 제거되며 Text Input Disabled 처리 (Text Input에 None 노출)
 - 다시 Order Reception Mode에서 ‘Query Mode’에서 ‘Push Mode’를 선택할 경우, Port 영역의 Text Input이 활성화되며 Default 값 20200 자동 기입
 - Port는 필수값이 아니며 입력 형식 · 범위 검사 없음
 - 공통 UX 참고 : COMM-5-t
