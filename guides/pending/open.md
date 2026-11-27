@@ -154,7 +154,6 @@
 | TI-IVT-01-T-R04 | Inventory | Inventory Summary (TI-IVT-01-T) | 기준 자료 변경 | 3-5 툴팁 "prioritized by Full and Warning status" | Full and Almost Full (Warning은 Waste Bin/Bottle Status 값이 아님) | `glossary/status-values.csv` | 대기 |
 | TI-IVT-01-T-R05 | Inventory | Inventory Summary (TI-IVT-01-T) | 기준 자료 변경 | 3-4 "Waste Status Icon" | Waste Bin/Bottle Status Icon | `glossary/terms.csv` | 대기 |
 | TI-IVT-01-T-R06 | Inventory | Inventory Summary (TI-IVT-01-T) | 점검 발견 | 1-7 툴팁 문구가 4개 나열됨 (옛 문구와 새 문구가 섞인 것으로 보임) | 현재 문구 하나만 남김 (v2.1.14 "Tooltip 내용 변경"). LI-IVT-01-T에는 앞의 2개에 취소선이 있음 | 버전 메모, LI-IVT-01-T | 대기 |
-| TI-IVT-01-T-R07 | Inventory | Inventory Summary (TI-IVT-01-T) | 점검 발견 | 번호 2 없음 (1 → 3) | 번호 정리 | 디스크립션 | 대기 |
 | TI-IVT-01-T-R08 | Inventory | Inventory Summary (TI-IVT-01-T) | 기준 자료 변경 | 0 "사용여부가 '사용'인 모듈" | Enabled인 Module | POL-EQP-009 | 대기 |
 | TI-IVT-01-T-R09 | Inventory | Inventory Summary (TI-IVT-01-T) | 기준 자료 변경 | 화면 "FlexibleExtraction(1)", "WasteBin", "PCR Setup(1)" 등 | Flexible Extraction (1), Waste Bin, PCR Setup (1) | 이름 (번호) 띄어쓰기, `glossary/terms.csv` | 대기 |
 | TI-IVT-01-T-R10 | Inventory | Inventory Summary (TI-IVT-01-T) | 기준 자료 변경 | 1 "통합 상태 Run O / X" | 장비 통합 상태 Running 여부로 표기 | `glossary/terms.csv` 장비 통합 상태 | 대기 |
@@ -193,7 +192,6 @@
 | TI-IVT-04-T-P-R08 | Inventory | Reagent Item details Popup (TI-IVT-04-T-P) | 점검 발견 | 예시 줄에 Inbound Date, Expiration Date 값이 없음 | 날짜 예시를 넣음 | 화면 글자 | 대기 |
 | TI-IVT-04-T-R01 | Inventory | Inventory Reagent (TI-IVT-04-T) | 기준 자료 변경 | Reagent에 재고 상태(Sufficient / Low / Insufficient)를 씀. 상태값 표의 재고 상태 대상은 Consumable뿐이었음 | 디스크립션에 넣음: Reagent도 Consumable과 같은 재고 상태(Sufficient, Low, Insufficient)를 씀. 상태값 표 대상을 Consumable / Reagent로 고침 | `glossary/status-values.csv 재고 상태`, POL-INV-003 | 대기 |
 | TI-IVT-04-T-R02 | Inventory | Inventory Reagent (TI-IVT-04-T) | 기준 자료 변경 | 2-6 Insufficient "재고가 0인 경우", Low "1개 이상 부족한 경우", 1 "sufficient" | TI-IVT-03-T 반영 대기 목록 1과 같이, Sufficient | `glossary/status-values.csv 재고 상태`, POL-INV-003 | 대기 |
-| TI-IVT-04-T-R03 | Inventory | Inventory Reagent (TI-IVT-04-T) | 점검 발견 | 번호 2-3이 두 번, 2-2 없음. Capacity가 3-3 안에 번호 없이 들어 있고 3-4 없음 | 번호 정리 (Capacity를 3-4로) | 디스크립션 | 대기 |
 | TI-IVT-04-T-R04 | Inventory | Inventory Reagent (TI-IVT-04-T) | 점검 발견 | 2-5 Required Qty 절 첫 문장 "좌측 영역의 Remaining Qty는…", 예외 처리 "검사 진행 중이 아닐 경우" (2-6·3-6은 "위의 상황이 아닐 경우") | Required Qty, 예외 처리 문장 통일 | 디스크립션 | 대기 |
 | TI-IVT-04-T-R05 | Inventory | Inventory Reagent (TI-IVT-04-T) | 점검 발견 | 단위 혼용: 2-5 "10rxns", 3-6 "10T", 화면 "200T (2 racks)" | rxns로 통일 (COMM-4-b) | 디스크립션 | 대기 |
 | TI-IVT-04-T-R06 | Inventory | Inventory Reagent (TI-IVT-04-T) | 점검 발견 | 2-4·3-5 "표기 방식: 0번 디스크립션 참고" (0의 표기 방식은 취소선) | Common UX COMM-4-b 참고 | Figma 취소선 | 대기 |
