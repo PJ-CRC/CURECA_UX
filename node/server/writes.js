@@ -67,7 +67,7 @@ module.exports = function register(on, h) {
       att.push('attach/' + path.basename(dst));
     }
     saveHistEntry(name, { id: name, kind: 'request', team: core.itemTeam(r), status: nn(r.status), at: nn(r.updatedAt), createdAt: nn(r.createdAt), by: nn(r.author), doneBy: nn(r.updatedBy), pc: C.pcName,
-      reqId: nn(r.id), fileKey: nn(r.fileKey), fileName: nn(r.fileName), page: nn(r.page), frame: nn(r.frame), nodeId: nn(r.nodeId),
+      reqId: nn(r.id), fileKey: nn(r.fileKey), fileName: nn(r.fileName), page: nn(r.page), pageId: nn(r.pageId), frame: nn(r.frame), nodeId: nn(r.nodeId),
       type: nn(r.type), layout: nn(r.layout), text: nn(r.text), note: nn(r.note), shot, shots, images: att,
       frames: core.arr(r.frames).filter(Boolean), marks: core.arr(r.marks).filter(Boolean), ask: r.ask === undefined ? null : r.ask, replies: core.arr(r.replies).filter(Boolean), raws: core.arr(r.raws).filter(Boolean), work: nn(r.work), handoff: r.handoff || null,
       uid: nn(r.uid) || core.reqUid(C.pcSlug, nn(r.id)), case: nn(r.case), takeover: r.takeover || null });
@@ -97,6 +97,15 @@ module.exports = function register(on, h) {
       out.push(Object.assign({ file: 'workbench/req_images/' + f, small: sf ? 'workbench/req_images/' + sf : '', name: nm, size: fs.statSync(path.join(attachDir, f)).size }, tf ? { text: 'workbench/req_images/' + tf } : {}));
     }
     return out;
+  }
+  // 페이지 이름 → 페이지 id(2026-11-27): 요청에 pageId를 남겨 페이지 이름이 바뀌어도 Workbench 「이 페이지」에 보이게.
+  //  Workbench는 pageId를 보내지만 UX 문서 · 이어서 진행 등은 이름만 보내므로 서버가 그 파일 프레임 목록에서 찾는다(없으면 빈 값)
+  function pageIdOf(k, name, given) {
+    if (/^\d+:\d+$/.test(nn(given))) return nn(given);
+    if (!nn(name) || !h.testKey(nn(k))) return '';
+    const cat = core.readJson(path.join(h.projDir(nn(k)), 'catalog.json')) || {};
+    const pg = core.arr(cat.pages).find((p) => p && p.name === nn(name));
+    return pg && /^\d+:\d+$/.test(nn(pg.id)) ? nn(pg.id) : '';
   }
   // 요청 완료 때 Claude가 새로 만든 프레임을 프레임 목록 끝에(Add-CatalogFrames) — 배열 모양이 바뀌지 않게 글자로 끼워 넣는다
   function addCatalogFrames(k, pageName, frames) {
@@ -1531,7 +1540,7 @@ module.exports = function register(on, h) {
         const rid = 'R' + String(n).padStart(3, '0');
         const imgs = saveAttach(rid, b.images);
         // pageId(2026-11-27): 페이지 이름이 바뀌면(Inventory_tobe → Inventory_tobe(진행중)) 이름만으로는 Workbench 「이 페이지」 목록에서 빠졌다
-        const it = { id: rid, uid: core.pcCode() + '-' + rid, team: b.team ? nn(b.team) : T.team, nodeId: nn(b.nodeId), frame: nn(b.frame), page: nn(b.page), pageId: /^\d+:\d+$/.test(nn(b.pageId)) ? nn(b.pageId) : '', fileKey: nn(b.fileKey), fileName: nn(b.fileName),
+        const it = { id: rid, uid: core.pcCode() + '-' + rid, team: b.team ? nn(b.team) : T.team, nodeId: nn(b.nodeId), frame: nn(b.frame), page: nn(b.page), pageId: pageIdOf(b.fileKey, b.page, b.pageId), fileKey: nn(b.fileKey), fileName: nn(b.fileName),
           editable: !!b.editable, type: nn(b.type), priority: nn(b.priority), layout: nn(b.layout), text: txt, status: '대기', note: '', author: nn(b.by), updatedBy: nn(b.by), createdAt: now, updatedAt: now };
         if (imgs.length) it.images = imgs;
         if (pickModel(b.model)) it.model = pickModel(b.model);
@@ -1644,7 +1653,7 @@ module.exports = function register(on, h) {
           imgs.push({ file: 'workbench/req_images/' + f, small: 'workbench/req_images/' + f, name: '이어 받은 첨부 ' + k, size: fs.statSync(path.join(attachDir, f)).size });
         }
         const who = nn(b.by) || core.meName() || '';
-        const it = { id: rid, uid: core.pcCode() + '-' + rid, team: T.team, nodeId: nn(e.nodeId), frame: nn(e.frame), page: nn(e.page), fileKey: nn(e.fileKey), fileName: nn(e.fileName),
+        const it = { id: rid, uid: core.pcCode() + '-' + rid, team: T.team, nodeId: nn(e.nodeId), frame: nn(e.frame), page: nn(e.page), pageId: pageIdOf(e.fileKey, e.page, e.pageId), fileKey: nn(e.fileKey), fileName: nn(e.fileName),
           editable: true, type: nn(e.type), priority: '', layout: nn(e.layout), text: nn(e.text), status: '대기', note: '', author: who, updatedBy: who, createdAt: now, updatedAt: now,
           takeover: { entry: eid, uid: ouid, by: nn(e.by), pc: nn(e.pc), slug, req: nn(e.reqId), status: nn(e.status), at: now } };
         if (['1', '2', '3'].includes(nn(e.case))) it.case = nn(e.case);
