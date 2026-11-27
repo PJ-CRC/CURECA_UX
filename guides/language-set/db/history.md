@@ -3000,3 +3000,14 @@
 | 2026-11-27 |  | LID-IVT-157 | Inventory | TI-IVT-03-T / TI-IVT-04-T | 변경 (ID 변경) | Sufficient (enough stock) | Sufficient(enough stock) | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 (LID-RUN-054에서 이 화면을 뺌) | Claude (최고관리자 작업) |
 | 2026-11-27 |  | LID-IVT-158 | Inventory | TI-IVT-03-T / TI-IVT-04-T | 변경 (ID 변경) | Low (partial shortage) | Low(partial shortage) | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 (LID-RUN-055에서 이 화면을 뺌) | Claude (최고관리자 작업) |
 | 2026-11-27 |  | LID-IVT-159 | Inventory | TI-IVT-03-T / TI-IVT-04-T | 변경 (ID 변경) | Insufficient (no stock) | Insufficient(no stock) | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 (LID-RUN-056에서 이 화면을 뺌) | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-151 | Assay Pack Setting | TI-STN-08 / LI-STN-08 / TI-STN-08-P | 재사용 추가 |  | {n} items | 작업 기록 20261126-최고관리자-assay-pack · 5단계 언어셋 반영 (Workbench R011) (DB 맞춤 (추가), 그 사이 Inventory에 생긴 글자라 ref) | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-STN-438 | Assay Pack Setting | TI-STN-08-P / LI-STN-08-P | 추가 |  | File Info | 작업 기록 20261126-최고관리자-assay-pack · 5단계 언어셋 반영 (Workbench R011) | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-STN-439 | Assay Pack Setting | TI-STN-08-P / LI-STN-08-P | 추가 |  | Test Target Selectable | 작업 기록 20261126-최고관리자-assay-pack · 5단계 언어셋 반영 (Workbench R011) | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-STN-440 | Assay Pack Setting | TI-STN-08-01 | 추가 |  | json · Multiple files | 작업 기록 20261126-최고관리자-assay-pack · 5단계 언어셋 반영 (Workbench R011) | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-STN-441 | Assay Pack Setting | TI-STN-08-01 | 추가 |  | {n} MB | 작업 기록 20261126-최고관리자-assay-pack · 5단계 언어셋 반영 (Workbench R011) | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-STN-006 | Assay Pack Setting | TI-STN-08 | 재사용 추가 |  | Items | 작업 기록 20261126-최고관리자-assay-pack · 5단계 언어셋 반영 (Workbench R011) (DB 맞춤 (CID 추가)) | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-SPT-033 | Assay Pack Setting | TI-STN-08 / LI-STN-08 | 재사용 추가 |  | PCR | 작업 기록 20261126-최고관리자-assay-pack · 5단계 언어셋 반영 (Workbench R011) (DB 맞춤 (CID 추가), 이 메뉴 파일에 ref 줄) | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-STN-361 | Assay Pack Setting | TI-STN-08-P | 재사용 추가 |  | File name | 작업 기록 20261126-최고관리자-assay-pack · 5단계 언어셋 반영 (Workbench R011) (DB 맞춤 (CID 추가)) | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-STN-363 | Assay Pack Setting | TI-STN-08-P | 재사용 추가 |  | File type | 작업 기록 20261126-최고관리자-assay-pack · 5단계 언어셋 반영 (Workbench R011) (DB 맞춤 (CID 추가)) | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-TMG-035 | Assay Pack Setting | TI-STN-08-P | 재사용 추가 |  | Import | 작업 기록 20261126-최고관리자-assay-pack · 5단계 언어셋 반영 (Workbench R011) (DB 맞춤 (CID 추가)) | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-STN-021 | Assay Pack Setting | TI-STN-08-01 | 재사용 추가 |  | Cancel | 작업 기록 20261126-최고관리자-assay-pack · 5단계 언어셋 반영 (Workbench R011) (DB 맞춤 (CID 추가), 이 메뉴 파일에 ref 줄) | Claude (최고관리자 작업) |
