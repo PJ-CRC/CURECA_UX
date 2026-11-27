@@ -1,0 +1,28 @@
+{
+  "id": "brex-gram-2_R011",
+  "kind": "request",
+  "reqId": "R011",
+  "reqType": "요청",
+  "team": "cureca",
+  "at": "2026-11-27T14:21:17+09:00",
+  "from": "2026-11-27T14:19:51+09:00",
+  "by": "하승현",
+  "doneBy": "Claude",
+  "pc": "BREX_GRAM_2",
+  "fileKey": "etCQFF3CTf1EA6C79d4BBf",
+  "fileName": "UX AI TEST",
+  "page": "Policy Setting_tobe(test)",
+  "frame": "",
+  "nodeId": "",
+  "text": "우선 위 답변하기 전에, 영문 및 다국어 1701·1706·1703행 변경됐어.\n이거 먼저 반영해줘.",
+  "models": {
+    "claude-opus-5-5": 20
+  },
+  "calls": 20,
+  "input": 40,
+  "cacheWrite": 62983,
+  "cacheRead": 1149768,
+  "output": 10177,
+  "total": 1222968,
+  "usd": 0.9375
+}
