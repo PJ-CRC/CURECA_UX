@@ -69,7 +69,8 @@ module.exports = function register(on, h) {
     saveHistEntry(name, { id: name, kind: 'request', team: core.itemTeam(r), status: nn(r.status), at: nn(r.updatedAt), createdAt: nn(r.createdAt), by: nn(r.author), doneBy: nn(r.updatedBy), pc: C.pcName,
       reqId: nn(r.id), fileKey: nn(r.fileKey), fileName: nn(r.fileName), page: nn(r.page), frame: nn(r.frame), nodeId: nn(r.nodeId),
       type: nn(r.type), layout: nn(r.layout), text: nn(r.text), note: nn(r.note), shot, shots, images: att,
-      frames: core.arr(r.frames).filter(Boolean), marks: core.arr(r.marks).filter(Boolean), ask: r.ask === undefined ? null : r.ask, replies: core.arr(r.replies).filter(Boolean), raws: core.arr(r.raws).filter(Boolean), work: nn(r.work), handoff: r.handoff || null });
+      frames: core.arr(r.frames).filter(Boolean), marks: core.arr(r.marks).filter(Boolean), ask: r.ask === undefined ? null : r.ask, replies: core.arr(r.replies).filter(Boolean), raws: core.arr(r.raws).filter(Boolean), work: nn(r.work), handoff: r.handoff || null,
+      uid: nn(r.uid) || core.reqUid(C.pcSlug, nn(r.id)), case: nn(r.case), takeover: r.takeover || null });
   }
   function histRemove(id) {
     const name = C.pcSlug + '_' + nn(id);
@@ -125,7 +126,8 @@ module.exports = function register(on, h) {
     setTimeout(() => { usage.record({ reqId: id }).then((o) => console.log(`  [${core.now()}] 사용량 ${o}`)).catch((e) => console.log(`  [${core.now()}] 사용량 기록 실패 ${id}: ${e.message}`)); }, 1500);
   }
   // 「진행 중」 한 구간을 runs에 쌓는다(최근 20개)
-  function closeRun(it, at) { it.runs = core.arr(it.runs).filter(Boolean).concat([{ from: nn(it.startedAt), to: at }]).slice(-20); }
+  // 2026-11-27: 예전에는 최근 20개만 남겨, 질문이 많은 요청(R001 답 29번)은 앞 구간이 빠져 사용량이 절반쯤만 잡혔다 → 500개까지
+  function closeRun(it, at) { it.runs = core.arr(it.runs).filter(Boolean).concat([{ from: nn(it.startedAt), to: at }]).slice(-500); }
   // 토큰으로 다시 캡처한 뒤 이력의 캡처를 새 것으로(2026-11-13 점검 F3): 완료 때 이력에 붙인 캡처는 다시 받기 전 그림이었다
   function histRefresh(id) {
     const it = core.arr((core.readJson(C.reqFile) || {}).items).find((x) => x && x.id === id);
@@ -136,26 +138,48 @@ module.exports = function register(on, h) {
   function handoffTick() {
     const r = core.readJson(C.reqFile); if (!r) return;
     const items = core.arr(r.items).filter(Boolean);
-    const mine = items.filter((x) => x.work && nn(x.status) === '보류' && !x.stopped);
-    if (!mine.length) return;
-    let names = []; try { names = fs.readdirSync(C.histEntries).filter((n) => n.endsWith('.json') && !n.startsWith(C.pcSlug + '_')); } catch (e) { return; }
-    const ents = names.map((n) => core.readJson(path.join(C.histEntries, n))).filter((e) => e && !core.preReset(e) && e.kind === 'request' && e.work);
-    const now = core.now(); let changed = false;
-    for (const x of mine) {
+    let changed = false;
+    // 고유 ID가 없는 예전 요청에 붙인다(2026-11-27, 한 번)
+    for (const x of items) if (!x.uid && x.id) { x.uid = core.pcCode() + '-' + x.id; changed = true; }
+    const save = () => { if (changed) { r.items = items; r.version = (parseInt(r.version, 10) || 0) + 1; core.writeJson(C.reqFile, r); } };
+    const open = items.filter((x) => !x.stopped && (nn(x.status) === '보류' || nn(x.status) === '대기'));
+    if (!open.length) return save();
+    let names = []; try { names = fs.readdirSync(C.histEntries).filter((n) => n.endsWith('.json') && !n.startsWith(C.pcSlug + '_')); } catch (e) { return save(); }
+    const all = names.map((n) => core.readJson(path.join(C.histEntries, n))).filter((e) => e && !core.preReset(e) && e.kind === 'request');
+    const now = core.now();
+    // 1) 이어서 진행(2026-11-27): 다른 PC가 변경 이력에서 내 요청을 골라 이어 받음 — 「대기」였어도 「보류」로(내 Claude가 같이 처리하지 않게), 그 요청이 끝나면 내 요청도 완료
+    const took = {};
+    for (const x of open) {
+      const o = all.filter((e) => e.takeover && e.takeover.slug === C.pcSlug && e.takeover.req === x.id && core.itemTeam(e) === core.itemTeam(x))
+        .sort((a, b) => String(b.at || '').localeCompare(String(a.at || '')))[0];
+      if (!o) continue;
+      took[x.id] = 1;
+      const ho = { by: nn(o.by), pc: nn(o.pc), req: nn(o.reqId), uid: nn(o.uid), status: nn(o.status), at: nn(o.at), take: true };
+      if (nn(o.status) === '완료') {
+        x.status = '완료'; x.ask = null; x.handoff = ho; x.updatedAt = now; x.updatedBy = ho.by;
+        x.note = `이어 받아 끝남 — ${ho.by}(${ho.pc})가 ${ho.uid || ho.req}로 이어 받아 마쳤습니다.` + (x.note ? '\n' + x.note : '');
+        histFromRequest(x); changed = true;
+      } else if (!x.handoff || x.handoff.req !== ho.req || x.handoff.status !== ho.status || x.handoff.at !== ho.at || nn(x.status) !== '보류') {
+        x.handoff = ho; x.ask = null; x.status = '보류'; x.updatedAt = now; histFromRequest(x); changed = true;
+      }
+    }
+    // 2) 같은 작업 기록(work)을 이어 감(2026-11-18): 「보류」만
+    const ents = all.filter((e) => e.work);
+    for (const x of open.filter((y) => y.work && nn(y.status) === '보류' && !took[y.id])) {
       const team = core.itemTeam(x);
       const o = ents.filter((e) => e.work === x.work && core.itemTeam(e) === team && String(e.createdAt || '') > String(x.updatedAt || '')).sort((a, b) => String(b.at || '').localeCompare(String(a.at || '')))[0];
       if (!o) continue;
-      const ho = { by: nn(o.by), pc: nn(o.pc), req: nn(o.reqId), status: nn(o.status), at: nn(o.at) };
+      const ho = { by: nn(o.by), pc: nn(o.pc), req: nn(o.reqId), uid: nn(o.uid), status: nn(o.status), at: nn(o.at) };
       let st = ''; try { const t = String(core.readText(path.join(core.teamCtx(team).guideRoot, 'work-logs', x.work + '.md')) || ''); st = ((/^---[\s\S]*?^status:\s*(\S+)/m.exec(t)) || [])[1] || ''; } catch (e) {}
       if (/끝남/.test(st)) {
         x.status = '완료'; x.ask = null; x.handoff = ho; x.updatedAt = now; x.updatedBy = ho.by;
-        x.note = `이어 받아 끝남 — ${ho.by}(${ho.pc}) ${ho.req}에서 작업 기록 「${x.work}」을 마쳤습니다.` + (x.note ? '\n' + x.note : '');
+        x.note = `이어 받아 끝남 — ${ho.by}(${ho.pc}) ${ho.uid || ho.req}에서 작업 기록 「${x.work}」을 마쳤습니다.` + (x.note ? '\n' + x.note : '');
         histFromRequest(x); changed = true;
       } else if (!x.handoff || x.handoff.req !== ho.req || x.handoff.status !== ho.status || x.handoff.at !== ho.at) {
         x.handoff = ho; x.ask = null; histFromRequest(x); changed = true;
       }
     }
-    if (changed) { r.items = items; r.version = (parseInt(r.version, 10) || 0) + 1; core.writeJson(C.reqFile, r); }
+    save();
   }
   /* ── 작업 내역 초기화(2026-11-24): 공유 신호(.history/config/reset.json, core.resetInfo) ──
      resetLocal: 이 PC의 요청 · 작업 목록에서 초기화 시각 앞의 것을 비운다(PC마다 한 번, workbench/.reset_done.json에 기록).
@@ -462,7 +486,7 @@ module.exports = function register(on, h) {
         // 작업 사용량 자동 기록(2026-11-26): 「진행 중」 구간(runs)을 적어 두고, 「진행 중」을 벗어나면 서버가 남긴다(요청 R과 같음). 예전에는 Claude가 POST /api/usage를 직접 불렀다
         if (b.status && nn(b.status) !== nn(hit.status)) {
           if (nn(b.status) === '진행 중') hit.startedAt = now;
-          else if (nn(hit.status) === '진행 중' && hit.startedAt) { hit.runs = core.arr(hit.runs).filter(Boolean).concat([{ from: nn(hit.startedAt), to: now }]).slice(-20); jobUsageId = hit.id; }
+          else if (nn(hit.status) === '진행 중' && hit.startedAt) { hit.runs = core.arr(hit.runs).filter(Boolean).concat([{ from: nn(hit.startedAt), to: now }]).slice(-500); jobUsageId = hit.id; }
         }
         if (b.status) hit.status = nn(b.status);
         if (b.note != null) hit.note = nn(b.note);
@@ -769,6 +793,9 @@ module.exports = function register(on, h) {
 
   // 지금 로그인한 사람 이름(Me-Name)
   const meName = () => { const u = core.currentUser(); return u ? nn(u.name) : nn(core.readSetup().user); };
+  /* 수정본 이름(2026-11-27): 초 단위 시각 + PC라, 한 초에 여러 파일을 저장하면 이름이 같아 앞 수정본의 기록(json)이 덮어써졌다(11-26 21:40 작업규칙 6개 중 4개 이력 빠짐).
+     이미 있으면 뒤에 -2, -3을 붙인다(…_brex-01-2) */
+  const revName = (rd) => { const b = stamp() + '_' + C.pcSlug; let r = b, k = 1; while (core.exists(path.join(rd, r + '.json')) || core.exists(path.join(rd, r)) || core.exists(path.join(rd, r + '.md'))) r = b + '-' + (++k); return r; };
   const stamp = () => { const d = new Date(), p = (x) => String(x).padStart(2, '0'); return `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}`; };
   // 문서 ID: 영문 · 숫자뿐 아니라 알아보기 쉬운 한글 이름도(2026-11-13, 예 「작업규칙_STAgora-작업규칙」). _ 로 시작 · .. 은 안 됨
   const okId = (x) => GID_RE.test(nn(x));
@@ -859,7 +886,7 @@ module.exports = function register(on, h) {
         const bom = /^\uFEFF/.test(String(core.readText(curAbs) || '')) ? '\uFEFF' : '';
         core.writeText(curAbs, bom + md);
       } else {
-        const rd = path.join(T.guideRoot, gid, 'rev'); saved = stamp() + '_' + C.pcSlug;
+        const rd = path.join(T.guideRoot, gid, 'rev'); saved = revName(rd);
         if (isFiles) core.writeText(path.join(rd, saved, ...file.replace(/\.\.\//g, '_up/').split('/')), md);
         else core.writeText(path.join(rd, saved + '.md'), md);
         h.keepFirst(path.join(T.guideRoot, gid), gm, file); h.writeOrig(h.origPath(path.join(T.guideRoot, gid), gm, file), md);   // 처음 내용을 남기고 원본 = 늘 최종, 수정본은 이력
@@ -883,7 +910,7 @@ module.exports = function register(on, h) {
       if (!okId(gid) || !core.exists(path.join(T.guideRoot, gid, 'meta.json'))) throw new Error('가이드를 찾지 못했습니다: ' + gid);
       if (!md.trim()) throw new Error('가이드 내용이 비어 있습니다.');
       if (md.length > 2000000) throw new Error('가이드 내용이 너무 깁니다.');
-      const rd = path.join(T.guideRoot, gid, 'rev'), rev = stamp() + '_' + C.pcSlug;
+      const rd = path.join(T.guideRoot, gid, 'rev'), rev = revName(rd);
       const gm = core.readJson(path.join(T.guideRoot, gid, 'meta.json')) || {}; let file = '';
       if (gm.format === 'files') {
         file = nn(b.file).replace(/\\/g, '/');
@@ -1478,7 +1505,7 @@ module.exports = function register(on, h) {
         let n = seqNext(items, 'R');
         const rid = 'R' + String(n).padStart(3, '0');
         const imgs = saveAttach(rid, b.images);
-        const it = { id: rid, team: b.team ? nn(b.team) : T.team, nodeId: nn(b.nodeId), frame: nn(b.frame), page: nn(b.page), fileKey: nn(b.fileKey), fileName: nn(b.fileName),
+        const it = { id: rid, uid: core.pcCode() + '-' + rid, team: b.team ? nn(b.team) : T.team, nodeId: nn(b.nodeId), frame: nn(b.frame), page: nn(b.page), fileKey: nn(b.fileKey), fileName: nn(b.fileName),
           editable: !!b.editable, type: nn(b.type), priority: nn(b.priority), layout: nn(b.layout), text: txt, status: '대기', note: '', author: nn(b.by), updatedBy: nn(b.by), createdAt: now, updatedAt: now };
         if (imgs.length) it.images = imgs;
         if (pickModel(b.model)) it.model = pickModel(b.model);
@@ -1566,6 +1593,39 @@ module.exports = function register(on, h) {
         hit.updatedAt = now; hit.updatedBy = who;
         if (prev === '진행 중') { try { const cf = path.join(C.root, 'workbench', '.agent_cancel'); const old = String(core.readText(cf) || ''); core.writeText(cf, (old ? old + '\n' : '') + hit.id); } catch (e) {} }
         histFromRequest(hit); break;
+      }
+      /* 이어서 진행(2026-11-27): 변경 이력에서 같은 팀 다른 PC의 「대기 · 보류」 요청을 골라 이 PC의 새 요청으로 이어 받는다.
+         요청 내용 · 대상 · 케이스 · 작업 기록(work) · 첨부 사본을 옮기고 takeover에 원래 요청을 남긴다. Claude는 원래 요청의 이력(note · 질문과 답)과
+         작업 기록을 읽고 Figma 지금 상태에서 이어 한다(requests.md). 원래 요청은 그 PC의 handoffTick이 「이어 받음」으로 바꾸고, 이 요청이 끝나면 함께 닫는다 */
+      case 'takeover': {
+        const eid = nn(b.entry);
+        if (!/^[a-z0-9-]+_R\d+$/.test(eid)) throw new Error('이어 받을 요청을 찾지 못했습니다.');
+        const slug = eid.replace(/_R\d+$/, '');
+        if (slug === C.pcSlug) throw new Error('이 PC의 요청은 이어 받지 않고 그대로 「다시 진행」하면 됩니다.');
+        const e = core.readJson(path.join(C.histEntries, eid + '.json'));
+        if (!e || e.kind !== 'request' || core.preReset(e)) throw new Error('이어 받을 요청을 찾지 못했습니다: ' + eid);
+        if (core.itemTeam(e) !== T.team) throw new Error('다른 팀의 요청은 이어 받을 수 없습니다.');
+        if (!['대기', '보류'].includes(nn(e.status))) throw new Error(`「${nn(e.status)}」인 요청은 이어 받을 수 없습니다(대기 · 보류만 — 진행 중이면 그 PC에서 멈춘 뒤).`);
+        const dup = items.find((i) => i.takeover && i.takeover.entry === eid && nn(i.status) !== '완료');
+        if (dup) throw new Error(`이미 이 PC에서 이어 받은 요청이 있습니다: ${nn(dup.uid) || dup.id}.`);
+        const n = seqNext(items, 'R'), rid = 'R' + String(n).padStart(3, '0');
+        const ouid = nn(e.uid) || core.reqUid(slug, nn(e.reqId)) || (nn(e.pc) + ' ' + nn(e.reqId));
+        // 첨부: 변경 이력의 줄인 사본(attach/{이름}_n.jpg)을 이 요청 이름으로(원본 PDF · 글은 그 PC에만 있어 옮기지 못한다)
+        const imgs = []; let k = 0;
+        for (const a of core.arr(e.images).filter(Boolean)) {
+          const src = path.join(C.histDir, nn(a)); if (!/^attach\/[^\\/]+\.jpg$/.test(nn(a)) || !core.exists(src)) continue;
+          k++; const f = `${rid}_${k}.jpg`; fs.mkdirSync(attachDir, { recursive: true }); fs.copyFileSync(src, path.join(attachDir, f));
+          imgs.push({ file: 'workbench/req_images/' + f, small: 'workbench/req_images/' + f, name: '이어 받은 첨부 ' + k, size: fs.statSync(path.join(attachDir, f)).size });
+        }
+        const who = nn(b.by) || core.meName() || '';
+        const it = { id: rid, uid: core.pcCode() + '-' + rid, team: T.team, nodeId: nn(e.nodeId), frame: nn(e.frame), page: nn(e.page), fileKey: nn(e.fileKey), fileName: nn(e.fileName),
+          editable: true, type: nn(e.type), priority: '', layout: nn(e.layout), text: nn(e.text), status: '대기', note: '', author: who, updatedBy: who, createdAt: now, updatedAt: now,
+          takeover: { entry: eid, uid: ouid, by: nn(e.by), pc: nn(e.pc), slug, req: nn(e.reqId), status: nn(e.status), at: now } };
+        if (['1', '2', '3'].includes(nn(e.case))) it.case = nn(e.case);
+        if (e.work) it.work = nn(e.work);
+        if (imgs.length) it.images = imgs;
+        if (core.arr(e.marks).length) it.marks = core.arr(e.marks).filter(Boolean);
+        items = [it].concat(items); histFromRequest(it); break;
       }
       case 'delete': {
         items = items.filter((i) => i.id !== b.id); histRemove(b.id);

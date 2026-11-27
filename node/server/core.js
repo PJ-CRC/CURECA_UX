@@ -225,7 +225,33 @@ function resetAt() { resetInfo(); return resetCache.at; }
 // 변경 이력 하나가 초기화 앞의 것인지(만든 시각, 없으면 마지막 시각)
 function preReset(e) { const t = resetAt(); if (!t || !e) return false; const x = Date.parse(e.createdAt || e.at || '') || 0; return x > 0 && x < t; }
 
-module.exports = { C, init, readText, resetInfo, resetAt, preReset, resetFile, readJson, exists, listJson, now, arr, writeText, writeJson, rmGlob, syncWant, writeLogin, setPw, saveAccount, saveTeams, setMyTeam, meName, readSetup, readAccounts, readAccount, pwHash, testPw, hasAccounts, histReady,
+/* ── PC 코드(2026-11-27): 요청 번호(R001)는 PC마다 따로 세니, 변경 이력에서 겹치지 않게 PC마다 무작위 4자리 코드를 붙여 고유 ID(K7M2-R001)로 보인다.
+   PC마다 파일 하나(.history/config/pc-codes/{pcSlug}.json {code, pc, at}) — 여러 PC가 같은 파일을 고치지 않아 깃 동기화가 부딪치지 않는다.
+   코드는 그 PC가 처음 쓸 때 스스로 만든다(헷갈리는 0 · O · 1 · I 빼고 32자, 이미 있는 코드와 겹치지 않게) */
+const pcCodeDir = () => path.join(C.histDir, 'config', 'pc-codes');
+const PCC = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+let pcCodeMine = '';
+function pcCodes() {
+  const out = {};
+  for (const n of listJson(pcCodeDir())) { const j = readJson(path.join(pcCodeDir(), n)); if (j && /^[A-Z0-9]{4}$/.test(String(j.code || ''))) out[n.slice(0, -5)] = String(j.code); }
+  return out;
+}
+//  코드는 PC 이름에서 뽑은 무작위처럼 보이는 4자리(해시) — 예전 버전 PC(아직 파일이 없음)의 기록도 모든 PC가 같은 코드로 보인다.
+//  다른 PC 코드와 겹치면 그때만 소금을 더해 다시 뽑는다
+function slugCode(slug, salt) { const b = crypto.createHash('sha256').update(String(slug) + (salt ? '#' + salt : '')).digest(); let c = ''; for (let i = 0; i < 4; i++) c += PCC[b[i] % 32]; return c; }
+function pcCode() {
+  if (pcCodeMine) return pcCodeMine;
+  const f = path.join(pcCodeDir(), C.pcSlug + '.json'), j = readJson(f);
+  if (j && /^[A-Z0-9]{4}$/.test(String(j.code || ''))) return (pcCodeMine = String(j.code));
+  const all = pcCodes(); delete all[C.pcSlug]; const used = new Set(Object.values(all));
+  let code = slugCode(C.pcSlug), k = 0; while (used.has(code)) code = slugCode(C.pcSlug, ++k);
+  writeJson(f, { code, pc: C.pcName, at: now() }); syncWant();
+  return (pcCodeMine = code);
+}
+// 요청의 고유 ID: 그 PC 코드(파일, 없으면 PC 이름 해시) + 번호
+function reqUid(slug, rid, codes) { if (!slug || !rid) return ''; const c = (codes || pcCodes())[String(slug)] || slugCode(slug); return c + '-' + rid; }
+
+module.exports = { C, init, readText, resetInfo, resetAt, preReset, resetFile, pcCode, pcCodes, reqUid, readJson, exists, listJson, now, arr, writeText, writeJson, rmGlob, syncWant, writeLogin, setPw, saveAccount, saveTeams, setMyTeam, meName, readSetup, readAccounts, readAccount, pwHash, testPw, hasAccounts, histReady,
   authRequired, needSync, currentUser, MENUS, MENU_KEYS, ALWAYS_KEYS, WRITE_KEYS, TEAM_MENUS, APPROVALS, APPROVE_KEYS, userWrites, userApproves, userMenus,
   isBrowser, canWrite, canApprove, roMsg, readTeams, fillTeamColors, teamIds, userTeams, myTeams, currentTeam, teamList, teamCtx, itemTeam, meInfo,
   MANAGES, MANAGE_KEYS, userManages, canManage, isAdmin, readTeamProjects, saveTeamProjects };

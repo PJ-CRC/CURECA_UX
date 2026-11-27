@@ -132,8 +132,9 @@ async function releaseOnLimit(ids, hm) {
 //  「창이 거의 찼다」며 19만에서 스스로 끊었다(R003 11:06 · 11:15 · 11:19 — 실제 창 100만). 알게 된 값을 기억해 두고, 모르면 0(모름)
 const WINF = path.join(WB, '.agent_win.json');
 let WIN = Number((readJson(WINF) || {}).win) || 0;
+// 창 크기를 아직 모르면(새 PC 첫 세션) 「모름」 대신 100만으로(2026-11-27): 모른다고 하면 Claude가 20만으로 짐작해 스스로 끊을 수 있다. 지금 쓰는 모델은 100만
 function ctxHint() { return `
-- 대화 크기: 지금 약 ${Math.round(((S && S.ctx) || 0) / 10000)}만 토큰, 창 크기 ${WIN ? Math.round(WIN / 10000) + '만' : '모름'}. 끊는 기준은 docs/claude/requests-flow.md 「끊지 않고 이어 가기」뿐이다(창 크기로 따로 끊지 않는다).`; }
+- 대화 크기: 지금 약 ${Math.round(((S && S.ctx) || 0) / 10000)}만 토큰, 창 크기 ${WIN ? Math.round(WIN / 10000) + '만' : '100만(이 PC에서 아직 재지 않아 기본값)'}. 끊는 기준은 docs/claude/requests-flow.md 「끊지 않고 이어 가기」뿐이다(창 크기로 따로 끊지 않는다).`; }
 let ctxSavedAt = 0;
 function saveCtx() {
   if (!S || Date.now() - ctxSavedAt < 5000) return; ctxSavedAt = Date.now();
@@ -355,7 +356,9 @@ ${details(out)}
 // 요청 · 작업의 지금 note · status(차례 앞뒤로 견줘 진척을 본다)
 function noteSnap(ids) {
   const rq = ((readJson(path.join(WB, 'edit_requests.json')) || {}).items || []).filter(Boolean), jb = ((readJson(path.join(WB, 'jobs.json')) || {}).items || []).filter(Boolean), o = {};
-  for (const id of ids) { const x = rq.find((i) => i.id === id) || jb.find((i) => i.id === id); o[id] = x ? String(x.status || '') + '|' + String(x.note || '') + '|' + String(x.work || '') : ''; }
+  // 답 개수(replies)도 본다(2026-11-27): 차례 중에 질문을 올리고 사람이 곧바로 답하면 서버가 「대기 · 빈 note」로 되돌려 차례 시작 때와 같아 보였고,
+  //  진척 없음으로 세션을 닫아 같은 요청을 새 세션이 규칙부터 다시 읽었다(R001 19:57 · 20:13, 한 번에 약 $2). 답이 늘었으면 진척 → 같은 세션에 「이어서 계속」
+  for (const id of ids) { const x = rq.find((i) => i.id === id) || jb.find((i) => i.id === id); o[id] = x ? String(x.status || '') + '|' + String(x.note || '') + '|' + String(x.work || '') + '|' + (Array.isArray(x.replies) ? x.replies.length : 0) : ''; }
   return o;
 }
 function progressed(ids, before) { const now2 = noteSnap(ids); return ids.some((id) => now2[id] !== (before || {})[id]); }
@@ -363,6 +366,13 @@ function waitingIds(ids) {
   const items = ((readJson(path.join(WB, 'edit_requests.json')) || {}).items || []).filter(Boolean);
   return ids.filter((id) => { const r = items.find((x) => x.id === id); return r && r.status === '보류' && r.ask && !String(r.note || '').startsWith('겹침 대기'); });
 }
+// 질문이 Figma 연결 · 인증 · 권한 문제인지(requests.md 0번 「Figma 파일 열림 확인」의 보류 note · ask)
+function authWaiting(id) {
+  const r = (((readJson(path.join(WB, 'edit_requests.json')) || {}).items) || []).find((x) => x && x.id === id); if (!r) return false;
+  const t = String(r.note || '') + '\n' + String((r.ask && r.ask.q) || '') + '\n' + ((r.ask && r.ask.options) || []).map((o) => o && o.label).join(' ');
+  return AUTH_RE.test(t);
+}
+const AUTH_RE = /Figma[^\n]{0,60}(인증|권한|로그인|연결(이|을)?\s?(안|끊|실패|필요))|(인증|편집 권한|접근 권한)[^\n]{0,30}(필요|없|공유)|다시 연결|Authenticate|auth(entication)? required/i;
 // 차례가 끝난 뒤 「대기」로 돌아가 있는 요청(사람이 멈춘 것은 빼고)
 function selfSplitIds(ids) {
   const items = ((readJson(path.join(WB, 'edit_requests.json')) || {}).items || []).filter(Boolean);
@@ -568,6 +578,14 @@ async function main() {
     if (r.dead) { await stopSession('응답 없음 · 세션 끊김'); save('error', '처리 중 세션이 끊겨 새로 띄웁니다. 기록: workbench/.agent.log'); continue; }
     const pct = S.win ? Math.round(100 * S.ctx / S.win) : 0, ctx = S.ctx;
     const wait = r.ok && ctx < KEEP_MAX ? waitingIds(S.turnIds.filter((x) => /^R/.test(x))) : [];
+    // Figma 연결 · 인증 · 권한 문제로 멈춘 질문은 세션을 두지 않는다(2026-11-27): 떠 있는 세션의 Figma 연결은 사람이 다시 인증해도 새로 맺어지지 않아,
+    //  같은 세션에 답을 보내면 또 「인증 필요」였다(11-26 09:45 ~ 09:53 세 번, 1시간 20분 늦어짐). 답은 새 세션(새 연결)이 받는다
+    const authHold = wait.filter(authWaiting);
+    if (authHold.length) {
+      await stopSession(`${authHold.join(', ')} Figma 연결 · 인증 문제로 멈춤 — 답이 오면 새 세션(새 Figma 연결)`, true);
+      save('idle', `${authHold.join(', ')} Figma 연결 · 인증 확인을 기다리는 중(답이 오면 새 세션으로 이어서 처리)`);
+      continue;
+    }
     if (wait.length) {
       S.keep = wait; S.keepUntil = Date.now() + KEEP_MIN * 60000;
       const hm = new Date(S.keepUntil).toTimeString().slice(0, 5);

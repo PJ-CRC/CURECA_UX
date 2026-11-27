@@ -74,13 +74,24 @@ async function record(o) {
   if (o.strict && tag && !tagged.length) return 'NOUSAGE (' + tag + '가 적힌 대화 기록 없음)';
   // 서브에이전트 기록(…/{세션}/subagents/*.jsonl)은 부모 세션 파일이 그 ID를 담고 있으면 함께 센다
   const keep = tagged.length ? new Set(tagged.map((x) => x.f.replace(/\.jsonl$/, ''))) : null;
+  /* 감시가 띄운 세션(첫 사람 메시지가 「[Workbench 요청 감시」)이 이 요청 · 작업 하나만 다뤘으면 구간과 상관없이 세션 전체를 센다(2026-11-27):
+     「진행 중」으로 바꾸기 전 규칙을 읽은 몫, 보류한 뒤 정리한 몫이 빠져 R001이 실제의 약 55%만 잡혔다.
+     여러 요청을 함께 다룬 세션 · 대화 창(다른 일이 섞임)은 예전처럼 처리 구간 안만 센다 */
+  const whole = new Set();
+  if (tag) for (const { f, txt } of tagged) {
+    const fu = (/^.*"type":"user".*$/m.exec(txt) || [''])[0];
+    if (!fu.includes('[Workbench 요청 감시')) continue;
+    const ids = new Set(); for (const m of txt.matchAll(/\b(?:PENDING|RESUME|JOBS) ([RJ]\d{3,}(?:,[RJ]\d{3,})*)/g)) for (const id of m[1].split(',')) ids.add(id);
+    if (ids.size === 1 && ids.has(tag)) whole.add(f);
+  }
   const msgs = new Map();
   for (const { f, txt } of files) {
+    const all = whole.has(f) || [...whole].some((w) => f.startsWith(w.replace(/\.jsonl$/, '') + path.sep));   // 그 세션의 서브에이전트도
     if (keep && !keep.has(f.replace(/\.jsonl$/, '')) && ![...keep].some((k) => f.startsWith(k + path.sep))) continue;
     for (const l of txt.split('\n')) {
       if (!l.includes('"usage"')) continue;
       const m = l.match(/"timestamp":"([^"]+)"/); if (!m) continue;
-      const ts = Date.parse(m[1]); if (isNaN(ts) || !inWin(ts)) continue;
+      const ts = Date.parse(m[1]); if (isNaN(ts) || (!all && !inWin(ts))) continue;
       let x; try { x = JSON.parse(l); } catch (e) { continue; }
       if (!x.message || !x.message.usage || !x.message.id) continue;
       msgs.set(String(x.message.id), x.message);   // 같은 응답이 여러 줄이면 마지막 값
