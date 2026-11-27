@@ -112,6 +112,59 @@ started: 2026-11-27
 ## 근거
 <!-- 2단계. 틀은 flow/2-evidence.md "작업 기록에 쓰는 것"의 "근거 틀" -->
 
+읽은 강도: 요건 1 · 8 옮겨 다시 그림 · 케이스 3 (다시 그리기). 정책 찾는 길 ① ~ ⑤ (⑤ 장비는 화면에 Module이 없어 해당 없음). 논의 대상(`discussions/` 13건)에 LIS Setting · POL-SYS-001 · 002가 걸린 것 없음. 대상 화면에 `basis`가 없어 basis 뒤 바뀐 것 보기는 하지 않음.
+
+**읽은 자료 목록**
+
+| 요건 | 종류 | 자료 (ID · 파일) | 연결 근거 (왜 이 요건과 관련 있나) | 설계에 씀 (O / -) | 쓰는 화면 · 요소 | 설계에 쓸 규칙 (번호 · 문장, `-`면 쓰지 않는 이유) |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | 정책 | POL-SYS-001 LIS 연동 설정 | 정책 `cids`에 TI-STN-04-01-T, 화면 MD 본문 | O | Interface Configuration (TI-STN-04-01-T) 0 · 1 · 2 · 3 · 3-2 · 3-3 · 4 · LIS Network · 5 | 규칙 1 "LIS 인터페이스와 CURECA는 1:1로 연결함." / 2 "Interface Type은 HL7로 고정함." / 3 "Transport Protocol은 MLLP 또는 HTTP이며 기본값은 MLLP임." / 4 "Order Reception Mode는 Query Mode 또는 Push Mode이며 기본값은 Query Mode임." / 5 "Push Mode일 때만 T-IOS Network의 오더 수신 Port를 설정하며 기본값은 20200임. Query Mode로 바꾸면 Port 값을 지우고 비활성화하며, 다시 Push Mode로 바꾸면 20200을 채움." / 6 "검사 결과를 보낼 LIS 서버의 Host Address(IP)와 Port는 LIS Network에 입력하며 기본값은 비어 있음." / 7 "LIS 설정은 CURECA마다 따로 두며, T-IOS 상단에서 고른 CURECA의 설정을 보여 주고 바꿈 (POL-COM-005)." / 8 "설정은 User Type이 Service 또는 Admin일 때 바꿀 수 있음." |
+| 1 | 정책 | POL-SYS-002 LIS Code Mapping | 정책 `cids`에 TI-STN-04-02-T, 화면 MD 본문 | O | Code Mapping (TI-STN-04-02-T) 0 · 1 · 2 · 2-2 · 3 · 4 · 5 | 정의: Sample Type Code = Sample Type (Assay Pack의 공통 정보) / Test Code = 검사 항목 (Assay Pack의 PCR 정보) / Target Code = Target을 따로 쓰는 검사 항목과 그 Target (2단계, Assay Pack의 PCR 정보 중 Target 이름을 쓰는 검사 항목). 규칙 1 "관리 항목은 Assay Pack에 들어 있는 정보로 정해지며, Assay Pack이 바뀌면 항목도 바뀜." / 2 "화면에는 코드 대신 UI 표기 이름(Sample Type 이름, 검사 항목 이름)을 보여 줌." / 3 "처음 설치할 때 LIS Code에는 CURECA가 관리하는 값이 채워져 있고, 사용자가 필요하면 고침." / 4 "입력한 LIS Code는 LIS 연동 때 대응 기준으로 씀." / 5 "고친 내용은 [Save]를 눌러야 반영되며, 저장하지 않고 화면을 떠나면 Confirm_016을 보여 줌." / 6 "Code Mapping은 CURECA마다 따로 둠 (POL-COM-005)." |
+| 1 | 정책 | POL-COM-005 여러 대 CURECA 운영 | 정책 `cids`에 TI-STN-04-01-T · TI-STN-04-02-T, 반영 대기 TI-STN-04-01-T-R04 | O | 두 화면 0 | 규칙 3 "Dashboard(All)를 뺀 메뉴는 상단에서 고른 CURECA 기준의 데이터를 보여 줌." / 5 "모든 설정은 CURECA마다 따로 둠: … LIS Setting …" |
+| 1 | 정책 | POL-TST-010 검사 항목과 조합 검사 | 정책 `cids`에 TI-STN-04-02-T | O | Code Mapping (TI-STN-04-02-T) 화면 예시 글자 (Sample Type · Test Code · Target Code 목록) | 규칙 1 "검사 항목, 검사군, 검사 항목별 사용 가능 검체 타입, 검사 Target은 Assay Pack(Master, PCR 파일)에서 받아 보여 줌. 화면설계서의 예시 값도 이 실제 값(`glossary/test-items.csv`, `glossary/sample-types.csv`)을 씀." / 4 "Target 선택이 가능한 검사 항목(… `glossary/test-items.csv`의 Target Masking 가능 Y)만 …" |
+| 1 | 기준데이터 | `glossary/sample-types.csv` | POL-SYS-002 · POL-TST-010 `data`, 반영 대기 TI-STN-04-02-T-R01 | O | Code Mapping (TI-STN-04-02-T) Sample Type Code 목록 | 14종 UI 표기 / 코드: Aspirate · BAL · Cary-blair · Cellpreserv · eNAT stool (eNAT_stool) · Fecal swab (Fecal_swab) · Raw stool (Raw_stool) · Saliva · Semen · Sputum · Surepath · Swab · Thinprep · Urine (나머지는 UI 표기 = 코드) |
+| 1 | 기준데이터 | `glossary/test-items.csv` | POL-SYS-002 · POL-TST-010 `data` | O | Code Mapping (TI-STN-04-02-T) Test Code · Target Code 목록 | 검사 항목 30종 UI 표기(기존 화면 Test Code 목록과 같음). Target Masking 가능 Y 9종과 Target 수: Allplex HPV28 28 · Anyplex II HPV HR 14 · GI-B1 7 (Sh/EI, Cam, Yer, Vib, CdB, Aer, Sal) · GI-B2 6 · GI-V 6 · PB 7 · RP1 7 · RP2 7 · RP3 5. 코드 예: Allplex HPV HR = `HPVHR-HP72/73`(쓰지 않는 표현 `Allplex_HPV_HR`), Allplex HPV28 = `Allplex_HPV28` |
+| 1 | Alert | `alert/alert-catalog.csv` Confirm_010 · Alert_017 | 디스크립션 5, POL-SYS-001 · 002 `alerts` | O | 두 화면 5 [Save] | Confirm_010 "Would you like to save?" OK → 데이터 저장 & Alert_017 노출 / Close → 닫힘. Alert_017 "The save is complete." OK → 닫힘. 사용 화면에 TI-STN-04-01-T · TI-STN-04-02-T 있음 |
+| 1 | Alert | `alert/alert-catalog.csv` Confirm_016 | 디스크립션 5-1 · 5, POL-SYS-001 · 002 `alerts` | O | 두 화면 저장하지 않고 이동 | Confirm_016 "Leave Without Saving?" / "If you leave this page, your changes will be lost." Leave → 클릭한 메뉴로 이동 / Cancel → 닫힘. 사용 화면에 두 화면 있음 |
+| 1 | 기준 자료 | `policy/permission-matrix.csv` | POL-SYS-001 `data`, 0번 User Type 확인 | - | | (Setting 아래 LIS Setting 줄이 없음 → 질문 대기 Q1) |
+| 1 | 용어 | `glossary/terms.csv` · `glossary/glossary.md` | 용어 대조 (절차 5번 순서 3) | O | 두 화면 디스크립션 | 아래 "용어 목록" |
+
+**관련 자료 없는 영역 · 요소**
+
+| 화면 · 영역 · 요소 | 근거로 삼는 것 |
+| --- | --- |
+| Interface Configuration (TI-STN-04-01-T) 화면 제목 아래 안내 문구 | 기존 UX 화면설계서만 근거 |
+| Code Mapping (TI-STN-04-02-T) 1 Code Type 정렬 · 1-1 항목 수 표시 · 2-1 검색 영역 · 3 depth 구조 배치 | 기존 UX 화면설계서만 근거 |
+
+**대조**
+
+| 요건 · 화면 · 요소 | 결과 | 근거 | 다음 |
+| --- | --- | --- | --- |
+| 요건 1 · TI-STN-04-01-T 1 · 2 · 3-3 · 4 · LIS Network | 정책에 있음 | POL-SYS-001 규칙 2 · 3 · 5 · 6 | 디스크립션 끝에 정책 ID |
+| 요건 1 · TI-STN-04-01-T 0 "Default: All / 데이터: All, Error, Warning" | 기존 화면이 정책과 다름 (LIS Setting에 없는 값) | 반영 대기 TI-STN-04-01-T-R01 | C1 |
+| 요건 1 · TI-STN-04-01-T 3 기본 상태 화면 (Push Mode 선택) | 기존 화면이 정책과 다름 | POL-SYS-001 규칙 4 · 5, 반영 대기 TI-STN-04-01-T-R03 | C2 |
+| 요건 1 · TI-STN-04-01-T · TI-STN-04-02-T 0 (CURECA마다 설정) | 기존 화면이 정책과 다름 (정책 내용이 디스크립션에 없음) | POL-SYS-001 규칙 7, POL-SYS-002 규칙 6, POL-COM-005 규칙 5, 반영 대기 TI-STN-04-01-T-R04 | C3 |
+| 요건 1 · TI-STN-04-02-T 0 데이터 관련 정의 (Assay Pack 데이터 키 이름) | 기존 화면이 정책과 다름 (헌법 3조) | POL-SYS-002 정의 · 규칙 1, 반영 대기 TI-STN-04-02-T-R03 | C4 |
+| 요건 1 · TI-STN-04-02-T 4 Done · Enter "입력값 저장 처리" | 기존 화면이 정책과 다름 | POL-SYS-002 규칙 5, 반영 대기 TI-STN-04-02-T-R02 | C5 |
+| 요건 1 · TI-STN-04-02-T Sample Type Name `Raw_stool` · `eNAT_stool` · `Fecal_swab` | 기존 화면이 정책과 다름 | `glossary/sample-types.csv` UI 표기, POL-SYS-002 규칙 2, 반영 대기 TI-STN-04-02-T-R01 | C6 |
+| 요건 1 · TI-STN-04-02-T Target Code 항목 수 `10` (Products 목록은 9개) | 기존 화면이 정책과 다름 | `glossary/test-items.csv` Target Masking 가능 Y 9종, POL-TST-010 규칙 4 | C7 |
+| 요건 1 · TI-STN-04-02-T Test Code 30종 · GI-B1 Target 7개 | 정책에 있음 | `glossary/test-items.csv` | 그대로 그림 |
+| 요건 1 · TI-STN-04-02-T Test Code의 LIS Test Code 예시 (`Allplex_HPV_HR` 등) | 정책에 없음 (처음 채워지는 CURECA 값이 무엇인지 없음) | POL-SYS-002 규칙 3, `glossary/test-items.csv` 코드 | Q4 |
+| 요건 1 · 두 화면 5 [Save] · 저장하지 않고 이동 | 정책에 있음 | Confirm_010 · Alert_017 · Confirm_016 | 디스크립션 끝에 코드 |
+| 요건 1 · 두 화면 0 User Type | 표에 줄 없음 | POL-SYS-001 규칙 8 (Service · Admin), `policy/permission-matrix.csv`에 LIS Setting 줄 없음 | Q1 |
+
+**정책 수정 범위**
+
+없음 (대조에서 "더함" · "바꿈"이 된 정책 없음. 정책에 없는 입력 검사는 화면에서 물을 것으로 질문 대기 Q2 · Q3)
+
+**용어 목록**
+
+| 원래 표현 | 표준어 | 어디서 | 새 용어면 처리 | 찾은 때 (2단계 / 3단계) |
+| --- | --- | --- | --- | --- |
+| Text Field · 텍스트 필드 | Text Input | TI-STN-04-01-T 3-2 · 4 · 4 (LIS Network) | | 2단계 |
+| 기본값 | Default | TI-STN-04-01-T 3-2 · 4 (LIS Network) · TI-STN-04-02-T 2 | | 2단계 |
+| TIOS (GNB) | T-IOS | TI-STN-04-01-T · TI-STN-04-02-T 화면 글자 GNB (공통 영역이라 3단계에서 Common UX GNB대로 그림) | | 2단계 |
+
 ## 설계
 <!-- 3단계. 틀은 flow/3-design.md "남는 것". 질문 대기 · 변경 확인은 이 절이 아니라 아래 표에 적음 -->
 
