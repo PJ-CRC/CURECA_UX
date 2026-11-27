@@ -4,7 +4,7 @@
   "reqId": "R014",
   "reqType": "요청",
   "team": "cureca",
-  "at": "2026-11-27T16:08:45+09:00",
+  "at": "2026-11-27T16:09:23+09:00",
   "from": "2026-11-27T16:08:34+09:00",
   "by": "하승현",
   "doneBy": "Claude",
@@ -16,13 +16,13 @@
   "nodeId": "",
   "text": "보류항목 다 삭제해줘",
   "models": {
-    "claude-opus-5-5": 9
+    "claude-opus-5-5": 14
   },
-  "calls": 9,
-  "input": 18,
-  "cacheWrite": 31938,
-  "cacheRead": 375508,
-  "output": 4119,
-  "total": 411583,
-  "usd": 0.4131
+  "calls": 14,
+  "input": 27,
+  "cacheWrite": 37271,
+  "cacheRead": 642855,
+  "output": 6501,
+  "total": 686654,
+  "usd": 0.5569
 }
