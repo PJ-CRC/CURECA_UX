@@ -11,8 +11,13 @@ author: 서보경
 client_mode: []
 user_type: [Service, Admin]
 policies: [POL-SYS-001, POL-COM-005]
-basis:
+basis: 2026-11-27 14:45 · history 31f20afa
 basis_versions:
+  rules: CURECA 작업규칙 @2026-11-27 11:34
+  policy: 정책서 @2026-11-25 21:21
+  glossary: 기준데이터 @2026-11-25 21:21
+  screens: 화면 정의서 @2026-11-26 03:39
+  common_ux: Common UX (common-ux/comm-index.md) @2026-11-26 16:53
 source: tobe
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3893-18
 ---
