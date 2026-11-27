@@ -483,6 +483,7 @@ started: 2026-11-27
 | C91 | [Export] 저장 실패 · 내보낼 목록 0건일 때 안내 없음 | 저장에 실패하면 Alert_049, 내보낼 데이터가 0건이면 Alert_050 노출 (Alert 카탈로그에 새로 더함) | 없음 → Export failed · The file could not be saved. Check the save location and try again. · No data to export · There is no data in the list to export. | TI-IVT-06-T #3 | Q1의 답 | - (L-IOS 고치지 않음) | O | 맞음 (2026-11-27) |
 | C92 | 1-7 Tooltip 문구 4줄 | 앞 2줄을 빨간 취소선으로 지우고 뒤 2줄만 둠 | Shows required items by replenishment priority, visible only when system is running or Inbound Trolley is docked → 없음 · Shows required items by replenishment priority → 없음 | TI-IVT-01-T #1-7 | Q2의 답 (반영 대기 TI-IVT-01-T-R06) | - (L-IOS 고치지 않음) | O | 맞음 (2026-11-27) |
 | C93 | Reagents type Chip `# Sample Preparation` (다른 Chip은 `#` 뒤 붙임) | `#` 뒤를 붙여 통일 | # Sample Preparation → #Sample Preparation | TI-IVT-04-T #1 | Q7의 답 (반영 대기 TI-IVT-04-T-R08) | - (L-IOS 고치지 않음) | O | 맞음 (2026-11-27) |
+| C94 | 품목 이름 `Anyplex™II STI-12 Detection` | 공통 품목 표기대로 띄어씀 | Anyplex™II STI-12 Detection → Anyplex™ II STI-12 Detection | TI-IVT-02-T #1 | 요청자 확인 12의 답 (LID-COM-TRM-101) | - (L-IOS 고치지 않음) | - | 맞음 (2026-11-27) |
 
 ## 검토 질의
 <!-- 4단계 절차 2번. 틀은 flow/4-revise-verify.md "검토 질의 틀" -->

@@ -177,7 +177,7 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=39
 | EB DWP · MB DWP · WB1 DWP · WB2 DWP · Spin Tip | 화면 1 High-throughput Extraction 열 | |
 | MB Tube · BB Tub · EB Tub · WB1 Tub · WB2 Tub · WB3 Tub · Buffer Cartridge Cap | 화면 1 Flexible Extraction 열 | LID-MAS-013 · - · - · - · - · - · - |
 | PCR Plate · 300 μL Tip (1) · 300 μL Tip (2) | 화면 1 PCR Setup 열 | LID-SPT-031 · - · - |
-| MM Tube · Sealing Film (1) · Sealing Film (2) · Allplex™ GI-Bacteria(I) Assay · Allplex™ GI-Bacteria(II) Assay · Allplex™ GI-Virus Assay · Allplex™ HPV28 Detection · Allplex™ PneumoBacter Assay · Allplex™ Respiratory Panel 1 · Allplex™ Respiratory Panel 2 · Allplex™ Respiratory Panel 3 · Anyplex™II STI-12 Detection | 화면 1 Plate Sealing 열 · 케이스 Case 3-2 | |
+| MM Tube · Sealing Film (1) · Sealing Film (2) · Allplex™ GI-Bacteria(I) Assay · Allplex™ GI-Bacteria(II) Assay · Allplex™ GI-Virus Assay · Allplex™ HPV28 Detection · Allplex™ PneumoBacter Assay · Allplex™ Respiratory Panel 1 · Allplex™ Respiratory Panel 2 · Allplex™ Respiratory Panel 3 · Anyplex™ II STI-12 Detection | 화면 1 Plate Sealing 열 · 케이스 Case 3-2 | |
 | {n} ea · {n} ea ({m} racks) · {n} ea ({m} rack) · {n} rxns ({m} DWPs) · {n} rxns ({m} DWP) · {n} rxns ({m} tubes) · {n} rxns ({m} tube) · {n} rxns ({m} racks) · {n} rxns ({m} rack) · {n} rxns ({m} sets) · {n} ea ({m} sets) · {n} ea ({m} socket) | 화면 1 수량 (n · m = 수량) | |
 | Displays total inventory aggregated across all modules. Select a module to view its individual stock details | 디스크립션 2 | LID-IVT-013 |
 | No docked trolleys | 케이스 Case 1-1 | LID-IVT-014 |
