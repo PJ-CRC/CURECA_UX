@@ -92,8 +92,8 @@ figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=39
 
 **1-7  Inventory status Tooltip**
 - Tooltip 문구
-  - Shows required items by replenishment priority, visible only when system is running or Inbound Trolley is docked
-  - Shows required items by replenishment priority
+  - <span style="color:red">~~Shows required items by replenishment priority, visible only when system is running or Inbound Trolley is docked~~</span>
+  - <span style="color:red">~~Shows required items by replenishment priority~~</span>
   - Visible only when the system is running or the Inbound Trolley is docked.
   - Shows the quantity of consumables required for the Run.
 - 공통 UX 참고 : COMM-5-v

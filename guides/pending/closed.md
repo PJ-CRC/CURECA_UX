@@ -52,7 +52,14 @@
 | TI-EVT-P-R03 | Event History | Event History (TI-EVT-P) | 기준 자료 변경 | Expiration date Status | 대소문자 통일 (PD-0001 결정 후) | `archive/glossary/review-v0.md` | 제외 (2026-11-25, 바꾸지 않음: 이 화면에 없는 글자, 시약 만료 상태는 시스템에서 쓰지 않는 값 — 요청자 답) |
 | TI-EVT-P-R04 | Event History | Event History (TI-EVT-P) | 기준 자료 변경 | Under 30 Day | Under 30 days | `glossary/status-values.csv` 시약 만료 상태 | 제외 (2026-11-25, 바꾸지 않음: 이 화면에 없는 글자, 시약 만료 상태는 시스템에서 쓰지 않는 값 — 요청자 답) |
 | TI-IVT-01-T-R07 | Inventory | Inventory Summary (TI-IVT-01-T) | 점검 발견 | 번호 2 없음 (1 → 3) | 번호 정리 | 디스크립션 | 제외 (2026-11-27, 케이스 3 규칙과 부딪힘: 빈 번호를 채우지 않음, 중복 번호는 끝 번호 다음으로) |
+| TI-IVT-03-T-P-R02 | Inventory | Consumables Item details popup (TI-IVT-03-T-P) | 점검 발견 | 예시 줄에 Inbound Date 값이 없음 (열은 5개, 값은 4개) | 날짜 예시를 넣음 | 화면 글자 | 제외 (2026-11-27, 바꾸지 않음) |
+| TI-IVT-03-T-P-R05 | Inventory | Consumables Item details popup (TI-IVT-03-T-P) | 점검 발견 | 5 [Close]와 6 [X]의 동작이 같은 말을 다르게 씀 | 하나의 문장으로 통일 | 디스크립션 | 제외 (2026-11-27, 바꾸지 않음) |
+| TI-IVT-03-T-R05 | Inventory | Inventory Consumables (TI-IVT-03-T) | 점검 발견 | 5 툴팁 "Capacity: Shown only for fixed-capacity storage." / 3-4 Capacity는 장비 셋팅 시 설정된 값 (26.08.20 기준 변경) | 툴팁 문구를 3-4 정의와 맞춤 | 디스크립션 | 제외 (2026-11-27, 바꾸지 않음) |
+| TI-IVT-03-T-R09 | Inventory | Inventory Consumables (TI-IVT-03-T) | 점검 발견 | 예시 값 "#Trolley", Tub 수량 "200T (2 racks)" | 실제 Location 예시, rxns 단위 (COMM-4-b) | 화면 글자 | 제외 (2026-11-27, 바꾸지 않음) |
+| TI-IVT-04-T-P-R08 | Inventory | Reagent Item details Popup (TI-IVT-04-T-P) | 점검 발견 | 예시 줄에 Inbound Date, Expiration Date 값이 없음 | 날짜 예시를 넣음 | 화면 글자 | 제외 (2026-11-27, 바꾸지 않음) |
 | TI-IVT-04-T-R03 | Inventory | Inventory Reagent (TI-IVT-04-T) | 점검 발견 | 번호 2-3이 두 번, 2-2 없음. Capacity가 3-3 안에 번호 없이 들어 있고 3-4 없음 | 번호 정리 (Capacity를 3-4로) | 디스크립션 | 제외 (2026-11-27, 케이스 3 규칙과 부딪힘: 빈 번호를 채우지 않음, 중복 번호는 끝 번호 다음으로) |
+| TI-IVT-04-T-R11 | Inventory | Inventory Reagent (TI-IVT-04-T) | 점검 발견 | 예시 값 "#Trolley" | 실제 Location 예시 | 화면 글자 | 제외 (2026-11-27, 바꾸지 않음) |
+| TI-IVT-06-T-R02 | Inventory | Inventory Usage History (TI-IVT-06-T) | 점검 발견 | Usage 열 값이 예시 줄에 없음, 일부 줄은 Barcode도 없음 | 예시 값 채움 | 화면 글자 | 제외 (2026-11-27, 바꾸지 않음) |
 | TI-STN-04-01-T-R01 | Setting | Interface Configuration (TI-STN-04-01-T) | 점검 발견 | 0에 "Default: All / 데이터: All, Error, Warning" (다른 화면에서 복사된 것으로 보임) | 지움 | 디스크립션 | 반영 완료 (2026-11-27) |
 | TI-STN-04-01-T-R03 | Setting | Interface Configuration (TI-STN-04-01-T) | 점검 발견 | 화면 예시는 Push Mode 선택, 디스크립션 기본값은 Query Mode | 기본 상태 화면을 기본값과 맞춤 | 디스크립션 3 | 반영 완료 (2026-11-27) |
 | TI-STN-04-01-T-R04 | Setting | Interface Configuration (TI-STN-04-01-T) | 기준 자료 변경 | CURECA가 여러 대일 때(TI-ADS) LIS 설정이 장비마다인지 화면에 없음 | 디스크립션에 넣음: LIS 설정은 상단에서 고른 CURECA마다 | POL-SYS-001 규칙 7, POL-COM-005 | 반영 완료 (2026-11-27) |

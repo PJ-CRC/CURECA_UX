@@ -168,28 +168,28 @@ started: 2026-11-27
 | 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (단수·복수) | Inventory Overview (TI-IVT-02-T) | TI-IVT-02-T-R05 | 화면 "Samples (Test In Progress) 48 ea (1 racks)" | 1 rack | 반영 |
 | 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (띄어쓰기) | Inventory Overview (TI-IVT-02-T) | TI-IVT-02-T-R07 | 2 툴팁 "all modules . Select" | all modules. Select | 반영 |
 | 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (3 표기 방식, LI-IVT-03-T-P Run 프레임) | Consumables Item details popup (TI-IVT-03-T-P) | TI-IVT-03-T-P-R01 | 합계 "2,021 (22 rack)" (단위 없음). Run 화면 프레임은 "2,021 ea (22 rack)" | 2,021 ea (22 racks) | 반영 |
-| 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (화면 글자) | Consumables Item details popup (TI-IVT-03-T-P) | TI-IVT-03-T-P-R02 | 예시 줄에 Inbound Date 값이 없음 (열은 5개, 값은 4개) | 날짜 예시를 넣음 | 반영 |
-| 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (디스크립션) | Consumables Item details popup (TI-IVT-03-T-P) | TI-IVT-03-T-P-R05 | 5 [Close]와 6 [X]의 동작이 같은 말을 다르게 씀 | 하나의 문장으로 통일 | 반영 |
+| 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (화면 글자) | Consumables Item details popup (TI-IVT-03-T-P) | TI-IVT-03-T-P-R02 | 예시 줄에 Inbound Date 값이 없음 (열은 5개, 값은 4개) | 날짜 예시를 넣음 | 제외 (2026-11-27, 바꾸지 않음) |
+| 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (디스크립션) | Consumables Item details popup (TI-IVT-03-T-P) | TI-IVT-03-T-P-R05 | 5 [Close]와 6 [X]의 동작이 같은 말을 다르게 씀 | 하나의 문장으로 통일 | 제외 (2026-11-27, 바꾸지 않음) |
 | 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (디스크립션) | Inventory Consumables (TI-IVT-03-T) | TI-IVT-03-T-R03 | 2-5 Required Qty 절의 첫 문장이 "좌측 영역의 Remaining Qty는…" | 좌측 영역의 Required Qty는… | 반영 |
-| 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (디스크립션) | Inventory Consumables (TI-IVT-03-T) | TI-IVT-03-T-R05 | 5 툴팁 "Capacity: Shown only for fixed-capacity storage." / 3-4 Capacity는 장비 셋팅 시 설정된 값 (26.08.20 기준 변경) | 툴팁 문구를 3-4 정의와 맞춤 | 반영 |
+| 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (디스크립션) | Inventory Consumables (TI-IVT-03-T) | TI-IVT-03-T-R05 | 5 툴팁 "Capacity: Shown only for fixed-capacity storage." / 3-4 Capacity는 장비 셋팅 시 설정된 값 (26.08.20 기준 변경) | 툴팁 문구를 3-4 정의와 맞춤 | 제외 (2026-11-27, 바꾸지 않음) |
 | 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (오타) | Inventory Consumables (TI-IVT-03-T) | TI-IVT-03-T-R06 | "단,장비 내 거치 공간에 있는 소모품은 … 차감되지 않는며" (2-4, 3-5) | 차감되지 않으며 | 반영 |
 | 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (단수·복수, 이름 (번호) 띄어쓰기) | Inventory Consumables (TI-IVT-03-T) | TI-IVT-03-T-R08 | Capacity "11 rack", "300 μL Tip Storage(1)" | 11 racks, 300 μL Tip Storage (1) | 반영 |
-| 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (화면 글자) | Inventory Consumables (TI-IVT-03-T) | TI-IVT-03-T-R09 | 예시 값 "#Trolley", Tub 수량 "200T (2 racks)" | 실제 Location 예시, rxns 단위 (COMM-4-b) | 반영 |
+| 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (화면 글자) | Inventory Consumables (TI-IVT-03-T) | TI-IVT-03-T-R09 | 예시 값 "#Trolley", Tub 수량 "200T (2 racks)" | 실제 Location 예시, rxns 단위 (COMM-4-b) | 제외 (2026-11-27, 바꾸지 않음) |
 | 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (오타) | Reagent Item details Popup (TI-IVT-04-T-P) | TI-IVT-04-T-P-R03 | 2-1 Used Counts "흡입한 회수" | 흡입한 횟수 | 반영 |
 | 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (Consumables Popup에서 복사) | Reagent Item details Popup (TI-IVT-04-T-P) | TI-IVT-04-T-P-R05 | 2-1 Location in storage "해당 소모품의 위치 값" (Reagent 화면) | 해당 Reagent의 위치 값 | 반영 |
 | 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (띄어쓰기) | Reagent Item details Popup (TI-IVT-04-T-P) | TI-IVT-04-T-P-R07 | "2,010rxns  (22 tubes)" | 2,010 rxns (22 tubes) | 반영 |
-| 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (화면 글자) | Reagent Item details Popup (TI-IVT-04-T-P) | TI-IVT-04-T-P-R08 | 예시 줄에 Inbound Date, Expiration Date 값이 없음 | 날짜 예시를 넣음 | 반영 |
+| 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (화면 글자) | Reagent Item details Popup (TI-IVT-04-T-P) | TI-IVT-04-T-P-R08 | 예시 줄에 Inbound Date, Expiration Date 값이 없음 | 날짜 예시를 넣음 | 제외 (2026-11-27, 바꾸지 않음) |
 | 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (디스크립션) | Inventory Reagent (TI-IVT-04-T) | TI-IVT-04-T-R04 | 2-5 Required Qty 절 첫 문장 "좌측 영역의 Remaining Qty는…", 예외 처리 "검사 진행 중이 아닐 경우" (2-6·3-6은 "위의 상황이 아닐 경우") | Required Qty, 예외 처리 문장 통일 | 반영 |
 | 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (디스크립션) | Inventory Reagent (TI-IVT-04-T) | TI-IVT-04-T-R05 | 단위 혼용: 2-5 "10rxns", 3-6 "10T", 화면 "200T (2 racks)" | rxns로 통일 (COMM-4-b) | 반영 |
 | 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (Figma 취소선) | Inventory Reagent (TI-IVT-04-T) | TI-IVT-04-T-R06 | 2-4·3-5 "표기 방식: 0번 디스크립션 참고" (0의 표기 방식은 취소선) | Common UX COMM-4-b 참고 | 반영 |
 | 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (화면 글자) | Inventory Reagent (TI-IVT-04-T) | TI-IVT-04-T-R08 | Chip "# Sample Preparation"과 "#Nucleic Acid Extraction" 띄어쓰기 다름 | 하나로 통일 | 반영 |
-| 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (화면 글자) | Inventory Reagent (TI-IVT-04-T) | TI-IVT-04-T-R11 | 예시 값 "#Trolley" | 실제 Location 예시 | 반영 |
+| 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (화면 글자) | Inventory Reagent (TI-IVT-04-T) | TI-IVT-04-T-R11 | 예시 값 "#Trolley" | 실제 Location 예시 | 제외 (2026-11-27, 바꾸지 않음) |
 | 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (오타) | Waste Bin/Bottle (TI-IVT-05-T) | TI-IVT-05-T-R03 | 0 "Moule(index)" | Module (index) | 반영 |
 | 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (디스크립션) | Waste Bin/Bottle (TI-IVT-05-T) | TI-IVT-05-T-R04 | 3-3 "[3-6] 최대 개수 도달/초과 후…" (3-6 없음) | 번호 지움 | 반영 |
 | 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (띄어쓰기) | Waste Bin/Bottle (TI-IVT-05-T) | TI-IVT-05-T-R07 | "PlateSealing (2)" | Plate Sealing (2) | 반영 |
 | 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (디스크립션) | Waste Bin/Bottle (TI-IVT-05-T) | TI-IVT-05-T-R09 | 1 "Default : 모든 탭이 미선택 된 상태" (Chip을 말함) | 모든 Chip이 선택되지 않은 상태 | 반영 |
 | 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (디스크립션 1) | Inventory Usage History (TI-IVT-06-T) | TI-IVT-06-T-R01 | 목록 Item Type 값 "Reagents" (디스크립션 데이터는 Consumable, Reagent) | Reagent | 반영 |
-| 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (화면 글자) | Inventory Usage History (TI-IVT-06-T) | TI-IVT-06-T-R02 | Usage 열 값이 예시 줄에 없음, 일부 줄은 Barcode도 없음 | 예시 값 채움 | 반영 |
+| 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (화면 글자) | Inventory Usage History (TI-IVT-06-T) | TI-IVT-06-T-R02 | Usage 열 값이 예시 줄에 없음, 일부 줄은 Barcode도 없음 | 예시 값 채움 | 제외 (2026-11-27, 바꾸지 않음) |
 | 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (디스크립션) | Inventory Usage History (TI-IVT-06-T) | TI-IVT-06-T-R04 | 2 "오늘 기준 7일간의 내용만 목록에 노출" / 1 기간 검색 최대 1년 | 기본 조회 기간이 7일이라는 뜻으로 고침 | 반영 |
 | 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (오타) | Inventory Usage History (TI-IVT-06-T) | TI-IVT-06-T-R05 | 3 ".CVS" | .CSV | 반영 |
 | 3 디스크립션 · 화면 글자 정리 (오타 · 띄어쓰기 · 번호 · 예시 값 · 다른 화면 참조) (이름 (번호) 띄어쓰기) | Inventory Usage History (TI-IVT-06-T) | TI-IVT-06-T-R07 | "Plate Sealing(1)", "Consumable Storage(1)" | Plate Sealing (1), Consumable Storage (1) | 반영 |
