@@ -1,18 +1,28 @@
 {
-  "reportAt": "2026-11-27T15:41:37+09:00",
+  "reportAt": "2026-11-27T15:42:53+09:00",
   "pc": "BREX_01",
   "slug": "brex-01",
   "user": "서보경",
   "os": "windows",
-  "version": "0.32.30",
+  "version": "0.32.36",
   "alive": true,
   "status": "idle",
-  "msg": "마지막 처리: PENDING R002 · 컨텍스트 29%",
-  "statusAt": "2026-11-27T15:41:33+09:00",
+  "msg": "준비 확인 중 (Claude 로그인 · Figma 연결)",
+  "statusAt": "2026-11-27T15:42:50+09:00",
   "claude": "따로 설치",
   "claudeWay": "app",
   "autoWatch": true,
   "events": [
+    {
+      "at": "2026-11-27T15:42:50+09:00",
+      "kind": "start",
+      "text": "감시 시작"
+    },
+    {
+      "at": "2026-11-27T15:42:44+09:00",
+      "kind": "stop",
+      "text": "감시 중지"
+    },
     {
       "at": "2026-11-27T14:31:00+09:00",
       "kind": "limit",
