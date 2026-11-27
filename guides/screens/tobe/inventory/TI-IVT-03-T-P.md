@@ -11,8 +11,13 @@ author: 이상헌
 client_mode: []
 user_type: [Service, Admin, User]
 policies: [POL-INV-001, POL-INV-004, POL-EQP-009]
-basis:
+basis: 2026-11-27 15:53 · history c133247fe
 basis_versions:
+  rules: CURECA 작업규칙 @2026-11-27 11:34
+  policy: CURECA 정책서 @2026-11-27 15:31
+  glossary: 기준데이터 @2026-11-26 15:17
+  screens: 화면 정의서 @2026-11-27 15:45
+  common_ux: Common UX (common-ux/comm-index.md) @2026-11-25 16:08
 source: tobe
 figma: https://www.figma.com/design/etCQFF3CTf1EA6C79d4BBf/UX-AI-TEST?node-id=3903-7490
 ---
