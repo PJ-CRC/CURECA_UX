@@ -29,7 +29,7 @@ started: 2026-11-27
 | 4. 수정 · 확인 | | | |
 | 5. 완료 | | | |
 
-이어서 작업할 곳: 4단계 · 절차 1 사용자 확인 목록 반영 중 — Q1 ~ Q7 반영 끝, C1 · C2 · C4 · C5 · C6 · Q4 답 받음(C22 · C23), 작업 기록 끝 · 화면 MD · Figma 진행 중. C7 · C8 · C12 · C14 · C15 물음, 답 기다림. 반영 대기 TI-STN-04-02-T-R03 \pending/open.md\ 대기로 되돌릴 것 (다시 읽을 곳: 4단계 \low/4-revise-verify.md\ 절차 1 · 절차 공통: 화면 수정 규칙 / 작업 기록 "질문 대기" · "변경 확인")
+이어서 작업할 곳: 4단계 · 절차 1 사용자 확인 목록 반영 중 — Q1 ~ Q7 반영 끝, C1 · C2 · C4 · C5 · C6 · Q4 답 받음(C22 · C23), 작업 기록 끝 · 화면 MD · Figma 진행 중. C7 · C8 · C12 · C14 · C15 물음, 답 기다림. 반영 대기 TI-STN-04-02-T-R03 `pending/open.md` 대기로 되돌릴 것 (다시 읽을 곳: 4단계 `flow/4-revise-verify.md` 절차 1 · 절차 공통: 화면 수정 규칙 / 작업 기록 "질문 대기" · "변경 확인")
 
 ## 요청
 <!-- 1단계 절차 1번. 요청 글 한두 줄과 출처, 공유 파일 (아래 "항목마다 적는 법") -->
@@ -226,7 +226,7 @@ started: 2026-11-27
 | Q1 | LIS Setting을 쓸 수 있는 User Type (권한 표 `policy/permission-matrix.csv`에 LIS Setting 줄 없음. POL-SYS-001 규칙 8 · 기존 화면은 Service · Admin) | TI-STN-04-01-T 0 · TI-STN-04-02-T 0 | | - (T-IOS 단독) | 2026-11-27 · 요청자 답 "Service, Admin" — 디스크립션 0이 이미 Service, Admin이라 화면 변경 없음. Figma 사용자 확인 목록 Q1 항목 지움 (라벨 없음). 권한 표는 5단계에서 맞춤 |
 | Q2 | Port · Host Address(IP) 입력값의 형식 · 범위 검사와 빈 값으로 [Save]를 누를 때의 동작 (POL-SYS-001에 없음) | TI-STN-04-01-T 3-2 · 4 · 4 (LIS Network) · 5 | | - (T-IOS 단독) || 2026-11-27 · 요청자 답: Text Input 그대로, 필수값으로 두지 않고 형식 · 범위 검사 정책도 두지 않음(테스트하며 확인) → C17 |
 | Q3 | LIS Code를 빈 값 · 다른 항목과 같은 값으로 입력할 때의 동작 (POL-SYS-002에 없음) | TI-STN-04-02-T 4 | | - (T-IOS 단독) || 2026-11-27 · 요청자 답: 빈 값으로 확정하면 Default 값으로 바뀌어 저장, 다른 항목과 같은 값은 쓸 수 없고 Alert(이미 사용 중)로 안내 → C18 (Alert_048 새로 더함). 이 화면 안의 결정이라 논의 대상은 만들지 않음 (discussions.md 4절) |
-| Q4 | 처음 설치할 때 채워지는 LIS Test Code 값 (기존 화면 `Allplex_HPV_HR`은 `glossary/test-items.csv`에서 쓰지 않는 표현, 검사 항목 코드는 `HPVHR-HP72/73`. POL-SYS-002 규칙 3) | TI-STN-04-02-T 케이스 Test Code 화면 | | - (T-IOS 단독) || 2026-11-27 · 요청자 답: 기존 화면 값 그대로 → 같은 날 C6 답에서 바꿈: LIS Test Code도 LIS Sample Type Code처럼 코드(\glossary/test-items.csv\ 검사 항목 코드)로 → C22 |
+| Q4 | 처음 설치할 때 채워지는 LIS Test Code 값 (기존 화면 `Allplex_HPV_HR`은 `glossary/test-items.csv`에서 쓰지 않는 표현, 검사 항목 코드는 `HPVHR-HP72/73`. POL-SYS-002 규칙 3) | TI-STN-04-02-T 케이스 Test Code 화면 | | - (T-IOS 단독) || 2026-11-27 · 요청자 답: 기존 화면 값 그대로 → 같은 날 C6 답에서 바꿈: LIS Test Code도 LIS Sample Type Code처럼 코드(`glossary/test-items.csv` 검사 항목 코드)로 → C22 |
 | Q5 | 검색 결과가 없을 때 목록에 보여 줄 문구 (Common UX Basic Table No Data는 문구를 화면에 맡김, 기존 화면 · 정책서 · 같은 메뉴에 없음) | TI-STN-04-02-T 2-1 | | - (T-IOS 단독) || 2026-11-27 · 요청자 답: 다른 화면과 같은 공통 문구 No results found. (LID-STN-015) → C19 |
 | Q6 | [4-2] 확정한 항목을 강조하는 표시 (기존 디스크립션 "색상으로 구분", 색 · 모양 정의 없음) | TI-STN-04-02-T 4 | | - (T-IOS 단독) || 2026-11-27 · 요청자 답: 색은 UI에서 정함, 디스크립션에는 색으로 강조된다고만 → C20 |
 | Q7 | 목록의 노출 개수 · Pagination 적용 (Common UX Basic Table은 10 items · 노출 개수 Dropdown · Pagination, 기존 화면은 전체 노출이라 기존대로 그림) | TI-STN-04-02-T 2 · 케이스 Case 1 · 2 | | - (T-IOS 단독) || 2026-11-27 · 요청자 답: Pagination 없이 전체 노출 (항목 최대 약 50개, 검색 있음) — 지금 그린 대로 → C21 (디스크립션만) |
@@ -257,7 +257,7 @@ started: 2026-11-27
 | C19 | 2-1 검색 결과가 없을 때 문구 없음 | 2-1에 「일치하는 항목이 없으면 목록에 No results found. 노출」을 더함 | 없음 → No results found. | TI-STN-04-02-T 2-1 | Q5의 답 | - (T-IOS 단독) | O | 맞음 (2026-11-27) |
 | C20 | 4 [4-2] 「색상으로 구분」 | 「색으로 강조 (색은 UI에서 정함)」으로 | | TI-STN-04-02-T 4 | Q6의 답 | - (T-IOS 단독) | - | 맞음 (2026-11-27) |
 | C21 | 2 노출 개수 · Pagination 설명 없음 | 2에 「목록 전체 노출 (Pagination 없음)」을 더함 | | TI-STN-04-02-T 2 | Q7의 답 | - (T-IOS 단독) | - | 맞음 (2026-11-27) |
-| C22 | 케이스 Case 2 LIS Test Code 예시 값이 검사 항목 이름 (Allplex HPV HR만 \Allplex_HPV_HR\) | LIS Test Code를 \glossary/test-items.csv\ 검사 항목 코드로 | Allplex_HPV_HR → HPVHR-HP72/73 · Anyplex II HPV HR → HPV_HR · H.ClariR → H_ClariR · M.AziR → M_AziR · M.MoxiR → M_MoxiR · BV plus → BV_plus (예시 값) | TI-STN-04-02-T 케이스 Case 2 | Q4의 답 (C6 답에서 바꿈) | - (T-IOS 단독) | O | 맞음 (2026-11-27) |
+| C22 | 케이스 Case 2 LIS Test Code 예시 값이 검사 항목 이름 (Allplex HPV HR만 `Allplex_HPV_HR`) | LIS Test Code를 `glossary/test-items.csv` 검사 항목 코드로 | Allplex_HPV_HR → HPVHR-HP72/73 · Anyplex II HPV HR → HPV_HR · H.ClariR → H_ClariR · M.AziR → M_AziR · M.MoxiR → M_MoxiR · BV plus → BV_plus (예시 값) | TI-STN-04-02-T 케이스 Case 2 | Q4의 답 (C6 답에서 바꿈) | - (T-IOS 단독) | O | 맞음 (2026-11-27) |
 | C23 | 0 데이터 관련 정의를 풀어 쓴 문장 (C4) | 씨젠 Assay Pack 명세 R06의 파일 · 파라미터 이름으로 다시 씀: Master 파일 검체 타입 목록(sampleTypeId · sampleTypeName · sampleTypeCode), PCR 파일 testItemCode · testItemName, isTestTargetSelectable · testTargetNames | | TI-STN-04-02-T 0 | 요청자 답 (C4, 2026-11-27) · \eference/customer/assay-pack/README.md\ | - (T-IOS 단독) | - | 맞음 (2026-11-27) |
 
 ## 검토 질의
