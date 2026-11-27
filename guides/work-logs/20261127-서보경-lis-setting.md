@@ -85,15 +85,15 @@ started: 2026-11-27
 | --- | --- | --- | --- | --- |
 | 1 | 1. 기능 정의가 안 된 요소: Port · Host Address(IP) 입력값의 형식 · 범위 검사와, 빈 값으로 [Save]를 누를 때 동작이 없음 | TI-STN-04-01-T #3-2 · #4 · #4(LIS Network) · #5 | 2단계 (POL-SYS-001) | Q2 |
 | 2 | 1. 기능 정의가 안 된 요소: [Edit]로 LIS 코드를 빈 값 · 다른 항목과 같은 값으로 입력할 때 동작이 없음 | TI-STN-04-02-T #4 | 2단계 (POL-SYS-002) | Q3 |
-| 3 | 1. 기능 정의가 안 된 요소: 검색 결과가 없을 때 무엇을 보여 주는지 없음 (Sample Type · Test Code · Target Code 검색) | TI-STN-04-02-T #2-1 | 3단계 | |
-| 4 | 1. 기능 정의가 안 된 요소: [4-2] 수정된 항목을 "색상으로 구분"하는데 어떤 표시인지 없음 | TI-STN-04-02-T #4 | 3단계 | |
-| 5 | 1. 기능 정의가 안 된 요소: 화면 제목 아래 안내 문구 "Configure LIS interface settings for order and result transmission."가 디스크립션에 없음 | TI-STN-04-01-T #0 | 3단계 | |
-| 6 | 5. 대상 화면에서 찾은 고칠 점: 디스크립션 번호 `4.`가 두 번 (T-IOS Network · LIS Network) → 뒤의 LIS Network에 끝 번호 다음 번호 (`flow/3-design-case3.md` 번호, 빈 번호 3-1은 그대로 둠) | TI-STN-04-01-T #4 (LIS Network) | 3단계 | |
-| 7 | 5. 대상 화면에서 찾은 고칠 점: 디스크립션 "'Push'를 선택" · "Query를 선택" → 화면 값 `Push Mode` · `Query Mode`와 맞춤 | TI-STN-04-01-T #4 | 3단계 | |
-| 8 | 5. 대상 화면에서 찾은 고칠 점: 디스크립션 영역 이름 "T-IOS Network (Order Reception Mode: Push Mode Only)" ↔ 화면 "T-IOS Network (Push Mode Only)" | TI-STN-04-01-T #3-2 · #4 | 3단계 | |
-| 9 | 5. 대상 화면에서 찾은 고칠 점: 2-1 검색 대상 "System Code 또는 LIS Code" ↔ 화면 검색창 "Search by sample type or LIS code" | TI-STN-04-02-T #2-1 | 3단계 | |
-| 10 | 5. 대상 화면에서 찾은 고칠 점: 2-2 제목 `System code` → `System Code` (표기) | TI-STN-04-02-T #2-2 | 3단계 | |
-| 11 | 5. 대상 화면에서 찾은 고칠 점: 기존 원본의 "필터 화면" 케이스가 Test Code 목록과 겹쳐 그려져 있음 → 케이스를 따로 그림 | TI-STN-04-02-T 케이스 (필터 화면) | 3단계 | |
+| 3 | 1. 기능 정의가 안 된 요소: 검색 결과가 없을 때 무엇을 보여 주는지 없음 (Sample Type · Test Code · Target Code 검색) | TI-STN-04-02-T #2-1 | 3단계 | Q5 |
+| 4 | 1. 기능 정의가 안 된 요소: [4-2] 수정된 항목을 "색상으로 구분"하는데 어떤 표시인지 없음 | TI-STN-04-02-T #4 | 3단계 | Q6 |
+| 5 | 1. 기능 정의가 안 된 요소: 화면 제목 아래 안내 문구 "Configure LIS interface settings for order and result transmission."가 디스크립션에 없음 | TI-STN-04-01-T #0 | 3단계 | C9 |
+| 6 | 5. 대상 화면에서 찾은 고칠 점: 디스크립션 번호 `4.`가 두 번 (T-IOS Network · LIS Network) → 뒤의 LIS Network에 끝 번호 다음 번호 (`flow/3-design-case3.md` 번호, 빈 번호 3-1은 그대로 둠) | TI-STN-04-01-T #4 (LIS Network) | 3단계 | C8 |
+| 7 | 5. 대상 화면에서 찾은 고칠 점: 디스크립션 "'Push'를 선택" · "Query를 선택" → 화면 값 `Push Mode` · `Query Mode`와 맞춤 | TI-STN-04-01-T #4 | 3단계 | C10 |
+| 8 | 5. 대상 화면에서 찾은 고칠 점: 디스크립션 영역 이름 "T-IOS Network (Order Reception Mode: Push Mode Only)" ↔ 화면 "T-IOS Network (Push Mode Only)" | TI-STN-04-01-T #3-2 · #4 | 3단계 | C11 |
+| 9 | 5. 대상 화면에서 찾은 고칠 점: 2-1 검색 대상 "System Code 또는 LIS Code" ↔ 화면 검색창 "Search by sample type or LIS code" | TI-STN-04-02-T #2-1 | 3단계 | C12 |
+| 10 | 5. 대상 화면에서 찾은 고칠 점: 2-2 제목 `System code` → `System Code` (표기) | TI-STN-04-02-T #2-2 | 3단계 | C13 |
+| 11 | 5. 대상 화면에서 찾은 고칠 점: 기존 원본의 "필터 화면" 케이스가 Test Code 목록과 겹쳐 그려져 있음 → 케이스를 따로 그림 | TI-STN-04-02-T 케이스 (필터 화면) | 3단계 | 근거로 풀림 (Figma 원본에서 필터 케이스가 따로 그려져 있음 `3543:568577`) |
 
 ## 대상 화면의 반영 대기 항목
 <!-- 1단계 절차 3번 순서 4. 틀은 flow/1-requirements.md "대상 화면의 반영 대기 항목 틀" -->
@@ -148,8 +148,20 @@ started: 2026-11-27
 | 요건 1 · TI-STN-04-02-T 4 Done · Enter "입력값 저장 처리" | 기존 화면이 정책과 다름 | POL-SYS-002 규칙 5, 반영 대기 TI-STN-04-02-T-R02 | C5 |
 | 요건 1 · TI-STN-04-02-T Sample Type Name `Raw_stool` · `eNAT_stool` · `Fecal_swab` | 기존 화면이 정책과 다름 | `glossary/sample-types.csv` UI 표기, POL-SYS-002 규칙 2, 반영 대기 TI-STN-04-02-T-R01 | C6 |
 | 요건 1 · TI-STN-04-02-T Target Code 항목 수 `10` (Products 목록은 9개) | 기존 화면이 정책과 다름 | `glossary/test-items.csv` Target Masking 가능 Y 9종, POL-TST-010 규칙 4 | C7 |
+| C8 | 디스크립션 번호 `4`가 두 번 (T-IOS Network · LIS Network), LIS Network에 화면 번호 표시 없음 | 뒤의 LIS Network를 끝 번호 다음 `6`으로, 화면에 번호 표시 6을 둠 (flow/3-design-case3.md 번호) | | TI-STN-04-01-T 6 | 기존 원본 번호 겹침 (뒤 단계용 확인 항목 6) | - (T-IOS 단독) | - | |
+| C9 | 화면 제목 아래 안내 문구가 디스크립션에 없음 | 0에 "화면 상단에 Interface Configuration 제목과 안내 문구 노출"을 더함 | | TI-STN-04-01-T 0 | 기존 화면에 보이는 것 (뒤 단계용 확인 항목 5) | - (T-IOS 단독) | - | 맞음 (기존 화면, 2026-11-27) |
+| C10 | 4에 "'Push'를 선택" · "Query를 선택" | `Push Mode` · `Query Mode`로 (화면 값과 맞춤) | | TI-STN-04-01-T 4 | 표기 정리 (뒤 단계용 확인 항목 7) | - (T-IOS 단독) | - | 맞음 (오타, 2026-11-27) |
+| C11 | 3-2 · 4의 영역 이름 "T-IOS Network (Order Reception Mode: Push Mode Only)" | 화면 글자 "T-IOS Network (Push Mode Only)"로 | | TI-STN-04-01-T 3-2 · 4 | 표기 정리 (뒤 단계용 확인 항목 8) | - (T-IOS 단독) | - | 맞음 (오타, 2026-11-27) |
+| C12 | 2-1 검색 대상 "System Code 또는 LIS Code" | "Sample Type Name 또는 LIS Sample Type Code"로 (화면 검색창 안내 글 `Search by sample type or LIS code`와 맞춤) | | TI-STN-04-02-T 2-1 | 기존 화면 글자 (뒤 단계용 확인 항목 9) | - (T-IOS 단독) | - | |
+| C13 | 2-2 제목 `System code` | `System Code` | | TI-STN-04-02-T 2-2 | 표기 (뒤 단계용 확인 항목 10) | - (T-IOS 단독) | - | 맞음 (오타, 2026-11-27) |
+| C14 | 탭(Interface Configuration · Code Mapping)에 번호 · 디스크립션 없음, 모양은 Box Tabs | 탭 영역 번호 (TI-STN-04-01-T `7` · TI-STN-04-02-T `6`)와 디스크립션을 더하고 Common UX Underline Tab으로 그림 | | TI-STN-04-01-T 7 · TI-STN-04-02-T 6 | Common UX COMM-5-s Underline Tab | - (T-IOS 단독) | O | |
+| C15 | Code Type 목록이 버튼 모양(항목 이름 + 개수 원) | Common UX Outline Tab(Count)으로 그림 | | TI-STN-04-02-T 1 · 1-1 · 케이스 Case 1 · 2 · 3 | Common UX COMM-5-s Outline Tab | - (T-IOS 단독) | O | |
+| C16 | 2에 컬럼 항목 설명 없음 | 2에 "컬럼 항목"(No. · 항목 이름 · LIS Code)을 더함 | | TI-STN-04-02-T 2 | 기존 화면에 보이는 것 (reference-rules/description.md 3절 표) | - (T-IOS 단독) | - | 맞음 (기존 화면, 2026-11-27) |
 | 요건 1 · TI-STN-04-02-T Test Code 30종 · GI-B1 Target 7개 | 정책에 있음 | `glossary/test-items.csv` | 그대로 그림 |
 | 요건 1 · TI-STN-04-02-T Test Code의 LIS Test Code 예시 (`Allplex_HPV_HR` 등) | 정책에 없음 (처음 채워지는 CURECA 값이 무엇인지 없음) | POL-SYS-002 규칙 3, `glossary/test-items.csv` 코드 | Q4 |
+| Q5 | 검색 결과가 없을 때 목록에 보여 줄 문구 (Common UX Basic Table No Data는 문구를 화면에 맡김, 기존 화면 · 정책서 · 같은 메뉴에 없음) | TI-STN-04-02-T 2-1 | | - (T-IOS 단독) | |
+| Q6 | [4-2] 확정한 항목을 강조하는 표시 (기존 디스크립션 "색상으로 구분", 색 · 모양 정의 없음) | TI-STN-04-02-T 4 | | - (T-IOS 단독) | |
+| Q7 | 목록의 노출 개수 · Pagination 적용 (Common UX Basic Table은 10 items · 노출 개수 Dropdown · Pagination, 기존 화면은 전체 노출이라 기존대로 그림) | TI-STN-04-02-T 2 · 케이스 Case 1 · 2 | | - (T-IOS 단독) | |
 | 요건 1 · 두 화면 5 [Save] · 저장하지 않고 이동 | 정책에 있음 | Confirm_010 · Alert_017 · Confirm_016 | 디스크립션 끝에 코드 |
 | 요건 1 · 두 화면 0 User Type | 표에 줄 없음 | POL-SYS-001 규칙 8 (Service · Admin), `policy/permission-matrix.csv`에 LIS Setting 줄 없음 | Q1 |
 
@@ -177,19 +189,31 @@ started: 2026-11-27
 | Q2 | Port · Host Address(IP) 입력값의 형식 · 범위 검사와 빈 값으로 [Save]를 누를 때의 동작 (POL-SYS-001에 없음) | TI-STN-04-01-T 3-2 · 4 · 4 (LIS Network) · 5 | | - (T-IOS 단독) | |
 | Q3 | LIS Code를 빈 값 · 다른 항목과 같은 값으로 입력할 때의 동작 (POL-SYS-002에 없음) | TI-STN-04-02-T 4 | | - (T-IOS 단독) | |
 | Q4 | 처음 설치할 때 채워지는 LIS Test Code 값 (기존 화면 `Allplex_HPV_HR`은 `glossary/test-items.csv`에서 쓰지 않는 표현, 검사 항목 코드는 `HPVHR-HP72/73`. POL-SYS-002 규칙 3) | TI-STN-04-02-T 케이스 Test Code 화면 | | - (T-IOS 단독) | |
+| Q5 | 검색 결과가 없을 때 목록에 보여 줄 문구 (Common UX Basic Table No Data는 문구를 화면에 맡김, 기존 화면 · 정책서 · 같은 메뉴에 없음) | TI-STN-04-02-T 2-1 | | - (T-IOS 단독) | |
+| Q6 | [4-2] 확정한 항목을 강조하는 표시 (기존 디스크립션 "색상으로 구분", 색 · 모양 정의 없음) | TI-STN-04-02-T 4 | | - (T-IOS 단독) | |
+| Q7 | 목록의 노출 개수 · Pagination 적용 (Common UX Basic Table은 10 items · 노출 개수 Dropdown · Pagination, 기존 화면은 전체 노출이라 기존대로 그림) | TI-STN-04-02-T 2 · 케이스 Case 1 · 2 | | - (T-IOS 단독) | |
 
 ## 변경 확인
 <!-- 사용자 확인 목록의 변경 확인이자 이 작업으로 화면에서 바뀐 요소의 목록. 원본은 이 표(화면 MD에는 두지 않음). 틀 설명은 reference-rules/work-log.md "틀"의 "변경 확인" 주석 -->
 
 | 번호 (C) | 기존 화면 | 바꿔 그린 것 | 화면 표기 글자 (기존 → 새) | 관련된 곳 (CID · 디스크립션 번호) | 근거 | T · L 같음 | 업데이트 메모 (O / -) | 확인한 날 · 답 (맞음 / 되돌림) |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| C1 | 0에 "Default: All / 데이터: All, Error, Warning" | 그 줄을 지움 (LIS Setting에 없는 값) | | TI-STN-04-01-T 0 | 반영 대기 TI-STN-04-01-T-R01 | - (T-IOS 단독) | - | |
+| C1 | 0에 "Default: All / 데이터: All, Error, Warning" | 그 줄을 빨간 취소선으로 (LIS Setting에 없는 값) | | TI-STN-04-01-T 0 | 반영 대기 TI-STN-04-01-T-R01 | - (T-IOS 단독) | - | |
 | C2 | 기본 상태 화면이 Order Reception Mode `Push Mode`, Port `20200` | 기본 상태 화면을 `Query Mode`, Port 비활성 · 빈 값으로 (POL-SYS-001 규칙 4 · 5) | Push Mode → Query Mode (예시 값) | TI-STN-04-01-T 3 · 3-2 · 4 | POL-SYS-001 규칙 4 · 5, 반영 대기 TI-STN-04-01-T-R03 | - (T-IOS 단독) | O | |
 | C3 | 설정이 CURECA마다인지 디스크립션에 없음 | 0에 "상단에서 고른 CURECA의 설정을 보여 주고 바꿈"을 더함 | | TI-STN-04-01-T 0 · TI-STN-04-02-T 0 | POL-SYS-001 규칙 7, POL-SYS-002 규칙 6, POL-COM-005 규칙 5, 반영 대기 TI-STN-04-01-T-R04 | - (T-IOS 단독) | O | |
 | C4 | 0 "데이터 관련 정의"에 Assay Pack 데이터 키 이름(fileType, sampleTypeInfo, testItemCode, isTargetNames 등) | Code Type마다 관리 항목 · 출처를 풀어 쓰고 POL-SYS-002 참고로 이음 (헌법 3조) | | TI-STN-04-02-T 0 | POL-SYS-002 정의 · 규칙 1, 반영 대기 TI-STN-04-02-T-R03 | - (T-IOS 단독) | - | |
 | C5 | 4 Done · Enter · 다른 영역 클릭 시 "입력값 저장 처리" | 행 입력 확정(edit 모드 종료)으로 쓰고, 저장은 5 [Save]로만 된다고 구분 (POL-SYS-002 규칙 5) | | TI-STN-04-02-T 4 · 5 | POL-SYS-002 규칙 5, 반영 대기 TI-STN-04-02-T-R02 | - (T-IOS 단독) | O | |
 | C6 | Sample Type Name `Raw_stool` · `eNAT_stool` · `Fecal_swab` (코드) | UI 표기로 (LIS Sample Type Code 칸은 그대로) | Raw_stool → Raw stool · eNAT_stool → eNAT stool · Fecal_swab → Fecal swab | TI-STN-04-02-T 2 | `glossary/sample-types.csv`, POL-SYS-002 규칙 2, 반영 대기 TI-STN-04-02-T-R01 | - (T-IOS 단독) | O | |
 | C7 | Code Type의 Target Code 항목 수 · Products 수 `10` (목록은 9개) | `9`로 (Target Masking 가능 Y 9종) | | TI-STN-04-02-T 1-1 · 케이스 Target Code 화면 | `glossary/test-items.csv`, POL-TST-010 규칙 4 | - (T-IOS 단독) | O | |
+| C8 | 디스크립션 번호 `4`가 두 번 (T-IOS Network · LIS Network), LIS Network에 화면 번호 표시 없음 | 뒤의 LIS Network를 끝 번호 다음 `6`으로, 화면에 번호 표시 6을 둠 (flow/3-design-case3.md 번호) | | TI-STN-04-01-T 6 | 기존 원본 번호 겹침 (뒤 단계용 확인 항목 6) | - (T-IOS 단독) | - | |
+| C9 | 화면 제목 아래 안내 문구가 디스크립션에 없음 | 0에 "화면 상단에 Interface Configuration 제목과 안내 문구 노출"을 더함 | | TI-STN-04-01-T 0 | 기존 화면에 보이는 것 (뒤 단계용 확인 항목 5) | - (T-IOS 단독) | - | 맞음 (기존 화면, 2026-11-27) |
+| C10 | 4에 "'Push'를 선택" · "Query를 선택" | `Push Mode` · `Query Mode`로 (화면 값과 맞춤) | | TI-STN-04-01-T 4 | 표기 정리 (뒤 단계용 확인 항목 7) | - (T-IOS 단독) | - | 맞음 (오타, 2026-11-27) |
+| C11 | 3-2 · 4의 영역 이름 "T-IOS Network (Order Reception Mode: Push Mode Only)" | 화면 글자 "T-IOS Network (Push Mode Only)"로 | | TI-STN-04-01-T 3-2 · 4 | 표기 정리 (뒤 단계용 확인 항목 8) | - (T-IOS 단독) | - | 맞음 (오타, 2026-11-27) |
+| C12 | 2-1 검색 대상 "System Code 또는 LIS Code" | "Sample Type Name 또는 LIS Sample Type Code"로 (화면 검색창 안내 글 `Search by sample type or LIS code`와 맞춤) | | TI-STN-04-02-T 2-1 | 기존 화면 글자 (뒤 단계용 확인 항목 9) | - (T-IOS 단독) | - | |
+| C13 | 2-2 제목 `System code` | `System Code` | | TI-STN-04-02-T 2-2 | 표기 (뒤 단계용 확인 항목 10) | - (T-IOS 단독) | - | 맞음 (오타, 2026-11-27) |
+| C14 | 탭(Interface Configuration · Code Mapping)에 번호 · 디스크립션 없음, 모양은 Box Tabs | 탭 영역 번호 (TI-STN-04-01-T `7` · TI-STN-04-02-T `6`)와 디스크립션을 더하고 Common UX Underline Tab으로 그림 | | TI-STN-04-01-T 7 · TI-STN-04-02-T 6 | Common UX COMM-5-s Underline Tab | - (T-IOS 단독) | O | |
+| C15 | Code Type 목록이 버튼 모양(항목 이름 + 개수 원) | Common UX Outline Tab(Count)으로 그림 | | TI-STN-04-02-T 1 · 1-1 · 케이스 Case 1 · 2 · 3 | Common UX COMM-5-s Outline Tab | - (T-IOS 단독) | O | |
+| C16 | 2에 컬럼 항목 설명 없음 | 2에 "컬럼 항목"(No. · 항목 이름 · LIS Code)을 더함 | | TI-STN-04-02-T 2 | 기존 화면에 보이는 것 (reference-rules/description.md 3절 표) | - (T-IOS 단독) | - | 맞음 (기존 화면, 2026-11-27) |
 
 ## 검토 질의
 <!-- 4단계 절차 2번. 틀은 flow/4-revise-verify.md "검토 질의 틀" -->
