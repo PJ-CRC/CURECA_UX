@@ -2872,3 +2872,131 @@
 | 2026-11-27 | v0.06 | LID-MAS-438 | Material Setup | LI-TSS-DXI-08 / LI-TSS-DXI-09 | 변경 | After refilling, click [Confirm refill]. | After refilling, click [Confirm]. | 언어셋 v0.06 목록 시트 1703행 (R011 첨부 CURECA_Language_Set_v0.06.xlsx) | 하승현 |
 | 2026-11-27 | v0.06 | LID-MAS-441 | Material Setup | LI-TSS-DXI-09 | 변경 | Confirm all refills | Confirm all | 언어셋 v0.06 목록 시트 1706행 (R011 첨부 CURECA_Language_Set_v0.06.xlsx) | 하승현 |
 | 2026-11-27 |  | ref: LID-STN-015 | LIS Setting | TI-STN-04-02-T | 재사용 추가 |  |  | 작업 기록 20261127-서보경-lis-setting · 5단계 언어셋 반영 | Claude (서보경 작업) |
+| 2026-11-27 |  | LID-IVT-052 | Inventory | TI-IVT-01-T | 재사용 추가 |  |  | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-001 | Inventory | TI-IVT-02-T / TI-IVT-03-T / TI-IVT-04-T / TI-IVT-05-T / TI-IVT-06-T | 재사용 추가 |  |  | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | ref: LID-EVT-003 | Inventory | TI-IVT-06-T | 변경 (ID 변경) | All Item Types | All | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 (LID-IVT-035에서 TI-IVT-06-T를 뺌) | Claude (최고관리자 작업) |
+| 2026-11-27 |  | ref: LID-MAS-013 | Inventory | TI-IVT-01-T / TI-IVT-02-T / TI-IVT-04-T | 재사용 추가 |  |  | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | ref: LID-EVT-051 | Inventory | TI-IVT-01-T / TI-IVT-02-T / TI-IVT-05-T | 재사용 추가 |  |  | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | ref: LID-SPT-026 | Inventory | TI-IVT-01-T / TI-IVT-02-T / TI-IVT-03-T / TI-IVT-05-T / TI-IVT-06-T | 재사용 추가 |  |  | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | ref: LID-EVT-049 | Inventory | TI-IVT-01-T / TI-IVT-02-T / TI-IVT-03-T / TI-IVT-03-T-P / TI-IVT-04-T / TI-IVT-04-T-P / TI-IVT-06-T | 재사용 추가 |  |  | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | ref: LID-EVT-052 | Inventory | TI-IVT-01-T / TI-IVT-02-T / TI-IVT-05-T | 재사용 추가 |  |  | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | ref: LID-SPT-032 | Inventory | TI-IVT-01-T / TI-IVT-02-T / TI-IVT-05-T / TI-IVT-06-T | 재사용 추가 |  |  | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | ref: LID-EVT-053 | Inventory | TI-IVT-01-T / TI-IVT-05-T | 재사용 추가 |  |  | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | ref: LID-EVT-050 | Inventory | TI-IVT-01-T / TI-IVT-05-T | 재사용 추가 |  |  | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | ref: LID-EVT-064 | Inventory | TI-IVT-01-T / TI-IVT-03-T | 재사용 추가 |  |  | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | ref: LID-EVT-056 | Inventory | TI-IVT-01-T / TI-IVT-03-T / TI-IVT-03-T-P / TI-IVT-04-T / TI-IVT-04-T-P / TI-IVT-06-T | 재사용 추가 |  |  | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | ref: LID-EVT-063 | Inventory | TI-IVT-01-T | 재사용 추가 |  |  | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | ref: LID-EVT-048 | Inventory | TI-IVT-02-T | 재사용 추가 |  |  | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | ref: LID-SPT-020 | Inventory | TI-IVT-02-T / TI-IVT-03-T | 재사용 추가 |  |  | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | ref: LID-MAS-014 | Inventory | TI-IVT-02-T / TI-IVT-04-T | 재사용 추가 |  |  | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | ref: LID-SPT-031 | Inventory | TI-IVT-02-T / TI-IVT-03-T / TI-IVT-06-T | 재사용 추가 |  |  | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | ref: LID-SPT-024 | Inventory | TI-IVT-04-T | 재사용 추가 |  |  | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | ref: LID-SPT-025 | Inventory | TI-IVT-04-T | 재사용 추가 |  |  | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | ref: LID-SPT-033 | Inventory | TI-IVT-04-T | 재사용 추가 |  |  | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | ref: LID-RUN-011 | Inventory | TI-IVT-06-T | 재사용 추가 |  |  | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-054 | Inventory | TI-IVT-01-T / TI-IVT-02-T / TI-IVT-04-T | 추가 |  | MB DWP | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-055 | Inventory | TI-IVT-01-T / TI-IVT-02-T / TI-IVT-04-T | 추가 |  | EB DWP | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-056 | Inventory | TI-IVT-01-T / TI-IVT-02-T / TI-IVT-03-T | 추가 |  | 300 μL Tip | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-057 | Inventory | TI-IVT-01-T / TI-IVT-02-T / TI-IVT-04-T | 추가 |  | PBS Tub | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-058 | Inventory | TI-IVT-01-T / TI-IVT-02-T / TI-IVT-03-T / TI-IVT-03-T-P / TI-IVT-06-T | 추가 |  | 1000 μL Tip | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-059 | Inventory | TI-IVT-01-T / TI-IVT-02-T / TI-IVT-04-T | 추가 |  | BB Tub | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-060 | Inventory | TI-IVT-01-T / TI-IVT-02-T / TI-IVT-04-T | 추가 |  | WB1 Tub | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-061 | Inventory | TI-IVT-01-T / TI-IVT-02-T / TI-IVT-04-T | 추가 |  | WB2 Tub | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-062 | Inventory | TI-IVT-01-T / TI-IVT-02-T / TI-IVT-04-T | 추가 |  | WB3 Tub | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-063 | Inventory | TI-IVT-01-T / TI-IVT-02-T / TI-IVT-04-T | 추가 |  | EB Tub | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-064 | Inventory | TI-IVT-01-T | 추가 |  | MB Storage | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-065 | Inventory | TI-IVT-01-T | 추가 |  | EB Storage | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-066 | Inventory | TI-IVT-01-T | 추가 |  | Waste Bin | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-067 | Inventory | TI-IVT-01-T | 추가 |  | Liquid Waste Bottle | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-068 | Inventory | TI-IVT-01-T | 추가 |  | Sealer Waste Bin | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-069 | Inventory | TI-IVT-01-T | 추가 |  | Tip Waste Bin (Upper) | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-070 | Inventory | TI-IVT-02-T / TI-IVT-03-T / TI-IVT-06-T | 추가 |  | Wide Bore Tip | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-071 | Inventory | TI-IVT-02-T / TI-IVT-03-T / TI-IVT-06-T | 추가 |  | Empty Standard Tube | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-072 | Inventory | TI-IVT-02-T / TI-IVT-03-T | 추가 |  | Stool Swab | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-073 | Inventory | TI-IVT-02-T / TI-IVT-04-T | 추가 |  | LB DWP | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-074 | Inventory | TI-IVT-02-T / TI-IVT-04-T | 추가 |  | GI-BP IC | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-075 | Inventory | TI-IVT-02-T / TI-IVT-04-T / TI-IVT-04-T-P | 추가 |  | GI-V IC | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-076 | Inventory | TI-IVT-02-T | 추가 |  | PB IC | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-077 | Inventory | TI-IVT-02-T / TI-IVT-04-T | 추가 |  | RP-V IC | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-078 | Inventory | TI-IVT-02-T | 추가 |  | STI-12 IC | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-079 | Inventory | TI-IVT-02-T / TI-IVT-04-T | 추가 |  | LB Tub | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-080 | Inventory | TI-IVT-02-T / TI-IVT-04-T | 추가 |  | LB Tub (Prep) | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-081 | Inventory | TI-IVT-02-T / TI-IVT-04-T | 추가 |  | Saline Tub | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-082 | Inventory | TI-IVT-02-T / TI-IVT-04-T | 추가 |  | ASL Standard Tube | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-083 | Inventory | TI-IVT-02-T / TI-IVT-04-T / TI-IVT-06-T | 추가 |  | PBS Standard Tube | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-084 | Inventory | TI-IVT-02-T / TI-IVT-04-T | 추가 |  | Prelyser Standard Tube | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-085 | Inventory | TI-IVT-02-T / TI-IVT-04-T | 추가 |  | Saline Standard Tube | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-086 | Inventory | TI-IVT-02-T / TI-IVT-04-T | 추가 |  | WB1 DWP | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-087 | Inventory | TI-IVT-02-T / TI-IVT-04-T | 추가 |  | WB2 DWP | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-088 | Inventory | TI-IVT-02-T / TI-IVT-04-T | 추가 |  | Spin Tip | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-089 | Inventory | TI-IVT-02-T / TI-IVT-03-T | 추가 |  | MM Tube | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-090 | Inventory | TI-IVT-02-T / TI-IVT-03-T | 추가 |  | Sealing Film | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-091 | Inventory | TI-IVT-02-T | 추가 |  | Allplex™ GI-Bacteria(I) Assay | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-092 | Inventory | TI-IVT-02-T / TI-IVT-04-T | 추가 |  | Allplex™ GI-Bacteria(II) Assay | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-093 | Inventory | TI-IVT-02-T / TI-IVT-04-T | 추가 |  | Allplex™ GI-Virus Assay | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-094 | Inventory | TI-IVT-02-T | 추가 |  | Allplex™ HPV28 Detection | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-095 | Inventory | TI-IVT-02-T | 추가 |  | Allplex™ PneumoBacter Assay | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-096 | Inventory | TI-IVT-02-T / TI-IVT-04-T | 추가 |  | Allplex™ Respiratory Panel 1 | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-097 | Inventory | TI-IVT-02-T | 추가 |  | Allplex™ Respiratory Panel 2 | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-098 | Inventory | TI-IVT-02-T | 추가 |  | Allplex™ Respiratory Panel 3 | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-099 | Inventory | TI-IVT-02-T | 추가 |  | Anyplex™ II STI-12 Detection | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-100 | Inventory | TI-IVT-03-T | 추가 |  | 1000 μL Tip Storage | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-101 | Inventory | TI-IVT-04-T | 추가 |  | STARMag M96 Kit | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-102 | Inventory | TI-IVT-04-T | 추가 |  | STARMag Universal Cartridge Kit | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-103 | Inventory | TI-IVT-04-T | 추가 |  | Allplex™ GI-Parasite Assay | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-104 | Inventory | TI-IVT-04-T | 추가 |  | 5X GI-V MOM | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-105 | Inventory | TI-IVT-04-T / TI-IVT-06-T | 추가 |  | 5X Real-time One-step Buffer | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-106 | Inventory | TI-IVT-04-T | 추가 |  | GI-V PC | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-107 | Inventory | TI-IVT-04-T / TI-IVT-06-T | 추가 |  | Real-time One-step Enzyme | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-108 | Inventory | TI-IVT-04-T / TI-IVT-06-T | 추가 |  | RNase-free Water | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-109 | Inventory | TI-IVT-04-T | 추가 |  | 5X RP1 MOM | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-110 | Inventory | TI-IVT-04-T | 추가 |  | RP1 PC | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-111 | Inventory | TI-IVT-04-T | 추가 |  | 5X GI-P MOM | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-112 | Inventory | TI-IVT-04-T / TI-IVT-06-T | 추가 |  | EM2 | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-113 | Inventory | TI-IVT-04-T | 추가 |  | GI-P PC | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-114 | Inventory | TI-IVT-04-T | 추가 |  | 5X GI-B(II) MOM | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-115 | Inventory | TI-IVT-04-T | 추가 |  | GI-B(II) PC | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-116 | Inventory | TI-IVT-05-T | 추가 |  | Liquid Waste Bottle (Upper) | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-117 | Inventory | TI-IVT-05-T | 추가 |  | Liquid Waste Bottle (Lower) | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-118 | Inventory | TI-IVT-06-T | 추가 |  | 5X RP2 MOM | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-119 | Inventory | TI-IVT-06-T | 추가 |  | 5X GI-B(I) MOM | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-120 | Inventory | TI-IVT-06-T | 추가 |  | Cold Storage | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-121 | Inventory | TI-IVT-06-T | 추가 |  | PCR Plate Storage | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-122 | Inventory | TI-IVT-01-T | 추가 |  | DWP Waste Bin | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-123 | Inventory | TI-IVT-01-T / TI-IVT-02-T / TI-IVT-04-T | 추가 |  | {n} rxns ({m} DWPs) | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-124 | Inventory | TI-IVT-01-T / TI-IVT-02-T / TI-IVT-03-T / TI-IVT-03-T-P | 추가 |  | {n} ea ({m} racks) | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-125 | Inventory | TI-IVT-01-T / TI-IVT-02-T / TI-IVT-04-T | 추가 |  | {n} rxns ({m} racks) | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-126 | Inventory | TI-IVT-01-T / TI-IVT-02-T / TI-IVT-03-T / TI-IVT-03-T-P | 추가 |  | {n} ea ({m} rack) | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-127 | Inventory | TI-IVT-01-T / TI-IVT-04-T | 추가 |  | {n} rxns ({m} set) | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-128 | Inventory | TI-IVT-01-T / TI-IVT-02-T / TI-IVT-04-T | 추가 |  | {n} rxns ({m} sets) | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-129 | Inventory | TI-IVT-02-T / TI-IVT-04-T | 추가 |  | Buffer Cartridge Cap | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-130 | Inventory | TI-IVT-02-T / TI-IVT-03-T | 추가 |  | {n} ea | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-131 | Inventory | TI-IVT-02-T / TI-IVT-04-T | 추가 |  | {n} rxns ({m} DWP) | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-132 | Inventory | TI-IVT-02-T / TI-IVT-04-T / TI-IVT-04-T-P | 추가 |  | {n} rxns ({m} tubes) | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-133 | Inventory | TI-IVT-02-T / TI-IVT-04-T | 추가 |  | {n} rxns ({m} tube) | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-134 | Inventory | TI-IVT-02-T / TI-IVT-04-T | 추가 |  | {n} rxns ({m} rack) | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-135 | Inventory | TI-IVT-02-T / TI-IVT-04-T | 추가 |  | {n} ea ({m} sets) | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-136 | Inventory | TI-IVT-02-T / TI-IVT-03-T | 추가 |  | {n} ea ({m} socket) | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-137 | Inventory | TI-IVT-03-T / TI-IVT-03-T-P / TI-IVT-04-T / TI-IVT-04-T-P | 추가 |  | Item details | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-138 | Inventory | TI-IVT-03-T | 추가 |  | {n} ea ({m} sockets) | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-139 | Inventory | TI-IVT-03-T / TI-IVT-04-T | 추가 |  | {n} DWPs | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-140 | Inventory | TI-IVT-03-T | 추가 |  | {n} racks | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-141 | Inventory | TI-IVT-03-T / TI-IVT-04-T | 추가 |  | {n} sets | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-142 | Inventory | TI-IVT-04-T-P | 추가 |  | {n} rxns | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-143 | Inventory | TI-IVT-04-T-P | 추가 |  | {n}/{m} | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-144 | Inventory | TI-IVT-04-T | 추가 |  | #Sample Preparation | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-145 | Inventory | TI-IVT-04-T | 추가 |  | #Nucleic Acid Extraction | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-146 | Inventory | TI-IVT-04-T | 추가 |  | #PCR | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-147 | Inventory | TI-IVT-05-T | 추가 |  | Waste Bin (Upper) | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-148 | Inventory | TI-IVT-05-T | 추가 |  | Waste Bin (Lower) | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-149 | Inventory | TI-IVT-05-T | 추가 |  | {n}% | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-150 | Inventory | TI-IVT-06-T | 추가 |  | Module-Unit | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-151 | Inventory | TI-IVT-06-T | 추가 |  | {n} items | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-152 | Inventory | TI-IVT-06-T | 추가 |  | No data to export | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-153 | Inventory | TI-IVT-06-T | 추가 |  | There is no data in the list to export. | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-154 | Inventory | TI-IVT-06-T | 추가 |  | Export failed | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-155 | Inventory | TI-IVT-06-T | 추가 |  | The file could not be saved. Check the save location and try again. | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-156 | Inventory | TI-IVT-01-T | 변경 (ID 변경) | Inventory Status | Inventory status | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 (LID-DAS-027에서 이 화면을 뺌) | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-157 | Inventory | TI-IVT-03-T / TI-IVT-04-T | 변경 (ID 변경) | Sufficient (enough stock) | Sufficient(enough stock) | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 (LID-RUN-054에서 이 화면을 뺌) | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-158 | Inventory | TI-IVT-03-T / TI-IVT-04-T | 변경 (ID 변경) | Low (partial shortage) | Low(partial shortage) | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 (LID-RUN-055에서 이 화면을 뺌) | Claude (최고관리자 작업) |
+| 2026-11-27 |  | LID-IVT-159 | Inventory | TI-IVT-03-T / TI-IVT-04-T | 변경 (ID 변경) | Insufficient (no stock) | Insufficient(no stock) | 작업 기록 20261127-최고관리자-inventory · 5단계 언어셋 반영 (LID-RUN-056에서 이 화면을 뺌) | Claude (최고관리자 작업) |
