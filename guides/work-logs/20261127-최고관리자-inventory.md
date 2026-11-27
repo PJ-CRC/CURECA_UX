@@ -354,6 +354,10 @@ started: 2026-11-27
 - 반영 대기 9건은 항목 내용이 기존 원본과 맞지 않거나 바꿀 값이 하나로 정해지지 않아 기존대로 두고 질문 대기로 둠: TI-IVT-01-T-R06 (Q2), TI-IVT-03-T-R05 (Q3), TI-IVT-03-T-R09 · TI-IVT-04-T-R11 (Q4), TI-IVT-03-T-P-R02 · TI-IVT-04-T-P-R08 · TI-IVT-06-T-R02 (Q5), TI-IVT-03-T-P-R05 (Q6), TI-IVT-04-T-R08 (Q7). 상태는 `작업 중` 그대로
 - 반영 대기 TI-IVT-02-T-R08 · TI-IVT-05-T-R01은 IA(`ia/ia-screens.csv`)를 고치는 항목이라 화면 MD에는 반영할 것이 없음. IA는 5단계(`flow/5-done.md` 절차 2번 순서 1)에서 고침
 - 규칙에 없어 판단한 곳: TI-IVT-06-T 1 검색 조건 요소 종류를 Common UX 이름으로 붙임(Item Type = Dropdown, Name · Barcode = Text Input, Module-Unit = Combine Dropdown, 기간 = Period Dropdown)
+- TI-IVT-04-T 왼쪽 카드는 Reagents type 글이 원본에서 첫 열 제목 자리에 있었음. Common UX Card/Table(Tag 켬)로 그리며 Reagents type을 Tag에 넣고 첫 열 제목은 비워 둠(규칙에 없어 판단한 곳). 카드 제목 앞 공백(` STARMag M96 Kit`)은 지움
+- TI-IVT-04-T 원본 화면 번호 표시 `2-2`(카드 내 항목)는 디스크립션 번호(2-3)와 달라 2-3으로, 원본 두 번째 `2-3`(Reagents type)은 2-7로 둠(C16)
+- TI-IVT-04-T 원본 오른쪽 상세의 Capacity 열(값 6 DWPs · 5 sets)은 투명(opacity 0)으로 숨겨져 있어 원본대로 숨겨 그리고 3-8 번호 표시를 그 자리에 둠(Q8)
+- TI-IVT-04-T Buffer Cartridge Cap 줄은 원본에 Remaining Qty 값이 없어 비워 둠(원본 그대로)
 - `Inventory_asis` 원본 위치: TI-IVT-01-T `3543:382925`(케이스 `3543:382700`) · 02-T `3543:385231`(케이스 `3543:385460`) · 03-T `3543:384725` · 03-T-P `3543:383368` · 04-T `3543:383847` · 04-T-P `3543:383580`(프레임 이름이 `TI-IVT-04-T`로 되어 있음) · 05-T `3543:371112` · 06-T `3543:361388`(원본으로 고른 아래 프레임). 업데이트 메모(`ver`)는 각 프레임 오른쪽(x = 프레임 x + 2252)에 쌓여 있음. 기획 진행 표시 원본 `3543:361225` 「✅ SB-Update : 2026.08.25 (컨펌 완료)」 → tobe `3903:7485`에 「검토 완료」로 옮김
 
 ## 질문 대기
@@ -368,6 +372,7 @@ started: 2026-11-27
 | Q5 | 반영 대기가 비었다고 한 예시 값(Inbound Date · Expiration Date · Usage · Barcode)이 기존 원본에는 채워져 있음 (반영 대기 TI-IVT-03-T-P-R02 · TI-IVT-04-T-P-R08 · TI-IVT-06-T-R02, 기존대로 그림) | TI-IVT-03-T-P #2-1 · TI-IVT-04-T-P #2-1 · TI-IVT-06-T #2 | | - (L-IOS 고치지 않음) | |
 | Q6 | [Close] · [X] 동작 문장을 하나로 맞출 문장 (반영 대기 TI-IVT-03-T-P-R05) | TI-IVT-03-T-P #5 · #6 | | - (L-IOS 고치지 않음) | |
 | Q7 | Reagents type Chip 띄어쓰기 통일 방식 (`# Sample Preparation` · `#Nucleic Acid Extraction`, 반영 대기 TI-IVT-04-T-R08) | TI-IVT-04-T #1 · #2-7 | | - (L-IOS 고치지 않음) | |
+| Q8 | 3-8 Capacity 열을 보일지와 값 (기존 원본에 6 DWPs · 5 sets 값이 투명하게 숨겨져 있음, 요청자 확인 4 "디스크립션대로"는 예시 화면이 없다는 답이라 기존대로 숨겨 그림) | TI-IVT-04-T #3-8 | | - (L-IOS 고치지 않음) | |
 
 ## 변경 확인
 <!-- 사용자 확인 목록의 변경 확인이자 이 작업으로 화면에서 바뀐 요소의 목록. 원본은 이 표(화면 MD에는 두지 않음). 2단계 · 3단계가 앞의 여덟 칸으로 줄을 만들고(오타 · 표기만 고친 줄은 3단계가 "확인한 날 · 답"에 `맞음 (오타, 날짜)`, Common UX · 기존 화면대로 설명을 더한 줄은 `맞음 (Common UX, 날짜)` · `맞음 (기존 화면, 날짜)`, 반영 대기 값을 그대로 쓴 줄은 3단계 마침 점검이 `맞음 (기계 검사, 날짜)`를 적음, reference-rules/description.md 5절), 4단계가 나머지 줄의 "확인한 날 · 답"을 채우고 답 · 검토 질의로 바뀐 줄을 더함. 번호 C1 · C2 …는 질문 대기와 같은 방식. "바꿔 그린 것"은 한 줄 요약, 근거는 괄호, 접두어 없음. "업데이트 메모"는 줄을 만들 때 채움: 보이는 것 · 동작 · 조건이 바뀌었거나 요소가 더해지거나 빠졌으면 O, 문서 정리(말투 · 용어 · 오타 · 번호 · 패널의 화면 정보)면 -(reference-rules/description.md 5절 "업데이트 메모"). "화면 표기 글자 (기존 → 새)"는 화면에 보이는 영어 글자가 바뀐 줄만 문구로 그대로 적음(`Statue → Status`, 새로 넣은 글자 `없음 → No results found.`, 지운 글자 `OPEN → 없음`). 여러 글자가 바뀌면 ` · `로 모두 적고 「등」으로 묶지 않음. 디스크립션 설명 글만 바뀐 줄은 비움. 4단계 언어셋이 이 칸으로 이번에 바뀐 글자를 가림(flow/4-revise-verify.md 절차 4). 줄은 지우지 않음 -->
